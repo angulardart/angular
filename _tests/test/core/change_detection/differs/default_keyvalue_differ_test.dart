@@ -114,7 +114,7 @@ void main() {
         differ.check(m);
         expect(differ.toString(),
             kvChangesAsString(map: ["foo"], previous: ["foo"]));
-      }, tags: ['known_ff_failure']);
+      });
 
       test('should detect removals when first item is moved', () {
         differ.check({'a': 1, 'b': 2});

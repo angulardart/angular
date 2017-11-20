@@ -121,6 +121,6 @@ void main() {
       String testInput = '<a href="&#x3000;javascript:alert(1)">CLICKME</a>';
       String expected = '<a>CLICKME</a>';
       expect(sanitizeHtmlInternal(testInput), expected);
-    }, tags: ['known_ff_failure']);
+    });
   });
 }
