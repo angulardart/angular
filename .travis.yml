@@ -43,3 +43,6 @@ branches:
 cache:
  directories:
    - $HOME/.pub-cache
+   - _tests/.dart_tool
+   - angular_router/.dart_tool
+   - angular_test/.dart_tool

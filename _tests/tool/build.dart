@@ -2,26 +2,15 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:build/build.dart';
+import 'package:build_compilers/build_compilers.dart';
+import 'package:build_runner/build_runner.dart';
+import 'package:build_test/builder.dart';
 import 'package:angular/src/source_gen/source_gen.dart';
 import 'package:angular/src/transform/stylesheet_compiler/transformer.dart';
 import 'package:angular_compiler/angular_compiler.dart';
-import 'package:build/build.dart';
-
-import 'package:build_compilers/build_compilers.dart';
-
-import 'package:build_runner/build_runner.dart';
-import 'package:build_test/builder.dart';
-import 'package:shelf/shelf_io.dart' as shelf_io;
 
 Future main(List<String> args) async {
-  var port = 8080;
-  if (args.isNotEmpty) {
-    assert(args.length == 1 && args.first.startsWith('--port'));
-    var parts = args.first.split('=');
-    assert(parts.length == 2);
-    port = int.parse(parts[1]);
-  }
-
   var graph = new PackageGraph.forThisPackage();
   var buildActions = _angularBuildActions(graph);
   buildActions.add(new BuildAction(new TestBootstrapBuilder(), graph.root.name,
@@ -43,24 +32,15 @@ Future main(List<String> args) async {
       new DevCompilerBootstrapBuilder(), graph.root.name,
       inputs: ['web/**.dart', 'test/**.browser_test.dart']));
 
-  var serveHandler = await watch(
+  await build(
     buildActions,
     deleteFilesByDefault: true,
     writeToCache: true,
+    enableLowResourcesMode: true,
+    buildDir: 'build',
   );
-
-  var testServer =
-      await shelf_io.serve(serveHandler.handlerFor('test'), 'localhost', port);
-
-  var firstBuild = await serveHandler.currentBuild;
-  stdout.writeln('Serving test on http://localhost:$port/');
-
-  if (firstBuild.status == BuildStatus.success) {
-    stdout.writeln('Build completed successfully');
-  }
-
-  await serveHandler.buildResults.drain();
-  await testServer.close();
+  // TODO(jakemac): Something is preventing us from exiting here.
+  exit(0);
 }
 
 List<BuildAction> _angularBuildActions(PackageGraph graph) {

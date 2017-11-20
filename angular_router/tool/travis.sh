@@ -15,11 +15,7 @@ dartanalyzer --fatal-warnings .
 # TODO(alorenzen): Run angular_test here.
 popd
 
-dartium --version
 pub run test -p vm
-# TODO(alorenzen): Refactor the build.dart script to a more common location.
-pub run angular_test \
-    --experimental-serve-script=tool/build.dart \
-    --verbose \
-    --port=8080 \
-    --test-arg=--platform=chrome
+dart tool/build.dart
+pub run test --precompiled=build --platform=chrome -j1
+
