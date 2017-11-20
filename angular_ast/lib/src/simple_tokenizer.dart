@@ -50,7 +50,8 @@ class NgSimpleScanner {
       r'(\#)|' //19 #
       r'(\.)|' //20 .
       r'(\%)|' //21 %
-      r'(\\)'); //22 \
+      r'(\\)|' //22 \
+      r'(\@)'); //23 @
   static final _commentEnd = new RegExp('-->');
   static final _mustaches = new RegExp(r'({{)|(}})');
   static final _newline = new RegExp('\n');
@@ -231,6 +232,9 @@ class NgSimpleScanner {
       }
       if (matchesGroup(match, 22)) {
         return new NgSimpleToken.backSlash(offset);
+      }
+      if (matchesGroup(match, 23)) {
+        return new NgSimpleToken.atSign(offset);
       }
     }
     return new NgSimpleToken.unexpectedChar(

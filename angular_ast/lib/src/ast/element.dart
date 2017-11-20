@@ -27,6 +27,7 @@ abstract class ElementAst implements StandaloneTemplateAst {
     List<ReferenceAst> references,
     List<BananaAst> bananas,
     List<StarAst> stars,
+    List<AnnotationAst> annotations,
   }) = _SyntheticElementAst;
 
   /// Create a synthetic element AST from an existing AST node.
@@ -41,6 +42,7 @@ abstract class ElementAst implements StandaloneTemplateAst {
     List<ReferenceAst> references,
     List<BananaAst> bananas,
     List<StarAst> stars,
+    List<AnnotationAst> annotations,
   }) = _SyntheticElementAst.from;
 
   /// Create a new element AST from parsed source.
@@ -57,6 +59,7 @@ abstract class ElementAst implements StandaloneTemplateAst {
     List<ReferenceAst> references,
     List<BananaAst> bananas,
     List<StarAst> stars,
+    List<AnnotationAst> annotations,
   }) = ParsedElementAst;
 
   @override
@@ -70,7 +73,8 @@ abstract class ElementAst implements StandaloneTemplateAst {
           _listEquals.equals(properties, o.properties) &&
           _listEquals.equals(references, o.references) &&
           _listEquals.equals(bananas, o.bananas) &&
-          _listEquals.equals(stars, o.stars);
+          _listEquals.equals(stars, o.stars) &&
+          _listEquals.equals(annotations, o.annotations);
     }
     return false;
   }
@@ -87,6 +91,7 @@ abstract class ElementAst implements StandaloneTemplateAst {
       _listEquals.hash(references),
       _listEquals.hash(bananas),
       _listEquals.hash(stars),
+      _listEquals.hash(annotations),
     ]);
   }
 
@@ -124,6 +129,9 @@ abstract class ElementAst implements StandaloneTemplateAst {
 
   /// Star assignments.
   List<StarAst> get stars;
+
+  /// Annotation assignments.
+  List<AnnotationAst> get annotations;
 
   @override
   String toString() {
@@ -164,6 +172,12 @@ abstract class ElementAst implements StandaloneTemplateAst {
         ..writeAll(stars, ', ')
         ..write(' ');
     }
+    if (annotations.isNotEmpty) {
+      buffer
+        ..write('annotations=')
+        ..writeAll(annotations, ', ')
+        ..write(' ');
+    }
     if (childNodes.isNotEmpty) {
       buffer
         ..write('childNodes=')
@@ -198,6 +212,7 @@ class ParsedElementAst extends TemplateAst with ElementAst {
     this.references: const [],
     this.bananas: const [],
     this.stars: const [],
+    this.annotations: const [],
   })
       : super.parsed(openElementStart, openElementEnd, sourceFile);
 
@@ -239,6 +254,10 @@ class ParsedElementAst extends TemplateAst with ElementAst {
   /// Star assignments.
   @override
   final List<StarAst> stars;
+
+  /// Annotation assignments.
+  @override
+  final List<AnnotationAst> annotations;
 }
 
 class _SyntheticElementAst extends SyntheticTemplateAst with ElementAst {
@@ -252,6 +271,7 @@ class _SyntheticElementAst extends SyntheticTemplateAst with ElementAst {
     this.references: const [],
     this.bananas: const [],
     this.stars: const [],
+    this.annotations: const [],
   });
 
   _SyntheticElementAst.from(
@@ -265,6 +285,7 @@ class _SyntheticElementAst extends SyntheticTemplateAst with ElementAst {
     this.references: const [],
     this.bananas: const [],
     this.stars: const [],
+    this.annotations: const [],
   })
       : super.from(origin);
 
@@ -297,4 +318,7 @@ class _SyntheticElementAst extends SyntheticTemplateAst with ElementAst {
 
   @override
   final List<StarAst> stars;
+
+  @override
+  final List<AnnotationAst> annotations;
 }

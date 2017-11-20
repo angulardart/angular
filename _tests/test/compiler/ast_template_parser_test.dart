@@ -1928,10 +1928,10 @@ void main() {
             humanizeTplAstSourceSpans(
                 parse('<component @deferred></component>', [])),
             [
-              [EmbeddedTemplateAst, '<component @deferred>'],
+              [EmbeddedTemplateAst, '@deferred'],
               [ElementAst, 'component', '<component @deferred>']
             ]);
-      }, skip: 'angular_ast doesn\'t handle @deferred yet.');
+      });
 
       test('should report invalid binding', () {
         expect(
