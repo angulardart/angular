@@ -9,12 +9,23 @@ set -e
 
 dartanalyzer --fatal-warnings .
 
-dartium --version
 pub run test -p vm -x codegen
-pub run angular_test \
-    --experimental-serve-script=tool/build.dart \
-    --verbose \
-    --serve-arg=--port=8080 \
-    --test-arg=--platform=chrome \
-    --test-arg=--tags=codegen \
-    --test-arg=--exclude-tags=known_pub_serve_failure
+dart tool/build.dart
+pub run test --precompiled=build --platform=chrome --tags=codegen \
+    --exclude-tags=known_pub_serve_failure -j1 test/common
+pub run test --precompiled=build --platform=chrome --tags=codegen \
+    --exclude-tags=known_pub_serve_failure -j1 test/compiler
+pub run test --precompiled=build --platform=chrome --tags=codegen \
+    --exclude-tags=known_pub_serve_failure -j1 test/core
+pub run test --precompiled=build --platform=chrome --tags=codegen \
+    --exclude-tags=known_pub_serve_failure -j1 test/di
+pub run test --precompiled=build --platform=chrome --tags=codegen \
+    --exclude-tags=known_pub_serve_failure -j1 test/integration
+pub run test --precompiled=build --platform=chrome --tags=codegen \
+    --exclude-tags=known_pub_serve_failure -j1 test/platform
+pub run test --precompiled=build --platform=chrome --tags=codegen \
+    --exclude-tags=known_pub_serve_failure -j1 test/security
+pub run test --precompiled=build --platform=chrome --tags=codegen \
+    --exclude-tags=known_pub_serve_failure -j1 test/source_gen
+pub run test --precompiled=build --platform=chrome --tags=codegen \
+    --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector
