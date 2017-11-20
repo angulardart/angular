@@ -473,22 +473,17 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   bool get isComponent =>
       metadataType == CompileDirectiveMetadataType.Component;
 
-  /// Returns true if the directive requires a ChangeDetector class to be
-  /// generated.
+  /// Whether the directive requires a change detector class to be generated.
   ///
-  /// DirectiveChangeDetector classes should only be generated if they
+  /// [DirectiveChangeDetector] classes should only be generated if they
   /// reduce the amount of duplicate code. Therefore we check for the presence
-  /// of either inputs (to reduce change detection code) or outputs that
-  /// are DOM events to add listeners inside a initHostEvents method.
+  /// of host bindings to move from each call site to a single method.
   bool get requiresDirectiveChangeDetector {
     if (_requiresDirectiveChangeDetector == null) {
-      bool hasInputsWithNgOnChanges = inputs.isNotEmpty &&
-          (lifecycleHooks.contains(LifecycleHooks.OnChanges) ||
-              lifecycleHooks.contains(LifecycleHooks.AfterChanges));
       _requiresDirectiveChangeDetector =
           metadataType == CompileDirectiveMetadataType.Directive &&
               identifier.name != 'NgIf' &&
-              (hasInputsWithNgOnChanges || hostProperties.isNotEmpty);
+              hostProperties.isNotEmpty;
     }
     return _requiresDirectiveChangeDetector;
   }
