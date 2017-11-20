@@ -42,12 +42,8 @@ import 'package:angular_forms/src/directives/ng_control_name.dart'
     as import14;
 import 'package:angular_forms/src/directives/ng_control.dart'
     as import15;
-import 'package:angular_forms/src/directives/ng_form_model.template.dart'
-    as import16;
-import 'package:angular_forms/src/directives/ng_control_name.template.dart'
-    as import17;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart'
-    as import18;
+    as import16;
 
 const List<dynamic> styles$TestFooComponent = const [
   'div._ngcontent-%COMP% { font-size:10px; }'
@@ -224,12 +220,12 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InputFormTest0 = [
 
 class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   import3.DivElement _el_0;
-  import16.NgFormModelNgCd _NgFormModel_0_4;
-  import11.NgFormModel _ControlContainer_0_5;
+  import11.NgFormModel _NgFormModel_0_4;
+  dynamic _ControlContainer_0_5;
   import3.InputElement _el_1;
   import13.DefaultValueAccessor _DefaultValueAccessor_1_4;
   List<dynamic> _const_OpaqueToken_dynamic___NgValueAccessor___1_5;
-  import17.NgControlNameNgCd _NgControlName_1_6;
+  import14.NgControlName _NgControlName_1_6;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex)
@@ -252,9 +248,8 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
-    _NgFormModel_0_4 =
-        new import16.NgFormModelNgCd(new import11.NgFormModel(null));
-    _ControlContainer_0_5 = _NgFormModel_0_4.instance;
+    _NgFormModel_0_4 = new import11.NgFormModel(null);
+    _ControlContainer_0_5 = _NgFormModel_0_4;
     _el_1 = createAndAppendDbg(this, doc, 'input', _el_0, 1, 1, 2);
     createAttr(_el_1, 'ngControl', 'login');
     createAttr(_el_1, 'type', 'text');
@@ -262,11 +257,10 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     _const_OpaqueToken_dynamic___NgValueAccessor___1_5 = [
       _DefaultValueAccessor_1_4
     ];
-    _NgControlName_1_6 = new import17.NgControlNameNgCd(
-        new import14.NgControlName(_ControlContainer_0_5, null,
-            _const_OpaqueToken_dynamic___NgValueAccessor___1_5));
+    _NgControlName_1_6 = new import14.NgControlName(_ControlContainer_0_5, null,
+        _const_OpaqueToken_dynamic___NgValueAccessor___1_5);
     import8.appViewUtils.eventManager.addEventListener(
-        _el_0, 'submit', eventHandler1(_NgFormModel_0_4.instance.onSubmit));
+        _el_0, 'submit', eventHandler1(_NgFormModel_0_4.onSubmit));
     _el_1.addEventListener('input', eventHandler1(_handle_input_1_0));
     _el_1.addEventListener(
         'blur', eventHandler0(_DefaultValueAccessor_1_4.touchHandler));
@@ -287,11 +281,11 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     if (((identical(token, import14.NgControlName) ||
             identical(token, import15.NgControl)) &&
         (1 == nodeIndex))) {
-      return _NgControlName_1_6.instance;
+      return _NgControlName_1_6;
     }
     if ((identical(token, import11.NgFormModel) &&
         ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
-      return _NgFormModel_0_4.instance;
+      return _NgFormModel_0_4;
     }
     if ((identical(token, import12.ControlContainer) &&
         ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
@@ -309,29 +303,29 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     dbg(0, 0, 5);
     final currVal_0 = _ctx.form;
     if (import8.checkBinding(_expr_0, currVal_0)) {
-      _NgFormModel_0_4.instance.form = currVal_0;
+      _NgFormModel_0_4.form = currVal_0;
       changes ??= <String, SimpleChange>{};
       changes['form'] = new SimpleChange(_expr_0, currVal_0);
       _expr_0 = currVal_0;
     }
     if (!identical(changes, null)) {
-      _NgFormModel_0_4.instance.ngOnChanges(changes);
+      _NgFormModel_0_4.ngOnChanges(changes);
     }
     changes = null;
     if (firstCheck) {
-      _NgControlName_1_6.instance.name = 'login';
+      _NgControlName_1_6.name = 'login';
       changes ??= {};
       changes['name'] = new SimpleChange(null, 'login');
     }
     if (!identical(changes, null)) {
-      _NgControlName_1_6.instance.ngOnChanges(changes);
+      _NgControlName_1_6.ngOnChanges(changes);
     }
   }
 
   @override
   void destroyInternal() {
     dbg(1, 1, 2);
-    _NgControlName_1_6.instance.ngOnDestroy();
+    _NgControlName_1_6.ngOnDestroy();
   }
 
   void _handle_input_1_0($event) {
@@ -408,7 +402,7 @@ const ComponentFactory<import1.InputFormTest> InputFormTestNgFactory =
     const ComponentFactory<import1.InputFormTest>('input-form-test',
         viewFactory_InputFormTestHost0, _InputFormTestMetadata);
 
-class ChildDirectiveNgCd extends import18.DirectiveChangeDetector {
+class ChildDirectiveNgCd extends import16.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
   var _expr_1;
