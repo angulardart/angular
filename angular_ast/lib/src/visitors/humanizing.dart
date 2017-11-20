@@ -11,6 +11,9 @@ class HumanizingTemplateAstVisitor
   const HumanizingTemplateAstVisitor();
 
   @override
+  String visitAnnotation(AnnotationAst astNode, [_]) => '@${astNode.name}';
+
+  @override
   String visitAttribute(AttributeAst astNode, [_]) {
     if (astNode.value != null) {
       return '${astNode.name}="${astNode.value}"';

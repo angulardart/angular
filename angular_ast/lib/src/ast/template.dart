@@ -27,6 +27,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
     List<PropertyAst> properties,
     List<ReferenceAst> references,
     List<LetBindingAst> letBindings,
+    bool hasDeferredComponent,
   }) = _SyntheticEmbeddedTemplateAst;
 
   factory EmbeddedTemplateAst.from(
@@ -37,6 +38,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
     List<PropertyAst> properties,
     List<ReferenceAst> references,
     List<LetBindingAst> letBindings,
+    bool hasDeferredComponent,
   }) = _SyntheticEmbeddedTemplateAst.from;
 
   factory EmbeddedTemplateAst.parsed(
@@ -50,6 +52,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
     List<PropertyAst> properties,
     List<ReferenceAst> references,
     List<LetBindingAst> letBindings,
+    bool hasDeferredComponent,
   }) = _ParsedEmbeddedTemplateAst;
 
   @override
@@ -82,6 +85,10 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
   /// `let-` binding defined within a template.
   List<LetBindingAst> get letBindings;
 
+  /// A flag to indicate that this template contains a `Component` which should
+  /// be deferred-loaded.
+  bool get hasDeferredComponent;
+
   /// </template> that is paired to this <template>.
   CloseElementAst get closeComplement;
   set closeComplement(CloseElementAst closeComplement);
@@ -95,7 +102,8 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
           _listEquals.equals(properties, o.properties) &&
           _listEquals.equals(childNodes, o.childNodes) &&
           _listEquals.equals(references, o.references) &&
-          _listEquals.equals(letBindings, o.letBindings);
+          _listEquals.equals(letBindings, o.letBindings) &&
+          hasDeferredComponent == o.hasDeferredComponent;
     }
     return false;
   }
@@ -110,6 +118,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
       _listEquals.hash(properties),
       _listEquals.hash(references),
       _listEquals.hash(letBindings),
+      hasDeferredComponent,
     ]);
   }
 
@@ -146,6 +155,9 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
         ..writeAll(letBindings, ', ')
         ..write(' ');
     }
+    if (hasDeferredComponent) {
+      buffer.write('deferred ');
+    }
     if (childNodes.isNotEmpty) {
       buffer
         ..write('childNodes=')
@@ -171,6 +183,7 @@ class _ParsedEmbeddedTemplateAst extends TemplateAst with EmbeddedTemplateAst {
     this.properties: const [],
     this.references: const [],
     this.letBindings: const [],
+    this.hasDeferredComponent: false,
   })
       : super.parsed(beginToken, endToken, sourceFile);
 
@@ -193,6 +206,9 @@ class _ParsedEmbeddedTemplateAst extends TemplateAst with EmbeddedTemplateAst {
   final List<LetBindingAst> letBindings;
 
   @override
+  final bool hasDeferredComponent;
+
+  @override
   CloseElementAst closeComplement;
 }
 
@@ -205,6 +221,7 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     this.properties: const [],
     this.references: const [],
     this.letBindings: const [],
+    this.hasDeferredComponent: false,
   })
       : closeComplement = new CloseElementAst('template');
 
@@ -216,6 +233,7 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     this.properties: const [],
     this.references: const [],
     this.letBindings: const [],
+    this.hasDeferredComponent: false,
   })
       : closeComplement = new CloseElementAst('template'),
         super.from(origin);
@@ -237,6 +255,9 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
 
   @override
   final List<LetBindingAst> letBindings;
+
+  @override
+  final bool hasDeferredComponent;
 
   @override
   CloseElementAst closeComplement;

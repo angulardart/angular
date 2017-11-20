@@ -15,6 +15,9 @@ export 'visitors/identity.dart';
 abstract class TemplateAstVisitor<R, C> {
   const TemplateAstVisitor();
 
+  /// Visits all annotation ASTs.
+  R visitAnnotation(AnnotationAst astNode, [C context]);
+
   /// Visits all attribute ASTs.
   R visitAttribute(AttributeAst astNode, [C context]);
 

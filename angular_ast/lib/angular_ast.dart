@@ -10,6 +10,7 @@ import 'src/parser.dart';
 
 export 'src/ast.dart'
     show
+        AnnotationAst,
         AttributeAst,
         BananaAst,
         CloseElementAst,

@@ -6,6 +6,7 @@ part of angular_ast.src.token.tokens;
 
 /// The types of tokens that can be returned by the NgStringTokenizer
 enum NgSimpleTokenType {
+  atSign,
   bang,
   backSlash,
   closeBanana,
@@ -42,6 +43,7 @@ enum NgSimpleTokenType {
 
 /// The types of tokens that can be returned by the NgScanner.
 enum NgTokenType {
+  annotationPrefix,
   bananaPrefix,
   bananaSuffix,
   bindPrefix, // Not used in NgScanner.

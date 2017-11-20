@@ -21,6 +21,7 @@ abstract class NgBaseToken<TokenType> {
 /// Clients should not extend, implement, or mix-in this class.
 class NgSimpleToken implements NgBaseToken<NgSimpleTokenType> {
   static final Map<NgSimpleTokenType, String> lexemeMap = const {
+    NgSimpleTokenType.atSign: '@',
     NgSimpleTokenType.backSlash: '\\',
     NgSimpleTokenType.bang: '!',
     NgSimpleTokenType.closeBanana: ')]',
@@ -46,13 +47,17 @@ class NgSimpleToken implements NgBaseToken<NgSimpleTokenType> {
     NgSimpleTokenType.period: '.',
     NgSimpleTokenType.star: '*',
     NgSimpleTokenType.text: '',
-    NgSimpleTokenType.unexpectedChar: '@',
+    NgSimpleTokenType.unexpectedChar: '?',
     NgSimpleTokenType.voidCloseTag: '/>',
     NgSimpleTokenType.whitespace: ' ',
   };
 
+  factory NgSimpleToken.atSign(int offset) {
+    return new NgSimpleToken._(NgSimpleTokenType.atSign, offset);
+  }
+
   factory NgSimpleToken.backSlash(int offset) {
-    return new NgSimpleToken._(NgSimpleTokenType.bang, offset);
+    return new NgSimpleToken._(NgSimpleTokenType.backSlash, offset);
   }
 
   factory NgSimpleToken.bang(int offset) {
@@ -276,6 +281,7 @@ class NgSimpleQuoteToken extends _LexemeNgSimpleToken {
 /// Clients should not extend, implement, or mix-in this class.
 class NgToken implements NgBaseToken<NgTokenType> {
   static final Map<NgTokenType, String> lexemeMap = const {
+    NgTokenType.annotationPrefix: '@',
     NgTokenType.bananaPrefix: '[(',
     NgTokenType.bananaSuffix: ')]',
     NgTokenType.beforeElementDecoratorValue: '=',
@@ -314,6 +320,10 @@ class NgToken implements NgBaseToken<NgTokenType> {
       return new _LexemeNgToken(offset, lexeme, type, errorSynthetic: true);
     }
     return new NgToken._(type, offset, errorSynthetic: true);
+  }
+
+  factory NgToken.annotationPrefix(int offset) {
+    return new NgToken._(NgTokenType.annotationPrefix, offset);
   }
 
   factory NgToken.bananaPrefix(int offset) {

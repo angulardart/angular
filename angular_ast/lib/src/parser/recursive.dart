@@ -104,7 +104,8 @@ class RecursiveAstParser {
       decoratorToken = _reader.next();
       suffixToken = _reader.next();
     } else if (peekType == NgTokenType.referencePrefix ||
-        peekType == NgTokenType.templatePrefix) {
+        peekType == NgTokenType.templatePrefix ||
+        peekType == NgTokenType.annotationPrefix) {
       prefixToken = _reader.next();
       decoratorToken = _reader.next();
     } else {
@@ -186,6 +187,8 @@ class RecursiveAstParser {
           valueToken,
           equalSignToken,
         );
+      } else if (prefixType == NgTokenType.annotationPrefix) {
+        return new AnnotationAst.parsed(_source, prefixToken, decoratorToken);
       }
     }
 
@@ -289,6 +292,7 @@ class RecursiveAstParser {
     var references = <ReferenceAst>[];
     var bananas = <BananaAst>[];
     var stars = <StarAst>[];
+    var annotations = <AnnotationAst>[];
     var letBindings = <LetBindingAst>[];
     NgToken nextToken;
 
@@ -335,6 +339,8 @@ class RecursiveAstParser {
               stars.add(decoratorAst);
             }
           }
+        } else if (decoratorAst is AnnotationAst) {
+          annotations.add(decoratorAst);
         } else if (decoratorAst is EventAst) {
           events.add(decoratorAst);
         } else if (decoratorAst is PropertyAst) {
@@ -468,6 +474,7 @@ class RecursiveAstParser {
         references: references,
         bananas: bananas,
         stars: stars,
+        annotations: annotations,
         closeComplement: closeElementAst,
       );
     }

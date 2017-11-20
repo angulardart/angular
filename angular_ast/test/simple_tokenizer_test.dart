@@ -258,6 +258,21 @@ void main() {
     ]);
   });
 
+  test('should tokenize at signs', () {
+    expect(tokenize('<div @deferred></div>'), [
+      new NgSimpleToken.openTagStart(0),
+      new NgSimpleToken.identifier(1, 'div'),
+      new NgSimpleToken.whitespace(4, ' '),
+      new NgSimpleToken.atSign(5),
+      new NgSimpleToken.identifier(6, 'deferred'),
+      new NgSimpleToken.tagEnd(14),
+      new NgSimpleToken.closeTagStart(15),
+      new NgSimpleToken.identifier(17, 'div'),
+      new NgSimpleToken.tagEnd(20),
+      new NgSimpleToken.EOF(21),
+    ]);
+  });
+
   //Error cases
 
   test('should tokenize unclosed comments', () {

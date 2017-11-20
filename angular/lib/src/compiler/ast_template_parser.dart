@@ -166,7 +166,8 @@ class _BindDirectivesVisitor
         null /* elementProviderUsage */,
         _visitAll(astNode.childNodes, embeddedContext),
         _findNgContentIndexForTemplate(astNode, parentContext),
-        astNode.sourceSpan);
+        astNode.sourceSpan,
+        hasDeferredComponent: astNode.hasDeferredComponent);
   }
 
   int _findNgContentIndexForTemplate(
@@ -284,6 +285,12 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitStar(ast.StarAst astNode, [_ParseContext _]) =>
       throw new UnimplementedError('Don\'t know how to handle stars.');
+
+  @override
+  ng.TemplateAst visitAnnotation(ast.AnnotationAst astNode,
+      [_ParseContext context]) {
+    throw new UnimplementedError('Don\'t know how to handle annotations.');
+  }
 
   List<T> _visitAll<T extends ng.TemplateAst>(
       List<ast.TemplateAst> astNodes, _ParseContext context) {
@@ -685,7 +692,8 @@ class _ProviderVisitor
         elementContext,
         children,
         ast.ngContentIndex,
-        ast.sourceSpan);
+        ast.sourceSpan,
+        hasDeferredComponent: ast.hasDeferredComponent);
   }
 
   @override

@@ -23,6 +23,9 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
         _toolFriendlyAstOrigin = toolFriendlyAstOrigin;
 
   @override
+  TemplateAst visitAnnotation(AnnotationAst astNode, [_]) => astNode;
+
+  @override
   TemplateAst visitAttribute(AttributeAst astNode, [_]) => astNode;
 
   @override
@@ -134,6 +137,17 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
 
       astNode.stars.clear();
       return newAst;
+    }
+
+    if (astNode.annotations.isNotEmpty) {
+      var annotationAst = astNode.annotations[0];
+      var origin = _toolFriendlyAstOrigin ? annotationAst : null;
+      var directiveName = annotationAst.name;
+      if (directiveName == 'deferred') {
+        astNode.annotations.clear();
+        return new EmbeddedTemplateAst.from(origin,
+            childNodes: [astNode], hasDeferredComponent: true);
+      }
     }
 
     return astNode;

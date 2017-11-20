@@ -209,6 +209,7 @@ class NgScanner {
         type == NgSimpleTokenType.openBanana ||
         type == NgSimpleTokenType.hash ||
         type == NgSimpleTokenType.star ||
+        type == NgSimpleTokenType.atSign ||
         type == NgSimpleTokenType.closeBracket ||
         type == NgSimpleTokenType.closeParen ||
         type == NgSimpleTokenType.closeBanana ||
@@ -268,6 +269,7 @@ class NgScanner {
         type == NgSimpleTokenType.openBanana ||
         type == NgSimpleTokenType.hash ||
         type == NgSimpleTokenType.star ||
+        type == NgSimpleTokenType.atSign ||
         type == NgSimpleTokenType.identifier ||
         type == NgSimpleTokenType.closeBracket ||
         type == NgSimpleTokenType.closeParen ||
@@ -359,6 +361,7 @@ class NgScanner {
         type == NgSimpleTokenType.openBanana ||
         type == NgSimpleTokenType.hash ||
         type == NgSimpleTokenType.star ||
+        type == NgSimpleTokenType.atSign ||
         type == NgSimpleTokenType.equalSign ||
         type == NgSimpleTokenType.closeBracket ||
         type == NgSimpleTokenType.closeParen ||
@@ -536,6 +539,11 @@ class NgScanner {
       _lastDecoratorPrefix = _current;
       return new NgToken.templatePrefix(offset);
     }
+    if (type == NgSimpleTokenType.atSign) {
+      _state = NgScannerState.scanSimpleElementDecorator;
+      _lastDecoratorPrefix = _current;
+      return new NgToken.annotationPrefix(offset);
+    }
 
     if (type == NgSimpleTokenType.equalSign ||
         type == NgSimpleTokenType.commentBegin ||
@@ -643,7 +651,8 @@ class NgScanner {
         type == NgSimpleTokenType.EOF ||
         type == NgSimpleTokenType.equalSign ||
         type == NgSimpleTokenType.hash ||
-        type == NgSimpleTokenType.star) {
+        type == NgSimpleTokenType.star ||
+        type == NgSimpleTokenType.atSign) {
       return handleError(
         NgParserWarningCode.ELEMENT_DECORATOR_VALUE,
         _lastEqualSignOffset,
@@ -672,6 +681,7 @@ class NgScanner {
           type == NgSimpleTokenType.openBanana ||
           type == NgSimpleTokenType.hash ||
           type == NgSimpleTokenType.star ||
+          type == NgSimpleTokenType.atSign ||
           type == NgSimpleTokenType.closeBracket ||
           type == NgSimpleTokenType.closeParen ||
           type == NgSimpleTokenType.closeBanana ||

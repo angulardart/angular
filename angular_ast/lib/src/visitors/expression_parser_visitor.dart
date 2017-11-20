@@ -16,6 +16,9 @@ class ExpressionParserVisitor implements TemplateAstVisitor<dynamic, Null> {
       : exceptionHandler = exceptionHandler ?? new ThrowingExceptionHandler();
 
   @override
+  visitAnnotation(AnnotationAst astNode, [_]) => null;
+
+  @override
   visitAttribute(AttributeAst astNode, [_]) {
     if (astNode.mustaches != null) {
       astNode.mustaches.forEach((mustache) {

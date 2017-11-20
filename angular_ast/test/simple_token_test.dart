@@ -177,6 +177,14 @@ void main() {
     expect(token.type, NgSimpleTokenType.star);
   });
 
+  test('atSign', () {
+    token = new NgSimpleToken.atSign(0);
+    expect(token.end, 1);
+    expect(token.length, 1);
+    expect(token.offset, 0);
+    expect(token.type, NgSimpleTokenType.atSign);
+  });
+
   test('text', () {
     token = new NgSimpleToken.text(0, 'some long text string');
     expect(token.lexeme, 'some long text string');

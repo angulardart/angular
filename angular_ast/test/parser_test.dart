@@ -455,6 +455,14 @@ void main() {
     );
   });
 
+  test('should parse an annotation', () {
+    expect(parse('<div @deferred></div>'), [
+      new EmbeddedTemplateAst(
+          hasDeferredComponent: true,
+          childNodes: [new ElementAst('div', new CloseElementAst('div'))])
+    ]);
+  });
+
   test('should parse an *ngFor multi-expression', () {
     expect(
       parse('<a *ngFor="let item of items; trackBy: byId; let i = index"></a>'),

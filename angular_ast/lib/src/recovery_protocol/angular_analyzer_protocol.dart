@@ -46,6 +46,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
         type == NgSimpleTokenType.openBanana ||
         type == NgSimpleTokenType.hash ||
         type == NgSimpleTokenType.star ||
+        type == NgSimpleTokenType.atSign ||
         type == NgSimpleTokenType.closeBracket ||
         type == NgSimpleTokenType.closeParen ||
         type == NgSimpleTokenType.closeBanana ||
@@ -87,6 +88,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
         type == NgSimpleTokenType.openBanana ||
         type == NgSimpleTokenType.hash ||
         type == NgSimpleTokenType.star ||
+        type == NgSimpleTokenType.atSign ||
         type == NgSimpleTokenType.identifier ||
         type == NgSimpleTokenType.closeBracket ||
         type == NgSimpleTokenType.closeParen ||
@@ -148,6 +150,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
         type == NgSimpleTokenType.openBanana ||
         type == NgSimpleTokenType.hash ||
         type == NgSimpleTokenType.star ||
+        type == NgSimpleTokenType.atSign ||
         type == NgSimpleTokenType.equalSign ||
         type == NgSimpleTokenType.closeBracket ||
         type == NgSimpleTokenType.closeParen ||
@@ -302,7 +305,8 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
         type == NgSimpleTokenType.EOF ||
         type == NgSimpleTokenType.equalSign ||
         type == NgSimpleTokenType.hash ||
-        type == NgSimpleTokenType.star) {
+        type == NgSimpleTokenType.star ||
+        type == NgSimpleTokenType.atSign) {
       reader.putBack(current);
       returnState = NgScannerState.scanAfterElementDecoratorValue;
 
@@ -395,6 +399,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
         type == NgSimpleTokenType.openBanana ||
         type == NgSimpleTokenType.hash ||
         type == NgSimpleTokenType.star ||
+        type == NgSimpleTokenType.atSign ||
         type == NgSimpleTokenType.closeBracket ||
         type == NgSimpleTokenType.closeParen ||
         type == NgSimpleTokenType.closeBanana ||
