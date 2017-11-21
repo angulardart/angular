@@ -16,6 +16,8 @@ dartanalyzer --fatal-warnings .
 popd
 
 pub run test -p vm
+
+export BUILD_MAX_WORKERS_PER_TASK=1
 dart tool/build.dart
 pub run test --precompiled=build --platform=chrome -j1
 
