@@ -1,5 +1,18 @@
 ## 5.0.0-alpha+1
 
+**NOTE**: As of `angular 5.0.0-alpha+1` [`dependency_overrides`][dep_overrides] are **required**:
+
+```yaml
+dependency_overrides:
+  analyzer: ^0.31.0-alpha.1
+```
+
+This is because we are starting to use and support the Dart 2.0.0 SDK, which is evolving. We expect
+to no longer require overrides once we are at a beta release, but this is unlikely until sometime
+in early 2018.
+
+[dep_overrides]: https://www.dartlang.org/tools/pub/dependencies#dependency-overrides
+
 ### New features
 
 *   Added an optional input to `NgTemplateOutlet` named
