@@ -1,4 +1,7 @@
-# Changelog
+## 0.4.0-alpha.1
+
+- Update version from `0.4.0-alpha+2` to make it come after `0.4.0-alpha.0`
+  which was published in August 2017.
 
 ## 0.4.0-alpha+2
 
