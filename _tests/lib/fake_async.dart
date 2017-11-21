@@ -3,8 +3,6 @@ import 'dart:async' show runZoned, ZoneSpecification;
 import 'package:quiver/testing/async.dart' as quiver;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
-import 'test_injector.dart';
-
 const _u = const Object();
 
 quiver.FakeAsync _fakeAsync;
@@ -19,26 +17,10 @@ quiver.FakeAsync _fakeAsync;
 /// Can be used to wrap inject() calls.
 ///
 /// Returns a `Function` that wraps [fn].
-Function fakeAsync(dynamic /* Function | FunctionWithParamTokens */ fn) {
+Function fakeAsync(Function innerFn) {
   if (_fakeAsync != null) {
     throw 'fakeAsync() calls can not be nested';
   }
-
-  Function innerFn;
-  if (fn is FunctionWithParamTokens) {
-    if (fn.isAsync) {
-      throw 'Cannot wrap async test with fakeAsync';
-    }
-    innerFn = () {
-      getTestInjector().execute(fn);
-    };
-  } else if (fn is Function) {
-    innerFn = fn;
-  } else {
-    throw 'fakeAsync can wrap only test functions but got object of type ' +
-        fn.runtimeType.toString();
-  }
-
   return (
       [a0 = _u,
       a1 = _u,
