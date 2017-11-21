@@ -1,8 +1,6 @@
 presets:
   travis:
-    exclude_tags: known_pub_serve_failure || failing_i302
+    exclude_tags: known_pub_serve_failure
 tags:
   # Tests that fail with pub serve/pub run test.
   known_pub_serve_failure:
-  # See https://github.com/dart-lang/angular2/issues/302.
-  failing_i302:
