@@ -762,7 +762,7 @@ void main() {
           expect(elAst.directives[1].directive, dir0);
           expect(elAst.directives[2].directive, dir1);
           expect(elAst.directives[3].directive, dir2);
-        }, skip: 'Don\'t yet sort properly.');
+        });
 
         test('should mark directives and dependencies of directives as eager',
             () {
