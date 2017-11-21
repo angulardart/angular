@@ -16,4 +16,5 @@ pub run test \
     --platform=chrome \
     --tags=codegen \
     --timeout=4x \
+    -x skip_on_travis \
     -j1
