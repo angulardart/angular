@@ -29,8 +29,9 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
     as import9;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
+import 'dart:core';
 import 'package:angular/src/facade/lang.dart'
-    as import12;
+    as import13;
 
 const List<dynamic> styles$TestFooComponent = const [];
 
@@ -134,17 +135,24 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     _el_1 = createSpanAndAppend(doc, _el_0);
     _text_2 = new import8.Text('');
     _el_1.append(_text_2);
+    _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
     init0(_el_0);
     return null;
   }
 
   @override
   void detectChangesInternal() {
-    final currVal_0 = import9.interpolate0(locals['\$implicit']);
-    if (!import12.looseIdentical(_expr_0, currVal_0)) {
+    final String local_bar = locals['\$implicit'];
+    final currVal_0 = import9.interpolate0(local_bar);
+    if (!import13.looseIdentical(_expr_0, currVal_0)) {
       _text_2.text = currVal_0;
       _expr_0 = currVal_0;
     }
+  }
+
+  void _handle_click_1_0($event) {
+    final String local_bar = locals['\$implicit'];
+    ctx.onClick(local_bar);
   }
 }
 

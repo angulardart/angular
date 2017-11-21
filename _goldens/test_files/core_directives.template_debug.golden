@@ -31,6 +31,7 @@ import 'dart:html' as import11;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import12;
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 const List<dynamic> styles$TestFooComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
@@ -168,19 +169,27 @@ class _ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
     _el_1 = createSpanAndAppendDbg(this, doc, _el_0, 1, 2, 6);
     _text_2 = new import11.Text('');
     _el_1.append(_text_2);
-    dbgElm(this, _text_2, 2, 2, 12);
+    dbgElm(this, _text_2, 2, 2, 35);
+    _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
     init0Dbg(_el_0, [_el_0, _el_1, _text_2]);
     return null;
   }
 
   @override
   void detectChangesInternal() {
-    dbg(2, 2, 12);
-    final currVal_0 = import12.interpolate0(locals['\$implicit']);
+    final String local_bar = locals['\$implicit'];
+    dbg(2, 2, 35);
+    final currVal_0 = import12.interpolate0(local_bar);
     if (import12.checkBinding(_expr_0, currVal_0)) {
       _text_2.text = currVal_0;
       _expr_0 = currVal_0;
     }
+  }
+
+  void _handle_click_1_0($event) {
+    final String local_bar = locals['\$implicit'];
+    dbg(1, 2, 12);
+    ctx.onClick(local_bar);
   }
 }
 

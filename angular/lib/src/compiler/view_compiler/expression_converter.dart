@@ -10,7 +10,13 @@ var IMPLICIT_RECEIVER = o.variable("#implicit");
 abstract class NameResolver {
   o.Expression callPipe(
       String name, o.Expression input, List<o.Expression> args);
+
+  /// Returns a variable that references the [name] local.
   o.Expression getLocal(String name);
+
+  /// Returns variable declarations for all locals used in this scope.
+  List<o.Statement> getLocalDeclarations();
+
   o.Expression createLiteralList(List<o.Expression> values);
   o.Expression createLiteralMap(
       List<List<dynamic /* String | o . Expression */ >> values);
