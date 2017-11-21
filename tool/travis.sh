@@ -7,6 +7,9 @@
 # Fast fail the script on failures.
 set -e
 
+# Use only one worker per task to limit resource usage on travis
+export BUILD_MAX_WORKERS_PER_TASK=1
+
 pushd $PKG
 pub upgrade
 ./tool/travis.sh
