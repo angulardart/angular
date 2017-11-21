@@ -8,7 +8,7 @@ import 'package:angular_test/angular_test.dart';
 import 'package:_tests/query_tests.dart';
 import 'package:test/test.dart';
 
-import 'query_test.template.dart' as ng_generated;
+import 'query_view_test.template.dart' as ng_generated;
 
 void main() {
   ng_generated.initReflector();
