@@ -39,27 +39,10 @@ class ValueDirective {
   int value;
 }
 
-/// Similar to `*ngIf`, but always true.
-@Directive(
-  selector: '[alwaysShow]',
-)
-class AlwaysShowDirective {
-  AlwaysShowDirective(ViewContainerRef container, TemplateRef template) {
-    container.createEmbeddedView(template);
-  }
-}
-
-/// Similar to `*ngIf`, but always false.
-@Directive(
-  selector: '[neverShow]',
-)
-class NeverShowDirective {}
-
 /// Returns a [Matcher] that looks for [ValueDirective] in a [NgTestFixture].
 Matcher hasChildValues(List<int> values) => new _HasChildValues(values);
 
 class _HasChildValues extends Matcher {
-  static final _equality = const IterableEquality();
   final List<int> values;
 
   const _HasChildValues(this.values);
@@ -70,33 +53,13 @@ class _HasChildValues extends Matcher {
   }
 
   @override
-  Description describeMismatch(
-    item,
-    Description mismatchDescription,
-    Map matchState,
-    bool verbose,
-  ) {
-    Iterable<int> children;
-    if (item is NgTestFixture<HasChild<ValueDirective>>) {
-      children = [item.assertOnlyInstance.child.value];
-    }
-    if (item is NgTestFixture<HasChildren<ValueDirective>>) {
-      children = item.assertOnlyInstance.children.map((v) => v.value);
-    }
-    return mismatchDescription
-        .addDescriptionOf(values)
-        .add(' (expected) is not the same as ')
-        .addDescriptionOf(children)
-        .add(' (actual)');
-  }
-
-  @override
   bool matches(item, Map matchState) {
     if (item is NgTestFixture<HasChild<ValueDirective>>) {
       return item.assertOnlyInstance.child.value == values.single;
     }
     if (item is NgTestFixture<HasChildren<ValueDirective>>) {
-      return _equality.equals(
+      final equality = const IterableEquality();
+      return equality.equals(
         item.assertOnlyInstance.children.map((v) => v.value),
         values,
       );
@@ -114,29 +77,11 @@ class TestCase<T> {
 
 void testViewChildren({
   @required TestCase<HasChildren<ValueDirective>> directViewChildren,
-  @required TestCase<HasChild<ValueDirective>> directViewChild,
-  @required TestCase<HasChildren<ValueDirective>> viewChildrenAndEmbedded,
-  @required TestCase<HasChild<ValueDirective>> viewChildEmbedded,
 }) {
   group('@ViewChildren(...)', () {
     test('should find direct view children', () async {
       final fixture = await directViewChildren.testBed.create();
       expect(fixture, hasChildValues(directViewChildren.expectValues));
-    });
-
-    test('should find a direct view child', () async {
-      final fixture = await directViewChild.testBed.create();
-      expect(fixture, hasChildValues(directViewChild.expectValues));
-    });
-
-    test('should find direct view children in embedded templates', () async {
-      final fixture = await viewChildrenAndEmbedded.testBed.create();
-      expect(fixture, hasChildValues(viewChildrenAndEmbedded.expectValues));
-    });
-
-    test('should find direct view children in embedded templates', () async {
-      final fixture = await viewChildEmbedded.testBed.create();
-      expect(fixture, hasChildValues(viewChildEmbedded.expectValues));
     });
   });
 }
