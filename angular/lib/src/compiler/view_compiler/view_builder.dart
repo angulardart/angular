@@ -829,6 +829,9 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
     genProfileCdStart(view, stmts);
   }
 
+  // Declare variables for locals used in this method.
+  stmts.addAll(view.nameResolver.getLocalDeclarations());
+
   // Add @Input change detectors.
   stmts.addAll(view.detectChangesInInputsMethod.finish());
 

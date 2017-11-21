@@ -5,7 +5,7 @@ import 'package:angular/angular.dart';
   template: '''
     <div *ngIf="foo">Foo</div>
     <div *ngFor="let bar of bars">
-      <span>{{bar}}</span>
+      <span (click)="onClick(bar)">{{bar}}</span>
     </div>
     ''',
   directives: const [NgIf, NgFor],
@@ -13,4 +13,8 @@ import 'package:angular/angular.dart';
 class TestFooComponent {
   final bool foo = true;
   final List<String> bars = ['bar'];
+
+  void onClick(String value) {
+    print('Clicked on $value');
+  }
 }

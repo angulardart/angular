@@ -86,6 +86,8 @@ class CompileEventListener {
       // retrieve last statement to ensure it's the handler invocation.
       _simpleHandler = _extractFunction(convertStmtIntoExpression(stmts.last));
     } else {
+      // Declare variables for locals used in this event listener.
+      stmts.insertAll(0, _nameResolver.getLocalDeclarations());
       compileElement.view.eventHandlerMethods.add(new o.ClassMethod(
           _methodName, [_eventParam], stmts, null, [o.StmtModifier.Private]));
     }
