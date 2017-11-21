@@ -1,3 +1,5 @@
+## 1.0.1-alpha+1
+
 -   Use the new generic function syntax, stop using `package:func`.
 -   Don't throw a null pointer exception in NgFormModel if a directives asks for
     a Control value before the form is initialized.
