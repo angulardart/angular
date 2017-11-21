@@ -126,7 +126,7 @@ void testViewChildren({
   @required TestCase<HasChild<ValueDirective>> viewChildNestedNgIfOffOn,
   @required TestCase<HasChild<ValueDirective>> viewChildNestedNgIfOffOnAsync,
 }) {
-  group('@ViewChildren(...)', () {
+  group('@ViewChild[ren](...)', () {
     test('should find direct view children', () async {
       final fixture = await directViewChildren.testBed.create();
       expect(fixture, hasChildValues(directViewChildren.expectValues));
@@ -165,6 +165,23 @@ void testViewChildren({
           hasChildValues(viewChildNestedNgIfOffOnAsync.expectValues),
         );
       });
+    });
+  });
+}
+
+void testContentChildren({
+  @required TestCase<HasChildren<ValueDirective>> contentChildren,
+  @required TestCase<HasChild<ValueDirective>> contentChild,
+}) {
+  group('@ContentChild[ren](...)', () {
+    test('should find content children', () async {
+      final fixture = await contentChildren.testBed.create();
+      expect(fixture, hasChildValues(contentChildren.expectValues));
+    });
+
+    test('should find a content child', () async {
+      final fixture = await contentChild.testBed.create();
+      expect(fixture, hasChildValues(contentChild.expectValues));
     });
   });
 }
