@@ -10,8 +10,6 @@ set -e
 dartanalyzer --fatal-warnings .
 
 pub run test -p vm -x codegen
-
-export BUILD_MAX_WORKERS_PER_TASK=1
 dart tool/build.dart
 pub run test --precompiled=build --platform=chrome --tags=codegen \
     --exclude-tags=known_pub_serve_failure -j1 test/common
