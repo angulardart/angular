@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:angular/angular.dart'
     show
+        AfterChanges,
         Directive,
         Inject,
         Input,
-        OnChanges,
         OnDestroy,
         Optional,
         Output,
         Provider,
         Self,
-        SimpleChange,
         SkipSelf;
 
 import '../model.dart' show Control;
@@ -21,8 +20,7 @@ import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import 'form_interface.dart' show Form;
 import 'ng_control.dart' show NgControl;
-import 'shared.dart'
-    show controlPath, composeValidators, isPropertyUpdated, selectValueAccessor;
+import 'shared.dart' show controlPath, composeValidators, selectValueAccessor;
 import 'validators.dart' show ValidatorFn;
 
 const controlNameBinding =
@@ -85,12 +83,19 @@ const controlNameBinding =
     selector: '[ngControl]',
     providers: const [controlNameBinding],
     exportAs: 'ngForm')
-class NgControlName extends NgControl implements OnChanges, OnDestroy {
+class NgControlName extends NgControl implements AfterChanges, OnDestroy {
   final ControlContainer _parent;
   final /* Array<Validator|Function> */ List<dynamic> _validators;
   final _update = new StreamController.broadcast();
+  bool _modelChanged = false;
+  dynamic _model;
   @Input('ngModel')
-  dynamic model;
+  set model(dynamic value) {
+    _modelChanged = true;
+    _model = value;
+  }
+
+  dynamic get model => _model;
   dynamic viewModel;
   var _added = false;
 
@@ -118,14 +123,17 @@ class NgControlName extends NgControl implements OnChanges, OnDestroy {
   Stream get update => _update.stream;
 
   @override
-  ngOnChanges(Map<String, SimpleChange> changes) {
+  ngAfterChanges() {
     if (!_added) {
       formDirective.addControl(this);
       _added = true;
     }
-    if (isPropertyUpdated(changes, viewModel)) {
-      viewModel = model;
-      formDirective.updateModel(this, model);
+    if (_modelChanged) {
+      _modelChanged = false;
+      if (!identical(_model, viewModel)) {
+        viewModel = _model;
+        formDirective.updateModel(this, _model);
+      }
     }
   }
 
