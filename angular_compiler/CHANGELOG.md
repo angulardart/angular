@@ -1,6 +1,6 @@
-* Now using `code_builder: '>=2.0.0-beta <3.0.0'`.
-
 ## 0.4.0-alpha+1
+
+* Now using `code_builder: '>=2.0.0-beta <3.0.0'`.
 
 ### Bug Fixes
 

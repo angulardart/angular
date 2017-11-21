@@ -1,3 +1,6 @@
+## 2.0.0-alpha+1
+- Support for angular 5.0.0-alpha+1
+
 ## 2.0.0-alpha
 - Major refactoring of the `angular_router` package. For a migration guide from
 `angular_router` v1, see
