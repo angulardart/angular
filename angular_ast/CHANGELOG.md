@@ -4,6 +4,16 @@
 
 - Requires `analyzer: ^0.31.0-alpha.1`.
 
+### New Features
+- Now supports `AnnotationAst`s, like `@deferred`.
+- Parse SVG tags as either void or non-void with no error.
+
+### Bug fixes
+- Fixed `sourceSpan` calculation to not include the space *before* the start of
+  an element decorator.
+- Sets the origin in all synthetic nodes. Previously, we were missing a few cases.
+- Fixed a NPE in `DesugarVisitor`.
+
 ## 0.4.0-alpha+1
 
 - New code location! angular_ast is now part of the angular mono-repo on
