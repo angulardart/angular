@@ -252,6 +252,7 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
   @override
   void detectChangesInternal() {
     final import1.InputFormTest _ctx = ctx;
+    bool changed = false;
     Map<String, SimpleChange> changes;
     bool firstCheck = (this.cdState == 0);
     changes = null;
@@ -265,14 +266,13 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
     if (!identical(changes, null)) {
       _NgFormModel_0_4.ngOnChanges(changes);
     }
-    changes = null;
+    changed = false;
     if (firstCheck) {
       _NgControlName_1_6.name = 'login';
-      changes ??= {};
-      changes['name'] = new SimpleChange(null, 'login');
+      changed = true;
     }
-    if (!identical(changes, null)) {
-      _NgControlName_1_6.ngOnChanges(changes);
+    if (changed) {
+      _NgControlName_1_6.ngAfterChanges();
     }
   }
 
