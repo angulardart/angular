@@ -7,7 +7,6 @@ const _di = '$_angular/src/core/di/decorators.dart';
 const _injector = '$_angular/src/di/injector/injector.dart';
 const _module = '$_angular/src/di/module.dart';
 const _provider = '$_angular/src/di/providers.dart';
-const _providerOf = '$_provider#Provider';
 const _token = '$_angular/src/core/di/opaque_token.dart';
 
 // Class metadata.
