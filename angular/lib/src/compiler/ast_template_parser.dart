@@ -41,6 +41,7 @@ class AstTemplateParser implements TemplateParser {
     final boundAsts = _bindDirectives(directives, compMeta, filteredAst);
     final providedAsts = _bindProviders(compMeta, desugaredAst, boundAsts);
     _optimize(compMeta, providedAsts);
+    _validatePipeNames(providedAsts, pipes);
     return providedAsts;
   }
 
@@ -102,6 +103,14 @@ class AstTemplateParser implements TemplateParser {
       parsedAst
           .map((asNode) => asNode.accept(new _NamespaceVisitor()))
           .toList();
+
+  void _validatePipeNames(
+      List<ng.TemplateAst> parsedAsts, List<CompilePipeMetadata> pipes) {
+    var pipeValidator = new _PipeValidator(pipes);
+    for (final ast in parsedAsts) {
+      ast.visit(pipeValidator, null);
+    }
+  }
 }
 
 /// A visitor which binds directives to element nodes.
@@ -832,4 +841,93 @@ class _NamespaceVisitor extends ast.IdentityTemplateAstVisitor<String> {
 
   String _getNamespace(String name) =>
       getHtmlTagDefinition(name).implicitNamespacePrefix;
+}
+
+/// Visitor that verifies all pipes in the template are valid.
+///
+/// First, we visit all [AST] values to extract the pipe names declared in the
+/// template, and then we verify that those names are actually defined by a
+/// [CompilePipeMetadata] entry.
+class _PipeValidator implements ng.TemplateAstVisitor<Null, Null> {
+  final List<String> _pipeNames;
+
+  _PipeValidator(List<CompilePipeMetadata> pipes)
+      : _pipeNames = pipes.map((pipe) => pipe.name).toList();
+
+  void _validatePipeNames(AST ast, SourceSpan sourceSpan) {
+    if (ast == null) return;
+    var collector = new PipeCollector();
+    ast.visit(collector);
+    for (String pipeName in collector.pipes) {
+      if (!_pipeNames.contains(pipeName)) {
+        // TODO(alorenzen): Replace this with proper error handling.
+        throw new ArgumentError(
+            "The pipe '$pipeName' could not be found. ${sourceSpan}");
+      }
+    }
+  }
+
+  @override
+  visitBoundText(ng.BoundTextAst ast, _) {
+    _validatePipeNames(ast.value, ast.sourceSpan);
+  }
+
+  @override
+  visitDirectiveProperty(ng.BoundDirectivePropertyAst ast, _) {
+    _validatePipeNames(ast.value, ast.sourceSpan);
+  }
+
+  @override
+  visitElementProperty(ng.BoundElementPropertyAst ast, _) {
+    _validatePipeNames(ast.value, ast.sourceSpan);
+  }
+
+  @override
+  visitEvent(ng.BoundEventAst ast, _) {
+    _validatePipeNames(ast.handler, ast.sourceSpan);
+  }
+
+  @override
+  visitDirective(ng.DirectiveAst ast, _) {
+    ng.templateVisitAll(this, ast.hostEvents);
+    ng.templateVisitAll(this, ast.hostProperties);
+    ng.templateVisitAll(this, ast.inputs);
+  }
+
+  @override
+  visitElement(ng.ElementAst ast, _) {
+    ng.templateVisitAll(this, ast.attrs);
+    ng.templateVisitAll(this, ast.inputs);
+    ng.templateVisitAll(this, ast.outputs);
+    ng.templateVisitAll(this, ast.references);
+    ng.templateVisitAll(this, ast.directives);
+    ng.templateVisitAll(this, ast.providers);
+    ng.templateVisitAll(this, ast.children);
+  }
+
+  @override
+  visitEmbeddedTemplate(ng.EmbeddedTemplateAst ast, _) {
+    ng.templateVisitAll(this, ast.attrs);
+    ng.templateVisitAll(this, ast.variables);
+    ng.templateVisitAll(this, ast.outputs);
+    ng.templateVisitAll(this, ast.references);
+    ng.templateVisitAll(this, ast.directives);
+    ng.templateVisitAll(this, ast.providers);
+    ng.templateVisitAll(this, ast.children);
+  }
+
+  @override
+  visitAttr(ng.AttrAst ast, _) {}
+
+  @override
+  visitNgContent(ng.NgContentAst ast, _) {}
+
+  @override
+  visitReference(ng.ReferenceAst ast, _) {}
+
+  @override
+  visitText(ng.TextAst ast, _) {}
+
+  @override
+  visitVariable(ng.VariableAst ast, _) {}
 }
