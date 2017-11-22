@@ -5,14 +5,12 @@
 // Note: We don't expose things like `Injector`, `ViewContainer`, ... here, i.e.
 // users have to ask for what they need. With that, we can build better analysis
 // tools and could do better codegen in the future.
-
-/// A wrapper around a native DOM elemnt inside of a template.
-///
-/// **DEPRECATED**: See https://github.com/dart-lang/angular/issues/692.
-@Deprecated('Inject Element or HtmlElement from dart:html instead.')
 class ElementRef {
   /// The underlying native element.
+  ///
+  /// Use with caution: Use this API as the last resort when direct access to
+  /// DOM is needed. Use templating and data-binding provided by Angular
+  /// instead.
   final dynamic nativeElement;
-
-  const ElementRef(this.nativeElement);
+  ElementRef(this.nativeElement);
 }
