@@ -16,24 +16,24 @@ import 'package:angular/angular.template.dart'
 
 // *** EXPERIMENTAL ** Injector Generator [START]
 import 'package:angular/src/di/injector/injector.dart'
-    as _1;
-import 'generated_injectors.dart' as _2;
+    as _i1;
+import 'generated_injectors.dart' as _i2;
 
-_1.Injector doGenerate$Injector([_1.Injector parent]) =>
+_i1.Injector doGenerate$Injector([_i1.Injector parent]) =>
     new _Injector$doGenerate._(parent);
 
-class _Injector$doGenerate extends _1.GeneratedInjector {
-  _Injector$doGenerate._([_1.Injector parent]) : super(parent);
+class _Injector$doGenerate extends _i1.GeneratedInjector {
+  _Injector$doGenerate._([_i1.Injector parent]) : super(parent);
 
-  _2.ExamplePrime _field0;
+  _i2.ExamplePrime _field0;
 
   @override
   Object injectFromSelfOptional(Object token,
-      [Object orElse = _1.throwIfNotFound]) {
-    if (identical(token, _2.Example)) {
-      return _field0 ??= new _2.ExamplePrime();
+      [Object orElse = _i1.throwIfNotFound]) {
+    if (identical(token, _i2.Example)) {
+      return _field0 ??= new _i2.ExamplePrime();
     }
-    if (identical(token, _1.Injector)) {
+    if (identical(token, _i1.Injector)) {
       return this;
     }
     return orElse;
