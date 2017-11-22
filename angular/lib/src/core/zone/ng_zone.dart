@@ -92,11 +92,11 @@ class NgZone {
     }
   }
 
-  final StreamController _onTurnStart =
+  final StreamController<Null> _onTurnStart =
       new StreamController.broadcast(sync: true);
-  final StreamController _onMicrotaskEmpty =
+  final StreamController<Null> _onMicrotaskEmpty =
       new StreamController.broadcast(sync: true);
-  final StreamController _onTurnDone =
+  final StreamController<Null> _onTurnDone =
       new StreamController.broadcast(sync: true);
   final StreamController<NgZoneError> _onError =
       new StreamController<NgZoneError>.broadcast(sync: true);
