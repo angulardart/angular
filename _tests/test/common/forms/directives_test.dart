@@ -297,13 +297,13 @@ void main() {
       test("should reexport new control properties", () {
         var newControl = new Control(null);
         controlDir.form = newControl;
-        controlDir.ngOnChanges({"form": new SimpleChange(control, newControl)});
+        controlDir.ngAfterChanges();
         checkProperties(newControl);
       });
       test("should set up validator", () {
         expect(control.valid, true);
         // this will add the required validator and recalculate the validity
-        controlDir.ngOnChanges({"form": new SimpleChange(null, control)});
+        controlDir.ngAfterChanges();
         expect(control.valid, false);
       });
     });
