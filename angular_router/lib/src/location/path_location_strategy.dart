@@ -66,7 +66,6 @@ class PathLocationStrategy extends LocationStrategy {
   @override
   void onPopState(html.EventListener fn) {
     _platformLocation.onPopState(fn);
-    _platformLocation.onHashChange(fn);
   }
 
   String getBaseHref() => _baseHref;
