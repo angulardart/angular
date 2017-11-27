@@ -651,7 +651,7 @@ class NgForCustomTemplateNullTest {
 
 @Component(
     selector: 'test-cmp',
-    template: '<ul><template ngFor let-item [ngForOf]="items"'
+    template: '<ul><template ngFor let-item [ngForOf]="items" '
         '[ngForTemplate]="contentTpl" let-i="index">'
         '{{i}}: {{item}};</template></ul>',
     directives: const [NgFor])
@@ -672,7 +672,7 @@ class NgForCustomTemplatePrecedenceTest {
 
 @Component(
     selector: 'test-cmp',
-    template: '<ul><template ngFor let-item [ngForOf]="items"'
+    template: '<ul><template ngFor let-item [ngForOf]="items" '
         '[ngForTemplate]="contentTpl" let-i="index">'
         '{{i}}=> {{item}};</template></ul>',
     directives: const [NgFor])
