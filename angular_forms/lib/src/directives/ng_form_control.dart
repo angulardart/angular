@@ -5,24 +5,18 @@ import 'package:angular/angular.dart'
         Directive,
         Inject,
         Input,
-        OnChanges,
+        AfterChanges,
         Optional,
         Output,
         Provider,
-        Self,
-        SimpleChange;
+        Self;
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
 import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import 'ng_control.dart' show NgControl;
-import 'shared.dart'
-    show
-        setUpControl,
-        composeValidators,
-        isPropertyUpdated,
-        selectValueAccessor;
+import 'shared.dart' show setUpControl, composeValidators, selectValueAccessor;
 import 'validators.dart' show ValidatorFn;
 
 const formControlBinding =
@@ -78,13 +72,27 @@ const formControlBinding =
     selector: '[ngFormControl]',
     providers: const [formControlBinding],
     exportAs: 'ngForm')
-class NgFormControl extends NgControl implements OnChanges {
+class NgFormControl extends NgControl implements AfterChanges {
   final /* Array<Validator|Function> */ List<dynamic> _validators;
+  bool _formChanged = false;
+  Control _form;
   @Input('ngFormControl')
-  Control form;
+  set form(Control value) {
+    _form = value;
+    _formChanged = true;
+  }
+
+  Control get form => _form;
   final _update = new StreamController.broadcast();
+  bool _modelChanged = false;
+  dynamic _model;
   @Input('ngModel')
-  dynamic model;
+  set model(dynamic value) {
+    _modelChanged = true;
+    _model = value;
+  }
+
+  dynamic get model => _model;
   dynamic viewModel;
 
   NgFormControl(
@@ -103,14 +111,18 @@ class NgFormControl extends NgControl implements OnChanges {
   Stream get update => _update.stream;
 
   @override
-  void ngOnChanges(Map<String, SimpleChange> changes) {
-    if (_isControlChanged(changes)) {
+  void ngAfterChanges() {
+    if (_formChanged) {
+      _formChanged = false;
       setUpControl(form, this);
       form.updateValueAndValidity(emitEvent: false);
     }
-    if (isPropertyUpdated(changes, viewModel)) {
-      form.updateValue(model);
-      viewModel = model;
+    if (_modelChanged) {
+      _modelChanged = false;
+      if (!identical(_model, viewModel)) {
+        form.updateValue(model);
+        viewModel = model;
+      }
     }
   }
 
@@ -128,7 +140,4 @@ class NgFormControl extends NgControl implements OnChanges {
     viewModel = newValue;
     _update.add(newValue);
   }
-
-  bool _isControlChanged(Map<String, dynamic> changes) =>
-      changes.containsKey('form');
 }
