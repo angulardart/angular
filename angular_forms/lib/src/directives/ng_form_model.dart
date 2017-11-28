@@ -6,12 +6,11 @@ import 'package:angular/angular.dart'
         Directive,
         Inject,
         Input,
-        OnChanges,
+        AfterChanges,
         Optional,
         Output,
         Provider,
-        Self,
-        SimpleChange;
+        Self;
 
 import '../model.dart' show Control, ControlGroup;
 import '../validators.dart' show Validators, NG_VALIDATORS;
@@ -99,10 +98,17 @@ const formDirectiveProvider =
     providers: const [formDirectiveProvider],
     host: const {'(submit)': 'onSubmit(\$event)'},
     exportAs: 'ngForm')
-class NgFormModel extends ControlContainer implements Form, OnChanges {
+class NgFormModel extends ControlContainer implements Form, AfterChanges {
   final List<dynamic> _validators;
+  bool _formChanged = false;
+  ControlGroup _form;
   @Input('ngFormModel')
-  ControlGroup form;
+  set form(ControlGroup value) {
+    _form = value;
+    _formChanged = true;
+  }
+
+  ControlGroup get form => _form;
   List<NgControl> directives = [];
   final _ngSubmit = new StreamController<ControlGroup>.broadcast(sync: true);
   final _ngBeforeSubmit =
@@ -116,12 +122,13 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   Stream<ControlGroup> get ngBeforeSubmit => _ngBeforeSubmit.stream;
 
   @override
-  void ngOnChanges(Map<String, SimpleChange> changes) {
+  void ngAfterChanges() {
     _checkFormPresent();
-    if (changes.containsKey('form')) {
+    if (_formChanged) {
+      _formChanged = false;
       var sync = composeValidators(_validators);
-      form.validator = Validators.compose([form.validator, sync]);
-      form.updateValueAndValidity(onlySelf: true, emitEvent: false);
+      _form.validator = Validators.compose([_form.validator, sync]);
+      _form.updateValueAndValidity(onlySelf: true, emitEvent: false);
     }
     _updateDomValue();
   }
@@ -130,7 +137,7 @@ class NgFormModel extends ControlContainer implements Form, OnChanges {
   Form get formDirective => this;
 
   @override
-  ControlGroup get control => form;
+  ControlGroup get control => _form;
 
   @override
   List<String> get path => [];

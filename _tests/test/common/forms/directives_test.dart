@@ -5,7 +5,6 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:_tests/fake_async.dart';
 import 'package:_tests/test_util.dart';
-import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_forms/src/directives/shared.dart';
 
@@ -181,20 +180,22 @@ void main() {
         expect(form.directives, []);
       });
     });
-    group("ngOnChanges", () {
+    group("ngAfterChanges", () {
       test("should update dom values of all the directives", () {
         form.addControl(loginControlDir);
         ((formModel.find(["login"]) as Control)).updateValue("new value");
-        form.ngOnChanges({});
+        form.ngAfterChanges();
         expect(((loginControlDir.valueAccessor as dynamic)).writtenValue,
             "new value");
       });
-      test("should set up a sync validator", () {
+      test("should validate form is not null", () {
         var formValidator = (c) => ({"custom": true});
         var f = new NgFormModel([formValidator]);
         f.form = formModel;
-        f.ngOnChanges({"form": new SimpleChange(null, null)});
-        expect(formModel.errors, {"custom": true});
+        f.ngAfterChanges();
+        f.form = null;
+        expect(
+            () => f.ngAfterChanges(), throwsA(new isInstanceOf<StateError>()));
       });
     });
     group("NgForm", () {
