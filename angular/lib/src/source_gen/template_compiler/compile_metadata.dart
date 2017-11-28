@@ -525,7 +525,7 @@ class CompileTypeMetadataVisitor
   }
 }
 
-class _PrivateConstructorException {
+class _PrivateConstructorException extends Error {
   final String constructorName;
   _PrivateConstructorException(this.constructorName);
 }

@@ -115,7 +115,7 @@ class PropModel implements Map {
   String operator [](_) => 'foo-map';
 
   dynamic noSuchMethod(_) {
-    throw 'property not found';
+    throw new StateError('property not found');
   }
 
   get doesNotExist;

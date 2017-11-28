@@ -384,7 +384,7 @@ class WrappedTimer implements Timer {
 
   void addOnCancelCb(void Function() onCancelCb) {
     if (this._onCancelCb != null) {
-      throw "On cancel cb already registered";
+      throw new StateError("On cancel cb already registered");
     }
     this._onCancelCb = onCancelCb;
   }

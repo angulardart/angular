@@ -104,7 +104,7 @@ class PipeOptionalArgumentListImpl extends AstNodeImpl
       return (visitor as AngularDartAstVisitor)
           .visitPipeOptionalArgumentList(this);
     }
-    throw NgParserWarningCode.WRONG_VISITOR;
+    throw new ArgumentError(NgParserWarningCode.WRONG_VISITOR.message);
   }
 
   @override
@@ -251,7 +251,7 @@ class PipeInvocationExpressionImpl extends ExpressionImpl
     if (visitor is AngularDartAstVisitor) {
       return (visitor as AngularDartAstVisitor).visitPipeInvocation(this);
     }
-    throw NgParserWarningCode.WRONG_VISITOR;
+    throw new ArgumentError(NgParserWarningCode.WRONG_VISITOR.message);
   }
 
   @override

@@ -69,7 +69,7 @@ void main() {
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
       form.valueChanges.listen((_) {
-        throw 'should not happen';
+        throw new UnsupportedError('should not happen');
       });
       await fixture.update((_) {
         input.value = 'updatedValue';

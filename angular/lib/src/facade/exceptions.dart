@@ -14,7 +14,7 @@ class BaseException extends Error {
   }
 }
 
-class WrappedException {
+class WrappedException extends Error {
   final dynamic _context;
   final String _wrapperMessage;
   final originalException;

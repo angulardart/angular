@@ -53,7 +53,7 @@ class BrowserGetTestability implements GetTestability {
               registry[i], 'getAngularTestability', [elem, findInAncestors]);
           if (result != null) return result;
         }
-        throw 'Could not find testability for element.';
+        throw new StateError('Could not find testability for element.');
       }));
       var getAllAngularTestabilities = () {
         List registry = js_util.getProperty(_self, 'ngTestabilityRegistries');

@@ -196,11 +196,11 @@ class TemplateContentProjectionHumanizer implements TemplateAstVisitor {
 
 class FooAstTransformer implements TemplateAstVisitor {
   dynamic visitNgContent(NgContentAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitElement(ElementAst ast, dynamic context) {
@@ -210,40 +210,40 @@ class FooAstTransformer implements TemplateAstVisitor {
   }
 
   dynamic visitReference(ReferenceAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitVariable(VariableAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitEvent(BoundEventAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitAttr(AttrAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitBoundText(BoundTextAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitText(TextAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitDirective(DirectiveAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 
   dynamic visitDirectiveProperty(
       BoundDirectivePropertyAst ast, dynamic context) {
-    throw "not implemented";
+    throw new UnimplementedError();
   }
 }
 
