@@ -5,22 +5,32 @@ import "compile_method.dart" show CompileMethod;
 import "compile_view.dart" show CompileView;
 import "view_compiler_utils.dart" show getPropertyInView;
 
-class ViewQueryValues {
-  CompileView view;
-  List<dynamic /* o . Expression | ViewQueryValues */ > values;
-  ViewQueryValues(this.view, this.values);
+class _QueryValues {
+  /// Compiled template associated to [values].
+  final CompileView view;
+
+  /// Either [o.Expression] or [_QueryValues] for nested `<template>` views.
+  final List values = [];
+
+  _QueryValues(this.view);
 }
 
 class CompileQuery {
-  CompileQueryMetadata meta;
-  o.Expression queryList;
-  o.Expression ownerDirectiveExpression;
-  CompileView view;
-  ViewQueryValues _values;
+  final CompileQueryMetadata meta;
+  final o.Expression queryList;
+  final o.Expression ownerDirectiveExpression;
+  final CompileView view;
+  final _QueryValues _values;
+
   CompileQuery(
-      this.meta, this.queryList, this.ownerDirectiveExpression, this.view) {
-    this._values = new ViewQueryValues(view, []);
-  }
+    this.meta,
+    this.queryList,
+    this.ownerDirectiveExpression,
+    CompileView view,
+  )
+      : _values = new _QueryValues(view),
+        view = view;
+
   void addValue(o.Expression value, CompileView view) {
     var currentView = view;
     List<CompileElement> elPath = [];
@@ -36,10 +46,10 @@ class CompileQuery {
       var last = viewValues.values.length > 0
           ? viewValues.values[viewValues.values.length - 1]
           : null;
-      if (last is ViewQueryValues && identical(last.view, el.embeddedView)) {
+      if (last is _QueryValues && identical(last.view, el.embeddedView)) {
         viewValues = last;
       } else {
-        var newViewValues = new ViewQueryValues(el.embeddedView, []);
+        var newViewValues = new _QueryValues(el.embeddedView);
         viewValues.values.add(newViewValues);
         viewValues = newViewValues;
       }
@@ -54,7 +64,7 @@ class CompileQuery {
   bool _isStatic() {
     var isStatic = true;
     for (var value in _values.values) {
-      if (value is ViewQueryValues) {
+      if (value is _QueryValues) {
         // querying a nested view makes the query content dynamic
         isStatic = false;
       }
@@ -72,7 +82,7 @@ class CompileQuery {
   /// would break the timing when we call QueryList listeners...
   void generateImmediateUpdate(CompileMethod targetMethod) {
     if (!_isSingleStaticQuery) return;
-    var values = createQueryValues(this._values);
+    var values = _createQueryValues(this._values);
     var statements = [
       queryList.callMethod("reset", [o.literalArr(values)]).toStmt()
     ];
@@ -87,7 +97,7 @@ class CompileQuery {
 
   void generateDynamicUpdate(CompileMethod targetMethod) {
     if (_isSingleStaticQuery) return;
-    var values = createQueryValues(this._values);
+    var values = _createQueryValues(this._values);
     var statements = [
       queryList.callMethod("reset", [o.literalArr(values)]).toStmt()
     ];
@@ -103,29 +113,20 @@ class CompileQuery {
     }
     targetMethod.addStmt(new o.IfStmt(queryList.prop("dirty"), statements));
   }
-
-  void afterChildren(
-      CompileMethod targetStaticMethod, CompileMethod targetDynamicMethod) {
-    if (_isSingleStaticQuery) {
-      generateImmediateUpdate(targetStaticMethod);
-    } else {
-      generateDynamicUpdate(targetDynamicMethod);
-    }
-  }
 }
 
-List<o.Expression> createQueryValues(ViewQueryValues viewValues) {
+List<o.Expression> _createQueryValues(_QueryValues viewValues) {
   return viewValues.values.map((entry) {
-    if (entry is ViewQueryValues) {
-      return mapNestedViews(entry.view.declarationElement.appViewContainer,
-          entry.view, createQueryValues(entry));
+    if (entry is _QueryValues) {
+      return _mapNestedViews(entry.view.declarationElement.appViewContainer,
+          entry.view, _createQueryValues(entry));
     } else {
       return (entry as o.Expression);
     }
   }).toList();
 }
 
-o.Expression mapNestedViews(o.Expression declarationViewContainer,
+o.Expression _mapNestedViews(o.Expression declarationViewContainer,
     CompileView view, List<o.Expression> expressions) {
   List<o.Expression> adjustedExpressions = expressions.map((expr) {
     return o.replaceReadClassMemberInExpression(o.variable("nestedView"), expr);
