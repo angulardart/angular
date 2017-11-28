@@ -15,6 +15,22 @@ class _QueryValues {
   _QueryValues(this.view);
 }
 
+class _QueryValues2 {
+  /// Compiled template associated to [values] and embedded [templates].
+  final CompileView view;
+
+  /// Values of the query to be compiled in as expressions.
+  final values = <o.Expression>[];
+
+  /// Embedded templates that have additional values.
+  final templates = <_QueryValues2>[];
+
+  _QueryValues2(this.view);
+
+  /// Whether there are nested embedded views in this instance.
+  bool get hasNestedViews => templates.isNotEmpty;
+}
+
 /// Compiles `@{Content|View}Child[ren]` to template IR.
 ///
 /// Uses a conditional compilation strategy in order to deprecate `QueryList`:
@@ -36,10 +52,15 @@ abstract class CompileQuery2 {
   /// additional generated views (embedded views), which are expressed as part
   /// of [todoSomeProperty].
   // ignore: unused_field
-  final CompileView _view;
+  final CompileView _queryRoot;
 
-  /// Base constructor which wraps metadata and a compiled view.
-  const CompileQuery2._base(this._metadata, this._view, this._boundField);
+  /// A combination of direct expressions and nested templates needed.
+  ///
+  /// This is built-up during the lifetime of this class.
+  final _QueryValues2 _values;
+
+  CompileQuery2._base(this._metadata, this._queryRoot, this._boundField)
+      : _values = new _QueryValues2(_queryRoot);
 
   /// Whether the query is entirely static, i.e. there are no `<template>`s.
   bool get _isStatic;
@@ -56,7 +77,65 @@ abstract class CompileQuery2 {
   /// Some of the expressions are simple (i.e. reads from an existing class
   /// field) and others require proxy-ing through `mapNestedViews` in order to
   /// determine what `<template>`s are currently active.
-  void addQueryResult(CompileView origin, o.Expression result);
+  void addQueryResult(CompileView origin, o.Expression result) {
+    // Determine if we have a path of embedded templates.
+    final elementPath = _resolvePathToRoot(origin);
+    var viewValues = _values;
+
+    // If we do, then continue building QueryValues, a tree-like data structure.
+    for (final element in elementPath) {
+      if (viewValues.hasNestedViews) {
+        viewValues = viewValues.templates.last;
+      } else {
+        assert(element.hasEmbeddedView);
+        final newViewValues = new _QueryValues2(element.embeddedView);
+        viewValues.templates.add(newViewValues);
+        viewValues = newViewValues;
+      }
+    }
+
+    // Add it to the applicable part of the view (either root or embedded).
+    viewValues.values.add(result);
+
+    // Finally, if this result doesn't come from the root, it means that some
+    // change in an embedded view needs to invalidate the state of the previous
+    // query.
+    if (elementPath.isNotEmpty) {
+      _setParentQueryAsDirty(
+        origin,
+      );
+    }
+  }
+
+  /// Invoked by [addQueryResult] when the [_queryRoot] is now dirty.
+  ///
+  /// This means during the next change detection cycle we need to rebuild the
+  /// result of the query and invoke the bound setter or field accessor.
+  void _setParentQueryAsDirty(CompileView origin);
+
+  /// Returns the path required to traverse back to the [_queryRoot].
+  ///
+  /// This information is used to build up the [_QueryValues] required to
+  /// express and retrieve the contents of the query at runtime.
+  ///
+  /// * For a simple query of static elements in a template, this is `[]`.
+  /// * For a more complex query with embedded `<template>`s, this will be
+  ///   the path to that embedded template. So for example, this might be a
+  ///   single `[ViewComponent0]` when nested in a single `<template>` and a
+  ///   longer `[ViewComponent0, ViewComponent1]` when nested even deeper.
+  List<CompileElement> _resolvePathToRoot(CompileView view) {
+    if (view == _queryRoot) {
+      return const [];
+    }
+    final pathToRoot = <CompileElement>[];
+    var currentView = view;
+    while (currentView != null && currentView != _queryRoot) {
+      final parentElement = currentView.declarationElement;
+      pathToRoot.insert(0, parentElement);
+      currentView = parentElement.view;
+    }
+    return pathToRoot;
+  }
 
   /// Create class-member level fields in order to store persistent state.
   ///
