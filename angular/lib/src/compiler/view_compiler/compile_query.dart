@@ -15,6 +15,76 @@ class _QueryValues {
   _QueryValues(this.view);
 }
 
+/// Compiles `@{Content|View}Child[ren]` to template IR.
+///
+/// Uses a conditional compilation strategy in order to deprecate `QueryList`:
+/// https://github.com/dart-lang/angular/issues/688
+abstract class CompileQuery2 {
+  /// An expression that accesses the component's instance.
+  ///
+  /// In practice, this is almost always `this.ctx`.
+  // ignore: unused_field
+  final o.Expression _boundField;
+
+  /// Extracted metadata information from the user-code.
+  // ignore: unused_field
+  final CompileQueryMetadata _metadata;
+
+  /// Compiled view of the `@Component` that this query originated from.
+  ///
+  /// **NOTE**: A component whose template has `<template>` tags will have
+  /// additional generated views (embedded views), which are expressed as part
+  /// of [todoSomeProperty].
+  // ignore: unused_field
+  final CompileView _view;
+
+  /// Base constructor which wraps metadata and a compiled view.
+  const CompileQuery2._base(this._metadata, this._view, this._boundField);
+
+  /// Whether the query is entirely static, i.e. there are no `<template>`s.
+  bool get _isStatic;
+
+  /// Whether the query is only setting a single value, not a list-like object.
+  ///
+  /// This aligns with `@QueryChild` and `@ContentChild`.
+  // ignore: unused_element
+  bool get _isSingle => _metadata.first;
+
+  /// Adds an expression [result] that originates from an [origin] view.
+  ///
+  /// The result of a given query is the sum of all invocations to this method.
+  /// Some of the expressions are simple (i.e. reads from an existing class
+  /// field) and others require proxy-ing through `mapNestedViews` in order to
+  /// determine what `<template>`s are currently active.
+  void addQueryResult(CompileView origin, o.Expression result);
+
+  /// Create class-member level fields in order to store persistent state.
+  ///
+  /// For example, in the original implementation this wrote the following:
+  /// ```dart
+  /// import2.QueryList _viewQuery_ChildDirective_0;
+  /// ```
+  List<o.Statement> createClassFields();
+
+  /// Return code that will set the query contents at change-detection time.
+  ///
+  /// This is the general case, where the value of the query is not known at
+  /// compile time (changes as embedded `<template>`s are created or destroyed)
+  /// or we want to have more predictable timing of the setter being invoked.
+  List<o.Statement> createDynamicUpdates();
+
+  /// Return code that will immediately set the query contents at build-time.
+  ///
+  /// This is an optimization over [createDynamicUpdates] and requires that:
+  /// * The query origin is `@ViewChild` or `@ContentChild` (single item).
+  /// * No part of the query could be inside of a `<template>` (embedded).
+  ///
+  /// In practice, most queries are compiled through [createDynamicUpdates], In
+  /// the future it will be possible to optimize further and use this method for
+  /// more query types.
+  List<o.Statement> createImmediateUpdates();
+}
+
 class CompileQuery {
   final CompileQueryMetadata meta;
   final o.Expression queryList;
@@ -26,10 +96,9 @@ class CompileQuery {
     this.meta,
     this.queryList,
     this.ownerDirectiveExpression,
-    CompileView view,
+    this.view,
   )
-      : _values = new _QueryValues(view),
-        view = view;
+      : _values = new _QueryValues(view);
 
   void addValue(o.Expression value, CompileView view) {
     var currentView = view;

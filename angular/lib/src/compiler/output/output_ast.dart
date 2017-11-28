@@ -280,6 +280,9 @@ class ReadClassMemberExpr extends Expression {
   WriteClassMemberExpr set(Expression value) {
     return new WriteClassMemberExpr(this.name, value);
   }
+
+  @override
+  String toString() => 'ReadClassMember {$name, $type}';
 }
 
 class WriteClassMemberExpr extends Expression {
