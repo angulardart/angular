@@ -19,7 +19,7 @@ quiver.FakeAsync _fakeAsync;
 /// Returns a `Function` that wraps [fn].
 Function fakeAsync(Function innerFn) {
   if (_fakeAsync != null) {
-    throw 'fakeAsync() calls can not be nested';
+    throw new StateError('fakeAsync() calls can not be nested');
   }
   return (
       [a0 = _u,
@@ -61,7 +61,7 @@ Function fakeAsync(Function innerFn) {
     },
         zoneSpecification: new ZoneSpecification(
             handleUncaughtError: (self, parent, zone, error, stackTrace) =>
-                throw error));
+                throw new UnsupportedError(error)));
   };
 }
 

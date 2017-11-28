@@ -156,7 +156,7 @@ class MyCompWithDirectiveMissingAnnotation {
   }
 
   throwError() {
-    throw 'boom';
+    throw new UnsupportedError('boom');
   }
 
   doNothing() {}
@@ -199,6 +199,7 @@ void functionThatThrows() {
 
 void functionThatThrowsNonError() {
   try {
+    // ignore: only_throw_errors
     throw new NonError();
   } catch (e, stack) {
     // If we lose the stack trace the message will no longer match

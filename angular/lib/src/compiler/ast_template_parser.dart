@@ -862,7 +862,7 @@ class _PipeValidator implements ng.TemplateAstVisitor<Null, Null> {
       if (!_pipeNames.contains(pipeName)) {
         // TODO(alorenzen): Replace this with proper error handling.
         throw new ArgumentError(
-            "The pipe '$pipeName' could not be found. ${sourceSpan}");
+            sourceSpan.message("The pipe '$pipeName' could not be found."));
       }
     }
   }

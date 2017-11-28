@@ -19,7 +19,7 @@ LibraryMirror getLibrary(String uriString) {
 
   var lib = currentMirrorSystem().libraries[uri];
   if (lib == null) {
-    throw 'Failed to load library $uri';
+    throw new ArgumentError('Failed to load library $uri');
   }
   return lib;
 }
@@ -50,7 +50,7 @@ class ExportedSymbol {
     } else if (declaration is VariableMirror) {
       names.add(name);
     } else {
-      throw 'UNEXPECTED: $declaration';
+      throw new StateError('UNEXPECTED: $declaration');
     }
   }
 

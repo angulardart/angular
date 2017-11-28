@@ -48,7 +48,7 @@ linter:
     - list_remove_unrelated_type
     #- non_constant_identifier_names
     #- one_member_abstracts
-    #- only_throw_errors
+    - only_throw_errors
     - overridden_fields
     - package_api_docs
     - package_names

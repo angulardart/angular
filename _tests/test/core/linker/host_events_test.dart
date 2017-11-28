@@ -153,7 +153,7 @@ class ComponentWithHost$Event {
   @HostListener('click', const [r'$event'])
   void onClick(MouseEvent event) {
     if (event == null) {
-      throw 'EXPECTED a $MouseEvent, but got null';
+      throw new ArgumentError('EXPECTED a $MouseEvent, but got null');
     }
     wasClicked = true;
   }

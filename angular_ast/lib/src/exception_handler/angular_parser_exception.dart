@@ -5,7 +5,7 @@
 part of angular_ast.src.exceptions;
 
 /// Exception class to be used in AngularAst parser.
-class AngularParserException {
+class AngularParserException extends Error {
   /// Length of error segment/token.
   final int length;
 
