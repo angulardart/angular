@@ -253,18 +253,16 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
   void detectChangesInternal() {
     final import1.InputFormTest _ctx = ctx;
     bool changed = false;
-    Map<String, SimpleChange> changes;
     bool firstCheck = (this.cdState == 0);
-    changes = null;
+    changed = false;
     final currVal_0 = _ctx.form;
     if (!import9.looseIdentical(_expr_0, currVal_0)) {
       _NgFormModel_0_4.form = currVal_0;
-      changes ??= <String, SimpleChange>{};
-      changes['form'] = new SimpleChange(_expr_0, currVal_0);
+      changed = true;
       _expr_0 = currVal_0;
     }
-    if (!identical(changes, null)) {
-      _NgFormModel_0_4.ngOnChanges(changes);
+    if (changed) {
+      _NgFormModel_0_4.ngAfterChanges();
     }
     changed = false;
     if (firstCheck) {
