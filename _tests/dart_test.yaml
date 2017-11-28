@@ -1,6 +1,51 @@
+# Package-wide configuration for "pub run test".
+# Format: https://github.com/dart-lang/test/blob/master/doc/configuration.md.
+#
+# Expected usage:
+# ```
+# $ pub run test -P browser --precompiled=build
+# $ pub run test -P compiler
+# ```
+#
+# On travis, the `travis` preset should be used to reduce resource usage:
+# ```
+# $ pub run test -P browser -P travis
+# ```
+#
+# Keep in sync across this entire repository!
+# #############################################################################
+
 presets:
+  # Only run tests that need to run within the browser.
+  # * ... make the stack traces nicer.
+  # * ... all tests in the browser likely need code generation.
+  # * ... we currently only run these tests on chrome (today).
+  browser:
+    js_trace: true
+    include_tags: codegen
+    platforms: [chrome]
+
+  # Only run tests that need to run within the standalone VM.
+  compiler:
+    platform: vm
+
+  # When running on travis:
+  # * ... skip tests that don't work in this environment.
+  # * ... increase timeouts (tests run slower here).
+  # * ... do not use concurrency (we run out of resources).
   travis:
-    exclude_tags: known_pub_serve_failure
+    exclude_tags: skip_on_travis
+    timeout: 1.5x
+    concurrency: 1
+
 tags:
-  # Tests that fail with pub serve/pub run test.
-  known_pub_serve_failure:
+  # Tests that require code generation to be executed.
+  #
+  # * ... it's expected that these are manually tagged by the author.
+  # * ... pass `--precompiled build` to `pub run test`.
+  codegen:
+
+  # Tests that are expected to fail on travis. These should be kept tightly
+  # curated with tracking bugs, and are used to temporarily get our build
+  # status to "green".
+  skip_on_travis:
