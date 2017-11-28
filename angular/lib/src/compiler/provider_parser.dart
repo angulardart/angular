@@ -487,7 +487,7 @@ class _ProviderResolver {
                     directiveContext.type.name &&
                 provider.useExisting.identifier.moduleUrl ==
                     directiveContext.type.moduleUrl &&
-                directiveContext.visibility == Visibility.none;
+                directiveContext.visibility == Visibility.local;
         resolvedProvider = new ProviderAst(
           provider.token,
           provider.multi,
@@ -498,7 +498,7 @@ class _ProviderResolver {
           implementedByDirectiveWithNoVisibility:
               implementedByDirectiveWithNoVisibility,
           multiProviderType: provider.multiType,
-          visibleForInjection: provider.visibility != Visibility.none,
+          visibleForInjection: provider.visibility == null,
         );
         _providersByToken.add(provider.token, resolvedProvider);
       } else {

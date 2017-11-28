@@ -1,3 +1,9 @@
+### Breaking changes
+
+*   Replaced `Visibility.none` with `Visibility.local`. The former name is
+    misleading, as a directive is always capable of providing itself locally for
+    injection via another token.
+
 ## 5.0.0-alpha+1
 
 **NOTE**: As of `angular 5.0.0-alpha+1` [`dependency_overrides`][dep_overrides] are **required**:

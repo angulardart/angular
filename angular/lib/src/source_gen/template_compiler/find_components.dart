@@ -230,7 +230,7 @@ class ComponentVisitor
       hostProperties: const {},
       hostAttributes: const {},
       providers: _extractProviders(annotationValue, 'providers'),
-      visibility: Visibility.none,
+      visibility: Visibility.local,
     );
   }
 
