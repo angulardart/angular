@@ -30,6 +30,22 @@ Future<Null> run(List<String> args) async {
     initFileWriting(logFile.openWrite());
   }
 
+  if (options.serveBin == 'none') {
+    const portArgPrefix = '--port=';
+    final portArg =
+        options.serveArgs.firstWhere((arg) => arg.startsWith('--port='));
+    if (portArg == null)
+      throw new ArgumentError.value(
+          'Specify external server port; e.g. --port=8081');
+    final port = int.parse(
+      portArg.substring(portArgPrefix.length),
+      onError: (_) => throw new ArgumentError.value(portArg, 'port'),
+    );
+    log('Using external server running on port $port.\nRunning tests...');
+    exitCode = await _runTests(options, port);
+    return;
+  }
+
   Process serveProcess;
 
   void killPub() {
