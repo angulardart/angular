@@ -1,3 +1,8 @@
+## Unpublished
+
+- Add support for the use of an externally launched `pub serve` by
+  using "none" as the value of `--experimental-serve-script`.
+
 ## 1.0.2-alpha+1
 
 -   Use the new generic function syntax, stop using `package:func`.
