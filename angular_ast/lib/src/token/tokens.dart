@@ -468,7 +468,7 @@ class NgToken implements NgBaseToken<NgTokenType> {
   @override
   bool operator ==(Object o) {
     if (o is NgToken) {
-      if (this.errorSynthetic || o.errorSynthetic) {
+      if (errorSynthetic || o.errorSynthetic) {
         return o.offset == offset && o.type == type;
       }
       return o.offset == offset && o.type == type && o.lexeme == lexeme;
