@@ -42,5 +42,25 @@ class QueriesComponent {
   QueryList<AnotherDirective> usingTypeFromField;
 }
 
+@Component(
+  selector: 'test',
+  directives: const [
+    AnotherDirective,
+  ],
+  template: r'''
+    <another></another>
+    <template>
+      <another></another>
+    </template>
+    <template>
+      <another></another>
+    </template>
+  ''',
+)
+class EmbeddedQueries {
+  @ViewChildren(AnotherDirective)
+  QueryList viewChildren;
+}
+
 @Directive(selector: 'another')
 class AnotherDirective {}

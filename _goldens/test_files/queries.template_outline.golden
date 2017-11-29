@@ -22,6 +22,13 @@ external AppView<_user.QueriesComponent> viewFactory_QueriesComponent0(AppView<d
 class ViewQueriesComponent0 extends AppView<_user.QueriesComponent> {
   external ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex);
 }
+// For @Component class EmbeddedQueries.
+const List<dynamic> styles$EmbeddedQueries = const [];
+external ComponentFactory get EmbeddedQueriesNgFactory;
+external AppView<_user.EmbeddedQueries> viewFactory_EmbeddedQueries0(AppView<dynamic> parentView, num parentIndex);
+class ViewEmbeddedQueries0 extends AppView<_user.EmbeddedQueries> {
+  external ViewEmbeddedQueries0(AppView<dynamic> parentView, num parentIndex);
+}
 // For @Directive class AnotherDirective.
 class AnotherDirectiveNgCd extends DirectiveChangeDetector {
   external _user.AnotherDirective get instance;
