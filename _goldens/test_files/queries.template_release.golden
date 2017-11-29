@@ -240,7 +240,210 @@ AppView viewFactory_QueriesComponentHost0(
 const ComponentFactory<import1.QueriesComponent> QueriesComponentNgFactory =
     const ComponentFactory<import1.QueriesComponent>('queries',
         viewFactory_QueriesComponentHost0, _QueriesComponentMetadata);
+const List<dynamic> styles$EmbeddedQueries = const [];
+
+class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
+  import2.QueryList _viewQuery_AnotherDirective_0;
+  import3.Element _el_0;
+  import1.AnotherDirective _AnotherDirective_0_4;
+  ViewContainer _appEl_1;
+  ViewContainer _appEl_2;
+  static RenderComponentType _renderType;
+  ViewEmbeddedQueries0(AppView<dynamic> parentView, num parentIndex)
+      : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import3.document.createElement('test');
+    _renderType ??= import9.appViewUtils
+        .createRenderType('', ViewEncapsulation.None, styles$EmbeddedQueries);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.EmbeddedQueries> build() {
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    _viewQuery_AnotherDirective_0 = new import2.QueryList();
+    var doc = import3.document;
+    _el_0 = createAndAppend(doc, 'another', parentRenderNode);
+    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    var _anchor_1 = ngAnchor.clone(false);
+    parentRenderNode.append(_anchor_1);
+    _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
+    TemplateRef _TemplateRef_1_5 =
+        new TemplateRef(_appEl_1, viewFactory_EmbeddedQueries1);
+    var _anchor_2 = ngAnchor.clone(false);
+    parentRenderNode.append(_anchor_2);
+    _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
+    TemplateRef _TemplateRef_2_5 =
+        new TemplateRef(_appEl_2, viewFactory_EmbeddedQueries2);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
+      return _AnotherDirective_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    if (_viewQuery_AnotherDirective_0.dirty) {
+      _viewQuery_AnotherDirective_0.reset([
+        _AnotherDirective_0_4,
+        _appEl_1.mapNestedViews(_ViewEmbeddedQueries1,
+            (_ViewEmbeddedQueries1 nestedView) {
+          return [nestedView._AnotherDirective_0_4];
+        }),
+        _appEl_2.mapNestedViews(_ViewEmbeddedQueries2,
+            (_ViewEmbeddedQueries2 nestedView) {
+          return [nestedView._AnotherDirective_0_4];
+        })
+      ]);
+      ctx.viewChildren = _viewQuery_AnotherDirective_0;
+      _viewQuery_AnotherDirective_0.notifyOnChanges();
+    }
+  }
+}
+
+AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewEmbeddedQueries0(parentView, parentIndex);
+}
+
+class _ViewEmbeddedQueries1 extends AppView<import1.EmbeddedQueries> {
+  import3.Element _el_0;
+  import1.AnotherDirective _AnotherDirective_0_4;
+  _ViewEmbeddedQueries1(AppView<dynamic> parentView, num parentIndex)
+      : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    componentType = ViewEmbeddedQueries0._renderType;
+  }
+  @override
+  ComponentRef<import1.EmbeddedQueries> build() {
+    var doc = import3.document;
+    _el_0 = doc.createElement('another');
+    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    init0(_el_0);
+    return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
+      return _AnotherDirective_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void dirtyParentQueriesInternal() {
+    (parentView as ViewEmbeddedQueries0)
+        ._viewQuery_AnotherDirective_0
+        .setDirty();
+  }
+}
+
+AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries1(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewEmbeddedQueries1(parentView, parentIndex);
+}
+
+class _ViewEmbeddedQueries2 extends AppView<import1.EmbeddedQueries> {
+  import3.Element _el_0;
+  import1.AnotherDirective _AnotherDirective_0_4;
+  _ViewEmbeddedQueries2(AppView<dynamic> parentView, num parentIndex)
+      : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    componentType = ViewEmbeddedQueries0._renderType;
+  }
+  @override
+  ComponentRef<import1.EmbeddedQueries> build() {
+    var doc = import3.document;
+    _el_0 = doc.createElement('another');
+    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    init0(_el_0);
+    return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
+      return _AnotherDirective_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void dirtyParentQueriesInternal() {
+    (parentView as ViewEmbeddedQueries0)
+        ._viewQuery_AnotherDirective_0
+        .setDirty();
+  }
+}
+
+AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries2(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewEmbeddedQueries2(parentView, parentIndex);
+}
+
+const List<dynamic> styles$EmbeddedQueriesHost = const [];
+
+class _ViewEmbeddedQueriesHost0 extends AppView<dynamic> {
+  ViewEmbeddedQueries0 _compView_0;
+  import1.EmbeddedQueries _EmbeddedQueries_0_4;
+  static RenderComponentType _renderType;
+  _ViewEmbeddedQueriesHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(import7.ViewType.HOST, {}, parentView, parentIndex,
+            ChangeDetectionStrategy.CheckAlways) {
+    _renderType ??= import9.appViewUtils.createRenderType(
+        '', ViewEncapsulation.Emulated, styles$EmbeddedQueriesHost);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewEmbeddedQueries0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _EmbeddedQueries_0_4 = new import1.EmbeddedQueries();
+    _compView_0.create(_EmbeddedQueries_0_4, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.EmbeddedQueries>(
+        0, this, rootEl, _EmbeddedQueries_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.EmbeddedQueries) && (0 == nodeIndex))) {
+      return _EmbeddedQueries_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_EmbeddedQueriesHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewEmbeddedQueriesHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.EmbeddedQueries> EmbeddedQueriesNgFactory =
+    const ComponentFactory<import1.EmbeddedQueries>(
+        'test', viewFactory_EmbeddedQueriesHost0, _EmbeddedQueriesMetadata);
 const _QueriesComponentMetadata = const [];
+const _EmbeddedQueriesMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -251,5 +454,9 @@ void initReflector() {
   _ngRef.registerComponent(
     QueriesComponent,
     QueriesComponentNgFactory,
+  );
+  _ngRef.registerComponent(
+    EmbeddedQueries,
+    EmbeddedQueriesNgFactory,
   );
 }
