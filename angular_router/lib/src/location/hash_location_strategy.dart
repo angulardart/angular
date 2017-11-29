@@ -52,7 +52,8 @@ class HashLocationStrategy extends LocationStrategy {
   HashLocationStrategy(
     this._platformLocation, [
     @Optional() @Inject(APP_BASE_HREF) String baseHref,
-  ]) : _baseHref = baseHref ?? '';
+  ])
+      : _baseHref = baseHref ?? '';
 
   @override
   void onPopState(html.EventListener fn) {
@@ -83,7 +84,8 @@ class HashLocationStrategy extends LocationStrategy {
   }
 
   void pushState(dynamic state, String title, String path, String queryParams) {
-    var url = prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
+    var url =
+        prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
     if (url.length == 0) {
       url = _platformLocation.pathname;
     }
@@ -92,7 +94,8 @@ class HashLocationStrategy extends LocationStrategy {
 
   void replaceState(
       dynamic state, String title, String path, String queryParams) {
-    var url = prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
+    var url =
+        prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
     if (url.length == 0) {
       url = _platformLocation.pathname;
     }
