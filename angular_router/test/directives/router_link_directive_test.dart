@@ -5,6 +5,7 @@
 @TestOn('browser')
 import 'dart:async';
 import 'dart:html' hide Location;
+import 'dart:js';
 
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
@@ -38,6 +39,19 @@ void main() {
     expect(fakeRouter.lastNavigatedPath, isNull);
     await fixture.update((_) => anchor.click());
     expect(fakeRouter.lastNavigatedPath, '/users/bob');
+  });
+
+  test('should attempt to navigate on Enter key press', () async {
+    final testBed = new NgTestBed<TestRouterLinkKeyPress>().addProviders([
+      provide(Location, useValue: const FakeLocation()),
+      provide(Router, useValue: fakeRouter),
+    ]);
+    final testFixture = await testBed.create();
+    final div = testFixture.rootElement.querySelector('div');
+    final keyboardEvent = createKeyboardEvent('keypress', KeyCode.ENTER);
+    expect(fakeRouter.lastNavigatedPath, isNull);
+    await testFixture.update((_) => div.dispatchEvent(keyboardEvent));
+    expect(fakeRouter.lastNavigatedPath, '/foo/bar');
   });
 
   test('should parse out query params and fragment', () async {
@@ -88,6 +102,15 @@ class TestRouterLink {
 }
 
 @Component(
+  selector: 'test-router-link-keypress',
+  template: '<div [routerLink]="routerLink"></div>',
+  directives: const [RouterLink],
+)
+class TestRouterLinkKeyPress {
+  String routerLink = '/foo/bar';
+}
+
+@Component(
   selector: 'test-router-link',
   directives: const [
     RouterLink,
@@ -129,4 +152,47 @@ class FakeLocation implements Location {
 
   @override
   noSuchMethod(i) => null;
+}
+
+const _createKeyboardEventName = '__dart_createKeyboardEvent';
+const _createKeyboardEventScript = '''
+window['$_createKeyboardEventName'] = function(
+    type, keyCode, ctrlKey, altKey, shiftKey, metaKey) {
+  var event = document.createEvent('KeyboardEvent');
+
+  // Chromium hack.
+  Object.defineProperty(event, 'keyCode', {
+    get: function() { return keyCode; }
+  });
+
+  // Creating keyboard events programmatically isn't supported and relies on
+  // these deprecated APIs.
+  if (event.initKeyboardEvent) {
+    event.initKeyboardEvent(type, true, true, document.defaultView, keyCode,
+        keyCode, ctrlKey, altKey, shiftKey, metaKey);
+  } else {
+    event.initKeyEvent(type, true, true, document.defaultView, ctrlKey, altKey,
+        shiftKey, metaKey, keyCode, keyCode);
+  }
+
+  return event;
+}
+''';
+
+Event createKeyboardEvent(
+  String type,
+  int keyCode, {
+  bool ctrlKey: false,
+  bool altKey: false,
+  bool shiftKey: false,
+  bool metaKey: false,
+}) {
+  if (!context.hasProperty(_createKeyboardEventName)) {
+    final script = document.createElement('script')
+      ..setAttribute('type', 'text/javascript')
+      ..text = _createKeyboardEventScript;
+    document.body.append(script);
+  }
+  return context.callMethod(_createKeyboardEventName,
+      [type, keyCode, ctrlKey, altKey, shiftKey, metaKey]);
 }
