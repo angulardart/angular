@@ -109,9 +109,7 @@ abstract class AbstractControl {
       _statusChanges.add(_status);
     }
     if (_parent != null && !onlySelf) {
-      this
-          ._parent
-          .updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
+      _parent.updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
     }
   }
 

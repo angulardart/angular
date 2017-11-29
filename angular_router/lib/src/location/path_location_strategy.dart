@@ -81,15 +81,13 @@ class PathLocationStrategy extends LocationStrategy {
       Location.normalizeQueryParams(_platformLocation.search);
 
   void pushState(dynamic state, String title, String url, String queryParams) {
-    var externalUrl = this
-        .prepareExternalUrl(url + Location.normalizeQueryParams(queryParams));
+    var externalUrl = prepareExternalUrl(url + Location.normalizeQueryParams(queryParams));
     _platformLocation.pushState(state, title, externalUrl);
   }
 
   void replaceState(
       dynamic state, String title, String url, String queryParams) {
-    var externalUrl = this
-        .prepareExternalUrl(url + Location.normalizeQueryParams(queryParams));
+    var externalUrl = prepareExternalUrl(url + Location.normalizeQueryParams(queryParams));
     _platformLocation.replaceState(state, title, externalUrl);
   }
 
