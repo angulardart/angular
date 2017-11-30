@@ -550,7 +550,7 @@ abstract class _Query {
 class ContentChildren extends _Query {
   const ContentChildren(
     Object selector, {
-    bool descendants: false,
+    bool descendants: true,
     Object read,
   })
       : super(
