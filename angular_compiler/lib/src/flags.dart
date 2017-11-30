@@ -10,7 +10,6 @@ const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
 const _argPlaceholder = 'use_placeholder';
 const _argEntryPoints = 'entry_points';
-const _argGeneratorInputs = 'generator_inputs';
 const _argAstPkg = 'use_new_template_parser';
 
 /// Compiler-wide configuration (flags) to allow opting in/out.
@@ -50,13 +49,6 @@ class CompilerFlags {
             'invoked). Build systems that re-write files use this in order '
             'to transform those calls to `bootstrapStatic`. These may be '
             'written in a glob format (such as lib/web/main_*.dart).')
-    ..addOption(_argGeneratorInputs,
-        allowMultiple: true,
-        defaultsTo: null,
-        help: 'Optional globs of files that will have the AngularDart '
-            'generator run on them. By default this is not required, but for '
-            'the "barback" (pub transformer) build system may be needed if '
-            'an "\$include" or "\$exclude" parameter is used.')
     ..addFlag(_argAstPkg,
         defaultsTo: null,
         hide: true,
@@ -69,13 +61,6 @@ class CompilerFlags {
   /// Build systems that re-write files use this in order to transform those
   /// calls to `bootstrapStatic`.
   final List<Glob> entryPoints;
-
-  /// Dart files that are expected to have the generator run on them.
-  ///
-  /// This is used to inform the build process what `.dart` files should have
-  /// an expected `.template.dart` generated file, and is used by some build
-  /// systems to speed up build times.
-  final List<Glob> generatorInputs;
 
   /// Whether to emit extra code suitable for testing and local development.
   final bool genDebugInfo;
@@ -109,7 +94,6 @@ class CompilerFlags {
   const CompilerFlags({
     @required this.genDebugInfo,
     this.entryPoints: const [],
-    this.generatorInputs: const [],
     this.profileFor: Profile.none,
     this.useLegacyStyleEncapsulation: false,
     this.usePlaceholder: true,
@@ -145,10 +129,6 @@ class CompilerFlags {
   }) {
     defaultTo = new CompilerFlags(
       genDebugInfo: defaultTo.genDebugInfo,
-      generatorInputs: defaultTo.generatorInputs ??
-          [
-            new Glob('**.dart', recursive: true),
-          ],
     );
     return new CompilerFlags.parseRaw(
       settings.configuration,
@@ -183,7 +163,6 @@ class CompilerFlags {
         _argLegacyStyle,
         _argPlaceholder,
         _argEntryPoints,
-        _argGeneratorInputs,
         _argAstPkg,
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
@@ -212,13 +191,6 @@ class CompilerFlags {
       log('Invalid value "$_argEntryPoints": $entryPoints');
       entryPoints = null;
     }
-    var generatorInputs = options[_argGeneratorInputs];
-    if (generatorInputs is String) {
-      generatorInputs = [generatorInputs];
-    } else if (generatorInputs != null && generatorInputs is! List<String>) {
-      log('Invalid value: "$_argGeneratorInputs": $generatorInputs');
-      generatorInputs = null;
-    }
     var profileFor = options[_argProfileFor];
     if (profileFor != null && profileFor is! String) {
       log('Invalid value "$_argProfileFor": $profileFor');
@@ -244,11 +216,6 @@ class CompilerFlags {
       entryPoints: entryPoints == null
           ? defaultTo.entryPoints
           : (entryPoints as Iterable<String>).map((e) => new Glob(e)).toList(),
-      generatorInputs: generatorInputs == null
-          ? defaultTo.entryPoints
-          : (generatorInputs as Iterable<String>)
-              .map((e) => new Glob(e))
-              .toList(),
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       usePlaceholder: usePlaceholder ?? defaultTo.usePlaceholder,
       useLegacyStyleEncapsulation:

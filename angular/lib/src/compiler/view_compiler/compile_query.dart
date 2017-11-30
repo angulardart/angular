@@ -1,4 +1,7 @@
+import "package:meta/meta.dart";
+
 import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
+import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 import "compile_element.dart" show CompileElement;
 import "compile_method.dart" show CompileMethod;
@@ -59,11 +62,32 @@ abstract class CompileQuery2 {
   /// This is built-up during the lifetime of this class.
   final _QueryValues2 _values;
 
-  CompileQuery2._base(this._metadata, this._queryRoot, this._boundField)
+  factory CompileQuery2({
+    @required CompileQueryMetadata metadata,
+    @required CompileView queryRoot,
+    @required o.Expression boundField,
+    @required int nodeIndex,
+    @required int queryIndex,
+  }) {
+    // TODO(matanl): If this is a 'List' type, use a different implementation.
+    return new _QueryListCompileQuery(
+      metadata,
+      queryRoot,
+      boundField,
+      nodeIndex: nodeIndex,
+      queryIndex: queryIndex,
+    );
+  }
+
+  CompileQuery2._base(
+    this._metadata,
+    this._queryRoot,
+    this._boundField,
+  )
       : _values = new _QueryValues2(_queryRoot);
 
   /// Whether the query is entirely static, i.e. there are no `<template>`s.
-  bool get _isStatic;
+  bool get _isStatic => !_values.hasNestedViews;
 
   /// Whether the query is only setting a single value, not a list-like object.
   ///
@@ -107,6 +131,20 @@ abstract class CompileQuery2 {
     }
   }
 
+  List<o.Expression> _buildQueryResult(_QueryValues2 viewValues) {
+    final result = viewValues.values.toList();
+    for (final template in viewValues.templates) {
+      result.add(
+        _mapNestedViews(
+          template.view.declarationElement.appViewContainer,
+          template.view,
+          _buildQueryResult(template),
+        ),
+      );
+    }
+    return result;
+  }
+
   /// Invoked by [addQueryResult] when the [_queryRoot] is now dirty.
   ///
   /// This means during the next change detection cycle we need to rebuild the
@@ -143,7 +181,7 @@ abstract class CompileQuery2 {
   /// ```dart
   /// import2.QueryList _viewQuery_ChildDirective_0;
   /// ```
-  List<o.Statement> createClassFields();
+  List<o.AbstractClassPart> createClassFields();
 
   /// Return code that will set the query contents at change-detection time.
   ///
@@ -162,6 +200,86 @@ abstract class CompileQuery2 {
   /// the future it will be possible to optimize further and use this method for
   /// more query types.
   List<o.Statement> createImmediateUpdates();
+}
+
+class _QueryListCompileQuery extends CompileQuery2 {
+  o.Expression _queryList;
+  o.ClassField _classField;
+
+  _QueryListCompileQuery(
+    CompileQueryMetadata metadata,
+    CompileView queryRoot,
+    o.Expression boundField, {
+    @required int nodeIndex,
+    @required int queryIndex,
+  })
+      : super._base(metadata, queryRoot, boundField) {
+    _queryList = _createQueryListField(
+      metadata: metadata,
+      nodeIndex: nodeIndex,
+      queryIndex: queryIndex,
+    );
+  }
+
+  /// Inserts a `QueryList {property}` field in the generated view.
+  ///
+  /// Returns an expression pointing to that field.
+  o.Expression _createQueryListField({
+    @required CompileQueryMetadata metadata,
+    @required int nodeIndex,
+    @required int queryIndex,
+  }) {
+    final selector = metadata.selectors.first.name;
+    final property = '_query_${selector}_${nodeIndex}_$queryIndex';
+    // final QueryList _query_foo_0_0 = new QueryList();
+    _classField = new o.ClassField(
+      property,
+      outputType: o.importType(Identifiers.QueryList),
+      modifiers: [o.StmtModifier.Private, o.StmtModifier.Final],
+      initializer: o.importExpr(Identifiers.QueryList).instantiate([]),
+    );
+    return new o.ReadClassMemberExpr(property);
+  }
+
+  @override
+  void _setParentQueryAsDirty(CompileView origin) {
+    final queryListField = getPropertyInView(_queryList, origin, _queryRoot);
+    origin.dirtyParentQueriesMethod.addStmt(
+      queryListField.callMethod('setDirty', []).toStmt(),
+    );
+  }
+
+  @override
+  List<o.AbstractClassPart> createClassFields() => [_classField];
+
+  @override
+  List<o.Statement> createDynamicUpdates() {
+    if (_isSingle && _isStatic) {
+      return const [];
+    }
+    final values = _buildQueryResult(_values);
+    final statements = [
+      _queryList.callMethod('reset', [o.literalArr(values)]).toStmt(),
+    ];
+    if (_boundField != null) {
+      final valueExpr = _isSingle ? _queryList.prop('first') : _queryList;
+      statements.add(
+        _boundField.prop(_metadata.propertyName).set(valueExpr).toStmt(),
+      );
+    }
+    if (!_isStatic && !_isSingle) {
+      statements.add(
+        _queryList.callMethod('notifyOnChanges', []).toStmt(),
+      );
+    }
+    return statements;
+  }
+
+  // This is the same in this implementation, the only change is that the
+  // createDynamicUpdates() method only emits "notifyOnChanges" for dynamic
+  // queries (i.e. those that can change during runtime).
+  @override
+  List<o.Statement> createImmediateUpdates() => createDynamicUpdates();
 }
 
 class CompileQuery {

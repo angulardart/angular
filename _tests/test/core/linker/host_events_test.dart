@@ -70,6 +70,37 @@ void main() {
       });
       expect(divElement.attributes['was-clicked'], 'true');
     });
+
+    test('inside a directive\'s annotation supports an event', () async {
+      final testBed = new NgTestBed<ComponentWithDirectiveWithHost>();
+      final testFixture = await testBed.create();
+      expect(testFixture.assertOnlyInstance.directive.lastValue, isNull);
+
+      await testFixture.update((_) {
+        final InputElement el = testFixture.rootElement.querySelector('input');
+        el.value = 'foo';
+        final changeEvent = new Event('change');
+        el.dispatchEvent(changeEvent);
+      });
+
+      expect(testFixture.assertOnlyInstance.directive.lastValue, 'foo');
+    });
+  });
+
+  test('should support two annotations on a single method', () async {
+    final testBed = new NgTestBed<ComponentWithTwoAnnotations>();
+    final testFixture = await testBed.create();
+    expect(testFixture.assertOnlyInstance.capturedEvent, isNull);
+
+    await testFixture.update((_) {
+      testFixture.rootElement.dispatchEvent(new Event('focus'));
+    });
+    expect(testFixture.assertOnlyInstance.capturedEvent, 'focus');
+
+    await testFixture.update((_) {
+      testFixture.rootElement.dispatchEvent(new Event('blur'));
+    });
+    expect(testFixture.assertOnlyInstance.capturedEvent, 'blur');
   });
 }
 
@@ -156,5 +187,45 @@ class ComponentWithHost$Event {
       throw new ArgumentError('EXPECTED a $MouseEvent, but got null');
     }
     wasClicked = true;
+  }
+}
+
+@Component(
+  selector: 'component-with-directive',
+  directives: const [
+    DirectiveWithHost$EventPropertyChain,
+  ],
+  template: r'''
+    <input #input type="text" />
+  ''',
+)
+class ComponentWithDirectiveWithHost {
+  @ViewChild('input', read: DirectiveWithHost$EventPropertyChain)
+  DirectiveWithHost$EventPropertyChain directive;
+}
+
+@Directive(
+  selector: 'input[type=text]',
+)
+class DirectiveWithHost$EventPropertyChain {
+  var lastValue;
+
+  @HostListener('change', const [r'$event.target.value'])
+  void onChange(dynamic value) {
+    lastValue = value;
+  }
+}
+
+@Component(
+  selector: 'component-with-two-annotations',
+  template: '',
+)
+class ComponentWithTwoAnnotations {
+  String capturedEvent;
+
+  @HostListener('blur', const [r'$event'])
+  @HostListener('focus', const [r'$event'])
+  void onFocusOrBlur(Event event) {
+    capturedEvent = event.type;
   }
 }

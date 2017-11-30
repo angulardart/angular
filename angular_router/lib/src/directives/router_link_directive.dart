@@ -2,7 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'dart:html' show MouseEvent;
+import 'dart:async';
+import 'dart:html' show AnchorElement, Element, Event, KeyboardEvent, KeyCode;
 
 import 'package:angular/angular.dart';
 
@@ -22,13 +23,26 @@ import '../url.dart';
 /// ```
 ///
 /// The [routerLink] can contain queryParameters or a fragment, ie: /heroes?a=1.
-@Directive(selector: "[routerLink]", visibility: Visibility.none)
-class RouterLink {
+@Directive(selector: '[routerLink]', visibility: Visibility.none)
+class RouterLink implements OnDestroy {
   final Router _router;
   final Location _location;
   final String _target;
 
-  RouterLink(this._router, this._location, @Attribute('target') this._target);
+  StreamSubscription<KeyboardEvent> _keyPressSubscription;
+  String _routerLink;
+  String _cachedVisibleHref;
+  Url _cachedUrl;
+
+  RouterLink(this._router, this._location, @Attribute('target') this._target,
+      Element element) {
+    // The browser will synthesize a click event for anchor elements when they
+    // receive an Enter key press. For other elements, we must manually add a
+    // key press listener to ensure the link remains keyboard accessible.
+    if (element is! AnchorElement) {
+      _keyPressSubscription = element.onKeyPress.listen(_onKeyPress);
+    }
+  }
 
   @Input()
   set routerLink(String routerLink) {
@@ -36,10 +50,6 @@ class RouterLink {
     _cachedVisibleHref = null;
     _cachedUrl = null;
   }
-
-  String _routerLink;
-  String _cachedVisibleHref;
-  Url _cachedUrl;
 
   Url get url {
     return _cachedUrl ??= Url.parse(_routerLink);
@@ -52,14 +62,25 @@ class RouterLink {
     return _cachedVisibleHref ??= _location.prepareExternalUrl(_routerLink);
   }
 
+  @override
+  void ngOnDestroy() {
+    _keyPressSubscription?.cancel();
+  }
+
   @HostListener('click', const [r'$event'])
-  void onClick(MouseEvent event) {
+  void onTrigger(Event event) {
     if (_target == null || _target == '_self') {
       event.preventDefault();
       _router.navigate(
           url.path,
           new NavigationParams(
               queryParameters: url.queryParameters, fragment: url.fragment));
+    }
+  }
+
+  void _onKeyPress(KeyboardEvent event) {
+    if (event.keyCode == KeyCode.ENTER) {
+      onTrigger(event);
     }
   }
 }
