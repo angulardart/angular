@@ -12,7 +12,6 @@ import 'package:angular/src/di/injector/injector.dart'
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/platform/dom/shared_styles_host.dart';
 
-import '../zone/ng_zone.dart';
 import 'app_view_utils.dart';
 import 'component_factory.dart';
 import 'exceptions.dart' show ViewDestroyedException;
@@ -609,11 +608,7 @@ abstract class AppView<T> {
   void Function(E) eventHandler0<E>(void Function() handler) {
     return (E event) {
       markPathToRootAsCheckOnce();
-      if (NgZone.isInAngularZone()) {
-        handler();
-      } else {
-        appViewUtils.eventManager.getZone().runGuarded(handler);
-      }
+      appViewUtils.eventManager.getZone().runGuarded(handler);
     };
   }
 
@@ -628,13 +623,7 @@ abstract class AppView<T> {
   void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
     return (E event) {
       markPathToRootAsCheckOnce();
-      if (NgZone.isInAngularZone()) {
-        handler(event as F);
-      } else {
-        appViewUtils.eventManager
-            .getZone()
-            .runGuarded(() => handler(event as F));
-      }
+      appViewUtils.eventManager.getZone().runGuarded(() => handler(event as F));
     };
   }
 
