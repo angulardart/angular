@@ -4,65 +4,48 @@ import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
 import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 import "compile_element.dart" show CompileElement;
-import "compile_method.dart" show CompileMethod;
 import "compile_view.dart" show CompileView;
 import "view_compiler_utils.dart" show getPropertyInView;
 
 class _QueryValues {
-  /// Compiled template associated to [values].
-  final CompileView view;
-
-  /// Either [o.Expression] or [_QueryValues] for nested `<template>` views.
-  final List values = [];
-
-  _QueryValues(this.view);
-}
-
-class _QueryValues2 {
   /// Compiled template associated to [values] and embedded [templates].
   final CompileView view;
 
-  /// Values of the query to be compiled in as expressions.
-  final values = <o.Expression>[];
+  /// Values or embedded templates of the query.
+  final valuesOrTemplates = <dynamic>[];
 
-  /// Embedded templates that have additional values.
-  final templates = <_QueryValues2>[];
-
-  _QueryValues2(this.view);
+  _QueryValues(this.view);
 
   /// Whether there are nested embedded views in this instance.
-  bool get hasNestedViews => templates.isNotEmpty;
+  bool get hasNestedViews => valuesOrTemplates.any((v) => v is _QueryValues);
 }
 
 /// Compiles `@{Content|View}Child[ren]` to template IR.
 ///
 /// Uses a conditional compilation strategy in order to deprecate `QueryList`:
 /// https://github.com/dart-lang/angular/issues/688
-abstract class CompileQuery2 {
+abstract class CompileQuery {
   /// An expression that accesses the component's instance.
   ///
   /// In practice, this is almost always `this.ctx`.
-  // ignore: unused_field
   final o.Expression _boundField;
 
   /// Extracted metadata information from the user-code.
-  // ignore: unused_field
-  final CompileQueryMetadata _metadata;
+  final CompileQueryMetadata metadata;
 
   /// Compiled view of the `@Component` that this query originated from.
   ///
   /// **NOTE**: A component whose template has `<template>` tags will have
   /// additional generated views (embedded views), which are expressed as part
   /// of [todoSomeProperty].
-  // ignore: unused_field
   final CompileView _queryRoot;
 
   /// A combination of direct expressions and nested templates needed.
   ///
   /// This is built-up during the lifetime of this class.
-  final _QueryValues2 _values;
+  final _QueryValues _values;
 
-  factory CompileQuery2({
+  factory CompileQuery({
     @required CompileQueryMetadata metadata,
     @required CompileView queryRoot,
     @required o.Expression boundField,
@@ -79,12 +62,27 @@ abstract class CompileQuery2 {
     );
   }
 
-  CompileQuery2._base(
-    this._metadata,
+  factory CompileQuery.viewQuery({
+    @required CompileQueryMetadata metadata,
+    @required CompileView queryRoot,
+    @required o.Expression boundField,
+    @required int queryIndex,
+  }) {
+    return new _QueryListCompileQuery(
+      metadata,
+      queryRoot,
+      boundField,
+      nodeIndex: -1,
+      queryIndex: queryIndex,
+    );
+  }
+
+  CompileQuery._base(
+    this.metadata,
     this._queryRoot,
     this._boundField,
   )
-      : _values = new _QueryValues2(_queryRoot);
+      : _values = new _QueryValues(_queryRoot);
 
   /// Whether the query is entirely static, i.e. there are no `<template>`s.
   bool get _isStatic => !_values.hasNestedViews;
@@ -93,7 +91,7 @@ abstract class CompileQuery2 {
   ///
   /// This aligns with `@QueryChild` and `@ContentChild`.
   // ignore: unused_element
-  bool get _isSingle => _metadata.first;
+  bool get _isSingle => metadata.first;
 
   /// Adds an expression [result] that originates from an [origin] view.
   ///
@@ -108,18 +106,20 @@ abstract class CompileQuery2 {
 
     // If we do, then continue building QueryValues, a tree-like data structure.
     for (final element in elementPath) {
-      if (viewValues.hasNestedViews) {
-        viewValues = viewValues.templates.last;
+      final valuesOrTemplates = viewValues.valuesOrTemplates;
+      final last = valuesOrTemplates.isNotEmpty ? valuesOrTemplates.last : null;
+      if (last is _QueryValues && last.view == element.embeddedView) {
+        viewValues = last;
       } else {
         assert(element.hasEmbeddedView);
-        final newViewValues = new _QueryValues2(element.embeddedView);
-        viewValues.templates.add(newViewValues);
+        final newViewValues = new _QueryValues(element.embeddedView);
+        valuesOrTemplates.add(newViewValues);
         viewValues = newViewValues;
       }
     }
 
     // Add it to the applicable part of the view (either root or embedded).
-    viewValues.values.add(result);
+    viewValues.valuesOrTemplates.add(result);
 
     // Finally, if this result doesn't come from the root, it means that some
     // change in an embedded view needs to invalidate the state of the previous
@@ -131,18 +131,45 @@ abstract class CompileQuery2 {
     }
   }
 
-  List<o.Expression> _buildQueryResult(_QueryValues2 viewValues) {
-    final result = viewValues.values.toList();
-    for (final template in viewValues.templates) {
-      result.add(
-        _mapNestedViews(
-          template.view.declarationElement.appViewContainer,
-          template.view,
-          _buildQueryResult(template),
-        ),
-      );
+  /// Returns the literal values of the list that the user-code receives.
+  List<o.Expression> _buildQueryResult(_QueryValues viewValues) {
+    final result = <o.Expression>[];
+    for (final valueOrTemplate in viewValues.valuesOrTemplates) {
+      if (valueOrTemplate is o.Expression) {
+        result.add(valueOrTemplate);
+      }
+      if (valueOrTemplate is _QueryValues) {
+        result.add(
+          _mapNestedViews(
+            valueOrTemplate.view.declarationElement.appViewContainer,
+            valueOrTemplate.view,
+            _buildQueryResult(valueOrTemplate),
+          ),
+        );
+      }
     }
     return result;
+  }
+
+  /// Returns an expression that invokes `AppView.mapNestedViews`.
+  ///
+  /// This is required to traverse embedded `<template>` views for query matches.
+  o.Expression _mapNestedViews(
+    o.Expression declarationViewContainer,
+    CompileView view,
+    List<o.Expression> expressions,
+  ) {
+    final adjustedExpressions = expressions.map((expr) {
+      return o.replaceReadClassMemberInExpression(
+          o.variable('nestedView'), expr);
+    }).toList();
+    return declarationViewContainer.callMethod('mapNestedViews', [
+      o.variable(view.className),
+      o.fn(
+        [new o.FnParam('nestedView', view.classType)],
+        [new o.ReturnStatement(o.literalArr(adjustedExpressions))],
+      ),
+    ]);
   }
 
   /// Invoked by [addQueryResult] when the [_queryRoot] is now dirty.
@@ -175,13 +202,15 @@ abstract class CompileQuery2 {
     return pathToRoot;
   }
 
-  /// Create class-member level fields in order to store persistent state.
+  /// Create class-member level field in order to store persistent state.
   ///
   /// For example, in the original implementation this wrote the following:
   /// ```dart
-  /// import2.QueryList _viewQuery_ChildDirective_0;
+  /// import2.QueryList _query_ChildDirective_0;
   /// ```
-  List<o.AbstractClassPart> createClassFields();
+  ///
+  /// May set [viewQuery] to `true` in order to label it `_viewQuery` instead.
+  o.AbstractClassPart createClassField({bool viewQuery});
 
   /// Return code that will set the query contents at change-detection time.
   ///
@@ -202,7 +231,7 @@ abstract class CompileQuery2 {
   List<o.Statement> createImmediateUpdates();
 }
 
-class _QueryListCompileQuery extends CompileQuery2 {
+class _QueryListCompileQuery extends CompileQuery {
   o.Expression _queryList;
   o.ClassField _classField;
 
@@ -230,7 +259,17 @@ class _QueryListCompileQuery extends CompileQuery2 {
     @required int queryIndex,
   }) {
     final selector = metadata.selectors.first.name;
-    final property = '_query_${selector}_${nodeIndex}_$queryIndex';
+    // This is to avoid churn in the golden files/output while debugging.
+    //
+    // We can rename the properties after we decide to keep this code branch.
+    String property;
+    if (nodeIndex == -1) {
+      // @ViewChild[ren].
+      property = '_viewQuery_${selector}_$queryIndex';
+    } else {
+      // @ContentChild[ren].
+      property = '_query_${selector}_${nodeIndex}_$queryIndex';
+    }
     // final QueryList _query_foo_0_0 = new QueryList();
     _classField = new o.ClassField(
       property,
@@ -250,13 +289,25 @@ class _QueryListCompileQuery extends CompileQuery2 {
   }
 
   @override
-  List<o.AbstractClassPart> createClassFields() => [_classField];
+  o.AbstractClassPart createClassField({bool viewQuery: false}) => _classField;
 
   @override
   List<o.Statement> createDynamicUpdates() {
     if (_isSingle && _isStatic) {
       return const [];
     }
+    return _createUpdates();
+  }
+
+  @override
+  List<o.Statement> createImmediateUpdates() {
+    if (_isStatic && _isSingle) {
+      return _createUpdates();
+    }
+    return const [];
+  }
+
+  List<o.Statement> _createUpdates() {
     final values = _buildQueryResult(_values);
     final statements = [
       _queryList.callMethod('reset', [o.literalArr(values)]).toStmt(),
@@ -264,149 +315,26 @@ class _QueryListCompileQuery extends CompileQuery2 {
     if (_boundField != null) {
       final valueExpr = _isSingle ? _queryList.prop('first') : _queryList;
       statements.add(
-        _boundField.prop(_metadata.propertyName).set(valueExpr).toStmt(),
+        _boundField.prop(metadata.propertyName).set(valueExpr).toStmt(),
       );
     }
-    if (!_isStatic && !_isSingle) {
+    if (!_isSingle) {
       statements.add(
         _queryList.callMethod('notifyOnChanges', []).toStmt(),
       );
     }
-    return statements;
+    if (_isStatic && _isSingle) {
+      return statements;
+    }
+    return [new o.IfStmt(_queryList.prop('dirty'), statements)];
   }
-
-  // This is the same in this implementation, the only change is that the
-  // createDynamicUpdates() method only emits "notifyOnChanges" for dynamic
-  // queries (i.e. those that can change during runtime).
-  @override
-  List<o.Statement> createImmediateUpdates() => createDynamicUpdates();
-}
-
-class CompileQuery {
-  final CompileQueryMetadata meta;
-  final o.Expression queryList;
-  final o.Expression ownerDirectiveExpression;
-  final CompileView view;
-  final _QueryValues _values;
-
-  CompileQuery(
-    this.meta,
-    this.queryList,
-    this.ownerDirectiveExpression,
-    this.view,
-  )
-      : _values = new _QueryValues(view);
-
-  void addValue(o.Expression value, CompileView view) {
-    var currentView = view;
-    List<CompileElement> elPath = [];
-    while (currentView != null && !identical(currentView, this.view)) {
-      var parentEl = currentView.declarationElement;
-      (elPath..insert(0, parentEl)).length;
-      currentView = parentEl.view;
-    }
-    var queryListForDirtyExpr =
-        getPropertyInView(this.queryList, view, this.view);
-    var viewValues = this._values;
-    for (var el in elPath) {
-      var last = viewValues.values.length > 0
-          ? viewValues.values[viewValues.values.length - 1]
-          : null;
-      if (last is _QueryValues && identical(last.view, el.embeddedView)) {
-        viewValues = last;
-      } else {
-        var newViewValues = new _QueryValues(el.embeddedView);
-        viewValues.values.add(newViewValues);
-        viewValues = newViewValues;
-      }
-    }
-    viewValues.values.add(value);
-    if (elPath.length > 0) {
-      view.dirtyParentQueriesMethod
-          .addStmt(queryListForDirtyExpr.callMethod("setDirty", []).toStmt());
-    }
-  }
-
-  bool _isStatic() {
-    var isStatic = true;
-    for (var value in _values.values) {
-      if (value is _QueryValues) {
-        // querying a nested view makes the query content dynamic
-        isStatic = false;
-      }
-    }
-    return isStatic;
-  }
-
-  bool get _isSingleStaticQuery => meta.first && _isStatic();
-
-  /// For queries that don't change and user is querying a single element such
-  /// as ViewContainerRef, create immediate code in createMethod to
-  /// reset value.
-  ///
-  /// We don't do this for QueryLists for now as this
-  /// would break the timing when we call QueryList listeners...
-  void generateImmediateUpdate(CompileMethod targetMethod) {
-    if (!_isSingleStaticQuery) return;
-    var values = _createQueryValues(this._values);
-    var statements = [
-      queryList.callMethod("reset", [o.literalArr(values)]).toStmt()
-    ];
-    if (ownerDirectiveExpression != null) {
-      statements.add(ownerDirectiveExpression
-          .prop(meta.propertyName)
-          .set(queryList.prop("first"))
-          .toStmt());
-    }
-    targetMethod.addStmts(statements);
-  }
-
-  void generateDynamicUpdate(CompileMethod targetMethod) {
-    if (_isSingleStaticQuery) return;
-    var values = _createQueryValues(this._values);
-    var statements = [
-      queryList.callMethod("reset", [o.literalArr(values)]).toStmt()
-    ];
-    if (ownerDirectiveExpression != null) {
-      var valueExpr = meta.first ? queryList.prop("first") : queryList;
-      statements.add(ownerDirectiveExpression
-          .prop(meta.propertyName)
-          .set(valueExpr)
-          .toStmt());
-    }
-    if (!meta.first) {
-      statements.add(queryList.callMethod("notifyOnChanges", []).toStmt());
-    }
-    targetMethod.addStmt(new o.IfStmt(queryList.prop("dirty"), statements));
-  }
-}
-
-List<o.Expression> _createQueryValues(_QueryValues viewValues) {
-  return viewValues.values.map((entry) {
-    if (entry is _QueryValues) {
-      return _mapNestedViews(entry.view.declarationElement.appViewContainer,
-          entry.view, _createQueryValues(entry));
-    } else {
-      return (entry as o.Expression);
-    }
-  }).toList();
-}
-
-o.Expression _mapNestedViews(o.Expression declarationViewContainer,
-    CompileView view, List<o.Expression> expressions) {
-  List<o.Expression> adjustedExpressions = expressions.map((expr) {
-    return o.replaceReadClassMemberInExpression(o.variable("nestedView"), expr);
-  }).toList();
-  return declarationViewContainer.callMethod("mapNestedViews", [
-    o.variable(view.className),
-    o.fn([new o.FnParam("nestedView", view.classType)],
-        [new o.ReturnStatement(o.literalArr(adjustedExpressions))])
-  ]);
 }
 
 void addQueryToTokenMap(
-    CompileTokenMap<List<CompileQuery>> map, CompileQuery query) {
-  for (var selector in query.meta.selectors) {
+  CompileTokenMap<List<CompileQuery>> map,
+  CompileQuery query,
+) {
+  for (final selector in query.metadata.selectors) {
     var entry = map.get(selector);
     if (entry == null) {
       entry = [];
