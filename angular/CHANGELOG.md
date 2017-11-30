@@ -4,6 +4,18 @@
     misleading, as a directive is always capable of providing itself locally for
     injection via another token.
 
+*   `RenderComponentType` is no longer part of the public API.
+
+### Bug fixes
+
+*   Fixed a bug where errors thrown in event listeners were sometimes uncaught
+    by the framework and never forwarded to the `ExceptionHandler`. Closes
+    https://github.com/dart-lang/angular/issues/721.
+
+*   The `$implicit` (iterable) value in `*ngFor` is now properly typed whenever
+    possible. It was previously always typed as `dynamic`, which caused dynamic
+    lookups/calls at runtime, and hid compilation errors.
+
 ## 5.0.0-alpha+1
 
 **NOTE**: As of `angular 5.0.0-alpha+1` [`dependency_overrides`][dep_overrides] are **required**:
