@@ -244,7 +244,7 @@ class CompileElement extends CompileNode {
         value = token != null ? _instances.get(token) : elementRef;
       }
       if (value != null) {
-        queryWithRead.query.addValue(value, this.view);
+        queryWithRead.query.addQueryResult(this.view, value);
       }
     }
   }
@@ -395,7 +395,7 @@ class CompileElement extends CompileNode {
     for (List<CompileQuery> queries in _queries.values) {
       for (CompileQuery query in queries) {
         view.updateQueryAtStartup(query);
-        query.generateDynamicUpdate(view.updateContentQueriesMethod);
+        view.updateContentQueriesMethod.addStmts(query.createDynamicUpdates());
       }
     }
   }
@@ -477,8 +477,9 @@ class CompileElement extends CompileNode {
     while (currentEl.parent != null) {
       queries = currentEl._queries.get(token);
       if (queries != null) {
-        result.addAll(
-            queries.where((query) => query.meta.descendants || distance <= 1));
+        result.addAll(queries.where(
+          (query) => query.metadata.descendants || distance <= 1,
+        ));
       }
       if (currentEl._directives.length > 0) {
         distance++;
@@ -491,11 +492,18 @@ class CompileElement extends CompileNode {
   }
 
   CompileQuery _addQuery(
-      CompileQueryMetadata queryMeta, o.Expression directiveInstance) {
-    var propName =
-        '_query_${queryMeta.selectors[0].name}_${nodeIndex}_${_queryCount++}';
-    var queryList = view.createQueryListField(queryMeta, propName);
-    var query = new CompileQuery(queryMeta, queryList, directiveInstance, view);
+    CompileQueryMetadata metadata,
+    o.Expression directiveInstance,
+  ) {
+    final query = new CompileQuery(
+      metadata: metadata,
+      queryRoot: view,
+      boundField: directiveInstance,
+      nodeIndex: nodeIndex,
+      queryIndex: _queryCount,
+    );
+    _queryCount++;
+    view.nameResolver.addField(query.createClassField());
     addQueryToTokenMap(this._queries, query);
     return query;
   }
@@ -613,6 +621,6 @@ class _QueryWithRead {
   CompileQuery query;
   CompileTokenMetadata read;
   _QueryWithRead(this.query, CompileTokenMetadata match) {
-    read = query.meta.read ?? match;
+    read = query.metadata.read ?? match;
   }
 }

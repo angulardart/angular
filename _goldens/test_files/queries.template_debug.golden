@@ -44,12 +44,13 @@ List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponent0 = [
 ];
 
 class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
-  import5.QueryList _viewQuery_q2_0;
-  import5.QueryList _viewQuery_q2_1;
-  import5.QueryList _viewQuery_q2_2;
-  import5.QueryList _viewQuery_q2_3;
-  import5.QueryList _viewQuery_q2_4;
-  import5.QueryList _viewQuery_AnotherDirective_5;
+  final import5.QueryList _viewQuery_q2_0 = new import5.QueryList();
+  final import5.QueryList _viewQuery_q2_1 = new import5.QueryList();
+  final import5.QueryList _viewQuery_q2_2 = new import5.QueryList();
+  final import5.QueryList _viewQuery_q2_3 = new import5.QueryList();
+  final import5.QueryList _viewQuery_q2_4 = new import5.QueryList();
+  final import5.QueryList _viewQuery_AnotherDirective_5 =
+      new import5.QueryList();
   import6.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_4;
   import6.Element _el_1;
@@ -75,12 +76,6 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   @override
   ComponentRef<import1.QueriesComponent> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _viewQuery_q2_0 = new import5.QueryList();
-    _viewQuery_q2_1 = new import5.QueryList();
-    _viewQuery_q2_2 = new import5.QueryList();
-    _viewQuery_q2_3 = new import5.QueryList();
-    _viewQuery_q2_4 = new import5.QueryList();
-    _viewQuery_AnotherDirective_5 = new import5.QueryList();
     dbg(null, 0, 4);
     project(parentRenderNode, 0);
     var doc = import6.document;
@@ -216,8 +211,8 @@ List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponentHost0 = [
 class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_4;
-  import5.QueryList _query_AnotherDirective_0_0;
-  import5.QueryList _query_AnotherDirective_0_1;
+  final import5.QueryList _query_AnotherDirective_0_0 = new import5.QueryList();
+  final import5.QueryList _query_AnotherDirective_0_1 = new import5.QueryList();
   static RenderComponentType _renderType;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -237,8 +232,6 @@ class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
     _QueriesComponent_0_4 = new import1.QueriesComponent();
-    _query_AnotherDirective_0_0 = new import5.QueryList();
-    _query_AnotherDirective_0_1 = new import5.QueryList();
     _query_AnotherDirective_0_1.reset([]);
     _QueriesComponent_0_4.contentChildFromField =
         _query_AnotherDirective_0_1.first;
@@ -293,7 +286,8 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmbeddedQueries0 = [
 ];
 
 class ViewEmbeddedQueries0 extends DebugAppView<import1.EmbeddedQueries> {
-  import5.QueryList _viewQuery_AnotherDirective_0;
+  final import5.QueryList _viewQuery_AnotherDirective_0 =
+      new import5.QueryList();
   import6.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_4;
   ViewContainer _appEl_1;
@@ -317,7 +311,6 @@ class ViewEmbeddedQueries0 extends DebugAppView<import1.EmbeddedQueries> {
   @override
   ComponentRef<import1.EmbeddedQueries> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _viewQuery_AnotherDirective_0 = new import5.QueryList();
     var doc = import6.document;
     _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 0, 4);
     _AnotherDirective_0_4 = new import1.AnotherDirective();

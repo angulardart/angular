@@ -178,10 +178,6 @@ abstract class AppViewBuilder {
   void addCustomEventListener(
       NodeReference node, String eventName, o.Expression handler);
 
-  /// Create a QueryList instance to update matches.
-  o.Expression createQueryListField(
-      CompileQueryMetadata query, String propertyName);
-
   /// Initializes query target on component at startup/build time.
   void updateQueryAtStartup(CompileQuery query);
 
@@ -332,12 +328,15 @@ class CompileView implements AppViewBuilder {
     if (viewType == ViewType.COMPONENT) {
       var directiveInstance = new o.ReadClassMemberExpr('ctx');
       var queryIndex = -1;
-      for (CompileQueryMetadata queryMeta in component.viewQueries) {
+      for (CompileQueryMetadata metadata in component.viewQueries) {
         queryIndex++;
-        var propName = '_viewQuery_${queryMeta.selectors[0].name}_$queryIndex';
-        var queryList = createQueryListField(queryMeta, propName);
-        var query =
-            new CompileQuery(queryMeta, queryList, directiveInstance, this);
+        final query = new CompileQuery.viewQuery(
+          metadata: metadata,
+          queryRoot: this,
+          boundField: directiveInstance,
+          queryIndex: queryIndex,
+        );
+        nameResolver.addField(query.createClassField(viewQuery: true));
         addQueryToTokenMap(viewQueries, query);
       }
     }
@@ -379,8 +378,8 @@ class CompileView implements AppViewBuilder {
     }
     for (var queries in viewQueries.values) {
       for (var query in queries) {
-        query.generateImmediateUpdate(_createMethod);
-        query.generateDynamicUpdate(updateContentQueriesMethod);
+        _createMethod.addStmts(query.createImmediateUpdates());
+        updateContentQueriesMethod.addStmts(query.createDynamicUpdates());
       }
     }
   }
@@ -813,20 +812,8 @@ class CompileView implements AppViewBuilder {
   }
 
   @override
-  o.Expression createQueryListField(
-      CompileQueryMetadata query, String propertyName) {
-    nameResolver.addField(new o.ClassField(propertyName,
-        outputType: o.importType(Identifiers.QueryList),
-        modifiers: [o.StmtModifier.Private]));
-    _createMethod.addStmt(new o.WriteClassMemberExpr(
-            propertyName, o.importExpr(Identifiers.QueryList).instantiate([]))
-        .toStmt());
-    return new o.ReadClassMemberExpr(propertyName);
-  }
-
-  @override
   void updateQueryAtStartup(CompileQuery query) {
-    query.generateImmediateUpdate(_createMethod);
+    _createMethod.addStmts(query.createImmediateUpdates());
   }
 
   /// Creates a class field and assigns the resolvedProviderValueExpr.

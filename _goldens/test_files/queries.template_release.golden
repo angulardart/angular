@@ -35,12 +35,13 @@ import 'package:angular/src/core/linker/element_ref.dart';
 const List<dynamic> styles$QueriesComponent = const [];
 
 class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
-  import2.QueryList _viewQuery_q2_0;
-  import2.QueryList _viewQuery_q2_1;
-  import2.QueryList _viewQuery_q2_2;
-  import2.QueryList _viewQuery_q2_3;
-  import2.QueryList _viewQuery_q2_4;
-  import2.QueryList _viewQuery_AnotherDirective_5;
+  final import2.QueryList _viewQuery_q2_0 = new import2.QueryList();
+  final import2.QueryList _viewQuery_q2_1 = new import2.QueryList();
+  final import2.QueryList _viewQuery_q2_2 = new import2.QueryList();
+  final import2.QueryList _viewQuery_q2_3 = new import2.QueryList();
+  final import2.QueryList _viewQuery_q2_4 = new import2.QueryList();
+  final import2.QueryList _viewQuery_AnotherDirective_5 =
+      new import2.QueryList();
   import3.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_4;
   import3.Element _el_1;
@@ -59,12 +60,6 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   @override
   ComponentRef<import1.QueriesComponent> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _viewQuery_q2_0 = new import2.QueryList();
-    _viewQuery_q2_1 = new import2.QueryList();
-    _viewQuery_q2_2 = new import2.QueryList();
-    _viewQuery_q2_3 = new import2.QueryList();
-    _viewQuery_q2_4 = new import2.QueryList();
-    _viewQuery_AnotherDirective_5 = new import2.QueryList();
     project(parentRenderNode, 0);
     var doc = import3.document;
     _el_0 = createAndAppend(doc, 'another', parentRenderNode);
@@ -180,8 +175,8 @@ const List<dynamic> styles$QueriesComponentHost = const [];
 class _ViewQueriesComponentHost0 extends AppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_4;
-  import2.QueryList _query_AnotherDirective_0_0;
-  import2.QueryList _query_AnotherDirective_0_1;
+  final import2.QueryList _query_AnotherDirective_0_0 = new import2.QueryList();
+  final import2.QueryList _query_AnotherDirective_0_1 = new import2.QueryList();
   static RenderComponentType _renderType;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import7.ViewType.HOST, {}, parentView, parentIndex,
@@ -195,8 +190,6 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
     _compView_0 = new ViewQueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _QueriesComponent_0_4 = new import1.QueriesComponent();
-    _query_AnotherDirective_0_0 = new import2.QueryList();
-    _query_AnotherDirective_0_1 = new import2.QueryList();
     _query_AnotherDirective_0_1.reset([]);
     _QueriesComponent_0_4.contentChildFromField =
         _query_AnotherDirective_0_1.first;
@@ -243,7 +236,8 @@ const ComponentFactory<import1.QueriesComponent> QueriesComponentNgFactory =
 const List<dynamic> styles$EmbeddedQueries = const [];
 
 class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
-  import2.QueryList _viewQuery_AnotherDirective_0;
+  final import2.QueryList _viewQuery_AnotherDirective_0 =
+      new import2.QueryList();
   import3.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_4;
   ViewContainer _appEl_1;
@@ -260,7 +254,6 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
   @override
   ComponentRef<import1.EmbeddedQueries> build() {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    _viewQuery_AnotherDirective_0 = new import2.QueryList();
     var doc = import3.document;
     _el_0 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_0_4 = new import1.AnotherDirective();
