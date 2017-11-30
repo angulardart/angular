@@ -39,6 +39,10 @@ dependency_overrides:
     git:
       url: https://github.com/dart-lang/build.git
       path: build_runner
+  build_config:
+    git:
+      url: https://github.com/dart-lang/build.git
+      path: build_config
   build_compilers:
     git:
       url: https://github.com/dart-lang/build.git
