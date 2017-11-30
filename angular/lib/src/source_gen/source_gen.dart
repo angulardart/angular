@@ -10,17 +10,14 @@ import 'template_compiler/generator.dart';
 export 'template_compiler/generator.dart'
     show TemplatePlaceholderBuilder, TemplateGenerator;
 
-const _outlineOnlyFlag = '--outline-only';
+const _outlineOnlyFlag = 'outline-only';
 
-Builder templateCompiler(List<String> args) {
-  var outlineOnly = args.contains(_outlineOnlyFlag);
-  if (outlineOnly) {
-    args = args.toList()..remove(_outlineOnlyFlag);
-  }
-
-  var flags = new CompilerFlags.parseArgs(
-    args,
-    defaultTo: const CompilerFlags(
+Builder templateCompiler(BuilderOptions options) {
+  final config = <String, dynamic>{}..addAll(options.config);
+  final outlineOnly = config.remove(_outlineOnlyFlag) != null;
+  var flags = new CompilerFlags.parseRaw(
+    config,
+    const CompilerFlags(
       genDebugInfo: false,
       useLegacyStyleEncapsulation: true,
       usePlaceholder: true,
