@@ -33,12 +33,10 @@ dependency_overrides:
     git:
       url: https://github.com/dart-lang/build.git
       path: build_runner
-      ref: build-dir
   build_compilers:
     git:
       url: https://github.com/dart-lang/build.git
       path: build_compilers
-      ref: build-dir
 
 transformers:
   - angular:
