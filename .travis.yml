@@ -4,14 +4,7 @@ dart:
   - dev
 
 env:
-  - PKG=_goldens
   - PKG=_tests
-  - PKG=angular
-  - PKG=angular_ast
-  - PKG=angular_compiler
-  - PKG=angular_forms
-  - PKG=angular_router
-  - PKG=angular_test
 
 # We don't use the dart_task model yet (mono-repo), so this will have to do.
 before_install:
