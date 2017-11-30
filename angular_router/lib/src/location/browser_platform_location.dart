@@ -15,13 +15,13 @@ class BrowserPlatformLocation extends PlatformLocation {
 
   BrowserPlatformLocation() {
     baseHRefFromDOM = base_href.baseHrefFromDOM;
-    this._init();
+    _init();
   }
   // This is moved to its own method so that `MockPlatformLocationStrategy` can overwrite it
 
   void _init() {
-    this._location = window.location;
-    this._history = window.history;
+    _location = window.location;
+    _history = window.history;
   }
 
   Location get location => _location;
@@ -39,34 +39,34 @@ class BrowserPlatformLocation extends PlatformLocation {
   }
 
   String get pathname {
-    return this._location.pathname;
+    return _location.pathname;
   }
 
   String get search {
-    return this._location.search;
+    return _location.search;
   }
 
   String get hash {
-    return this._location.hash;
+    return _location.hash;
   }
 
   set pathname(String newPath) {
-    this._location.pathname = newPath;
+    _location.pathname = newPath;
   }
 
   void pushState(dynamic state, String title, String url) {
-    this._history.pushState(state, title, url);
+    _history.pushState(state, title, url);
   }
 
   void replaceState(dynamic state, String title, String url) {
-    this._history.replaceState(state, title, url);
+    _history.replaceState(state, title, url);
   }
 
   void forward() {
-    this._history.forward();
+    _history.forward();
   }
 
   void back() {
-    this._history.back();
+    _history.back();
   }
 }

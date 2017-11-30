@@ -41,7 +41,7 @@ class LoginComponent implements CanReuse {
   Future login() async {
     message = 'Trying to log in ...';
 
-    await this._authService.login();
+    await _authService.login();
     setMessage();
     if (_authService.isLoggedIn) {
       String redirect = _authService.redirectUrl ?? '/admin';
