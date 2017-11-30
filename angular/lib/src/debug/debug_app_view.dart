@@ -156,32 +156,6 @@ class DebugAppView<T> extends AppView<T> {
   }
 
   @override
-  void Function(E) eventHandler0<E>(void Function() handler) {
-    return (E event) {
-      _resetDebug();
-      try {
-        return super.eventHandler0(handler)(event);
-      } catch (exception, stack) {
-        _rethrowWithContext(exception, stack);
-        rethrow;
-      }
-    };
-  }
-
-  @override
-  void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
-    return (E event) {
-      _resetDebug();
-      try {
-        return super.eventHandler1(handler)(event);
-      } catch (exception, stack) {
-        _rethrowWithContext(exception, stack);
-        rethrow;
-      }
-    };
-  }
-
-  @override
   Future<Null> loadDeferred(
       Future loadComponentFunction(),
       Future loadTemplateLibFunction(),
