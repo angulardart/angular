@@ -32,7 +32,7 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
   StreamSubscription _routeChanged;
   List<String> _classes;
 
-  @ContentChildren(RouterLink, descendants: true)
+  @ContentChildren(RouterLink)
   QueryList<RouterLink> links;
 
   RouterLinkActive(this._element, this._router);
