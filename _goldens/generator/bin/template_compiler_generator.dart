@@ -7,17 +7,16 @@ import 'package:angular_compiler/angular_compiler.dart';
 const String TEMPLATE_EXTENSION_PARAM = 'template_extension';
 const String CODEGEN_MODE_PARAM = 'codegen_mode';
 
-Builder templateBuilder(List<String> args) {
-  final argResults = _argParser.parse(args);
+Builder templateBuilder(BuilderOptions options) {
   final compilerFlags = new CompilerFlags(
-    genDebugInfo: argResults[CODEGEN_MODE_PARAM] == 'debug',
+    genDebugInfo: options.config[CODEGEN_MODE_PARAM] == 'debug',
   );
-  if (argResults[CODEGEN_MODE_PARAM] == 'outline') {
+  if (options.config[CODEGEN_MODE_PARAM] == 'outline') {
     return new TemplateOutliner(compilerFlags,
-        extension: argResults[TEMPLATE_EXTENSION_PARAM]);
+        extension: options.config[TEMPLATE_EXTENSION_PARAM]);
   }
   return new LibraryBuilder(new TemplateGenerator(compilerFlags),
-      generatedExtension: argResults[TEMPLATE_EXTENSION_PARAM]);
+      generatedExtension: options.config[TEMPLATE_EXTENSION_PARAM]);
 }
 
 Builder templatePlaceholderBuilder(_) => const TemplatePlaceholderBuilder();

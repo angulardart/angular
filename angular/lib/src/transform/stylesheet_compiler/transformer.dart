@@ -6,8 +6,9 @@ import 'package:angular_compiler/angular_compiler.dart';
 
 import 'processor.dart';
 
-Builder stylesheetCompiler(List<String> args) {
-  final flags = new CompilerFlags.parseArgs(args);
+Builder stylesheetCompiler(BuilderOptions options) {
+  final flags = new CompilerFlags.parseRaw(
+      options.config, const CompilerFlags(genDebugInfo: false));
   return new StylesheetCompiler(flags);
 }
 
