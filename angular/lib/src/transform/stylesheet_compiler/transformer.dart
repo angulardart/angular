@@ -8,7 +8,9 @@ import 'processor.dart';
 
 Builder stylesheetCompiler(BuilderOptions options) {
   final flags = new CompilerFlags.parseRaw(
-      options.config, const CompilerFlags(genDebugInfo: false));
+    options.config,
+    const CompilerFlags(genDebugInfo: false),
+  );
   return new StylesheetCompiler(flags);
 }
 
@@ -16,20 +18,23 @@ Builder stylesheetCompiler(BuilderOptions options) {
 class StylesheetCompiler implements Builder {
   final CompilerFlags _flags;
 
-  StylesheetCompiler(this._flags);
+  const StylesheetCompiler(this._flags);
 
   @override
-  final buildExtensions = {
+  final buildExtensions = const {
     CSS_EXTENSION: const [
       SHIMMED_STYLESHEET_EXTENSION,
-      NON_SHIMMED_STYLESHEET_EXTENSION
-    ]
+      NON_SHIMMED_STYLESHEET_EXTENSION,
+    ],
   };
 
   @override
   Future build(BuildStep buildStep) async {
-    final outputs =
-        await processStylesheet(buildStep, buildStep.inputId, _flags);
+    final outputs = await processStylesheet(
+      buildStep,
+      buildStep.inputId,
+      _flags,
+    );
     outputs.forEach(buildStep.writeAsString);
   }
 }
