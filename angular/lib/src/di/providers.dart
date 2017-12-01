@@ -302,19 +302,19 @@ class FactoryProvider<T> extends Provider<T> {
 class ValueProvider<T> extends Provider<T> {
   const factory ValueProvider(
     Object token,
-    Object useExisting, {
+    T useValue, {
     bool multi,
   }) = ValueProvider<T>._;
 
   // Prevents extending this class.
   const ValueProvider._(
     Object token,
-    Object useExisting, {
+    T useValue, {
     bool multi,
   })
       : super._(
           token,
-          useExisting: useExisting,
+          useValue: useValue,
           multi: multi,
         );
 }
