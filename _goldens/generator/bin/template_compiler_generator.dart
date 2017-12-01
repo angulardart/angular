@@ -1,4 +1,3 @@
-import 'package:args/args.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/source_gen.dart';
@@ -20,9 +19,3 @@ Builder templateBuilder(BuilderOptions options) {
 }
 
 Builder templatePlaceholderBuilder(_) => const TemplatePlaceholderBuilder();
-
-final _argParser = new ArgParser()
-  ..addOption(CODEGEN_MODE_PARAM,
-      help: 'What mode to run the code generator in. Either release or debug.')
-  ..addOption(TEMPLATE_EXTENSION_PARAM,
-      help: 'Generated template extension.', defaultsTo: '.template.dart');
