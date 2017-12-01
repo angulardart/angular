@@ -11,5 +11,5 @@ dartanalyzer --fatal-warnings .
 
 pub run test -p vm -x codegen
 dart tool/build.dart
-pub run test --precompiled=build --platform=chrome --tags=codegen \
+pub run test --precompiled=build --platform=firefox --tags=codegen \
     --exclude-tags=known_pub_serve_failure -j1 
