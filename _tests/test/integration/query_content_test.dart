@@ -24,6 +24,15 @@ void main() {
       ),
     );
   });
+
+  test('List', () {
+    testContentChildren(
+      contentChildren: new TestCase(
+        new NgTestBed<TestContentChildrenList>(),
+        [1, 2, 3],
+      ),
+    );
+  });
 }
 
 @Component(
@@ -86,4 +95,36 @@ class TestContentChild extends HasChild<ValueDirective> {
 
   @override
   ValueDirective get child => content.child;
+}
+
+@Component(
+  selector: 'content',
+  template: '<ng-content></ng-content>',
+)
+class ContentChildrenComponentList extends HasChildren<ValueDirective> {
+  @override
+  @ContentChildren(ValueDirective)
+  List<ValueDirective> actualChildren;
+}
+
+@Component(
+  selector: 'test',
+  directives: const [
+    ContentChildrenComponentList,
+    ValueDirective,
+  ],
+  template: r'''
+    <content #comp>
+      <value [value]="1"></value>
+      <value [value]="2"></value>
+      <value [value]="3"></value>
+    </content>
+  ''',
+)
+class TestContentChildrenList extends HasChildren<ValueDirective> {
+  @ViewChild('comp')
+  HasChildren<ValueDirective> content;
+
+  @override
+  List<ValueDirective> get actualChildren => content.actualChildren;
 }

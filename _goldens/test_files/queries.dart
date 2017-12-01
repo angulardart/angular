@@ -62,5 +62,25 @@ class EmbeddedQueries {
   QueryList viewChildren;
 }
 
+@Component(
+  selector: 'test',
+  directives: const [
+    AnotherDirective,
+  ],
+  template: r'''
+    <another></another>
+    <template>
+      <another></another>
+    </template>
+    <template>
+      <another></another>
+    </template>
+  ''',
+)
+class EmbeddedQueriesList {
+  @ViewChildren(AnotherDirective)
+  List<AnotherDirective> viewChildren;
+}
+
 @Directive(selector: 'another')
 class AnotherDirective {}

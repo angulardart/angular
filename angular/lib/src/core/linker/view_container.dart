@@ -155,17 +155,14 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     }
   }
 
-  List<dynamic> mapNestedViews(/*Type*/ nestedViewClass, Function callback) {
-    // TODO: Once reflective compiler removed, type 'nestedViewClass'.
-    var result = [];
-    if (nestedViews != null) {
-      for (var nestedView in nestedViews) {
-        // It's currently unsupported to use identical(...) with runtimeType:
-        // https://github.com/dart-lang/sdk/issues/23852
-        if (nestedView.runtimeType == nestedViewClass) {
-          result.add(callback(nestedView));
-        }
-      }
+  List<T> mapNestedViews<T>(List<T> Function(dynamic) callback) {
+    final nestedViews = this.nestedViews;
+    if (nestedViews == null || nestedViews.isEmpty) {
+      return const [];
+    }
+    final result = <T>[];
+    for (var i = 0, l = nestedViews.length; i < l; i++) {
+      result.addAll(callback(nestedViews[i]));
     }
     return result;
   }

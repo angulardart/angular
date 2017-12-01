@@ -13,12 +13,6 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   group('query for Directive', () {
-    test('should contain all content children', () async {
-      final testBed = new NgTestBed<TestsContentChildrenDescendantsComponent>();
-      final testFixture = await testBed.create();
-      expect(testFixture.text.trim(), '2|3|4|5');
-    });
-
     test('should contain first content child', () async {
       final testBed = new NgTestBed<TestsContentChildComponent>();
       final testFixture = await testBed.create();
@@ -35,15 +29,6 @@ void main() {
       final testBed = new NgTestBed<TestsViewChildComponent>();
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), 'a');
-    });
-
-    test('should contain all content children in embedded view', () async {
-      final testBed =
-          new NgTestBed<TestsEmbeddedContentChildrenDescendantsComponent>();
-      final testFixture = await testBed.create();
-      expect(testFixture.text.trim(), '1');
-      await testFixture.update((component) => component.showContent = true);
-      expect(testFixture.text.trim(), '1|2|3|4');
     });
 
     test('should contain first content child in embedded view', () async {
@@ -254,33 +239,6 @@ class ContentChildrenComponent extends TextDirectivesRenderer {
 }
 
 @Component(
-  selector: 'content-children-descendants',
-  template: '<div>{{text}}</div>',
-)
-class ContentChildrenDescendantsComponent extends TextDirectivesRenderer {
-  @ContentChildren(TextDirective, descendants: true)
-  QueryList<TextDirective> textDirectives;
-}
-
-@Component(
-  selector: 'tests-content-children-descendants',
-  template: '''
-<div text="1"></div>
-<content-children-descendants text="2">
-  <div text="3">
-    <div text="4"></div>
-  </div>
-  <div text="5"></div>
-</content-children-descendants>
-<div text="6"></div>''',
-  directives: const [
-    ContentChildrenDescendantsComponent,
-    TextDirective,
-  ],
-)
-class TestsContentChildrenDescendantsComponent {}
-
-@Component(
   selector: 'content-child',
   template: '<div>{{textDirective?.text}}</div>',
 )
@@ -370,27 +328,6 @@ class ViewChildComponent {
   ],
 )
 class TestsViewChildComponent {}
-
-@Component(
-  selector: 'tests-embedded-content-children',
-  template: '''
-<content-children-descendants text="1">
-  <template [ngIf]="showContent">
-    <div text="2">
-      <div text="3"></div>
-    </div>
-    <div text="4"></div>
-  </template>
-</content-children-descendants>''',
-  directives: const [
-    ContentChildrenDescendantsComponent,
-    NgIf,
-    TextDirective,
-  ],
-)
-class TestsEmbeddedContentChildrenDescendantsComponent {
-  bool showContent = false;
-}
 
 @Component(
   selector: 'tests-embedded-content-children',

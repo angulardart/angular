@@ -74,6 +74,15 @@ class AppViewUtils {
   }
 }
 
+/// Flattens a `List<List<?>>` into a `List<?>`.
+List<T> flattenNodes<T>(List<List<T>> nodes) {
+  final result = <T>[];
+  for (var i = 0, l = nodes.length; i < l; i++) {
+    result.addAll(nodes[i]);
+  }
+  return result;
+}
+
 dynamic interpolate0(dynamic p) {
   if (p is SafeValue) return p;
   return p == null ? '' : '$p';

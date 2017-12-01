@@ -25,6 +25,10 @@ class _QueryValues {
 /// Uses a conditional compilation strategy in order to deprecate `QueryList`:
 /// https://github.com/dart-lang/angular/issues/688
 abstract class CompileQuery {
+  static bool _useNewQuery(CompileQueryMetadata metadata) =>
+      // We don't use the new-style queries with .first yet.
+      !metadata.first && metadata.isListType;
+
   /// An expression that accesses the component's instance.
   ///
   /// In practice, this is almost always `this.ctx`.
@@ -52,7 +56,15 @@ abstract class CompileQuery {
     @required int nodeIndex,
     @required int queryIndex,
   }) {
-    // TODO(matanl): If this is a 'List' type, use a different implementation.
+    if (_useNewQuery(metadata)) {
+      return new _ListCompileQuery(
+        metadata,
+        queryRoot,
+        boundField,
+        nodeIndex: nodeIndex,
+        queryIndex: queryIndex,
+      );
+    }
     return new _QueryListCompileQuery(
       metadata,
       queryRoot,
@@ -68,6 +80,15 @@ abstract class CompileQuery {
     @required o.Expression boundField,
     @required int queryIndex,
   }) {
+    if (_useNewQuery(metadata)) {
+      return new _ListCompileQuery(
+        metadata,
+        queryRoot,
+        boundField,
+        nodeIndex: 1,
+        queryIndex: queryIndex,
+      );
+    }
     return new _QueryListCompileQuery(
       metadata,
       queryRoot,
@@ -134,18 +155,36 @@ abstract class CompileQuery {
   /// Returns the literal values of the list that the user-code receives.
   List<o.Expression> _buildQueryResult(_QueryValues viewValues) {
     final result = <o.Expression>[];
-    for (final valueOrTemplate in viewValues.valuesOrTemplates) {
-      if (valueOrTemplate is o.Expression) {
-        result.add(valueOrTemplate);
+    if (!viewValues.hasNestedViews) {
+      // Fast-path when there are no nested views.
+      for (final o.Expression expression in viewValues.valuesOrTemplates) {
+        result.add(expression);
       }
-      if (valueOrTemplate is _QueryValues) {
-        result.add(
-          _mapNestedViews(
-            valueOrTemplate.view.declarationElement.appViewContainer,
-            valueOrTemplate.view,
-            _buildQueryResult(valueOrTemplate),
-          ),
-        );
+    } else {
+      for (final valueOrTemplate in viewValues.valuesOrTemplates) {
+        // It's easier to reason/flatten if everything is a List.
+        //
+        // If we _don't_ do this, then we lose type inference as well:
+        //   [
+        //     [1],
+        //     [2],
+        //   ] ==> List<List<int>>
+        //
+        //   [
+        //     1,
+        //     [2],
+        //   ] ==> List<Object>
+        if (valueOrTemplate is o.Expression) {
+          result.add(o.literalArr([valueOrTemplate]));
+        } else if (valueOrTemplate is _QueryValues) {
+          result.add(
+            _mapNestedViews(
+              valueOrTemplate.view.declarationElement.appViewContainer,
+              valueOrTemplate.view,
+              _buildQueryResult(valueOrTemplate),
+            ),
+          );
+        }
       }
     }
     return result;
@@ -161,16 +200,23 @@ abstract class CompileQuery {
   ) {
     final adjustedExpressions = expressions.map((expr) {
       return o.replaceReadClassMemberInExpression(
-          o.variable('nestedView'), expr);
+        o.variable('nestedView'),
+        expr,
+      );
     }).toList();
     return declarationViewContainer.callMethod('mapNestedViews', [
-      o.variable(view.className),
       o.fn(
         [new o.FnParam('nestedView', view.classType)],
         [new o.ReturnStatement(o.literalArr(adjustedExpressions))],
       ),
     ]);
   }
+
+  static final _flattenNodesFn = o.importExpr(Identifiers.flattenNodes);
+
+  /// Flattens a `List<List<?>>` into a `List<?>`.
+  o.Expression _flattenNodes(o.Expression nodeExpressions) =>
+      _flattenNodesFn.callFn([nodeExpressions]);
 
   /// Invoked by [addQueryResult] when the [_queryRoot] is now dirty.
   ///
@@ -208,9 +254,7 @@ abstract class CompileQuery {
   /// ```dart
   /// import2.QueryList _query_ChildDirective_0;
   /// ```
-  ///
-  /// May set [viewQuery] to `true` in order to label it `_viewQuery` instead.
-  o.AbstractClassPart createClassField({bool viewQuery});
+  o.AbstractClassPart createClassField();
 
   /// Return code that will set the query contents at change-detection time.
   ///
@@ -327,6 +371,98 @@ class _QueryListCompileQuery extends CompileQuery {
       return statements;
     }
     return [new o.IfStmt(_queryList.prop('dirty'), statements)];
+  }
+}
+
+class _ListCompileQuery extends CompileQuery {
+  o.ReadPropExpr _queryDirtyField;
+  o.ClassField _classField;
+
+  _ListCompileQuery(
+    CompileQueryMetadata metadata,
+    CompileView queryRoot,
+    o.Expression boundField, {
+    @required int nodeIndex,
+    @required int queryIndex,
+  })
+      : super._base(metadata, queryRoot, boundField) {
+    _queryDirtyField = _createQueryDirtyField(
+      metadata: metadata,
+      nodeIndex: nodeIndex,
+      queryIndex: queryIndex,
+    );
+  }
+
+  /// Inserts a `bool {property}` field in the generated view.
+  ///
+  /// Returns an expression pointing to that field.
+  o.Expression _createQueryDirtyField({
+    @required CompileQueryMetadata metadata,
+    @required int nodeIndex,
+    @required int queryIndex,
+  }) {
+    final selector = metadata.selectors.first.name;
+    // This is to avoid churn in the golden files/output while debugging.
+    //
+    // We can rename the properties after we decide to keep this code branch.
+    String property;
+    if (nodeIndex == -1) {
+      // @ViewChild[ren].
+      property = '_viewQuery_${selector}_${queryIndex}_isDirty';
+    } else {
+      // @ContentChild[ren].
+      property = '_query_${selector}_${nodeIndex}_${queryIndex}_isDirty';
+    }
+    // bool _query_foo_0_0_isDirty = true;
+    _classField = new o.ClassField(property,
+        outputType: o.BOOL_TYPE,
+        modifiers: [o.StmtModifier.Private],
+        initializer: o.literal(true));
+    return new o.ReadClassMemberExpr(property);
+  }
+
+  @override
+  void _setParentQueryAsDirty(CompileView origin) {
+    final o.ReadPropExpr queryDirtyField = getPropertyInView(
+      _queryDirtyField,
+      origin,
+      _queryRoot,
+    );
+    origin.dirtyParentQueriesMethod.addStmt(
+      queryDirtyField.set(o.literal(true)).toStmt(),
+    );
+  }
+
+  @override
+  o.AbstractClassPart createClassField() => _classField;
+
+  @override
+  List<o.Statement> createDynamicUpdates() {
+    final statements = <o.Statement>[]
+      ..addAll(_createUpdates())
+      ..add(_queryDirtyField.set(o.literal(false)).toStmt());
+    return [
+      new o.IfStmt(
+        _queryDirtyField,
+        statements,
+      ),
+    ];
+  }
+
+  @override
+  List<o.Statement> createImmediateUpdates() {
+    return _isStatic ? _createUpdates() : const [];
+  }
+
+  List<o.Statement> _createUpdates() {
+    o.Expression values = o.literalArr(_buildQueryResult(_values));
+    if (_isSingle) {
+      values = values.prop('first');
+    }
+    if (_values.hasNestedViews) {
+      values = _flattenNodes(values);
+    }
+    return [_boundField.prop(metadata.propertyName).set(values).toStmt()];
   }
 }
 
