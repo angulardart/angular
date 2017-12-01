@@ -16,8 +16,8 @@ dependencies:
 
 dev_dependencies:
   angular_test: ^1.0.1
-  build_compilers: ^0.0.1
-  build_runner: ^0.6.0
+  build_compilers: ^0.1.0
+  build_runner: ^0.6.1
   build_test: ^0.9.0
   test: ^0.12.6
 
@@ -35,18 +35,6 @@ dependency_overrides:
     path: ../angular_test
   angular_router.example:
     path: example
-  build_runner:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: build_runner
-  build_config:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: build_config
-  build_compilers:
-    git:
-      url: https://github.com/dart-lang/build.git
-      path: build_compilers
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
 
 transformers:
