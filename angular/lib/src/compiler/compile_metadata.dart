@@ -292,32 +292,35 @@ class CompileTypeMetadata
 /// ContentChild and ContentChildren decorators.
 class CompileQueryMetadata {
   /// List of types or tokens to match.
-  List<CompileTokenMetadata> selectors;
+  final List<CompileTokenMetadata> selectors;
 
-  /// TODO: unused, deprecate.
-  bool descendants;
+  /// Whether nested elements should be queried.
+  final bool descendants;
 
   /// Set when querying for first instance that matches selectors.
-  bool first;
+  final bool first;
 
   /// Name of class member on the component to update with query result.
-  String propertyName;
+  final String propertyName;
+
+  /// Type of the class member on the component.
+  final bool isListType;
 
   /// Optional type to read for given match.
   ///
   /// When we match an element in the template, it typically returns the
   /// component. Using read: parameter we can specifically query for
   /// ViewContainer or TemplateRef for the node.
-  CompileTokenMetadata read;
+  final CompileTokenMetadata read;
 
-  CompileQueryMetadata(
-      {this.selectors,
-      bool descendants,
-      bool first,
-      this.propertyName,
-      this.read})
-      : this.descendants = descendants == true,
-        this.first = first == true;
+  const CompileQueryMetadata({
+    this.selectors,
+    this.descendants: false,
+    this.first: false,
+    this.propertyName,
+    this.isListType: false,
+    this.read,
+  });
 }
 
 /// Metadata regarding compilation of a template.

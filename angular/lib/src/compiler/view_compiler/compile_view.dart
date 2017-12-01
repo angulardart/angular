@@ -336,7 +336,7 @@ class CompileView implements AppViewBuilder {
           boundField: directiveInstance,
           queryIndex: queryIndex,
         );
-        nameResolver.addField(query.createClassField(viewQuery: true));
+        nameResolver.addField(query.createClassField());
         addQueryToTokenMap(viewQueries, query);
       }
     }

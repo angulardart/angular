@@ -151,6 +151,8 @@ class Identifiers {
     new CompileIdentifierMetadata<dynamic>(
         name: "interpolate9", moduleUrl: APP_VIEW_UTILS_MODULE_URL),
   ];
+  static final flattenNodes = new CompileIdentifierMetadata<dynamic>(
+      name: "flattenNodes", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final EMPTY_ARRAY = new CompileIdentifierMetadata<dynamic>(
       name: "EMPTY_ARRAY", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
   static final EMPTY_MAP = new CompileIdentifierMetadata<dynamic>(

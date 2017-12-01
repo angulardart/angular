@@ -119,12 +119,12 @@ class TestCase<T> {
 
 void testViewChildren({
   @required TestCase<HasChildren<ValueDirective>> directViewChildren,
-  @required TestCase<HasChild<ValueDirective>> directViewChild,
+  TestCase<HasChild<ValueDirective>> directViewChild,
   @required TestCase<HasChildren<ValueDirective>> viewChildrenAndEmbedded,
-  @required TestCase<HasChild<ValueDirective>> viewChildEmbedded,
-  @required TestCase<HasChild<ValueDirective>> viewChildNestedOffOn,
-  @required TestCase<HasChild<ValueDirective>> viewChildNestedNgIfOffOn,
-  @required TestCase<HasChild<ValueDirective>> viewChildNestedNgIfOffOnAsync,
+  TestCase<HasChild<ValueDirective>> viewChildEmbedded,
+  TestCase<HasChild<ValueDirective>> viewChildNestedOffOn,
+  TestCase<HasChild<ValueDirective>> viewChildNestedNgIfOffOn,
+  TestCase<HasChild<ValueDirective>> viewChildNestedNgIfOffOnAsync,
 }) {
   group('@ViewChild[ren](...)', () {
     test('should find direct view children', () async {
@@ -135,7 +135,7 @@ void testViewChildren({
     test('should find a direct view child', () async {
       final fixture = await directViewChild.testBed.create();
       expect(fixture, hasChildValues(directViewChild.expectValues));
-    });
+    }, skip: directViewChild == null);
 
     test('should find direct view children in embedded templates', () async {
       final fixture = await viewChildrenAndEmbedded.testBed.create();
@@ -145,18 +145,18 @@ void testViewChildren({
     test('should find direct view child in embedded templates', () async {
       final fixture = await viewChildEmbedded.testBed.create();
       expect(fixture, hasChildValues(viewChildEmbedded.expectValues));
-    });
+    }, skip: viewChildEmbedded == null);
 
     group('should not find embedded view child on', () {
       test('a nested pair of <template> tags (off then on)', () async {
         final fixture = await viewChildNestedOffOn.testBed.create();
         expect(fixture, hasChildValues(viewChildNestedOffOn.expectValues));
-      });
+      }, skip: viewChildNestedOffOn == null);
 
       test('a nested pair of *ngIf usages (true than false)', () async {
         final fixture = await viewChildNestedNgIfOffOn.testBed.create();
         expect(fixture, hasChildValues(viewChildNestedNgIfOffOn.expectValues));
-      });
+      }, skip: viewChildNestedNgIfOffOn == null);
 
       test('a nested pair of *ngIf usages that becomes true, false', () async {
         final fixture = await viewChildNestedNgIfOffOnAsync.testBed.create();
@@ -164,14 +164,14 @@ void testViewChildren({
           fixture,
           hasChildValues(viewChildNestedNgIfOffOnAsync.expectValues),
         );
-      });
+      }, skip: viewChildNestedNgIfOffOnAsync == null);
     });
   });
 }
 
 void testContentChildren({
   @required TestCase<HasChildren<ValueDirective>> contentChildren,
-  @required TestCase<HasChild<ValueDirective>> contentChild,
+  TestCase<HasChild<ValueDirective>> contentChild,
 }) {
   group('@ContentChild[ren](...)', () {
     test('should find content children', () async {
@@ -182,6 +182,6 @@ void testContentChildren({
     test('should find a content child', () async {
       final fixture = await contentChild.testBed.create();
       expect(fixture, hasChildValues(contentChild.expectValues));
-    });
+    }, skip: contentChild == null);
   });
 }

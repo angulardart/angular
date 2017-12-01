@@ -46,6 +46,19 @@ void main() {
       ),
     );
   });
+
+  group('List', () {
+    testViewChildren(
+      directViewChildren: new TestCase(
+        new NgTestBed<TestDirectViewChildrenList>(),
+        [1, 2, 3],
+      ),
+      viewChildrenAndEmbedded: new TestCase(
+        new NgTestBed<TestViewChildrenAndEmbeddedList>(),
+        [1, 3],
+      ),
+    );
+  });
 }
 
 @Component(
@@ -193,4 +206,43 @@ class TestViewChildNestedNgIfOffOnAsync extends HasChild<ValueDirective>
   @override
   @ViewChild(ValueDirective)
   ValueDirective child;
+}
+
+@Component(
+  selector: 'test',
+  directives: const [
+    ValueDirective,
+  ],
+  template: r'''
+    <value [value]="1"></value>
+    <value [value]="2"></value>
+    <value [value]="3"></value>
+  ''',
+)
+class TestDirectViewChildrenList extends HasChildren<ValueDirective> {
+  @override
+  @ViewChildren(ValueDirective)
+  List<ValueDirective> actualChildren;
+}
+
+@Component(
+  selector: 'test',
+  directives: const [
+    AlwaysShowDirective,
+    ValueDirective,
+  ],
+  template: r'''
+    <value [value]="1"></value>
+    <template neverShow>
+      <value [value]="2"></value>
+    </template>
+    <template alwaysShow>
+      <value [value]="3"></value>
+    </template>
+  ''',
+)
+class TestViewChildrenAndEmbeddedList extends HasChildren<ValueDirective> {
+  @override
+  @ViewChildren(ValueDirective)
+  List<ValueDirective> actualChildren;
 }

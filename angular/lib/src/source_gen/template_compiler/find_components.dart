@@ -1,6 +1,7 @@
 import 'package:analyzer/analyzer.dart' hide Directive;
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
@@ -325,6 +326,7 @@ class ComponentVisitor
             annotation.computeConstantValue(),
             // Avoid emitting the '=' part of the setter.
             element.displayName,
+            _fieldOrPropertyType(element),
           ));
         } else {
           log.severe(''
@@ -340,6 +342,7 @@ class ComponentVisitor
             annotation.computeConstantValue(),
             // Avoid emitting the '=' part of the setter.
             element.displayName,
+            _fieldOrPropertyType(element),
           ));
         } else {
           log.severe(''
@@ -348,6 +351,16 @@ class ComponentVisitor
         }
       }
     }
+  }
+
+  DartType _fieldOrPropertyType(Element element) {
+    if (element is PropertyAccessorElement) {
+      return element.returnType;
+    }
+    if (element is FieldElement) {
+      return element.type;
+    }
+    return null;
   }
 
   List<CompileTokenMetadata> _getSelectors(DartObject value) {
@@ -370,9 +383,12 @@ class ComponentVisitor
     ];
   }
 
+  static final _coreList = new TypeChecker.fromUrl('dart:core#List');
+
   CompileQueryMetadata _getQuery(
     annotationOrObject,
     String propertyName,
+    DartType propertyType,
   ) {
     DartObject value;
     if (annotationOrObject is ElementAnnotation) {
@@ -386,6 +402,8 @@ class ComponentVisitor
       descendants: coerceBool(value, 'descendants', defaultTo: false),
       first: coerceBool(value, 'first', defaultTo: false),
       propertyName: propertyName,
+      isListType: propertyType?.element != null &&
+          _coreList.isExactlyType(propertyType),
       read: readType != null
           ? new CompileTokenMetadata(
               identifier: new CompileIdentifierMetadata(
