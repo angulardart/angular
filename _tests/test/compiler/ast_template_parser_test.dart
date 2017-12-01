@@ -732,9 +732,9 @@ void main() {
               () => parse('<div dirA dirB></div>', [dirA, dirB]),
               throwsWith('Template parse errors:\n'
                   'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Mixing multi and non multi provider is not possible for token service0\n'
-                  '<div dirA dirB>\n'
+                  '<div dirA dirB></div>\n'
                   '^^^^^^^^^^^^^^^'));
-        }, skip: 'Don\'t yet handle errors.');
+        });
 
         test('should sort providers by their DI order', () {
           var provider0 = createProvider('service0', deps: ['type:[dir2]']);
@@ -834,9 +834,9 @@ void main() {
               () => parse('<div dirA></div>', [dirA]),
               throwsWith('Template parse errors:\n'
                   'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: No provider for provider0\n'
-                  '<div dirA>\n'
+                  '<div dirA></div>\n'
                   '^^^^^^^^^^'));
-        }, skip: 'Don\'t yet handle errors.');
+        });
 
         test('should change missing @Self() that are optional to nulls', () {
           var dirA = createDir('[dirA]', deps: ['optional:self:provider0']);
@@ -852,9 +852,9 @@ void main() {
               () => parse('<div dirA></div>', [dirA]),
               throwsWith('Template parse errors:\n'
                   'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: No provider for provider0\n'
-                  '<div dirA>\n'
+                  '<div dirA></div>\n'
                   '^^^^^^^^^^'));
-        }, skip: 'Don\'t yet handle errors.');
+        });
 
         test('should change missing @Host() that are optional to nulls', () {
           var dirA = createDir('[dirA]', deps: ['optional:host:provider0']);
@@ -872,8 +872,8 @@ void main() {
               throwsWith('Template parse errors:\n'
                   'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: '
                   'Cannot instantiate cyclic dependency! [cycleDirective]\n'
-                  '<div cycleDirective>\n'));
-        }, skip: 'Don\'t yet handle errors.');
+                  '<div cycleDirective></div>\n'));
+        });
 
         test('should report missing @Host() deps in providers as errors', () {
           var needsHost = createDir('[needsHost]', deps: ['host:service']);
@@ -882,24 +882,24 @@ void main() {
               throwsWith('Template parse errors:\n'
                   'line 1, column 1 of TestComp: '
                   'ParseErrorLevel.FATAL: No provider for service\n'
-                  '<div needsHost>\n'));
-        }, skip: 'Don\'t yet handle errors.');
+                  '<div needsHost></div>\n'));
+        });
 
         test('should report missing @Self() deps as errors', () {
           var needsDirectiveFromSelf = createDir('[needsDirectiveFromSelf]',
               deps: ['self:type:[simpleDirective]']);
           var simpleDirective = createDir('[simpleDirective]');
           expect(
-              () => parse(
-                  '<div simpleDirective>'
-                  '<div needsDirectiveFromSelf></div>'
-                  '</div>',
-                  [needsDirectiveFromSelf, simpleDirective]),
+              () => parse('''
+                  <div simpleDirective>
+                    <div needsDirectiveFromSelf></div>
+                  </div>''', [needsDirectiveFromSelf, simpleDirective]),
               throwsWith('Template parse errors:\n'
-                  'line 1, column 22 of TestComp: '
+                  'line 2, column 21 of TestComp: '
                   'ParseErrorLevel.FATAL: No provider for [simpleDirective]\n'
-                  '<div needsDirectiveFromSelf>\n'));
-        }, skip: 'Don\'t yet handle errors.');
+                  '                    <div needsDirectiveFromSelf></div>\n'
+                  '                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^'));
+        });
       });
 
       group('references', () {
@@ -1915,11 +1915,11 @@ void main() {
           'as dependencies', () {
         expect(
             () => parse('{{a | test}}', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: The pipe \'test\' could not be found\n'
+            throwsWith(
+                'Invalid argument(s): line 1, column 1 of TestComp: The pipe \'test\' could not be found.\n'
                 '{{a | test}}\n'
                 '^^^^^^^^^^^^'));
-      }, skip: 'Don\'t handle errors yet.');
+      });
     });
 
     group('deferred', () {

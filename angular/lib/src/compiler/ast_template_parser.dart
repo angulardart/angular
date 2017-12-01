@@ -1,4 +1,5 @@
 import 'package:source_span/source_span.dart';
+import 'package:angular/src/facade/exceptions.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
 import 'package:angular_ast/src/expression/micro.dart';
 
@@ -33,10 +34,10 @@ class AstTemplateParser implements TemplateParser {
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
       String name) {
-    final parsedAst = _parseTemplate(template);
+    final parsedAst = _parseTemplate(template, name);
     if (parsedAst.isEmpty) return const [];
     final implicNamespace = _applyImplicitNamespace(parsedAst);
-    final desugaredAst = _inlineTemplates(implicNamespace);
+    final desugaredAst = _inlineTemplates(implicNamespace, template, name);
     final filteredAst = _filterElements(desugaredAst);
     final boundAsts = _bindDirectives(directives, compMeta, filteredAst);
     final providedAsts = _bindProviders(compMeta, desugaredAst, boundAsts);
@@ -45,21 +46,44 @@ class AstTemplateParser implements TemplateParser {
     return providedAsts;
   }
 
-  List<ast.TemplateAst> _parseTemplate(String template) {
+  List<ast.TemplateAst> _parseTemplate(String template, String name) {
+    var exceptionHandler = new ast.RecoveringExceptionHandler();
     final parsedAst = ast.parse(template,
-        // TODO(alorenzen): Use real sourceUrl.
-        sourceUrl: '/test#inline',
+        sourceUrl: name,
         desugar: true,
         toolFriendlyAst: true,
-        parseExpressions: false);
+        parseExpressions: false,
+        exceptionHandler: exceptionHandler);
+    if (exceptionHandler.exceptions.isNotEmpty) {
+      _handleExceptions(template, name, exceptionHandler.exceptions);
+      return [];
+    }
     return parsedAst;
   }
 
-  List<ast.TemplateAst> _inlineTemplates(List<ast.TemplateAst> parsedAst) {
-    var values = parsedAst
-        .map((asNode) => asNode.accept(new _InlineTemplateDesugar()))
-        .toList();
-    return values;
+  void _handleExceptions(String template, String sourceUrl,
+      List<ast.AngularParserException> exceptions) {
+    final sourceFile = new SourceFile.fromString(template, url: sourceUrl);
+    final errorString = exceptions
+        .map((exception) => sourceFile
+            .span(exception.offset, exception.offset + exception.length)
+            .message(exception.errorCode.message))
+        .join('\n');
+    throw new BaseException('Template parse errors: \n$errorString');
+  }
+
+  List<ast.TemplateAst> _inlineTemplates(
+      List<ast.TemplateAst> parsedAst, String template, String sourceUrl) {
+    try {
+      var values = parsedAst
+          .map((asNode) => asNode.accept(new _InlineTemplateDesugar()))
+          .toList();
+      return values;
+    } on ast.AngularParserException catch (e) {
+      _handleExceptions(template, sourceUrl, [e]);
+      // _handleExceptions throws an exception, so don't expect to reach this.
+      rethrow;
+    }
   }
 
   List<ast.TemplateAst> _filterElements(List<ast.TemplateAst> parsedAst) =>
@@ -87,10 +111,15 @@ class AstTemplateParser implements TemplateParser {
     final providerVisitor = new _ProviderVisitor(providerViewContext);
     final ProviderElementContext providerContext = new ProviderElementContext(
         providerViewContext, null, false, [], [], [], null);
-    return visitedAsts
+    final providedAsts = visitedAsts
         .map((templateAst) =>
             templateAst.visit(providerVisitor, providerContext))
         .toList();
+    if (providerViewContext.errors.isNotEmpty) {
+      handleParseErrors(providerViewContext.errors);
+      return [];
+    }
+    return providedAsts;
   }
 
   void _optimize(CompileDirectiveMetadata compMeta, List<ng.TemplateAst> asts) {
