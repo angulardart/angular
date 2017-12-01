@@ -37,10 +37,7 @@ Future main(List<String> args) async {
     deleteFilesByDefault: true,
     writeToCache: true,
     enableLowResourcesMode: true,
-    buildDir: 'build',
   );
-  // TODO(jakemac): Something is preventing us from exiting here.
-  exit(0);
 }
 
 List<BuildAction> _angularBuildActions(PackageGraph graph) {
