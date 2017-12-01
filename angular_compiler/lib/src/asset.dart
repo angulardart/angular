@@ -25,8 +25,13 @@ abstract class NgAssetReader {
     return asset.uri.toString();
   }
 
-  String _normalize(String url) =>
-      assetToPackageUrl(Uri.parse(url)).toString().replaceAll('%7C', r'/');
+  String _normalize(String url) => assetToPackageUrl(Uri.parse(url))
+      .toString()
+      // Normalization for Windows URLs.
+      // See https://github.com/dart-lang/angular/issues/723.
+      .replaceAll('..%5C', '')
+      // Other normalization.
+      .replaceAll('%7C', r'/');
 }
 
 class _BarbackAssetReader extends NgAssetReader {
