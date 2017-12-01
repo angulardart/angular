@@ -12,48 +12,37 @@ import 'package:angular_compiler/angular_compiler.dart';
 
 Future main(List<String> args) async {
   var graph = new PackageGraph.forThisPackage();
-  var buildActions = _angularBuildActions(graph);
-  buildActions.add(new BuildAction(new TestBootstrapBuilder(), graph.root.name,
-      inputs: ['test/**_test.dart']));
-
-  void addBuilderForAll(Builder builder) {
-    for (var packageNode in graph.orderedPackages) {
-      buildActions
-          .add(new BuildAction(builder, packageNode.name, isOptional: true));
-    }
-  }
-
-  addBuilderForAll(new ModuleBuilder());
-  addBuilderForAll(new UnlinkedSummaryBuilder());
-  addBuilderForAll(new LinkedSummaryBuilder());
-  addBuilderForAll(new DevCompilerBuilder());
-
-  buildActions.add(new BuildAction(
-      new DevCompilerBootstrapBuilder(), graph.root.name,
-      inputs: ['web/**.dart', 'test/**.browser_test.dart']));
+  var flags = new CompilerFlags(genDebugInfo: true);
+  var builders = [
+    apply(
+        'angular',
+        'angular',
+        [
+          (_) => const TemplatePlaceholderBuilder(),
+          (_) => createSourceGenTemplateCompiler(flags),
+          (_) => new StylesheetCompiler(flags),
+        ],
+        toAll([toPackage('angular'), toDependentsOf('angular')])),
+    applyToRoot(new TestBootstrapBuilder(), inputs: ['test/**_test.dart']),
+    apply(
+        'build_compilers',
+        'ddc',
+        [
+          (_) => new ModuleBuilder(),
+          (_) => new UnlinkedSummaryBuilder(),
+          (_) => new LinkedSummaryBuilder(),
+          (_) => new DevCompilerBuilder(),
+        ],
+        toAllPackages(),
+        isOptional: true),
+    applyToRoot(new DevCompilerBootstrapBuilder(),
+        inputs: ['web/**.dart', 'test/**.browser_test.dart']),
+  ];
 
   await build(
-    buildActions,
+    createBuildActions(graph, builders),
     deleteFilesByDefault: true,
     writeToCache: true,
     enableLowResourcesMode: true,
   );
-}
-
-List<BuildAction> _angularBuildActions(PackageGraph graph) {
-  var actions = <BuildAction>[];
-  var flags = new CompilerFlags(genDebugInfo: true);
-  var builders = [
-    const TemplatePlaceholderBuilder(),
-    createSourceGenTemplateCompiler(flags),
-    new StylesheetCompiler(flags),
-  ];
-  var packages = ['angular']
-    ..addAll(graph.dependentsOf('angular').map((n) => n.name));
-  for (var builder in builders) {
-    for (var package in packages) {
-      actions.add(new BuildAction(builder, package));
-    }
-  }
-  return actions;
 }
