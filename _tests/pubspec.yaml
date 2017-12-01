@@ -42,7 +42,7 @@ dependency_overrides:
   test:
     git:
       url: https://github.com/dart-lang/test
-      ref: master
+      ref: chrome-printing
 
 transformers:
   - angular:
