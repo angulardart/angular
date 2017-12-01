@@ -25,7 +25,7 @@ void main() {
     );
   });
 
-  test('List', () {
+  group('List', () {
     testContentChildren(
       contentChildren: new TestCase(
         new NgTestBed<TestContentChildrenList>(),
