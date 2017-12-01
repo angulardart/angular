@@ -118,22 +118,7 @@ class TemplateParserImpl implements TemplateParser {
       List<CompilePipeMetadata> pipes,
       String templateUrl) {
     var result = tryParse(component, template, directives, pipes, templateUrl);
-    var warnings = <ParseError>[];
-    var errors = <ParseError>[];
-    for (ParseError error in result.errors) {
-      if (error.level == ParseErrorLevel.WARNING) {
-        warnings.add(error);
-      } else if (error.level == ParseErrorLevel.FATAL) {
-        errors.add(error);
-      }
-    }
-    if (warnings.isNotEmpty) {
-      logger.warning("Template parse warnings:\n${warnings.join('\n')}");
-    }
-    if (errors.isNotEmpty) {
-      var errorString = errors.join('\n');
-      throw new BaseException('Template parse errors:\n$errorString');
-    }
+    handleParseErrors(result.errors);
     return result.templateAst;
   }
 
@@ -182,6 +167,25 @@ class TemplateParserImpl implements TemplateParser {
       result = <TemplateAst>[];
     }
     return new TemplateParseResult(result, errors);
+  }
+}
+
+void handleParseErrors(List<ParseError> parseErrors) {
+  var warnings = <ParseError>[];
+  var errors = <ParseError>[];
+  for (ParseError error in parseErrors) {
+    if (error.level == ParseErrorLevel.WARNING) {
+      warnings.add(error);
+    } else if (error.level == ParseErrorLevel.FATAL) {
+      errors.add(error);
+    }
+  }
+  if (warnings.isNotEmpty) {
+    logger.warning("Template parse warnings:\n${warnings.join('\n')}");
+  }
+  if (errors.isNotEmpty) {
+    var errorString = errors.join('\n');
+    throw new BaseException('Template parse errors:\n$errorString');
   }
 }
 
