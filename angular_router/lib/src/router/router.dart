@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import '../directives/router_outlet_directive.dart';
 import 'navigation_params.dart';
 import 'router_state.dart';
 
@@ -37,4 +38,15 @@ abstract class Router {
 
   Future<NavigationResult> navigate(String path,
       [NavigationParams navigationParams]);
+
+  /// Registers the root [routerOutlet] and navigates to the current route.
+  ///
+  /// The root outlet is where the router begins to resolve routes upon
+  /// navigation. Does nothing if the root outlet is already set.
+  void registerRootOutlet(RouterOutlet routerOutlet);
+
+  /// Unregisters the root [routerOutlet].
+  ///
+  /// Does nothing if [routerOutlet] isn't the current root outlet.
+  void unregisterRootOutlet(RouterOutlet routerOutlet);
 }

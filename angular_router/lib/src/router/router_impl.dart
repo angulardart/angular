@@ -46,7 +46,7 @@ class RouterImpl extends Router {
     _location.subscribe((_) async {
       var url = Url.parse(_location.path());
 
-      var navigationResult = await navigateRouter(
+      var navigationResult = await _navigateRouter(
           Location.joinWithSlash(_baseHref, url.path),
           new NavigationParams(
               queryParameters: url.queryParameters,
@@ -66,13 +66,13 @@ class RouterImpl extends Router {
   RouterState get current => _activeState;
   Stream<RouterState> get stream => _streamController.stream;
 
-  /// Sets the rootOutlet and makes an initial navigation.
+  @override
   void registerRootOutlet(RouterOutlet routerOutlet) {
     if (_rootOutlet == null) {
       _rootOutlet = routerOutlet;
 
       Url url = Url.parse(_location.path());
-      navigateRouter(
+      _navigateRouter(
           Location.joinWithSlash(_baseHref, url.path),
           new NavigationParams(
               queryParameters: url.queryParameters,
@@ -83,6 +83,7 @@ class RouterImpl extends Router {
     }
   }
 
+  @override
   void unregisterRootOutlet(RouterOutlet routerOutlet) {
     if (_rootOutlet == routerOutlet) {
       _rootOutlet = null;
@@ -93,18 +94,19 @@ class RouterImpl extends Router {
   /// Navigate to the given url.
   ///
   /// Path is the path without the base href.
+  @override
   Future<NavigationResult> navigate(String path,
       [NavigationParams navigationParams]) {
     var absolutePath = _getAbsolutePath(path, _activeState);
 
-    return navigateRouter(
+    return _navigateRouter(
         Location.joinWithSlash(_baseHref, absolutePath), navigationParams);
   }
 
   /// Navigate this router to the given url.
   ///
   /// Path is the full, absolute URL.
-  Future<NavigationResult> navigateRouter(String path,
+  Future<NavigationResult> _navigateRouter(String path,
       [NavigationParams navigationParams]) async {
     // If the path does not begin with the baseHref, the navigation must be
     // for another shard.

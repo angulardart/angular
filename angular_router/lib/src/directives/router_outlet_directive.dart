@@ -9,7 +9,6 @@ import 'package:angular/angular.dart';
 import '../lifecycle.dart';
 import '../route_definition.dart';
 import '../router/router.dart';
-import '../router/router_impl.dart';
 import '../router/router_outlet_token.dart';
 import '../router/router_state.dart';
 import '../router_hook.dart';
@@ -88,7 +87,7 @@ class RouterOutlet implements OnInit, OnDestroy {
   @override
   void ngOnInit() {
     if (isRootOutlet) {
-      (_router as RouterImpl).registerRootOutlet(this);
+      _router.registerRootOutlet(this);
     }
   }
 
@@ -97,7 +96,7 @@ class RouterOutlet implements OnInit, OnDestroy {
     _activeComponent?.destroy();
     _viewContainerRef.clear();
     if (isRootOutlet) {
-      (_router as RouterImpl).unregisterRootOutlet(this);
+      _router.unregisterRootOutlet(this);
     }
   }
 
