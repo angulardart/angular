@@ -174,20 +174,6 @@ class RouterImpl extends Router {
     return path;
   }
 
-  @override
-  Future<RouterState> recognize(String path,
-      [NavigationParams navigationParams]) async {
-    navigationParams?.assertValid();
-    path = await _routerHook?.navigationPath(path, navigationParams) ?? path;
-    path = Url.normalizePath(path);
-    navigationParams =
-        await _routerHook?.navigationParams(path, navigationParams) ??
-            navigationParams;
-    navigationParams?.assertValid();
-
-    return (await _resolveState(path, navigationParams))?.build();
-  }
-
   /// Translates a navigation request to the MutableRouterState.
   Future<MutableRouterState> _resolveState(
       String path, NavigationParams navigationParams) async {
