@@ -37,11 +37,4 @@ abstract class Router {
 
   Future<NavigationResult> navigate(String path,
       [NavigationParams navigationParams]);
-
-  /// Indicates whether the path is recognized by the router.
-  ///
-  /// If [recognize] returns a future of null value, this indicates that the
-  /// path is not registered in the route tree.
-  Future<RouterState> recognize(String path,
-      [NavigationParams navigationParams]);
 }
