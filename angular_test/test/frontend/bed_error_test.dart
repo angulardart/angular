@@ -39,6 +39,10 @@ void main() {
   test('should be able to catch errors that occur in change detection', () {
     return CatchInChangeDetection._runTest();
   });
+
+  test('should not throw uncaught exceptions to ExceptionHandler', () async {
+    await RegressionTest631._runTest();
+  });
 }
 
 @Component(
@@ -153,5 +157,41 @@ class ChildChangeDetectionError {
     if (trueToError) {
       throw new StateError('Test');
     }
+  }
+}
+
+@Component(
+  selector: 'test',
+  template: '<h1>Hello {{name}}</h1>',
+)
+class RegressionTest631 {
+  static _runTest() async {
+    // A simple in-memory handler
+    final simpleHandler = new _SimpleExceptionHandler();
+    final fixture = await new NgTestBed<RegressionTest631>().addProviders([
+      new Provider(ExceptionHandler, useValue: simpleHandler),
+    ]).create();
+    expect(fixture.text, 'Hello Angular');
+    await fixture.update((c) => c.name = 'World');
+    expect(fixture.text, 'Hello World');
+    final html = fixture.rootElement.innerHtml;
+    expect(html, '<h1>Hello World</h1>');
+    await fixture.dispose();
+    expect(
+      simpleHandler.exceptions,
+      isEmpty,
+      reason: 'No exceptions should have been thrown',
+    );
+  }
+
+  var name = 'Angular';
+}
+
+class _SimpleExceptionHandler implements ExceptionHandler {
+  final exceptions = <String>[];
+
+  @override
+  void call(exception, [stackTrace, String reason]) {
+    exceptions.add('$exception: $stackTrace');
   }
 }

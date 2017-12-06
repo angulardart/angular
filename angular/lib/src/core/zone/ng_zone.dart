@@ -262,7 +262,6 @@ class NgZone {
     if (_nesting == 0) {
       if (!_hasPendingMicrotasks && !_isStable) {
         try {
-          // console.log('ZONE.microtaskEmpty');
           _nesting++;
           _isRunning = false;
           if (!_disposed) _onMicrotaskEmpty.add(null);
@@ -270,9 +269,10 @@ class NgZone {
           _nesting--;
           if (!_hasPendingMicrotasks) {
             try {
-              // console.log('ZONE.stable', this._nesting, this._isStable);
               runOutsideAngular(() {
-                if (!_disposed) _onTurnDone.add(null);
+                if (!_disposed) {
+                  _onTurnDone.add(null);
+                }
               });
             } finally {
               _isStable = true;
