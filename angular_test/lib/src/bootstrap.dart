@@ -65,6 +65,14 @@ Future<ComponentRef> bootstrapForTest<E>(
     ).then((componentRef) async {
       hostElement.append(componentRef.location);
       await ngZone.onTurnDone.first;
+      // Required to prevent onTurnDone to become re-entrant, as described in
+      // the bug https://github.com/dart-lang/angular/issues/631. Without this
+      // the .first.then((_) => ...) eventually calls stabilization, which
+      // in turn triggers another zone entry/exit, which is illegal.
+      //
+      // Can be removed if NgZone.onTurnDone ever supports re-entry, either by
+      // no longer using Streams or fixing dart:async.
+      await new Future.value();
       onErrorSub.cancel();
       if (caughtError != null) {
         return new Future.error(
