@@ -58,6 +58,12 @@ void main() {
         [1, 3],
       ),
     );
+
+    test('should work even when the property is a setter', () async {
+      final testBed = new NgTestBed<TestDirectViewChildrenListSetter>();
+      final fixture = await testBed.create();
+      expect(fixture, hasChildValues([1, 2, 3]));
+    });
   });
 }
 
@@ -223,6 +229,27 @@ class TestDirectViewChildrenList extends HasChildren<ValueDirective> {
   @override
   @ViewChildren(ValueDirective)
   List<ValueDirective> actualChildren;
+}
+
+@Component(
+  selector: 'test',
+  directives: const [
+    ValueDirective,
+  ],
+  template: r'''
+    <value [value]="1"></value>
+    <value [value]="2"></value>
+    <value [value]="3"></value>
+  ''',
+)
+class TestDirectViewChildrenListSetter extends HasChildren<ValueDirective> {
+  @ViewChildren(ValueDirective)
+  set actualChildrenSetter(List<ValueDirective> actualChildren) {
+    this.actualChildren = actualChildren;
+  }
+
+  @override
+  Iterable actualChildren;
 }
 
 @Component(
