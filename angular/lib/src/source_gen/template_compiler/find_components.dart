@@ -354,8 +354,8 @@ class ComponentVisitor
   }
 
   DartType _fieldOrPropertyType(Element element) {
-    if (element is PropertyAccessorElement) {
-      return element.returnType;
+    if (element is PropertyAccessorElement && element.isSetter) {
+      return element.parameters.first.type;
     }
     if (element is FieldElement) {
       return element.type;
