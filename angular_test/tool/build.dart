@@ -1,6 +1,5 @@
 #!/usr/bin/env dart
 import 'dart:async';
-import 'dart:io';
 
 import 'package:build_compilers/build_compilers.dart';
 import 'package:build_runner/build_runner.dart';
@@ -42,6 +41,6 @@ Future main(List<String> args) async {
     createBuildActions(graph, builders),
     deleteFilesByDefault: true,
     writeToCache: true,
-    enableLowResourcesMode: true,
+    enableLowResourcesMode: false,
   );
 }

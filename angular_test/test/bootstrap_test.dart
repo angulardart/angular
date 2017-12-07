@@ -18,7 +18,7 @@ void main() {
   test('should create a new component in the DOM', () async {
     final host = new Element.div();
     final test = await bootstrapForTest(
-      NewComponentInDom,
+      ng_generated.NewComponentInDomNgFactory,
       host,
     );
     expect(host.text, contains('Hello World'));
@@ -28,7 +28,7 @@ void main() {
   test('should call a handler before initial load', () async {
     final host = new Element.div();
     final test = await bootstrapForTest<BeforeChangeDetection>(
-      BeforeChangeDetection,
+      ng_generated.BeforeChangeDetectionNgFactory,
       host,
       beforeChangeDetection: (comp) => comp.users.add('Mati'),
     );
@@ -39,7 +39,7 @@ void main() {
   test('should include user-specified providers', () async {
     final host = new Element.div();
     final test = await bootstrapForTest(
-      AddProviders,
+      ng_generated.AddProvidersNgFactory,
       host,
       addProviders: const [
         TestService,
@@ -52,7 +52,10 @@ void main() {
 
   test('should throw if the root component is OnPush', () async {
     expect(
-      bootstrapForTest(OnPushComponent, new DivElement()),
+      bootstrapForTest(
+        ng_generated.OnPushComponentNgFactory,
+        new DivElement(),
+      ),
       throwsUnsupportedError,
     );
   }, skip: 'See https://github.com/dart-lang/angular2/issues/329');
