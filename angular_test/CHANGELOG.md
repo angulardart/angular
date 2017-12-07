@@ -1,7 +1,8 @@
 ## Unpublished
 
-- Add support for the use of an externally launched `pub serve` by
-  using "none" as the value of `--experimental-serve-script`.
+-   Add support for the use of an externally launched `pub serve` by
+    using "none" as the value of `--experimental-serve-script`.
+-   Add `NgTestBed.withFactory` to start supporting fully static testing.
 
 ## 1.0.2-alpha+1
 
