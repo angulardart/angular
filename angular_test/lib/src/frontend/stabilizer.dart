@@ -62,7 +62,7 @@ abstract class NgTestStabilizer {
   ///   return true;
   /// }
   /// ```
-  Future<bool> update([void fn()]) {
+  Future<bool> update([void Function() fn]) {
     return new Future<bool>.sync(() {
       if (fn != null) {
         fn();
@@ -74,7 +74,7 @@ abstract class NgTestStabilizer {
   /// Runs [update] until it completes with `false`, reporting stabilized.
   ///
   /// If more then [threshold] attempts occur, throws [WillNeverStabilizeError].
-  Future<Null> stabilize({void run(), int threshold: 100}) async {
+  Future<Null> stabilize({void Function() run, int threshold: 100}) async {
     if (threshold == null) {
       throw new ArgumentError.notNull('threshold');
     }
@@ -95,7 +95,7 @@ class _DelegatingNgTestStabilizer extends NgTestStabilizer {
       : _delegates = stabilizers.toList(growable: false);
 
   @override
-  Future<bool> update([void fn()]) async {
+  Future<bool> update([void Function() fn]) async {
     if (_delegates.isEmpty) {
       return false;
     }
@@ -116,7 +116,7 @@ class NgZoneStabilizer extends NgTestStabilizer {
   }
 
   @override
-  Future<bool> update([void fn()]) {
+  Future<bool> update([void Function() fn]) {
     return new Future<Null>.sync(() => _waitForZone(fn)).then((_) => isStable);
   }
 
