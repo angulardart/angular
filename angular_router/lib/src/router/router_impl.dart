@@ -28,26 +28,18 @@ class RouterImpl extends Router {
       new StreamController<RouterState>.broadcast(sync: true);
   final Location _location;
   final RouterHook _routerHook;
-  final String _baseHref;
   RouterState _activeState;
   Iterable<ComponentRef> _activeComponentRefs = [];
   RouterOutlet _rootOutlet;
 
-  RouterImpl(
-      this._location,
-      @Optional() this._routerHook,
-      PlatformLocation platformLocation,
-      @Optional() @Inject(APP_BASE_HREF) String baseHref)
-      : _baseHref = Url.normalizePath(
-            baseHref ?? platformLocation.getBaseHrefFromDOM() ?? '',
-            _location.platformStrategy is HashLocationStrategy) {
+  RouterImpl(this._location, @Optional() this._routerHook) {
     Url.isHashStrategy = _location.platformStrategy is HashLocationStrategy;
 
     _location.subscribe((_) async {
       var url = Url.parse(_location.path());
 
       var navigationResult = await _navigateRouter(
-          Location.joinWithSlash(_baseHref, url.path),
+          url.path,
           new NavigationParams(
               queryParameters: url.queryParameters,
               fragment: Url.isHashStrategy
@@ -73,7 +65,7 @@ class RouterImpl extends Router {
 
       Url url = Url.parse(_location.path());
       _navigateRouter(
-          Location.joinWithSlash(_baseHref, url.path),
+          url.path,
           new NavigationParams(
               queryParameters: url.queryParameters,
               fragment: Url.isHashStrategy
@@ -99,8 +91,7 @@ class RouterImpl extends Router {
       [NavigationParams navigationParams]) {
     var absolutePath = _getAbsolutePath(path, _activeState);
 
-    return _navigateRouter(
-        Location.joinWithSlash(_baseHref, absolutePath), navigationParams);
+    return _navigateRouter(absolutePath, navigationParams);
   }
 
   /// Navigate this router to the given url.
@@ -108,11 +99,6 @@ class RouterImpl extends Router {
   /// Path is the full, absolute URL.
   Future<NavigationResult> _navigateRouter(String path,
       [NavigationParams navigationParams]) async {
-    // If the path does not begin with the baseHref, the navigation must be
-    // for another shard.
-    if (!path.startsWith(_baseHref)) return NavigationResult.INVALID_ROUTE;
-    path = path.substring(_baseHref.length);
-
     navigationParams?.assertValid();
     path = await _routerHook?.navigationPath(path, navigationParams) ?? path;
     path = Url.normalizePath(path);
