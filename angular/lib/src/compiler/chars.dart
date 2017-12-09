@@ -54,10 +54,21 @@ const $PIPE = 124;
 const $TILDA = 126;
 const $AT = 64;
 const String ngSpace = '\uE500';
+
 String replaceNgSpace(String value) {
   return value.replaceAll(ngSpace, ' ');
 }
 
 bool isWhitespace(num code) {
   return (code >= $TAB && code <= $SPACE) || (code == $NBSP) || (code == $NGSP);
+}
+
+bool isNewLineWithSpaces(String text) {
+  int len = text.length;
+  for (int i = 0; i < len; i++) {
+    if (text[i] != '\n' && text[i] != ' ') {
+      return false;
+    }
+  }
+  return true;
 }

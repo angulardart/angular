@@ -252,24 +252,14 @@ class TemplateParseVisitor
           text = text.trim();
         }
         if (text.isEmpty) return null;
-        if (_isNewLineWithSpaces(text)) {
+        if (isNewLineWithSpaces(text)) {
           return null;
         }
       }
       // Convert &ngsp to actual space.
-      text = text.replaceAll('\uE500', ' ');
+      text = replaceNgSpace(text);
       return new TextAst(text, ngContentIndex, ast.sourceSpan);
     }
-  }
-
-  bool _isNewLineWithSpaces(String text) {
-    int len = text.length;
-    for (int i = 0; i < len; i++) {
-      if (text[i] != '\n' && text[i] != ' ') {
-        return false;
-      }
-    }
-    return true;
   }
 
   AttrAst visitAttr(HtmlAttrAst ast, ElementContext context) {
