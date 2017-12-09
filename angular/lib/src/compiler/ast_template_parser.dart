@@ -3,6 +3,7 @@ import 'package:angular/src/facade/exceptions.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
 import 'package:angular_ast/src/expression/micro.dart';
 
+import 'chars.dart';
 import 'compile_metadata.dart';
 import 'expression_parser/ast.dart';
 import 'expression_parser/parser.dart';
@@ -38,7 +39,8 @@ class AstTemplateParser implements TemplateParser {
     if (parsedAst.isEmpty) return const [];
     final implicNamespace = _applyImplicitNamespace(parsedAst);
     final desugaredAst = _inlineTemplates(implicNamespace, template, name);
-    final filteredAst = _filterElements(desugaredAst);
+    final filteredAst = _filterElements(
+        desugaredAst, compMeta.template.preserveWhitespace ?? false);
     final boundAsts = _bindDirectives(directives, compMeta, filteredAst);
     final providedAsts = _bindProviders(compMeta, desugaredAst, boundAsts);
     _optimize(compMeta, providedAsts);
@@ -86,8 +88,12 @@ class AstTemplateParser implements TemplateParser {
     }
   }
 
-  List<ast.TemplateAst> _filterElements(List<ast.TemplateAst> parsedAst) =>
-      new _ElementFilter().visitAll(parsedAst);
+  List<ast.TemplateAst> _filterElements(
+      List<ast.TemplateAst> parsedAst, bool preserveWhitespace) {
+    var filteredElements = new _ElementFilter().visitAll(parsedAst);
+    return new _PreserveWhitespaceVisitor()
+        .visitAll(filteredElements, preserveWhitespace);
+  }
 
   List<ng.TemplateAst> _bindDirectives(
       List<CompileDirectiveMetadata> directives,
@@ -99,9 +105,7 @@ class AstTemplateParser implements TemplateParser {
         schemaRegistry: schemaRegistry,
         directives: directives,
         exports: compMeta.exports));
-    return filteredAst
-        .map((templateAst) => templateAst.accept(visitor, context))
-        .toList();
+    return visitor._visitAll(filteredAst, context);
   }
 
   List<ng.TemplateAst> _bindProviders(CompileDirectiveMetadata compMeta,
@@ -263,16 +267,6 @@ class _BindDirectivesVisitor
         (_, __, [___]) {});
   }
 
-  static String _getPropertyName(ast.PropertyAst astNode) {
-    if (astNode.unit != null) {
-      return '${astNode.name}.${astNode.postfix}.${astNode.unit}';
-    }
-    if (astNode.postfix != null) {
-      return '${astNode.name}.${astNode.postfix}';
-    }
-    return astNode.name;
-  }
-
   @override
   ng.TemplateAst visitLetBinding(ast.LetBindingAst astNode,
           [_ParseContext _]) =>
@@ -313,7 +307,7 @@ class _BindDirectivesVisitor
 
   @override
   ng.TemplateAst visitComment(ast.CommentAst astNode, [_ParseContext _]) =>
-      throw new UnimplementedError('Don\'t know how to handle comments.');
+      null;
 
   @override
   ng.TemplateAst visitExpression(ast.ExpressionAst astNode,
@@ -414,7 +408,8 @@ class _ParseContext {
 
   CompileTokenMetadata identifierForReference(String identifier) {
     for (var directive in boundDirectives) {
-      if (identifier == null || identifier == directive.directive.exportAs) {
+      if ((identifier == null && directive.directive.isComponent) ||
+          identifier != null && identifier == directive.directive.exportAs) {
         return identifierToken(directive.directive.type);
       }
     }
@@ -429,8 +424,8 @@ class _ParseContext {
       astNode.sourceSpan);
 
   bool bindPropertyToDirective(ast.PropertyAst astNode, ASTWithSource value) =>
-      _bindToDirective(
-          boundDirectives, astNode.name, value, astNode.sourceSpan);
+      _bindToDirective(boundDirectives, _getPropertyName(astNode), value,
+          astNode.sourceSpan);
 
   bool _bindToDirective(List<ng.DirectiveAst> directives, String name,
       ASTWithSource value, SourceSpan sourceSpan) {
@@ -595,6 +590,16 @@ CssSelector _selector(String elementName, List<ast.AttributeAst> attributes,
 String _location(ast.TemplateAst astNode) =>
     astNode.isSynthetic ? '' : astNode.sourceSpan.start.toString();
 
+String _getPropertyName(ast.PropertyAst astNode) {
+  if (astNode.unit != null) {
+    return '${astNode.name}.${astNode.postfix}.${astNode.unit}';
+  }
+  if (astNode.postfix != null) {
+    return '${astNode.name}.${astNode.postfix}';
+  }
+  return astNode.name;
+}
+
 /// Visitor which filters elements that are not supported in angular templates.
 class _ElementFilter extends ast.IdentityTemplateAstVisitor<bool> {
   List<T> visitAll<T extends ast.TemplateAst>(Iterable<T> astNodes,
@@ -624,6 +629,23 @@ class _ElementFilter extends ast.IdentityTemplateAstVisitor<bool> {
         references: visitAll(astNode.references, hasNgNonBindable),
         bananas: visitAll(astNode.bananas, hasNgNonBindable),
         stars: visitAll(astNode.stars, hasNgNonBindable));
+  }
+
+  @override
+  ast.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
+      [bool hasNgNonBindable]) {
+    hasNgNonBindable =
+        hasNgNonBindable || _hasNgNOnBindable(astNode.attributes);
+    return new ast.EmbeddedTemplateAst.from(
+      astNode,
+      attributes: visitAll(astNode.attributes, hasNgNonBindable),
+      childNodes: visitAll(astNode.childNodes, hasNgNonBindable),
+      events: visitAll(astNode.events, hasNgNonBindable),
+      properties: visitAll(astNode.properties, hasNgNonBindable),
+      references: visitAll(astNode.references, hasNgNonBindable),
+      letBindings: visitAll(astNode.letBindings, hasNgNonBindable),
+      hasDeferredComponent: astNode.hasDeferredComponent,
+    );
   }
 
   @override
@@ -773,8 +795,8 @@ class _ProviderVisitor
 // TODO(alorenzen): Refactor this into pkg:angular_ast.
 class _InlineTemplateDesugar extends ast.IdentityTemplateAstVisitor<Null> {
   @override
-  ast.TemplateAst visitElement(ast.ElementAst astNode,
-      [_ParseContext context]) {
+  ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
+    _visitChildren(astNode, this);
     var templateAttribute = _findTemplateAttribute(astNode);
     if (templateAttribute == null) {
       return astNode;
@@ -831,22 +853,38 @@ class _InlineTemplateDesugar extends ast.IdentityTemplateAstVisitor<Null> {
     }
   }
 
+  @override
+  ast.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode, [_]) {
+    _visitChildren(astNode, this);
+    return astNode;
+  }
+
   ast.AttributeAst _findTemplateAttribute(ast.ElementAst astNode) =>
       astNode.attributes
           .firstWhere((attr) => attr.name == 'template', orElse: () => null);
 
   String _getName(String value) {
     var spaceIndex = value.indexOf(' ');
-    var name = value.substring(0, spaceIndex);
+    var name = spaceIndex == -1 ? value : value.substring(0, spaceIndex);
     if (name == 'let') return null;
     return name;
   }
 
   String _getExpression(String value) {
     var spaceIndex = value.indexOf(' ');
+    if (spaceIndex == -1) return null;
     if (value.substring(0, spaceIndex) == 'let') return value;
     return value.substring(spaceIndex + 1);
   }
+}
+
+void _visitChildren<C>(ast.TemplateAst astNode,
+    ast.TemplateAstVisitor<ast.TemplateAst, C> visitor) {
+  var children = astNode.childNodes
+      .map((child) => child.accept(visitor) as ast.StandaloneTemplateAst)
+      .toList();
+  astNode.childNodes.clear();
+  astNode.childNodes.addAll(children);
 }
 
 /// Visitor that applies default namespaces to elements.
@@ -866,6 +904,12 @@ class _NamespaceVisitor extends ast.IdentityTemplateAstVisitor<String> {
         references: element.references,
         bananas: element.bananas,
         stars: element.stars);
+  }
+
+  @override
+  visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode, [_]) {
+    _visitChildren(astNode, this);
+    return astNode;
   }
 
   String _getNamespace(String name) =>
@@ -959,4 +1003,80 @@ class _PipeValidator implements ng.TemplateAstVisitor<Null, Null> {
 
   @override
   visitVariable(ng.VariableAst ast, _) {}
+}
+
+class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
+  List<T> visitAll<T extends ast.TemplateAst>(
+      List<T> astNodes, bool preserveWhitespace) {
+    final result = <T>[];
+    for (int i = 0; i < astNodes.length; i++) {
+      var node = astNodes[i];
+      final visited = node is ast.TextAst
+          ? _stripWhitespace(i, node, astNodes, preserveWhitespace)
+          : node.accept(this, preserveWhitespace);
+      if (visited != null) result.add(visited);
+    }
+    return result;
+  }
+
+  @override
+  visitElement(ast.ElementAst astNode, [bool preserveWhitespace]) {
+    var children = visitAll(astNode.childNodes, preserveWhitespace);
+    astNode.childNodes.clear();
+    astNode.childNodes.addAll(children);
+    return astNode;
+  }
+
+  @override
+  visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
+      [bool preserveWhitespace]) {
+    var children = visitAll(astNode.childNodes, preserveWhitespace);
+    astNode.childNodes.clear();
+    astNode.childNodes.addAll(children);
+    return astNode;
+  }
+
+  ast.TextAst _stripWhitespace(int i, ast.TextAst node,
+      List<ast.TemplateAst> astNodes, bool preserveWhitespace) {
+    var text = node.value;
+    text = text.replaceAll('&ngsp;', ngSpace);
+    // If preserve white space is turned off, filter out spaces after line
+    // breaks and any empty text nodes.
+    //if (!context.templateContext.preserveWhitespace) {}
+
+    if (preserveWhitespace ||
+        text.contains('\u00A0') ||
+        text.contains(ngSpace)) {
+      return new ast.TextAst.from(node, replaceNgSpace(text));
+    }
+
+    if (text.trim().isEmpty) {
+      return _hasInterpretationBefore(astNodes, i) &&
+              _hasInterpretationAfter(astNodes, i)
+          ? node
+          : null;
+    }
+    if (!_hasInterpretationBefore(astNodes, i)) {
+      text = text.trimLeft();
+    }
+    if (!_hasInterpretationAfter(astNodes, i)) {
+      text = text.trimRight();
+    }
+
+    if (text.isEmpty || isNewLineWithSpaces(text)) return null;
+
+    // Convert &ngsp to actual space.
+    text = replaceNgSpace(text);
+    return new ast.TextAst.from(node, text);
+  }
+
+  bool _hasInterpretationBefore(List<ast.TemplateAst> astNodes, int i) {
+    if (i == 0) return false;
+    return astNodes[i - 1] is ast.InterpolationAst;
+  }
+
+  bool _hasInterpretationAfter(List<ast.TemplateAst> astNodes, int i) {
+    if (i == (astNodes.length - 1)) return false;
+    return astNodes[i + 1] is ast.InterpolationAst;
+  }
 }

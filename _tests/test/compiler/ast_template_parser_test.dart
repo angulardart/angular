@@ -2001,6 +2001,6 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
     providers: providers,
     viewProviders: viewProviders,
     queries: queries,
-    template: template,
+    template: template ?? new CompileTemplateMetadata(),
   );
 }
