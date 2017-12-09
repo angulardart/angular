@@ -286,7 +286,7 @@ void main() {
               null
             ]
           ]);
-        }, skip: 'angular_ast reports this as an attribute.');
+        });
       });
 
       group('events', () {
