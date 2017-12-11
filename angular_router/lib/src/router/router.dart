@@ -36,8 +36,11 @@ abstract class Router {
   RouterState get current;
   Stream<RouterState> get stream;
 
-  Future<NavigationResult> navigate(String path,
-      [NavigationParams navigationParams]);
+  Future<NavigationResult> navigate(
+    String path, [
+    NavigationParams navigationParams,
+    bool forceNavigation = false,
+  ]);
 
   /// Registers the root [routerOutlet] and navigates to the current route.
   ///
