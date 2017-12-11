@@ -221,27 +221,27 @@ void main() {
               () => parse('<p [atTr.foo]></p>', []),
               throwsWith('Template parse errors:\n'
                   'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: Invalid property name \'atTr.foo\'\n'
-                  '[atTr.foo]\n'
-                  '^^^^^^^^^^'));
+                  '<p [atTr.foo]></p>\n'
+                  '   ^^^^^^^^^^'));
           expect(
               () => parse('<p [sTyle.foo]></p>', []),
               throwsWith('Template parse errors:\n'
                   'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: Invalid property name \'sTyle.foo\'\n'
-                  '[sTyle.foo]\n'
-                  '^^^^^^^^^^^'));
+                  '<p [sTyle.foo]></p>\n'
+                  '   ^^^^^^^^^^^'));
           expect(
               () => parse('<p [Class.foo]></p>', []),
               throwsWith('Template parse errors:\n'
                   'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: Invalid property name \'Class.foo\'\n'
-                  '[Class.foo]\n'
-                  '^^^^^^^^^^^'));
+                  '<p [Class.foo]></p>\n'
+                  '   ^^^^^^^^^^^'));
           expect(
               () => parse('<p [bar.foo]></p>', []),
               throwsWith('Template parse errors:\n'
                   'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: Invalid property name \'bar.foo\'\n'
-                  '[bar.foo]\n'
-                  '^^^^^^^^^'));
-        }, skip: 'Error handing doesn\t match yet.');
+                  '<p [bar.foo]></p>\n'
+                  '   ^^^^^^^^^'));
+        });
 
         test(
             'should parse bound properties via [...] and not report '
@@ -1045,7 +1045,7 @@ void main() {
           expect(humanizeTplAst(parse('<TEMPLATE></TEMPLATE>', [])), [
             [EmbeddedTemplateAst]
           ]);
-        }, skip: 'Don\'t handle TEMPLATE properly');
+        });
 
         test(
             'should create embedded templates for <template> elements '
@@ -1498,9 +1498,12 @@ void main() {
         expect(
             () => parse('<ng-content>content</ng-content>', []),
             throwsWith('Template parse errors:\n'
-                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: <ng-content> element cannot have content. <ng-content> must be immediately followed by </ng-content>\n'
-                '<ng-content>\n'
-                '^^^^^^^^^^^^'));
+                'line 1, column 1 of TestComp: \'<ng-content ...>\' must be followed immediately by close \'</ng-content>\'\n'
+                '<ng-content>content</ng-content>\n'
+                '^^^^^^^^^^^^\n'
+                'line 1, column 20 of TestComp: Closing tag is dangling and no matching open tag can be found\n'
+                '<ng-content>content</ng-content>\n'
+                '                   ^^^^^^^^^^^^^'));
       });
 
       test('should report invalid property names', () {
@@ -1508,8 +1511,8 @@ void main() {
             () => parse('<div [invalidProp]></div>', []),
             throwsWith('Template parse errors:\n'
                 'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Can\'t bind to \'invalidProp\' since it isn\'t a known native property or known directive. Please fix typo or add to directives list.\n'
-                '[invalidProp]\n'
-                '^^^^^^^^^^^^^'));
+                '<div [invalidProp]></div>\n'
+                '     ^^^^^^^^^^^^^'));
       });
 
       test('should report errors in expressions', () {
@@ -1519,7 +1522,7 @@ void main() {
                 'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in <FileLocation: 5 TestComp:1:6>\n'
                 '[prop]="a b"\n'
                 '^^^^^^^^^^^^'));
-      });
+      }, skip: 'Doesn\'t use sourcSpan yet for error message.');
 
       test(
           'should not throw on invalid property names if the property is '
@@ -1547,12 +1550,12 @@ void main() {
                 new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirB'),
             template: new CompileTemplateMetadata(ngContentSelectors: []));
         expect(
-            () => parse('<div>', [dirB, dirA]),
+            () => parse('<div></div>', [dirB, dirA]),
             throwsWith('Template parse errors:\n'
                 'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: More than one component: DirB,DirA\n'
                 '<div>\n'
                 '^^^^^'));
-      });
+      }, skip: 'Doesn\'t throw yet.');
 
       test(
           'should not allow components or element bindings nor dom events '
@@ -1575,7 +1578,7 @@ void main() {
                 'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Property binding a not used by any directive on an embedded template\n'
                 '<template [a]="b" (e)="f">\n'
                 '^^^^^^^^^^^^^^^^^^^^^^^^^^'));
-      });
+      }, skip: 'Doesn\'t throw yet.');
 
       test(
           'should not allow components or element bindings on inline '
@@ -1595,7 +1598,7 @@ void main() {
                 'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: Property binding a not used by any directive on an embedded template\n'
                 '<div *a="b">\n'
                 '^^^^^^^^^^^^'));
-      });
+      }, skip: 'Doesn\'t throw yet.');
 
       test('should prevent binding event attributes', () async {
         final template = '<div [attr.onclick]="onClick()"></div>';
@@ -1605,8 +1608,8 @@ void main() {
                 'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: '
                 'Binding to event attribute \'onclick\' is disallowed for '
                 'security reasons, please use (click)=...\n'
-                '[attr.onclick]="onClick()"\n'
-                '^^^^^^^^^^^^^^^^^^^^^^^^^^'));
+                '<div [attr.onclick]="onClick()"></div>\n'
+                '     ^^^^^^^^^^^^^^^^^^^^^^^^^^'));
       });
 
       test('should prevent binding to unsafe SVG attributes', () async {
@@ -1621,10 +1624,10 @@ void main() {
                 "Can't bind to 'xlink:href' since it isn't a known native "
                 'property or known directive. Please fix typo or add to '
                 'directives list.\n'
-                '[xlink:href]="url"\n'
-                '^^^^^^^^^^^^^^^^^^'));
+                '<svg:circle [xlink:href]="url"></svg:circle>\n'
+                '            ^^^^^^^^^^^^^^^^^^'));
       });
-    }, skip: 'Don\'t support error cases yet.');
+    });
 
     group('ignore elements', () {
       test('should ignore <script> elements', () {
