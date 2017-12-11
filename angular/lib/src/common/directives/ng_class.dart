@@ -49,7 +49,7 @@ import 'package:angular/src/core/change_detection/differs/default_keyvalue_diffe
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngClass
 @Directive(
   selector: '[ngClass]',
-  visibility: Visibility.none,
+  visibility: Visibility.local,
 )
 class NgClass implements DoCheck, OnDestroy {
   // Separator used to split string to parts - can be any number of
