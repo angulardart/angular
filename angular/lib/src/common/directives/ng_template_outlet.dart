@@ -40,7 +40,7 @@ import 'package:angular/src/core/linker.dart'
 ///   };
 /// }
 /// ```
-@Directive(selector: '[ngTemplateOutlet]', visibility: Visibility.none)
+@Directive(selector: '[ngTemplateOutlet]', visibility: Visibility.local)
 class NgTemplateOutlet implements DoCheck {
   final ViewContainerRef _viewContainerRef;
 

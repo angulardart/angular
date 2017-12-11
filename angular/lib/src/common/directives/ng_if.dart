@@ -36,7 +36,7 @@ import 'package:angular/src/facade/lang.dart';
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngIf
 @Directive(
   selector: '[ngIf]',
-  visibility: Visibility.none,
+  visibility: Visibility.local,
 )
 class NgIf {
   final TemplateRef _templateRef;

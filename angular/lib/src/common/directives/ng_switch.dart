@@ -180,7 +180,7 @@ class NgSwitch {
 ///
 @Directive(
   selector: '[ngSwitchWhen],[ngSwitchCase]',
-  visibility: Visibility.none,
+  visibility: Visibility.local,
 )
 class NgSwitchWhen {
   /// Used as a marker for an uninitialized value.
@@ -212,7 +212,7 @@ class NgSwitchWhen {
 ///
 /// See [NgSwitch] for more details and example.
 ///
-@Directive(selector: '[ngSwitchDefault]', visibility: Visibility.none)
+@Directive(selector: '[ngSwitchDefault]', visibility: Visibility.local)
 class NgSwitchDefault {
   NgSwitchDefault(ViewContainerRef viewContainer, TemplateRef templateRef,
       @Host() NgSwitch switchDirective) {

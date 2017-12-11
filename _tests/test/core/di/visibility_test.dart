@@ -13,7 +13,7 @@ void main() {
 
   tearDown(disposeAnyRunningTest);
 
-  group('Visibility.none', () {
+  group('Visibility.local', () {
     test('component should not be injectable by child component', () async {
       final testBed = new NgTestBed<ShouldFailToInjectParentComponent>();
       expect(testBed.create(), throwsInAngular(anything));
@@ -63,11 +63,11 @@ class InjectsParentComponent {
   selector: 'should-fail-to-inject-parent-component',
   template: '<injects-parent></injects-parent>',
   directives: const [InjectsParentComponent],
-  visibility: Visibility.none,
+  visibility: Visibility.local,
 )
 class ShouldFailToInjectParentComponent {}
 
-@Directive(selector: '[visibility-none]', visibility: Visibility.none)
+@Directive(selector: '[visibility-none]', visibility: Visibility.local)
 class VisibilityNoneDirective {}
 
 @Component(
@@ -150,7 +150,7 @@ class MyComponentWithServiceTest {}
     const Provider(SomeService, useExisting: MyChildComponentProvidesService)
   ],
   template: '<div></div>',
-  visibility: Visibility.none,
+  visibility: Visibility.local,
 )
 class MyChildComponentProvidesService implements SomeService {
   @override

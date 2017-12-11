@@ -56,7 +56,7 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// [ex]: http://angular-examples.github.io/template-syntax/#ngStyle
 @Directive(
   selector: '[ngStyle]',
-  visibility: Visibility.none,
+  visibility: Visibility.local,
 )
 class NgStyle implements DoCheck {
   final Element _ngElement;
