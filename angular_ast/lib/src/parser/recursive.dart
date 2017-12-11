@@ -278,7 +278,7 @@ class RecursiveAstParser {
     var nameToken = _reader.next();
     if (nameToken.lexeme == 'ng-content') {
       return parseEmbeddedContent(beginToken, nameToken);
-    } else if (nameToken.lexeme == 'template') {
+    } else if (nameToken.lexeme.toLowerCase() == 'template') {
       isTemplateElement = true;
     }
     var isVoidElement = _voidElements.contains(nameToken.lexeme);

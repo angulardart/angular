@@ -72,7 +72,7 @@ class AstTemplateParser implements TemplateParser {
             .span(exception.offset, exception.offset + exception.length)
             .message(exception.errorCode.message))
         .join('\n');
-    throw new BaseException('Template parse errors: \n$errorString');
+    throw new BaseException('Template parse errors:\n$errorString');
   }
 
   List<ast.TemplateAst> _inlineTemplates(
