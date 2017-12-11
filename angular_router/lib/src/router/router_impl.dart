@@ -87,18 +87,24 @@ class RouterImpl extends Router {
   ///
   /// Path is the path without the base href.
   @override
-  Future<NavigationResult> navigate(String path,
-      [NavigationParams navigationParams]) {
+  Future<NavigationResult> navigate(
+    String path, [
+    NavigationParams navigationParams,
+    bool forceNavigation = false,
+  ]) {
     var absolutePath = _getAbsolutePath(path, _activeState);
 
-    return _navigateRouter(absolutePath, navigationParams);
+    return _navigateRouter(absolutePath, navigationParams, forceNavigation);
   }
 
   /// Navigate this router to the given url.
   ///
   /// Path is the full, absolute URL.
-  Future<NavigationResult> _navigateRouter(String path,
-      [NavigationParams navigationParams]) async {
+  Future<NavigationResult> _navigateRouter(
+    String path, [
+    NavigationParams navigationParams,
+    bool forceNavigation = false,
+  ]) async {
     navigationParams?.assertValid();
     path = await _routerHook?.navigationPath(path, navigationParams) ?? path;
     path = Url.normalizePath(path);
@@ -108,7 +114,8 @@ class RouterImpl extends Router {
     navigationParams?.assertValid();
 
     var queryParameters = (navigationParams?.queryParameters ?? {});
-    if (current != null &&
+    if (!forceNavigation &&
+        current != null &&
         path == current.path &&
         (navigationParams?.fragment ?? '') == current.fragment &&
         const MapEquality().equals(queryParameters, current.queryParameters)) {
