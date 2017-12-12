@@ -1,8 +1,6 @@
 #!/usr/bin/env dart
 import 'dart:async';
-import 'dart:io';
 
-import 'package:build/build.dart';
 import 'package:build_compilers/build_compilers.dart';
 import 'package:build_runner/build_runner.dart';
 import 'package:build_test/builder.dart';

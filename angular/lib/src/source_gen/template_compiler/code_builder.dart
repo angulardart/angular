@@ -51,7 +51,7 @@ String buildGeneratedCode(
 
   if (outputs.injectorsOutput.isNotEmpty) {
     buffer.writeln('// *** EXPERIMENTAL ** Injector Generator [START]');
-    final file = new FileBuilder();
+    final file = new LibraryBuilder();
     final dart = new DartEmitter.scoped();
 
     for (final injector in outputs.injectorsOutput) {
