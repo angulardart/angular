@@ -5,8 +5,7 @@ analyzer:
    # implicit-dynamic: false
    # implicit-casts: false
  exclude:
-    - "tool/build.dart"
-    - "tools/analyzer_plugin/bin/plugin.dart"
+    - "angular/tools/analyzer_plugin/bin/plugin.dart"
  errors:
    unused_element: error
    unused_import: error
