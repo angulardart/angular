@@ -137,7 +137,7 @@ class TemplateOutliner implements Builder {
           ..writeln('  external void deliverChanges();')
           ..writeln('  external $name(_user.$directive instance);')
           ..writeln('  external void detectHostChanges(AppView view, '
-              'Element node, bool firstCheck);');
+              'Element node);');
         output.writeln('}');
       });
     }

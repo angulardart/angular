@@ -31,6 +31,15 @@ void main() {
       // Should not have updated the template, i.e. not change detection.
       expect(targetElement.text, 'Matan');
     });
+
+    test('Should update bound attribute with change detection', () async {
+      var testBed = new NgTestBed<DirectiveContainerTest>();
+      var testRoot = await testBed.create();
+      Element targetElement = testRoot.rootElement.querySelector('.target1');
+      expect(targetElement.attributes['data-msg'], 'Hello xyz');
+      targetElement = testRoot.rootElement.querySelector('.target2');
+      expect(targetElement.attributes['data-msg'], 'Hello abc');
+    });
   });
 }
 
@@ -59,4 +68,34 @@ class SingleBindingTest extends Object with ComponentState {
     if (_messages == messages) return;
     setState(() => _messages = messages);
   }
+}
+
+@Directive(
+    host: const {'[attr.data-msg]': 'msg'},
+    selector: '[fastDirective]',
+    visibility: Visibility.none)
+class FastDirective extends ComponentState {
+  Element element;
+  String msg;
+  String _prevValue;
+
+  FastDirective(this.element);
+
+  @Input()
+  set name(String value) {
+    if (_prevValue == value) return;
+    _prevValue = value;
+    setState(() => msg = 'Hello $value');
+  }
+}
+
+@Component(
+    selector: 'directive-container',
+    template: r'<div class="target1" fastDirective [name]="finalName"></div>'
+        '<div class="target2" fastDirective [name]="nonFinal"></div>',
+    directives: const [FastDirective],
+    visibility: Visibility.none)
+class DirectiveContainerTest {
+  final String finalName = "xyz";
+  String nonFinal = "abc";
 }

@@ -1,4 +1,6 @@
 import 'package:source_span/source_span.dart';
+import 'package:angular/src/core/change_detection/change_detection.dart'
+    show ChangeDetectionStrategy;
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import 'package:angular_compiler/angular_compiler.dart';
@@ -864,6 +866,16 @@ class CompileView implements AppViewBuilder {
               toTemplateExtension(directiveMetadata.identifier.moduleUrl));
     }
 
+    List<o.Expression> changeDetectorParams;
+    if (providerHasChangeDetector) {
+      changeDetectorParams = [resolvedProviderValueExpr];
+      if (directiveMetadata.changeDetection ==
+          ChangeDetectionStrategy.Stateful) {
+        changeDetectorParams.add(o.THIS_EXPR);
+        changeDetectorParams.add(compileElement.renderNode.toReadExpr());
+      }
+    }
+
     if (isEager) {
       // Check if we need to reach this directive or component beyond the
       // contents of the build() function. Otherwise allocate locally.
@@ -875,10 +887,11 @@ class CompileView implements AppViewBuilder {
               outputType: o.importType(changeDetectorType),
               modifiers: const [o.StmtModifier.Private]));
           _createMethod.addStmt(new o.WriteClassMemberExpr(
-              propName,
-              o
-                  .importExpr(changeDetectorType)
-                  .instantiate([resolvedProviderValueExpr])).toStmt());
+                  propName,
+                  o
+                      .importExpr(changeDetectorType)
+                      .instantiate(changeDetectorParams))
+              .toStmt());
           return new o.ReadPropExpr(
               new o.ReadClassMemberExpr(
                   propName, o.importType(changeDetectorType)),
@@ -916,9 +929,8 @@ class CompileView implements AppViewBuilder {
       getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
 
       if (providerHasChangeDetector) {
-        resolvedProviderValueExpr = o
-            .importExpr(changeDetectorType)
-            .instantiate([resolvedProviderValueExpr]);
+        resolvedProviderValueExpr =
+            o.importExpr(changeDetectorType).instantiate(changeDetectorParams);
       }
       // Note: Equals is important for JS so that it also checks the undefined case!
       var statements = <o.Statement>[

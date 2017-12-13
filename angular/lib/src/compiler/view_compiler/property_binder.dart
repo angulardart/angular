@@ -366,7 +366,11 @@ void bindRenderInputs(
 void bindDirectiveHostProps(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement) {
   if (directiveAst.hostProperties.isEmpty) return;
-  bool isComponent = directiveAst.directive.isComponent;
+  var directive = directiveAst.directive;
+  bool isComponent = directive.isComponent;
+  var isStatefulDirective = !directive.isComponent &&
+      directive.changeDetection == ChangeDetectionStrategy.Stateful;
+
   var target = isComponent
       ? compileElement.componentView
       : unwrapDirective(directiveInstance);
@@ -375,13 +379,13 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
     callDetectHostPropertiesExpr =
         target.callMethod('detectHostChanges', [DetectChangesVars.firstCheck]);
   } else {
+    if (isStatefulDirective) return;
     if (unwrapDirectiveInstance(directiveInstance) == null) return;
     callDetectHostPropertiesExpr = target.callMethod('detectHostChanges', [
       compileElement.component != null
           ? compileElement.componentView
           : o.THIS_EXPR,
-      compileElement.renderNode.toReadExpr(),
-      DetectChangesVars.firstCheck
+      compileElement.renderNode.toReadExpr()
     ]);
   }
   compileElement.view.detectChangesRenderPropertiesMethod
@@ -409,6 +413,9 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
       !isDefaultChangeDetectionStrategy(directive.changeDetection);
   var isStatefulComp = directive.isComponent &&
       directive.changeDetection == ChangeDetectionStrategy.Stateful;
+  var isStatefulDirective = !directive.isComponent &&
+      directive.changeDetection == ChangeDetectionStrategy.Stateful;
+
   if (calcChangesMap) {
     // We need to reinitialize changes, otherwise a second change
     // detection cycle would cause extra ngOnChanges call.
@@ -456,7 +463,27 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           .toStmt());
       continue;
     }
-    if (isStatefulComp && directive.isComponent && outlinerDeprecated) {
+    if (isStatefulDirective) {
+      var fieldType = o.importType(directiveAst.directive.inputTypes[input]);
+      var checkExpression = convertCdExpressionToIr(
+          view.nameResolver,
+          DetectChangesVars.cachedCtx,
+          input.value,
+          view.component.template.preserveWhitespace,
+          _isBoolType(fieldType));
+      if (isImmutable(input.value, view.component.analyzedClass)) {
+        constantInputsMethod.addStmt(directiveInstance
+            .prop(input.directiveName)
+            .set(checkExpression)
+            .toStmt());
+      } else {
+        dynamicInputsMethod.addStmt(directiveInstance
+            .prop(input.directiveName)
+            .set(checkExpression)
+            .toStmt());
+      }
+      continue;
+    } else if (isStatefulComp && outlinerDeprecated) {
       // Write code for components that extend ComponentState:
       // Since we are not going to call markAsCheckOnce anymore we need to
       // generate a call to property updater that will invoke setState() on the

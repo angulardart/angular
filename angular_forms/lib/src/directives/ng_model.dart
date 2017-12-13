@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:angular/angular.dart'
     show
+        AfterChanges,
+        ComponentState,
         Directive,
         Inject,
         Input,
-        AfterChanges,
         OnInit,
         Optional,
         Output,
@@ -60,7 +61,9 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
     selector: '[ngModel]:not([ngControl]):not([ngFormControl])',
     providers: const [formControlBinding],
     exportAs: 'ngForm')
-class NgModel extends NgControl implements AfterChanges, OnInit {
+class NgModel extends NgControl
+    with ComponentState
+    implements AfterChanges, OnInit {
   final List<dynamic> _validators;
   Control _control;
   StreamController _update;
@@ -69,8 +72,14 @@ class NgModel extends NgControl implements AfterChanges, OnInit {
 
   @Input('ngModel')
   set model(dynamic value) {
+    /// Make sure input actually changed so we don't override
+    /// viewModel passed to us using viewToModelUpdate from proxies.
+    if (looseIdentical(_model, value)) return;
     _model = value;
     if (looseIdentical(value, viewModel)) return;
+
+    /// Mark as changed so we can commit to viewModel in ngAfterChanges
+    /// lifecycle.
     _modelChanged = true;
   }
 
@@ -107,7 +116,9 @@ class NgModel extends NgControl implements AfterChanges, OnInit {
   void ngAfterChanges() {
     if (_modelChanged) {
       _control.updateValue(_model);
-      viewModel = _model;
+      setState(() {
+        viewModel = _model;
+      });
       _modelChanged = false;
     }
   }

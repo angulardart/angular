@@ -1,5 +1,7 @@
 import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
+import 'package:angular/src/core/change_detection/change_detection.dart'
+    show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
@@ -11,7 +13,7 @@ import '../schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import "../template_ast.dart" show BoundElementPropertyAst;
 import '../template_parser.dart';
 import 'compile_method.dart';
-import 'constants.dart' show EventHandlerVars;
+import 'constants.dart' show DetectChangesVars, EventHandlerVars;
 import 'property_binder.dart' show bindAndWriteToRenderer;
 import 'view_name_resolver.dart';
 
@@ -32,6 +34,7 @@ class DirectiveCompiler {
   final viewMethods = <o.ClassMethod>[];
 
   bool _hasChangeDetector = false;
+  bool _implementsComponentState;
   ViewNameResolver _nameResolver;
 
   Logger _logger;
@@ -41,7 +44,10 @@ class DirectiveCompiler {
       : hasOnChangesLifecycle =
             directive.lifecycleHooks.contains(LifecycleHooks.OnChanges),
         hasAfterChangesLifecycle =
-            directive.lifecycleHooks.contains(LifecycleHooks.AfterChanges);
+            directive.lifecycleHooks.contains(LifecycleHooks.AfterChanges) {
+    _implementsComponentState =
+        directive.changeDetection == ChangeDetectionStrategy.Stateful;
+  }
 
   DirectiveCompileResult compile() {
     assert(directive.requiresDirectiveChangeDetector);
@@ -72,6 +78,9 @@ class DirectiveCompiler {
     return changeDetectorClass;
   }
 
+  bool get usesSetState =>
+      _implementsComponentState && directive.hostProperties.isNotEmpty;
+
   o.ClassMethod _createChangeDetectorConstructor(
       CompileDirectiveMetadata meta) {
     var instanceType = o.importType(meta.type.identifier);
@@ -82,16 +91,23 @@ class DirectiveCompiler {
         o.StmtModifier.Final,
       ],
     ));
-    var constructorArgs = [new o.FnParam('this.instance', instanceType)];
-    var statements;
-    if (hasOnChangesLifecycle || hasAfterChangesLifecycle) {
-      statements = [
-        new o.WriteClassMemberExpr(
-                'directive', new o.ReadClassMemberExpr('instance'))
-            .toStmt()
-      ];
-    } else {
-      statements = const [];
+    var statements = [];
+    if (hasOnChangesLifecycle || usesSetState) {
+      statements.add(new o.WriteClassMemberExpr(
+              'directive', new o.ReadClassMemberExpr('instance'))
+          .toStmt());
+    }
+    var constructorArgs = [new o.FnParam('this.instance')];
+    if (usesSetState) {
+      constructorArgs
+          .add(new o.FnParam('v', o.importType(Identifiers.AppView)));
+      constructorArgs
+          .add(new o.FnParam('e', o.importType(Identifiers.HTML_ELEMENT)));
+      statements.add(
+          new o.WriteClassMemberExpr('view', new o.ReadVarExpr('v')).toStmt());
+      statements.add(
+          new o.WriteClassMemberExpr('el', new o.ReadVarExpr('e')).toStmt());
+      statements.add(new o.InvokeMemberMethodExpr('initCd', const []).toStmt());
     }
     return new o.ClassMethod(null, constructorArgs, statements);
   }
@@ -139,15 +155,29 @@ class DirectiveCompiler {
         genDebugInfo,
         updatingHostAttribute: true);
 
+    var statements = method.finish();
+    var readVars = method.findReadVarNames();
+
+    if (readVars.contains(DetectChangesVars.firstCheck.name)) {
+      statements.insert(
+          0,
+          new o.DeclareVarStmt(
+              DetectChangesVars.firstCheck.name,
+              o
+                  .variable('view')
+                  .prop('cdState')
+                  .equals(o.literal(ChangeDetectorState.NeverChecked)),
+              o.BOOL_TYPE));
+    }
+
     viewMethods.add(new o.ClassMethod(
         'detectHostChanges',
         [
           new o.FnParam(
               'view', o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
           new o.FnParam('el', o.importType(Identifiers.HTML_ELEMENT)),
-          new o.FnParam('firstCheck', o.BOOL_TYPE),
         ],
-        method.finish()));
+        statements));
   }
 
   static String buildInputUpdateMethodName(String input) => 'ngSet\$$input';
