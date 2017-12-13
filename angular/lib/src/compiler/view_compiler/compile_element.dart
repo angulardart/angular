@@ -49,7 +49,9 @@ class CompileElement extends CompileNode {
   // If true, we know for sure it is html and not svg or other type
   // so we can create code for more exact type HtmlElement.
   final bool isHtmlElement;
-  CompileDirectiveMetadata component;
+  // CompileElement either is an html element or is an angular component.
+  // This member is populated when element is host of a component.
+  final CompileDirectiveMetadata component;
   final List<CompileDirectiveMetadata> _directives;
   List<ProviderAst> _resolvedProvidersArray;
   final bool hasViewContainer;
