@@ -48,7 +48,6 @@ class DebugAppView<T> extends AppView<T> {
   /// References to all internal nodes/elements, for debugging purposes only.
   ///
   /// See [DebugAppView.init].
-  @visibleForTesting
   List allNodes;
 
   // TODO(het): remove this when we have the functionality in angular_test
