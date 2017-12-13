@@ -84,7 +84,9 @@ Uri urlOf(Element element, [String name]) {
     return new Uri(scheme: 'dart', path: 'core', fragment: 'dynamic');
   }
   name ??= element.name;
-  return normalizeUrl(element.source.uri).replace(fragment: name);
+  // NOTE: element.source.uri might be a file that is not importable (i.e. is
+  // a "part"), while element.library.source.uri is always importable.
+  return normalizeUrl(element.library.source.uri).replace(fragment: name);
 }
 
 /// Create a `code_builder` [Reference] to [assetUri].
