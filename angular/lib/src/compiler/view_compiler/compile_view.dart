@@ -14,6 +14,7 @@ import '../compile_metadata.dart'
         CompileProviderMetadata,
         CompileQueryMetadata,
         CompileTokenMap;
+
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
@@ -25,6 +26,7 @@ import '../template_ast.dart'
         ProviderAst,
         ProviderAstType,
         VariableAst;
+import 'constants.dart' show parentRenderNodeVar;
 import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
@@ -37,7 +39,6 @@ import 'view_compiler_utils.dart'
         createDbgElementCall,
         createSetAttributeStatement,
         cachedParentIndexVarName,
-        getParentRenderNode,
         getViewFactoryName,
         identifierFromTagName,
         injectFromViewParentInjector,
@@ -393,7 +394,7 @@ class CompileView implements AppViewBuilder {
         renderNode._name,
         o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([o.literal(text)]),
         o.importType(Identifiers.HTML_TEXT_NODE)));
-    var parentRenderNodeExpr = getParentRenderNode(this, parent);
+    var parentRenderNodeExpr = _getParentRenderNode(parent);
     if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
       // Write append code.
       _createMethod.addStmt(parentRenderNodeExpr
@@ -417,7 +418,7 @@ class CompileView implements AppViewBuilder {
         outputType: o.importType(Identifiers.HTML_TEXT_NODE),
         modifiers: const [o.StmtModifier.Private]));
 
-    var parentRenderNodeExpr = getParentRenderNode(this, parent);
+    var parentRenderNodeExpr = _getParentRenderNode(parent);
     var createRenderNodeExpr = renderNode.toWriteExpr(
         o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([o.literal('')]));
     _createMethod.addStmt(createRenderNodeExpr.toStmt());
@@ -437,7 +438,7 @@ class CompileView implements AppViewBuilder {
   /// Create an html node and appends to parent element.
   void createElement(CompileElement parent, NodeReference elementRef,
       int nodeIndex, String tagName, TemplateAst ast) {
-    var parentRenderNodeExpr = getParentRenderNode(this, parent);
+    var parentRenderNodeExpr = _getParentRenderNode(parent);
     final generateDebugInfo = genConfig.genDebugInfo;
 
     if (!_isRootNodeOfHost(nodeIndex)) {
@@ -538,7 +539,7 @@ class CompileView implements AppViewBuilder {
   /// Creates an html node with a namespace and appends to parent element.
   void createElementNs(CompileElement parent, NodeReference elementRef,
       int nodeIndex, String ns, String tagName, TemplateAst ast) {
-    var parentRenderNodeExpr = getParentRenderNode(this, parent);
+    var parentRenderNodeExpr = _getParentRenderNode(parent);
     final generateDebugInfo = genConfig.genDebugInfo;
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());
@@ -572,7 +573,7 @@ class CompileView implements AppViewBuilder {
     var assignCloneAnchorNodeExpr =
         (renderNode.toReadExpr() as o.ReadVarExpr).set(_cloneAnchorNodeExpr);
     _createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
-    var parentNode = getParentRenderNode(this, parent);
+    var parentNode = _getParentRenderNode(parent);
     if (parentNode != o.NULL_EXPR) {
       var addCommentStmt =
           parentNode.callMethod('append', [renderNode.toReadExpr()]).toStmt();
@@ -699,7 +700,7 @@ class CompileView implements AppViewBuilder {
             .addStmt(_createDbgIndexElementCall(elementRef, nodes.length));
       }
     } else {
-      var parentRenderNodeExpr = getParentRenderNode(this, parent);
+      var parentRenderNodeExpr = _getParentRenderNode(parent);
       final generateDebugInfo = genConfig.genDebugInfo;
       _createMethod.addStmt(elementRef
           .toWriteExpr(
@@ -740,7 +741,7 @@ class CompileView implements AppViewBuilder {
     // The projected nodes originate from a different view, so we don't
     // have debug information for them.
     _createMethod.resetDebugInfo(null, ast);
-    var parentRenderNode = getParentRenderNode(this, target);
+    var parentRenderNode = _getParentRenderNode(target);
     // AppView.projectableNodes property contains the list of nodes
     // to project for each NgContent.
     // Creates a call to project(parentNode, nodeIndex).
@@ -1033,6 +1034,27 @@ class CompileView implements AppViewBuilder {
   @override
   void writeBuildStatements(List<o.Statement> targetStatements) {
     targetStatements.addAll(_createMethod.finish());
+  }
+
+  // Returns reference for compile element or null if compile element
+  // has no attached node (root node of embedded or host view).
+  o.Expression _getParentRenderNode(CompileElement parentElement) {
+    bool isRootNode = !identical(parentElement.view, this);
+    if (isRootNode) {
+      if (viewType == ViewType.COMPONENT) {
+        return parentRenderNodeVar;
+      } else {
+        // root node of an embedded/host view
+        return o.NULL_EXPR;
+      }
+    } else {
+      // If our parent element is a component, this is transcluded content
+      // and we should return null since there is no physical element in
+      // this view. Otherwise return the actual html node reference.
+      return parentElement.component != null
+          ? o.NULL_EXPR
+          : parentElement.renderNode.toReadExpr();
+    }
   }
 }
 

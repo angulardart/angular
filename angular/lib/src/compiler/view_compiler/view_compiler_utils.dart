@@ -10,7 +10,6 @@ import '../compile_metadata.dart'
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show AttrAst, TemplateAst;
-import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart';
 
@@ -352,28 +351,6 @@ o.Statement createDbgElementCall(
     sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.line),
     sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.column)
   ]).toStmt();
-}
-
-bool _isRootNode(CompileView view, CompileElement parent) {
-  return !identical(parent.view, view);
-}
-
-// TODO: make private after all call sites move into AppViewBuilder interface.
-// Returns reference for compile element or null if compile element
-// has no attached node (root node of embedded or host view).
-o.Expression getParentRenderNode(CompileView view, CompileElement parent) {
-  if (_isRootNode(view, parent)) {
-    if (view.viewType == ViewType.COMPONENT) {
-      return parentRenderNodeVar;
-    } else {
-      // root node of an embedded/host view
-      return o.NULL_EXPR;
-    }
-  } else {
-    return parent.component != null
-        ? o.NULL_EXPR
-        : parent.renderNode.toReadExpr();
-  }
 }
 
 Map<String, CompileIdentifierMetadata> tagNameToIdentifier;
