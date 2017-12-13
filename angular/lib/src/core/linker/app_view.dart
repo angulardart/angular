@@ -33,15 +33,12 @@ final ngAnchor = new Comment('template bindings={}');
 /// When non-null, change detection is re-run (synchronously), in a slow-mode
 /// that individually checks components, and disables change detection for them
 /// if there is a failure detected.
-@visibleForTesting
 AppView lastGuardedView;
 
 /// Exception caught for [lastGuardedView].
-@visibleForTesting
 dynamic caughtException;
 
 /// Stack trace caught for [lastGuardedView].
-@visibleForTesting
 dynamic caughtStack;
 
 /// Set to `true` when Angular modified the DOM.
@@ -80,7 +77,6 @@ class AppViewData<T> {
   /// Tracks the root DOM elements or view containers (for `<template>`).
   ///
   /// **INTERNAL ONLY**: Not part of the supported public API.
-  @visibleForTesting
   List rootNodesOrViewContainers;
 
   /// Index of this view within the [parentView].

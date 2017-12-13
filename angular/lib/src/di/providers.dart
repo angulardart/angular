@@ -7,7 +7,6 @@ import 'package:meta/meta.dart';
 import '../core/di/opaque_token.dart';
 
 /// A marker that represents a lack-of-value for the `useValue` parameter.
-@visibleForTesting
 const Object noValueProvided = '__noValueProvided__';
 
 /// A contract for creating implementations of [Injector] at runtime.
@@ -189,7 +188,6 @@ Object buildAtRuntime(Provider provider, RuntimeInjectorBuilder builder) {
 }
 
 /// **INTERNAL ONLY**: Used to provide type inference for `multi: true`.
-@visibleForTesting
 List<T> listOfMulti<T>(Provider<T> provider) => provider._listOfMulti();
 
 /// Describes at compile-time configuring to return an instance of a `class`.

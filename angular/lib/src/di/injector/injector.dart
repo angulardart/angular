@@ -12,14 +12,11 @@ export '../../core/di/opaque_token.dart' show OpaqueToken;
 class InjectionToken<T> {}
 
 /// **INTERNAL ONLY**: Placeholder until we support 1.25.0+ (function syntax).
-@visibleForTesting
 typedef T OrElseInject<T>(Injector injector, Object token);
 
 /// **INTERNAL ONLY**: Sentinel value for determining a missing DI instance.
-@visibleForTesting
 const Object throwIfNotFound = const Object();
 
-@visibleForTesting
 Null throwsNotFound(Injector injector, Object token) {
   throw new ArgumentError('No provider found for $token.');
 }
