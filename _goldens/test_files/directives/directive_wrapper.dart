@@ -85,3 +85,33 @@ class MyInjectableClass {
 class InputFormTest {
   ControlGroup form;
 }
+
+@Directive(
+    host: const {'[attr.data-msg]': 'msg'},
+    selector: '[fastDirective]',
+    visibility: Visibility.none)
+class FastDirective extends ComponentState {
+  Element element;
+  String msg;
+  String _prevValue;
+
+  FastDirective(this.element);
+
+  @Input()
+  set name(String value) {
+    if (_prevValue == value) return;
+    _prevValue = value;
+    setState(() => msg = 'Hello $value');
+  }
+}
+
+@Component(
+    selector: 'directive-container',
+    template: r'<div class="target1" fastDirective [name]="finalName"></div>'
+        '<div class="target2" fastDirective [name]="nonFinal"></div>',
+    directives: const [FastDirective],
+    visibility: Visibility.none)
+class DirectiveContainerTest {
+  final String finalName = "xyz";
+  String nonFinal = "abc";
+}

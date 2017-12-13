@@ -1,4 +1,4 @@
-/// Mixin representing an component with observable state change.
+/// Mixin representing an component or directive with observable state change.
 ///
 /// !Status: EXPERIMENTAL. APIs are not mature yet.
 ///
@@ -21,7 +21,8 @@ class ComponentState {
 
   /// Callback for state changes used by Angular AppView.
   ///
-  /// To observe changes outside AppView, please use stateChanges stream.
+  /// This is private to framework. To observe changes outside AppView,
+  /// please use stateChanges stream.
   set stateChangeCallback(ComponentStateCallback callback) {
     _stateChangeCallback = callback;
   }
@@ -30,7 +31,9 @@ class ComponentState {
   ///
   /// Users may override to process aggregate state changes.
   void deliverStateChanges() {
-    _stateChangeCallback();
+    if (_stateChangeCallback != null) {
+      _stateChangeCallback();
+    }
   }
 }
 

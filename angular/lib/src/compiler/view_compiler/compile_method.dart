@@ -80,6 +80,11 @@ class CompileMethod {
     _bodyStatements.addAll(stmts);
   }
 
+  /// Returns set of variable reads in method.
+  Set<String> findReadVarNames() {
+    return o.findReadVarNames(_bodyStatements);
+  }
+
   List<o.Statement> finish() {
     return _bodyStatements;
   }

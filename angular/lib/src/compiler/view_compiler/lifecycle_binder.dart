@@ -1,6 +1,7 @@
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
-
+import 'package:angular/src/core/change_detection/change_detection.dart'
+    show ChangeDetectionStrategy;
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import '../identifiers.dart';
@@ -28,8 +29,15 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
   }
   if (lifecycleHooks.contains(LifecycleHooks.AfterChanges) &&
       directiveAst.inputs.isNotEmpty) {
-    detectChangesInInputsMethod.addStmt(new o.IfStmt(DetectChangesVars.changed,
-        [directiveInstance.callMethod('ngAfterChanges', const []).toStmt()]));
+    if (directiveAst.directive.changeDetection ==
+        ChangeDetectionStrategy.Stateful) {
+      detectChangesInInputsMethod.addStmt(
+          directiveInstance.callMethod('ngAfterChanges', const []).toStmt());
+    } else {
+      detectChangesInInputsMethod.addStmt(new o.IfStmt(
+          DetectChangesVars.changed,
+          [directiveInstance.callMethod('ngAfterChanges', const []).toStmt()]));
+    }
   }
   if (lifecycleHooks.contains(LifecycleHooks.OnInit)) {
     if (view.genConfig.genDebugInfo) {

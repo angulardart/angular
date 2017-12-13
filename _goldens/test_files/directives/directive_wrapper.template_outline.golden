@@ -31,19 +31,33 @@ external AppView<_user.InputFormTest> viewFactory_InputFormTest0(AppView<dynamic
 class ViewInputFormTest0 extends AppView<_user.InputFormTest> {
   external ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex);
 }
+// For @Component class DirectiveContainerTest.
+const List<dynamic> styles$DirectiveContainerTest = const [];
+external ComponentFactory get DirectiveContainerTestNgFactory;
+external AppView<_user.DirectiveContainerTest> viewFactory_DirectiveContainerTest0(AppView<dynamic> parentView, num parentIndex);
+class ViewDirectiveContainerTest0 extends AppView<_user.DirectiveContainerTest> {
+  external ViewDirectiveContainerTest0(AppView<dynamic> parentView, num parentIndex);
+}
 // For @Directive class ChildDirective.
 class ChildDirectiveNgCd extends DirectiveChangeDetector {
   external _user.ChildDirective get instance;
   external void deliverChanges();
   external ChildDirectiveNgCd(_user.ChildDirective instance);
-  external void detectHostChanges(AppView view, Element node, bool firstCheck);
+  external void detectHostChanges(AppView view, Element node);
 }
 // For @Directive class DirectiveWithOutput.
 class DirectiveWithOutputNgCd extends DirectiveChangeDetector {
   external _user.DirectiveWithOutput get instance;
   external void deliverChanges();
   external DirectiveWithOutputNgCd(_user.DirectiveWithOutput instance);
-  external void detectHostChanges(AppView view, Element node, bool firstCheck);
+  external void detectHostChanges(AppView view, Element node);
+}
+// For @Directive class FastDirective.
+class FastDirectiveNgCd extends DirectiveChangeDetector {
+  external _user.FastDirective get instance;
+  external void deliverChanges();
+  external FastDirectiveNgCd(_user.FastDirective instance);
+  external void detectHostChanges(AppView view, Element node);
 }
 
 external void initReflector();
