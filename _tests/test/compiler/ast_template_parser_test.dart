@@ -535,7 +535,21 @@ void main() {
                 [DirectiveAst, dirA],
                 [BoundDirectivePropertyAst, 'a', '"literal2"']
               ]);
-        }, skip: 'Don\'t yet dedupe bound properties.');
+        });
+
+        test('should parse directive properties with no value', () {
+          var dirA = createCompileDirectiveMetadata(
+              selector: '[a]',
+              type: new CompileTypeMetadata(
+                  moduleUrl: someModuleUrl, name: 'DirA'),
+              inputs: ['a']);
+          expect(humanizeTplAst(parse('<div a></div>', [dirA])), [
+            [ElementAst, 'div'],
+            [AttrAst, 'a', ''],
+            [DirectiveAst, dirA],
+            [BoundDirectivePropertyAst, 'a', '']
+          ]);
+        });
 
         test('should support optional directive properties', () {
           var dirA = createCompileDirectiveMetadata(
