@@ -103,6 +103,7 @@ class NgParser {
     'hkern',
     // 'iframe', Exclude this because it's also HTML
     'image',
+    'line',
     'linearGradient',
     'marker',
     'mask',
