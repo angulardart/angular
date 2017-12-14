@@ -24,7 +24,7 @@ Future<dynamic> exec(_SimpleCallback fn,
     } on AnalyzerError catch (e) {
       // Do not worry about printing the stack trace, barback will handle
       // that on its own when it catches the rethrown exception.
-      log.error('  Failed with ${e.runtimeType}\n${_friendlyError(e.error)}');
+      log.error('  Failed with ${_friendlyError(e.error)}');
       rethrow;
     } on AnalyzerErrorGroup catch (eGroup) {
       // See above re: stack trace.

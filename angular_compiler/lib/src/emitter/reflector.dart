@@ -116,7 +116,7 @@ class ReflectableEmitter {
     if (bound is FunctionElement) {
       return bound.name;
     }
-    throw new UnsupportedError('Invalid type: ${bound.runtimeType}.');
+    throw new UnsupportedError('Unexpected element: $bound.');
   }
 
   String _invocationParams(DependencyInvocation invocation) =>
@@ -155,7 +155,7 @@ class ReflectableEmitter {
     if (bound is FunctionElement) {
       return bound.name;
     }
-    throw new UnsupportedError('Invalid type: ${bound.runtimeType}.');
+    throw new UnsupportedError('Unexpected element: $bound.');
   }
 
   String _registerFactory(DependencyInvocation invocation) {
