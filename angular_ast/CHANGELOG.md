@@ -1,3 +1,12 @@
+### New features
+
+- Add `RecursiveTemplateAstVisitor`, which will visit all AST nodes accessible
+  from the given node.
+
+### Bug fixes
+- `DesugarVisitor` now desugars AST nodes which were the (indirect) children of
+  `EmbeddedTemplateAst` nodes.
+
 ## 0.4.0-alpha.1
 
 - Update version from `0.4.0-alpha+2` to make it come after `0.4.0-alpha.0`

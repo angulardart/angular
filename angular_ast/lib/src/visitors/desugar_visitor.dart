@@ -61,12 +61,7 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
 
   @override
   TemplateAst visitElement(ElementAst astNode, [_]) {
-    var newChildren = <StandaloneTemplateAst>[];
-    astNode.childNodes.forEach((child) {
-      newChildren.add(child.accept(this) as StandaloneTemplateAst);
-    });
-    astNode.childNodes.clear();
-    astNode.childNodes.addAll(newChildren);
+    _visitChildren(astNode);
 
     if (astNode.bananas.isNotEmpty) {
       for (BananaAst bananaAst in astNode.bananas) {
@@ -153,12 +148,24 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
     return astNode;
   }
 
+  void _visitChildren(TemplateAst astNode) {
+    if (astNode.childNodes.isEmpty) return;
+    var newChildren = <StandaloneTemplateAst>[];
+    astNode.childNodes.forEach((child) {
+      newChildren.add(child.accept(this) as StandaloneTemplateAst);
+    });
+    astNode.childNodes.clear();
+    astNode.childNodes.addAll(newChildren);
+  }
+
   @override
   TemplateAst visitEmbeddedContent(EmbeddedContentAst astNode, [_]) => astNode;
 
   @override
-  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [_]) =>
-      astNode;
+  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [_]) {
+    _visitChildren(astNode);
+    return astNode;
+  }
 
   @override
   TemplateAst visitEvent(EventAst astNode, [_]) => astNode;

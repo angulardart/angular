@@ -91,7 +91,7 @@ class AstTemplateParser implements TemplateParser {
 
   List<ast.TemplateAst> _filterElements(
       List<ast.TemplateAst> parsedAst, bool preserveWhitespace) {
-    var filteredElements = new _ElementFilter().visitAll(parsedAst);
+    var filteredElements = new _ElementFilter().visitAll(parsedAst, false);
     return new _PreserveWhitespaceVisitor()
         .visitAll(filteredElements, preserveWhitespace);
   }
@@ -681,52 +681,22 @@ String _getPropertyName(ast.PropertyAst astNode) {
 }
 
 /// Visitor which filters elements that are not supported in angular templates.
-class _ElementFilter extends ast.IdentityTemplateAstVisitor<bool> {
-  List<T> visitAll<T extends ast.TemplateAst>(Iterable<T> astNodes,
-      [bool hasNgNonBindable = false]) {
-    final result = <T>[];
-    for (final node in astNodes) {
-      final visited = node.accept(this, hasNgNonBindable);
-      if (visited != null) result.add(visited);
-    }
-    return result;
-  }
-
+class _ElementFilter extends ast.RecursiveTemplateAstVisitor<bool> {
   @override
   ast.TemplateAst visitElement(ast.ElementAst astNode,
       [bool hasNgNonBindable]) {
     if (_filterElement(astNode, hasNgNonBindable)) {
       return null;
     }
-    hasNgNonBindable =
-        hasNgNonBindable || _hasNgNOnBindable(astNode.attributes);
-    return new ast.ElementAst.from(
-        astNode, astNode.name, astNode.closeComplement,
-        attributes: visitAll(astNode.attributes, hasNgNonBindable),
-        childNodes: visitAll(astNode.childNodes, hasNgNonBindable),
-        events: visitAll(astNode.events, hasNgNonBindable),
-        properties: visitAll(astNode.properties, hasNgNonBindable),
-        references: visitAll(astNode.references, hasNgNonBindable),
-        bananas: visitAll(astNode.bananas, hasNgNonBindable),
-        stars: visitAll(astNode.stars, hasNgNonBindable));
+    return super.visitElement(
+        astNode, hasNgNonBindable || _hasNgNonBindable(astNode.attributes));
   }
 
   @override
   ast.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
-      [bool hasNgNonBindable]) {
-    hasNgNonBindable =
-        hasNgNonBindable || _hasNgNOnBindable(astNode.attributes);
-    return new ast.EmbeddedTemplateAst.from(
-      astNode,
-      attributes: visitAll(astNode.attributes, hasNgNonBindable),
-      childNodes: visitAll(astNode.childNodes, hasNgNonBindable),
-      events: visitAll(astNode.events, hasNgNonBindable),
-      properties: visitAll(astNode.properties, hasNgNonBindable),
-      references: visitAll(astNode.references, hasNgNonBindable),
-      letBindings: visitAll(astNode.letBindings, hasNgNonBindable),
-      hasDeferredComponent: astNode.hasDeferredComponent,
-    );
-  }
+          [bool hasNgNonBindable]) =>
+      super.visitEmbeddedTemplate(
+          astNode, hasNgNonBindable || _hasNgNonBindable(astNode.attributes));
 
   @override
   ast.TemplateAst visitEmbeddedContent(ast.EmbeddedContentAst astNode,
@@ -742,7 +712,7 @@ class _ElementFilter extends ast.IdentityTemplateAstVisitor<bool> {
           [bool hasNgNonBindable]) =>
       hasNgNonBindable
           ? new ast.TextAst.from(astNode, '{{${astNode.value}}}')
-          : astNode;
+          : super.visitInterpolation(astNode, hasNgNonBindable);
 
   static bool _filterElement(ast.ElementAst astNode, bool hasNgNonBindable) =>
       _filterScripts(astNode) ||
@@ -769,7 +739,7 @@ class _ElementFilter extends ast.IdentityTemplateAstVisitor<bool> {
     return null;
   }
 
-  bool _hasNgNOnBindable(List<ast.AttributeAst> attributes) {
+  bool _hasNgNonBindable(List<ast.AttributeAst> attributes) {
     for (var attr in attributes) {
       if (attr.name == NG_NON_BINDABLE_ATTR) return true;
     }
@@ -873,10 +843,10 @@ class _ProviderVisitor
 
 /// Visitor which extracts inline templates.
 // TODO(alorenzen): Refactor this into pkg:angular_ast.
-class _InlineTemplateDesugar extends ast.IdentityTemplateAstVisitor<Null> {
+class _InlineTemplateDesugar extends ast.RecursiveTemplateAstVisitor<Null> {
   @override
   ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
-    _visitChildren(astNode, this);
+    astNode = super.visitElement(astNode);
     var templateAttribute = _findTemplateAttribute(astNode);
     if (templateAttribute == null) {
       return astNode;
@@ -895,10 +865,7 @@ class _InlineTemplateDesugar extends ast.IdentityTemplateAstVisitor<Null> {
     final letBindings = <ast.LetBindingAst>[];
     if (isMicroExpression(expression)) {
       NgMicroAst micro;
-      var expressionOffset = (templateAttribute as ast.ParsedAttributeAst)
-          .valueToken
-          ?.innerValue
-          ?.offset;
+      var expressionOffset = _expressionOffset(templateAttribute);
       try {
         micro = parseMicroExpression(
           name,
@@ -933,12 +900,6 @@ class _InlineTemplateDesugar extends ast.IdentityTemplateAstVisitor<Null> {
     }
   }
 
-  @override
-  ast.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode, [_]) {
-    _visitChildren(astNode, this);
-    return astNode;
-  }
-
   ast.AttributeAst _findTemplateAttribute(ast.ElementAst astNode) =>
       astNode.attributes
           .firstWhere((attr) => attr.name == 'template', orElse: () => null);
@@ -947,7 +908,7 @@ class _InlineTemplateDesugar extends ast.IdentityTemplateAstVisitor<Null> {
     var spaceIndex = value.indexOf(' ');
     var name = spaceIndex == -1 ? value : value.substring(0, spaceIndex);
     if (name == 'let') return null;
-    return name;
+    return name.replaceAll(':', '');
   }
 
   String _getExpression(String value) {
@@ -956,44 +917,65 @@ class _InlineTemplateDesugar extends ast.IdentityTemplateAstVisitor<Null> {
     if (value.substring(0, spaceIndex) == 'let') return value;
     return value.substring(spaceIndex + 1);
   }
-}
 
-void _visitChildren<C>(ast.TemplateAst astNode,
-    ast.TemplateAstVisitor<ast.TemplateAst, C> visitor) {
-  var children = astNode.childNodes
-      .map((child) => child.accept(visitor) as ast.StandaloneTemplateAst)
-      .toList();
-  astNode.childNodes.clear();
-  astNode.childNodes.addAll(children);
+  int _expressionOffset(ast.AttributeAst templateAttribute) {
+    if (templateAttribute == null) return null;
+    if (templateAttribute is ast.SyntheticTemplateAst) {
+      return _expressionOffset(
+          (templateAttribute as ast.SyntheticTemplateAst).origin);
+    }
+    return (templateAttribute as ast.ParsedAttributeAst)
+        .valueToken
+        ?.innerValue
+        ?.offset;
+  }
 }
 
 /// Visitor that applies default namespaces to elements.
 // TODO(alorenzen): Refactor this into pkg:angular_ast.
-class _NamespaceVisitor extends ast.IdentityTemplateAstVisitor<String> {
+class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
   @override
   visitElement(ast.ElementAst element, [String parentPrefix]) {
     var prefix = _getNamespace(element.name) ?? parentPrefix;
-    var children =
-        element.childNodes.map((child) => child.accept(this, prefix)).toList();
+    var visitedElement = super.visitElement(element, prefix) as ast.ElementAst;
     return new ast.ElementAst.from(
-        element, mergeNsAndName(prefix, element.name), element.closeComplement,
-        attributes: element.attributes,
-        childNodes: children,
-        events: element.events,
-        properties: element.properties,
-        references: element.references,
-        bananas: element.bananas,
-        stars: element.stars);
+        visitedElement,
+        mergeNsAndName(prefix, _getName(visitedElement.name)),
+        visitedElement.closeComplement,
+        attributes: visitedElement.attributes,
+        childNodes: visitedElement.childNodes,
+        events: visitedElement.events,
+        properties: visitedElement.properties,
+        references: visitedElement.references,
+        bananas: visitedElement.bananas,
+        stars: visitedElement.stars);
+  }
+
+  String _getNamespace(String name) {
+    return _getNsPrefix(name) ??
+        getHtmlTagDefinition(name).implicitNamespacePrefix;
   }
 
   @override
-  visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode, [_]) {
-    _visitChildren(astNode, this);
-    return astNode;
+  visitAttribute(ast.AttributeAst astNode, [String parentPrefix]) {
+    astNode = super.visitAttribute(astNode, parentPrefix);
+    if (_getNsPrefix(astNode.name) == null) return astNode;
+    var names = astNode.name.split(':');
+    return new ast.AttributeAst.from(astNode,
+        mergeNsAndName(names[0], names[1]), astNode.value, astNode.mustaches);
   }
 
-  String _getNamespace(String name) =>
-      getHtmlTagDefinition(name).implicitNamespacePrefix;
+  String _getNsPrefix(String name) {
+    var separatorIndex = name.indexOf(':');
+    if (separatorIndex == -1) return null;
+    return name.substring(0, separatorIndex);
+  }
+
+  String _getName(String name) {
+    var separatorIndex = name.indexOf(':');
+    if (separatorIndex == -1) return name;
+    return name.substring(separatorIndex + 1);
+  }
 }
 
 /// Visitor that verifies all pipes in the template are valid.

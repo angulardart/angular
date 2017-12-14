@@ -115,6 +115,13 @@ void main() {
         ]);
       });
 
+      test('should parse svg', () {
+        expect(humanizeTplAst(parse('<svg:use xlink:href="#id"/>', [])), [
+          [ElementAst, "@svg:use"],
+          [AttrAst, "@xlink:href", "#id"],
+        ]);
+      });
+
       test('should parse bound text nodes', () {
         expect(humanizeTplAst(parse('{{a}}', [])), [
           [BoundTextAst, '{{ a }}']
@@ -1898,7 +1905,7 @@ void main() {
               [AttrAst, '@xlink:href', 'Port', 'xlink:href="Port"'],
               [DirectiveAst, attrSel, '<use xlink:href="Port" />']
             ]);
-      }, skip: 'Don\'t yet support namespaces.');
+      });
 
       test('should support directive property', () {
         var dirA = createCompileDirectiveMetadata(

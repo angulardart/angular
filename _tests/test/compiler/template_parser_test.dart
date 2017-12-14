@@ -111,6 +111,12 @@ void main() {
           [NgContentAst]
         ]);
       });
+      test('should parse svg', () {
+        expect(humanizeTplAst(parse('<svg:use xlink:href="#id"/>', [])), [
+          [ElementAst, "@svg:use"],
+          [AttrAst, "@xlink:href", "#id"],
+        ]);
+      });
       test("should parse bound text nodes", () {
         expect(humanizeTplAst(parse("{{a}}", [])), [
           [BoundTextAst, "{{ a }}"]
