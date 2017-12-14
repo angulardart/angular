@@ -333,6 +333,7 @@ class CompoundSelector {
     var x = a.simpleSelector;
     var y = b.simpleSelector;
 
+    // OK instance of '.runtimeType' usage, and is only in the compiler.
     if (x.runtimeType == y.runtimeType) {
       if (x is ElementSelector || x is NamespaceSelector) {
         logger.warning('Compound selector contains multiple type selectors:\n'

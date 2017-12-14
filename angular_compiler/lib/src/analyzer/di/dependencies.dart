@@ -53,7 +53,7 @@ class DependencyReader {
     if (element is FunctionElement) {
       return _parseFunctionDependencies(element) as DependencyInvocation<E>;
     }
-    throw new ArgumentError('Invalid type: ${element.runtimeType}.');
+    throw new ArgumentError('Invalid element: $element.');
   }
 
   /// Returns parsed dependencies for the provided [element].
