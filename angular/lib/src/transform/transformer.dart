@@ -4,7 +4,6 @@ import 'package:build_barback/build_barback.dart';
 
 import '../../source_gen.dart';
 import 'common/eager_transformer_wrapper.dart';
-import 'reflection_remover/transformer.dart';
 import 'stylesheet_compiler/transformer.dart';
 
 /// Replaces Angular 2 mirror use with generated code.
@@ -14,7 +13,6 @@ class AngularTransformerGroup extends TransformerGroup {
   factory AngularTransformerGroup(CompilerFlags flags) {
     Iterable<Iterable> phases = [
       [new BuilderTransformer(new TemplatePlaceholderBuilder())],
-      [new ReflectionRemover(flags)],
       [
         new BuilderTransformer(new StylesheetCompiler(flags)),
         new BuilderTransformer(
