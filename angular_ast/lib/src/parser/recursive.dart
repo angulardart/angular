@@ -482,12 +482,22 @@ class RecursiveAstParser {
     }
   }
 
+  static const _allowedEmbeddedContentDecorators = const [
+    'select',
+    'ngProjectAs'
+  ];
+
   /// Returns and parses an embedded content directive/transclusions.
   EmbeddedContentAst parseEmbeddedContent(
       NgToken beginToken, NgToken elementIdentifierToken) {
-    NgToken selectToken, equalSign, endToken;
-    NgAttributeValueToken valueToken;
+    NgToken selectToken,
+        selectEqualSign,
+        ngProjectAsToken,
+        ngProjectAsEqualSign,
+        endToken;
+    NgAttributeValueToken selectValueToken, ngProjectAsValueToken;
     var selectAttributeFound = false;
+    var ngProjectAsAttributeFound = false;
     CloseElementAst closeElementAst;
 
     // Ensure that ng-content has only 'select' attribute, if any. Also
@@ -497,7 +507,7 @@ class RecursiveAstParser {
       var nextToken = _reader.next();
 
       if (nextToken.type != NgTokenType.elementDecorator ||
-          nextToken.lexeme != 'select') {
+          !_allowedEmbeddedContentDecorators.contains(nextToken.lexeme)) {
         var endOffset = _accumulateInvalidNgContentDecoratorValue(nextToken);
         var e = new AngularParserException(
           NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTENT,
@@ -506,22 +516,45 @@ class RecursiveAstParser {
         );
         exceptionHandler.handle(e);
       } else {
-        if (selectAttributeFound) {
-          var endOffset = _accumulateInvalidNgContentDecoratorValue(nextToken);
-          var e = new AngularParserException(
-            NgParserWarningCode.DUPLICATE_SELECT_DECORATOR,
-            startOffset,
-            endOffset - startOffset,
-          );
-          exceptionHandler.handle(e);
-        } else {
-          selectAttributeFound = true;
-          selectToken = nextToken;
-          _consumeWhitespaces();
-          if (_reader.peekType() == NgTokenType.beforeElementDecoratorValue) {
-            equalSign = _reader.next();
+        if (nextToken.lexeme == 'select') {
+          if (selectAttributeFound) {
+            var endOffset =
+                _accumulateInvalidNgContentDecoratorValue(nextToken);
+            var e = new AngularParserException(
+              NgParserWarningCode.DUPLICATE_SELECT_DECORATOR,
+              startOffset,
+              endOffset - startOffset,
+            );
+            exceptionHandler.handle(e);
+          } else {
+            selectAttributeFound = true;
+            selectToken = nextToken;
             _consumeWhitespaces();
-            valueToken = _reader.next();
+            if (_reader.peekType() == NgTokenType.beforeElementDecoratorValue) {
+              selectEqualSign = _reader.next();
+              _consumeWhitespaces();
+              selectValueToken = _reader.next();
+            }
+          }
+        } else {
+          if (ngProjectAsAttributeFound) {
+            var endOffset =
+                _accumulateInvalidNgContentDecoratorValue(nextToken);
+            var e = new AngularParserException(
+              NgParserWarningCode.DUPLICATE_PROJECT_AS_DECORATOR,
+              startOffset,
+              endOffset - startOffset,
+            );
+            exceptionHandler.handle(e);
+          } else {
+            ngProjectAsAttributeFound = true;
+            ngProjectAsToken = nextToken;
+            _consumeWhitespaces();
+            if (_reader.peekType() == NgTokenType.beforeElementDecoratorValue) {
+              ngProjectAsEqualSign = _reader.next();
+              _consumeWhitespaces();
+              ngProjectAsValueToken = _reader.next();
+            }
           }
         }
       }
@@ -577,8 +610,11 @@ class RecursiveAstParser {
       endToken,
       closeElementAst,
       selectToken,
-      equalSign,
-      valueToken,
+      selectEqualSign,
+      selectValueToken,
+      ngProjectAsToken,
+      ngProjectAsEqualSign,
+      ngProjectAsValueToken,
     );
   }
 

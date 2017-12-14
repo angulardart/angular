@@ -77,6 +77,12 @@ class NgParserWarningCode extends ErrorCode {
     "Only 1 'select' decorator can exist in <ng-content>, found duplicate",
   );
 
+  static const NgParserWarningCode DUPLICATE_PROJECT_AS_DECORATOR =
+      const NgParserWarningCode(
+    'DUPLICATE_PROJECT_AS_DECORATOR',
+    "Only 1 'ngProjectAs' decorator can exist in <ng-content>, found duplicate",
+  );
+
   static const NgParserWarningCode ELEMENT_DECORATOR =
       const NgParserWarningCode(
     'ELEMENT_DECORATOR',
