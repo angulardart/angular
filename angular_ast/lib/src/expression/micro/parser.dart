@@ -96,6 +96,7 @@ class _RecursiveMicroAstParser {
     }
     identifier = _tokens.current.lexeme;
     if (!_tokens.moveNext() ||
+        _tokens.current.type == NgMicroTokenType.endExpression ||
         !_tokens.moveNext() ||
         _tokens.current.type == NgMicroTokenType.endExpression) {
       letBindings.add(new LetBindingAst.from(_origin, identifier));
