@@ -169,6 +169,10 @@ class _BindDirectivesVisitor
       [_ParseContext parentContext]) {
     final elementContext =
         new _ParseContext.forElement(astNode, parentContext.templateContext);
+
+    // Note: We rely on the fact that attributes are visited before properties
+    // in order to ensure that properties take precedence over attributes with
+    // the same name.
     return new ng.ElementAst(
         astNode.name,
         _visitAll(astNode.attributes, elementContext),
@@ -474,25 +478,27 @@ class _ParseContext {
   void bindLiteralToDirective(ast.AttributeAst astNode) => _bindToDirective(
       boundDirectives,
       astNode.name,
-      templateContext.parser
-          .wrapLiteralPrimitive(astNode.value, _location(astNode)),
+      astNode.value == null
+          ? new EmptyExpr()
+          : templateContext.parser
+              .wrapLiteralPrimitive(astNode.value, _location(astNode)),
       astNode.sourceSpan);
 
-  bool bindPropertyToDirective(ast.PropertyAst astNode, ASTWithSource value) =>
+  bool bindPropertyToDirective(ast.PropertyAst astNode, AST value) =>
       _bindToDirective(boundDirectives, _getPropertyName(astNode), value,
           astNode.sourceSpan);
 
-  bool bindInterpolationToDirective(
-          ast.AttributeAst astNode, ASTWithSource value) =>
+  bool bindInterpolationToDirective(ast.AttributeAst astNode, AST value) =>
       _bindToDirective(
           boundDirectives, astNode.name, value, astNode.sourceSpan);
 
   bool _bindToDirective(List<ng.DirectiveAst> directives, String name,
-      ASTWithSource value, SourceSpan sourceSpan) {
+      AST value, SourceSpan sourceSpan) {
     for (var directive in directives) {
       for (var directiveName in directive.directive.inputs.keys) {
         var templateName = directive.directive.inputs[directiveName];
         if (templateName == name) {
+          _removeExisting(directive.inputs, templateName);
           directive.inputs.add(new ng.BoundDirectivePropertyAst(
               directiveName, templateName, value, sourceSpan));
           return true;
@@ -500,6 +506,15 @@ class _ParseContext {
       }
     }
     return false;
+  }
+
+  void _removeExisting(
+      List<ng.BoundDirectivePropertyAst> inputs, String templateName) {
+    var input = inputs.firstWhere((input) => input.templateName == templateName,
+        orElse: () => null);
+    if (input != null) {
+      inputs.remove(input);
+    }
   }
 
   int findNgContentIndex(CssSelector selector) {
@@ -1105,6 +1120,7 @@ class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
       List<ast.TemplateAst> astNodes, bool preserveWhitespace) {
     var text = node.value;
     text = text.replaceAll('&ngsp;', ngSpace);
+    text = text.replaceAll('&nbsp;', new String.fromCharCode($NBSP));
     // If preserve white space is turned off, filter out spaces after line
     // breaks and any empty text nodes.
     //if (!context.templateContext.preserveWhitespace) {}
