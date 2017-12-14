@@ -31,11 +31,24 @@ void main() {
 
   test('should parse a let assignment', () {
     expect(
-      parse('ngThing', 'let foo = bar;let baz', 0),
+      parse('ngThing', 'let foo = bar; let baz', 0),
       new NgMicroAst(
         letBindings: [
           new LetBindingAst('foo', 'bar'),
           new LetBindingAst('baz'),
+        ],
+        properties: [],
+      ),
+    );
+  });
+
+  test('should parse a simple let and a let assignment', () {
+    expect(
+      parse('ngThing', 'let baz; let foo = bar', 0),
+      new NgMicroAst(
+        letBindings: [
+          new LetBindingAst('baz'),
+          new LetBindingAst('foo', 'bar'),
         ],
         properties: [],
       ),
