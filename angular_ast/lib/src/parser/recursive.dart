@@ -282,7 +282,9 @@ class RecursiveAstParser {
       isTemplateElement = true;
     }
     var isVoidElement = _voidElements.contains(nameToken.lexeme);
-    var isSvgElement = _svgElements.contains(nameToken.lexeme);
+    // TODO(alorenzen): Add better namespace handling.
+    var isSvgElement =
+        _svgElements.contains(nameToken.lexeme.replaceAll('svg:', ''));
 
     // Start collecting decorators.
     var attributes = <AttributeAst>[];
