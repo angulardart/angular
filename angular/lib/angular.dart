@@ -21,7 +21,6 @@ export 'core.dart';
 export 'src/common/common_directives.dart';
 export 'src/common/directives.dart';
 export 'src/common/pipes.dart';
-export 'src/core/angular_entrypoint.dart' show AngularEntrypoint;
 export 'src/core/application_ref.dart' show PlatformRef, ApplicationRef;
 export 'src/core/linker.dart';
 export 'src/core/testability/testability.dart';

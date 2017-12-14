@@ -6,6 +6,35 @@
 
 *   `RenderComponentType` is no longer part of the public API.
 
+*   Dropped support for `@AngularEntrypoint` and rewriting entrypoints to
+    automatically use `initReflector()` and `bootstrapStatic`. This will no
+    longer be supported in the new build system so we're encouraging that manual
+    changes are made as of this release:
+
+```dart
+// test/a_test.dart
+
+import 'a_test.template.dart' as ng;
+
+void main() {
+  ng.initReflector();
+}
+```
+
+```dart
+// web/a_app.dart
+
+import 'package:angular/angular.dart';
+import 'a_app.template.dart' as ng;
+
+@Component(selector: 'app', template: '')
+class AppComponent {}
+
+void main() {
+  bootstrapStatic(AppComponent, [/*providers*/], ng.initReflector);
+}
+```
+
 ### Bug fixes
 
 *   Fixed a bug where errors thrown in event listeners were sometimes uncaught
