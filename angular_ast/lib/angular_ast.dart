@@ -58,7 +58,8 @@ export 'src/visitor.dart'
         HumanizingTemplateAstVisitor,
         IdentityTemplateAstVisitor,
         TemplateAstVisitor,
-        DesugarVisitor;
+        DesugarVisitor,
+        RecursiveTemplateAstVisitor;
 
 /// Returns [template] parsed as an abstract syntax tree.
 ///
