@@ -282,6 +282,11 @@ void main() {
     );
   });
 
+  test('should parse an embedded content directive with an ngProjectAs', () {
+    expect(parse('<ng-content select="foo" ngProjectAs="bar"></ng-content>'),
+        [new EmbeddedContentAst('foo', 'bar')]);
+  });
+
   test('should parse a <template> directive', () {
     expect(
       parse('<template></template>'),

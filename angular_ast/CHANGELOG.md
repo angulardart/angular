@@ -2,6 +2,7 @@
 
 - Add `RecursiveTemplateAstVisitor`, which will visit all AST nodes accessible
   from the given node.
+- Support `ngProjectAs` decorator on `<ng-content>`.
 
 ### Bug fixes
 - `DesugarVisitor` now desugars AST nodes which were the (indirect) children of

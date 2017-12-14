@@ -1356,10 +1356,37 @@ void main() {
               ]);
         });
 
+        test('should project ng-content with ngProjectAs and wildcard selector',
+            () {
+          expect(
+              humanizeContentProjection(parse(
+                  '<div><ng-content ngProjectAs="[x]"></ng-content></div>', [
+                createComp('div', ['*'])
+              ])),
+              [
+                ['div', null],
+                ['ng-content', 0]
+              ]);
+        });
+
+        test('should project ng-content with ngProjectAs', () {
+          expect(
+              humanizeContentProjection(parse(
+                  '<div><ng-content ngProjectAs="[x]"></ng-content><ng-content></ng-content></div>',
+                  [
+                    createComp('div', ['[x]'])
+                  ])),
+              [
+                ['div', null],
+                ['ng-content', 0],
+                ['ng-content', null]
+              ]);
+        });
+
         test('should project ng-content with css selector', () {
           expect(
               humanizeContentProjection(parse(
-                  '<div><ng-content x></ng-content><ng-content></ng-content></div>',
+                  '<div><ng-content ngProjectAs="ng-content[x]"></ng-content><ng-content></ng-content></div>',
                   [
                     createComp('div', ['ng-content[x]'])
                   ])),
@@ -1368,7 +1395,7 @@ void main() {
                 ['ng-content', 0],
                 ['ng-content', null]
               ]);
-        }, skip: 'Not a valid ng-content element.');
+        });
       });
 
       test('should project into the first matching ng-content', () {
@@ -1450,18 +1477,6 @@ void main() {
       }, skip: 'Don\'t yet handle inline templates.');
 
       group('ngProjectAs', () {
-        test('should override elements', () {
-          expect(
-              humanizeContentProjection(
-                  parse('<div><a ngProjectAs="b"></a></div>', [
-                createComp('div', ['a', 'b'])
-              ])),
-              [
-                ['div', null],
-                ['a', 1]
-              ]);
-        });
-
         test('should override <ng-content>', () {
           expect(
               humanizeContentProjection(parse(
@@ -1472,33 +1487,7 @@ void main() {
                 ['div', null],
                 ['ng-content', 1]
               ]);
-        }, skip: 'Don\'t yet support attrs on ng-content.');
-
-        test('should override <template>', () {
-          expect(
-              humanizeContentProjection(
-                  parse('<div><template ngProjectAs="b"></template></div>', [
-                createComp('div', ['template', 'b'])
-              ])),
-              [
-                ['div', null],
-                ['template', 1]
-              ]);
         });
-
-        test('should override inline templates', () {
-          expect(
-              humanizeContentProjection(
-                  parse('<div><a *ngIf="cond" ngProjectAs="b"></a></div>', [
-                createComp('div', ['a', 'b']),
-                ngIf
-              ])),
-              [
-                ['div', null],
-                ['template', 1],
-                ['a', null]
-              ]);
-        }, skip: 'Don\'t yet handle inline templates.');
       });
 
       test('should support other directives before the component', () {

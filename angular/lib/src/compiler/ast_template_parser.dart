@@ -225,17 +225,7 @@ class _BindDirectivesVisitor
 
   int _findNgContentIndexForElement(
       ast.ElementAst astNode, _ParseContext context) {
-    return context
-        .findNgContentIndex(_projectAs(astNode) ?? _elementSelector(astNode));
-  }
-
-  _projectAs(ast.ElementAst astNode) {
-    for (var attr in astNode.attributes) {
-      if (attr.name == NG_PROJECT_AS) {
-        return CssSelector.parse(attr.value)[0];
-      }
-    }
-    return null;
+    return context.findNgContentIndex(_elementSelector(astNode));
   }
 
   @override
@@ -260,17 +250,7 @@ class _BindDirectivesVisitor
 
   int _findNgContentIndexForTemplate(
       ast.EmbeddedTemplateAst astNode, _ParseContext context) {
-    return context.findNgContentIndex(
-        _templateProjectAs(astNode) ?? _templateSelector(astNode));
-  }
-
-  _templateProjectAs(ast.EmbeddedTemplateAst astNode) {
-    for (var attr in astNode.attributes) {
-      if (attr.name == NG_PROJECT_AS) {
-        return CssSelector.parse(attr.value)[0];
-      }
-    }
-    return null;
+    return context.findNgContentIndex(_templateSelector(astNode));
   }
 
   @override
@@ -278,8 +258,19 @@ class _BindDirectivesVisitor
           [_ParseContext context]) =>
       new ng.NgContentAst(
           ngContentCount++,
-          context.findNgContentIndex(CssSelector.parse(astNode.selector)[0]),
+          _findNgContentIndexForEmbeddedContent(context, astNode),
           astNode.sourceSpan);
+
+  int _findNgContentIndexForEmbeddedContent(
+          _ParseContext context, ast.EmbeddedContentAst astNode) =>
+      context.findNgContentIndex(_embeddedContentSelector(astNode));
+
+  CssSelector _embeddedContentSelector(ast.EmbeddedContentAst astNode) =>
+      astNode.ngProjectAs != null
+          ? CssSelector.parse(astNode.ngProjectAs)[0]
+          : createElementCssSelector(NG_CONTENT_ELEMENT, [
+              [NG_CONTENT_SELECT_ATTR, astNode.selector]
+            ]);
 
   @override
   ng.TemplateAst visitEvent(ast.EventAst astNode, [_ParseContext context]) {
