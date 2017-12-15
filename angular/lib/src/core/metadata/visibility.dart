@@ -1,8 +1,5 @@
 /// Restricts where a directive is visible for injection.
 enum Visibility {
-  /// Deprecated, renamed to [local].
-  none,
-
   /// Can only be provided locally for injection via another token.
   ///
   /// Prevents the directive from automatically being provided for injection to
