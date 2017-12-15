@@ -450,7 +450,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.hostAttributes,
     this.analyzedClass,
     this.template,
-    Visibility visibility,
+    this.visibility,
     List<LifecycleHooks> lifecycleHooks,
     // CompileProviderMetadata | CompileTypeMetadata |
     // CompileIdentifierMetadata | List
@@ -461,11 +461,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     List exports,
     List<CompileQueryMetadata> queries,
     List<CompileQueryMetadata> viewQueries,
-  })
-      :
-        // Rewrite deprecated `Visibility.none` to `Visibility.local`.
-        visibility =
-            visibility == Visibility.none ? Visibility.local : visibility {
+  }) {
     this.lifecycleHooks = lifecycleHooks ?? [];
     this.providers = providers as List<CompileProviderMetadata> ?? [];
     this.viewProviders = viewProviders as List<CompileProviderMetadata> ?? [];
