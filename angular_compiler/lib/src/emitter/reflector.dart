@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
 
 import '../analyzer/di/dependencies.dart';
 import '../analyzer/di/tokens.dart';
@@ -8,13 +9,28 @@ import '../analyzer/reflector.dart';
 class ReflectableEmitter {
   static const _package = 'package:angular';
 
+  /// Optional, may be specified in order to avoid linking to specified URLs.
+  ///
+  /// These are expected in the fully-qualified `asset:...` notation, including
+  /// both relative files and `package: ...` imports.
+  ///
+  /// For example in the case of using the `@deferred` feature, we don't want
+  /// to call "initReflector(...)" on the components' modules.
+  final Iterable<String> deferredModules;
+
+  /// If [deferredModules] is non-empty, this is expected to be provided.
+  final String deferredModuleSource;
+
   final String reflectorSource;
   final ReflectableOutput _output;
 
   const ReflectableEmitter(
     this._output, {
     this.reflectorSource: '$_package/src/di/reflector.dart',
-  });
+    List<String> deferredModules,
+    this.deferredModuleSource,
+  })
+      : this.deferredModules = deferredModules ?? const [];
 
   bool get _linkingNeeded => _output.urlsNeedingInitReflector.isNotEmpty;
 
@@ -23,6 +39,24 @@ class ReflectableEmitter {
       _output.registerFunctions.isNotEmpty;
 
   bool get _isNoop => !_linkingNeeded && !_registrationNeeded;
+
+  /// Returns true if [url] should not be omitted for linking `initReflector()`.
+  ///
+  /// If the Angular compiler is going to manually load another component (for
+  /// example for `@deferred` loading), then we want to delegate to the template
+  /// compiler and not invoke `initReflector()` ourselves.
+  bool _isDeferred(String url) {
+    if (deferredModules.isEmpty) {
+      return false;
+    }
+    // Create an asset URL for the current module URL (asset:../../*.dart).
+    final module = new AssetId.resolve(deferredModuleSource);
+    // Give the prospective [url] parameter, resolve what absolute path that is.
+    final asset = new AssetId.resolve(url, from: module);
+    // The template compiler and package:build use a different asset: scheme.
+    final assetUrl = 'asset:${asset.toString().replaceFirst('|', '/')}';
+    return deferredModules.contains(assetUrl);
+  }
 
   /// Writes `import` statements needed for [emitInitReflector].
   ///
@@ -38,6 +72,9 @@ class ReflectableEmitter {
     }
     if (_linkingNeeded)
       for (var i = 0; i < urls.length; i++) {
+        if (_isDeferred(urls[i])) {
+          continue;
+        }
         output.writeln("import '${urls[i]}' as _ref$i;");
       }
     return (output..writeln()).toString();
@@ -79,6 +116,9 @@ class ReflectableEmitter {
       ..writeln('  _visited = true;');
     if (_linkingNeeded) {
       for (var i = 0; i < _output.urlsNeedingInitReflector.length; i++) {
+        if (_isDeferred(_output.urlsNeedingInitReflector[i])) {
+          continue;
+        }
         output.writeln('  _ref$i.initReflector();');
       }
     }

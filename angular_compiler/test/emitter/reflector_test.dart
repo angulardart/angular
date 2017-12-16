@@ -49,6 +49,40 @@ void main() {
     );
   });
 
+  test('should support linking omitting deferred modules', () {
+    final output = new ReflectableOutput(
+      urlsNeedingInitReflector: [
+        // Relative file.
+        'foo.template.dart',
+
+        // Package file.
+        'package:bar/bar.template.dart',
+      ],
+    );
+    final emitter = new ReflectableEmitter(
+      output,
+      deferredModules: [
+        // Relative file.
+        'asset:baz/lib/foo.template.dart',
+
+        // Package file.
+        'asset:bar/lib/bar.template.dart',
+      ],
+      deferredModuleSource: 'asset:baz/lib/baz.dart',
+    );
+    expect(
+      emitter.emitInitReflector(),
+      ''
+          'var _visited = false;\n'
+          'void initReflector() {\n'
+          '  if (_visited) {\n'
+          '    return;\n'
+          '  }\n'
+          '  _visited = true;\n'
+          '}\n',
+    );
+  });
+
   test('should support reflector linking', () async {
     final reflector = new ReflectableReader(
       // We have no inputs to this "build".
