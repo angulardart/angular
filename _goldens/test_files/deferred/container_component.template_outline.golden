@@ -13,6 +13,7 @@ import 'container_component.dart' as _user;
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'package:_goldens/component.dart';
 import 'deferred_component.dart';
 
 // For @Component class TestContainerComponent.

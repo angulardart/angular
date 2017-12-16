@@ -31,7 +31,13 @@ String buildGeneratedCode(
 
   // Generated code.
   final compilerOutput = outputs.templatesSource?.source ?? '';
-  final reflectableOutput = new ReflectableEmitter(outputs.reflectableOutput);
+  final reflectableOutput = new ReflectableEmitter(
+    outputs.reflectableOutput,
+    deferredModules: outputs.templatesSource != null
+        ? outputs.templatesSource.deferredModules.keys.toList()
+        : const [],
+    deferredModuleSource: outputs.templatesSource?.moduleUrl,
+  );
 
   // Write the input file as an import and an export.
   buffer.writeln("import '$sourceFile';");

@@ -45,6 +45,9 @@ void main() {
     possible. It was previously always typed as `dynamic`, which caused dynamic
     lookups/calls at runtime, and hid compilation errors.
 
+*   Fixed a bug where an `@deferred` components were still being linked to in
+    `initReflector()`.
+
 ## 5.0.0-alpha+1
 
 **NOTE**: As of `angular 5.0.0-alpha+1` [`dependency_overrides`][dep_overrides] are **required**:
