@@ -61,20 +61,14 @@ class ViewTestContainerComponent0
     TemplateRef _TemplateRef_1_5 =
         new TemplateRef(_appEl_1, viewFactory_TestContainerComponent1);
     loadDeferred(
-        deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_5,
-        () {
-      deflib1.initReflector();
-    });
+        deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_5);
     var _anchor_2 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_2);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_5 =
         new TemplateRef(_appEl_2, viewFactory_TestContainerComponent2);
     loadDeferred(
-        deflib2.loadLibrary, deflib3.loadLibrary, _appEl_2, _TemplateRef_2_5,
-        () {
-      deflib3.initReflector();
-    });
+        deflib2.loadLibrary, deflib3.loadLibrary, _appEl_2, _TemplateRef_2_5);
     init(const [], null);
     return null;
   }

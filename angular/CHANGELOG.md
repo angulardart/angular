@@ -35,6 +35,18 @@ void main() {
 }
 ```
 
+*    Use of the template annotation `@deferred` does not work out of the box
+     with the standard bootstrap process (`bootstrap/bootstrapStatic`), only
+     the experimental `bootstrapFactory`. We've added a backwards compatible
+     compiler flag, `fast_boot`, that may be changed to `false`. We don't
+     expect this to impact most users.
+
+```yaml
+transformers:
+  angular:
+    fast_boot: false
+```
+
 ### Bug fixes
 
 *   Fixed a bug where errors thrown in event listeners were sometimes uncaught

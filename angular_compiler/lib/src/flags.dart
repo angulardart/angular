@@ -8,9 +8,14 @@ import 'package:meta/meta.dart';
 const _argDebugMode = 'debug';
 const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
-const _argPlaceholder = 'use_placeholder';
-const _argEntryPoints = 'entry_points';
 const _argAstPkg = 'use_new_template_parser';
+const _argFastBoot = 'fast_boot';
+
+// TODO: Deprecate. The compiler doesn't even work without it.
+const _argPlaceholder = 'use_placeholder';
+
+// TODO: Deprecate. Never shipped.
+const _argEntryPoints = 'entry_points';
 
 /// Compiler-wide configuration (flags) to allow opting in/out.
 ///
@@ -20,41 +25,61 @@ const _argAstPkg = 'use_new_template_parser';
 /// with an option to use defaults set by bazel or pub's build systems.
 class CompilerFlags {
   static final _argParser = new ArgParser()
-    ..addFlag(_argDebugMode,
+    ..addFlag(
+      _argDebugMode,
+      defaultsTo: null,
+      help: ''
+          'Whether to run the code generator in debug mode. This is '
+          'useful for local development but should be disabled for '
+          'production builds.',
+    )
+    ..addFlag(
+      _argLegacyStyle,
+      defaultsTo: null,
+      help: ''
+          'Enables the use of deprecated Shadow DOM CSS selectors, and '
+          'cause shadow host selectors to prevent a series of selectors '
+          'from being properly scoped to their component',
+    )
+    ..addFlag(
+      _argPlaceholder,
+      defaultsTo: null,
+      hide: true,
+      help: ''
+          'Enables the creation of an empty "placeholder" file. Some '
+          'build systems require this in order to be able to determine '
+          'where a ".template.dart" file will exist in a future build '
+          'phase.',
+    )
+    ..addOption(
+      _argProfileFor,
+      valueHelp: '"build" or "binding"',
+      defaultsTo: null,
+      help: ''
+          'Whether to emit additional code that may be used by tooling '
+          'in order to profile performance or other runtime information.',
+    )
+    ..addOption(
+      _argEntryPoints,
+      allowMultiple: true,
+      defaultsTo: null,
+      help: ''
+          'Entrypoint(s) of the application (i.e. where `bootstrap` is '
+          'invoked). Build systems that re-write files use this in order '
+          'to transform those calls to `bootstrapStatic`. These may be '
+          'written in a glob format (such as lib/web/main_*.dart).',
+    )
+    ..addFlag(
+      _argAstPkg,
+      defaultsTo: null,
+      hide: true,
+      help: ''
+          'Whether to use pkg:angular_ast for parsing template files instead '
+          'of the existing template parser.',
+    )
+    ..addFlag(_argFastBoot,
         defaultsTo: null,
-        help: 'Whether to run the code generator in debug mode. This is '
-            'useful for local development but should be disabled for '
-            'production builds.')
-    ..addFlag(_argLegacyStyle,
-        defaultsTo: null,
-        help: 'Enables the use of deprecated Shadow DOM CSS selectors, and '
-            'cause shadow host selectors to prevent a series of selectors '
-            'from being properly scoped to their component')
-    ..addFlag(_argPlaceholder,
-        defaultsTo: null,
-        hide: true,
-        help: 'Enables the creation of an empty "placeholder" file. Some '
-            'build systems require this in order to be able to determine '
-            'where a ".template.dart" file will exist in a future build '
-            'phase.')
-    ..addOption(_argProfileFor,
-        valueHelp: '"build" or "binding"',
-        defaultsTo: null,
-        help: 'Whether to emit additional code that may be used by tooling '
-            'in order to profile performance or other runtime information.')
-    ..addOption(_argEntryPoints,
-        allowMultiple: true,
-        defaultsTo: null,
-        help: 'Entrypoint(s) of the application (i.e. where `bootstrap` is '
-            'invoked). Build systems that re-write files use this in order '
-            'to transform those calls to `bootstrapStatic`. These may be '
-            'written in a glob format (such as lib/web/main_*.dart).')
-    ..addFlag(_argAstPkg,
-        defaultsTo: null,
-        hide: true,
-        help:
-            'Whether to use pkg:angular_ast for parsing template files instead '
-            'of the existing template parser.');
+        help: 'Whether to support AngularDart v5\'s "fastBoot" functionality.');
 
   /// Entrypoint(s) of the application (i.e. where `bootstrap` is invoked).
   ///
@@ -67,6 +92,13 @@ class CompilerFlags {
 
   /// May emit extra code suitable for profiling or tooling.
   final Profile profileFor;
+
+  /// Whether to support AngularDart v5's "fastBoot" functionality.
+  ///
+  /// If `false`, additional code may be generated that negatively affects
+  /// startup performance and code size, but allows compatibility with
+  /// functionality such as `SlowComponentLoader` and `ReflectiveInjector`.
+  final bool useFastBoot;
 
   /// Whether to generate placeholder files in order to inform the compilation.
   ///
@@ -95,6 +127,7 @@ class CompilerFlags {
     @required this.genDebugInfo,
     this.entryPoints: const [],
     this.profileFor: Profile.none,
+    this.useFastBoot: true,
     this.useLegacyStyleEncapsulation: false,
     this.usePlaceholder: true,
     this.useAstPkg: false,
@@ -164,13 +197,14 @@ class CompilerFlags {
         _argPlaceholder,
         _argEntryPoints,
         _argAstPkg,
+        _argFastBoot,
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
         logger?.severe('Invalid arguments passed to the transformer: \n'
             '  - ${unknownArgs.join('\n  - ')}\n\n'
             'You may be providing flags that are no longer valid or supported '
-            'for AngularDart 4.x. See "compiler_flags.md" in the AngularDart '
+            'for AngularDart 5.x. See "compiler_flags.md" in the AngularDart '
             'repository for a list of supported flags.');
         throw new ArgumentError('Invalid compiler argument(s).');
       }
@@ -211,6 +245,11 @@ class CompilerFlags {
       log('Invalid value for "$_argAstPkg": $useAstPkg');
       useAstPkg = null;
     }
+    var useFastBoot = options[_argFastBoot];
+    if (useFastBoot != null && useFastBoot is! bool) {
+      log('Invalid value for "$_argFastBoot": $useFastBoot');
+      useFastBoot = null;
+    }
     return new CompilerFlags(
       genDebugInfo: debugMode ?? defaultTo.genDebugInfo,
       entryPoints: entryPoints == null
@@ -221,6 +260,7 @@ class CompilerFlags {
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
       useAstPkg: useAstPkg ?? defaultTo.useAstPkg,
+      useFastBoot: useFastBoot ?? defaultTo.useFastBoot,
     );
   }
 }

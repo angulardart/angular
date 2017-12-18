@@ -2,7 +2,7 @@
 
 The following is a list of supported flags when using the AngularDart compiler
 as a _pub/barback transformer_. Any flag you don't see listed below is not
-supported in AngularDart 4.x, and will cause the compiler to fail.
+supported in AngularDart 5.x, and will cause the compiler to fail.
 
 Additionally, you can use the `mode` flag (to pub) to force a build compilation
 in `debug` mode (what is used for testing and local development). This can be
@@ -28,18 +28,17 @@ component.
 
 Defaults to `false`.
 
-## `entry_points`
+## `fast_boot`
 
 ```yaml
 transformers:
   angular:
-    entry_points:
-      - web/main.dart
+    fast_boot: false
 ```
 
-Entrypoint(s) of the application (i.e. where `bootstrap` is invoked or a
-`*_test.dart` file that uses `angular_test`). Build systems that re-write files
-(such as pub/barback) transform calls to `bootstrap` to `bootstrapStatic` and
-initialize code required to run AngularDart applications and tests.
+By disabling this flag, AngularDart may choose to generate additional code to
+support legacy classes like `SlowComponentLoader` and `ReflectiveInjector`. If
+you are using `fastBoot` (formally known as `bootstrapFactory`) then this can
+always safely be `true`.
 
-These may be written as a glob format (such as `lib/web/main_*.dart`).
+Defaults to `true` in AngularDart ^5.0.0-alpha+2.

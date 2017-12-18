@@ -628,14 +628,17 @@ abstract class AppView<T> {
   }
 
   Future<Null> loadDeferred(
-      Future loadComponentFunction(),
-      Future loadTemplateLibFunction(),
-      ViewContainer viewContainer,
-      TemplateRef templateRef,
-      void initializer()) {
+    Future loadComponentFunction(),
+    Future loadTemplateLibFunction(),
+    ViewContainer viewContainer,
+    TemplateRef templateRef, [
+    void initializer(),
+  ]) {
     return Future
         .wait([loadComponentFunction(), loadTemplateLibFunction()]).then((_) {
-      initializer();
+      if (initializer != null) {
+        initializer();
+      }
       viewContainer.createEmbeddedView(templateRef);
       viewContainer.detectChangesInNestedViews();
     });
