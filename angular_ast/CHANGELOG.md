@@ -1,3 +1,9 @@
+## 0.4.0
+
+First stable release in a while! Going forward we'll be versioning this package
+normally as needed to support the AngularDart template compiler and analyzer
+plugin.
+
 ### New features
 
 - Add `RecursiveTemplateAstVisitor`, which will visit all AST nodes accessible
@@ -5,6 +11,7 @@
 - Support `ngProjectAs` decorator on `<ng-content>`.
 
 ### Bug fixes
+
 - `DesugarVisitor` now desugars AST nodes which were the (indirect) children of
   `EmbeddedTemplateAst` nodes.
 

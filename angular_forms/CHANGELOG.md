@@ -1,3 +1,7 @@
+## 1.0.1-alpha+2
+
+_Maintenence release, to support the latest package:angular alpha._
+
 ## 1.0.1-alpha+1
 
 -   Use the new generic function syntax, stop using `package:func`.

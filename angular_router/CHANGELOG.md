@@ -1,3 +1,5 @@
+## 2.0.0-alpha+2
+
 - Fixed a bug where `RouterLinkDirective` was not keyboard accessible.
 
 ## 2.0.0-alpha+1
