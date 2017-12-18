@@ -237,12 +237,35 @@ void main() {
     });
 
     group('.generate', () {
+      final injector = exampleGenerated();
+
       test('should support "useClass"', () {
-        final injector = exampleGenerated();
         expect(
           injector.get(ExampleService),
           const isInstanceOf<ExampleService2>(),
         );
+      });
+
+      group('should support "useValue" to a', () {
+        test('boolean', () {
+          expect(injector.get(booleanToken), true);
+        });
+
+        test('number', () {
+          expect(injector.get(numberToken), 1234);
+        });
+
+        test('string', () {
+          expect(injector.get(stringToken), 'Hello World');
+        });
+      });
+
+      test('should return null when the binding failed', () {
+        // TODO(matanl): Remove this test once Injector.generated is stable.
+        // We are keeping this behavior to just allow incremental use of the API
+        // for EAPs, but at the same time be able to easily identify what
+        // scenario is not yet covered.
+        expect(() => injector.get(simpleConstToken), throwsUnimplementedError);
       });
     });
   });
@@ -264,12 +287,23 @@ class CaptureInjectInjector extends Injector {
   }
 }
 
-class ExampleService {}
+class ExampleService {
+  const ExampleService();
+}
 
 class ExampleService2 implements ExampleService {}
 
+const stringToken = const OpaqueToken('stringToken');
+const numberToken = const OpaqueToken('numberToken');
+const booleanToken = const OpaqueToken('booleanToken');
+const simpleConstToken = const OpaqueToken('simpleConstToken');
+
 @Injector.generate(const [
   const Provider(ExampleService, useClass: ExampleService2),
+  const Provider(stringToken, useValue: 'Hello World'),
+  const Provider(numberToken, useValue: 1234),
+  const Provider(booleanToken, useValue: true),
+  const Provider(simpleConstToken, useValue: const ExampleService()),
 ])
 Injector exampleGenerated() => ng.exampleGenerated$Injector();
 
