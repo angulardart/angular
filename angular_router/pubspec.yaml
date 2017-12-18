@@ -2,20 +2,20 @@ name: angular_router
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Router for AngularDart.
-version: 2.0.0-alpha+1
+version: 2.0.0-alpha+2
 
 environment:
   sdk: '>=2.0.0-dev.3.0 <2.0.0'
 
 dependencies:
-  angular: '^5.0.0-alpha+1'
+  angular: '^5.0.0-alpha+2'
   collection: '^1.12.0'
   js: ^0.6.0
   meta: ^1.0.3
   quiver: '>=0.22.0 <0.26.0'
 
 dev_dependencies:
-  angular_test: ^1.0.1
+  angular_test: ^2.0.0-alpha
   build_compilers: ^0.1.0
   build_runner: ^0.6.1
   build_test: ^0.9.0
