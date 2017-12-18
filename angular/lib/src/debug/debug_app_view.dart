@@ -156,13 +156,19 @@ class DebugAppView<T> extends AppView<T> {
 
   @override
   Future<Null> loadDeferred(
-      Future loadComponentFunction(),
-      Future loadTemplateLibFunction(),
-      ViewContainer viewContainer,
-      TemplateRef templateRef,
-      void initializer()) {
-    var load = super.loadDeferred(loadComponentFunction,
-        loadTemplateLibFunction, viewContainer, templateRef, initializer);
+    Future loadComponentFunction(),
+    Future loadTemplateLibFunction(),
+    ViewContainer viewContainer,
+    TemplateRef templateRef, [
+    void initializer(),
+  ]) {
+    var load = super.loadDeferred(
+      loadComponentFunction,
+      loadTemplateLibFunction,
+      viewContainer,
+      templateRef,
+      initializer,
+    );
     deferredLoads.add(load);
     return load;
   }

@@ -1,3 +1,4 @@
+* `CompilerFlags` now supports as a `fast_boot` argument; default is `true`.
 * `ReflectorEmitter` now takes an optional `deferredModules{Source}`.
 
 ## 0.4.0-alpha+1

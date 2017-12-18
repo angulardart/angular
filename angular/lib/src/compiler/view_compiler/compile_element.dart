@@ -443,16 +443,26 @@ class CompileElement extends CompileNode {
     var templateRefExpr =
         _instances.get(identifierToken(Identifiers.TemplateRef));
 
-    var initializerExpr = new o.FunctionExpr(const [], <o.Statement>[
-      o.importDeferred(templateInitializer).callFn(const []).toStmt()
-    ], null);
+    final args = [
+      o.importDeferred(prefixedId),
+      o.importDeferred(templatePrefixId),
+      viewContainerExpr,
+      templateRefExpr,
+    ];
+
+    // If "fastBoot" is not being used, we need to emit more information.
+    if (!view.genConfig.useFastBoot) {
+      final initReflectorExpr = new o.FunctionExpr(const [], <o.Statement>[
+        o.importDeferred(templateInitializer).callFn(const []).toStmt()
+      ], null);
+      args.add(initReflectorExpr);
+    }
 
     stmts.add(new o.InvokeMemberMethodExpr('loadDeferred', [
       o.importDeferred(prefixedId),
       o.importDeferred(templatePrefixId),
       viewContainerExpr,
       templateRefExpr,
-      initializerExpr
     ]).toStmt());
   }
 
