@@ -52,7 +52,7 @@ class InjectorEmitter implements InjectorVisitor {
   Method createInjectSelfOptional() => new Method((b) => b
     ..name = 'injectFromSelfOptional'
     ..returns = _$Object
-    ..annotations.add(_$override.annotation())
+    ..annotations.add(_$override)
     ..requiredParameters.add(new Parameter((b) => b
       ..name = 'token'
       ..type = _$Object))

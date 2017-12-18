@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
@@ -152,10 +153,22 @@ class InjectorReader {
     var index = 0;
     for (final provider in providers) {
       if (provider is UseValueProviderElement) {
+        var useValue = provider.useValue;
+        if (useValue is Revivable) {
+          // TODO(matanl): Make this an error once cases we support are ready.
+          log.warning(''
+              'Cannot resolve useValue: for ${provider.token}.\n'
+              'Most constant expressions are not yet supported.');
+          useValue = ''
+              '(() => throw new UnimplementedError(r"""Does not yet useValue: '
+              '<const expression> for ${provider.token}"""))();';
+        } else if (useValue is String) {
+          useValue = 'r"""$useValue"""';
+        }
         visitor.visitProvideValue(
           index,
           _tokenToIdentifier(provider.token),
-          refer(provider.useValue),
+          refer(useValue),
         );
       } else if (provider is UseClassProviderElement) {
         final name = provider.dependencies.bound.name;
