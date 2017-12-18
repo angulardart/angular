@@ -250,7 +250,24 @@ class _BindDirectivesVisitor
 
   int _findNgContentIndexForTemplate(
       ast.EmbeddedTemplateAst astNode, _ParseContext context) {
+    if (_isInlineTemplate(astNode)) {
+      return _findNgContentIndexForElement(
+          astNode.childNodes
+              .firstWhere((childNode) => childNode is ast.ElementAst),
+          context);
+    }
     return context.findNgContentIndex(_templateSelector(astNode));
+  }
+
+  bool _isInlineTemplate(ast.EmbeddedTemplateAst astNode) {
+    if (astNode is! ast.SyntheticTemplateAst) return false;
+    final syntheticNode = astNode as ast.SyntheticTemplateAst;
+    if (syntheticNode.origin is ast.EmbeddedTemplateAst) {
+      return _isInlineTemplate(syntheticNode.origin);
+    }
+    if (syntheticNode.origin is ast.StarAst ||
+        syntheticNode.origin is ast.AttributeAst) return true;
+    return false;
   }
 
   @override
