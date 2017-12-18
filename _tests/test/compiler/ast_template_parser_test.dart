@@ -1474,7 +1474,22 @@ void main() {
               ['template', 1],
               ['b', null]
             ]);
-      }, skip: 'Don\'t yet handle inline templates.');
+      });
+
+      test('should not match the element when there is a explicit template',
+          () {
+        expect(
+            humanizeContentProjection(
+                parse('<div><template [ngIf]="cond"><b></b></template></div>', [
+              createComp('div', ['a', 'b']),
+              ngIf
+            ])),
+            [
+              ['div', null],
+              ['template', null],
+              ['b', null]
+            ]);
+      });
 
       group('ngProjectAs', () {
         test('should override <ng-content>', () {
