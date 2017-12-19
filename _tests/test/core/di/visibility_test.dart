@@ -13,56 +13,67 @@ void main() {
 
   tearDown(disposeAnyRunningTest);
 
-  group('Visibility.local', () {
-    test('component should not be injectable by child component', () async {
-      final testBed = new NgTestBed<ShouldFailToInjectParentComponent>();
-      expect(testBed.create(), throwsInAngular(anything));
-    });
+  group('Visibility', () {
+    group('local', () {
+      test('component should not be injectable by child component', () async {
+        final testBed = new NgTestBed<ShouldFailToInjectParentComponent>();
+        expect(testBed.create(), throwsInAngular(anything));
+      });
 
-    test('directive should be accessible via a query', () async {
-      final testBed = new NgTestBed<ShouldQueryDirective>();
-      final testFixture = await testBed.create();
-      await testFixture.update((component) {
-        expect(component.directive, isNotNull);
+      test('directive should be accessible via a query', () async {
+        final testBed = new NgTestBed<ShouldQueryDirective>();
+        final testFixture = await testBed.create();
+        await testFixture.update((component) {
+          expect(component.directive, isNotNull);
+        });
+      });
+
+      test('directive should not be injectable on same element', () async {
+        final testBed = new NgTestBed<ShouldFailToInjectFromElement>();
+        expect(testBed.create(), throwsInAngular(anything));
+      });
+
+      test('directive should not be injectable in same view', () async {
+        final testBed = new NgTestBed<ShouldFailToInjectFromView>();
+        expect(testBed.create(), throwsInAngular(anything));
+      });
+
+      test('directive should not be injectable in child view', () async {
+        final testBed = new NgTestBed<ShouldFailToInjectFromParentView>();
+        expect(testBed.create(), throwsInAngular(anything));
+      });
+
+      test('service on Visibility.none component is injectable', () async {
+        final testBed = new NgTestBed<MyComponentWithServiceTest>();
+        var testFixture = await testBed.create();
+        expect(testFixture.rootElement, isNotNull);
       });
     });
 
-    test('directive should not be injectable on same element', () async {
-      final testBed = new NgTestBed<ShouldFailToInjectFromElement>();
-      expect(testBed.create(), throwsInAngular(anything));
-    });
-
-    test('directive should not be injectable in same view', () async {
-      final testBed = new NgTestBed<ShouldFailToInjectFromView>();
-      expect(testBed.create(), throwsInAngular(anything));
-    });
-
-    test('directive should not be injectable in child view', () async {
-      final testBed = new NgTestBed<ShouldFailToInjectFromParentView>();
-      expect(testBed.create(), throwsInAngular(anything));
-    });
-
-    test('service on Visibility.none component is injectable', () async {
-      final testBed = new NgTestBed<MyComponentWithServiceTest>();
-      var testFixture = await testBed.create();
-      expect(testFixture.rootElement, isNotNull);
+    group('all', () {
+      test('component should be injectable by child component', () async {
+        final testBed = new NgTestBed<ShouldInjectParentComponent>();
+        final testFixture = await testBed.create();
+        final testComponent = testFixture.assertOnlyInstance;
+        expect(testComponent.child.parent, testComponent);
+      });
     });
   });
 }
 
 @Component(
-  selector: 'injects-parent',
+  selector: 'injects-visibility-local',
   template: '',
 )
-class InjectsParentComponent {
+class InjectsVisibilityLocalComponent {
   ShouldFailToInjectParentComponent parent;
-  InjectsParentComponent(this.parent);
+  InjectsVisibilityLocalComponent(this.parent);
 }
 
 @Component(
   selector: 'should-fail-to-inject-parent-component',
-  template: '<injects-parent></injects-parent>',
-  directives: const [InjectsParentComponent],
+  template: '<injects-visibility-local></injects-visibility-local>',
+  directives: const [InjectsVisibilityLocalComponent],
   visibility: Visibility.local,
 )
 class ShouldFailToInjectParentComponent {}
@@ -162,4 +173,24 @@ class MyDirectiveNeedsService {
   final SomeService someService;
   MyDirectiveNeedsService(
       this.someService, ViewContainerRef ref, TemplateRef templateRef);
+}
+
+@Component(
+  selector: 'injects-visibility-all',
+  template: '',
+)
+class InjectsVisibilityAllComponent {
+  final ShouldInjectParentComponent parent;
+  InjectsVisibilityAllComponent(this.parent);
+}
+
+@Component(
+  selector: 'should-inject-parent-component',
+  template: '<injects-visibility-all></injects-visibility-all>',
+  directives: const [InjectsVisibilityAllComponent],
+  visibility: Visibility.all,
+)
+class ShouldInjectParentComponent {
+  @ViewChild(InjectsVisibilityAllComponent)
+  InjectsVisibilityAllComponent child;
 }

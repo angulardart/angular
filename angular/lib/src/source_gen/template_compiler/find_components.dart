@@ -546,8 +546,12 @@ class ComponentVisitor
       queries: _queries,
       viewQueries: _viewQueries,
       template: template,
-      visibility:
-          coerceEnum(annotationValue, _visibilityProperty, Visibility.values),
+      visibility: coerceEnum(
+        annotationValue,
+        _visibilityProperty,
+        Visibility.values,
+        defaultTo: Visibility.all,
+      ),
     );
   }
 

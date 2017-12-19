@@ -97,7 +97,7 @@ class CompileProviderMetadata {
     this.useExisting,
     this.useFactory,
     this.deps,
-    this.visibility,
+    this.visibility: Visibility.all,
     bool multi,
     this.multiType,
   })
@@ -450,7 +450,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.hostAttributes,
     this.analyzedClass,
     this.template,
-    this.visibility,
+    this.visibility: Visibility.all,
     List<LifecycleHooks> lifecycleHooks,
     // CompileProviderMetadata | CompileTypeMetadata |
     // CompileIdentifierMetadata | List

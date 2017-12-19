@@ -498,7 +498,7 @@ class _ProviderResolver {
           implementedByDirectiveWithNoVisibility:
               implementedByDirectiveWithNoVisibility,
           multiProviderType: provider.multiType,
-          visibleForInjection: provider.visibility == null,
+          visibleForInjection: provider.visibility == Visibility.all,
         );
         _providersByToken.add(provider.token, resolvedProvider);
       } else {

@@ -62,6 +62,12 @@ transformers:
 *   Fixed a bug where an `@deferred` components were still being linked to in
     `initReflector()`.
 
+### Refactors
+
+*   Added `Visibility.all` as the default visibility of all directives. This has
+    no user-facing implications yet, but will allow migrating the default from
+    `Visibility.all` to `Visibility.local`.
+
 ## 5.0.0-alpha+1
 
 **NOTE**: As of `angular 5.0.0-alpha+1` [`dependency_overrides`][dep_overrides] are **required**:
