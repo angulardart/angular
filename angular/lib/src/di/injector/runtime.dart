@@ -106,7 +106,13 @@ class _RuntimeInjector extends HierarchicalInjector
     final resolved = new List(deps.length);
     for (var i = 0, l = resolved.length; i < l; i++) {
       final dep = deps[i];
-      resolved[i] = dep is List ? _resolveMeta(dep) : inject(dep);
+      final result = dep is List ? _resolveMeta(dep) : inject(dep);
+      // We don't check to see if this failed otherwise, because this is an
+      // edge case where we just delegate to Function.apply to invoke a factory.
+      if (identical(result, throwIfNotFound)) {
+        return throwsNotFound(this, token);
+      }
+      resolved[i] = result;
     }
     return resolved;
   }
