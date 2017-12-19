@@ -19,4 +19,9 @@ enum Visibility {
   /// In this example, `PrivateImplementation` can't be injected directly, but
   /// it will be provided to satisfy a dependency on `PublicDependency`.
   local,
+
+  /// Can be injected anywhere in the subtree rooted where this is provided.
+  ///
+  /// This is the default visibility and need not be explicitly set.
+  all,
 }
