@@ -1,3 +1,9 @@
+### Bug fixes
+
+*   Fixed a bug where `ReflectiveInjector` would return an `Object` instead of
+    throwing `ArgumentError` when resolving an `@Injectable()` service that
+    injected a dependency with one or more annotations (i.e. `@Inject(...)`).
+
 ## 5.0.0-alpha+2
 
 ### Breaking changes
