@@ -6,7 +6,6 @@ import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular/src/core/security.dart' show SafeValue;
 import 'package:angular/src/core/security.dart';
-import 'package:angular/src/facade/lang.dart' show looseIdentical;
 import 'package:angular/src/platform/dom/events/event_manager.dart'
     show EventManager;
 
@@ -316,46 +315,19 @@ bool checkBinding(oldValue, newValue) {
       );
     }
     return false;
-  } else {
-    // Delegates to identical(...) for JS, so no performance issues.
-    return !looseIdentical(oldValue, newValue);
   }
+  return !identical(oldValue, newValue);
 }
 
-bool arrayLooseIdentical(List<dynamic> a, List<dynamic> b) {
-  if (a.length != b.length) return false;
-  for (var i = 0; i < a.length; ++i) {
-    if (!looseIdentical(a[i], b[i])) return false;
-  }
-  return true;
-}
-
-// TODO(matanl): Consider implementing using package:collection#MapEquality.
-// Purposefully did not attempt to optimize when refactoring, as it could have
-// bad perf impact if not properly tested. This is a 1:1 from the original
-// version for now (see _looseIdentical for dart vm/dart2js bugs).
-bool mapLooseIdentical<V>(Map<String, V> m1, Map<String, V> m2) {
-  // Tiny optimization: Maps of different length, avoid allocating arrays.
-  if (m1.length != m2.length) {
-    return false;
-  }
-  for (var key in m1.keys) {
-    if (!looseIdentical(m1[key], m2[key])) {
-      return false;
-    }
-  }
-  return true;
-}
-
-const EMPTY_ARRAY = const [];
-const EMPTY_MAP = const {};
+const EMPTY_ARRAY = const <Null>[];
+const EMPTY_MAP = const <Null, Null>{};
 
 T Function(S0) pureProxy1<T, S0>(T Function(S0) fn) {
   T result;
   var first = true;
   S0 v0;
   return (S0 p0) {
-    if (first || !looseIdentical(v0, p0)) {
+    if (first || !identical(v0, p0)) {
       first = false;
       v0 = p0;
       result = fn(p0);
@@ -370,7 +342,7 @@ T Function(S0, S1) pureProxy2<T, S0, S1>(T Function(S0, S1) fn) {
   S0 v0;
   S1 v1;
   return (S0 p0, S1 p1) {
-    if (first || !looseIdentical(v0, p0) || !looseIdentical(v1, p1)) {
+    if (first || !identical(v0, p0) || !identical(v1, p1)) {
       first = false;
       v0 = p0;
       v1 = p1;
@@ -388,9 +360,9 @@ T Function(S0, S1, S2) pureProxy3<T, S0, S1, S2>(T Function(S0, S1, S2) fn) {
   S2 v2;
   return (S0 p0, S1 p1, S2 p2) {
     if (first ||
-        !looseIdentical(v0, p0) ||
-        !looseIdentical(v1, p1) ||
-        !looseIdentical(v2, p2)) {
+        !identical(v0, p0) ||
+        !identical(v1, p1) ||
+        !identical(v2, p2)) {
       first = false;
       v0 = p0;
       v1 = p1;
@@ -411,10 +383,10 @@ T Function(S0, S1, S2, S3) pureProxy4<T, S0, S1, S2, S3>(
   S3 v3;
   return (S0 p0, S1 p1, S2 p2, S3 p3) {
     if (first ||
-        !looseIdentical(v0, p0) ||
-        !looseIdentical(v1, p1) ||
-        !looseIdentical(v2, p2) ||
-        !looseIdentical(v3, p3)) {
+        !identical(v0, p0) ||
+        !identical(v1, p1) ||
+        !identical(v2, p2) ||
+        !identical(v3, p3)) {
       first = false;
       v0 = p0;
       v1 = p1;
@@ -437,11 +409,11 @@ T Function(S0, S1, S2, S3, S4) pureProxy5<T, S0, S1, S2, S3, S4>(
   S4 v4;
   return (S0 p0, S1 p1, S2 p2, S3 p3, S4 p4) {
     if (first ||
-        !looseIdentical(v0, p0) ||
-        !looseIdentical(v1, p1) ||
-        !looseIdentical(v2, p2) ||
-        !looseIdentical(v3, p3) ||
-        !looseIdentical(v4, p4)) {
+        !identical(v0, p0) ||
+        !identical(v1, p1) ||
+        !identical(v2, p2) ||
+        !identical(v3, p3) ||
+        !identical(v4, p4)) {
       first = false;
       v0 = p0;
       v1 = p1;
@@ -466,12 +438,12 @@ T Function(S0, S1, S2, S3, S4, S5) pureProxy6<T, S0, S1, S2, S3, S4, S5>(
   S5 v5;
   return (S0 p0, S1 p1, S2 p2, S3 p3, S4 p4, S5 p5) {
     if (first ||
-        !looseIdentical(v0, p0) ||
-        !looseIdentical(v1, p1) ||
-        !looseIdentical(v2, p2) ||
-        !looseIdentical(v3, p3) ||
-        !looseIdentical(v4, p4) ||
-        !looseIdentical(v5, p5)) {
+        !identical(v0, p0) ||
+        !identical(v1, p1) ||
+        !identical(v2, p2) ||
+        !identical(v3, p3) ||
+        !identical(v4, p4) ||
+        !identical(v5, p5)) {
       first = false;
       v0 = p0;
       v1 = p1;
@@ -499,13 +471,13 @@ T Function(S0, S1, S2, S3, S4, S5, S6)
   S6 v6;
   return (S0 p0, S1 p1, S2 p2, S3 p3, S4 p4, S5 p5, S6 p6) {
     if (first ||
-        !looseIdentical(v0, p0) ||
-        !looseIdentical(v1, p1) ||
-        !looseIdentical(v2, p2) ||
-        !looseIdentical(v3, p3) ||
-        !looseIdentical(v4, p4) ||
-        !looseIdentical(v5, p5) ||
-        !looseIdentical(v6, p6)) {
+        !identical(v0, p0) ||
+        !identical(v1, p1) ||
+        !identical(v2, p2) ||
+        !identical(v3, p3) ||
+        !identical(v4, p4) ||
+        !identical(v5, p5) ||
+        !identical(v6, p6)) {
       first = false;
       v0 = p0;
       v1 = p1;
@@ -535,14 +507,14 @@ T Function(S0, S1, S2, S3, S4, S5, S6, S7)
   S7 v7;
   return (S0 p0, S1 p1, S2 p2, S3 p3, S4 p4, S5 p5, S6 p6, S7 p7) {
     if (first ||
-        !looseIdentical(v0, p0) ||
-        !looseIdentical(v1, p1) ||
-        !looseIdentical(v2, p2) ||
-        !looseIdentical(v3, p3) ||
-        !looseIdentical(v4, p4) ||
-        !looseIdentical(v5, p5) ||
-        !looseIdentical(v6, p6) ||
-        !looseIdentical(v7, p7)) {
+        !identical(v0, p0) ||
+        !identical(v1, p1) ||
+        !identical(v2, p2) ||
+        !identical(v3, p3) ||
+        !identical(v4, p4) ||
+        !identical(v5, p5) ||
+        !identical(v6, p6) ||
+        !identical(v7, p7)) {
       first = false;
       v0 = p0;
       v1 = p1;
@@ -574,15 +546,15 @@ T Function(S0, S1, S2, S3, S4, S5, S6, S7, S8)
   S8 v8;
   return (S0 p0, S1 p1, S2 p2, S3 p3, S4 p4, S5 p5, S6 p6, S7 p7, S8 p8) {
     if (first ||
-        !looseIdentical(v0, p0) ||
-        !looseIdentical(v1, p1) ||
-        !looseIdentical(v2, p2) ||
-        !looseIdentical(v3, p3) ||
-        !looseIdentical(v4, p4) ||
-        !looseIdentical(v5, p5) ||
-        !looseIdentical(v6, p6) ||
-        !looseIdentical(v7, p7) ||
-        !looseIdentical(v8, p8)) {
+        !identical(v0, p0) ||
+        !identical(v1, p1) ||
+        !identical(v2, p2) ||
+        !identical(v3, p3) ||
+        !identical(v4, p4) ||
+        !identical(v5, p5) ||
+        !identical(v6, p6) ||
+        !identical(v7, p7) ||
+        !identical(v8, p8)) {
       first = false;
       v0 = p0;
       v1 = p1;
@@ -627,16 +599,16 @@ T Function(S0, S1, S2, S3, S4, S5, S6, S7, S8, S9)
     S9 p9,
   ) {
     if (first ||
-        !looseIdentical(v0, p0) ||
-        !looseIdentical(v1, p1) ||
-        !looseIdentical(v2, p2) ||
-        !looseIdentical(v3, p3) ||
-        !looseIdentical(v4, p4) ||
-        !looseIdentical(v5, p5) ||
-        !looseIdentical(v6, p6) ||
-        !looseIdentical(v7, p7) ||
-        !looseIdentical(v8, p8) ||
-        !looseIdentical(v9, p9)) {
+        !identical(v0, p0) ||
+        !identical(v1, p1) ||
+        !identical(v2, p2) ||
+        !identical(v3, p3) ||
+        !identical(v4, p4) ||
+        !identical(v5, p5) ||
+        !identical(v6, p6) ||
+        !identical(v7, p7) ||
+        !identical(v8, p8) ||
+        !identical(v9, p9)) {
       first = false;
       v0 = p0;
       v1 = p1;

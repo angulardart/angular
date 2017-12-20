@@ -2,7 +2,7 @@ import 'dart:html';
 
 import 'package:angular/angular.dart'
     show Directive, Provider, ElementRef, Input, OnDestroy, Host, Optional;
-import 'package:angular/src/facade/lang.dart' show isPrimitive, looseIdentical;
+import 'package:angular/src/facade/lang.dart' show isPrimitive;
 
 import 'control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
@@ -77,7 +77,7 @@ class SelectControlValueAccessor implements ControlValueAccessor {
 
   String _getOptionId(dynamic value) {
     for (var id in _optionMap.keys) {
-      if (looseIdentical(_optionMap[id], value)) return id;
+      if (identical(_optionMap[id], value)) return id;
     }
     return null;
   }

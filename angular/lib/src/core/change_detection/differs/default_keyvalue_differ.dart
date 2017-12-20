@@ -1,5 +1,4 @@
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
-import 'package:angular/src/facade/lang.dart' show looseIdentical;
 
 class DefaultKeyValueDiffer {
   final _records = new Map<dynamic, KeyValueChangeRecord>();
@@ -167,7 +166,7 @@ class DefaultKeyValueDiffer {
   }
 
   void _maybeAddToChanges(KeyValueChangeRecord record, dynamic value) {
-    if (!looseIdentical(value, record.currentValue)) {
+    if (!identical(value, record.currentValue)) {
       record.previousValue = record.currentValue;
       record.currentValue = value;
       _addToChanges(record);
@@ -309,7 +308,7 @@ class KeyValueChangeRecord {
 
   KeyValueChangeRecord(this.key);
   String toString() {
-    return looseIdentical(previousValue, currentValue)
+    return identical(previousValue, currentValue)
         ? key
         : '$key[$previousValue->$currentValue]';
   }

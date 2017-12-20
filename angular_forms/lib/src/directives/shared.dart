@@ -1,5 +1,3 @@
-import 'package:angular/src/facade/lang.dart' show looseIdentical;
-
 import '../model.dart' show Control, ControlGroup;
 import '../validators.dart' show Validators;
 import 'abstract_control_directive.dart' show AbstractControlDirective;
@@ -63,7 +61,7 @@ ValidatorFn composeValidators(List<dynamic> validators) {
 bool isPropertyUpdated(Map<String, dynamic> changes, dynamic viewModel) {
   if (!changes.containsKey('model')) return false;
   var change = changes['model'];
-  return !looseIdentical(viewModel, change.currentValue);
+  return !identical(viewModel, change.currentValue);
 }
 
 ControlValueAccessor selectValueAccessor(

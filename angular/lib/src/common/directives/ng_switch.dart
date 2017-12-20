@@ -2,7 +2,6 @@ import 'package:angular/core.dart';
 import 'package:angular/src/core/di/decorators.dart' show Host;
 import 'package:angular/src/core/linker.dart'
     show ViewContainerRef, TemplateRef;
-import 'package:angular/src/facade/lang.dart';
 
 const _WHEN_DEFAULT = const Object();
 
@@ -114,10 +113,10 @@ class NgSwitch {
   void _onWhenValueChanged(dynamic oldWhen, dynamic newWhen, SwitchView view) {
     this._deregisterView(oldWhen, view);
     this._registerView(newWhen, view);
-    if (looseIdentical(oldWhen, this._switchValue)) {
+    if (identical(oldWhen, this._switchValue)) {
       view.destroy();
       _activeViews.remove(view);
-    } else if (looseIdentical(newWhen, this._switchValue)) {
+    } else if (identical(newWhen, this._switchValue)) {
       if (this._useDefault) {
         this._useDefault = false;
         this._emptyAllActiveViews();
@@ -201,7 +200,7 @@ class NgSwitchWhen {
 
   @Input()
   set ngSwitchWhen(dynamic value) {
-    if (looseIdentical(value, _value)) return;
+    if (identical(value, _value)) return;
     this._switch._onWhenValueChanged(this._value, value, this._view);
     this._value = value;
   }

@@ -24,8 +24,6 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import6;
 import 'package:angular/angular.dart';
-import 'package:angular/src/facade/lang.dart'
-    as import8;
 
 const List<dynamic> styles$InterpolationComponent = const [];
 
@@ -58,7 +56,7 @@ class ViewInterpolationComponent0
   void detectChangesInternal() {
     final import1.InterpolationComponent _ctx = ctx;
     final currVal_0 = import6.interpolate0(_ctx.foo);
-    if (!import8.looseIdentical(_expr_0, currVal_0)) {
+    if (!identical(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -158,7 +156,7 @@ class ViewInterpolationComponentNoWhitespace0
   void detectChangesInternal() {
     final import1.InterpolationComponentNoWhitespace _ctx = ctx;
     final currVal_0 = import6.interpolate0(_ctx.foo);
-    if (!import8.looseIdentical(_expr_0, currVal_0)) {
+    if (!identical(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }

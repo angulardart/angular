@@ -1,3 +1,5 @@
+-   Dartium is no longer supported.
+
 ## 1.0.1-alpha+2
 
 _Maintenence release, to support the latest package:angular alpha._

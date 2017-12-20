@@ -55,7 +55,7 @@ class NgIf {
     if (assertionsEnabled()) {
       if (!checkBinding(newCondition, _prevCondition)) return;
     } else {
-      if (looseIdentical(newCondition, _prevCondition)) return;
+      if (identical(newCondition, _prevCondition)) return;
     }
     if (newCondition) {
       _viewContainer.createEmbeddedView(_templateRef);

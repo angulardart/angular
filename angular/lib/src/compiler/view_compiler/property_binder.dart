@@ -100,9 +100,8 @@ void bind(
     condition =
         o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
   } else {
-    condition = new o.NotExpr(o
-        .importExpr(Identifiers.looseIdentical)
-        .callFn([fieldExpr, currValExpr]));
+    condition = new o.NotExpr(
+        o.importExpr(Identifiers.identical).callFn([fieldExpr, currValExpr]));
   }
   method.addStmt(new o.IfStmt(
       condition,
@@ -602,9 +601,8 @@ void bindToUpdateMethod(
           .importExpr(Identifiers.checkBinding)
           .callFn([fieldExpr, currValExpr]);
     } else {
-      condition = new o.NotExpr(o
-          .importExpr(Identifiers.looseIdentical)
-          .callFn([fieldExpr, currValExpr]));
+      condition = new o.NotExpr(
+          o.importExpr(Identifiers.identical).callFn([fieldExpr, currValExpr]));
     }
     method.addStmt(new o.IfStmt(
         condition,

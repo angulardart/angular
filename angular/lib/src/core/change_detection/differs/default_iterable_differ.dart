@@ -1,5 +1,4 @@
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
-import 'package:angular/src/facade/lang.dart' show looseIdentical;
 
 typedef void DefaultIterableCallback(
   CollectionChangeRecord item,
@@ -199,7 +198,7 @@ class DefaultIterableDiffer {
         item = list[index];
         itemTrackBy = this._trackByFn(index, item);
         if (identical(record, null) ||
-            !looseIdentical(record.trackById, itemTrackBy)) {
+            !identical(record.trackById, itemTrackBy)) {
           record = this._mismatch(record, item, itemTrackBy, index);
           mayBeDirty = true;
         } else {
@@ -207,7 +206,7 @@ class DefaultIterableDiffer {
             // TODO(misko): can we limit this to duplicates only?
             record = this._verifyReinsertion(record, item, itemTrackBy, index);
           }
-          if (!looseIdentical(record.item, item))
+          if (!identical(record.item, item))
             this._addIdentityChange(record, item);
         }
         record = record._next;
@@ -217,7 +216,7 @@ class DefaultIterableDiffer {
       collection.forEach((item) {
         itemTrackBy = this._trackByFn(index, item);
         if (identical(record, null) ||
-            !looseIdentical(record.trackById, itemTrackBy)) {
+            !identical(record.trackById, itemTrackBy)) {
           record = this._mismatch(record, item, itemTrackBy, index);
           mayBeDirty = true;
         } else {
@@ -225,7 +224,7 @@ class DefaultIterableDiffer {
             // TODO(misko): can we limit this to duplicates only?
             record = this._verifyReinsertion(record, item, itemTrackBy, index);
           }
-          if (!looseIdentical(record.item, item))
+          if (!identical(record.item, item))
             this._addIdentityChange(record, item);
         }
         record = record._next;
@@ -308,8 +307,7 @@ class DefaultIterableDiffer {
       // We have seen this before, we need to move it forward in the collection.
       // But first we need to check if identity changed, so we can update in
       // view if necessary.
-      if (!looseIdentical(record.item, item))
-        this._addIdentityChange(record, item);
+      if (!identical(record.item, item)) this._addIdentityChange(record, item);
       this._moveAfter(record, previousRecord, index);
     } else {
       // Never seen it, check evicted list.
@@ -320,7 +318,7 @@ class DefaultIterableDiffer {
         // It is an item which we have evicted earlier: reinsert it back into
         // the list. But first we need to check if identity changed, so we can
         // update in view if necessary
-        if (!looseIdentical(record.item, item))
+        if (!identical(record.item, item))
           this._addIdentityChange(record, item);
         this._reinsertAfter(record, previousRecord, index);
       } else {
@@ -688,7 +686,7 @@ class _DuplicateItemRecordList {
         !identical(record, null);
         record = record._nextDup) {
       if ((identical(afterIndex, null) || afterIndex < record.currentIndex) &&
-          looseIdentical(record.trackById, trackById)) {
+          identical(record.trackById, trackById)) {
         return record;
       }
     }

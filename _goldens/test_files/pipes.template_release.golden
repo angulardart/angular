@@ -25,8 +25,6 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/facade/lang.dart'
-    as import9;
 
 const List<dynamic> styles$Comp = const [];
 
@@ -79,7 +77,7 @@ class ViewComp0 extends AppView<import1.Comp> {
         '\n    ',
         _pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d),
         '');
-    if (!import9.looseIdentical(_expr_0, currVal_0)) {
+    if (!identical(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }

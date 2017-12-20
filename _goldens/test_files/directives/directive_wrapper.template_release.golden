@@ -30,20 +30,18 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
     as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular/src/facade/lang.dart'
-    as import9;
 import 'package:angular_forms/src/directives/ng_form_model.dart'
-    as import10;
+    as import9;
 import 'package:angular_forms/src/directives/default_value_accessor.dart'
-    as import11;
+    as import10;
 import 'package:angular_forms/src/directives/ng_control_name.dart'
-    as import12;
+    as import11;
 import 'package:angular_forms/src/directives/ng_control.dart'
-    as import13;
+    as import12;
 import 'package:angular_forms/src/directives/control_container.dart'
-    as import14;
+    as import13;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart'
-    as import15;
+    as import14;
 
 const List<dynamic> styles$TestFooComponent = const [
   'div._ngcontent-%COMP% { font-size:10px; }'
@@ -108,7 +106,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   void detectChangesInternal() {
     final import1.TestFooComponent _ctx = ctx;
     final currVal_0 = _ctx.rowIndex;
-    if (!import9.looseIdentical(_expr_0, currVal_0)) {
+    if (!identical(_expr_0, currVal_0)) {
       _ChildDirective_0_4.instance.gridRow = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -181,12 +179,12 @@ const List<dynamic> styles$InputFormTest = const [];
 
 class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
   import2.DivElement _el_0;
-  import10.NgFormModel _NgFormModel_0_4;
+  import9.NgFormModel _NgFormModel_0_4;
   dynamic _ControlContainer_0_5;
   import2.InputElement _el_1;
-  import11.DefaultValueAccessor _DefaultValueAccessor_1_4;
+  import10.DefaultValueAccessor _DefaultValueAccessor_1_4;
   List<dynamic> _const_OpaqueToken_dynamic___NgValueAccessor___1_5;
-  import12.NgControlName _NgControlName_1_6;
+  import11.NgControlName _NgControlName_1_6;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex)
@@ -202,16 +200,16 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
     final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _NgFormModel_0_4 = new import10.NgFormModel(null);
+    _NgFormModel_0_4 = new import9.NgFormModel(null);
     _ControlContainer_0_5 = _NgFormModel_0_4;
     _el_1 = createAndAppend(doc, 'input', _el_0);
     createAttr(_el_1, 'ngControl', 'login');
     createAttr(_el_1, 'type', 'text');
-    _DefaultValueAccessor_1_4 = new import11.DefaultValueAccessor(_el_1);
+    _DefaultValueAccessor_1_4 = new import10.DefaultValueAccessor(_el_1);
     _const_OpaqueToken_dynamic___NgValueAccessor___1_5 = [
       _DefaultValueAccessor_1_4
     ];
-    _NgControlName_1_6 = new import12.NgControlName(_ControlContainer_0_5, null,
+    _NgControlName_1_6 = new import11.NgControlName(_ControlContainer_0_5, null,
         _const_OpaqueToken_dynamic___NgValueAccessor___1_5);
     import6.appViewUtils.eventManager.addEventListener(
         _el_0, 'submit', eventHandler1(_NgFormModel_0_4.onSubmit));
@@ -225,23 +223,23 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import11.DefaultValueAccessor) && (1 == nodeIndex))) {
+    if ((identical(token, import10.DefaultValueAccessor) && (1 == nodeIndex))) {
       return _DefaultValueAccessor_1_4;
     }
     if ((identical(token, const OpaqueToken<dynamic>('NgValueAccessor')) &&
         (1 == nodeIndex))) {
       return _const_OpaqueToken_dynamic___NgValueAccessor___1_5;
     }
-    if (((identical(token, import12.NgControlName) ||
-            identical(token, import13.NgControl)) &&
+    if (((identical(token, import11.NgControlName) ||
+            identical(token, import12.NgControl)) &&
         (1 == nodeIndex))) {
       return _NgControlName_1_6;
     }
-    if ((identical(token, import10.NgFormModel) &&
+    if ((identical(token, import9.NgFormModel) &&
         ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
       return _NgFormModel_0_4;
     }
-    if ((identical(token, import14.ControlContainer) &&
+    if ((identical(token, import13.ControlContainer) &&
         ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
       return _ControlContainer_0_5;
     }
@@ -255,7 +253,7 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
     bool firstCheck = (this.cdState == 0);
     changed = false;
     final currVal_0 = _ctx.form;
-    if (!import9.looseIdentical(_expr_0, currVal_0)) {
+    if (!identical(_expr_0, currVal_0)) {
       _NgFormModel_0_4.form = currVal_0;
       changed = true;
       _expr_0 = currVal_0;
@@ -438,7 +436,7 @@ const ComponentFactory<import1.DirectiveContainerTest>
         viewFactory_DirectiveContainerTestHost0,
         _DirectiveContainerTestMetadata);
 
-class ChildDirectiveNgCd extends import15.DirectiveChangeDetector {
+class ChildDirectiveNgCd extends import14.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
   var _expr_1;
@@ -446,24 +444,24 @@ class ChildDirectiveNgCd extends import15.DirectiveChangeDetector {
   ChildDirectiveNgCd(this.instance);
   void detectHostChanges(AppView<dynamic> view, import2.Element el) {
     final currVal_0 = instance.tabIndex;
-    if (!import9.looseIdentical(_expr_0, currVal_0)) {
+    if (!identical(_expr_0, currVal_0)) {
       setProp(el, 'tabIndex', currVal_0);
       _expr_0 = currVal_0;
     }
     final currVal_1 = instance.disabledStr;
-    if (!import9.looseIdentical(_expr_1, currVal_1)) {
+    if (!identical(_expr_1, currVal_1)) {
       setAttr(el, 'aria-disabled', currVal_1?.toString());
       _expr_1 = currVal_1;
     }
     final currVal_2 = instance.disabled;
-    if (!import9.looseIdentical(_expr_2, currVal_2)) {
+    if (!identical(_expr_2, currVal_2)) {
       updateElemClass(el, 'is-disabled', currVal_2);
       _expr_2 = currVal_2;
     }
   }
 }
 
-class FastDirectiveNgCd extends import15.DirectiveChangeDetector {
+class FastDirectiveNgCd extends import14.DirectiveChangeDetector {
   final import1.FastDirective instance;
   var _expr_0;
   FastDirectiveNgCd(this.instance, AppView v, import2.Element e) {
@@ -474,7 +472,7 @@ class FastDirectiveNgCd extends import15.DirectiveChangeDetector {
   }
   void detectHostChanges(AppView<dynamic> view, import2.Element el) {
     final currVal_0 = instance.msg;
-    if (!import9.looseIdentical(_expr_0, currVal_0)) {
+    if (!identical(_expr_0, currVal_0)) {
       setAttr(el, 'data-msg', currVal_0?.toString());
       _expr_0 = currVal_0;
     }

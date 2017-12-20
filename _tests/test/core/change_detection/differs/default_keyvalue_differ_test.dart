@@ -1,3 +1,4 @@
+@TestOn('browser')
 import 'package:test/test.dart';
 import "package:angular/src/core/change_detection/differs/default_keyvalue_differ.dart";
 
@@ -108,13 +109,14 @@ void main() {
         expect(differ.toString(),
             kvChangesAsString(map: ["foo"], previous: ["foo"]));
       });
+
       test("should not see a NaN value as a change (JS)", () {
         m["foo"] = double.NAN;
         differ.check(m);
         differ.check(m);
         expect(differ.toString(),
             kvChangesAsString(map: ["foo"], previous: ["foo"]));
-      });
+      }, skip: 'Was not being run in JS');
 
       test('should detect removals when first item is moved', () {
         differ.check({'a': 1, 'b': 2});
