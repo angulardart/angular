@@ -113,14 +113,6 @@ class HtmlTreeBuilder {
 
   void _consumeText(HtmlToken token) {
     String text = token.parts[0];
-    if (text.isNotEmpty && text[0] == '\n') {
-      var parent = _getParentElement();
-      if (parent != null &&
-          parent.children.isEmpty &&
-          getHtmlTagDefinition(parent.name).ignoreFirstLf) {
-        text = text.substring(1);
-      }
-    }
     if (text.isNotEmpty) {
       _addToParent(new HtmlTextAst(text, token.sourceSpan));
     }

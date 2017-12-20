@@ -267,15 +267,13 @@ class HtmlTagDefinition {
   String implicitNamespacePrefix;
   HtmlTagContentType contentType;
   bool isVoid;
-  bool ignoreFirstLf;
   HtmlTagDefinition(
       {List<String> closedByChildren,
       List<String> requiredParents,
       String implicitNamespacePrefix,
       HtmlTagContentType contentType,
       bool closedByParent,
-      bool isVoid,
-      bool ignoreFirstLf}) {
+      bool isVoid}) {
     if (closedByChildren != null && closedByChildren.isNotEmpty) {
       for (var tagName in closedByChildren) {
         this.closedByChildren[tagName] = true;
@@ -291,7 +289,6 @@ class HtmlTagDefinition {
     }
     this.implicitNamespacePrefix = implicitNamespacePrefix;
     this.contentType = contentType ?? HtmlTagContentType.PARSABLE_DATA;
-    this.ignoreFirstLf = ignoreFirstLf == true;
   }
   bool requireExtraParent(String currentParent) {
     if (this.requiredParents == null) {
@@ -385,14 +382,12 @@ Map<String, HtmlTagDefinition> TAG_DEFINITIONS = {
       closedByChildren: ["optgroup"], closedByParent: true),
   "option": new HtmlTagDefinition(
       closedByChildren: ["option", "optgroup"], closedByParent: true),
-  "pre": new HtmlTagDefinition(ignoreFirstLf: true),
-  "listing": new HtmlTagDefinition(ignoreFirstLf: true),
   "style": new HtmlTagDefinition(contentType: HtmlTagContentType.RAW_TEXT),
   "script": new HtmlTagDefinition(contentType: HtmlTagContentType.RAW_TEXT),
   "title":
       new HtmlTagDefinition(contentType: HtmlTagContentType.ESCAPABLE_RAW_TEXT),
-  "textarea": new HtmlTagDefinition(
-      contentType: HtmlTagContentType.ESCAPABLE_RAW_TEXT, ignoreFirstLf: true)
+  "textarea":
+      new HtmlTagDefinition(contentType: HtmlTagContentType.ESCAPABLE_RAW_TEXT)
 };
 final HtmlTagDefinition DEFAULT_TAG_DEFINITION = new HtmlTagDefinition();
 HtmlTagDefinition getHtmlTagDefinition(String tagName) {
