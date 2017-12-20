@@ -30,8 +30,6 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'dart:core';
-import 'package:angular/src/facade/lang.dart'
-    as import13;
 
 const List<dynamic> styles$TestFooComponent = const [];
 
@@ -144,7 +142,7 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   void detectChangesInternal() {
     final String local_bar = locals['\$implicit'];
     final currVal_0 = import9.interpolate0(local_bar);
-    if (!import13.looseIdentical(_expr_0, currVal_0)) {
+    if (!identical(_expr_0, currVal_0)) {
       _text_2.text = currVal_0;
       _expr_0 = currVal_0;
     }

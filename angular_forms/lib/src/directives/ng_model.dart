@@ -12,7 +12,6 @@ import 'package:angular/angular.dart'
         Output,
         Provider,
         Self;
-import 'package:angular/src/facade/lang.dart' show looseIdentical;
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
 import 'control_value_accessor.dart'
@@ -74,9 +73,9 @@ class NgModel extends NgControl
   set model(dynamic value) {
     /// Make sure input actually changed so we don't override
     /// viewModel passed to us using viewToModelUpdate from proxies.
-    if (looseIdentical(_model, value)) return;
+    if (identical(_model, value)) return;
     _model = value;
-    if (looseIdentical(value, viewModel)) return;
+    if (identical(value, viewModel)) return;
 
     /// Mark as changed so we can commit to viewModel in ngAfterChanges
     /// lifecycle.

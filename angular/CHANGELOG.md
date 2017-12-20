@@ -1,3 +1,12 @@
+### Breaking changes
+
+*   Dartium is no longer supported. All development of your AngularDart
+    applications is now required to be in [DDC][ddc]. With incoming language
+    and library changes this would have been required regardless, but we expect
+    to have faster build tools available (instead of `pub serve`) soon.
+
+[ddc]: https://webdev.dartlang.org/tools/dartdevc
+
 ### Bug fixes
 
 *   Fixed a bug where `ReflectiveInjector` would return an `Object` instead of

@@ -1,5 +1,4 @@
-export "change_detection_util.dart"
-    show SimpleChange, devModeEqual, looseIdentical;
+export "change_detection_util.dart" show SimpleChange, devModeEqual;
 export "change_detector_ref.dart" show ChangeDetectorRef;
 export "constants.dart"
     show

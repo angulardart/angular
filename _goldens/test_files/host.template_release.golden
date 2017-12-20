@@ -24,8 +24,6 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import6;
 import 'package:angular/angular.dart';
-import 'package:angular/src/facade/lang.dart'
-    as import8;
 
 const List<dynamic> styles$HostComponent = const [];
 
@@ -54,12 +52,12 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
 
   void detectHostChanges(bool firstCheck) {
     final currVal_0 = ctx.title;
-    if (!import8.looseIdentical(_expr_0, currVal_0)) {
+    if (!identical(_expr_0, currVal_0)) {
       setProp(rootEl, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
     final currVal_1 = ctx.isDisabled;
-    if (!import8.looseIdentical(_expr_1, currVal_1)) {
+    if (!identical(_expr_1, currVal_1)) {
       updateElemClass(rootEl, 'is-disabled', currVal_1);
       _expr_1 = currVal_1;
     }

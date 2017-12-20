@@ -114,9 +114,8 @@ class Identifiers {
       name: "dbgElm", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
   static final devModeEqual = new CompileIdentifierMetadata<dynamic>(
       name: "devModeEqual", moduleUrl: CD_MODULE_URL);
-  static final looseIdentical = new CompileIdentifierMetadata<dynamic>(
-      name: "looseIdentical",
-      moduleUrl: 'asset:angular/lib/src/facade/lang.dart');
+  static final identical =
+      new CompileIdentifierMetadata<dynamic>(name: "identical");
   static final profileSetup = new CompileIdentifierMetadata<dynamic>(
       name: "profileSetup", moduleUrl: PROFILE_RUNTIME_MODULE_URL);
   static final profileMarkStart = new CompileIdentifierMetadata<dynamic>(

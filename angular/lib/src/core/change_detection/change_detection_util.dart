@@ -1,7 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:angular/src/facade/lang.dart' show looseIdentical, isPrimitive;
-
-export 'package:angular/src/facade/lang.dart' show looseIdentical;
+import 'package:angular/src/facade/lang.dart' show isPrimitive;
 
 class _DevModeEquality extends DefaultEquality<Object> {
   const _DevModeEquality();
@@ -17,7 +15,7 @@ class _DevModeEquality extends DefaultEquality<Object> {
       // Code inlined from TS facade.
       return true;
     } else {
-      return looseIdentical(a, b);
+      return identical(a, b);
     }
   }
 }
