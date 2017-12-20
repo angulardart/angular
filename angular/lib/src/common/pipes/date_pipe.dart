@@ -84,7 +84,7 @@ class DatePipe implements PipeTransform {
       throw new InvalidPipeArgumentException(DatePipe, value);
     }
     if (value is num) {
-      value = new DateTime.fromMillisecondsSinceEpoch(value, isUtc: true);
+      value = new DateTime.fromMillisecondsSinceEpoch(value);
     }
     if (DatePipe._ALIASES.containsKey(pattern)) {
       pattern = DatePipe._ALIASES[pattern];
