@@ -201,23 +201,6 @@ void main() {
             [HtmlElementAst, "@math:math", 0]
           ]);
         });
-        test("should ignore LF immediately after textarea, pre and listing",
-            () {
-          expect(
-              humanizeDom(parser.parse(
-                  '<p>\n</p><textarea>\n</textarea><pre>'
-                  '\n\n</pre><listing>\n\n</listing>',
-                  "TestComp")),
-              [
-                [HtmlElementAst, "p", 0],
-                [HtmlTextAst, "\n", 1],
-                [HtmlElementAst, "textarea", 0],
-                [HtmlElementAst, "pre", 0],
-                [HtmlTextAst, "\n", 1],
-                [HtmlElementAst, "listing", 0],
-                [HtmlTextAst, "\n", 1]
-              ]);
-        });
       });
       group("attributes", () {
         test("should parse attributes on regular elements case sensitive", () {
