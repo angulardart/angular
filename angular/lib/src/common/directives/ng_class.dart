@@ -110,8 +110,7 @@ class NgClass implements DoCheck, OnDestroy {
     _cleanupClasses(_rawClass);
   }
 
-  void _cleanupClasses(
-      dynamic /* List < String > | Set< String > | Map < String , dynamic > */ rawClassVal) {
+  void _cleanupClasses(dynamic /* Iterable | Map */ rawClassVal) {
     _applyClasses(rawClassVal, true);
     _applyInitialClasses(false);
   }
@@ -145,20 +144,23 @@ class NgClass implements DoCheck, OnDestroy {
     }
   }
 
-  void _applyClasses(
-      dynamic /* List < String > | Set< String > | Map < String , dynamic > */ rawClassVal,
-      bool isCleanup) {
+  /// If [rawClassVal] is an Iterable, it should only contain string values,
+  /// but it is OK if the Iterable itself is Iterable<dynamic> or
+  /// Iterable<Object> since we need to walk it in this method anyway.
+  ///
+  /// Likewise, if [rawClassVal] is a Map, its keys should all be strings.
+  void _applyClasses(dynamic /* Iterable | Map */ rawClassVal, bool isCleanup) {
     if (rawClassVal != null) {
       if (rawClassVal is List) {
         for (int i = 0, len = rawClassVal.length; i < len; i++) {
           _toggleClass(rawClassVal[i], !isCleanup);
         }
       } else if (rawClassVal is Iterable) {
-        for (var className in (rawClassVal as Iterable<String>)) {
+        for (var className in rawClassVal) {
           _toggleClass(className, !isCleanup);
         }
       } else {
-        (rawClassVal as Map<String, dynamic>).forEach((className, expVal) {
+        (rawClassVal as Map).forEach((className, expVal) {
           if (expVal != null) {
             _toggleClass(className, !isCleanup);
           }
