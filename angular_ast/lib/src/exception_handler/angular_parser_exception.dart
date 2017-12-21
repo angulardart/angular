@@ -33,4 +33,7 @@ class AngularParserException extends Error {
 
   @override
   int get hashCode => hash3(errorCode, length, offset);
+
+  @override
+  String toString() => 'AngularParserException{$errorCode}';
 }

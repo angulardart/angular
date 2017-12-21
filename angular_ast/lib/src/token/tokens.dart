@@ -118,7 +118,7 @@ class NgSimpleToken implements NgBaseToken<NgSimpleTokenType> {
 
   factory NgSimpleToken.identifier(int offset, String lexeme) {
     return new _LexemeNgSimpleToken(
-        offset, lexeme, NgSimpleTokenType.identifier);
+        offset, lexeme, lexeme.length, NgSimpleTokenType.identifier);
   }
 
   factory NgSimpleToken.mustacheBegin(int offset) {
@@ -154,12 +154,19 @@ class NgSimpleToken implements NgBaseToken<NgSimpleTokenType> {
   }
 
   factory NgSimpleToken.text(int offset, String lexeme) {
-    return new _LexemeNgSimpleToken(offset, lexeme, NgSimpleTokenType.text);
+    return new _LexemeNgSimpleToken(
+        offset, lexeme, lexeme.length, NgSimpleTokenType.text);
+  }
+
+  factory NgSimpleToken.decodedText(
+      int offset, String lexeme, int originalLength) {
+    return new _LexemeNgSimpleToken(
+        offset, lexeme, originalLength, NgSimpleTokenType.text);
   }
 
   factory NgSimpleToken.unexpectedChar(int offset, String lexeme) {
     return new _LexemeNgSimpleToken(
-        offset, lexeme, NgSimpleTokenType.unexpectedChar);
+        offset, lexeme, lexeme.length, NgSimpleTokenType.unexpectedChar);
   }
 
   factory NgSimpleToken.voidCloseTag(int offset) {
@@ -168,7 +175,7 @@ class NgSimpleToken implements NgBaseToken<NgSimpleTokenType> {
 
   factory NgSimpleToken.whitespace(int offset, String lexeme) {
     return new _LexemeNgSimpleToken(
-        offset, lexeme, NgSimpleTokenType.whitespace);
+        offset, lexeme, lexeme.length, NgSimpleTokenType.whitespace);
   }
 
   const NgSimpleToken._(
@@ -251,6 +258,7 @@ class NgSimpleQuoteToken extends _LexemeNgSimpleToken {
         super(
           offset,
           lexeme,
+          lexeme.length,
           type,
         );
 

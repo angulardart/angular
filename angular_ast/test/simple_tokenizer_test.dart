@@ -478,4 +478,25 @@ void main() {
       new NgSimpleToken.EOF(28),
     ]);
   });
+
+  test('should escape named entities', () {
+    expect(tokenize('&lt;div&gt;'), [
+      new NgSimpleToken.text(0, '<div>'),
+      new NgSimpleToken.EOF(11),
+    ]);
+  });
+
+  test('should escape dec values', () {
+    expect(tokenize('&#8721;'), [
+      new NgSimpleToken.text(0, '∑'),
+      new NgSimpleToken.EOF(7),
+    ]);
+  });
+
+  test('should escape hex values', () {
+    expect(tokenize('&#x2211;'), [
+      new NgSimpleToken.text(0, '∑'),
+      new NgSimpleToken.EOF(8),
+    ]);
+  });
 }
