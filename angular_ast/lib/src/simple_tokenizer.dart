@@ -3,9 +3,10 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:charcode/charcode.dart';
-import 'package:string_scanner/string_scanner.dart';
 import 'package:meta/meta.dart';
+import 'package:string_scanner/string_scanner.dart';
 
+import 'token/chars.dart';
 import 'token/tokens.dart';
 
 class NgSimpleTokenizer {
@@ -55,6 +56,9 @@ class NgSimpleScanner {
   static final _commentEnd = new RegExp('-->');
   static final _mustaches = new RegExp(r'({{)|(}})');
   static final _newline = new RegExp('\n');
+  static final _escape = new RegExp(r'&#([0-9]{4});|' // 1 decimal
+      '&#x([0-9A-Fa-f]{4});|' // 2 hex
+      '&([a-zA-Z]+);'); // 3 named
 
   static final _doctypeBegin = new RegExp(r'(<!DOCTYPE)|(>)');
   static final _gt = new RegExp(r'>');
@@ -100,11 +104,11 @@ class NgSimpleScanner {
       if (_scanner.isDone) {
         _state = _NgSimpleScannerState.text;
         String substring = _scanner.string.substring(offset);
-        return new NgSimpleToken.text(offset, substring);
+        return _newTextToken(offset, substring);
       }
     }
     _state = _NgSimpleScannerState.commentEnd;
-    return new NgSimpleToken.text(offset, _scanner.substring(offset));
+    return _newTextToken(offset, _scanner.substring(offset));
   }
 
   NgSimpleToken scanCommentEnd() {
@@ -131,7 +135,7 @@ class NgSimpleScanner {
         endOffset = _scanner.position + match.end;
       }
       _scanner.position = endOffset;
-      return new NgSimpleToken.text(
+      return _newTextToken(
           offset, _scanner.string.substring(offset, endOffset));
     }
     return scanText();
@@ -259,7 +263,7 @@ class NgSimpleScanner {
           // Mustache exists, but text precedes it - return the text first.
           if (mustacheStart != offset) {
             _scanner.position = mustacheStart;
-            return new NgSimpleToken.text(
+            return _newTextToken(
                 offset, _scanner.substring(offset, mustacheStart));
           }
 
@@ -274,7 +278,7 @@ class NgSimpleScanner {
           }
         }
         // Mustache doesn't exist; simple text.
-        return new NgSimpleToken.text(offset, text);
+        return _newTextToken(offset, text);
       }
       if (matchesGroup(match, 2)) {
         _state = _NgSimpleScannerState.comment;
@@ -318,7 +322,7 @@ class NgSimpleScanner {
         // If text precedes it, return text.
         if (newlineStart != offset) {
           _scanner.position = newlineStart;
-          return new NgSimpleToken.text(offset, _scanner.substring(offset));
+          return _newTextToken(offset, _scanner.substring(offset));
         }
         // Otherwise, return the newline and switch state back to text.
         _state = _NgSimpleScannerState.text;
@@ -329,7 +333,7 @@ class NgSimpleScanner {
       // Simply scan text until EOF hit.
       _scanner.position = offset + text.length;
       _state = _NgSimpleScannerState.text;
-      return new NgSimpleToken.text(offset, _scanner.substring(offset));
+      return _newTextToken(offset, _scanner.substring(offset));
     }
 
     var matchStartOffset = offset + match.start;
@@ -337,7 +341,7 @@ class NgSimpleScanner {
     // Match exists, but text precedes it - return the text first.
     if (matchStartOffset != offset) {
       _scanner.position = matchStartOffset;
-      return new NgSimpleToken.text(offset, _scanner.substring(offset));
+      return _newTextToken(offset, _scanner.substring(offset));
     }
 
     _scanner.position = offset + match.end;
@@ -354,6 +358,26 @@ class NgSimpleScanner {
 
   void resetState() {
     _state = _NgSimpleScannerState.doctype;
+  }
+
+  NgSimpleToken _newTextToken(int offset, String lexme) =>
+      new NgSimpleToken.decodedText(offset, _unEscapeText(lexme), lexme.length);
+
+  String _unEscapeText(String string) {
+    return string.replaceAllMapped(_escape, (match) {
+      // decimal
+      if (matchesGroup(match, 1)) {
+        return new String.fromCharCode(int.parse(match.group(1)));
+      }
+      // hex
+      if (matchesGroup(match, 2)) {
+        return new String.fromCharCode(int.parse(match.group(2), radix: 16));
+      }
+      // named
+      if (matchesGroup(match, 3)) {
+        return NAMED_ENTITIES[match.group(3)] ?? match.group(3);
+      }
+    });
   }
 }
 

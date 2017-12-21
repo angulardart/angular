@@ -194,6 +194,15 @@ void main() {
     expect(token.type, NgSimpleTokenType.text);
   });
 
+  test('decoded text', () {
+    var token = new NgSimpleToken.decodedText(0, '∑', 7);
+    expect(token.lexeme, '∑');
+    expect(token.end, 7);
+    expect(token.length, 7);
+    expect(token.offset, 0);
+    expect(token.type, NgSimpleTokenType.text);
+  });
+
   test('unexpectedChar', () {
     token = new NgSimpleToken.unexpectedChar(0, '!@#\$');
     expect(token.lexeme, '!@#\$');

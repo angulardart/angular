@@ -34,6 +34,15 @@ void main() {
     );
   });
 
+  test('should tokenize escaped text', () {
+    expect(
+      tokenize('&lt;div&gt;'),
+      [
+        new NgToken.text(0, '<div>'),
+      ],
+    );
+  });
+
   test('should tokenize an HTML element', () {
     expect(
       tokenize('<div></div>'),

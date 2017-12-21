@@ -8,7 +8,8 @@ part of angular_ast.src.token.tokens;
 ///
 /// For example, a `text` is (almost) any arbitrary string.
 class _LexemeNgSimpleToken extends NgSimpleToken {
-  const _LexemeNgSimpleToken(int offset, this.lexeme, NgSimpleTokenType type)
+  const _LexemeNgSimpleToken(
+      int offset, this.lexeme, this.length, NgSimpleTokenType type)
       : super._(type, offset);
 
   @override
@@ -24,6 +25,9 @@ class _LexemeNgSimpleToken extends NgSimpleToken {
 
   @override
   final String lexeme;
+
+  @override
+  final int length;
 }
 
 /// A [NgToken] that has a custom lexeme, i.e. not predefined by a token type.
