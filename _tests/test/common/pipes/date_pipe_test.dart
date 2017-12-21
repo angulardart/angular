@@ -57,6 +57,22 @@ void main() {
         expect(pipe.transform(date, 'mediumTime'), '9:43:11 PM');
         expect(pipe.transform(date, 'shortTime'), '9:43 PM');
       });
+      test('should format millis in local timezone', () {
+        int millis = date.millisecondsSinceEpoch;
+        expect(pipe.transform(millis, 'y'), '2015');
+        expect(pipe.transform(millis, 'yy'), '15');
+        expect(pipe.transform(millis, 'M'), '6');
+        expect(pipe.transform(millis, 'MM'), '06');
+        expect(pipe.transform(millis, 'MMM'), 'Jun');
+        expect(pipe.transform(millis, 'MMMM'), 'June');
+        expect(pipe.transform(millis, 'd'), '15');
+        expect(pipe.transform(millis, 'E'), 'Mon');
+        expect(pipe.transform(millis, 'EEEE'), 'Monday');
+        expect(pipe.transform(millis, 'H'), '21');
+        expect(pipe.transform(millis, 'j'), '9 PM');
+        expect(pipe.transform(millis, 'm'), '43');
+        expect(pipe.transform(millis, 's'), '11');
+      });
     });
   });
 }
