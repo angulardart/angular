@@ -49,12 +49,14 @@ class TemplateOutliner implements Builder {
 
   @override
   Future<Null> build(BuildStep buildStep) async {
-    final library = await buildStep.inputLibrary;
-    if (library == null) {
-      buildStep.writeAsString(buildStep.inputId.changeExtension(_extension),
-          'external void initReflector();');
+    if (!await buildStep.resolver.isLibrary(buildStep.inputId)) {
+      buildStep.writeAsString(
+        buildStep.inputId.changeExtension(_extension),
+        'external void initReflector();',
+      );
       return;
     }
+    final library = await buildStep.inputLibrary;
     final components = <String>[];
     final directives = <String, DartObject>{};
     final injectors = <String>[];
