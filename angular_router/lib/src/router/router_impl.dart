@@ -148,7 +148,12 @@ class RouterImpl extends Router {
 
     await _activateRouterState(nextState);
     if (navigationParams == null || navigationParams.updateUrl) {
-      _location.go(nextState.build().toUrl());
+      final url = nextState.build().toUrl();
+      if (navigationParams != null && navigationParams.replace) {
+        _location.replaceState(url);
+      } else {
+        _location.go(url);
+      }
     }
 
     return NavigationResult.SUCCESS;
