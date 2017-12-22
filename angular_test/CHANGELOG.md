@@ -4,8 +4,9 @@
 > breaking changes that make it incompatible with the `1.x.x` releases in order
 > to support `angular 5.x.x`, this will now be the `2.0.0` alpha release.
 
-- Add support for the use of an externally launched `pub serve` by
-  using "none" as the value of `--experimental-serve-script`.
+-   Add support for the use of an externally launched `pub serve` by
+    using "none" as the value of `--experimental-serve-script`.
+-   Add `NgTestBed.withFactory` to start supporting fully static testing.
 
 ## 1.0.2-alpha+1
 

@@ -12,6 +12,6 @@ library angular_test.compatibility;
 
 import 'package:meta/meta.dart';
 
-export 'src/bootstrap.dart' show bootstrapForTest, createTestInjector;
+export 'src/bootstrap.dart' show bootstrapForTest;
 export 'src/frontend/bed.dart' show createDynamicFixture, createDynamicTestBed;
 export 'src/frontend/fixture.dart' show injectFromFixture;

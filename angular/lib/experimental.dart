@@ -51,13 +51,19 @@ ComponentRef<T> bootstrapFactory<T>(
   ComponentFactory<T> factory, [
   Injector createAppInjector(Injector parent),
 ]) {
-  final appInjector = createAppInjector == null
-      ? minimalApp(_platformInjector())
-      : createAppInjector(minimalApp(_platformInjector()));
+  final appInjector = bootstrapInjector(createAppInjector);
   initAngular(appInjector);
   sharedStylesHost ??= new DomSharedStylesHost(document);
   final appRef = appInjector.get(ApplicationRef) as ApplicationRef;
   return appRef.bootstrap(factory, appInjector);
+}
+
+/// Creates a new injector similar to the one created by [bootstrapFactory].
+@experimental
+Injector bootstrapInjector(Injector createAppInjector(Injector parent)) {
+  return createAppInjector == null
+      ? minimalApp(_platformInjector())
+      : createAppInjector(minimalApp(_platformInjector()));
 }
 
 /// Transitional API: Returns a [ComponentFactory] for [typeOrFactory].

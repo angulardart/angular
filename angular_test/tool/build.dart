@@ -41,6 +41,6 @@ Future main(List<String> args) async {
     createBuildActions(graph, builders),
     deleteFilesByDefault: true,
     writeToCache: true,
-    enableLowResourcesMode: true,
+    enableLowResourcesMode: false,
   );
 }

@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 import 'package:pageloader/html.dart';
 
 import '../bootstrap.dart';
@@ -121,6 +122,11 @@ class NgTestBed<T> {
     return host;
   }
 
+  /// Returns the component factory for the supplied [type].
+  static ComponentFactory<T> _lookupFactory<T>(Type type) {
+    return typeToFactory(type) as ComponentFactory<T>;
+  }
+
   static const _lifecycleProviders = const <Provider>[
     const Provider(
       NgZoneStabilizer,
@@ -130,6 +136,7 @@ class NgTestBed<T> {
   ];
   static const _lifecycleStabilizers = const <Type>[NgZoneStabilizer];
 
+  final ComponentFactory<T> _factory;
   final Element _host;
   final PageLoader Function(Element, NgTestFixture<T>) _pageLoaderFactory;
   final List _providers;
@@ -155,19 +162,34 @@ class NgTestBed<T> {
     );
   }
 
+  factory NgTestBed.withFactory(
+    ComponentFactory<T> factory, {
+    Element host,
+    bool watchAngularLifecycle: true,
+  }) {
+    return new NgTestBed<T>._allowDynamicType(
+      factory: factory,
+      host: host,
+      watchAngularLifecycle: watchAngularLifecycle,
+    );
+  }
+
   // Used for compatibility only.
   factory NgTestBed._allowDynamicType({
+    ComponentFactory<T> factory,
     Element host,
     bool watchAngularLifecycle: true,
   }) {
     return new NgTestBed<T>._(
+      factory ?? _lookupFactory<T>(T),
       host: host,
       providers: watchAngularLifecycle ? _lifecycleProviders : const [],
       stabilizers: watchAngularLifecycle ? _lifecycleStabilizers : const [],
     );
   }
 
-  NgTestBed._({
+  NgTestBed._(
+    this._factory, {
     Element host,
     Iterable providers,
     Iterable stabilizers,
@@ -225,7 +247,7 @@ class NgTestBed<T> {
     return new Future<NgTestFixture<T>>.sync(() {
       _checkForActiveTest();
       return bootstrapForTest(
-        type,
+        _factory,
         _host ?? _defaultHost(),
         beforeChangeDetection: beforeChangeDetection,
         addProviders: _concat(_providers, /*_stabilizers*/ const []),
@@ -260,6 +282,7 @@ class NgTestBed<T> {
     PageLoader createPageLoader(Element element, NgTestFixture<T> fixture),
   }) {
     return new NgTestBed<T>._(
+      _factory,
       host: host ?? _host,
       providers: providers ?? _providers,
       stabilizers: stabilizers ?? _stabilizers,
