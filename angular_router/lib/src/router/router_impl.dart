@@ -90,11 +90,10 @@ class RouterImpl extends Router {
   Future<NavigationResult> navigate(
     String path, [
     NavigationParams navigationParams,
-    bool forceNavigation = false,
   ]) {
     var absolutePath = _getAbsolutePath(path, _activeState);
 
-    return _navigateRouter(absolutePath, navigationParams, forceNavigation);
+    return _navigateRouter(absolutePath, navigationParams);
   }
 
   /// Navigate this router to the given url.
@@ -103,7 +102,6 @@ class RouterImpl extends Router {
   Future<NavigationResult> _navigateRouter(
     String path, [
     NavigationParams navigationParams,
-    bool forceNavigation = false,
   ]) async {
     navigationParams?.assertValid();
     path = await _routerHook?.navigationPath(path, navigationParams) ?? path;
@@ -114,7 +112,8 @@ class RouterImpl extends Router {
     navigationParams?.assertValid();
 
     var queryParameters = (navigationParams?.queryParameters ?? {});
-    if (!forceNavigation &&
+    var reload = navigationParams != null ? navigationParams.reload : false;
+    if (!reload &&
         current != null &&
         path == current.path &&
         (navigationParams?.fragment ?? '') == current.fragment &&

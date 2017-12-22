@@ -250,6 +250,43 @@ void main() {
       '$SecondChildComponent.onActivate',
     ]);
   });
+
+  test('navigate to the same route should do nothing', () async {
+    final fixture = await setup<TestNavigateToSibling>();
+    final log = fixture.assertOnlyInstance.lifecycleLog;
+    final router = fixture.assertOnlyInstance.router;
+    expect(log, [
+      '$FirstChildComponent.ngOnInit',
+      '$FirstChildComponent.canActivate',
+      '$FirstChildComponent.onActivate',
+    ]);
+    log.clear();
+    expect(await router.navigate('/'), NavigationResult.SUCCESS);
+    expect(log, isEmpty);
+  });
+
+  test('reload the same route', () async {
+    final fixture = await setup<TestNavigateToSibling>();
+    final log = fixture.assertOnlyInstance.lifecycleLog;
+    final router = fixture.assertOnlyInstance.router;
+    expect(log, [
+      '$FirstChildComponent.ngOnInit',
+      '$FirstChildComponent.canActivate',
+      '$FirstChildComponent.onActivate',
+    ]);
+    log.clear();
+    expect(await router.navigate('/', new NavigationParams(reload: true)),
+        NavigationResult.SUCCESS);
+    expect(log, [
+      '$FirstChildComponent.canDeactivate',
+      '$FirstChildComponent.canActivate',
+      '$FirstChildComponent.onDeactivate',
+      '$FirstChildComponent.canReuse',
+      '$FirstChildComponent.ngOnDestroy',
+      '$FirstChildComponent.ngOnInit',
+      '$FirstChildComponent.onActivate'
+    ]);
+  });
 }
 
 const lifecycleLogToken = const OpaqueToken('lifecycleLog');

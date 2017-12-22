@@ -136,7 +136,6 @@ class FakeRouter implements Router {
   Future<NavigationResult> navigate(
     String routerLink, [
     NavigationParams navigationParams,
-    bool _,
   ]) async {
     lastNavigatedPath = routerLink;
     lastNavigatedParams = navigationParams;
