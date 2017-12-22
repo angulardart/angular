@@ -14,13 +14,21 @@ class NavigationParams {
   /// The hash fragment for a URL.
   final String fragment;
 
+  /// Whether to replace the current history entry or create a new one.
+  ///
+  /// This can be used to replace the current route upon navigation and prevent
+  /// it from being navigated to again when manipulating browser history.
+  final bool replace;
+
   /// Navigate and push the new state into history.
   final bool updateUrl;
 
-  const NavigationParams(
-      {this.queryParameters: const {},
-      this.fragment: '',
-      this.updateUrl: true});
+  const NavigationParams({
+    this.queryParameters: const {},
+    this.fragment: '',
+    this.replace: false,
+    this.updateUrl: true,
+  });
 
   /// Runs a dev-mode assertion that the definition is valid.
   ///

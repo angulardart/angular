@@ -1,3 +1,8 @@
+### New features
+
+*   Added `replace` field to `NavigationParams` which can be used to replace the
+    current history entry on navigation instead of creating a new one.
+
 ## 2.0.0-alpha+2
 
 - Fixed a bug where `RouterLinkDirective` was not keyboard accessible.
