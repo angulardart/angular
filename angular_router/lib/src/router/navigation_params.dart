@@ -14,6 +14,13 @@ class NavigationParams {
   /// The hash fragment for a URL.
   final String fragment;
 
+  /// Whether to force the router to navigate.
+  ///
+  /// Normally the router won't navigate if the path, query parameters, and
+  /// fragment identifier are the same as those of the current route. Setting
+  /// this to true overrides that check and navigates regardless.
+  final bool reload;
+
   /// Whether to replace the current history entry or create a new one.
   ///
   /// This can be used to replace the current route upon navigation and prevent
@@ -26,6 +33,7 @@ class NavigationParams {
   const NavigationParams({
     this.queryParameters: const {},
     this.fragment: '',
+    this.reload: false,
     this.replace: false,
     this.updateUrl: true,
   });

@@ -36,10 +36,14 @@ abstract class Router {
   RouterState get current;
   Stream<RouterState> get stream;
 
+  /// Attempts to navigate to a route that matches [path].
+  ///
+  /// Returns a future which completes after navigation indicating whether
+  /// navigation completed successfully, failed because no route matched [path],
+  /// or was blocked by a router lifecycle implementor.
   Future<NavigationResult> navigate(
     String path, [
     NavigationParams navigationParams,
-    bool forceNavigation = false,
   ]);
 
   /// Registers the root [routerOutlet] and navigates to the current route.
