@@ -16,7 +16,8 @@ dartanalyzer --fatal-warnings .
 popd
 
 pub run test -p vm
-dart tool/build.dart
-pub run build_runner:create_merged_dir --script=tool/build.dart -o build
+pub run build_runner build
+pub run build_runner:create_merged_dir \
+    --script=.dart_tool/build/entrypoint/build.dart -o build
 pub run test --precompiled=build --platform=chrome -j1
 

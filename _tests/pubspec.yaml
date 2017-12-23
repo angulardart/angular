@@ -4,12 +4,12 @@ description: Tests for AngularDart.
 environment:
   sdk: '>=2.0.0-dev.3.0 <2.0.0'
 dev_dependencies:
-  angular: '^4.0.0'
+  angular: '^5.0.0-alpha+2'
   angular_forms: '^1.0.0'
   angular_test: '^1.0.2'
-  build_compilers: ^0.1.0
-  build_runner: ^0.6.1
-  build_test: ^0.9.0
+  build_web_compilers: ^0.1.1
+  build_runner: ^0.7.3
+  build_test: ^0.9.4
   cli_util: ^0.1.0
   mockito: '>=0.11.0 <3.0.0'
   source_span: ^1.4.0
@@ -17,6 +17,7 @@ dev_dependencies:
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:
+  analyzer: '^0.31.0-alpha.1'
   angular:
     path: ../angular
   angular_ast:
@@ -29,15 +30,3 @@ dependency_overrides:
     path: ../angular_router
   angular_test:
     path: ../angular_test
-
-transformers:
-  - angular:
-      entry_points: test/**_test.dart
-      $exclude:
-          - test/**.template.dart
-          - test/core/reflection/reflector_test.dart
-          - test/source_gen/template_compiler/test_files/**
-
-  # Allow test to proxy-load files so we can run tests w/ pub serve.
-  - test/pub_serve:
-      $include: test/**_test.dart

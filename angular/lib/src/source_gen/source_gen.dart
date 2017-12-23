@@ -5,6 +5,7 @@ import 'package:source_gen/source_gen.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 
 import '../transform/common/names.dart';
+import '../transform/stylesheet_compiler/transformer.dart';
 import 'template_compiler/generator.dart';
 
 export 'template_compiler/generator.dart'
@@ -33,6 +34,14 @@ Builder templateCompiler(BuilderOptions options) {
 }
 
 Builder templatePlaceholderBuilder(_) => const TemplatePlaceholderBuilder();
+
+Builder stylesheetCompiler(BuilderOptions options) {
+  final flags = new CompilerFlags.parseRaw(
+    options.config,
+    const CompilerFlags(genDebugInfo: false),
+  );
+  return new StylesheetCompiler(flags);
+}
 
 Builder createSourceGenTemplateCompiler(CompilerFlags flags) =>
     new LibraryBuilder(new TemplateGenerator(flags),

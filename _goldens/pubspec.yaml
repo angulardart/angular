@@ -7,13 +7,14 @@ dev_dependencies:
   angular: '^4.0.0'
   angular_forms: '^1.0.0'
   _goldens.generator: ^1.0.0
-  build_runner: ^0.6.1
+  build_runner: ^0.7.4
   build_test: ^0.9.0
   source_span: ^1.4.0
   test: ^0.12.6
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:
+  analyzer: '^0.31.0-alpha.1'
   angular:
     path: ../angular
   angular_ast:
@@ -28,3 +29,8 @@ dependency_overrides:
     path: ../angular_test
   _goldens.generator:
     path: generator
+  build_runner:
+    git:
+      url: git://github.com/dart-lang/build.git
+      ref: 7950a4836e8082609deac91e406d0e5a1b9ddcae
+      path: build_runner
