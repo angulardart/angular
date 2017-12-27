@@ -13,7 +13,7 @@ elif [ -z "$TASK" ]; then
 fi
 
 pushd $PKG
-# pub upgrade
+pub upgrade
 
 case $PKG in
 _goldens) echo
