@@ -7,17 +7,7 @@
 # Fast fail the script on failures.
 set -e
 
-dartanalyzer --fatal-warnings lib test
-
-pushd example
-pub upgrade
-dartanalyzer --fatal-warnings .
-# TODO(alorenzen): Run angular_test here.
-popd
-
-pub run test -p vm
 pub run build_runner build --low-resources-mode
 pub run build_runner:create_merged_dir \
     --script=.dart_tool/build/entrypoint/build.dart -o build
-pub run test --precompiled=build --platform=chrome -j1
 

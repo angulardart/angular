@@ -1,0 +1,11 @@
+language: dart
+dart:
+  - dev
+
+dart_task:
+  - dartfmt
+  - dartanalyzer: --fatal-infos --fatal-warnings .
+  - test: -p vm
+  - test: --precompiled=build --platform=chrome -j1
+
+before_script: tool/travis.sh

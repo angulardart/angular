@@ -7,12 +7,4 @@
 # Fast fail the script on failures.
 set -e
 
-dartanalyzer --fatal-warnings test
-
-pushd generator
-pub upgrade
-dartanalyzer --fatal-warnings bin
-popd
-
 dart generator/bin/generate.dart
-pub run test -p vm
