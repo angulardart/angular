@@ -8,7 +8,6 @@ dart_task:
   - dartanalyzer: --fatal-infos --fatal-warnings .
   - test: -p vm -x codegen
   - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/common
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/common
   - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/compiler
   - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/core
   - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/di
