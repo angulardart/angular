@@ -4,7 +4,6 @@ library angular2.test.core.change_detection.differs.default_iterable_differ_test
 import 'dart:collection';
 
 import 'package:test/test.dart';
-import 'package:_tests/test_util.dart';
 import 'package:angular/src/core/change_detection/differs/default_iterable_differ.dart';
 
 void main() {
@@ -173,15 +172,6 @@ void main() {
             iterableChangesAsString(
                 collection: ["a", "boo"], previous: ["a", "boo"]));
       });
-      test("should ignore [NaN] != [NaN] (JS)", () {
-        var l = [double.NAN];
-        differ.check(l);
-        differ.check(l);
-        expect(
-            differ.toString(),
-            iterableChangesAsString(
-                collection: [double.NAN], previous: [double.NAN]));
-      });
       test("should remove and add same item", () {
         var l = ["a", "b", "c"];
         differ.check(l);
@@ -274,17 +264,11 @@ void main() {
                   previous: ["a[0->null]", "b[1->null]"],
                   removals: ["a[0->null]", "b[1->null]"]));
         });
-        test("should throw when given an invalid collection", () {
-          expect(
-              () => differ.diff("invalid" as dynamic),
-              throwsWith(new RegExp(
-                  "type '(JS)?String' is not a subtype of type 'Iterable'")));
-        });
       });
     });
     group("trackBy function by id", () {
       var differ;
-      var trackByItemId = (num index, dynamic item) => item.id;
+      var trackByItemId = (int index, dynamic item) => item.id;
       var buildItemList = (List<String> list) {
         return list.map((val) {
           return new ItemWithId(val);
@@ -390,7 +374,7 @@ void main() {
     });
     group("trackBy function by index", () {
       var differ;
-      var trackByIndex = (num index, dynamic item) => index;
+      var trackByIndex = (int index, Object item) => index;
       setUp(() {
         differ = new DefaultIterableDiffer(trackByIndex);
       });
