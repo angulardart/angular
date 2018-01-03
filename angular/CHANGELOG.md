@@ -7,6 +7,29 @@
     This is meant to help with the move to strong mode and DDC, and is now the
     preferred way to configure dependency injection.
 
+*   Any variation of `multi: true` when configuring dependency injection is now
+    soft-deprecated (not preferred), and the `MultiToken` class has been added.
+    A `MultiToken<T>` now represents an `OpaqueToken<T>` where `multi: true` is
+    implicitly always `true`:
+
+```dart
+const usPresidents = const MultiToken<String>('usPresidents');
+
+@Component(
+  selector: 'presidents-list',
+  providers: const [
+    const ValueProvider.forToken(usPresidents, 'George Washington'),
+    const ValueProvider.forToken(usPresidents, 'Abraham Lincoln'),
+  ],
+)
+class PresidentsListComponent {
+  // Will be ['George Washington', 'Abraham Lincoln'].
+  final List<String> items;
+
+  PresidentsListComponent(@Inject(usPresidents) this.items);
+}
+```
+
 ### Breaking changes
 
 *   Dartium is no longer supported. All development of your AngularDart

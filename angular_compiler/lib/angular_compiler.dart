@@ -33,6 +33,8 @@ export 'src/analyzer.dart'
         $Inject,
         $Injectable,
         $Input,
+        $MultiToken,
+        $OpaqueToken,
         $Optional,
         $Output,
         $Pipe,

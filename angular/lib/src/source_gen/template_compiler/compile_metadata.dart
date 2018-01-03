@@ -108,17 +108,19 @@ class CompileTypeMetadataVisitor
         multiType = _getCompileTypeMetadata(genericType.element);
       }
     }
+    final token = dart_objects.getField(provider, 'token');
     return new CompileProviderMetadata(
-      token: _token(dart_objects.getField(provider, 'token')),
+      token: _token(token),
       useClass: _getUseClass(provider),
       useExisting: _getUseExisting(provider),
       useFactory: _getUseFactory(provider),
       useValue: _getUseValue(provider),
-      multi: dart_objects.coerceBool(
-        provider,
-        'multi',
-        defaultTo: false,
-      ),
+      multi: $MultiToken.isExactlyType(token.type) ||
+          dart_objects.coerceBool(
+            provider,
+            'multi',
+            defaultTo: false,
+          ),
       multiType: multiType,
     );
   }

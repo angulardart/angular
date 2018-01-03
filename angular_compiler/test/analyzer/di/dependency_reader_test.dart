@@ -191,7 +191,7 @@ void main() {
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
         new DependencyElement(
-          new OpaqueTokenElement('someToken'),
+          new OpaqueTokenElement('someToken', isMultiToken: false),
           type: new TypeTokenElement(
             new Uri(
               scheme: 'asset',

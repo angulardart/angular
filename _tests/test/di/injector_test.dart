@@ -234,6 +234,18 @@ void main() {
         ]);
         expect(injector.get(usPresidents), const isInstanceOf<List<String>>());
       });
+
+      test('should support MultiToken instead of multi: true', () {
+        const usPresidentsMulti = const MultiToken<String>('usPresidents');
+        final injector = new Injector.slowReflective([
+          const ValueProvider.forToken(usPresidentsMulti, 'George W.'),
+          const ValueProvider.forToken(usPresidentsMulti, 'Abraham L.'),
+        ]);
+        expect(
+          injector.get(usPresidentsMulti),
+          const isInstanceOf<List<String>>(),
+        );
+      });
     });
 
     group('.generate', () {
@@ -259,6 +271,12 @@ void main() {
           expect(injector.get(stringToken), 'Hello World');
         });
       });
+
+      test('should support MultiToken', () {
+        final result = injector.get(multiStringToken);
+        expect(result, const isInstanceOf<List<String>>());
+        expect(result, ['A', 'B']);
+      }, skip: 'Not yet supported for generated injectors');
 
       test('should return null when the binding failed', () {
         // TODO(matanl): Remove this test once Injector.generated is stable.
@@ -297,6 +315,7 @@ const stringToken = const OpaqueToken('stringToken');
 const numberToken = const OpaqueToken('numberToken');
 const booleanToken = const OpaqueToken('booleanToken');
 const simpleConstToken = const OpaqueToken('simpleConstToken');
+const multiStringToken = const MultiToken<String>('multiStringToken');
 
 @Injector.generate(const [
   const Provider(ExampleService, useClass: ExampleService2),
@@ -304,6 +323,9 @@ const simpleConstToken = const OpaqueToken('simpleConstToken');
   const Provider(numberToken, useValue: 1234),
   const Provider(booleanToken, useValue: true),
   const Provider(simpleConstToken, useValue: const ExampleService()),
+  // TODO(matanl): Add once supported.
+  // const ValueProvider.forToken(multiStringToken, 'A'),
+  // const ValueProvider.forToken(multiStringToken, 'B'),
 ])
 Injector exampleGenerated() => ng.exampleGenerated$Injector();
 

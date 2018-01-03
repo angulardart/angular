@@ -39,3 +39,4 @@ const $_GenerateInjector =
 const $Module = const TypeChecker.fromUrl('$_module#Module');
 const $Provider = const TypeChecker.fromUrl('$_provider#Provider');
 const $OpaqueToken = const TypeChecker.fromUrl('$_token#OpaqueToken');
+const $MultiToken = const TypeChecker.fromUrl('$_token#MultiToken');

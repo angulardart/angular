@@ -66,6 +66,14 @@ void main() {
     );
   });
 
+  test('should support MultiToken instead of multi: true', () async {
+    final fixture = await new NgTestBed<SupportsMultiToken>().create();
+    expect(
+      fixture.assertOnlyInstance.values,
+      const isInstanceOf<List<String>>(),
+    );
+  });
+
   group('should support optional values', () {
     NgTestBed<UsingInjectAndOptional> testBed;
 
@@ -284,4 +292,20 @@ class SupportsInferredProviders {
   final List<Arbitrary> arbitrary;
 
   SupportsInferredProviders(@Inject(arbitraryToken) this.arbitrary);
+}
+
+const usPresidentsMulti = const MultiToken<String>('usPresidents');
+
+@Component(
+  selector: 'supports-multi-token',
+  providers: const [
+    const ValueProvider.forToken(usPresidentsMulti, 'George Washington'),
+    const ValueProvider.forToken(usPresidentsMulti, 'Abraham Lincoln'),
+  ],
+  template: '',
+)
+class SupportsMultiToken {
+  final List<String> values;
+
+  SupportsMultiToken(@Inject(usPresidentsMulti) this.values);
 }

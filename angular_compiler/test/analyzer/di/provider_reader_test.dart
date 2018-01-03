@@ -36,6 +36,7 @@ void main() {
         Example createExample(DependencyA a) => new ExamplePrime();
 
         const exampleToken = const OpaqueToken('exampleToken');
+        const usPresidents = const MulitToken<String>('usPresidents');
 
         const exampleModule = const [
           // [0] Implicit Provider(Type)
@@ -70,6 +71,9 @@ void main() {
           const Provider(exampleToken, useValue: const [
             const Duration(seconds: 5),
           ]),
+
+          // [9] Implicit multi: true.
+          const Provider(usPresidents, useValue: 'George Washington'),
         ];
       ''');
       $Example = testLib.getType('Example');
@@ -204,7 +208,7 @@ void main() {
       expect(
         reader.parseProvider(providers[6]),
         new UseClassProviderElement(
-          new OpaqueTokenElement('exampleToken'),
+          new OpaqueTokenElement('exampleToken', isMultiToken: false),
           urlOf($Example),
           dependencies: new DependencyInvocation(
             $Example.unnamedConstructor,
@@ -213,5 +217,12 @@ void main() {
         ),
       );
     });
+
+    test('using a MultiToken instead of a Type', () {
+      final UseValueProviderElement value = reader.parseProvider(providers[9]);
+      expect((value.token as OpaqueTokenElement).isMultiToken, isTrue);
+      expect((value.token as OpaqueTokenElement).identifier, 'usPresidents');
+      expect(value.isMulti, isTrue);
+    }, skip: 'Not yet supported');
   });
 }

@@ -171,10 +171,21 @@ abstract class ProviderElement {
   /// Canonical URL of the source location and element name being referenced.
   final TokenElement token;
 
-  const ProviderElement._(this.token);
+  final bool _isExplictlyMulti;
+
+  const ProviderElement._(this.token, this._isExplictlyMulti);
 
   @override
   bool operator ==(Object o) => o is ProviderElement && o.token == token;
+
+  /// Whether this represents a multi-binding.
+  bool get isMulti {
+    final token = this.token;
+    if (token is OpaqueTokenElement && token.isMultiToken) {
+      return true;
+    }
+    return _isExplictlyMulti;
+  }
 
   @mustCallSuper
   @override
@@ -194,8 +205,9 @@ class UseClassProviderElement extends ProviderElement {
     TokenElement e,
     this.useClass, {
     @required this.dependencies,
+    bool multi: false,
   })
-      : super._(e);
+      : super._(e, multi);
 
   @override
   bool operator ==(Object o) =>
@@ -224,9 +236,10 @@ class UseExistingProviderElement extends ProviderElement {
 
   const UseExistingProviderElement(
     TokenElement e,
-    this.redirect,
-  )
-      : super._(e);
+    this.redirect, {
+    bool multi: false,
+  })
+      : super._(e, multi);
 
   @override
   bool operator ==(Object o) =>
@@ -257,8 +270,9 @@ class UseFactoryProviderElement extends ProviderElement {
     TokenElement e,
     this.useFactory, {
     @required this.dependencies,
+    bool multi: false,
   })
-      : super._(e);
+      : super._(e, multi);
 
   @override
   bool operator ==(Object o) =>
@@ -289,7 +303,8 @@ class UseValueProviderElement extends ProviderElement {
   // Not visible for testing because its impractical to create one.
   const UseValueProviderElement._(
     TokenElement e,
-    this.useValue,
-  )
-      : super._(e);
+    this.useValue, {
+    bool multi: false,
+  })
+      : super._(e, multi);
 }

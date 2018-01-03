@@ -1,4 +1,5 @@
 import '../../core/di/decorators.dart';
+import '../../core/di/opaque_token.dart';
 import '../../facade/lang.dart' show assertionsEnabled;
 import '../providers.dart';
 import '../reflector.dart' as reflector;
@@ -33,6 +34,8 @@ abstract class ReflectiveInjector implements HierarchicalInjector {
   /// Creates a new child reflective injector from [providersOrLists].
   ReflectiveInjector resolveAndCreateChild(List<Object> providersOrLists);
 }
+
+bool _isMultiProvider(Provider p) => p.multi == true || p.token is MultiToken;
 
 class _RuntimeInjector extends HierarchicalInjector
     implements ReflectiveInjector, RuntimeInjectorBuilder {
@@ -69,7 +72,7 @@ class _RuntimeInjector extends HierarchicalInjector
         return orElse;
       }
       // Resolve the provider and cache the instance.
-      if (provider.multi == true) {
+      if (_isMultiProvider(provider)) {
         return _instances[provider.token] = _resolveMulti(provider);
       }
       _instances[token] = instance = buildAtRuntime(provider, this);
@@ -224,7 +227,7 @@ _FlatProviders _flattenProviders(
     if (item is List) {
       _flattenProviders(item, allProviders, multiProviders);
     } else if (item is Provider) {
-      if (item.multi == true) {
+      if (_isMultiProvider(item)) {
         multiProviders.add(item);
       }
       allProviders[item.token] = item;

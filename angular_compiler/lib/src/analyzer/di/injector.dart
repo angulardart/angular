@@ -169,6 +169,7 @@ class InjectorReader {
           index,
           _tokenToIdentifier(provider.token),
           refer(useValue),
+          provider.isMulti,
         );
       } else if (provider is UseClassProviderElement) {
         final name = provider.dependencies.bound.name;
@@ -178,6 +179,7 @@ class InjectorReader {
           _referToProxy(provider.useClass),
           name.isNotEmpty ? name : null,
           _computeDependencies(provider.dependencies.positional),
+          provider.isMulti,
         );
       } else if (provider is UseFactoryProviderElement) {
         visitor.visitProvideFactory(
@@ -187,12 +189,14 @@ class InjectorReader {
           refer('dynamic'),
           _referToProxy(provider.useFactory),
           _computeDependencies(provider.dependencies.positional),
+          provider.isMulti,
         );
       } else if (provider is UseExistingProviderElement) {
         visitor.visitProvideExisting(
           index,
           _tokenToIdentifier(provider.token),
           _tokenToIdentifier(provider.redirect),
+          provider.isMulti,
         );
       }
       index++;
@@ -202,6 +206,7 @@ class InjectorReader {
       index,
       _$Injector,
       refer('this'),
+      false,
     );
   }
 }
@@ -223,10 +228,16 @@ abstract class InjectorVisitor {
     Reference type,
     String constructor,
     List<Expression> dependencies,
+    bool isMulti,
   );
 
   /// Implement redirecting to [redirect] when [token] is requested.
-  void visitProvideExisting(int index, Expression token, Expression redirect);
+  void visitProvideExisting(
+    int index,
+    Expression token,
+    Expression redirect,
+    bool isMulti,
+  );
 
   /// Implement providing [token] by calling [function].
   ///
@@ -240,8 +251,14 @@ abstract class InjectorVisitor {
     Reference returnType,
     Reference function,
     List<Expression> dependencies,
+    bool isMulti,
   );
 
   /// Implement providing [value] when [token] is requested.
-  void visitProvideValue(int index, Expression token, Expression value);
+  void visitProvideValue(
+    int index,
+    Expression token,
+    Expression value,
+    bool isMulti,
+  );
 }

@@ -1,3 +1,5 @@
+* Added support for recognizing the `MultiToken` type.
+
 ## 0.4.0-alpha+2
 
 * `CompilerFlags` now supports as a `fast_boot` argument; default is `true`.
