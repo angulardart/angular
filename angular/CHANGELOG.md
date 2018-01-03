@@ -1,3 +1,12 @@
+### New features
+
+*   `Provider` is now soft-deprecated (not preferred), and new more-typed
+    classes exist: `ClassProvider`, `ExistingProvider`, `FactoryProvider`, and
+    `ValueProvider`. Each also has a `.forToken` named constructor that infers
+    the `Provider<T>`'s `T` value from the provided `OpaqueToken<T>`'s `T`.
+    This is meant to help with the move to strong mode and DDC, and is now the
+    preferred way to configure dependency injection.
+
 ### Breaking changes
 
 *   Dartium is no longer supported. All development of your AngularDart
