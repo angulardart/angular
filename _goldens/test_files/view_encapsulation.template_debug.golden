@@ -75,7 +75,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponentHost0 = [
 class _ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
   ViewEmulatedComponent0 _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewEmulatedComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -83,11 +82,7 @@ class _ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_EmulatedComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$EmulatedComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_EmulatedComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmulatedComponent0(this, 0);
@@ -176,7 +171,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponentHost0 = [
 class _ViewNoneComponentHost0 extends DebugAppView<dynamic> {
   ViewNoneComponent0 _compView_0;
   import2.NoneComponent _NoneComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewNoneComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -184,11 +178,7 @@ class _ViewNoneComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_NoneComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$NoneComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_NoneComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewNoneComponent0(this, 0);

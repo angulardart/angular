@@ -212,7 +212,6 @@ class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   import1.QueriesComponent _QueriesComponent_0_4;
   final import5.QueryList _query_AnotherDirective_0_0 = new import5.QueryList();
   final import5.QueryList _query_AnotherDirective_0_1 = new import5.QueryList();
-  static RenderComponentType _renderType;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import10.ViewType.HOST,
@@ -220,11 +219,7 @@ class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_QueriesComponentHost0) {
-    _renderType ??= import12.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$QueriesComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_QueriesComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewQueriesComponent0(this, 0);
@@ -470,7 +465,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmbeddedQueriesHost0 = [
 class _ViewEmbeddedQueriesHost0 extends DebugAppView<dynamic> {
   ViewEmbeddedQueries0 _compView_0;
   import1.EmbeddedQueries _EmbeddedQueries_0_4;
-  static RenderComponentType _renderType;
   _ViewEmbeddedQueriesHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import10.ViewType.HOST,
@@ -478,11 +472,7 @@ class _ViewEmbeddedQueriesHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_EmbeddedQueriesHost0) {
-    _renderType ??= import12.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$EmbeddedQueriesHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_EmbeddedQueriesHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmbeddedQueries0(this, 0);
@@ -716,7 +706,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmbeddedQueriesListHost0 = [
 class _ViewEmbeddedQueriesListHost0 extends DebugAppView<dynamic> {
   ViewEmbeddedQueriesList0 _compView_0;
   import1.EmbeddedQueriesList _EmbeddedQueriesList_0_4;
-  static RenderComponentType _renderType;
   _ViewEmbeddedQueriesListHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import10.ViewType.HOST,
@@ -724,11 +713,7 @@ class _ViewEmbeddedQueriesListHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_EmbeddedQueriesListHost0) {
-    _renderType ??= import12.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$EmbeddedQueriesListHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_EmbeddedQueriesListHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmbeddedQueriesList0(this, 0);

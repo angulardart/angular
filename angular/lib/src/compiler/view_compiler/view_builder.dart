@@ -447,7 +447,9 @@ o.ClassStmt createViewClass(
       viewMethods
           .where((method) => method.body != null && method.body.isNotEmpty)
           .toList());
-  _addRenderTypeCtorInitialization(view, viewClass);
+  if (view.viewType != ViewType.HOST) {
+    _addRenderTypeCtorInitialization(view, viewClass);
+  }
   return viewClass;
 }
 

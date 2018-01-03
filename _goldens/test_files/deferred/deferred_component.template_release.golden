@@ -61,14 +61,9 @@ const List<dynamic> styles$DeferredChildComponentHost = const [];
 class _ViewDeferredChildComponentHost0 extends AppView<dynamic> {
   ViewDeferredChildComponent0 _compView_0;
   import1.DeferredChildComponent _DeferredChildComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewDeferredChildComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$DeferredChildComponentHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDeferredChildComponent0(this, 0);

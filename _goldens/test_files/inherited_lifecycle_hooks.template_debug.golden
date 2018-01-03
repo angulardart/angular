@@ -70,7 +70,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponentHost0 = [
 class _ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   ViewLifecycleHooksComponent0 _compView_0;
   import2.LifecycleHooksComponent _LifecycleHooksComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewLifecycleHooksComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -79,11 +78,7 @@ class _ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_LifecycleHooksComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$LifecycleHooksComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_LifecycleHooksComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewLifecycleHooksComponent0(this, 0);

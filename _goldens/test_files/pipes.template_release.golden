@@ -99,14 +99,9 @@ const List<dynamic> styles$CompHost = const [];
 class _ViewCompHost0 extends AppView<dynamic> {
   ViewComp0 _compView_0;
   import1.Comp _Comp_0_4;
-  static RenderComponentType _renderType;
   _ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import7.appViewUtils
-        .createRenderType('', ViewEncapsulation.Emulated, styles$CompHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewComp0(this, 0);

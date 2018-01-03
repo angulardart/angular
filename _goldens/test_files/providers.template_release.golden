@@ -67,14 +67,9 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
   List<dynamic> __const_OpaqueToken_dynamic___useValueList___0_12;
   Map<String, dynamic> __const_OpaqueToken_dynamic___useValueMap___0_13;
   dynamic __const_OpaqueToken_dynamic___useEnums___0_14;
-  static RenderComponentType _renderType;
   _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$ProvidersComponentHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   import1.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_5 {
     if ((this.__MyInjectableTypeAnnotation_0_5 == null)) {
       (__MyInjectableTypeAnnotation_0_5 =

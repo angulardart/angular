@@ -88,7 +88,6 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   import2.InjectableComponent _InjectableComponent_0_5;
   dynamic __SomeDep_0_6;
   dynamic __BaseService_0_7;
-  static RenderComponentType _renderType;
   _ViewInjectableComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -96,11 +95,7 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_InjectableComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$InjectableComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_InjectableComponentHost0);
   dynamic get _SomeDep_0_6 {
     dbg(0, 0, 0);
     if ((this.__SomeDep_0_6 == null)) {

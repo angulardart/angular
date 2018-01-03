@@ -55,7 +55,12 @@ class DebugContext<T> implements RenderDebugInfo {
   }
 
   String get source {
-    return '${_view.componentType.templateUrl}:$_tplRow:$_tplCol';
+    var componentType = _view.componentType;
+    // If Host crashes in View0 initialization, show class type instead of
+    // componentType.
+    return componentType == null
+        ? '$_view'
+        : '${componentType.templateUrl}:$_tplRow:$_tplCol';
   }
 
   Map<String, dynamic> get locals {

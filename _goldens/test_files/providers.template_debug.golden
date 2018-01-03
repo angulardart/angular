@@ -96,7 +96,6 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   List<dynamic> __const_OpaqueToken_dynamic___useValueList___0_12;
   Map<String, dynamic> __const_OpaqueToken_dynamic___useValueMap___0_13;
   dynamic __const_OpaqueToken_dynamic___useEnums___0_14;
-  static RenderComponentType _renderType;
   _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.HOST,
@@ -104,11 +103,7 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_ProvidersComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$ProvidersComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_ProvidersComponentHost0);
   import2.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_5 {
     dbg(0, 0, 0);
     if ((this.__MyInjectableTypeAnnotation_0_5 == null)) {

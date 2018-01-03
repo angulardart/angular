@@ -78,7 +78,6 @@ class _ViewAppComponentHost0 extends DebugAppView<dynamic> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_4;
   import1.TextService __TextService_0_5;
-  static RenderComponentType _renderType;
   _ViewAppComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -86,11 +85,7 @@ class _ViewAppComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_AppComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$AppComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_AppComponentHost0);
   import1.TextService get _TextService_0_5 {
     dbg(0, 0, 0);
     if ((this.__TextService_0_5 == null)) {

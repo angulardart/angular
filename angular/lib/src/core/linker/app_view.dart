@@ -156,6 +156,8 @@ abstract class AppView<T> {
   /// A representation of how the component will be rendered in the DOM.
   ///
   /// This is _lazily_ set via [setupComponentType] in a generated constructor.
+  /// Not available on Host component views since shimming is performed by
+  /// View0.
   RenderComponentType componentType;
 
   /// The root element.

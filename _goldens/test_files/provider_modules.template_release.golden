@@ -61,15 +61,10 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   Duration __const_OpaqueToken_dynamic___fooToken___0_6;
   List<dynamic> __const_OpaqueToken_dynamic___barToken___0_7;
   dynamic __const_OpaqueToken_dynamic___bazToken___0_8;
-  static RenderComponentType _renderType;
   _ViewProviderModulesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$ProviderModulesComponentHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   import1.FooService get _FooService_0_5 {
     if ((this.__FooService_0_5 == null)) {
       (__FooService_0_5 = new import1.FooService());

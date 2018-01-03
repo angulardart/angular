@@ -88,7 +88,6 @@ class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   ViewHasOpaqueTokens0 _compView_0;
   String _const_OpaqueToken_dynamic___baseUrlDescription___0_4;
   import2.HasOpaqueTokens _HasOpaqueTokens_0_5;
-  static RenderComponentType _renderType;
   _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -96,11 +95,7 @@ class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_HasOpaqueTokensHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$HasOpaqueTokensHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_HasOpaqueTokensHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
