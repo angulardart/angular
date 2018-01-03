@@ -41,13 +41,29 @@ void main() {
     });
   });
 
-  test('should reify a MultiProvider<T> in strong-mode runtimes', () async {
+  test('should reify a typed OpaqueToken<T>', () async {
     final fixture = await new NgTestBed<ReifiedMultiGenerics>().create();
     expect(
       fixture.assertOnlyInstance.usPresidents,
       const isInstanceOf<List<String>>(),
     );
     expect(fixture.text, '[George, Abraham]');
+  });
+
+  test('should reify a typed OpaqueToken<T> for a directive', () async {
+    final fixture = await new NgTestBed<UsesTypedTokensComponent>().create();
+    expect(
+      fixture.assertOnlyInstance.directive.arbitrary,
+      const isInstanceOf<List<Arbitrary>>(),
+    );
+  });
+
+  test('should support typed tokens that are inferred', () async {
+    final fixture = await new NgTestBed<SupportsInferredProviders>().create();
+    expect(
+      fixture.assertOnlyInstance.arbitrary,
+      const isInstanceOf<List<Arbitrary>>(),
+    );
   });
 
   group('should support optional values', () {
@@ -195,8 +211,16 @@ const usPresidentsToken = const OpaqueToken<String>('usPresidents');
 @Component(
   selector: 'reified-multi-generics',
   providers: const [
-    const Provider<String>(usPresidentsToken, useValue: 'George', multi: true),
-    const Provider<String>(usPresidentsToken, useValue: 'Abraham', multi: true),
+    const Provider<String>(
+      usPresidentsToken,
+      useValue: 'George',
+      multi: true,
+    ),
+    const Provider<String>(
+      usPresidentsToken,
+      useValue: 'Abraham',
+      multi: true,
+    ),
   ],
   template: "{{usPresidents}}",
 )
@@ -204,4 +228,60 @@ class ReifiedMultiGenerics {
   final List<String> usPresidents;
 
   ReifiedMultiGenerics(@Inject(usPresidentsToken) this.usPresidents);
+}
+
+class Arbitrary {
+  final int value;
+
+  const Arbitrary(this.value);
+}
+
+const arbitraryToken = const OpaqueToken<Arbitrary>('arbitrary');
+
+@Component(
+  selector: 'uses-typed-tokens',
+  directives: const [UsesTypedTokensDirective],
+  providers: const [
+    const Provider<Arbitrary>(
+      arbitraryToken,
+      useValue: const Arbitrary(1),
+      multi: true,
+    ),
+    const Provider<Arbitrary>(
+      arbitraryToken,
+      useValue: const Arbitrary(2),
+      multi: true,
+    ),
+  ],
+  template: r'<button arbitrary></button>',
+)
+class UsesTypedTokensComponent {
+  @ViewChild(UsesTypedTokensDirective)
+  UsesTypedTokensDirective directive;
+}
+
+@Directive(
+  selector: '[arbitrary]',
+)
+class UsesTypedTokensDirective {
+  final List<Arbitrary> arbitrary;
+
+  UsesTypedTokensDirective(@Inject(arbitraryToken) this.arbitrary);
+}
+
+@Component(
+  selector: 'supports-inferred-providers',
+  providers: const [
+    const ValueProvider.forToken(
+      arbitraryToken,
+      const Arbitrary(1),
+      multi: true,
+    ),
+  ],
+  template: '',
+)
+class SupportsInferredProviders {
+  final List<Arbitrary> arbitrary;
+
+  SupportsInferredProviders(@Inject(arbitraryToken) this.arbitrary);
 }

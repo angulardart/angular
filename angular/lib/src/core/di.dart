@@ -4,4 +4,12 @@ export "../di/injector/runtime.dart" show ReflectiveInjector;
 export "../di/module.dart" hide internalModuleToList;
 export "di/decorators.dart";
 export "di/opaque_token.dart" show OpaqueToken;
-export "di/provider.dart" show Provider, provide, noValueProvided;
+export "di/provider.dart"
+    show
+        Provider,
+        ClassProvider,
+        ExistingProvider,
+        FactoryProvider,
+        ValueProvider,
+        provide,
+        noValueProvided;

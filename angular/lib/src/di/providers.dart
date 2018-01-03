@@ -206,14 +206,20 @@ List<T> listOfMulti<T>(Provider<T> provider) => provider._listOfMulti();
 @optionalTypeArgs
 class ClassProvider<T> extends Provider<T> {
   const factory ClassProvider(
-    Type token, {
+    Type type, {
+    Type useClass,
+    bool multi,
+  }) = ClassProvider<T>._;
+
+  const factory ClassProvider.forToken(
+    OpaqueToken<T> token, {
     Type useClass,
     bool multi,
   }) = ClassProvider<T>._;
 
   // Prevents extending this class.
   const ClassProvider._(
-    Type token, {
+    Object token, {
     Type useClass,
     bool multi: false,
   })
@@ -232,7 +238,13 @@ class ClassProvider<T> extends Provider<T> {
 @optionalTypeArgs
 class ExistingProvider<T> extends Provider<T> {
   const factory ExistingProvider(
-    Object token,
+    Type type,
+    Object useExisting, {
+    bool multi,
+  }) = ExistingProvider<T>._;
+
+  const factory ExistingProvider.forToken(
+    OpaqueToken<T> token,
     Object useExisting, {
     bool multi,
   }) = ExistingProvider<T>._;
@@ -263,7 +275,14 @@ class ExistingProvider<T> extends Provider<T> {
 @optionalTypeArgs
 class FactoryProvider<T> extends Provider<T> {
   const factory FactoryProvider(
-    Object token,
+    Type type,
+    Function useFactory, {
+    bool multi,
+    List<Object> deps,
+  }) = FactoryProvider<T>._;
+
+  const factory FactoryProvider.forToken(
+    OpaqueToken<T> token,
     Function useFactory, {
     bool multi,
     List<Object> deps,
@@ -299,7 +318,13 @@ class FactoryProvider<T> extends Provider<T> {
 @optionalTypeArgs
 class ValueProvider<T> extends Provider<T> {
   const factory ValueProvider(
-    Object token,
+    Type type,
+    T useValue, {
+    bool multi,
+  }) = ValueProvider<T>._;
+
+  const factory ValueProvider.forToken(
+    OpaqueToken<T> token,
     T useValue, {
     bool multi,
   }) = ValueProvider<T>._;
