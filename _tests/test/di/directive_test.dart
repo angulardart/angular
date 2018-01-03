@@ -41,15 +41,6 @@ void main() {
     });
   });
 
-  test('should support multi: true without reified generics', () async {
-    final fixture = await new NgTestBed<ErasedMultiGenerics>().create();
-    expect(
-      fixture.assertOnlyInstance.usPresidents,
-      const isInstanceOf<List>(),
-    );
-    expect(fixture.text, '[George, Abraham]');
-  });
-
   test('should reify a MultiProvider<T> in strong-mode runtimes', () async {
     final fixture = await new NgTestBed<ReifiedMultiGenerics>().create();
     expect(
@@ -200,20 +191,6 @@ class ExampleServiceOptionals {
 }
 
 const usPresidentsToken = const OpaqueToken<String>('usPresidents');
-
-@Component(
-  selector: 'reified-multi-generics',
-  providers: const [
-    const Provider(usPresidentsToken, useValue: 'George', multi: true),
-    const Provider(usPresidentsToken, useValue: 'Abraham', multi: true),
-  ],
-  template: "{{usPresidents}}",
-)
-class ErasedMultiGenerics {
-  final List<dynamic> usPresidents;
-
-  ErasedMultiGenerics(@Inject(usPresidentsToken) this.usPresidents);
-}
 
 @Component(
   selector: 'reified-multi-generics',
