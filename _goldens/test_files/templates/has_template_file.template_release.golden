@@ -63,15 +63,10 @@ const List<dynamic> styles$HasTemplateFileComponentHost = const [];
 class _ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   ViewHasTemplateFileComponent0 _compView_0;
   import2.HasTemplateFileComponent _HasTemplateFileComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewHasTemplateFileComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(import5.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import7.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$HasTemplateFileComponentHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasTemplateFileComponent0(this, 0);

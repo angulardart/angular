@@ -65,14 +65,9 @@ class _ViewAppComponentHost0 extends AppView<dynamic> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_4;
   import1.TextService __TextService_0_5;
-  static RenderComponentType _renderType;
   _ViewAppComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$AppComponentHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   import1.TextService get _TextService_0_5 {
     if ((this.__TextService_0_5 == null)) {
       (__TextService_0_5 = new import1.TextService());

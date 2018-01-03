@@ -89,7 +89,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentHost0 = [
 class _ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
   ViewInterpolationComponent0 _compView_0;
   import2.InterpolationComponent _InterpolationComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewInterpolationComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -97,11 +96,7 @@ class _ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_InterpolationComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$InterpolationComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_InterpolationComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponent0(this, 0);
@@ -216,7 +211,6 @@ class _ViewInterpolationComponentNoWhitespaceHost0
   ViewInterpolationComponentNoWhitespace0 _compView_0;
   import2.InterpolationComponentNoWhitespace
       _InterpolationComponentNoWhitespace_0_4;
-  static RenderComponentType _renderType;
   _ViewInterpolationComponentNoWhitespaceHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -225,13 +219,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_InterpolationComponentNoWhitespaceHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '',
-        ViewEncapsulation.Emulated,
-        styles$InterpolationComponentNoWhitespaceHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_InterpolationComponentNoWhitespaceHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);

@@ -56,15 +56,10 @@ const List<dynamic> styles$LifecycleHooksComponentHost = const [];
 class _ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
   ViewLifecycleHooksComponent0 _compView_0;
   import1.LifecycleHooksComponent _LifecycleHooksComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewLifecycleHooksComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$LifecycleHooksComponentHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewLifecycleHooksComponent0(this, 0);

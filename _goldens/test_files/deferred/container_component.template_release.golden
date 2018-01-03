@@ -182,14 +182,9 @@ const List<dynamic> styles$TestContainerComponentHost = const [];
 class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
   ViewTestContainerComponent0 _compView_0;
   import1.TestContainerComponent _TestContainerComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewTestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import7.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$TestContainerComponentHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestContainerComponent0(this, 0);

@@ -88,7 +88,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentHost0 = [
 class _ViewHostComponentHost0 extends DebugAppView<dynamic> {
   ViewHostComponent0 _compView_0;
   import2.HostComponent _HostComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import5.ViewType.HOST,
@@ -96,11 +95,7 @@ class _ViewHostComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_HostComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$HostComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_HostComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHostComponent0(this, 0);

@@ -83,7 +83,6 @@ class _ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   Duration __const_OpaqueToken_dynamic___fooToken___0_6;
   List<dynamic> __const_OpaqueToken_dynamic___barToken___0_7;
   dynamic __const_OpaqueToken_dynamic___bazToken___0_8;
-  static RenderComponentType _renderType;
   _ViewProviderModulesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -92,11 +91,7 @@ class _ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_ProviderModulesComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$ProviderModulesComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_ProviderModulesComponentHost0);
   import2.FooService get _FooService_0_5 {
     dbg(0, 0, 0);
     if ((this.__FooService_0_5 == null)) {

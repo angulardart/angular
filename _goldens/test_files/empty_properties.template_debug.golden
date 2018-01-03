@@ -163,7 +163,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmptyPropertiesComponentHost0 = [
 class _ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
   ViewEmptyPropertiesComponent0 _compView_0;
   import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewEmptyPropertiesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -172,11 +171,7 @@ class _ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_EmptyPropertiesComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$EmptyPropertiesComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_EmptyPropertiesComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmptyPropertiesComponent0(this, 0);
@@ -264,7 +259,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_FancyButtonComponentHost0 = [
 class _ViewFancyButtonComponentHost0 extends DebugAppView<dynamic> {
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -272,11 +266,7 @@ class _ViewFancyButtonComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_FancyButtonComponentHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$FancyButtonComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_FancyButtonComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewFancyButtonComponent0(this, 0);

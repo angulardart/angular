@@ -176,14 +176,9 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
   import1.QueriesComponent _QueriesComponent_0_4;
   final import2.QueryList _query_AnotherDirective_0_0 = new import2.QueryList();
   final import2.QueryList _query_AnotherDirective_0_1 = new import2.QueryList();
-  static RenderComponentType _renderType;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import7.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import9.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$QueriesComponentHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewQueriesComponent0(this, 0);
@@ -385,14 +380,9 @@ const List<dynamic> styles$EmbeddedQueriesHost = const [];
 class _ViewEmbeddedQueriesHost0 extends AppView<dynamic> {
   ViewEmbeddedQueries0 _compView_0;
   import1.EmbeddedQueries _EmbeddedQueries_0_4;
-  static RenderComponentType _renderType;
   _ViewEmbeddedQueriesHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import7.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import9.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$EmbeddedQueriesHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmbeddedQueries0(this, 0);
@@ -581,14 +571,9 @@ const List<dynamic> styles$EmbeddedQueriesListHost = const [];
 class _ViewEmbeddedQueriesListHost0 extends AppView<dynamic> {
   ViewEmbeddedQueriesList0 _compView_0;
   import1.EmbeddedQueriesList _EmbeddedQueriesList_0_4;
-  static RenderComponentType _renderType;
   _ViewEmbeddedQueriesListHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import7.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
-    _renderType ??= import9.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$EmbeddedQueriesListHost);
-    setupComponentType(_renderType);
-  }
+            ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmbeddedQueriesList0(this, 0);

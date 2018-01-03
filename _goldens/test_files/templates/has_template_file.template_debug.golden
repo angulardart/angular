@@ -81,7 +81,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 = [
 class _ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
   ViewHasTemplateFileComponent0 _compView_0;
   import3.HasTemplateFileComponent _HasTemplateFileComponent_0_4;
-  static RenderComponentType _renderType;
   _ViewHasTemplateFileComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -90,11 +89,7 @@ class _ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_HasTemplateFileComponentHost0) {
-    _renderType ??= import9.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$HasTemplateFileComponentHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_HasTemplateFileComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasTemplateFileComponent0(this, 0);

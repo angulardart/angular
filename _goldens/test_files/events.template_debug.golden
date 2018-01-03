@@ -76,7 +76,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEventsHost0 = [
 class _ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
   ViewUsesNativeEvents0 _compView_0;
   import2.UsesNativeEvents _UsesNativeEvents_0_4;
-  static RenderComponentType _renderType;
   _ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -84,11 +83,7 @@ class _ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_UsesNativeEventsHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$UsesNativeEventsHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_UsesNativeEventsHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewUsesNativeEvents0(this, 0);
@@ -204,7 +199,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEventsHost0 = [
 class _ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
   ViewUsesAngularEvents0 _compView_0;
   import2.UsesAngularEvents _UsesAngularEvents_0_4;
-  static RenderComponentType _renderType;
   _ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -212,11 +206,7 @@ class _ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_UsesAngularEventsHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$UsesAngularEventsHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_UsesAngularEventsHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewUsesAngularEvents0(this, 0);
@@ -299,7 +289,6 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEventsHost0 = [
 class _ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
   ViewHasAngularEvents0 _compView_0;
   import2.HasAngularEvents _HasAngularEvents_0_4;
-  static RenderComponentType _renderType;
   _ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex)
       : super(
             import6.ViewType.HOST,
@@ -307,11 +296,7 @@ class _ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
             parentView,
             parentIndex,
             ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_HasAngularEventsHost0) {
-    _renderType ??= import8.appViewUtils.createRenderType(
-        '', ViewEncapsulation.Emulated, styles$HasAngularEventsHost);
-    setupComponentType(_renderType);
-  }
+            nodeDebugInfos_HasAngularEventsHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasAngularEvents0(this, 0);
