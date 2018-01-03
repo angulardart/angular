@@ -92,6 +92,7 @@ class InjectorEmitter implements InjectorVisitor {
     Reference type,
     String constructor,
     List<Expression> dependencies,
+    bool isMulti,
   ) {
     _fieldCache.add(new Field((b) => b
       ..name = '_field$index'
@@ -108,7 +109,12 @@ class InjectorEmitter implements InjectorVisitor {
   }
 
   @override
-  void visitProvideExisting(int index, Expression token, Expression redirect) {
+  void visitProvideExisting(
+    int index,
+    Expression token,
+    Expression redirect,
+    bool isMulti,
+  ) {
     _injectSelfBody.add(
       _ifIsTokenThen(
         token,
@@ -124,6 +130,7 @@ class InjectorEmitter implements InjectorVisitor {
     Reference returnType,
     Reference function,
     List<Expression> dependencies,
+    bool isMulti,
   ) {
     _fieldCache.add(new Field((b) => b
       ..name = '_field$index'
@@ -140,7 +147,12 @@ class InjectorEmitter implements InjectorVisitor {
   }
 
   @override
-  void visitProvideValue(int index, Expression token, Expression value) {
+  void visitProvideValue(
+    int index,
+    Expression token,
+    Expression value,
+    bool isMulti,
+  ) {
     _injectSelfBody.add(_ifIsTokenThen(token, value.returned.statement));
   }
 }

@@ -46,6 +46,7 @@ void main() {
           refer('inject').call([refer('Dep1')]),
           refer('inject').call([refer('Dep2')]),
         ],
+        false,
       );
       expect(
         emitter.createClass(),
@@ -80,6 +81,7 @@ void main() {
           refer('inject').call([refer('Dep1')]),
           refer('inject').call([refer('Dep2')]),
         ],
+        false,
       );
       expect(
         emitter.createInjectSelfOptional(),
@@ -101,6 +103,7 @@ void main() {
         0,
         refer('FooPrime'),
         refer('Foo'),
+        false,
       );
       expect(
         emitter.createInjectSelfOptional(),
@@ -127,6 +130,7 @@ void main() {
           refer('inject').call([refer('Dep1')]),
           refer('inject').call([refer('Dep2')]),
         ],
+        false,
       );
       expect(
         emitter.createInjectSelfOptional(),
@@ -148,6 +152,7 @@ void main() {
         0,
         refer('Foo'),
         refer('Foo').constInstance([]),
+        false,
       );
       expect(
         emitter.createInjectSelfOptional(),

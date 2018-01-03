@@ -41,7 +41,10 @@ class TokenReader {
       return new TypeTokenElement(urlOf(constant.typeValue.element));
     }
     if (constant.instanceOf($OpaqueToken)) {
-      return new OpaqueTokenElement(constant.read('_desc').stringValue);
+      return new OpaqueTokenElement(
+        constant.read('_desc').stringValue,
+        isMultiToken: constant.instanceOf($MultiToken),
+      );
     }
     if (allowLiteralTokens) {
       if (constant.isInt) {
@@ -172,8 +175,11 @@ class OpaqueTokenElement implements TokenElement {
   /// Canonical name of an `OpaqueToken`.
   final String identifier;
 
+  /// Whether this represents a `MutliToken` class.
+  final bool isMultiToken;
+
   @visibleForTesting
-  const OpaqueTokenElement(this.identifier);
+  const OpaqueTokenElement(this.identifier, {@required this.isMultiToken});
 
   @override
   bool operator ==(Object o) =>

@@ -1,28 +1,26 @@
 import 'package:meta/meta.dart';
 
-/// Creates a token that can be used in a DI Provider.
+/// A token to be used instead of [Type] when configuring dependency injection.
 ///
-/// ### Example ([live demo](http://plnkr.co/edit/Ys9ezXpj2Mnoy3Uc8KBp?p=preview))
+/// ```
+/// const loginUrl = const OpaqueToken<String>('loginUrl');
 ///
-/// var t = new OpaqueToken("value");
+/// @Component(
+///   selector: 'dashboard',
+///   providers: const [
+///     const ValueProvider.forToken(loginUrl, 'https://someurl.com'),
+///   ],
+/// )
+/// class DashboardComponent {}
+/// ```
 ///
-/// var injector = Injector.resolveAndCreate([
-///   provide(t, {useValue: "bindingValue"})
-/// ]);
-///
-/// expect(injector.get(t)).toEqual("bindingValue");
-///
-/// Using an `OpaqueToken` is preferable to using strings as tokens because of
-/// possible collisions caused by multiple providers using the same string as
-/// two different tokens.
-///
-/// Using an `OpaqueToken` is preferable to using an `Object` as tokens because
-/// it provides better error messages.
+/// The type [T] is not required, but is recommended, otherwise it is `dynamic`.
 @optionalTypeArgs
 class OpaqueToken<T> {
   final String _desc;
 
-  const OpaqueToken(this._desc);
+  const factory OpaqueToken(String description) = OpaqueToken<T>._;
+  const OpaqueToken._(this._desc);
 
   @override
   bool operator ==(other) => other is OpaqueToken && _desc == other._desc;
@@ -33,7 +31,44 @@ class OpaqueToken<T> {
   // Temporary: We are using this to canonical-ize OpaqueTokens in source_gen.
   toJson() => toString();
 
-  String toString() {
-    return "const OpaqueToken<$T>('$_desc')";
-  }
+  @override
+  String toString() => "const OpaqueToken<$T>('$_desc')";
+}
+
+/// A token representing multiple values of [T] for dependency injection.
+///
+/// ```
+/// const usPresidents = const MultiToken<String>('usPresidents');
+///
+/// @Component(
+///   selector: 'presidents-list',
+///   providers: const [
+///     const ValueProvider.forToken(usPresidents, 'George Washington'),
+///     const ValueProvider.forToken(usPresidents, 'Abraham Lincoln'),
+///   ],
+/// )
+/// class PresidentsListComponent {
+///   // Will be ['George Washington', 'Abraham Lincoln'].
+///   final List<String> items;
+///
+///   PresidentsListComponent(@Inject(usPresidents) this.items);
+/// }
+/// ```
+///
+/// This is is the preferred mechanism for configuring multiple bound values to
+/// a single token, and will replace `Provider(..., multi: true)` and other
+/// variations of the `multi: true` APIs.
+@optionalTypeArgs
+class MultiToken<T> extends OpaqueToken<T> {
+  const factory MultiToken(String description) = MultiToken<T>._;
+  const MultiToken._(String description) : super._(description);
+
+  @override
+  bool operator ==(other) => other is MultiToken && _desc == other._desc;
+
+  @override
+  int get hashCode => super.hashCode;
+
+  @override
+  String toString() => "const MultiToken<$T>('$_desc')";
 }
