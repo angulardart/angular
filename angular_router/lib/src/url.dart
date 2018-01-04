@@ -2,9 +2,6 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:collection/collection.dart';
-import 'package:quiver/core.dart';
-
 /// A light-weight representation of a browser URL.
 ///
 /// This class primarily exists to avoid a direct dependency on [Uri].
@@ -70,20 +67,6 @@ class Url {
       : this.path = path ?? '',
         this.fragment = fragment ?? '',
         this.queryParameters = new Map.unmodifiable(queryParameters ?? {});
-
-  @override
-  bool operator ==(Object o) {
-    if (o is Url) {
-      return path == o.path &&
-          fragment == o.fragment &&
-          const MapEquality().equals(queryParameters, o.queryParameters);
-    }
-    return false;
-  }
-
-  @override
-  int get hashCode =>
-      hash3(path, fragment, const MapEquality().hash(queryParameters));
 
   /// Returns as a URL string that could be used for navigation/link sharing.
   String toUrl() {

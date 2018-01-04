@@ -5,7 +5,6 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
-import 'package:quiver/core.dart';
 import 'package:angular/angular.dart';
 
 import 'route_path.dart';
@@ -136,12 +135,6 @@ abstract class RouteDefinition {
     RoutePath routePath,
   }) = RedirectRouteDefinition._;
 
-  @override
-  bool operator ==(Object o) => o is RouteDefinition && path == o.path;
-
-  @override
-  int get hashCode => path.hashCode;
-
   /// Collection of parameters that are supplied in [path].
   Iterable<String> get parameters {
     return _findParameters.allMatches(path).map((m) => m[1]);
@@ -192,17 +185,6 @@ class ComponentRouteDefinition extends RouteDefinition {
         );
 
   @override
-  bool operator ==(Object o) {
-    if (o is ComponentRouteDefinition) {
-      return component == o.component && super == o;
-    }
-    return false;
-  }
-
-  @override
-  int get hashCode => hash2(component, super.hashCode);
-
-  @override
   void assertValid() {
     assert(() {
       if (component is! Type && component is! ComponentFactory) {
@@ -235,17 +217,6 @@ class DeferredRouteDefinition extends RouteDefinition {
             routePath: routePath);
 
   @override
-  bool operator ==(Object o) {
-    if (o is DeferredRouteDefinition) {
-      return loader == o.loader && super == o;
-    }
-    return false;
-  }
-
-  @override
-  int get hashCode => hash2(loader, super.hashCode);
-
-  @override
   void assertValid() {
     assert(() {
       if (loader == null) {
@@ -274,17 +245,6 @@ class RedirectRouteDefinition extends RouteDefinition {
             useAsDefault: useAsDefault,
             additionalData: additionalData,
             routePath: routePath);
-
-  @override
-  bool operator ==(Object o) {
-    if (o is RedirectRouteDefinition) {
-      return redirectTo == o.redirectTo && super == o;
-    }
-    return false;
-  }
-
-  @override
-  int get hashCode => hash2(redirectTo, super.hashCode);
 
   @override
   void assertValid() {

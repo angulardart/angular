@@ -3,7 +3,6 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:collection/collection.dart';
-import 'package:quiver/core.dart';
 import 'package:angular/angular.dart' show ComponentFactory, ComponentRef;
 
 import '../route_definition.dart';
@@ -36,17 +35,6 @@ class RouterState extends Url {
       : this.parameters = new Map.unmodifiable(parameters ?? {}),
         this.routes = new List.unmodifiable(routes ?? []),
         super(path, queryParameters: queryParameters, fragment: fragment);
-
-  @override
-  bool operator ==(Object o) {
-    if (o is RouterState) {
-      return const ListEquality().equals(routes, o.routes) && super == o;
-    }
-    return false;
-  }
-
-  @override
-  int get hashCode => hash2(const ListEquality().hash(routes), super.hashCode);
 
   @override
   String toString() => '#$RouterState {${super.toString()}}';

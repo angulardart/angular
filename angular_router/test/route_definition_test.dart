@@ -26,28 +26,6 @@ void main() {
         expect(def.component, ng.HeroesComponentNgFactory);
       });
 
-      test('should be equivalent to another route with the same inputs', () {
-        final def1 = new RouteDefinition(
-          path: '/1',
-          component: ng.HeroesComponentNgFactory,
-        );
-        final def2 = new RouteDefinition(
-          path: '/1',
-          component: ng.HeroesComponentNgFactory,
-        );
-        final def3 = new RouteDefinition(
-          path: '/2',
-          component: ng.HeroesComponentNgFactory,
-        );
-        final def4 = new RouteDefinition(
-          path: '/1',
-          component: ng.VillainsComponentNgFactory,
-        );
-        expect(def1, def2);
-        expect(def1, isNot(def3));
-        expect(def1, isNot(def4));
-      });
-
       test('should fail "assertValid" with a null or empty path', () {
         final def1 = new RouteDefinition(
           path: null,
@@ -69,20 +47,6 @@ void main() {
         expect(def.loader, loadHeroesComponent);
       });
 
-      test('should be equivalent to another route with the same inputs', () {
-        var def1 =
-            new RouteDefinition.defer(path: '/1', loader: loadHeroesComponent);
-        var def2 =
-            new RouteDefinition.defer(path: '/1', loader: loadHeroesComponent);
-        var def3 =
-            new RouteDefinition.defer(path: '/2', loader: loadHeroesComponent);
-        var def4 = new RouteDefinition.defer(
-            path: '/1', loader: loadVillainsComponent);
-        expect(def1, def2);
-        expect(def1, isNot(def3));
-        expect(def1, isNot(def4));
-      });
-
       test('should fail "assertValid" with a null loader function', () {
         var def1 = new RouteDefinition.defer(path: '/1', loader: null);
         expect(def1.assertValid, throwsStateError);
@@ -94,16 +58,6 @@ void main() {
         RedirectRouteDefinition def = new RouteDefinition.redirect(
             path: '/good-guys', redirectTo: '/heroes');
         expect(def.redirectTo, '/heroes');
-      });
-
-      test('should be equivalent to another route with the same inputs', () {
-        var def1 = new RouteDefinition.redirect(path: '/1', redirectTo: '/2');
-        var def2 = new RouteDefinition.redirect(path: '/1', redirectTo: '/2');
-        var def3 = new RouteDefinition.redirect(path: '/2', redirectTo: '/1');
-        var def4 = new RouteDefinition.redirect(path: '/1', redirectTo: '/3');
-        expect(def1, def2);
-        expect(def1, isNot(def3));
-        expect(def1, isNot(def4));
       });
 
       test('should fail "assertValid" with a null `to` path', () {

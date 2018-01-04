@@ -3,6 +3,11 @@
 *   Added `replace` field to `NavigationParams` which can be used to replace the
     current history entry on navigation instead of creating a new one.
 
+### Breaking changes
+
+*   Removed `hashCode` and `operator ==` overrides from `RouteDefinition` and
+    `RouterState`, as these can't be removed by tree-shaking.
+
 ## 2.0.0-alpha+2
 
 - Fixed a bug where `RouterLinkDirective` was not keyboard accessible.

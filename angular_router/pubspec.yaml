@@ -12,7 +12,6 @@ dependencies:
   collection: '^1.12.0'
   js: ^0.6.0
   meta: ^1.0.3
-  quiver: '>=0.22.0 <0.26.0'
 
 dev_dependencies:
   angular_test: ^2.0.0-alpha
