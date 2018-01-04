@@ -29,12 +29,6 @@ void main() {
       });
     });
 
-    test('should be equivalent to another $Url', () {
-      var url1 = new Url('/1', fragment: '2', queryParameters: {'3': 'true'});
-      var url2 = new Url('/1', fragment: '2', queryParameters: {'3': 'true'});
-      expect(url1, url2);
-    });
-
     test('toUrl should return a Url string', () {
       var url1 = new Url('/1', fragment: '2', queryParameters: {'3': 'true'});
       expect(url1.toUrl(), '/1?3=true#2');
