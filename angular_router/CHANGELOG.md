@@ -1,5 +1,8 @@
 ### New features
 
+*   Added `reload` field to `NavigationParams` which can be used to force
+    navigation, even if the path and other navigation parameters are unchanged.
+
 *   Added `replace` field to `NavigationParams` which can be used to replace the
     current history entry on navigation instead of creating a new one.
 
