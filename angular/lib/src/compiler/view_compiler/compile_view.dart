@@ -12,6 +12,7 @@ import '../compile_metadata.dart'
     show
         CompileDirectiveMetadata,
         CompileIdentifierMetadata,
+        CompileTokenMetadata,
         CompilePipeMetadata,
         CompileProviderMetadata,
         CompileQueryMetadata,
@@ -32,12 +33,17 @@ import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
-import 'constants.dart' show parentRenderNodeVar;
-import 'constants.dart' show appViewRootElementName, ViewProperties;
+import 'constants.dart'
+    show
+        parentRenderNodeVar,
+        appViewRootElementName,
+        ViewProperties,
+        InjectMethodVars;
 import 'view_compiler_utils.dart'
     show
         astAttribListToMap,
         createDbgElementCall,
+        createDiTokenExpression,
         createSetAttributeStatement,
         cachedParentIndexVarName,
         getViewFactoryName,
@@ -222,6 +228,12 @@ abstract class AppViewBuilder {
 
   /// Finally writes build statements into target.
   void writeBuildStatements(List<o.Statement> targetStatements);
+
+  /// Adds reference to a provider by token type and nodeIndex range.
+  void addInjectable(int nodeIndex, int childNodeCount, ProviderAst provider,
+      o.Expression providerExpr, List<CompileTokenMetadata> aliases);
+
+  o.ClassMethod writeInjectorGetMethod();
 }
 
 /// Represents data to generate a host, component or embedded AppView.
@@ -259,7 +271,7 @@ class CompileView implements AppViewBuilder {
   final _bindings = <CompileBinding>[];
   List<o.Statement> classStatements = [];
   CompileMethod _createMethod;
-  CompileMethod injectorGetMethod;
+  CompileMethod _injectorGetMethod;
   CompileMethod updateContentQueriesMethod;
   CompileMethod dirtyParentQueriesMethod;
   CompileMethod updateViewQueriesMethod;
@@ -301,7 +313,7 @@ class CompileView implements AppViewBuilder {
       this.templateVariables,
       this.deferredModules) {
     _createMethod = new CompileMethod(genDebugInfo);
-    injectorGetMethod = new CompileMethod(genDebugInfo);
+    _injectorGetMethod = new CompileMethod(genDebugInfo);
     updateContentQueriesMethod = new CompileMethod(genDebugInfo);
     dirtyParentQueriesMethod = new CompileMethod(genDebugInfo);
     updateViewQueriesMethod = new CompileMethod(genDebugInfo);
@@ -568,26 +580,6 @@ class CompileView implements AppViewBuilder {
     }
   }
 
-  NodeReference createViewContainerAnchor(
-      CompileElement parent, int nodeIndex, TemplateAst ast) {
-    NodeReference renderNode = new NodeReference.anchor(parent, nodeIndex, ast);
-    var assignCloneAnchorNodeExpr =
-        (renderNode.toReadExpr() as o.ReadVarExpr).set(_cloneAnchorNodeExpr);
-    _createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
-    var parentNode = _getParentRenderNode(parent);
-    if (parentNode != o.NULL_EXPR) {
-      var addCommentStmt =
-          parentNode.callMethod('append', [renderNode.toReadExpr()]).toStmt();
-      _createMethod.addStmt(addCommentStmt);
-    }
-
-    if (genConfig.genDebugInfo) {
-      _createMethod.addStmt(
-          createDbgElementCall(renderNode.toReadExpr(), nodeIndex, ast));
-    }
-    return renderNode;
-  }
-
   /// Adds a field member that holds the reference to a child app view for
   /// a hosted component.
   AppViewReference _createAppViewNodeAndComponent(
@@ -646,6 +638,26 @@ class CompileView implements AppViewBuilder {
           .toStmt());
     }
     return appViewRef;
+  }
+
+  NodeReference createViewContainerAnchor(
+      CompileElement parent, int nodeIndex, TemplateAst ast) {
+    NodeReference renderNode = new NodeReference.anchor(parent, nodeIndex, ast);
+    var assignCloneAnchorNodeExpr =
+        (renderNode.toReadExpr() as o.ReadVarExpr).set(_cloneAnchorNodeExpr);
+    _createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
+    var parentNode = _getParentRenderNode(parent);
+    if (parentNode != o.NULL_EXPR) {
+      var addCommentStmt =
+          parentNode.callMethod('append', [renderNode.toReadExpr()]).toStmt();
+      _createMethod.addStmt(addCommentStmt);
+    }
+
+    if (genConfig.genDebugInfo) {
+      _createMethod.addStmt(
+          createDbgElementCall(renderNode.toReadExpr(), nodeIndex, ast));
+    }
+    return renderNode;
   }
 
   @override
@@ -1047,6 +1059,47 @@ class CompileView implements AppViewBuilder {
     targetStatements.addAll(_createMethod.finish());
   }
 
+  @override
+  void addInjectable(int nodeIndex, int childNodeCount, ProviderAst provider,
+      o.Expression providerExpr, List<CompileTokenMetadata> aliases) {
+    var indexCondition;
+    if (childNodeCount > 0) {
+      indexCondition = o
+          .literal(nodeIndex)
+          .lowerEquals(InjectMethodVars.nodeIndex)
+          .and(InjectMethodVars.nodeIndex
+              .lowerEquals(o.literal(nodeIndex + childNodeCount)));
+    } else {
+      indexCondition = o.literal(nodeIndex).equals(InjectMethodVars.nodeIndex);
+    }
+    o.Expression tokenCondition = InjectMethodVars.token
+        .identical(createDiTokenExpression(provider.token));
+    if (aliases != null) {
+      for (var alias in aliases) {
+        tokenCondition = tokenCondition.or(
+            InjectMethodVars.token.identical(createDiTokenExpression(alias)));
+      }
+    }
+    _injectorGetMethod.addStmt(new o.IfStmt(tokenCondition.and(indexCondition),
+        [new o.ReturnStatement(providerExpr)]));
+  }
+
+  @override
+  o.ClassMethod writeInjectorGetMethod() {
+    return new o.ClassMethod(
+        "injectorGetInternal",
+        [
+          new o.FnParam(InjectMethodVars.token.name, o.DYNAMIC_TYPE),
+          new o.FnParam(InjectMethodVars.nodeIndex.name, o.INT_TYPE),
+          new o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
+        ],
+        _addReturnValueIfNotEmpty(
+            _injectorGetMethod.finish(), InjectMethodVars.notFoundResult),
+        o.DYNAMIC_TYPE,
+        null,
+        ['override']);
+  }
+
   // Returns reference for compile element or null if compile element
   // has no attached node (root node of embedded or host view).
   o.Expression _getParentRenderNode(CompileElement parentElement) {
@@ -1077,5 +1130,14 @@ ViewType getViewType(
     return ViewType.HOST;
   } else {
     return ViewType.COMPONENT;
+  }
+}
+
+List<o.Statement> _addReturnValueIfNotEmpty(
+    List<o.Statement> statements, o.Expression value) {
+  if (statements.isEmpty) {
+    return statements;
+  } else {
+    return new List.from(statements)..addAll([new o.ReturnStatement(value)]);
   }
 }

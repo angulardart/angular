@@ -43,7 +43,6 @@ import 'constants.dart'
         parentRenderNodeVar,
         DetectChangesVars,
         EventHandlerVars,
-        InjectMethodVars,
         ViewConstructorVars,
         ViewProperties;
 import 'event_binder.dart' show convertStmtIntoExpression;
@@ -410,18 +409,7 @@ o.ClassStmt createViewClass(
         ),
         null,
         ['override']),
-    new o.ClassMethod(
-        "injectorGetInternal",
-        [
-          new o.FnParam(InjectMethodVars.token.name, o.DYNAMIC_TYPE),
-          new o.FnParam(InjectMethodVars.nodeIndex.name, o.INT_TYPE),
-          new o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
-        ],
-        addReturnValueIfNotEmpty(
-            view.injectorGetMethod.finish(), InjectMethodVars.notFoundResult),
-        o.DYNAMIC_TYPE,
-        null,
-        ['override']),
+    view.writeInjectorGetMethod(),
     new o.ClassMethod("detectChangesInternal", [],
         generateDetectChangesMethod(view), null, null, ['override']),
     new o.ClassMethod("dirtyParentQueriesInternal", [],
@@ -914,15 +902,6 @@ List<o.Statement> generateDetectChangesMethod(CompileView view) {
     genProfileCdEnd(view, stmts);
   }
   return (new List.from(varStmts)..addAll(stmts));
-}
-
-List<o.Statement> addReturnValueIfNotEmpty(
-    List<o.Statement> statements, o.Expression value) {
-  if (statements.length > 0) {
-    return (new List.from(statements)..addAll([new o.ReturnStatement(value)]));
-  } else {
-    return statements;
-  }
 }
 
 o.OutputType getContextType(CompileView view) {
