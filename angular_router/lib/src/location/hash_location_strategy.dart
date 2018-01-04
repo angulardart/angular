@@ -71,22 +71,22 @@ class HashLocationStrategy extends LocationStrategy {
   String path() {
     // the hash value is always prefixed with a `#`
     // and if it is empty then it will stay empty
-    var path = _platformLocation.hash ?? '#';
+    var path = _platformLocation.hash ?? '';
     // Dart will complain if a call to substring is
     // executed with a position value that extends the
     // length of string.
-    return (path.length > 0 ? path.substring(1) : path);
+    return path.isEmpty ? path : path.substring(1);
   }
 
   String prepareExternalUrl(String internal) {
     var url = Location.joinWithSlash(_baseHref, internal);
-    return url.length > 0 ? ('#' + url) : url;
+    return url.isEmpty ? url : '#$url';
   }
 
   void pushState(dynamic state, String title, String path, String queryParams) {
     var url =
         prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
-    if (url.length == 0) {
+    if (url.isEmpty) {
       url = _platformLocation.pathname;
     }
     _platformLocation.pushState(state, title, url);
@@ -96,7 +96,7 @@ class HashLocationStrategy extends LocationStrategy {
       dynamic state, String title, String path, String queryParams) {
     var url =
         prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
-    if (url.length == 0) {
+    if (url.isEmpty) {
       url = _platformLocation.pathname;
     }
     _platformLocation.replaceState(state, title, url);

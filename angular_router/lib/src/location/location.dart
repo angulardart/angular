@@ -70,31 +70,32 @@ class Location {
 
   String hash() => normalize(platformStrategy.hash());
 
-  /// Given a string representing a URL, returns the normalized URL path without leading or
-  /// trailing slashes
+  /// Given a string representing a URL, returns the normalized URL path without
+  /// leading or trailing slashes
   String normalize(String url) => Location
       .stripTrailingSlash(_stripBaseHref(_baseHref, _stripIndexHtml(url)));
 
-  /// Given a string representing a URL, returns the platform-specific external URL path.
-  /// If the given URL doesn't begin with a leading slash (`'/'`), this method adds one
-  /// before normalizing. This method will also add a hash if `HashLocationStrategy` is
-  /// used, or the `APP_BASE_HREF` if the `PathLocationStrategy` is in use.
+  /// Given a string representing a URL, returns the platform-specific external
+  /// URL path. If the given URL doesn't begin with a leading slash (`'/'`),
+  /// this method adds one before normalizing. This method will also add a hash
+  /// if `HashLocationStrategy` is used, or the `APP_BASE_HREF` if the
+  /// `PathLocationStrategy` is in use.
   String prepareExternalUrl(String url) {
-    if (url.length > 0 && !url.startsWith('/')) {
-      url = '/' + url;
+    if (url.isNotEmpty && !url.startsWith('/')) {
+      url = '/$url';
     }
     return platformStrategy.prepareExternalUrl(url);
   }
-  // TODO: rename this method to pushState
 
-  /// Changes the browsers URL to the normalized version of the given URL, and pushes a
-  /// new item onto the platform's history.
+  // TODO: rename this method to pushState
+  /// Changes the browsers URL to the normalized version of the given URL, and
+  /// pushes a new item onto the platform's history.
   void go(String path, [String query = '']) {
     platformStrategy.pushState(null, '', path, query);
   }
 
-  /// Changes the browsers URL to the normalized version of the given URL, and replaces
-  /// the top item on the platform's history stack.
+  /// Changes the browsers URL to the normalized version of the given URL, and
+  /// replaces the top item on the platform's history stack.
   void replaceState(String path, [String query = '']) {
     platformStrategy.replaceState(null, '', path, query);
   }
@@ -118,20 +119,18 @@ class Location {
     return _subject.stream.listen(onNext, onError: onThrow, onDone: onReturn);
   }
 
-  /// Given a string of url parameters, prepend with '?' if needed, otherwise return parameters as
-  /// is.
+  /// Given a string of url parameters, prepend with '?' if needed, otherwise
+  /// return parameters as is.
   static String normalizeQueryParams(String params) {
-    return (params.length > 0 && params.substring(0, 1) != '?')
-        ? ('?' + params)
-        : params;
+    return params.isEmpty || params.startsWith('?') ? params : '?$params';
   }
 
   /// Given 2 parts of a url, join them with a slash if needed.
   static String joinWithSlash(String start, String end) {
-    if (start.length == 0) {
+    if (start.isEmpty) {
       return end;
     }
-    if (end.length == 0) {
+    if (end.isEmpty) {
       return start;
     }
     var slashes = 0;
@@ -147,12 +146,12 @@ class Location {
     if (slashes == 1) {
       return start + end;
     }
-    return start + '/' + end;
+    return '$start/$end';
   }
 
   /// If url has a trailing slash, remove it, otherwise return url as is.
   static String stripTrailingSlash(String url) {
-    if (new RegExp(r'\/$').hasMatch(url)) {
+    if (url.endsWith('/')) {
       url = url.substring(0, url.length - 1);
     }
     return url;
@@ -160,14 +159,14 @@ class Location {
 }
 
 String _stripBaseHref(String baseHref, String url) {
-  if (baseHref.length > 0 && url.startsWith(baseHref)) {
+  if (baseHref.isNotEmpty && url.startsWith(baseHref)) {
     return url.substring(baseHref.length);
   }
   return url;
 }
 
 String _stripIndexHtml(String url) {
-  if (new RegExp(r'\/index.html$').hasMatch(url)) {
+  if (url.endsWith('/index.html')) {
     // '/index.html'.length == 11
     return url.substring(0, url.length - 11);
   }
