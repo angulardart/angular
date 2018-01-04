@@ -318,9 +318,14 @@ class CompileTypeMetadataVisitor
   }
 
   CompileTokenMetadata _canonicalOpaqueToken(DartObject object) {
-    return new CompileTokenMetadata(
-      value: new OpaqueToken(dart_objects.coerceString(object, '_desc')),
-    );
+    final description = dart_objects.coerceString(object, '_desc');
+    OpaqueToken token;
+    if ($MultiToken.isExactlyType(object.type)) {
+      token = new MultiToken(description);
+    } else {
+      token = new OpaqueToken(description);
+    }
+    return new CompileTokenMetadata(value: token);
   }
 
   CompileTokenMetadata _tokenForType(DartType type, {bool isInstance: false}) {
@@ -479,8 +484,7 @@ class CompileTypeMetadataVisitor
   }
 
   bool _isOpaqueToken(DartObject token) =>
-      token != null &&
-      const TypeChecker.fromRuntime(OpaqueToken).isExactlyType(token.type);
+      token != null && $OpaqueToken.isAssignableFromType(token.type);
 
   ElementAnnotation _getAnnotation(Element element, Type type) =>
       element.metadata.firstWhere(
