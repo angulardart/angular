@@ -14,7 +14,6 @@ import '../template_ast.dart'
     show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst, ElementAst;
 import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
 import 'compile_view.dart' show CompileView, NodeReference;
-import 'constants.dart' show InjectMethodVars;
 import 'view_compiler_utils.dart'
     show
         createDiTokenExpression,
@@ -391,8 +390,8 @@ class CompileElement extends CompileNode {
           resolvedProvider.providerType == ProviderAstType.PrivateService
               ? 0
               : childNodeCount;
-      view.injectorGetMethod.addStmt(_createInjectInternalCondition(nodeIndex,
-          providerChildNodeCount, resolvedProvider, providerExpr, aliases));
+      view.addInjectable(nodeIndex, providerChildNodeCount, resolvedProvider,
+          providerExpr, aliases);
     }
     for (List<CompileQuery> queries in _queries.values) {
       for (CompileQuery query in queries) {
@@ -598,35 +597,6 @@ class CompileElement extends CompileNode {
         view, requestOrigin ?? dep.token, dep.isOptional);
     return getPropertyInView(result, view, currElement.view);
   }
-}
-
-o.Statement _createInjectInternalCondition(
-    int nodeIndex,
-    int childNodeCount,
-    ProviderAst provider,
-    o.Expression providerExpr,
-    List<CompileTokenMetadata> aliases) {
-  var indexCondition;
-  if (childNodeCount > 0) {
-    indexCondition = o
-        .literal(nodeIndex)
-        .lowerEquals(InjectMethodVars.nodeIndex)
-        .and(InjectMethodVars.nodeIndex
-            .lowerEquals(o.literal(nodeIndex + childNodeCount)));
-  } else {
-    indexCondition = o.literal(nodeIndex).equals(InjectMethodVars.nodeIndex);
-  }
-  o.Expression tokenCondition =
-      InjectMethodVars.token.identical(createDiTokenExpression(provider.token));
-  if (aliases != null) {
-    for (var alias in aliases) {
-      tokenCondition = tokenCondition
-          .or(InjectMethodVars.token.identical(createDiTokenExpression(alias)));
-    }
-  }
-
-  return new o.IfStmt(tokenCondition.and(indexCondition),
-      [new o.ReturnStatement(providerExpr)]);
 }
 
 class _QueryWithRead {
