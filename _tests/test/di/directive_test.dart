@@ -74,6 +74,12 @@ void main() {
     );
   });
 
+  test('should not consider Opaque/MultiToken the same token', () async {
+    final fixture = await new NgTestBed<NoClashTokens>().create();
+    expect(fixture.assertOnlyInstance.fooTokenFromOpaque, hasLength(1));
+    expect(fixture.assertOnlyInstance.fooTokenFromMulti, hasLength(1));
+  });
+
   group('should support optional values', () {
     NgTestBed<UsingInjectAndOptional> testBed;
 
@@ -308,4 +314,25 @@ class SupportsMultiToken {
   final List<String> values;
 
   SupportsMultiToken(@Inject(usPresidentsMulti) this.values);
+}
+
+const fooOpaqueToken = const OpaqueToken<String>('fooToken');
+const fooMultiToken = const MultiToken<String>('fooToken');
+
+@Component(
+  selector: 'no-clash-tokens',
+  providers: const [
+    const ValueProvider.forToken(fooOpaqueToken, 'Hello', multi: true),
+    const ValueProvider.forToken(fooMultiToken, 'World'),
+  ],
+  template: '',
+)
+class NoClashTokens {
+  final List<String> fooTokenFromOpaque;
+  final List<String> fooTokenFromMulti;
+
+  NoClashTokens(
+    @Inject(fooOpaqueToken) this.fooTokenFromOpaque,
+    @Inject(fooMultiToken) this.fooTokenFromMulti,
+  );
 }
