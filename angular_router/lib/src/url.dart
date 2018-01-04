@@ -24,7 +24,7 @@ class Url {
     hashStrategy = isHashStrategy || hashStrategy;
 
     if (!hashStrategy && !path.startsWith('/')) {
-      path = '/' + path;
+      path = '/$path';
     }
     if (hashStrategy && path.startsWith('/')) {
       path = path.substring(1);

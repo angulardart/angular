@@ -132,7 +132,7 @@ class RouterImpl extends Router {
       return NavigationResult.BLOCKED_BY_GUARD;
     }
 
-    if (nextState.routes.length > 0 &&
+    if (nextState.routes.isNotEmpty &&
         nextState.routes.last is RedirectRouteDefinition) {
       var redirectUrl =
           (nextState.routes.last as RedirectRouteDefinition).redirectTo;
@@ -387,9 +387,8 @@ class RouterImpl extends Router {
     });
 
     RouterOutlet currentOutlet = _rootOutlet;
-    for (int i = 0; i < mutableNextState.components.length; i++) {
-      var component = mutableNextState.components[i];
-      var factory = mutableNextState.factories[component];
+    for (var component in mutableNextState.components) {
+      final factory = mutableNextState.factories[component];
       await currentOutlet.activate(
         factory,
         _activeState,

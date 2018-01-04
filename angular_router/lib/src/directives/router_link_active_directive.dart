@@ -33,7 +33,7 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
   List<String> _classes;
 
   @ContentChildren(RouterLink)
-  QueryList<RouterLink> links;
+  List<RouterLink> links;
 
   RouterLinkActive(this._element, this._router);
 
@@ -63,28 +63,26 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
   }
 
   void _update(RouterState routerState) {
-    if (routerState != null &&
-        links.isNotEmpty &&
-        links.any((link) {
-          if (link.url.path != routerState.path) {
-            return false;
-          }
-          // Only check queryParameter/fragment if included in the [routerLink].
-          if (link.url.queryParameters.length > 0 &&
-              !const MapEquality().equals(
-                  link.url.queryParameters, routerState.queryParameters)) {
-            return false;
-          }
-          if (link.url.fragment.length > 0 &&
-              link.url.fragment != routerState.fragment) {
-            return false;
-          }
-
-          return true;
-        })) {
-      _element.classes.addAll(_classes);
-    } else {
-      _element.classes.removeAll(_classes);
+    var isActive = false;
+    if (routerState != null) {
+      for (var link in links) {
+        final url = link.url;
+        if (url.path != routerState.path) continue;
+        // Only compare query parameters if specified in the [routerLink].
+        if (url.queryParameters.isNotEmpty &&
+            !const MapEquality()
+                .equals(url.queryParameters, routerState.queryParameters)) {
+          continue;
+        }
+        // Only compare fragment identifier if specified in the [routerLink].
+        if (url.fragment.isNotEmpty && url.fragment != routerState.fragment) {
+          continue;
+        }
+        // The link matches the current router state and should be activated.
+        isActive = true;
+        break;
+      }
     }
+    _element.classes.toggleAll(_classes, isActive);
   }
 }
