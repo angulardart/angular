@@ -126,6 +126,16 @@ void main() {
       var testBed = new NgTestBed<SvgComponentTest>();
       await testBed.create();
     });
+
+    test('Should support class binding to host component', () async {
+      var testBed = new NgTestBed<FeaturePromoComponent2>();
+      var testFixture = await testBed.create();
+      Element elm = testFixture.rootElement;
+      expect(elm.tagName.toLowerCase(), 'feature-promo2');
+      expect(elm.className.contains('_nghost'), true);
+      expect(elm.className.contains('_ngcontent'), false);
+      expect(elm.className.contains('promo-test-class'), true);
+    });
   });
 }
 
@@ -328,4 +338,14 @@ class NgHostAttribShimTest {
   NgHostAttribShimTest() {
     myposition = "position-class";
   }
+}
+
+@Component(
+  selector: 'feature-promo2',
+  styles: const [':host {position: absolute;}'],
+  template: '<div >Hello</div>',
+)
+class FeaturePromoComponent2 {
+  @HostBinding('class')
+  String hostClassValue = 'promo-test-class';
 }

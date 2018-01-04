@@ -544,7 +544,7 @@ abstract class AppView<T> {
     if (element == rootEl) {
       String hostClass = componentType.hostAttr;
       element.className = hostClass == null ? newClass : '$newClass $hostClass';
-      if (parentView != null) {
+      if (parentView != null && parentView.componentType != null) {
         parentView.addShimE(element);
       }
     } else {
