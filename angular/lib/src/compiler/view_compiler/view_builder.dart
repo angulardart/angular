@@ -1,9 +1,6 @@
 import 'package:angular/src/compiler/output/output_ast.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
-    show
-        ChangeDetectorState,
-        ChangeDetectionStrategy,
-        isDefaultChangeDetectionStrategy;
+    show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
@@ -61,7 +58,6 @@ import 'view_compiler_utils.dart'
         ViewCompileDependency;
 
 var rootSelectorVar = o.variable("rootSelector");
-var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
 
 class ViewBuilderVisitor implements TemplateAstVisitor {
   final CompileView view;
@@ -411,7 +407,7 @@ o.ClassStmt createViewClass(
         ['override']),
     view.writeInjectorGetMethod(),
     new o.ClassMethod("detectChangesInternal", [],
-        generateDetectChangesMethod(view), null, null, ['override']),
+        view.writeChangeDetectionStatements(), null, null, ['override']),
     new o.ClassMethod("dirtyParentQueriesInternal", [],
         view.dirtyParentQueriesMethod.finish(), null, null, ['override']),
     new o.ClassMethod("destroyInternal", [], generateDestroyMethod(view), null,
@@ -800,108 +796,6 @@ void _writeComponentHostEventListeners(
     }
     statements.add(listenExpr.toStmt());
   }
-}
-
-List<o.Statement> generateDetectChangesMethod(CompileView view) {
-  var stmts = <o.Statement>[];
-  if (view.detectChangesInInputsMethod.isEmpty &&
-      view.updateContentQueriesMethod.isEmpty &&
-      view.afterContentLifecycleCallbacksMethod.isEmpty &&
-      view.detectChangesRenderPropertiesMethod.isEmpty &&
-      view.updateViewQueriesMethod.isEmpty &&
-      view.afterViewLifecycleCallbacksMethod.isEmpty &&
-      view.viewChildren.isEmpty &&
-      view.viewContainers.isEmpty) {
-    return stmts;
-  }
-
-  if (view.genConfig.profileFor == Profile.build) {
-    genProfileCdStart(view, stmts);
-  }
-
-  // Declare variables for locals used in this method.
-  stmts.addAll(view.nameResolver.getLocalDeclarations());
-
-  // Add @Input change detectors.
-  stmts.addAll(view.detectChangesInInputsMethod.finish());
-
-  // Add content child change detection calls.
-  for (o.Expression contentChild in view.viewContainers) {
-    stmts.add(
-        contentChild.callMethod('detectChangesInNestedViews', []).toStmt());
-  }
-
-  // Add Content query updates.
-  List<o.Statement> afterContentStmts =
-      (new List.from(view.updateContentQueriesMethod.finish())
-        ..addAll(view.afterContentLifecycleCallbacksMethod.finish()));
-  if (afterContentStmts.isNotEmpty) {
-    if (view.genConfig.genDebugInfo) {
-      stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterContentStmts));
-    } else {
-      stmts.addAll(afterContentStmts);
-    }
-  }
-
-  // Add render properties change detectors.
-  stmts.addAll(view.detectChangesRenderPropertiesMethod.finish());
-
-  // Add view child change detection calls.
-  for (o.Expression viewChild in view.viewChildren) {
-    stmts.add(viewChild.callMethod('detectChanges', []).toStmt());
-  }
-
-  List<o.Statement> afterViewStmts =
-      (new List.from(view.updateViewQueriesMethod.finish())
-        ..addAll(view.afterViewLifecycleCallbacksMethod.finish()));
-  if (afterViewStmts.length > 0) {
-    if (view.genConfig.genDebugInfo) {
-      stmts.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterViewStmts));
-    } else {
-      stmts.addAll(afterViewStmts);
-    }
-  }
-  var varStmts = [];
-  var readVars = o.findReadVarNames(stmts);
-  var writeVars = o.findWriteVarNames(stmts);
-  if (readVars.contains(cachedParentIndexVarName)) {
-    varStmts.add(new o.DeclareVarStmt(cachedParentIndexVarName,
-        new ReadClassMemberExpr('viewData').prop('parentIndex')));
-  }
-  if (readVars.contains(DetectChangesVars.cachedCtx.name)) {
-    // Cache [ctx] class field member as typed [_ctx] local for change detection
-    // code to consume.
-    var contextType = view.viewType != ViewType.HOST
-        ? o.importType(view.component.type)
-        : null;
-    varStmts.add(o
-        .variable(DetectChangesVars.cachedCtx.name)
-        .set(new o.ReadClassMemberExpr('ctx'))
-        .toDeclStmt(contextType, [o.StmtModifier.Final]));
-  }
-  if (readVars.contains(DetectChangesVars.changed.name) ||
-      writeVars.contains(DetectChangesVars.changed.name)) {
-    varStmts.add(DetectChangesVars.changed
-        .set(o.literal(false))
-        .toDeclStmt(o.BOOL_TYPE));
-  }
-  if (readVars.contains(DetectChangesVars.changes.name) ||
-      view.requiresOnChangesCall) {
-    varStmts.add(new o.DeclareVarStmt(DetectChangesVars.changes.name, null,
-        new o.MapType(o.importType(Identifiers.SimpleChange))));
-  }
-  if (readVars.contains(DetectChangesVars.firstCheck.name)) {
-    varStmts.add(new o.DeclareVarStmt(
-        DetectChangesVars.firstCheck.name,
-        o.THIS_EXPR
-            .prop('cdState')
-            .equals(o.literal(ChangeDetectorState.NeverChecked)),
-        o.BOOL_TYPE));
-  }
-  if (view.genConfig.profileFor == Profile.build) {
-    genProfileCdEnd(view, stmts);
-  }
-  return (new List.from(varStmts)..addAll(stmts));
 }
 
 o.OutputType getContextType(CompileView view) {

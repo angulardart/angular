@@ -1,6 +1,6 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy;
+    show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
@@ -37,8 +37,10 @@ import 'constants.dart'
     show
         parentRenderNodeVar,
         appViewRootElementName,
+        DetectChangesVars,
         ViewProperties,
         InjectMethodVars;
+import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'
     show
         astAttribListToMap,
@@ -58,6 +60,8 @@ enum NodeReferenceVisibility {
   classPublic, // Visible across build and change detectors or other closures.
   build, // Only visible inside DOM build process.
 }
+
+var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
 
 /// Reference to html node created during AppView build.
 class NodeReference {
@@ -189,6 +193,9 @@ abstract class AppViewBuilder {
   /// Initializes query target on component at startup/build time.
   void updateQueryAtStartup(CompileQuery query);
 
+  /// Writes code to update content query targets.
+  void updateContentQuery(CompileQuery query);
+
   /// Creates a provider as a field or local expression.
   o.Expression createProvider(
       String propName,
@@ -228,6 +235,9 @@ abstract class AppViewBuilder {
 
   /// Finally writes build statements into target.
   void writeBuildStatements(List<o.Statement> targetStatements);
+
+  /// Writes change detection code for detectChangesInternal method.
+  List<o.Statement> writeChangeDetectionStatements();
 
   /// Adds reference to a provider by token type and nodeIndex range.
   void addInjectable(int nodeIndex, int childNodeCount, ProviderAst provider,
@@ -272,9 +282,9 @@ class CompileView implements AppViewBuilder {
   List<o.Statement> classStatements = [];
   CompileMethod _createMethod;
   CompileMethod _injectorGetMethod;
-  CompileMethod updateContentQueriesMethod;
+  CompileMethod _updateContentQueriesMethod;
+  CompileMethod _updateViewQueriesMethod;
   CompileMethod dirtyParentQueriesMethod;
-  CompileMethod updateViewQueriesMethod;
   CompileMethod detectChangesInInputsMethod;
   CompileMethod detectChangesRenderPropertiesMethod;
   CompileMethod detectHostChangesMethod;
@@ -314,9 +324,9 @@ class CompileView implements AppViewBuilder {
       this.deferredModules) {
     _createMethod = new CompileMethod(genDebugInfo);
     _injectorGetMethod = new CompileMethod(genDebugInfo);
-    updateContentQueriesMethod = new CompileMethod(genDebugInfo);
+    _updateContentQueriesMethod = new CompileMethod(genDebugInfo);
     dirtyParentQueriesMethod = new CompileMethod(genDebugInfo);
-    updateViewQueriesMethod = new CompileMethod(genDebugInfo);
+    _updateViewQueriesMethod = new CompileMethod(genDebugInfo);
     detectChangesInInputsMethod = new CompileMethod(genDebugInfo);
     detectChangesRenderPropertiesMethod = new CompileMethod(genDebugInfo);
     afterContentLifecycleCallbacksMethod = new CompileMethod(genDebugInfo);
@@ -392,8 +402,8 @@ class CompileView implements AppViewBuilder {
     }
     for (var queries in viewQueries.values) {
       for (var query in queries) {
-        _createMethod.addStmts(query.createImmediateUpdates());
-        updateContentQueriesMethod.addStmts(query.createDynamicUpdates());
+        updateQueryAtStartup(query);
+        updateContentQuery(query);
       }
     }
   }
@@ -830,6 +840,11 @@ class CompileView implements AppViewBuilder {
     _createMethod.addStmts(query.createImmediateUpdates());
   }
 
+  @override
+  void updateContentQuery(CompileQuery query) {
+    _updateContentQueriesMethod.addStmts(query.createDynamicUpdates());
+  }
+
   /// Creates a class field and assigns the resolvedProviderValueExpr.
   ///
   /// Eager Example:
@@ -1057,6 +1072,110 @@ class CompileView implements AppViewBuilder {
   @override
   void writeBuildStatements(List<o.Statement> targetStatements) {
     targetStatements.addAll(_createMethod.finish());
+  }
+
+  @override
+  List<o.Statement> writeChangeDetectionStatements() {
+    var statements = <o.Statement>[];
+    if (detectChangesInInputsMethod.isEmpty &&
+        _updateContentQueriesMethod.isEmpty &&
+        afterContentLifecycleCallbacksMethod.isEmpty &&
+        detectChangesRenderPropertiesMethod.isEmpty &&
+        _updateViewQueriesMethod.isEmpty &&
+        afterViewLifecycleCallbacksMethod.isEmpty &&
+        viewChildren.isEmpty &&
+        viewContainers.isEmpty) {
+      return statements;
+    }
+
+    if (genConfig.profileFor == Profile.build) {
+      genProfileCdStart(this, statements);
+    }
+
+    // Declare variables for locals used in this method.
+    statements.addAll(nameResolver.getLocalDeclarations());
+
+    // Add @Input change detectors.
+    statements.addAll(detectChangesInInputsMethod.finish());
+
+    // Add content child change detection calls.
+    for (o.Expression contentChild in viewContainers) {
+      statements.add(
+          contentChild.callMethod('detectChangesInNestedViews', []).toStmt());
+    }
+
+    // Add Content query updates.
+    List<o.Statement> afterContentStmts =
+        new List.from(_updateContentQueriesMethod.finish())
+          ..addAll(afterContentLifecycleCallbacksMethod.finish());
+    if (afterContentStmts.isNotEmpty) {
+      if (genConfig.genDebugInfo) {
+        // Prevent query list updates when we run change detection for
+        // second time to check if values are stabilized.
+        statements.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterContentStmts));
+      } else {
+        statements.addAll(afterContentStmts);
+      }
+    }
+
+    // Add render properties change detectors.
+    statements.addAll(detectChangesRenderPropertiesMethod.finish());
+
+    // Add view child change detection calls.
+    for (o.Expression viewChild in viewChildren) {
+      statements.add(viewChild.callMethod('detectChanges', []).toStmt());
+    }
+
+    List<o.Statement> afterViewStmts =
+        new List.from(_updateViewQueriesMethod.finish())
+          ..addAll(afterViewLifecycleCallbacksMethod.finish());
+    if (afterViewStmts.isNotEmpty) {
+      if (genConfig.genDebugInfo) {
+        statements.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterViewStmts));
+      } else {
+        statements.addAll(afterViewStmts);
+      }
+    }
+    var varStmts = [];
+    var readVars = o.findReadVarNames(statements);
+    var writeVars = o.findWriteVarNames(statements);
+    if (readVars.contains(cachedParentIndexVarName)) {
+      varStmts.add(new o.DeclareVarStmt(cachedParentIndexVarName,
+          new o.ReadClassMemberExpr('viewData').prop('parentIndex')));
+    }
+    if (readVars.contains(DetectChangesVars.cachedCtx.name)) {
+      // Cache [ctx] class field member as typed [_ctx] local for change
+      // detection code to consume.
+      var contextType =
+          viewType != ViewType.HOST ? o.importType(component.type) : null;
+      varStmts.add(o
+          .variable(DetectChangesVars.cachedCtx.name)
+          .set(new o.ReadClassMemberExpr('ctx'))
+          .toDeclStmt(contextType, [o.StmtModifier.Final]));
+    }
+    if (readVars.contains(DetectChangesVars.changed.name) ||
+        writeVars.contains(DetectChangesVars.changed.name)) {
+      varStmts.add(DetectChangesVars.changed
+          .set(o.literal(false))
+          .toDeclStmt(o.BOOL_TYPE));
+    }
+    if (readVars.contains(DetectChangesVars.changes.name) ||
+        requiresOnChangesCall) {
+      varStmts.add(new o.DeclareVarStmt(DetectChangesVars.changes.name, null,
+          new o.MapType(o.importType(Identifiers.SimpleChange))));
+    }
+    if (readVars.contains(DetectChangesVars.firstCheck.name)) {
+      varStmts.add(new o.DeclareVarStmt(
+          DetectChangesVars.firstCheck.name,
+          o.THIS_EXPR
+              .prop('cdState')
+              .equals(o.literal(ChangeDetectorState.NeverChecked)),
+          o.BOOL_TYPE));
+    }
+    if (genConfig.profileFor == Profile.build) {
+      genProfileCdEnd(this, statements);
+    }
+    return new List.from(varStmts)..addAll(statements);
   }
 
   @override
