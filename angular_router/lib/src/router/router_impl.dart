@@ -241,12 +241,14 @@ class RouterImpl extends Router {
           routerState = new MutableRouterState();
         }
 
-        routerState..routes.addFirst(route);
+        // TODO(leonsenft): reorder state construction to avoid insertion.
+        routerState..routes.insert(0, route);
 
         if (component != null) {
           routerState
             ..factories[componentRef] = component
-            ..components.addFirst(componentRef);
+            // TODO(leonsenft): reorder state construction to avoid insertion.
+            ..components.insert(0, componentRef);
         }
 
         Iterable<String> parameters = route.parameters;
@@ -312,7 +314,7 @@ class RouterImpl extends Router {
     for (RouteDefinition route in nextOutlet.routes) {
       // There is a default route, so we push it onto the RouterState.
       if (route.useAsDefault) {
-        stateSoFar.routes.addLast(route);
+        stateSoFar.routes.add(route);
 
         final component = await _getTypeFromRoute(stateSoFar.routes.last);
         // The default route has a component, and we need to check for defaults
@@ -321,7 +323,7 @@ class RouterImpl extends Router {
           final instance = await nextOutlet.prepare(component);
           stateSoFar
             ..factories[instance] = component
-            ..components.addLast(instance);
+            ..components.add(instance);
           return _attachDefaultChildren(stateSoFar);
         }
 
