@@ -1,0 +1,12 @@
+targets:
+  angular_test:
+    builders:
+      angular:
+        options:
+          debug: True
+        generate_for:
+          include:
+            - "lib/**.dart"
+            - "test/**_test.dart"
+          exclude:
+            - "test/**.template.dart"

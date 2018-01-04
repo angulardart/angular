@@ -16,13 +16,14 @@ dependencies:
 
 dev_dependencies:
   angular_test: ^2.0.0-alpha
-  build_compilers: ^0.1.0
-  build_runner: ^0.6.1
+  build_web_compilers: ^0.1.1
+  build_runner: ^0.7.0
   build_test: ^0.9.0
   test: ^0.12.6
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
+  analyzer: '^0.31.0-alpha.1'
   angular:
     path: ../angular
   angular_ast:
@@ -36,12 +37,3 @@ dependency_overrides:
   angular_router.example:
     path: example
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
-
-transformers:
-  # Run the code generator on the entire package.
-  - angular:
-      entry_points: test/**_test.dart
-      $exclude:
-          - test/url_test.dart
-  - test/pub_serve:
-      $include: test/**_test.dart
