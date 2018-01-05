@@ -48,30 +48,31 @@ abstract class CanActivate {
 
 /// A lifecycle interface that allows conditionally deactivating a route.
 ///
-/// Component classes should `implement` this if they will be navigated to as
-/// part of a route definition and would like to determine if routing away
-/// should be allowed.
+/// Routed components should implement this to prevent deactivation based on the
+/// next [RouterState]. Prefer [CanNavigate] if the next [RouterState] isn't
+/// needed.
 ///
-/// Some example uses could include preventing navigation when a user hasn't
-/// saved an incomplete form or to record what the new route is for analytics
-/// before navigating.
+/// This interface is checked after constructing the components necessary to
+/// resolve the next [RouterState].
+///
+/// An example use case is preventing deactivation if the current and next route
+/// haven't changed, but navigation was triggered for another reason such as an
+/// added query parameter.
 abstract class CanDeactivate {
-  /// Called by the router when a transition is requested from router states.
+  /// Called by the router when a transition is requested between router states.
   ///
   /// The client should return a future that completes with `true` in order to
   /// accept the transition, or completes with `false` in order to reject it
   /// (and prevent the routing from occurring).
   ///
-  /// You can use `async` in order to simplify when returning synchronously:
-  ///
   /// ```
   /// class MyComponent implements CanDeactivate {
-  ///   bool get hasFormBeenSaved => ...
-  ///
   ///   @override
-  ///   Future<bool> canDeactivate(RouterState _, RouterState __) async {
-  ///     return hasFormBeenSaved;
-  ///   }
+  ///   Future<bool> canDeactivate(
+  ///     RouterState current,
+  ///     RouterState next,
+  ///   ) async =>
+  ///       current.parameters['id'] != next.parameters['id'];
   /// }
   /// ```
   ///
@@ -80,6 +81,35 @@ abstract class CanDeactivate {
     // Provided as a default if someone extends or mixes-in this interface.
     return true;
   }
+}
+
+/// A lifecycle interface that allows conditionally preventing navigation.
+///
+/// Routed components should implement this to prevent navigation regardless of
+/// the next [RouterState]. This interface is preferable to [CanDeactivate],
+/// which can be used if the next [RouterState] is necessary.
+///
+/// This interface is checked immediately upon navigation, before constructing
+/// the components necessary to resolve the next [RouterState].
+///
+/// An example use case is preventing navigation if a form has unsaved changes.
+abstract class CanNavigate {
+  /// Called by the router upon navigation.
+  ///
+  /// The client should return a future that completes with a boolean indicating
+  /// whether the router is allowed to navigate.
+  ///
+  /// ```
+  /// class MyComponent implements CanNavigate {
+  ///   bool get _hasFormBeenSaved => ...;
+  ///
+  ///   @override
+  ///   Future<bool> canNavigate() async => _hasFormBeenSaved;
+  /// }
+  /// ```
+  ///
+  /// This lifecycle occurs *before* any others during navigation.
+  Future<bool> canNavigate();
 }
 
 /// A lifecycle interface that allows re-using an existing component instance.

@@ -29,6 +29,7 @@ void main() {
     log.clear();
     expect(await router.navigate('/second-child'), NavigationResult.SUCCESS);
     expect(log, [
+      '$FirstChildComponent.canNavigate',
       '$SecondChildComponent.ngOnInit',
       '$FirstChildComponent.canDeactivate',
       '$SecondChildComponent.canActivate',
@@ -40,6 +41,7 @@ void main() {
     log.clear();
     expect(await router.navigate('/first-child'), NavigationResult.SUCCESS);
     expect(log, [
+      '$SecondChildComponent.canNavigate',
       '$FirstChildComponent.ngOnInit',
       '$SecondChildComponent.canDeactivate',
       '$FirstChildComponent.canActivate',
@@ -63,6 +65,7 @@ void main() {
     log.clear();
     expect(await router.navigate('/second-child'), NavigationResult.SUCCESS);
     expect(log, [
+      '$FirstReusableChildComponent.canNavigate',
       '$SecondChildComponent.ngOnInit',
       '$FirstReusableChildComponent.canDeactivate',
       '$SecondChildComponent.canActivate',
@@ -74,6 +77,7 @@ void main() {
     expect(await router.navigate('/first-reusable-child'),
         NavigationResult.SUCCESS);
     expect(log, [
+      '$SecondChildComponent.canNavigate',
       '$SecondChildComponent.canDeactivate',
       '$FirstReusableChildComponent.canActivate',
       '$SecondChildComponent.onDeactivate',
@@ -100,6 +104,8 @@ void main() {
     expect(await router.navigate('/parent/second-child'),
         NavigationResult.SUCCESS);
     expect(log, [
+      '$ParentComponent.canNavigate',
+      '$FirstChildComponent.canNavigate',
       '$SecondChildComponent.ngOnInit',
       '$ParentComponent.canDeactivate',
       '$FirstChildComponent.canDeactivate',
@@ -134,6 +140,8 @@ void main() {
     expect(await router.navigate('/reusable-parent/second-child'),
         NavigationResult.SUCCESS);
     expect(log, [
+      '$ReusableParentComponent.canNavigate',
+      '$FirstChildComponent.canNavigate',
       '$SecondChildComponent.ngOnInit',
       '$ReusableParentComponent.canDeactivate',
       '$FirstChildComponent.canDeactivate',
@@ -166,6 +174,8 @@ void main() {
     expect(await router.navigate('/second-parent/second-child'),
         NavigationResult.SUCCESS);
     expect(log, [
+      '$FirstParentComponent.canNavigate',
+      '$FirstChildComponent.canNavigate',
       '$SecondParentComponent.ngOnInit',
       '$SecondChildComponent.ngOnInit',
       '$FirstParentComponent.canDeactivate',
@@ -200,6 +210,8 @@ void main() {
     expect(await router.navigate('/second-parent/second-child'),
         NavigationResult.SUCCESS);
     expect(log, [
+      '$FirstReusableParentComponent.canNavigate',
+      '$FirstChildComponent.canNavigate',
       '$SecondParentComponent.ngOnInit',
       '$SecondChildComponent.ngOnInit',
       '$FirstReusableParentComponent.canDeactivate',
@@ -236,6 +248,8 @@ void main() {
     expect(await router.navigate('/second-reusable-parent/second-child'),
         NavigationResult.SUCCESS);
     expect(log, [
+      '$ReusableParentComponent.canNavigate',
+      '$FirstChildComponent.canNavigate',
       '$SecondChildComponent.ngOnInit',
       '$ReusableParentComponent.canDeactivate',
       '$FirstChildComponent.canDeactivate',
@@ -287,6 +301,23 @@ void main() {
       '$FirstChildComponent.onActivate'
     ]);
   });
+
+  test('prevent navigation before other lifecycle callbacks', () async {
+    final fixture = await setup<TestPreventNavigation>();
+    final log = fixture.assertOnlyInstance.lifecycleLog;
+    final router = fixture.assertOnlyInstance.router;
+    expect(log, [
+      '$CantNavigateChildComponent.ngOnInit',
+      '$CantNavigateChildComponent.canActivate',
+      '$CantNavigateChildComponent.onActivate',
+    ]);
+    log.clear();
+    expect(await router.navigate('/second-child'),
+        NavigationResult.BLOCKED_BY_GUARD);
+    expect(log, [
+      '$CantNavigateChildComponent.canNavigate',
+    ]);
+  });
 }
 
 const lifecycleLogToken = const OpaqueToken('lifecycleLog');
@@ -307,6 +338,7 @@ abstract class RouterLifecycleLogger
     implements
         CanActivate,
         CanDeactivate,
+        CanNavigate,
         CanReuse,
         OnActivate,
         OnDeactivate,
@@ -327,6 +359,12 @@ abstract class RouterLifecycleLogger
   @override
   Future<bool> canDeactivate(_, __) async {
     lifecycleLog.add('$componentName.canDeactivate');
+    return true;
+  }
+
+  @override
+  Future<bool> canNavigate() async {
+    lifecycleLog.add('$componentName.canNavigate');
     return true;
   }
 
@@ -410,6 +448,29 @@ class FirstReusableChildComponent extends RouterLifecycleLogger {
   Future<bool> canReuse(_, __) async {
     await super.canReuse(_, __);
     return true;
+  }
+}
+
+@Component(
+  selector: 'cant-navigate-child',
+  template: '',
+)
+class CantNavigateChildComponent extends RouterLifecycleLogger {
+  static final RouteDefinition routeDefinition = new RouteDefinition(
+    path: 'cant-navigate-child',
+    component: ng.CantNavigateChildComponentNgFactory,
+    useAsDefault: true,
+  );
+
+  final String componentName = '$CantNavigateChildComponent';
+  final List<String> lifecycleLog;
+
+  CantNavigateChildComponent(@Inject(lifecycleLogToken) this.lifecycleLog);
+
+  @override
+  Future<bool> canNavigate() async {
+    await super.canNavigate();
+    return false;
   }
 }
 
@@ -655,5 +716,22 @@ class TestNavigateBetweenNestedRoutesWithSameReusableParent {
   ];
 
   TestNavigateBetweenNestedRoutesWithSameReusableParent(
+      @Inject(lifecycleLogToken) this.lifecycleLog, this.router);
+}
+
+@Component(
+  selector: 'test-prevent-navigation',
+  template: testTemplate,
+  directives: testDirectives,
+)
+class TestPreventNavigation {
+  final List<String> lifecycleLog;
+  final Router router;
+  final List<RouteDefinition> routes = [
+    CantNavigateChildComponent.routeDefinition,
+    SecondChildComponent.routeDefinition,
+  ];
+
+  TestPreventNavigation(
       @Inject(lifecycleLogToken) this.lifecycleLog, this.router);
 }

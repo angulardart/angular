@@ -1,5 +1,9 @@
 ### New features
 
+*   Added the `CanNavigate` lifecycle interface. This is similar to
+    `CanDeactivate`, and preferred when the next `RouterState` isn't necessary
+    to determine whether the router may navigate.
+
 *   Added `reload` field to `NavigationParams` which can be used to force
     navigation, even if the path and other navigation parameters are unchanged.
 
