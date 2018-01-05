@@ -241,13 +241,11 @@ class RouterImpl extends Router {
           routerState = new MutableRouterState();
         }
 
-        // TODO(leonsenft): reorder state construction to avoid insertion.
-        routerState..routes.insert(0, route);
+        routerState.routes.insert(0, route);
 
         if (component != null) {
           routerState
             ..factories[componentRef] = component
-            // TODO(leonsenft): reorder state construction to avoid insertion.
             ..components.insert(0, componentRef);
         }
 
