@@ -276,7 +276,9 @@ void main() {
     ]);
     log.clear();
     expect(await router.navigate('/'), NavigationResult.SUCCESS);
-    expect(log, isEmpty);
+    expect(log, [
+      '$FirstChildComponent.canNavigate',
+    ]);
   });
 
   test('reload the same route', () async {
@@ -292,6 +294,7 @@ void main() {
     expect(await router.navigate('/', new NavigationParams(reload: true)),
         NavigationResult.SUCCESS);
     expect(log, [
+      '$FirstChildComponent.canNavigate',
       '$FirstChildComponent.canDeactivate',
       '$FirstChildComponent.canActivate',
       '$FirstChildComponent.onDeactivate',
