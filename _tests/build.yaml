@@ -1,0 +1,6 @@
+targets:
+  _tests:
+    builders:
+      angular:
+        options:
+          debug: True

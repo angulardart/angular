@@ -1,0 +1,25 @@
+targets:
+  angular:
+    builders:
+      angular:
+        generate_for:
+          exclude:
+            - "lib/source_gen.dart"
+            - "lib/src/compiler/**"
+            - "lib/src/source_gen/**"
+            - "lib/src/transform/**"
+            - "lib/transformer.dart"
+
+builders:
+  angular:
+    target: "angular"
+    import: "package:angular/source_gen.dart"
+    builder_factories:
+      - templatePlaceholderBuilder
+      - templateCompiler
+      - stylesheetCompiler
+    auto_apply: dependents
+    required_inputs: [".css"]
+    build_extensions:
+      .css: [".css.dart", ".css.shim.dart"]
+      .dart: [".template.dart"]
