@@ -103,6 +103,10 @@ class RouterImpl extends Router {
     String path, [
     NavigationParams navigationParams,
   ]) async {
+    if (!await _canNavigate()) {
+      return NavigationResult.BLOCKED_BY_GUARD;
+    }
+
     navigationParams?.assertValid();
     path = await _routerHook?.navigationPath(path, navigationParams) ?? path;
     path = Url.normalizePath(path);
@@ -330,6 +334,17 @@ class RouterImpl extends Router {
     }
 
     return stateSoFar;
+  }
+
+  /// Returns whether the router can navigate.
+  Future<bool> _canNavigate() async {
+    for (var componentRef in _activeComponentRefs) {
+      final component = componentRef.instance;
+      if (component is CanNavigate && !await component.canNavigate()) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /// Returns whether the current state can deactivate.
