@@ -115,6 +115,7 @@ void main() {
       '$FirstChildComponent.onDeactivate',
       '$ParentComponent.canReuse',
       '$FirstChildComponent.ngOnDestroy',
+      '$SecondChildComponent.ngOnDestroy',
       '$ParentComponent.ngOnDestroy',
       '$ParentComponent.ngOnInit',
       '$ParentComponent.onActivate',
