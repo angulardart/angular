@@ -1,0 +1,6 @@
+targets:
+  _goldens:
+    sources: ["lib/**", "test_files/**"]
+    builders:
+      angular|goldens:
+        generate_for: ["test_files/**"]

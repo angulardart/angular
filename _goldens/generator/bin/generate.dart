@@ -22,11 +22,9 @@ Future main(List<String> args) async {
   var results = parser.parse(args);
   var updateGoldens = results[_updateGoldens];
   var package = '_goldens';
-  var inputs = ['$testFiles/*.dart', '$testFiles/**/*.dart'];
   var builders = [
     apply(
-        'angular',
-        'angular',
+        'angular|goldens',
         [
           (_) => new LibraryBuilder(
               new TemplateGenerator(const CompilerFlags(
@@ -47,8 +45,7 @@ Future main(List<String> args) async {
                   : '.template_outline.check'),
         ],
         toPackage(package),
-        inputs: inputs),
+        hideOutput: false),
   ];
-  await build(createBuildActions(new PackageGraph.forThisPackage(), builders),
-      deleteFilesByDefault: updateGoldens);
+  await build(builders, deleteFilesByDefault: updateGoldens);
 }
