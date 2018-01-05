@@ -93,7 +93,9 @@ class RouterOutlet implements OnInit, OnDestroy {
 
   @override
   void ngOnDestroy() {
-    _activeComponent?.destroy();
+    for (var loadedComponent in _loadedComponents.values) {
+      loadedComponent.destroy();
+    }
     _viewContainerRef.clear();
     if (isRootOutlet) {
       _router.unregisterRootOutlet(this);
