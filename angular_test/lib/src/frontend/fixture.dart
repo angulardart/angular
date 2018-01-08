@@ -17,7 +17,7 @@ import 'stabilizer.dart';
 /// Inject a service for [tokenOrType] from [fixture].
 ///
 /// This is for compatibility reasons only and should not be used otherwise.
-T injectFromFixture<T>(NgTestFixture fixture, tokenOrType) {
+T injectFromFixture<T>(NgTestFixture fixture, Object tokenOrType) {
   return fixture._rootComponentRef.injector.get(tokenOrType);
 }
 
@@ -97,7 +97,10 @@ class NgTestFixture<T> {
   /// Calls [run] with `null` if there was no matching element.
   ///
   /// **NOTE**: The root component is _not_ query-able. See [update] instead.
-  Future<Null> query<E>(bool test(DebugElement element), run(E instance)) {
+  Future<Null> query<E>(
+    bool Function(DebugElement element) test,
+    void Function(E instance) run,
+  ) {
     final instance = _debugElement.query(test)?.componentInstance;
     return update((_) => run(instance));
   }
@@ -118,8 +121,8 @@ class NgTestFixture<T> {
   ///
   /// **NOTE**: The root component is _not_ query-able. See [update] instead.
   Future<Null> queryAll<E>(
-    bool test(DebugElement element),
-    run(Iterable<E> instances),
+    bool Function(DebugElement element) test,
+    void run(Iterable<E> instances),
   ) {
     return update((_) {
       return run(_debugElement.queryAll(test).map((e) => e.componentInstance));
@@ -147,7 +150,7 @@ class NgTestFixture<T> {
   ///   c.value = 5;
   /// });
   /// expect(fixture.text, contains('5 little piggies'));
-  Future<Null> update([run(T instance)]) {
+  Future<Null> update([void Function(T instance) run]) {
     return _testStabilizer.stabilize(run: () {
       if (run != null) {
         new Future<Null>.sync(() {
@@ -165,10 +168,10 @@ class NgTestFixture<T> {
   /// A component instance to use for read-only operations (expect, assert)
   /// ONLY.
   ///
-  /// Warning this instance is not stabalized and so the test will not be in a
+  /// Warning this instance is not stabilized and so the test will not be in a
   /// stable state likely leading to unexpected results. State changes to
   /// the instance should be done through the `update` call, or external
-  /// stablalized mechanism such as page objects. Use this **ONLY** for simple
+  /// stabilized mechanism such as page objects. Use this **ONLY** for simple
   /// expects of the instance state.
   ///
   /// #Example
