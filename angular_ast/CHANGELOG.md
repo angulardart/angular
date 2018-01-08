@@ -1,3 +1,11 @@
+## 0.4.1
+
+### Bug fixes
+
+- Un-escape HTML characters, such as `&lt;`, `&#8721;`, or `&#x2211;`, when they
+  appear in text. Note, we do _not_ do any un-escaping when these characters
+  appear inside elements.
+
 ## 0.4.0
 
 First stable release in a while! Going forward we'll be versioning this package
