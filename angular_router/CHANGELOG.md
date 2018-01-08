@@ -1,3 +1,5 @@
+## 2.0.0-alpha+3
+
 ### New features
 
 *   Added the `CanNavigate` lifecycle interface. This is similar to
