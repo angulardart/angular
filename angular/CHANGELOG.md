@@ -1,3 +1,5 @@
+## 5.0.0-alpha+3
+
 ### New features
 
 *   `Provider` is now soft-deprecated (not preferred), and new more-typed
@@ -30,6 +32,10 @@ class PresidentsListComponent {
 }
 ```
 
+*   We are starting to support the new build system at `dart-lang/build`. More
+    information and documentation will be included in a future release, but we
+    expect to drop support for `pub serve/build` by 5.0.0 final.
+
 ### Breaking changes
 
 *   Dartium is no longer supported. All development of your AngularDart
@@ -44,6 +50,9 @@ class PresidentsListComponent {
 *   Fixed a bug where `ReflectiveInjector` would return an `Object` instead of
     throwing `ArgumentError` when resolving an `@Injectable()` service that
     injected a dependency with one or more annotations (i.e. `@Inject(...)`).
+
+*   Fixed a bug where `DatePipe` didn't format` millisecondsSinceEpoch` in the
+    local time zone (consistent with how it formats `DateTime`).
 
 ## 5.0.0-alpha+2
 

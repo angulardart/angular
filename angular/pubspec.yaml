@@ -1,5 +1,5 @@
 name: angular
-version: 5.0.0-alpha+2
+version: 5.0.0-alpha+3
 author: Dart Team <web@dartlang.org>
 description: Fast and productive web framework
 homepage: https://webdev.dartlang.org/angular
@@ -9,7 +9,7 @@ environment:
 dependencies:
   analyzer: '^0.31.0-alpha.1'
   angular_ast: ^0.4.0
-  angular_compiler: ^0.4.0-alpha+2
+  angular_compiler: ^0.4.0-alpha+3
   barback: ^0.15.2+2
   build: '>=0.10.0 <0.12.0'
   build_barback: '>=0.4.0 <0.6.0'

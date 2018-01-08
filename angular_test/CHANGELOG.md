@@ -1,3 +1,7 @@
+## 2.0.0-alpha+1
+
+- Added support for `build.yaml`.
+
 ## 2.0.0-alpha
 
 > **NOTE**: This was previously `1.0.2-alpha+1`, but since this has major

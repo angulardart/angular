@@ -1,3 +1,5 @@
+## 0.4.0-alpha+3
+
 * Added support for recognizing the `MultiToken` type.
 
 ## 0.4.0-alpha+2
