@@ -14,11 +14,11 @@ import 'fixture.dart';
 import 'stabilizer.dart';
 
 /// Used to determine if there is an actively executing test.
-NgTestFixture activeTest;
+NgTestFixture<Object> activeTest;
 
 /// Returns a new [List] merging iterables [a] and [b].
 List<E> _concat<E>(Iterable<E> a, Iterable<E> b) {
-  return new List<E>.from(a)..addAll(b);
+  return a.toList()..addAll(b);
 }
 
 /// If any [NgTestFixture] is currently executing, calls `dispose` on it.
@@ -38,7 +38,7 @@ Future<Null> disposeAnyRunningTest() async => activeTest?.dispose();
 Future<NgTestFixture<T>> createDynamicFixture<T>(
   NgTestBed<T> bed,
   Type type, {
-  void beforeChangeDetection(T componentInstance),
+  void Function(T componentInstance) beforeChangeDetection,
 }) {
   return bed._createDynamic(type, beforeChangeDetection: beforeChangeDetection);
 }
@@ -121,19 +121,19 @@ class NgTestBed<T> {
     return host;
   }
 
-  static const _lifecycleProviders = const <Provider>[
+  static const _lifecycleProviders = const <Object>[
     const Provider(
       NgZoneStabilizer,
       useFactory: createZoneStabilizer,
       deps: const [NgZone],
     ),
   ];
-  static const _lifecycleStabilizers = const <Type>[NgZoneStabilizer];
+  static const _lifecycleStabilizers = const <Object>[NgZoneStabilizer];
 
   final Element _host;
   final PageLoader Function(Element, NgTestFixture<T>) _pageLoaderFactory;
-  final List _providers;
-  final List _stabilizers;
+  final List<Object> _providers;
+  final List<Object> _stabilizers;
 
   /// Create a new empty [NgTestBed] that creates a component type [T].
   ///
@@ -162,29 +162,30 @@ class NgTestBed<T> {
   }) {
     return new NgTestBed<T>._(
       host: host,
-      providers: watchAngularLifecycle ? _lifecycleProviders : const [],
-      stabilizers: watchAngularLifecycle ? _lifecycleStabilizers : const [],
+      providers: watchAngularLifecycle ? _lifecycleProviders : const <Object>[],
+      stabilizers:
+          watchAngularLifecycle ? _lifecycleStabilizers : const <Object>[],
     );
   }
 
   NgTestBed._({
     Element host,
-    Iterable providers,
-    Iterable stabilizers,
-    PageLoader createPageLoader(Element element, NgTestFixture<T> fixture),
+    Iterable<Object> providers,
+    Iterable<Object> stabilizers,
+    PageLoader Function(Element element, NgTestFixture<T> fixture) pageLoader,
   })
       : _host = host,
         _providers = providers.toList(),
         _stabilizers = stabilizers.toList(),
-        _pageLoaderFactory = createPageLoader;
+        _pageLoaderFactory = pageLoader;
 
   /// Returns a new instance of [NgTestBed] with [providers] added.
-  NgTestBed<T> addProviders(Iterable providers) {
+  NgTestBed<T> addProviders(Iterable<Object> providers) {
     return fork(providers: _concat(_providers, providers));
   }
 
   /// Returns a new instance of [NgTestBed] with [stabilizers] added.
-  NgTestBed<T> addStabilizers(Iterable stabilizers) {
+  NgTestBed<T> addStabilizers(Iterable<Object> stabilizers) {
     return fork(stabilizers: _concat(_stabilizers, stabilizers));
   }
 
@@ -202,7 +203,9 @@ class NgTestBed<T> {
   /// might be required).
   ///
   /// Returns a future that completes with a fixture around the component.
-  Future<NgTestFixture<T>> create({void beforeChangeDetection(T instance)}) {
+  Future<NgTestFixture<T>> create({
+    void Function(T instance) beforeChangeDetection,
+  }) {
     return _createDynamic(
       T,
       beforeChangeDetection: beforeChangeDetection,
@@ -210,8 +213,10 @@ class NgTestBed<T> {
   }
 
   // Used for compatibility only. See `create` for public API.
-  Future<NgTestFixture<T>> _createDynamic(Type type,
-      {void beforeChangeDetection(T instance)}) {
+  Future<NgTestFixture<T>> _createDynamic(
+    Type type, {
+    void Function(T instance) beforeChangeDetection,
+  }) {
     // We *purposefully* do not use async/await here - that always adds an
     // additional micro-task - we want this to fail fast without entering an
     // asynchronous event if another test is running.
@@ -237,7 +242,7 @@ class NgTestBed<T> {
           }),
         );
         await allStabilizers.stabilize();
-        final testFixture = new NgTestFixture(
+        final testFixture = new NgTestFixture<T>(
           componentRef.injector.get(ApplicationRef),
           _pageLoaderFactory ?? _createPageLoader,
           componentRef,
@@ -255,15 +260,16 @@ class NgTestBed<T> {
   /// Any non-null value overrides the existing properties.
   NgTestBed<T> fork({
     Element host,
-    Iterable providers,
-    Iterable stabilizers,
-    PageLoader createPageLoader(Element element, NgTestFixture<T> fixture),
+    Iterable<Object> providers,
+    Iterable<Object> stabilizers,
+    PageLoader Function(Element element, NgTestFixture<T> fixture)
+        createPageLoader,
   }) {
     return new NgTestBed<T>._(
       host: host ?? _host,
       providers: providers ?? _providers,
       stabilizers: stabilizers ?? _stabilizers,
-      createPageLoader: createPageLoader ?? _pageLoaderFactory,
+      pageLoader: createPageLoader ?? _pageLoaderFactory,
     );
   }
 
