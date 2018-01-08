@@ -397,6 +397,14 @@ class WrappedTimer implements Timer {
   }
 
   bool get isActive => _timer.isActive;
+
+  @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // See https://github.com/dart-lang/sdk/issues/31664
+  // ignore: override_on_non_overriding_getter
+  int get tick {
+    throw new UnimplementedError("tick");
+  }
 }
 
 /// Stores error information; delivered via [NgZone.onError] stream.
