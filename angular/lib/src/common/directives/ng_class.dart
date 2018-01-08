@@ -45,7 +45,7 @@ import 'package:angular/src/core/change_detection/differs/default_keyvalue_diffe
 /// For details, see the [`ngClass` discussion in the Template Syntax][guide]
 /// page.
 ///
-/// [ex]: http://angular-examples.github.io/template-syntax/#ngClass
+/// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngClass
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngClass
 @Directive(
   selector: '[ngClass]',
