@@ -53,7 +53,7 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// in the binding to `setStyle()` above.
 ///
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngStyle
-/// [ex]: http://angular-examples.github.io/template-syntax/#ngStyle
+/// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngStyle
 @Directive(
   selector: '[ngStyle]',
   visibility: Visibility.local,

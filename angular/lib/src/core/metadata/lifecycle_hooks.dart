@@ -51,7 +51,7 @@ enum LifecycleHooks {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#onchanges
-/// [ex]: http://angular-examples.github.io/lifecycle-hooks#onchanges
+/// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#onchanges
 abstract class OnChanges {
   ngOnChanges(Map<String, SimpleChange> changes);
 }
@@ -218,7 +218,7 @@ abstract class OnDestroy {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#docheck
-/// [ex]: http://angular-examples.github.io/lifecycle-hooks#docheck
+/// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#onchangeslifecycle-hooks#docheck
 abstract class DoCheck {
   ngDoCheck();
 }
@@ -272,7 +272,7 @@ abstract class DoCheck {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#aftercontent
-/// [ex]: http://angular-examples.github.io/lifecycle-hooks#after-content
+/// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#after-content
 abstract class AfterContentInit {
   ngAfterContentInit();
 }
@@ -326,7 +326,7 @@ abstract class AfterContentInit {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#aftercontent
-/// [ex]: http://angular-examples.github.io/lifecycle-hooks#after-content
+/// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#after-content
 abstract class AfterContentChecked {
   ngAfterContentChecked();
 }
@@ -377,7 +377,7 @@ abstract class AfterContentChecked {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#afterview
-/// [ex]: http://angular-examples.github.io/lifecycle-hooks#after-view
+/// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#after-view
 abstract class AfterViewInit {
   ngAfterViewInit();
 }
@@ -428,7 +428,7 @@ abstract class AfterViewInit {
 /// ```
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#afterview
-/// [ex]: http://angular-examples.github.io/lifecycle-hooks#after-view
+/// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#after-view
 abstract class AfterViewChecked {
   ngAfterViewChecked();
 }
