@@ -22,7 +22,7 @@ dependencies:
 dev_dependencies:
   # This is here in order for it to be resolvable by the analyzer.
   angular: '^4.0.0-alpha'
-  build_test: ^0.9.0
+  build_test: ^0.7.1
   test: '^0.12.0'
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
