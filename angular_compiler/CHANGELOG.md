@@ -1,3 +1,7 @@
+## 0.3.0+1
+
+- Support the latest `pkg/build`.
+
 ## 0.3.0
 
 - Always link to `export "...template.dart" files` in `initReflector()`.

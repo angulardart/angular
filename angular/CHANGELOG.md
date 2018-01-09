@@ -1,3 +1,7 @@
+## 4.0.0+2
+
+- Support the latest `pkg/build`.
+
 ## 4.0.0+1
 
 * Update `NgZone` to support Dart v2 Zone API changes.
