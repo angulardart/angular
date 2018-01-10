@@ -3,7 +3,8 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:html' show AnchorElement, Element, Event, KeyboardEvent, KeyCode;
+import 'dart:html'
+    show AnchorElement, Element, Event, KeyboardEvent, KeyCode, MouseEvent;
 
 import 'package:angular/angular.dart';
 
@@ -68,19 +69,28 @@ class RouterLink implements OnDestroy {
   }
 
   @HostListener('click', const [r'$event'])
-  void onTrigger(Event event) {
+  void onClick(MouseEvent event) {
+    // Control-click (or Command-click) opens link in new tab.
+    if (event.ctrlKey || event.metaKey) return;
+    _trigger(event);
+  }
+
+  void _onKeyPress(KeyboardEvent event) {
+    // Control-click (or Command-click) opens link in new tab.
+    if (event.keyCode != KeyCode.ENTER || event.ctrlKey || event.metaKey) {
+      return;
+    }
+    _trigger(event);
+  }
+
+  void _trigger(Event event) {
+    // The presence of target="_blank" opens link in new tab.
     if (_target == null || _target == '_self') {
       event.preventDefault();
       _router.navigate(
           url.path,
           new NavigationParams(
               queryParameters: url.queryParameters, fragment: url.fragment));
-    }
-  }
-
-  void _onKeyPress(KeyboardEvent event) {
-    if (event.keyCode == KeyCode.ENTER) {
-      onTrigger(event);
     }
   }
 }
