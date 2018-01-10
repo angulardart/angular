@@ -84,3 +84,30 @@ class EmbeddedQueriesList {
 
 @Directive(selector: 'another')
 class AnotherDirective {}
+
+// This closely mimics a piece of internal code that previously crashed.
+@Component(
+  selector: 'test',
+  directives: const [
+    AnotherDirective,
+    NgFor,
+    NgIf,
+  ],
+  template: r'''
+    <div *ngIf="conditionA">
+      <div *ngIf="conditionB">
+        <div *ngFor="let item of items" #taggedItem>
+          <another></another>
+        </div>
+      </div>
+    </div>
+  ''',
+)
+class NestedNgForQueriesList {
+  final items = [1, 2, 3];
+  var conditionA = true;
+  var conditionB = true;
+
+  @ViewChildren('taggedItem')
+  List<AnotherDirective> taggedItems;
+}

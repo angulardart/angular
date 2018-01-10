@@ -64,6 +64,26 @@ void main() {
       final fixture = await testBed.create();
       expect(fixture, hasChildValues([1, 2, 3]));
     });
+
+    test('should work in a multiple nesting scenario', () async {
+      // This is a regression case based on internal code.
+      final testBed = new NgTestBed<TestNestedNgForQueriesList>();
+      final fixture = await testBed.create();
+      expect(
+        fixture.assertOnlyInstance.taggedDivs.map((e) => e.nativeElement.text),
+        ['1', '2', '3'],
+      );
+    });
+
+    test('should work in a multiple nesting+static scenario', () async {
+      // This is a regression case based on internal code.
+      final testBed = new NgTestBed<TestNestedAndStaticNgForQueriesList>();
+      final fixture = await testBed.create();
+      expect(
+        fixture.assertOnlyInstance.taggedDivs.map((e) => e.nativeElement.text),
+        ['1', '2', '3', '4', '5', '6', '7'],
+      );
+    });
   });
 }
 
@@ -272,4 +292,50 @@ class TestViewChildrenAndEmbeddedList extends HasChildren<ValueDirective> {
   @override
   @ViewChildren(ValueDirective)
   List<ValueDirective> actualChildren;
+}
+
+@Component(
+  selector: 'test',
+  directives: const [
+    AlwaysShowDirective,
+    NgFor,
+  ],
+  template: r'''
+    <div *alwaysShow>
+      <div *alwaysShow>
+        <div *ngFor="let item of items" #taggedDiv>{{item}}</div>
+      </div>
+    </div>
+  ''',
+)
+class TestNestedNgForQueriesList {
+  final items = [1, 2, 3];
+
+  @ViewChildren('taggedDiv')
+  List<ElementRef> taggedDivs;
+}
+
+@Component(
+  selector: 'test',
+  directives: const [
+    AlwaysShowDirective,
+    NgFor,
+  ],
+  template: r'''
+    <div #taggedDiv>1</div>
+    <div *alwaysShow>
+      <div #taggedDiv>2</div>
+      <div *alwaysShow>
+        <div #taggedDiv>3</div>
+        <div *ngFor="let item of items" #taggedDiv>{{item}}</div>
+      </div>
+    </div>
+    <div #taggedDiv>7</div>
+  ''',
+)
+class TestNestedAndStaticNgForQueriesList {
+  final items = [4, 5, 6];
+
+  @ViewChildren('taggedDiv')
+  List<ElementRef> taggedDivs;
 }

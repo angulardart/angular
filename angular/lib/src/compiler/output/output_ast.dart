@@ -592,6 +592,18 @@ class ReadKeyExpr extends Expression {
   }
 }
 
+/// Similar to [LiteralArrayExpr], but without wrapping in brackets.
+class LiteralVargsExpr extends Expression {
+  final List<Expression> entries;
+
+  LiteralVargsExpr(this.entries) : super(null);
+
+  @override
+  dynamic visitExpression(ExpressionVisitor visitor, dynamic context) {
+    return visitor.visitLiteralVargsExpr(this, context);
+  }
+}
+
 class LiteralArrayExpr extends Expression {
   final List<Expression> entries;
 
@@ -643,6 +655,7 @@ abstract class ExpressionVisitor {
   dynamic visitBinaryOperatorExpr(BinaryOperatorExpr ast, dynamic context);
   dynamic visitReadPropExpr(ReadPropExpr ast, dynamic context);
   dynamic visitReadKeyExpr(ReadKeyExpr ast, dynamic context);
+  dynamic visitLiteralVargsExpr(LiteralVargsExpr ast, dynamic context);
   dynamic visitLiteralArrayExpr(LiteralArrayExpr ast, dynamic context);
   dynamic visitLiteralMapExpr(LiteralMapExpr ast, dynamic context);
   dynamic visitNamedExpr(NamedExpr ast, dynamic context);
@@ -1001,6 +1014,11 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
   }
 
   @override
+  dynamic visitLiteralVargsExpr(LiteralVargsExpr ast, dynamic context) {
+    return new LiteralVargsExpr(this.visitAllExpressions(ast.entries, context));
+  }
+
+  @override
   dynamic visitLiteralArrayExpr(LiteralArrayExpr ast, dynamic context) {
     return new LiteralArrayExpr(this.visitAllExpressions(ast.entries, context));
   }
@@ -1232,6 +1250,12 @@ class RecursiveExpressionVisitor
   }
 
   @override
+  dynamic visitLiteralVargsExpr(LiteralVargsExpr ast, dynamic context) {
+    this.visitAllExpressions(ast.entries, context);
+    return ast;
+  }
+
+  @override
   dynamic visitLiteralArrayExpr(LiteralArrayExpr ast, dynamic context) {
     this.visitAllExpressions(ast.entries, context);
     return ast;
@@ -1413,6 +1437,10 @@ LiteralExpr literal(dynamic value, [OutputType type]) {
 
 LiteralArrayExpr literalArr(List<Expression> values, [OutputType type]) {
   return new LiteralArrayExpr(values, type);
+}
+
+LiteralVargsExpr literalVargs(List<Expression> values) {
+  return new LiteralVargsExpr(values);
 }
 
 LiteralMapExpr literalMap(List<List<dynamic /* String | Expression */ >> values,

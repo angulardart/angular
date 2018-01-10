@@ -18,19 +18,6 @@ class _QueryValues {
 
   /// Whether there are nested embedded views in this instance.
   bool get hasNestedViews => valuesOrTemplates.any((v) => v is _QueryValues);
-
-  /// Whether there are a combination of nested views and non-nested views.
-  ///
-  /// This allows treating a single `mapNestedViews` as a pure `List`, and also
-  /// allows treating multiple static elements are a pure `List`, only needing
-  /// to invoke `flattenNodes` when there is a combination of both.
-  bool get needsFlattening {
-    // A single element, a single "mapNestedViews", or nothing.
-    if (valuesOrTemplates.length < 2) {
-      return false;
-    }
-    return hasNestedViews;
-  }
 }
 
 /// Compiles `@{Content|View}Child[ren]` to template IR.
@@ -118,6 +105,11 @@ abstract class CompileQuery {
   )
       : _values = new _QueryValues(_queryRoot);
 
+  /// Whether this query requires "flattenNodes".
+  ///
+  /// The older-style `QueryList` does this implicitly (with `reset`).
+  bool get _needsFlattening;
+
   /// Whether the query is entirely static, i.e. there are no `<template>`s.
   bool get _isStatic => !_values.hasNestedViews;
 
@@ -166,61 +158,101 @@ abstract class CompileQuery {
   }
 
   /// Returns the literal values of the list that the user-code receives.
-  List<o.Expression> _buildQueryResult(_QueryValues viewValues) {
-    final result = <o.Expression>[];
+  List<o.Expression> _buildQueryResult(
+    _QueryValues viewValues, {
+    bool recursive = false,
+  }) {
+    // Fast-path: There are no nested views, these are all static elements.
     if (!viewValues.hasNestedViews) {
-      // Fast-path when there are no nested views.
+      final result = <o.Expression>[];
       for (final o.Expression expression in viewValues.valuesOrTemplates) {
         result.add(expression);
       }
-    } else {
-      for (final valueOrTemplate in viewValues.valuesOrTemplates) {
-        // It's easier to reason/flatten if everything is a List.
-        //
-        // If we _don't_ do this, then we lose type inference as well:
-        //   [
-        //     [1],
-        //     [2],
-        //   ] ==> List<List<int>>
-        //
-        //   [
-        //     1,
-        //     [2],
-        //   ] ==> List<Object>
-        if (valueOrTemplate is o.Expression) {
-          result.add(o.literalArr([valueOrTemplate]));
-        } else if (valueOrTemplate is _QueryValues) {
-          result.add(
-            _mapNestedViews(
-              valueOrTemplate.view.declarationElement.appViewContainer,
-              valueOrTemplate.view,
-              _buildQueryResult(valueOrTemplate),
-            ),
-          );
-        }
+      // In the recursive case (i.e. called by another mapNestedViews), we need
+      // to return the results as a List<T> explicitly (this is a little complex
+      // but lets further optimizations take place for the List<T> case).
+      if (recursive) {
+        return [o.literalArr(result)];
       }
+      return result;
     }
-    return result;
+
+    // At least a single node is a call to "mapNestedViews".
+    return [
+      _resultsWithNestedViews(viewValues.valuesOrTemplates, recursive),
+    ];
   }
 
-  /// Returns an expression that invokes `AppView.mapNestedViews`.
+  o.Expression _resultsWithNestedViews(
+    List<dynamic> valuesOrTemplates, [
+    bool recursive = false,
+  ]) {
+    // The goal of this function is to always return a (non-recursive) List,
+    // using the "flattenNodes" function where needed in order to conform to
+    // the Dart type system.
+    final expressions = <o.Expression>[];
+    var isNestedViewsOnly = true;
+
+    for (final valueOrTemplate in valuesOrTemplates) {
+      if (valueOrTemplate is o.Expression) {
+        expressions.add(o.literalArr([valueOrTemplate]));
+        isNestedViewsOnly = false;
+      } else if (valueOrTemplate is _QueryValues) {
+        final invocation = _mapNestedViews(
+          valueOrTemplate.view.declarationElement.appViewContainer,
+          valueOrTemplate.view,
+          _buildQueryResult(valueOrTemplate, recursive: true),
+        );
+        expressions.add(invocation);
+      }
+    }
+
+    // Special case: Every node is a call to "mapNestedViews".
+    //
+    // If there is only a single node, compiles to:
+    //   _appEl_0.mapNestedViews(...)
+    //
+    // ... instead of needing flattenNodes at all.
+    if (isNestedViewsOnly && expressions.length == 1) {
+      return expressions.first;
+    }
+
+    // For users of List<T>, not QueryList<T>, they do not rely on the ".reset"
+    // function doing an (expensive) flattening, so we need to do it for them.
+    if (_needsFlattening) {
+      return _flattenNodes(o.literalArr(expressions));
+    }
+
+    return recursive ? o.literalArr(expressions) : o.literalVargs(expressions);
+  }
+
+  /// Returns an expression that invokes `appElementN.mapNestedViews`.
   ///
   /// This is required to traverse embedded `<template>` views for query matches.
   o.Expression _mapNestedViews(
-    o.Expression declarationViewContainer,
+    o.Expression appElementN,
     CompileView view,
     List<o.Expression> expressions,
   ) {
+    // Should return:
+    //
+    //   appElementN.mapNestedViews(({view.Type} nestedView) {
+    //     return /* {expressions} that is List<T> */
+    //   });
+
+    // Changes `_el_0` to `nestedView._el_0`.
     final adjustedExpressions = expressions.map((expr) {
       return o.replaceReadClassMemberInExpression(
         o.variable('nestedView'),
         expr,
       );
     }).toList();
-    return declarationViewContainer.callMethod('mapNestedViews', [
+
+    // Invokes `appElementN.mapNestedView`.
+    return appElementN.callMethod('mapNestedViews', [
       o.fn(
         [new o.FnParam('nestedView', view.classType)],
-        [new o.ReturnStatement(o.literalArr(adjustedExpressions))],
+        [new o.ReturnStatement(o.literalVargs(adjustedExpressions))],
       ),
     ]);
   }
@@ -306,6 +338,9 @@ class _QueryListCompileQuery extends CompileQuery {
       queryIndex: queryIndex,
     );
   }
+
+  @override
+  final _needsFlattening = false;
 
   /// Inserts a `QueryList {property}` field in the generated view.
   ///
@@ -405,6 +440,9 @@ class _ListCompileQuery extends CompileQuery {
       queryIndex: queryIndex,
     );
   }
+
+  @override
+  final _needsFlattening = true;
 
   /// Inserts a `bool {property}` field in the generated view.
   ///
