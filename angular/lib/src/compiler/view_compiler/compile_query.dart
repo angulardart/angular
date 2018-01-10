@@ -18,6 +18,19 @@ class _QueryValues {
 
   /// Whether there are nested embedded views in this instance.
   bool get hasNestedViews => valuesOrTemplates.any((v) => v is _QueryValues);
+
+  /// Whether there are a combination of nested views and non-nested views.
+  ///
+  /// This allows treating a single `mapNestedViews` as a pure `List`, and also
+  /// allows treating multiple static elements are a pure `List`, only needing
+  /// to invoke `flattenNodes` when there is a combination of both.
+  bool get needsFlattening {
+    // A single element, a single "mapNestedViews", or nothing.
+    if (valuesOrTemplates.length < 2) {
+      return false;
+    }
+    return hasNestedViews;
+  }
 }
 
 /// Compiles `@{Content|View}Child[ren]` to template IR.
@@ -455,14 +468,54 @@ class _ListCompileQuery extends CompileQuery {
   }
 
   List<o.Statement> _createUpdates() {
-    o.Expression values = o.literalArr(_buildQueryResult(_values));
-    if (_isSingle) {
-      values = values.prop('first');
-    }
+    final queryValueExpressions = _buildQueryResult(_values);
+    o.Expression result;
+
     if (_values.hasNestedViews) {
-      values = _flattenNodes(values);
+      if (queryValueExpressions.length == 1) {
+        result = _createsUpdatesSingleNested(queryValueExpressions);
+      } else {
+        result = _createUpdatesMultiNested(queryValueExpressions);
+      }
+    } else {
+      result = _createUpdatesStaticOnly(queryValueExpressions);
     }
-    return [_boundField.prop(metadata.propertyName).set(values).toStmt()];
+
+    return [_boundField.prop(metadata.propertyName).set(result).toStmt()];
+  }
+
+  // Only static elements are the result of the query.
+  //
+  // * If this is for @{Content|View}Child, use the first value.
+  // * Else, return the element(s) as a List.
+  o.Expression _createUpdatesStaticOnly(List<o.Expression> values) {
+    return _isSingle ? values.first : o.literalArr(values);
+  }
+
+  // A single call to "mapNestedViews" is the result of this query.
+  //
+  // * If this is for @{Content|View}Child, use {expression}.first.
+  // * Else, just return the {expression} itself (already a List).
+  o.Expression _createsUpdatesSingleNested(List<o.Expression> values) {
+    final first = values.first;
+    return _isSingle ? first.prop('first') : first;
+  }
+
+  // Multiple elements, where at least one is "mapNestedViews".
+  //
+  // Here is where it gets a little more complicated; we need to always return
+  // a List<T> ultimately. We have an option of returning a List<List<T>> and
+  // using "flattenNodes" to turn it into a List<T>, but we can't be any more
+  // recursive than that with the Dart type system.
+  //
+  // So:
+  //   * flattenNodes([ mapNestedViews, mapNestedViews ]) OR
+  //   * flattenNodes([ mapNestedViews, [staticElement] ])
+  //
+  // .. is OK.
+  o.Expression _createUpdatesMultiNested(List<o.Expression> values) {
+    final result = _flattenNodes(o.literalArr(values));
+    return _isSingle ? result.prop('first') : result;
   }
 }
 
