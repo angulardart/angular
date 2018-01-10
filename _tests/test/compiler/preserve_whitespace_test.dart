@@ -33,6 +33,15 @@ void main() {
           'test0  test1   test2\n');
     });
 
+    test('should render nbsp entity', () async {
+      var testBed = new NgTestBed<NbSpaceComponent>();
+      testRoot = await testBed.create();
+      expect(
+          testRoot.text,
+          'V1\u{00A0}\u{00A0}test1 \u{00A0} test2V2\n'
+          'test0\u{00A0}\u{00A0}test1 \u{00A0} test2\n');
+    });
+
     test('should remove whitespace when explicitely requested', () async {
       var testBed = new NgTestBed<WhiteSpaceComponentExplicitFalse>();
       testRoot = await testBed.create();
@@ -69,7 +78,7 @@ void main() {
     test('should not remove whitespace before interpolation', () async {
       var testBed = new NgTestBed<TextBeforeInterpolateComponent>();
       testRoot = await testBed.create();
-      expect(testRoot.text, ' prefix V1');
+      expect(testRoot.text, ' prefix V1 ');
     });
   });
 }
@@ -101,6 +110,19 @@ class DefaultWhiteSpaceComponent {
   preserveWhitespace: true,
 )
 class NgSpaceComponent {
+  String get value1 => 'V1';
+  String get value2 => 'V2';
+}
+
+@Component(
+  selector: 'test-nbspace',
+  // First div covers interpolate path.
+  // Second div covers simple visitText path.
+  template: '<div>{{value1}}&nbsp;&nbsp;test1 &nbsp; test2{{value2}}</div>\n'
+      '<div>test0&nbsp;&nbsp;test1 &nbsp; test2</div>\n',
+  preserveWhitespace: true,
+)
+class NbSpaceComponent {
   String get value1 => 'V1';
   String get value2 => 'V2';
 }
@@ -171,7 +193,7 @@ class InterpolateBetweenTextNewlineComponent {
 /// Should preserve the space between prefix and interpolation.
 @Component(
   selector: 'test-textbeforeinterpolate',
-  template: '<span> prefix {{value1}}</span>\n      ',
+  template: '<span> prefix {{value1}} </span>\n      ',
 )
 class TextBeforeInterpolateComponent {
   String get value1 => 'V1';

@@ -98,6 +98,12 @@ void main() {
           ]);
         });
       });
+      test('should parse char codes', () {
+        expect(humanizeTplAst(parse('<div>&lt;</div>', [])), [
+          [ElementAst, 'div'],
+          [TextAst, '<']
+        ]);
+      });
       test("should parse ngContent", () {
         var parsed = parse("<ng-content select=\"a\">", []);
         expect(humanizeTplAst(parsed), [

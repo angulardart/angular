@@ -104,7 +104,7 @@ class AstTemplateParser implements TemplateParser {
     final context = new _ParseContext.forRoot(new _TemplateContext(
         parser: parser,
         schemaRegistry: schemaRegistry,
-        directives: directives,
+        directives: removeDuplicates(directives),
         exports: compMeta.exports));
     final boundAsts = visitor._visitAll(filteredAst, context);
     if (context.templateContext.errors.isNotEmpty) {
@@ -145,7 +145,7 @@ class AstTemplateParser implements TemplateParser {
 
   void _validatePipeNames(
       List<ng.TemplateAst> parsedAsts, List<CompilePipeMetadata> pipes) {
-    var pipeValidator = new _PipeValidator(pipes);
+    var pipeValidator = new _PipeValidator(removeDuplicates(pipes));
     for (final ast in parsedAsts) {
       ast.visit(pipeValidator, null);
     }
@@ -233,7 +233,7 @@ class _BindDirectivesVisitor
       [_ParseContext parentContext]) {
     final embeddedContext =
         new _ParseContext.forTemplate(astNode, parentContext.templateContext);
-    _visitAll(astNode.properties, embeddedContext);
+    _visitProperties(astNode.properties, astNode.attributes, embeddedContext);
     return new ng.EmbeddedTemplateAst(
         _visitAll(astNode.attributes, embeddedContext),
         _visitAll(astNode.events, embeddedContext),
@@ -502,6 +502,8 @@ class _ParseContext {
 
   bool _bindToDirective(List<ng.DirectiveAst> directives, String name,
       AST value, SourceSpan sourceSpan) {
+    bool foundMatch = false;
+    directive:
     for (var directive in directives) {
       for (var directiveName in directive.directive.inputs.keys) {
         var templateName = directive.directive.inputs[directiveName];
@@ -509,11 +511,12 @@ class _ParseContext {
           _removeExisting(directive.inputs, templateName);
           directive.inputs.add(new ng.BoundDirectivePropertyAst(
               directiveName, templateName, value, sourceSpan));
-          return true;
+          foundMatch = true;
+          continue directive;
         }
       }
     }
-    return false;
+    return foundMatch;
   }
 
   void _removeExisting(
@@ -1109,44 +1112,44 @@ class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
   ast.TextAst _stripWhitespace(int i, ast.TextAst node,
       List<ast.TemplateAst> astNodes, bool preserveWhitespace) {
     var text = node.value;
-    text = text.replaceAll('&ngsp;', ngSpace);
-    text = text.replaceAll('&nbsp;', new String.fromCharCode($NBSP));
-    // If preserve white space is turned off, filter out spaces after line
-    // breaks and any empty text nodes.
-    //if (!context.templateContext.preserveWhitespace) {}
 
     if (preserveWhitespace ||
         text.contains('\u00A0') ||
-        text.contains(ngSpace)) {
+        text.contains(ngSpace) ||
+        _betweenInterpolation(astNodes, i)) {
       return new ast.TextAst.from(node, replaceNgSpace(text));
     }
 
-    if (text.trim().isEmpty) {
-      return _hasInterpretationBefore(astNodes, i) &&
-              _hasInterpretationAfter(astNodes, i)
-          ? node
-          : null;
-    }
-    if (!_hasInterpretationBefore(astNodes, i)) {
-      text = text.trimLeft();
-    }
-    if (!_hasInterpretationAfter(astNodes, i)) {
-      text = text.trimRight();
+    if (_hasInterpolation(astNodes, i)) {
+      if (text.contains('\n')) {
+        if (!_hasInterpolationBefore(astNodes, i)) text = text.trimLeft();
+        if (!_hasInterpolationAfter(astNodes, i)) text = text.trimRight();
+      }
+    } else {
+      text = text.trim();
     }
 
-    if (text.isEmpty || isNewLineWithSpaces(text)) return null;
+    if (text.isEmpty) return null;
 
     // Convert &ngsp to actual space.
     text = replaceNgSpace(text);
     return new ast.TextAst.from(node, text);
   }
 
-  bool _hasInterpretationBefore(List<ast.TemplateAst> astNodes, int i) {
+  bool _hasInterpolation(List<ast.TemplateAst> astNodes, int i) =>
+      _hasInterpolationBefore(astNodes, i) ||
+      _hasInterpolationAfter(astNodes, i);
+
+  bool _betweenInterpolation(List<ast.TemplateAst> astNodes, int i) =>
+      _hasInterpolationBefore(astNodes, i) &&
+      _hasInterpolationAfter(astNodes, i);
+
+  bool _hasInterpolationBefore(List<ast.TemplateAst> astNodes, int i) {
     if (i == 0) return false;
     return astNodes[i - 1] is ast.InterpolationAst;
   }
 
-  bool _hasInterpretationAfter(List<ast.TemplateAst> astNodes, int i) {
+  bool _hasInterpolationAfter(List<ast.TemplateAst> astNodes, int i) {
     if (i == (astNodes.length - 1)) return false;
     return astNodes[i + 1] is ast.InterpolationAst;
   }

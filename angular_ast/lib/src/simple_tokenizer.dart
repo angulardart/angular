@@ -56,8 +56,8 @@ class NgSimpleScanner {
   static final _commentEnd = new RegExp('-->');
   static final _mustaches = new RegExp(r'({{)|(}})');
   static final _newline = new RegExp('\n');
-  static final _escape = new RegExp(r'&#([0-9]{4});|' // 1 decimal
-      '&#x([0-9A-Fa-f]{4});|' // 2 hex
+  static final _escape = new RegExp(r'&#([0-9]{2,4});|' // 1 decimal
+      '&#x([0-9A-Fa-f]{2,4});|' // 2 hex
       '&([a-zA-Z]+);'); // 3 named
 
   static final _doctypeBegin = new RegExp(r'(<!DOCTYPE)|(>)');
