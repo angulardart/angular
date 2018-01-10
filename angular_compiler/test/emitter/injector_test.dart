@@ -1,11 +1,17 @@
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
 
 void main() {
+  final dartfmt = new DartFormatter();
+  EqualsDart.format = dartfmt.format;
+
   InjectorEmitter emitter;
 
-  setUp(() => emitter = new InjectorEmitter());
+  setUp(() {
+    emitter = new InjectorEmitter()..visitMeta('FooInjector', 'fooInjector');
+  });
 
   test('createFactory should return a factory function', () {
     emitter.visitMeta('FooInjector', 'fooInjector');
@@ -19,7 +25,6 @@ void main() {
 
   group('createClass should return a class', () {
     test('empty case', () {
-      emitter.visitMeta('FooInjector', 'fooInjector');
       expect(
         emitter.createClass(),
         equalsDart(r'''
@@ -32,39 +37,6 @@ void main() {
           }
         }
       '''),
-      );
-    });
-
-    test('with a provider', () {
-      emitter.visitMeta('FooInjector', 'fooInjector');
-      emitter.visitProvideClass(
-        0,
-        refer('Foo'),
-        refer('FooImpl'),
-        null,
-        [
-          refer('inject').call([refer('Dep1')]),
-          refer('inject').call([refer('Dep2')]),
-        ],
-        false,
-      );
-      expect(
-        emitter.createClass(),
-        equalsDart(r'''
-        class FooInjector extends GeneratedInjector {
-          FooInjector._([Injector parent]) : super(parent);
-
-          FooImpl _field0;
-
-          @override
-          Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
-            if (identical(token, Foo)) {
-              return _field0 ??= new FooImpl(inject(Dep1), inject(Dep2));
-            }
-            return orElse;
-          }
-        }
-        '''),
       );
     });
   });
@@ -84,15 +56,22 @@ void main() {
         false,
       );
       expect(
-        emitter.createInjectSelfOptional(),
+        emitter.createClass(),
         equalsDart(r'''
+        class FooInjector extends GeneratedInjector {
+          FooInjector._([Injector parent]) : super(parent);
+
+          FooImpl _field0;
+
+          FooImpl _getFooImpl$0() => _field0 ??= new FooImpl(inject(Dep1), inject(Dep2));
           @override
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
             if (identical(token, Foo)) {
-              return _field0 ??= new FooImpl(inject(Dep1), inject(Dep2));
+              return _getFooImpl$0();
             }
             return orElse;
           }
+        }
         '''),
       );
     });
@@ -103,18 +82,24 @@ void main() {
         0,
         refer('FooPrime'),
         refer('Foo'),
+        refer('Foo'),
         false,
       );
       expect(
-        emitter.createInjectSelfOptional(),
+        emitter.createClass(),
         equalsDart(r'''
+        class FooInjector extends GeneratedInjector {
+          FooInjector._([Injector parent]) : super(parent);
+
+          Foo _getExisting$0() => inject(Foo);
           @override
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
             if (identical(token, FooPrime)) {
-              return inject(Foo);
+              return _getExisting$0();
             }
             return orElse;
           }
+        }
         '''),
       );
     });
@@ -133,15 +118,22 @@ void main() {
         false,
       );
       expect(
-        emitter.createInjectSelfOptional(),
+        emitter.createClass(),
         equalsDart(r'''
+        class FooInjector extends GeneratedInjector {
+          FooInjector._([Injector parent]) : super(parent);
+
+          Foo _field0;
+
+          Foo _getFoo$0() => _field0 ??= createFoo(inject(Dep1), inject(Dep2));
           @override
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
             if (identical(token, Foo)) {
-              return _field0 ??= createFoo(inject(Dep1), inject(Dep2));
+              return _getFoo$0();
             }
             return orElse;
           }
+        }
         '''),
       );
     });
@@ -151,19 +143,25 @@ void main() {
       emitter.visitProvideValue(
         0,
         refer('Foo'),
+        refer('Foo'),
         refer('Foo').constInstance([]),
         false,
       );
       expect(
-        emitter.createInjectSelfOptional(),
+        emitter.createClass(),
         equalsDart(r'''
+        class FooInjector extends GeneratedInjector {
+          FooInjector._([Injector parent]) : super(parent);
+
+          Foo _getFoo$0() => const Foo();
           @override
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
             if (identical(token, Foo)) {
-              return const Foo();
+              return _getFoo$0();
             }
             return orElse;
           }
+        }
         '''),
       );
     });

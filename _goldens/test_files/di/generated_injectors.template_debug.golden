@@ -27,14 +27,16 @@ class _Injector$doGenerate extends _i1.GeneratedInjector {
 
   _i2.ExamplePrime _field0;
 
+  _i2.ExamplePrime _getExamplePrime$0() => _field0 ??= new _i2.ExamplePrime();
+  _i1.Injector _getInjector$1() => this;
   @override
   Object injectFromSelfOptional(Object token,
       [Object orElse = _i1.throwIfNotFound]) {
     if (identical(token, _i2.Example)) {
-      return _field0 ??= new _i2.ExamplePrime();
+      return _getExamplePrime$0();
     }
     if (identical(token, _i1.Injector)) {
-      return this;
+      return _getInjector$1();
     }
     return orElse;
   }

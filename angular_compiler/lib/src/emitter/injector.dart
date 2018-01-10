@@ -19,6 +19,8 @@ class InjectorEmitter implements InjectorVisitor {
 
   String _className;
   String _factoryName;
+
+  final _methodCache = <Method>[];
   final _fieldCache = <Field>[];
   final _injectSelfBody = <Code>[];
 
@@ -32,6 +34,7 @@ class InjectorEmitter implements InjectorVisitor {
         ..name = 'parent'
         ..type = _$Injector))
       ..initializers.add(refer('super').call([refer('parent')]).code)))
+    ..methods.addAll(_methodCache)
     ..methods.add(createInjectSelfOptional())
     ..fields.addAll(_fieldCache));
 
@@ -68,6 +71,10 @@ class InjectorEmitter implements InjectorVisitor {
   @visibleForTesting
   List<Field> createFields() => _fieldCache;
 
+  /// Returns the methods needed to create instances for this injector.
+  @visibleForTesting
+  List<Method> createMethods() => _methodCache;
+
   @override
   void visitMeta(String className, String factoryName) {
     _className = className;
@@ -94,16 +101,23 @@ class InjectorEmitter implements InjectorVisitor {
     List<Expression> dependencies,
     bool isMulti,
   ) {
+    final fieldName = '_field$index';
     _fieldCache.add(new Field((b) => b
-      ..name = '_field$index'
+      ..name = fieldName
       ..type = type));
+
+    final methodName = '_get${type.symbol}\$$index';
+    _methodCache.add(new Method((b) => b
+      ..name = methodName
+      ..returns = type
+      ..body = refer(fieldName)
+          .assignNullAware(type.newInstanceNamed(constructor, dependencies))
+          .code));
+
     _injectSelfBody.add(
       _ifIsTokenThen(
         token,
-        refer('_field$index')
-            .assignNullAware(type.newInstanceNamed(constructor, dependencies))
-            .returned
-            .statement,
+        refer(methodName).call(const []).returned.statement,
       ),
     );
   }
@@ -112,13 +126,20 @@ class InjectorEmitter implements InjectorVisitor {
   void visitProvideExisting(
     int index,
     Expression token,
+    Reference type,
     Expression redirect,
     bool isMulti,
   ) {
+    final methodName = '_getExisting\$$index';
+    _methodCache.add(new Method((b) => b
+      ..name = methodName
+      ..returns = type
+      ..body = refer('inject').call([redirect]).code));
+
     _injectSelfBody.add(
       _ifIsTokenThen(
         token,
-        refer('inject').call([redirect]).returned.statement,
+        refer(methodName).call(const []).returned.statement,
       ),
     );
   }
@@ -132,16 +153,27 @@ class InjectorEmitter implements InjectorVisitor {
     List<Expression> dependencies,
     bool isMulti,
   ) {
+    final fieldName = '_field$index';
     _fieldCache.add(new Field((b) => b
       ..name = '_field$index'
       ..type = returnType));
+
+    final methodName = '_get${returnType.symbol}\$$index';
+    _methodCache.add(
+      new Method(
+        (b) => b
+          ..name = methodName
+          ..returns = returnType
+          ..body = refer(fieldName)
+              .assignNullAware(function.call(dependencies))
+              .code,
+      ),
+    );
+
     _injectSelfBody.add(
       _ifIsTokenThen(
         token,
-        refer('_field$index')
-            .assignNullAware(function.call(dependencies))
-            .returned
-            .statement,
+        refer(methodName).call(const []).returned.statement,
       ),
     );
   }
@@ -150,9 +182,24 @@ class InjectorEmitter implements InjectorVisitor {
   void visitProvideValue(
     int index,
     Expression token,
+    Reference returnType,
     Expression value,
     bool isMulti,
   ) {
-    _injectSelfBody.add(_ifIsTokenThen(token, value.returned.statement));
+    final methodName = '_get${returnType.symbol}\$$index';
+    _methodCache.add(
+      new Method(
+        (b) => b
+          ..name = methodName
+          ..returns = returnType
+          ..body = value.code,
+      ),
+    );
+    _injectSelfBody.add(
+      _ifIsTokenThen(
+        token,
+        refer(methodName).call(const []).returned.statement,
+      ),
+    );
   }
 }
