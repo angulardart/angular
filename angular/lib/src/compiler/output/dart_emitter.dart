@@ -393,6 +393,18 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   }
 
   @override
+  dynamic visitLiteralVargsExpr(o.LiteralVargsExpr ast, dynamic context) {
+    this.visitAllExpressions(
+      ast.entries,
+      context,
+      ',',
+      newLine: ast.entries.isNotEmpty,
+      keepOnSameLine: true,
+    );
+    return ast;
+  }
+
+  @override
   dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
     if (isConstType(ast.type)) {

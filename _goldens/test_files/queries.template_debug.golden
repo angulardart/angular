@@ -33,6 +33,8 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
     as import12;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/element_ref.dart';
+import 'package:angular/src/common/directives/ng_for.dart'
+    as import15;
 
 const List<dynamic> styles$QueriesComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_QueriesComponent0 = [
@@ -755,9 +757,315 @@ const ComponentFactory<import1.EmbeddedQueriesList>
     EmbeddedQueriesListNgFactory =
     const ComponentFactory<import1.EmbeddedQueriesList>('test',
         viewFactory_EmbeddedQueriesListHost0, _EmbeddedQueriesListMetadata);
+const List<dynamic> styles$NestedNgForQueriesList = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForQueriesList0 = [
+  new StaticNodeDebugInfo([TemplateRef, NgIf], null, <String, dynamic>{})
+];
+
+class ViewNestedNgForQueriesList0
+    extends DebugAppView<import1.NestedNgForQueriesList> {
+  bool _query_taggedItem_1_0_isDirty = true;
+  ViewContainer _appEl_0;
+  NgIf _NgIf_0_7;
+  static RenderComponentType _renderType;
+  ViewNestedNgForQueriesList0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import10.ViewType.COMPONENT,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_NestedNgForQueriesList0) {
+    rootEl = import6.document.createElement('test');
+    _renderType ??= import12.appViewUtils.createRenderType(
+        'asset:_goldens/test_files/queries.dart class NestedNgForQueriesList - inline template',
+        ViewEncapsulation.None,
+        styles$NestedNgForQueriesList);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.NestedNgForQueriesList> build() {
+    final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var _anchor_0 = ngAnchor.clone(false);
+    parentRenderNode.append(_anchor_0);
+    dbgElm(this, _anchor_0, 0, 0, 4);
+    _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_6 =
+        new TemplateRef(_appEl_0, viewFactory_NestedNgForQueriesList1);
+    _NgIf_0_7 = new NgIf(_appEl_0, _TemplateRef_0_6);
+    init(const [], null, [_anchor_0]);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.NestedNgForQueriesList _ctx = ctx;
+    dbg(0, 0, 9);
+    _NgIf_0_7.ngIf = _ctx.conditionA;
+    _appEl_0.detectChangesInNestedViews();
+    if (!import12.AppViewUtils.throwOnChanges) {
+      if (_query_taggedItem_1_0_isDirty) {
+        ctx.taggedItems =
+            _appEl_0.mapNestedViews((_ViewNestedNgForQueriesList1 nestedView) {
+          return nestedView._appEl_1
+              .mapNestedViews((_ViewNestedNgForQueriesList2 nestedView) {
+            return nestedView._appEl_1
+                .mapNestedViews((_ViewNestedNgForQueriesList3 nestedView) {
+              return [new ElementRef(nestedView._el_0)];
+            });
+          });
+        });
+        _query_taggedItem_1_0_isDirty = false;
+      }
+    }
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_0?.destroyNestedViews();
+  }
+}
+
+AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new ViewNestedNgForQueriesList0(parentView, parentIndex);
+}
+
+List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForQueriesList1 = [
+  null,
+  new StaticNodeDebugInfo([TemplateRef, NgIf], null, <String, dynamic>{})
+];
+
+class _ViewNestedNgForQueriesList1
+    extends DebugAppView<import1.NestedNgForQueriesList> {
+  import6.DivElement _el_0;
+  ViewContainer _appEl_1;
+  NgIf _NgIf_1_7;
+  _ViewNestedNgForQueriesList1(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import10.ViewType.EMBEDDED,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_NestedNgForQueriesList1) {
+    componentType = ViewNestedNgForQueriesList0._renderType;
+  }
+  @override
+  ComponentRef<import1.NestedNgForQueriesList> build() {
+    var doc = import6.document;
+    _el_0 = doc.createElement('div');
+    dbgElm(this, _el_0, 0, 0, 4);
+    var _anchor_1 = ngAnchor.clone(false);
+    _el_0.append(_anchor_1);
+    dbgElm(this, _anchor_1, 1, 1, 6);
+    _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
+    TemplateRef _TemplateRef_1_6 =
+        new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList2);
+    _NgIf_1_7 = new NgIf(_appEl_1, _TemplateRef_1_6);
+    init0Dbg(_el_0, [_el_0, _anchor_1]);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.NestedNgForQueriesList _ctx = ctx;
+    dbg(1, 1, 11);
+    _NgIf_1_7.ngIf = _ctx.conditionB;
+    _appEl_1.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_1?.destroyNestedViews();
+  }
+}
+
+AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList1(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewNestedNgForQueriesList1(parentView, parentIndex);
+}
+
+List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForQueriesList2 = [
+  null,
+  new StaticNodeDebugInfo(
+      [TemplateRef, import15.NgFor], null, <String, dynamic>{})
+];
+
+class _ViewNestedNgForQueriesList2
+    extends DebugAppView<import1.NestedNgForQueriesList> {
+  import6.DivElement _el_0;
+  ViewContainer _appEl_1;
+  import15.NgFor _NgFor_1_7;
+  _ViewNestedNgForQueriesList2(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import10.ViewType.EMBEDDED,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_NestedNgForQueriesList2) {
+    componentType = ViewNestedNgForQueriesList0._renderType;
+  }
+  @override
+  ComponentRef<import1.NestedNgForQueriesList> build() {
+    var doc = import6.document;
+    _el_0 = doc.createElement('div');
+    dbgElm(this, _el_0, 0, 1, 6);
+    var _anchor_1 = ngAnchor.clone(false);
+    _el_0.append(_anchor_1);
+    dbgElm(this, _anchor_1, 1, 2, 8);
+    _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
+    TemplateRef _TemplateRef_1_6 =
+        new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList3);
+    _NgFor_1_7 = new import15.NgFor(_appEl_1, _TemplateRef_1_6);
+    init0Dbg(_el_0, [_el_0, _anchor_1]);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.NestedNgForQueriesList _ctx = ctx;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      if (!identical(_ctx.items, null)) {
+        (_NgFor_1_7.ngForOf = _ctx.items);
+      }
+    }
+    if (!import12.AppViewUtils.throwOnChanges) {
+      _NgFor_1_7.ngDoCheck();
+    }
+    _appEl_1.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_1?.destroyNestedViews();
+  }
+}
+
+AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList2(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewNestedNgForQueriesList2(parentView, parentIndex);
+}
+
+List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForQueriesList3 = [
+  new StaticNodeDebugInfo([], null, <String, dynamic>{'taggedItem': null}),
+  new StaticNodeDebugInfo([import1.AnotherDirective], null, <String, dynamic>{})
+];
+
+class _ViewNestedNgForQueriesList3
+    extends DebugAppView<import1.NestedNgForQueriesList> {
+  import6.DivElement _el_0;
+  import6.Element _el_1;
+  import1.AnotherDirective _AnotherDirective_1_4;
+  _ViewNestedNgForQueriesList3(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import10.ViewType.EMBEDDED,
+            {'\$implicit': null},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_NestedNgForQueriesList3) {
+    componentType = ViewNestedNgForQueriesList0._renderType;
+  }
+  @override
+  ComponentRef<import1.NestedNgForQueriesList> build() {
+    var doc = import6.document;
+    _el_0 = doc.createElement('div');
+    dbgElm(this, _el_0, 0, 2, 8);
+    _el_1 = createAndAppendDbg(this, doc, 'another', _el_0, 1, 3, 10);
+    _AnotherDirective_1_4 = new import1.AnotherDirective();
+    init0Dbg(_el_0, [_el_0, _el_1]);
+    return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.AnotherDirective) && (1 == nodeIndex))) {
+      return _AnotherDirective_1_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void dirtyParentQueriesInternal() {
+    (parentView.parentView.parentView as ViewNestedNgForQueriesList0)
+        ._query_taggedItem_1_0_isDirty = true;
+  }
+}
+
+AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList3(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewNestedNgForQueriesList3(parentView, parentIndex);
+}
+
+const List<dynamic> styles$NestedNgForQueriesListHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForQueriesListHost0 = [
+  new StaticNodeDebugInfo([import1.NestedNgForQueriesList],
+      import1.NestedNgForQueriesList, <String, dynamic>{})
+];
+
+class _ViewNestedNgForQueriesListHost0 extends DebugAppView<dynamic> {
+  ViewNestedNgForQueriesList0 _compView_0;
+  import1.NestedNgForQueriesList _NestedNgForQueriesList_0_4;
+  _ViewNestedNgForQueriesListHost0(AppView<dynamic> parentView, num parentIndex)
+      : super(
+            import10.ViewType.HOST,
+            {},
+            parentView,
+            parentIndex,
+            ChangeDetectionStrategy.CheckAlways,
+            nodeDebugInfos_NestedNgForQueriesListHost0);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewNestedNgForQueriesList0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _NestedNgForQueriesList_0_4 = new import1.NestedNgForQueriesList();
+    _compView_0.create(_NestedNgForQueriesList_0_4, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import1.NestedNgForQueriesList>(
+        0, this, rootEl, _NestedNgForQueriesList_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.NestedNgForQueriesList) &&
+        (0 == nodeIndex))) {
+      return _NestedNgForQueriesList_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_NestedNgForQueriesListHost0(
+    AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewNestedNgForQueriesListHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.NestedNgForQueriesList>
+    NestedNgForQueriesListNgFactory =
+    const ComponentFactory<import1.NestedNgForQueriesList>(
+        'test',
+        viewFactory_NestedNgForQueriesListHost0,
+        _NestedNgForQueriesListMetadata);
 const _QueriesComponentMetadata = const [];
 const _EmbeddedQueriesMetadata = const [];
 const _EmbeddedQueriesListMetadata = const [];
+const _NestedNgForQueriesListMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -776,5 +1084,9 @@ void initReflector() {
   _ngRef.registerComponent(
     EmbeddedQueriesList,
     EmbeddedQueriesListNgFactory,
+  );
+  _ngRef.registerComponent(
+    NestedNgForQueriesList,
+    NestedNgForQueriesListNgFactory,
   );
 }
