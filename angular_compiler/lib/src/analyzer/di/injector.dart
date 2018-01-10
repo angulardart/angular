@@ -161,13 +161,15 @@ class InjectorReader {
               'Most constant expressions are not yet supported.');
           useValue = ''
               '(() => throw new UnimplementedError(r"""Does not yet useValue: '
-              '<const expression> for ${provider.token}"""))();';
+              '<const expression> for ${provider.token}"""))()';
         } else if (useValue is String) {
           useValue = 'r"""$useValue"""';
         }
         visitor.visitProvideValue(
           index,
           _tokenToIdentifier(provider.token),
+          // TODO(matanl): Replace with actual return type of method.
+          refer('dynamic'),
           refer(useValue),
           provider.isMulti,
         );
@@ -195,6 +197,8 @@ class InjectorReader {
         visitor.visitProvideExisting(
           index,
           _tokenToIdentifier(provider.token),
+          // TODO(matanl): Replace with the Type or OpaqueToken type.
+          refer('dynamic'),
           _tokenToIdentifier(provider.redirect),
           provider.isMulti,
         );
@@ -204,6 +208,7 @@ class InjectorReader {
     // Implicit provider: provide(Injector).
     visitor.visitProvideValue(
       index,
+      _$Injector,
       _$Injector,
       refer('this'),
       false,
@@ -235,6 +240,7 @@ abstract class InjectorVisitor {
   void visitProvideExisting(
     int index,
     Expression token,
+    Reference type,
     Expression redirect,
     bool isMulti,
   );
@@ -258,6 +264,7 @@ abstract class InjectorVisitor {
   void visitProvideValue(
     int index,
     Expression token,
+    Reference returnType,
     Expression value,
     bool isMulti,
   );

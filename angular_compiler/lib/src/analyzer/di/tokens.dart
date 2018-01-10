@@ -41,9 +41,13 @@ class TokenReader {
       return new TypeTokenElement(urlOf(constant.typeValue.element));
     }
     if (constant.instanceOf($OpaqueToken)) {
+      final value = constant.objectValue;
       return new OpaqueTokenElement(
         constant.read('_desc').stringValue,
         isMultiToken: constant.instanceOf($MultiToken),
+        typeUrl: value.type.typeArguments.isNotEmpty
+            ? urlOf(value.type.typeArguments.first.element)
+            : null,
       );
     }
     if (allowLiteralTokens) {
@@ -172,24 +176,48 @@ class _DynamicTypeElement extends TypeTokenElement {
 
 /// A statically parsed `OpaqueToken` used as an identifier for injection.
 class OpaqueTokenElement implements TokenElement {
+  static final _dynamic = Uri.parse('dart:core#dynamic');
+
   /// Canonical name of an `OpaqueToken`.
   final String identifier;
 
-  /// Whether this represents a `MutliToken` class.
+  /// Whether this represents a `MultiToken` class.
   final bool isMultiToken;
 
+  /// What the type of the token is, or `null` if it is `dynamic`.
+  final Uri typeUrl;
+
   @visibleForTesting
-  const OpaqueTokenElement(this.identifier, {@required this.isMultiToken});
+  const OpaqueTokenElement(
+    this.identifier, {
+    this.typeUrl,
+    @required this.isMultiToken,
+  });
 
   @override
-  bool operator ==(Object o) =>
-      o is OpaqueTokenElement && identifier == o.identifier;
+  bool operator ==(Object o) {
+    if (o is OpaqueTokenElement) {
+      return identifier == o.identifier &&
+              isMultiToken == o.isMultiToken &&
+              typeUrl == o.typeUrl ||
+          _bothTypesDynamic(typeUrl, o.typeUrl);
+    }
+    return false;
+  }
+
+  static bool _bothTypesDynamic(Uri a, Uri b) {
+    return (a == null || a == _dynamic) == (b == null || b == _dynamic);
+  }
 
   @override
-  int get hashCode => identifier.hashCode;
+  int get hashCode {
+    return identifier.hashCode ^ isMultiToken.hashCode ^ typeUrl.hashCode;
+  }
 
   @override
-  String toString() => 'OpaqueTokenElement {$identifier}';
+  String toString() {
+    return '${isMultiToken ? 'MultiToken' : 'OpaqueToken'} {$identifier:${typeUrl ?? _dynamic}';
+  }
 }
 
 /// A statically parsed literal (such as a `String`).
