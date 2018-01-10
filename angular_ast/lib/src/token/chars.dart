@@ -130,7 +130,7 @@ const NAMED_ENTITIES = const {
   "Mu": "Μ",
   "mu": "μ",
   "nabla": "∇",
-  "nbsp": " ",
+  "nbsp": "\u00A0",
   "ngsp": "\uE500", // Space in Unicode PUA.
   "ndash": "–",
   "ne": "≠",
