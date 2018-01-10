@@ -360,6 +360,24 @@ void main() {
       });
       expect(content.classes, equals(['init', 'baz']));
     });
+    test(
+        'should cooperate with interpolated class attribute '
+        'and clas.name binding', () async {
+      var testBed = new NgTestBed<InterpolationWithConditionBindingTest>();
+      var testFixture = await testBed.create();
+      var content = testFixture.rootElement.querySelector('div');
+      expect(content.classes, equals(['foo', 'baz']));
+      await testFixture
+          .update((InterpolationWithConditionBindingTest component) {
+        component.condition = false;
+      });
+      expect(content.classes, equals(['foo']));
+      await testFixture
+          .update((InterpolationWithConditionBindingTest component) {
+        component.condition = true;
+      });
+      expect(content.classes, equals(['foo', 'baz']));
+    });
   });
 }
 
@@ -493,3 +511,10 @@ class MapUpdateWithConditionBindingTest extends Base {}
   template: '<div class="init" [ngClass]="map" [class]="string"></div>',
 )
 class MapUpdateWithStringBindingTest extends Base {}
+
+@Component(
+  selector: 'interpolation-with-condition-binding-test',
+  directives: const [NgClass],
+  template: '<div [class.baz]="condition" class="{{string}}" ngClass></div>',
+)
+class InterpolationWithConditionBindingTest extends Base {}
