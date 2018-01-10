@@ -322,6 +322,31 @@ void main() {
       '$CantNavigateChildComponent.canNavigate',
     ]);
   });
+
+  test('redirect to a sibling', () async {
+    final fixture = await setup<TestRedirectToSibling>();
+    final log = fixture.assertOnlyInstance.lifecycleLog;
+    final router = fixture.assertOnlyInstance.router;
+    expect(log, [
+      '$FirstChildComponent.ngOnInit',
+      '$FirstChildComponent.canActivate',
+      '$FirstChildComponent.onActivate',
+    ]);
+    log.clear();
+    expect(await router.navigate('/foo'), NavigationResult.SUCCESS);
+    expect(log, [
+      '$FirstChildComponent.canNavigate',
+      '$FirstChildComponent.canDeactivate',
+      '$FirstChildComponent.canNavigate',
+      '$SecondChildComponent.ngOnInit',
+      '$FirstChildComponent.canDeactivate',
+      '$SecondChildComponent.canActivate',
+      '$FirstChildComponent.onDeactivate',
+      '$FirstChildComponent.canReuse',
+      '$FirstChildComponent.ngOnDestroy',
+      '$SecondChildComponent.onActivate',
+    ]);
+  });
 }
 
 const lifecycleLogToken = const OpaqueToken('lifecycleLog');
@@ -737,5 +762,26 @@ class TestPreventNavigation {
   ];
 
   TestPreventNavigation(
+      @Inject(lifecycleLogToken) this.lifecycleLog, this.router);
+}
+
+@Component(
+  selector: 'test-redirect-to-sibiling',
+  template: testTemplate,
+  directives: testDirectives,
+)
+class TestRedirectToSibling {
+  final List<String> lifecycleLog;
+  final Router router;
+  final List<RouteDefinition> routes = [
+    FirstChildComponent.routeDefinition,
+    SecondChildComponent.routeDefinition,
+    new RouteDefinition.redirect(
+      path: '.+',
+      redirectTo: SecondChildComponent.routeDefinition.path,
+    ),
+  ];
+
+  TestRedirectToSibling(
       @Inject(lifecycleLogToken) this.lifecycleLog, this.router);
 }

@@ -121,12 +121,27 @@ abstract class RouteDefinition {
   /// Configures a redirect from a [path] --> [to] another one.
   ///
   /// ```
-  /// new RouteDefinition.redirect('contact', 'about/contact');
+  /// new RouteDefinition.redirect(
+  ///   path: 'contact',
+  ///   redirectTo: 'about/contact',
+  /// );
   /// ```
   ///
   /// At most one route may be set to [useAsDefault], which means it will be
   /// automatically inferred to be in use if there are no matching routes for a
   /// given outlet.
+  ///
+  /// If you want to redirect all unmatched routes using a regex path '.*', be
+  /// aware this will override your default route. Instead, if you wish to have
+  /// both a default route, and redirect all unmatched routes, be sure to use
+  /// '.+' as your path.
+  ///
+  /// ```
+  /// [
+  ///   new RouteDefinition(path: 'home', useAsDefault: true, ...),
+  ///   new RouteDefinition.redirect(path: '.+', redirectTo: 'home'),
+  /// ]
+  /// ```
   factory RouteDefinition.redirect({
     String path,
     String redirectTo,
