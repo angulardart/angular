@@ -46,7 +46,7 @@ class InjectorReader {
   @protected
   final Uri doNotScope;
 
-  Set<ProviderElement> _providers;
+  List<ProviderElement> _providers;
 
   InjectorReader(
     this.method, {
@@ -90,8 +90,10 @@ class InjectorReader {
     if (token is TypeTokenElement) {
       return _referToProxy(token.url);
     }
-    return const Reference('OpaqueToken', _runtime).constInstance([
-      literalString((token as OpaqueTokenElement).identifier),
+    final opaqueToken = token as OpaqueTokenElement;
+    final tokenClass = opaqueToken.isMultiToken ? 'MultiToken' : 'OpaqueToken';
+    return new Reference(tokenClass, _runtime).constInstance([
+      literalString(opaqueToken.identifier),
     ]);
   }
 
@@ -167,6 +169,7 @@ class InjectorReader {
         }
         visitor.visitProvideValue(
           index,
+          provider.token,
           _tokenToIdentifier(provider.token),
           // TODO(matanl): Replace with actual return type of method.
           refer('dynamic'),
@@ -177,6 +180,7 @@ class InjectorReader {
         final name = provider.dependencies.bound.name;
         visitor.visitProvideClass(
           index,
+          provider.token,
           _tokenToIdentifier(provider.token),
           _referToProxy(provider.useClass),
           name.isNotEmpty ? name : null,
@@ -186,6 +190,7 @@ class InjectorReader {
       } else if (provider is UseFactoryProviderElement) {
         visitor.visitProvideFactory(
           index,
+          provider.token,
           _tokenToIdentifier(provider.token),
           // TODO(matanl): Replace with actual return type of method.
           refer('dynamic'),
@@ -196,6 +201,7 @@ class InjectorReader {
       } else if (provider is UseExistingProviderElement) {
         visitor.visitProvideExisting(
           index,
+          provider.token,
           _tokenToIdentifier(provider.token),
           // TODO(matanl): Replace with the Type or OpaqueToken type.
           refer('dynamic'),
@@ -208,6 +214,7 @@ class InjectorReader {
     // Implicit provider: provide(Injector).
     visitor.visitProvideValue(
       index,
+      null,
       _$Injector,
       _$Injector,
       refer('this'),
@@ -229,7 +236,8 @@ abstract class InjectorVisitor {
   /// ```
   void visitProvideClass(
     int index,
-    Expression token,
+    TokenElement token,
+    Expression tokenExpression,
     Reference type,
     String constructor,
     List<Expression> dependencies,
@@ -239,7 +247,8 @@ abstract class InjectorVisitor {
   /// Implement redirecting to [redirect] when [token] is requested.
   void visitProvideExisting(
     int index,
-    Expression token,
+    TokenElement token,
+    Expression tokenExpression,
     Reference type,
     Expression redirect,
     bool isMulti,
@@ -253,7 +262,8 @@ abstract class InjectorVisitor {
   /// ```
   void visitProvideFactory(
     int index,
-    Expression token,
+    TokenElement token,
+    Expression tokenExpression,
     Reference returnType,
     Reference function,
     List<Expression> dependencies,
@@ -263,7 +273,8 @@ abstract class InjectorVisitor {
   /// Implement providing [value] when [token] is requested.
   void visitProvideValue(
     int index,
-    Expression token,
+    TokenElement token,
+    Expression tokenExpression,
     Reference returnType,
     Expression value,
     bool isMulti,

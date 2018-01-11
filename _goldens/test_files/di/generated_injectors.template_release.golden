@@ -28,7 +28,9 @@ class _Injector$doGenerate extends _i1.GeneratedInjector {
   _i2.ExamplePrime _field0;
 
   _i2.ExamplePrime _getExamplePrime$0() => _field0 ??= new _i2.ExamplePrime();
-  _i1.Injector _getInjector$1() => this;
+  dynamic _getdynamic$1() => r"""A""";
+  dynamic _getdynamic$2() => r"""B""";
+  _i1.Injector _getInjector$3() => this;
   @override
   Object injectFromSelfOptional(Object token,
       [Object orElse = _i1.throwIfNotFound]) {
@@ -36,7 +38,10 @@ class _Injector$doGenerate extends _i1.GeneratedInjector {
       return _getExamplePrime$0();
     }
     if (identical(token, _i1.Injector)) {
-      return _getInjector$1();
+      return _getInjector$3();
+    }
+    if (identical(token, const _i1.MultiToken('someMultiToken'))) {
+      return [_getdynamic$1(), _getdynamic$2()];
     }
     return orElse;
   }

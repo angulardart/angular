@@ -46,6 +46,7 @@ void main() {
       // provide(Foo, useClass: FooImpl)
       emitter.visitProvideClass(
         0,
+        null,
         refer('Foo'),
         refer('FooImpl'),
         null,
@@ -80,6 +81,7 @@ void main() {
       // provide(FooPrime, useExisting: Foo)
       emitter.visitProvideExisting(
         0,
+        null,
         refer('FooPrime'),
         refer('Foo'),
         refer('Foo'),
@@ -108,6 +110,7 @@ void main() {
       // provide(Foo, useFactory: createFoo)
       emitter.visitProvideFactory(
         0,
+        null,
         refer('Foo'),
         refer('Foo'),
         refer('createFoo'),
@@ -142,6 +145,7 @@ void main() {
       // provide(Foo, useValue: const Foo())
       emitter.visitProvideValue(
         0,
+        null,
         refer('Foo'),
         refer('Foo'),
         refer('Foo').constInstance([]),
@@ -158,6 +162,46 @@ void main() {
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
             if (identical(token, Foo)) {
               return _getFoo$0();
+            }
+            return orElse;
+          }
+        }
+        '''),
+      );
+    });
+
+    test('should support a MultiToken', () {
+      // provide(someToken, useValue: 1, multi: true)
+      // provide(someToken, useValue: 2, multi: true)
+      final someToken = new OpaqueTokenElement('someToken', isMultiToken: true);
+      emitter.visitProvideValue(
+        0,
+        someToken,
+        refer('someToken'),
+        refer('int'),
+        literal(1),
+        true,
+      );
+      emitter.visitProvideValue(
+        1,
+        someToken,
+        refer('someToken'),
+        refer('int'),
+        literal(2),
+        true,
+      );
+      expect(
+        emitter.createClass(),
+        equalsDart(r'''
+        class FooInjector extends GeneratedInjector {
+          FooInjector._([Injector parent]) : super(parent);
+
+          int _getint$0() => 1;
+          int _getint$1() => 2;
+          @override
+          Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
+            if (identical(token, someToken)) {
+              return [_getint$0(), _getint$1()];
             }
             return orElse;
           }

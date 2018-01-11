@@ -274,9 +274,17 @@ void main() {
 
       test('should support MultiToken', () {
         final result = injector.get(multiStringToken);
-        expect(result, const isInstanceOf<List<String>>());
+        expect(
+          result,
+          const isInstanceOf<List<String>>(),
+          reason: 'A reified List<String> is expected',
+          // See https://github.com/dart-lang/angular/issues/772; all reified
+          // types for multi providers for generated injectors are List<dynamic>
+          // but that will change.
+          skip: 'Not currently supported for generated injectors.',
+        );
         expect(result, ['A', 'B']);
-      }, skip: 'Not yet supported for generated injectors');
+      });
 
       test('should return null when the binding failed', () {
         // TODO(matanl): Remove this test once Injector.generated is stable.
@@ -315,7 +323,7 @@ const stringToken = const OpaqueToken('stringToken');
 const numberToken = const OpaqueToken('numberToken');
 const booleanToken = const OpaqueToken('booleanToken');
 const simpleConstToken = const OpaqueToken('simpleConstToken');
-const multiStringToken = const MultiToken<String>('multiStringToken');
+const multiStringToken = const MultiToken<dynamic>('multiStringToken');
 
 @Injector.generate(const [
   const Provider(ExampleService, useClass: ExampleService2),
@@ -323,9 +331,10 @@ const multiStringToken = const MultiToken<String>('multiStringToken');
   const Provider(numberToken, useValue: 1234),
   const Provider(booleanToken, useValue: true),
   const Provider(simpleConstToken, useValue: const ExampleService()),
-  // TODO(matanl): Add once supported.
-  // const ValueProvider.forToken(multiStringToken, 'A'),
-  // const ValueProvider.forToken(multiStringToken, 'B'),
+
+  // TODO(matanl): Switch to ValueProvider.forToken once supported.
+  const Provider(multiStringToken, useValue: 'A'),
+  const Provider(multiStringToken, useValue: 'B'),
 ])
 Injector exampleGenerated() => ng.exampleGenerated$Injector();
 
