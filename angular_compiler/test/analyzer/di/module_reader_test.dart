@@ -75,6 +75,7 @@ void main() {
           new ModuleElement(provide: [
             new UseClassProviderElement(
               new TypeTokenElement(urlOf($Example)),
+              null,
               urlOf($Example),
               dependencies: new DependencyInvocation(
                 $Example.unnamedConstructor,
@@ -86,6 +87,7 @@ void main() {
               provide: [
                 new UseClassProviderElement(
                   new TypeTokenElement(urlOf($Dependency)),
+                  null,
                   urlOf($Dependency),
                   dependencies: new DependencyInvocation(
                     $Dependency.unnamedConstructor,
@@ -107,6 +109,7 @@ void main() {
               provide: [
                 new UseClassProviderElement(
                   new TypeTokenElement(urlOf($Dependency)),
+                  null,
                   urlOf($Dependency),
                   dependencies: new DependencyInvocation(
                     $Dependency.unnamedConstructor,
@@ -129,6 +132,7 @@ void main() {
               provide: [
                 new UseClassProviderElement(
                   new TypeTokenElement(urlOf($Example)),
+                  null,
                   urlOf($Example),
                   dependencies: new DependencyInvocation(
                     $Example.unnamedConstructor,
@@ -141,6 +145,7 @@ void main() {
                   provide: [
                     new UseClassProviderElement(
                       new TypeTokenElement(urlOf($Dependency)),
+                      null,
                       urlOf($Dependency),
                       dependencies: new DependencyInvocation(
                         $Dependency.unnamedConstructor,

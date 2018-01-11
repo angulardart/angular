@@ -36,7 +36,8 @@ void main() {
         Example createExample(DependencyA a) => new ExamplePrime();
 
         const exampleToken = const OpaqueToken('exampleToken');
-        const usPresidents = const MulitToken<String>('usPresidents');
+        const usPresidents = const MultiToken<String>('usPresidents');
+        const anotherToken = const OpaqueToken('anotherToken');
 
         const exampleModule = const [
           // [0] Implicit Provider(Type)
@@ -74,6 +75,9 @@ void main() {
 
           // [9] Implicit multi: true.
           const Provider(usPresidents, useValue: 'George Washington'),
+
+          // [10] With a type (explicit).
+          const Provider<String>(anotherToken, useValue: 'Hello World'),
         ];
       ''');
       $Example = testLib.getType('Example');
@@ -89,6 +93,7 @@ void main() {
         reader.parseProvider(providers[0]),
         new UseClassProviderElement(
           new TypeTokenElement(urlOf($Example)),
+          null,
           urlOf($Example),
           dependencies: new DependencyInvocation(
             $Example.unnamedConstructor,
@@ -103,6 +108,7 @@ void main() {
         reader.parseProvider(providers[1]),
         new UseClassProviderElement(
           new TypeTokenElement(urlOf($Example)),
+          null,
           urlOf($Example),
           dependencies: new DependencyInvocation(
             $Example.unnamedConstructor,
@@ -117,6 +123,7 @@ void main() {
         reader.parseProvider(providers[2]),
         new UseClassProviderElement(
           new TypeTokenElement(urlOf($Example)),
+          null,
           urlOf($ExamplePrime),
           dependencies: new DependencyInvocation(
             $ExamplePrime.unnamedConstructor,
@@ -131,6 +138,7 @@ void main() {
         reader.parseProvider(providers[3]),
         new UseFactoryProviderElement(
           new TypeTokenElement(urlOf($Example)),
+          null,
           urlOf($createExample),
           dependencies: new DependencyInvocation(
             $createExample,
@@ -149,6 +157,7 @@ void main() {
         reader.parseProvider(providers[4]),
         new UseFactoryProviderElement(
           new TypeTokenElement(urlOf($Example)),
+          null,
           urlOf($createExample),
           dependencies: new DependencyInvocation(
             $createExample,
@@ -209,6 +218,7 @@ void main() {
         reader.parseProvider(providers[6]),
         new UseClassProviderElement(
           new OpaqueTokenElement('exampleToken', isMultiToken: false),
+          null,
           urlOf($Example),
           dependencies: new DependencyInvocation(
             $Example.unnamedConstructor,
@@ -223,6 +233,11 @@ void main() {
       expect((value.token as OpaqueTokenElement).isMultiToken, isTrue);
       expect((value.token as OpaqueTokenElement).identifier, 'usPresidents');
       expect(value.isMulti, isTrue);
-    }, skip: 'Not yet supported');
+    });
+
+    test('using an explicit Provider type <T>', () {
+      final UseValueProviderElement value = reader.parseProvider(providers[10]);
+      expect(value.providerType, Uri.parse('dart:core#String'));
+    });
   });
 }
