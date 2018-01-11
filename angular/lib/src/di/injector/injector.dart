@@ -6,7 +6,7 @@ import 'map.dart';
 import 'runtime.dart';
 
 // TODO(matanl): Remove export after we have a 'runtime.dart' import.
-export '../../core/di/opaque_token.dart' show OpaqueToken;
+export '../../core/di/opaque_token.dart' show MultiToken, OpaqueToken;
 
 /// **INTERNAL ONLY**: Work in progress.
 class InjectionToken<T> {}
@@ -131,7 +131,7 @@ abstract class Injector {
 
 /// Used as a compiler-only base class for inheritance.
 abstract class GeneratedInjector extends HierarchicalInjector {
-  GeneratedInjector([Injector parent]) : super(parent);
+  GeneratedInjector([Injector parent]) : super(parent ?? const EmptyInjector());
 }
 
 // Used as a token-type for the AngularDart compiler.

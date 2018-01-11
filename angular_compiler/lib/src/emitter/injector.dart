@@ -2,6 +2,7 @@ import 'package:code_builder/code_builder.dart';
 import 'package:meta/meta.dart';
 
 import '../analyzer/di/injector.dart';
+import '../analyzer/di/tokens.dart';
 
 /// Generates `.dart` source code given a list of providers to bind.
 ///
@@ -23,6 +24,9 @@ class InjectorEmitter implements InjectorVisitor {
   final _methodCache = <Method>[];
   final _fieldCache = <Field>[];
   final _injectSelfBody = <Code>[];
+
+  final _multiTokenInvokes = <TokenElement, List<String>>{};
+  final _expressionForToken = <TokenElement, Expression>{};
 
   /// Returns the `class ... { ... }` for this generated injector.
   Class createClass() => new Class((b) => b
@@ -65,6 +69,7 @@ class InjectorEmitter implements InjectorVisitor {
       ..defaultTo = _$throwIfNotFound.expression.code))
     ..body = new Block((b) => b
       ..statements.addAll(_injectSelfBody)
+      ..statements.addAll(_createMultiBody())
       ..statements.add(refer('orElse').returned.statement)));
 
   /// Returns the fields needed to cache instances in this injector.
@@ -74,6 +79,26 @@ class InjectorEmitter implements InjectorVisitor {
   /// Returns the methods needed to create instances for this injector.
   @visibleForTesting
   List<Method> createMethods() => _methodCache;
+
+  /// Returns statements that represent `_multiTokenInvokes`.
+  List<Code> _createMultiBody() {
+    if (_multiTokenInvokes.isEmpty) {
+      return const [];
+    }
+    final statements = <Code>[];
+    _multiTokenInvokes.forEach((token, methods) {
+      final tokenExpression = _expressionForToken[token];
+      statements.add(
+        _ifIsTokenThen(
+          tokenExpression,
+          literalList(methods.map((m) => refer(m).call(const [])))
+              .returned
+              .statement,
+        ),
+      );
+    });
+    return statements;
+  }
 
   @override
   void visitMeta(String className, String factoryName) {
@@ -92,10 +117,29 @@ class InjectorEmitter implements InjectorVisitor {
     ]);
   }
 
+  void _addToBody(Expression tokenExpression, String methodName) {
+    _injectSelfBody.add(
+      _ifIsTokenThen(
+        tokenExpression,
+        refer(methodName).call(const []).returned.statement,
+      ),
+    );
+  }
+
+  void _addToMulti(
+    TokenElement token,
+    Expression tokenExpression,
+    String methodName,
+  ) {
+    _multiTokenInvokes.putIfAbsent(token, () => []).add(methodName);
+    _expressionForToken[token] = tokenExpression;
+  }
+
   @override
   void visitProvideClass(
     int index,
-    Expression token,
+    TokenElement token,
+    Expression tokenExpression,
     Reference type,
     String constructor,
     List<Expression> dependencies,
@@ -114,18 +158,18 @@ class InjectorEmitter implements InjectorVisitor {
           .assignNullAware(type.newInstanceNamed(constructor, dependencies))
           .code));
 
-    _injectSelfBody.add(
-      _ifIsTokenThen(
-        token,
-        refer(methodName).call(const []).returned.statement,
-      ),
-    );
+    if (isMulti) {
+      _addToMulti(token, tokenExpression, methodName);
+    } else {
+      _addToBody(tokenExpression, methodName);
+    }
   }
 
   @override
   void visitProvideExisting(
     int index,
-    Expression token,
+    TokenElement token,
+    Expression tokenExpression,
     Reference type,
     Expression redirect,
     bool isMulti,
@@ -136,18 +180,18 @@ class InjectorEmitter implements InjectorVisitor {
       ..returns = type
       ..body = refer('inject').call([redirect]).code));
 
-    _injectSelfBody.add(
-      _ifIsTokenThen(
-        token,
-        refer(methodName).call(const []).returned.statement,
-      ),
-    );
+    if (isMulti) {
+      _addToMulti(token, tokenExpression, methodName);
+    } else {
+      _addToBody(tokenExpression, methodName);
+    }
   }
 
   @override
   void visitProvideFactory(
     int index,
-    Expression token,
+    TokenElement token,
+    Expression tokenExpression,
     Reference returnType,
     Reference function,
     List<Expression> dependencies,
@@ -170,18 +214,18 @@ class InjectorEmitter implements InjectorVisitor {
       ),
     );
 
-    _injectSelfBody.add(
-      _ifIsTokenThen(
-        token,
-        refer(methodName).call(const []).returned.statement,
-      ),
-    );
+    if (isMulti) {
+      _addToMulti(token, tokenExpression, methodName);
+    } else {
+      _addToBody(tokenExpression, methodName);
+    }
   }
 
   @override
   void visitProvideValue(
     int index,
-    Expression token,
+    TokenElement token,
+    Expression tokenExpression,
     Reference returnType,
     Expression value,
     bool isMulti,
@@ -195,11 +239,11 @@ class InjectorEmitter implements InjectorVisitor {
           ..body = value.code,
       ),
     );
-    _injectSelfBody.add(
-      _ifIsTokenThen(
-        token,
-        refer(methodName).call(const []).returned.statement,
-      ),
-    );
+
+    if (isMulti) {
+      _addToMulti(token, tokenExpression, methodName);
+    } else {
+      _addToBody(tokenExpression, methodName);
+    }
   }
 }

@@ -33,14 +33,15 @@ class ModuleReader {
   /// Returns a unique ordered-set based off of [providers].
   ///
   /// [ProviderElement.token] is used to determine uniqueness.
-  Set<ProviderElement> deduplicateProviders(
+  List<ProviderElement> deduplicateProviders(
     Iterable<ProviderElement> providers,
   ) {
-    return new LinkedHashSet<ProviderElement>(
+    final soloProviders = new LinkedHashSet<ProviderElement>(
       equals: (a, b) => a.token == b.token,
       hashCode: (e) => e.token.hashCode,
       isValidKey: (e) => e is ProviderElement,
-    )..addAll(providers);
+    )..addAll(providers.where((e) => !e.isMulti));
+    return soloProviders.toList()..addAll(providers.where((e) => e.isMulti));
   }
 
   /// Parses a static object representing a `Module`.

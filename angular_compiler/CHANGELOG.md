@@ -1,3 +1,7 @@
+* `ModuleReader.deduplicateProviders` now returns a `List` not a `Set`, and
+  providers that are _multi_ are not removed, as it is a feature of the DI
+  system to have multiple of them with the same token.
+
 ## 0.4.0-alpha+3
 
 * Added support for recognizing the `MultiToken` type.
