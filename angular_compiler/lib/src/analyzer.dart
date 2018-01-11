@@ -5,5 +5,6 @@ export 'analyzer/di/injector.dart';
 export 'analyzer/di/modules.dart';
 export 'analyzer/di/providers.dart';
 export 'analyzer/di/tokens.dart';
+export 'analyzer/link.dart';
 export 'analyzer/reflector.dart';
 export 'analyzer/types.dart';
