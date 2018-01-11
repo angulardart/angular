@@ -131,12 +131,6 @@ class RouterImpl extends Router {
     if (nextState == null) {
       return NavigationResult.INVALID_ROUTE;
     }
-    if (!await _canDeactivate(nextState)) {
-      return NavigationResult.BLOCKED_BY_GUARD;
-    }
-    if (!await _canActivate(nextState)) {
-      return NavigationResult.BLOCKED_BY_GUARD;
-    }
 
     if (nextState.routes.isNotEmpty &&
         nextState.routes.last is RedirectRouteDefinition) {
@@ -151,6 +145,13 @@ class RouterImpl extends Router {
                 queryParameters: navigationParams.queryParameters),
         isRedirect: true,
       );
+    }
+
+    if (!await _canDeactivate(nextState)) {
+      return NavigationResult.BLOCKED_BY_GUARD;
+    }
+    if (!await _canActivate(nextState)) {
+      return NavigationResult.BLOCKED_BY_GUARD;
     }
 
     await _activateRouterState(nextState);
