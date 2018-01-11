@@ -77,7 +77,7 @@ class RouterOutlet implements OnInit, OnDestroy {
         }
       }
       return true;
-    });
+    }());
     _routes = routes;
   }
 

@@ -58,7 +58,7 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
         throw new ArgumentError(
           'Expected a string or list of strings. Got $classes.',
         );
-      });
+      }());
     }
   }
 

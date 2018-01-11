@@ -384,7 +384,7 @@ class InvokeMethodExpr extends Expression {
         }
       }
       return true;
-    });
+    }());
     if (method is String) {
       this.name = method;
       this.builtin = null;
@@ -437,7 +437,7 @@ class InstantiateExpr extends Expression {
         }
       }
       return true;
-    });
+    }());
   }
 
   @override

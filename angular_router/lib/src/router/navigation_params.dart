@@ -52,6 +52,6 @@ class NavigationParams {
         throw new StateError('Must have a non-null `query` type');
       }
       return true;
-    });
+    }());
   }
 }
