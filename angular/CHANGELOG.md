@@ -1,3 +1,5 @@
+*   We now require `code_builder ^3.0.0`.
+
 ### Breaking changes
 
 *   `ComponentRef.componentType` throws an `UnsupportedError`, pending removal.
