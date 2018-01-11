@@ -100,10 +100,12 @@ class RouterImpl extends Router {
   ///
   /// Path is the full, absolute URL.
   Future<NavigationResult> _navigateRouter(
-    String path, [
-    NavigationParams navigationParams,
-  ]) async {
-    if (!await _canNavigate()) {
+    String path,
+    NavigationParams navigationParams, {
+    bool isRedirect: false,
+  }) async {
+    // Don't check `CanNavigate` implementations again if this is a redirect.
+    if (!(isRedirect || await _canNavigate())) {
       return NavigationResult.BLOCKED_BY_GUARD;
     }
 
@@ -140,13 +142,15 @@ class RouterImpl extends Router {
         nextState.routes.last is RedirectRouteDefinition) {
       var redirectUrl =
           (nextState.routes.last as RedirectRouteDefinition).redirectTo;
-      return navigate(
-          _getAbsolutePath(redirectUrl, nextState.build()),
-          navigationParams == null
-              ? null
-              : new NavigationParams(
-                  fragment: navigationParams.fragment,
-                  queryParameters: navigationParams.queryParameters));
+      return _navigateRouter(
+        _getAbsolutePath(redirectUrl, nextState.build()),
+        navigationParams == null
+            ? null
+            : new NavigationParams(
+                fragment: navigationParams.fragment,
+                queryParameters: navigationParams.queryParameters),
+        isRedirect: true,
+      );
     }
 
     await _activateRouterState(nextState);

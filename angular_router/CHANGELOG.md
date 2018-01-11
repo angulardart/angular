@@ -1,3 +1,7 @@
+### Bug fixes
+
+*   Prevented `canNavigate()` from being invoked twice during redirection.
+
 ## 2.0.0-alpha+3
 
 ### New features
