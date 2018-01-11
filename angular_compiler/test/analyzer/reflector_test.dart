@@ -221,7 +221,7 @@ void main() {
         ),
       ]),
     );
-  }, solo: true);
+  });
 
   group('for linking', () {
     Set<String> _fakeInputs;
