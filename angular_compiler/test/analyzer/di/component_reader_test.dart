@@ -43,9 +43,9 @@ void main() {
   test('should resolve a provider', () {
     final component = new ComponentReader(getClass('CompWithProvider'));
     expect(
-      component.provides(new TypeTokenElement(Uri.parse(
-        'asset:test_lib/lib/test_lib.dart#ExampleService',
-      ))),
+      component.provides(new TypeTokenElement(
+        new TypeLink('ExampleService', 'asset:test_lib/lib/test_lib.dart'),
+      )),
       isTrue,
       reason: '"ExampleService" should be provided by the component.',
     );
@@ -54,16 +54,16 @@ void main() {
   test('should resolve a view provider', () {
     final component = new ComponentReader(getClass('CompWithViewProvider'));
     expect(
-      component.provides(new TypeTokenElement(Uri.parse(
-        'asset:test_lib/lib/test_lib.dart#ExampleService',
-      ))),
+      component.provides(new TypeTokenElement(
+        new TypeLink('ExampleService', 'asset:test_lib/lib/test_lib.dart'),
+      )),
       isTrue,
       reason: '"ExampleService" should be provided by the component',
     );
     expect(
-      component.providesForContent(new TypeTokenElement(Uri.parse(
-        'asset:test_lib/lib/test_lib.dart#ExampleService',
-      ))),
+      component.providesForContent(new TypeTokenElement(
+        new TypeLink('ExampleService', 'asset:test_lib/lib/test_lib.dart'),
+      )),
       isFalse,
       reason: '"ExampleService" should not be visible to <ng-content>.',
     );

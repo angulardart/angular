@@ -89,11 +89,7 @@ void main() {
       expect(deps.positional, [
         new DependencyElement(
           new TypeTokenElement(
-            new Uri(
-              scheme: 'asset',
-              path: 'test_lib/lib/test_lib.dart',
-              fragment: 'Engine',
-            ),
+            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
         ),
       ]);
@@ -107,11 +103,7 @@ void main() {
       expect(deps.positional, [
         new DependencyElement(
           new TypeTokenElement(
-            new Uri(
-              scheme: 'asset',
-              path: 'test_lib/lib/test_lib.dart',
-              fragment: 'Engine',
-            ),
+            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
         ),
       ]);
@@ -124,11 +116,7 @@ void main() {
       expect(deps.positional, [
         new DependencyElement(
           new TypeTokenElement(
-            new Uri(
-              scheme: 'asset',
-              path: 'test_lib/lib/test_lib.dart',
-              fragment: 'Engine',
-            ),
+            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           host: true,
         ),
@@ -141,11 +129,7 @@ void main() {
       expect(deps.positional, [
         new DependencyElement(
           new TypeTokenElement(
-            new Uri(
-              scheme: 'asset',
-              path: 'test_lib/lib/test_lib.dart',
-              fragment: 'Engine',
-            ),
+            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           optional: true,
         ),
@@ -158,11 +142,7 @@ void main() {
       expect(deps.positional, [
         new DependencyElement(
           new TypeTokenElement(
-            new Uri(
-              scheme: 'asset',
-              path: 'test_lib/lib/test_lib.dart',
-              fragment: 'Engine',
-            ),
+            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           self: true,
         ),
@@ -175,11 +155,7 @@ void main() {
       expect(deps.positional, [
         new DependencyElement(
           new TypeTokenElement(
-            new Uri(
-              scheme: 'asset',
-              path: 'test_lib/lib/test_lib.dart',
-              fragment: 'Engine',
-            ),
+            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           skipSelf: true,
         ),
@@ -193,11 +169,7 @@ void main() {
         new DependencyElement(
           new OpaqueTokenElement('someToken', isMultiToken: false),
           type: new TypeTokenElement(
-            new Uri(
-              scheme: 'asset',
-              path: 'test_lib/lib/test_lib.dart',
-              fragment: 'Engine',
-            ),
+            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
         ),
       ]);
@@ -209,11 +181,7 @@ void main() {
       expect(deps.positional, [
         new DependencyElement(
           new TypeTokenElement(
-            new Uri(
-              scheme: 'asset',
-              path: 'test_lib/lib/test_lib.dart',
-              fragment: 'Engine',
-            ),
+            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           type: TypeTokenElement.$dynamic,
         ),

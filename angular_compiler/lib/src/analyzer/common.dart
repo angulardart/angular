@@ -4,7 +4,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/dart/element/type.dart';
 import 'package:build/build.dart';
-import 'package:code_builder/code_builder.dart' show refer, Reference;
 import 'package:source_gen/source_gen.dart';
 import 'package:source_gen/src/utils.dart';
 
@@ -105,10 +104,4 @@ Uri urlOf(Element element, [String name]) {
   // NOTE: element.source.uri might be a file that is not importable (i.e. is
   // a "part"), while element.library.source.uri is always importable.
   return normalizeUrl(element.library.source.uri).replace(fragment: name);
-}
-
-/// Create a `code_builder` [Reference] to [assetUri].
-Reference referTo(Uri assetUri) {
-  final dartUrl = assetToPackageUrl(assetUri);
-  return refer(dartUrl.fragment, dartUrl.removeFragment().toString());
 }

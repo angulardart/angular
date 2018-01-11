@@ -1,11 +1,11 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../common.dart';
+import '../link.dart';
 import '../types.dart';
 
 /// Support for reading and parsing a "token" for dependency injection.
@@ -38,7 +38,7 @@ class TokenReader {
       throw new FormatException('Expected token, but got "null".');
     }
     if (constant.isType) {
-      return new TypeTokenElement(urlOf(constant.typeValue.element));
+      return new TypeTokenElement(linkTypeOf(constant.typeValue));
     }
     if (constant.instanceOf($OpaqueToken)) {
       final value = constant.objectValue;
@@ -110,13 +110,7 @@ class TokenReader {
     DartType type, [
     String prefix,
   ]) =>
-      new TypeTokenElement(
-        urlOf(type.element, getTypeName(type)),
-        generics: type is ParameterizedType
-            ? type.typeParameters.map((p) => _parseType(p.type)).toList()
-            : const [],
-        prefix: prefix,
-      );
+      new TypeTokenElement(linkTypeOf(type), prefix: prefix);
 }
 
 /// A statically parsed token used as an identifier for injection.
@@ -130,42 +124,33 @@ class TypeTokenElement implements TokenElement {
   static const TypeTokenElement $dynamic = const _DynamicTypeElement();
 
   /// Canonical URL of the source location and class name being referenced.
-  final Uri url;
+  final TypeLink link;
 
   /// Optional; prefix used when importing this token.
   final String prefix;
 
-  /// Generic type parameters, if any.
-  final List<TypeTokenElement> generics;
-
   @visibleForTesting
-  const TypeTokenElement(this.url, {this.generics: const [], this.prefix});
+  const TypeTokenElement(this.link, {this.prefix});
 
   @override
   bool operator ==(Object o) =>
-      o is TypeTokenElement &&
-      url == o.url &&
-      prefix == o.prefix &&
-      const ListEquality().equals(generics, o.generics);
+      o is TypeTokenElement && link == o.link && prefix == o.prefix;
 
   @override
-  int get hashCode =>
-      url.hashCode ^ prefix.hashCode ^ const ListEquality().hash(generics);
+  int get hashCode => link.hashCode ^ prefix.hashCode;
 
   /// Whether this is a considered the type `dynamic`.
-  bool get isDynamic =>
-      url.scheme == 'dart' && url.path == 'core' && url.fragment == 'dynamic';
+  bool get isDynamic => link == TypeLink.$dynamic;
 
   @override
-  String toString() =>
-      'TypeTokenElement {$url, prefix: $prefix, generic: $generics}';
+  String toString() => 'TypeTokenElement {$link, prefix: $prefix}';
 }
 
 class _DynamicTypeElement extends TypeTokenElement {
   const _DynamicTypeElement() : super(null);
 
   @override
-  Uri get url => new Uri(scheme: 'dart', path: 'core', fragment: 'dynamic');
+  TypeLink get link => TypeLink.$dynamic;
 
   @override
   String get prefix => null;

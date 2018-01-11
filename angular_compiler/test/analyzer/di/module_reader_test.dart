@@ -74,9 +74,9 @@ void main() {
           reader.parseModule($listModule),
           new ModuleElement(provide: [
             new UseClassProviderElement(
-              new TypeTokenElement(urlOf($Example)),
+              new TypeTokenElement(linkTypeOf($Example.type)),
               null,
-              urlOf($Example),
+              linkTypeOf($Example.type),
               dependencies: new DependencyInvocation(
                 $Example.unnamedConstructor,
                 const [],
@@ -86,9 +86,9 @@ void main() {
             new ModuleElement(
               provide: [
                 new UseClassProviderElement(
-                  new TypeTokenElement(urlOf($Dependency)),
+                  new TypeTokenElement(linkTypeOf($Dependency.type)),
                   null,
-                  urlOf($Dependency),
+                  linkTypeOf($Dependency.type),
                   dependencies: new DependencyInvocation(
                     $Dependency.unnamedConstructor,
                     const [],
@@ -108,9 +108,9 @@ void main() {
             new ModuleElement(
               provide: [
                 new UseClassProviderElement(
-                  new TypeTokenElement(urlOf($Dependency)),
+                  new TypeTokenElement(linkTypeOf($Dependency.type)),
                   null,
-                  urlOf($Dependency),
+                  linkTypeOf($Dependency.type),
                   dependencies: new DependencyInvocation(
                     $Dependency.unnamedConstructor,
                     const [],
@@ -131,9 +131,9 @@ void main() {
             new ModuleElement(
               provide: [
                 new UseClassProviderElement(
-                  new TypeTokenElement(urlOf($Example)),
+                  new TypeTokenElement(linkTypeOf($Example.type)),
                   null,
-                  urlOf($Example),
+                  linkTypeOf($Example.type),
                   dependencies: new DependencyInvocation(
                     $Example.unnamedConstructor,
                     const [],
@@ -144,9 +144,9 @@ void main() {
                 new ModuleElement(
                   provide: [
                     new UseClassProviderElement(
-                      new TypeTokenElement(urlOf($Dependency)),
+                      new TypeTokenElement(linkTypeOf($Dependency.type)),
                       null,
-                      urlOf($Dependency),
+                      linkTypeOf($Dependency.type),
                       dependencies: new DependencyInvocation(
                         $Dependency.unnamedConstructor,
                         const [],
