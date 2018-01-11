@@ -1,5 +1,9 @@
 ### Bug fixes
 
+*   Prevented `canDeactivate()` from being invoked twice during redirection. It
+    will now only be invoked with the redirected next router state, without also
+    being invoked with the intermediate next router state.
+
 *   Prevented `canNavigate()` from being invoked twice during redirection.
 
 ## 2.0.0-alpha+3

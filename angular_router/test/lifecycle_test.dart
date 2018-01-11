@@ -336,7 +336,6 @@ void main() {
     expect(await router.navigate('/foo'), NavigationResult.SUCCESS);
     expect(log, [
       '$FirstChildComponent.canNavigate',
-      '$FirstChildComponent.canDeactivate',
       '$SecondChildComponent.ngOnInit',
       '$FirstChildComponent.canDeactivate',
       '$SecondChildComponent.canActivate',
