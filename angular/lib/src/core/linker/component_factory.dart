@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:angular/src/core/di.dart' show Injector;
+import 'package:angular/src/di/reflector.dart' show runtimeTypeProvider;
 
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
 import 'app_view.dart';
@@ -40,9 +41,9 @@ class ComponentRef<C> {
   /// The [ChangeDetectorRef] of the Component instance.
   ChangeDetectorRef get changeDetectorRef => _parentView.viewData.ref;
 
-  /// Returns type of component.
-  /// TODO: remove use from angular router and deprecate.
-  Type get componentType => _component.runtimeType;
+  /// Returns the type of component [C].
+  @Deprecated('No longer supported, and throws an error in most applications')
+  Type get componentType => runtimeTypeProvider(_component);
 
   /// Destroys the component instance and all of the data structures associated
   /// with it.

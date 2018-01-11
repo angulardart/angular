@@ -1,3 +1,9 @@
+### Breaking changes
+
+*   `ComponentRef.componentType` throws an `UnsupportedError`, pending removal.
+    This removes our last invocation of `.runtimeType`, which has potentially
+    severe code-size implications for some applications.
+
 ## 5.0.0-alpha+3
 
 ### New features

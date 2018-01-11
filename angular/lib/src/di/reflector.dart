@@ -19,6 +19,22 @@ export '../core/di/opaque_token.dart' show OpaqueToken;
 // already considered the "slow" path, this isn't a regression.
 final _components = <Object, dynamic /*ComponentFactory*/ >{};
 
+/// May be overridden by legacy clients of AngularDart.
+///
+/// Otherwise, `ComponentRef.componentType` always returns throws.
+Type Function(Object instance) runtimeTypeProvider = _nullTypeProvider;
+
+Type _nullTypeProvider(Object _) {
+  // In debug mode give a better error message.
+  assert(
+      false,
+      ''
+      'This feature is no longer supported in AngularDart due to '
+      'the effects it has on code-size for highly optimized/size sensitive '
+      'applications.');
+  throw new UnsupportedError('');
+}
+
 /// Registers [component] as the static factory for [type].
 ///
 /// This is done entirely to support `SlowComponentLoader`; applications may be
