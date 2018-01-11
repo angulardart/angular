@@ -4,8 +4,10 @@ import 'generated_injectors.template.dart' as ng;
 
 @Injector.generate(const [
   const Provider(Example, useClass: ExamplePrime),
-  const Provider(someMultiToken, useValue: 'A'),
-  const Provider(someMultiToken, useValue: 'B'),
+
+  // TODO(matanl): As soon as ValueProvider is supported, use it.
+  const Provider<String>(someMultiToken, useValue: 'A'),
+  const Provider<String>(someMultiToken, useValue: 'B'),
 ])
 Injector doGenerate() => ng.doGenerate$Injector();
 

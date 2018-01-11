@@ -68,7 +68,6 @@ class InjectorReader {
     return _providers;
   }
 
-  // Remove after https://github.com/dart-lang/code_builder/issues/148.
   Reference _referToProxy(Uri to) {
     if (doNotScope != null && to.scheme == 'asset') {
       final normalizedBased = doNotScope.normalizePath();
@@ -95,6 +94,11 @@ class InjectorReader {
     return new Reference(tokenClass, _runtime).constInstance([
       literalString(opaqueToken.identifier),
     ]);
+  }
+
+  // TODO(matanl): Support nested generics, i.e. List<T>, Map<K, V>.
+  static Reference _urlToReference(Uri typeUrl) {
+    return refer(typeUrl.fragment, typeUrl.removeFragment().toString());
   }
 
   List<Expression> _computeDependencies(Iterable<DependencyElement> deps) {
@@ -171,8 +175,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          // TODO(matanl): Replace with actual return type of method.
-          refer('dynamic'),
+          _urlToReference(provider.providerType),
           refer(useValue),
           provider.isMulti,
         );
@@ -192,8 +195,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          // TODO(matanl): Replace with actual return type of method.
-          refer('dynamic'),
+          _urlToReference(provider.providerType),
           _referToProxy(provider.useFactory),
           _computeDependencies(provider.dependencies.positional),
           provider.isMulti,
@@ -203,8 +205,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          // TODO(matanl): Replace with the Type or OpaqueToken type.
-          refer('dynamic'),
+          _urlToReference(provider.providerType),
           _tokenToIdentifier(provider.redirect),
           provider.isMulti,
         );

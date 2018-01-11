@@ -1,6 +1,8 @@
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/src/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart' show refer, Reference;
 import 'package:source_gen/source_gen.dart';
@@ -74,6 +76,22 @@ String _identifierOfAst(AstNode astNode, ParameterElement element) {
         ?.toSource();
   }
   return null;
+}
+
+/// Returns the bound [DartType] from the instance [object].
+///
+/// For example for the following code:
+/// ```
+/// const foo = const <String>[];
+/// const bar = const ['A string'];
+/// ```
+///
+/// ... both `foo` and `bar` should return the [DartType] for `String`.
+DartType typeArgumentOf(DartObject object, [int index = 0]) {
+  if (object.type.typeArguments.isEmpty) {
+    return DynamicTypeImpl.instance;
+  }
+  return object.type.typeArguments[index];
 }
 
 /// Returns a canonical URL pointing to [element].

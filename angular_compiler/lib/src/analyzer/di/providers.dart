@@ -50,7 +50,7 @@ class ProviderReader {
     final token = _tokenReader.parseTokenObject(o.getField('token'));
     final useClass = reader.read('useClass');
     if (!useClass.isNull) {
-      return _parseUseClass(token, useClass.typeValue.element);
+      return _parseUseClass(token, o, useClass.typeValue.element);
     }
     final useFactory = reader.read('useFactory');
     if (!useFactory.isNull) {
@@ -65,18 +65,18 @@ class ProviderReader {
       //  const Provider(TimingService, useValue: null)
       //
       // Teams that inject `TimingService` @Optional() will stop using it.
-      return _parseUseValue(token, null);
+      return _parseUseValue(token, o, null);
     }
     if (!useValue.isString || useValue.stringValue != '__noValueProvided__') {
-      return _parseUseValue(token, useValue.objectValue);
+      return _parseUseValue(token, o, useValue.objectValue);
     }
     final useExisting = reader.read('useExisting');
     if (!useExisting.isNull) {
-      return _parseUseExisting(token, useExisting.objectValue);
+      return _parseUseExisting(token, o, useExisting.objectValue);
     }
     // Base case: const Provider(Foo) with no fields set.
     if (token is TypeTokenElement) {
-      return _parseUseClass(token, reader.read('token').typeValue.element);
+      return _parseUseClass(token, o, reader.read('token').typeValue.element);
     }
     throw new UnsupportedError('Could not parse provider: $o.');
   }
@@ -84,11 +84,13 @@ class ProviderReader {
   // const Provider(<token>, useClass: Foo)
   ProviderElement _parseUseClass(
     TokenElement token,
+    DartObject provider,
     ClassElement clazz,
   ) {
     // TODO(matanl): Validate that clazz has @Injectable() when flag is set.
     return new UseClassProviderElement(
       token,
+      urlOf(typeArgumentOf(provider).element),
       urlOf(clazz),
       dependencies: _dependencyReader.parseDependencies(clazz),
     );
@@ -97,10 +99,12 @@ class ProviderReader {
   // const Provider(<token>, useExisting: <other>)
   ProviderElement _parseUseExisting(
     TokenElement token,
+    DartObject provider,
     DartObject object,
   ) {
     return new UseExistingProviderElement(
       token,
+      urlOf(typeArgumentOf(provider).element),
       _tokenReader.parseTokenObject(object),
     );
   }
@@ -115,6 +119,7 @@ class ProviderReader {
     // TODO(matanl): Validate that Foo has @Injectable() when flag is set.
     return new UseFactoryProviderElement(
       token,
+      urlOf(typeArgumentOf(provider.objectValue).element),
       urlOf(factoryElement),
       dependencies: manualDeps.isList
           ? _dependencyReader.parseDependenciesList(
@@ -123,10 +128,15 @@ class ProviderReader {
     );
   }
 
-  ProviderElement _parseUseValue(TokenElement token, DartObject useValue) {
+  ProviderElement _parseUseValue(
+    TokenElement token,
+    DartObject provider,
+    DartObject useValue,
+  ) {
     // TODO(matanl): For corner-cases that can't be revived, display error.
     return new UseValueProviderElement._(
       token,
+      urlOf(typeArgumentOf(provider).element),
       _reviveInvocationsOf(useValue),
     );
   }
@@ -160,6 +170,7 @@ class ProviderReader {
     final token = urlOf(clazz);
     return new UseClassProviderElement(
       new TypeTokenElement(token),
+      urlOf(typeArgumentOf(o).element),
       token,
       dependencies: _dependencyReader.parseDependencies(clazz),
     );
@@ -171,9 +182,16 @@ abstract class ProviderElement {
   /// Canonical URL of the source location and element name being referenced.
   final TokenElement token;
 
+  /// The `T` type of `Provider<T>`.
+  final Uri providerType;
+
   final bool _isExplictlyMulti;
 
-  const ProviderElement._(this.token, this._isExplictlyMulti);
+  const ProviderElement._(
+    this.token,
+    this.providerType,
+    this._isExplictlyMulti,
+  );
 
   @override
   bool operator ==(Object o) => o is ProviderElement && o.token == token;
@@ -203,11 +221,12 @@ class UseClassProviderElement extends ProviderElement {
   @visibleForTesting
   const UseClassProviderElement(
     TokenElement e,
+    Uri providerType,
     this.useClass, {
     @required this.dependencies,
     bool multi: false,
   })
-      : super._(e, multi);
+      : super._(e, providerType, multi);
 
   @override
   bool operator ==(Object o) =>
@@ -236,10 +255,11 @@ class UseExistingProviderElement extends ProviderElement {
 
   const UseExistingProviderElement(
     TokenElement e,
+    Uri providerType,
     this.redirect, {
     bool multi: false,
   })
-      : super._(e, multi);
+      : super._(e, providerType, multi);
 
   @override
   bool operator ==(Object o) =>
@@ -268,11 +288,12 @@ class UseFactoryProviderElement extends ProviderElement {
   @visibleForTesting
   const UseFactoryProviderElement(
     TokenElement e,
+    Uri providerType,
     this.useFactory, {
     @required this.dependencies,
     bool multi: false,
   })
-      : super._(e, multi);
+      : super._(e, providerType, multi);
 
   @override
   bool operator ==(Object o) =>
@@ -303,8 +324,9 @@ class UseValueProviderElement extends ProviderElement {
   // Not visible for testing because its impractical to create one.
   const UseValueProviderElement._(
     TokenElement e,
+    Uri providerType,
     this.useValue, {
     bool multi: false,
   })
-      : super._(e, multi);
+      : super._(e, providerType, multi);
 }
