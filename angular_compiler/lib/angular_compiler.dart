@@ -1,6 +1,8 @@
 export 'src/analyzer.dart'
     show
         getTypeName,
+        linkToReference,
+        linkTypeOf,
         urlOf,
         ComponentReader,
         DependencyElement,

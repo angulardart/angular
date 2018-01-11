@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 import 'package:source_gen/source_gen.dart';
 
-import '../common.dart';
+import '../link.dart';
 import '../types.dart';
 import 'dependencies.dart';
 import 'modules.dart';
@@ -68,37 +68,53 @@ class InjectorReader {
     return _providers;
   }
 
-  Reference _referToProxy(Uri to) {
-    if (doNotScope != null && to.scheme == 'asset') {
-      final normalizedBased = doNotScope.normalizePath();
-      final baseSegments = p.split(normalizedBased.path)..removeLast();
-      final targetSegments = p.split(to.path);
-      if (baseSegments.first == targetSegments.first &&
-          baseSegments[1] == targetSegments[1]) {
-        final relativePath = p.relative(
-          targetSegments.skip(2).join('/'),
-          from: baseSegments.skip(2).join('/'),
-        );
-        return referTo(new Uri(path: relativePath, fragment: to.fragment));
-      }
+  /// Creates a codegen reference to [symbol] in [url].
+  ///
+  /// Compares against [doNotScope], which is usually the current library. This
+  /// is required because while some URLs can be referenced via `package:`,
+  /// others cannot (i.e. those in a `test` directory), so we need to compute
+  /// the relative path to them.
+  Reference _referSafe(String symbol, String url) {
+    final toUrl = Uri.parse(url);
+    if (doNotScope != null && toUrl.scheme == 'asset') {
+      return _referRelative(symbol, toUrl);
     }
-    return referTo(to);
+    return refer(symbol, toUrl.toString());
+  }
+
+  Reference _referRelative(String symbol, Uri url) {
+    // URL segments indicating the origin.
+    final from = p.split(doNotScope.normalizePath().path)..removeLast();
+
+    // URL segments indicating the target.
+    final to = p.split(url.path);
+
+    // Verify this is the same package:.
+    if (to[0] != from[0]) {
+      return refer(symbol, url.toString());
+    }
+
+    // This is pointing to a package: location. We can safely just link.
+    if (to[1] == 'lib') {
+      to.removeAt(1);
+      return refer(symbol, 'package:${to.join('/')}');
+    }
+
+    // This is pointing to a true asset: location, needing a relative link.
+    print('>>> to: $to\nfrom: $from');
+    final path = p.relative(to.skip(2).join('/'), from: from.skip(2).join('/'));
+    return refer(symbol, path);
   }
 
   Expression _tokenToIdentifier(TokenElement token) {
     if (token is TypeTokenElement) {
-      return _referToProxy(token.url);
+      return _referSafe(token.link.symbol, token.link.import);
     }
     final opaqueToken = token as OpaqueTokenElement;
     final tokenClass = opaqueToken.isMultiToken ? 'MultiToken' : 'OpaqueToken';
     return new Reference(tokenClass, _runtime).constInstance([
       literalString(opaqueToken.identifier),
     ]);
-  }
-
-  // TODO(matanl): Support nested generics, i.e. List<T>, Map<K, V>.
-  static Reference _urlToReference(Uri typeUrl) {
-    return refer(typeUrl.fragment, typeUrl.removeFragment().toString());
   }
 
   List<Expression> _computeDependencies(Iterable<DependencyElement> deps) {
@@ -175,7 +191,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          _urlToReference(provider.providerType),
+          linkToReference(provider.providerType),
           refer(useValue),
           provider.isMulti,
         );
@@ -185,7 +201,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          _referToProxy(provider.useClass),
+          _referSafe(provider.useClass.symbol, provider.useClass.import),
           name.isNotEmpty ? name : null,
           _computeDependencies(provider.dependencies.positional),
           provider.isMulti,
@@ -195,8 +211,11 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          _urlToReference(provider.providerType),
-          _referToProxy(provider.useFactory),
+          linkToReference(provider.providerType),
+          _referSafe(
+            provider.useFactory.fragment,
+            provider.useFactory.removeFragment().toString(),
+          ),
           _computeDependencies(provider.dependencies.positional),
           provider.isMulti,
         );
@@ -205,7 +224,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          _urlToReference(provider.providerType),
+          linkToReference(provider.providerType),
           _tokenToIdentifier(provider.redirect),
           provider.isMulti,
         );

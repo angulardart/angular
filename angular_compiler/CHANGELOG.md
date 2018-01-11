@@ -1,8 +1,8 @@
 * `ModuleReader.deduplicateProviders` now returns a `List` not a `Set`, and
   providers that are _multi_ are not removed, as it is a feature of the DI
   system to have multiple of them with the same token.
-
-* Add the `TypeLink` class.
+  
+* **BREAKING CHANGE**: Add the `TypeLink` class, and replace uses of `Uri`.
 
 * Require `code_builder ^3.0.0`.
 

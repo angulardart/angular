@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../common.dart';
+import '../link.dart';
 import '../types.dart';
 import 'dependencies.dart';
 import 'tokens.dart';
@@ -90,8 +91,8 @@ class ProviderReader {
     // TODO(matanl): Validate that clazz has @Injectable() when flag is set.
     return new UseClassProviderElement(
       token,
-      urlOf(typeArgumentOf(provider).element),
-      urlOf(clazz),
+      linkTypeOf(typeArgumentOf(provider)),
+      linkTypeOf(clazz.type),
       dependencies: _dependencyReader.parseDependencies(clazz),
     );
   }
@@ -104,7 +105,7 @@ class ProviderReader {
   ) {
     return new UseExistingProviderElement(
       token,
-      urlOf(typeArgumentOf(provider).element),
+      linkTypeOf(typeArgumentOf(provider)),
       _tokenReader.parseTokenObject(object),
     );
   }
@@ -119,7 +120,7 @@ class ProviderReader {
     // TODO(matanl): Validate that Foo has @Injectable() when flag is set.
     return new UseFactoryProviderElement(
       token,
-      urlOf(typeArgumentOf(provider.objectValue).element),
+      linkTypeOf(typeArgumentOf(provider.objectValue)),
       urlOf(factoryElement),
       dependencies: manualDeps.isList
           ? _dependencyReader.parseDependenciesList(
@@ -136,7 +137,7 @@ class ProviderReader {
     // TODO(matanl): For corner-cases that can't be revived, display error.
     return new UseValueProviderElement._(
       token,
-      urlOf(typeArgumentOf(provider).element),
+      linkTypeOf(typeArgumentOf(provider)),
       _reviveInvocationsOf(useValue),
     );
   }
@@ -167,10 +168,10 @@ class ProviderReader {
   ProviderElement _parseType(DartObject o) {
     final reader = new ConstantReader(o);
     final clazz = reader.typeValue.element as ClassElement;
-    final token = urlOf(clazz);
+    final token = linkTypeOf(clazz.type);
     return new UseClassProviderElement(
       new TypeTokenElement(token),
-      urlOf(typeArgumentOf(o).element),
+      linkTypeOf(typeArgumentOf(o)),
       token,
       dependencies: _dependencyReader.parseDependencies(clazz),
     );
@@ -183,7 +184,7 @@ abstract class ProviderElement {
   final TokenElement token;
 
   /// The `T` type of `Provider<T>`.
-  final Uri providerType;
+  final TypeLink providerType;
 
   final bool _isExplictlyMulti;
 
@@ -213,7 +214,7 @@ abstract class ProviderElement {
 /// A statically parsed `Provider` that describes a new class instance.
 class UseClassProviderElement extends ProviderElement {
   /// A reference to the class type to create.
-  final Uri useClass;
+  final TypeLink useClass;
 
   /// Arguments that are dependencies to the class.
   final DependencyInvocation<ConstructorElement> dependencies;
@@ -221,7 +222,7 @@ class UseClassProviderElement extends ProviderElement {
   @visibleForTesting
   const UseClassProviderElement(
     TokenElement e,
-    Uri providerType,
+    TypeLink providerType,
     this.useClass, {
     @required this.dependencies,
     bool multi: false,
@@ -255,7 +256,7 @@ class UseExistingProviderElement extends ProviderElement {
 
   const UseExistingProviderElement(
     TokenElement e,
-    Uri providerType,
+    TypeLink providerType,
     this.redirect, {
     bool multi: false,
   })
@@ -288,7 +289,7 @@ class UseFactoryProviderElement extends ProviderElement {
   @visibleForTesting
   const UseFactoryProviderElement(
     TokenElement e,
-    Uri providerType,
+    TypeLink providerType,
     this.useFactory, {
     @required this.dependencies,
     bool multi: false,
@@ -324,7 +325,7 @@ class UseValueProviderElement extends ProviderElement {
   // Not visible for testing because its impractical to create one.
   const UseValueProviderElement._(
     TokenElement e,
-    Uri providerType,
+    TypeLink providerType,
     this.useValue, {
     bool multi: false,
   })

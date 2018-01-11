@@ -176,8 +176,8 @@ class ReflectableEmitter {
       final token = element.type ?? element.token;
       if (token is TypeTokenElement && !token.isDynamic) {
         type = token.prefix != null
-            ? '${token.prefix}${token.url.fragment}'
-            : token.url.fragment;
+            ? '${token.prefix}${token.link.symbol}'
+            : token.link.symbol;
       }
       yield '$type p$i';
     }
@@ -249,8 +249,8 @@ class ReflectableEmitter {
     }
     if (token is TypeTokenElement) {
       return token.prefix != null
-          ? '${token.prefix}${token.url.fragment}'
-          : token.url.fragment;
+          ? '${token.prefix}${token.link.symbol}'
+          : token.link.symbol;
     }
     throw new UnsupportedError('Invalid token type: $token.');
   }

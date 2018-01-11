@@ -1,6 +1,9 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart' show TypeReference;
+import 'package:collection/collection.dart';
 import 'package:source_gen/src/utils.dart';
+
+import 'common.dart';
 
 /// Returns as a `code_builder` [TypeReference] for code generation.
 TypeReference linkToReference(TypeLink link) => new TypeReference((b) => b
@@ -9,13 +12,18 @@ TypeReference linkToReference(TypeLink link) => new TypeReference((b) => b
   ..types.addAll(link.generics.map(linkToReference)));
 
 /// Returns a [TypeLink] to the given statically analyzed [DartType].
-TypeLink linkTypeOf(DartType type) => new TypeLink(
-      type.name,
-      normalizeUrl(type.element.library.source.uri).toString(),
-      type is ParameterizedType
-          ? type.typeArguments.map(linkTypeOf).toList()
-          : const [],
-    );
+TypeLink linkTypeOf(DartType type) {
+  if (type.element.library == null) {
+    return TypeLink.$dynamic;
+  }
+  return new TypeLink(
+    getTypeName(type),
+    normalizeUrl(type.element.library.source.uri).toString(),
+    type is ParameterizedType
+        ? type.typeArguments.map(linkTypeOf).toList()
+        : const [],
+  );
+}
 
 /// An abstraction over pointing to a type in a given Dart source file.
 ///
@@ -42,6 +50,24 @@ class TypeLink {
     this.import, [
     this.generics = const [],
   ]);
+
+  static const _list = const ListEquality();
+
+  @override
+  bool operator ==(Object o) {
+    if (o is TypeLink) {
+      return symbol == o.symbol &&
+          import == o.import &&
+          _list.equals(generics, o.generics);
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => symbol.hashCode ^ import.hashCode ^ _list.hash(generics);
+
+  @override
+  String toString() => 'TypeLink {$import:$symbol<$generics>}';
 
   /// Returns as the older [Url] format, omitting any [generics].
   ///

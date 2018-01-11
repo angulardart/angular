@@ -34,7 +34,7 @@ void main() {
             [
               new DependencyElement(
                 new TypeTokenElement(
-                  Uri.parse('dart:core#DateTime'),
+                  const TypeLink('DateTime', 'dart:core'),
                 ),
               ),
             ],
@@ -64,7 +64,7 @@ void main() {
             [
               new DependencyElement(
                 new TypeTokenElement(
-                  Uri.parse('dart:core#Duration'),
+                  const TypeLink('Duration', 'dart:core'),
                 ),
               ),
             ],
@@ -94,7 +94,7 @@ void main() {
             [
               new DependencyElement(
                 new TypeTokenElement(
-                  Uri.parse('dart:core#Duration'),
+                  const TypeLink('Duration', 'dart:core'),
                 ),
               ),
             ],
@@ -124,7 +124,7 @@ void main() {
             [
               new DependencyElement(
                 new TypeTokenElement(
-                  Uri.parse('dart:core#Duration'),
+                  const TypeLink('Duration', 'dart:core'),
                 ),
               ),
             ],
@@ -154,7 +154,7 @@ void main() {
             [
               new DependencyElement(
                 new TypeTokenElement(
-                  Uri.parse('dart:core#Duration'),
+                  const TypeLink('Duration', 'dart:core'),
                 ),
               ),
             ],
@@ -209,7 +209,7 @@ void main() {
             [
               new DependencyElement(
                 new TypeTokenElement(
-                  Uri.parse('dart:core#Duration'),
+                  const TypeLink('Duration', 'dart:core'),
                 ),
               ),
             ],
@@ -221,7 +221,7 @@ void main() {
         ),
       ]),
     );
-  });
+  }, solo: true);
 
   group('for linking', () {
     Set<String> _fakeInputs;

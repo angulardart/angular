@@ -169,7 +169,7 @@ class DependencyInvocation<E extends Element> {
   String toString() =>
       'DependencyInvocation ' +
       {
-        'bound': urlOf(bound),
+        'bound': '${urlOf(bound)}',
         'positional': '$positional',
         'named': '$named',
       }.toString();

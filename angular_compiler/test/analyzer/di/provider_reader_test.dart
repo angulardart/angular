@@ -92,9 +92,9 @@ void main() {
       expect(
         reader.parseProvider(providers[0]),
         new UseClassProviderElement(
-          new TypeTokenElement(urlOf($Example)),
+          new TypeTokenElement(linkTypeOf($Example.type)),
           null,
-          urlOf($Example),
+          linkTypeOf($Example.type),
           dependencies: new DependencyInvocation(
             $Example.unnamedConstructor,
             const [],
@@ -107,9 +107,9 @@ void main() {
       expect(
         reader.parseProvider(providers[1]),
         new UseClassProviderElement(
-          new TypeTokenElement(urlOf($Example)),
+          new TypeTokenElement(linkTypeOf($Example.type)),
           null,
-          urlOf($Example),
+          linkTypeOf($Example.type),
           dependencies: new DependencyInvocation(
             $Example.unnamedConstructor,
             const [],
@@ -122,9 +122,9 @@ void main() {
       expect(
         reader.parseProvider(providers[2]),
         new UseClassProviderElement(
-          new TypeTokenElement(urlOf($Example)),
+          new TypeTokenElement(linkTypeOf($Example.type)),
           null,
-          urlOf($ExamplePrime),
+          linkTypeOf($ExamplePrime.type),
           dependencies: new DependencyInvocation(
             $ExamplePrime.unnamedConstructor,
             const [],
@@ -137,14 +137,14 @@ void main() {
       expect(
         reader.parseProvider(providers[3]),
         new UseFactoryProviderElement(
-          new TypeTokenElement(urlOf($Example)),
+          new TypeTokenElement(linkTypeOf($Example.type)),
           null,
           urlOf($createExample),
           dependencies: new DependencyInvocation(
             $createExample,
             [
               new DependencyElement(
-                new TypeTokenElement(urlOf($DependencyA)),
+                new TypeTokenElement(linkTypeOf($DependencyA.type)),
               ),
             ],
           ),
@@ -156,14 +156,14 @@ void main() {
       expect(
         reader.parseProvider(providers[4]),
         new UseFactoryProviderElement(
-          new TypeTokenElement(urlOf($Example)),
+          new TypeTokenElement(linkTypeOf($Example.type)),
           null,
           urlOf($createExample),
           dependencies: new DependencyInvocation(
             $createExample,
             [
               new DependencyElement(
-                new TypeTokenElement(urlOf($DependencyB)),
+                new TypeTokenElement(linkTypeOf($DependencyB.type)),
               ),
             ],
           ),
@@ -177,7 +177,7 @@ void main() {
       ) as UseValueProviderElement;
       expect(
         useValue.token,
-        new TypeTokenElement(Uri.parse('dart:core#Duration')),
+        new TypeTokenElement(const TypeLink('Duration', 'dart:core')),
       );
       expect(useValue.useValue, const isInstanceOf<Revivable>());
       final revivable = useValue.useValue as Revivable;
@@ -219,7 +219,7 @@ void main() {
         new UseClassProviderElement(
           new OpaqueTokenElement('exampleToken', isMultiToken: false),
           null,
-          urlOf($Example),
+          linkTypeOf($Example.type),
           dependencies: new DependencyInvocation(
             $Example.unnamedConstructor,
             const [],
@@ -237,7 +237,7 @@ void main() {
 
     test('using an explicit Provider type <T>', () {
       final UseValueProviderElement value = reader.parseProvider(providers[10]);
-      expect(value.providerType, Uri.parse('dart:core#String'));
+      expect(value.providerType, new TypeLink('String', 'dart:core'));
     });
   });
 }

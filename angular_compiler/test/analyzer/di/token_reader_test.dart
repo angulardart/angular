@@ -31,8 +31,8 @@ void main() {
       final token = reader.parseTokenObject(tokens[0]);
       expect(token, const isInstanceOf<TypeTokenElement>());
       expect(
-        '${(token as TypeTokenElement).url}',
-        'asset:test_lib/lib/test_lib.dart#Example',
+        (token as TypeTokenElement).link,
+        new TypeLink('Example', 'asset:test_lib/lib/test_lib.dart'),
       );
     });
 
