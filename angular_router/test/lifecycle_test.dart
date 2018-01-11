@@ -345,17 +345,33 @@ void main() {
       '$SecondChildComponent.onActivate',
     ]);
   });
+
+  test('only match complete path segment', () async {
+    final fixture = await setup<TestMatchCompletePathSegment>('/second-child');
+    final log = fixture.assertOnlyInstance.lifecycleLog;
+    // TODO(b/70224632): prevent initial `FirstChildComponent.ngOnInit`.
+    expect(
+        log,
+        [
+          '$SecondChildComponent.ngOnInit',
+          '$SecondChildComponent.canActivate',
+          '$SecondChildComponent.onActivate'
+        ],
+        skip: true);
+  });
 }
 
 const lifecycleLogToken = const OpaqueToken('lifecycleLog');
 
-List<String> lifecycleLogFactory() => [];
-
-Future<NgTestFixture<T>> setup<T>() async {
-  final testBed = new NgTestBed<T>().addProviders(const [
-    const Provider(lifecycleLogToken, useFactory: lifecycleLogFactory),
-    const Provider(Location, useClass: SpyLocation),
-    const Provider(Router, useClass: RouterImpl),
+Future<NgTestFixture<T>> setup<T>([String initialPath]) async {
+  final location = new SpyLocation();
+  if (initialPath != null) {
+    location.setInitialPath(initialPath);
+  }
+  final testBed = new NgTestBed<T>().addProviders([
+    new Provider(lifecycleLogToken, useValue: []),
+    new Provider(Location, useValue: location),
+    new Provider(Router, useClass: RouterImpl),
   ]);
   return testBed.create();
 }
@@ -781,5 +797,22 @@ class TestRedirectToSibling {
   ];
 
   TestRedirectToSibling(
+      @Inject(lifecycleLogToken) this.lifecycleLog, this.router);
+}
+
+@Component(
+  selector: 'test-match-complete-path-segment',
+  template: testTemplate,
+  directives: testDirectives,
+)
+class TestMatchCompletePathSegment {
+  final List<String> lifecycleLog;
+  final Router router;
+  final List<RouteDefinition> routes = [
+    new RouteDefinition(path: '', component: ng.FirstChildComponentNgFactory),
+    SecondChildComponent.routeDefinition,
+  ];
+
+  TestMatchCompletePathSegment(
       @Inject(lifecycleLogToken) this.lifecycleLog, this.router);
 }
