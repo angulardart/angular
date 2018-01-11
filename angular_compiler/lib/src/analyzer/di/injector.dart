@@ -101,7 +101,6 @@ class InjectorReader {
     }
 
     // This is pointing to a true asset: location, needing a relative link.
-    print('>>> to: $to\nfrom: $from');
     final path = p.relative(to.skip(2).join('/'), from: from.skip(2).join('/'));
     return refer(symbol, path);
   }

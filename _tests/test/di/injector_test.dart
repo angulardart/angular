@@ -287,10 +287,6 @@ void main() {
           result,
           const isInstanceOf<List<String>>(),
           reason: 'A reified List<String> is expected',
-          // See https://github.com/dart-lang/angular/issues/772; all reified
-          // types for multi providers for generated injectors are List<dynamic>
-          // but that will change.
-          skip: 'Not currently supported for generated injectors.',
         );
         expect(result, ['A', 'B']);
       });
@@ -355,8 +351,8 @@ const typedTokenOfString = const OpaqueToken<String>('typedToken');
   const Provider(simpleConstToken, useValue: const ExampleService()),
 
   // TODO(matanl): Switch to ValueProvider.forToken once supported.
-  const Provider(multiStringToken, useValue: 'A'),
-  const Provider(multiStringToken, useValue: 'B'),
+  const Provider<String>(multiStringToken, useValue: 'A'),
+  const Provider<String>(multiStringToken, useValue: 'B'),
 
   // We are going to expect these are different bindings.
   const Provider(typedTokenOfDynamic, useValue: 1),
