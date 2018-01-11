@@ -337,7 +337,6 @@ void main() {
     expect(log, [
       '$FirstChildComponent.canNavigate',
       '$FirstChildComponent.canDeactivate',
-      '$FirstChildComponent.canNavigate',
       '$SecondChildComponent.ngOnInit',
       '$FirstChildComponent.canDeactivate',
       '$SecondChildComponent.canActivate',
