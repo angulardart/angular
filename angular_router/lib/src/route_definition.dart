@@ -51,7 +51,7 @@ abstract class RouteDefinition {
         throw new StateError('Must have a non-null `path` string');
       }
       return true;
-    });
+    }());
   }
 
   /// Define a route from [path] that loads [component] into an outlet.
@@ -167,7 +167,7 @@ abstract class RouteDefinition {
         throw new ArgumentError.notNull('paramValues');
       }
       return true;
-    });
+    }());
     var url = '/' + path;
     for (final parameter in parameters) {
       url = url.replaceFirst(
@@ -208,7 +208,7 @@ class ComponentRouteDefinition extends RouteDefinition {
         );
       }
       return true;
-    });
+    }());
     super.assertValid();
   }
 }
@@ -238,7 +238,7 @@ class DeferredRouteDefinition extends RouteDefinition {
         throw new StateError('Must have a non-null `loader` function');
       }
       return true;
-    });
+    }());
     super.assertValid();
   }
 }
@@ -271,7 +271,7 @@ class RedirectRouteDefinition extends RouteDefinition {
         throw new StateError('Cannot redirect from `redirectTo` to `path');
       }
       return true;
-    });
+    }());
     super.assertValid();
   }
 }
