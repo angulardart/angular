@@ -346,16 +346,16 @@ void main() {
     ]);
   });
 
-  test('only match complete path segment', () async {
-    final fixture = await setup<TestMatchCompletePathSegment>('/second-child');
+  test('only initialize route with longest prefix match', () async {
+    final fixture = await setup<TestMatchCompletePathSegment>('items');
     final log = fixture.assertOnlyInstance.lifecycleLog;
-    // TODO(b/70224632): prevent initial `FirstChildComponent.ngOnInit`.
+    // TODO(b/70224632): prevent partial matches from being initialized.
     expect(
         log,
         [
-          '$SecondChildComponent.ngOnInit',
-          '$SecondChildComponent.canActivate',
-          '$SecondChildComponent.onActivate'
+          '$ThirdChildComponent.ngOnInit',
+          '$ThirdChildComponent.canActivate',
+          '$ThirdChildComponent.onActivate'
         ],
         skip: true);
   });
@@ -469,6 +469,17 @@ class SecondChildComponent extends RouterLifecycleLogger {
   final List<String> lifecycleLog;
 
   SecondChildComponent(@Inject(lifecycleLogToken) this.lifecycleLog);
+}
+
+@Component(
+  selector: 'third-child',
+  template: '',
+)
+class ThirdChildComponent extends RouterLifecycleLogger {
+  final String componentName = '$ThirdChildComponent';
+  final List<String> lifecycleLog;
+
+  ThirdChildComponent(@Inject(lifecycleLogToken) this.lifecycleLog);
 }
 
 @Component(
@@ -809,8 +820,18 @@ class TestMatchCompletePathSegment {
   final List<String> lifecycleLog;
   final Router router;
   final List<RouteDefinition> routes = [
-    new RouteDefinition(path: '', component: ng.FirstChildComponentNgFactory),
-    SecondChildComponent.routeDefinition,
+    new RouteDefinition(
+      path: '',
+      component: ng.FirstChildComponentNgFactory,
+    ),
+    new RouteDefinition(
+      path: 'item',
+      component: ng.SecondChildComponentNgFactory,
+    ),
+    new RouteDefinition(
+      path: 'items',
+      component: ng.ThirdChildComponentNgFactory,
+    ),
   ];
 
   TestMatchCompletePathSegment(
