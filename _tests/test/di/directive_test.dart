@@ -80,6 +80,14 @@ void main() {
     expect(fixture.assertOnlyInstance.fooTokenFromMulti, hasLength(1));
   });
 
+  test('should not consider tokens with different types the same', () async {
+    final fixture = await new NgTestBed<SupportsTypedToken>().create();
+    final value1 = fixture.assertOnlyInstance.injector.get(barTypedToken1);
+    expect(value1, 1);
+    final value2 = fixture.assertOnlyInstance.injector.get(barTypedToken2);
+    expect(value2, 2);
+  }, skip: 'Enable when supported in the ViewCompiler.');
+
   group('should support optional values', () {
     NgTestBed<UsingInjectAndOptional> testBed;
 
@@ -335,4 +343,21 @@ class NoClashTokens {
     @Inject(fooOpaqueToken) this.fooTokenFromOpaque,
     @Inject(fooMultiToken) this.fooTokenFromMulti,
   );
+}
+
+const barTypedToken1 = const OpaqueToken<dynamic>('barTypedToken');
+const barTypedToken2 = const OpaqueToken<bool>('barTypedToken');
+
+@Component(
+  selector: 'supports-typed-token',
+  providers: const [
+    const ValueProvider.forToken(barTypedToken1, 1),
+    const ValueProvider.forToken(barTypedToken2, 2),
+  ],
+  template: '',
+)
+class SupportsTypedToken {
+  final Injector injector;
+
+  SupportsTypedToken(this.injector);
 }
