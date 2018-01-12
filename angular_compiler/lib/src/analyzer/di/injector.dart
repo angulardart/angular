@@ -116,7 +116,14 @@ class InjectorReader {
     }
     final opaqueToken = token as OpaqueTokenElement;
     final tokenClass = opaqueToken.isMultiToken ? 'MultiToken' : 'OpaqueToken';
-    return new Reference(tokenClass, _runtime).constInstance([
+    final preciseToken = new TypeReference((b) {
+      b.symbol = tokenClass;
+      b.url = _runtime;
+      if (opaqueToken.typeUrl != null) {
+        b.types.add(linkToReference(opaqueToken.typeUrl));
+      }
+    });
+    return preciseToken.constInstance([
       literalString(opaqueToken.identifier),
     ]);
   }
