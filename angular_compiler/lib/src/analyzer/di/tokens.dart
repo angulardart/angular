@@ -46,7 +46,7 @@ class TokenReader {
         constant.read('_desc').stringValue,
         isMultiToken: constant.instanceOf($MultiToken),
         typeUrl: value.type.typeArguments.isNotEmpty
-            ? urlOf(value.type.typeArguments.first.element)
+            ? linkTypeOf(value.type.typeArguments.first)
             : null,
       );
     }
@@ -170,7 +170,7 @@ class OpaqueTokenElement implements TokenElement {
   final bool isMultiToken;
 
   /// What the type of the token is, or `null` if it is `dynamic`.
-  final Uri typeUrl;
+  final TypeLink typeUrl;
 
   @visibleForTesting
   const OpaqueTokenElement(
@@ -190,9 +190,9 @@ class OpaqueTokenElement implements TokenElement {
     return false;
   }
 
-  static bool _bothTypesDynamic(Uri a, Uri b) {
-    return (a == null || a == _dynamic) == (b == null || b == _dynamic);
-  }
+  static bool _bothTypesDynamic(TypeLink a, TypeLink b) =>
+      (a == null || a == TypeLink.$dynamic) ==
+      (b == null || b == TypeLink.$dynamic);
 
   @override
   int get hashCode {

@@ -301,11 +301,7 @@ void main() {
 
       test('should consider opaque tokens with different types unique', () {
         expect(injector.get(typedTokenOfDynamic), 1);
-        expect(
-          () => injector.get(typedTokenOfString),
-          2,
-          skip: 'Enable once supported in the generated injector',
-        );
+        expect(injector.get(typedTokenOfString), 2);
       });
     });
   });

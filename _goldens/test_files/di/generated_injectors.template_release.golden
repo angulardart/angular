@@ -28,20 +28,28 @@ class _Injector$doGenerate extends _i1.GeneratedInjector {
   _i2.ExamplePrime _field0;
 
   _i2.ExamplePrime _getExamplePrime$0() => _field0 ??= new _i2.ExamplePrime();
-  String _getString$1() => r"""A""";
-  String _getString$2() => r"""B""";
-  _i1.Injector _getInjector$3() => this;
+  String _getString$1() => r"""dynamic""";
+  String _getString$2() => r"""String""";
+  String _getString$3() => r"""A""";
+  String _getString$4() => r"""B""";
+  _i1.Injector _getInjector$5() => this;
   @override
   Object injectFromSelfOptional(Object token,
       [Object orElse = _i1.throwIfNotFound]) {
     if (identical(token, _i2.Example)) {
       return _getExamplePrime$0();
     }
-    if (identical(token, _i1.Injector)) {
-      return _getInjector$3();
+    if (identical(token, const _i1.OpaqueToken<dynamic>('someToken'))) {
+      return _getString$1();
     }
-    if (identical(token, const _i1.MultiToken('someMultiToken'))) {
-      return [_getString$1(), _getString$2()];
+    if (identical(token, const _i1.OpaqueToken<String>('someToken'))) {
+      return _getString$2();
+    }
+    if (identical(token, _i1.Injector)) {
+      return _getInjector$5();
+    }
+    if (identical(token, const _i1.MultiToken<dynamic>('someMultiToken'))) {
+      return [_getString$3(), _getString$4()];
     }
     return orElse;
   }
