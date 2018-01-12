@@ -23,11 +23,16 @@ class InjectorReader {
   }
 
   /// Returns a list of all injectors needing generation in [element].
-  static List<InjectorReader> findInjectors(LibraryElement element) =>
-      element.definingCompilationUnit.functions
-          .where(_shouldGenerateInjector)
-          .map((fn) => new InjectorReader(fn, doNotScope: element.source.uri))
-          .toList();
+  static List<InjectorReader> findInjectors(LibraryElement element) {
+    final source = element.source.uri;
+    if (source == null) {
+      throw new StateError('Expected a source for $element.');
+    }
+    return element.definingCompilationUnit.functions
+        .where(_shouldGenerateInjector)
+        .map((fn) => new InjectorReader(fn, doNotScope: source))
+        .toList();
+  }
 
   /// `@Injector.generate` annotation object;
   final ConstantReader annotation;
@@ -89,15 +94,15 @@ class InjectorReader {
     // URL segments indicating the target.
     final to = p.split(url.path);
 
-    // Verify this is the same package:.
-    if (to[0] != from[0]) {
-      return refer(symbol, url.toString());
-    }
-
     // This is pointing to a package: location. We can safely just link.
     if (to[1] == 'lib') {
       to.removeAt(1);
       return refer(symbol, 'package:${to.join('/')}');
+    }
+
+    // Verify this is the same package:.
+    if (to[0] != from[0]) {
+      return refer(symbol, url.toString());
     }
 
     // This is pointing to a true asset: location, needing a relative link.
