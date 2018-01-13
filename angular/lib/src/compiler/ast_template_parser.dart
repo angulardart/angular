@@ -29,6 +29,17 @@ class AstTemplateParser implements TemplateParser {
 
   AstTemplateParser(this.schemaRegistry, this.parser);
 
+  /// Parses the template into a structured tree of [ng.TemplateAst] nodes.
+  ///
+  /// This parsing is done in multiple phases:
+  /// 1. Parse the raw template using `angular_ast` package.
+  /// 2. Post-process the raw [ast.TemplateAst] nodes.
+  /// 3. Bind any matching Directives and Providers, converting into
+  ///    [ng.TemplateAst] nodes.
+  /// 4. Post-process the bound [ng.TemplateAst] nodes.
+  ///
+  /// We will collect parse errors for each phase, and only continue to the next
+  /// phase if no errors have occurred.
   @override
   List<ng.TemplateAst> parse(
       CompileDirectiveMetadata compMeta,
@@ -36,58 +47,81 @@ class AstTemplateParser implements TemplateParser {
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
       String name) {
-    final parsedAst = _parseTemplate(template, name);
+    final exceptionHandler = new _AstExceptionHandler(template, name);
+
+    final parsedAst = _parseTemplate(template, name, exceptionHandler);
+    exceptionHandler.maybeReportExceptions();
     if (parsedAst.isEmpty) return const [];
+
+    final filteredAst = _processRawTemplateNodes(
+      parsedAst,
+      template: template,
+      name: name,
+      exceptionHandler: exceptionHandler,
+      preserveWhitespace: compMeta.template.preserveWhitespace ?? false,
+    );
+    exceptionHandler.maybeReportExceptions();
+
+    final providedAsts = _bindDirectivesAndProviders(directives, compMeta,
+        filteredAst, exceptionHandler, parsedAst.first.sourceSpan);
+    exceptionHandler.maybeReportExceptions();
+
+    var processedAsts = _processBoundTemplateNodes(
+        compMeta, providedAsts, pipes, exceptionHandler);
+    exceptionHandler.maybeReportExceptions();
+
+    return processedAsts;
+  }
+
+  List<ast.TemplateAst> _parseTemplate(String template, String name,
+          _AstExceptionHandler exceptionHandler) =>
+      ast.parse(template,
+          sourceUrl: name,
+          desugar: true,
+          toolFriendlyAst: true,
+          parseExpressions: false,
+          exceptionHandler: exceptionHandler);
+
+  List<ast.TemplateAst> _processRawTemplateNodes(
+      Iterable<ast.TemplateAst> parsedAst,
+      {String template,
+      String name,
+      _AstExceptionHandler exceptionHandler,
+      bool preserveWhitespace: false}) {
     final implicNamespace = _applyImplicitNamespace(parsedAst);
-    final desugaredAst = _inlineTemplates(implicNamespace, template, name);
-    final filteredAst = _filterElements(
-        desugaredAst, compMeta.template.preserveWhitespace ?? false);
-    final boundAsts = _bindDirectives(directives, compMeta, filteredAst);
-    final providedAsts = _bindProviders(compMeta, desugaredAst, boundAsts);
+    final desugaredAst = _inlineTemplates(implicNamespace, exceptionHandler);
+    var filterElements = _filterElements(desugaredAst, preserveWhitespace);
+    _validateTemplate(filterElements, exceptionHandler);
+    return filterElements;
+  }
+
+  List<ng.TemplateAst> _bindDirectivesAndProviders(
+      List<CompileDirectiveMetadata> directives,
+      CompileDirectiveMetadata compMeta,
+      List<ast.TemplateAst> filteredAst,
+      _AstExceptionHandler exceptionHandler,
+      SourceSpan span) {
+    final boundAsts =
+        _bindDirectives(directives, compMeta, filteredAst, exceptionHandler);
+    return _bindProviders(compMeta, boundAsts, span, exceptionHandler);
+  }
+
+  List<ng.TemplateAst> _processBoundTemplateNodes(
+      CompileDirectiveMetadata compMeta,
+      List<ng.TemplateAst> providedAsts,
+      List<CompilePipeMetadata> pipes,
+      _AstExceptionHandler exceptionHandler) {
     _optimize(compMeta, providedAsts);
-    _validatePipeNames(providedAsts, pipes);
+    _validatePipeNames(providedAsts, pipes, exceptionHandler);
     return providedAsts;
   }
 
-  List<ast.TemplateAst> _parseTemplate(String template, String name) {
-    var exceptionHandler = new ast.RecoveringExceptionHandler();
-    final parsedAst = ast.parse(template,
-        sourceUrl: name,
-        desugar: true,
-        toolFriendlyAst: true,
-        parseExpressions: false,
-        exceptionHandler: exceptionHandler);
-    if (exceptionHandler.exceptions.isNotEmpty) {
-      _handleExceptions(template, name, exceptionHandler.exceptions);
-      return [];
-    }
-    return parsedAst;
-  }
-
-  void _handleExceptions(String template, String sourceUrl,
-      List<ast.AngularParserException> exceptions) {
-    final sourceFile = new SourceFile.fromString(template, url: sourceUrl);
-    final errorString = exceptions
-        .map((exception) => sourceFile
-            .span(exception.offset, exception.offset + exception.length)
-            .message(exception.errorCode.message))
-        .join('\n');
-    throw new BaseException('Template parse errors:\n$errorString');
-  }
-
-  List<ast.TemplateAst> _inlineTemplates(
-      List<ast.TemplateAst> parsedAst, String template, String sourceUrl) {
-    try {
-      var values = parsedAst
-          .map((asNode) => asNode.accept(new _InlineTemplateDesugar()))
+  List<ast.TemplateAst> _inlineTemplates(List<ast.TemplateAst> parsedAst,
+          ast.ExceptionHandler exceptionHandler) =>
+      parsedAst
+          .map((asNode) =>
+              asNode.accept(new _InlineTemplateDesugar(exceptionHandler)))
           .toList();
-      return values;
-    } on ast.AngularParserException catch (e) {
-      _handleExceptions(template, sourceUrl, [e]);
-      // _handleExceptions throws an exception, so don't expect to reach this.
-      rethrow;
-    }
-  }
 
   List<ast.TemplateAst> _filterElements(
       List<ast.TemplateAst> parsedAst, bool preserveWhitespace) {
@@ -99,25 +133,24 @@ class AstTemplateParser implements TemplateParser {
   List<ng.TemplateAst> _bindDirectives(
       List<CompileDirectiveMetadata> directives,
       CompileDirectiveMetadata compMeta,
-      List<ast.TemplateAst> filteredAst) {
+      List<ast.TemplateAst> filteredAst,
+      _AstExceptionHandler exceptionHandler) {
     final visitor = new _BindDirectivesVisitor();
     final context = new _ParseContext.forRoot(new _TemplateContext(
         parser: parser,
         schemaRegistry: schemaRegistry,
         directives: removeDuplicates(directives),
-        exports: compMeta.exports));
-    final boundAsts = visitor._visitAll(filteredAst, context);
-    if (context.templateContext.errors.isNotEmpty) {
-      handleParseErrors(context.templateContext.errors);
-      return [];
-    }
-    return boundAsts;
+        exports: compMeta.exports,
+        exceptionHandler: exceptionHandler));
+    return visitor._visitAll(filteredAst, context);
   }
 
-  List<ng.TemplateAst> _bindProviders(CompileDirectiveMetadata compMeta,
-      List<ast.TemplateAst> parsedAst, List<ng.TemplateAst> visitedAsts) {
-    var providerViewContext =
-        new ProviderViewContext(compMeta, parsedAst.first.sourceSpan);
+  List<ng.TemplateAst> _bindProviders(
+      CompileDirectiveMetadata compMeta,
+      List<ng.TemplateAst> visitedAsts,
+      SourceSpan sourceSpan,
+      _AstExceptionHandler exceptionHandler) {
+    var providerViewContext = new ProviderViewContext(compMeta, sourceSpan);
     final providerVisitor = new _ProviderVisitor(providerViewContext);
     final ProviderElementContext providerContext = new ProviderElementContext(
         providerViewContext, null, false, [], [], [], null);
@@ -125,10 +158,7 @@ class AstTemplateParser implements TemplateParser {
         .map((templateAst) =>
             templateAst.visit(providerVisitor, providerContext))
         .toList();
-    if (providerViewContext.errors.isNotEmpty) {
-      handleParseErrors(providerViewContext.errors);
-      return [];
-    }
+    exceptionHandler.handleAll(providerViewContext.errors);
     return providedAsts;
   }
 
@@ -143,12 +173,62 @@ class AstTemplateParser implements TemplateParser {
           .map((asNode) => asNode.accept(new _NamespaceVisitor()))
           .toList();
 
-  void _validatePipeNames(
-      List<ng.TemplateAst> parsedAsts, List<CompilePipeMetadata> pipes) {
-    var pipeValidator = new _PipeValidator(removeDuplicates(pipes));
+  void _validatePipeNames(List<ng.TemplateAst> parsedAsts,
+      List<CompilePipeMetadata> pipes, _AstExceptionHandler exceptionHandler) {
+    var pipeValidator =
+        new _PipeValidator(removeDuplicates(pipes), exceptionHandler);
     for (final ast in parsedAsts) {
       ast.visit(pipeValidator, null);
     }
+  }
+
+  void _validateTemplate(
+      List<ast.TemplateAst> parsedAst, _AstExceptionHandler exceptionHandler) {
+    for (final ast in parsedAst) {
+      ast.accept(new _TemplateValidator(exceptionHandler));
+    }
+  }
+}
+
+class _AstExceptionHandler extends ast.RecoveringExceptionHandler {
+  final String template;
+  final String sourceUrl;
+
+  final parseErrors = <ParseError>[];
+
+  _AstExceptionHandler(this.template, this.sourceUrl);
+
+  void handleParseError(ParseError error) {
+    parseErrors.add(error);
+  }
+
+  void handleAll(Iterable<ParseError> errors) {
+    parseErrors.addAll(errors);
+  }
+
+  void maybeReportExceptions() {
+    if (exceptions.isNotEmpty) {
+      // We always throw here, so no need to clear the list.
+      _reportExceptions();
+    }
+    if (parseErrors.isNotEmpty) {
+      // TODO(alorenzen): Once this is no longer used for the legacy parser,
+      // rename to reportParseErrors.
+      handleParseErrors(parseErrors);
+      // handleParseErrors() may only log warnings and not throw, so we need to
+      // clear the list before the next phase.
+      parseErrors.clear();
+    }
+  }
+
+  void _reportExceptions() {
+    final sourceFile = new SourceFile.fromString(template, url: sourceUrl);
+    final errorString = exceptions
+        .map((exception) => sourceFile
+            .span(exception.offset, exception.offset + exception.length)
+            .message(exception.errorCode.message))
+        .join('\n');
+    throw new BaseException('Template parse errors:\n$errorString');
   }
 }
 
@@ -402,15 +482,20 @@ class _TemplateContext {
   final ElementSchemaRegistry schemaRegistry;
   final List<CompileDirectiveMetadata> directives;
   final List<CompileIdentifierMetadata> exports;
-  final List<TemplateParseError> errors = [];
+  final _AstExceptionHandler exceptionHandler;
 
   _TemplateContext(
-      {this.parser, this.schemaRegistry, this.directives, this.exports});
+      {this.parser,
+      this.schemaRegistry,
+      this.directives,
+      this.exports,
+      this.exceptionHandler});
 
   void reportError(String message, SourceSpan sourceSpan,
       [ParseErrorLevel level]) {
     level ??= ParseErrorLevel.FATAL;
-    errors.add(new TemplateParseError(message, sourceSpan, level));
+    exceptionHandler
+        .handleParseError(new TemplateParseError(message, sourceSpan, level));
   }
 }
 
@@ -855,6 +940,10 @@ class _ProviderVisitor
 /// Visitor which extracts inline templates.
 // TODO(alorenzen): Refactor this into pkg:angular_ast.
 class _InlineTemplateDesugar extends ast.RecursiveTemplateAstVisitor<Null> {
+  final ast.ExceptionHandler exceptionHandler;
+
+  _InlineTemplateDesugar(this.exceptionHandler);
+
   @override
   ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
     astNode = super.visitElement(astNode);
@@ -896,11 +985,9 @@ class _InlineTemplateDesugar extends ast.RecursiveTemplateAstVisitor<Null> {
                 ? [new ast.AttributeAst.from(templateAttribute, name)]
                 : [],
             childNodes: [astNode]);
-      } catch (e) {
-        rethrow;
-        // TODO(alorenzen): Add support for exception handling.
-        // exceptionHandler.handle(e);
-        // return astNode;
+      } on ast.AngularParserException catch (e) {
+        exceptionHandler.handle(e);
+        return null;
       }
     } else {
       return new ast.EmbeddedTemplateAst.from(templateAttribute, properties: [
@@ -989,6 +1076,14 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
   }
 }
 
+class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
+  final ast.ExceptionHandler exceptionHandler;
+
+  _TemplateValidator(this.exceptionHandler);
+
+  // TODO(alorenzen): Add validation.
+}
+
 /// Visitor that verifies all pipes in the template are valid.
 ///
 /// First, we visit all [AST] values to extract the pipe names declared in the
@@ -996,8 +1091,9 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
 /// [CompilePipeMetadata] entry.
 class _PipeValidator implements ng.TemplateAstVisitor<Null, Null> {
   final List<String> _pipeNames;
+  final _AstExceptionHandler _exceptionHandler;
 
-  _PipeValidator(List<CompilePipeMetadata> pipes)
+  _PipeValidator(List<CompilePipeMetadata> pipes, this._exceptionHandler)
       : _pipeNames = pipes.map((pipe) => pipe.name).toList();
 
   void _validatePipeNames(AST ast, SourceSpan sourceSpan) {
@@ -1006,9 +1102,10 @@ class _PipeValidator implements ng.TemplateAstVisitor<Null, Null> {
     ast.visit(collector);
     for (String pipeName in collector.pipes) {
       if (!_pipeNames.contains(pipeName)) {
-        // TODO(alorenzen): Replace this with proper error handling.
-        throw new ArgumentError(
-            sourceSpan.message("The pipe '$pipeName' could not be found."));
+        _exceptionHandler.handleParseError(new TemplateParseError(
+            "The pipe '$pipeName' could not be found.",
+            sourceSpan,
+            ParseErrorLevel.FATAL));
       }
     }
   }
