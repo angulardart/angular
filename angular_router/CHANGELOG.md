@@ -1,3 +1,7 @@
+### Breaking changes
+
+*   Removed `SpyLocation`. `MockLocationStrategy` should be used instead.
+
 ### Bug fixes
 
 *   Prevented `canDeactivate()` from being invoked twice during redirection. It
