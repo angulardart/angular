@@ -287,20 +287,26 @@ class _BindDirectivesVisitor
 
   ng.BoundElementPropertyAst _createPropertyForAttribute(
       ast.AttributeAst attribute, _ParseContext elementContext) {
-    var parsedInterpolation = elementContext.templateContext.parser
-        .parseInterpolation(attribute.value, _location(attribute),
-            elementContext.templateContext.exports);
-    if (elementContext.bindInterpolationToDirective(
-        attribute, parsedInterpolation)) {
+    try {
+      var parsedInterpolation = elementContext.templateContext.parser
+          .parseInterpolation(attribute.value, _location(attribute),
+              elementContext.templateContext.exports);
+      if (elementContext.bindInterpolationToDirective(
+          attribute, parsedInterpolation)) {
+        return null;
+      }
+      return createElementPropertyAst(
+          elementContext.elementName,
+          attribute.name,
+          parsedInterpolation,
+          attribute.sourceSpan,
+          elementContext.templateContext.schemaRegistry,
+          elementContext.templateContext.reportError);
+    } on ParseException catch (e) {
+      elementContext.templateContext
+          .reportError(e.message, attribute.sourceSpan);
       return null;
     }
-    return createElementPropertyAst(
-        elementContext.elementName,
-        attribute.name,
-        parsedInterpolation,
-        attribute.sourceSpan,
-        elementContext.templateContext.schemaRegistry,
-        elementContext.templateContext.reportError);
   }
 
   int _findNgContentIndexForElement(
@@ -371,9 +377,15 @@ class _BindDirectivesVisitor
 
   @override
   ng.TemplateAst visitEvent(ast.EventAst astNode, [_ParseContext context]) {
-    var value = context.templateContext.parser.parseAction(
-        astNode.value, _location(astNode), context.templateContext.exports);
-    return new ng.BoundEventAst(astNode.name, value, astNode.sourceSpan);
+    try {
+      var value = context.templateContext.parser.parseAction(
+          astNode.value, _location(astNode), context.templateContext.exports);
+      return new ng.BoundEventAst(
+          _getEventName(astNode), value, astNode.sourceSpan);
+    } on ParseException catch (e) {
+      context.templateContext.reportError(e.message, astNode.sourceSpan);
+      return null;
+    }
   }
 
   @override
@@ -389,22 +401,28 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitProperty(ast.PropertyAst astNode,
       [_ParseContext context]) {
-    var value = context.templateContext.parser.parseBinding(
-        astNode.value ?? 'null',
-        _location(astNode),
-        context.templateContext.exports);
-    // If we bind the property to a directive input, or the element is a
-    // template element, then we don't want to bind the property to the element.
-    if (context.bindPropertyToDirective(astNode, value) || context.isTemplate) {
+    try {
+      var value = context.templateContext.parser.parseBinding(
+          astNode.value ?? 'null',
+          _location(astNode),
+          context.templateContext.exports);
+      // If we bind the property to a directive input, or the element is a
+      // template element, then we don't want to bind the property to the element.
+      if (context.bindPropertyToDirective(astNode, value) ||
+          context.isTemplate) {
+        return null;
+      }
+      return createElementPropertyAst(
+          context.elementName,
+          _getPropertyName(astNode),
+          value,
+          astNode.sourceSpan,
+          context.templateContext.schemaRegistry,
+          context.templateContext.reportError);
+    } on ParseException catch (e) {
+      context.templateContext.reportError(e.message, astNode.sourceSpan);
       return null;
     }
-    return createElementPropertyAst(
-        context.elementName,
-        _getPropertyName(astNode),
-        value,
-        astNode.sourceSpan,
-        context.templateContext.schemaRegistry,
-        context.templateContext.reportError);
   }
 
   @override
@@ -428,12 +446,17 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitInterpolation(ast.InterpolationAst astNode,
       [_ParseContext context]) {
-    var element = context.templateContext.parser.parseInterpolation(
-        '{{${astNode.value}}}',
-        _location(astNode),
-        context.templateContext.exports);
-    return new ng.BoundTextAst(element,
-        context.findNgContentIndex(TEXT_CSS_SELECTOR), astNode.sourceSpan);
+    try {
+      var element = context.templateContext.parser.parseInterpolation(
+          '{{${astNode.value}}}',
+          _location(astNode),
+          context.templateContext.exports);
+      return new ng.BoundTextAst(element,
+          context.findNgContentIndex(TEXT_CSS_SELECTOR), astNode.sourceSpan);
+    } on ParseException catch (e) {
+      context.templateContext.reportError(e.message, astNode.sourceSpan);
+      return null;
+    }
   }
 
   @override
@@ -682,16 +705,21 @@ class _ParseContext {
       _TemplateContext templateContext) {
     var result = [];
     for (var propName in directive.hostProperties.keys) {
-      var expression = directive.hostProperties[propName];
-      var exprAst = templateContext.parser
-          .parseBinding(expression, location, templateContext.exports);
-      result.add(createElementPropertyAst(
-          elementName,
-          propName,
-          exprAst,
-          sourceSpan,
-          templateContext.schemaRegistry,
-          templateContext.reportError));
+      try {
+        var expression = directive.hostProperties[propName];
+        var exprAst = templateContext.parser
+            .parseBinding(expression, location, templateContext.exports);
+        result.add(createElementPropertyAst(
+            elementName,
+            propName,
+            exprAst,
+            sourceSpan,
+            templateContext.schemaRegistry,
+            templateContext.reportError));
+      } on ParseException catch (e) {
+        templateContext.reportError(e.message, sourceSpan);
+        continue;
+      }
     }
     return result;
   }
@@ -704,10 +732,15 @@ class _ParseContext {
       _TemplateContext templateContext) {
     var result = [];
     for (var eventName in directive.hostListeners.keys) {
-      var expression = directive.hostListeners[eventName];
-      var value = templateContext.parser
-          .parseAction(expression, location, templateContext.exports);
-      result.add(new ng.BoundEventAst(eventName, value, sourceSpan));
+      try {
+        var expression = directive.hostListeners[eventName];
+        var value = templateContext.parser
+            .parseAction(expression, location, templateContext.exports);
+        result.add(new ng.BoundEventAst(eventName, value, sourceSpan));
+      } on ParseException catch (e) {
+        templateContext.reportError(e.message, sourceSpan);
+        continue;
+      }
     }
     return result;
   }
@@ -758,7 +791,7 @@ CssSelector _selector(String elementName, List<ast.AttributeAst> attributes,
     matchableAttributes.add([_getPropertyName(property), property.value]);
   }
   for (var event in events) {
-    matchableAttributes.add([event.name, event.value]);
+    matchableAttributes.add([_getEventName(event), event.value]);
   }
   return createElementCssSelector(elementName, matchableAttributes);
 }
@@ -775,6 +808,9 @@ String _getPropertyName(ast.PropertyAst astNode) {
   }
   return astNode.name;
 }
+
+String _getEventName(ast.EventAst event) =>
+    ([event.name]..addAll(event.reductions)).join('.');
 
 /// Visitor which filters elements that are not supported in angular templates.
 class _ElementFilter extends ast.RecursiveTemplateAstVisitor<bool> {
@@ -1077,11 +1113,126 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
 }
 
 class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
-  final ast.ExceptionHandler exceptionHandler;
+  final _AstExceptionHandler exceptionHandler;
 
   _TemplateValidator(this.exceptionHandler);
 
-  // TODO(alorenzen): Add validation.
+  @override
+  ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
+    _findDuplicateAttributes(astNode.attributes);
+    _findDuplicateProperties(astNode.properties);
+    _findDuplicateEvents(astNode.events);
+    return super.visitElement(astNode);
+  }
+
+  @override
+  ast.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode, [_]) {
+    _findDuplicateAttributes(astNode.attributes);
+    _findDuplicateProperties(astNode.properties);
+    _findDuplicateEvents(astNode.events);
+    return super.visitEmbeddedTemplate(astNode);
+  }
+
+  @override
+  ast.TemplateAst visitAttribute(ast.AttributeAst astNode, [_]) {
+    // warnings
+    if (astNode.name.startsWith('bindon-')) {
+      _reportError(
+          astNode,
+          '"bindon-" for properties/events is no longer supported. Use "[()]" '
+          'instead!',
+          ParseErrorLevel.WARNING);
+    }
+    if (astNode.name.startsWith('ref-')) {
+      _reportError(
+          astNode,
+          '"ref-" for references is no longer supported. Use "#" instead!',
+          ParseErrorLevel.WARNING);
+    }
+    if (astNode.name.startsWith('var-')) {
+      _reportError(
+          astNode,
+          '"var-" for references is no longer supported. Use "#" instead!',
+          ParseErrorLevel.WARNING);
+    }
+    return super.visitAttribute(astNode);
+  }
+
+  @override
+  ast.TemplateAst visitEvent(ast.EventAst astNode, [_]) {
+    if (_getEventName(astNode).contains(':')) {
+      _reportError(astNode,
+          '":" is not allowed in event names: ${_getEventName(astNode)}');
+    }
+    return super.visitEvent(astNode);
+  }
+
+  @override
+  ast.TemplateAst visitReference(ast.ReferenceAst astNode, [_]) {
+    if (astNode.variable.contains('-')) {
+      _reportError(astNode, '"-" is not allowed in reference names');
+    }
+    return super.visitReference(astNode);
+  }
+
+  @override
+  ast.TemplateAst visitProperty(ast.PropertyAst astNode, [_]) {
+    if (astNode.value?.startsWith('#') ?? false) {
+      _reportError(astNode,
+          '"#" inside of expressions is no longer supported. Use "let" instead!');
+    }
+    if (astNode.value?.startsWith('var ') ?? false) {
+      _reportError(astNode,
+          '"var" inside of expressions is no longer supported. Use "let" instead!');
+    }
+    return super.visitProperty(astNode);
+  }
+
+  void _findDuplicateAttributes(List<ast.AttributeAst> attributes) {
+    final seenAttributes = new Set<String>();
+    for (final attribute in attributes) {
+      if (seenAttributes.contains(attribute.name)) {
+        _reportError(attribute,
+            'Found multiple attributes with the same name: ${attribute.name}.');
+      } else {
+        seenAttributes.add(attribute.name);
+      }
+    }
+  }
+
+  void _findDuplicateProperties(List<ast.PropertyAst> properties) {
+    final seenProperties = new Set<String>();
+    for (final property in properties) {
+      final propertyName = _getPropertyName(property);
+      if (seenProperties.contains(propertyName)) {
+        _reportError(property,
+            'Found multiple properties with the same name: $propertyName.');
+      } else {
+        seenProperties.add(propertyName);
+      }
+    }
+  }
+
+  void _findDuplicateEvents(List<ast.EventAst> events) {
+    final seenEvents = new Set<String>();
+    for (final event in events) {
+      final eventName = _getEventName(event);
+      if (seenEvents.contains(eventName)) {
+        _reportError(
+            event,
+            'Found multiple events with the same name: $eventName. You should '
+            'merge the handlers into a single statement.');
+      } else {
+        seenEvents.add(eventName);
+      }
+    }
+  }
+
+  void _reportError(ast.TemplateAst astNode, String message,
+      [ParseErrorLevel level = ParseErrorLevel.FATAL]) {
+    exceptionHandler.handleParseError(
+        new TemplateParseError(message, astNode.sourceSpan, level));
+  }
 }
 
 /// Visitor that verifies all pipes in the template are valid.
