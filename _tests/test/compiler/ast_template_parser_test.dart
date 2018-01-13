@@ -1951,7 +1951,7 @@ void main() {
         expect(
             () => parse('{{a | test}}', []),
             throwsWith(
-                'Invalid argument(s): line 1, column 1 of TestComp: The pipe \'test\' could not be found.\n'
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: The pipe \'test\' could not be found.\n'
                 '{{a | test}}\n'
                 '^^^^^^^^^^^^'));
       });
