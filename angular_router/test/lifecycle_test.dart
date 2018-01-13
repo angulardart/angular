@@ -364,13 +364,14 @@ void main() {
 const lifecycleLogToken = const OpaqueToken('lifecycleLog');
 
 Future<NgTestFixture<T>> setup<T>([String initialPath]) async {
-  final location = new SpyLocation();
+  final locationStrategy = new MockLocationStrategy();
   if (initialPath != null) {
-    location.setInitialPath(initialPath);
+    locationStrategy.internalPath = initialPath;
   }
   final testBed = new NgTestBed<T>().addProviders([
     new Provider(lifecycleLogToken, useValue: []),
-    new Provider(Location, useValue: location),
+    new Provider(Location),
+    new Provider(LocationStrategy, useValue: locationStrategy),
     new Provider(Router, useClass: RouterImpl),
   ]);
   return testBed.create();
