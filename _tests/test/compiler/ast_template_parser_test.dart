@@ -309,9 +309,9 @@ void main() {
               () => parse('<div (window:event)="v"></div>', []),
               throwsWith('Template parse errors:\n'
                   'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: ":" is not allowed in event names: window:event\n'
-                  '(window:event)="v"\n'
-                  '^^^^^^^^^^^^^^^^^^'));
-        }, skip: 'does not throw');
+                  '<div (window:event)="v"></div>\n'
+                  '     ^^^^^^^^^^^^^^^^^^'));
+        });
 
         test(
             'should parse bound events via (...) and not report them '
@@ -388,11 +388,11 @@ void main() {
             [
               'Template parse warnings:\n'
                   'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: "bindon-" for properties/events is no longer supported. Use "[()]" instead!\n'
-                  'bindon-prop="v"\n'
-                  '^^^^^'
+                  '<div bindon-prop="v"></div>\n'
+                  '     ^^^^^^^^^^^^^^^'
             ].join('\n')
           ]);
-        }, skip: 'Don\'t have warning yet.');
+        });
       });
 
       group('directives', () {
@@ -412,15 +412,27 @@ void main() {
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: 'DirC'));
           expect(
-              humanizeTplAst(
-                  parse('<div a c b a b></div>', [dirA, dirB, dirC])),
+              humanizeTplAst(parse(
+                  '<div a c b [a]="foo" [b]="bar"></div>', [dirA, dirB, dirC])),
               [
                 [ElementAst, 'div'],
                 [AttrAst, 'a', ''],
                 [AttrAst, 'c', ''],
                 [AttrAst, 'b', ''],
-                [AttrAst, 'a', ''],
-                [AttrAst, 'b', ''],
+                [
+                  BoundElementPropertyAst,
+                  PropertyBindingType.Property,
+                  'a',
+                  'foo',
+                  null
+                ],
+                [
+                  BoundElementPropertyAst,
+                  PropertyBindingType.Property,
+                  'b',
+                  'bar',
+                  null
+                ],
                 [DirectiveAst, dirA],
                 [DirectiveAst, dirB],
                 [DirectiveAst, dirC]
@@ -945,35 +957,35 @@ void main() {
             'them as attributes', () {
           expect(humanizeTplAst(parse('<div ref-a></div>', [])), [
             [ElementAst, 'div'],
-            [AttrAst, 'ref-a', null]
+            [AttrAst, 'ref-a', '']
           ]);
 
           expect(console.warnings, [
             [
               'Template parse warnings:\n'
-                  'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: Using "ref-" for references is no longer supported. Use "#" instead!\n'
-                  'ref-a\n'
-                  '^^^^^'
+                  'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: "ref-" for references is no longer supported. Use "#" instead!\n'
+                  '<div ref-a></div>\n'
+                  '     ^^^^^'
             ].join('\n')
           ]);
-        }, skip: 'Don\'t handle errors yet.');
+        });
 
         test(
             'should parse references via var-... and report them as deprecated',
             () {
           expect(humanizeTplAst(parse('<div var-a></div>', [])), [
             [ElementAst, 'div'],
-            [AttrAst, 'var-a', null]
+            [AttrAst, 'var-a', '']
           ]);
           expect(console.warnings, [
             [
               'Template parse warnings:\n'
-                  'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: "var-" on non <template> elements is deprecated. Use "ref-" instead!\n'
-                  'var-a\n'
-                  '^^^^^'
+                  'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: "var-" for references is no longer supported. Use "#" instead!\n'
+                  '<div var-a></div>\n'
+                  '     ^^^^^'
             ].join('\n')
           ]);
-        }, skip: 'Don\'t handle errors yet.');
+        });
 
         test('should parse camel case references', () {
           expect(humanizeTplAst(parse('<div #someA></div>', [])), [
@@ -1019,18 +1031,18 @@ void main() {
               () => parse('<div #a-b></div>', []),
               throwsWith('Template parse errors:\n'
                   'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: "-" is not allowed in reference names\n'
-                  '#a-b\n'
-                  '^^^^'));
-        }, skip: 'Don\'t handle errors yet.');
+                  '<div #a-b></div>\n'
+                  '     ^^^^'));
+        });
 
         test('should report variables as errors', () {
           expect(
               () => parse('<div let-a></div>', []),
               throwsWith('Template parse errors:\n'
-                  'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: "let-" is only supported on template elements.\n'
-                  'let-a\n'
-                  '^^^^^'));
-        }, skip: 'Don\'t handle errors yet.');
+                  'line 1, column 6 of TestComp: \'let-\' binding can only be used in \'template\' element\n'
+                  '<div let-a></div>\n'
+                  '     ^^^^^'));
+        });
 
         test('should assign references with empty value to components', () {
           var dirA = createCompileDirectiveMetadata(
@@ -1097,6 +1109,15 @@ void main() {
             [EmbeddedTemplateAst],
             [AttrAst, 'ref-a', '']
           ]);
+
+          expect(console.warnings, [
+            [
+              'Template parse warnings:\n'
+                  'line 1, column 11 of TestComp: ParseErrorLevel.WARNING: "ref-" for references is no longer supported. Use "#" instead!\n'
+                  '<template ref-a></template>\n'
+                  '          ^^^^^'
+            ].join('\n')
+          ]);
         });
 
         test('should parse variables via let-...', () {
@@ -1115,12 +1136,12 @@ void main() {
           expect(console.warnings, [
             [
               'Template parse warnings:\n'
-                  'line 1, column 11 of TestComp: ParseErrorLevel.WARNING: "var-" on <template> elements is deprecated. Use "let-" instead!\n'
-                  'var-a="b"\n'
-                  '^^^^^^^^^'
+                  'line 1, column 11 of TestComp: ParseErrorLevel.WARNING: "var-" for references is no longer supported. Use "#" instead!\n'
+                  '<template var-a="b"></template>\n'
+                  '          ^^^^^^^^^'
             ].join('\n')
           ]);
-        }, skip: 'Don\'t handle errors yet.');
+        });
 
         test('should not locate directives in variables', () {
           var dirA = createCompileDirectiveMetadata(
@@ -1157,37 +1178,23 @@ void main() {
 
         test('should parse variables via #... and report them as deprecated',
             () {
-          expect(humanizeTplAst(parse('<div *ngIf="#a=b"></div>', [])), [
-            [EmbeddedTemplateAst],
-            [VariableAst, 'a', 'b'],
-            [ElementAst, 'div']
-          ]);
-          expect(console.warnings, [
-            [
-              'Template parse warnings:\n'
-                  'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: "#" inside of expressions is deprecated. Use "let" instead!\n'
-                  '*ngIf="#a=b"\n'
-                  '^^^^^^^^^^^^'
-            ].join('\n')
-          ]);
-        }, skip: 'Don\'t handle errors yet.');
+          expect(
+              () => parse('<div *ngIf="#a=b"></div>', []),
+              throwsWith('Template parse errors:\n'
+                  'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: "#" inside of expressions is no longer supported. Use "let" instead!\n'
+                  '<div *ngIf="#a=b"></div>\n'
+                  '     ^^^^^^^^^^^^'));
+        });
 
         test('should parse variables via var ... and report them as deprecated',
             () {
-          expect(humanizeTplAst(parse('<div *ngIf="var a=b"></div>', [])), [
-            [EmbeddedTemplateAst],
-            [VariableAst, 'a', 'b'],
-            [ElementAst, 'div']
-          ]);
-          expect(console.warnings, [
-            [
-              'Template parse warnings:\n'
-                  'line 1, column 6 of TestComp: ParseErrorLevel.WARNING: "var" inside of expressions is deprecated. Use "let" instead!\n'
-                  '*ngIf="var a=b"\n'
-                  '^^^^^^^^^^^^^^^'
-            ].join('\n')
-          ]);
-        }, skip: 'Don\'t handle errors yet.');
+          expect(
+              () => parse('<div *ngIf="var a=b"></div>', []),
+              throwsWith('Template parse errors:\n'
+                  'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: "var" inside of expressions is no longer supported. Use "let" instead!\n'
+                  '<div *ngIf="var a=b"></div>\n'
+                  '     ^^^^^^^^^^^^^^^'));
+        });
 
         test('should parse variables via let ...', () {
           expect(humanizeTplAst(parse('<div *ngIf="let a=b"></div>', [])), [
@@ -1551,10 +1558,10 @@ void main() {
         expect(
             () => parse('<div [prop]="a b"></div>', []),
             throwsWith('Template parse errors:\n'
-                'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in <FileLocation: 5 TestComp:1:6>\n'
-                '[prop]="a b"\n'
-                '^^^^^^^^^^^^'));
-      }, skip: 'Doesn\'t use sourcSpan yet for error message.');
+                'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in \n'
+                '<div [prop]="a b"></div>\n'
+                '     ^^^^^^^^^^^^'));
+      });
 
       test(
           'should not throw on invalid property names if the property is '
@@ -1658,6 +1665,51 @@ void main() {
                 'directives list.\n'
                 '<svg:circle [xlink:href]="url"></svg:circle>\n'
                 '            ^^^^^^^^^^^^^^^^^^'));
+      });
+
+      test('should prevent duplicate attributes', () {
+        expect(
+            () => parse('<div a="b" a="c"></div>', []),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 12 of TestComp: ParseErrorLevel.FATAL: Found multiple attributes with the same name: a.\n'
+                '<div a="b" a="c"></div>\n'
+                '           ^^^^^'));
+      });
+
+      test('should prevent duplicate properties', () {
+        expect(
+            () => parse('<div [a]="b" [a]="c"></div>', []),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 14 of TestComp: ParseErrorLevel.FATAL: Found multiple properties with the same name: a.\n'
+                '<div [a]="b" [a]="c"></div>\n'
+                '             ^^^^^^^'));
+      });
+
+      test('should prevent duplicate properties with banana', () {
+        expect(
+            () => parse('<div [(a)]="b" [a]="c"></div>', []),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Found multiple properties with the same name: a.\n'
+                '<div [(a)]="b" [a]="c"></div>\n'
+                '     ^^^^^^^'));
+      });
+
+      test('should prevent duplicate events', () {
+        expect(
+            () => parse('<div (a)="b()" (a)="c()"></div>', []),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 16 of TestComp: ParseErrorLevel.FATAL: Found multiple events with the same name: a. You should merge the handlers into a single statement.\n'
+                '<div (a)="b()" (a)="c()"></div>\n'
+                '               ^^^^^^^^^'));
+      });
+
+      test('should prevent duplicate events from banana', () {
+        expect(
+            () => parse('<div [(a)]="b" (aChange)="c()"></div>', []),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Found multiple events with the same name: aChange. You should merge the handlers into a single statement.\n'
+                '<div [(a)]="b" (aChange)="c()"></div>\n'
+                '     ^^^^^^^^^'));
       });
     });
 
