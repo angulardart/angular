@@ -151,19 +151,18 @@ abstract class CanReuse {
   }
 }
 
-/// A lifecycle interface to notify when a component is created by a route.
+/// A lifecycle interface to notify when a component is activated by a route.
 ///
 /// Component classes should `implement` this if they will be navigated to as
 /// part of a route definition and would like to be notified if they were
-/// created due to routing.
+/// activated due to routing.
 abstract class OnActivate {
   /// Called after component is inserted by a router outlet.
   ///
   /// This will occur *after* initial change detection.
   ///
-  /// **NOTE**: If [CanReuse] is implemented and re-use is done, this will also
-  /// be called when the transition keeps this component, even though the same
-  /// component instance was used:
+  /// **NOTE**: If the component also extends [CanReuse] and is reused, this
+  /// will be called again on the same instance.
   ///
   /// ```dart
   /// class MyComponent extends CanReuse implements OnActivate {
@@ -179,15 +178,15 @@ abstract class OnActivate {
   void onActivate(RouterState previous, RouterState current);
 }
 
-/// A lifecycle interface to notify when a component is destroyed by a route.
+/// A lifecycle interface to notify when a component is deactivated by a route.
 ///
 /// Component classes should `implement` this if they will be navigated to as
 /// part of a route definition and would like to be notified if they are being
-/// destroyed due to routing.
+/// deactivated due to routing.
 abstract class OnDeactivate {
-  /// Called before component destruction when routing destroyed this component.
+  /// Called before component deactivation when routing.
   ///
-  /// **NOTE**: If [CanReuse] is implemented and re-use is done, this will not
-  /// be called when the transition keeps this component; see [OnReuse] instead.
+  /// **NOTE**: This is still called even if the component also extends
+  /// [CanReuse] and is reused.
   void onDeactivate(RouterState previous, RouterState current);
 }
