@@ -319,13 +319,17 @@ class CompileTypeMetadataVisitor
 
   CompileTokenMetadata _canonicalOpaqueToken(DartObject object) {
     final description = dart_objects.coerceString(object, '_desc');
-    OpaqueToken token;
-    if ($MultiToken.isExactlyType(object.type)) {
-      token = new MultiToken(description);
-    } else {
-      token = new OpaqueToken(description);
-    }
-    return new CompileTokenMetadata(value: token);
+    final genericType = typeArgumentOf(object);
+    final isMultiToken = $MultiToken.isExactlyType(object.type);
+    final className = '${isMultiToken ? 'Multi' : 'Opaque'}Token';
+
+    // TODO(matanl): If we end up needing better/proper support for generic
+    // type parameters in the source_gen compiler, refactor this out. We want
+    // to get towards using code_builder anyways.
+    final tokenHack = new _OpaqueToken(
+      "const $className<${genericType.name}>('$description')",
+    );
+    return new CompileTokenMetadata(value: tokenHack);
   }
 
   CompileTokenMetadata _tokenForType(DartType type, {bool isInstance: false}) {
@@ -529,6 +533,23 @@ class CompileTypeMetadataVisitor
         .importExpr(_idFor(token.type))
         .prop(dart_objects.coerceString(token, 'name'));
   }
+}
+
+class _OpaqueToken {
+  final String _value;
+
+  _OpaqueToken(this._value);
+
+  @override
+  bool operator ==(Object o) => o is _OpaqueToken && o._value == _value;
+
+  @override
+  int get hashCode => _value.hashCode;
+
+  toJson() => _value;
+
+  @override
+  String toString() => _value;
 }
 
 class _PrivateConstructorException extends Error {
