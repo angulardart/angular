@@ -17,6 +17,7 @@ import 'style_url_resolver.dart';
 import 'template_ast.dart' as ng;
 import 'template_optimize.dart';
 import 'template_parser.dart';
+import 'template_parser/recursive_template_visitor.dart';
 import 'template_preparser.dart';
 
 /// A [TemplateParser] which uses the `angular_ast` package to parse angular
@@ -111,9 +112,10 @@ class AstTemplateParser implements TemplateParser {
       List<ng.TemplateAst> providedAsts,
       List<CompilePipeMetadata> pipes,
       _AstExceptionHandler exceptionHandler) {
-    _optimize(compMeta, providedAsts);
-    _validatePipeNames(providedAsts, pipes, exceptionHandler);
-    return providedAsts;
+    final optimizedAsts = _optimize(compMeta, providedAsts);
+    final sortedAsts = _sortInputs(optimizedAsts);
+    _validatePipeNames(sortedAsts, pipes, exceptionHandler);
+    return sortedAsts;
   }
 
   List<ast.TemplateAst> _inlineTemplates(List<ast.TemplateAst> parsedAst,
@@ -154,18 +156,17 @@ class AstTemplateParser implements TemplateParser {
     final providerVisitor = new _ProviderVisitor(providerViewContext);
     final ProviderElementContext providerContext = new ProviderElementContext(
         providerViewContext, null, false, [], [], [], null);
-    final providedAsts = visitedAsts
-        .map((templateAst) =>
-            templateAst.visit(providerVisitor, providerContext))
-        .toList();
+    final providedAsts = providerVisitor.visitAll(visitedAsts, providerContext);
     exceptionHandler.handleAll(providerViewContext.errors);
     return providedAsts;
   }
 
-  void _optimize(CompileDirectiveMetadata compMeta, List<ng.TemplateAst> asts) {
-    final optimizerVisitor = new OptimizeTemplateAstVisitor(compMeta);
-    ng.templateVisitAll(optimizerVisitor, asts);
-  }
+  List<ng.TemplateAst> _optimize(
+          CompileDirectiveMetadata compMeta, List<ng.TemplateAst> asts) =>
+      new OptimizeTemplateAstVisitor(compMeta).visitAll(asts);
+
+  List<ng.TemplateAst> _sortInputs(List<ng.TemplateAst> asts) =>
+      new _SortInputsVisitor().visitAll(asts);
 
   List<ast.TemplateAst> _applyImplicitNamespace(
           List<ast.TemplateAst> parsedAst) =>
@@ -884,12 +885,15 @@ class _ElementFilter extends ast.RecursiveTemplateAstVisitor<bool> {
 /// These providers are provided by the bound directives on the element or by
 /// parent elements.
 class _ProviderVisitor
-    implements ng.TemplateAstVisitor<ng.TemplateAst, ProviderElementContext> {
+    extends RecursiveTemplateVisitor<ProviderElementContext> {
   final ProviderViewContext _rootContext;
 
   _ProviderVisitor(this._rootContext);
 
   @override
+  // We intentionally don't call super.visitElement() so that we can control
+  // exactly when the children are visited.
+  // ignore: MUST_CALL_SUPER
   ng.ElementAst visitElement(
       ng.ElementAst ast, ProviderElementContext context) {
     var elementContext = new ProviderElementContext(_rootContext, context,
@@ -914,6 +918,9 @@ class _ProviderVisitor
   }
 
   @override
+  // We intentionally don't call super.visitElement() so that we can control
+  // exactly when the children are visited.
+  // ignore: MUST_CALL_SUPER
   ng.EmbeddedTemplateAst visitEmbeddedTemplate(
       ng.EmbeddedTemplateAst ast, ProviderElementContext context) {
     var elementContext = new ProviderElementContext(_rootContext, context, true,
@@ -937,40 +944,6 @@ class _ProviderVisitor
         ast.sourceSpan,
         hasDeferredComponent: ast.hasDeferredComponent);
   }
-
-  @override
-  visitAttr(ng.AttrAst ast, ProviderElementContext context) => ast;
-
-  @override
-  visitBoundText(ng.BoundTextAst ast, ProviderElementContext context) => ast;
-
-  @override
-  visitDirective(ng.DirectiveAst ast, ProviderElementContext context) => ast;
-
-  @override
-  visitDirectiveProperty(
-          ng.BoundDirectivePropertyAst ast, ProviderElementContext context) =>
-      ast;
-
-  @override
-  visitElementProperty(
-          ng.BoundElementPropertyAst ast, ProviderElementContext context) =>
-      ast;
-
-  @override
-  visitEvent(ng.BoundEventAst ast, ProviderElementContext context) => ast;
-
-  @override
-  visitNgContent(ng.NgContentAst ast, ProviderElementContext context) => ast;
-
-  @override
-  visitReference(ng.ReferenceAst ast, ProviderElementContext context) => ast;
-
-  @override
-  visitText(ng.TextAst ast, ProviderElementContext context) => ast;
-
-  @override
-  visitVariable(ng.VariableAst ast, ProviderElementContext context) => ast;
 }
 
 /// Visitor which extracts inline templates.
@@ -1240,7 +1213,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
 /// First, we visit all [AST] values to extract the pipe names declared in the
 /// template, and then we verify that those names are actually defined by a
 /// [CompilePipeMetadata] entry.
-class _PipeValidator implements ng.TemplateAstVisitor<Null, Null> {
+class _PipeValidator extends RecursiveTemplateVisitor<Null> {
   final List<String> _pipeNames;
   final _AstExceptionHandler _exceptionHandler;
 
@@ -1262,68 +1235,28 @@ class _PipeValidator implements ng.TemplateAstVisitor<Null, Null> {
   }
 
   @override
-  visitBoundText(ng.BoundTextAst ast, _) {
+  ng.TemplateAst visitBoundText(ng.BoundTextAst ast, _) {
     _validatePipeNames(ast.value, ast.sourceSpan);
+    return super.visitBoundText(ast, null);
   }
 
   @override
-  visitDirectiveProperty(ng.BoundDirectivePropertyAst ast, _) {
+  ng.TemplateAst visitDirectiveProperty(ng.BoundDirectivePropertyAst ast, _) {
     _validatePipeNames(ast.value, ast.sourceSpan);
+    return super.visitDirectiveProperty(ast, null);
   }
 
   @override
-  visitElementProperty(ng.BoundElementPropertyAst ast, _) {
+  ng.TemplateAst visitElementProperty(ng.BoundElementPropertyAst ast, _) {
     _validatePipeNames(ast.value, ast.sourceSpan);
+    return super.visitElementProperty(ast, null);
   }
 
   @override
-  visitEvent(ng.BoundEventAst ast, _) {
+  ng.TemplateAst visitEvent(ng.BoundEventAst ast, _) {
     _validatePipeNames(ast.handler, ast.sourceSpan);
+    return super.visitEvent(ast, null);
   }
-
-  @override
-  visitDirective(ng.DirectiveAst ast, _) {
-    ng.templateVisitAll(this, ast.hostEvents);
-    ng.templateVisitAll(this, ast.hostProperties);
-    ng.templateVisitAll(this, ast.inputs);
-  }
-
-  @override
-  visitElement(ng.ElementAst ast, _) {
-    ng.templateVisitAll(this, ast.attrs);
-    ng.templateVisitAll(this, ast.inputs);
-    ng.templateVisitAll(this, ast.outputs);
-    ng.templateVisitAll(this, ast.references);
-    ng.templateVisitAll(this, ast.directives);
-    ng.templateVisitAll(this, ast.providers);
-    ng.templateVisitAll(this, ast.children);
-  }
-
-  @override
-  visitEmbeddedTemplate(ng.EmbeddedTemplateAst ast, _) {
-    ng.templateVisitAll(this, ast.attrs);
-    ng.templateVisitAll(this, ast.variables);
-    ng.templateVisitAll(this, ast.outputs);
-    ng.templateVisitAll(this, ast.references);
-    ng.templateVisitAll(this, ast.directives);
-    ng.templateVisitAll(this, ast.providers);
-    ng.templateVisitAll(this, ast.children);
-  }
-
-  @override
-  visitAttr(ng.AttrAst ast, _) {}
-
-  @override
-  visitNgContent(ng.NgContentAst ast, _) {}
-
-  @override
-  visitReference(ng.ReferenceAst ast, _) {}
-
-  @override
-  visitText(ng.TextAst ast, _) {}
-
-  @override
-  visitVariable(ng.VariableAst ast, _) {}
 }
 
 class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
@@ -1400,5 +1333,24 @@ class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
   bool _hasInterpolationAfter(List<ast.TemplateAst> astNodes, int i) {
     if (i == (astNodes.length - 1)) return false;
     return astNodes[i + 1] is ast.InterpolationAst;
+  }
+}
+
+class _SortInputsVisitor extends RecursiveTemplateVisitor<Null> {
+  @override
+  ng.DirectiveAst visitDirective(ng.DirectiveAst ast, _) {
+    ast.inputs.sort(_orderingOf(ast.directive.inputs));
+    return super.visitDirective(ast, null);
+  }
+
+  Comparator<ng.BoundDirectivePropertyAst> _orderingOf(
+      Map<String, String> inputs) {
+    final keys = inputs.keys.toList(growable: false);
+    int _indexOf(ng.BoundDirectivePropertyAst input) {
+      return keys.indexOf(input.directiveName);
+    }
+
+    return (ng.BoundDirectivePropertyAst a, ng.BoundDirectivePropertyAst b) =>
+        Comparable.compare(_indexOf(a), _indexOf(b));
   }
 }

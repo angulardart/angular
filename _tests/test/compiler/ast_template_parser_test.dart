@@ -588,6 +588,20 @@ void main() {
             [DirectiveAst, dirA]
           ]);
         });
+
+        test('should sort inputs based on directive ordering', () {
+          var dirA = createCompileDirectiveMetadata(
+              selector: 'div',
+              type: new CompileTypeMetadata(
+                  moduleUrl: someModuleUrl, name: 'DirA'),
+              inputs: ['a', 'b']);
+          expect(humanizeTplAst(parse('<div [b]="b" [a]="a"></div>', [dirA])), [
+            [ElementAst, 'div'],
+            [DirectiveAst, dirA],
+            [BoundDirectivePropertyAst, 'a', 'a'],
+            [BoundDirectivePropertyAst, 'b', 'b']
+          ]);
+        });
       });
 
       group('providers', () {
