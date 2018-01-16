@@ -178,7 +178,7 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
   dynamic _ControlContainer_0_5;
   import2.InputElement _el_1;
   import10.DefaultValueAccessor _DefaultValueAccessor_1_4;
-  List<dynamic> _const_OpaqueToken_ControlValueAccessor___NgValueAccessor___1_5;
+  List<dynamic> _const_OpaqueToken_dynamic___NgValueAccessor___1_5;
   import11.NgControlName _NgControlName_1_6;
   var _expr_0;
   static RenderComponentType _renderType;
@@ -201,11 +201,11 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
     createAttr(_el_1, 'ngControl', 'login');
     createAttr(_el_1, 'type', 'text');
     _DefaultValueAccessor_1_4 = new import10.DefaultValueAccessor(_el_1);
-    _const_OpaqueToken_ControlValueAccessor___NgValueAccessor___1_5 = [
+    _const_OpaqueToken_dynamic___NgValueAccessor___1_5 = [
       _DefaultValueAccessor_1_4
     ];
     _NgControlName_1_6 = new import11.NgControlName(_ControlContainer_0_5, null,
-        _const_OpaqueToken_ControlValueAccessor___NgValueAccessor___1_5);
+        _const_OpaqueToken_dynamic___NgValueAccessor___1_5);
     import6.appViewUtils.eventManager.addEventListener(
         _el_0, 'submit', eventHandler1(_NgFormModel_0_4.onSubmit));
     _el_1.addEventListener('input', eventHandler1(_handle_input_1_0));
@@ -221,10 +221,9 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
     if ((identical(token, import10.DefaultValueAccessor) && (1 == nodeIndex))) {
       return _DefaultValueAccessor_1_4;
     }
-    if ((identical(token,
-            const OpaqueToken<ControlValueAccessor>('NgValueAccessor')) &&
+    if ((identical(token, const OpaqueToken<dynamic>('NgValueAccessor')) &&
         (1 == nodeIndex))) {
-      return _const_OpaqueToken_ControlValueAccessor___NgValueAccessor___1_5;
+      return _const_OpaqueToken_dynamic___NgValueAccessor___1_5;
     }
     if (((identical(token, import11.NgControlName) ||
             identical(token, import12.NgControl)) &&

@@ -327,7 +327,8 @@ class CompileTypeMetadataVisitor
     // type parameters in the source_gen compiler, refactor this out. We want
     // to get towards using code_builder anyways.
     final tokenHack = new _OpaqueToken(
-      "const $className<${genericType.name}>('$description')",
+      // TODO(matanl): Roll-forward to use the real generic type after fix.
+      "const $className<dynamic>('$description')",
     );
     return new CompileTokenMetadata(value: tokenHack);
   }
