@@ -19,6 +19,7 @@ import "../template_ast.dart"
         TextAst,
         DirectiveAst,
         BoundDirectivePropertyAst,
+        ProviderAst,
         templateVisitAll;
 import '../template_parser.dart';
 import "compile_element.dart" show CompileElement;
@@ -183,6 +184,10 @@ class ViewBinderVisitor implements TemplateAstVisitor {
   }
 
   dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context) {
+    return null;
+  }
+
+  dynamic visitProvider(ProviderAst ast, dynamic context) {
     return null;
   }
 }

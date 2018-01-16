@@ -25,10 +25,11 @@ import '../template_ast.dart'
         ElementAst,
         EmbeddedTemplateAst,
         NgContentAst,
+        ProviderAst,
         ReferenceAst,
         TemplateAstVisitor,
-        VariableAst,
         TextAst,
+        VariableAst,
         templateVisitAll;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_view.dart';
@@ -343,6 +344,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor {
   }
 
   dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context) {
+    return null;
+  }
+
+  dynamic visitProvider(ProviderAst ast, dynamic context) {
     return null;
   }
 }

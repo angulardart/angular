@@ -115,6 +115,10 @@ class TemplateHumanizer implements TemplateAstVisitor {
     return null;
   }
 
+  dynamic visitProvider(ProviderAst ast, dynamic context) {
+    return null;
+  }
+
   List<dynamic> _appendContext(TemplateAst ast, List<dynamic> input) {
     if (!this.includeSourceSpan) return input;
     input.add(ast.sourceSpan.text);
@@ -192,6 +196,10 @@ class TemplateContentProjectionHumanizer implements TemplateAstVisitor {
       BoundDirectivePropertyAst ast, dynamic context) {
     return null;
   }
+
+  dynamic visitProvider(ProviderAst ast, dynamic context) {
+    return null;
+  }
 }
 
 class FooAstTransformer implements TemplateAstVisitor {
@@ -243,6 +251,10 @@ class FooAstTransformer implements TemplateAstVisitor {
 
   dynamic visitDirectiveProperty(
       BoundDirectivePropertyAst ast, dynamic context) {
+    throw new UnimplementedError();
+  }
+
+  dynamic visitProvider(ProviderAst ast, dynamic context) {
     throw new UnimplementedError();
   }
 }

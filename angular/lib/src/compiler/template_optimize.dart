@@ -4,56 +4,22 @@ import 'identifiers.dart';
 import 'output/convert.dart';
 import 'output/output_ast.dart';
 import 'template_ast.dart';
+import 'template_parser/recursive_template_visitor.dart';
 
 /// Augments [TemplateAst]s with additional information to enable optimizations.
 ///
 /// This information can't be provided during construction of the [TemplateAst]s
 /// as it may not exist yet at the time it is needed.
-class OptimizeTemplateAstVisitor extends TemplateAstVisitor<dynamic, Null> {
+class OptimizeTemplateAstVisitor extends RecursiveTemplateVisitor<Null> {
   final CompileDirectiveMetadata _component;
 
   OptimizeTemplateAstVisitor(this._component);
 
   @override
-  void visitNgContent(NgContentAst ast, _) {}
-
-  @override
-  void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
+  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     _typeNgForLocals(_component, ast.directives, ast.variables);
-    templateVisitAll(this, ast.children);
+    return super.visitEmbeddedTemplate(ast, null);
   }
-
-  @override
-  void visitElement(ElementAst ast, _) {
-    templateVisitAll(this, ast.children);
-  }
-
-  @override
-  void visitReference(ReferenceAst ast, _) {}
-
-  @override
-  void visitVariable(VariableAst ast, _) {}
-
-  @override
-  void visitEvent(BoundEventAst ast, _) {}
-
-  @override
-  void visitElementProperty(BoundElementPropertyAst ast, _) {}
-
-  @override
-  void visitAttr(AttrAst ast, _) {}
-
-  @override
-  void visitBoundText(BoundTextAst ast, _) {}
-
-  @override
-  void visitText(TextAst ast, _) {}
-
-  @override
-  void visitDirective(DirectiveAst ast, _) {}
-
-  @override
-  void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {}
 }
 
 /// Adds type information to the [VariableAst]s of `NgFor` locals.

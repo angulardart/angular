@@ -277,8 +277,8 @@ class ProviderAst implements TemplateAst {
     this.implementedByDirectiveWithNoVisibility: false,
   });
 
-  // No visit method in the visitor for now...
-  R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) => null;
+  R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
+      visitor.visitProvider(this, context);
 
   /// Returns true if the provider is used by a constructor in a child
   /// CompileView or queried which requires non local access.
@@ -351,6 +351,7 @@ abstract class TemplateAstVisitor<R, C> {
   R visitText(TextAst ast, C context);
   R visitDirective(DirectiveAst ast, C context);
   R visitDirectiveProperty(BoundDirectivePropertyAst ast, C context);
+  R visitProvider(ProviderAst providerAst, C context);
 }
 
 /// Visit every node in a list of [TemplateAst]s with the given
