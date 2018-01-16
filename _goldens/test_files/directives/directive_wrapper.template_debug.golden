@@ -204,7 +204,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InputFormTest0 = [
   new StaticNodeDebugInfo(
       [
         import13.DefaultValueAccessor,
-        const OpaqueToken<dynamic>('NgValueAccessor'),
+        const OpaqueToken<ControlValueAccessor>('NgValueAccessor'),
         import14.NgControlName,
         import15.NgControl
       ],
@@ -218,7 +218,7 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   dynamic _ControlContainer_0_5;
   import3.InputElement _el_1;
   import13.DefaultValueAccessor _DefaultValueAccessor_1_4;
-  List<dynamic> _const_OpaqueToken_dynamic___NgValueAccessor___1_5;
+  List<dynamic> _const_OpaqueToken_ControlValueAccessor___NgValueAccessor___1_5;
   import14.NgControlName _NgControlName_1_6;
   var _expr_0;
   static RenderComponentType _renderType;
@@ -248,11 +248,11 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     createAttr(_el_1, 'ngControl', 'login');
     createAttr(_el_1, 'type', 'text');
     _DefaultValueAccessor_1_4 = new import13.DefaultValueAccessor(_el_1);
-    _const_OpaqueToken_dynamic___NgValueAccessor___1_5 = [
+    _const_OpaqueToken_ControlValueAccessor___NgValueAccessor___1_5 = [
       _DefaultValueAccessor_1_4
     ];
     _NgControlName_1_6 = new import14.NgControlName(_ControlContainer_0_5, null,
-        _const_OpaqueToken_dynamic___NgValueAccessor___1_5);
+        _const_OpaqueToken_ControlValueAccessor___NgValueAccessor___1_5);
     import8.appViewUtils.eventManager.addEventListener(
         _el_0, 'submit', eventHandler1(_NgFormModel_0_4.onSubmit));
     _el_1.addEventListener('input', eventHandler1(_handle_input_1_0));
@@ -268,9 +268,10 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     if ((identical(token, import13.DefaultValueAccessor) && (1 == nodeIndex))) {
       return _DefaultValueAccessor_1_4;
     }
-    if ((identical(token, const OpaqueToken<dynamic>('NgValueAccessor')) &&
+    if ((identical(token,
+            const OpaqueToken<ControlValueAccessor>('NgValueAccessor')) &&
         (1 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___NgValueAccessor___1_5;
+      return _const_OpaqueToken_ControlValueAccessor___NgValueAccessor___1_5;
     }
     if (((identical(token, import14.NgControlName) ||
             identical(token, import15.NgControl)) &&

@@ -1,5 +1,17 @@
 *   We now require `code_builder ^3.0.0`.
 
+### New features
+
+*   Using `OpaqueToken<T>` and `MutliToken<T>` where `T` is not `dynamic` is
+    now properly supported in all the different implementations of Injector. As
+    a consequence relying on the following is now a breaking change:
+
+```dart
+// These used to be considered the same in some DI implementations.
+const tokenA = const OpaqueToken<String>('a');
+const tokenB = const OpaqueToken<dynamic('b');
+```
+
 ### Breaking changes
 
 *   `ComponentRef.componentType` throws an `UnsupportedError`, pending removal.

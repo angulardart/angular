@@ -86,7 +86,7 @@ void main() {
     expect(value1, 1);
     final value2 = fixture.assertOnlyInstance.injector.get(barTypedToken2);
     expect(value2, 2);
-  }, skip: 'Enable when supported in the ViewCompiler.');
+  });
 
   group('should support optional values', () {
     NgTestBed<UsingInjectAndOptional> testBed;
