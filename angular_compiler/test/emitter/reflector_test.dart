@@ -269,7 +269,79 @@ void main() {
           '  );\n'
           '  _ngRef.registerDependencies(\n'
           '    Example,\n'
-          '    const [const [const _ngRef.Inject(const _ngRef.OpaqueToken(r\'someToken\')),],],\n'
+          '    const [const [const _ngRef.Inject(const _ngRef.OpaqueToken<dynamic>(r\'someToken\')),],],\n'
+          '  );\n'
+          '\n'
+          '}\n',
+    );
+  });
+
+  test('should support MultiToken', () async {
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(await resolveLibrary(r'''
+      const someToken = const MultiToken('someToken');
+      @Injectable()
+      class Example {
+        final Map<String, Map<int, String>> example;
+        Example(@Inject(someToken) this.example);
+      }
+    '''));
+    final emitter = new ReflectableEmitter(
+      output,
+      reflectorSource: libReflection,
+    );
+    expect(
+      emitter.emitInitReflector(),
+      ''
+          'var _visited = false;\n'
+          'void initReflector() {\n'
+          '  if (_visited) {\n'
+          '    return;\n'
+          '  }\n'
+          '  _visited = true;\n'
+          '  _ngRef.registerFactory(\n'
+          '    Example,\n'
+          '    (Map p0) => new Example(p0),\n'
+          '  );\n'
+          '  _ngRef.registerDependencies(\n'
+          '    Example,\n'
+          '    const [const [const _ngRef.Inject(const _ngRef.MultiToken<dynamic>(r\'someToken\')),],],\n'
+          '  );\n'
+          '\n'
+          '}\n',
+    );
+  });
+
+  test('should support generic typed OpaqueToken', () async {
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(await resolveLibrary(r'''
+      const stringToken = const OpaqueToken<String>('stringToken');
+      @Injectable()
+      class Example {
+        final String example;
+        Example(@Inject(stringToken) this.example);
+      }
+    '''));
+    final emitter = new ReflectableEmitter(
+      output,
+      reflectorSource: libReflection,
+    );
+    expect(
+      emitter.emitInitReflector(),
+      ''
+          'var _visited = false;\n'
+          'void initReflector() {\n'
+          '  if (_visited) {\n'
+          '    return;\n'
+          '  }\n'
+          '  _visited = true;\n'
+          '  _ngRef.registerFactory(\n'
+          '    Example,\n'
+          '    (String p0) => new Example(p0),\n'
+          '  );\n'
+          '  _ngRef.registerDependencies(\n'
+          '    Example,\n'
+          '    const [const [const _ngRef.Inject(const _ngRef.OpaqueToken<String>(r\'stringToken\')),],],\n'
           '  );\n'
           '\n'
           '}\n',

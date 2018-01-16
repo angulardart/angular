@@ -3,6 +3,7 @@ import 'package:build/build.dart';
 
 import '../analyzer/di/dependencies.dart';
 import '../analyzer/di/tokens.dart';
+import '../analyzer/link.dart';
 import '../analyzer/reflector.dart';
 
 /// Generates `.dart` source code given a [ReflectableOutput].
@@ -244,7 +245,23 @@ class ReflectableEmitter {
       return 'const _ngRef.Inject(${token.literal})';
     }
     if (token is OpaqueTokenElement) {
-      final expression = 'const _ngRef.OpaqueToken(r\'${token.identifier}\')';
+      // TODO(matanl): Make this more solid.
+      //
+      // Ideally we should be using code_builder for this entire class, as it
+      // would handle import resolution, etc, and make the code more future
+      // proof.
+      //
+      // As-is, this will breakdown if the generic type of an OpaqueToken is
+      // imported with a prefix, for example:
+      //
+      //   const fooToken = const OpaqueToken<foo.Foo>('fooToken');
+      //
+      // Since this feature is still WIP, this is acceptable, but it should be
+      // fixed 5.0-beta: https://github.com/dart-lang/angular/issues/782.
+      final classType = token.isMultiToken ? 'MultiToken' : 'OpaqueToken';
+      final genericTypeIfAny = _typesAsString([token.typeUrl]);
+      final expression =
+          'const _ngRef.$classType$genericTypeIfAny(r\'${token.identifier}\')';
       return 'const _ngRef.Inject($expression)';
     }
     if (token is TypeTokenElement) {
@@ -253,5 +270,12 @@ class ReflectableEmitter {
           : token.link.symbol;
     }
     throw new UnsupportedError('Invalid token type: $token.');
+  }
+
+  static String _typesAsString(List<TypeLink> types) {
+    if (types.isEmpty) {
+      return '';
+    }
+    return '<${types.map((l) => l.symbol + _typesAsString(l.generics)).join(', ')}>';
   }
 }

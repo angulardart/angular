@@ -8,6 +8,9 @@
 
 * Require `code_builder ^3.0.0`.
 
+* `ReflectorEmitter` now supports `MultiToken` and generic-typed tokens, with
+  some known limitations. See https://github.com/dart-lang/angular/issues/782.
+
 ## 0.4.0-alpha+3
 
 * Added support for recognizing the `MultiToken` type.
