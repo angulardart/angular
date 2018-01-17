@@ -40,6 +40,11 @@ class Comp implements AfterChanges {
 *   The type of `EmbeddedViewRef.rootNodes` and `ViewRefImpl.rootNodes` has
     changed from `List<dynamic>` to `List<Node>`.
 
+### Bug fixes
+
+*   Fixed a bug where `Provider(T)` was not correctly parsed as an implicit use
+    of `Provider(T, useClass: T)`.
+
 ## 5.0.0-alpha+3
 
 ### New features

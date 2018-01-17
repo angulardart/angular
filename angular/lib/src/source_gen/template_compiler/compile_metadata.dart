@@ -112,7 +112,7 @@ class CompileTypeMetadataVisitor
     final token = dart_objects.getField(provider, 'token');
     return new CompileProviderMetadata(
       token: _token(token),
-      useClass: _getUseClass(provider),
+      useClass: _getUseClass(provider, token),
       useExisting: _getUseExisting(provider),
       useFactory: _getUseFactory(provider),
       useValue: _getUseValue(provider),
@@ -126,7 +126,7 @@ class CompileTypeMetadataVisitor
     );
   }
 
-  CompileTypeMetadata _getUseClass(DartObject provider) {
+  CompileTypeMetadata _getUseClass(DartObject provider, DartObject token) {
     var maybeUseClass = dart_objects.getField(provider, 'useClass');
     if (!dart_objects.isNull(maybeUseClass)) {
       var type = maybeUseClass.toTypeValue();
@@ -137,9 +137,19 @@ class CompileTypeMetadataVisitor
             'Provider.useClass can only be used with a class, but found '
             '${type.element}');
       }
+    } else if (_hasNoUseValue(provider) && _notAnythingElse(provider)) {
+      final typeValue = token.toTypeValue();
+      if (typeValue != null && !typeValue.isDartCoreNull) {
+        return _getCompileTypeMetadata(typeValue.element);
+      }
     }
     return null;
   }
+
+  // Verifies this is not useExisting or useFactory.
+  static bool _notAnythingElse(DartObject provider) =>
+      dart_objects.isNull(dart_objects.getField(provider, 'useFactory')) &&
+      dart_objects.isNull(dart_objects.getField(provider, 'useExisting'));
 
   CompileTokenMetadata _getUseExisting(DartObject provider) {
     var maybeUseExisting = dart_objects.getField(provider, 'useExisting');
@@ -179,20 +189,28 @@ class CompileTypeMetadataVisitor
           name: element.name,
           diDeps: _getCompileDiDependencyMetadata(element.parameters, element));
 
+  bool _hasNoUseValue(DartObject provider) {
+    final useValue = dart_objects.getField(provider, 'useValue');
+    final isNull = dart_objects.isNull(useValue);
+    return !isNull && useValue.toStringValue() == noValueProvided;
+  }
+
   o.Expression _getUseValue(DartObject provider) {
-    var maybeUseValue = dart_objects.getField(provider, 'useValue');
-    if (!dart_objects.isNull(maybeUseValue)) {
-      if (maybeUseValue.toStringValue() == noValueProvided) return null;
-      try {
-        return _useValueExpression(maybeUseValue);
-      } on _PrivateConstructorException catch (e) {
-        _logger.severe(
-            'Could not link provider "${provider.getField('token')}" to '
-            '"${e.constructorName}". You may have valid Dart code but the '
-            'angular2 compiler has limited support for `useValue` that '
-            'eventually uses a private constructor. As a workaround we '
-            'recommend `useFactory`.');
-      }
+    // TODO(matanl): This is no longer strictly necessary; refactor out.
+    // Will require a bit more extensive testing.
+    if (_hasNoUseValue(provider)) {
+      return null;
+    }
+    final useValue = dart_objects.getField(provider, 'useValue');
+    try {
+      return _useValueExpression(useValue);
+    } on _PrivateConstructorException catch (e) {
+      _logger
+          .severe('Could not link provider "${provider.getField('token')}" to '
+              '"${e.constructorName}". You may have valid Dart code but the '
+              'angular2 compiler has limited support for `useValue` that '
+              'eventually uses a private constructor. As a workaround we '
+              'recommend `useFactory`.');
     }
     return null;
   }
@@ -358,7 +376,7 @@ class CompileTypeMetadataVisitor
           name: getTypeName(type), moduleUrl: moduleUrl(type.element));
 
   o.Expression _useValueExpression(DartObject token) {
-    if (token.isNull) {
+    if (token == null || token.isNull) {
       return o.NULL_EXPR;
     } else if (token.toStringValue() != null) {
       return new o.LiteralExpr(token.toStringValue(), o.STRING_TYPE);

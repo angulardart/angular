@@ -33,6 +33,15 @@ void main() {
     );
   });
 
+  test('should consider Provider(T) as Provider(T, useClass: T)', () async {
+    final fixture = await new NgTestBed<SupportsImplicitClass>().create();
+    final injector = fixture.assertOnlyInstance.injector;
+    expect(
+      injector.get(ExampleService),
+      const isInstanceOf<ExampleService>(),
+    );
+  });
+
   test('should use user-default value on ElementInjector.get', () async {
     final fixture = await new NgTestBed<UsingElementInjector>().create();
     await fixture.update((comp) {
@@ -86,13 +95,6 @@ void main() {
     expect(value1, 1);
     final value2 = fixture.assertOnlyInstance.injector.get(barTypedToken2);
     expect(value2, 2);
-  });
-
-  test('should not consider tokens with nested types the same', () async {
-    final fixture = await new NgTestBed<SupportsNestedGenerics>().create();
-    final injector = fixture.assertOnlyInstance.injector;
-    expect(injector.get(aListOfDynamic), ['dynamic']);
-    expect(injector.get(aListOfString), ['String']);
   });
 
   group('should support optional values', () {
@@ -393,19 +395,18 @@ class ProperTokenIdentity {
   ProperTokenIdentity(this.injector);
 }
 
-const aListOfDynamic = const OpaqueToken<List>('aListOf');
-const aListOfString = const OpaqueToken<List<String>>('aListOf');
+@Injectable()
+class ExampleService {}
 
 @Component(
-  selector: 'supports-nested-generics',
+  selector: 'supports-implicit-class',
   providers: const [
-    const Provider(aListOfDynamic, useValue: const <dynamic>['dynamic']),
-    const Provider(aListOfString, useValue: const <String>['String']),
+    const Provider(ExampleService),
   ],
   template: '',
 )
-class SupportsNestedGenerics {
+class SupportsImplicitClass {
   final Injector injector;
 
-  SupportsNestedGenerics(this.injector);
+  SupportsImplicitClass(this.injector);
 }
