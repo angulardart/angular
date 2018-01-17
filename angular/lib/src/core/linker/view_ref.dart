@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:angular/src/core/change_detection/constants.dart'
     show ChangeDetectionStrategy;
 
@@ -62,7 +64,7 @@ abstract class EmbeddedViewRef extends ViewRef {
   /// Checks whether this view has a local variable called [variableName].
   bool hasLocal(String variableName);
 
-  List<dynamic> get rootNodes;
+  List<Node> get rootNodes;
 
   /// Destroys the view and all of the data structures associated with it.
   void destroy();
@@ -79,7 +81,7 @@ class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
   @Deprecated('Use appView instead')
   AppView<dynamic> get internalView => appView;
 
-  List get rootNodes => appView.flatRootNodes;
+  List<Node> get rootNodes => appView.flatRootNodes;
 
   ChangeDetectorRef get changeDetectorRef => this;
 

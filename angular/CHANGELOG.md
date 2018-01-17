@@ -17,6 +17,8 @@ const tokenB = const OpaqueToken<dynamic('b');
 *   `ComponentRef.componentType` throws an `UnsupportedError`, pending removal.
     This removes our last invocation of `.runtimeType`, which has potentially
     severe code-size implications for some applications.
+*   The type of `EmbeddedViewRef.rootNodes` and `ViewRefImpl.rootNodes` has
+    changed from `List<dynamic>` to `List<Node>`.
 
 ## 5.0.0-alpha+3
 
