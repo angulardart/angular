@@ -1,3 +1,4 @@
+# TODO(travis-ci/travis-ci#8836): Remove once the travis issue is resolved.
 sudo: required
 addons:
   chrome: stable
