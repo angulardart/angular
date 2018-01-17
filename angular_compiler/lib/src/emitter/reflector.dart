@@ -1,10 +1,13 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:code_builder/code_builder.dart';
 
 import '../analyzer/di/dependencies.dart';
 import '../analyzer/di/tokens.dart';
 import '../analyzer/link.dart';
 import '../analyzer/reflector.dart';
+
+import 'reflector_2.dart';
 
 /// Generates `.dart` source code given a [ReflectableOutput].
 class ReflectableEmitter {
@@ -32,6 +35,15 @@ class ReflectableEmitter {
     this.deferredModuleSource,
   })
       : this.deferredModules = deferredModules ?? const [];
+
+  /// Alternative constructor that uses a different output strategy.
+  factory ReflectableEmitter.useCodeBuilder(
+    ReflectableOutput output, {
+    Allocator allocator,
+    String reflectorSource,
+    List<String> deferredModules,
+    String deferredModuleSource,
+  }) = CodeBuilderReflectableEmitter;
 
   bool get _linkingNeeded => _output.urlsNeedingInitReflector.isNotEmpty;
 

@@ -12,9 +12,13 @@
 
 * Added `typeArgumentOf` helper method.
 
+* Added `ReflectableEmitter.useCodeBuilder`, which uses `package:code_builder`
+  instead of an ad-hoc string-based output for Dart code. Once this passes the
+  same suite of tests the original strategy will be removed.
+
 ### Bug fixes
 
-* Prevented a `RangeError` that occured when an invalid import lacked an
+* Prevented a `RangeError` that occurred when an invalid import lacked an
   extension.
 
 * `ReflectorEmitter` now supports `MultiToken` and generic-typed tokens, with
