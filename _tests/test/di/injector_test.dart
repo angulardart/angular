@@ -264,10 +264,27 @@ void main() {
         expect(injector.get(typedTokenOfListDynamic), 3);
         expect(injector.get(typedTokenOfListString), 4);
       });
+
+      test('should consider Provider(T) as Provider(T, useClass: T)', () {
+        final injector = new Injector.slowReflective([
+          const Provider(ExampleService),
+        ]);
+        expect(
+          injector.get(ExampleService),
+          const isInstanceOf<ExampleService>(),
+        );
+      });
     });
 
     group('.generate', () {
       final injector = exampleGenerated();
+
+      test('should consider Provider(T) as Provider(T, useClass: T)', () {
+        expect(
+          injector.get(ExampleService2),
+          const isInstanceOf<ExampleService2>(),
+        );
+      });
 
       test('should support "useClass"', () {
         expect(
@@ -358,6 +375,7 @@ const typedTokenOfListString = const OpaqueToken<List<String>>('typedToken');
 
 @Injector.generate(const [
   const Provider(ExampleService, useClass: ExampleService2),
+  const Provider(ExampleService2),
   const Provider(stringToken, useValue: 'Hello World'),
   const Provider(numberToken, useValue: 1234),
   const Provider(booleanToken, useValue: true),
