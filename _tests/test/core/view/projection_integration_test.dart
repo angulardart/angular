@@ -547,7 +547,7 @@ class OuterWithIndirectNestedComponent {}
 @Component(
   selector: 'outer',
   template: 'OUTER(<inner>'
-      '<ng-content select=".left" class="left"></ng-content>'
+      '<ng-content select=".left" ngProjectAs=".left"></ng-content>'
       '<ng-content></ng-content>'
       '</inner>)',
   directives: const [InnerComponent],
@@ -557,7 +557,7 @@ class OuterComponent {}
 @Component(
   selector: 'inner',
   template: 'INNER(<innerinner>'
-      '<ng-content select=".left" class="left"></ng-content>'
+      '<ng-content select=".left" ngProjectAs=".left"></ng-content>'
       '<ng-content></ng-content></innerinner>)',
   directives: const [InnerInnerComponent],
 )
