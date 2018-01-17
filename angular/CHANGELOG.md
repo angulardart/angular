@@ -36,7 +36,7 @@ class Comp implements AfterChanges {
 
 *   `ComponentRef.componentType` throws an `UnsupportedError`, pending removal.
     This removes our last invocation of `.runtimeType`, which has potentially
-    severe code-size implications for some applications.
+    severe code-size implications for some apps.
 *   The type of `EmbeddedViewRef.rootNodes` and `ViewRefImpl.rootNodes` has
     changed from `List<dynamic>` to `List<Node>`.
 
@@ -85,9 +85,9 @@ class PresidentsListComponent {
 
 ### Breaking changes
 
-*   Dartium is no longer supported. All development of your AngularDart
-    applications is now required to be in [DDC][ddc]. With incoming language
-    and library changes this would have been required regardless, but we expect
+*   Dartium is no longer supported. Use [dartdevc][ddc] and Chrome instead when
+    developing your AngularDart apps. With incoming language and library
+    changes, using dartdevc would have been required regardless, but we expect
     to have faster build tools available (instead of `pub serve`) soon.
 
 [ddc]: https://webdev.dartlang.org/tools/dartdevc
@@ -291,7 +291,7 @@ dependencies:
 
 *   Fixed a bug where the hashcode of an item passed via `ngFor` changing would
     cause a strange runtime exception; while it is considered unsupported for
-    a mutable object to have an overriden `hashCode`, we wanted the exception
+    a mutable object to have an overridden `hashCode`, we wanted the exception
     to be much better.
 
 ### Refactors
