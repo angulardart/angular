@@ -196,7 +196,9 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
 
   static String _typeAssetKey(o.OutputType t) {
     if (t is o.ExternalType) {
-      final generics = t.value.genericTypes.map(_typeAssetKey).join(',');
+      final generics = t.value.genericTypes != null
+          ? t.value.genericTypes.map(_typeAssetKey).join(',')
+          : '[]';
       return 'ExternalType {${t.value.moduleUrl}:${t.value.name}:$generics}';
     }
     return '{notExternalType}';
