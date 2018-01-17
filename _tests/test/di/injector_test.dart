@@ -255,6 +255,15 @@ void main() {
         expect(injector.get(typedTokenOfDynamic), 1);
         expect(injector.get(typedTokenOfString), 2);
       });
+
+      test('should consider opaque tokens with different nested types', () {
+        final injector = new Injector.slowReflective([
+          const Provider(typedTokenOfListDynamic, useValue: 3),
+          const Provider(typedTokenOfListString, useValue: 4),
+        ]);
+        expect(injector.get(typedTokenOfListDynamic), 3);
+        expect(injector.get(typedTokenOfListString), 4);
+      });
     });
 
     group('.generate', () {
@@ -303,6 +312,11 @@ void main() {
         expect(injector.get(typedTokenOfDynamic), 1);
         expect(injector.get(typedTokenOfString), 2);
       });
+
+      test('should consider opaque tokens with nested types unique', () {
+        expect(injector.get(typedTokenOfListDynamic), 3);
+        expect(injector.get(typedTokenOfListString), 4);
+      });
     });
   });
 }
@@ -339,6 +353,9 @@ const multiStringToken = const MultiToken<dynamic>('multiStringToken');
 const typedTokenOfDynamic = const OpaqueToken('typedToken');
 const typedTokenOfString = const OpaqueToken<String>('typedToken');
 
+const typedTokenOfListDynamic = const OpaqueToken<List>('typedToken');
+const typedTokenOfListString = const OpaqueToken<List<String>>('typedToken');
+
 @Injector.generate(const [
   const Provider(ExampleService, useClass: ExampleService2),
   const Provider(stringToken, useValue: 'Hello World'),
@@ -353,6 +370,10 @@ const typedTokenOfString = const OpaqueToken<String>('typedToken');
   // We are going to expect these are different bindings.
   const Provider(typedTokenOfDynamic, useValue: 1),
   const Provider(typedTokenOfString, useValue: 2),
+
+  // We are going to expect these are also different bindings.
+  const Provider(typedTokenOfListDynamic, useValue: 3),
+  const Provider(typedTokenOfListString, useValue: 4),
 ])
 Injector exampleGenerated() => ng.exampleGenerated$Injector();
 
