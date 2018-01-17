@@ -88,6 +88,13 @@ void main() {
     expect(value2, 2);
   });
 
+  test('should not consider tokens with nested types the same', () async {
+    final fixture = await new NgTestBed<SupportsNestedGenerics>().create();
+    final injector = fixture.assertOnlyInstance.injector;
+    expect(injector.get(aListOfDynamic), ['dynamic']);
+    expect(injector.get(aListOfString), ['String']);
+  });
+
   group('should support optional values', () {
     NgTestBed<UsingInjectAndOptional> testBed;
 
@@ -384,4 +391,21 @@ class ProperTokenIdentity {
   final Injector injector;
 
   ProperTokenIdentity(this.injector);
+}
+
+const aListOfDynamic = const OpaqueToken<List>('aListOf');
+const aListOfString = const OpaqueToken<List<String>>('aListOf');
+
+@Component(
+  selector: 'supports-nested-generics',
+  providers: const [
+    const Provider(aListOfDynamic, useValue: const <dynamic>['dynamic']),
+    const Provider(aListOfString, useValue: const <String>['String']),
+  ],
+  template: '',
+)
+class SupportsNestedGenerics {
+  final Injector injector;
+
+  SupportsNestedGenerics(this.injector);
 }

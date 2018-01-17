@@ -24,6 +24,9 @@ o.OutputType fromDartType(DartType dartType) {
     new CompileIdentifierMetadata(
       name: dartType.name,
       moduleUrl: moduleUrl(dartType.element),
+      // Most o.ExternalTypes are not created, but those that are (like
+      // OpaqueToken<...> need this generic type.
+      genericTypes: typeArguments,
     ),
     typeArguments,
   );
