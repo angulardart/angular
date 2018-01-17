@@ -12,6 +12,26 @@ const tokenA = const OpaqueToken<String>('a');
 const tokenB = const OpaqueToken<dynamic('b');
 ```
 
+*  Added a lifecycle event `AfterChanges`, which is similar to `OnChanges`, but
+   with a much lower performance cost - it does not take any parameters and is
+   suitable when you have multiple fields and you want to be notified when any
+   of them change:
+
+```dart
+class Comp implements AfterChanges {
+  @Input()
+  String field1;
+
+  @Input()
+  String field2;
+
+  @override
+  void ngAfterChanges() {
+    print('Field1: $field1, Field2: $field2');
+  }
+}
+```
+
 ### Breaking changes
 
 *   `ComponentRef.componentType` throws an `UnsupportedError`, pending removal.
