@@ -25,6 +25,8 @@ import 'package:angular/src/core/linker/app_view_utils.dart'
     as import6;
 import 'package:angular/angular.dart';
 import 'dart:core';
+import 'package:angular/src/core/di/opaque_token.dart'
+    as import9;
 
 const List<dynamic> styles$ProviderModulesComponent = const [];
 
@@ -58,9 +60,9 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   ViewProviderModulesComponent0 _compView_0;
   import1.ProviderModulesComponent _ProviderModulesComponent_0_4;
   import1.FooService __FooService_0_5;
-  Duration __const_OpaqueToken_dynamic___fooToken___0_6;
-  List<dynamic> __const_OpaqueToken_dynamic___barToken___0_7;
-  dynamic __const_OpaqueToken_dynamic___bazToken___0_8;
+  Duration __fooToken_0_6;
+  List<dynamic> __barToken_0_7;
+  dynamic __bazToken_0_8;
   _ViewProviderModulesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(import3.ViewType.HOST, {}, parentView, parentIndex,
@@ -72,26 +74,25 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
     return this.__FooService_0_5;
   }
 
-  Duration get _const_OpaqueToken_dynamic___fooToken___0_6 {
-    if ((this.__const_OpaqueToken_dynamic___fooToken___0_6 == null)) {
-      (__const_OpaqueToken_dynamic___fooToken___0_6 =
-          const Duration(seconds: 500));
+  Duration get _fooToken_0_6 {
+    if ((this.__fooToken_0_6 == null)) {
+      (__fooToken_0_6 = const Duration(seconds: 500));
     }
-    return this.__const_OpaqueToken_dynamic___fooToken___0_6;
+    return this.__fooToken_0_6;
   }
 
-  List<dynamic> get _const_OpaqueToken_dynamic___barToken___0_7 {
-    if ((this.__const_OpaqueToken_dynamic___barToken___0_7 == null)) {
-      (__const_OpaqueToken_dynamic___barToken___0_7 = const ['a', 'b', 'c']);
+  List<dynamic> get _barToken_0_7 {
+    if ((this.__barToken_0_7 == null)) {
+      (__barToken_0_7 = const ['a', 'b', 'c']);
     }
-    return this.__const_OpaqueToken_dynamic___barToken___0_7;
+    return this.__barToken_0_7;
   }
 
-  dynamic get _const_OpaqueToken_dynamic___bazToken___0_8 {
-    if ((this.__const_OpaqueToken_dynamic___bazToken___0_8 == null)) {
-      (__const_OpaqueToken_dynamic___bazToken___0_8 = import1.getSomeValues());
+  dynamic get _bazToken_0_8 {
+    if ((this.__bazToken_0_8 == null)) {
+      (__bazToken_0_8 = import1.getSomeValues());
     }
-    return this.__const_OpaqueToken_dynamic___bazToken___0_8;
+    return this.__bazToken_0_8;
   }
 
   @override
@@ -115,17 +116,17 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
     if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
       return _FooService_0_5;
     }
-    if ((identical(token, const OpaqueToken<dynamic>('fooToken')) &&
+    if ((identical(token, const import9.OpaqueToken('fooToken')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___fooToken___0_6;
+      return _fooToken_0_6;
     }
-    if ((identical(token, const OpaqueToken<dynamic>('barToken')) &&
+    if ((identical(token, const import9.OpaqueToken('barToken')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___barToken___0_7;
+      return _barToken_0_7;
     }
-    if ((identical(token, const OpaqueToken<dynamic>('bazToken')) &&
+    if ((identical(token, const import9.OpaqueToken('bazToken')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___bazToken___0_8;
+      return _bazToken_0_8;
     }
     return notFoundResult;
   }

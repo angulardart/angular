@@ -86,7 +86,7 @@ void main() {
     expect(value1, 1);
     final value2 = fixture.assertOnlyInstance.injector.get(barTypedToken2);
     expect(value2, 2);
-  }, skip: 'Enable when supported in the ViewCompiler (again).');
+  });
 
   group('should support optional values', () {
     NgTestBed<UsingInjectAndOptional> testBed;
@@ -111,6 +111,13 @@ void main() {
         isNull,
       );
     });
+  });
+
+  test('should treat tokens with different names as different', () async {
+    final fixture = await new NgTestBed<ProperTokenIdentity>().create();
+    final injector = fixture.assertOnlyInstance.injector;
+    expect(injector.get(aDynamicTokenNamedA), 'A');
+    expect(injector.get(aDynamicTokenNamedB), 'B');
   });
 }
 
@@ -360,4 +367,21 @@ class SupportsTypedToken {
   final Injector injector;
 
   SupportsTypedToken(this.injector);
+}
+
+const aDynamicTokenNamedA = const OpaqueToken('A');
+const aDynamicTokenNamedB = const OpaqueToken('B');
+
+@Component(
+  selector: 'proper-token-identity',
+  providers: const [
+    const Provider(aDynamicTokenNamedA, useValue: 'A'),
+    const Provider(aDynamicTokenNamedB, useValue: 'B'),
+  ],
+  template: '',
+)
+class ProperTokenIdentity {
+  final Injector injector;
+
+  ProperTokenIdentity(this.injector);
 }

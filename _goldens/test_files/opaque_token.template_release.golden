@@ -24,6 +24,8 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import6;
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/di/opaque_token.dart'
+    as import8;
 
 const List<dynamic> styles$HasOpaqueTokens = const [];
 
@@ -66,7 +68,7 @@ const List<dynamic> styles$HasOpaqueTokensHost = const [];
 
 class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   ViewHasOpaqueTokens0 _compView_0;
-  String _const_OpaqueToken_dynamic___baseUrlDescription___0_4;
+  String _baseUrlDescription_0_4;
   import1.HasOpaqueTokens _HasOpaqueTokens_0_5;
   _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex)
       : super(import4.ViewType.HOST, {}, parentView, parentIndex,
@@ -75,9 +77,8 @@ class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
-    _const_OpaqueToken_dynamic___baseUrlDescription___0_4 = 'https://localhost';
-    _HasOpaqueTokens_0_5 = new import1.HasOpaqueTokens(
-        _const_OpaqueToken_dynamic___baseUrlDescription___0_4);
+    _baseUrlDescription_0_4 = 'https://localhost';
+    _HasOpaqueTokens_0_5 = new import1.HasOpaqueTokens(_baseUrlDescription_0_4);
     _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.HasOpaqueTokens>(
@@ -87,9 +88,9 @@ class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const OpaqueToken<dynamic>('baseUrlDescription')) &&
+    if ((identical(token, const import8.OpaqueToken('baseUrlDescription')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___baseUrlDescription___0_4;
+      return _baseUrlDescription_0_4;
     }
     if ((identical(token, import1.HasOpaqueTokens) && (0 == nodeIndex))) {
       return _HasOpaqueTokens_0_5;

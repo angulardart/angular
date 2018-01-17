@@ -26,6 +26,8 @@ import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import8;
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/di/opaque_token.dart'
+    as import10;
 import 'dart:core';
 
 const List<dynamic> styles$ProviderModulesComponent = const [];
@@ -68,9 +70,9 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProviderModulesComponentHost0 = [
       [
         import2.ProviderModulesComponent,
         import2.FooService,
-        const OpaqueToken<dynamic>('fooToken'),
-        const OpaqueToken<dynamic>('barToken'),
-        const OpaqueToken<dynamic>('bazToken')
+        const import10.OpaqueToken('fooToken'),
+        const import10.OpaqueToken('barToken'),
+        const import10.OpaqueToken('bazToken')
       ],
       import2.ProviderModulesComponent,
       <String, dynamic>{})
@@ -80,9 +82,9 @@ class _ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
   ViewProviderModulesComponent0 _compView_0;
   import2.ProviderModulesComponent _ProviderModulesComponent_0_4;
   import2.FooService __FooService_0_5;
-  Duration __const_OpaqueToken_dynamic___fooToken___0_6;
-  List<dynamic> __const_OpaqueToken_dynamic___barToken___0_7;
-  dynamic __const_OpaqueToken_dynamic___bazToken___0_8;
+  Duration __fooToken_0_6;
+  List<dynamic> __barToken_0_7;
+  dynamic __bazToken_0_8;
   _ViewProviderModulesComponentHost0(
       AppView<dynamic> parentView, num parentIndex)
       : super(
@@ -100,29 +102,28 @@ class _ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
     return this.__FooService_0_5;
   }
 
-  Duration get _const_OpaqueToken_dynamic___fooToken___0_6 {
+  Duration get _fooToken_0_6 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken_dynamic___fooToken___0_6 == null)) {
-      (__const_OpaqueToken_dynamic___fooToken___0_6 =
-          const Duration(seconds: 500));
+    if ((this.__fooToken_0_6 == null)) {
+      (__fooToken_0_6 = const Duration(seconds: 500));
     }
-    return this.__const_OpaqueToken_dynamic___fooToken___0_6;
+    return this.__fooToken_0_6;
   }
 
-  List<dynamic> get _const_OpaqueToken_dynamic___barToken___0_7 {
+  List<dynamic> get _barToken_0_7 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken_dynamic___barToken___0_7 == null)) {
-      (__const_OpaqueToken_dynamic___barToken___0_7 = const ['a', 'b', 'c']);
+    if ((this.__barToken_0_7 == null)) {
+      (__barToken_0_7 = const ['a', 'b', 'c']);
     }
-    return this.__const_OpaqueToken_dynamic___barToken___0_7;
+    return this.__barToken_0_7;
   }
 
-  dynamic get _const_OpaqueToken_dynamic___bazToken___0_8 {
+  dynamic get _bazToken_0_8 {
     dbg(0, 0, 0);
-    if ((this.__const_OpaqueToken_dynamic___bazToken___0_8 == null)) {
-      (__const_OpaqueToken_dynamic___bazToken___0_8 = import2.getSomeValues());
+    if ((this.__bazToken_0_8 == null)) {
+      (__bazToken_0_8 = import2.getSomeValues());
     }
-    return this.__const_OpaqueToken_dynamic___bazToken___0_8;
+    return this.__bazToken_0_8;
   }
 
   @override
@@ -147,17 +148,17 @@ class _ViewProviderModulesComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, import2.FooService) && (0 == nodeIndex))) {
       return _FooService_0_5;
     }
-    if ((identical(token, const OpaqueToken<dynamic>('fooToken')) &&
+    if ((identical(token, const import10.OpaqueToken('fooToken')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___fooToken___0_6;
+      return _fooToken_0_6;
     }
-    if ((identical(token, const OpaqueToken<dynamic>('barToken')) &&
+    if ((identical(token, const import10.OpaqueToken('barToken')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___barToken___0_7;
+      return _barToken_0_7;
     }
-    if ((identical(token, const OpaqueToken<dynamic>('bazToken')) &&
+    if ((identical(token, const import10.OpaqueToken('bazToken')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___bazToken___0_8;
+      return _bazToken_0_8;
     }
     return notFoundResult;
   }

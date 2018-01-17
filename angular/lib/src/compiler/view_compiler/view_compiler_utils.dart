@@ -98,11 +98,21 @@ String getViewFactoryName(CompileDirectiveMetadata component,
 }
 
 o.Expression createDiTokenExpression(CompileTokenMetadata token) {
-  if (token.value != null) {
-    return o.literal(token.value);
-  } else if (token.identifierIsInstance) {
+  if (token.identifierIsInstance) {
     return o.importExpr(token.identifier).instantiate(
-        [], o.importType(token.identifier, [], [o.TypeModifier.Const]));
+        // If there is also a value, assume it is the first argument.
+        //
+        // i.e. const OpaqueToken('literalValue')
+        token.value != null ? [o.literal(token.value)] : const <o.Expression>[],
+        o.importType(token.identifier, [], [o.TypeModifier.Const]),
+        // Add any generic types attached to the type.
+        //
+        // Only a value of `null` precisely means "no generic types", not [].
+        token.identifier.genericTypes.isNotEmpty
+            ? token.identifier.genericTypes
+            : null);
+  } else if (token.value != null) {
+    return o.literal(token.value);
   } else {
     return o.importExpr(token.identifier);
   }
