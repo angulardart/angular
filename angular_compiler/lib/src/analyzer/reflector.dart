@@ -218,7 +218,10 @@ class ReflectableReader {
     // Link if we are have or will have a .template.dart file.
     if (directive is ast.UriBasedDirective) {
       final uri = directive.uri.stringValue;
-      if (uri.startsWith('dart:')) {
+      if (!uri.contains('.')) {
+        // Don't link imports that are missing an extension. These are either
+        // valid Dart SDK imports which don't need to be linked, or invalid
+        // imports which will be reported by the analyzer.
         return false;
       }
       final outputUri = _withOutputExtension(uri);

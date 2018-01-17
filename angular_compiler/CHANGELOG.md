@@ -1,12 +1,21 @@
+### Breaking changes
+
 * `ModuleReader.deduplicateProviders` now returns a `List` not a `Set`, and
   providers that are _multi_ are not removed, as it is a feature of the DI
   system to have multiple of them with the same token.
 
-* Added `typeArgumentOf` helper method.
-
-* **BREAKING CHANGE**: Add the `TypeLink` class, and replace uses of `Uri`.
+* Add the `TypeLink` class, and replace uses of `Uri`.
 
 * Require `code_builder ^3.0.0`.
+
+### New features
+
+* Added `typeArgumentOf` helper method.
+
+### Bug fixes
+
+* Prevented a `RangeError` that occured when an invalid import lacked an
+  extension.
 
 * `ReflectorEmitter` now supports `MultiToken` and generic-typed tokens, with
   some known limitations. See https://github.com/dart-lang/angular/issues/782.
@@ -24,7 +33,7 @@
 
 * Now using `code_builder: '>=2.0.0-beta <3.0.0'`.
 
-### Bug Fixes
+### Bug fixes
 
 * Correctly depend on `analyzer: ^0.31.0-alpha.1`.
 
