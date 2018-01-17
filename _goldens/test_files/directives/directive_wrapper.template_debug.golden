@@ -38,12 +38,16 @@ import 'package:angular_forms/src/directives/control_container.dart'
     as import12;
 import 'package:angular_forms/src/directives/default_value_accessor.dart'
     as import13;
-import 'package:angular_forms/src/directives/ng_control_name.dart'
+import 'package:angular/src/core/di/opaque_token.dart'
     as import14;
-import 'package:angular_forms/src/directives/ng_control.dart'
+import 'package:angular_forms/src/directives/control_value_accessor.dart'
     as import15;
-import 'package:angular/src/core/change_detection/directive_change_detector.dart'
+import 'package:angular_forms/src/directives/ng_control_name.dart'
     as import16;
+import 'package:angular_forms/src/directives/ng_control.dart'
+    as import17;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart'
+    as import18;
 
 const List<dynamic> styles$TestFooComponent = const [
   'div._ngcontent-%COMP% { font-size:10px; }'
@@ -204,9 +208,10 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InputFormTest0 = [
   new StaticNodeDebugInfo(
       [
         import13.DefaultValueAccessor,
-        const OpaqueToken<dynamic>('NgValueAccessor'),
-        import14.NgControlName,
-        import15.NgControl
+        const import14.OpaqueToken<import15.ControlValueAccessor<dynamic>>(
+            'NgValueAccessor'),
+        import16.NgControlName,
+        import17.NgControl
       ],
       null,
       <String, dynamic>{})
@@ -218,8 +223,8 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   dynamic _ControlContainer_0_5;
   import3.InputElement _el_1;
   import13.DefaultValueAccessor _DefaultValueAccessor_1_4;
-  List<dynamic> _const_OpaqueToken_dynamic___NgValueAccessor___1_5;
-  import14.NgControlName _NgControlName_1_6;
+  List<dynamic> _NgValueAccessor_1_5;
+  import16.NgControlName _NgControlName_1_6;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex)
@@ -248,11 +253,9 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     createAttr(_el_1, 'ngControl', 'login');
     createAttr(_el_1, 'type', 'text');
     _DefaultValueAccessor_1_4 = new import13.DefaultValueAccessor(_el_1);
-    _const_OpaqueToken_dynamic___NgValueAccessor___1_5 = [
-      _DefaultValueAccessor_1_4
-    ];
-    _NgControlName_1_6 = new import14.NgControlName(_ControlContainer_0_5, null,
-        _const_OpaqueToken_dynamic___NgValueAccessor___1_5);
+    _NgValueAccessor_1_5 = [_DefaultValueAccessor_1_4];
+    _NgControlName_1_6 = new import16.NgControlName(
+        _ControlContainer_0_5, null, _NgValueAccessor_1_5);
     import8.appViewUtils.eventManager.addEventListener(
         _el_0, 'submit', eventHandler1(_NgFormModel_0_4.onSubmit));
     _el_1.addEventListener('input', eventHandler1(_handle_input_1_0));
@@ -268,12 +271,15 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     if ((identical(token, import13.DefaultValueAccessor) && (1 == nodeIndex))) {
       return _DefaultValueAccessor_1_4;
     }
-    if ((identical(token, const OpaqueToken<dynamic>('NgValueAccessor')) &&
+    if ((identical(
+            token,
+            const import14.OpaqueToken<import15.ControlValueAccessor<dynamic>>(
+                'NgValueAccessor')) &&
         (1 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___NgValueAccessor___1_5;
+      return _NgValueAccessor_1_5;
     }
-    if (((identical(token, import14.NgControlName) ||
-            identical(token, import15.NgControl)) &&
+    if (((identical(token, import16.NgControlName) ||
+            identical(token, import17.NgControl)) &&
         (1 == nodeIndex))) {
       return _NgControlName_1_6;
     }
@@ -503,7 +509,7 @@ const ComponentFactory<import1.DirectiveContainerTest>
         viewFactory_DirectiveContainerTestHost0,
         _DirectiveContainerTestMetadata);
 
-class ChildDirectiveNgCd extends import16.DirectiveChangeDetector {
+class ChildDirectiveNgCd extends import18.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
   var _expr_1;
@@ -528,7 +534,7 @@ class ChildDirectiveNgCd extends import16.DirectiveChangeDetector {
   }
 }
 
-class FastDirectiveNgCd extends import16.DirectiveChangeDetector {
+class FastDirectiveNgCd extends import18.DirectiveChangeDetector {
   final import1.FastDirective instance;
   var _expr_0;
   FastDirectiveNgCd(this.instance, AppView v, import3.Element e) {

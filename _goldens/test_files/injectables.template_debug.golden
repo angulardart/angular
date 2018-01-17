@@ -27,6 +27,8 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart'
     as import8;
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/di/opaque_token.dart'
+    as import10;
 import 'dart:core';
 
 const List<dynamic> styles$InjectableComponent = const [];
@@ -73,7 +75,7 @@ const List<dynamic> styles$InjectableComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 = [
   new StaticNodeDebugInfo(
       [
-        const OpaqueToken<dynamic>('test'),
+        const import10.OpaqueToken('test'),
         import2.InjectableComponent,
         import2.SomeDep,
         import2.BaseService
@@ -84,7 +86,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 = [
 
 class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   ViewInjectableComponent0 _compView_0;
-  dynamic _const_OpaqueToken_dynamic___test___0_4;
+  dynamic _test_0_4;
   import2.InjectableComponent _InjectableComponent_0_5;
   dynamic __SomeDep_0_6;
   dynamic __BaseService_0_7;
@@ -99,8 +101,7 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   dynamic get _SomeDep_0_6 {
     dbg(0, 0, 0);
     if ((this.__SomeDep_0_6 == null)) {
-      (__SomeDep_0_6 = import2
-          .createLinkedHashMap(this._const_OpaqueToken_dynamic___test___0_4));
+      (__SomeDep_0_6 = import2.createLinkedHashMap(this._test_0_4));
     }
     return this.__SomeDep_0_6;
   }
@@ -121,12 +122,12 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _const_OpaqueToken_dynamic___test___0_4 = import2.injectableFactory(
+    _test_0_4 = import2.injectableFactory(
         this.injectorGet(import3.Window, viewData.parentIndex));
     _InjectableComponent_0_5 = new import2.InjectableComponent(
         null,
         this.injectorGet(import2.InjectableService, viewData.parentIndex, null),
-        _const_OpaqueToken_dynamic___test___0_4,
+        _test_0_4,
         this.injectorGet(String, viewData.parentIndex, null));
     _compView_0.create(_InjectableComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -137,9 +138,9 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   @override
   dynamic injectorGetInternal(
       dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const OpaqueToken<dynamic>('test')) &&
+    if ((identical(token, const import10.OpaqueToken('test')) &&
         (0 == nodeIndex))) {
-      return _const_OpaqueToken_dynamic___test___0_4;
+      return _test_0_4;
     }
     if ((identical(token, import2.InjectableComponent) && (0 == nodeIndex))) {
       return _InjectableComponent_0_5;

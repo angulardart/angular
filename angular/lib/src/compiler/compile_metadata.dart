@@ -29,6 +29,7 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
   // includes prefixes that aren't supposed to be emitted because it can't tell
   // if a prefix is a class name or a qualified import name.
   final bool emitPrefix;
+  final List<o.OutputType> genericTypes;
   final String prefix;
 
   String name;
@@ -40,6 +41,7 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
       this.moduleUrl,
       this.prefix,
       this.emitPrefix: false,
+      this.genericTypes: const [],
       this.value});
 
   @override
@@ -131,15 +133,24 @@ class CompileProviderMetadata {
 class CompileFactoryMetadata implements CompileIdentifierMetadata<Function> {
   @override
   String name;
+
   @override
   String prefix;
+
   @override
   bool emitPrefix;
+
   @override
   String moduleUrl;
+
   @override
   dynamic value;
+
+  @override
+  List<o.OutputType> get genericTypes => const [];
+
   List<CompileDiDependencyMetadata> diDeps;
+
   CompileFactoryMetadata(
       {this.name,
       this.moduleUrl,
@@ -162,15 +173,33 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   CompileTokenMetadata({this.value, this.identifier, bool identifierIsInstance})
       : this.identifierIsInstance = identifierIsInstance == true;
 
+  // Used to determine unique-ness of CompileTokenMetadata.
+  //
+  // Because this code originated from the shared TypeScript source, a unique
+  // String is emitted and compared, and not something more Dart-y like
+  // equality. Should be refactored.
   dynamic get assetCacheKey {
     if (identifier != null) {
       return identifier.moduleUrl != null &&
               Uri.parse(identifier.moduleUrl).scheme != null
-          ? '${identifier.name}|${identifier.moduleUrl}|$identifierIsInstance'
+          ? ''
+              '${identifier.name}|'
+              '${identifier.moduleUrl}|'
+              '$identifierIsInstance|'
+              '$value|'
+              '${identifier.genericTypes.map(_typeAssetKey).join(',')}'
           : null;
     } else {
       return value;
     }
+  }
+
+  static String _typeAssetKey(o.OutputType t) {
+    if (t is o.ExternalType) {
+      final generics = t.value.genericTypes.map(_typeAssetKey).join(',');
+      return 'ExternalType {${t.value.moduleUrl}:${t.value.name}:$generics}';
+    }
+    return '{notExternalType}';
   }
 
   bool equalsTo(CompileTokenMetadata token2) {
@@ -185,10 +214,12 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   @override
   // ignore: hash_and_equals
   bool operator ==(other) {
-    if (other is! CompileTokenMetadata) return false;
-    return value == other.value &&
-        identifier == other.identifier &&
-        identifierIsInstance == other.identifierIsInstance;
+    if (other is CompileTokenMetadata) {
+      return value == other.value &&
+          identifier == other.identifier &&
+          identifierIsInstance == other.identifierIsInstance;
+    }
+    return false;
   }
 
   @override
@@ -237,16 +268,26 @@ class CompileTypeMetadata
     implements CompileIdentifierMetadata<Type>, CompileMetadataWithType {
   @override
   String name;
+
   @override
   String prefix;
+
   @override
   final bool emitPrefix = false;
+
   @override
   String moduleUrl;
+
   bool isHost;
+
   @override
   dynamic value;
+
   List<CompileDiDependencyMetadata> diDeps;
+
+  @override
+  List<o.OutputType> get genericTypes => const [];
+
   CompileTypeMetadata(
       {this.name,
       this.moduleUrl,

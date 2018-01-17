@@ -10,6 +10,7 @@ import 'package:logging/logging.dart';
 import 'package:quiver/strings.dart' as strings;
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
+import 'package:angular/src/compiler/output/convert.dart';
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/core/di.dart';
 import 'package:angular/src/core/di/decorators.dart';
@@ -318,19 +319,33 @@ class CompileTypeMetadataVisitor
   }
 
   CompileTokenMetadata _canonicalOpaqueToken(DartObject object) {
-    final description = dart_objects.coerceString(object, '_desc');
-    final genericType = typeArgumentOf(object);
-    final isMultiToken = $MultiToken.isExactlyType(object.type);
-    final className = '${isMultiToken ? 'Multi' : 'Opaque'}Token';
+    // We could make this static, but it actually shouldn't be used elsewhere.
+    const moduleUrl = ''
+        'asset:angular'
+        '/lib/src/core/di/opaque_token.dart';
 
-    // TODO(matanl): If we end up needing better/proper support for generic
-    // type parameters in the source_gen compiler, refactor this out. We want
-    // to get towards using code_builder anyways.
-    final tokenHack = new _OpaqueToken(
-      // TODO(matanl): Roll-forward to use the real generic type after fix.
-      "const $className<dynamic>('$description')",
+    // The actual string name/identifier of the token.
+    final description = dart_objects.coerceString(object, '_desc');
+
+    // Generic type T of {Opaque|Multi}Token<T>, if any.
+    final genericType = typeArgumentOf(object);
+
+    // Whether this is a MultiToken or OpaqueToken.
+    final isMultiToken = $MultiToken.isExactlyType(object.type);
+
+    // Create an identifier referencing {Opaque|Multi}Token<T>.
+    final tokenId = new CompileIdentifierMetadata(
+      name: isMultiToken ? 'MultiToken' : 'OpaqueToken',
+      moduleUrl: moduleUrl,
+      genericTypes: genericType.isDynamic
+          ? const <CompileIdentifierMetadata>[]
+          : [fromDartType(genericType)],
     );
-    return new CompileTokenMetadata(value: tokenHack);
+    return new CompileTokenMetadata(
+      value: description,
+      identifier: tokenId,
+      identifierIsInstance: true,
+    );
   }
 
   CompileTokenMetadata _tokenForType(DartType type, {bool isInstance: false}) {
@@ -534,23 +549,6 @@ class CompileTypeMetadataVisitor
         .importExpr(_idFor(token.type))
         .prop(dart_objects.coerceString(token, 'name'));
   }
-}
-
-class _OpaqueToken {
-  final String _value;
-
-  _OpaqueToken(this._value);
-
-  @override
-  bool operator ==(Object o) => o is _OpaqueToken && o._value == _value;
-
-  @override
-  int get hashCode => _value.hashCode;
-
-  toJson() => _value;
-
-  @override
-  String toString() => _value;
 }
 
 class _PrivateConstructorException extends Error {
