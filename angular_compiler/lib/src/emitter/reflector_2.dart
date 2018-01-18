@@ -31,6 +31,7 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
 
   DartEmitter _dartEmitter;
   LibraryBuilder _library;
+  BlockBuilder _initReflectorBody;
   StringSink _importBuffer;
   StringSink _initReflectorBuffer;
 
@@ -58,6 +59,17 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
       : _allocator = allocator ?? Allocator.none,
         deferredModules = deferredModules ?? const [];
 
+  /// Whether we have one or more URLs that need `initReflector` called on them.
+  bool get _linkingNeeded => _output.urlsNeedingInitReflector.isNotEmpty;
+
+  /// Whether one or more functions or classes to be registered for reflection.
+  bool get _registrationNeeded =>
+      _output.registerClasses.isNotEmpty ||
+      _output.registerFunctions.isNotEmpty;
+
+  /// Whether the result of analysis is that this file is a complete no-op.
+  bool get _isNoop => !_linkingNeeded && !_registrationNeeded;
+
   @override
   String emitImports() {
     _produceDartCode();
@@ -71,6 +83,14 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
   }
 
   void _produceDartCode() {
+    if (_isNoop) {
+      _importBuffer = new StringBuffer();
+      _initReflectorBuffer = new StringBuffer(
+        '// No initReflector() linking required.\nvoid initReflector(){}',
+      );
+      return;
+    }
+
     // Only invoke this method once per instance of the class.
     if (_dartEmitter != null) {
       return;
@@ -82,12 +102,36 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     _dartEmitter = new _SplitDartEmitter(_importBuffer, _allocator);
     _library = new LibraryBuilder();
 
+    // Create the initial (static) body of initReflector().
+    _initReflectorBody = new BlockBuilder()
+      ..statements.add(
+        const Code(
+          ''
+              'if (_visited) {\n'
+              '  return;\n'
+              '}\n'
+              '_visited = true;\n',
+        ),
+      );
+
+    final initReflector = new MethodBuilder()
+      ..name = 'initReflector'
+      ..returns = refer('void')
+      ..body = _initReflectorBody.build();
+
     // For some classes, emit "const _{class}Metadata = const [ ... ]".
     //
     // This is used to:
     // 1. Allow use of ReflectiveInjector.
     // 2. Allow use of the AngularDart [v1] deprecated router.
     _output.registerClasses.forEach(_registerMetadataFor);
+
+    // Add initReflector() [to the end].
+    _library.body.add(
+      // var _visited = false;
+      literalFalse.assignVar('_visited').statement,
+    );
+    _library.body.add(initReflector.build());
 
     // Write code to output.
     _library.build().accept(_dartEmitter, _initReflectorBuffer);
