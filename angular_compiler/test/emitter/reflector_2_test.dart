@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import '../src/resolve.dart';
 
 void main() {
-  final _dartfmt = new DartFormatter().format;
+  final dartfmt = new DartFormatter().format;
   final angular = 'package:angular';
   final libReflection = '$angular/src/core/reflection/reflection.dart';
 
@@ -13,7 +13,10 @@ void main() {
     final output = new ReflectableOutput();
     final emitter = new ReflectableEmitter.useCodeBuilder(output);
     expect(emitter.emitImports(), isEmpty);
-    expect(emitter.emitInitReflector(), isEmpty);
+    expect(
+      emitter.emitInitReflector(),
+      '// No initReflector() linking required.\nvoid initReflector(){}',
+    );
   });
 
   test('should emit no metadata for an empty injectable class', () async {
@@ -29,9 +32,16 @@ void main() {
       reflectorSource: libReflection,
     );
     expect(
-      _dartfmt(emitter.emitInitReflector()),
-      _dartfmt(r'''
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
         const _ExampleMetadata = const [];
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+        }
       '''),
     );
   });
@@ -73,8 +83,8 @@ void main() {
       reflectorSource: libReflection,
     );
     expect(
-      _dartfmt(emitter.emitInitReflector()),
-      _dartfmt(r'''
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
         const _ExampleMetadata = const [
           const RouteConfig(const [
             const Route(
@@ -84,6 +94,13 @@ void main() {
             )
           ])
         ];
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+        }
       '''),
     );
   });
