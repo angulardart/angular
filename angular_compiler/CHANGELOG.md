@@ -1,3 +1,5 @@
+## 0.4.0-alpha+4
+
 ### Breaking changes
 
 * `ModuleReader.deduplicateProviders` now returns a `List` not a `Set`, and
