@@ -19,6 +19,69 @@ void main() {
     );
   });
 
+  test('should support linking', () {
+    final output = new ReflectableOutput(
+      urlsNeedingInitReflector: ['foo.template.dart'],
+    );
+    final emitter = new ReflectableEmitter.useCodeBuilder(output);
+    expect(
+      dartfmt(emitter.emitImports()),
+      dartfmt(r'''
+        import 'foo.template.dart' as _ref0;
+      '''),
+    );
+    expect(
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+
+          _ref0.initReflector();
+        }
+      '''),
+    );
+  });
+
+  test('should skip linking to deferred libraries', () {
+    final output = new ReflectableOutput(
+      urlsNeedingInitReflector: [
+        // Relative file.
+        'foo.template.dart',
+
+        // Package file.
+        'package:bar/bar.template.dart',
+      ],
+    );
+    final emitter = new ReflectableEmitter.useCodeBuilder(
+      output,
+      deferredModules: [
+        // Relative file.
+        'asset:baz/lib/foo.template.dart',
+
+        // Package file.
+        'asset:bar/lib/bar.template.dart',
+      ],
+      deferredModuleSource: 'asset:baz/lib/baz.dart',
+    );
+    expect(emitter.emitImports(), isEmpty);
+    expect(
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+        }
+      '''),
+    );
+  });
+
   test('should emit no metadata for an empty injectable class', () async {
     final reflector = new ReflectableReader.noLinking(
       recordComponentsAsInjectables: false,

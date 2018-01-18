@@ -1,3 +1,4 @@
+import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 
 import '../analyzer/reflector.dart';
@@ -70,6 +71,25 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
   /// Whether the result of analysis is that this file is a complete no-op.
   bool get _isNoop => !_linkingNeeded && !_registrationNeeded;
 
+  /// Returns whether to skip linking to [url].
+  ///
+  /// The view compiler may instruct us to defer additional source URLs if they
+  /// were only used in order to refer to a component that is later deferred
+  /// using the `@deferred` template syntax.
+  bool _isUsedForDeferredComponentsOnly(String url) {
+    if (deferredModules.isEmpty) {
+      return false;
+    }
+    // Transforms the current source URL to an AssetId (canonical).
+    final module = new AssetId.resolve(deferredModuleSource);
+    // Given the url, resolve what absolute path that is.
+    // We might get a relative path, but we only deal with absolute URLs.
+    final asset = new AssetId.resolve(url, from: module);
+    // The template compiler and package:build use a different asset: scheme.
+    final assetUrl = 'asset:${asset.toString().replaceFirst('|', '/')}';
+    return deferredModules.contains(assetUrl);
+  }
+
   @override
   String emitImports() {
     _produceDartCode();
@@ -116,8 +136,7 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
 
     final initReflector = new MethodBuilder()
       ..name = 'initReflector'
-      ..returns = refer('void')
-      ..body = _initReflectorBody.build();
+      ..returns = refer('void');
 
     // For some classes, emit "const _{class}Metadata = const [ ... ]".
     //
@@ -126,15 +145,46 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     // 2. Allow use of the AngularDart [v1] deprecated router.
     _output.registerClasses.forEach(_registerMetadataFor);
 
+    // Invoke 'initReflector' on other imported URLs.
+    _linkToOtherInitReflectors();
+
     // Add initReflector() [to the end].
     _library.body.add(
       // var _visited = false;
       literalFalse.assignVar('_visited').statement,
     );
+
+    initReflector.body = _initReflectorBody.build();
     _library.body.add(initReflector.build());
 
     // Write code to output.
     _library.build().accept(_dartEmitter, _initReflectorBuffer);
+  }
+
+  void _linkToOtherInitReflectors() {
+    if (!_linkingNeeded) {
+      return;
+    }
+    var counter = 0;
+    for (final url in _output.urlsNeedingInitReflector) {
+      if (_isUsedForDeferredComponentsOnly(url)) {
+        continue;
+      }
+      // Generates:
+      //
+      // import "<url>" as _refN;
+      //
+      // void initReflector() {
+      //   ...
+      //   _refN.initReflector();
+      // }
+      final name = '_ref$counter';
+      _library.directives.add(new Directive.import(url, as: name));
+      _initReflectorBody.addExpression(
+        refer(name).property('initReflector').call([]),
+      );
+      counter++;
+    }
   }
 
   void _registerMetadataFor(ReflectableClass clazz) {
