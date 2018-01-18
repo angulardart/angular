@@ -36,7 +36,7 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
   StringSink _importBuffer;
   StringSink _initReflectorBuffer;
 
-  Reference _ngRef(String symbol) => refer(reflectorSource, symbol);
+  Reference _ngRef(String symbol) => refer('_ngRef.$symbol');
 
   // Classes and functions we need to refer to in generated (runtime) code.
   Reference get _registerComponent => _ngRef('registerComponent');
@@ -122,6 +122,13 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     _dartEmitter = new _SplitDartEmitter(_importBuffer, _allocator);
     _library = new LibraryBuilder();
 
+    // Reference _ngRef if we do any registration.
+    if (_registrationNeeded) {
+      _library.directives.add(
+        new Directive.import(reflectorSource, as: '_ngRef'),
+      );
+    }
+
     // Create the initial (static) body of initReflector().
     _initReflectorBody = new BlockBuilder()
       ..statements.add(
@@ -143,7 +150,7 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     // This is used to:
     // 1. Allow use of ReflectiveInjector.
     // 2. Allow use of the AngularDart [v1] deprecated router.
-    _output.registerClasses.forEach(_registerMetadataFor);
+    _output.registerClasses.forEach(_registerMetadataForClass);
 
     // Invoke 'initReflector' on other imported URLs.
     _linkToOtherInitReflectors();
@@ -187,10 +194,17 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     }
   }
 
-  void _registerMetadataFor(ReflectableClass clazz) {
+  void _registerMetadataForClass(ReflectableClass clazz) {
+    // Ignore any class that isn't a component.
     if (!clazz.registerComponentFactory) {
       return;
     }
+    _initReflectorBody.addExpression(
+      _registerComponent.call([
+        refer(clazz.name),
+        refer('${clazz.name}NgFactory'),
+      ]),
+    );
     if (clazz.registerAnnotation == null) {
       _registerEmptyMetadata(clazz.name);
     } else {

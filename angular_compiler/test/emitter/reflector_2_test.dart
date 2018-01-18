@@ -104,6 +104,8 @@ void main() {
             return;
           }
           _visited = true;
+
+          _ngRef.registerComponent(Example, ExampleNgFactory);
         }
       '''),
     );
@@ -163,6 +165,8 @@ void main() {
             return;
           }
           _visited = true;
+
+          _ngRef.registerComponent(Example, ExampleNgFactory);
         }
       '''),
     );
