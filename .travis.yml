@@ -5,8 +5,9 @@ addons:
 
 language: dart
 
+# Unpin SDK after https://github.com/dart-lang/sdk/issues/31940
 dart:
-  - dev
+  - "dev/release/2.0.0-dev.17.0"
 
 env:
   - PKG=_goldens
