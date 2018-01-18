@@ -1,3 +1,7 @@
+## 0.4.2
+
+- Supports the latest version of `quiver`.
+
 ## 0.4.1
 
 ### Bug fixes

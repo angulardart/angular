@@ -1,3 +1,18 @@
+## 5.0.0-alpha+4
+
+* We have a new template parser. This parser is much stricter than the old one,
+  as it will detect things like missing closing tags or quotation marks.
+  Enabling it will be a major breaking change, so we encourage you to try it out
+  in this alpha release before we enable it by default in the next one.
+
+  In order to use it, you need to set the following flag in your `build.yaml`:
+```yaml
+builders:
+  angular:
+    options:
+      use_new_template_parser: True
+```
+
 *   We now require `code_builder ^3.0.0`.
 
 ### New features

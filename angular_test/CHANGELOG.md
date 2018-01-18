@@ -1,3 +1,7 @@
+## 2.0.0-alpha+2
+
+_Maintenance release, to support the latest package:angular alpha._
+
 ## 2.0.0-alpha+1
 
 - Added support for `build.yaml`.

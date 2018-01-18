@@ -1,3 +1,5 @@
+## 2.0.0-alpha+4
+
 ### Breaking changes
 
 *   Removed `SpyLocation`. `MockLocationStrategy` should be used instead.
