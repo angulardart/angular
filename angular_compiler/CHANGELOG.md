@@ -1,6 +1,11 @@
 * Requires `source_gen ^0.7.4` (was previously `^0.7.0`).
 
-* `linkToReference` now requires a second parameter, a `LibraryReader`.
+* `linkToReference` now requires a second parameter, a `LibraryReader`, and
+  treats private types (i.e. prefixed with `_`) as `dynamic` as the compiler
+  cannot point to them.
+
+* `linkTypeOf` correctly resolves bound types (i.e. `<T>`) in most cases, and
+  can fallback to `dynamic` otherwise.
 
 * `ReflectableEmitter` (the default implementation) will flip to become the
   `ReflectableEmitter.useCodeBuilder` strategy, and the original constructor

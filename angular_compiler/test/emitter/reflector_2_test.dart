@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:angular_compiler/angular_compiler.dart';
@@ -194,7 +196,7 @@ void main() {
 
       @Injectable()
       class ExampleServiceNoDeps {}
-      
+
       @Injectable()
       class ExampleServiceWithDeps {
         ExampleServiceWithDeps(A a, B b, C c);
@@ -276,7 +278,7 @@ void main() {
       {
         'a|test/a_test.dart': '''
           library a_test;
-          
+
           import '$angular/angular.dart';
 
           import 'a_data.dart';
@@ -330,5 +332,198 @@ void main() {
         }
       '''),
     );
+  });
+
+  group('should handle generic type parameters where', () {
+    Future<String> initReflectorOf(String source) async {
+      final library = new LibraryReader(await resolveLibrary(source));
+      final reflector = new ReflectableReader.noLinking();
+      final output = await reflector.resolve(library.element);
+      final emitter = new ReflectableEmitter.useCodeBuilder(output, library);
+      return emitter.emitInitReflector();
+    }
+
+    test('there is no bound type (default to dynamic)', () async {
+      final source = r'''
+        class GenericType<T> {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<dynamic> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type is private (default to dynamic)', () async {
+      final source = r'''
+        class GenericType<T> {}
+        class _PrivateType {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType<_PrivateType> a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<dynamic> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type is non-dynamic', () async {
+      final source = r'''
+        class GenericType<T> {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType<String> a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<String> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type extends another a non-dynamic type', () async {
+      final source = r'''
+        class GenericType<T extends Comparable<T>> {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type extends another bound type', () async {
+      final source = r'''
+        class GenericType<T> {}
+
+        @Injectable()
+        class InjectsGeneric<T extends String> {
+          InjectsGeneric(GenericType<T> a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<String> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type extends another bound on the same class', () async {
+      final source = r'''
+        class GenericType<E extends Comparable<E>, T extends E> {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType a);
+        }
+      ''';
+      // TODO(matanl): This isn't quite right. Work with analyzer team on this.
+      // We'd expect GenericType<Comparable<dynamic>, Comparable<dynamic>>.
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>, dynamic> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
   });
 }
