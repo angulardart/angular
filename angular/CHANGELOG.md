@@ -1,5 +1,10 @@
 * Requires `source_gen ^0.7.4` (was previously `^0.7.0`).
 
+* The compiler behind `initReflector()` has changed implementations and now
+  uses fully-scoped import statements instead of trying to figure out the
+  original scope (including import prefixes) of your source code. This is not
+  intended to be a breaking change.
+
 ## 5.0.0-alpha+4
 
 * We have a new template parser. This parser is much stricter than the old one,

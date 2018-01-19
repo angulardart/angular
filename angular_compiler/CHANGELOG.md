@@ -2,6 +2,10 @@
 
 * `linkToReference` now requires a second parameter, a `LibraryReader`.
 
+* `ReflectableEmitter` (the default implementation) will flip to become the
+  `ReflectableEmitter.useCodeBuilder` strategy, and the original constructor
+  will be removed.
+
 ## 0.4.0-alpha+4
 
 ### Breaking changes
