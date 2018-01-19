@@ -1,6 +1,10 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 
+import '../analyzer/di/dependencies.dart';
+import '../analyzer/di/tokens.dart';
+import '../analyzer/link.dart';
 import '../analyzer/reflector.dart';
 
 import 'reflector.dart';
@@ -90,6 +94,40 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     return deferredModules.contains(assetUrl);
   }
 
+  /// Creates a manual tear-off of the provided constructor.
+  Expression _tearOffConstructor(
+    String constructor,
+    DependencyInvocation invocation,
+  ) =>
+      new Method(
+        (b) => b
+          ..requiredParameters.addAll(
+            _parameters(invocation.positional),
+          )
+          ..body = refer(constructor)
+              .newInstance(new Iterable<Expression>.generate(
+                invocation.positional.length,
+                (i) => refer('p$i'),
+              ))
+              .code,
+      ).closure;
+
+  List<Parameter> _parameters(Iterable<DependencyElement> elements) {
+    var counter = 0;
+    return elements.map((element) {
+      TypeLink type = element.type?.link ?? TypeLink.$dynamic;
+      if (type.isDynamic) {
+        final token = element.token;
+        if (token is TypeTokenElement) {
+          type = token.link;
+        }
+      }
+      return new Parameter((b) => b
+        ..name = 'p${counter++}'
+        ..type = linkToReference(type));
+    }).toList();
+  }
+
   @override
   String emitImports() {
     _produceDartCode();
@@ -152,6 +190,11 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     // 2. Allow use of the AngularDart [v1] deprecated router.
     _output.registerClasses.forEach(_registerMetadataForClass);
 
+    // For some classes and functions, link to the factory.
+    //
+    // This is used to allow use of ReflectiveInjector.
+    _output.registerFunctions.forEach(_registerParametersForFunction);
+
     // Invoke 'initReflector' on other imported URLs.
     _linkToOtherInitReflectors();
 
@@ -196,21 +239,54 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
 
   void _registerMetadataForClass(ReflectableClass clazz) {
     // Ignore any class that isn't a component.
-    if (!clazz.registerComponentFactory) {
+    if (clazz.registerComponentFactory) {
+      // Legacy support for SlowComponentLoader.
+      _initReflectorBody.addExpression(
+        _registerComponent.call([
+          refer(clazz.name),
+          refer('${clazz.name}NgFactory'),
+        ]),
+      );
+
+      // Legacy support for the AngularDart router [v1].
+      if (clazz.registerAnnotation == null) {
+        _registerEmptyMetadata(clazz.name);
+      } else {
+        // We arbitrarily support the `@RouteConfig` annotation for the router.
+        _registerRouteConfig(clazz);
+      }
+    }
+
+    // Legacy support for ReflectiveInjector.
+    if (clazz.factory != null) {
+      _registerConstructor(clazz.factory);
+    }
+  }
+
+  void _registerParametersForFunction(
+      DependencyInvocation functionOrConstructor) {
+    print(functionOrConstructor);
+    // Optimization: Don't register dependencies for zero-arg functions.
+    if (functionOrConstructor.positional.isEmpty) {
       return;
     }
+  }
+
+  void _registerConstructor(DependencyInvocation<ConstructorElement> function) {
+    // _ngRef.registerFactory(Type, (p0, p1) => new Type(p0, p1));
+    final bound = function.bound;
+    final clazz = bound.returnType;
+    var constructor = clazz.name;
+    // Support named constructors.
+    if (bound.name?.isNotEmpty == true) {
+      constructor = '$constructor.${bound.name}';
+    }
     _initReflectorBody.addExpression(
-      _registerComponent.call([
+      _registerFactory.call([
         refer(clazz.name),
-        refer('${clazz.name}NgFactory'),
+        _tearOffConstructor(constructor, function),
       ]),
     );
-    if (clazz.registerAnnotation == null) {
-      _registerEmptyMetadata(clazz.name);
-    } else {
-      // We arbitrarily support the `@RouteConfig` annotation for the router.
-      _registerRouteConfig(clazz);
-    }
   }
 
   void _registerRouteConfig(ReflectableClass clazz) {

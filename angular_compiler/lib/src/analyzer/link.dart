@@ -1,15 +1,17 @@
 import 'package:analyzer/dart/element/type.dart';
-import 'package:code_builder/code_builder.dart' show TypeReference;
+import 'package:code_builder/code_builder.dart' show refer, TypeReference;
 import 'package:collection/collection.dart';
 import 'package:source_gen/src/utils.dart';
 
 import 'common.dart';
 
 /// Returns as a `code_builder` [TypeReference] for code generation.
-TypeReference linkToReference(TypeLink link) => new TypeReference((b) => b
-  ..symbol = link.symbol
-  ..url = link.import
-  ..types.addAll(link.generics.map(linkToReference)));
+TypeReference linkToReference(TypeLink link) => link.isDynamic
+    ? refer('dynamic', 'dart:core')
+    : new TypeReference((b) => b
+      ..symbol = link.symbol
+      ..url = link.import
+      ..types.addAll(link.generics.map(linkToReference)));
 
 /// Returns a [TypeLink] to the given statically analyzed [DartType].
 TypeLink linkTypeOf(DartType type) {
@@ -65,6 +67,9 @@ class TypeLink {
 
   @override
   int get hashCode => symbol.hashCode ^ import.hashCode ^ _list.hash(generics);
+
+  /// Whether this is considered `dynamic`.
+  bool get isDynamic => this == $dynamic;
 
   @override
   String toString() => 'TypeLink {$import:$symbol<$generics>}';

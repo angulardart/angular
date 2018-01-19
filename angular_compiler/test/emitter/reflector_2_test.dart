@@ -171,4 +171,55 @@ void main() {
       '''),
     );
   });
+
+  test('should register constructors for injectable services', () async {
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(await resolveLibrary(r'''
+      class A {}
+      class B {}
+      class C {}
+
+      @Injectable()
+      class ExampleServiceNoDeps {}
+      
+      @Injectable()
+      class ExampleServiceWithDeps {
+        ExampleServiceWithDeps(A a, B b, C c);
+      }
+
+      @Injectable()
+      class ExampleServiceWithNamedConstructor {
+        ExampleServiceWithNamedConstructor.namedConstructor(A a, B b, C c);
+      }
+    '''));
+    final emitter = new ReflectableEmitter.useCodeBuilder(
+      output,
+      reflectorSource: libReflection,
+    );
+    expect(
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+
+          _ngRef.registerFactory(
+            ExampleServiceNoDeps,
+            () => new ExampleServiceNoDeps()
+          );
+          _ngRef.registerFactory(
+            ExampleServiceWithDeps,
+            (A p0, B p1, C p2) => new ExampleServiceWithDeps(p0, p1, p2)
+          );
+          _ngRef.registerFactory(
+            ExampleServiceWithNamedConstructor,
+            (A p0, B p1, C p2) => new ExampleServiceWithNamedConstructor.namedConstructor(p0, p1, p2)
+          );
+        }
+      '''),
+    );
+  });
 }
