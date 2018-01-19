@@ -93,4 +93,7 @@ class TypeLink {
   ///
   /// This should be used for migration purposes off [Url] only.
   Uri toUrlWithoutGenerics() => Uri.parse('$import#$symbol');
+
+  /// Returns as a [TypeLink] without generic type arguments.
+  TypeLink withoutGenerics() => new TypeLink(symbol, import);
 }
