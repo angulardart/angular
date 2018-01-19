@@ -175,6 +175,7 @@ void main() {
   test('should register constructors for injectable services', () async {
     final reflector = new ReflectableReader.noLinking();
     final output = await reflector.resolve(await resolveLibrary(r'''
+      const someToken = const OpaqueToken('someToken');
       class A {}
       class B {}
       class C {}
@@ -190,6 +191,11 @@ void main() {
       @Injectable()
       class ExampleServiceWithNamedConstructor {
         ExampleServiceWithNamedConstructor.namedConstructor(A a, B b, C c);
+      }
+
+      @Injectable()
+      class ExampleServiceWithDynamicDeps {
+        ExampleServiceWithDynamicDeps(@Inject(someToken) a);
       }
     '''));
     final emitter = new ReflectableEmitter.useCodeBuilder(
@@ -217,6 +223,10 @@ void main() {
           _ngRef.registerFactory(
             ExampleServiceWithNamedConstructor,
             (A p0, B p1, C p2) => new ExampleServiceWithNamedConstructor.namedConstructor(p0, p1, p2)
+          );
+          _ngRef.registerFactory(
+            ExampleServiceWithDynamicDeps,
+            (dynamic p0) => new ExampleServiceWithDynamicDeps(p0)
           );
         }
       '''),
