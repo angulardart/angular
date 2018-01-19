@@ -1,13 +1,17 @@
 import 'package:analyzer/dart/element/type.dart';
-import 'package:code_builder/code_builder.dart' show refer, TypeReference;
+import 'package:code_builder/code_builder.dart' show TypeReference;
 import 'package:collection/collection.dart';
 import 'package:source_gen/src/utils.dart';
 
 import 'common.dart';
 
+final TypeReference _dynamic = new TypeReference((b) => b
+  ..symbol = 'dynamic'
+  ..url = 'dart:core');
+
 /// Returns as a `code_builder` [TypeReference] for code generation.
 TypeReference linkToReference(TypeLink link) => link.isDynamic
-    ? refer('dynamic', 'dart:core')
+    ? _dynamic
     : new TypeReference((b) => b
       ..symbol = link.symbol
       ..url = link.import
