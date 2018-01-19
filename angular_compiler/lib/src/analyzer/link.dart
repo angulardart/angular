@@ -11,19 +11,26 @@ final TypeReference _dynamic = new TypeReference((b) => b
   ..url = 'dart:core');
 
 /// Returns as a `code_builder` [TypeReference] for code generation.
-TypeReference linkToReference(TypeLink link, LibraryReader library) => link
-        .isDynamic
-    ? _dynamic
-    : new TypeReference((b) => b
-      ..symbol = link.symbol
-      ..url = library.pathToUrl(link.import).toString()
-      ..types.addAll(link.generics.map((t) => linkToReference(t, library))));
+TypeReference linkToReference(TypeLink link, LibraryReader library) {
+  if (link.isDynamic || link.isPrivate) {
+    return _dynamic;
+  }
+  return new TypeReference((b) => b
+    ..symbol = link.symbol
+    ..url = library.pathToUrl(link.import).toString()
+    ..types.addAll(link.generics.map((t) => linkToReference(t, library))));
+}
+
+DartType _resolveBounds(DartType type) {
+  return type is TypeParameterType ? _resolveBounds(type.bound) : type;
+}
 
 /// Returns a [TypeLink] to the given statically analyzed [DartType].
 TypeLink linkTypeOf(DartType type) {
   if (type.element.library == null) {
     return TypeLink.$dynamic;
   }
+  type = _resolveBounds(type);
   return new TypeLink(
     getTypeName(type),
     normalizeUrl(type.element.library.source.uri).toString(),
@@ -76,6 +83,9 @@ class TypeLink {
 
   /// Whether this is considered `dynamic`.
   bool get isDynamic => this == $dynamic;
+
+  /// Whether this is a private type.
+  bool get isPrivate => symbol.startsWith('_');
 
   @override
   String toString() => 'TypeLink {$import:$symbol<$generics>}';
