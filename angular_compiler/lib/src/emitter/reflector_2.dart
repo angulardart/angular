@@ -260,16 +260,72 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     // Legacy support for ReflectiveInjector.
     if (clazz.factory != null) {
       _registerConstructor(clazz.factory);
+      _registerParametersForFunction(clazz.factory);
     }
   }
 
   void _registerParametersForFunction(
-      DependencyInvocation functionOrConstructor) {
-    print(functionOrConstructor);
+    DependencyInvocation functionOrConstructor,
+  ) {
     // Optimization: Don't register dependencies for zero-arg functions.
     if (functionOrConstructor.positional.isEmpty) {
       return;
     }
+    // _ngRef.registerDependencies(functionOrType, [ ... ]).
+    final bound = functionOrConstructor.bound;
+
+    // Get either the function or class name (not the constructor name).
+    var name = bound.name;
+    if (bound is ConstructorElement) {
+      name = bound.enclosingElement.name;
+    }
+
+    _initReflectorBody.addExpression(
+      _registerDependencies.call([
+        refer(name),
+        literalConstList(_dependencies(functionOrConstructor.positional)),
+      ]),
+    );
+  }
+
+  List<Expression> _dependencies(Iterable<DependencyElement> parameters) {
+    final expressions = <Expression>[];
+    for (final param in parameters) {
+      final value = <Expression>[_token(param.token)];
+      if (param.skipSelf) {
+        value.add(_SkipSelf.constInstance(const []));
+      }
+      if (param.optional) {
+        value.add(_Optional.constInstance(const []));
+      }
+      if (param.self) {
+        value.add(_Self.constInstance(const []));
+      }
+      if (param.host) {
+        value.add(_Host.constInstance(const []));
+      }
+      expressions.add(literalConstList(value));
+    }
+    return expressions;
+  }
+
+  Expression _token(TokenElement token) {
+    if (token is LiteralTokenElement) {
+      return _Inject.constInstance([refer(token.literal)]);
+    }
+    if (token is OpaqueTokenElement) {
+      final classType = token.isMultiToken ? _MultiToken : _OpaqueToken;
+      final tokenInstance = classType.constInstance(
+        [literalString(token.identifier)],
+        {},
+        [linkToReference(token.typeUrl)],
+      );
+      return _Inject.constInstance([tokenInstance]);
+    }
+    if (token is TypeTokenElement) {
+      return linkToReference(token.link);
+    }
+    throw new UnsupportedError('Invalid token type: $token.');
   }
 
   void _registerConstructor(DependencyInvocation<ConstructorElement> function) {
