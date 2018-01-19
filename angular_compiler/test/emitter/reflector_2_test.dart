@@ -220,13 +220,37 @@ void main() {
             ExampleServiceWithDeps,
             (A p0, B p1, C p2) => new ExampleServiceWithDeps(p0, p1, p2)
           );
+          _ngRef.registerDependencies(
+            ExampleServiceWithDeps,
+            const [
+              const [A],
+              const [B],
+              const [C]
+            ]
+          );
           _ngRef.registerFactory(
             ExampleServiceWithNamedConstructor,
             (A p0, B p1, C p2) => new ExampleServiceWithNamedConstructor.namedConstructor(p0, p1, p2)
           );
+          _ngRef.registerDependencies(
+            ExampleServiceWithNamedConstructor,
+            const [
+              const [A],
+              const [B],
+              const [C]
+            ]
+          );
           _ngRef.registerFactory(
             ExampleServiceWithDynamicDeps,
             (dynamic p0) => new ExampleServiceWithDynamicDeps(p0)
+          );
+          _ngRef.registerDependencies(
+            ExampleServiceWithDynamicDeps,
+            const [
+              const [
+                const _ngRef.Inject(const _ngRef.OpaqueToken<dynamic>('someToken'))
+              ]
+            ]
           );
         }
       '''),
