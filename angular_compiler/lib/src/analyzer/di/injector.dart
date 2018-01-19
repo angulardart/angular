@@ -30,7 +30,11 @@ class InjectorReader {
     }
     return element.definingCompilationUnit.functions
         .where(_shouldGenerateInjector)
-        .map((fn) => new InjectorReader(fn, doNotScope: source))
+        .map((fn) => new InjectorReader(
+              fn,
+              new LibraryReader(element),
+              doNotScope: source,
+            ))
         .toList();
   }
 
@@ -43,6 +47,9 @@ class InjectorReader {
   @protected
   final ModuleReader moduleReader;
 
+  @protected
+  final LibraryReader libraryReader;
+
   /// Originating file URL.
   ///
   /// If non-null, references to symbols in this URL are not scoped.
@@ -54,7 +61,8 @@ class InjectorReader {
   List<ProviderElement> _providers;
 
   InjectorReader(
-    this.method, {
+    this.method,
+    this.libraryReader, {
     this.moduleReader: const ModuleReader(),
     this.doNotScope,
   })
@@ -120,7 +128,7 @@ class InjectorReader {
       b.symbol = tokenClass;
       b.url = _runtime;
       if (opaqueToken.typeUrl != null) {
-        b.types.add(linkToReferenceDeprecated(opaqueToken.typeUrl));
+        b.types.add(linkToReference(opaqueToken.typeUrl, libraryReader));
       }
     });
     return preciseToken.constInstance([
@@ -202,7 +210,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          linkToReferenceDeprecated(provider.providerType),
+          linkToReference(provider.providerType, libraryReader),
           refer(useValue),
           provider.isMulti,
         );
@@ -222,7 +230,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          linkToReferenceDeprecated(provider.providerType),
+          linkToReference(provider.providerType, libraryReader),
           _referSafe(
             provider.useFactory.fragment,
             provider.useFactory.removeFragment().toString(),
@@ -235,7 +243,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          linkToReferenceDeprecated(provider.providerType),
+          linkToReference(provider.providerType, libraryReader),
           _tokenToIdentifier(provider.redirect),
           provider.isMulti,
         );

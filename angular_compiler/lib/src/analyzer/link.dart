@@ -11,15 +11,6 @@ final TypeReference _dynamic = new TypeReference((b) => b
   ..url = 'dart:core');
 
 /// Returns as a `code_builder` [TypeReference] for code generation.
-@Deprecated('Use linkToReference')
-TypeReference linkToReferenceDeprecated(TypeLink link) => link.isDynamic
-    ? _dynamic
-    : new TypeReference((b) => b
-      ..symbol = link.symbol
-      ..url = link.import
-      ..types.addAll(link.generics.map(linkToReferenceDeprecated)));
-
-/// Returns as a `code_builder` [TypeReference] for code generation.
 TypeReference linkToReference(TypeLink link, LibraryReader library) => link
         .isDynamic
     ? _dynamic
