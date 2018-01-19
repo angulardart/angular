@@ -1,3 +1,5 @@
+* Requires `source_gen ^0.7.4` (was previously `^0.7.0`).
+
 ## 0.4.0-alpha+4
 
 ### Breaking changes
