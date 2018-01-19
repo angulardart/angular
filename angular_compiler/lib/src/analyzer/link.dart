@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart' show TypeReference;
 import 'package:collection/collection.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:source_gen/src/utils.dart';
 
 import 'common.dart';
@@ -10,12 +11,22 @@ final TypeReference _dynamic = new TypeReference((b) => b
   ..url = 'dart:core');
 
 /// Returns as a `code_builder` [TypeReference] for code generation.
-TypeReference linkToReference(TypeLink link) => link.isDynamic
+@Deprecated('Use linkToReference')
+TypeReference linkToReferenceDeprecated(TypeLink link) => link.isDynamic
     ? _dynamic
     : new TypeReference((b) => b
       ..symbol = link.symbol
       ..url = link.import
-      ..types.addAll(link.generics.map(linkToReference)));
+      ..types.addAll(link.generics.map(linkToReferenceDeprecated)));
+
+/// Returns as a `code_builder` [TypeReference] for code generation.
+TypeReference linkToReference(TypeLink link, LibraryReader library) => link
+        .isDynamic
+    ? _dynamic
+    : new TypeReference((b) => b
+      ..symbol = link.symbol
+      ..url = library.pathToUrl(link.import).toString()
+      ..types.addAll(link.generics.map((t) => linkToReference(t, library))));
 
 /// Returns a [TypeLink] to the given statically analyzed [DartType].
 TypeLink linkTypeOf(DartType type) {

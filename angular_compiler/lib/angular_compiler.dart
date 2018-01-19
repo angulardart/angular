@@ -2,6 +2,7 @@ export 'src/analyzer.dart'
     show
         getTypeName,
         linkToReference,
+        linkToReferenceDeprecated,
         linkTypeOf,
         typeArgumentOf,
         urlOf,

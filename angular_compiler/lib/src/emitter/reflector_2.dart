@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:source_gen/source_gen.dart' show LibraryReader;
 
 import '../analyzer/di/dependencies.dart';
 import '../analyzer/di/tokens.dart';
@@ -8,10 +9,6 @@ import '../analyzer/link.dart';
 import '../analyzer/reflector.dart';
 
 import 'reflector.dart';
-
-// TODO(matanl): Remove both of these once the class is complete.
-// ignore_for_file: unused_element
-// ignore_for_file: unused_field
 
 /// Re-implements [ReflectableEmitter] using `package:code_builder`.
 ///
@@ -34,8 +31,11 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
 
   final ReflectableOutput _output;
 
+  /// The library that is being analyzed currently.
+  final LibraryReader _library;
+
   DartEmitter _dartEmitter;
-  LibraryBuilder _library;
+  LibraryBuilder _libraryBuilder;
   BlockBuilder _initReflectorBody;
   StringSink _importBuffer;
   StringSink _initReflectorBuffer;
@@ -55,7 +55,8 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
   Reference get _OpaqueToken => _ngRef('OpaqueToken');
 
   CodeBuilderReflectableEmitter(
-    this._output, {
+    this._output,
+    this._library, {
     Allocator allocator,
     this.reflectorSource: '$_package/src/di/reflector.dart',
     List<String> deferredModules,
@@ -124,7 +125,7 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
       }
       return new Parameter((b) => b
         ..name = 'p${counter++}'
-        ..type = linkToReference(type));
+        ..type = linkToReference(type, _library));
     }).toList();
   }
 
@@ -158,11 +159,11 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     _importBuffer = new StringBuffer();
     _initReflectorBuffer = new StringBuffer();
     _dartEmitter = new _SplitDartEmitter(_importBuffer, _allocator);
-    _library = new LibraryBuilder();
+    _libraryBuilder = new LibraryBuilder();
 
     // Reference _ngRef if we do any registration.
     if (_registrationNeeded) {
-      _library.directives.add(
+      _libraryBuilder.directives.add(
         new Directive.import(reflectorSource, as: '_ngRef'),
       );
     }
@@ -199,16 +200,16 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
     _linkToOtherInitReflectors();
 
     // Add initReflector() [to the end].
-    _library.body.add(
+    _libraryBuilder.body.add(
       // var _visited = false;
       literalFalse.assignVar('_visited').statement,
     );
 
     initReflector.body = _initReflectorBody.build();
-    _library.body.add(initReflector.build());
+    _libraryBuilder.body.add(initReflector.build());
 
     // Write code to output.
-    _library.build().accept(_dartEmitter, _initReflectorBuffer);
+    _libraryBuilder.build().accept(_dartEmitter, _initReflectorBuffer);
   }
 
   void _linkToOtherInitReflectors() {
@@ -229,7 +230,7 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
       //   _refN.initReflector();
       // }
       final name = '_ref$counter';
-      _library.directives.add(new Directive.import(url, as: name));
+      _libraryBuilder.directives.add(new Directive.import(url, as: name));
       _initReflectorBody.addExpression(
         refer(name).property('initReflector').call([]),
       );
@@ -318,12 +319,12 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
       final tokenInstance = classType.constInstance(
         [literalString(token.identifier)],
         {},
-        [linkToReference(token.typeUrl)],
+        [linkToReference(token.typeUrl, _library)],
       );
       return _Inject.constInstance([tokenInstance]);
     }
     if (token is TypeTokenElement) {
-      return linkToReference(token.link);
+      return linkToReference(token.link, _library);
     }
     throw new UnsupportedError('Invalid token type: $token.');
   }
@@ -352,13 +353,13 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
         .firstWhere((a) => a.name.name == 'RouteConfig')
         .toSource();
     source = 'const ${source.substring(1)}';
-    _library.body.add(
+    _libraryBuilder.body.add(
       new Code('const _${clazz.name}Metadata = const [$source];'),
     );
   }
 
   void _registerEmptyMetadata(String className) {
-    _library.body.add(
+    _libraryBuilder.body.add(
       literalConstList([]).assignConst('_${className}Metadata').statement,
     );
   }
