@@ -1,4 +1,8 @@
+import 'package:build/build.dart';
+import 'package:code_builder/code_builder.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:build_test/build_test.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
 
@@ -9,9 +13,14 @@ void main() {
   final angular = 'package:angular';
   final libReflection = '$angular/src/core/reflection/reflection.dart';
 
+  // We don't have a true "source" library to use in these tests. Its OK.
+  //
+  // (Normally this is used to determine relative import paths, etc)
+  final nullLibrary = new LibraryReader(null);
+
   test('should support a no-op', () {
     final output = new ReflectableOutput();
-    final emitter = new ReflectableEmitter.useCodeBuilder(output);
+    final emitter = new ReflectableEmitter.useCodeBuilder(output, nullLibrary);
     expect(emitter.emitImports(), isEmpty);
     expect(
       emitter.emitInitReflector(),
@@ -23,7 +32,7 @@ void main() {
     final output = new ReflectableOutput(
       urlsNeedingInitReflector: ['foo.template.dart'],
     );
-    final emitter = new ReflectableEmitter.useCodeBuilder(output);
+    final emitter = new ReflectableEmitter.useCodeBuilder(output, nullLibrary);
     expect(
       dartfmt(emitter.emitImports()),
       dartfmt(r'''
@@ -58,6 +67,7 @@ void main() {
     );
     final emitter = new ReflectableEmitter.useCodeBuilder(
       output,
+      nullLibrary,
       deferredModules: [
         // Relative file.
         'asset:baz/lib/foo.template.dart',
@@ -92,6 +102,7 @@ void main() {
     '''));
     final emitter = new ReflectableEmitter.useCodeBuilder(
       output,
+      nullLibrary,
       reflectorSource: libReflection,
     );
     expect(
@@ -145,6 +156,7 @@ void main() {
     '''));
     final emitter = new ReflectableEmitter.useCodeBuilder(
       output,
+      nullLibrary,
       reflectorSource: libReflection,
     );
     expect(
@@ -200,6 +212,7 @@ void main() {
     '''));
     final emitter = new ReflectableEmitter.useCodeBuilder(
       output,
+      nullLibrary,
       reflectorSource: libReflection,
     );
     expect(
@@ -252,6 +265,68 @@ void main() {
               ]
             ]
           );
+        }
+      '''),
+    );
+  });
+
+  test('should handle relative paths in a test directory', () async {
+    // This a silly, but effective way, to get a LibraryElement.
+    final pkgATest = await resolveSources(
+      {
+        'a|test/a_test.dart': '''
+          library a_test;
+          
+          import '$angular/angular.dart';
+
+          import 'a_data.dart';
+
+          @Injectable()
+          class InjectsB {
+            InjectsB(B b);
+          }
+        ''',
+        'a|test/a_data.dart': r'''
+          library a_data;
+
+          class B {}
+        ''',
+      },
+      (r) => r.libraryFor(new AssetId('a', 'test/a_test.dart')),
+    );
+    final library = new LibraryReader(pkgATest);
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(pkgATest);
+    final allocator = new Allocator.simplePrefixing();
+    final emitter = new ReflectableEmitter.useCodeBuilder(
+      output,
+      library,
+      allocator: allocator,
+      reflectorSource: libReflection,
+    );
+    expect(
+      dartfmt(emitter.emitImports()),
+      dartfmt('''
+        import '$libReflection' as _ngRef;
+        import 'a_data.dart' as _i1;
+      '''),
+    );
+    expect(
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+
+          _ngRef.registerFactory(InjectsB, (_i1.B p0) => new InjectsB(p0));
+          _ngRef.registerDependencies(InjectsB, const [
+            const [
+              _i1.B
+            ]
+          ]);
         }
       '''),
     );

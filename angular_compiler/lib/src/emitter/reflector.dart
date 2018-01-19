@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:source_gen/source_gen.dart' show LibraryReader;
 
 import '../analyzer/di/dependencies.dart';
 import '../analyzer/di/tokens.dart';
@@ -38,7 +39,8 @@ class ReflectableEmitter {
 
   /// Alternative constructor that uses a different output strategy.
   factory ReflectableEmitter.useCodeBuilder(
-    ReflectableOutput output, {
+    ReflectableOutput output,
+    LibraryReader library, {
     Allocator allocator,
     String reflectorSource,
     List<String> deferredModules,

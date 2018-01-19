@@ -120,7 +120,7 @@ class InjectorReader {
       b.symbol = tokenClass;
       b.url = _runtime;
       if (opaqueToken.typeUrl != null) {
-        b.types.add(linkToReference(opaqueToken.typeUrl));
+        b.types.add(linkToReferenceDeprecated(opaqueToken.typeUrl));
       }
     });
     return preciseToken.constInstance([
@@ -202,7 +202,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          linkToReference(provider.providerType),
+          linkToReferenceDeprecated(provider.providerType),
           refer(useValue),
           provider.isMulti,
         );
@@ -222,7 +222,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          linkToReference(provider.providerType),
+          linkToReferenceDeprecated(provider.providerType),
           _referSafe(
             provider.useFactory.fragment,
             provider.useFactory.removeFragment().toString(),
@@ -235,7 +235,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          linkToReference(provider.providerType),
+          linkToReferenceDeprecated(provider.providerType),
           _tokenToIdentifier(provider.redirect),
           provider.isMulti,
         );
