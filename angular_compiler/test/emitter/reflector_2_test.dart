@@ -331,4 +331,39 @@ void main() {
       '''),
     );
   });
+
+  test('should emit type tokens without generic type arguments', () async {
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(await resolveLibrary(r'''
+      @Injectable()
+      class NeedsMap {
+        // Even though this is typed, we should treat it as Map.
+        NeedsMap(Map<String, String> map);
+      }
+    '''));
+    final emitter = new ReflectableEmitter.useCodeBuilder(
+      output,
+      nullLibrary,
+      reflectorSource: libReflection,
+    );
+    expect(
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+
+          _ngRef.registerFactory(NeedsMap, (Map<String, String> p0) => new NeedsMap(p0));
+          _ngRef.registerDependencies(NeedsMap, const [
+            const [
+              Map
+            ]
+          ]);
+        }
+      '''),
+    );
+  });
 }

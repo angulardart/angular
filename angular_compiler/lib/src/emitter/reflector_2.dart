@@ -324,7 +324,7 @@ class CodeBuilderReflectableEmitter implements ReflectableEmitter {
       return _Inject.constInstance([tokenInstance]);
     }
     if (token is TypeTokenElement) {
-      return linkToReference(token.link, _library);
+      return linkToReference(token.link.withoutGenerics(), _library);
     }
     throw new UnsupportedError('Invalid token type: $token.');
   }
