@@ -1,3 +1,5 @@
+* Requires `source_gen ^0.7.4` (was previously `^0.7.0`).
+
 ## 5.0.0-alpha+4
 
 * We have a new template parser. This parser is much stricter than the old one,
