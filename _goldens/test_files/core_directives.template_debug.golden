@@ -8,12 +8,10 @@
 import 'core_directives.dart';
 export 'core_directives.dart';
 import 'package:angular/angular.dart';
-// Required for initReflector().
 import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
     as _ref0;
-
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
@@ -262,9 +260,7 @@ void initReflector() {
     return;
   }
   _visited = true;
+
+  _ngRef.registerComponent(TestFooComponent, TestFooComponentNgFactory);
   _ref0.initReflector();
-  _ngRef.registerComponent(
-    TestFooComponent,
-    TestFooComponentNgFactory,
-  );
 }

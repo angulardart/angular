@@ -10,14 +10,12 @@ export 'base_component.dart';
 import 'package:angular/angular.dart';
 import 'components.dart';
 import 'directives.dart' as directive;
-// Required for initReflector().
 import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'components.template.dart' as _ref0;
 import 'directives.template.dart' as _ref1;
 import 'package:angular/angular.template.dart'
     as _ref2;
-
 import 'package:angular/src/debug/debug_context.dart';
 import 'components.dart' as import1;
 import 'package:angular/src/debug/debug_app_view.dart';
@@ -169,11 +167,9 @@ void initReflector() {
     return;
   }
   _visited = true;
+
+  _ngRef.registerComponent(TestFooComponent, TestFooComponentNgFactory);
   _ref0.initReflector();
   _ref1.initReflector();
   _ref2.initReflector();
-  _ngRef.registerComponent(
-    TestFooComponent,
-    TestFooComponentNgFactory,
-  );
 }

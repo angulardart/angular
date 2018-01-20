@@ -8,12 +8,10 @@
 import 'interpolation.dart';
 export 'interpolation.dart';
 import 'package:angular/angular.dart';
-// Required for initReflector().
 import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
     as _ref0;
-
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'interpolation.dart' as import2;
@@ -275,13 +273,10 @@ void initReflector() {
     return;
   }
   _visited = true;
+
+  _ngRef.registerComponent(
+      InterpolationComponent, InterpolationComponentNgFactory);
+  _ngRef.registerComponent(InterpolationComponentNoWhitespace,
+      InterpolationComponentNoWhitespaceNgFactory);
   _ref0.initReflector();
-  _ngRef.registerComponent(
-    InterpolationComponent,
-    InterpolationComponentNgFactory,
-  );
-  _ngRef.registerComponent(
-    InterpolationComponentNoWhitespace,
-    InterpolationComponentNoWhitespaceNgFactory,
-  );
 }

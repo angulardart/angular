@@ -1,3 +1,5 @@
+### New features
+
 * Requires `source_gen ^0.7.4` (was previously `^0.7.0`).
 
 * The compiler behind `initReflector()` has changed implementations and now
@@ -31,7 +33,7 @@ builders:
 ```dart
 // These used to be considered the same in some DI implementations.
 const tokenA = const OpaqueToken<String>('a');
-const tokenB = const OpaqueToken<dynamic('b');
+const tokenB = const OpaqueToken<dynamic>('b');
 ```
 
 *  Added a lifecycle event `AfterChanges`, which is similar to `OnChanges`, but

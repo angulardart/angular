@@ -11,14 +11,12 @@ import 'package:angular/angular.dart';
 import 'package:angular/di.template.dart'
     as di_lib;
 import 'example_of_file_that_is_not_generated_yet.template.dart' as example_lib;
-// Required for initReflector().
 import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'example_of_file_that_is_not_generated_yet.template.dart' as _ref0;
 import 'package:angular/angular.template.dart'
     as _ref1;
 import 'package:angular/di.template.dart' as _ref2;
-
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'component_loader_pattern.dart' as import2;
@@ -129,11 +127,9 @@ void initReflector() {
     return;
   }
   _visited = true;
+
+  _ngRef.registerComponent(TestComponent, TestComponentNgFactory);
   _ref0.initReflector();
   _ref1.initReflector();
   _ref2.initReflector();
-  _ngRef.registerComponent(
-    TestComponent,
-    TestComponentNgFactory,
-  );
 }

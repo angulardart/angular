@@ -8,12 +8,10 @@
 import 'empty_properties.dart';
 export 'empty_properties.dart';
 import 'package:angular/angular.dart';
-// Required for initReflector().
 import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
     as _ref0;
-
 import 'package:angular/src/debug/debug_context.dart';
 import 'empty_properties.dart' as import1;
 import 'package:angular/src/debug/debug_app_view.dart';
@@ -316,13 +314,9 @@ void initReflector() {
     return;
   }
   _visited = true;
+
+  _ngRef.registerComponent(
+      EmptyPropertiesComponent, EmptyPropertiesComponentNgFactory);
+  _ngRef.registerComponent(FancyButtonComponent, FancyButtonComponentNgFactory);
   _ref0.initReflector();
-  _ngRef.registerComponent(
-    EmptyPropertiesComponent,
-    EmptyPropertiesComponentNgFactory,
-  );
-  _ngRef.registerComponent(
-    FancyButtonComponent,
-    FancyButtonComponentNgFactory,
-  );
 }

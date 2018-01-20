@@ -9,12 +9,10 @@ import 'queries.dart';
 export 'queries.dart';
 import 'dart:html';
 import 'package:angular/angular.dart';
-// Required for initReflector().
 import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
     as _ref0;
-
 import 'package:angular/src/debug/debug_context.dart';
 import 'queries.dart' as import1;
 import 'package:angular/src/core/linker/template_ref.dart';
@@ -1072,21 +1070,11 @@ void initReflector() {
     return;
   }
   _visited = true;
+
+  _ngRef.registerComponent(QueriesComponent, QueriesComponentNgFactory);
+  _ngRef.registerComponent(EmbeddedQueries, EmbeddedQueriesNgFactory);
+  _ngRef.registerComponent(EmbeddedQueriesList, EmbeddedQueriesListNgFactory);
+  _ngRef.registerComponent(
+      NestedNgForQueriesList, NestedNgForQueriesListNgFactory);
   _ref0.initReflector();
-  _ngRef.registerComponent(
-    QueriesComponent,
-    QueriesComponentNgFactory,
-  );
-  _ngRef.registerComponent(
-    EmbeddedQueries,
-    EmbeddedQueriesNgFactory,
-  );
-  _ngRef.registerComponent(
-    EmbeddedQueriesList,
-    EmbeddedQueriesListNgFactory,
-  );
-  _ngRef.registerComponent(
-    NestedNgForQueriesList,
-    NestedNgForQueriesListNgFactory,
-  );
 }
