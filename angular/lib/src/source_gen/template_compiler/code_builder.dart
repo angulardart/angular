@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:source_gen/source_gen.dart' show LibraryReader;
 import 'package:code_builder/code_builder.dart';
 
 import 'template_compiler_outputs.dart';
@@ -30,9 +31,12 @@ String buildGeneratedCode(
   }
 
   // Generated code.
+  final allocator = new Allocator.simplePrefixing();
   final compilerOutput = outputs.templatesSource?.source ?? '';
-  final reflectableOutput = new ReflectableEmitter(
+  final reflectableOutput = new ReflectableEmitter.useCodeBuilder(
     outputs.reflectableOutput,
+    new LibraryReader(element),
+    allocator: allocator,
     deferredModules: outputs.templatesSource != null
         ? outputs.templatesSource.deferredModules.keys.toList()
         : const [],
@@ -58,7 +62,7 @@ String buildGeneratedCode(
   if (outputs.injectorsOutput.isNotEmpty) {
     buffer.writeln('// *** EXPERIMENTAL ** Injector Generator [START]');
     final file = new LibraryBuilder();
-    final dart = new DartEmitter.scoped();
+    final dart = new DartEmitter(allocator);
 
     for (final injector in outputs.injectorsOutput) {
       final emitter = new InjectorEmitter();

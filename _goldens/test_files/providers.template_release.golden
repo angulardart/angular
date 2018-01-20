@@ -8,12 +8,10 @@
 import 'providers.dart';
 export 'providers.dart';
 import 'package:angular/angular.dart';
-// Required for initReflector().
 import 'package:angular/src/di/reflector.dart'
     as _ngRef;
 import 'package:angular/angular.template.dart'
     as _ref0;
-
 import 'package:angular/src/core/linker/app_view.dart';
 import 'providers.dart' as import1;
 import 'package:angular/src/core/render/api.dart';
@@ -215,13 +213,9 @@ void initReflector() {
     return;
   }
   _visited = true;
-  _ref0.initReflector();
-  _ngRef.registerComponent(
-    ProvidersComponent,
-    ProvidersComponentNgFactory,
-  );
+
+  _ngRef.registerComponent(ProvidersComponent, ProvidersComponentNgFactory);
   _ngRef.registerFactory(
-    MyInjectableTypeAnnotation,
-    () => new MyInjectableTypeAnnotation(),
-  );
+      MyInjectableTypeAnnotation, () => new MyInjectableTypeAnnotation());
+  _ref0.initReflector();
 }

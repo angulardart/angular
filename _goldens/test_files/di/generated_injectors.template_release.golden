@@ -9,11 +9,9 @@ import 'generated_injectors.dart';
 export 'generated_injectors.dart';
 import 'package:angular/angular.dart';
 import 'generated_injectors.template.dart' as ng;
-// Required for initReflector().
 import 'generated_injectors.template.dart' as _ref0;
 import 'package:angular/angular.template.dart'
     as _ref1;
-
 // *** EXPERIMENTAL ** Injector Generator [START]
 import 'package:angular/src/di/injector/injector.dart'
     as _i1;
@@ -62,6 +60,7 @@ void initReflector() {
     return;
   }
   _visited = true;
+
   _ref0.initReflector();
   _ref1.initReflector();
 }
