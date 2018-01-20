@@ -8,8 +8,6 @@ import '../analyzer/di/tokens.dart';
 import '../analyzer/link.dart';
 import '../analyzer/reflector.dart';
 
-import 'reflector_2.dart';
-
 /// Generates `.dart` source code given a [ReflectableOutput].
 class ReflectableEmitter {
   static const _package = 'package:angular';
@@ -23,273 +21,370 @@ class ReflectableEmitter {
   /// to call "initReflector(...)" on the components' modules.
   final Iterable<String> deferredModules;
 
+  /// Origin of the analyzed library.
+  ///
   /// If [deferredModules] is non-empty, this is expected to be provided.
   final String deferredModuleSource;
 
+  /// Where the runtime `reflector.dart` is located.
   final String reflectorSource;
+
+  final Allocator _allocator;
   final ReflectableOutput _output;
 
-  const ReflectableEmitter(
-    this._output, {
+  /// The library that is being analyzed currently.
+  final LibraryReader _library;
+
+  DartEmitter _dartEmitter;
+  LibraryBuilder _libraryBuilder;
+  BlockBuilder _initReflectorBody;
+  StringSink _importBuffer;
+  StringSink _initReflectorBuffer;
+
+  Reference _ngRef(String symbol) => refer('_ngRef.$symbol');
+
+  // Classes and functions we need to refer to in generated (runtime) code.
+  Reference get _registerComponent => _ngRef('registerComponent');
+  Reference get _registerFactory => _ngRef('registerFactory');
+  Reference get _registerDependencies => _ngRef('registerDependencies');
+  Reference get _SkipSelf => _ngRef('SkipSelf');
+  Reference get _Optional => _ngRef('Optional');
+  Reference get _Self => _ngRef('Self');
+  Reference get _Host => _ngRef('Host');
+  Reference get _Inject => _ngRef('Inject');
+  Reference get _MultiToken => _ngRef('MultiToken');
+  Reference get _OpaqueToken => _ngRef('OpaqueToken');
+
+  ReflectableEmitter(
+    this._output,
+    this._library, {
+    Allocator allocator,
     this.reflectorSource: '$_package/src/di/reflector.dart',
     List<String> deferredModules,
     this.deferredModuleSource,
   })
-      : this.deferredModules = deferredModules ?? const [];
+      : _allocator = allocator ?? Allocator.none,
+        deferredModules = deferredModules ?? const [];
 
-  /// Alternative constructor that uses a different output strategy.
-  factory ReflectableEmitter.useCodeBuilder(
-    ReflectableOutput output,
-    LibraryReader library, {
-    Allocator allocator,
-    String reflectorSource,
-    List<String> deferredModules,
-    String deferredModuleSource,
-  }) = CodeBuilderReflectableEmitter;
-
+  /// Whether we have one or more URLs that need `initReflector` called on them.
   bool get _linkingNeeded => _output.urlsNeedingInitReflector.isNotEmpty;
 
+  /// Whether one or more functions or classes to be registered for reflection.
   bool get _registrationNeeded =>
       _output.registerClasses.isNotEmpty ||
       _output.registerFunctions.isNotEmpty;
 
+  /// Whether the result of analysis is that this file is a complete no-op.
   bool get _isNoop => !_linkingNeeded && !_registrationNeeded;
 
-  /// Returns true if [url] should not be omitted for linking `initReflector()`.
+  /// Returns whether to skip linking to [url].
   ///
-  /// If the Angular compiler is going to manually load another component (for
-  /// example for `@deferred` loading), then we want to delegate to the template
-  /// compiler and not invoke `initReflector()` ourselves.
-  bool _isDeferred(String url) {
+  /// The view compiler may instruct us to defer additional source URLs if they
+  /// were only used in order to refer to a component that is later deferred
+  /// using the `@deferred` template syntax.
+  bool _isUsedForDeferredComponentsOnly(String url) {
     if (deferredModules.isEmpty) {
       return false;
     }
-    // Create an asset URL for the current module URL (asset:../../*.dart).
+    // Transforms the current source URL to an AssetId (canonical).
     final module = new AssetId.resolve(deferredModuleSource);
-    // Give the prospective [url] parameter, resolve what absolute path that is.
+    // Given the url, resolve what absolute path that is.
+    // We might get a relative path, but we only deal with absolute URLs.
     final asset = new AssetId.resolve(url, from: module);
     // The template compiler and package:build use a different asset: scheme.
     final assetUrl = 'asset:${asset.toString().replaceFirst('|', '/')}';
     return deferredModules.contains(assetUrl);
   }
 
+  /// Creates a manual tear-off of the provided constructor.
+  Expression _tearOffConstructor(
+    String constructor,
+    DependencyInvocation invocation,
+  ) =>
+      new Method(
+        (b) => b
+          ..requiredParameters.addAll(
+            _parameters(invocation.positional),
+          )
+          ..body = refer(constructor)
+              .newInstance(new Iterable<Expression>.generate(
+                invocation.positional.length,
+                (i) => refer('p$i'),
+              ))
+              .code,
+      ).closure;
+
+  List<Parameter> _parameters(Iterable<DependencyElement> elements) {
+    var counter = 0;
+    return elements.map((element) {
+      TypeLink type = element.type?.link ?? TypeLink.$dynamic;
+      if (type.isDynamic) {
+        final token = element.token;
+        if (token is TypeTokenElement) {
+          type = token.link;
+        }
+      }
+      return new Parameter((b) => b
+        ..name = 'p${counter++}'
+        ..type = linkToReference(type, _library));
+    }).toList();
+  }
+
   /// Writes `import` statements needed for [emitInitReflector].
   ///
   /// They are all prefixed in a way that should not conflict with others.
   String emitImports() {
-    if (_isNoop) {
-      return '// No initReflector() linking required.\n';
-    }
-    final urls = _output.urlsNeedingInitReflector;
-    final output = new StringBuffer('// Required for initReflector().\n');
-    if (_registrationNeeded) {
-      output.writeln("import '$reflectorSource' as _ngRef;");
-    }
-    if (_linkingNeeded)
-      for (var i = 0; i < urls.length; i++) {
-        if (_isDeferred(urls[i])) {
-          continue;
-        }
-        output.writeln("import '${urls[i]}' as _ref$i;");
-      }
-    return (output..writeln()).toString();
+    _produceDartCode();
+    return _importBuffer.toString();
   }
 
   /// Writes `initReflector`, including a preamble if required.
   String emitInitReflector() {
+    _produceDartCode();
+    return _initReflectorBuffer.toString();
+  }
+
+  void _produceDartCode() {
     if (_isNoop) {
-      return '// No initReflector() needed.\nvoid initReflector() {}\n';
+      _importBuffer = new StringBuffer();
+      _initReflectorBuffer = new StringBuffer(
+        '// No initReflector() linking required.\nvoid initReflector(){}',
+      );
+      return;
     }
-    // _ExampleMetadata
-    final output = new StringBuffer();
-    for (final element in _output.registerClasses) {
-      if (!element.registerComponentFactory) {
+
+    // Only invoke this method once per instance of the class.
+    if (_dartEmitter != null) {
+      return;
+    }
+
+    // Prepare to write code.
+    _importBuffer = new StringBuffer();
+    _initReflectorBuffer = new StringBuffer();
+    _dartEmitter = new _SplitDartEmitter(_importBuffer, _allocator);
+    _libraryBuilder = new LibraryBuilder();
+
+    // Reference _ngRef if we do any registration.
+    if (_registrationNeeded) {
+      _libraryBuilder.directives.add(
+        new Directive.import(reflectorSource, as: '_ngRef'),
+      );
+    }
+
+    // Create the initial (static) body of initReflector().
+    _initReflectorBody = new BlockBuilder()
+      ..statements.add(
+        const Code(
+          ''
+              'if (_visited) {\n'
+              '  return;\n'
+              '}\n'
+              '_visited = true;\n',
+        ),
+      );
+
+    final initReflector = new MethodBuilder()
+      ..name = 'initReflector'
+      ..returns = refer('void');
+
+    // For some classes, emit "const _{class}Metadata = const [ ... ]".
+    //
+    // This is used to:
+    // 1. Allow use of ReflectiveInjector.
+    // 2. Allow use of the AngularDart [v1] deprecated router.
+    _output.registerClasses.forEach(_registerMetadataForClass);
+
+    // For some classes and functions, link to the factory.
+    //
+    // This is used to allow use of ReflectiveInjector.
+    _output.registerFunctions.forEach(_registerParametersForFunction);
+
+    // Invoke 'initReflector' on other imported URLs.
+    _linkToOtherInitReflectors();
+
+    // Add initReflector() [to the end].
+    _libraryBuilder.body.add(
+      // var _visited = false;
+      literalFalse.assignVar('_visited').statement,
+    );
+
+    initReflector.body = _initReflectorBody.build();
+    _libraryBuilder.body.add(initReflector.build());
+
+    // Write code to output.
+    _libraryBuilder.build().accept(_dartEmitter, _initReflectorBuffer);
+  }
+
+  void _linkToOtherInitReflectors() {
+    if (!_linkingNeeded) {
+      return;
+    }
+    var counter = 0;
+    for (final url in _output.urlsNeedingInitReflector) {
+      if (_isUsedForDeferredComponentsOnly(url)) {
         continue;
       }
-      if (element.registerAnnotation == null) {
-        output.writeln('const _${element.name}Metadata = const [];');
-      } else {
-        var source = element.element
-            .computeNode()
-            .metadata
-            .firstWhere((a) => a.name.name == 'RouteConfig')
-            .toSource();
-        source = 'const ${source.substring(1)}';
-        output
-          ..writeln('const _${element.name}Metadata = const [')
-          ..writeln('  $source,')
-          ..writeln('];');
-      }
-    }
-    output
-      // Can't write "bool", in case `import 'dart:core' as core` is used.
-      ..writeln('var _visited = false;')
-      ..writeln('void initReflector() {')
-      ..writeln('  if (_visited) {')
-      ..writeln('    return;')
-      ..writeln('  }')
-      ..writeln('  _visited = true;');
-    if (_linkingNeeded) {
-      for (var i = 0; i < _output.urlsNeedingInitReflector.length; i++) {
-        if (_isDeferred(_output.urlsNeedingInitReflector[i])) {
-          continue;
-        }
-        output.writeln('  _ref$i.initReflector();');
-      }
-    }
-    if (_registrationNeeded) {
-      for (final element in _output.registerFunctions) {
-        output.writeln(_registerFactory(element));
-      }
-      for (final element in _output.registerClasses) {
-        if (element.registerComponentFactory) {
-          output.writeln(_registerComponent(element.name));
-        }
-        if (element.factory != null) {
-          output.writeln(_registerFactory(element.factory));
-        }
-      }
-    }
-    return (output..writeln('}')).toString();
-  }
-
-  String _registerComponent(String name) =>
-      '  _ngRef.registerComponent(\n    $name,\n    ${name}NgFactory,\n  );';
-
-  String _nameOfInvocation(
-    DependencyInvocation invocation, {
-    bool checkNamedConstructor: false,
-  }) {
-    final bound = invocation.bound;
-    if (bound is ConstructorElement) {
-      final clazz = bound.returnType.element.name;
-      if (checkNamedConstructor && bound?.name?.isNotEmpty == true) {
-        return '$clazz.${bound.name}';
-      }
-      return clazz;
-    }
-    if (bound is FunctionElement) {
-      return bound.name;
-    }
-    throw new UnsupportedError('Unexpected element: $bound.');
-  }
-
-  String _invocationParams(DependencyInvocation invocation) =>
-      new Iterable.generate(invocation.positional.length, (i) => 'p$i')
-          .join(', ');
-
-  String _generateFactory(DependencyInvocation invocation) =>
-      invocation.bound is FunctionElement
-          ? invocation.bound.name
-          : '(${_generateParameters(invocation.positional).join(', ')}) => '
-          '${_invocationOf(invocation)}(${_invocationParams(invocation)})';
-
-  Iterable<String> _generateParameters(List<DependencyElement> params) sync* {
-    for (var i = 0; i < params.length; i++) {
-      String type = '';
-      final element = params[i];
-      final token = element.type ?? element.token;
-      if (token is TypeTokenElement && !token.isDynamic) {
-        type = token.prefix != null
-            ? '${token.prefix}${token.link.symbol}'
-            : token.link.symbol;
-      }
-      yield '$type p$i';
-    }
-  }
-
-  String _invocationOf(DependencyInvocation invocation) {
-    final bound = invocation.bound;
-    if (bound is ConstructorElement) {
-      final expression = _nameOfInvocation(
-        invocation,
-        checkNamedConstructor: true,
+      // Generates:
+      //
+      // import "<url>" as _refN;
+      //
+      // void initReflector() {
+      //   ...
+      //   _refN.initReflector();
+      // }
+      final name = '_ref$counter';
+      _libraryBuilder.directives.add(new Directive.import(url, as: name));
+      _initReflectorBody.addExpression(
+        refer(name).property('initReflector').call([]),
       );
-      return 'new $expression';
+      counter++;
     }
-    if (bound is FunctionElement) {
-      return bound.name;
-    }
-    throw new UnsupportedError('Unexpected element: $bound.');
   }
 
-  String _registerFactory(DependencyInvocation invocation) {
-    final buffer = new StringBuffer();
-    if (invocation.bound is ConstructorElement) {
-      // Only store the factory function for constructors (useClass: ...).
-      buffer
-        ..writeln('  _ngRef.registerFactory(')
-        ..writeln('    ${_nameOfInvocation(invocation)},')
-        ..writeln('    ${_generateFactory(invocation)},')
-        ..writeln('  );');
+  void _registerMetadataForClass(ReflectableClass clazz) {
+    // Ignore any class that isn't a component.
+    if (clazz.registerComponentFactory) {
+      // Legacy support for SlowComponentLoader.
+      _initReflectorBody.addExpression(
+        _registerComponent.call([
+          refer(clazz.name),
+          refer('${clazz.name}NgFactory'),
+        ]),
+      );
+
+      // Legacy support for the AngularDart router [v1].
+      if (clazz.registerAnnotation == null) {
+        _registerEmptyMetadata(clazz.name);
+      } else {
+        // We arbitrarily support the `@RouteConfig` annotation for the router.
+        _registerRouteConfig(clazz);
+      }
     }
-    if (invocation.positional.isNotEmpty) {
-      buffer
-        ..writeln('  _ngRef.registerDependencies(')
-        ..writeln('    ${_nameOfInvocation(invocation)},')
-        ..writeln('    ${_generateDependencies(invocation)},')
-        ..writeln('  );');
+
+    // Legacy support for ReflectiveInjector.
+    if (clazz.factory != null) {
+      _registerConstructor(clazz.factory);
+      _registerParametersForFunction(clazz.factory);
     }
-    return buffer.toString();
   }
 
-  String _generateDependencies(DependencyInvocation invocation) {
-    final output = new StringBuffer('const [');
-    for (final param in invocation.positional) {
-      output..write('const [')..write(_generateToken(param.token))..write(',');
+  void _registerParametersForFunction(
+    DependencyInvocation functionOrConstructor,
+  ) {
+    // Optimization: Don't register dependencies for zero-arg functions.
+    if (functionOrConstructor.positional.isEmpty) {
+      return;
+    }
+    // _ngRef.registerDependencies(functionOrType, [ ... ]).
+    final bound = functionOrConstructor.bound;
+
+    // Get either the function or class name (not the constructor name).
+    var name = bound.name;
+    if (bound is ConstructorElement) {
+      name = bound.enclosingElement.name;
+    }
+
+    _initReflectorBody.addExpression(
+      _registerDependencies.call([
+        refer(name),
+        literalConstList(_dependencies(functionOrConstructor.positional)),
+      ]),
+    );
+  }
+
+  List<Expression> _dependencies(Iterable<DependencyElement> parameters) {
+    final expressions = <Expression>[];
+    for (final param in parameters) {
+      final value = <Expression>[_token(param.token)];
       if (param.skipSelf) {
-        output.write('const _ngRef.SkipSelf(),');
+        value.add(_SkipSelf.constInstance(const []));
       }
       if (param.optional) {
-        output.write('const _ngRef.Optional(),');
+        value.add(_Optional.constInstance(const []));
       }
       if (param.self) {
-        output.write('const _ngRef.Self(),');
+        value.add(_Self.constInstance(const []));
       }
       if (param.host) {
-        output.write('const _ngRef.Host(),');
+        value.add(_Host.constInstance(const []));
       }
-      output..write('],');
+      expressions.add(literalConstList(value));
     }
-    return (output..write(']')).toString();
+    return expressions;
   }
 
-  String _generateToken(TokenElement token) {
+  Expression _token(TokenElement token) {
     if (token is LiteralTokenElement) {
-      return 'const _ngRef.Inject(${token.literal})';
+      return _Inject.constInstance([refer(token.literal)]);
     }
     if (token is OpaqueTokenElement) {
-      // TODO(matanl): Make this more solid.
-      //
-      // Ideally we should be using code_builder for this entire class, as it
-      // would handle import resolution, etc, and make the code more future
-      // proof.
-      //
-      // As-is, this will breakdown if the generic type of an OpaqueToken is
-      // imported with a prefix, for example:
-      //
-      //   const fooToken = const OpaqueToken<foo.Foo>('fooToken');
-      //
-      // Since this feature is still WIP, this is acceptable, but it should be
-      // fixed 5.0-beta: https://github.com/dart-lang/angular/issues/782.
-      final classType = token.isMultiToken ? 'MultiToken' : 'OpaqueToken';
-      final genericTypeIfAny = _typesAsString([token.typeUrl]);
-      final expression =
-          'const _ngRef.$classType$genericTypeIfAny(r\'${token.identifier}\')';
-      return 'const _ngRef.Inject($expression)';
+      final classType = token.isMultiToken ? _MultiToken : _OpaqueToken;
+      final tokenInstance = classType.constInstance(
+        [literalString(token.identifier)],
+        {},
+        [linkToReference(token.typeUrl, _library)],
+      );
+      return _Inject.constInstance([tokenInstance]);
     }
     if (token is TypeTokenElement) {
-      return token.prefix != null
-          ? '${token.prefix}${token.link.symbol}'
-          : token.link.symbol;
+      return linkToReference(token.link.withoutGenerics(), _library);
     }
     throw new UnsupportedError('Invalid token type: $token.');
   }
 
-  static String _typesAsString(List<TypeLink> types) {
-    if (types.isEmpty) {
-      return '';
+  void _registerConstructor(DependencyInvocation<ConstructorElement> function) {
+    // _ngRef.registerFactory(Type, (p0, p1) => new Type(p0, p1));
+    final bound = function.bound;
+    final clazz = bound.returnType;
+    var constructor = clazz.name;
+    // Support named constructors.
+    if (bound.name?.isNotEmpty == true) {
+      constructor = '$constructor.${bound.name}';
     }
-    return '<${types.map((l) => l.symbol + _typesAsString(l.generics)).join(', ')}>';
+    _initReflectorBody.addExpression(
+      _registerFactory.call([
+        refer(clazz.name),
+        _tearOffConstructor(constructor, function),
+      ]),
+    );
+  }
+
+  void _registerRouteConfig(ReflectableClass clazz) {
+    var source = clazz.element
+        .computeNode()
+        .metadata
+        .firstWhere((a) => a.name.name == 'RouteConfig')
+        .toSource();
+    source = 'const ${source.substring(1)}';
+    _libraryBuilder.body.add(
+      new Code('const _${clazz.name}Metadata = const [$source];'),
+    );
+  }
+
+  void _registerEmptyMetadata(String className) {
+    _libraryBuilder.body.add(
+      literalConstList([]).assignConst('_${className}Metadata').statement,
+    );
+  }
+}
+
+// Unlike the default [DartEmitter], this has two output buffers, which is used
+// transitionally since other parts of the AngularDart compiler write code based
+// on the existing "Output AST" format (string-based).
+//
+// Once/if all code is using code_builder, this can be safely removed.
+class _SplitDartEmitter extends DartEmitter {
+  final StringSink _writeImports;
+
+  _SplitDartEmitter(
+    this._writeImports, [
+    Allocator allocator = Allocator.none,
+  ])
+      : super(allocator);
+
+  @override
+  visitDirective(Directive spec, [_]) {
+    // Always write import/export directives to a separate buffer.
+    return super.visitDirective(spec, _writeImports);
   }
 }

@@ -33,7 +33,7 @@ String buildGeneratedCode(
   // Generated code.
   final allocator = new Allocator.simplePrefixing();
   final compilerOutput = outputs.templatesSource?.source ?? '';
-  final reflectableOutput = new ReflectableEmitter.useCodeBuilder(
+  final reflectableOutput = new ReflectableEmitter(
     outputs.reflectableOutput,
     new LibraryReader(element),
     allocator: allocator,

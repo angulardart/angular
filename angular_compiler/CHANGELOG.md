@@ -7,9 +7,7 @@
 * `linkTypeOf` correctly resolves bound types (i.e. `<T>`) in most cases, and
   can fallback to `dynamic` otherwise.
 
-* `ReflectableEmitter` (the default implementation) will flip to become the
-  `ReflectableEmitter.useCodeBuilder` strategy, and the original constructor
-  will be removed.
+* `ReflectableEmitter` has been completely replaced with a new implementation.
 
 ## 0.4.0-alpha+4
 

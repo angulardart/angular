@@ -1,25 +1,32 @@
+import 'dart:async';
+
+import 'package:build/build.dart';
+import 'package:code_builder/code_builder.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:build_test/build_test.dart';
+import 'package:source_gen/source_gen.dart';
+import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
 
 import '../src/resolve.dart';
 
 void main() {
-  const angular = 'package:angular';
-  const libReflection = '$angular/src/core/reflection/reflection.dart';
+  final dartfmt = new DartFormatter().format;
+  final angular = 'package:angular';
+  final libReflection = '$angular/src/core/reflection/reflection.dart';
+
+  // We don't have a true "source" library to use in these tests. Its OK.
+  //
+  // (Normally this is used to determine relative import paths, etc)
+  final nullLibrary = new LibraryReader(null);
 
   test('should support a no-op', () {
     final output = new ReflectableOutput();
-    final emitter = new ReflectableEmitter(output);
-    expect(
-      emitter.emitImports(),
-      ''
-          '// No initReflector() linking required.\n',
-    );
+    final emitter = new ReflectableEmitter(output, nullLibrary);
+    expect(emitter.emitImports(), isEmpty);
     expect(
       emitter.emitInitReflector(),
-      ''
-          '// No initReflector() needed.\n'
-          'void initReflector() {}\n',
+      '// No initReflector() linking required.\nvoid initReflector(){}',
     );
   });
 
@@ -27,29 +34,30 @@ void main() {
     final output = new ReflectableOutput(
       urlsNeedingInitReflector: ['foo.template.dart'],
     );
-    final emitter = new ReflectableEmitter(output);
+    final emitter = new ReflectableEmitter(output, nullLibrary);
     expect(
-      emitter.emitImports(),
-      ''
-          '// Required for initReflector().\n'
-          'import \'foo.template.dart\' as _ref0;\n'
-          '\n',
+      dartfmt(emitter.emitImports()),
+      dartfmt(r'''
+        import 'foo.template.dart' as _ref0;
+      '''),
     );
     expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ref0.initReflector();\n'
-          '}\n',
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+
+          _ref0.initReflector();
+        }
+      '''),
     );
   });
 
-  test('should support linking omitting deferred modules', () {
+  test('should skip linking to deferred libraries', () {
     final output = new ReflectableOutput(
       urlsNeedingInitReflector: [
         // Relative file.
@@ -61,6 +69,7 @@ void main() {
     );
     final emitter = new ReflectableEmitter(
       output,
+      nullLibrary,
       deferredModules: [
         // Relative file.
         'asset:baz/lib/foo.template.dart',
@@ -70,322 +79,22 @@ void main() {
       ],
       deferredModuleSource: 'asset:baz/lib/baz.dart',
     );
+    expect(emitter.emitImports(), isEmpty);
     expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '}\n',
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+        }
+      '''),
     );
   });
 
-  test('should support reflector linking', () async {
-    final reflector = new ReflectableReader(
-      // We have no inputs to this "build".
-      hasInput: (_) => false,
-
-      // Assume that the only import, "angular.dart", has generated code.
-      isLibrary: (_) async => true,
-    );
-    final output = await reflector.resolve(await resolveLibrary(r'''
-      @Injectable()
-      class Example {}
-    '''));
-    final emitter = new ReflectableEmitter(
-      output,
-      reflectorSource: libReflection,
-    );
-    expect(
-        emitter.emitImports(),
-        ''
-        '// Required for initReflector().\n'
-        'import \'$libReflection\' as _ngRef;\n'
-        'import \'$angular/angular.template.dart\' as _ref0;\n'
-        '\n');
-    expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ref0.initReflector();\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    () => new Example(),\n'
-          '  );\n'
-          '\n'
-          '}\n',
-    );
-  });
-
-  test('should support named constructors', () async {
-    final reflector = new ReflectableReader.noLinking();
-    final output = await reflector.resolve(await resolveLibrary(r'''
-      @Injectable()
-      class Example {
-        Example.namedConstructor();
-      }
-    '''));
-    final emitter = new ReflectableEmitter(
-      output,
-      reflectorSource: libReflection,
-    );
-    expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    () => new Example.namedConstructor(),\n'
-          '  );\n'
-          '\n'
-          '}\n',
-    );
-  });
-
-  test('should support factory registration', () async {
-    final reflector = new ReflectableReader.noLinking();
-    final output = await reflector.resolve(await resolveLibrary(r'''
-      @Injectable()
-      class Example {}
-
-      @Injectable()
-      Example createExample(String parameter) => new Example();
-    '''));
-    final emitter = new ReflectableEmitter(
-      output,
-      reflectorSource: libReflection,
-    );
-    expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerDependencies(\n'
-          '    createExample,\n'
-          '    const [const [String,],],\n'
-          '  );\n'
-          '\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    () => new Example(),\n'
-          '  );\n'
-          '\n'
-          '}\n',
-    );
-  });
-
-  test('should support prefixed identifiers', () async {
-    final reflector = new ReflectableReader.noLinking();
-    final output = await reflector.resolve(await resolveLibrary(r'''
-      import 'package:angular/angular.dart' as ng_prefixed;
-
-      @Injectable()
-      class Example {
-        final ng_prefixed.ComponentLoader b;
-        Example(ng_prefixed.ComponentLoader a1, this.b);
-      }
-
-      @Injectable()
-      ng_prefixed.ComponentLoader getComponentLoader([
-        @Optional()
-        @SkipSelf()
-        ng_prefixed.ComponentLoader existingComponentLoader,
-      ]) => null;
-    '''));
-    final emitter = new ReflectableEmitter(
-      output,
-      reflectorSource: libReflection,
-    );
-    expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerDependencies(\n'
-          '    getComponentLoader,\n'
-          '    const [const [ng_prefixed.ComponentLoader,const _ngRef.SkipSelf(),const _ngRef.Optional(),],],\n'
-          '  );\n'
-          '\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    (ng_prefixed.ComponentLoader p0, ng_prefixed.ComponentLoader p1) => new Example(p0, p1),\n'
-          '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [const [ng_prefixed.ComponentLoader,],const [ng_prefixed.ComponentLoader,],],\n'
-          '  );\n'
-          '\n'
-          '}\n',
-    );
-  });
-
-  test('should support generic types', () async {
-    final reflector = new ReflectableReader.noLinking();
-    final output = await reflector.resolve(await resolveLibrary(r'''
-      const someToken = const OpaqueToken('someToken');
-      @Injectable()
-      class Example {
-        final Map<String, Map<int, String>> example;
-        Example(@Inject(someToken) this.example);
-      }
-    '''));
-    final emitter = new ReflectableEmitter(
-      output,
-      reflectorSource: libReflection,
-    );
-    expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    (Map p0) => new Example(p0),\n'
-          '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [const [const _ngRef.Inject(const _ngRef.OpaqueToken<dynamic>(r\'someToken\')),],],\n'
-          '  );\n'
-          '\n'
-          '}\n',
-    );
-  });
-
-  test('should support MultiToken', () async {
-    final reflector = new ReflectableReader.noLinking();
-    final output = await reflector.resolve(await resolveLibrary(r'''
-      const someToken = const MultiToken('someToken');
-      @Injectable()
-      class Example {
-        final Map<String, Map<int, String>> example;
-        Example(@Inject(someToken) this.example);
-      }
-    '''));
-    final emitter = new ReflectableEmitter(
-      output,
-      reflectorSource: libReflection,
-    );
-    expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    (Map p0) => new Example(p0),\n'
-          '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [const [const _ngRef.Inject(const _ngRef.MultiToken<dynamic>(r\'someToken\')),],],\n'
-          '  );\n'
-          '\n'
-          '}\n',
-    );
-  });
-
-  test('should support generic typed OpaqueToken', () async {
-    final reflector = new ReflectableReader.noLinking();
-    final output = await reflector.resolve(await resolveLibrary(r'''
-      const stringToken = const OpaqueToken<String>('stringToken');
-      @Injectable()
-      class Example {
-        final String example;
-        Example(@Inject(stringToken) this.example);
-      }
-    '''));
-    final emitter = new ReflectableEmitter(
-      output,
-      reflectorSource: libReflection,
-    );
-    expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    (String p0) => new Example(p0),\n'
-          '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [const [const _ngRef.Inject(const _ngRef.OpaqueToken<String>(r\'stringToken\')),],],\n'
-          '  );\n'
-          '\n'
-          '}\n',
-    );
-  });
-
-  test('should support prefixed top-level fields', () async {
-    final reflector = new ReflectableReader.noLinking();
-    final output = await reflector.resolve(await resolveLibrary(r'''
-      import 'package:meta/meta.dart' as meta_lib;
-
-      @Injectable()
-      class Example {
-        final String example;
-        Example(@Inject(meta_lib.visibleForTesting) this.example);
-      }
-    '''));
-    final emitter = new ReflectableEmitter(
-      output,
-      reflectorSource: libReflection,
-    );
-    expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerFactory(\n'
-          '    Example,\n'
-          '    (String p0) => new Example(p0),\n'
-          '  );\n'
-          '  _ngRef.registerDependencies(\n'
-          '    Example,\n'
-          '    const [const [const _ngRef.Inject(meta_lib.visibleForTesting),],],\n'
-          '  );\n'
-          '\n'
-          '}\n',
-    );
-  });
-
-  test('should support component registration', () async {
+  test('should emit no metadata for an empty injectable class', () async {
     final reflector = new ReflectableReader.noLinking(
       recordComponentsAsInjectables: false,
     );
@@ -395,62 +104,27 @@ void main() {
     '''));
     final emitter = new ReflectableEmitter(
       output,
+      nullLibrary,
       reflectorSource: libReflection,
     );
     expect(
-      emitter.emitInitReflector(),
-      ''
-          'const _ExampleMetadata = const [];\n'
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerComponent(\n'
-          '    Example,\n'
-          '    ExampleNgFactory,\n'
-          '  );\n'
-          '}\n',
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        const _ExampleMetadata = const [];
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+
+          _ngRef.registerComponent(Example, ExampleNgFactory);
+        }
+      '''),
     );
   });
 
-  test('should support directives and pipe factories', () async {
-    final reflector = new ReflectableReader.noLinking();
-    final output = await reflector.resolve(await resolveLibrary(r'''
-      @Directive(selector: 'example')
-      class ExampleDirective {}
-
-      @Pipe('example')
-      class ExamplePipe {}
-    '''));
-    final emitter = new ReflectableEmitter(
-      output,
-      reflectorSource: libReflection,
-    );
-    expect(
-      emitter.emitInitReflector(),
-      ''
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerFactory(\n'
-          '    ExampleDirective,\n'
-          '    () => new ExampleDirective(),\n'
-          '  );\n\n'
-          '  _ngRef.registerFactory(\n'
-          '    ExamplePipe,\n'
-          '    () => new ExamplePipe(),\n'
-          '  );\n'
-          '\n'
-          '}\n',
-    );
-  });
-
-  test('should emit @RouteConfig annotations', () async {
+  test('should emit metadata for annotations named RouteConfig', () async {
     final reflector = new ReflectableReader.noLinking(
       recordComponentsAsInjectables: false,
     );
@@ -484,25 +158,372 @@ void main() {
     '''));
     final emitter = new ReflectableEmitter(
       output,
+      nullLibrary,
       reflectorSource: libReflection,
     );
     expect(
-      emitter.emitInitReflector(),
-      ''
-          'const _ExampleMetadata = const [\n'
-          "  const RouteConfig(const [const Route(path: '/dashboard', name: 'Dashboard', component: Example)]),\n"
-          '];\n'
-          'var _visited = false;\n'
-          'void initReflector() {\n'
-          '  if (_visited) {\n'
-          '    return;\n'
-          '  }\n'
-          '  _visited = true;\n'
-          '  _ngRef.registerComponent(\n'
-          '    Example,\n'
-          '    ExampleNgFactory,\n'
-          '  );\n'
-          '}\n',
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        const _ExampleMetadata = const [
+          const RouteConfig(const [
+            const Route(
+              path: '/dashboard',
+              name: 'Dashboard',
+              component: Example
+            )
+          ])
+        ];
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+
+          _ngRef.registerComponent(Example, ExampleNgFactory);
+        }
+      '''),
     );
+  });
+
+  test('should register constructors for injectable services', () async {
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(await resolveLibrary(r'''
+      const someToken = const OpaqueToken('someToken');
+      class A {}
+      class B {}
+      class C {}
+
+      @Injectable()
+      class ExampleServiceNoDeps {}
+
+      @Injectable()
+      class ExampleServiceWithDeps {
+        ExampleServiceWithDeps(A a, B b, C c);
+      }
+
+      @Injectable()
+      class ExampleServiceWithNamedConstructor {
+        ExampleServiceWithNamedConstructor.namedConstructor(A a, B b, C c);
+      }
+
+      @Injectable()
+      class ExampleServiceWithDynamicDeps {
+        ExampleServiceWithDynamicDeps(@Inject(someToken) a);
+      }
+    '''));
+    final emitter = new ReflectableEmitter(
+      output,
+      nullLibrary,
+      reflectorSource: libReflection,
+    );
+    expect(
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+
+          _ngRef.registerFactory(
+            ExampleServiceNoDeps,
+            () => new ExampleServiceNoDeps()
+          );
+          _ngRef.registerFactory(
+            ExampleServiceWithDeps,
+            (A p0, B p1, C p2) => new ExampleServiceWithDeps(p0, p1, p2)
+          );
+          _ngRef.registerDependencies(
+            ExampleServiceWithDeps,
+            const [
+              const [A],
+              const [B],
+              const [C]
+            ]
+          );
+          _ngRef.registerFactory(
+            ExampleServiceWithNamedConstructor,
+            (A p0, B p1, C p2) => new ExampleServiceWithNamedConstructor.namedConstructor(p0, p1, p2)
+          );
+          _ngRef.registerDependencies(
+            ExampleServiceWithNamedConstructor,
+            const [
+              const [A],
+              const [B],
+              const [C]
+            ]
+          );
+          _ngRef.registerFactory(
+            ExampleServiceWithDynamicDeps,
+            (dynamic p0) => new ExampleServiceWithDynamicDeps(p0)
+          );
+          _ngRef.registerDependencies(
+            ExampleServiceWithDynamicDeps,
+            const [
+              const [
+                const _ngRef.Inject(const _ngRef.OpaqueToken<dynamic>('someToken'))
+              ]
+            ]
+          );
+        }
+      '''),
+    );
+  });
+
+  test('should handle relative paths in a test directory', () async {
+    // This a silly, but effective way, to get a LibraryElement.
+    final pkgATest = await resolveSources(
+      {
+        'a|test/a_test.dart': '''
+          library a_test;
+
+          import '$angular/angular.dart';
+
+          import 'a_data.dart';
+
+          @Injectable()
+          class InjectsB {
+            InjectsB(B b);
+          }
+        ''',
+        'a|test/a_data.dart': r'''
+          library a_data;
+
+          class B {}
+        ''',
+      },
+      (r) => r.libraryFor(new AssetId('a', 'test/a_test.dart')),
+    );
+    final library = new LibraryReader(pkgATest);
+    final reflector = new ReflectableReader.noLinking();
+    final output = await reflector.resolve(pkgATest);
+    final allocator = new Allocator.simplePrefixing();
+    final emitter = new ReflectableEmitter(
+      output,
+      library,
+      allocator: allocator,
+      reflectorSource: libReflection,
+    );
+    expect(
+      dartfmt(emitter.emitImports()),
+      dartfmt('''
+        import '$libReflection' as _ngRef;
+        import 'a_data.dart' as _i1;
+      '''),
+    );
+    expect(
+      dartfmt(emitter.emitInitReflector()),
+      dartfmt(r'''
+        var _visited = false;
+        void initReflector() {
+          if (_visited) {
+            return;
+          }
+          _visited = true;
+
+          _ngRef.registerFactory(InjectsB, (_i1.B p0) => new InjectsB(p0));
+          _ngRef.registerDependencies(InjectsB, const [
+            const [
+              _i1.B
+            ]
+          ]);
+        }
+      '''),
+    );
+  });
+
+  group('should handle generic type parameters where', () {
+    Future<String> initReflectorOf(String source) async {
+      final library = new LibraryReader(await resolveLibrary(source));
+      final reflector = new ReflectableReader.noLinking();
+      final output = await reflector.resolve(library.element);
+      final emitter = new ReflectableEmitter(output, library);
+      return emitter.emitInitReflector();
+    }
+
+    test('there is no bound type (default to dynamic)', () async {
+      final source = r'''
+        class GenericType<T> {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<dynamic> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type is private (default to dynamic)', () async {
+      final source = r'''
+        class GenericType<T> {}
+        class _PrivateType {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType<_PrivateType> a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<dynamic> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type is non-dynamic', () async {
+      final source = r'''
+        class GenericType<T> {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType<String> a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<String> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type extends another a non-dynamic type', () async {
+      final source = r'''
+        class GenericType<T extends Comparable<T>> {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type extends another bound type', () async {
+      final source = r'''
+        class GenericType<T> {}
+
+        @Injectable()
+        class InjectsGeneric<T extends String> {
+          InjectsGeneric(GenericType<T> a);
+        }
+      ''';
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<String> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
+
+    test('the bound type extends another bound on the same class', () async {
+      final source = r'''
+        class GenericType<E extends Comparable<E>, T extends E> {}
+
+        @Injectable()
+        class InjectsGeneric {
+          InjectsGeneric(GenericType a);
+        }
+      ''';
+      // TODO(matanl): This isn't quite right. Work with analyzer team on this.
+      // We'd expect GenericType<Comparable<dynamic>, Comparable<dynamic>>.
+      expect(
+        dartfmt(await initReflectorOf(source)),
+        dartfmt(r'''
+          var _visited = false;
+          void initReflector() {
+            if (_visited) {
+              return;
+            }
+            _visited = true;
+
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>, dynamic> p0) => new InjectsGeneric(p0));
+            _ngRef.registerDependencies(InjectsGeneric, const [
+              const [
+                GenericType
+              ]
+            ]);
+          }
+        '''),
+      );
+    });
   });
 }
