@@ -9,6 +9,9 @@
 
 * `ReflectableEmitter` has been completely replaced with a new implementation.
 
+* Removed all references and use of determining a "prefix" of a type. This was
+  no longer used once `ReflectableEmitter` was re-written.
+
 ## 0.4.0-alpha+4
 
 ### Breaking changes

@@ -4,7 +4,6 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../common.dart';
 import '../link.dart';
 import '../types.dart';
 
@@ -18,15 +17,9 @@ class TokenReader {
   /// Whether to allow [int] and [String] to be tokens.
   final bool allowLiteralTokens;
 
-  /// Whether to compute [TypeTokenElement.prefix].
-  ///
-  /// This is required currently by the `ReflectorEmitter`.
-  final bool computePrefixForTypes;
-
   const TokenReader({
     this.allowArbitraryTokens: true,
     this.allowLiteralTokens: true,
-    this.computePrefixForTypes: true,
   });
 
   /// Returns [object] parsed into a [TokenElement].
@@ -95,22 +88,16 @@ class TokenReader {
 
   /// Returns the type of [element] as a [TokenElement].
   TypeTokenElement parseTokenType(ParameterElement element) {
-    final prefix = computePrefixForTypes ? prefixOf(element) : null;
-    return _parseType(element.type, prefix);
+    return _parseType(element.type);
   }
 
   /// Returns the type parameter [element] as a [TokenElement].
-  ///
-  /// Does not support [TypeTokenElement.prefix], it will always be `null`.
   TypeTokenElement parseTokenTypeOf(DartType type) {
-    return _parseType(type, null);
+    return _parseType(type);
   }
 
-  TypeTokenElement _parseType(
-    DartType type, [
-    String prefix,
-  ]) =>
-      new TypeTokenElement(linkTypeOf(type), prefix: prefix);
+  TypeTokenElement _parseType(DartType type) =>
+      new TypeTokenElement(linkTypeOf(type));
 }
 
 /// A statically parsed token used as an identifier for injection.
@@ -126,24 +113,20 @@ class TypeTokenElement implements TokenElement {
   /// Canonical URL of the source location and class name being referenced.
   final TypeLink link;
 
-  /// Optional; prefix used when importing this token.
-  final String prefix;
-
   @visibleForTesting
-  const TypeTokenElement(this.link, {this.prefix});
+  const TypeTokenElement(this.link);
 
   @override
-  bool operator ==(Object o) =>
-      o is TypeTokenElement && link == o.link && prefix == o.prefix;
+  bool operator ==(Object o) => o is TypeTokenElement && link == o.link;
 
   @override
-  int get hashCode => link.hashCode ^ prefix.hashCode;
+  int get hashCode => link.hashCode;
 
   /// Whether this is a considered the type `dynamic`.
   bool get isDynamic => link == TypeLink.$dynamic;
 
   @override
-  String toString() => 'TypeTokenElement {$link, prefix: $prefix}';
+  String toString() => 'TypeTokenElement {$link}';
 }
 
 class _DynamicTypeElement extends TypeTokenElement {
@@ -151,9 +134,6 @@ class _DynamicTypeElement extends TypeTokenElement {
 
   @override
   TypeLink get link => TypeLink.$dynamic;
-
-  @override
-  String get prefix => null;
 
   @override
   bool get isDynamic => true;
