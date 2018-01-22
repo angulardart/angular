@@ -1,10 +1,7 @@
-import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/dart/element/type.dart';
-import 'package:build/build.dart';
-import 'package:source_gen/source_gen.dart';
 import 'package:source_gen/src/utils.dart';
 
 /// Forwards and backwards-compatible method of getting the "name" of [type].
@@ -22,59 +19,6 @@ String getTypeName(DartType type) {
     }
   }
   return type.name;
-}
-
-/// Returns the prefix used to decorate [element], if imported with one.
-String prefixOf(Element element) {
-  String identifier;
-  if (element is ParameterElement) {
-    AstNode astNode;
-    // TODO(matanl): https://b2.corp.google.com/issues/67906224.
-    try {
-      astNode = element.computeNode();
-    } catch (_) {
-      return null;
-    }
-    if (astNode is DefaultFormalParameter) {
-      identifier = _identifierOfAst(astNode.parameter, element);
-    } else {
-      identifier = _identifierOfAst(astNode, element);
-    }
-  } else if (element is FunctionElement) {
-    identifier = element.computeNode()?.returnType?.toSource();
-  }
-  if (identifier == null) {
-    return null;
-  } else {
-    // Remove generics.
-    identifier = identifier.split('<').first;
-  }
-  final prefixDot = identifier.indexOf('.');
-  if (prefixDot != -1) {
-    return identifier.substring(0, prefixDot + 1);
-  }
-  return null;
-}
-
-String _identifierOfAst(AstNode astNode, ParameterElement element) {
-  if (astNode is SimpleFormalParameter) {
-    return astNode?.type?.toSource();
-  } else if (astNode is FieldFormalParameter) {
-    final parameter = element as FieldFormalParameterElement;
-    final clazz = (element.enclosingElement.enclosingElement) as ClassElement;
-    final fieldElement = clazz.getField(parameter.name);
-    if (fieldElement == null) {
-      log.severe(spanForElement(element).message(
-          'Could not find corresponding field "${parameter.name}" in class '
-          '"${clazz.name}".'));
-      return null;
-    }
-    final field = fieldElement.computeNode();
-    return ((field as VariableDeclaration).parent as VariableDeclarationList)
-        ?.type
-        ?.toSource();
-  }
-  return null;
 }
 
 /// Returns the bound [DartType] from the instance [object].
