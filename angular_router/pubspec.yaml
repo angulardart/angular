@@ -35,12 +35,3 @@ dependency_overrides:
   angular_router.example:
     path: example
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
-
-transformers:
-  # Run the code generator on the entire package.
-  - angular:
-      entry_points: test/**_test.dart
-      $exclude:
-          - test/url_test.dart
-  - test/pub_serve:
-      $include: test/**_test.dart

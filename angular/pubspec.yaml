@@ -10,9 +10,7 @@ dependencies:
   analyzer: '^0.31.0-alpha.1'
   angular_ast: ^0.4.0
   angular_compiler: ^0.4.0-alpha+4
-  barback: ^0.15.2+2
   build: '>=0.10.0 <0.13.0'
-  build_barback: '>=0.4.0 <0.6.0'
   build_config: ^0.2.1
   code_builder: '^3.0.0'
   collection: '^1.12.0'
@@ -39,9 +37,3 @@ dependency_overrides:
   angular_compiler:
       path: ../angular_compiler
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
-
-transformers:
-  - angular
-  - $dart2js:
-      commandLineOptions:
-        - '--show-package-warnings'
