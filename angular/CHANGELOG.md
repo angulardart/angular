@@ -7,6 +7,10 @@
   original scope (including import prefixes) of your source code. This is not
   intended to be a breaking change.
 
+### Breaking changes
+
+* Explicitly remove support for `ngNonBindable` in the new template parser.
+
 ## 5.0.0-alpha+4
 
 * We have a new template parser. This parser is much stricter than the old one,

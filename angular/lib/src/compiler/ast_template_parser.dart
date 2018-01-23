@@ -127,7 +127,7 @@ class AstTemplateParser implements TemplateParser {
 
   List<ast.TemplateAst> _filterElements(
       List<ast.TemplateAst> parsedAst, bool preserveWhitespace) {
-    var filteredElements = new _ElementFilter().visitAll(parsedAst, false);
+    var filteredElements = new _ElementFilter().visitAll(parsedAst);
     return new _PreserveWhitespaceVisitor()
         .visitAll(filteredElements, preserveWhitespace);
   }
@@ -814,43 +814,19 @@ String _getEventName(ast.EventAst event) =>
     ([event.name]..addAll(event.reductions)).join('.');
 
 /// Visitor which filters elements that are not supported in angular templates.
-class _ElementFilter extends ast.RecursiveTemplateAstVisitor<bool> {
+class _ElementFilter extends ast.RecursiveTemplateAstVisitor<Null> {
   @override
-  ast.TemplateAst visitElement(ast.ElementAst astNode,
-      [bool hasNgNonBindable]) {
-    if (_filterElement(astNode, hasNgNonBindable)) {
+  ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
+    if (_filterElement(astNode)) {
       return null;
     }
-    return super.visitElement(
-        astNode, hasNgNonBindable || _hasNgNonBindable(astNode.attributes));
+    return super.visitElement(astNode);
   }
 
-  @override
-  ast.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
-          [bool hasNgNonBindable]) =>
-      super.visitEmbeddedTemplate(
-          astNode, hasNgNonBindable || _hasNgNonBindable(astNode.attributes));
-
-  @override
-  ast.TemplateAst visitEmbeddedContent(ast.EmbeddedContentAst astNode,
-          [bool hasNgNonBindable]) =>
-      hasNgNonBindable
-          ? new ast.ElementAst.from(
-              astNode, NG_CONTENT_ELEMENT, astNode.closeComplement,
-              childNodes: visitAll(astNode.childNodes, hasNgNonBindable))
-          : astNode;
-
-  @override
-  ast.TemplateAst visitInterpolation(ast.InterpolationAst astNode,
-          [bool hasNgNonBindable]) =>
-      hasNgNonBindable
-          ? new ast.TextAst.from(astNode, '{{${astNode.value}}}')
-          : super.visitInterpolation(astNode, hasNgNonBindable);
-
-  static bool _filterElement(ast.ElementAst astNode, bool hasNgNonBindable) =>
+  static bool _filterElement(ast.ElementAst astNode) =>
       _filterScripts(astNode) ||
       _filterStyles(astNode) ||
-      _filterStyleSheets(astNode, hasNgNonBindable);
+      _filterStyleSheets(astNode);
 
   static bool _filterStyles(ast.ElementAst astNode) =>
       astNode.name.toLowerCase() == STYLE_ELEMENT;
@@ -858,11 +834,10 @@ class _ElementFilter extends ast.RecursiveTemplateAstVisitor<bool> {
   static bool _filterScripts(ast.ElementAst astNode) =>
       astNode.name.toLowerCase() == SCRIPT_ELEMENT;
 
-  static bool _filterStyleSheets(
-      ast.ElementAst astNode, bool hasNgNonBindable) {
+  static bool _filterStyleSheets(ast.ElementAst astNode) {
     if (astNode.name != LINK_ELEMENT) return false;
     var href = _findHref(astNode.attributes);
-    return hasNgNonBindable || isStyleUrlResolvable(href?.value);
+    return isStyleUrlResolvable(href?.value);
   }
 
   static ast.AttributeAst _findHref(List<ast.AttributeAst> attributes) {
@@ -870,13 +845,6 @@ class _ElementFilter extends ast.RecursiveTemplateAstVisitor<bool> {
       if (attr.name.toLowerCase() == LINK_STYLE_HREF_ATTR) return attr;
     }
     return null;
-  }
-
-  bool _hasNgNonBindable(List<ast.AttributeAst> attributes) {
-    for (var attr in attributes) {
-      if (attr.name == NG_NON_BINDABLE_ATTR) return true;
-    }
-    return false;
   }
 }
 
