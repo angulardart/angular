@@ -5,8 +5,8 @@ environment:
   sdk: '>=2.0.0-dev.3.0 <2.0.0'
 dev_dependencies:
   angular: '^4.0.0'
-  build_runner: ^0.7.4
-  build_test: ^0.9.0
+  build_runner: ^0.7.8
+  build_test: ^0.10.0
   cli_util: ^0.1.0
   mockito: '>=0.11.0 <3.0.0'
   source_span: ^1.4.0
