@@ -274,6 +274,15 @@ void main() {
           const isInstanceOf<ExampleService>(),
         );
       });
+
+      test('should accept unnammed tokens', () {
+        final injector = new Injector.slowReflective([
+          const Provider(unnamedTokenOfDynamic, useValue: 1),
+          const Provider(unnamedTokenOfString, useValue: 2),
+        ]);
+        expect(injector.get(unnamedTokenOfDynamic), 1);
+        expect(injector.get(unnamedTokenOfString), 2);
+      });
     });
 
     group('.generate', () {
@@ -334,6 +343,11 @@ void main() {
         expect(injector.get(typedTokenOfListDynamic), 3);
         expect(injector.get(typedTokenOfListString), 4);
       });
+
+      test('should support unnamed tokens', () {
+        expect(injector.get(unnamedTokenOfDynamic), 5);
+        expect(injector.get(unnamedTokenOfString), 6);
+      });
     });
   });
 }
@@ -373,6 +387,9 @@ const typedTokenOfString = const OpaqueToken<String>('typedToken');
 const typedTokenOfListDynamic = const OpaqueToken<List>('typedToken');
 const typedTokenOfListString = const OpaqueToken<List<String>>('typedToken');
 
+const unnamedTokenOfDynamic = const OpaqueToken();
+const unnamedTokenOfString = const OpaqueToken<String>();
+
 @Injector.generate(const [
   const Provider(ExampleService, useClass: ExampleService2),
   const Provider(ExampleService2),
@@ -392,6 +409,10 @@ const typedTokenOfListString = const OpaqueToken<List<String>>('typedToken');
   // We are going to expect these are also different bindings.
   const Provider(typedTokenOfListDynamic, useValue: 3),
   const Provider(typedTokenOfListString, useValue: 4),
+
+  // We are going to expect these are also different bindings.
+  const Provider(unnamedTokenOfDynamic, useValue: 5),
+  const Provider(unnamedTokenOfString, useValue: 6),
 ])
 Injector exampleGenerated() => ng.exampleGenerated$Injector();
 

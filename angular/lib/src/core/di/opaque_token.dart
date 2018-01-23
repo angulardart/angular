@@ -19,8 +19,8 @@ import 'package:meta/meta.dart';
 class OpaqueToken<T> {
   final String _desc;
 
-  const factory OpaqueToken(String description) = OpaqueToken<T>._;
-  const OpaqueToken._(this._desc);
+  const factory OpaqueToken([String description]) = OpaqueToken<T>._;
+  const OpaqueToken._([this._desc = '']);
 
   @override
   bool operator ==(other) => other is OpaqueToken && _desc == other._desc;
@@ -60,8 +60,8 @@ class OpaqueToken<T> {
 /// variations of the `multi: true` APIs.
 @optionalTypeArgs
 class MultiToken<T> extends OpaqueToken<T> {
-  const factory MultiToken(String description) = MultiToken<T>._;
-  const MultiToken._(String description) : super._(description);
+  const factory MultiToken([String description]) = MultiToken<T>._;
+  const MultiToken._([String description = '']) : super._(description);
 
   @override
   bool operator ==(other) => other is MultiToken && _desc == other._desc;

@@ -128,6 +128,13 @@ void main() {
     expect(injector.get(aDynamicTokenNamedA), 'A');
     expect(injector.get(aDynamicTokenNamedB), 'B');
   });
+
+  test('should treat unnamed tokens as acceptable', () async {
+    final fixture = await new NgTestBed<SupportsUnnamedToken>().create();
+    final injector = fixture.assertOnlyInstance.injector;
+    expect(injector.get(unnamedTokenOfDynamic), 1);
+    expect(injector.get(unnamedTokenOfString), 2);
+  });
 }
 
 @Component(
@@ -409,4 +416,21 @@ class SupportsImplicitClass {
   final Injector injector;
 
   SupportsImplicitClass(this.injector);
+}
+
+const unnamedTokenOfDynamic = const OpaqueToken();
+const unnamedTokenOfString = const OpaqueToken<String>();
+
+@Component(
+  selector: 'supports-unnamed-token',
+  providers: const [
+    const Provider(unnamedTokenOfDynamic, useValue: 1),
+    const Provider(unnamedTokenOfString, useValue: 2),
+  ],
+  template: '',
+)
+class SupportsUnnamedToken {
+  final Injector injector;
+
+  SupportsUnnamedToken(this.injector);
 }
