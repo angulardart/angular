@@ -37,22 +37,3 @@ dependency_overrides:
   angular_compiler:
     path: ../angular_compiler
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
-
-transformers:
-  # This using the AngularDart transformer causes hanging builds for some
-  # clients (https://github.com/dart-lang/angular/issues/549). As it was
-  # only needed for a single class, the code was modified temporarily to
-  # not need this.
-  - angular:
-      entry_points: test/**_test.dart
-      # Forces this transformer to run somewhat like a "dev-transformer", in
-      # that it only executes when you "pub serve" this package directly.
-      $include:
-        - lib/**.dart
-        - test/**_test.dart
-      $exclude:
-        - test/**.template.dart
-
-  # Allow test to proxy-load files so we can run AoT tests w/ pub serve.
-  - test/pub_serve:
-      $include: test/**_test.dart
