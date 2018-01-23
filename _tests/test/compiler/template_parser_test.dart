@@ -516,12 +516,13 @@ void main() {
               selector: "[a]",
               type: new CompileTypeMetadata(
                   moduleUrl: someModuleUrl, name: "DirA"),
-              inputs: ["a"]);
-          expect(humanizeTplAst(parse("<div a></div>", [dirA])), [
+              inputs: ["a", "b"]);
+          expect(humanizeTplAst(parse("<div a [b]></div>", [dirA])), [
             [ElementAst, "div"],
             [AttrAst, "a", ""],
             [DirectiveAst, dirA],
-            [BoundDirectivePropertyAst, "a", ""]
+            [BoundDirectivePropertyAst, "a", ""],
+            [BoundDirectivePropertyAst, "b", ""],
           ]);
         });
 
