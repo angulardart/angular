@@ -1478,19 +1478,6 @@ void main() {
             ]);
       });
 
-      test('should project children of components with ngNonBindable', () {
-        expect(
-            humanizeContentProjection(
-                parse('<div ngNonBindable>{{hello}}<span></span></div>', [
-              createComp('div', ['*'])
-            ])),
-            [
-              ['div', null],
-              ['#text({{hello}})', 0],
-              ['span', 0]
-            ]);
-      });
-
       test('should match the element when there is an inline template', () {
         expect(
             humanizeContentProjection(parse('<div><b *ngIf="cond"></b></div>', [
@@ -1797,80 +1784,6 @@ void main() {
                 [TextAst, 'a']
               ]);
         });
-      });
-
-      test('should ignore bindings on children of elements with ngNonBindable',
-          () {
-        expect(humanizeTplAst(parse('<div ngNonBindable>{{b}}</div>', [])), [
-          [ElementAst, 'div'],
-          [AttrAst, 'ngNonBindable', ''],
-          [TextAst, '{{b}}']
-        ]);
-      });
-
-      test('should keep nested children of elements with ngNonBindable', () {
-        expect(
-            humanizeTplAst(
-                parse('<div ngNonBindable><span>{{b}}</span></div>', [])),
-            [
-              [ElementAst, 'div'],
-              [AttrAst, 'ngNonBindable', ''],
-              [ElementAst, 'span'],
-              [TextAst, '{{b}}']
-            ]);
-      });
-
-      test(
-          'should ignore <script> elements inside of elements with '
-          'ngNonBindable', () {
-        expect(
-            humanizeTplAst(
-                parse('<div ngNonBindable><script></script>a</div>', [])),
-            [
-              [ElementAst, 'div'],
-              [AttrAst, 'ngNonBindable', ''],
-              [TextAst, 'a']
-            ]);
-      });
-
-      test(
-          'should ignore <style> elements inside of elements with '
-          'ngNonBindable', () {
-        expect(
-            humanizeTplAst(
-                parse('<div ngNonBindable><style></style>a</div>', [])),
-            [
-              [ElementAst, 'div'],
-              [AttrAst, 'ngNonBindable', ''],
-              [TextAst, 'a']
-            ]);
-      });
-
-      test(
-          'should ignore <link rel="stylesheet"> elements inside of '
-          'elements with ngNonBindable', () {
-        expect(
-            humanizeTplAst(
-                parse('<div ngNonBindable><link rel="stylesheet">a</div>', [])),
-            [
-              [ElementAst, 'div'],
-              [AttrAst, 'ngNonBindable', ''],
-              [TextAst, 'a']
-            ]);
-      });
-
-      test(
-          'should convert <ng-content> elements into regular elements '
-          'inside of elements with ngNonBindable', () {
-        expect(
-            humanizeTplAst(parse(
-                '<div ngNonBindable><ng-content></ng-content>a</div>', [])),
-            [
-              [ElementAst, 'div'],
-              [AttrAst, 'ngNonBindable', ''],
-              [ElementAst, 'ng-content'],
-              [TextAst, 'a']
-            ]);
       });
     });
 
