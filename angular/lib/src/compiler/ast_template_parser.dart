@@ -404,7 +404,7 @@ class _BindDirectivesVisitor
       [_ParseContext context]) {
     try {
       var value = context.templateContext.parser.parseBinding(
-          astNode.value ?? 'null',
+          astNode.value ?? '',
           _location(astNode),
           context.templateContext.exports);
       // If we bind the property to a directive input, or the element is a
