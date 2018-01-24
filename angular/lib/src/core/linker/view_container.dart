@@ -155,7 +155,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     }
   }
 
-  List<T> mapNestedViews<T>(List<T> Function(dynamic) callback) {
+  List<T> mapNestedViews<T, U extends AppView>(List<T> Function(U) callback) {
     final nestedViews = this.nestedViews;
     if (nestedViews == null || nestedViews.isEmpty) {
       return const [];
