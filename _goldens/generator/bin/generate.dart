@@ -28,18 +28,19 @@ Future main(List<String> args) async {
         [
           (_) => new LibraryBuilder(
               new TemplateGenerator(const CompilerFlags(
-                  genDebugInfo: false, usePlaceholder: false)),
+                  genDebugInfo: false, usePlaceholder: false, useAstPkg: true)),
               generatedExtension: updateGoldens
                   ? '.template_release.golden'
                   : '.template_release.check'),
           (_) => new LibraryBuilder(
               new TemplateGenerator(const CompilerFlags(
-                  genDebugInfo: true, usePlaceholder: false)),
+                  genDebugInfo: true, usePlaceholder: false, useAstPkg: true)),
               generatedExtension: updateGoldens
                   ? '.template_debug.golden'
                   : '.template_debug.check'),
           (_) => new TemplateOutliner(
-              const CompilerFlags(genDebugInfo: false, usePlaceholder: false),
+              const CompilerFlags(
+                  genDebugInfo: false, usePlaceholder: false, useAstPkg: true),
               extension: updateGoldens
                   ? '.template_outline.golden'
                   : '.template_outline.check'),
