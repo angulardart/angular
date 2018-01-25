@@ -1,5 +1,18 @@
 ### New features
 
+* Enables the new template parser by default. This parser is much stricter than
+  the old one, as it will detect things like missing closing tags or quotation
+  marks.
+
+  If you need to turn it off temporarily, you need to set the following flag in
+  your `build.yaml`:
+```yaml
+builders:
+  angular:
+    options:
+      use_new_template_parser: False
+```
+
 * Requires `source_gen ^0.7.4` (was previously `^0.7.0`).
 
 * The compiler behind `initReflector()` has changed implementations and now

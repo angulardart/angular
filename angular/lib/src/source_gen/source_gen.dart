@@ -22,6 +22,7 @@ Builder templateCompiler(BuilderOptions options) {
       genDebugInfo: false,
       useLegacyStyleEncapsulation: true,
       usePlaceholder: true,
+      useAstPkg: true,
     ),
     severity: Level.SEVERE,
   );
