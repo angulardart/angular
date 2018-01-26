@@ -1,3 +1,8 @@
+### New features
+
+*   Added the `routerProvidersTest` module for testing route configurations or
+    components with router dependencies.
+
 ## 2.0.0-alpha+4
 
 ### Breaking changes
