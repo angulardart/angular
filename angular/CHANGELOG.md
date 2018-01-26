@@ -22,6 +22,17 @@ builders:
 
 ### Breaking changes
 
+* `QueryList` is now formally *deprecated*. See `doc/deprecated_query_list.md`.
+  This feature is not compatible with future restrictions of Dart 2, because
+  `QueryList` was always created as a `QueryList<dynamic>`, even though users
+  expected it to be a `QueryList<T>`. The new API is fully compatible.
+
+* `SlowCompinentLoader` is now formally *deprecated*. See
+  `doc/component_loading.md`. This feature is not compatible with future
+  restrictions of AngularDart, because it requires collecting metadata and
+  disabling tree-shaking of classes annotated with `@Component`. The newer API
+  is nearly fully compatible, is faster, and will be supported long-term.
+
 * Explicitly remove support for `ngNonBindable` in the new template parser.
 
 ## 5.0.0-alpha+4
