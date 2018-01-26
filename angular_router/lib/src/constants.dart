@@ -35,8 +35,7 @@ const routerDirectives = const [RouterOutlet, RouterLink, RouterLinkActive];
 const routerProviders = const [
   const Provider(LocationStrategy, useClass: PathLocationStrategy),
   const Provider(PlatformLocation, useClass: BrowserPlatformLocation),
-  // Requires `useClass`: https://github.com/dart-lang/angular/issues/579
-  const Provider(Location, useClass: Location),
+  const Provider(Location),
   const Provider(Router, useClass: RouterImpl)
 ];
 
@@ -50,7 +49,6 @@ const routerProviders = const [
 const routerProvidersHash = const [
   const Provider(LocationStrategy, useClass: HashLocationStrategy),
   const Provider(PlatformLocation, useClass: BrowserPlatformLocation),
-  // Requires `useClass`: https://github.com/dart-lang/angular/issues/579
-  const Provider(Location, useClass: Location),
+  const Provider(Location),
   const Provider(Router, useClass: RouterImpl)
 ];
