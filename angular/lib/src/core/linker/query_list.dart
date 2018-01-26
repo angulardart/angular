@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:collection';
 
-/// A list of items that Angular keeps up to date when the state of the
-/// application changes.
+import '../metadata.dart' show ContentChildren, ViewChildren;
+
+/// A legacy (now deprecated) way to receive updates on child elements.
 ///
-/// Provides  an observable list for references to child components requested
-/// by @ViewChildren and @ViewChild annotations.
+/// See [ViewChildren] and [ContentChildren], and the markdown document titled
+/// `deprecated_query_list.md` for additional examples and rationale for the
+/// deprecation.
+@Deprecated('Use a normal List instead. See comments for details')
 class QueryList<T> extends Object with IterableMixin<T> {
   bool _dirty = true;
   List<T> _results = const [];
