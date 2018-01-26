@@ -8,6 +8,7 @@ const String CODEGEN_MODE_PARAM = 'codegen_mode';
 
 Builder templateBuilder(BuilderOptions options) {
   final compilerFlags = new CompilerFlags(
+    useAstPkg: true,
     genDebugInfo: options.config[CODEGEN_MODE_PARAM] == 'debug',
   );
   if (options.config[CODEGEN_MODE_PARAM] == 'outline') {

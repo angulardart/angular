@@ -1,5 +1,5 @@
 targets:
-  _goldens:
+  $default:
     sources: ["lib/**", "test_files/**"]
     builders:
       angular|goldens:

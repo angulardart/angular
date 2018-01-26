@@ -85,7 +85,7 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     _AnotherDirective_1_4 = new import1.AnotherDirective();
     var _anchor_2 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_2);
-    dbgElm(this, _anchor_2, 2, 3, 4);
+    dbgElm(this, _anchor_2, 2, 3, 17);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_6 =
         new TemplateRef(_appEl_2, viewFactory_QueriesComponent1);
@@ -786,7 +786,7 @@ class ViewNestedNgForQueriesList0
     final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
-    dbgElm(this, _anchor_0, 0, 0, 4);
+    dbgElm(this, _anchor_0, 0, 0, 9);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_6 =
         new TemplateRef(_appEl_0, viewFactory_NestedNgForQueriesList1);
@@ -856,7 +856,7 @@ class _ViewNestedNgForQueriesList1
     dbgElm(this, _el_0, 0, 0, 4);
     var _anchor_1 = ngAnchor.clone(false);
     _el_0.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 1, 6);
+    dbgElm(this, _anchor_1, 1, 1, 11);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_6 =
         new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList2);
@@ -912,7 +912,7 @@ class _ViewNestedNgForQueriesList2
     dbgElm(this, _el_0, 0, 1, 6);
     var _anchor_1 = ngAnchor.clone(false);
     _el_0.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 2, 8);
+    dbgElm(this, _anchor_1, 1, 2, 13);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_6 =
         new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList3);

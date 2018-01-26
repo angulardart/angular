@@ -1,5 +1,5 @@
 targets:
-  angular:
+  $default:
     builders:
       angular:
         generate_for:
