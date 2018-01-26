@@ -56,7 +56,7 @@ class ViewInterpolationComponent0
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 1, 2);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }
@@ -64,8 +64,8 @@ class ViewInterpolationComponent0
   @override
   void detectChangesInternal() {
     final import2.InterpolationComponent _ctx = ctx;
-    dbg(1, 0, 5);
-    final currVal_0 = import8.interpolate0(_ctx.foo);
+    dbg(1, 1, 2);
+    final currVal_0 = (_ctx.foo ?? '');
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
@@ -174,7 +174,7 @@ class ViewInterpolationComponentNoWhitespace0
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
+    dbgElm(this, _text_1, 1, 1, 2);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }
@@ -182,8 +182,8 @@ class ViewInterpolationComponentNoWhitespace0
   @override
   void detectChangesInternal() {
     final import2.InterpolationComponentNoWhitespace _ctx = ctx;
-    dbg(1, 0, 5);
-    final currVal_0 = import8.interpolate0(_ctx.foo);
+    dbg(1, 1, 2);
+    final currVal_0 = (_ctx.foo ?? '');
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;

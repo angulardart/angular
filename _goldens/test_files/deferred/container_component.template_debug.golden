@@ -70,7 +70,7 @@ class ViewTestContainerComponent0
     dbgElm(this, _text_0, 0, 0, 0);
     var _anchor_1 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 1, 6);
+    dbgElm(this, _anchor_1, 1, 1, 26);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_5 =
         new TemplateRef(_appEl_1, viewFactory_TestContainerComponent1);
@@ -78,7 +78,7 @@ class ViewTestContainerComponent0
         deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_5);
     var _anchor_2 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_2);
-    dbgElm(this, _anchor_2, 2, 2, 6);
+    dbgElm(this, _anchor_2, 2, 2, 24);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_5 =
         new TemplateRef(_appEl_2, viewFactory_TestContainerComponent2);
