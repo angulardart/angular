@@ -4,8 +4,7 @@ dart:
   - dev
 
 dart_task:
-  - dartfmt
-  - dartanalyzer: --fatal-infos --fatal-warnings .
+  - dartanalyzer: --fatal-warnings lib test
   - test: -p vm -x codegen
   - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/common
   - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/compiler

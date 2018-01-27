@@ -24,12 +24,12 @@ _tests) echo
   echo -e "[1mPKG: _tests[22m"
   tool/travis.sh
   ;;
-angular_router) echo
-  echo -e "[1mPKG: angular_router[22m"
-  tool/travis.sh
-  ;;
 angular_test) echo
   echo -e "[1mPKG: angular_test[22m"
+  tool/travis.sh
+  ;;
+angular_router) echo
+  echo -e "[1mPKG: angular_router[22m"
   tool/travis.sh
   ;;
 *) echo -e "No before_script specified for PKG '${PKG}'."
@@ -39,11 +39,11 @@ esac
 case $TASK in
 dartanalyzer) echo
   echo -e "[1mTASK: dartanalyzer[22m"
-  dartanalyzer --fatal-infos --fatal-warnings .
+  dartanalyzer --fatal-warnings .
   ;;
-dartfmt) echo
-  echo -e "[1mTASK: dartfmt[22m"
-  dartfmt -n --set-exit-if-changed .
+dartanalyzer_1) echo
+  echo -e "[1mTASK: dartanalyzer_1[22m"
+  dartanalyzer --fatal-warnings lib test
   ;;
 test) echo
   echo -e "[1mTASK: test[22m"

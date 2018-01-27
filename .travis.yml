@@ -11,12 +11,9 @@ dart:
 
 env:
   - PKG=_goldens TASK=dartanalyzer
-  - PKG=_goldens TASK=dartfmt
   - PKG=_goldens TASK=test
   - PKG=_goldens/generator TASK=dartanalyzer
-  - PKG=_goldens/generator TASK=dartfmt
-  - PKG=_tests TASK=dartanalyzer
-  - PKG=_tests TASK=dartfmt
+  - PKG=_tests TASK=dartanalyzer_1
   - PKG=_tests TASK=test_1
   - PKG=_tests TASK=test_10
   - PKG=_tests TASK=test_2
@@ -28,23 +25,16 @@ env:
   - PKG=_tests TASK=test_8
   - PKG=_tests TASK=test_9
   - PKG=angular TASK=dartanalyzer
-  - PKG=angular TASK=dartfmt
   - PKG=angular_ast TASK=dartanalyzer
-  - PKG=angular_ast TASK=dartfmt
   - PKG=angular_ast TASK=test
   - PKG=angular_compiler TASK=dartanalyzer
-  - PKG=angular_compiler TASK=dartfmt
   - PKG=angular_compiler TASK=test
   - PKG=angular_forms TASK=dartanalyzer
-  - PKG=angular_forms TASK=dartfmt
-  - PKG=angular_router TASK=dartanalyzer
-  - PKG=angular_router TASK=dartfmt
+  - PKG=angular_router TASK=dartanalyzer_1
   - PKG=angular_router TASK=test_11
   - PKG=angular_router TASK=test_12
   - PKG=angular_router/example TASK=dartanalyzer
-  - PKG=angular_router/example TASK=dartfmt
-  - PKG=angular_test TASK=dartanalyzer
-  - PKG=angular_test TASK=dartfmt
+  - PKG=angular_test TASK=dartanalyzer_1
   - PKG=angular_test TASK=test_11
   - PKG=angular_test TASK=test_12
 
