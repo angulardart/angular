@@ -63,6 +63,10 @@ test_11) echo
   ;;
 test_12) echo
   echo -e "[1mTASK: test_12[22m"
+  pub run test --precompiled=build --platform=chrome --tags=codegen --timeout=4x -x skip_on_travis -j1
+  ;;
+test_13) echo
+  echo -e "[1mTASK: test_13[22m"
   pub run test --precompiled=build --platform=chrome -j1
   ;;
 test_2) echo

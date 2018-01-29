@@ -32,7 +32,7 @@ env:
   - PKG=angular_forms TASK=dartanalyzer
   - PKG=angular_router TASK=dartanalyzer_1
   - PKG=angular_router TASK=test_11
-  - PKG=angular_router TASK=test_12
+  - PKG=angular_router TASK=test_13
   - PKG=angular_router/example TASK=dartanalyzer
   - PKG=angular_test TASK=dartanalyzer_1
   - PKG=angular_test TASK=test_11
