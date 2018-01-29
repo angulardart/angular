@@ -326,14 +326,6 @@ void main() {
         expect(result, ['A', 'B']);
       });
 
-      test('should return null when the binding failed', () {
-        // TODO(matanl): Remove this test once Injector.generated is stable.
-        // We are keeping this behavior to just allow incremental use of the API
-        // for EAPs, but at the same time be able to easily identify what
-        // scenario is not yet covered.
-        expect(() => injector.get(simpleConstToken), throwsUnimplementedError);
-      });
-
       test('should consider opaque tokens with different types unique', () {
         expect(injector.get(typedTokenOfDynamic), 1);
         expect(injector.get(typedTokenOfString), 2);

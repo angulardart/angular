@@ -1,10 +1,8 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 
-import '../../src/constants.dart';
 import '../../src/resolve.dart';
 
 void main() {
@@ -179,38 +177,21 @@ void main() {
         useValue.token,
         new TypeTokenElement(const TypeLink('Duration', 'dart:core')),
       );
-      expect(useValue.useValue, const isInstanceOf<Revivable>());
-      final revivable = useValue.useValue as Revivable;
-      expect(revivable.source, Uri.parse('dart:core#Duration'));
-      expect(revivable.accessor, '');
-      expect(literalStringMap(revivable.namedArguments), {
-        'seconds': 5,
-      });
+      expect(useValue.useValue.type.name, 'Duration');
     });
 
     test('using useValue: ... to define a literal', () {
       final useValue = reader.parseProvider(
         providers[7],
       ) as UseValueProviderElement;
-      expect(useValue.useValue, 'Hello World');
+      expect(useValue.useValue.toStringValue(), 'Hello World');
     });
 
     test('using useValue: ... to define a literal and constant invocation', () {
       final useValue = reader.parseProvider(
         providers[8],
       ) as UseValueProviderElement;
-      expect(useValue.useValue, const isInstanceOf<List>());
-
-      final useValueList = useValue.useValue as List<Object>;
-      expect(useValueList, hasLength(1));
-
-      expect(useValueList.first, const isInstanceOf<Revivable>());
-      final revivable = useValueList.first as Revivable;
-      expect(revivable.source, Uri.parse('dart:core#Duration'));
-      expect(revivable.accessor, '');
-      expect(literalStringMap(revivable.namedArguments), {
-        'seconds': 5,
-      });
+      expect(useValue.useValue.toListValue(), isNotEmpty);
     });
 
     test('using an OpaqueToken instead of a Type', () {

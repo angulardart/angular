@@ -1,6 +1,5 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -138,30 +137,8 @@ class ProviderReader {
     return new UseValueProviderElement._(
       token,
       linkTypeOf(typeArgumentOf(provider)),
-      _reviveInvocationsOf(useValue),
+      useValue,
     );
-  }
-
-  Object _reviveInvocationsOf(DartObject o) {
-    final reader = new ConstantReader(o);
-    // TODO: "isPrimitive" @ https://github.com/dart-lang/source_gen/issues/256.
-    if (reader.isBool ||
-        reader.isString ||
-        reader.isDouble ||
-        reader.isInt ||
-        reader.isNull ||
-        reader.isSymbol) {
-      return reader.literalValue;
-    }
-    if (reader.isList) {
-      return reader.listValue.map(_reviveInvocationsOf).toList();
-    }
-    if (reader.isMap) {
-      return mapMap(reader.mapValue,
-          key: (k, _) => _reviveInvocationsOf(k),
-          value: (_, v) => _reviveInvocationsOf(v));
-    }
-    return reader.revive();
   }
 
   /// Returns a provider element representing a single type.
@@ -320,7 +297,7 @@ class UseFactoryProviderElement extends ProviderElement {
 /// A statically parsed `Provider` that describes a constant expression.
 class UseValueProviderElement extends ProviderElement {
   /// A reference to the constant expression or literal to generate.
-  final Object useValue;
+  final DartObject useValue;
 
   // Not visible for testing because its impractical to create one.
   const UseValueProviderElement._(
