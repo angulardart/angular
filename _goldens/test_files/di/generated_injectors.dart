@@ -22,6 +22,21 @@ import 'generated_injectors.template.dart' as ng;
   const Provider(arbitraryToken1, useValue: instanceOfExample),
   const Provider(arbitraryToken2, useValue: instanceOfExamplePrime),
   const Provider(arbitraryToken3, useValue: ExampleTheta.instance),
+  const Provider(
+    arbitraryToken4,
+    useValue: const [
+      instanceOfExample,
+      instanceOfExamplePrime,
+      ExampleTheta.instance,
+    ],
+  ),
+  const Provider(
+    arbitraryToken5,
+    useValue: const {
+      'instanceOfExample': instanceOfExample,
+      instanceOfExamplePrime: 'instanceOfExamplePrime',
+    },
+  ),
 ])
 Injector doGenerate() => ng.doGenerate$Injector();
 
@@ -46,6 +61,8 @@ const tokenOfString = const OpaqueToken<String>('someToken');
 const arbitraryToken1 = const OpaqueToken('arbitraryToken1');
 const arbitraryToken2 = const OpaqueToken('arbitraryToken2');
 const arbitraryToken3 = const OpaqueToken('arbitraryToken3');
+const arbitraryToken4 = const OpaqueToken('arbitraryToken4');
+const arbitraryToken5 = const OpaqueToken('arbitraryToken5');
 
 const instanceOfExample = const Example();
 const instanceOfExamplePrime = const ExamplePrime._withPrivateConstructor();

@@ -16,43 +16,43 @@ void main() {
   group('should resolve useValue: targeting a', () {
     test('class with a const constructor', () {
       expect(
-        () => injector.get(ClassWithConstConstructor),
-        throwsUnimplementedError,
+        injector.get(ClassWithConstConstructor),
+        const isInstanceOf<ClassWithConstConstructor>(),
       );
     });
 
     test('class with a named const constructor', () {
       expect(
-        () => injector.get(ClassWithNamedConstConstructor),
-        throwsUnimplementedError,
+        injector.get(ClassWithNamedConstConstructor),
+        const isInstanceOf<ClassWithNamedConstConstructor>(),
       );
     });
 
     test('class with multiple constructors, at least one const', () {
       expect(
-        () => injector.get(ClassWithMultipleConstructors),
-        throwsUnimplementedError,
+        injector.get(ClassWithMultipleConstructors),
+        const isInstanceOf<ClassWithMultipleConstructors>(),
       );
     });
 
     test('class with a private constructor, but a public static field', () {
       expect(
-        () => injector.get(ClassWithPrivateConstructorAndStaticField),
-        throwsUnimplementedError,
+        injector.get(ClassWithPrivateConstructorAndStaticField),
+        const isInstanceOf<ClassWithPrivateConstructorAndStaticField>(),
       );
-    });
+    }, skip: 'Re-enable once source_gen bug is fixed for this case');
 
     test('class with a private constructor, but a public top-level field', () {
       expect(
-        () => injector.get(ClassWithPrivateConstructorAndTopLevelField),
-        throwsUnimplementedError,
+        injector.get(ClassWithPrivateConstructorAndTopLevelField),
+        const isInstanceOf<ClassWithPrivateConstructorAndTopLevelField>(),
       );
     });
 
     test('class with a redirecting constructor', () {
       expect(
-        () => injector.get(ClassWithRedirectingConstructor),
-        throwsUnimplementedError,
+        injector.get(ClassWithRedirectingConstructor),
+        const isInstanceOf<ClassWithRedirectingConstructor>(),
       );
     });
   });
@@ -71,10 +71,10 @@ void main() {
     ClassWithMultipleConstructors,
     useValue: const ClassWithMultipleConstructors.isConst(),
   ),
-  const Provider(
-    ClassWithPrivateConstructorAndStaticField,
-    useValue: ClassWithPrivateConstructorAndStaticField.instance,
-  ),
+  // const Provider(
+  //  ClassWithPrivateConstructorAndStaticField,
+  //  useValue: ClassWithPrivateConstructorAndStaticField.instance,
+  // ),
   const Provider(
     ClassWithPrivateConstructorAndTopLevelField,
     useValue: topLevelInstance,

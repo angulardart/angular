@@ -1,7 +1,9 @@
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:meta/meta.dart';
+import 'package:collection/collection.dart' show mapMap;
+import 'package:meta/meta.dart' hide literal;
 import 'package:path/path.dart' as p;
 import 'package:source_gen/source_gen.dart';
 
@@ -194,24 +196,13 @@ class InjectorReader {
     var index = 0;
     for (final provider in providers) {
       if (provider is UseValueProviderElement) {
-        var useValue = provider.useValue;
-        if (useValue is Revivable) {
-          // TODO(matanl): Make this an error once cases we support are ready.
-          log.warning(''
-              'Cannot resolve useValue: for ${provider.token}.\n'
-              'Most constant expressions are not yet supported.');
-          useValue = ''
-              '(() => throw new UnimplementedError(r"""Does not yet useValue: '
-              '<const expression> for ${provider.token}"""))()';
-        } else if (useValue is String) {
-          useValue = 'r"""$useValue"""';
-        }
+        final actualValue = _reviveAny(provider, provider.useValue);
         visitor.visitProvideValue(
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
           linkToReference(provider.providerType, libraryReader),
-          refer(useValue),
+          actualValue,
           provider.isMulti,
         );
       } else if (provider is UseClassProviderElement) {
@@ -260,6 +251,73 @@ class InjectorReader {
       false,
     );
   }
+
+  /// Returns a revivable `const` invocation as a code_builder [Expression].
+  Expression _revive(UseValueProviderElement provider, Revivable invocation) {
+    if (invocation.isPrivate) {
+      log.severe(''
+          'While attempting to resolve the "useValue:" for ${provider.token} '
+          '(${invocation.source}), there was no public constructor to use. '
+          'While it is syntatically valid to write this expression: \n'
+          '  const Provider(Foo, useValue: const Foo._())\n\n'
+          '... it is not supported for code generation. Consider either making '
+          'the constructor public, create a static (or top-level) public field '
+          'that invokes the constructor, or using "useFactory" instead to '
+          'create the instance.');
+      return literalNull;
+    }
+    final import = libraryReader.pathToUrl(invocation.source.removeFragment());
+    if (invocation.source.fragment.isNotEmpty) {
+      // We can create this invocation by calling `const ...`.
+      final name = invocation.source.fragment;
+      final args = invocation.positionalArguments
+          .map((a) => _reviveAny(provider, a))
+          .toList();
+      final clazz = refer(name, '$import');
+      if (invocation.accessor.isNotEmpty) {
+        return clazz.constInstanceNamed(invocation.accessor, args);
+      }
+      return clazz.constInstance(args);
+    }
+    // We can create this invocation by referring to a const field.
+    final name = invocation.accessor;
+    return refer(name, '$import');
+  }
+
+  Expression _reviveAny(UseValueProviderElement provider, DartObject object) {
+    final reader = new ConstantReader(object);
+    if (reader.isNull) {
+      return literalNull;
+    }
+    if (reader.isList) {
+      return _reviveList(provider, reader.listValue);
+    }
+    if (reader.isMap) {
+      return _reviveMap(provider, reader.mapValue);
+    }
+    if (reader.isLiteral) {
+      return literal(reader.literalValue);
+    }
+    final revive = reader.revive();
+    if (revive != null) {
+      return _revive(provider, revive);
+    }
+    throw new UnsupportedError('Unexpected: $object');
+  }
+
+  Expression _reviveList(
+    UseValueProviderElement provider,
+    List<DartObject> list,
+  ) =>
+      literalConstList(list.map((v) => _reviveAny(provider, v)).toList());
+
+  Expression _reviveMap(
+    UseValueProviderElement provider,
+    Map<DartObject, DartObject> map,
+  ) =>
+      literalConstMap(mapMap(map,
+          key: (DartObject k, DartObject v) => _reviveAny(provider, k),
+          value: (DartObject k, DartObject v) => _reviveAny(provider, v)));
 }
 
 /// To be implemented by an emitter class to create a `GeneratedInjector`.

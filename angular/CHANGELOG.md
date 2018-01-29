@@ -41,6 +41,13 @@ builders:
 
 * Explicitly remove support for `ngNonBindable` in the new template parser.
 
+### Bug fixes
+
+* The experimental feature `@Injector.generate` now supports some `const`
+  expressions in a Provider's `useValue: ...`. There are remaining known
+  issues with this implementation, and `useFactory` should be used instead if
+  you encounter issues.
+
 ## 5.0.0-alpha+4
 
 * We have a new template parser. This parser is much stricter than the old one,

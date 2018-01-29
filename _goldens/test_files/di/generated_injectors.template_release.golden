@@ -26,17 +26,23 @@ class _Injector$doGenerate extends _i1.GeneratedInjector {
   _i2.Example _field0;
 
   _i2.Example _getExample$0() => _field0 ??= new _i2.Example();
-  String _getString$1() => r"""dynamic""";
-  String _getString$2() => r"""String""";
-  dynamic _getdynamic$3() => (() => throw new UnimplementedError(
-      r"""Does not yet useValue: <const expression> for OpaqueToken {arbitraryToken1:TypeLink {null:dynamic<[]>}"""))();
-  dynamic _getdynamic$4() => (() => throw new UnimplementedError(
-      r"""Does not yet useValue: <const expression> for OpaqueToken {arbitraryToken2:TypeLink {null:dynamic<[]>}"""))();
-  dynamic _getdynamic$5() => (() => throw new UnimplementedError(
-      r"""Does not yet useValue: <const expression> for OpaqueToken {arbitraryToken3:TypeLink {null:dynamic<[]>}"""))();
-  String _getString$6() => r"""A""";
-  String _getString$7() => r"""B""";
-  _i1.Injector _getInjector$8() => this;
+  String _getString$1() => 'dynamic';
+  String _getString$2() => 'String';
+  dynamic _getdynamic$3() => const _i2.Example();
+  dynamic _getdynamic$4() => _i2.instanceOfExamplePrime;
+  dynamic _getdynamic$5() => const _i2.ExampleTheta.instance();
+  dynamic _getdynamic$6() => const [
+        const _i2.Example(),
+        _i2.instanceOfExamplePrime,
+        const _i2.ExampleTheta.instance()
+      ];
+  dynamic _getdynamic$7() => const {
+        'instanceOfExample': const _i2.Example(),
+        _i2.instanceOfExamplePrime: 'instanceOfExamplePrime'
+      };
+  String _getString$8() => 'A';
+  String _getString$9() => 'B';
+  _i1.Injector _getInjector$10() => this;
   @override
   Object injectFromSelfOptional(Object token,
       [Object orElse = _i1.throwIfNotFound]) {
@@ -58,11 +64,17 @@ class _Injector$doGenerate extends _i1.GeneratedInjector {
     if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken3'))) {
       return _getdynamic$5();
     }
+    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken4'))) {
+      return _getdynamic$6();
+    }
+    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken5'))) {
+      return _getdynamic$7();
+    }
     if (identical(token, _i1.Injector)) {
-      return _getInjector$8();
+      return _getInjector$10();
     }
     if (identical(token, const _i1.MultiToken<dynamic>('someMultiToken'))) {
-      return [_getString$6(), _getString$7()];
+      return [_getString$8(), _getString$9()];
     }
     return orElse;
   }

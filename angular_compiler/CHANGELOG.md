@@ -1,11 +1,15 @@
+### Bug fixes
+
+* `linkTypeOf` correctly resolves bound types (i.e. `<T>`) in most cases, and
+  can fallback to `dynamic` otherwise.
+
+### Breaking changes
+
 * Requires `source_gen ^0.7.4` (was previously `^0.7.0`).
 
 * `linkToReference` now requires a second parameter, a `LibraryReader`, and
   treats private types (i.e. prefixed with `_`) as `dynamic` as the compiler
   cannot point to them.
-
-* `linkTypeOf` correctly resolves bound types (i.e. `<T>`) in most cases, and
-  can fallback to `dynamic` otherwise.
 
 * `ReflectableEmitter` has been completely replaced with a new implementation.
 
