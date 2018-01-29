@@ -4,8 +4,8 @@ import 'package:logging/logging.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 
-import '../transform/common/names.dart';
-import '../transform/stylesheet_compiler/transformer.dart';
+import 'common/names.dart';
+import 'stylesheet_compiler/builder.dart';
 import 'template_compiler/generator.dart';
 
 export 'template_compiler/generator.dart'

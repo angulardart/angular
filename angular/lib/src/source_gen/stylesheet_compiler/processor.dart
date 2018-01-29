@@ -4,9 +4,10 @@ import 'package:analyzer/dart/ast/token.dart' show Keyword;
 import 'package:build/build.dart';
 import 'package:angular/src/compiler/source_module.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
-import 'package:angular/src/transform/common/ng_compiler.dart';
-import 'package:angular/src/transform/common/zone.dart' as zone;
 import 'package:angular_compiler/angular_compiler.dart';
+
+import 'ng_compiler.dart';
+import 'zone.dart' as zone;
 
 Future<Map<AssetId, String>> processStylesheet(
     AssetReader reader, AssetId stylesheetId, CompilerFlags flags) async {
