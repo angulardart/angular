@@ -6,7 +6,7 @@ import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';
-import 'package:angular/src/transform/common/names.dart'
+import 'package:angular/src/source_gen/common/names.dart'
     show toTemplateExtension;
 
 import "../compile_metadata.dart";

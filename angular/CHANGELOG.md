@@ -22,6 +22,12 @@ builders:
 
 ### Breaking changes
 
+* **We have removed the transformer completely from `angular`.** It is now a
+  requirement that you use `build_runner` to build `angular`.
+  For more details, see [Building Angular][building_angular].
+
+[building_angular]: https://github.com/dart-lang/angular/blob/master/doc/building_angular.md
+
 * `QueryList` is now formally *deprecated*. See `doc/deprecated_query_list.md`.
   This feature is not compatible with future restrictions of Dart 2, because
   `QueryList` was always created as a `QueryList<dynamic>`, even though users

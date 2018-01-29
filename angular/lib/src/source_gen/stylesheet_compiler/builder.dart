@@ -1,18 +1,10 @@
 import 'dart:async';
 
 import 'package:build/build.dart';
-import 'package:angular/src/transform/common/names.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 
+import '../common/names.dart';
 import 'processor.dart';
-
-Builder stylesheetCompiler(BuilderOptions options) {
-  final flags = new CompilerFlags.parseRaw(
-    options.config,
-    const CompilerFlags(genDebugInfo: false),
-  );
-  return new StylesheetCompiler(flags);
-}
 
 /// Pre-compiles CSS stylesheet files to Dart code for Angular 2.
 class StylesheetCompiler implements Builder {
