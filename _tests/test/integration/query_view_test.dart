@@ -101,7 +101,7 @@ void main() {
 class TestDirectViewChildren extends HasChildren<ValueDirective> {
   @override
   @ViewChildren(ValueDirective)
-  QueryList actualChildren;
+  List actualChildren;
 }
 
 @Component(
@@ -138,7 +138,7 @@ class TestDirectViewChild extends HasChild<ValueDirective> {
 class TestViewChildrenAndEmbedded extends HasChildren<ValueDirective> {
   @override
   @ViewChildren(ValueDirective)
-  QueryList actualChildren;
+  List actualChildren;
 }
 
 @Component(

@@ -266,10 +266,10 @@ class RootComponent {
   Stream<String> get output => _outputController.stream;
 
   @ContentChildren(QueryTargetComponent)
-  QueryList<QueryTargetComponent> contentChildren;
+  List<QueryTargetComponent> contentChildren;
 
   @ViewChildren(QueryTargetComponent)
-  QueryList<QueryTargetComponent> viewChildren;
+  List<QueryTargetComponent> viewChildren;
 
   void dispatchOutput(String outputData) {
     _outputController.add(outputData);
@@ -364,12 +364,12 @@ class AnnotatedDerivedComponent extends RootComponent {
   String get title => super.title;
 
   @ContentChildren('content')
-  set contentChildren(QueryList<QueryTargetComponent> value) {
+  set contentChildren(List<QueryTargetComponent> value) {
     super.contentChildren = value;
   }
 
   @ViewChildren('view')
-  set viewChildren(QueryList<QueryTargetComponent> value) {
+  set viewChildren(List<QueryTargetComponent> value) {
     super.viewChildren = value;
   }
 }

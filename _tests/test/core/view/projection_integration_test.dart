@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 import 'package:angular/core.dart'
     show Component, Directive, Input, ViewChild, ViewChildren;
 import 'package:angular/src/core/linker.dart'
-    show ElementRef, QueryList, TemplateRef, ViewContainerRef;
+    show ElementRef, TemplateRef, ViewContainerRef;
 import 'package:angular/src/debug/debug_node.dart' show getAllDebugNodes;
 import 'package:angular_test/angular_test.dart';
 
@@ -304,7 +304,7 @@ class OnlyDirectChildrenTest {}
 )
 class LightDomChangeTest {
   @ViewChildren(ManualViewportDirective)
-  QueryList<ManualViewportDirective> viewports;
+  List<ManualViewportDirective> viewports;
 }
 
 @Component(
@@ -593,7 +593,7 @@ class ConditionalContentComponent {
 )
 class ConditionalTextComponent {
   @ViewChildren(ManualViewportDirective)
-  QueryList<ManualViewportDirective> viewports;
+  List<ManualViewportDirective> viewports;
 }
 
 @Component(

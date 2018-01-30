@@ -31,6 +31,7 @@ export 'directives/form_interface.dart' show Form;
 export 'directives/ng_control.dart' show NgControl;
 export 'directives/ng_control_group.dart' show NgControlGroup;
 export 'directives/ng_control_name.dart' show NgControlName;
+// ignore: deprecated_member_use
 export 'directives/ng_control_status.dart' show NgControlStatus;
 export 'directives/ng_form.dart' show NgForm;
 export 'directives/ng_form_control.dart' show NgFormControl;

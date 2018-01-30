@@ -116,7 +116,7 @@ void main() {
 @Directive(selector: "tpl-refs", exportAs: "tplRefs")
 class CaptureTplRefs {
   @ContentChildren(TemplateRef)
-  QueryList<TemplateRef> tplRefs;
+  List<TemplateRef> tplRefs;
 }
 
 @Component(
