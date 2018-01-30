@@ -6,6 +6,15 @@
 *   Added the `routerProvidersTest` module for testing route configurations or
     components with router dependencies.
 
+### Breaking changes
+
+*   Removed fuzzy arrow from `MockLocationStrategy`. It relied on Dart 1's
+    treatment of dynamic as bottom to mock handling of `popstate` events without
+    actually relying on `dart:html`. Since Angular must be tested in the browser
+    anyways, there's no incentive to avoid this dependency. As a consequence,
+    the signature of `MockLocationStrategy.onPopState` is now unchanged from
+    `LocationStrategy.onPopState`.
+
 ## 2.0.0-alpha+4
 
 ### Breaking changes
