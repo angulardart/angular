@@ -5,7 +5,6 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/testing.dart';
-import 'package:angular_router/src/router/router_impl.dart';
 import 'package:angular_test/angular_test.dart';
 
 // ignore: uri_has_not_been_generated
@@ -345,34 +344,14 @@ void main() {
       '$SecondChildComponent.onActivate',
     ]);
   });
-
-  test('only initialize route with longest prefix match', () async {
-    final fixture = await setup<TestMatchCompletePathSegment>('items');
-    final log = fixture.assertOnlyInstance.lifecycleLog;
-    // TODO(b/70224632): prevent partial matches from being initialized.
-    expect(
-        log,
-        [
-          '$ThirdChildComponent.ngOnInit',
-          '$ThirdChildComponent.canActivate',
-          '$ThirdChildComponent.onActivate'
-        ],
-        skip: true);
-  });
 }
 
-const lifecycleLogToken = const OpaqueToken('lifecycleLog');
+const lifecycleLogToken = const OpaqueToken<List<String>>('lifecycleLog');
 
-Future<NgTestFixture<T>> setup<T>([String initialPath]) async {
-  final locationStrategy = new MockLocationStrategy();
-  if (initialPath != null) {
-    locationStrategy.internalPath = initialPath;
-  }
+Future<NgTestFixture<T>> setup<T>() async {
   final testBed = new NgTestBed<T>().addProviders([
-    new Provider(lifecycleLogToken, useValue: []),
-    new Provider(Location),
-    new Provider(LocationStrategy, useValue: locationStrategy),
-    new Provider(Router, useClass: RouterImpl),
+    new ValueProvider.forToken(lifecycleLogToken, []),
+    routerProvidersTest,
   ]);
   return testBed.create();
 }
@@ -470,17 +449,6 @@ class SecondChildComponent extends RouterLifecycleLogger {
   final List<String> lifecycleLog;
 
   SecondChildComponent(@Inject(lifecycleLogToken) this.lifecycleLog);
-}
-
-@Component(
-  selector: 'third-child',
-  template: '',
-)
-class ThirdChildComponent extends RouterLifecycleLogger {
-  final String componentName = '$ThirdChildComponent';
-  final List<String> lifecycleLog;
-
-  ThirdChildComponent(@Inject(lifecycleLogToken) this.lifecycleLog);
 }
 
 @Component(
@@ -809,32 +777,5 @@ class TestRedirectToSibling {
   ];
 
   TestRedirectToSibling(
-      @Inject(lifecycleLogToken) this.lifecycleLog, this.router);
-}
-
-@Component(
-  selector: 'test-match-complete-path-segment',
-  template: testTemplate,
-  directives: testDirectives,
-)
-class TestMatchCompletePathSegment {
-  final List<String> lifecycleLog;
-  final Router router;
-  final List<RouteDefinition> routes = [
-    new RouteDefinition(
-      path: '',
-      component: ng.FirstChildComponentNgFactory,
-    ),
-    new RouteDefinition(
-      path: 'item',
-      component: ng.SecondChildComponentNgFactory,
-    ),
-    new RouteDefinition(
-      path: 'items',
-      component: ng.ThirdChildComponentNgFactory,
-    ),
-  ];
-
-  TestMatchCompletePathSegment(
       @Inject(lifecycleLogToken) this.lifecycleLog, this.router);
 }
