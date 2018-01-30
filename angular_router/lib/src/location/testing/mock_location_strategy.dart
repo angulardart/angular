@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html' show EventListener, PopStateEvent;
 
 import 'package:angular/angular.dart' show Injectable;
 import 'package:angular_router/src/location/location_strategy.dart'
@@ -14,11 +15,11 @@ class MockLocationStrategy extends LocationStrategy {
   String internalHash = '';
   List<String> urlChanges = [];
 
-  final _subject = new StreamController<dynamic>();
+  final _subject = new StreamController<PopStateEvent>();
   MockLocationStrategy();
   void simulatePopState(String url) {
     internalPath = url;
-    _subject.add(new _MockPopStateEvent(path()));
+    _subject.add(new PopStateEvent('popstate'));
   }
 
   String hash() => internalHash;
@@ -48,7 +49,7 @@ class MockLocationStrategy extends LocationStrategy {
     urlChanges.add('replace: ' + externalUrl);
   }
 
-  void onPopState(fn) {
+  void onPopState(EventListener fn) {
     _subject.stream.listen(fn);
   }
 
@@ -66,12 +67,4 @@ class MockLocationStrategy extends LocationStrategy {
   void forward() {
     throw new UnimplementedError('not implemented');
   }
-}
-
-class _MockPopStateEvent {
-  String newUrl;
-  bool pop = true;
-  String type = 'popstate';
-
-  _MockPopStateEvent(newUrl);
 }
