@@ -46,6 +46,10 @@ builders:
   properly deprecated:
   `'Use @HostBinding() on a getter or @HostListener on a method'`.
 
+* `ElementRef` is now deprecated. Inject `Element` or `HtmlElement` instead.
+  This has unnecessary overhead on-top of the native DOM bindings without any
+  benefit.
+
 ### Bug fixes
 
 * The experimental feature `@Injector.generate` now supports some `const`
