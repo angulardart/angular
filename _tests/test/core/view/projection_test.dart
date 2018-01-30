@@ -5,7 +5,6 @@ import 'dart:html';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 import 'package:_tests/matchers.dart';
 
 import 'projection_test.template.dart' as ng_generated;
@@ -57,11 +56,8 @@ void main() {
       Element element = testFixture.rootElement;
       expect(element, hasTextContent("(,BC)"));
 
-      DebugElement debugElement = getDebugNode(testFixture.rootElement);
-
-      ManualViewportDirective viewportDirective = debugElement
-          .queryAllNodes(By.nodeDirective(ManualViewportDirective))[0]
-          .inject(ManualViewportDirective);
+      final viewportDirective =
+          testFixture.assertOnlyInstance.child.manualViewportDirective;
       await testFixture.update((ContainerABCWithConditionalComponent comp) {
         viewportDirective.show();
       });
@@ -226,7 +222,10 @@ class SimpleComponentWithBinding {}
         '<div class="left">A</div><div>B</div><div>C</div>'
         '</conditional-content>',
     directives: const [ConditionalContentComponent])
-class ContainerABCWithConditionalComponent {}
+class ContainerABCWithConditionalComponent {
+  @ViewChild(ConditionalContentComponent)
+  ConditionalContentComponent child;
+}
 
 @Component(
     selector: "conditional-content",
@@ -234,7 +233,10 @@ class ContainerABCWithConditionalComponent {}
         '<div>(<div *manual><ng-content select=".left"></ng-content></div>'
         ', <ng-content></ng-content>)</div>',
     directives: const [ManualViewportDirective])
-class ConditionalContentComponent {}
+class ConditionalContentComponent {
+  @ViewChild(ManualViewportDirective)
+  ManualViewportDirective manualViewportDirective;
+}
 
 @Directive(selector: "[manual]")
 class ManualViewportDirective {
