@@ -21,5 +21,19 @@ external AppView<_user.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dyn
 class ViewHasOpaqueTokens0 extends AppView<_user.HasOpaqueTokens> {
   external ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex);
 }
+// For @Component class ContainsChildComponent.
+const List<dynamic> styles$ContainsChildComponent = const [];
+external ComponentFactory get ContainsChildComponentNgFactory;
+external AppView<_user.ContainsChildComponent> viewFactory_ContainsChildComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewContainsChildComponent0 extends AppView<_user.ContainsChildComponent> {
+  external ViewContainsChildComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class InjectsTypedTokenFromSomeParent.
+const List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
+external ComponentFactory get InjectsTypedTokenFromSomeParentNgFactory;
+external AppView<_user.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, num parentIndex);
+class ViewInjectsTypedTokenFromSomeParent0 extends AppView<_user.InjectsTypedTokenFromSomeParent> {
+  external ViewInjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, num parentIndex);
+}
 
 external void initReflector();

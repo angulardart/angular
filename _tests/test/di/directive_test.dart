@@ -135,6 +135,15 @@ void main() {
     expect(injector.get(unnamedTokenOfDynamic), 1);
     expect(injector.get(unnamedTokenOfString), 2);
   });
+
+  test('should support nested views with typed tokens', () async {
+    var testBed = new NgTestBed<SupportsTypedTokenInNestedViews>();
+    testBed = testBed.addProviders([
+      new Provider(listOfStringToken, useValue: ['A', 'B', 'C']),
+    ]);
+    final fixture = await testBed.create();
+    expect(fixture.assertOnlyInstance.childView.example, ['A', 'B', 'C']);
+  });
 }
 
 @Component(
@@ -433,4 +442,37 @@ class SupportsUnnamedToken {
   final Injector injector;
 
   SupportsUnnamedToken(this.injector);
+}
+
+const listOfStringToken = const OpaqueToken<List<String>>('listOfString');
+
+@Component(
+  selector: 'supports-typed-token-in-nested-views',
+  template: r'''
+    <div *ngIf="someValue">
+      <div *ngIf="someValue">
+        <child-that-injects-token #tag></child-that-injects-token>
+      </div>
+    </div>
+  ''',
+  directives: const [
+    ChildThatInjectsTypedToken,
+    NgIf,
+  ],
+)
+class SupportsTypedTokenInNestedViews {
+  @ViewChild('tag')
+  ChildThatInjectsTypedToken childView;
+
+  bool someValue = true;
+}
+
+@Component(
+  selector: 'child-that-injects-token',
+  template: '',
+)
+class ChildThatInjectsTypedToken {
+  final List<String> example;
+
+  ChildThatInjectsTypedToken(@Inject(listOfStringToken) this.example);
 }

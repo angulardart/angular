@@ -64,6 +64,11 @@ builders:
   but one or more of `X`'s dependencies were not found. We now correctly throw
   `No provider found for Y` (where `Y` was that actual missing dependency).
 
+* `OpaqueToken<T>` was emitted as `OpaqueToken<dynamic>` when you used nested
+  views (`<div *ngIf="..."><comp></comp></div>`), and `<comp>` was a component
+  or directive that `@Inject`-ed a typed token (like `OpaqueToken<String>`);
+  this is now fixed.
+
 ## 5.0.0-alpha+4
 
 * We have a new template parser. This parser is much stricter than the old one,

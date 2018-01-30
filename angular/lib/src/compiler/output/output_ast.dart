@@ -947,8 +947,12 @@ class ExpressionTransformer implements StatementVisitor, ExpressionVisitor {
 
   @override
   dynamic visitInstantiateExpr(InstantiateExpr ast, dynamic context) {
-    return new InstantiateExpr(ast.classExpr.visitExpression(this, context),
-        this.visitAllExpressions(ast.args, context), ast.type);
+    return new InstantiateExpr(
+      ast.classExpr.visitExpression(this, context),
+      this.visitAllExpressions(ast.args, context),
+      ast.type,
+      ast.types,
+    );
   }
 
   @override
