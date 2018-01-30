@@ -7,6 +7,8 @@ import 'package:angular/angular.dart';
 
 import 'query_integration_test.template.dart' as ng_generated;
 
+// ignore_for_file: deprecated_member_use
+
 void main() {
   ng_generated.initReflector();
 
