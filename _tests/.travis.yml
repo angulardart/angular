@@ -1,5 +1,4 @@
 language: dart
-sudo: false
 dart:
   - dev
 
@@ -18,11 +17,3 @@ dart_task:
 
 
 before_script: tool/travis.sh
-
-# Only building master means that we don't run two builds for each pull request.
-branches:
-  only: [master]
-
-cache:
- directories:
-   - $HOME/.pub-cache
