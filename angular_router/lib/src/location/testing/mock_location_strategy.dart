@@ -48,7 +48,7 @@ class MockLocationStrategy extends LocationStrategy {
     urlChanges.add('replace: ' + externalUrl);
   }
 
-  void onPopState(void fn(dynamic value)) {
+  void onPopState(fn) {
     _subject.stream.listen(fn);
   }
 
