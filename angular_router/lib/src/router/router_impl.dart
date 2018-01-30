@@ -30,6 +30,7 @@ class RouterImpl extends Router {
   final RouterHook _routerHook;
   RouterState _activeState;
   Iterable<ComponentRef> _activeComponentRefs = [];
+  StreamController<Null> _onNavigationStart;
   RouterOutlet _rootOutlet;
 
   RouterImpl(this._location, @Optional() this._routerHook) {
@@ -56,6 +57,13 @@ class RouterImpl extends Router {
   }
 
   RouterState get current => _activeState;
+
+  @override
+  Stream<Null> get onNavigationStart {
+    _onNavigationStart ??= new StreamController<Null>.broadcast(sync: true);
+    return _onNavigationStart.stream;
+  }
+
   Stream<RouterState> get stream => _streamController.stream;
 
   @override
@@ -104,9 +112,13 @@ class RouterImpl extends Router {
     NavigationParams navigationParams, {
     bool isRedirect: false,
   }) async {
-    // Don't check `CanNavigate` implementations again if this is a redirect.
-    if (!(isRedirect || await _canNavigate())) {
-      return NavigationResult.BLOCKED_BY_GUARD;
+    if (!isRedirect) {
+      // Don't check `CanNavigate` or trigger `onNavigationStart` on redirect.
+      if (!await _canNavigate()) {
+        return NavigationResult.BLOCKED_BY_GUARD;
+      } else {
+        _onNavigationStart?.add(null);
+      }
     }
 
     navigationParams?.assertValid();

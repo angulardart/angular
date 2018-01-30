@@ -1,5 +1,8 @@
 ### New features
 
+*   Added `Router.onNavigationStart` to notify subscribers when a navigation
+    request starts.
+
 *   Added the `routerProvidersTest` module for testing route configurations or
     components with router dependencies.
 

@@ -34,6 +34,16 @@ abstract class Router {
   /// During a stream navigation (via [listen]), this represents the previous
   /// state and is updated _after_ all subscribers are notified.
   RouterState get current;
+
+  /// Notifies subscribers when a navigation request starts.
+  ///
+  /// This occurs after all active [CanNavigate] implementions permit
+  /// navigation, but before any other router lifecycle method are invoked. Note
+  /// that this does not necessary indicate the start of a successful
+  /// navigation, as it could be blocked by another lifecycle implementation or
+  /// be an invalid request.
+  Stream<Null> get onNavigationStart;
+
   Stream<RouterState> get stream;
 
   /// Attempts to navigate to a route that matches [path].
