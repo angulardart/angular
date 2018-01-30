@@ -41,6 +41,11 @@ builders:
 
 * Explicitly remove support for `ngNonBindable` in the new template parser.
 
+* Both `@Component.host` and `@Directive.host` were deprecated several versions
+  back, but not properly, so warnings never appeared in IDEs. They are now
+  properly deprecated:
+  `'Use @HostBinding() on a getter or @HostListener on a method'`.
+
 ### Bug fixes
 
 * The experimental feature `@Injector.generate` now supports some `const`

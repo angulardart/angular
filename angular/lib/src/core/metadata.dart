@@ -225,7 +225,8 @@ class Directive {
 
   const Directive({
     @required this.selector,
-    this.host,
+    @Deprecated('Use @HostBinding() on a getter or @HostListener on a method')
+        this.host,
     this.providers,
     this.exportAs,
     this.visibility,
@@ -333,7 +334,8 @@ class Component extends Directive {
 
   const Component({
     String selector,
-    Map<String, String> host,
+    @Deprecated('Use @HostBinding() on a getter or @HostListener on a method')
+        Map<String, String> host,
     String exportAs,
     List providers,
     Visibility visibility,
