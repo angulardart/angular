@@ -53,6 +53,13 @@ builders:
   issues with this implementation, and `useFactory` should be used instead if
   you encounter issues.
 
+* Fixed a bug where a `Injector.get` call where `Injector` is a
+  `ReflectiveInjector` (which is also the injector most commonly used for both
+  the entrypoint and virtually every test) would throw
+  `No provider found for X`, where `X` was a class or factory that _was_ found
+  but one or more of `X`'s dependencies were not found. We now correctly throw
+  `No provider found for Y` (where `Y` was that actual missing dependency).
+
 ## 5.0.0-alpha+4
 
 * We have a new template parser. This parser is much stricter than the old one,
