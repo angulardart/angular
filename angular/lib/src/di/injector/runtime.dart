@@ -113,7 +113,7 @@ class _RuntimeInjector extends HierarchicalInjector
       // We don't check to see if this failed otherwise, because this is an
       // edge case where we just delegate to Function.apply to invoke a factory.
       if (identical(result, throwIfNotFound)) {
-        return throwsNotFound(this, token);
+        return throwsNotFound(this, dep);
       }
       resolved[i] = result;
     }
@@ -153,17 +153,21 @@ class _RuntimeInjector extends HierarchicalInjector
       }
     }
     // TODO(matanl): Assert that there is no invalid combination.
+    Object result;
     final orElse = isOptional ? null : throwIfNotFound;
     if (isSkipSelf) {
-      return injectFromAncestryOptional(token, orElse);
+      result = injectFromAncestryOptional(token, orElse);
+    } else if (isSelf) {
+      result = injectFromSelfOptional(token, orElse);
+    } else if (isHost) {
+      result = injectFromParentOptional(token, orElse);
+    } else {
+      result = injectOptional(token, orElse);
     }
-    if (isSelf) {
-      return injectFromSelfOptional(token, orElse);
+    if (identical(result, throwIfNotFound)) {
+      throwsNotFound(this, token);
     }
-    if (isHost) {
-      return injectFromParentOptional(token, orElse);
-    }
-    return injectOptional(token, orElse);
+    return result;
   }
 
   @override

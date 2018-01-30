@@ -6,6 +6,7 @@ import 'package:angular/src/di/injector/hierarchical.dart';
 import 'package:angular/src/di/injector/injector.dart';
 import 'package:test/test.dart';
 import 'package:angular/src/di/reflector.dart' as reflector;
+import 'package:angular_test/angular_test.dart';
 
 import 'injector_test.template.dart' as ng;
 
@@ -282,6 +283,24 @@ void main() {
         ]);
         expect(injector.get(unnamedTokenOfDynamic), 1);
         expect(injector.get(unnamedTokenOfString), 2);
+      });
+
+      test('should throw the provider token that failed', () {
+        final injector = new Injector.slowReflective([
+          new Provider(
+            ExampleService,
+            useFactory: (ExampleService2 e) => null,
+            deps: const [ExampleService2],
+          ),
+        ]);
+        expect(
+          () => injector.get(ExampleService),
+          throwsInAngular(
+            predicate(
+              (e) => '$e'.contains('No provider found for ExampleService2'),
+            ),
+          ),
+        );
       });
     });
 
