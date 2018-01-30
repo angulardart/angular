@@ -42,7 +42,6 @@ class NavigationParams {
   ///
   /// When assertions are enabled, throws [StateError]. Otherwise does nothing.
   @mustCallSuper
-  @visibleForTesting
   void assertValid() {
     assert(() {
       if (fragment == null) {

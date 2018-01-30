@@ -196,6 +196,7 @@ class MyComp {
   bool ctxBoolProp;
   @ViewChild('loc', read: ViewContainerRef)
   ViewContainerRef viewContainerRef;
+  // ignore: deprecated_member_use
   final SlowComponentLoader loader;
   MyComp(this.loader) {
     this.ctxBoolProp = false;
