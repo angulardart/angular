@@ -16,7 +16,6 @@ abstract class HierarchicalInjector extends Injector {
   const HierarchicalInjector([this.parent = const EmptyInjector()]);
 
   /// **INTERNAL ONLY**: Used to implement [EmptyInjector] efficiently.
-  @visibleForTesting
   const HierarchicalInjector.maybeEmpty([this.parent]);
 
   @override

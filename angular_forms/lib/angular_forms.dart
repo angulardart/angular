@@ -29,6 +29,7 @@ export 'src/directives.dart'
         NgControl,
         NgControlGroup,
         NgControlName,
+        // ignore: deprecated_member_use
         NgControlStatus,
         NgForm,
         NgFormControl,

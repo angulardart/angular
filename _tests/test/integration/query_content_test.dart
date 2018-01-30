@@ -42,7 +42,7 @@ void main() {
 class ContentChildrenComponent extends HasChildren<ValueDirective> {
   @override
   @ContentChildren(ValueDirective)
-  QueryList actualChildren;
+  List actualChildren;
 }
 
 @Component(
@@ -74,7 +74,7 @@ class TestContentChildren extends HasChildren<ValueDirective> {
   HasChildren<ValueDirective> content;
 
   @override
-  QueryList get actualChildren => content.actualChildren;
+  List get actualChildren => content.actualChildren;
 }
 
 @Component(

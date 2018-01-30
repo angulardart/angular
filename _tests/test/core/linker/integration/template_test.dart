@@ -141,7 +141,7 @@ class ToolbarViewContainer {
 )
 class ToolbarComponent {
   @ContentChildren(ToolbarPart)
-  QueryList<ToolbarPart> query;
+  List<ToolbarPart> query;
 
   String prop = 'hello world';
 }

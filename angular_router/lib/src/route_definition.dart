@@ -44,7 +44,6 @@ abstract class RouteDefinition {
   ///
   /// When assertions are enabled, throws [StateError]. Otherwise does nothing.
   @mustCallSuper
-  @visibleForTesting
   void assertValid() {
     assert(() {
       if (path == null) {
@@ -180,7 +179,6 @@ abstract class RouteDefinition {
 /// Returns a future that completes with a component type or factory.
 typedef Future<ComponentFactory> LoadComponentAsync();
 
-@visibleForTesting
 class ComponentRouteDefinition extends RouteDefinition {
   /// Allows creating a component imperatively.
   final ComponentFactory component;
@@ -213,7 +211,6 @@ class ComponentRouteDefinition extends RouteDefinition {
   }
 }
 
-@visibleForTesting
 class DeferredRouteDefinition extends RouteDefinition {
   /// Returns a future that completes with a component type to be resolved.
   final LoadComponentAsync loader;
@@ -243,7 +240,6 @@ class DeferredRouteDefinition extends RouteDefinition {
   }
 }
 
-@visibleForTesting
 class RedirectRouteDefinition extends RouteDefinition {
   /// What [path] to redirect to when resolved.
   final String redirectTo;

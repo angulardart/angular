@@ -2,7 +2,6 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:meta/meta.dart';
 import 'package:angular/angular.dart';
 
 import '../directives/router_outlet_directive.dart';
@@ -13,7 +12,6 @@ import '../directives/router_outlet_directive.dart';
 /// angular component will initialize and it's [RouterOutlet] will also
 /// initialize. The RouterOutlet's constructor will then attach itself to the
 /// token, enabling the Router to have a point to the RouterOutlet.
-@visibleForTesting
 class RouterOutletToken {
   RouterOutlet routerOutlet;
 }

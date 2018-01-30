@@ -4,7 +4,6 @@
 
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/src/dart/ast/utilities.dart';
-import 'package:analyzer/src/generated/java_core.dart';
 
 import 'ng_dart_ast.dart';
 
@@ -15,12 +14,12 @@ abstract class AngularDartAstVisitor<R> extends AstVisitor<R> {
 
 /// A visitor used to write a source representation of a visited AST node (and
 /// all of it's children) to a writer. This handles AngularDartAst nodes.
-class NgToSourceVisitor extends ToSourceVisitor
+class NgToSourceVisitor extends ToSourceVisitor2
     implements AngularDartAstVisitor<Object> {
-  final PrintWriter _writer;
+  final StringSink _writer;
 
   factory NgToSourceVisitor() {
-    final writer = new PrintStringWriter();
+    final writer = new StringBuffer();
     return new NgToSourceVisitor._(writer);
   }
 
@@ -28,13 +27,13 @@ class NgToSourceVisitor extends ToSourceVisitor
 
   @override
   Object visitPipeOptionalArgumentList(PipeOptionalArgumentList node) {
-    _writer.print(node.toSource());
+    _writer.write(node.toSource());
     return null;
   }
 
   @override
   Object visitPipeInvocation(PipeInvocationExpression node) {
-    _writer.print(node.toSource());
+    _writer.write(node.toSource());
     return null;
   }
 
