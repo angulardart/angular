@@ -61,6 +61,22 @@ class RouterOutlet implements OnInit, OnDestroy {
     return _loadedComponents[_activeComponentFactory];
   }
 
+  /// Registers a list of [routes] to render at this location when matched.
+  ///
+  /// Note that it's possible for more than one route to match the same path, so
+  /// order of definition matters. The router attempts to match routes in order,
+  /// so the first route to match will be rendered.
+  ///
+  /// There are a few notable cases to be aware of when defining routes.
+  ///
+  ///   * Always place a route that matches `/` last. Otherwise, this route will
+  ///     be created every time the router navigates in an attempt to resolve a
+  ///     child route of `/`.
+  ///
+  ///   * Never define a route that matches `/.*`, *and* another route that
+  ///     matches `/`. Either remove the route that matches `/`, if they share
+  ///     the same parameters; or match `/.+` instead of `/.*`, if they have
+  ///     distinct parameters.
   @Input()
   set routes(List<RouteDefinition> routes) {
     assert(() {
