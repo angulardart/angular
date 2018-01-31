@@ -13,7 +13,7 @@ builders:
       use_new_template_parser: False
 ```
 
-* Requires `source_gen ^0.7.4` (was previously `^0.7.0`).
+* Requires `source_gen ^0.7.4+2` (was previously `^0.7.0`).
 
 * The compiler behind `initReflector()` has changed implementations and now
   uses fully-scoped import statements instead of trying to figure out the
