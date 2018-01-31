@@ -3,41 +3,40 @@ sudo: required
 addons:
   chrome: stable
 
+# Created with https://github.com/dart-lang/mono_repo
 language: dart
 
 dart:
   - dev
 
 env:
-  - PKG=_goldens
-  - PKG=_tests
-  - PKG=angular
-  - PKG=angular_ast
-  - PKG=angular_compiler
-  - PKG=angular_forms
-  - PKG=angular_router
-  - PKG=angular_test
-
-# We don't use the dart_task model yet (mono-repo), so this will have to do.
-before_install:
-  # Add a local `bin` folder and add it to the PATH.
-  - mkdir -p bin
-  - export PATH="$PATH:$PWD/bin"
-
-  # Start UI (required for Dartium).
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start &
-  - sleep 3
-
-  # Download the latest stable release of Dartium, extract it, and add a symlink to bin.
-  - wget http://gsdview.appspot.com/dart-archive/channels/stable/release/latest/dartium/dartium-linux-x64-release.zip
-  - unzip dartium-linux-x64-release.zip
-  - rm dartium-linux-x64-release.zip
-  - PATH_TO_DARTIUM=`pwd`/`echo dartium-linux-*`/chrome
-  - ln -sv "$PATH_TO_DARTIUM" "bin/dartium"
-
-  # Sanity check for terminal output.
-  - echo `which dartium`
+  - PKG=_goldens TASK=dartanalyzer
+  - PKG=_goldens TASK=test
+  - PKG=_goldens/generator TASK=dartanalyzer
+  - PKG=_tests TASK=dartanalyzer_1
+  - PKG=_tests TASK=test_1
+  - PKG=_tests TASK=test_10
+  - PKG=_tests TASK=test_2
+  - PKG=_tests TASK=test_3
+  - PKG=_tests TASK=test_4
+  - PKG=_tests TASK=test_5
+  - PKG=_tests TASK=test_6
+  - PKG=_tests TASK=test_7
+  - PKG=_tests TASK=test_8
+  - PKG=_tests TASK=test_9
+  - PKG=angular TASK=dartanalyzer
+  - PKG=angular_ast TASK=dartanalyzer
+  - PKG=angular_ast TASK=test
+  - PKG=angular_compiler TASK=dartanalyzer
+  - PKG=angular_compiler TASK=test
+  - PKG=angular_forms TASK=dartanalyzer
+  - PKG=angular_router TASK=dartanalyzer_1
+  - PKG=angular_router TASK=test_11
+  - PKG=angular_router TASK=test_13
+  - PKG=angular_router/example TASK=dartanalyzer
+  - PKG=angular_test TASK=dartanalyzer_1
+  - PKG=angular_test TASK=test_11
+  - PKG=angular_test TASK=test_12
 
 script: ./tool/travis.sh
 
