@@ -769,10 +769,15 @@ void main() {
   });
 }
 
-@Directive(selector: '[wrapped-value]', host: const {
-  '(input)': 'handleOnInput(\$event.target.value)',
-  '[value]': 'value'
-})
+@Directive(
+  selector: '[wrapped-value]',
+  host: const {
+    '(input)': 'handleOnInput(\$event.target.value)',
+    '[value]': 'value'
+  },
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class WrappedAccessor implements ControlValueAccessor {
   var value;
   Function onChange;
@@ -796,7 +801,11 @@ class WrappedAccessor implements ControlValueAccessor {
   }
 }
 
-@Component(selector: 'my-input', template: '')
+@Component(
+  selector: 'my-input', template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class MyInput implements ControlValueAccessor {
   @Output('input')
   StreamController onInput = new StreamController.broadcast();
@@ -825,31 +834,42 @@ Map loginIsEmptyGroupValidator(ControlGroup c) {
   return c.controls['login'].value == '' ? {'loginIsEmpty': true} : null;
 }
 
-@Directive(selector: '[login-is-empty-validator]', providers: const [
-  const Provider(NG_VALIDATORS,
-      useValue: loginIsEmptyGroupValidator, multi: true)
-])
+@Directive(
+  selector: '[login-is-empty-validator]',
+  providers: const [
+    const Provider(NG_VALIDATORS,
+        useValue: loginIsEmptyGroupValidator, multi: true)
+  ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class LoginIsEmptyValidator {}
 
 @Component(
-    selector: 'input-form-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'input-form-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <input type="text" ngControl="login">
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class InputFormTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'submit-form-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'submit-form-test',
+  directives: const [formDirectives],
+  template: '''
 <div>
   <form [ngFormModel]="form" (ngSubmit)="name = 'updated'"></form>
   <span>{{name}}</span>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SubmitFormTest {
   ControlGroup form;
   String name;
@@ -859,104 +879,139 @@ class SubmitFormTest {
   selector: 'single-control-test',
   directives: const [formDirectives],
   template: '<div><input type="text" [ngFormControl]="form"></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SingleControlTest {
   Control form;
 }
 
 @Component(
-    selector: 'input-without-type-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'input-without-type-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <input ngControl="text">
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class InputWithoutTypeTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'textarea-test', directives: const [formDirectives], template: '''
+  selector: 'textarea-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <textarea ngControl="text"></textarea>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class TextAreaTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'checkbox-test', directives: const [formDirectives], template: '''
+  selector: 'checkbox-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <input type="checkbox" ngControl="checkbox">
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class CheckboxTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'number-test', directives: const [formDirectives], template: '''
+  selector: 'number-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <input type="number" ngControl="num">
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NumberTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'number-required-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'number-required-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <input type="number" ngControl="num" required>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NumberRequiredTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'number-required-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'number-required-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <input type="number" ngControl="num" [(ngModel)]="data">
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NumberModelTest {
   ControlGroup form;
   String data;
 }
 
 @Component(
-    selector: 'radio-test',
-    directives: const [formDirectives],
-    providers: FORM_PROVIDERS,
-    template: '''
+  selector: 'radio-test',
+  directives: const [formDirectives],
+  providers: FORM_PROVIDERS,
+  template: '''
 <form [ngFormModel]="form">
   <input type="radio" ngControl="foodChicken" name="food">
   <input type="radio" ngControl="foodFish" name="food">
-</form>''')
+</form>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class RadioTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'basic-select-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'basic-select-test',
+  directives: const [formDirectives],
+  template: '''
 <select>
   <option value="SF"></option>
   <option value="NYC"></option>
-</select>''')
+</select>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class BasicSelectTest {}
 
 @Component(
-    selector: 'select-for-test',
-    directives: const [formDirectives, NgFor],
-    template: '''
+  selector: 'select-for-test',
+  directives: const [formDirectives, NgFor],
+  template: '''
 <select>
   <option *ngFor="let city of cities" [value]="city['id']">
     {{city['name']}}
   </option>
-</select>''')
+</select>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SelectForTest {
   List<Map<String, String>> cities = [
     {"id": "0", "name": "SF"},
@@ -965,42 +1020,51 @@ class SelectForTest {
 }
 
 @Component(
-    selector: 'select-control-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'select-control-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <select ngControl="city">
     <option value="SF"></option>
     <option value="NYC"></option>
   </select>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SelectControlTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'select-control-dynamic-data-test',
-    directives: const [formDirectives, NgFor],
-    template: '''
+  selector: 'select-control-dynamic-data-test',
+  directives: const [formDirectives, NgFor],
+  template: '''
 <div [ngFormModel]="form">
   <select ngControl="city">
     <option *ngFor="let c of cities" [value]="c"></option>
   </select>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SelectControlDynamicDataTest {
   ControlGroup form = new ControlGroup({"city": new Control("NYC")});
   List<String> cities = ["SF", "NYC"];
 }
 
 @Component(
-    selector: 'select-option-value-map-test',
-    directives: const [formDirectives, NgFor],
-    template: '''
+  selector: 'select-option-value-map-test',
+  directives: const [formDirectives, NgFor],
+  template: '''
 <div>
   <select [(ngModel)]="selectedCity">
     <option *ngFor="let c of cities" [ngValue]="c">{{c['name']}}</option>
   </select>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SelectOptionValueMapTest {
   Map<String, String> selectedCity;
 
@@ -1012,14 +1076,17 @@ class SelectOptionValueMapTest {
 }
 
 @Component(
-    selector: 'select-trackby-test',
-    directives: const [formDirectives, NgFor],
-    template: '''
+  selector: 'select-trackby-test',
+  directives: const [formDirectives, NgFor],
+  template: '''
 <div>
   <select [(ngModel)]="selectedCity">
     <option *ngFor="let c of cities; trackBy:customTrackBy" [ngValue]="c">{{c}}</option>
   </select>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SelectTrackByTest {
   dynamic selectedCity;
 
@@ -1034,23 +1101,29 @@ class SelectTrackByTest {
 }
 
 @Component(
-    selector: 'custom-accessor-test',
-    directives: const [formDirectives, WrappedAccessor],
-    template: '''
+  selector: 'custom-accessor-test',
+  directives: const [formDirectives, WrappedAccessor],
+  template: '''
 <div [ngFormModel]="form">
   <input type="text" ngControl="name" wrapped-value>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class CustomAccessorTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'my-input-test',
-    directives: const [formDirectives, MyInput],
-    template: '''
+  selector: 'my-input-test',
+  directives: const [formDirectives, MyInput],
+  template: '''
 <div [ngFormModel]="form">
   <my-input #input ngControl="name"></my-input>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class MyInputTest {
   ControlGroup form = new ControlGroup({'name': new Control('aa')});
 
@@ -1059,27 +1132,33 @@ class MyInputTest {
 }
 
 @Component(
-    selector: 'sync-validators-html-test',
-    directives: const [formDirectives, LoginIsEmptyValidator],
-    template: '''
+  selector: 'sync-validators-html-test',
+  directives: const [formDirectives, LoginIsEmptyValidator],
+  template: '''
 <div [ngFormModel]="form" login-is-empty-validator>
   <input type="text" ngControl="login" required>
   <input type="text" ngControl="min" [minlength]="3">
   <input type="text" ngControl="max" [maxlength]="3">
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SyncValidatorsHtmlTest {
   ControlGroup form;
 }
 
 @Component(
-    selector: 'nested-form-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'nested-form-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <div ngControlGroup="nested">
     <input type="text" ngControl="login">
   </div>
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NestedFormTest {
   ControlGroup form = new ControlGroup({
     'nested': new ControlGroup({'login': new Control('value')})
@@ -1087,12 +1166,15 @@ class NestedFormTest {
 }
 
 @Component(
-    selector: 'complex-ngmodel-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'complex-ngmodel-test',
+  directives: const [formDirectives],
+  template: '''
 <div [ngFormModel]="form">
   <input type="text" ngControl="name" [(ngModel)]="name">
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class ComplexNgModelTest {
   ControlGroup form = new ControlGroup({"name": new Control("")});
 
@@ -1100,26 +1182,32 @@ class ComplexNgModelTest {
 }
 
 @Component(
-    selector: 'single-field-ngmodel-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'single-field-ngmodel-test',
+  directives: const [formDirectives],
+  template: '''
 <div>
   <input type="text" [ngFormControl]="form" [(ngModel)]="name">
-</div>''')
+</div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SingleFieldNgModelTest {
   Control form = new Control("");
   String name;
 }
 
 @Component(
-    selector: 'template-form-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'template-form-test',
+  directives: const [formDirectives],
+  template: '''
 <form #myForm="ngForm">
   <div ngControlGroup="user">
     <input type="text" ngControl="login">
   </div>
-</form>''')
+</form>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class TemplateFormTest {
   @ViewChild('myForm')
   NgForm form;
@@ -1129,6 +1217,8 @@ class TemplateFormTest {
   selector: 'template-submit-test',
   directives: const [formDirectives],
   template: '''<div><form (ngSubmit)="name = 'updated'"></form></div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TemplateSubmitTest {
   String name;
@@ -1138,18 +1228,23 @@ class TemplateSubmitTest {
   selector: 'ngnoform-test',
   directives: const [formDirectives],
   template: '<form ngNoForm></form>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgNoFormTest {}
 
 @Component(
-    selector: 'remove-controls-test',
-    directives: const [formDirectives, NgIf],
-    template: '''
+  selector: 'remove-controls-test',
+  directives: const [formDirectives, NgIf],
+  template: '''
 <form #myForm="ngForm">
   <div *ngIf="name == 'show'">
     <input type="text" ngControl="login">
   </div>
-</form>''')
+</form>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class RemoveControlsTest {
   String name;
 
@@ -1158,14 +1253,17 @@ class RemoveControlsTest {
 }
 
 @Component(
-    selector: 'remove-control-group-test',
-    directives: const [formDirectives, NgIf],
-    template: '''
+  selector: 'remove-control-group-test',
+  directives: const [formDirectives, NgIf],
+  template: '''
 <form #myForm="ngForm">
   <div *ngIf="name == 'show'" ngControlGroup="user">
     <input type="text" ngControl="login">
   </div>
-</form>''')
+</form>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class RemoveControlGroupTest {
   String name;
 
@@ -1174,12 +1272,15 @@ class RemoveControlGroupTest {
 }
 
 @Component(
-    selector: 'ngmodel-complex-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'ngmodel-complex-test',
+  directives: const [formDirectives],
+  template: '''
 <form>
   <input type="text" ngControl="name" [(ngModel)]="name">
-</form>''')
+</form>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgModelComplexTest {
   String name;
 }
@@ -1188,16 +1289,18 @@ class NgModelComplexTest {
   selector: 'ngmodel-single-field-test',
   directives: const [formDirectives],
   template: '<div><input type="text" [(ngModel)]="name"></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgModelSingleFieldTest {
   String name;
 }
 
 @Component(
-    selector: 'template-radio-test',
-    directives: const [formDirectives],
-    providers: FORM_PROVIDERS,
-    template: '''
+  selector: 'template-radio-test',
+  directives: const [formDirectives],
+  providers: FORM_PROVIDERS,
+  template: '''
 <form>
   <input type="radio" name="food" ngControl="chicken" [(ngModel)]="data['chicken1']">
   <input type="radio" name="food" ngControl="fish" [(ngModel)]="data['fish1']">
@@ -1205,7 +1308,10 @@ class NgModelSingleFieldTest {
 <form>
   <input type="radio" name="food" ngControl="chicken" [(ngModel)]="data['chicken2']">
   <input type="radio" name="food" ngControl="fish" [(ngModel)]="data['fish2']">
-</form>''')
+</form>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class TemplateRadioTest {
   Map<String, RadioButtonState> data;
 }
@@ -1217,6 +1323,8 @@ class TemplateRadioTest {
 <div>
   <input type="text" [ngFormControl]="form" [(ngModel)]="name">
 </div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgModelInitialViewTest {
   Control form = new Control('');
@@ -1227,18 +1335,23 @@ class NgModelInitialViewTest {
   selector: 'ngmodel-revert-view-test',
   directives: const [formDirectives],
   template: '<input type="text" [(ngModel)]="name">',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgModelRevertViewTest {
   String name;
 }
 
 @Component(
-    selector: 'ngmodel-validity-test',
-    directives: const [formDirectives],
-    template: '''
+  selector: 'ngmodel-validity-test',
+  directives: const [formDirectives],
+  template: '''
 <form>
   <div ngControlGroup="x" #x="ngForm">
     <input type="text" ngControl="test">
   </div>{{x.valid}}
-</form>''')
+</form>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgModelValidityTest {}

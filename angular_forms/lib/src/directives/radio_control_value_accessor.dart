@@ -2,7 +2,15 @@ import 'dart:html';
 import 'dart:js_util' as js_util;
 
 import 'package:angular/angular.dart'
-    show Directive, Injectable, Injector, Input, OnInit, OnDestroy, Provider;
+    show
+        Directive,
+        Injectable,
+        Injector,
+        Input,
+        OnInit,
+        OnDestroy,
+        Provider,
+        Visibility;
 
 import 'control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
@@ -65,11 +73,14 @@ class RadioButtonState {
 /// }
 /// ```
 @Directive(
-    selector: 'input[type=radio][ngControl],'
-        'input[type=radio][ngFormControl],'
-        'input[type=radio][ngModel]',
-    host: const {'(change)': 'changeHandler()', '(blur)': 'touchHandler()'},
-    providers: const [RADIO_VALUE_ACCESSOR])
+  selector: 'input[type=radio][ngControl],'
+      'input[type=radio][ngFormControl],'
+      'input[type=radio][ngModel]',
+  host: const {'(change)': 'changeHandler()', '(blur)': 'touchHandler()'},
+  providers: const [RADIO_VALUE_ACCESSOR],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class RadioControlValueAccessor
     implements ControlValueAccessor, OnDestroy, OnInit {
   HtmlElement _element;

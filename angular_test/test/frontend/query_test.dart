@@ -49,6 +49,8 @@ void main() {
 @Component(
   selector: 'child',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ChildComponent {}
 
@@ -56,6 +58,8 @@ class ChildComponent {}
   selector: 'single',
   directives: const [ChildComponent],
   template: '<child></child>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SingleComponentTest {}
 
@@ -67,5 +71,7 @@ class SingleComponentTest {}
     <child></child>
     <child></child>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ManyComponentTest {}

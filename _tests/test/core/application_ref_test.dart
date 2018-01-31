@@ -16,7 +16,8 @@ import 'package:angular/core.dart'
         APP_INITIALIZER,
         Component,
         ReflectiveInjector,
-        ChangeDetectorRef;
+        ChangeDetectorRef,
+        Visibility;
 import 'package:angular/experimental.dart';
 import 'package:angular/src/core/application_ref.dart'
     show
@@ -171,6 +172,8 @@ void main() {
 @Component(
   selector: 'my-comp',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MyComp {}
 

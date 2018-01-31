@@ -1,10 +1,18 @@
 import 'dart:collection' as collection_lib;
 import 'package:angular/angular.dart';
 
-@Directive(selector: 'directive')
+@Directive(
+  selector: 'directive',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class TestDirective {}
 
-@Directive(selector: 'test-directive-with-inputs')
+@Directive(
+  selector: 'test-directive-with-inputs',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class TestDirectiveWithInputs {
   @Input()
   String input1;

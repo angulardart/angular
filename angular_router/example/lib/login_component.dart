@@ -20,6 +20,8 @@ import 'auth_service.dart';
     </div>
     <button (click)="logout()" *ngIf="loggedIn">Logout</button>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class LoginComponent implements CanReuse {
   final AuthService _authService;

@@ -1,17 +1,22 @@
-import 'package:angular/angular.dart' show Directive, Self;
+import 'package:angular/angular.dart' show Directive, Self, Visibility;
 
 import 'ng_control.dart' show NgControl;
 
 /// Directive automatically applied to Angular forms that sets CSS classes
 /// based on control status (valid/invalid/dirty/etc).
-@Directive(selector: '[ngControl],[ngModel],[ngFormControl]', host: const {
-  '[class.ng-untouched]': 'ngClassUntouched',
-  '[class.ng-touched]': 'ngClassTouched',
-  '[class.ng-pristine]': 'ngClassPristine',
-  '[class.ng-dirty]': 'ngClassDirty',
-  '[class.ng-valid]': 'ngClassValid',
-  '[class.ng-invalid]': 'ngClassInvalid'
-})
+@Directive(
+  selector: '[ngControl],[ngModel],[ngFormControl]',
+  host: const {
+    '[class.ng-untouched]': 'ngClassUntouched',
+    '[class.ng-touched]': 'ngClassTouched',
+    '[class.ng-pristine]': 'ngClassPristine',
+    '[class.ng-dirty]': 'ngClassDirty',
+    '[class.ng-valid]': 'ngClassValid',
+    '[class.ng-invalid]': 'ngClassInvalid'
+  },
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 @Deprecated('Use listeners or variable binding on the control itself instead. '
     'This adds overhead for every form control whether the class is '
     'used or not.')

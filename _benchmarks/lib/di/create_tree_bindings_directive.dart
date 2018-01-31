@@ -15,6 +15,8 @@ import 'src/tree_bindings.dart';
   template: r'''
     <create-tree-bindings-app *ngIf="ready"></create-tree-bindings-app>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CreateTreeBindingsBenchmark implements Benchmark {
   @Input()
@@ -41,6 +43,8 @@ class CreateTreeBindingsBenchmark implements Benchmark {
       <create-tree-bindings-page nested></create-tree-bindings-page>
     </div>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CreateTreeBindingsAppComponent {
   final pages = new List<Null>(numberOfPages);
@@ -62,6 +66,8 @@ class CreateTreeBindingsAppComponent {
     </template>
     <create-tree-bindings-panel></create-tree-bindings-panel>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CreateTreeBindingsPageComponent {
   @Input()
@@ -82,6 +88,8 @@ class CreateTreeBindingsPageComponent {
       <create-tree-bindings-tab></create-tree-bindings-tab>
     </div>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CreateTreeBindingsPanelComponent {
   final tabs = new List<Null>(numberOfTabs);
@@ -93,6 +101,8 @@ class CreateTreeBindingsPanelComponent {
     simpleTreeTabBindings,
   ],
   template: '[TAB]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CreateTreeBindingsTabComponent {
   CreateTreeBindingsTabComponent(Injector injector) {

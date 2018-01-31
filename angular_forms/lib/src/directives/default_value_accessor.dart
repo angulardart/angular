@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:angular/angular.dart' show Directive, Provider;
+import 'package:angular/angular.dart' show Directive, Provider, Visibility;
 
 import 'control_value_accessor.dart';
 
@@ -14,19 +14,20 @@ const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 /// ### Example
 ///     <input type="text" ngControl="searchQuery">
 @Directive(
-    selector: 'input:not([type=checkbox])[ngControl],'
-        'textarea[ngControl],'
-        'input:not([type=checkbox])[ngFormControl],'
-        'textarea[ngFormControl],'
-        'input:not([type=checkbox])[ngModel],'
-        'textarea[ngModel],[ngDefaultControl]',
-    host: const {
-      '(input)': 'onChange(\$event.target.value)',
-      '(blur)': 'touchHandler()'
-    },
-    providers: const [
-      DEFAULT_VALUE_ACCESSOR
-    ])
+  selector: 'input:not([type=checkbox])[ngControl],'
+      'textarea[ngControl],'
+      'input:not([type=checkbox])[ngFormControl],'
+      'textarea[ngFormControl],'
+      'input:not([type=checkbox])[ngModel],'
+      'textarea[ngModel],[ngDefaultControl]',
+  host: const {
+    '(input)': 'onChange(\$event.target.value)',
+    '(blur)': 'touchHandler()'
+  },
+  providers: const [DEFAULT_VALUE_ACCESSOR],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DefaultValueAccessor implements ControlValueAccessor {
   HtmlElement _elementRef;
   void Function(dynamic) onChange = (_) {};

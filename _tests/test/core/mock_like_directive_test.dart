@@ -29,6 +29,8 @@ void main() {
 @Component(
   selector: 'notifier',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NotifierComponent {
   final StreamController<String> _notificationsController =
@@ -41,6 +43,8 @@ class NotifierComponent {
 @Component(
   selector: 'notifier',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MockNotifierComponent implements NotifierComponent {
   noSuchMethod(Invocation invocation) => null;
@@ -52,6 +56,8 @@ class MockNotifierComponent implements NotifierComponent {
     <notifier (notifications)="notify(\$event)">'
     </notifier>''',
   directives: const [MockNotifierComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestMockNotificationComponent {
   void notify(String notification) {}
@@ -60,6 +66,8 @@ class TestMockNotificationComponent {
 @Component(
   selector: 'notifier',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class FakeNotifierComponent extends NotifierComponent {
   Stream<String> get notifications => null;
@@ -71,6 +79,8 @@ class FakeNotifierComponent extends NotifierComponent {
     <notifier (notifications)="notify(\$event)">'
     </notifier>''',
   directives: const [FakeNotifierComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestFakeNotificationComponent {
   void notify(String notification) {}

@@ -12,6 +12,8 @@ import 'hero_service.dart';
   directives: const [NgFor, NgIf, RouterLink],
   templateUrl: 'heroes_component.html',
   styleUrls: const ['heroes_component.css'],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HeroesComponent implements OnInit {
   final HeroService _heroService;

@@ -84,7 +84,11 @@ class SwitchView {
 /// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngSwitch
 /// [guide]: https://webdev.dartlang.org/angular/guide/structural-directives.html#ngSwitch
 ///
-@Directive(selector: '[ngSwitch]')
+@Directive(
+  selector: '[ngSwitch]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgSwitch {
   dynamic _switchValue;
   bool _useDefault = false;

@@ -30,6 +30,8 @@ import '../router_hook.dart';
 /// ```
 @Directive(
   selector: 'router-outlet',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class RouterOutlet implements OnInit, OnDestroy {
   final ViewContainerRef _viewContainerRef;

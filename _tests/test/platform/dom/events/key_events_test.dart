@@ -118,6 +118,8 @@ void main() {
     '(keydown.shift.a)': 'receivedKeydownShiftA = true',
   },
   template: '<div></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class KeydownListenerComponent {
   bool receivedKeydown = false;
@@ -131,6 +133,8 @@ class KeydownListenerComponent {
     '(keypress)': 'receivedKeypress = true',
   },
   template: '<div></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class KeypressListenerComponent {
   bool receivedKeypress = false;
@@ -144,6 +148,8 @@ class KeypressListenerComponent {
     '(keyup.control.enter)': 'receivedKeyupCtrlEnter = true',
   },
   template: '<div></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class KeyupListenerComponent {
   bool receivedKeyup = false;
@@ -157,6 +163,8 @@ class KeyupListenerComponent {
     '(keyup.alt.meta.0)': 'receivedModifiers = true',
   },
   template: '<div></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ModifiersListener {
   bool receivedModifiers = false;

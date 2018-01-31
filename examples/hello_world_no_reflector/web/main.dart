@@ -10,5 +10,7 @@ void main() {
 @Component(
   selector: 'hello-world',
   template: 'Hello World',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HelloWorldComponent {}

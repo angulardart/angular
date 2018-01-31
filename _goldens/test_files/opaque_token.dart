@@ -8,6 +8,8 @@ const baseUrlToken = const OpaqueToken('baseUrlDescription');
   providers: const [
     const Provider(baseUrlToken, useValue: 'https://localhost'),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HasOpaqueTokens {
   final String baseUrl;

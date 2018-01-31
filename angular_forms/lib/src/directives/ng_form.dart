@@ -3,7 +3,7 @@ import 'dart:html' show Event;
 
 import 'package:meta/meta.dart';
 import 'package:angular/angular.dart'
-    show Directive, Inject, Optional, Output, Provider, Self;
+    show Directive, Inject, Optional, Output, Provider, Self, Visibility;
 
 import '../model.dart' show AbstractControl, ControlGroup, Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -72,10 +72,13 @@ const formDirectiveProvider =
 /// }
 /// ```
 @Directive(
-    selector: 'form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]',
-    providers: const [formDirectiveProvider],
-    host: const {'(submit)': 'onSubmit(\$event)'},
-    exportAs: 'ngForm')
+  selector: 'form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]',
+  providers: const [formDirectiveProvider],
+  host: const {'(submit)': 'onSubmit(\$event)'},
+  exportAs: 'ngForm',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgForm extends ControlContainer implements Form {
   ControlGroup form;
   final _ngSubmit = new StreamController<ControlGroup>.broadcast(sync: true);

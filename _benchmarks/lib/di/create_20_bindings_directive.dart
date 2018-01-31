@@ -15,6 +15,8 @@ import 'src/flat_20_bindings.dart';
   template: r'''
     <create-20-bindings-eager *ngIf="ready"></create-20-bindings-eager>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class Create20BindingsEagerBenchmark extends Benchmark {
   @Input()
@@ -33,6 +35,8 @@ class Create20BindingsEagerBenchmark extends Benchmark {
     flat20Bindings,
   ],
   template: 'DONE',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class Create20BindingsEagerComponent {
   Create20BindingsEagerComponent(
@@ -71,6 +75,8 @@ class Create20BindingsEagerComponent {
   template: r'''
     <create-20-bindings-lazy *ngIf="ready"></create-20-bindings-lazy>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class Create20BindingsLazyBenchmark implements Benchmark {
   @Input()
@@ -89,6 +95,8 @@ class Create20BindingsLazyBenchmark implements Benchmark {
     flat20Bindings,
   ],
   template: 'DONE',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class Create20BindingsLazyComponent {
   Create20BindingsLazyComponent(Injector injector) {

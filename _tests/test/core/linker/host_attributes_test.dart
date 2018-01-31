@@ -85,6 +85,8 @@ void main() {
   selector: 'host-attr-on-comp',
   template: '<component-with-attr></component-with-attr>',
   directives: const [ComponentWithAttr],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HostAttrOnComponentTest {}
 
@@ -93,6 +95,8 @@ class HostAttrOnComponentTest {}
   template: '<div id="my_element" directive-with-attr>'
       '</div>',
   directives: const [DirectiveWithAttr],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HostAttrOnDirectiveTest {}
 
@@ -101,6 +105,8 @@ class HostAttrOnDirectiveTest {}
   template: '<component-with-attr id="merged" directive-with-attr>'
       '</component-with-attr>',
   directives: const [ComponentWithAttr, DirectiveWithAttr],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HostAttrMergedTest {}
 
@@ -108,6 +114,8 @@ class HostAttrMergedTest {}
   selector: 'host-attr-on-comp-and-element',
   template: '<component-with-attr class="base"></component-with-attr>',
   directives: const [ComponentWithAttr],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HostAttrOnComponentAndElementTest {}
 
@@ -116,6 +124,8 @@ class HostAttrOnComponentAndElementTest {}
   template: '<div id="my_element" class="base" directive-with-attr>'
       '</div>',
   directives: const [DirectiveWithAttr],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HostAttrOnDirectiveAndElementTest {}
 
@@ -124,6 +134,8 @@ class HostAttrOnDirectiveAndElementTest {}
   template: '<component-with-attr id="merged" class="base" directive-with-attr>'
       '</component-with-attr>',
   directives: const [ComponentWithAttr, DirectiveWithAttr],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HostAttrMergedAndElementTest {}
 
@@ -135,14 +147,21 @@ class HostAttrMergedAndElementTest {}
   },
   selector: 'component-with-attr',
   template: '<div>{{message}}</div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ComponentWithAttr {
   final String message = 'Hello World';
 }
 
-@Directive(selector: '[directive-with-attr]', host: const {
-  'role': 'button',
-  'style': 'display:block; background-color: green;',
-  'class': 'autofocus'
-})
+@Directive(
+  selector: '[directive-with-attr]',
+  host: const {
+    'role': 'button',
+    'style': 'display:block; background-color: green;',
+    'class': 'autofocus'
+  },
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DirectiveWithAttr {}

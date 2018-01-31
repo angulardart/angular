@@ -89,6 +89,8 @@ class InjectableService {}
 @Component(
   selector: 'directive-consuming-injectable',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveConsumingInjectable {
   InjectableService injectable;
@@ -100,6 +102,8 @@ class DirectiveConsumingInjectable {
 @Directive(
   selector: 'directive-providing-injectable',
   providers: const [InjectableService],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveProvidingInjectable {}
 
@@ -113,6 +117,8 @@ class DirectiveProvidingInjectable {}
     DirectiveConsumingInjectable,
     DirectiveProvidingInjectable,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProvideConsumeInjectableComponent {}
 
@@ -123,6 +129,8 @@ class ProvideConsumeInjectableComponent {}
 </directive-consuming-injectable>''',
   directives: const [DirectiveConsumingInjectable],
   viewProviders: const [InjectableService],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProvidesInjectableInViewComponent {}
 
@@ -132,6 +140,8 @@ class ProvidesInjectableInViewComponent {}
 <directive-consuming-injectable-unbounded>
 </directive-consuming-injectable-unbounded>''',
   directives: const [DirectiveConsumingInjectableUnbounded],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveContainingDirectiveConsumingAnInjectable {
   var directive;
@@ -140,6 +150,8 @@ class DirectiveContainingDirectiveConsumingAnInjectable {
 @Component(
   selector: 'directive-consuming-injectable-unbounded',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveConsumingInjectableUnbounded {
   InjectableService injectable;
@@ -161,6 +173,8 @@ class DirectiveConsumingInjectableUnbounded {
     DirectiveProvidingInjectable,
     DirectiveContainingDirectiveConsumingAnInjectable,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProvidesInjectableUnboundedComponent {}
 
@@ -178,6 +192,8 @@ const grandParentBus = const EventBus(null, 'grandparent');
   providers: const [
     const Provider(EventBus, useValue: grandParentBus),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class GrandParentProvidingEventBus {
   EventBus bus;
@@ -198,6 +214,8 @@ EventBus createParentBus(EventBus parentEventBus) {
   ],
   directives: const [ChildConsumingEventBus],
   template: '<child-consuming-event-bus></child-consuming-event-bus>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ParentProvidingEventBus {
   EventBus bus;
@@ -206,7 +224,11 @@ class ParentProvidingEventBus {
   ParentProvidingEventBus(this.bus, @SkipSelf() this.grandParentBus);
 }
 
-@Directive(selector: 'child-consuming-event-bus')
+@Directive(
+  selector: 'child-consuming-event-bus',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class ChildConsumingEventBus {
   EventBus bus;
 
@@ -223,6 +245,8 @@ class ChildConsumingEventBus {
     GrandParentProvidingEventBus,
     ParentProvidingEventBus,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class EventBusComponent {}
 
@@ -238,6 +262,8 @@ InjectableService createInjectableWithLogging(Injector injector) {
         useFactory: createInjectableWithLogging, deps: const [Injector])
   ],
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ComponentProvidingLoggingInjectable {
   bool created = false;
@@ -255,18 +281,26 @@ class ComponentProvidingLoggingInjectable {
     DirectiveConsumingInjectable,
     NgIf,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class LazyBindingsComponent {
   bool visible = false;
 }
 
-@Directive(selector: 'some-directive')
+@Directive(
+  selector: 'some-directive',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SomeDirective {}
 
 @Component(
   selector: 'cmp-with-host',
   template: '<p>Component with an injected host</p>',
   directives: const [SomeDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CompWithHost {
   SomeDirective myHost;
@@ -281,6 +315,8 @@ class CompWithHost {
   template:
       '<some-directive><cmp-with-host #cmp></cmp-with-host></some-directive>',
   directives: const [CompWithHost, SomeDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectsHostComponent {}
 
@@ -293,5 +329,7 @@ class InjectsHostComponent {}
   </p>
 </some-directive>''',
   directives: const [CompWithHost, NgIf, SomeDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectsHostThroughViewContainer {}

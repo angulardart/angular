@@ -64,6 +64,8 @@ void main() {
 @Component(
   selector: 'injects-visibility-local',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectsVisibilityLocalComponent {
   ShouldFailToInjectParentComponent parent;
@@ -85,6 +87,8 @@ class VisibilityNoneDirective {}
   selector: 'should-query-directive',
   template: '<div visibility-none></div>',
   directives: const [VisibilityNoneDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ShouldQueryDirective {
   @ViewChild(VisibilityNoneDirective)
@@ -94,6 +98,8 @@ class ShouldQueryDirective {
 @Component(
   selector: 'injects-directive',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectsDirectiveComponent {
   VisibilityNoneDirective directive;
@@ -104,6 +110,8 @@ class InjectsDirectiveComponent {
   selector: 'should-fail-to-inject-from-element',
   template: '<injects-directive visibility-none></injects-directive>',
   directives: const [InjectsDirectiveComponent, VisibilityNoneDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ShouldFailToInjectFromElement {}
 
@@ -115,6 +123,8 @@ class ShouldFailToInjectFromElement {}
   </div>
   ''',
   directives: const [InjectsDirectiveComponent, VisibilityNoneDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ShouldFailToInjectFromView {}
 
@@ -122,6 +132,8 @@ class ShouldFailToInjectFromView {}
   selector: 'injects-directive-host',
   template: '<injects-directive></injects-directive>',
   directives: const [InjectsDirectiveComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectsDirectiveHostComponent {}
 
@@ -136,6 +148,8 @@ class InjectsDirectiveHostComponent {}
     InjectsDirectiveHostComponent,
     VisibilityNoneDirective,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ShouldFailToInjectFromParentView {}
 
@@ -152,6 +166,8 @@ abstract class SomeService {
       '<div *dirNeedsService></div>'
       '</child-component-provides-service>',
   directives: const [MyChildComponentProvidesService, MyDirectiveNeedsService],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MyComponentWithServiceTest {}
 
@@ -168,7 +184,11 @@ class MyChildComponentProvidesService implements SomeService {
   foo() {}
 }
 
-@Directive(selector: '[dirNeedsService]')
+@Directive(
+  selector: '[dirNeedsService]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class MyDirectiveNeedsService {
   final SomeService someService;
   MyDirectiveNeedsService(
@@ -178,6 +198,8 @@ class MyDirectiveNeedsService {
 @Component(
   selector: 'injects-visibility-all',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectsVisibilityAllComponent {
   final ShouldInjectParentComponent parent;

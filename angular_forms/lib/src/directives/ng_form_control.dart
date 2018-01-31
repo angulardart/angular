@@ -9,7 +9,8 @@ import 'package:angular/angular.dart'
         Optional,
         Output,
         Provider,
-        Self;
+        Self,
+        Visibility;
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -69,9 +70,12 @@ const formControlBinding =
 /// }
 /// ```
 @Directive(
-    selector: '[ngFormControl]',
-    providers: const [formControlBinding],
-    exportAs: 'ngForm')
+  selector: '[ngFormControl]',
+  providers: const [formControlBinding],
+  exportAs: 'ngForm',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgFormControl extends NgControl implements AfterChanges {
   final /* Array<Validator|Function> */ List<dynamic> _validators;
   bool _formChanged = false;

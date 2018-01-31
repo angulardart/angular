@@ -35,6 +35,8 @@ void main() {
   directives: const [DeferredInputComponent],
   template: r'<my-deferred-input [attr.data-xyz]="testValue" @deferred>'
       '</my-deferred-input>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestContainerComponent {
   String testValue = 'testValue';

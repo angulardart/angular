@@ -11,6 +11,8 @@ import 'example_of_file_that_is_not_generated_yet.template.dart' as example_lib;
 @Component(
   selector: 'test',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestComponent {
   TestComponent() {

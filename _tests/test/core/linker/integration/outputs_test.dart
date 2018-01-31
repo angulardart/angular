@@ -79,7 +79,11 @@ void main() {
   });
 }
 
-@Directive(selector: '[emitter]')
+@Directive(
+  selector: '[emitter]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class EventEmitterDirective {
   String msg;
   final _streamController = new StreamController<String>();
@@ -92,7 +96,11 @@ class EventEmitterDirective {
   }
 }
 
-@Directive(selector: '[listener]', host: const {'(event)': 'onEvent(\$event)'})
+@Directive(
+  selector: '[listener]', host: const {'(event)': 'onEvent(\$event)'},
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class EventListenerDirective {
   String msg;
 
@@ -105,6 +113,8 @@ class EventListenerDirective {
   selector: 'event-directives',
   template: '<div emitter listener></div>',
   directives: const [EventEmitterDirective, EventListenerDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ElementWithEventDirectivesComponent {}
 
@@ -112,6 +122,8 @@ class ElementWithEventDirectivesComponent {}
   selector: 'template-event-directives',
   template: '<template emitter listener (event)="msg=\$event"></template>',
   directives: const [EventEmitterDirective, EventListenerDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TemplateWithEventDirectivesComponent {
   String msg;
@@ -119,6 +131,8 @@ class TemplateWithEventDirectivesComponent {
 
 @Directive(
   selector: '[two-way]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveWithTwoWayBinding {
   final _streamController = new StreamController<String>();
@@ -138,6 +152,8 @@ class DirectiveWithTwoWayBinding {
   selector: 'two-way-binding',
   template: '<div [(control)]="ctxProp" two-way></div>',
   directives: const [DirectiveWithTwoWayBinding],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TwoWayBindingComponent {
   String ctxProp = 'one';
@@ -148,6 +164,8 @@ class TwoWayBindingComponent {
   host: const {
     '(domEvent)': 'onEvent(\$event.type)',
   },
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DomEventListenerDirective {
   List<String> eventTypes = [];
@@ -161,12 +179,16 @@ class DomEventListenerDirective {
   selector: 'element-with-dom-event',
   template: '<div listener></div>',
   directives: const [DomEventListenerDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ElementWithDomEventComponent {}
 
 @Directive(
   selector: '[listenerprevent]',
   host: const {'(click)': 'onEvent(\$event)'},
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveListeningDomEventPrevent {
   onEvent(Event event) {
@@ -177,6 +199,8 @@ class DirectiveListeningDomEventPrevent {
 @Directive(
   selector: '[listenernoprevent]',
   host: const {'(click)': 'onEvent(\$event)'},
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveListeningDomEventNoPrevent {
   onEvent(Event event) {}
@@ -190,5 +214,7 @@ class DirectiveListeningDomEventNoPrevent {
     DirectiveListeningDomEventNoPrevent,
     DirectiveListeningDomEventPrevent,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestPreventDefaultComponent {}

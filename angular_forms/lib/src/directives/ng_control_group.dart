@@ -8,7 +8,8 @@ import 'package:angular/angular.dart'
         Optional,
         Provider,
         Self,
-        SkipSelf;
+        SkipSelf,
+        Visibility;
 
 import '../model.dart' show ControlGroup;
 import '../validators.dart' show NG_VALIDATORS;
@@ -65,9 +66,12 @@ const controlGroupProvider =
 /// validation state of this group can be accessed separately from the overall
 /// form.
 @Directive(
-    selector: '[ngControlGroup]',
-    providers: const [controlGroupProvider],
-    exportAs: 'ngForm')
+  selector: '[ngControlGroup]',
+  providers: const [controlGroupProvider],
+  exportAs: 'ngForm',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
   final List<dynamic> _validators;
   final ControlContainer _parent;

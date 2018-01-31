@@ -62,7 +62,11 @@ void main() {
   });
 }
 
-@Directive(selector: '[some-viewport]')
+@Directive(
+  selector: '[some-viewport]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SomeViewport {
   final ViewContainerRef container;
 
@@ -79,6 +83,8 @@ class SomeViewport {
   directives: const [
     SomeViewport,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TemplateDirectiveComponent {}
 
@@ -91,6 +97,8 @@ class TemplateDirectiveComponent {}
     NgIf,
     SomeViewport,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DestroyParentViewComponent {
   bool visible = true;
@@ -99,6 +107,8 @@ class DestroyParentViewComponent {
 @Component(
   selector: 'empty-template',
   template: '<template></template>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class EmptyTemplateComponent {}
 
@@ -108,17 +118,27 @@ class EmptyTemplateComponent {}
   directives: const [
     SomeViewport,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TemplatePropertyComponent {}
 
-@Directive(selector: '[toolbarpart]')
+@Directive(
+  selector: '[toolbarpart]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class ToolbarPart {
   final TemplateRef templateRef;
 
   ToolbarPart(this.templateRef);
 }
 
-@Directive(selector: '[toolbarVc]')
+@Directive(
+  selector: '[toolbarVc]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class ToolbarViewContainer {
   final ViewContainerRef vc;
 
@@ -138,6 +158,8 @@ class ToolbarViewContainer {
     NgFor,
     ToolbarViewContainer,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ToolbarComponent {
   @ContentChildren(ToolbarPart)
@@ -146,13 +168,19 @@ class ToolbarComponent {
   String prop = 'hello world';
 }
 
-@Directive(selector: 'some-directive')
+@Directive(
+  selector: 'some-directive',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SomeDirective {}
 
 @Component(
   selector: 'cmp-with-host',
   template: '<p>Component with an injected host</p>',
   directives: const [SomeDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CompWithHost {
   SomeDirective myHost;
@@ -175,6 +203,8 @@ class CompWithHost {
     ToolbarComponent,
     ToolbarPart,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TemplateRefTransplantComponent {
   String prop = 'From component';

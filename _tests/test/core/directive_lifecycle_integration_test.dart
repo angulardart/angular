@@ -60,7 +60,11 @@ class Log {
   String toString() => logItems.join('; ');
 }
 
-@Directive(selector: "[lifecycle-dir]")
+@Directive(
+  selector: "[lifecycle-dir]",
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class LifecycleDir implements DoCheck {
   Log _log;
   LifecycleDir(this._log);
@@ -73,6 +77,8 @@ class LifecycleDir implements DoCheck {
   selector: "lifecycle",
   template: '<div lifecycle-dir></div>',
   directives: const [LifecycleDir],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class LifecycleCmp
     implements
@@ -127,5 +133,7 @@ class LifecycleCmp
   selector: "my-comp",
   template: '<lifecycle [field]="123"></lifecycle>',
   directives: const [LifecycleCmp],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MyComp {}

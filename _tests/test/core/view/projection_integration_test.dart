@@ -4,7 +4,7 @@ import 'dart:html';
 
 import 'package:test/test.dart';
 import 'package:angular/core.dart'
-    show Component, Directive, Input, ViewChild, ViewChildren;
+    show Component, Directive, Input, ViewChild, ViewChildren, Visibility;
 import 'package:angular/src/core/linker.dart'
     show ElementRef, TemplateRef, ViewContainerRef;
 import 'package:angular/src/debug/debug_node.dart' show getAllDebugNodes;
@@ -232,6 +232,8 @@ void main() {
   selector: 'non-bound-interpolation-test',
   template: '<simple>{{text}}</simple>',
   directives: const [NonBoundInterpolationChild],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NonBoundInterpolationTest {
   String text = '';
@@ -242,6 +244,8 @@ class NonBoundInterpolationTest {
   template: 'SIMPLE('
       '<div><ng-content></ng-content></div>'
       '<div [tabIndex]="0">EL</div>)',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NonBoundInterpolationChild {
   String text = '';
@@ -251,18 +255,24 @@ class NonBoundInterpolationChild {
   selector: 'project-component-test',
   template: '<simple><other></other></simple>',
   directives: const [ProjectComponentSimple, ProjectComponentOther],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProjectComponentTest {}
 
 @Component(
   selector: 'simple',
   template: 'SIMPLE({{0}}|<ng-content></ng-content>|{{2}})',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProjectComponentSimple {}
 
 @Component(
   selector: 'other',
   template: '{{1}}',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProjectComponentOther {}
 
@@ -270,6 +280,8 @@ class ProjectComponentOther {}
   selector: 'no-light-dom-test',
   template: '<empty>A</empty>',
   directives: const [Empty],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NoLightDomTest {}
 
@@ -281,6 +293,8 @@ class NoLightDomTest {}
       '<div class="left">A</div>'
       '</multiple-content-tags>',
   directives: const [MultipleContentTagsComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MultipleContentTagsTest {}
 
@@ -291,6 +305,8 @@ class MultipleContentTagsTest {}
       '<div>C</div>'
       '</multiple-content-tags>',
   directives: const [MultipleContentTagsComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class OnlyDirectChildrenTest {}
 
@@ -301,6 +317,8 @@ class OnlyDirectChildrenTest {}
       '<div>B</div>'
       '</multiple-content-tags>',
   directives: const [ManualViewportDirective, MultipleContentTagsComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class LightDomChangeTest {
   @ViewChildren(ManualViewportDirective)
@@ -314,6 +332,8 @@ class LightDomChangeTest {
       '<div>B</div>'
       '</outer-with-indirect-nested>',
   directives: const [OuterWithIndirectNestedComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NestedComponentTest {}
 
@@ -325,6 +345,8 @@ class NestedComponentTest {}
       '<div>C</div>'
       '</outer>',
   directives: const [OuterComponent, ManualViewportDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NestedDirectChildTest {
   @ViewChild(ManualViewportDirective)
@@ -339,6 +361,8 @@ class NestedDirectChildTest {
       '<div>C</div>'
       '</conditional-content>',
   directives: const [ConditionalContentComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ShadowDomChangeTest {
   @ViewChild(ConditionalContentComponent)
@@ -349,12 +373,16 @@ class ShadowDomChangeTest {
   selector: 'text-node-after-content-test',
   template: '<simple stringProp="text"></simple>',
   directives: const [TextNodeAfterContentComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TextNodeAfterContentTest {}
 
 @Component(
   selector: 'simple',
   template: '<ng-content></ng-content><p>P,</p>{{stringProp}}',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TextNodeAfterContentComponent {
   @Input()
@@ -365,12 +393,16 @@ class TextNodeAfterContentComponent {
   selector: 'text-node-after-style-test',
   template: '<simple stringProp="text"></simple>',
   directives: const [TextNodeAfterStyleComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TextNodeAfterStyleTest {}
 
 @Component(
   selector: 'simple',
   template: '<style></style><p>P,</p>{{stringProp}}',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TextNodeAfterStyleComponent {
   @Input()
@@ -384,6 +416,8 @@ class TextNodeAfterStyleComponent {
       '</empty>'
       'START(<div project></div>)END',
   directives: const [Empty, ProjectDirective, ManualViewportDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MoveLightDomTest {
   @ViewChild(ProjectDirective)
@@ -395,6 +429,8 @@ class MoveLightDomTest {
   template: '<simple><template manual><div>A</div></template></simple>'
       'START(<div project></div>)END',
   directives: const [Simple, ManualViewportDirective, ProjectDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MoveProjectedLightDomTest {
   @ViewChild(ManualViewportDirective)
@@ -412,6 +448,8 @@ class MoveProjectedLightDomTest {
       '</conditional-content>'
       'START(<div project></div>)END',
   directives: const [ConditionalContentComponent, ProjectDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MoveNgContentTest {
   @ViewChild(ProjectDirective)
@@ -425,6 +463,8 @@ class MoveNgContentTest {
   selector: 'recursive-tree-test',
   template: '<tree></tree>',
   directives: const [Tree],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class RecursiveTreeTest {
   @ViewChild(Tree)
@@ -435,6 +475,8 @@ class RecursiveTreeTest {
   selector: 'recursive-tree-multiple-component-test',
   template: '<tree></tree>',
   directives: const [RecursiveTree],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class RecursiveTreeMultipleComponentTest {
   @ViewChild(RecursiveTree)
@@ -445,6 +487,8 @@ class RecursiveTreeMultipleComponentTest {
   selector: 'nested-conditional-test',
   template: '<conditional-text>a</conditional-text>',
   directives: const [ConditionalTextComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NestedConditionalTest {
   @ViewChild(ConditionalTextComponent)
@@ -455,6 +499,8 @@ class NestedConditionalTest {
   selector: 'switch-order-test',
   template: '<cmp-a><cmp-b></cmp-b></cmp-a>',
   directives: const [CmpA, CmpB],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SwitchOrderTest {}
 
@@ -462,6 +508,8 @@ class SwitchOrderTest {}
   selector: 'correct-order-test',
   template: '<cmp-a1></cmp-a1><cmp-a2></cmp-a2>',
   directives: const [CmpA1, CmpA2],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CorrectOrderTest {}
 
@@ -474,6 +522,8 @@ class CorrectOrderTest {}
       '<div>D</div>'
       '</conditional-content>',
   directives: const [ConditionalContentComponent, ManualViewportDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NestedProjectionTest {
   @ViewChild(ConditionalContentComponent)
@@ -487,6 +537,8 @@ class NestedProjectionTest {
   selector: 'simple',
   template: 'SIMPLE(<ng-content></ng-content>)',
   directives: const [],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class Simple {
   @Input()
@@ -497,6 +549,8 @@ class Simple {
   selector: 'empty',
   template: '',
   directives: const [],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class Empty {}
 
@@ -505,10 +559,16 @@ class Empty {}
   template:
       '(<ng-content select=".left"></ng-content>,&ngsp;<ng-content></ng-content>)',
   directives: const [],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MultipleContentTagsComponent {}
 
-@Directive(selector: '[manual]')
+@Directive(
+  selector: '[manual]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class ManualViewportDirective {
   ViewContainerRef vc;
   TemplateRef templateRef;
@@ -524,7 +584,11 @@ class ManualViewportDirective {
   }
 }
 
-@Directive(selector: '[project]')
+@Directive(
+  selector: '[project]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class ProjectDirective {
   ViewContainerRef vc;
   ProjectDirective(this.vc);
@@ -541,6 +605,8 @@ class ProjectDirective {
   selector: 'outer-with-indirect-nested',
   template: 'OUTER(<simple><div><ng-content></ng-content></div></simple>)',
   directives: const [Simple],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class OuterWithIndirectNestedComponent {}
 
@@ -551,6 +617,8 @@ class OuterWithIndirectNestedComponent {}
       '<ng-content></ng-content>'
       '</inner>)',
   directives: const [InnerComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class OuterComponent {}
 
@@ -560,6 +628,8 @@ class OuterComponent {}
       '<ng-content select=".left" ngProjectAs=".left"></ng-content>'
       '<ng-content></ng-content></innerinner>)',
   directives: const [InnerInnerComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InnerComponent {}
 
@@ -569,6 +639,8 @@ class InnerComponent {}
       '<ng-content select=".left"></ng-content>,'
       '<ng-content></ng-content>)',
   directives: const [],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InnerInnerComponent {}
 
@@ -578,6 +650,8 @@ class InnerInnerComponent {}
       '<ng-content select=".left"></ng-content></div>,&ngsp;'
       '<ng-content></ng-content>)</div>',
   directives: const [ManualViewportDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ConditionalContentComponent {
   @ViewChild(ManualViewportDirective)
@@ -590,6 +664,8 @@ class ConditionalContentComponent {
       'FIRST(<template manual>SECOND(<ng-content></ng-content>)</template>)'
       '</template>)',
   directives: const [ManualViewportDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ConditionalTextComponent {
   @ViewChildren(ManualViewportDirective)
@@ -600,6 +676,8 @@ class ConditionalTextComponent {
   selector: 'tree2',
   template: 'TREE2({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
   directives: const [ManualViewportDirective, RecursiveTree],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class Tree2 {
   @Input()
@@ -613,6 +691,8 @@ class Tree2 {
   selector: 'tree',
   template: 'TREE({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
   directives: const [ManualViewportDirective, Tree],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class Tree {
   @Input()
@@ -626,6 +706,8 @@ class Tree {
   selector: 'tree',
   template: 'TREE({{depth}}:<tree2 *manual [depth]="depth+1"></tree2>)',
   directives: const [ManualViewportDirective, Tree2],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class RecursiveTree {
   @Input()
@@ -641,6 +723,8 @@ class RecursiveTree {
 @Component(
   selector: 'cmp-d',
   template: '<d>{{tagName}}</d>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpD {
   String tagName;
@@ -652,6 +736,8 @@ class CmpD {
 @Component(
   selector: 'cmp-c',
   template: '<c>{{tagName}}</c>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpC {
   String tagName;
@@ -664,6 +750,8 @@ class CmpC {
   selector: 'cmp-b',
   template: '<ng-content></ng-content><cmp-d></cmp-d>',
   directives: const [CmpD],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpB {}
 
@@ -671,6 +759,8 @@ class CmpB {}
   selector: 'cmp-a',
   template: '<ng-content></ng-content><cmp-c></cmp-c>',
   directives: const [CmpC],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpA {}
 
@@ -678,6 +768,8 @@ class CmpA {}
   selector: 'cmp-b11',
   template: '{{\'b11\'}}',
   directives: const [],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpB11 {}
 
@@ -685,6 +777,8 @@ class CmpB11 {}
   selector: 'cmp-b12',
   template: '{{\'b12\'}}',
   directives: const [],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpB12 {}
 
@@ -692,6 +786,8 @@ class CmpB12 {}
   selector: 'cmp-b21',
   template: '{{\'b21\'}}',
   directives: const [],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpB21 {}
 
@@ -699,6 +795,8 @@ class CmpB21 {}
   selector: 'cmp-b22',
   template: '{{\'b22\'}}',
   directives: const [],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpB22 {}
 
@@ -706,6 +804,8 @@ class CmpB22 {}
   selector: 'cmp-a1',
   template: '{{\'a1\'}}<cmp-b11></cmp-b11><cmp-b12></cmp-b12>',
   directives: const [CmpB11, CmpB12],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpA1 {}
 
@@ -713,5 +813,7 @@ class CmpA1 {}
   selector: 'cmp-a2',
   template: '{{\'a2\'}}<cmp-b21></cmp-b21><cmp-b22></cmp-b22>',
   directives: const [CmpB21, CmpB22],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CmpA2 {}

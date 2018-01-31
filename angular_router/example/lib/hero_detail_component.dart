@@ -13,6 +13,8 @@ import 'hero_service.dart';
   directives: const [NgIf, formDirectives],
   templateUrl: 'hero_detail_component.html',
   styleUrls: const ['hero_detail_component.css'],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HeroDetailComponent implements CanDeactivate, OnActivate {
   final HeroService _heroService;

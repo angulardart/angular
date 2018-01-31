@@ -72,6 +72,8 @@ void main() {
 @Component(
   selector: 'unsafe-attribute',
   template: '<a [href]="href">Link Title</a>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class UnsafeAttributeComponent {
   String href = 'hello';
@@ -80,6 +82,8 @@ class UnsafeAttributeComponent {
 @Component(
   selector: 'trusted-value',
   template: '<a [href]="href">Link Title</a>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TrustedValueComponent {
   SafeUrl href;
@@ -92,6 +96,8 @@ class TrustedValueComponent {
 @Component(
   selector: 'wrong-trusted-value',
   template: '<a [href]="href">Link Title</a>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class WrongTrustedValueComponent {
   SafeScript href;
@@ -104,6 +110,8 @@ class WrongTrustedValueComponent {
 @Component(
   selector: 'unsafe-style',
   template: '<div [style.background]="backgroundStyle"></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class UnsafeStyleComponent {
   String backgroundStyle = 'red';
@@ -112,6 +120,8 @@ class UnsafeStyleComponent {
 @Component(
   selector: 'unsafe-html',
   template: '<div [innerHtml]="html"></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class UnsafeHtmlComponent {
   String html = 'some <p>text</p>';

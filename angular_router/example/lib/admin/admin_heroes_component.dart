@@ -5,5 +5,7 @@ import 'package:angular/angular.dart';
   template: '''
       <p>Manage your heroes here</p>
     ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class AdminHeroesComponent {}

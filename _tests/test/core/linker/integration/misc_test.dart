@@ -64,6 +64,8 @@ void main() {
 @Component(
   selector: 'child-cmp-no-template',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ChildCompNoTemplate {
   String ctxProp = 'hello';
@@ -75,20 +77,32 @@ class ChildCompNoTemplate {
       '<child-cmp-no-template #cmp></child-cmp-no-template>'
       '{{i}}-{{cmp.ctxProp}}</template>',
   directives: const [ChildCompNoTemplate, NgFor],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class VarInLoopComponent {}
 
-@Directive(selector: '[update-host-attributes]', host: const {'role': 'button'})
+@Directive(
+  selector: '[update-host-attributes]', host: const {'role': 'button'},
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DirectiveUpdatingHostAttributes {}
 
 @Component(
   selector: 'directive-host-attributes',
   template: '<div update-host-attributes></div>',
   directives: const [DirectiveUpdatingHostAttributes],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HostAttributeFromDirectiveComponent {}
 
-@Directive(selector: '[update-host-properties]', host: const {'[id]': 'id'})
+@Directive(
+  selector: '[update-host-properties]', host: const {'[id]': 'id'},
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DirectiveUpdatingHostProperties {
   String id = 'one';
 }
@@ -97,6 +111,8 @@ class DirectiveUpdatingHostProperties {
   selector: 'directive-host-properties',
   template: '<div update-host-properties></div>',
   directives: const [DirectiveUpdatingHostProperties],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HostPropertyFromDirectiveComponent {}
 
@@ -108,6 +124,8 @@ class MyService {
 @Component(
   selector: 'child-cmp-svc',
   template: '{{ctxProp}}',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ChildCompUsingService {
   String ctxProp;
@@ -117,7 +135,11 @@ class ChildCompUsingService {
   }
 }
 
-@Directive(selector: 'dynamic-vp')
+@Directive(
+  selector: 'dynamic-vp',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DynamicViewport {
   Future<dynamic> done;
 
@@ -140,10 +162,16 @@ class DynamicViewport {
   directives: const [
     DynamicViewport,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DynamicChildComponent {}
 
-@Directive(selector: '[static]')
+@Directive(
+  selector: '[static]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsAttribute {
   var typeAttribute;
   var staticAttribute;
@@ -159,6 +187,8 @@ class NeedsAttribute {
   selector: 'static-attributes',
   template: '<input static type="text" title>',
   directives: const [NeedsAttribute],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class StaticAttributesComponent {}
 
@@ -169,5 +199,7 @@ class StaticAttributesComponent {}
 <div>
   <script>alert("Ooops");</script>
 </div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class UnsafeComponent {}

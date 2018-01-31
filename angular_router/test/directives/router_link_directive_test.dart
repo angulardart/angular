@@ -96,6 +96,8 @@ void main() {
   template: r'''
     <a [routerLink]="routerLink"></a>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestRouterLink {
   String routerLink;
@@ -105,6 +107,8 @@ class TestRouterLink {
   selector: 'test-router-link-keypress',
   template: '<div [routerLink]="routerLink"></div>',
   directives: const [RouterLink],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestRouterLinkKeyPress {
   String routerLink = '/foo/bar';
@@ -118,6 +122,8 @@ class TestRouterLinkKeyPress {
   template: r'''
     <a (click)="onClick($event)" [routerLink]="routerLink" target="_parent"></a>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestRouterLinkWithTarget {
   String routerLink;

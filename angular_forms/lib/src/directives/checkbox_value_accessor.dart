@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import 'package:angular/angular.dart' show Directive, Provider;
+import 'package:angular/angular.dart' show Directive, Provider, Visibility;
 
 import 'control_value_accessor.dart'
     show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
@@ -16,16 +16,17 @@ const CHECKBOX_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
 /// <input type="checkbox" ngControl="rememberLogin">
 /// ```
 @Directive(
-    selector: 'input[type=checkbox][ngControl],'
-        'input[type=checkbox][ngFormControl],'
-        'input[type=checkbox][ngModel]',
-    host: const {
-      '(change)': 'onChange(\$event.target.checked)',
-      '(blur)': 'touchHandler()'
-    },
-    providers: const [
-      CHECKBOX_VALUE_ACCESSOR
-    ])
+  selector: 'input[type=checkbox][ngControl],'
+      'input[type=checkbox][ngFormControl],'
+      'input[type=checkbox][ngModel]',
+  host: const {
+    '(change)': 'onChange(\$event.target.checked)',
+    '(blur)': 'touchHandler()'
+  },
+  providers: const [CHECKBOX_VALUE_ACCESSOR],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class CheckboxControlValueAccessor implements ControlValueAccessor {
   final HtmlElement _elementRef;
   ChangeFunction onChange = (_, {String rawValue}) {};

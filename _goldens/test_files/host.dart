@@ -7,6 +7,8 @@ import 'package:angular/angular.dart';
     'aria-title': 'title',
     '(keydown)': 'onKeyDown()',
   },
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class HostComponent {
   @HostBinding()

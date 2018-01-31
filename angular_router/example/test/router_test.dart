@@ -146,6 +146,8 @@ class FakePlatformLocation implements PlatformLocation {
   template: r'''
 <my-app></my-app>
 ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestRouter {
   Router router;

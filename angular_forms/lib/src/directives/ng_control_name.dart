@@ -11,7 +11,8 @@ import 'package:angular/angular.dart'
         Output,
         Provider,
         Self,
-        SkipSelf;
+        SkipSelf,
+        Visibility;
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -80,9 +81,12 @@ const controlNameBinding =
 /// }
 /// ```
 @Directive(
-    selector: '[ngControl]',
-    providers: const [controlNameBinding],
-    exportAs: 'ngForm')
+  selector: '[ngControl]',
+  providers: const [controlNameBinding],
+  exportAs: 'ngForm',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgControlName extends NgControl implements AfterChanges, OnDestroy {
   final ControlContainer _parent;
   final /* Array<Validator|Function> */ List<dynamic> _validators;
