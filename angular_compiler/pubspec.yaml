@@ -18,7 +18,7 @@ dependencies:
   logging: '>=0.9.0 <0.12.0'
   meta: ^1.0.3
   path: ^1.0.0
-  source_gen: '^0.7.4'
+  source_gen: '^0.7.4+2'
 
 dev_dependencies:
   # This is here in order for it to be resolvable by the analyzer.

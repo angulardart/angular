@@ -5,7 +5,7 @@
 
 ### Breaking changes
 
-* Requires `source_gen ^0.7.4` (was previously `^0.7.0`).
+* Requires `source_gen ^0.7.4+2` (was previously `^0.7.0`).
 
 * `linkToReference` now requires a second parameter, a `LibraryReader`, and
   treats private types (i.e. prefixed with `_`) as `dynamic` as the compiler
