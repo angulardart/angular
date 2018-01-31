@@ -421,6 +421,8 @@ abstract class RouterLifecycleLogger
 @Component(
   selector: 'first-child',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class FirstChildComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = new RouteDefinition(
@@ -438,6 +440,8 @@ class FirstChildComponent extends RouterLifecycleLogger {
 @Component(
   selector: 'second-child',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SecondChildComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = new RouteDefinition(
@@ -454,6 +458,8 @@ class SecondChildComponent extends RouterLifecycleLogger {
 @Component(
   selector: 'first-child',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class FirstReusableChildComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = new RouteDefinition(
@@ -477,6 +483,8 @@ class FirstReusableChildComponent extends RouterLifecycleLogger {
 @Component(
   selector: 'cant-navigate-child',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CantNavigateChildComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = new RouteDefinition(
@@ -504,6 +512,8 @@ const testTemplate = '<router-outlet [routes]="routes"></router-outlet>';
   selector: 'parent',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = new RouteDefinition(
@@ -526,6 +536,8 @@ class ParentComponent extends RouterLifecycleLogger {
   selector: 'reusable-parent',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ReusableParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = new RouteDefinition(
@@ -554,6 +566,8 @@ class ReusableParentComponent extends RouterLifecycleLogger {
   selector: 'first-parent',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class FirstParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = new RouteDefinition(
@@ -575,6 +589,8 @@ class FirstParentComponent extends RouterLifecycleLogger {
   selector: 'second-parent',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SecondParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = new RouteDefinition(
@@ -595,6 +611,8 @@ class SecondParentComponent extends RouterLifecycleLogger {
   selector: 'first-reusable-parent',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class FirstReusableParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = new RouteDefinition(
@@ -622,6 +640,8 @@ class FirstReusableParentComponent extends RouterLifecycleLogger {
   selector: 'test-navigate-to-sibling',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestNavigateToSibling {
   final List<String> lifecycleLog;
@@ -639,6 +659,8 @@ class TestNavigateToSibling {
   selector: 'test-navigate-to-sibling-from-reusable-child',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestNavigateToSiblingFromReusableChild {
   final List<String> lifecycleLog;
@@ -656,6 +678,8 @@ class TestNavigateToSiblingFromReusableChild {
   selector: 'test-navigate-to-nested-sibling',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestNavigateToNestedSibling {
   final List<String> lifecycleLog;
@@ -672,6 +696,8 @@ class TestNavigateToNestedSibling {
   selector: 'test-navigate-to-nested-sibling-with-shared-parent',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestNavigateToNestedSiblingWithSharedParent {
   final List<String> lifecycleLog;
@@ -688,6 +714,8 @@ class TestNavigateToNestedSiblingWithSharedParent {
   selector: 'test-navigate-between-nested-routes',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestNavigateBetweenNestedRoutes {
   final List<String> lifecycleLog;
@@ -705,6 +733,8 @@ class TestNavigateBetweenNestedRoutes {
   selector: 'test-navigate-between-nested-routes-with-reusable-parent',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestNavigateBetweenNestedRoutesWithReusableParent {
   final List<String> lifecycleLog;
@@ -722,6 +752,8 @@ class TestNavigateBetweenNestedRoutesWithReusableParent {
   selector: 'test-navigate-between-nested-routes-with-same-reusable-parent',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestNavigateBetweenNestedRoutesWithSameReusableParent {
   final List<String> lifecycleLog;
@@ -746,6 +778,8 @@ class TestNavigateBetweenNestedRoutesWithSameReusableParent {
   selector: 'test-prevent-navigation',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestPreventNavigation {
   final List<String> lifecycleLog;
@@ -763,6 +797,8 @@ class TestPreventNavigation {
   selector: 'test-redirect-to-sibiling',
   template: testTemplate,
   directives: testDirectives,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestRedirectToSibling {
   final List<String> lifecycleLog;

@@ -10,6 +10,8 @@ import 'package:angular/angular.dart';
       Title:&ngsp;{{title}}
     </button>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DeferredChildComponent extends SomeBaseClass {
   final _onSelected = new StreamController<bool>.broadcast(sync: true);

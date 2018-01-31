@@ -12,6 +12,8 @@ import 'src/flat_20_bindings.dart';
     NgIf,
   ],
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class Create20BindingsReflectiveBenchmark implements Benchmark {
   @override

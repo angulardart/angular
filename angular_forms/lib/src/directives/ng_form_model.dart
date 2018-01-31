@@ -10,7 +10,8 @@ import 'package:angular/angular.dart'
         Optional,
         Output,
         Provider,
-        Self;
+        Self,
+        Visibility;
 
 import '../model.dart' show Control, ControlGroup;
 import '../validators.dart' show Validators, NG_VALIDATORS;
@@ -94,10 +95,13 @@ const formDirectiveProvider =
 /// }
 /// ```
 @Directive(
-    selector: '[ngFormModel]',
-    providers: const [formDirectiveProvider],
-    host: const {'(submit)': 'onSubmit(\$event)'},
-    exportAs: 'ngForm')
+  selector: '[ngFormModel]',
+  providers: const [formDirectiveProvider],
+  host: const {'(submit)': 'onSubmit(\$event)'},
+  exportAs: 'ngForm',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgFormModel extends ControlContainer implements Form, AfterChanges {
   final List<dynamic> _validators;
   bool _formChanged = false;

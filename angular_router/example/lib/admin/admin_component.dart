@@ -20,6 +20,8 @@ import 'admin_heroes_component.template.dart' as admin_heroes_component;
       </nav>
       <router-outlet [routes]="routes"></router-outlet>
     ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class AdminComponent implements CanActivate {
   String adminDashboardRoute = app_routes.adminDashboard.toUrl();

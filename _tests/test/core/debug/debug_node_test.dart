@@ -175,7 +175,11 @@ void main() {
 }
 
 /// Directive that logs bound value.
-@Directive(selector: "[message]")
+@Directive(
+  selector: "[message]",
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class MessageDir {
   Logger logger;
 
@@ -197,6 +201,8 @@ class MessageDir {
         </div>
         <span class="child" [innerHtml]="childBinding"></span>''',
   directives: const [MessageDir],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ChildComp {
   final String childBinding = "Original";
@@ -217,6 +223,8 @@ class ParentCompProvider {
         <span class="parent2" [innerHtml]="parentBinding"></span>
         <child-comp class="child-comp-class"></child-comp>''',
   directives: const [ChildComp, MessageDir],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ParentComp {
   final String parentBinding = "OriginalParent";
@@ -231,6 +239,8 @@ class ParentComp {
         <span class="parent2" [innerHtml]="parentBinding"></span>
         <child-comp class="child-comp-class"></child-comp>''',
   directives: const [ChildComp, MessageDir],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ParentCompNoWhitespace {
   final String parentBinding = "OriginalParent";
@@ -242,6 +252,8 @@ class ParentCompNoWhitespace {
       '  <ng-content></ng-content>'
       '</div>',
   directives: const [NgIf, MessageDir],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ConditionalContentComp {
   bool myBool = false;
@@ -255,6 +267,8 @@ class ConditionalContentComp {
           <span class="from-parent"></span>
         </cond-content-comp>''',
   directives: const [ConditionalContentComp],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ConditionalParentComp {
   String parentBinding = "OriginalParent";
@@ -269,6 +283,8 @@ class ConditionalParentComp {
            <li *ngFor="let item of stuff" [innerHtml]="item"></li>
         </ul>''',
   directives: const [NgFor, MessageDir],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class UsingFor {
   List<String> stuff;
@@ -283,6 +299,8 @@ class UsingFor {
    Bank Name: {{bank}}
    Account Id: {{id}}
  ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class BankAccount {
   @Input()
@@ -298,20 +316,32 @@ class BankAccount {
   selector: "bank-account-app",
   template: '<bank-account bank="RBC" account="4747"></bank-account>',
   directives: const [BankAccount],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class BankAccountApp {}
 
-@Directive(selector: "[mydir]", exportAs: "mydir")
+@Directive(
+  selector: "[mydir]", exportAs: "mydir",
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class MyDir {}
 
 @Component(
   selector: "locals-comp",
   template: '<div mydir #alice="mydir"></div>',
   directives: const [MyDir],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class LocalsComp {}
 
-@Directive(selector: "custom-emitter")
+@Directive(
+  selector: "custom-emitter",
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class CustomEmitter {
   final _myEvent = new StreamController<dynamic>.broadcast();
 
@@ -323,6 +353,8 @@ class CustomEmitter {
   selector: "events-comp",
   template: '''
         <button (click)="handleClick()"></button>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class EventsComp {
   bool clicked;
@@ -345,6 +377,8 @@ class EventsComp {
         <span class="parent2" [innerHtml]="parentBinding"></span>
         <child-comp class="child-comp-class"></child-comp>''',
   directives: const [ChildComp, MessageDir],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ParentCompWithBadSelector {
   final String parentBinding = "OriginalParent";

@@ -38,6 +38,8 @@ void main() {
 @Component(
   selector: 'content',
   template: '<ng-content></ng-content>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ContentChildrenComponent extends HasChildren<ValueDirective> {
   @override
@@ -48,6 +50,8 @@ class ContentChildrenComponent extends HasChildren<ValueDirective> {
 @Component(
   selector: 'content',
   template: '<ng-content></ng-content>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ContentChildComponent extends HasChild<ValueDirective> {
   @override
@@ -68,6 +72,8 @@ class ContentChildComponent extends HasChild<ValueDirective> {
       <value [value]="3"></value>
     </content>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestContentChildren extends HasChildren<ValueDirective> {
   @ViewChild('comp')
@@ -88,6 +94,8 @@ class TestContentChildren extends HasChildren<ValueDirective> {
       <value [value]="1"></value>
     </content>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestContentChild extends HasChild<ValueDirective> {
   @ViewChild('comp')
@@ -100,6 +108,8 @@ class TestContentChild extends HasChild<ValueDirective> {
 @Component(
   selector: 'content',
   template: '<ng-content></ng-content>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ContentChildrenComponentList extends HasChildren<ValueDirective> {
   @override
@@ -120,6 +130,8 @@ class ContentChildrenComponentList extends HasChildren<ValueDirective> {
       <value [value]="3"></value>
     </content>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestContentChildrenList extends HasChildren<ValueDirective> {
   @ViewChild('comp')

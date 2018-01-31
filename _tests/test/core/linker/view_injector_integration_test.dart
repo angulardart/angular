@@ -377,13 +377,21 @@ void main() {
   });
 }
 
-@Directive(selector: '[simpleDirective]')
+@Directive(
+  selector: '[simpleDirective]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SimpleDirective {
   @Input('simpleDirective')
   dynamic value;
 }
 
-@Directive(selector: '[optionallyNeedsDirective]')
+@Directive(
+  selector: '[optionallyNeedsDirective]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class OptionallyNeedsDirective {
   SimpleDirective dependency;
   OptionallyNeedsDirective(@Self() @Optional() SimpleDirective dependency) {
@@ -391,7 +399,11 @@ class OptionallyNeedsDirective {
   }
 }
 
-@Directive(selector: '[needsComponentFromHost]')
+@Directive(
+  selector: '[needsComponentFromHost]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsComponentFromHost {
   DependOnHostSimpleComponent dependency;
   NeedsComponentFromHost(@Host() DependOnHostSimpleComponent dependency) {
@@ -399,7 +411,11 @@ class NeedsComponentFromHost {
   }
 }
 
-@Directive(selector: '[needsDirective]')
+@Directive(
+  selector: '[needsDirective]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsDirective {
   SimpleDirective dependency;
   NeedsDirective(SimpleDirective dependency) {
@@ -407,7 +423,11 @@ class NeedsDirective {
   }
 }
 
-@Directive(selector: '[needsService]')
+@Directive(
+  selector: '[needsService]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsService {
   dynamic service;
   NeedsService(@Inject('service') service) {
@@ -415,7 +435,11 @@ class NeedsService {
   }
 }
 
-@Directive(selector: '[needsAppService]')
+@Directive(
+  selector: '[needsAppService]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsAppService {
   dynamic service;
   NeedsAppService(@Inject('appService') service) {
@@ -426,6 +450,8 @@ class NeedsAppService {
 @Component(
   selector: 'needsHostAppService',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NeedsHostAppService {
   dynamic service;
@@ -434,7 +460,11 @@ class NeedsHostAppService {
   }
 }
 
-@Directive(selector: '[needsAttribute]')
+@Directive(
+  selector: '[needsAttribute]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsAttribute {
   var typeAttribute;
   var titleAttribute;
@@ -449,7 +479,11 @@ class NeedsAttribute {
   }
 }
 
-@Directive(selector: '[needsAttributeNoType]')
+@Directive(
+  selector: '[needsAttributeNoType]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsAttributeNoType {
   var fooAttribute;
   NeedsAttributeNoType(@Attribute('foo') fooAttribute) {
@@ -457,7 +491,11 @@ class NeedsAttributeNoType {
   }
 }
 
-@Directive(selector: '[needsElementRef]')
+@Directive(
+  selector: '[needsElementRef]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsElementRef {
   var elementRef;
   NeedsElementRef(ElementRef ref) {
@@ -465,7 +503,11 @@ class NeedsElementRef {
   }
 }
 
-@Directive(selector: '[needsElement]')
+@Directive(
+  selector: '[needsElement]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsElement {
   Element element;
   NeedsElement(Element e) {
@@ -473,7 +515,11 @@ class NeedsElement {
   }
 }
 
-@Directive(selector: '[needsHtmlElement]')
+@Directive(
+  selector: '[needsHtmlElement]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsHtmlElement {
   HtmlElement element;
   NeedsHtmlElement(HtmlElement e) {
@@ -481,7 +527,11 @@ class NeedsHtmlElement {
   }
 }
 
-@Directive(selector: '[needsViewContainerRef]')
+@Directive(
+  selector: '[needsViewContainerRef]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsViewContainerRef {
   var viewContainer;
   NeedsViewContainerRef(ViewContainerRef vc) {
@@ -489,7 +539,11 @@ class NeedsViewContainerRef {
   }
 }
 
-@Directive(selector: '[needsTemplateRef]')
+@Directive(
+  selector: '[needsTemplateRef]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsTemplateRef {
   var templateRef;
   NeedsTemplateRef(TemplateRef ref) {
@@ -497,7 +551,11 @@ class NeedsTemplateRef {
   }
 }
 
-@Directive(selector: '[optionallyNeedsTemplateRef]')
+@Directive(
+  selector: '[optionallyNeedsTemplateRef]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class OptionallyNeedsTemplateRef {
   var templateRef;
   OptionallyNeedsTemplateRef(@Optional() TemplateRef ref) {
@@ -505,7 +563,11 @@ class OptionallyNeedsTemplateRef {
   }
 }
 
-@Directive(selector: '[directiveNeedsChangeDetectorRef]')
+@Directive(
+  selector: '[directiveNeedsChangeDetectorRef]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DirectiveNeedsChangeDetectorRef {
   ChangeDetectorRef changeDetectorRef;
   DirectiveNeedsChangeDetectorRef(this.changeDetectorRef);
@@ -515,6 +577,8 @@ class DirectiveNeedsChangeDetectorRef {
   selector: 'componentNeedsChangeDetectorRef',
   template: '{{counter}}',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class PushComponentNeedsChangeDetectorRef {
   ChangeDetectorRef changeDetectorRef;
@@ -575,6 +639,8 @@ class DuplicatePipe2 implements PipeTransform {
   selector: 'no-dependency-test',
   template: '<div simpleDirective></div>',
   directives: const [SimpleDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NoDependencyTest {}
 
@@ -582,12 +648,16 @@ class NoDependencyTest {}
   selector: 'simple-dependency-test',
   template: '<div simpleDirective needsDirective></div>',
   directives: const [SimpleDirective, NeedsDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SimpleDependencyTest {}
 
 @Directive(
   selector: '[simpleDirective]',
   providers: const [const Provider('injectable1', useValue: 'injectable1')],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SkipSelfSimpleDirective {}
 
@@ -600,6 +670,8 @@ class SkipSelfSimpleDirective {}
       useFactory: skipSelfFactory,
     ),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SkipSelfSomeOtherDirective {}
 
@@ -610,6 +682,8 @@ String skipSelfFactory(@SkipSelf() @Inject('injectable1') val) =>
   selector: 'skip-self-test',
   template: '<div simpleDirective><span someOtherDirective></span></div>',
   directives: const [SkipSelfSimpleDirective, SkipSelfSomeOtherDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SkipSelfTest {}
 
@@ -617,6 +691,8 @@ class SkipSelfTest {}
   selector: 'provider-dependency-test',
   template: '<div simpleDirective></div>',
   directives: const [ProviderDependencySimpleDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProviderDependencyTest {}
 
@@ -629,6 +705,8 @@ class ProviderDependencyTest {}
       useFactory: providerDependencyFactory,
     ),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProviderDependencySimpleDirective {}
 
@@ -639,6 +717,8 @@ String providerDependencyFactory(@Inject('injectable1') val) =>
   selector: 'view-provider-dependency-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [ViewProviderSimpleComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ViewProviderDependencyTest {}
 
@@ -649,6 +729,8 @@ class ViewProviderDependencyTest {}
     const Provider('injectable1', useValue: 'injectable1'),
     const Provider('injectable2', useFactory: viewProviderDependencyFactory),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ViewProviderSimpleComponent {}
 
@@ -659,6 +741,8 @@ String viewProviderDependencyFactory(@Inject('injectable1') val) =>
   selector: 'view-provider-provider-test',
   template: '<needsServiceComponent></needsServiceComponent>',
   directives: const [ViewProviderProviderNeedsServiceComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ViewProviderProviderTest {}
 
@@ -666,6 +750,8 @@ class ViewProviderProviderTest {}
   selector: 'needsServiceComponent',
   template: '',
   viewProviders: const [const Provider('service', useValue: 'service')],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ViewProviderProviderNeedsServiceComponent {
   dynamic service;
@@ -678,6 +764,8 @@ class ViewProviderProviderNeedsServiceComponent {
   selector: 'multi-provider-test',
   template: '<div simpleDirective></div>',
   directives: const [MultiProviderSimpleDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MultiProviderTest {}
 
@@ -687,6 +775,8 @@ class MultiProviderTest {}
     const Provider('injectable1', useValue: 'injectable11', multi: true),
     const Provider('injectable1', useValue: 'injectable12', multi: true),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MultiProviderSimpleDirective {}
 
@@ -694,6 +784,8 @@ class MultiProviderSimpleDirective {}
   selector: 'lazy-initialization-test',
   template: '<div simpleDirective></div>',
   directives: const [LazyInitializationSimpleDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class LazyInitializationTest {}
 
@@ -702,6 +794,8 @@ class LazyInitializationTest {}
   providers: const [
     const Provider('service', useFactory: lazyCreationFactory),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class LazyInitializationSimpleDirective {}
 
@@ -712,6 +806,8 @@ lazyCreationFactory() => _lazilyCreated = true;
   selector: 'lazy-initialization-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [ViewProviderLazyInitializationSimpleComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ViewProviderLazyInitializationTest {}
 
@@ -721,6 +817,8 @@ class ViewProviderLazyInitializationTest {}
   providers: const [
     const Provider('service', useFactory: lazyCreationFactory),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ViewProviderLazyInitializationSimpleComponent {}
 
@@ -728,6 +826,8 @@ class ViewProviderLazyInitializationSimpleComponent {}
   selector: 'view-providers-fail-test',
   template: '<simpleComponent needsService></simpleComponent>',
   directives: const [ViewProvidersFailSimpleComponent, NeedsService],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ViewProvidersFailTest {}
 
@@ -737,6 +837,8 @@ class ViewProvidersFailTest {}
   viewProviders: const [
     const Provider('service', useValue: 'service'),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ViewProvidersFailSimpleComponent {}
 
@@ -744,6 +846,8 @@ class ViewProvidersFailSimpleComponent {}
   selector: 'nested-directive-provide-test',
   template: '<div simpleDirective><div needsService></div></div>',
   directives: const [ParentServiceSimpleDirective, NeedsService],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NestedDirectiveProvideTest {}
 
@@ -752,6 +856,8 @@ class NestedDirectiveProvideTest {}
   providers: const [
     const Provider('service', useValue: 'parentService'),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ParentServiceSimpleDirective {}
 
@@ -760,6 +866,8 @@ class ParentServiceSimpleDirective {}
   template: '<div simpleDirective><template [ngIf]="true">'
       '<div *ngIf="true" needsService></div></template></div>',
   directives: const [ParentServiceSimpleDirective, NeedsService, NgIf],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ParentViewProvideTest {}
 
@@ -767,6 +875,8 @@ class ParentViewProvideTest {}
   selector: 'directive-provider-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DirectiveProviderSimpleComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveProviderTest {}
 
@@ -777,6 +887,8 @@ class DirectiveProviderTest {}
   providers: const [
     const Provider('service', useValue: 'hostService'),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveProviderSimpleComponent {}
 
@@ -784,6 +896,8 @@ class DirectiveProviderSimpleComponent {}
   selector: 'directive-provider-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DirectiveViewProviderSimpleComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveViewProviderTest {}
 
@@ -794,6 +908,8 @@ class DirectiveViewProviderTest {}
   viewProviders: const [
     const Provider('service', useValue: 'hostService'),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveViewProviderSimpleComponent {}
 
@@ -801,6 +917,8 @@ class DirectiveViewProviderSimpleComponent {}
   selector: 'directive-provider-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DirectiveEmbeddedViewProviderSimpleComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveEmbeddedViewProviderTest {}
 
@@ -811,6 +929,8 @@ class DirectiveEmbeddedViewProviderTest {}
   viewProviders: const [
     const Provider('service', useValue: 'hostService'),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveEmbeddedViewProviderSimpleComponent {}
 
@@ -818,6 +938,8 @@ class DirectiveEmbeddedViewProviderSimpleComponent {}
   selector: 'app-provider-test',
   template: '<div needsAppService></div>',
   directives: const [NeedsAppService],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class AppProviderTest {}
 
@@ -825,6 +947,8 @@ class AppProviderTest {}
   selector: 'depend-on-other-directive-test',
   template: '<div simpleDirective><div needsDirective></div></div>',
   directives: const [SimpleDirective, NeedsDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DependOnOtherDirectiveTest {}
 
@@ -832,6 +956,8 @@ class DependOnOtherDirectiveTest {}
   selector: 'throw-when-unresolved-dependency-test',
   template: '<div needsService></div>',
   directives: const [NeedsService],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ThrowWhenUnresolvedDependencyTest {}
 
@@ -839,6 +965,8 @@ class ThrowWhenUnresolvedDependencyTest {}
   selector: 'inject-missing-optional-test',
   template: '<div optionallyNeedsDirective></div>',
   directives: const [OptionallyNeedsDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectMissingOptionalTest {}
 
@@ -846,6 +974,8 @@ class InjectMissingOptionalTest {}
   selector: 'depend-on-host-component-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DependOnHostSimpleComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DependOnHostComponentTest {}
 
@@ -853,6 +983,8 @@ class DependOnHostComponentTest {}
   selector: 'simpleComponent',
   template: '<div needsComponentFromHost></div>',
   directives: const [NeedsComponentFromHost],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DependOnHostSimpleComponent {}
 
@@ -860,6 +992,8 @@ class DependOnHostSimpleComponent {}
   selector: 'inject-static-attribute-test',
   template: '<div needsAttribute type="text" title></div>',
   directives: const [NeedsAttribute],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectStaticAttributeTest {}
 
@@ -867,6 +1001,8 @@ class InjectStaticAttributeTest {}
   selector: 'inject-static-attribute-no-type-test',
   template: '<div needsAttributeNoType foo=\'bar\'></div>',
   directives: const [NeedsAttributeNoType],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectStaticAttributeNoTypeTest {}
 
@@ -874,6 +1010,8 @@ class InjectStaticAttributeNoTypeTest {}
   selector: 'inject-element-ref-test',
   template: '<div needsElementRef></div>',
   directives: const [NeedsElementRef],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectElementRefTest {}
 
@@ -881,6 +1019,8 @@ class InjectElementRefTest {}
   selector: 'inject-element-test',
   template: '<div needsElement></div>',
   directives: const [NeedsElement],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectElementTest {}
 
@@ -888,6 +1028,8 @@ class InjectElementTest {}
   selector: 'inject-html-element-test',
   template: '<div needsHtmlElement></div>',
   directives: const [NeedsHtmlElement],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectHtmlElementTest {}
 
@@ -896,6 +1038,8 @@ class InjectHtmlElementTest {}
   template:
       '<componentNeedsChangeDetectorRef></componentNeedsChangeDetectorRef>',
   directives: const [PushComponentNeedsChangeDetectorRef],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectChangeDetectorTest {}
 
@@ -904,6 +1048,8 @@ class InjectChangeDetectorTest {}
   template:
       '<componentNeedsChangeDetectorRef></componentNeedsChangeDetectorRef>',
   directives: const [PushComponentWithChangeDetectorDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectChangeDetectorDirectiveTest {}
 
@@ -912,6 +1058,8 @@ class InjectChangeDetectorDirectiveTest {}
   template: '{{counter}}<div directiveNeedsChangeDetectorRef></div>',
   directives: const [DirectiveNeedsChangeDetectorRef],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class PushComponentWithChangeDetectorDirective {
   num counter = 0;
@@ -922,6 +1070,8 @@ class PushComponentWithChangeDetectorDirective {
   selector: 'inject-view-container-ref-test',
   template: '<div needsViewContainerRef></div>',
   directives: const [NeedsViewContainerRef],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectViewContainerRefTest {}
 
@@ -929,6 +1079,8 @@ class InjectViewContainerRefTest {}
   selector: 'inject-template-ref-test',
   template: '<template needsViewContainerRef needsTemplateRef></template>',
   directives: const [NeedsViewContainerRef, NeedsTemplateRef],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectTemplateRefTest {}
 
@@ -936,6 +1088,8 @@ class InjectTemplateRefTest {}
   selector: 'throw-if-no-template-ref-test',
   template: '<div needsTemplateRef></div>',
   directives: const [NeedsTemplateRef],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ThrowIfNoTemplateRefTest {}
 
@@ -943,6 +1097,8 @@ class ThrowIfNoTemplateRefTest {}
   selector: 'optional-template-ref-test',
   template: '<div optionallyNeedsTemplateRef></div>',
   directives: const [OptionallyNeedsTemplateRef],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class OptionalTemplateRefTest {}
 
@@ -952,6 +1108,8 @@ class OptionalTemplateRefTest {}
   directives: const [SimpleDirective],
   pipes: const [PipeNeedsService],
   providers: const [const Provider('service', useValue: 'pipeService')],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class PipeDependencyTest {}
 
@@ -960,6 +1118,8 @@ class PipeDependencyTest {}
   template: '<div [simpleDirective]="true | duplicatePipe"></div>',
   directives: const [SimpleDirective],
   pipes: const [DuplicatePipe1, DuplicatePipe2],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DuplicatePipeTest {}
 
@@ -969,6 +1129,8 @@ class DuplicatePipeTest {}
       'directiveNeedsChangeDetectorRef></div>',
   directives: const [SimpleDirective, DirectiveNeedsChangeDetectorRef],
   pipes: const [PipeNeedsChangeDetectorRef],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class PipeChangeDetectorRefTest {}
 
@@ -980,6 +1142,8 @@ class PipeChangeDetectorRefTest {}
       '</div>',
   directives: const [SimpleDirective, NgFor],
   pipes: const [PurePipe],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CachePurePipesTest {}
 
@@ -991,5 +1155,7 @@ class CachePurePipesTest {}
       '</div>',
   directives: const [SimpleDirective, NgFor],
   pipes: const [ImpurePipe],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NoCacheImpurePipesTest {}

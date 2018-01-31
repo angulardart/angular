@@ -92,6 +92,8 @@ void main() {
   template: r'''
     <a [routerLink]="link" routerLinkActive="active-link">Bob</a>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestRouterLinkActive {
   String link;

@@ -3,15 +3,20 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 
-@Directive(selector: '[some-child-directive]', host: const {
-  '(click)': r'handleClick($event)',
-  '(keypress)': r'handleKeyPress($event)',
-  '(eventXyz)': r'handleXyzEventFromOtherDirective($event)',
-  '[tabindex]': 'tabIndex',
-  'role': 'button',
-  '[attr.aria-disabled]': 'disabledStr',
-  '[class.is-disabled]': 'disabled',
-})
+@Directive(
+  selector: '[some-child-directive]',
+  host: const {
+    '(click)': r'handleClick($event)',
+    '(keypress)': r'handleKeyPress($event)',
+    '(eventXyz)': r'handleXyzEventFromOtherDirective($event)',
+    '[tabindex]': 'tabIndex',
+    'role': 'button',
+    '[attr.aria-disabled]': 'disabledStr',
+    '[class.is-disabled]': 'disabled',
+  },
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class ChildDirective {
   Element element;
   ElementRef elementRef;
@@ -44,7 +49,11 @@ class ChildDirective {
   bool get disabled => false;
 }
 
-@Directive(selector: '[directive-with-output]')
+@Directive(
+  selector: '[directive-with-output]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DirectiveWithOutput {
   String msg;
   final _streamController = new StreamController<String>();
@@ -63,6 +72,8 @@ class DirectiveWithOutput {
       '<div some-child-directive directive-with-output [row]="rowIndex" (trigger)="onTrigger">Foo</div>',
   directives: const [ChildDirective, DirectiveWithOutput],
   styles: const ['div { font-size: 10px; }'],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestFooComponent {
   int get rowIndex => 5;
@@ -81,6 +92,8 @@ class MyInjectableClass {
 <div [ngFormModel]="form">
   <input type="text" ngControl="login">
 </div>''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InputFormTest {
   ControlGroup form;

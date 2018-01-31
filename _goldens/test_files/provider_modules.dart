@@ -27,5 +27,7 @@ const barProviders = const [
   selector: 'provider-modules',
   providers: const [barProviders],
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProviderModulesComponent {}

@@ -46,6 +46,8 @@ void main() {
 @Component(
   selector: 'child-with-single-binding',
   template: r'<span class="target">{{title}}</span>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SingleBindingTest extends Object with ComponentState {
   String _title;

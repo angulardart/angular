@@ -26,6 +26,8 @@ import 'login_component.template.dart' as login_component;
       <router-outlet [routes]="routes"></router-outlet>
     ''',
   styleUrls: const ['app_component.css'],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class AppComponent {
   String adminRoute = app_routes.admin.toUrl();

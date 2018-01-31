@@ -10,6 +10,8 @@ import 'package:angular_router/angular_router.dart';
       <a id="anchor"></a>
       <p>Token: {{token}}</p>
     ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class AdminDashboardComponent implements OnActivate {
   String sessionId;

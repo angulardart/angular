@@ -101,6 +101,8 @@ void main() {
 @Component(
   selector: 'input[type=text][width]',
   template: 'Test',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SimpleInput {
   @Input()
@@ -110,6 +112,8 @@ class SimpleInput {
 @Component(
   selector: 'button[width]',
   template: 'Test',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SimpleButton {
   @Input()
@@ -119,6 +123,8 @@ class SimpleButton {
 @Directive(
   selector: '[my-dir]',
   exportAs: 'myDir',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MyDir {
   @Input('elProp')
@@ -134,6 +140,8 @@ class MyDir {
   directives: const [
     MyDir,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class BoundDirectiveInputComponent {
   String value = 'Initial value';
@@ -150,6 +158,8 @@ class MyService {
   viewProviders: const [
     MyService,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ChildComponent {
   String value;
@@ -165,6 +175,8 @@ class ChildComponent {
   directives: const [
     ChildComponent,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ParentComponent {}
 
@@ -175,6 +187,8 @@ class ParentComponent {}
     ChildComponent,
     MyDir,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MultipleDirectivesComponent {
   String value = 'Hello world!';
@@ -186,10 +200,16 @@ class MultipleDirectivesComponent {
   directives: const [
     MyDir,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class UnboundDirectiveInputComponent {}
 
-@Directive(selector: '[no-duplicate]')
+@Directive(
+  selector: '[no-duplicate]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DuplicateDir {
   DuplicateDir(HtmlElement element) {
     element.text = '${element.text}noduplicate';
@@ -203,10 +223,16 @@ class DuplicateDir {
     DuplicateDir,
     DuplicateDir,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DuplicateDirectivesComponent {}
 
-@Directive(selector: '[id]')
+@Directive(
+  selector: '[id]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class IdDir {
   @Input()
   String id;
@@ -218,12 +244,18 @@ class IdDir {
   directives: const [
     IdDir,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class OverrideNativePropertyComponent {
   String value = 'some_id';
 }
 
-@Directive(selector: '[customEvent]')
+@Directive(
+  selector: '[customEvent]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class EventDir {
   final _streamController = new StreamController<String>();
 
@@ -237,6 +269,8 @@ class EventDir {
   directives: const [
     EventDir,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class EventDirectiveComponent {
   void doNothing() {}
@@ -245,12 +279,21 @@ class EventDirectiveComponent {
 @Injectable()
 class PublicApi {}
 
-@Directive(selector: '[public-api]', providers: const [
-  const Provider(PublicApi, useExisting: PrivateImpl),
-])
+@Directive(
+  selector: '[public-api]',
+  providers: const [
+    const Provider(PublicApi, useExisting: PrivateImpl),
+  ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class PrivateImpl extends PublicApi {}
 
-@Directive(selector: '[needs-public-api]')
+@Directive(
+  selector: '[needs-public-api]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NeedsPublicApi {
   NeedsPublicApi(@Host() PublicApi api) {
     expect(api, new isInstanceOf<PrivateImpl>());
@@ -264,6 +307,8 @@ class NeedsPublicApi {
     PrivateImpl,
     NeedsPublicApi,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class RetrievesDependencyFromHostComponent {}
 
@@ -281,6 +326,8 @@ class DoublePipe implements PipeTransform {
   pipes: const [
     DoublePipe,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class PipedDirectiveInputComponent {
   String value = 'a';

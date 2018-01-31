@@ -33,6 +33,8 @@ abstract class HasChild<T> {
 /// Accepts a single input, [value], for use with the helper [hasChildValues].
 @Directive(
   selector: 'value,[value]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ValueDirective {
   @Input()
@@ -42,6 +44,8 @@ class ValueDirective {
 /// Similar to `*ngIf`, but always true.
 @Directive(
   selector: '[alwaysShow]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class AlwaysShowDirective {
   AlwaysShowDirective(ViewContainerRef container, TemplateRef template) {
@@ -52,6 +56,8 @@ class AlwaysShowDirective {
 /// Similar to `*ngIf`, but always false.
 @Directive(
   selector: '[neverShow]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NeverShowDirective {}
 

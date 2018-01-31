@@ -145,6 +145,8 @@ void main() {
 @Component(
   selector: 'simple-imp-cmp',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SimpleImperativeViewComponent {
   SimpleImperativeViewComponent(ElementRef elementRef) {
@@ -155,7 +157,11 @@ class SimpleImperativeViewComponent {
 
 const ANCHOR_ELEMENT = const OpaqueToken('AnchorElement');
 
-@Directive(selector: '[someImpvp]')
+@Directive(
+  selector: '[someImpvp]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SomeImperativeViewport {
   ViewContainerRef vc;
   TemplateRef templateRef;
@@ -185,12 +191,18 @@ class SomeImperativeViewport {
   selector: 'moves-embedded-view',
   template: '<div><div *someImpvp="ctxBoolProp">hello</div></div>',
   directives: const [SomeImperativeViewport],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MovesEmbeddedViewComponent {
   bool ctxBoolProp = false;
 }
 
-@Directive(selector: '[has-property]')
+@Directive(
+  selector: '[has-property]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class PropertyDirective {
   @Input('property')
   String value;
@@ -200,12 +212,18 @@ class PropertyDirective {
   selector: 'unknown-property-on-directive',
   template: '<div has-property [property]="value"></div>',
   directives: const [PropertyDirective],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class UnknownPropertyOnDirectiveComponent {
   String value = 'Hello world!';
 }
 
-@Directive(selector: '[title]')
+@Directive(
+  selector: '[title]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DirectiveWithTitle {
   @Input()
   String title;
@@ -215,6 +233,8 @@ class DirectiveWithTitle {
   selector: 'overridden-property',
   template: '<span [title]="name"></span>',
   directives: const [DirectiveWithTitle],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class OverriddenPropertyComponent {
   String name = 'TITLE';
@@ -223,6 +243,8 @@ class OverriddenPropertyComponent {
 @Directive(
   selector: '[title]',
   host: const {'[title]': 'title'},
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveWithTitleAndHostProperty {
   @Input()
@@ -233,12 +255,18 @@ class DirectiveWithTitleAndHostProperty {
   selector: 'directive-updates-dom',
   template: '<span [title]="name"></span>',
   directives: const [DirectiveWithTitleAndHostProperty],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveUpdatesDomComponent {
   String name = 'TITLE';
 }
 
-@Directive(selector: 'with-prop-decorators')
+@Directive(
+  selector: 'with-prop-decorators',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DirectiveWithPropDecorators {
   final StreamController<String> _streamController =
       new StreamController<String>();
@@ -269,6 +297,8 @@ class DirectiveWithPropDecorators {
 <with-prop-decorators elProp="foo" (elEvent)="value='called'">
 </with-prop-decorators>''',
   directives: const [DirectiveWithPropDecorators],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DecoratorsComponent {
   String value;
@@ -288,18 +318,24 @@ class DecoratorsComponent {
   </foreignObject>
 </svg>
 ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SvgElementsComponent {}
 
 @Component(
   selector: 'namespace-attribute',
   template: '<svg:use xlink:href="#id"/>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NamespaceAttributeComponent {}
 
 @Component(
   selector: 'namespace-attribute-binding',
   template: '<svg:use [attr.xlink:href]="value"/>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NamespaceAttributeBindingComponent {
   String value;

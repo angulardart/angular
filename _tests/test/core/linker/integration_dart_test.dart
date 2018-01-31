@@ -61,12 +61,16 @@ void main() {
   template: '<template #alice>Unstamped tmp</template>'
       '<ref-reader [ref1]="alice"></ref-reader>',
   directives: const [RefReaderComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class MyCompWithTemplateRef {}
 
 @Component(
   selector: 'ref-reader',
   template: '<div></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class RefReaderComponent {
   @Input()
@@ -86,6 +90,8 @@ class NonError {
   selector: 'container-with-propertyaccess',
   template: '<property-access></property-access>',
   directives: const [PropertyAccess],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ContainerWithPropertyAccess {
   dynamic value;
@@ -95,6 +101,8 @@ class ContainerWithPropertyAccess {
   selector: 'container-with-no-propertyaccess',
   template: '<no-property-access></no-property-access>',
   directives: const [NoPropertyAccess],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ContainerWithNoPropertyAccess {
   dynamic value;
@@ -104,6 +112,8 @@ class ContainerWithNoPropertyAccess {
   selector: 'container-with-onchange',
   template: '<on-change [prop]="\'hello\'"></on-change>',
   directives: const [OnChangeComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class OnChangeContainer {
   dynamic value;
@@ -124,6 +134,8 @@ class PropModel implements Map {
 @Component(
   selector: 'property-access',
   template: '''prop:{{model.foo}};map:{{model['foo']}}''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class PropertyAccess {
   final model = new PropModel();
@@ -132,6 +144,8 @@ class PropertyAccess {
 @Component(
   selector: 'no-property-access',
   template: '''{{model.doesNotExist}}''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NoPropertyAccess {
   final model = new PropModel();
@@ -140,6 +154,8 @@ class NoPropertyAccess {
 @Component(
   selector: 'on-change',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class OnChangeComponent implements OnChanges {
   Map changes;
@@ -152,7 +168,11 @@ class OnChangeComponent implements OnChanges {
   }
 }
 
-@Directive(selector: 'directive-logging-checks')
+@Directive(
+  selector: 'directive-logging-checks',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class DirectiveLoggingChecks implements DoCheck {
   Logger log;
 

@@ -12,6 +12,8 @@ import 'hero_service.dart';
   directives: const [NgFor, RouterLink],
   templateUrl: 'dashboard_component.html',
   styleUrls: const ['dashboard_component.css'],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DashboardComponent implements OnInit {
   List<Hero> heroes;

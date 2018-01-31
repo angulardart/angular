@@ -44,6 +44,8 @@ import 'package:angular/angular.dart';
   viewProviders: const [
     const Provider(MyUseValue, useValue: const MyUseValue('Matan'))
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ProvidersComponent {
   static MyUseFactory createService(NgZone ngZone, {bool optional}) =>

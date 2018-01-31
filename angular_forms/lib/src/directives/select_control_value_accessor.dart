@@ -1,7 +1,15 @@
 import 'dart:html';
 
 import 'package:angular/angular.dart'
-    show Directive, Provider, ElementRef, Input, OnDestroy, Host, Optional;
+    show
+        Directive,
+        Provider,
+        ElementRef,
+        Input,
+        OnDestroy,
+        Host,
+        Optional,
+        Visibility;
 import 'package:angular/src/facade/lang.dart' show isPrimitive;
 
 import 'control_value_accessor.dart'
@@ -30,14 +38,15 @@ String _extractId(String valueString) => valueString.split(':')[0];
 /// https://bugzilla.mozilla.org/show_bug.cgi?id=1024350
 /// https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/4660045
 @Directive(
-    selector: 'select[ngControl],select[ngFormControl],select[ngModel]',
-    host: const {
-      '(change)': 'onChange(\$event.target.value)',
-      '(blur)': 'touchHandler()'
-    },
-    providers: const [
-      SELECT_VALUE_ACCESSOR
-    ])
+  selector: 'select[ngControl],select[ngFormControl],select[ngModel]',
+  host: const {
+    '(change)': 'onChange(\$event.target.value)',
+    '(blur)': 'touchHandler()'
+  },
+  providers: const [SELECT_VALUE_ACCESSOR],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SelectControlValueAccessor implements ControlValueAccessor {
   final ElementRef _elementRef;
   dynamic value;
@@ -95,7 +104,11 @@ class SelectControlValueAccessor implements ControlValueAccessor {
 ///     <select ngControl="city">
 ///       <option *ngFor="let c of cities" [value]="c"></option>
 ///     </select>
-@Directive(selector: 'option')
+@Directive(
+  selector: 'option',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgSelectOption implements OnDestroy {
   final ElementRef _element;
   SelectControlValueAccessor _select;

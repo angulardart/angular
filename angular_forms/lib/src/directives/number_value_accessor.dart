@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import 'package:angular/angular.dart' show Directive, Provider;
+import 'package:angular/angular.dart' show Directive, Provider, Visibility;
 
 import 'control_value_accessor.dart'
     show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
@@ -17,17 +17,18 @@ typedef dynamic _SimpleChangeFn(value);
 ///
 ///  <input type="number" [(ngModel)]="age">
 @Directive(
-    selector: 'input[type=number][ngControl],'
-        'input[type=number][ngFormControl],'
-        'input[type=number][ngModel]',
-    host: const {
-      '(change)': 'onChange(\$event.target.value)',
-      '(input)': 'onChange(\$event.target.value)',
-      '(blur)': 'touchHandler()'
-    },
-    providers: const [
-      NUMBER_VALUE_ACCESSOR
-    ])
+  selector: 'input[type=number][ngControl],'
+      'input[type=number][ngFormControl],'
+      'input[type=number][ngModel]',
+  host: const {
+    '(change)': 'onChange(\$event.target.value)',
+    '(input)': 'onChange(\$event.target.value)',
+    '(blur)': 'touchHandler()'
+  },
+  providers: const [NUMBER_VALUE_ACCESSOR],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NumberValueAccessor implements ControlValueAccessor {
   final HtmlElement _element;
   _SimpleChangeFn onChange = (_) {};

@@ -136,6 +136,8 @@ const isExpressionChanged =
   template: '<div><copy-me template="ngIf booleanCondition">'
       'hello</copy-me></div>',
   directives: const [NgIf],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgIfInTemplateAttributeComponent {
   bool booleanCondition = true;
@@ -146,6 +148,8 @@ class NgIfInTemplateAttributeComponent {
   template: '<div><template [ngIf]="booleanCondition">'
       '<copy-me>hello2</copy-me></template></div>',
   directives: const [NgIf],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgIfInTemplateComponent {
   bool booleanCondition = true;
@@ -156,6 +160,8 @@ class NgIfInTemplateComponent {
   template: '<div><copy-me template="ngIf booleanCondition">hello</copy-me>'
       '</div>',
   directives: const [NgIf],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgIfToggleTestComponent {
   bool booleanCondition = true;
@@ -167,6 +173,8 @@ class NgIfToggleTestComponent {
       '<copy-me *ngIf="nestedBooleanCondition">hello</copy-me>'
       '</template></div>',
   directives: const [NgIf],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgIfNestedTestComponent {
   bool booleanCondition = true;
@@ -181,6 +189,8 @@ class NgIfNestedTestComponent {
       '<copy-me template="ngIf functionCondition(stringCondition, numberCondition)">helloFunction</copy-me>'
       '</div>',
   directives: const [NgIf],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgIfMultiUpdateTestComponent {
   bool booleanCondition = true;
@@ -198,6 +208,8 @@ class NgIfMultiUpdateTestComponent {
     </template>
   ''',
   directives: const [NgIf],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class NgIfThrowsDuringChangeDetection {
   bool _value = false;

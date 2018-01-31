@@ -30,7 +30,11 @@ import 'package:angular/security.dart';
 ///         : trustedHtml = domSecurityService.bypassSecurityTrustHtml(
 ///             'I solemnly swear that this <script></script> is OK!');
 ///   }
-@Directive(selector: '[safeInnerHtml]')
+@Directive(
+  selector: '[safeInnerHtml]',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class SafeInnerHtmlDirective {
   final Element _element;
 

@@ -35,6 +35,8 @@ void main() {
   template: r'''
     <counter></counter>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestComponent {}
 
@@ -43,6 +45,8 @@ class TestComponent {}
   template: r'''
     <button (click)="onClick()">Click count: {{count}}</button>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ClickCounterComponent {
   var count = 0;

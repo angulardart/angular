@@ -26,6 +26,8 @@ void main() {
   selector: 'view-comp',
   providers: const [DataService],
   template: '{{value}}',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ViewComponent implements OnInit {
   final DataService _service;
@@ -45,6 +47,8 @@ class ViewComponent implements OnInit {
     ViewComponent,
   ],
   template: '<view-comp override></view-comp>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TestViewComponent {}
 
@@ -53,6 +57,8 @@ class TestViewComponent {}
   providers: const [
     const Provider(DataService, useClass: FakeDataService),
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class OverrideDirective {}
 

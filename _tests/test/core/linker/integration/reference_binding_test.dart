@@ -78,6 +78,8 @@ class MyService {
   viewProviders: const [
     MyService,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ChildComponent {
   String value;
@@ -91,12 +93,16 @@ class ChildComponent {
   selector: 'component-reference-binding',
   template: '<p><child #alice></child></p>',
   directives: const [ChildComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ComponentReferenceBindingComponent {}
 
 @Directive(
   selector: '[export-dir]',
   exportAs: 'dir',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ExportDir {}
 
@@ -104,12 +110,16 @@ class ExportDir {}
   selector: 'directive-reference-binding',
   template: '<div><div export-dir #localdir="dir"></div></div>',
   directives: const [ExportDir],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class DirectiveReferenceBindingComponent {}
 
 @Component(
   selector: 'element-reference-binding',
   template: '<div><div #alice><i>Hello</i></div></div>',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ElementReferenceBindingComponent {}
 
@@ -121,6 +131,8 @@ class ElementReferenceBindingComponent {}
     ChildComponent,
     NgIf,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class UseRefBeforeDeclarationComponent {}
 
@@ -128,6 +140,8 @@ class UseRefBeforeDeclarationComponent {}
   selector: 'two-component-references',
   template: '<p><child #alice></child><child #bob></child></p>',
   directives: const [ChildComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class TwoComponentReferencesComponent {}
 
@@ -135,6 +149,8 @@ class TwoComponentReferencesComponent {}
   selector: 'shorthand-ref',
   template: '<child #alice></child>',
   directives: const [ChildComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ShorthandRefComponent {}
 
@@ -142,5 +158,7 @@ class ShorthandRefComponent {}
   selector: 'case-sensitive-ref',
   template: '<child #superAlice></child>',
   directives: const [ChildComponent],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class CaseSensitiveRefComponent {}

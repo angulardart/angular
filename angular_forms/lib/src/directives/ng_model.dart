@@ -11,7 +11,8 @@ import 'package:angular/angular.dart'
         Optional,
         Output,
         Provider,
-        Self;
+        Self,
+        Visibility;
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
 import 'control_value_accessor.dart'
@@ -57,9 +58,12 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 ///
 /// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngModel
 @Directive(
-    selector: '[ngModel]:not([ngControl]):not([ngFormControl])',
-    providers: const [formControlBinding],
-    exportAs: 'ngForm')
+  selector: '[ngModel]:not([ngControl]):not([ngFormControl])',
+  providers: const [formControlBinding],
+  exportAs: 'ngForm',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
 class NgModel extends NgControl
     with ComponentState
     implements AfterChanges, OnInit {
