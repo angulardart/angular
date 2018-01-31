@@ -7,16 +7,6 @@
 # Fast fail the script on failures.
 set -e
 
-dartanalyzer --fatal-warnings .
-
-pub run test -p vm -x codegen
 pub run build_runner build
 pub run build_runner:create_merged_dir \
     --script=.dart_tool/build/entrypoint/build.dart -o build
-pub run test \
-    --precompiled=build \
-    --platform=chrome \
-    --tags=codegen \
-    --timeout=4x \
-    -x skip_on_travis \
-    -j1
