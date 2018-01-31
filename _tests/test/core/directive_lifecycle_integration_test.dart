@@ -1,5 +1,5 @@
 @Tags(const ['codegen'])
-@TestOn('browser && !js')
+@TestOn('browser')
 library angular2.test.core.directive_lifecycle_integration_test;
 
 import 'package:angular_test/angular_test.dart';

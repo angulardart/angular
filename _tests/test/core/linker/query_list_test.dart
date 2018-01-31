@@ -1,4 +1,4 @@
-@TestOn('browser && !js')
+@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:_tests/fake_async.dart';
 import 'package:angular/src/core/linker/query_list.dart' show QueryList;
