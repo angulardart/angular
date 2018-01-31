@@ -69,6 +69,21 @@ builders:
   or directive that `@Inject`-ed a typed token (like `OpaqueToken<String>`);
   this is now fixed.
 
+* Trying to use `@{Content|View}Child{ren}` with `Element` or `HtmlElement`
+  (from `dart:html`) caused a runtime exception, as `ElementRef` was passed
+  instead. The following now works:
+
+```dart
+@Component(
+  selector: 'uses-element',
+  template: '<div #div>1</div>'
+)
+class UsesElement {
+  @ViewChild('div')
+  // Could also be HtmlElement.
+  Element div;
+```
+
 ## 5.0.0-alpha+4
 
 * We have a new template parser. This parser is much stricter than the old one,

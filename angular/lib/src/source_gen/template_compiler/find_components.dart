@@ -384,6 +384,7 @@ class ComponentVisitor
   }
 
   static final _coreList = new TypeChecker.fromUrl('dart:core#List');
+  static final _htmlElement = new TypeChecker.fromUrl('dart:html#Element');
 
   CompileQueryMetadata _getQuery(
     annotationOrObject,
@@ -402,6 +403,8 @@ class ComponentVisitor
       descendants: coerceBool(value, 'descendants', defaultTo: false),
       first: coerceBool(value, 'first', defaultTo: false),
       propertyName: propertyName,
+      isElementType: propertyType?.element != null &&
+          _htmlElement.isAssignableFromType(propertyType),
       isListType: propertyType?.element != null &&
           _coreList.isExactlyType(propertyType),
       read: readType != null

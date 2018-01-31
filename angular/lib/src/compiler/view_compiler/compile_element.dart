@@ -241,8 +241,14 @@ class CompileElement extends CompileNode {
         var token = (referenceTokens != null)
             ? referenceTokens[queryWithRead.read.value]
             : null;
-        // elementRef contains expression of the form new ElementRef(...).
-        value = token != null ? _instances.get(token) : elementRef;
+        // If we can't find a valid query type, then we fall back to ElementRef.
+        //
+        // HOWEVER, if specifically typed as Element or HtmlElement, use that.
+        value = token != null
+            ? _instances.get(token)
+            : queryWithRead.query.metadata.isElementType
+                ? renderNode.toReadExpr()
+                : elementRef;
       }
       if (value != null) {
         queryWithRead.query.addQueryResult(this.view, value);
