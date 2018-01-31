@@ -1,5 +1,5 @@
 @Tags(const ['codegen'])
-@TestOn('browser && !js')
+@TestOn('browser')
 import 'dart:async';
 import 'dart:html';
 

@@ -1,5 +1,5 @@
 @Tags(const ['codegen'])
-@TestOn('browser && !js')
+@TestOn('browser')
 import 'dart:html';
 
 import 'package:logging/logging.dart';

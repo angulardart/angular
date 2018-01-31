@@ -1,5 +1,5 @@
 @Tags(const ['codegen'])
-@TestOn('browser && !js')
+@TestOn('browser')
 library angular2.test.di.integration_dart_test;
 
 import 'dart:html';
