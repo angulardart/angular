@@ -16,6 +16,8 @@
 * Removed all references and use of determining a "prefix" of a type. This was
   no longer used once `ReflectableEmitter` was re-written.
 
+* Removed a number of internal flags that were no longer strictly required.
+
 ## 0.4.0-alpha+4
 
 ### Breaking changes

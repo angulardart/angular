@@ -1,23 +1,21 @@
 # Compiler Flags
 
 The following is a list of supported flags when using the AngularDart compiler
-as a _pub/barback transformer_. Any flag you don't see listed below is not
-supported in AngularDart 5.x, and will cause the compiler to fail.
+with the `build_runner` build system. Any flag you _don't_ see listed below may
+not be supported in the current build of AngularDart 5.x, and could cause the
+compiler to fail.
 
-Additionally, you can use the `mode` flag (to pub) to force a build compilation
-in `debug` mode (what is used for testing and local development). This can be
-useful to inspect `.dart` files generated (on disk):
-
-```bash
-$ pub build --mode=debug
-```
+YAML files below are expected to be in `build.yaml` for a given project.
 
 ## `use_legacy_style_encapsulation`
 
 ```yaml
-transformers:
-  angular:
-    use_legacy_style_encapsulation: true
+targets:
+  $default:
+    builders:
+      angular:
+        options:
+          use_legacy_style_encapsulation: true
 ```
 
 **DEPRECATED**: Support for this flag will be removed in a future release.
@@ -31,9 +29,12 @@ Defaults to `false`.
 ## `fast_boot`
 
 ```yaml
-transformers:
-  angular:
-    fast_boot: false
+targets:
+  $default:
+    builders:
+      angular:
+        options:
+          fast_boot: false
 ```
 
 By disabling this flag, AngularDart may choose to generate additional code to
@@ -42,3 +43,20 @@ you are using `fastBoot` (formally known as `bootstrapFactory`) then this can
 always safely be `true`.
 
 Defaults to `true` in AngularDart ^5.0.0-alpha+2.
+
+## `use_new_template_parser`
+
+```yaml
+targets:
+  $default:
+    builders:
+      angular:
+        options:
+          use_new_template_parser: false
+```
+
+By disabling this flag, AngularDart will use the older, less-strict template
+parser, which will eventually be removed. Only disable this option if you need
+additional time to migrate.
+
+Defaults to `true` in AngularDart ^5.0.0-alpha+5.
