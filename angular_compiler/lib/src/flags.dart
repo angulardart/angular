@@ -77,12 +77,21 @@ class CompilerFlags {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
+  /// Whether to look for a file to determine if `.template.dart` will exist.
+  ///
+  /// **NOTE**: This is an _internal_ flag that is currently only supported for
+  /// use with the golden file testing, and may be removed at some point in the
+  /// future.
+  @experimental
+  final bool ignoreNgPlaceholderForGoldens;
+
   /// Whether to opt-in to using the new angular_ast package for parsing
   /// template files.
   final bool useAstPkg;
 
   const CompilerFlags({
     @required this.genDebugInfo,
+    this.ignoreNgPlaceholderForGoldens: false,
     this.profileFor: Profile.none,
     this.useFastBoot: true,
     this.useLegacyStyleEncapsulation: false,
