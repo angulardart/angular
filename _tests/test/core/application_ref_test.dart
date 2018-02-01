@@ -1,4 +1,3 @@
-@Tags(const ['codegen'])
 @TestOn('browser')
 library angular2.test.core.application_ref_test;
 

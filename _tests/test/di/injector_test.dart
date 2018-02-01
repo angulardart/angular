@@ -1,5 +1,4 @@
 // ignore_for_file: invalid_use_of_protected_member
-@Tags(const ['codegen'])
 @TestOn('browser')
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/injector/hierarchical.dart';

@@ -1,4 +1,3 @@
-@Tags(const ['codegen'])
 @TestOn('browser')
 
 import 'package:test/test.dart';

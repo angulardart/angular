@@ -1,5 +1,4 @@
 @TestOn('browser')
-@Tags(const ['codegen'])
 import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';

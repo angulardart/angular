@@ -1,6 +1,4 @@
-@Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.common.directives.if_test;
 
 import 'dart:html';
 
