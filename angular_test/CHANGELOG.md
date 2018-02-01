@@ -1,3 +1,12 @@
+* Removed support for `pub run angular_test`. This is no longer strictly
+  needed, as it was just a convenience for running both the build system and
+  test runner. Similar functionality is supported out of the box by
+  `build_runner`:
+
+```bash
+$ pub run build_runner test
+```
+
 ## 2.0.0-alpha+2
 
 _Maintenance release, to support the latest package:angular alpha._

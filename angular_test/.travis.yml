@@ -4,7 +4,6 @@ dart:
 
 dart_task:
   - dartanalyzer: --fatal-warnings lib test
-  - test: -p vm
-  - test: --precompiled=build --platform=chrome --tags=codegen --timeout=4x -x skip_on_travis -j1
+  - test: --precompiled=build --platform=chrome --timeout=4x -x skip_on_travis -j1
 
 before_script: tool/travis.sh

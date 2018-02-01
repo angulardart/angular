@@ -12,15 +12,10 @@ executables:
 
 dependencies:
   angular: '^5.0.0-alpha+4'
-  ansicolor: '^0.0.9'
-  args: '^0.13.7'
-  collection: '^1.14.0'
-  logging: '^0.11.3+1'
   matcher: '^0.12.0+2'
   meta: '^1.0.0'
   pageloader: '^2.2.5'
   path: '^1.4.1'
-  stack_trace: ^1.7.0
   test: '^0.12.17'
 
 dev_dependencies:
