@@ -3,40 +3,114 @@ sudo: required
 addons:
   chrome: stable
 
-# Created with https://github.com/dart-lang/mono_repo
 language: dart
 
 dart:
   - dev
 
-env:
-  - PKG=_goldens TASK=dartanalyzer_0
-  - PKG=_goldens TASK=test_00
-  - PKG=_goldens/generator TASK=dartanalyzer_0
-  - PKG=_tests TASK=dartanalyzer_1
-  - PKG=_tests TASK=test_04
-  - PKG=_tests TASK=test_05
-  - PKG=_tests TASK=test_06
-  - PKG=_tests TASK=test_07
-  - PKG=_tests TASK=test_08
-  - PKG=_tests TASK=test_09
-  - PKG=_tests TASK=test_10
-  - PKG=_tests TASK=test_11
-  - PKG=_tests TASK=test_12
-  - PKG=_tests TASK=test_13
-  - PKG=angular TASK=dartanalyzer_0
-  - PKG=angular_ast TASK=dartanalyzer_0
-  - PKG=angular_ast TASK=test_00
-  - PKG=angular_compiler TASK=dartanalyzer_0
-  - PKG=angular_compiler TASK=test_00
-  - PKG=angular_forms TASK=dartanalyzer_0
-  - PKG=angular_router TASK=dartanalyzer_1
-  - PKG=angular_router TASK=test_01
-  - PKG=angular_router TASK=test_02
-  - PKG=angular_router/example TASK=dartanalyzer_0
-  - PKG=angular_test TASK=dartanalyzer_1
-  - PKG=angular_test TASK=test_01
-  - PKG=angular_test TASK=test_03
+jobs:
+  include:
+    - &build
+      stage: build
+      script: ./tool/travis.sh build
+      if: env(PKG) IS present
+    - <<: *build
+      env: PKG="_tests"
+    - <<: *build
+      env: PKG="angular_router"
+    - <<: *build
+      env: PKG="angular_test"
+    - stage: build
+      script: "pushd _goldens && ./tool/travis.sh"
+    - &analyze_0
+      stage: analyze
+      script: ./tool/travis.sh dartanalyzer_0
+      if: env(PKG) IS present
+    - <<: *analyze_0
+      env: PKG="_goldens"
+    - <<: *analyze_0
+      env: PKG="_goldens/generator"
+    - <<: *analyze_0
+      env: PKG="angular"
+    - <<: *analyze_0
+      env: PKG="angular_ast"
+    - <<: *analyze_0
+      env: PKG="angular_compiler"
+    - <<: *analyze_0
+      env: PKG="angular_forms"
+    - <<: *analyze_0
+      env: PKG="angular_router/example"
+    - &analyze_1
+      stage: analyze
+      script: ./tool/travis.sh dartanalyzer_1
+      if: env(PKG) IS present
+    - <<: *analyze_1
+      env: PKG="_tests"
+    - <<: *analyze_1
+      env: PKG="angular_router"
+    - <<: *analyze_1
+      env: PKG="angular_test"
+    - &test_00
+      stage: test
+      script: ./tool/travis.sh test_00
+      if: env(PKG) IS present
+    - <<: *test_00
+      env: PKG="_goldens"
+    - <<: *test_00
+      env: PKG="angular_ast"
+    - <<: *test_00
+      env: PKG="angular_compiler"
+    - &test_01
+      stage: test
+      script: ./tool/travis.sh test_01
+      if: env(PKG) IS present
+    - <<: *test_01
+      env: PKG="angular_router"
+    - <<: *test_01
+      env: PKG="angular_test"
+    - stage: test
+      script: ./tool/travis.sh test_02
+      env: PKG="angular_router"
+    - stage: test
+      script: ./tool/travis.sh test_03
+      env: PKG="angular_test"
+    - stage: test
+      script: ./tool/travis.sh test_04
+      env: PKG="_tests"
+    - stage: test
+      script: ./tool/travis.sh test_05
+      env: PKG="_tests"
+    - stage: test
+      script: ./tool/travis.sh test_06
+      env: PKG="_tests"
+    - stage: test
+      script: ./tool/travis.sh test_07
+      env: PKG="_tests"
+    - stage: test
+      script: ./tool/travis.sh test_08
+      env: PKG="_tests"
+    - stage: test
+      script: ./tool/travis.sh test_09
+      env: PKG="_tests"
+    - stage: test
+      script: ./tool/travis.sh test_10
+      env: PKG="_tests"
+    - stage: test
+      script: ./tool/travis.sh test_11
+      env: PKG="_tests"
+    - stage: test
+      script: ./tool/travis.sh test_12
+      env: PKG="_tests"
+    - stage: test
+      script: ./tool/travis.sh test_13
+      env: PKG="_tests"
+
+
+stages:
+  - build
+  - analyze
+  - name: test
+    if: env(PKG) IS present
 
 script: ./tool/travis.sh
 
