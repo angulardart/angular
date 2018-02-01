@@ -27,16 +27,11 @@ Future<TemplateCompilerOutputs> processTemplates(
     // a.dart, and a.dart imports b.dart, we can assume that there will be
     // a generated b.template.dart that we need to import/initReflector().
     hasInput: (uri) async {
-      if (flags.usePlaceholder) {
-        final placeholder = ''
-            '${uri.substring(0, uri.length - '.dart'.length)}'
-            '.ng_placeholder';
-        return await buildStep
-            .canRead(new AssetId.resolve(placeholder, from: buildStep.inputId));
-      } else {
-        return await buildStep
-            .canRead(new AssetId.resolve(uri, from: buildStep.inputId));
-      }
+      final placeholder = ''
+          '${uri.substring(0, uri.length - '.dart'.length)}'
+          '.ng_placeholder';
+      return await buildStep
+          .canRead(new AssetId.resolve(placeholder, from: buildStep.inputId));
     },
     // For a given import or export directive, return whether a generated
     // .template.dart file already exists. If it does we will need to link

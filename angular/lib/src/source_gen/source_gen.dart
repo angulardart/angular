@@ -21,7 +21,6 @@ Builder templateCompiler(BuilderOptions options) {
     const CompilerFlags(
       genDebugInfo: false,
       useLegacyStyleEncapsulation: true,
-      usePlaceholder: true,
       useAstPkg: true,
     ),
     severity: Level.SEVERE,

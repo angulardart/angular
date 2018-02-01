@@ -7,10 +7,12 @@
   If you need to turn it off temporarily, you need to set the following flag in
   your `build.yaml`:
 ```yaml
-builders:
-  angular:
-    options:
-      use_new_template_parser: False
+targets:
+  $default:
+    builders:
+      angular:
+        options:
+          use_new_template_parser: false
 ```
 
 * Requires `source_gen ^0.7.4+2` (was previously `^0.7.0`).
@@ -93,10 +95,12 @@ class UsesElement {
 
   In order to use it, you need to set the following flag in your `build.yaml`:
 ```yaml
-builders:
-  angular:
-    options:
-      use_new_template_parser: True
+targets:
+  $default:
+    builders:
+      angular:
+        options:
+          use_new_template_parser: true
 ```
 
 *   We now require `code_builder ^3.0.0`.

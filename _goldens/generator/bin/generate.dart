@@ -27,20 +27,19 @@ Future main(List<String> args) async {
         'angular|goldens',
         [
           (_) => new LibraryBuilder(
-              new TemplateGenerator(const CompilerFlags(
-                  genDebugInfo: false, usePlaceholder: false, useAstPkg: true)),
+              new TemplateGenerator(
+                  const CompilerFlags(genDebugInfo: false, useAstPkg: true)),
               generatedExtension: updateGoldens
                   ? '.template_release.golden'
                   : '.template_release.check'),
           (_) => new LibraryBuilder(
-              new TemplateGenerator(const CompilerFlags(
-                  genDebugInfo: true, usePlaceholder: false, useAstPkg: true)),
+              new TemplateGenerator(
+                  const CompilerFlags(genDebugInfo: true, useAstPkg: true)),
               generatedExtension: updateGoldens
                   ? '.template_debug.golden'
                   : '.template_debug.check'),
           (_) => new TemplateOutliner(
-              const CompilerFlags(
-                  genDebugInfo: false, usePlaceholder: false, useAstPkg: true),
+              const CompilerFlags(genDebugInfo: false, useAstPkg: true),
               extension: updateGoldens
                   ? '.template_outline.golden'
                   : '.template_outline.check'),
