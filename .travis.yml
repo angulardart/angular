@@ -10,33 +10,33 @@ dart:
   - dev
 
 env:
-  - PKG=_goldens TASK=dartanalyzer
-  - PKG=_goldens TASK=test
-  - PKG=_goldens/generator TASK=dartanalyzer
+  - PKG=_goldens TASK=dartanalyzer_0
+  - PKG=_goldens TASK=test_00
+  - PKG=_goldens/generator TASK=dartanalyzer_0
   - PKG=_tests TASK=dartanalyzer_1
-  - PKG=_tests TASK=test_1
+  - PKG=_tests TASK=test_04
+  - PKG=_tests TASK=test_05
+  - PKG=_tests TASK=test_06
+  - PKG=_tests TASK=test_07
+  - PKG=_tests TASK=test_08
+  - PKG=_tests TASK=test_09
   - PKG=_tests TASK=test_10
-  - PKG=_tests TASK=test_2
-  - PKG=_tests TASK=test_3
-  - PKG=_tests TASK=test_4
-  - PKG=_tests TASK=test_5
-  - PKG=_tests TASK=test_6
-  - PKG=_tests TASK=test_7
-  - PKG=_tests TASK=test_8
-  - PKG=_tests TASK=test_9
-  - PKG=angular TASK=dartanalyzer
-  - PKG=angular_ast TASK=dartanalyzer
-  - PKG=angular_ast TASK=test
-  - PKG=angular_compiler TASK=dartanalyzer
-  - PKG=angular_compiler TASK=test
-  - PKG=angular_forms TASK=dartanalyzer
+  - PKG=_tests TASK=test_11
+  - PKG=_tests TASK=test_12
+  - PKG=_tests TASK=test_13
+  - PKG=angular TASK=dartanalyzer_0
+  - PKG=angular_ast TASK=dartanalyzer_0
+  - PKG=angular_ast TASK=test_00
+  - PKG=angular_compiler TASK=dartanalyzer_0
+  - PKG=angular_compiler TASK=test_00
+  - PKG=angular_forms TASK=dartanalyzer_0
   - PKG=angular_router TASK=dartanalyzer_1
-  - PKG=angular_router TASK=test_11
-  - PKG=angular_router TASK=test_13
-  - PKG=angular_router/example TASK=dartanalyzer
+  - PKG=angular_router TASK=test_01
+  - PKG=angular_router TASK=test_02
+  - PKG=angular_router/example TASK=dartanalyzer_0
   - PKG=angular_test TASK=dartanalyzer_1
-  - PKG=angular_test TASK=test_11
-  - PKG=angular_test TASK=test_12
+  - PKG=angular_test TASK=test_01
+  - PKG=angular_test TASK=test_03
 
 script: ./tool/travis.sh
 
