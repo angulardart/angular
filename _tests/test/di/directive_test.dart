@@ -490,6 +490,8 @@ const listOfStringToken = const OpaqueToken<List<String>>('listOfString');
     ChildThatInjectsTypedToken,
     NgIf,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SupportsTypedTokenInNestedViews {
   @ViewChild('tag')
@@ -501,6 +503,8 @@ class SupportsTypedTokenInNestedViews {
 @Component(
   selector: 'child-that-injects-token',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ChildThatInjectsTypedToken {
   final List<String> example;

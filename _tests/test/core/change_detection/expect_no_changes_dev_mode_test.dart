@@ -25,6 +25,8 @@ void main() {
   template: r'''
     <div>{{counter}}</div>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class IllegalChangeDetectionComponent {
   var _counter = 0;
