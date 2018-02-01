@@ -20,8 +20,6 @@ jobs:
       env: PKG="angular_router"
     - <<: *build
       env: PKG="angular_test"
-    - stage: build
-      script: "pushd _goldens && ./tool/travis.sh"
     - &analyze_0
       stage: analyze
       script: ./tool/travis.sh dartanalyzer_0

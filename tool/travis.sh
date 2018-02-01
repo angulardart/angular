@@ -1,16 +1,30 @@
 #!/bin/bash
 # Hand Written for now, should update to mono_repo once it supports build stages
 
+# Fast fail the script on failures.
+set -e
+
 if [ -z "$PKG" ]; then
   echo -e '\033[31mPKG environment variable must be set!\033[0m'
   exit 1
-elif [ -z "$TASK" ]; then
-  echo -e '\033[31mTASK environment variable must be set!\033[0m'
+fi
+
+if [ "$#" == "0" ]; then
+  echo -e "\033[31mExpected a task!\033[0m"
   exit 1
 fi
+TASK=$1
 
 pushd $PKG
 pub upgrade
+
+case $PKG in
+_goldens) echo
+  echo -e '\033[1m_goldens: before_script\033[22m'
+  echo -e 'tool/travis.sh'
+  tool/travis.sh
+  ;;
+esac
 
 case $TASK in
 build) echo
