@@ -1,6 +1,4 @@
-@Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.platform.dom.events.key_events;
 
 import 'dart:html';
 import 'dart:js';

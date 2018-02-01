@@ -1,6 +1,4 @@
-@Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.core.change_detection.component_state_test;
 
 import 'dart:html';
 

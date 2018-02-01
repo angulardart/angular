@@ -1,4 +1,4 @@
-@Tags(const ['codegen', 'known_pub_serve_failure'])
+@Tags(const ['known_pub_serve_failure'])
 @TestOn('browser')
 import 'dart:async';
 import 'dart:html';

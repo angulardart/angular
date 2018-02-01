@@ -4,16 +4,15 @@ dart:
 
 dart_task:
   - dartanalyzer: --fatal-warnings lib test
-  - test: -p vm -x codegen
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/common
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/compiler
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/core
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/di
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/integration
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/platform
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/security
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/source_gen
-  - test: --precompiled=build --platform=chrome --tags=codegen --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector
-
+  - test: -p vm
+  - test: --precompiled=build --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/common
+  - test: --precompiled=build --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/compiler
+  - test: --precompiled=build --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/core
+  - test: --precompiled=build --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/di
+  - test: --precompiled=build --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/integration
+  - test: --precompiled=build --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/platform
+  - test: --precompiled=build --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/security
+  - test: --precompiled=build --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/source_gen
+  - test: --precompiled=build --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector
 
 before_script: tool/travis.sh

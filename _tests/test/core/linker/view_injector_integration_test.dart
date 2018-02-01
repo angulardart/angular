@@ -1,5 +1,4 @@
 @TestOn('browser')
-@Tags(const ['codegen'])
 
 import 'dart:html';
 

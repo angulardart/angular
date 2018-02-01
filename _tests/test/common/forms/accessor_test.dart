@@ -1,6 +1,4 @@
-@Tags(const ['codegen'])
 @TestOn('browser')
-library angular2.test.common.forms.accessor_test;
 
 import 'dart:html';
 import 'dart:js_util' as js_util;
