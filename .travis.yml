@@ -49,7 +49,7 @@ jobs:
     - <<: *analyze_1
       env: PKG="angular_test"
     - &test_00
-      stage: test
+      stage: unit_test
       script: ./tool/travis.sh test_00
       if: env(PKG) IS present
     - <<: *test_00
@@ -59,47 +59,47 @@ jobs:
     - <<: *test_00
       env: PKG="angular_compiler"
     - &test_01
-      stage: test
+      stage: unit_test
       script: ./tool/travis.sh test_01
       if: env(PKG) IS present
     - <<: *test_01
       env: PKG="angular_router"
     - <<: *test_01
       env: PKG="angular_test"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_02
       env: PKG="angular_router"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_03
       env: PKG="angular_test"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_04
       env: PKG="_tests"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_05
       env: PKG="_tests"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_06
       env: PKG="_tests"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_07
       env: PKG="_tests"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_08
       env: PKG="_tests"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_09
       env: PKG="_tests"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_10
       env: PKG="_tests"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_11
       env: PKG="_tests"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_12
       env: PKG="_tests"
-    - stage: test
+    - stage: unit_test
       script: ./tool/travis.sh test_13
       env: PKG="_tests"
 
@@ -107,6 +107,7 @@ jobs:
 stages:
   - build
   - analyze
+  - unit_test
   - name: test
     if: env(PKG) IS present
 
