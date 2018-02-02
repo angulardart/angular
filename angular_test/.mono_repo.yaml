@@ -1,0 +1,10 @@
+dart:
+  - dev
+
+stages:
+  - analyze:
+    - dartanalyzer: --fatal-warnings lib test
+  - build:
+    - command: pub run build_runner build
+  - unit_test:
+    - command: pub run build_runner test -- --platform=chrome --timeout=4x -x skip_on_travis -j1
