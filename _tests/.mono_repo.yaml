@@ -6,7 +6,7 @@ stages:
     - dartanalyzer: --fatal-warnings lib test
   build:
     - command: pub run build_runner build
-  test:
+  unit_test:
     - command: pub run build_runner test -- -p vm
     - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/common
     - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/compiler
