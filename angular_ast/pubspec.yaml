@@ -8,7 +8,7 @@ environment:
   sdk: '>=2.0.0-dev.3.0 <2.0.0'
 
 dependencies:
-  analyzer: '^0.31.0-alpha.1'
+  analyzer: '^0.31.0'
   charcode: '^1.1.0'
   collection: '^1.12.0'
   string_scanner: '^1.0.0'
