@@ -8,7 +8,7 @@ environment:
   sdk: '>=2.0.0-dev.3.0 <2.0.0'
 
 dependencies:
-  analyzer: '^0.31.0-alpha.1'
+  analyzer: '^0.31.0'
   args: '>=0.13.6 <2.0.0'
   build: '>=0.10.0 <0.13.0'
   code_builder: '^3.0.0'
@@ -26,7 +26,6 @@ dev_dependencies:
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
-  analyzer: '^0.31.0-alpha.1'
   angular:
     path: ../angular
   angular_ast:

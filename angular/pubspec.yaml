@@ -7,7 +7,7 @@ documentation: https://webdev.dartlang.org/angular/api
 environment:
   sdk: '>=2.0.0-dev.3.0 <2.0.0'
 dependencies:
-  analyzer: '^0.31.0-alpha.1'
+  analyzer: '^0.31.0'
   angular_ast: ^0.4.0
   angular_compiler: ^0.4.0-alpha+4
   build: '>=0.10.0 <0.13.0'
@@ -31,7 +31,6 @@ dependencies:
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
-  analyzer: '^0.31.0-alpha.1'
   angular_ast:
       path: ../angular_ast
   angular_compiler:
