@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   angular: '^5.0.0-alpha+4'
-  meta: ^1.0.3
+  meta: ^1.1.2
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
@@ -18,5 +18,5 @@ dependency_overrides:
   angular_ast:
     path: ../angular_ast
   angular_compiler:
-      path: ../angular_compiler
+    path: ../angular_compiler
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
