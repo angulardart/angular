@@ -5,17 +5,17 @@ description: Parser and utilities for AngularDart templates
 version: 0.4.2
 
 environment:
-  sdk: '>=2.0.0-dev.3.0 <2.0.0'
+  sdk: '>=2.0.0-dev.20.0 <2.0.0'
 
 dependencies:
-  analyzer: '^0.31.0-alpha.1'
-  charcode: '^1.1.0'
-  collection: '^1.12.0'
-  string_scanner: '^1.0.0'
-  meta: '^1.0.5'
-  quiver: '>=0.22.0 <0.28.0'
-  source_span: '^1.4.0'
+  analyzer: ^0.31.0+1
+  charcode: ^1.1.0
+  collection: ^1.14.5
+  string_scanner: ^1.0.1
+  meta: ^1.1.2
+  quiver: '>=0.22.0 <0.29.0'
+  source_span: ^1.4.0
 
 dev_dependencies:
-  path: '^1.4.1'
-  test: '^0.12.17'
+  path: ^1.5.1
+  test: ^0.12.30+1

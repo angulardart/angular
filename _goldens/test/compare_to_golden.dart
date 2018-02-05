@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:mirrors';
 
-import 'package:dart_style/src/dart_formatter.dart';
+import 'package:dart_style/dart_style.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
@@ -29,6 +29,6 @@ File _getFile(String filename) {
 final String _testFilesDir = p.join(_scriptDir(), '../test_files');
 
 String _scriptDir() =>
-    p.dirname(currentMirrorSystem().findLibrary(#compare_to_golden).uri.path);
+    p.dirname(currentMirrorSystem().findLibrary(#compare_to_golden).uri.path,);
 
 final _formatter = new DartFormatter();
