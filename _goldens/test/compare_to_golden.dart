@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:mirrors';
 
-import 'package:dart_style/src/dart_formatter.dart';
+import 'package:dart_style/dart_style.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
