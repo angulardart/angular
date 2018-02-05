@@ -267,7 +267,7 @@ class CompileTokenMap<V> {
 
 /// Metadata regarding compilation of a type.
 class CompileTypeMetadata
-    implements CompileIdentifierMetadata<Type>, CompileMetadataWithType {
+    implements CompileIdentifierMetadata<Type>, CompileMetadataWithType<Type> {
   @override
   String name;
 
