@@ -25,7 +25,6 @@ dev_dependencies:
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
-  analyzer: 0.31.0+1 # <<< TEMPORARY. Remove once build_runner is compatible.
   angular:
     path: ../angular
   angular_ast:
