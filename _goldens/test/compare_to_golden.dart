@@ -1,3 +1,5 @@
+library compare_to_golden;
+
 import 'dart:async';
 import 'dart:io';
 import 'dart:mirrors';
@@ -27,6 +29,6 @@ File _getFile(String filename) {
 final String _testFilesDir = p.join(_scriptDir(), '../test_files');
 
 String _scriptDir() =>
-    p.dirname(currentMirrorSystem().findLibrary(#compare_to_golden).uri.path);
+    p.dirname(currentMirrorSystem().findLibrary(#compare_to_golden).uri.path,);
 
 final _formatter = new DartFormatter();
