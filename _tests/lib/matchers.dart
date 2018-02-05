@@ -1,6 +1,19 @@
 import 'dart:html';
 
+import 'package:angular/src/di/errors.dart';
+import 'package:angular/src/facade/lang.dart';
 import 'package:test/test.dart';
+
+/// Matches a missing provider error thrown at runtime.
+final Matcher throwsMissingProviderError = (() {
+  if (assertionsEnabled()) {
+    return _throwsMissingProviderError;
+  }
+  return throwsArgumentError;
+})();
+
+final _isMissingProviderError = const isInstanceOf<MissingProviderError>();
+final _throwsMissingProviderError = throwsA(_isMissingProviderError);
 
 /// Matches textual content of an element including children.
 Matcher hasTextContent(expected) => new _HasTextContent(expected);

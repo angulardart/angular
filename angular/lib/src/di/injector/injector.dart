@@ -1,5 +1,7 @@
 import 'package:meta/meta.dart';
 
+import '../errors.dart';
+
 import 'empty.dart';
 import 'hierarchical.dart';
 import 'map.dart';
@@ -17,8 +19,10 @@ typedef T OrElseInject<T>(Injector injector, Object token);
 /// **INTERNAL ONLY**: Sentinel value for determining a missing DI instance.
 const Object throwIfNotFound = const Object();
 
+/// **INTERNAL ONLY**: Throws an error that [token] was not found.
+@alwaysThrows
 Null throwsNotFound(Injector injector, Object token) {
-  throw new ArgumentError('No provider found for $token.');
+  throw MissingProviderError.create(injector, token);
 }
 
 /// Support for imperatively loading dependency injected services at runtime.
