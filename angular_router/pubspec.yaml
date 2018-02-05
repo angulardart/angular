@@ -5,34 +5,31 @@ description: Router for AngularDart.
 version: 2.0.0-alpha+4
 
 environment:
-  sdk: '>=2.0.0-dev.3.0 <2.0.0'
+  sdk: '>=2.0.0-dev.20.0 <2.0.0'
 
 dependencies:
   angular: '^5.0.0-alpha+4'
-  collection: '^1.12.0'
+  collection: ^1.14.5
   js: ^0.6.0
-  meta: ^1.0.3
+  meta: ^1.1.2
 
 dev_dependencies:
   async: ^2.0.3
   angular_test: ^2.0.0-alpha+2
   build_web_compilers: ^0.2.1
-  build_runner: ^0.7.8
+  build_runner: ^0.7.9
   build_test: ^0.10.0
-  test: ^0.12.6
+  test: ^0.12.30+1
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
+  analyzer: 0.31.0+1 # <<< TEMPORARY. Remove once build_runner is compatible.
   angular:
     path: ../angular
   angular_ast:
     path: ../angular_ast
   angular_compiler:
     path: ../angular_compiler
-  angular_forms:
-    path: ../angular_forms
   angular_test:
     path: ../angular_test
-  angular_router.example:
-    path: example
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
