@@ -1,3 +1,5 @@
+## 0.4.0-alpha+5
+
 ### Bug fixes
 
 * `linkTypeOf` correctly resolves bound types (i.e. `<T>`) in most cases, and
