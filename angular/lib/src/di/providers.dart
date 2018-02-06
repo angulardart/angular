@@ -6,8 +6,6 @@ import 'package:meta/meta.dart';
 
 import '../core/di/opaque_token.dart';
 
-var intentionallyInvalidateTheCache = true;
-
 /// A marker that represents a lack-of-value for the `useValue` parameter.
 const Object noValueProvided = '__noValueProvided__';
 
