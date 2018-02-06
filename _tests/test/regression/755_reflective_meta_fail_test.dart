@@ -1,13 +1,14 @@
-@Tags(const ['codegen'])
 @TestOn('browser')
-
-import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:_tests/matchers.dart';
+import 'package:test/test.dart';
 
 import '755_reflective_meta_fail_test.template.dart' as ng_generated;
 
 // Source: https://github.com/dart-lang/angular/issues/755.
 void main() {
+  // TODO(matanl): Remove once this is the default.
+  InjectionError.enableBetterErrors = true;
   ng_generated.initReflector();
 
   test('should throw ArgumentError on a missing provider', () {
@@ -18,7 +19,7 @@ void main() {
 
     // Used to return an Object representing the secret "notFound" instead of
     // throwing ArgumentError, which was the expected behavior.
-    expect(() => injector.get(ServiceInjectingToken), throwsArgumentError);
+    expect(() => injector.get(ServiceInjectingToken), throwsNoProviderError);
   });
 }
 

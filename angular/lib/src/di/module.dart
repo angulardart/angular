@@ -61,7 +61,6 @@ class Module {
 /// Compatibility layer for expressing a [Module] as a `List<...>`.
 ///
 /// **DO NOT USE**: This function may break or change at any time.
-@visibleForTesting
 List<Provider<Object>> internalModuleToList(Module module) {
   final result = <dynamic>[];
   final includes = module.include;

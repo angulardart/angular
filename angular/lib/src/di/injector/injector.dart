@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../errors.dart' as errors;
 import 'empty.dart';
 import 'hierarchical.dart';
 import 'map.dart';
@@ -8,17 +9,12 @@ import 'runtime.dart';
 // TODO(matanl): Remove export after we have a 'runtime.dart' import.
 export '../../core/di/opaque_token.dart' show MultiToken, OpaqueToken;
 
-/// **INTERNAL ONLY**: Work in progress.
-class InjectionToken<T> {}
-
-/// **INTERNAL ONLY**: Placeholder until we support 1.25.0+ (function syntax).
-typedef T OrElseInject<T>(Injector injector, Object token);
-
 /// **INTERNAL ONLY**: Sentinel value for determining a missing DI instance.
 const Object throwIfNotFound = const Object();
 
+/// **INTERNAL ONLY**: Throws "no provider found for {token}".
 Null throwsNotFound(Injector injector, Object token) {
-  throw new ArgumentError('No provider found for $token.');
+  throw errors.noProviderError(token);
 }
 
 /// Support for imperatively loading dependency injected services at runtime.

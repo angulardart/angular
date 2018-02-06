@@ -1,9 +1,13 @@
 import 'dart:html';
 
+import 'package:angular/angular.dart';
 import 'package:test/test.dart';
 
 /// Matches textual content of an element including children.
 Matcher hasTextContent(expected) => new _HasTextContent(expected);
+
+final throwsNoProviderError = throwsA(_isNoProviderError);
+final _isNoProviderError = const isInstanceOf<NoProviderError>();
 
 // TODO(matanl): Add matcher to new test infrastructure.
 class _HasTextContent extends Matcher {
