@@ -29,8 +29,8 @@ esac
 case $TASK in
 build) echo
   echo -e '\033[1mTASK: build\033[22m'
-  echo -e 'pub run build_runner build --low-resources-mode'
-  pub run build_runner build --low-resources-mode
+  echo -e 'pub run build_runner build'
+  pub run build_runner build
   ;;
 dartanalyzer_0) echo
   echo -e '\033[1mTASK: dartanalyzer_0\033[22m'
