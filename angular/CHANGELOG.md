@@ -1,3 +1,5 @@
+## 5.0.0-alpha+5
+
 ### New features
 
 * Enables the new template parser by default. This parser is much stricter than

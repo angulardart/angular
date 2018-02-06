@@ -1,3 +1,5 @@
+## 2.0.0-alpha+3
+
 * Removed support for `pub run angular_test`. This is no longer strictly
   needed, as it was just a convenience for running both the build system and
   test runner. Similar functionality is supported out of the box by

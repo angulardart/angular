@@ -2,7 +2,7 @@ name: angular_test
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Testing runner and library for AngularDart
-version: 2.0.0-alpha+2
+version: 2.0.0-alpha+3
 
 environment:
   sdk: '>=2.0.0-dev.20.0 <2.0.0'
@@ -12,7 +12,7 @@ executables:
   angular_test:
 
 dependencies:
-  angular: '^5.0.0-alpha+4'
+  angular: '^5.0.0-alpha+5'
   matcher: ^0.12.0+2
   meta: ^1.1.2
   pageloader: ^2.2.5
