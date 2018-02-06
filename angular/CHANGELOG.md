@@ -1,3 +1,10 @@
+### New features
+
+* Added `InjectionError` and `NoProviderError`, which _may_ be thrown during
+  dependency injection when `InjectionError.enableBetterErrors` is set to
+  `true`. This is an experiment, and we not complete this feature (and it could
+  be rolled back entirely).
+
 ## 5.0.0-alpha+5
 
 ### New features
