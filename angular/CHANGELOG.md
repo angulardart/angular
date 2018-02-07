@@ -7,6 +7,10 @@
 
 ### Bug fixes
 
+* An invalid event binding (`<comp (event-with-no-expression)>`) no longer
+  crashes the parser during compilation and instead reports that such a binding
+  is not allowed.
+
 * Corrects the behavior of `Visibility.local` to match documentation.
 
   Previously, a directive with `Visibility.local` was only injectable via an
@@ -17,7 +21,7 @@
 
   @Component(
     selector: 'dependency',
-    template: '<ng-content></ng-content>'
+    template: '<ng-content></ng-content>',
     providers: const [
       const Provider(Dependency, useExisting: DependencyImpl),
     ],
