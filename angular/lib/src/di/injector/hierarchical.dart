@@ -9,12 +9,15 @@ import 'injector.dart';
 /// Hierarchical injection is a popular pattern in AngularDart given that the
 /// component tree naturally forms a tree structure of components (and
 /// implicitly, injectors).
+///
+/// **NOTE**: This is not a user-visible class.
 abstract class HierarchicalInjector extends Injector {
   @protected
   final HierarchicalInjector parent;
 
   @visibleForTesting
-  const HierarchicalInjector([this.parent = const EmptyInjector()]);
+  const HierarchicalInjector([HierarchicalInjector parent])
+      : parent = parent ?? const Injector.empty();
 
   /// **INTERNAL ONLY**: Used to implement [EmptyInjector] efficiently.
   const HierarchicalInjector.maybeEmpty([this.parent]);

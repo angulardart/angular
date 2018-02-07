@@ -1,4 +1,10 @@
+### Bug fixes
+
 * Removed all remaining (invalid) references to `package:barback`.
+
+### Breaking changes
+
+* Changes required to reference the renamed `@GenerateInjector`.
 
 ## 0.4.0-alpha+5
 

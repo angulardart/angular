@@ -5,6 +5,22 @@
   `true`. This is an experiment, and we may not complete this feature (and it
   could be rolled back entirely).
 
+* Added `@GenerateInjector`, a way to generate a factory for an `Injector`
+  completely at compile-time, similar to `@Component` or `@Directive`. This
+  replaces the experimental feature `@Injector.generate`:
+
+```dart
+import 'my_file.template.dart' as ng;
+
+@GenerateInjector(const [
+  const Provider(A, useClass: APrime),
+])
+Injector example([Injector parent]) {
+  // The generated factory is your method's name, suffixed with `$Injector`.
+  return example$Injector(parent);
+}
+```
+
 ### Bug fixes
 
 * An invalid event binding (`<comp (event-with-no-expression)>`) no longer
@@ -131,7 +147,7 @@ targets:
   `QueryList` was always created as a `QueryList<dynamic>`, even though users
   expected it to be a `QueryList<T>`. The new API is fully compatible.
 
-* `SlowCompinentLoader` is now formally *deprecated*. See
+* `SlowComponentLoader` is now formally *deprecated*. See
   `doc/component_loading.md`. This feature is not compatible with future
   restrictions of AngularDart, because it requires collecting metadata and
   disabling tree-shaking of classes annotated with `@Component`. The newer API

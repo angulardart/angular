@@ -21,7 +21,7 @@ class InjectorReader {
   static const _$Injector = const Reference('Injector', _runtime);
 
   static bool _shouldGenerateInjector(FunctionElement element) {
-    return $_GenerateInjector.hasAnnotationOfExact(element);
+    return $GenerateInjector.hasAnnotationOfExact(element);
   }
 
   /// Returns a list of all injectors needing generation in [element].
@@ -40,10 +40,10 @@ class InjectorReader {
         .toList();
   }
 
-  /// `@Injector.generate` annotation object;
+  /// `@GenerateInjector` annotation object;
   final ConstantReader annotation;
 
-  /// A function element annotated with `@Injector.generate`.
+  /// A function element annotated with `@GenerateInjector`.
   final FunctionElement method;
 
   @protected
@@ -69,14 +69,14 @@ class InjectorReader {
     this.doNotScope,
   })
       : this.annotation = new ConstantReader(
-          $_GenerateInjector.firstAnnotationOfExact(method),
+          $GenerateInjector.firstAnnotationOfExact(method),
         );
 
   /// Providers that are part of the provided list of the annotation.
   Iterable<ProviderElement> get providers {
     if (_providers == null) {
       final module = moduleReader.parseModule(
-        annotation.read('providersOrModules').objectValue,
+        annotation.read('_providersOrModules').objectValue,
       );
       _providers = moduleReader.deduplicateProviders(module.flatten());
     }

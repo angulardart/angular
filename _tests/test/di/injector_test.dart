@@ -558,7 +558,7 @@ const unnamedTokenOfString = const OpaqueToken<String>();
 Null willNeverBeCalled1(Object _) => null;
 Null willNeverBeCalled2(Object _, Object __) => null;
 
-@Injector.generate(const [
+@GenerateInjector(const [
   const Provider(ExampleService, useClass: ExampleService2),
   const Provider(ExampleService2),
   const Provider(stringToken, useValue: 'Hello World'),

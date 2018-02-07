@@ -77,7 +77,7 @@ const bootstrapMinimalModule = const <Object>[
 ];
 
 /// An experimental application [Injector] that is statically generated.
-@Injector.generate(const [bootstrapMinimalModule])
+@GenerateInjector(const [bootstrapMinimalModule])
 Injector minimalApp([Injector parent]) => ng.minimalApp$Injector(parent);
 
 /// Returns the current [Document] of the browser.
