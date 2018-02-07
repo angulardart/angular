@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../errors.dart' as errors;
 import 'empty.dart';
 import 'injector.dart';
 
@@ -20,10 +21,12 @@ abstract class HierarchicalInjector extends Injector {
 
   @override
   T inject<T>(Object token) {
+    errors.debugInjectorEnter(token);
     final result = injectOptional(token);
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
+    errors.debugInjectorLeave(token);
     return result;
   }
 
@@ -32,10 +35,12 @@ abstract class HierarchicalInjector extends Injector {
     Object token, [
     Object orElse = throwIfNotFound,
   ]) {
+    errors.debugInjectorEnter(token);
     var result = injectFromSelfOptional(token, orElse);
     if (identical(result, orElse)) {
       result = injectFromAncestryOptional(token, orElse);
     }
+    errors.debugInjectorLeave(token);
     return result;
   }
 
