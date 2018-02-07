@@ -2,11 +2,11 @@ dart:
   - dev
 
 stages:
-  analyze:
+  - analyze:
     - dartanalyzer: --fatal-warnings lib test
-  build:
+  - build:
     - command: pub run build_runner build
-  unit_test:
+  - unit_test:
     - command: pub run build_runner test -- -p vm
     - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/common
     - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/compiler
