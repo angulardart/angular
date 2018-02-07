@@ -6,5 +6,5 @@ stages:
     - dartanalyzer: --fatal-warnings .
   - unit_test:
     - command:
-      - tool/travis.sh
+      - dart generator/bin/generate.dart
       - pub run test
