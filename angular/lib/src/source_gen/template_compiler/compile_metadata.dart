@@ -30,9 +30,14 @@ class CompileTypeMetadataVisitor
 
   @override
   CompileTypeMetadata visitClassElement(ClassElement element) {
-    if (!annotation_matcher.isInjectable(element)) return null;
+    if (!annotation_matcher.isInjectable(element)) {
+      _logger.warning(''
+          'Ignoring class: $element. This may be a breaking change, see '
+          'https://github.com/dart-lang/angular/issues/849.');
+      return null;
+    }
     if (element.isPrivate) {
-      _logger.severe('Injectables must be public: $element');
+      _logger.severe('Provided classes must be public: $element');
       return null;
     }
     return _getCompileTypeMetadata(element);
@@ -73,9 +78,11 @@ class CompileTypeMetadataVisitor
     }
     if (element.constructors.length > 1 &&
         strings.isNotEmpty(constructor.name)) {
-      _logger.warning(
-          'Found ${element.constructors.length} constructors for class '
-          '${element.name}; using constructor ${constructor.name}.');
+      // No use in being a warning, as it's not something they need to fix
+      // until we add a way to be able to "pick" the constructor to use.
+      _logger
+          .fine('Found ${element.constructors.length} constructors for class '
+              '${element.name}; using constructor ${constructor.name}.');
     }
     return constructor;
   }
@@ -92,8 +99,7 @@ class CompileTypeMetadataVisitor
       }
       var metadata = visitClassElement(element as ClassElement);
       if (metadata == null) {
-        _logger.warning(
-            'Skipping non-injectable element $provider in provider list.');
+        // Was skipped.
         return null;
       }
       return new CompileProviderMetadata(
@@ -177,10 +183,13 @@ class CompileTypeMetadataVisitor
 
   CompileTypeMetadata _getCompileTypeMetadata(ClassElement element) =>
       new CompileTypeMetadata(
-          moduleUrl: moduleUrl(element),
-          name: element.name,
-          diDeps: _getCompileDiDependencyMetadata(
-              unnamedConstructor(element)?.parameters ?? [], element));
+        moduleUrl: moduleUrl(element),
+        name: element.name,
+        diDeps: _getCompileDiDependencyMetadata(
+          unnamedConstructor(element)?.parameters ?? [],
+          element,
+        ),
+      );
 
   CompileTypeMetadata _getFunctionCompileTypeMetadata(
           FunctionElement element) =>
@@ -220,8 +229,7 @@ class CompileTypeMetadataVisitor
     List<CompileDiDependencyMetadata> deps = [];
     for (final param in parameters) {
       if (param.parameterKind == ParameterKind.NAMED) {
-        _logger.warning('For dependency ${element.name}, we are skipping '
-            'named parameter $param');
+        // No use being a warning, since this is not prohibited; just skip.
         continue;
       }
       deps.add(_createCompileDiDependencyMetadata(param));
