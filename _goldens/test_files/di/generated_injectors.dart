@@ -2,7 +2,7 @@ import 'package:angular/angular.dart';
 
 import 'generated_injectors.template.dart' as ng;
 
-@Injector.generate(const [
+@GenerateInjector(const [
   const Provider(Example, useClass: Example),
 
   // TODO(matanl): As soon as ValueProvider is supported, use it.

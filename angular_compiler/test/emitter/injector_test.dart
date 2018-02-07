@@ -28,7 +28,7 @@ void main() {
       expect(
         emitter.createClass(),
         equalsDart(r'''
-        class FooInjector extends GeneratedInjector {
+        class FooInjector extends HierarchicalInjector {
           FooInjector._([Injector parent]) : super(parent);
 
           @override
@@ -59,7 +59,7 @@ void main() {
       expect(
         emitter.createClass(),
         equalsDart(r'''
-        class FooInjector extends GeneratedInjector {
+        class FooInjector extends HierarchicalInjector {
           FooInjector._([Injector parent]) : super(parent);
 
           FooImpl _field0;
@@ -90,7 +90,7 @@ void main() {
       expect(
         emitter.createClass(),
         equalsDart(r'''
-        class FooInjector extends GeneratedInjector {
+        class FooInjector extends HierarchicalInjector {
           FooInjector._([Injector parent]) : super(parent);
 
           Foo _getExisting$0() => inject(Foo);
@@ -123,7 +123,7 @@ void main() {
       expect(
         emitter.createClass(),
         equalsDart(r'''
-        class FooInjector extends GeneratedInjector {
+        class FooInjector extends HierarchicalInjector {
           FooInjector._([Injector parent]) : super(parent);
 
           Foo _field0;
@@ -154,7 +154,7 @@ void main() {
       expect(
         emitter.createClass(),
         equalsDart(r'''
-        class FooInjector extends GeneratedInjector {
+        class FooInjector extends HierarchicalInjector {
           FooInjector._([Injector parent]) : super(parent);
 
           Foo _getFoo$0() => const Foo();
@@ -193,7 +193,7 @@ void main() {
       expect(
         emitter.createClass(),
         equalsDart(r'''
-        class FooInjector extends GeneratedInjector {
+        class FooInjector extends HierarchicalInjector {
           FooInjector._([Injector parent]) : super(parent);
 
           int _getint$0() => 1;
