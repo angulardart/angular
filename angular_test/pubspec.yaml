@@ -15,7 +15,6 @@ dependencies:
   angular: '^5.0.0-alpha+5'
   matcher: ^0.12.0+2
   meta: ^1.1.2
-  pageloader: ^2.2.5
   test: ^0.12.30+1
 
 dev_dependencies:

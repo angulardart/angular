@@ -6,7 +6,6 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:pageloader/html.dart';
 
 import '../bootstrap.dart';
 import '../errors.dart';
@@ -102,19 +101,6 @@ NgTestStabilizer createZoneStabilizer(NgZone ngZone) =>
 /// });
 /// ```
 class NgTestBed<T> {
-  static PageLoader _createPageLoader<T>(
-    Element rootElement,
-    NgTestFixture<T> fixture,
-  ) {
-    return new HtmlPageLoader(
-      rootElement,
-      executeSyncedFn: (fn) async {
-        await fn();
-        return fixture.update();
-      },
-    );
-  }
-
   static Element _defaultHost() {
     final host = new Element.tag('ng-test-bed');
     document.body.append(host);
@@ -131,7 +117,6 @@ class NgTestBed<T> {
   static const _lifecycleStabilizers = const <Object>[NgZoneStabilizer];
 
   final Element _host;
-  final PageLoader Function(Element, NgTestFixture<T>) _pageLoaderFactory;
   final List<Object> _providers;
   final List<Object> _stabilizers;
 
@@ -172,12 +157,10 @@ class NgTestBed<T> {
     Element host,
     Iterable<Object> providers,
     Iterable<Object> stabilizers,
-    PageLoader Function(Element element, NgTestFixture<T> fixture) pageLoader,
   })
       : _host = host,
         _providers = providers.toList(),
-        _stabilizers = stabilizers.toList(),
-        _pageLoaderFactory = pageLoader;
+        _stabilizers = stabilizers.toList();
 
   /// Returns a new instance of [NgTestBed] with [providers] added.
   NgTestBed<T> addProviders(Iterable<Object> providers) {
@@ -187,13 +170,6 @@ class NgTestBed<T> {
   /// Returns a new instance of [NgTestBed] with [stabilizers] added.
   NgTestBed<T> addStabilizers(Iterable<Object> stabilizers) {
     return fork(stabilizers: _concat(_stabilizers, stabilizers));
-  }
-
-  /// Returns a new instance of [NgTestBed] with [createPageLoader] set.
-  NgTestBed<T> setPageLoader(
-    PageLoader createPageLoader(Element element, NgTestFixture<T> fixture),
-  ) {
-    return fork(createPageLoader: createPageLoader);
   }
 
   /// Creates a new test application with [T] as the root component.
@@ -244,7 +220,6 @@ class NgTestBed<T> {
         await allStabilizers.stabilize();
         final testFixture = new NgTestFixture<T>(
           componentRef.injector.get(ApplicationRef),
-          _pageLoaderFactory ?? _createPageLoader,
           componentRef,
           allStabilizers,
         );
@@ -262,14 +237,11 @@ class NgTestBed<T> {
     Element host,
     Iterable<Object> providers,
     Iterable<Object> stabilizers,
-    PageLoader Function(Element element, NgTestFixture<T> fixture)
-        createPageLoader,
   }) {
     return new NgTestBed<T>._(
       host: host ?? _host,
       providers: providers ?? _providers,
       stabilizers: stabilizers ?? _stabilizers,
-      pageLoader: createPageLoader ?? _pageLoaderFactory,
     );
   }
 
