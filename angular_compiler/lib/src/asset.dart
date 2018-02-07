@@ -1,15 +1,11 @@
 import 'dart:async';
 
-import 'package:barback/barback.dart' as barback;
 import 'package:build/build.dart';
 import 'package:source_gen/src/utils.dart';
 
 /// Wraps an [AssetReader] to provide an ergonomic API for finding input files.
 abstract class NgAssetReader {
   const NgAssetReader();
-
-  const factory NgAssetReader.fromBarback(barback.Transform transform) =
-      _BarbackAssetReader;
 
   const factory NgAssetReader.fromBuildStep(BuildStep buildStep) =
       _BuildStepAssetReader;
@@ -32,18 +28,6 @@ abstract class NgAssetReader {
       .replaceAll('..%5C', '')
       // Other normalization.
       .replaceAll('%7C', r'/');
-}
-
-class _BarbackAssetReader extends NgAssetReader {
-  final barback.Transform _transform;
-
-  const _BarbackAssetReader(this._transform);
-
-  @override
-  Future<String> readText(String url) async {
-    final id = new barback.AssetId.parse(url);
-    return _transform.readInputAsString(id);
-  }
 }
 
 class _BuildStepAssetReader extends NgAssetReader {

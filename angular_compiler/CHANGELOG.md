@@ -1,3 +1,5 @@
+* Removed all remaining (invalid) references to `package:barback`.
+
 ## 0.4.0-alpha+5
 
 ### Bug fixes
