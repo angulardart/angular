@@ -38,6 +38,7 @@ main() {
         'providers',
         'queries',
         'view_encapsulation',
+        'visibility',
         'deferred/container_component',
         'deferred/deferred_component',
         'di/generated_injectors',

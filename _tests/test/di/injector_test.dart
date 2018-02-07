@@ -6,10 +6,13 @@ import 'package:angular/src/di/injector/injector.dart';
 import 'package:test/test.dart';
 import 'package:angular/src/di/reflector.dart' as reflector;
 import 'package:angular_test/angular_test.dart';
+import 'package:_tests/matchers.dart';
 
 import 'injector_test.template.dart' as ng;
 
 void main() {
+  // TODO(matanl): Remove once this is the default.
+  InjectionError.enableBetterErrors = true;
   ng.initReflector();
 
   group('Injector', () {
@@ -43,11 +46,26 @@ void main() {
 
       test('should throw by default', () {
         i = new Injector.empty();
-        expect(() => i.get(ExampleService), throwsArgumentError);
-        expect(() => i.inject(ExampleService), throwsArgumentError);
-        expect(() => i.injectFromSelf(ExampleService), throwsArgumentError);
-        expect(() => i.injectFromAncestry(ExampleService), throwsArgumentError);
-        expect(() => i.injectFromParent(ExampleService), throwsArgumentError);
+        expect(
+          () => i.get(ExampleService),
+          throwsNoProviderError,
+        );
+        expect(
+          () => i.inject(ExampleService),
+          throwsNoProviderError,
+        );
+        expect(
+          () => i.injectFromSelf(ExampleService),
+          throwsNoProviderError,
+        );
+        expect(
+          () => i.injectFromAncestry(ExampleService),
+          throwsNoProviderError,
+        );
+        expect(
+          () => i.injectFromParent(ExampleService),
+          throwsNoProviderError,
+        );
       });
 
       test('should use orElse if provided', () {
@@ -64,7 +82,10 @@ void main() {
         i = new Injector.empty(parent);
         expect(i.get(ExampleService), 123);
         expect(i.inject(ExampleService), 123);
-        expect(() => i.injectFromSelf(ExampleService), throwsArgumentError);
+        expect(
+          () => i.injectFromSelf(ExampleService),
+          throwsNoProviderError,
+        );
         expect(i.injectFromAncestry(ExampleService), 123);
         expect(i.injectFromParent(ExampleService), 123);
       });
@@ -83,8 +104,14 @@ void main() {
         expect(i.get(ExampleService), 123);
         expect(i.inject(ExampleService), 123);
         expect(i.injectFromSelf(ExampleService), 123);
-        expect(() => i.injectFromAncestry(ExampleService), throwsArgumentError);
-        expect(() => i.injectFromParent(ExampleService), throwsArgumentError);
+        expect(
+          () => i.injectFromAncestry(ExampleService),
+          throwsNoProviderError,
+        );
+        expect(
+          () => i.injectFromParent(ExampleService),
+          throwsNoProviderError,
+        );
       });
 
       test('should return itself if Injector is passed', () {
@@ -193,7 +220,7 @@ void main() {
 
       test('should thrown when a provider was not found', () {
         i = new Injector.slowReflective([]);
-        expect(() => i.get(#ABC), throwsArgumentError);
+        expect(() => i.get(#ABC), throwsNoProviderError);
       });
 
       test('should support resolveAndCreateChild', () {

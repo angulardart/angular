@@ -1,5 +1,14 @@
 ### New features
 
+* Added `InjectionError` and `NoProviderError`, which _may_ be thrown during
+  dependency injection when `InjectionError.enableBetterErrors` is set to
+  `true`. This is an experiment, and we not complete this feature (and it could
+  be rolled back entirely).
+
+## 5.0.0-alpha+5
+
+### New features
+
 * Enables the new template parser by default. This parser is much stricter than
   the old one, as it will detect things like missing closing tags or quotation
   marks.

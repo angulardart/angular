@@ -1,3 +1,5 @@
+## 2.0.0-alpha+5
+
 ### New features
 
 *   Added `Router.onNavigationStart` to notify subscribers when a navigation
