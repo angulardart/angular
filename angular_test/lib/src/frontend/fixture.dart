@@ -5,7 +5,6 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:pageloader/objects.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
@@ -23,22 +22,17 @@ T injectFromFixture<T>(NgTestFixture fixture, Object tokenOrType) {
 
 class NgTestFixture<T> {
   final ApplicationRef _applicationRef;
-  final PageLoader Function(Element, NgTestFixture<T>) _pageLoaderFactory;
   final ComponentRef _rootComponentRef;
   final NgTestStabilizer _testStabilizer;
 
-  PageLoader _pageLoaderInstance;
-
   factory NgTestFixture(
     ApplicationRef applicationRef,
-    PageLoader pageLoaderFactory(Element element, NgTestFixture<T> fixture),
     ComponentRef rootComponentRef,
     NgTestStabilizer testStabilizer,
   ) = NgTestFixture<T>._;
 
   NgTestFixture._(
     this._applicationRef,
-    this._pageLoaderFactory,
     this._rootComponentRef,
     this._testStabilizer,
   );
@@ -69,17 +63,6 @@ class NgTestFixture<T> {
     _rootComponentRef.location.parent.remove();
     _applicationRef.dispose();
     activeTest = null;
-  }
-
-  /// Return a page object representing [pageObjectType] from the DOM.
-  Future<T> resolvePageObject<T>(Type pageObjectType) async {
-    await update();
-    return _pageLoader.getInstance<T>(pageObjectType);
-  }
-
-  /// A page loader instance representing this test fixture.
-  PageLoader get _pageLoader {
-    return _pageLoaderInstance ??= _pageLoaderFactory(rootElement, this);
   }
 
   /// Returns the first component instance that matches predicate [test].
