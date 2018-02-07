@@ -52,7 +52,7 @@ void main() {
         final testBed = new NgTestBed<ShouldInjectAliasedLocal>();
         final testFixture = await testBed.create();
         expect(testFixture.text, testFixture.assertOnlyInstance.text);
-      }, skip: true /* Enable once behavior matches documentation. */);
+      });
     });
 
     group('all', () {

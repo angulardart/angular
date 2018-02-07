@@ -377,7 +377,6 @@ class CompileElement extends CompileNode {
       }
 
       if (!resolvedProvider.dynamicallyReachable ||
-          !resolvedProvider.visibleForInjection ||
           _aliasedProviders.containsKey(resolvedProvider.token)) continue;
 
       // Note: afterChildren is called after recursing into children.
