@@ -240,6 +240,11 @@ void main() {
             throwsWith(new RegExp(
                 "Missing expected \\) at the end of the expression \\[a\\(b\\]")));
       });
+      test("should not crash when encountering an invalid event", () {
+        // Template validator should prevent from ever getting here, but just
+        // in case lets avoid an NPE error that is impossible to debug.
+        expectActionError(null, throwsWith('Blank expressions are not'));
+      });
     });
     group("parseBinding", () {
       group("pipes", () {
