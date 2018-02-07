@@ -23,6 +23,7 @@ dev_dependencies:
   # It is overrode in `dependency_overrides`.
   angular:
   build_test: ^0.10.0
+  dart_style: ^1.0.9
   test: ^0.12.30+1
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
