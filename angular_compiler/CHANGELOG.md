@@ -4,7 +4,7 @@
 
 ### Breaking changes
 
-* Changes required to reference the renamed `@GenerateInjector`.
+* Added `canRead` to `NgAssetReader`.
 
 ## 0.4.0-alpha+5
 

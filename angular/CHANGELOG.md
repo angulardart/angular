@@ -108,6 +108,41 @@ Injector example([Injector parent]) {
   they were always successfully ignored in the past, and showing a warning to
   the user on every build served no purpose.
 
+* If a `templateUrl` is mispelled, a more readable exception is thrown
+  (closes https://github.com/dart-lang/angular/issues/389):
+
+```
+[SEVERE]: Unable to read file:
+  "package:.../not_a_template.html"
+  Ensure the file exists on disk and is available to the compiler.
+```
+
+* If both `template` AND `templateUrl` are supplied, it is now a cleaner build
+  error (closes https://github.com/dart-lang/angular/issues/451):
+
+```
+[SEVERE]: Component "CompWithBothProperties" in
+  asset:experimental.users.matanl.examples.angular.template_url_crash/lib/template_url_crash.dart:
+  Cannot supply both "template" and "templateUrl"
+```
+
+* If _neither_ is supplied, it is also a cleaner build error:
+
+```
+[SEVERE]: Component "CompWithNoTemplate" in
+  asset:experimental.users.matanl.examples.angular.template_url_crash/lib/template_url_crash.dart:
+  Requires either a "template" or "templateUrl"; had neither.
+```
+
+* If a `template` is a string that points to a file on disk, we now warn:
+
+```
+[WARNING]: Component "CompMeantTemplateUrl" in
+  asset:experimental.users.matanl.examples.angular.template_url_crash/lib/template_url_crash.dart:
+  Has a "template" property set to a string that is a file.
+  This is a common mistake, did you mean "templateUrl" instead?
+```
+
 ## 5.0.0-alpha+5
 
 ### New features

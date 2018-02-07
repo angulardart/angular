@@ -10,6 +10,9 @@ abstract class NgAssetReader {
   const factory NgAssetReader.fromBuildStep(BuildStep buildStep) =
       _BuildStepAssetReader;
 
+  /// Returns whether [url] is readable.
+  Future<bool> canRead(String url);
+
   /// Returns [url]'s contents as a string.
   Future<String> readText(String url);
 
@@ -36,8 +39,24 @@ class _BuildStepAssetReader extends NgAssetReader {
   const _BuildStepAssetReader(this._buildStep);
 
   @override
+  Future<bool> canRead(String url) {
+    final asset = new AssetId.resolve(_normalize(url));
+    return _buildStep.canRead(asset);
+  }
+
+  @override
   Future<String> readText(String url) async {
-    url = _normalize(url);
-    return _buildStep.readAsString(new AssetId.resolve(url));
+    final asset = new AssetId.resolve(_normalize(url));
+    return _buildStep.readAsString(asset).catchError((e) async {
+      if (!await _buildStep.canRead(asset)) {
+        // TODO: https://github.com/dart-lang/angular/issues/851.
+        log.severe(''
+            'Unable to read file:\n'
+            '  "$url"\n  '
+            'Ensure the file exists on disk and is available to the compiler.');
+        return '';
+      }
+      throw e;
+    });
   }
 }
