@@ -121,6 +121,10 @@ jobs:
       env: PKG="angular_test"
       dart: dev
     - stage: unit_test
+      script: ./tool/travis.sh test_1
+      env: PKG="angular_test"
+      dart: dev
+    - stage: unit_test
       script: ./tool/travis.sh command_13
       env: PKG="angular_test"
       dart: dev

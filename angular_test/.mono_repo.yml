@@ -8,4 +8,5 @@ stages:
   - build:
     - command: pub run build_runner build
   - unit_test:
+    - test: -p vm
     - command: pub run build_runner test -- --platform=chrome --timeout=4x -x skip_on_travis -j1
