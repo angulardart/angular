@@ -92,11 +92,14 @@ abstract class Injector {
   /// - Throws an error (default behavior).
   ///
   /// An injector always returns itself if [Injector] is given as a token.
+  @mustCallSuper
   dynamic get(Object token, [Object notFoundValue = throwIfNotFound]) {
+    errors.debugInjectorEnter(token);
     final result = injectOptional(token, notFoundValue);
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
+    errors.debugInjectorLeave(token);
     return result;
   }
 
@@ -104,12 +107,6 @@ abstract class Injector {
   ///
   /// ```dart
   /// final rpcService = injector.inject<RpcService>();
-  /// ```
-  ///
-  /// _or_:
-  ///
-  /// ```dart
-  ///
   /// ```
   ///
   /// **EXPERIMENTAL**: Reified types are currently not supported in all of the

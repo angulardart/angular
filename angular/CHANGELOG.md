@@ -2,8 +2,8 @@
 
 * Added `InjectionError` and `NoProviderError`, which _may_ be thrown during
   dependency injection when `InjectionError.enableBetterErrors` is set to
-  `true`. This is an experiment, and we not complete this feature (and it could
-  be rolled back entirely).
+  `true`. This is an experiment, and we may not complete this feature (and it
+  could be rolled back entirely).
 
 ### Bug fixes
 
