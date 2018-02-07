@@ -1,5 +1,6 @@
 import "dart:async";
 
+import 'package:build/build.dart';
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import "package:angular/src/facade/exceptions.dart" show BaseException;
 import "package:angular_compiler/angular_compiler.dart";
@@ -53,30 +54,72 @@ class DirectiveNormalizer {
             ));
   }
 
+  Future<Null> _validateTemplateUrlNotMeant(
+    String content,
+    CompileTypeMetadata directiveType,
+  ) {
+    // Short-circuit.
+    if (content.contains('\n') || !content.endsWith('.html')) {
+      return new Future.value();
+    }
+    return _reader
+        .canRead(_reader.resolveUrl(directiveType.moduleUrl, content))
+        .then((couldRead) {
+      if (couldRead) {
+        // TODO: https://github.com/dart-lang/angular/issues/851.
+        log.warning('Component "${directiveType.name}" in\n  '
+            '${directiveType.moduleUrl}:\n'
+            '  Has a "template" property set to a string that is a file.\n'
+            '  This is a common mistake, did you mean "templateUrl" instead?');
+      }
+    });
+  }
+
   Future<CompileTemplateMetadata> normalizeTemplate(
     CompileTypeMetadata directiveType,
     CompileTemplateMetadata template,
-  ) {
+  ) async {
     // This emulates the same behavior for interpreted mode, that is, that
     // omitting either template: or templateUrl: results in an empty template.
     template ??= new CompileTemplateMetadata(template: '');
     if (template.template != null) {
+      await _validateTemplateUrlNotMeant(template.template, directiveType);
       return new Future.value(normalizeLoadedTemplate(
-          directiveType,
-          template,
-          template.template,
-          directiveType.moduleUrl,
-          template.preserveWhitespace));
+        directiveType,
+        template,
+        template.template,
+        directiveType.moduleUrl,
+        template.preserveWhitespace,
+      ));
     } else if (template.templateUrl != null) {
       var sourceAbsUrl = this
           ._reader
           .resolveUrl(directiveType.moduleUrl, template.templateUrl);
-      return this._reader.readText(sourceAbsUrl).then((templateContent) => this
-          .normalizeLoadedTemplate(directiveType, template, templateContent,
-              sourceAbsUrl, template.preserveWhitespace));
+      return this
+          ._reader
+          .readText(sourceAbsUrl)
+          .then((templateContent) => this.normalizeLoadedTemplate(
+                directiveType,
+                template,
+                templateContent,
+                sourceAbsUrl,
+                template.preserveWhitespace,
+              ));
     } else {
-      throw new BaseException(
-          'No template specified for component ${directiveType.name}');
+      // TODO: https://github.com/dart-lang/angular/issues/851.
+      log.severe(''
+          'Component "${directiveType.name}" in\n  '
+          '${directiveType.moduleUrl}:\n'
+          '  Requires either a "template" or "templateUrl"; had neither.');
+      return new Future.value(
+        normalizeLoadedTemplate(
+          directiveType,
+          template,
+          '',
+          directiveType.moduleUrl,
+          template.preserveWhitespace,
+        ),
+      );
     }
   }
 

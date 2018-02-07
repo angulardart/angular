@@ -563,12 +563,11 @@ class ComponentVisitor
     var template = component;
     String templateContent = coerceString(template, 'template');
     String templateUrl = coerceString(template, 'templateUrl');
-    if (templateContent != null &&
-        templateContent.isNotEmpty &&
-        templateUrl != null &&
-        templateUrl.isNotEmpty) {
-      throw new Exception('${componentType.name} @Component should either '
-          'provide template or templateUrl, not both.');
+    if (templateContent != null && templateUrl != null) {
+      // TODO: https://github.com/dart-lang/angular/issues/851.
+      log.severe(''
+          'Component "${componentType.name}" in\n  ${componentType.moduleUrl}:\n'
+          '  Cannot supply both "template" and "templateUrl"');
     }
     return new CompileTemplateMetadata(
       encapsulation: _encapsulation(template),
