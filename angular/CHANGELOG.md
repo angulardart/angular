@@ -5,6 +5,70 @@
   `true`. This is an experiment, and we not complete this feature (and it could
   be rolled back entirely).
 
+### Bug fixes
+
+* Corrects the behavior of `Visibility.local` to match documentation.
+
+  Previously, a directive with `Visibility.local` was only injectable via an
+  alias within its defining view. This meant the following was possible
+
+  ```dart
+  abstract class Dependency {}
+
+  @Component(
+    selector: 'dependency',
+    template: '<ng-content></ng-content>'
+    providers: const [
+      const Provider(Dependency, useExisting: DependencyImpl),
+    ],
+    visibility: Visibility.local,
+  )
+  class DependencyImpl implements Dependency {}
+
+  @Component(
+    selector: 'dependent',
+    ...
+  )
+  class Dependent {
+    Dependent(Dependency _); // Injection succeeds.
+  }
+
+  @Component(
+    selector: 'app',
+    template: '''
+      <dependency>
+        <dependent></dependent>
+      </dependency>
+    ''',
+    directives: const [Dependency, Dependent],
+  )
+  class AppComponent {}
+  ```
+
+  because both `DependencyImpl` and `Dependent` are constructed in the same
+  method, thus the instance of `DependencyImpl` could be passed directly to
+  `Dependent` without an injector lookup. However, the following failed
+
+  ```dart
+  @Component(
+    selector: 'dependency',
+    // `Dependent` will fail to inject `Dependency`.
+    template: '<dependent></dependent>',
+    directives: const [Dependent],
+    providers: const [
+      const Provider(Dependency, useExisting: DependencyImpl),
+    ],
+    visibility: Visibility.local,
+  )
+  class DependencyImpl implements Dependency {}
+  ```
+
+  because no code was generated for children to inject `Dependency`. This was at
+  odds with the documentation, and optimized for a very specific use case.
+
+  This has been fixed and it's now possible for all children of `DependencyImpl`
+  to inject `Dependency`, not just those constructed in the same view.
+
 ## 5.0.0-alpha+5
 
 ### New features

@@ -208,6 +208,15 @@ class _ViewDependencyWithDependentInViewHost0 extends DebugAppView<dynamic> {
   }
 
   @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.Dependency) && (0 == nodeIndex))) {
+      return _DependencyWithDependentInView_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -292,6 +301,15 @@ class _ViewDependencyWithContentHost0 extends DebugAppView<dynamic> {
     init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.DependencyWithContent>(
         0, this, rootEl, _DependencyWithContent_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(
+      dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.Dependency) && (0 == nodeIndex))) {
+      return _DependencyWithContent_0_4;
+    }
+    return notFoundResult;
   }
 
   @override
