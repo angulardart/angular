@@ -553,7 +553,7 @@ class ComponentVisitor
         annotationValue,
         _visibilityProperty,
         Visibility.values,
-        defaultTo: Visibility.all,
+        defaultTo: Visibility.local,
       ),
     );
   }
