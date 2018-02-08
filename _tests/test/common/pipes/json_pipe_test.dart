@@ -1,5 +1,4 @@
 @TestOn('browser')
-@Tags(const ['codegen'])
 import 'dart:convert';
 
 import 'package:angular_test/angular_test.dart';
