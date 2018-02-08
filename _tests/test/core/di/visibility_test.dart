@@ -220,6 +220,8 @@ class ShouldInjectAliasedLocal extends Dependency {
 @Component(
   selector: 'injects-aliased-local',
   template: '{{dependency.text}}',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class InjectsAliasedLocal {
   final Dependency dependency;
