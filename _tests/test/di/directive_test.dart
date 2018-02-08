@@ -576,6 +576,8 @@ class MissingService {}
 @Component(
   selector: 'will-fail-injecting-1-node',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class WillFailInjecting1Node {
   WillFailInjecting1Node(MissingService _);
@@ -593,6 +595,8 @@ class InjectsMissingService {
     ),
   ],
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class WillFailInjecting2Node {
   WillFailInjecting2Node(InjectsMissingService _);
@@ -601,6 +605,8 @@ class WillFailInjecting2Node {
 @Component(
   selector: 'will-fail-injecting-2-node',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class WillFailInjecting2NodeParent {
   WillFailInjecting2NodeParent(InjectsMissingService _);
