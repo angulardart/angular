@@ -101,4 +101,7 @@ class FakeAssetReader extends NgAssetReader {
 
   @override
   Future<String> readText(String url) async => '';
+
+  @override
+  Future<bool> canRead(String url) async => true;
 }

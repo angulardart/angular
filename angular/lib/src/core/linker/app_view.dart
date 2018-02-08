@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:angular/src/core/app_view_consts.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
+import 'package:angular/src/di/errors.dart' as di_errors;
 import 'package:angular/src/di/injector/element.dart';
 import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
@@ -296,6 +297,7 @@ abstract class AppView<T> {
   }
 
   dynamic injectorGet(token, int nodeIndex, [notFoundValue = throwIfNotFound]) {
+    di_errors.debugInjectorEnter(token);
     var result = _UndefinedInjectorResult;
     AppView view = this;
     while (identical(result, _UndefinedInjectorResult)) {
@@ -312,6 +314,7 @@ abstract class AppView<T> {
       nodeIndex = view.viewData.parentIndex;
       view = view.parentView;
     }
+    di_errors.debugInjectorLeave(token);
     return result;
   }
 

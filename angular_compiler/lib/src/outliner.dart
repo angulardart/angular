@@ -81,7 +81,7 @@ class TemplateOutliner implements Builder {
       }
     }
     for (final method in methods) {
-      if ($_GenerateInjector.hasAnnotationOfExact(
+      if ($GenerateInjector.hasAnnotationOfExact(
         method,
         throwOnUnresolved: false,
       )) {

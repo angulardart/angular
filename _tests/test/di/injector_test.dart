@@ -5,7 +5,6 @@ import 'package:angular/src/di/injector/hierarchical.dart';
 import 'package:angular/src/di/injector/injector.dart';
 import 'package:test/test.dart';
 import 'package:angular/src/di/reflector.dart' as reflector;
-import 'package:angular_test/angular_test.dart';
 import 'package:_tests/matchers.dart';
 
 import 'injector_test.template.dart' as ng;
@@ -68,6 +67,32 @@ void main() {
         );
       });
 
+      test('should throw a readable message with injection fails', () {
+        // Anything but injector.get(Injector) will fail here.
+        final injector = new Injector.empty();
+        expect(
+          () => injector.get(ExampleService),
+          throwsA(
+            predicate(
+              (e) => '$e'.endsWith('No provider found for $ExampleService'),
+            ),
+          ),
+        );
+      });
+
+      test('should throw a readable message even with a parent injector', () {
+        final parent = new Injector.empty();
+        final child = new Injector.empty(parent);
+        expect(
+          () => child.get(ExampleService),
+          throwsA(
+            predicate(
+              (e) => '$e'.endsWith('No provider found for $ExampleService'),
+            ),
+          ),
+        );
+      });
+
       test('should use orElse if provided', () {
         i = new Injector.empty();
         expect(i.get(ExampleService, 123), 123);
@@ -116,6 +141,18 @@ void main() {
 
       test('should return itself if Injector is passed', () {
         expect(i.get(Injector), i);
+      });
+
+      test('should throw a readable error message on a failure', () {
+        final injector = new Injector.map({});
+        expect(
+          () => injector.get(ExampleService),
+          throwsA(
+            predicate(
+              (e) => '$e'.endsWith('No provider found for $ExampleService'),
+            ),
+          ),
+        );
       });
     });
 
@@ -311,19 +348,67 @@ void main() {
         expect(injector.get(unnamedTokenOfString), 2);
       });
 
-      test('should throw the provider token that failed', () {
+      test('should throw a readable error message on a 1-node failure', () {
+        final injector = new Injector.slowReflective([]);
+        expect(
+          () => injector.get(ExampleService),
+          throwsA(
+            predicate(
+              (e) => '$e'.endsWith('No provider found for $ExampleService'),
+            ),
+          ),
+        );
+      });
+
+      test('should throw a readable error message on a 2-node failure', () {
         final injector = new Injector.slowReflective([
           new Provider(
             ExampleService,
-            useFactory: (ExampleService2 e) => null,
+            useFactory: (Null willNeverBeCalled) => null,
             deps: const [ExampleService2],
           ),
         ]);
         expect(
           () => injector.get(ExampleService),
-          throwsInAngular(
+          throwsA(
             predicate(
-              (e) => '$e'.contains('No provider found for ExampleService2'),
+              (e) => '$e'.contains(''
+                  'No provider found for $ExampleService2: '
+                  '$ExampleService -> $ExampleService2.'),
+            ),
+          ),
+        );
+      });
+
+      test('should throw a readable error message on a 3-node failure', () {
+        // ExampleService -->
+        //   ExampleService2 -->
+        //     ExampleService3 + ExampleService4
+        //
+        // ... where ExampleService4 is missing.
+        final injector = new Injector.slowReflective([
+          new Provider(
+            ExampleService,
+            useFactory: (Null willNeverBeCalled) => null,
+            deps: const [ExampleService2],
+          ),
+          new Provider(
+            ExampleService2,
+            useFactory: (Null willNeverBeCalled) => null,
+            deps: const [ExampleService3, ExampleService4],
+          ),
+          new Provider(
+            ExampleService3,
+            useValue: new ExampleService3(),
+          ),
+        ]);
+        expect(
+          () => injector.get(ExampleService),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(''
+                  'No provider found for $ExampleService4: '
+                  '$ExampleService -> $ExampleService2 -> $ExampleService4.'),
             ),
           ),
         );
@@ -385,6 +470,43 @@ void main() {
         expect(injector.get(unnamedTokenOfDynamic), 5);
         expect(injector.get(unnamedTokenOfString), 6);
       });
+
+      test('should throw a readable error message on a 1-node failure', () {
+        expect(
+          () => injector.get(MissingService),
+          throwsA(
+            predicate(
+              (e) => '$e'.endsWith('No provider found for $MissingService'),
+            ),
+          ),
+        );
+      });
+
+      test('should throw a readable error message on a 2-node failure', () {
+        expect(
+          () => injector.get(ExampleService3),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(''
+                  'No provider found for $MissingService: '
+                  '$ExampleService3 -> $MissingService.'),
+            ),
+          ),
+        );
+      });
+
+      test('should throw a readable error message on a 3-node failure', () {
+        expect(
+          () => injector.get(ExampleService4),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(''
+                  'No provider found for $MissingService: '
+                  '$ExampleService4 -> $ExampleService3 -> $MissingService.'),
+            ),
+          ),
+        );
+      });
     });
   });
 }
@@ -411,6 +533,12 @@ class ExampleService {
 
 class ExampleService2 implements ExampleService {}
 
+class ExampleService3 {}
+
+class ExampleService4 {}
+
+class MissingService {}
+
 const stringToken = const OpaqueToken('stringToken');
 const numberToken = const OpaqueToken('numberToken');
 const booleanToken = const OpaqueToken('booleanToken');
@@ -427,13 +555,31 @@ const typedTokenOfListString = const OpaqueToken<List<String>>('typedToken');
 const unnamedTokenOfDynamic = const OpaqueToken();
 const unnamedTokenOfString = const OpaqueToken<String>();
 
-@Injector.generate(const [
+Null willNeverBeCalled1(Object _) => null;
+Null willNeverBeCalled2(Object _, Object __) => null;
+
+@GenerateInjector(const [
   const Provider(ExampleService, useClass: ExampleService2),
   const Provider(ExampleService2),
   const Provider(stringToken, useValue: 'Hello World'),
   const Provider(numberToken, useValue: 1234),
   const Provider(booleanToken, useValue: true),
   const Provider(simpleConstToken, useValue: const ExampleService()),
+
+  // Example of a runtime failure; MissingService
+  const Provider(
+    ExampleService3,
+    useFactory: willNeverBeCalled1,
+    deps: const [MissingService],
+  ),
+
+  // Example of a runtime failure; ExampleService3 -> MissingService.
+  const Provider(
+    ExampleService4,
+    useFactory: willNeverBeCalled2,
+    // Will find ExampleService2, ExampleService3 will fail (see above).
+    deps: const [ExampleService2, ExampleService3],
+  ),
 
   // TODO(matanl): Switch to ValueProvider.forToken once supported.
   const Provider<String>(multiStringToken, useValue: 'A'),

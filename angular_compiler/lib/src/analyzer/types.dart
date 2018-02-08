@@ -34,8 +34,8 @@ const $HostBinding = const TypeChecker.fromUrl('$_meta#HostBinding');
 const $HostListener = const TypeChecker.fromUrl('$_meta#HostListener');
 
 // Class types.
-const $_GenerateInjector =
-    const TypeChecker.fromUrl('$_injector#_GenerateInjector');
+const $GenerateInjector =
+    const TypeChecker.fromUrl('$_injector#GenerateInjector');
 const $Module = const TypeChecker.fromUrl('$_module#Module');
 const $Provider = const TypeChecker.fromUrl('$_provider#Provider');
 const $OpaqueToken = const TypeChecker.fromUrl('$_token#OpaqueToken');

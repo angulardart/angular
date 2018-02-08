@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 
 import 'injector_use_value_test.template.dart' as ng;
 
-// Tests specifically for @Injector.generate + useValue: ...
+// Tests specifically for @GenerateInjector + useValue: ...
 //
 // These tend to be complicated and more isolated than other code.
 void main() {
@@ -40,7 +40,7 @@ void main() {
         injector.get(ClassWithPrivateConstructorAndStaticField),
         const isInstanceOf<ClassWithPrivateConstructorAndStaticField>(),
       );
-    }, skip: 'Re-enable once source_gen bug is fixed for this case');
+    });
 
     test('class with a private constructor, but a public top-level field', () {
       expect(
@@ -58,7 +58,7 @@ void main() {
   });
 }
 
-@Injector.generate(const [
+@GenerateInjector(const [
   const Provider(
     ClassWithConstConstructor,
     useValue: const ClassWithConstConstructor(),
@@ -71,10 +71,10 @@ void main() {
     ClassWithMultipleConstructors,
     useValue: const ClassWithMultipleConstructors.isConst(),
   ),
-  // const Provider(
-  //  ClassWithPrivateConstructorAndStaticField,
-  //  useValue: ClassWithPrivateConstructorAndStaticField.instance,
-  // ),
+  const Provider(
+    ClassWithPrivateConstructorAndStaticField,
+    useValue: ClassWithPrivateConstructorAndStaticField.instance,
+  ),
   const Provider(
     ClassWithPrivateConstructorAndTopLevelField,
     useValue: topLevelInstance,

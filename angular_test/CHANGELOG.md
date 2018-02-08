@@ -1,3 +1,10 @@
+* Removed built-in support for `package:pageloader`. The current version of
+  `pageloader` relies on `dart:mirrors`, which is being removed from the web
+  compilers (dart2js, dartdevc). There is a new (internal-only, right now)
+  version of `pageloader` in development that uses code generation, but it is
+  not available externally yet. We'll consider re-adding support once available
+  or through another package (i.e. `angular_pageloader` or similar).
+
 ## 2.0.0-alpha+3
 
 * Removed support for `pub run angular_test`. This is no longer strictly

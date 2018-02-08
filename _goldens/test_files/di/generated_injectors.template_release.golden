@@ -15,30 +15,32 @@ import 'package:angular/angular.template.dart'
 // *** EXPERIMENTAL ** Injector Generator [START]
 import 'package:angular/src/di/injector/injector.dart'
     as _i1;
-import 'generated_injectors.dart' as _i2;
+import 'package:angular/src/di/injector/hierarchical.dart'
+    as _i2;
+import 'generated_injectors.dart' as _i3;
 
 _i1.Injector doGenerate$Injector([_i1.Injector parent]) =>
     new _Injector$doGenerate._(parent);
 
-class _Injector$doGenerate extends _i1.GeneratedInjector {
+class _Injector$doGenerate extends _i2.HierarchicalInjector {
   _Injector$doGenerate._([_i1.Injector parent]) : super(parent);
 
-  _i2.Example _field0;
+  _i3.Example _field0;
 
-  _i2.Example _getExample$0() => _field0 ??= new _i2.Example();
+  _i3.Example _getExample$0() => _field0 ??= new _i3.Example();
   String _getString$1() => 'dynamic';
   String _getString$2() => 'String';
-  dynamic _getdynamic$3() => const _i2.Example();
-  dynamic _getdynamic$4() => _i2.instanceOfExamplePrime;
-  dynamic _getdynamic$5() => _i2.ExampleTheta.instance;
+  dynamic _getdynamic$3() => const _i3.Example();
+  dynamic _getdynamic$4() => _i3.instanceOfExamplePrime;
+  dynamic _getdynamic$5() => _i3.ExampleTheta.instance;
   dynamic _getdynamic$6() => const [
-        const _i2.Example(),
-        _i2.instanceOfExamplePrime,
-        _i2.ExampleTheta.instance
+        const _i3.Example(),
+        _i3.instanceOfExamplePrime,
+        _i3.ExampleTheta.instance
       ];
   dynamic _getdynamic$7() => const {
-        'instanceOfExample': const _i2.Example(),
-        _i2.instanceOfExamplePrime: 'instanceOfExamplePrime'
+        'instanceOfExample': const _i3.Example(),
+        _i3.instanceOfExamplePrime: 'instanceOfExamplePrime'
       };
   String _getString$8() => 'A';
   String _getString$9() => 'B';
@@ -46,7 +48,7 @@ class _Injector$doGenerate extends _i1.GeneratedInjector {
   @override
   Object injectFromSelfOptional(Object token,
       [Object orElse = _i1.throwIfNotFound]) {
-    if (identical(token, _i2.Example)) {
+    if (identical(token, _i3.Example)) {
       return _getExample$0();
     }
     if (identical(token, const _i1.OpaqueToken<dynamic>('someToken'))) {

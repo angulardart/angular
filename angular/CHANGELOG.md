@@ -2,8 +2,146 @@
 
 * Added `InjectionError` and `NoProviderError`, which _may_ be thrown during
   dependency injection when `InjectionError.enableBetterErrors` is set to
-  `true`. This is an experiment, and we not complete this feature (and it could
-  be rolled back entirely).
+  `true`. This is an experiment, and we may not complete this feature (and it
+  could be rolled back entirely).
+
+* Added `@GenerateInjector`, a way to generate a factory for an `Injector`
+  completely at compile-time, similar to `@Component` or `@Directive`. This
+  replaces the experimental feature `@Injector.generate`:
+
+```dart
+import 'my_file.template.dart' as ng;
+
+@GenerateInjector(const [
+  const Provider(A, useClass: APrime),
+])
+Injector example([Injector parent]) {
+  // The generated factory is your method's name, suffixed with `$Injector`.
+  return example$Injector(parent);
+}
+```
+
+### Bug fixes
+
+* An invalid event binding (`<comp (event-with-no-expression)>`) no longer
+  crashes the parser during compilation and instead reports that such a binding
+  is not allowed.
+
+* Corrects the behavior of `Visibility.local` to match documentation.
+
+  Previously, a directive with `Visibility.local` was only injectable via an
+  alias within its defining view. This meant the following was possible
+
+  ```dart
+  abstract class Dependency {}
+
+  @Component(
+    selector: 'dependency',
+    template: '<ng-content></ng-content>',
+    providers: const [
+      const Provider(Dependency, useExisting: DependencyImpl),
+    ],
+    visibility: Visibility.local,
+  )
+  class DependencyImpl implements Dependency {}
+
+  @Component(
+    selector: 'dependent',
+    ...
+  )
+  class Dependent {
+    Dependent(Dependency _); // Injection succeeds.
+  }
+
+  @Component(
+    selector: 'app',
+    template: '''
+      <dependency>
+        <dependent></dependent>
+      </dependency>
+    ''',
+    directives: const [Dependency, Dependent],
+  )
+  class AppComponent {}
+  ```
+
+  because both `DependencyImpl` and `Dependent` are constructed in the same
+  method, thus the instance of `DependencyImpl` could be passed directly to
+  `Dependent` without an injector lookup. However, the following failed
+
+  ```dart
+  @Component(
+    selector: 'dependency',
+    // `Dependent` will fail to inject `Dependency`.
+    template: '<dependent></dependent>',
+    directives: const [Dependent],
+    providers: const [
+      const Provider(Dependency, useExisting: DependencyImpl),
+    ],
+    visibility: Visibility.local,
+  )
+  class DependencyImpl implements Dependency {}
+  ```
+
+  because no code was generated for children to inject `Dependency`. This was at
+  odds with the documentation, and optimized for a very specific use case.
+
+  This has been fixed and it's now possible for all children of `DependencyImpl`
+  to inject `Dependency`, not just those constructed in the same view.
+
+<!-- NOT YET ENABLED
+* Services that were _not_ marked `@Injectable()` are _no longer skipped_ when
+  provided in `providers: const [ ... ]` for a `@Directive` or `@Component`.
+  This choice made sense when `@Injectable()` was required, but this is no
+  longer the case. Additionally, the warning that was printed to console has
+  been removed.
+-->
+
+* It is no longer a build warning to have an injectable service with multiple
+  constructors. This was originally meant to keep injection from being too
+  ambiguous, but there are understood patterns now (first constructor), and
+  there is no alternative present yet. We may re-add this as a warning if there
+  ends up being a mechanism to pick a constructor in the future.
+
+* It is no longer a build warning to have injectable services or components with
+  named constructor parameters. While they are still not supported for injected,
+  they were always successfully ignored in the past, and showing a warning to
+  the user on every build served no purpose.
+
+* If a `templateUrl` is mispelled, a more readable exception is thrown
+  (closes https://github.com/dart-lang/angular/issues/389):
+
+```
+[SEVERE]: Unable to read file:
+  "package:.../not_a_template.html"
+  Ensure the file exists on disk and is available to the compiler.
+```
+
+* If both `template` AND `templateUrl` are supplied, it is now a cleaner build
+  error (closes https://github.com/dart-lang/angular/issues/451):
+
+```
+[SEVERE]: Component "CompWithBothProperties" in
+  asset:experimental.users.matanl.examples.angular.template_url_crash/lib/template_url_crash.dart:
+  Cannot supply both "template" and "templateUrl"
+```
+
+* If _neither_ is supplied, it is also a cleaner build error:
+
+```
+[SEVERE]: Component "CompWithNoTemplate" in
+  asset:experimental.users.matanl.examples.angular.template_url_crash/lib/template_url_crash.dart:
+  Requires either a "template" or "templateUrl"; had neither.
+```
+
+* If a `template` is a string that points to a file on disk, we now warn:
+
+```
+[WARNING]: Component "CompMeantTemplateUrl" in
+  asset:experimental.users.matanl.examples.angular.template_url_crash/lib/template_url_crash.dart:
+  Has a "template" property set to a string that is a file.
+  This is a common mistake, did you mean "templateUrl" instead?
+```
 
 ## 5.0.0-alpha+5
 
@@ -44,7 +182,7 @@ targets:
   `QueryList` was always created as a `QueryList<dynamic>`, even though users
   expected it to be a `QueryList<T>`. The new API is fully compatible.
 
-* `SlowCompinentLoader` is now formally *deprecated*. See
+* `SlowComponentLoader` is now formally *deprecated*. See
   `doc/component_loading.md`. This feature is not compatible with future
   restrictions of AngularDart, because it requires collecting metadata and
   disabling tree-shaking of classes annotated with `@Component`. The newer API

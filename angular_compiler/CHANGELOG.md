@@ -1,4 +1,10 @@
+### Bug fixes
+
 * Removed all remaining (invalid) references to `package:barback`.
+
+### Breaking changes
+
+* Added `canRead` to `NgAssetReader`.
 
 ## 0.4.0-alpha+5
 

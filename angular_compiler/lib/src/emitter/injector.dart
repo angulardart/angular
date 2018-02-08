@@ -9,14 +9,22 @@ import '../analyzer/di/tokens.dart';
 /// **NOTE**: This class is _stateful_, and should be used once per injector.
 class InjectorEmitter implements InjectorVisitor {
   static const _package = 'package:angular';
-  static const _runtime = '$_package/src/di/injector/injector.dart';
+  static const _runtime = '$_package/src/di/injector';
   static const _$override = const Reference('override', 'dart:core');
   static const _$Object = const Reference('Object', 'dart:core');
 
-  static const _$Injector = const Reference('Injector', _runtime);
-  static const _$GeneratedInjector =
-      const Reference('GeneratedInjector', _runtime);
-  static const _$throwIfNotFound = const Reference('throwIfNotFound', _runtime);
+  static const _$Injector = const Reference(
+    'Injector',
+    '$_runtime/injector.dart',
+  );
+  static const _$Hierarchical = const Reference(
+    'HierarchicalInjector',
+    '$_runtime/hierarchical.dart',
+  );
+  static const _$throwIfNotFound = const Reference(
+    'throwIfNotFound',
+    '$_runtime/injector.dart',
+  );
 
   String _className;
   String _factoryName;
@@ -31,7 +39,7 @@ class InjectorEmitter implements InjectorVisitor {
   /// Returns the `class ... { ... }` for this generated injector.
   Class createClass() => new Class((b) => b
     ..name = _className
-    ..extend = _$GeneratedInjector
+    ..extend = _$Hierarchical
     ..constructors.add(new Constructor((b) => b
       ..name = '_'
       ..optionalParameters.add(new Parameter((b) => b

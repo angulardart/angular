@@ -1105,6 +1105,10 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
       _reportError(astNode,
           '":" is not allowed in event names: ${_getEventName(astNode)}');
     }
+    if (astNode.value == null || astNode.value.isEmpty) {
+      _reportError(astNode,
+          'events must have a bound expresssion: ${_getEventName(astNode)}');
+    }
     return super.visitEvent(astNode);
   }
 
