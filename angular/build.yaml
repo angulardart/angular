@@ -4,22 +4,24 @@ targets:
       angular:
         generate_for:
           exclude:
-            - "lib/source_gen.dart"
+            - "lib/builder.dart"
             - "lib/src/compiler/**"
             - "lib/src/source_gen/**"
-            - "lib/src/transform/**"
-            - "lib/transformer.dart"
 
 builders:
   angular:
     target: "angular"
-    import: "package:angular/source_gen.dart"
+    import: "package:angular/builder.dart"
     builder_factories:
-      - templatePlaceholderBuilder
+      - templatePlaceholder
       - templateCompiler
       - stylesheetCompiler
     auto_apply: dependents
-    required_inputs: [".css"]
+    required_inputs:
+      - ".css"
     build_extensions:
-      .css: [".css.dart", ".css.shim.dart"]
-      .dart: [".template.dart"]
+      .css:
+        - ".css.dart"
+        - ".css.shim.dart"
+      .dart:
+        - ".template.dart"
