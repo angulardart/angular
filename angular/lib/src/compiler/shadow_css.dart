@@ -333,18 +333,17 @@ class CompoundSelector {
     var x = a.simpleSelector;
     var y = b.simpleSelector;
 
-    // OK instance of '.runtimeType' usage, and is only in the compiler.
-    if (x.runtimeType == y.runtimeType) {
-      if (x is ElementSelector || x is NamespaceSelector) {
-        logger.warning('Compound selector contains multiple type selectors:\n'
-            '${x.span.message('')}\n'
-            '${y.span.message('')}');
-      } else if (x is PseudoElementSelector) {
-        logger.warning(
-            'Compound selector contains multiple pseudo element selectors:\n'
-            '${x.span.message('')}\n'
-            '${y.span.message('')}');
-      }
+    if ((x is ElementSelector && y is ElementSelector) ||
+        (x is NamespaceSelector && y is NamespaceSelector)) {
+      logger.warning('Compound selector contains multiple type selectors:\n'
+          '${x.span.message('')}\n'
+          '${y.span.message('')}');
+      return 0;
+    } else if (x is PseudoElementSelector && y is PseudoElementSelector) {
+      logger.warning(
+          'Compound selector contains multiple pseudo element selectors:\n'
+          '${x.span.message('')}\n'
+          '${y.span.message('')}');
       return 0;
     } else if (x is PseudoElementSelector ||
         y is ElementSelector ||
