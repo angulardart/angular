@@ -21,6 +21,14 @@ Injector example([Injector parent]) {
 }
 ```
 
+### Breaking changes
+
+* Restricted the default visibility of all components and directives to
+  `Visibility.local`. This means components and directives will no longer be
+  available for injection by their descendants, unless their visibility is
+  explicitly set to `Visibility.all`. This feature had a cost in code size but
+  was rarely used, so it's now opt-in, rather than the default behavior.
+
 ### Bug fixes
 
 * An invalid event binding (`<comp (event-with-no-expression)>`) no longer
