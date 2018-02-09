@@ -32,27 +32,52 @@ const _defaultFlags = const CompilerFlags(
   useAstPkg: true,
 );
 
-/// Default extension of the output `.template.dart` file.
+// Default extensions of the output `[.outline].template.dart` file(s).
 const _templateExtension = '.template.dart';
+const _outlineExtension = '.outline.template.dart';
 
 /// Generates a temporary `.ng_placeholder` file for the compiler to use.
 Builder templatePlaceholder(_) => const Placeholder();
 
 /// Generates additional required Dart files for AngularDart.
-Builder templateCompiler(BuilderOptions options) {
+///
+/// * [defaultFlags]: Default compiler flags before merged with [options].
+/// * [templateExtension]: Template extension to use when compiling.
+/// * [outlineExtension]: Outline extension to use when `--outline-only` used.
+Builder templateCompiler(
+  BuilderOptions options, {
+  CompilerFlags defaultFlags: _defaultFlags,
+  String templateExtension: _templateExtension,
+  String outlineExtension: _outlineExtension,
+}) {
   final config = <String, dynamic>{}..addAll(options.config);
   final outline = config.remove(_useTemplateOutlinesInstead) != null;
   final flags = new CompilerFlags.parseRaw(
     config,
-    _defaultFlags,
+    defaultFlags,
     severity: Level.SEVERE,
   );
   if (outline) {
-    return new TemplateOutliner(flags);
+    return new TemplateOutliner(flags, extension: outlineExtension);
   }
-  return new Compiler(flags, generate).asBuilder(
-    extension: _templateExtension,
+  return new Compiler(flags, generate).asBuilder(extension: templateExtension);
+}
+
+/// Generates an outline (API skeleton) instead of fully-generated code.
+///
+/// * [defaultFlags]: Default compiler flags before merged with [options].
+/// * [extension]: Extension to use when compiling.
+Builder outlineCompiler(
+  BuilderOptions options, {
+  CompilerFlags defaultFlags: _defaultFlags,
+  String extension: _outlineExtension,
+}) {
+  final flags = new CompilerFlags.parseRaw(
+    options,
+    defaultFlags,
+    severity: Level.SEVERE,
   );
+  return new TemplateOutliner(flags, extension: extension);
 }
 
 /// Generates `.css.dart` files that are imported by the template compiler.

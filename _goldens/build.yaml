@@ -4,3 +4,19 @@ targets:
     builders:
       angular|goldens:
         generate_for: ["test_files/**"]
+
+builders:
+  goldens:
+    target: "goldens"
+    import: "../../../tool/src/builder.dart"
+    builder_factories:
+      - debugBuilder
+      - releaseBuilder
+      - templateBuilder
+    auto_apply: none
+    build_to: source
+    build_extensions:
+      - .dart:
+        - ".template_debug.golden"
+        - ".template_release.golden"
+        - ".template_outline.golden"
