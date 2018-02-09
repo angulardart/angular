@@ -1,7 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 // **************************************************************************
-// Generator: TemplateGenerator
+// Generator: Instance of 'Compiler'
 // **************************************************************************
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
@@ -10,42 +8,32 @@ export 'container_component.dart';
 import 'package:angular/angular.dart';
 import 'package:_goldens/component.dart';
 import 'deferred_component.dart';
-import 'package:angular/src/di/reflector.dart'
-    as _ngRef;
-import 'package:angular/angular.template.dart'
-    as _ref0;
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'container_component.dart' as import1;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import6;
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import7;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'deferred_component.template.dart' deferred as deflib1;
 import 'deferred_component.dart' deferred as deflib0;
-import 'package:_goldens/component.template.dart'
-    deferred as deflib3;
-import 'package:_goldens/component.dart'
-    deferred as deflib2;
+import 'package:_goldens/component.template.dart' deferred as deflib3;
+import 'package:_goldens/component.dart' deferred as deflib2;
 
 const List<dynamic> styles$TestContainerComponent = const [];
 
-class ViewTestContainerComponent0
-    extends AppView<import1.TestContainerComponent> {
+class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent> {
   ViewContainer _appEl_1;
   ViewContainer _appEl_2;
   static RenderComponentType _renderType;
-  ViewTestContainerComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  ViewTestContainerComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import6.document.createElement('test-container');
-    _renderType ??= import7.appViewUtils.createRenderType(
-        '', ViewEncapsulation.None, styles$TestContainerComponent);
+    _renderType ??= import7.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$TestContainerComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -56,17 +44,13 @@ class ViewTestContainerComponent0
     var _anchor_1 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
-    TemplateRef _TemplateRef_1_5 =
-        new TemplateRef(_appEl_1, viewFactory_TestContainerComponent1);
-    loadDeferred(
-        deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_5);
+    TemplateRef _TemplateRef_1_5 = new TemplateRef(_appEl_1, viewFactory_TestContainerComponent1);
+    loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_5);
     var _anchor_2 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_2);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
-    TemplateRef _TemplateRef_2_5 =
-        new TemplateRef(_appEl_2, viewFactory_TestContainerComponent2);
-    loadDeferred(
-        deflib2.loadLibrary, deflib3.loadLibrary, _appEl_2, _TemplateRef_2_5);
+    TemplateRef _TemplateRef_2_5 = new TemplateRef(_appEl_2, viewFactory_TestContainerComponent2);
+    loadDeferred(deflib2.loadLibrary, deflib3.loadLibrary, _appEl_2, _TemplateRef_2_5);
     init(const [], null);
     return null;
   }
@@ -78,19 +62,15 @@ class ViewTestContainerComponent0
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewTestContainerComponent0(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent1
-    extends AppView<import1.TestContainerComponent> {
+class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponent> {
   import6.Element _el_0;
   AppView _compView_0;
   dynamic _DeferredChildComponent_0_4;
-  _ViewTestContainerComponent1(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent1(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
@@ -105,10 +85,8 @@ class _ViewTestContainerComponent1
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, deflib0.DeferredChildComponent) &&
-        ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, deflib0.DeferredChildComponent) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
       return _DeferredChildComponent_0_4;
     }
     return notFoundResult;
@@ -125,19 +103,15 @@ class _ViewTestContainerComponent1
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent1(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent1(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewTestContainerComponent1(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent2
-    extends AppView<import1.TestContainerComponent> {
+class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponent> {
   import6.Element _el_0;
   AppView _compView_0;
   dynamic _SampleComponent_0_4;
-  _ViewTestContainerComponent2(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent2(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
@@ -151,8 +125,7 @@ class _ViewTestContainerComponent2
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, deflib2.SampleComponent) && (0 == nodeIndex))) {
       return _SampleComponent_0_4;
     }
@@ -170,8 +143,7 @@ class _ViewTestContainerComponent2
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewTestContainerComponent2(parentView, parentIndex);
 }
 
@@ -180,9 +152,7 @@ const List<dynamic> styles$TestContainerComponentHost = const [];
 class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
   ViewTestContainerComponent0 _compView_0;
   import1.TestContainerComponent _TestContainerComponent_0_4;
-  _ViewTestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways);
+  _ViewTestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestContainerComponent0(this, 0);
@@ -190,15 +160,12 @@ class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
     _TestContainerComponent_0_4 = new import1.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_4, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.TestContainerComponent>(
-        0, this, rootEl, _TestContainerComponent_0_4);
+    return new ComponentRef<import1.TestContainerComponent>(0, this, rootEl, _TestContainerComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TestContainerComponent) &&
-        (0 == nodeIndex))) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TestContainerComponent) && (0 == nodeIndex))) {
       return _TestContainerComponent_0_4;
     }
     return notFoundResult;
@@ -215,17 +182,11 @@ class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestContainerComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_TestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewTestContainerComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.TestContainerComponent>
-    TestContainerComponentNgFactory =
-    const ComponentFactory<import1.TestContainerComponent>(
-        'test-container',
-        viewFactory_TestContainerComponentHost0,
-        _TestContainerComponentMetadata);
+const ComponentFactory<import1.TestContainerComponent> TestContainerComponentNgFactory = const ComponentFactory<import1.TestContainerComponent>('test-container', viewFactory_TestContainerComponentHost0, _TestContainerComponentMetadata);
 const _TestContainerComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
@@ -234,7 +195,6 @@ void initReflector() {
   }
   _visited = true;
 
-  _ngRef.registerComponent(
-      TestContainerComponent, TestContainerComponentNgFactory);
+  _ngRef.registerComponent(TestContainerComponent, TestContainerComponentNgFactory);
   _ref0.initReflector();
 }

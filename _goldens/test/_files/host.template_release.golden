@@ -1,26 +1,20 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 // **************************************************************************
-// Generator: TemplateGenerator
+// Generator: Instance of 'Compiler'
 // **************************************************************************
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'host.dart';
 export 'host.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/reflector.dart'
-    as _ngRef;
-import 'package:angular/angular.template.dart'
-    as _ref0;
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'host.dart' as import1;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import6;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$HostComponent = const [];
@@ -29,13 +23,10 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   var _expr_0;
   bool _expr_1;
   static RenderComponentType _renderType;
-  ViewHostComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  ViewHostComponent0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('host');
     createAttr(rootEl, 'aria-title', 'title');
-    _renderType ??= import6.appViewUtils
-        .createRenderType('', ViewEncapsulation.None, styles$HostComponent);
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$HostComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -62,8 +53,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   }
 }
 
-AppView<import1.HostComponent> viewFactory_HostComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.HostComponent> viewFactory_HostComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewHostComponent0(parentView, parentIndex);
 }
 
@@ -72,9 +62,7 @@ const List<dynamic> styles$HostComponentHost = const [];
 class _ViewHostComponentHost0 extends AppView<dynamic> {
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_4;
-  _ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import3.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways);
+  _ViewHostComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHostComponent0(this, 0);
@@ -82,13 +70,11 @@ class _ViewHostComponentHost0 extends AppView<dynamic> {
     _HostComponent_0_4 = new import1.HostComponent();
     _compView_0.create(_HostComponent_0_4, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.HostComponent>(
-        0, this, rootEl, _HostComponent_0_4);
+    return new ComponentRef<import1.HostComponent>(0, this, rootEl, _HostComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.HostComponent) && (0 == nodeIndex))) {
       return _HostComponent_0_4;
     }
@@ -108,14 +94,11 @@ class _ViewHostComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_HostComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_HostComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewHostComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.HostComponent> HostComponentNgFactory =
-    const ComponentFactory<import1.HostComponent>(
-        'host', viewFactory_HostComponentHost0, _HostComponentMetadata);
+const ComponentFactory<import1.HostComponent> HostComponentNgFactory = const ComponentFactory<import1.HostComponent>('host', viewFactory_HostComponentHost0, _HostComponentMetadata);
 const _HostComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

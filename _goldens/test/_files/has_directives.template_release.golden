@@ -1,26 +1,20 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 // **************************************************************************
-// Generator: TemplateGenerator
+// Generator: Instance of 'Compiler'
 // **************************************************************************
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'has_directives.dart';
 export 'has_directives.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/reflector.dart'
-    as _ngRef;
-import 'package:angular/angular.template.dart'
-    as _ref0;
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'has_directives.dart' as import1;
 import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import6;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$TestFooComponent = const [];
@@ -33,12 +27,9 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ViewTestSubComponent0 _compView_5;
   import1.TestSubComponent _TestSubComponent_5_4;
   static RenderComponentType _renderType;
-  ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-foo');
-    _renderType ??= import6.appViewUtils
-        .createRenderType('', ViewEncapsulation.None, styles$TestFooComponent);
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$TestFooComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -64,8 +55,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.TestDirective) && (3 == nodeIndex))) {
       return _TestDirective_3_4;
     }
@@ -86,8 +76,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   }
 }
 
-AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewTestFooComponent0(parentView, parentIndex);
 }
 
@@ -96,9 +85,7 @@ const List<dynamic> styles$TestFooComponentHost = const [];
 class _ViewTestFooComponentHost0 extends AppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
   import1.TestFooComponent _TestFooComponent_0_4;
-  _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways);
+  _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
@@ -106,13 +93,11 @@ class _ViewTestFooComponentHost0 extends AppView<dynamic> {
     _TestFooComponent_0_4 = new import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_4, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.TestFooComponent>(
-        0, this, rootEl, _TestFooComponent_0_4);
+    return new ComponentRef<import1.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.TestFooComponent) && (0 == nodeIndex))) {
       return _TestFooComponent_0_4;
     }
@@ -130,25 +115,19 @@ class _ViewTestFooComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestFooComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewTestFooComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.TestFooComponent> TestFooComponentNgFactory =
-    const ComponentFactory<import1.TestFooComponent>('test-foo',
-        viewFactory_TestFooComponentHost0, _TestFooComponentMetadata);
+const ComponentFactory<import1.TestFooComponent> TestFooComponentNgFactory = const ComponentFactory<import1.TestFooComponent>('test-foo', viewFactory_TestFooComponentHost0, _TestFooComponentMetadata);
 const List<dynamic> styles$TestSubComponent = const [];
 
 class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   import2.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  ViewTestSubComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-bar');
-    _renderType ??= import6.appViewUtils
-        .createRenderType('', ViewEncapsulation.None, styles$TestSubComponent);
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$TestSubComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -163,8 +142,7 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   }
 }
 
-AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewTestSubComponent0(parentView, parentIndex);
 }
 
@@ -173,9 +151,7 @@ const List<dynamic> styles$TestSubComponentHost = const [];
 class _ViewTestSubComponentHost0 extends AppView<dynamic> {
   ViewTestSubComponent0 _compView_0;
   import1.TestSubComponent _TestSubComponent_0_4;
-  _ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways);
+  _ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestSubComponent0(this, 0);
@@ -183,13 +159,11 @@ class _ViewTestSubComponentHost0 extends AppView<dynamic> {
     _TestSubComponent_0_4 = new import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_4, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.TestSubComponent>(
-        0, this, rootEl, _TestSubComponent_0_4);
+    return new ComponentRef<import1.TestSubComponent>(0, this, rootEl, _TestSubComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.TestSubComponent) && (0 == nodeIndex))) {
       return _TestSubComponent_0_4;
     }
@@ -207,14 +181,11 @@ class _ViewTestSubComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestSubComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_TestSubComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewTestSubComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.TestSubComponent> TestSubComponentNgFactory =
-    const ComponentFactory<import1.TestSubComponent>('test-bar',
-        viewFactory_TestSubComponentHost0, _TestSubComponentMetadata);
+const ComponentFactory<import1.TestSubComponent> TestSubComponentNgFactory = const ComponentFactory<import1.TestSubComponent>('test-bar', viewFactory_TestSubComponentHost0, _TestSubComponentMetadata);
 const _TestFooComponentMetadata = const [];
 const _TestSubComponentMetadata = const [];
 var _visited = false;

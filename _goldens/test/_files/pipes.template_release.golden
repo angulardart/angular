@@ -1,27 +1,21 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 // **************************************************************************
-// Generator: TemplateGenerator
+// Generator: Instance of 'Compiler'
 // **************************************************************************
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'pipes.dart';
 export 'pipes.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/reflector.dart'
-    as _ngRef;
-import 'package:angular/angular.template.dart'
-    as _ref0;
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'pipes.dart' as import1;
 import 'dart:html' as import2;
 import 'dart:core';
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import5;
+import 'package:angular/src/core/linker/view_type.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import7;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$Comp = const [];
@@ -41,15 +35,11 @@ class ViewComp0 extends AppView<import1.Comp> {
   import1.LifecyclePipe _pipe_lifecycle_2;
   dynamic Function(dynamic) _pipe_lifecycle_2_0;
   import1.TypesPipe _pipe_types_3;
-  String Function(String, int, dynamic, import1.C, void Function(String))
-      _pipe_types_3_0;
+  String Function(String, int, dynamic, import1.C, void Function(String)) _pipe_types_3_0;
   static RenderComponentType _renderType;
-  ViewComp0(AppView<dynamic> parentView, num parentIndex)
-      : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  ViewComp0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp');
-    _renderType ??= import7.appViewUtils
-        .createRenderType('', ViewEncapsulation.None, styles$Comp);
+    _renderType ??= import7.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$Comp);
     setupComponentType(_renderType);
   }
   @override
@@ -100,8 +90,7 @@ class ViewComp0 extends AppView<import1.Comp> {
       _text_5.text = currVal_2;
       _expr_2 = currVal_2;
     }
-    final currVal_3 =
-        import7.interpolate0(_pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d));
+    final currVal_3 = import7.interpolate0(_pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d));
     if (!identical(_expr_3, currVal_3)) {
       _text_7.text = currVal_3;
       _expr_3 = currVal_3;
@@ -114,8 +103,7 @@ class ViewComp0 extends AppView<import1.Comp> {
   }
 }
 
-AppView<import1.Comp> viewFactory_Comp0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.Comp> viewFactory_Comp0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewComp0(parentView, parentIndex);
 }
 
@@ -124,9 +112,7 @@ const List<dynamic> styles$CompHost = const [];
 class _ViewCompHost0 extends AppView<dynamic> {
   ViewComp0 _compView_0;
   import1.Comp _Comp_0_4;
-  _ViewCompHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import5.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways);
+  _ViewCompHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewComp0(this, 0);
@@ -138,8 +124,7 @@ class _ViewCompHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.Comp) && (0 == nodeIndex))) {
       return _Comp_0_4;
     }
@@ -161,9 +146,7 @@ AppView viewFactory_CompHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.Comp> CompNgFactory =
-    const ComponentFactory<import1.Comp>(
-        'comp', viewFactory_CompHost0, _CompMetadata);
+const ComponentFactory<import1.Comp> CompNgFactory = const ComponentFactory<import1.Comp>('comp', viewFactory_CompHost0, _CompMetadata);
 const _CompMetadata = const [];
 var _visited = false;
 void initReflector() {

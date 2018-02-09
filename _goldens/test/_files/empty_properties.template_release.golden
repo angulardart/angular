@@ -1,32 +1,25 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 // **************************************************************************
-// Generator: TemplateGenerator
+// Generator: Instance of 'Compiler'
 // **************************************************************************
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'empty_properties.dart';
 export 'empty_properties.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/reflector.dart'
-    as _ngRef;
-import 'package:angular/angular.template.dart'
-    as _ref0;
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'empty_properties.dart' as import1;
 import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import6;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$EmptyPropertiesComponent = const [];
 
-class ViewEmptyPropertiesComponent0
-    extends AppView<import1.EmptyPropertiesComponent> {
+class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesComponent> {
   import2.Element _el_0;
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_4;
@@ -40,12 +33,9 @@ class ViewEmptyPropertiesComponent0
   ViewFancyButtonComponent0 _compView_3;
   import1.FancyButtonComponent _FancyButtonComponent_3_4;
   static RenderComponentType _renderType;
-  ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('empty-properties');
-    _renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.None, styles$EmptyPropertiesComponent);
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$EmptyPropertiesComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -77,8 +67,7 @@ class ViewEmptyPropertiesComponent0
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.FancyButtonComponent) && (0 == nodeIndex))) {
       return _FancyButtonComponent_0_4;
     }
@@ -124,8 +113,7 @@ class ViewEmptyPropertiesComponent0
   }
 }
 
-AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewEmptyPropertiesComponent0(parentView, parentIndex);
 }
 
@@ -134,10 +122,7 @@ const List<dynamic> styles$EmptyPropertiesComponentHost = const [];
 class _ViewEmptyPropertiesComponentHost0 extends AppView<dynamic> {
   ViewEmptyPropertiesComponent0 _compView_0;
   import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_4;
-  _ViewEmptyPropertiesComponentHost0(
-      AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways);
+  _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmptyPropertiesComponent0(this, 0);
@@ -145,15 +130,12 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<dynamic> {
     _EmptyPropertiesComponent_0_4 = new import1.EmptyPropertiesComponent();
     _compView_0.create(_EmptyPropertiesComponent_0_4, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.EmptyPropertiesComponent>(
-        0, this, rootEl, _EmptyPropertiesComponent_0_4);
+    return new ComponentRef<import1.EmptyPropertiesComponent>(0, this, rootEl, _EmptyPropertiesComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.EmptyPropertiesComponent) &&
-        (0 == nodeIndex))) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.EmptyPropertiesComponent) && (0 == nodeIndex))) {
       return _EmptyPropertiesComponent_0_4;
     }
     return notFoundResult;
@@ -170,27 +152,18 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_EmptyPropertiesComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_EmptyPropertiesComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewEmptyPropertiesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmptyPropertiesComponent>
-    EmptyPropertiesComponentNgFactory =
-    const ComponentFactory<import1.EmptyPropertiesComponent>(
-        'empty-properties',
-        viewFactory_EmptyPropertiesComponentHost0,
-        _EmptyPropertiesComponentMetadata);
+const ComponentFactory<import1.EmptyPropertiesComponent> EmptyPropertiesComponentNgFactory = const ComponentFactory<import1.EmptyPropertiesComponent>('empty-properties', viewFactory_EmptyPropertiesComponentHost0, _EmptyPropertiesComponentMetadata);
 const List<dynamic> styles$FancyButtonComponent = const [];
 
 class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
   static RenderComponentType _renderType;
-  ViewFancyButtonComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  ViewFancyButtonComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('fancy-button');
-    _renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.None, styles$FancyButtonComponent);
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$FancyButtonComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -201,8 +174,7 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
   }
 }
 
-AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewFancyButtonComponent0(parentView, parentIndex);
 }
 
@@ -211,9 +183,7 @@ const List<dynamic> styles$FancyButtonComponentHost = const [];
 class _ViewFancyButtonComponentHost0 extends AppView<dynamic> {
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_4;
-  _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import4.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways);
+  _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewFancyButtonComponent0(this, 0);
@@ -221,13 +191,11 @@ class _ViewFancyButtonComponentHost0 extends AppView<dynamic> {
     _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_4, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.FancyButtonComponent>(
-        0, this, rootEl, _FancyButtonComponent_0_4);
+    return new ComponentRef<import1.FancyButtonComponent>(0, this, rootEl, _FancyButtonComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.FancyButtonComponent) && (0 == nodeIndex))) {
       return _FancyButtonComponent_0_4;
     }
@@ -245,15 +213,11 @@ class _ViewFancyButtonComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_FancyButtonComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_FancyButtonComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewFancyButtonComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.FancyButtonComponent>
-    FancyButtonComponentNgFactory =
-    const ComponentFactory<import1.FancyButtonComponent>('fancy-button',
-        viewFactory_FancyButtonComponentHost0, _FancyButtonComponentMetadata);
+const ComponentFactory<import1.FancyButtonComponent> FancyButtonComponentNgFactory = const ComponentFactory<import1.FancyButtonComponent>('fancy-button', viewFactory_FancyButtonComponentHost0, _FancyButtonComponentMetadata);
 const _EmptyPropertiesComponentMetadata = const [];
 const _FancyButtonComponentMetadata = const [];
 var _visited = false;
@@ -263,8 +227,7 @@ void initReflector() {
   }
   _visited = true;
 
-  _ngRef.registerComponent(
-      EmptyPropertiesComponent, EmptyPropertiesComponentNgFactory);
+  _ngRef.registerComponent(EmptyPropertiesComponent, EmptyPropertiesComponentNgFactory);
   _ngRef.registerComponent(FancyButtonComponent, FancyButtonComponentNgFactory);
   _ref0.initReflector();
 }

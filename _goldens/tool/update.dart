@@ -31,11 +31,13 @@ void main() {
 void _copyPathSync(String from, String to) {
   new Directory(to).createSync(recursive: true);
   for (final file in new Directory(from).listSync(recursive: true)) {
-    final copyTo = p.join(to, p.relative(file.path, from: from));
+    var copyTo = p.join(to, p.relative(file.path, from: from));
     if (file is Directory) {
       new Directory(copyTo).createSync(recursive: true);
-    } else if (file is File) {
-      new File(copyTo.replaceFirst('.check', '.golden')).writeAsStringSync(
+    } else if (file is File && p.extension(file.path) == '.check') {
+      copyTo = copyTo.replaceFirst('.check', '.golden');
+      stdout.writeln('Copying $copyTo...');
+      new File(copyTo).writeAsStringSync(
         new File(file.path).readAsStringSync(),
       );
     } else if (file is Link) {

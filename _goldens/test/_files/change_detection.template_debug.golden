@@ -1,28 +1,22 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 // **************************************************************************
-// Generator: TemplateGenerator
+// Generator: Instance of 'Compiler'
 // **************************************************************************
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'change_detection.dart';
 export 'change_detection.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/reflector.dart'
-    as _ngRef;
-import 'package:angular/angular.template.dart'
-    as _ref0;
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'change_detection.dart' as import2;
 import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import6;
+import 'package:angular/src/core/linker/view_type.dart' as import6;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import8;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$CheckOnceComponent = const [];
@@ -32,19 +26,9 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   import3.DivElement _el_0;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckOnce,
-            nodeDebugInfos_CheckOnceComponent0) {
+  ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_CheckOnceComponent0) {
     rootEl = import3.document.createElement('CheckOnce');
-    _renderType ??= import8.appViewUtils.createRenderType(
-        'asset:_goldens/test_files/change_detection.dart class CheckOnceComponent - inline template',
-        ViewEncapsulation.None,
-        styles$CheckOnceComponent);
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class CheckOnceComponent - inline template', ViewEncapsulation.None, styles$CheckOnceComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -68,28 +52,19 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   }
 }
 
-AppView<import2.CheckOnceComponent> viewFactory_CheckOnceComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.CheckOnceComponent> viewFactory_CheckOnceComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewCheckOnceComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles$CheckOnceComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = [
-  new StaticNodeDebugInfo([import2.CheckOnceComponent],
-      import2.CheckOnceComponent, <String, dynamic>{})
+  new StaticNodeDebugInfo([import2.CheckOnceComponent], import2.CheckOnceComponent, <String, dynamic>{})
 ];
 
 class _ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckOnceComponent0 _compView_0;
   import2.CheckOnceComponent _CheckOnceComponent_0_4;
-  _ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_CheckOnceComponentHost0);
+  _ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckOnceComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCheckOnceComponent0(this, 0);
@@ -98,13 +73,11 @@ class _ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
     _CheckOnceComponent_0_4 = new import2.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.CheckOnceComponent>(
-        0, this, rootEl, _CheckOnceComponent_0_4);
+    return new ComponentRef<import2.CheckOnceComponent>(0, this, rootEl, _CheckOnceComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckOnceComponent) && (0 == nodeIndex))) {
       return _CheckOnceComponent_0_4;
     }
@@ -124,33 +97,20 @@ class _ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_CheckOnceComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_CheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewCheckOnceComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.CheckOnceComponent> CheckOnceComponentNgFactory =
-    const ComponentFactory<import2.CheckOnceComponent>('CheckOnce',
-        viewFactory_CheckOnceComponentHost0, _CheckOnceComponentMetadata);
+const ComponentFactory<import2.CheckOnceComponent> CheckOnceComponentNgFactory = const ComponentFactory<import2.CheckOnceComponent>('CheckOnce', viewFactory_CheckOnceComponentHost0, _CheckOnceComponentMetadata);
 const List<dynamic> styles$CheckedComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponent0 = [null, null];
 
 class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewCheckedComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckOnce,
-            nodeDebugInfos_CheckedComponent0) {
+  ViewCheckedComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_CheckedComponent0) {
     rootEl = import3.document.createElement('Checked');
-    _renderType ??= import8.appViewUtils.createRenderType(
-        'asset:_goldens/test_files/change_detection.dart class CheckedComponent - inline template',
-        ViewEncapsulation.None,
-        styles$CheckedComponent);
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class CheckedComponent - inline template', ViewEncapsulation.None, styles$CheckedComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -166,28 +126,19 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   }
 }
 
-AppView<import2.CheckedComponent> viewFactory_CheckedComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.CheckedComponent> viewFactory_CheckedComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewCheckedComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles$CheckedComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = [
-  new StaticNodeDebugInfo(
-      [import2.CheckedComponent], import2.CheckedComponent, <String, dynamic>{})
+  new StaticNodeDebugInfo([import2.CheckedComponent], import2.CheckedComponent, <String, dynamic>{})
 ];
 
 class _ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckedComponent0 _compView_0;
   import2.CheckedComponent _CheckedComponent_0_4;
-  _ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_CheckedComponentHost0);
+  _ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckedComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCheckedComponent0(this, 0);
@@ -196,13 +147,11 @@ class _ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
     _CheckedComponent_0_4 = new import2.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.CheckedComponent>(
-        0, this, rootEl, _CheckedComponent_0_4);
+    return new ComponentRef<import2.CheckedComponent>(0, this, rootEl, _CheckedComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckedComponent) && (0 == nodeIndex))) {
       return _CheckedComponent_0_4;
     }
@@ -220,34 +169,20 @@ class _ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_CheckedComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_CheckedComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewCheckedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.CheckedComponent> CheckedComponentNgFactory =
-    const ComponentFactory<import2.CheckedComponent>('Checked',
-        viewFactory_CheckedComponentHost0, _CheckedComponentMetadata);
+const ComponentFactory<import2.CheckedComponent> CheckedComponentNgFactory = const ComponentFactory<import2.CheckedComponent>('Checked', viewFactory_CheckedComponentHost0, _CheckedComponentMetadata);
 const List<dynamic> styles$CheckAlwaysComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponent0 = [null, null];
 
-class ViewCheckAlwaysComponent0
-    extends DebugAppView<import2.CheckAlwaysComponent> {
+class ViewCheckAlwaysComponent0 extends DebugAppView<import2.CheckAlwaysComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewCheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckOnce,
-            nodeDebugInfos_CheckAlwaysComponent0) {
+  ViewCheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_CheckAlwaysComponent0) {
     rootEl = import3.document.createElement('CheckAlways');
-    _renderType ??= import8.appViewUtils.createRenderType(
-        'asset:_goldens/test_files/change_detection.dart class CheckAlwaysComponent - inline template',
-        ViewEncapsulation.None,
-        styles$CheckAlwaysComponent);
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class CheckAlwaysComponent - inline template', ViewEncapsulation.None, styles$CheckAlwaysComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -263,28 +198,19 @@ class ViewCheckAlwaysComponent0
   }
 }
 
-AppView<import2.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewCheckAlwaysComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles$CheckAlwaysComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 = [
-  new StaticNodeDebugInfo([import2.CheckAlwaysComponent],
-      import2.CheckAlwaysComponent, <String, dynamic>{})
+  new StaticNodeDebugInfo([import2.CheckAlwaysComponent], import2.CheckAlwaysComponent, <String, dynamic>{})
 ];
 
 class _ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckAlwaysComponent0 _compView_0;
   import2.CheckAlwaysComponent _CheckAlwaysComponent_0_4;
-  _ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_CheckAlwaysComponentHost0);
+  _ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckAlwaysComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
@@ -293,13 +219,11 @@ class _ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
     _CheckAlwaysComponent_0_4 = new import2.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.CheckAlwaysComponent>(
-        0, this, rootEl, _CheckAlwaysComponent_0_4);
+    return new ComponentRef<import2.CheckAlwaysComponent>(0, this, rootEl, _CheckAlwaysComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.CheckAlwaysComponent) && (0 == nodeIndex))) {
       return _CheckAlwaysComponent_0_4;
     }
@@ -317,34 +241,20 @@ class _ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_CheckAlwaysComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_CheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewCheckAlwaysComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.CheckAlwaysComponent>
-    CheckAlwaysComponentNgFactory =
-    const ComponentFactory<import2.CheckAlwaysComponent>('CheckAlways',
-        viewFactory_CheckAlwaysComponentHost0, _CheckAlwaysComponentMetadata);
+const ComponentFactory<import2.CheckAlwaysComponent> CheckAlwaysComponentNgFactory = const ComponentFactory<import2.CheckAlwaysComponent>('CheckAlways', viewFactory_CheckAlwaysComponentHost0, _CheckAlwaysComponentMetadata);
 const List<dynamic> styles$DetachedComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponent0 = [null, null];
 
 class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewDetachedComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckOnce,
-            nodeDebugInfos_DetachedComponent0) {
+  ViewDetachedComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_DetachedComponent0) {
     rootEl = import3.document.createElement('Detached');
-    _renderType ??= import8.appViewUtils.createRenderType(
-        'asset:_goldens/test_files/change_detection.dart class DetachedComponent - inline template',
-        ViewEncapsulation.None,
-        styles$DetachedComponent);
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class DetachedComponent - inline template', ViewEncapsulation.None, styles$DetachedComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -360,28 +270,19 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   }
 }
 
-AppView<import2.DetachedComponent> viewFactory_DetachedComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.DetachedComponent> viewFactory_DetachedComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewDetachedComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles$DetachedComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = [
-  new StaticNodeDebugInfo([import2.DetachedComponent],
-      import2.DetachedComponent, <String, dynamic>{})
+  new StaticNodeDebugInfo([import2.DetachedComponent], import2.DetachedComponent, <String, dynamic>{})
 ];
 
 class _ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   ViewDetachedComponent0 _compView_0;
   import2.DetachedComponent _DetachedComponent_0_4;
-  _ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_DetachedComponentHost0);
+  _ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DetachedComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDetachedComponent0(this, 0);
@@ -390,13 +291,11 @@ class _ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
     _DetachedComponent_0_4 = new import2.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DetachedComponent>(
-        0, this, rootEl, _DetachedComponent_0_4);
+    return new ComponentRef<import2.DetachedComponent>(0, this, rootEl, _DetachedComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.DetachedComponent) && (0 == nodeIndex))) {
       return _DetachedComponent_0_4;
     }
@@ -414,33 +313,20 @@ class _ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_DetachedComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_DetachedComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewDetachedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.DetachedComponent> DetachedComponentNgFactory =
-    const ComponentFactory<import2.DetachedComponent>('Detached',
-        viewFactory_DetachedComponentHost0, _DetachedComponentMetadata);
+const ComponentFactory<import2.DetachedComponent> DetachedComponentNgFactory = const ComponentFactory<import2.DetachedComponent>('Detached', viewFactory_DetachedComponentHost0, _DetachedComponentMetadata);
 const List<dynamic> styles$OnPushComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponent0 = [null, null];
 
 class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewOnPushComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckOnce,
-            nodeDebugInfos_OnPushComponent0) {
+  ViewOnPushComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_OnPushComponent0) {
     rootEl = import3.document.createElement('OnPush');
-    _renderType ??= import8.appViewUtils.createRenderType(
-        'asset:_goldens/test_files/change_detection.dart class OnPushComponent - inline template',
-        ViewEncapsulation.None,
-        styles$OnPushComponent);
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class OnPushComponent - inline template', ViewEncapsulation.None, styles$OnPushComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -456,28 +342,19 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   }
 }
 
-AppView<import2.OnPushComponent> viewFactory_OnPushComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.OnPushComponent> viewFactory_OnPushComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewOnPushComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles$OnPushComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = [
-  new StaticNodeDebugInfo(
-      [import2.OnPushComponent], import2.OnPushComponent, <String, dynamic>{})
+  new StaticNodeDebugInfo([import2.OnPushComponent], import2.OnPushComponent, <String, dynamic>{})
 ];
 
 class _ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   ViewOnPushComponent0 _compView_0;
   import2.OnPushComponent _OnPushComponent_0_4;
-  _ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_OnPushComponentHost0);
+  _ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_OnPushComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewOnPushComponent0(this, 0);
@@ -486,13 +363,11 @@ class _ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
     _OnPushComponent_0_4 = new import2.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.OnPushComponent>(
-        0, this, rootEl, _OnPushComponent_0_4);
+    return new ComponentRef<import2.OnPushComponent>(0, this, rootEl, _OnPushComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.OnPushComponent) && (0 == nodeIndex))) {
       return _OnPushComponent_0_4;
     }
@@ -510,33 +385,20 @@ class _ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_OnPushComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_OnPushComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewOnPushComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.OnPushComponent> OnPushComponentNgFactory =
-    const ComponentFactory<import2.OnPushComponent>(
-        'OnPush', viewFactory_OnPushComponentHost0, _OnPushComponentMetadata);
+const ComponentFactory<import2.OnPushComponent> OnPushComponentNgFactory = const ComponentFactory<import2.OnPushComponent>('OnPush', viewFactory_OnPushComponentHost0, _OnPushComponentMetadata);
 const List<dynamic> styles$StatefulComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponent0 = [null, null];
 
 class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewStatefulComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckOnce,
-            nodeDebugInfos_StatefulComponent0) {
+  ViewStatefulComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_StatefulComponent0) {
     rootEl = import3.document.createElement('Stateful');
-    _renderType ??= import8.appViewUtils.createRenderType(
-        'asset:_goldens/test_files/change_detection.dart class StatefulComponent - inline template',
-        ViewEncapsulation.None,
-        styles$StatefulComponent);
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class StatefulComponent - inline template', ViewEncapsulation.None, styles$StatefulComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -554,28 +416,19 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
   }
 }
 
-AppView<import2.StatefulComponent> viewFactory_StatefulComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.StatefulComponent> viewFactory_StatefulComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewStatefulComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles$StatefulComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = [
-  new StaticNodeDebugInfo([import2.StatefulComponent],
-      import2.StatefulComponent, <String, dynamic>{})
+  new StaticNodeDebugInfo([import2.StatefulComponent], import2.StatefulComponent, <String, dynamic>{})
 ];
 
 class _ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   ViewStatefulComponent0 _compView_0;
   import2.StatefulComponent _StatefulComponent_0_4;
-  _ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_StatefulComponentHost0);
+  _ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_StatefulComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewStatefulComponent0(this, 0);
@@ -584,13 +437,11 @@ class _ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
     _StatefulComponent_0_4 = new import2.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.StatefulComponent>(
-        0, this, rootEl, _StatefulComponent_0_4);
+    return new ComponentRef<import2.StatefulComponent>(0, this, rootEl, _StatefulComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.StatefulComponent) && (0 == nodeIndex))) {
       return _StatefulComponent_0_4;
     }
@@ -608,33 +459,20 @@ class _ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_StatefulComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_StatefulComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewStatefulComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.StatefulComponent> StatefulComponentNgFactory =
-    const ComponentFactory<import2.StatefulComponent>('Stateful',
-        viewFactory_StatefulComponentHost0, _StatefulComponentMetadata);
+const ComponentFactory<import2.StatefulComponent> StatefulComponentNgFactory = const ComponentFactory<import2.StatefulComponent>('Stateful', viewFactory_StatefulComponentHost0, _StatefulComponentMetadata);
 const List<dynamic> styles$DefaultComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponent0 = [null, null];
 
 class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewDefaultComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.COMPONENT,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_DefaultComponent0) {
+  ViewDefaultComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DefaultComponent0) {
     rootEl = import3.document.createElement('Default');
-    _renderType ??= import8.appViewUtils.createRenderType(
-        'asset:_goldens/test_files/change_detection.dart class DefaultComponent - inline template',
-        ViewEncapsulation.None,
-        styles$DefaultComponent);
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class DefaultComponent - inline template', ViewEncapsulation.None, styles$DefaultComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -650,28 +488,19 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   }
 }
 
-AppView<import2.DefaultComponent> viewFactory_DefaultComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.DefaultComponent> viewFactory_DefaultComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewDefaultComponent0(parentView, parentIndex);
 }
 
 const List<dynamic> styles$DefaultComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = [
-  new StaticNodeDebugInfo(
-      [import2.DefaultComponent], import2.DefaultComponent, <String, dynamic>{})
+  new StaticNodeDebugInfo([import2.DefaultComponent], import2.DefaultComponent, <String, dynamic>{})
 ];
 
 class _ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   ViewDefaultComponent0 _compView_0;
   import2.DefaultComponent _DefaultComponent_0_4;
-  _ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(
-            import6.ViewType.HOST,
-            {},
-            parentView,
-            parentIndex,
-            ChangeDetectionStrategy.CheckAlways,
-            nodeDebugInfos_DefaultComponentHost0);
+  _ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DefaultComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDefaultComponent0(this, 0);
@@ -680,13 +509,11 @@ class _ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
     _DefaultComponent_0_4 = new import2.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DefaultComponent>(
-        0, this, rootEl, _DefaultComponent_0_4);
+    return new ComponentRef<import2.DefaultComponent>(0, this, rootEl, _DefaultComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.DefaultComponent) && (0 == nodeIndex))) {
       return _DefaultComponent_0_4;
     }
@@ -704,14 +531,11 @@ class _ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_DefaultComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_DefaultComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewDefaultComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.DefaultComponent> DefaultComponentNgFactory =
-    const ComponentFactory<import2.DefaultComponent>('Default',
-        viewFactory_DefaultComponentHost0, _DefaultComponentMetadata);
+const ComponentFactory<import2.DefaultComponent> DefaultComponentNgFactory = const ComponentFactory<import2.DefaultComponent>('Default', viewFactory_DefaultComponentHost0, _DefaultComponentMetadata);
 const _CheckOnceComponentMetadata = const [];
 const _CheckedComponentMetadata = const [];
 const _CheckAlwaysComponentMetadata = const [];

@@ -1,42 +1,31 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 // **************************************************************************
-// Generator: TemplateGenerator
+// Generator: Instance of 'Compiler'
 // **************************************************************************
 
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'providers.dart';
 export 'providers.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/reflector.dart'
-    as _ngRef;
-import 'package:angular/angular.template.dart'
-    as _ref0;
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'providers.dart' as import1;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart'
-    as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart'
-    as import6;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/zone/ng_zone.dart'
-    as import8;
-import 'package:angular/src/core/di/opaque_token.dart'
-    as import9;
+import 'package:angular/src/core/zone/ng_zone.dart' as import8;
+import 'package:angular/src/core/di/opaque_token.dart' as import9;
 
 const List<dynamic> styles$ProvidersComponent = const [];
 
 class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   static RenderComponentType _renderType;
-  ViewProvidersComponent0(AppView<dynamic> parentView, num parentIndex)
-      : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways) {
+  ViewProvidersComponent0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('providers');
-    _renderType ??= import6.appViewUtils.createRenderType(
-        '', ViewEncapsulation.None, styles$ProvidersComponent);
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$ProvidersComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -49,8 +38,7 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   }
 }
 
-AppView<import1.ProvidersComponent> viewFactory_ProvidersComponent0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.ProvidersComponent> viewFactory_ProvidersComponent0(AppView<dynamic> parentView, num parentIndex) {
   return new ViewProvidersComponent0(parentView, parentIndex);
 }
 
@@ -67,21 +55,17 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
   List<dynamic> __useValueList_0_12;
   Map<String, dynamic> __useValueMap_0_13;
   dynamic __useEnums_0_14;
-  _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex)
-      : super(import3.ViewType.HOST, {}, parentView, parentIndex,
-            ChangeDetectionStrategy.CheckAlways);
+  _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_5 {
     if ((this.__MyInjectableTypeAnnotation_0_5 == null)) {
-      (__MyInjectableTypeAnnotation_0_5 =
-          new import1.MyInjectableTypeAnnotation());
+      (__MyInjectableTypeAnnotation_0_5 = new import1.MyInjectableTypeAnnotation());
     }
     return this.__MyInjectableTypeAnnotation_0_5;
   }
 
   dynamic get _MyUseFactory_0_6 {
     if ((this.__MyUseFactory_0_6 == null)) {
-      (__MyUseFactory_0_6 = import1.ProvidersComponent.createService(
-          this.injectorGet(import8.NgZone, this.viewData.parentIndex)));
+      (__MyUseFactory_0_6 = import1.ProvidersComponent.createService(this.injectorGet(import8.NgZone, this.viewData.parentIndex)));
     }
     return this.__MyUseFactory_0_6;
   }
@@ -109,21 +93,14 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
 
   List<dynamic> get _useValueList_0_12 {
     if ((this.__useValueList_0_12 == null)) {
-      (__useValueList_0_12 = const [
-        const import1.MyUseValue('Andrew'),
-        const import1.MyUseValue('Matan'),
-        const import1.MyUseValue.named(optional: true)
-      ]);
+      (__useValueList_0_12 = const [const import1.MyUseValue('Andrew'), const import1.MyUseValue('Matan'), const import1.MyUseValue.named(optional: true)]);
     }
     return this.__useValueList_0_12;
   }
 
   Map<String, dynamic> get _useValueMap_0_13 {
     if ((this.__useValueMap_0_13 == null)) {
-      (__useValueMap_0_13 = const {
-        'Andrew': const import1.MyUseValue('Andrew'),
-        'Matan': const import1.MyUseValue('Matan')
-      });
+      (__useValueMap_0_13 = const {'Andrew': const import1.MyUseValue('Andrew'), 'Matan': const import1.MyUseValue('Matan')});
     }
     return this.__useValueMap_0_13;
   }
@@ -142,46 +119,36 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
     _ProvidersComponent_0_4 = new import1.ProvidersComponent();
     _compView_0.create(_ProvidersComponent_0_4, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.ProvidersComponent>(
-        0, this, rootEl, _ProvidersComponent_0_4);
+    return new ComponentRef<import1.ProvidersComponent>(0, this, rootEl, _ProvidersComponent_0_4);
   }
 
   @override
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.ProvidersComponent) && (0 == nodeIndex))) {
       return _ProvidersComponent_0_4;
     }
-    if ((identical(token, import1.MyInjectableTypeAnnotation) &&
-        (0 == nodeIndex))) {
+    if ((identical(token, import1.MyInjectableTypeAnnotation) && (0 == nodeIndex))) {
       return _MyInjectableTypeAnnotation_0_5;
     }
     if ((identical(token, import1.MyUseFactory) && (0 == nodeIndex))) {
       return _MyUseFactory_0_6;
     }
-    if ((((identical(token, import1.MyUseClass) ||
-                identical(token, import1.MyUseExisting)) ||
-            identical(token, import1.MyUseExistingNested)) &&
-        (0 == nodeIndex))) {
+    if ((((identical(token, import1.MyUseClass) || identical(token, import1.MyUseExisting)) || identical(token, import1.MyUseExistingNested)) && (0 == nodeIndex))) {
       return _MyUseClass_0_7;
     }
     if ((identical(token, import1.MyUseValue) && (0 == nodeIndex))) {
       return _MyUseValue_0_10;
     }
-    if ((identical(token, const import9.OpaqueToken('useValueString')) &&
-        (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken('useValueString')) && (0 == nodeIndex))) {
       return _useValueString_0_11;
     }
-    if ((identical(token, const import9.OpaqueToken('useValueList')) &&
-        (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken('useValueList')) && (0 == nodeIndex))) {
       return _useValueList_0_12;
     }
-    if ((identical(token, const import9.OpaqueToken('useValueMap')) &&
-        (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken('useValueMap')) && (0 == nodeIndex))) {
       return _useValueMap_0_13;
     }
-    if ((identical(token, const import9.OpaqueToken('useEnums')) &&
-        (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken('useEnums')) && (0 == nodeIndex))) {
       return _useEnums_0_14;
     }
     return notFoundResult;
@@ -198,14 +165,11 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_ProvidersComponentHost0(
-    AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_ProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex) {
   return new _ViewProvidersComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.ProvidersComponent> ProvidersComponentNgFactory =
-    const ComponentFactory<import1.ProvidersComponent>('providers',
-        viewFactory_ProvidersComponentHost0, _ProvidersComponentMetadata);
+const ComponentFactory<import1.ProvidersComponent> ProvidersComponentNgFactory = const ComponentFactory<import1.ProvidersComponent>('providers', viewFactory_ProvidersComponentHost0, _ProvidersComponentMetadata);
 const _ProvidersComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
@@ -215,7 +179,6 @@ void initReflector() {
   _visited = true;
 
   _ngRef.registerComponent(ProvidersComponent, ProvidersComponentNgFactory);
-  _ngRef.registerFactory(
-      MyInjectableTypeAnnotation, () => new MyInjectableTypeAnnotation());
+  _ngRef.registerFactory(MyInjectableTypeAnnotation, () => new MyInjectableTypeAnnotation());
   _ref0.initReflector();
 }
