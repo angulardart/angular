@@ -1,0 +1,20 @@
+# See https://github.com/dart-lang/mono_repo for details
+dart:
+  - dev
+
+stages:
+  - analyze:
+    - dartanalyzer: --fatal-warnings lib test
+  - build:
+    - command: pub run build_runner build
+  - unit_test:
+    - command: pub run build_runner test -- -p vm
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/common
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/compiler
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/core
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/di
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/integration
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/platform
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/security
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/source_gen
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector
