@@ -7,8 +7,12 @@ jobs:
       script: ./tool/travis.sh dartanalyzer_0
       env: PKG="_goldens"
       dart: dev
-    - stage: unit_test
+    - stage: build
       script: ./tool/travis.sh command_00
+      env: PKG="_goldens"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh test_0
       env: PKG="_goldens"
       dart: dev
     - stage: analyze
@@ -16,6 +20,10 @@ jobs:
       env: PKG="_tests"
       dart: dev
     - stage: build
+      script: ./tool/travis.sh command_00
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
       script: ./tool/travis.sh command_01
       env: PKG="_tests"
       dart: dev
@@ -55,32 +63,28 @@ jobs:
       script: ./tool/travis.sh command_10
       env: PKG="_tests"
       dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh command_11
-      env: PKG="_tests"
-      dart: dev
     - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_0
+      script: ./tool/travis.sh dartanalyzer_2
       env: PKG="angular"
       dart: dev
     - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_0
+      script: ./tool/travis.sh dartanalyzer_2
       env: PKG="angular_ast"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_0
+      script: ./tool/travis.sh test_1
       env: PKG="angular_ast"
       dart: dev
     - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_0
+      script: ./tool/travis.sh dartanalyzer_2
       env: PKG="angular_compiler"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_0
+      script: ./tool/travis.sh test_1
       env: PKG="angular_compiler"
       dart: dev
     - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_0
+      script: ./tool/travis.sh dartanalyzer_2
       env: PKG="angular_forms"
       dart: dev
     - stage: analyze
@@ -88,15 +92,15 @@ jobs:
       env: PKG="angular_router"
       dart: dev
     - stage: build
-      script: ./tool/travis.sh command_01
+      script: ./tool/travis.sh command_00
       env: PKG="angular_router"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_1
+      script: ./tool/travis.sh test_2
       env: PKG="angular_router"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh command_12
+      script: ./tool/travis.sh command_11
       env: PKG="angular_router"
       dart: dev
     - stage: analyze
@@ -104,15 +108,15 @@ jobs:
       env: PKG="angular_test"
       dart: dev
     - stage: build
-      script: ./tool/travis.sh command_01
+      script: ./tool/travis.sh command_00
       env: PKG="angular_test"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_1
+      script: ./tool/travis.sh test_2
       env: PKG="angular_test"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh command_13
+      script: ./tool/travis.sh command_12
       env: PKG="angular_test"
       dart: dev
 
