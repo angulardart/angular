@@ -1,7 +1,5 @@
 _goldens:
   published: false
-_goldens/generator:
-  published: false
 _tests:
   published: false
 angular:

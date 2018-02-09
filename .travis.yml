@@ -12,10 +12,6 @@ jobs:
       env: PKG="_goldens"
       dart: dev
     - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_0
-      env: PKG="_goldens/generator"
-      dart: dev
-    - stage: analyze
       script: ./tool/travis.sh dartanalyzer_1
       env: PKG="_tests"
       dart: dev
