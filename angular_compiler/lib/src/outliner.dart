@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:build/build.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import 'analyzer.dart';
@@ -40,7 +41,7 @@ class TemplateOutliner implements Builder {
 
   TemplateOutliner(
     this._compilerFlags, {
-    String extension: '.outline.template.dart',
+    @required String extension,
   })
       : _extension = extension,
         buildExtensions = {
