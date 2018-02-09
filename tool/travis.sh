@@ -22,8 +22,8 @@ while (( "$#" )); do
   case $TASK in
   command_00) echo
     echo -e '\033[1mTASK: command_00\033[22m'
-    echo -e 'dart generator/bin/generate.dart;pub run test'
-    dart generator/bin/generate.dart;pub run test
+    echo -e 'pub run build_runner build -o build;pub run test --precompiled build'
+    pub run build_runner build -o build;pub run test --precompiled build
     ;;
   command_01) echo
     echo -e '\033[1mTASK: command_01\033[22m'
