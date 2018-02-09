@@ -4,8 +4,8 @@ dart:
 
 stages:
   - analyze:
-    - dartanalyzer: --fatal-warnings .
+    - dartanalyzer: --fatal-warnings lib test tool
+  - build:
+      - command: pub run build_runner build
   - unit_test:
-    - command:
-      - dart generator/bin/generate.dart
-      - pub run test
+    - test: -p vm --precompiled build

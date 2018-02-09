@@ -1,6 +1,29 @@
 targets:
   $default:
-    sources: ["lib/**", "test_files/**"]
+    sources: ["lib/**", "test/_files/**", "tool/**"]
     builders:
-      angular|goldens:
-        generate_for: ["test_files/**"]
+      "angular|angular":
+        enabled: false
+      "build_test|test_bootstrap":
+        enabled: false
+      "|goldens":
+        generate_for: ["test/_files/**"]
+        options:
+          extensions:
+            debug: ".template_debug.check"
+            release: ".template_release.check"
+            outline: ".template_outline.check"
+
+builders:
+  goldens:
+    target: "goldens"
+    import: "../../../tool/src/builder.dart"
+    builder_factories:
+      - debugBuilder
+      - releaseBuilder
+      - outlineBuilder
+    build_extensions:
+      ".dart":
+        - ".template_debug.check"
+        - ".template_release.check"
+        - ".template_outline.check"
