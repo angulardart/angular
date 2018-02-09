@@ -1,0 +1,126 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'base_component.dart';
+export 'base_component.dart';
+import 'package:angular/angular.dart';
+import 'components.dart';
+import 'directives.dart' as directive;
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'base_component.dart' as import1;
+import 'dart:html' as import2;
+import 'components.template.dart' as import3;
+import 'components.dart' as import4;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import6;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular/angular.dart';
+
+const List<dynamic> styles$TestFooComponent = const [];
+
+class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
+  import2.DivElement _el_0;
+  import2.Element _el_2;
+  import3.ViewTestSubComponent0 _compView_2;
+  import4.TestSubComponent _TestSubComponent_2_4;
+  static RenderComponentType _renderType;
+  ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('test-foo');
+    _renderType ??= import8.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$TestFooComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.TestFooComponent> build() {
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import2.document;
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    import2.Text _text_1 = new import2.Text('Foo');
+    _el_0.append(_text_1);
+    _compView_2 = new import3.ViewTestSubComponent0(this, 2);
+    _el_2 = _compView_2.rootEl;
+    parentRenderNode.append(_el_2);
+    _TestSubComponent_2_4 = new import4.TestSubComponent();
+    _compView_2.create(_TestSubComponent_2_4, []);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import4.TestSubComponent) && (2 == nodeIndex))) {
+      return _TestSubComponent_2_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_2.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_2?.destroy();
+  }
+}
+
+AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, num parentIndex) {
+  return new ViewTestFooComponent0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$TestFooComponentHost = const [];
+
+class _ViewTestFooComponentHost0 extends AppView<dynamic> {
+  ViewTestFooComponent0 _compView_0;
+  import1.TestFooComponent _TestFooComponent_0_4;
+  _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewTestFooComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _TestFooComponent_0_4 = new import1.TestFooComponent();
+    _compView_0.create(_TestFooComponent_0_4, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TestFooComponent) && (0 == nodeIndex))) {
+      return _TestFooComponent_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewTestFooComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.TestFooComponent> TestFooComponentNgFactory = const ComponentFactory<import1.TestFooComponent>('test-foo', viewFactory_TestFooComponentHost0, _TestFooComponentMetadata);
+const _TestFooComponentMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(TestFooComponent, TestFooComponentNgFactory);
+  _ref0.initReflector();
+}

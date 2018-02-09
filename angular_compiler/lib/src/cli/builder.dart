@@ -10,7 +10,7 @@ import 'logging.dart';
 /// Compiles `.dart` files and `.html`, `.css` files for AngularDart.
 ///
 /// To use as a [Builder], see [Compiler.asBuilder].
-class Compiler extends Generator {
+class Compiler implements Generator {
   // Note: Use an absurdly long line width in order to speed up the formatter.
   // We still get a lot of other formatting, such as forced line breaks (after
   // semicolons for instance), spaces in argument lists, etc.
@@ -38,6 +38,7 @@ class Compiler extends Generator {
       this,
       formatOutput: (s) => _formatter.format(s),
       generatedExtension: extension,
+      header: '',
     );
   }
 }

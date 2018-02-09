@@ -1,0 +1,46 @@
+// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import,unused_shown_name
+// The .template.dart files also export the user code.
+export 'visibility.dart';
+
+// Required for referencing runtime code.
+import 'dart:html';
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/change_detection/directive_change_detector.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+
+// Required for specifically referencing user code.
+import 'visibility.dart' as _user;
+
+// Required for "type inference" (scoping).
+import 'package:angular/angular.dart';
+
+// For @Component class Dependent.
+const List<dynamic> styles$Dependent = const [];
+external ComponentFactory get DependentNgFactory;
+external AppView<_user.Dependent> viewFactory_Dependent0(AppView<dynamic> parentView, num parentIndex);
+class ViewDependent0 extends AppView<_user.Dependent> {
+  external ViewDependent0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class DependencyWithDependentInView.
+const List<dynamic> styles$DependencyWithDependentInView = const [];
+external ComponentFactory get DependencyWithDependentInViewNgFactory;
+external AppView<_user.DependencyWithDependentInView> viewFactory_DependencyWithDependentInView0(AppView<dynamic> parentView, num parentIndex);
+class ViewDependencyWithDependentInView0 extends AppView<_user.DependencyWithDependentInView> {
+  external ViewDependencyWithDependentInView0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class DependencyWithContent.
+const List<dynamic> styles$DependencyWithContent = const [];
+external ComponentFactory get DependencyWithContentNgFactory;
+external AppView<_user.DependencyWithContent> viewFactory_DependencyWithContent0(AppView<dynamic> parentView, num parentIndex);
+class ViewDependencyWithContent0 extends AppView<_user.DependencyWithContent> {
+  external ViewDependencyWithContent0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class DependencyAndDependentInView.
+const List<dynamic> styles$DependencyAndDependentInView = const [];
+external ComponentFactory get DependencyAndDependentInViewNgFactory;
+external AppView<_user.DependencyAndDependentInView> viewFactory_DependencyAndDependentInView0(AppView<dynamic> parentView, num parentIndex);
+class ViewDependencyAndDependentInView0 extends AppView<_user.DependencyAndDependentInView> {
+  external ViewDependencyAndDependentInView0(AppView<dynamic> parentView, num parentIndex);
+}
+
+external void initReflector();

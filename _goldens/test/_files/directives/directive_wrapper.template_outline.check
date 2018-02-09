@@ -1,0 +1,63 @@
+// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import,unused_shown_name
+// The .template.dart files also export the user code.
+export 'directive_wrapper.dart';
+
+// Required for referencing runtime code.
+import 'dart:html';
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/change_detection/directive_change_detector.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+
+// Required for specifically referencing user code.
+import 'directive_wrapper.dart' as _user;
+
+// Required for "type inference" (scoping).
+import 'dart:async';
+import 'dart:html';
+import 'package:angular/angular.dart';
+import 'package:angular_forms/angular_forms.dart';
+
+// For @Component class TestFooComponent.
+const List<dynamic> styles$TestFooComponent = const [];
+external ComponentFactory get TestFooComponentNgFactory;
+external AppView<_user.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, num parentIndex);
+class ViewTestFooComponent0 extends AppView<_user.TestFooComponent> {
+  external ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class InputFormTest.
+const List<dynamic> styles$InputFormTest = const [];
+external ComponentFactory get InputFormTestNgFactory;
+external AppView<_user.InputFormTest> viewFactory_InputFormTest0(AppView<dynamic> parentView, num parentIndex);
+class ViewInputFormTest0 extends AppView<_user.InputFormTest> {
+  external ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class DirectiveContainerTest.
+const List<dynamic> styles$DirectiveContainerTest = const [];
+external ComponentFactory get DirectiveContainerTestNgFactory;
+external AppView<_user.DirectiveContainerTest> viewFactory_DirectiveContainerTest0(AppView<dynamic> parentView, num parentIndex);
+class ViewDirectiveContainerTest0 extends AppView<_user.DirectiveContainerTest> {
+  external ViewDirectiveContainerTest0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Directive class ChildDirective.
+class ChildDirectiveNgCd extends DirectiveChangeDetector {
+  external _user.ChildDirective get instance;
+  external void deliverChanges();
+  external ChildDirectiveNgCd(_user.ChildDirective instance);
+  external void detectHostChanges(AppView view, Element node);
+}
+// For @Directive class DirectiveWithOutput.
+class DirectiveWithOutputNgCd extends DirectiveChangeDetector {
+  external _user.DirectiveWithOutput get instance;
+  external void deliverChanges();
+  external DirectiveWithOutputNgCd(_user.DirectiveWithOutput instance);
+  external void detectHostChanges(AppView view, Element node);
+}
+// For @Directive class FastDirective.
+class FastDirectiveNgCd extends DirectiveChangeDetector {
+  external _user.FastDirective get instance;
+  external void deliverChanges();
+  external FastDirectiveNgCd(_user.FastDirective instance);
+  external void detectHostChanges(AppView view, Element node);
+}
+
+external void initReflector();
