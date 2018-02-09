@@ -1,3 +1,7 @@
+### New features
+
+* Added an internal `cli.dart` library.
+
 ### Bug fixes
 
 * Removed all remaining (invalid) references to `package:barback`.

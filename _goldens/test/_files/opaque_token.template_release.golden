@@ -1,0 +1,315 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'opaque_token.dart';
+export 'opaque_token.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'opaque_token.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/di/opaque_token.dart' as import8;
+import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/common/directives/ng_if.dart';
+import 'package:angular/src/core/linker/template_ref.dart';
+import 'dart:core';
+
+const List<dynamic> styles$HasOpaqueTokens = const [];
+
+class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
+  import2.Text _text_0;
+  static RenderComponentType _renderType;
+  ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('has-opaque-tokens');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$HasOpaqueTokens);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.HasOpaqueTokens> build() {
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    _text_0 = new import2.Text('');
+    parentRenderNode.append(_text_0);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.HasOpaqueTokens _ctx = ctx;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      (_text_0.text = (_ctx.baseUrl ?? ''));
+    }
+  }
+}
+
+AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex) {
+  return new ViewHasOpaqueTokens0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$HasOpaqueTokensHost = const [];
+
+class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
+  ViewHasOpaqueTokens0 _compView_0;
+  String _baseUrlDescription_0_4;
+  import1.HasOpaqueTokens _HasOpaqueTokens_0_5;
+  _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewHasOpaqueTokens0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _baseUrlDescription_0_4 = 'https://localhost';
+    _HasOpaqueTokens_0_5 = new import1.HasOpaqueTokens(_baseUrlDescription_0_4);
+    _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.HasOpaqueTokens>(0, this, rootEl, _HasOpaqueTokens_0_5);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, const import8.OpaqueToken('baseUrlDescription')) && (0 == nodeIndex))) {
+      return _baseUrlDescription_0_4;
+    }
+    if ((identical(token, import1.HasOpaqueTokens) && (0 == nodeIndex))) {
+      return _HasOpaqueTokens_0_5;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_HasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewHasOpaqueTokensHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.HasOpaqueTokens> HasOpaqueTokensNgFactory = const ComponentFactory<import1.HasOpaqueTokens>('has-opaque-tokens', viewFactory_HasOpaqueTokensHost0, _HasOpaqueTokensMetadata);
+const List<dynamic> styles$ContainsChildComponent = const [];
+
+class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent> {
+  ViewContainer _appEl_0;
+  NgIf _NgIf_0_7;
+  static RenderComponentType _renderType;
+  ViewContainsChildComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('contains-child-component');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$ContainsChildComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.ContainsChildComponent> build() {
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var _anchor_0 = ngAnchor.clone(false);
+    parentRenderNode.append(_anchor_0);
+    _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_6 = new TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
+    _NgIf_0_7 = new NgIf(_appEl_0, _TemplateRef_0_6);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.ContainsChildComponent _ctx = ctx;
+    _NgIf_0_7.ngIf = _ctx.someValue;
+    _appEl_0.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_0?.destroyNestedViews();
+  }
+}
+
+AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent0(AppView<dynamic> parentView, num parentIndex) {
+  return new ViewContainsChildComponent0(parentView, parentIndex);
+}
+
+class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponent> {
+  import2.DivElement _el_0;
+  ViewContainer _appEl_1;
+  NgIf _NgIf_1_7;
+  _ViewContainsChildComponent1(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    componentType = ViewContainsChildComponent0._renderType;
+  }
+  @override
+  ComponentRef<import1.ContainsChildComponent> build() {
+    var doc = import2.document;
+    _el_0 = doc.createElement('div');
+    var _anchor_1 = ngAnchor.clone(false);
+    _el_0.append(_anchor_1);
+    _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
+    TemplateRef _TemplateRef_1_6 = new TemplateRef(_appEl_1, viewFactory_ContainsChildComponent2);
+    _NgIf_1_7 = new NgIf(_appEl_1, _TemplateRef_1_6);
+    init0(_el_0);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.ContainsChildComponent _ctx = ctx;
+    _NgIf_1_7.ngIf = _ctx.someValue;
+    _appEl_1.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_1?.destroyNestedViews();
+  }
+}
+
+AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent1(AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewContainsChildComponent1(parentView, parentIndex);
+}
+
+class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponent> {
+  import2.DivElement _el_0;
+  import2.Element _el_1;
+  ViewInjectsTypedTokenFromSomeParent0 _compView_1;
+  import1.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_1_4;
+  _ViewContainsChildComponent2(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    componentType = ViewContainsChildComponent0._renderType;
+  }
+  @override
+  ComponentRef<import1.ContainsChildComponent> build() {
+    var doc = import2.document;
+    _el_0 = doc.createElement('div');
+    _compView_1 = new ViewInjectsTypedTokenFromSomeParent0(this, 1);
+    _el_1 = _compView_1.rootEl;
+    _el_0.append(_el_1);
+    _InjectsTypedTokenFromSomeParent_1_4 = new import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import8.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
+    _compView_1.create(_InjectsTypedTokenFromSomeParent_1_4, []);
+    init0(_el_0);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_1?.destroy();
+  }
+}
+
+AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent2(AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewContainsChildComponent2(parentView, parentIndex);
+}
+
+const List<dynamic> styles$ContainsChildComponentHost = const [];
+
+class _ViewContainsChildComponentHost0 extends AppView<dynamic> {
+  ViewContainsChildComponent0 _compView_0;
+  import1.ContainsChildComponent _ContainsChildComponent_0_4;
+  _ViewContainsChildComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewContainsChildComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _ContainsChildComponent_0_4 = new import1.ContainsChildComponent();
+    _compView_0.create(_ContainsChildComponent_0_4, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.ContainsChildComponent>(0, this, rootEl, _ContainsChildComponent_0_4);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_ContainsChildComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewContainsChildComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.ContainsChildComponent> ContainsChildComponentNgFactory = const ComponentFactory<import1.ContainsChildComponent>('contains-child-component', viewFactory_ContainsChildComponentHost0, _ContainsChildComponentMetadata);
+const List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
+
+class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedTokenFromSomeParent> {
+  static RenderComponentType _renderType;
+  ViewInjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('injects-typed-token-from-parent');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$InjectsTypedTokenFromSomeParent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.InjectsTypedTokenFromSomeParent> build() {
+    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, num parentIndex) {
+  return new ViewInjectsTypedTokenFromSomeParent0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$InjectsTypedTokenFromSomeParentHost = const [];
+
+class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<dynamic> {
+  ViewInjectsTypedTokenFromSomeParent0 _compView_0;
+  import1.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_0_4;
+  _ViewInjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewInjectsTypedTokenFromSomeParent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _InjectsTypedTokenFromSomeParent_0_4 = new import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import8.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
+    _compView_0.create(_InjectsTypedTokenFromSomeParent_0_4, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.InjectsTypedTokenFromSomeParent>(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_4);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_InjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewInjectsTypedTokenFromSomeParentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.InjectsTypedTokenFromSomeParent> InjectsTypedTokenFromSomeParentNgFactory = const ComponentFactory<import1.InjectsTypedTokenFromSomeParent>('injects-typed-token-from-parent', viewFactory_InjectsTypedTokenFromSomeParentHost0, _InjectsTypedTokenFromSomeParentMetadata);
+const _HasOpaqueTokensMetadata = const [];
+const _ContainsChildComponentMetadata = const [];
+const _InjectsTypedTokenFromSomeParentMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(HasOpaqueTokens, HasOpaqueTokensNgFactory);
+  _ngRef.registerComponent(ContainsChildComponent, ContainsChildComponentNgFactory);
+  _ngRef.registerComponent(InjectsTypedTokenFromSomeParent, InjectsTypedTokenFromSomeParentNgFactory);
+  _ref0.initReflector();
+}
