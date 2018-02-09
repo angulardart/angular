@@ -117,10 +117,18 @@ void main() {
         expect(sanitizeHtmlInternal(testInput), '<a>evil!</a>');
       }
     });
-    test('should prevent mXSS attacks', () {
-      String testInput = '<a href="&#x3000;javascript:alert(1)">CLICKME</a>';
-      String expected = '<a>CLICKME</a>';
-      expect(sanitizeHtmlInternal(testInput), expected);
-    });
+    test(
+      'should prevent mXSS attacks',
+      () {
+        String testInput = '<a href="&#x3000;javascript:alert(1)">CLICKME</a>';
+        String expected = '<a>CLICKME</a>';
+        expect(sanitizeHtmlInternal(testInput), expected);
+      },
+      // This example is no longer a vulnerability in recent versions of Chrome,
+      // so the test fails since the href isn't removed. We either need to find
+      // a new mXSS example to test, or pin this test to an older version of
+      // Chrome if possible.
+      skip: true,
+    );
   });
 }
