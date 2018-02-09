@@ -1,9 +1,0 @@
-language: dart
-dart:
-  - dev
-
-dart_task:
-  - dartanalyzer: --fatal-warnings lib test
-  - test: --precompiled=build --platform=chrome --timeout=4x -x skip_on_travis -j1
-
-before_script: tool/travis.sh

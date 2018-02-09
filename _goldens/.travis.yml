@@ -1,9 +1,0 @@
-language: dart
-dart:
-  - dev
-
-dart_task:
-  - dartanalyzer: --fatal-warnings .
-  - test
-
-before_script: tool/travis.sh

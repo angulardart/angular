@@ -1,125 +1,146 @@
+# Created with https://github.com/dart-lang/mono_repo
+language: dart
+
 # TODO(travis-ci/travis-ci#8836): Remove once the travis issue is resolved.
 sudo: required
 addons:
   chrome: stable
 
-language: dart
-
-dart:
-  - dev
-
 jobs:
   include:
-    - &build
-      stage: build
-      script: ./tool/travis.sh build
-      if: env(PKG) IS present
-    - <<: *build
-      env: PKG="_tests"
-    - <<: *build
-      env: PKG="angular_router"
-    - <<: *build
-      env: PKG="angular_test"
-    - &analyze_0
-      stage: analyze
+    - stage: analyze
       script: ./tool/travis.sh dartanalyzer_0
-      if: env(PKG) IS present
-    - <<: *analyze_0
       env: PKG="_goldens"
-    - <<: *analyze_0
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_00
+      env: PKG="_goldens"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_0
       env: PKG="_goldens/generator"
-    - <<: *analyze_0
-      env: PKG="angular"
-    - <<: *analyze_0
-      env: PKG="angular_ast"
-    - <<: *analyze_0
-      env: PKG="angular_compiler"
-    - <<: *analyze_0
-      env: PKG="angular_forms"
-    - <<: *analyze_0
-      env: PKG="angular_router/example"
-    - &analyze_1
-      stage: analyze
+      dart: dev
+    - stage: analyze
       script: ./tool/travis.sh dartanalyzer_1
-      if: env(PKG) IS present
-    - <<: *analyze_1
       env: PKG="_tests"
-    - <<: *analyze_1
-      env: PKG="angular_router"
-    - <<: *analyze_1
-      env: PKG="angular_test"
-    - &test_00
-      stage: unit_test
-      script: ./tool/travis.sh test_00
-      if: env(PKG) IS present
-    - <<: *test_00
-      env: PKG="_goldens"
-    - <<: *test_00
+      dart: dev
+    - stage: build
+      script: ./tool/travis.sh command_01
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_02
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_03
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_04
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_05
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_06
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_07
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_08
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_09
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_10
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_11
+      env: PKG="_tests"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_0
+      env: PKG="angular"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_0
       env: PKG="angular_ast"
-    - <<: *test_00
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh test_0
+      env: PKG="angular_ast"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_0
       env: PKG="angular_compiler"
-    - &test_01
-      stage: unit_test
-      script: ./tool/travis.sh test_01
-      if: env(PKG) IS present
-    - <<: *test_01
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh test_0
+      env: PKG="angular_compiler"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_0
+      env: PKG="angular_forms"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_1
       env: PKG="angular_router"
-    - <<: *test_01
-      env: PKG="angular_test"
-    - stage: unit_test
-      script: ./tool/travis.sh test_02
+      dart: dev
+    - stage: build
+      script: ./tool/travis.sh command_01
       env: PKG="angular_router"
+      dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_03
+      script: ./tool/travis.sh test_1
+      env: PKG="angular_router"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_12
+      env: PKG="angular_router"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_0
+      env: PKG="angular_router/example"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_1
       env: PKG="angular_test"
+      dart: dev
+    - stage: build
+      script: ./tool/travis.sh command_01
+      env: PKG="angular_test"
+      dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_04
-      env: PKG="_tests"
+      script: ./tool/travis.sh test_1
+      env: PKG="angular_test"
+      dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_05
-      env: PKG="_tests"
-    - stage: unit_test
-      script: ./tool/travis.sh test_06
-      env: PKG="_tests"
-    - stage: unit_test
-      script: ./tool/travis.sh test_07
-      env: PKG="_tests"
-    - stage: unit_test
-      script: ./tool/travis.sh test_08
-      env: PKG="_tests"
-    - stage: unit_test
-      script: ./tool/travis.sh test_09
-      env: PKG="_tests"
-    - stage: unit_test
-      script: ./tool/travis.sh test_10
-      env: PKG="_tests"
-    - stage: unit_test
-      script: ./tool/travis.sh test_11
-      env: PKG="_tests"
-    - stage: unit_test
-      script: ./tool/travis.sh test_12
-      env: PKG="_tests"
-    - stage: unit_test
-      script: ./tool/travis.sh test_13
-      env: PKG="_tests"
-
+      script: ./tool/travis.sh command_13
+      env: PKG="angular_test"
+      dart: dev
 
 stages:
-  - build
   - analyze
+  - build
   - unit_test
-  - name: test
-    if: env(PKG) IS present
-
-script: ./tool/travis.sh
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
   only: [master]
 
 cache:
- directories:
-   - $HOME/.pub-cache
-   - _tests/.dart_tool
-   - angular_router/.dart_tool
-   - angular_test/.dart_tool
+  directories:
+    - $HOME/.pub-cache
+    - _tests/.dart_tool
+    - angular_router/.dart_tool
+    - angular_test/.dart_tool
