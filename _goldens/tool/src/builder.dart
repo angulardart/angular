@@ -2,6 +2,11 @@ import 'package:angular/builder.dart' as angular;
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:build/build.dart';
 
+BuilderOptions _withoutExtensions(BuilderOptions options) =>
+    new BuilderOptions({}
+      ..addAll(options.config)
+      ..remove('extensions'));
+
 /// Returns a [Builder] to generate (debug) template files for comparison.
 ///
 /// Based on `build.yaml` configuration, this will either emit:
@@ -11,7 +16,7 @@ import 'package:build/build.dart';
 /// See `README.md` for this package for details.
 Builder debugBuilder(BuilderOptions options) {
   return angular.templateCompiler(
-    options,
+    _withoutExtensions(options),
     defaultFlags: const CompilerFlags(
       genDebugInfo: true,
       ignoreNgPlaceholderForGoldens: true,
@@ -30,7 +35,7 @@ Builder debugBuilder(BuilderOptions options) {
 /// See `README.md` for this package for details.
 Builder releaseBuilder(BuilderOptions options) {
   return angular.templateCompiler(
-    options,
+    _withoutExtensions(options),
     defaultFlags: const CompilerFlags(
       genDebugInfo: false,
       ignoreNgPlaceholderForGoldens: true,
@@ -49,7 +54,7 @@ Builder releaseBuilder(BuilderOptions options) {
 /// See `README.md` for this package for details.
 Builder outlineBuilder(BuilderOptions options) {
   return angular.outlineCompiler(
-    options,
+    _withoutExtensions(options),
     defaultFlags: const CompilerFlags(
       genDebugInfo: false,
       ignoreNgPlaceholderForGoldens: true,

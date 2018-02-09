@@ -73,7 +73,7 @@ Builder outlineCompiler(
   String extension: _outlineExtension,
 }) {
   final flags = new CompilerFlags.parseRaw(
-    options,
+    options.config,
     defaultFlags,
     severity: Level.SEVERE,
   );

@@ -12,14 +12,11 @@ dev_dependencies:
   # No strict dependencies, we always use dependency_overrides.
   angular_forms:
 
-  # Only used by this package.
-  _goldens.generator:
-    path: generator
-
   # Actual valid dependencies required.
   build_runner: ^0.7.9
   build_test: ^0.10.0
   dart_style: ^1.0.9
+  io: ^0.3.0
   path: ^1.5.1
   test: ^0.12.30+1
 

@@ -7,4 +7,4 @@
 # Fast fail the script on failures.
 set -e
 
-dart generator/bin/generate.dart
+pub run build_runner build -o build
