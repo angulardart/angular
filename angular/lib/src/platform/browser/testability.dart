@@ -61,7 +61,15 @@ class BrowserGetTestability implements GetTestability {
         for (int i = 0; i < registry.length; i++) {
           var testabilities =
               js_util.callMethod(registry[i], 'getAllAngularTestabilities', []);
-          if (testabilities != null) result.addAll(testabilities);
+
+          // We can't rely on testabilities being a Dart List, since it's read
+          // from a JS variable. It might have been created from DDC.
+          // Therefore, we only assume that it supports .length and [] access.
+          var testabilityCount = js_util.getProperty(testabilities, 'length');
+          for (var j = 0; j < testabilityCount; j++) {
+            var testability = js_util.getProperty(testabilities, j);
+            result.add(testability);
+          }
         }
         return result;
       };
