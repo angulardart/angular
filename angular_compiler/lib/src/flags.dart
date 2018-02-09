@@ -144,12 +144,12 @@ class CompilerFlags {
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
-        logger?.severe('Invalid arguments passed to the transformer: \n'
+        final message = 'Invalid arguments passed to the transformer: \n'
             '  - ${unknownArgs.join('\n  - ')}\n\n'
             'You may be providing flags that are no longer valid or supported '
             'for AngularDart 5.x. See "compiler_flags.md" in the AngularDart '
-            'repository for a list of supported flags.');
-        throw new ArgumentError('Invalid compiler argument(s).');
+            'repository for a list of supported flags.';
+        throw new ArgumentError(message);
       }
     }
 
