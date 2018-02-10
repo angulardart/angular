@@ -7,7 +7,8 @@
 
 * Added `@GenerateInjector`, a way to generate a factory for an `Injector`
   completely at compile-time, similar to `@Component` or `@Directive`. This
-  replaces the experimental feature `@Injector.generate`:
+  replaces the experimental feature `@Injector.generate`, and can be used
+  in conjunction with the `InjectorFactory` function type:
 
 ```dart
 import 'my_file.template.dart' as ng;
@@ -15,10 +16,8 @@ import 'my_file.template.dart' as ng;
 @GenerateInjector(const [
   const Provider(A, useClass: APrime),
 ])
-Injector example([Injector parent]) {
-  // The generated factory is your method's name, suffixed with `$Injector`.
-  return example$Injector(parent);
-}
+// The generated factory is your method's name, suffixed with `$Injector`.
+final InjectorFactory example = example$Injector;
 ```
 
 ### Breaking changes

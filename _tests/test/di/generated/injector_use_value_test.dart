@@ -84,7 +84,7 @@ void main() {
     useValue: const ClassWithRedirectingConstructor(),
   ),
 ])
-Injector example() => ng.example$Injector();
+final InjectorFactory example = ng.example$Injector;
 
 // An example of a class with a single, default, "const" constructor.
 class ClassWithConstConstructor {

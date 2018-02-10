@@ -9,7 +9,6 @@ import 'package:angular/angular.dart';
 import 'generated_injectors.template.dart' as ng;
 import 'generated_injectors.template.dart' as _ref0;
 import 'package:angular/angular.template.dart' as _ref1;
-// *** EXPERIMENTAL ** Injector Generator [START]
 import 'package:angular/src/di/injector/injector.dart' as _i1;
 import 'package:angular/src/di/injector/hierarchical.dart' as _i2;
 import 'generated_injectors.dart' as _i3;
@@ -67,7 +66,6 @@ class _Injector$doGenerate extends _i2.HierarchicalInjector {
     return orElse;
   }
 }
-// *** EXPERIMENTAL ** Injector Generator [END]
 
 var _visited = false;
 void initReflector() {

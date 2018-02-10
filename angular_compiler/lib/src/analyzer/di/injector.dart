@@ -20,7 +20,7 @@ class InjectorReader {
   static const _runtime = '$_package/src/di/injector/injector.dart';
   static const _$Injector = const Reference('Injector', _runtime);
 
-  static bool _shouldGenerateInjector(FunctionElement element) {
+  static bool _shouldGenerateInjector(TopLevelVariableElement element) {
     return $GenerateInjector.hasAnnotationOfExact(element);
   }
 
@@ -30,10 +30,10 @@ class InjectorReader {
     if (source == null) {
       throw new StateError('Expected a source for $element.');
     }
-    return element.definingCompilationUnit.functions
+    return element.definingCompilationUnit.topLevelVariables
         .where(_shouldGenerateInjector)
-        .map((fn) => new InjectorReader(
-              fn,
+        .map((field) => new InjectorReader(
+              field,
               new LibraryReader(element),
               doNotScope: source,
             ))
@@ -43,8 +43,8 @@ class InjectorReader {
   /// `@GenerateInjector` annotation object;
   final ConstantReader annotation;
 
-  /// A function element annotated with `@GenerateInjector`.
-  final FunctionElement method;
+  /// A top-level `InjectorFactory` field annotated with `@GenerateInjector`.
+  final TopLevelVariableElement field;
 
   @protected
   final ModuleReader moduleReader;
@@ -63,13 +63,13 @@ class InjectorReader {
   List<ProviderElement> _providers;
 
   InjectorReader(
-    this.method,
+    this.field,
     this.libraryReader, {
     this.moduleReader: const ModuleReader(),
     this.doNotScope,
   })
       : this.annotation = new ConstantReader(
-          $GenerateInjector.firstAnnotationOfExact(method),
+          $GenerateInjector.firstAnnotationOfExact(field),
         );
 
   /// Providers that are part of the provided list of the annotation.
@@ -192,7 +192,7 @@ class InjectorReader {
 
   /// Uses [visitor] to emit the results of this reader.
   void accept(InjectorVisitor visitor) {
-    visitor.visitMeta('_Injector\$${method.name}', '${method.name}\$Injector');
+    visitor.visitMeta('_Injector\$${field.name}', '${field.name}\$Injector');
     var index = 0;
     for (final provider in providers) {
       if (provider is UseValueProviderElement) {
