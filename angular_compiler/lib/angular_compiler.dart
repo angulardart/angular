@@ -49,6 +49,6 @@ export 'src/analyzer.dart'
         $ViewChildren;
 export 'src/asset.dart' show NgAssetReader;
 export 'src/emitter/injector.dart' show InjectorEmitter;
-export 'src/emitter/reflector.dart' show ReflectableEmitter;
+export 'src/emitter/reflector.dart' show ReflectableEmitter, SplitDartEmitter;
 export 'src/flags.dart' show CompilerFlags, Profile;
 export 'src/outliner.dart' show TemplateOutliner;

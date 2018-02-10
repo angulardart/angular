@@ -63,7 +63,7 @@ class TemplateOutliner implements Builder {
     final injectors = <String>[];
     var units = [library.definingCompilationUnit]..addAll(library.parts);
     var types = units.expand((unit) => unit.types);
-    var methods = units.expand((unit) => unit.functions);
+    var fields = units.expand((unit) => unit.topLevelVariables);
     for (final clazz in types) {
       final component = $Component.firstAnnotationOfExact(
         clazz,
@@ -81,12 +81,12 @@ class TemplateOutliner implements Builder {
         }
       }
     }
-    for (final method in methods) {
+    for (final field in fields) {
       if ($GenerateInjector.hasAnnotationOfExact(
-        method,
+        field,
         throwOnUnresolved: false,
       )) {
-        injectors.add('${method.name}\$Injector');
+        injectors.add('${field.name}\$Injector');
       }
     }
     final output = new StringBuffer('$_analyzerIgnores\n');
