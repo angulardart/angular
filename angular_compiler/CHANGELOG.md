@@ -1,6 +1,7 @@
 ### New features
 
 * Added an internal `cli.dart` library.
+* Added `$QueryList` as a `TypeChecker`.
 
 ### Bug fixes
 
