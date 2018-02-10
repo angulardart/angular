@@ -29,6 +29,11 @@ Injector example([Injector parent]) {
   explicitly set to `Visibility.all`. This feature had a cost in code size but
   was rarely used, so it's now opt-in, rather than the default behavior.
 
+* We now use a different code-path for the majority of content and view
+  queries, with the exception of places statically typed `QueryList`. While
+  this is not intended to be a breaking change it could have timing
+  implications.
+
 ### Bug fixes
 
 * An invalid event binding (`<comp (event-with-no-expression)>`) no longer

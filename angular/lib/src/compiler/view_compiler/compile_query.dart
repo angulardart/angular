@@ -26,8 +26,7 @@ class _QueryValues {
 /// https://github.com/dart-lang/angular/issues/688
 abstract class CompileQuery {
   static bool _useNewQuery(CompileQueryMetadata metadata) =>
-      // We don't use the new-style queries with .first yet.
-      !metadata.first && metadata.isListType;
+      !metadata.isQueryListType;
 
   /// An expression that accesses the component's instance.
   ///
@@ -489,6 +488,9 @@ class _ListCompileQuery extends CompileQuery {
 
   @override
   List<o.Statement> createDynamicUpdates() {
+    if (_isStatic) {
+      return const [];
+    }
     final statements = <o.Statement>[]
       ..addAll(_createUpdates())
       ..add(_queryDirtyField.set(o.literal(false)).toStmt());
@@ -516,6 +518,17 @@ class _ListCompileQuery extends CompileQuery {
         result = _createUpdatesMultiNested(queryValueExpressions);
       }
     } else {
+      // Optimization: Avoid .singleChild = null.
+      //
+      // Otherwise in build() we would write:
+      //   build() {
+      //     context.childField = null;
+      //   }
+      //
+      // ... which should be skip-able in the following condition:
+      if (_isSingle && queryValueExpressions.isEmpty) {
+        return const [];
+      }
       result = _createUpdatesStaticOnly(queryValueExpressions);
     }
 
@@ -526,9 +539,19 @@ class _ListCompileQuery extends CompileQuery {
   //
   // * If this is for @{Content|View}Child, use the first value.
   // * Else, return the element(s) as a List.
-  o.Expression _createUpdatesStaticOnly(List<o.Expression> values) {
-    return _isSingle ? values.first : o.literalArr(values);
-  }
+  o.Expression _createUpdatesStaticOnly(List<o.Expression> values) => _isSingle
+      ? values.isEmpty ? o.NULL_EXPR : values.first
+      : o.literalArr(values);
+
+  // Returns the equivalent of `{list}.isNotEmpty ? {list}.first : null`.
+  static o.Expression _firstIfNotEmpty(o.Expression list) =>
+      list is o.LiteralArrayExpr && list.entries.isNotEmpty
+          // Optimization: .isNotEmpty always === true.
+          ? list.prop('first')
+          // Base case: Check .isNotEmpty before calling .first.
+          : list
+              .prop('isNotEmpty')
+              .conditional(list.prop('first'), o.NULL_EXPR);
 
   // A single call to "mapNestedViews" is the result of this query.
   //
@@ -536,7 +559,7 @@ class _ListCompileQuery extends CompileQuery {
   // * Else, just return the {expression} itself (already a List).
   o.Expression _createsUpdatesSingleNested(List<o.Expression> values) {
     final first = values.first;
-    return _isSingle ? first.prop('first') : first;
+    return _isSingle ? _firstIfNotEmpty(first) : first;
   }
 
   // Multiple elements, where at least one is "mapNestedViews".
@@ -553,7 +576,7 @@ class _ListCompileQuery extends CompileQuery {
   // .. is OK.
   o.Expression _createUpdatesMultiNested(List<o.Expression> values) {
     final result = _flattenNodes(o.literalArr(values));
-    return _isSingle ? result.prop('first') : result;
+    return _isSingle ? _firstIfNotEmpty(result) : result;
   }
 }
 
