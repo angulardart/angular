@@ -28,10 +28,10 @@ const List<dynamic> styles$QueriesComponent = const [];
 
 class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   final import2.QueryList _viewQuery_q2_0 = new import2.QueryList();
-  final import2.QueryList _viewQuery_q2_1 = new import2.QueryList();
-  final import2.QueryList _viewQuery_q2_2 = new import2.QueryList();
-  final import2.QueryList _viewQuery_q2_3 = new import2.QueryList();
-  final import2.QueryList _viewQuery_q2_4 = new import2.QueryList();
+  bool _query_q2_1_1_isDirty = true;
+  bool _query_q2_1_2_isDirty = true;
+  bool _query_q2_1_3_isDirty = true;
+  bool _query_q2_1_4_isDirty = true;
   final import2.QueryList _viewQuery_AnotherDirective_5 = new import2.QueryList();
   import3.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_4;
@@ -59,14 +59,10 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_6 = new TemplateRef(_appEl_2, viewFactory_QueriesComponent1);
     _NgIf_2_7 = new NgIf(_appEl_2, _TemplateRef_2_6);
-    _viewQuery_q2_1.reset([new ElementRef(_el_1)]);
-    ctx.viewChildFromField = _viewQuery_q2_1.first;
-    _viewQuery_q2_2.reset([new ElementRef(_el_1)]);
-    ctx.readDIFromElementRef = _viewQuery_q2_2.first;
-    _viewQuery_q2_3.reset([_el_1]);
-    ctx.readDIFromElement = _viewQuery_q2_3.first;
-    _viewQuery_q2_4.reset([_el_1]);
-    ctx.readDIFromHtmlElement = _viewQuery_q2_4.first;
+    ctx.viewChildFromField = new ElementRef(_el_1);
+    ctx.readDIFromElementRef = new ElementRef(_el_1);
+    ctx.readDIFromElement = _el_1;
+    ctx.readDIFromHtmlElement = _el_1;
     init(const [], null);
     return null;
   }
@@ -154,15 +150,13 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_4;
   final import2.QueryList _query_AnotherDirective_0_0 = new import2.QueryList();
-  final import2.QueryList _query_AnotherDirective_0_1 = new import2.QueryList();
+  bool _query_AnotherDirective_0_1_isDirty = true;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewQueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _QueriesComponent_0_4 = new import1.QueriesComponent();
-    _query_AnotherDirective_0_1.reset([]);
-    _QueriesComponent_0_4.contentChildFromField = _query_AnotherDirective_0_1.first;
     _compView_0.create(_QueriesComponent_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.QueriesComponent>(0, this, rootEl, _QueriesComponent_0_4);
