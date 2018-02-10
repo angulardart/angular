@@ -60,9 +60,10 @@ String buildGeneratedCode(
   buffer.writeln(reflectableOutput.emitImports());
 
   if (outputs.injectorsOutput.isNotEmpty) {
-    buffer.writeln('// *** EXPERIMENTAL ** Injector Generator [START]');
+    final imports = new StringBuffer();
+    final body = new StringBuffer();
     final file = new LibraryBuilder();
-    final dart = new DartEmitter(allocator);
+    final dart = new SplitDartEmitter(imports, allocator);
 
     for (final injector in outputs.injectorsOutput) {
       final emitter = new InjectorEmitter();
@@ -74,12 +75,16 @@ String buildGeneratedCode(
     }
 
     // Write imports AND backing code required for generated injectors.
-    file.build().accept(dart, buffer);
-    buffer.writeln('// *** EXPERIMENTAL ** Injector Generator [END]');
-  }
+    file.build().accept(dart, body);
 
-  // Write generated code.
-  buffer.writeln(compilerOutput);
+    // ... in a specific order, so we don't put inputs before classes, etc.
+    buffer.writeln(imports);
+    buffer.writeln(compilerOutput);
+    buffer.writeln(body);
+  } else {
+    // Write generated code.
+    buffer.writeln(compilerOutput);
+  }
 
   // Write initReflector.
   buffer.writeln(reflectableOutput.emitInitReflector());

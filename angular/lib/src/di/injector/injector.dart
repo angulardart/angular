@@ -17,6 +17,9 @@ Null throwsNotFound(Injector injector, Object token) {
   throw errors.noProviderError(token);
 }
 
+/// Defines a function that creates an injector around a [parent] injector.
+typedef InjectorFactory = Injector Function([Injector parent]);
+
 /// Support for imperatively loading dependency injected services at runtime.
 ///
 /// [Injector] is a simple interface that accepts a valid _token_ (often either
@@ -115,12 +118,12 @@ abstract class Injector {
 /// @GenerateInjector(const [
 ///   const Provider(A, useClass: APrime),
 /// ])
-/// Injector example([Injector parent]) {
-///   // The generated factory is your method's name, suffixed with `$Injector`.
-///   return example$Injector(parent);
-/// }
+/// // The generated factory is your method's name, suffixed with `$Injector`.
+/// final InjectorFactory example = example$Injector;
 /// ```
 class GenerateInjector {
+  // Used internally via analysis only.
+  // ignore: unused_field
   final List<Object> _providersOrModules;
 
   const GenerateInjector(this._providersOrModules);

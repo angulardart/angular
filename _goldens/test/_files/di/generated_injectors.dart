@@ -38,7 +38,7 @@ import 'generated_injectors.template.dart' as ng;
     },
   ),
 ])
-Injector doGenerate() => ng.doGenerate$Injector();
+final InjectorFactory doGenerate = ng.doGenerate$Injector;
 
 class Example {
   const Example();

@@ -1,4 +1,5 @@
 import 'package:_benchmarks/common.dart';
+import 'package:_benchmarks/common.template.dart' as common;
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
@@ -9,9 +10,15 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should start and stop a benchmark', () async {
-    final testBed = new NgTestBed<BenchmarkComponent>().addProviders([
-      provide(runBenchmarkOn, useValue: ng.ExampleBenchmarkNgFactory),
-    ]);
+    final testBed = NgTestBed.forComponent<BenchmarkComponent>(
+      common.BenchmarkComponentNgFactory,
+      rootInjector: ([i]) {
+        return new Injector.map(
+          {runBenchmarkOn: ng.ExampleBenchmarkNgFactory},
+          i,
+        );
+      },
+    );
     final fixture = await testBed.create();
     expect(fixture.text, contains('[false]'));
     await fixture.update((_) {
