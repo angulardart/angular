@@ -1,6 +1,11 @@
 # Created with https://github.com/dart-lang/mono_repo
 language: dart
 
+# TODO(travis-ci/travis-ci#8836): Remove once the travis issue is resolved.
+sudo: required
+addons:
+  chrome: stable
+
 jobs:
   include:
     - stage: analyze
@@ -132,3 +137,6 @@ branches:
 cache:
   directories:
     - $HOME/.pub-cache
+    - _tests/.dart_tool
+    - angular_router/.dart_tool
+    - angular_test/.dart_tool
