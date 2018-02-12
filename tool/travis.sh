@@ -27,61 +27,66 @@ while (( "$#" )); do
     ;;
   command_01) echo
     echo -e '\033[1mTASK: command_01\033[22m'
-    echo -e 'pub run build_runner test -- -p vm'
-    pub run build_runner test -- -p vm
+    echo -e 'pub run build_runner test -o build -- -p vm'
+    pub run build_runner test -o build -- -p vm
     ;;
   command_02) echo
     echo -e '\033[1mTASK: command_02\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/common'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/common
+    echo -e 'pub run build_runner test -- -p vm'
+    pub run build_runner test -- -p vm
     ;;
   command_03) echo
     echo -e '\033[1mTASK: command_03\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/compiler'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/compiler
+    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/common'
+    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/common
     ;;
   command_04) echo
     echo -e '\033[1mTASK: command_04\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/core'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/core
+    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/compiler'
+    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/compiler
     ;;
   command_05) echo
     echo -e '\033[1mTASK: command_05\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/di'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/di
+    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/core'
+    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/core
     ;;
   command_06) echo
     echo -e '\033[1mTASK: command_06\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/integration'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/integration
+    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/di'
+    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/di
     ;;
   command_07) echo
     echo -e '\033[1mTASK: command_07\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/platform'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/platform
+    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/integration'
+    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/integration
     ;;
   command_08) echo
     echo -e '\033[1mTASK: command_08\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/security'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/security
+    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/platform'
+    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/platform
     ;;
   command_09) echo
     echo -e '\033[1mTASK: command_09\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/source_gen'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/source_gen
+    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/security'
+    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/security
     ;;
   command_10) echo
     echo -e '\033[1mTASK: command_10\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector
+    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/source_gen'
+    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/source_gen
     ;;
   command_11) echo
     echo -e '\033[1mTASK: command_11\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome -j1'
-    pub run build_runner test -- --platform=chrome -j1
+    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector'
+    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector
     ;;
   command_12) echo
     echo -e '\033[1mTASK: command_12\033[22m'
+    echo -e 'pub run build_runner test -- --platform=chrome -j1'
+    pub run build_runner test -- --platform=chrome -j1
+    ;;
+  command_13) echo
+    echo -e '\033[1mTASK: command_13\033[22m'
     echo -e 'pub run build_runner test -- --platform=chrome --timeout=4x -x skip_on_travis -j1'
     pub run build_runner test -- --platform=chrome --timeout=4x -x skip_on_travis -j1
     ;;
