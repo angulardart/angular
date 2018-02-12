@@ -6,7 +6,7 @@ stages:
   - analyze:
     - dartanalyzer: --fatal-warnings lib test
   - build:
-    - command: pub run build_runner build --low-resources-mode --fail-on-severe
+    - command: pub run build_runner build --fail-on-severe
   - unit_test:
     - test: -p vm
     - command: pub run build_runner test -- --platform=chrome --timeout=4x -x skip_on_travis -j1

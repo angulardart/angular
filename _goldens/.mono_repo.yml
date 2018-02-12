@@ -6,6 +6,7 @@ stages:
   - analyze:
     - dartanalyzer: --fatal-warnings lib test tool
   - build:
-      - command: pub run build_runner build
+    - command: pub run build_runner build --fail-on-severe -o build
+  # TODO(matanl): Use pub run build_runner test -- -p vm instead.
   - unit_test:
     - test: -p vm --precompiled build

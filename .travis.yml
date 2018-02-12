@@ -1,6 +1,12 @@
 # Created with https://github.com/dart-lang/mono_repo
 language: dart
 
+# Gives more resources on Travis (8GB Ram, 2 CPUs).
+# Do not remove without verifying w/ Travis.
+sudo: required
+addons:
+  chrome: stable
+
 jobs:
   include:
     - stage: analyze
@@ -132,3 +138,7 @@ branches:
 cache:
   directories:
     - $HOME/.pub-cache
+    - _goldens/.dart_tool
+    - _tests/.dart_tool
+    - angular_router/.dart_tool
+    - angular_test/.dart_tool
