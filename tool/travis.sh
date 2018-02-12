@@ -22,8 +22,8 @@ while (( "$#" )); do
   case $TASK in
   command_00) echo
     echo -e '\033[1mTASK: command_00\033[22m'
-    echo -e 'pub run build_runner build --low-resources-mode --fail-on-severe'
-    pub run build_runner build --low-resources-mode --fail-on-severe
+    echo -e 'pub run build_runner build --fail-on-severe'
+    pub run build_runner build --fail-on-severe
     ;;
   command_01) echo
     echo -e '\033[1mTASK: command_01\033[22m'
