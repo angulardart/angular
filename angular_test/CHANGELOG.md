@@ -5,6 +5,10 @@
   not available externally yet. We'll consider re-adding support once available
   or through another package (i.e. `angular_pageloader` or similar).
 
+* Added `NgTestBed.forComponent`, which takes a `ComponentFactory<T>`, and
+  optionally an `InjectorFactory`. This allows writing tests entirely free
+  of any invocations of `initReflector()`.
+
 ## 2.0.0-alpha+3
 
 * Removed support for `pub run angular_test`. This is no longer strictly

@@ -383,7 +383,6 @@ class ComponentVisitor
     ];
   }
 
-  static final _coreList = new TypeChecker.fromUrl('dart:core#List');
   static final _htmlElement = new TypeChecker.fromUrl('dart:html#Element');
 
   CompileQueryMetadata _getQuery(
@@ -405,8 +404,8 @@ class ComponentVisitor
       propertyName: propertyName,
       isElementType: propertyType?.element != null &&
           _htmlElement.isAssignableFromType(propertyType),
-      isListType: propertyType?.element != null &&
-          _coreList.isExactlyType(propertyType),
+      isQueryListType: propertyType?.element != null &&
+          $QueryList.isExactlyType(propertyType),
       read: readType != null
           ? new CompileTokenMetadata(
               identifier: new CompileIdentifierMetadata(

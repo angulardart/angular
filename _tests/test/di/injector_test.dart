@@ -597,7 +597,7 @@ Null willNeverBeCalled2(Object _, Object __) => null;
   const Provider(unnamedTokenOfDynamic, useValue: 5),
   const Provider(unnamedTokenOfString, useValue: 6),
 ])
-Injector exampleGenerated() => ng.exampleGenerated$Injector();
+final InjectorFactory exampleGenerated = ng.exampleGenerated$Injector;
 
 ExampleService createExampleService() => new ExampleService();
 List createListWith(String item) => [item];

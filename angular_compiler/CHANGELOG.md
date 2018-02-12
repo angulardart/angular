@@ -1,3 +1,9 @@
+### New features
+
+* Added an internal `cli.dart` library.
+* Added `SplitDartEmitter` for internal use.
+* Added `$QueryList` as a `TypeChecker`.
+
 ### Bug fixes
 
 * Removed all remaining (invalid) references to `package:barback`.

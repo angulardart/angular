@@ -1,0 +1,106 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'has_template_file.dart';
+export 'has_template_file.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'has_template_file.css.shim.dart' as import0;
+import 'package:angular/src/debug/debug_context.dart';
+import 'package:angular/src/debug/debug_app_view.dart';
+import 'has_template_file.dart' as import3;
+import 'dart:html' as import4;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import7;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
+import 'package:angular/angular.dart';
+
+const List<dynamic> styles$HasTemplateFileComponent = const [import0.styles];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 = [null, null];
+
+class ViewHasTemplateFileComponent0 extends DebugAppView<import3.HasTemplateFileComponent> {
+  import4.DivElement _el_0;
+  static RenderComponentType _renderType;
+  ViewHasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasTemplateFileComponent0) {
+    rootEl = import4.document.createElement('has-template-file');
+    _renderType ??= import9.appViewUtils.createRenderType('asset:_goldens/test/_files/templates/has_template_file.html', ViewEncapsulation.Emulated, styles$HasTemplateFileComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import3.HasTemplateFileComponent> build() {
+    final import4.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    var doc = import4.document;
+    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    addShimC(_el_0);
+    import4.Text _text_1 = new import4.Text('Has Template File!');
+    _el_0.append(_text_1);
+    dbgElm(this, _text_1, 1, 0, 5);
+    init(const [], null, [_el_0, _text_1]);
+    return null;
+  }
+}
+
+AppView<import3.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex) {
+  return new ViewHasTemplateFileComponent0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$HasTemplateFileComponentHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 = [
+  new StaticNodeDebugInfo([import3.HasTemplateFileComponent], import3.HasTemplateFileComponent, <String, dynamic>{})
+];
+
+class _ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
+  ViewHasTemplateFileComponent0 _compView_0;
+  import3.HasTemplateFileComponent _HasTemplateFileComponent_0_4;
+  _ViewHasTemplateFileComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasTemplateFileComponentHost0);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewHasTemplateFileComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _HasTemplateFileComponent_0_4 = new import3.HasTemplateFileComponent();
+    _compView_0.create(_HasTemplateFileComponent_0_4, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import3.HasTemplateFileComponent>(0, this, rootEl, _HasTemplateFileComponent_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import3.HasTemplateFileComponent) && (0 == nodeIndex))) {
+      return _HasTemplateFileComponent_0_4;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_HasTemplateFileComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import3.HasTemplateFileComponent> HasTemplateFileComponentNgFactory = const ComponentFactory<import3.HasTemplateFileComponent>('has-template-file', viewFactory_HasTemplateFileComponentHost0, _HasTemplateFileComponentMetadata);
+const _HasTemplateFileComponentMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(HasTemplateFileComponent, HasTemplateFileComponentNgFactory);
+  _ref0.initReflector();
+}

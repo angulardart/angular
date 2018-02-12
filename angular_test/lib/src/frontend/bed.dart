@@ -5,7 +5,9 @@
 import 'dart:async';
 import 'dart:html';
 
+import 'package:meta/meta.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 
 import '../bootstrap.dart';
 import '../errors.dart';
@@ -107,6 +109,10 @@ class NgTestBed<T> {
     return host;
   }
 
+  static Injector _defaultRootInjector([Injector parent]) {
+    return new Injector.empty(parent);
+  }
+
   static const _lifecycleProviders = const <Object>[
     const Provider(
       NgZoneStabilizer,
@@ -119,6 +125,51 @@ class NgTestBed<T> {
   final Element _host;
   final List<Object> _providers;
   final List<Object> _stabilizers;
+
+  // Used only with .forComponent:
+  final ComponentFactory<T> _componentFactory;
+  final InjectorFactory _rootInjector;
+
+  /// Create a new [NgTestBed] that uses the provided [component] factory.
+  ///
+  /// There are some differences between this API and the normal [NgTestBed]:
+  /// * [addProviders] will throw [UnsupportedError]; instead, the [addInjector]
+  ///   API allows you to wrap the previous [Injector], if any, to provide
+  ///   additional services. In most cases just [rootInjector] is enough, and
+  ///   you could re-use providers via [GenerateInjector].
+  ///
+  /// ```dart
+  /// main() {
+  ///   final ngTestBed = NgTestBed.forComponent(
+  ///     SomeComponentNgFactory,
+  ///     rootInjector: (parent) => new Injector.map({
+  ///       Service: new Service(),
+  ///     }, parent),
+  ///   );
+  /// }
+  /// ```
+  ///
+  /// **NOTE**: This is the only way to use [NgTestBed] without requiring use
+  /// of the `initReflector()` API on startup.
+  static NgTestBed<T> forComponent<T>(
+    ComponentFactory<T> component, {
+    Element host,
+    InjectorFactory rootInjector: _defaultRootInjector,
+    bool watchAngularLifecycle: true,
+  }) {
+    if (T == dynamic) {
+      throw new GenericTypeMissingError();
+    }
+    if (component == null) {
+      throw new ArgumentError.notNull('component');
+    }
+    return new NgTestBed<T>._useComponentFactory(
+      component: component,
+      rootInjector: rootInjector,
+      host: host,
+      watchAngularLifecycle: watchAngularLifecycle,
+    );
+  }
 
   /// Create a new empty [NgTestBed] that creates a component type [T].
   ///
@@ -147,9 +198,8 @@ class NgTestBed<T> {
   }) {
     return new NgTestBed<T>._(
       host: host,
-      providers: watchAngularLifecycle ? _lifecycleProviders : const <Object>[],
-      stabilizers:
-          watchAngularLifecycle ? _lifecycleStabilizers : const <Object>[],
+      providers: watchAngularLifecycle ? _lifecycleProviders : const [],
+      stabilizers: watchAngularLifecycle ? _lifecycleStabilizers : const [],
     );
   }
 
@@ -157,14 +207,47 @@ class NgTestBed<T> {
     Element host,
     Iterable<Object> providers,
     Iterable<Object> stabilizers,
+    InjectorFactory rootInjector,
+    ComponentFactory<T> component,
   })
       : _host = host,
         _providers = providers.toList(),
-        _stabilizers = stabilizers.toList();
+        _stabilizers = stabilizers.toList(),
+        _rootInjector = rootInjector ?? _defaultRootInjector,
+        _componentFactory = component;
+
+  NgTestBed._useComponentFactory({
+    @required Element host,
+    @required ComponentFactory<T> component,
+    @required InjectorFactory rootInjector,
+    @required bool watchAngularLifecycle,
+  })
+      : _host = host,
+        _providers = watchAngularLifecycle ? _lifecycleProviders : const [],
+        _stabilizers = watchAngularLifecycle ? _lifecycleStabilizers : const [],
+        _rootInjector = rootInjector,
+        _componentFactory = component;
+
+  /// Whether this is the new-style [ComponentFactory]-backed [NgTestBed].
+  bool get _usesComponentFactory => _componentFactory != null;
 
   /// Returns a new instance of [NgTestBed] with [providers] added.
   NgTestBed<T> addProviders(Iterable<Object> providers) {
+    if (_usesComponentFactory) {
+      throw new UnsupportedError('Use "addInjector" instead');
+    }
     return fork(providers: _concat(_providers, providers));
+  }
+
+  /// Returns a new instance of [NgTestBed] with the root injector wrapped.
+  ///
+  /// That is, [factory] will _supplement_ the existing injector(s). In most
+  /// cases this is likely not required unless you are re-using test
+  /// configuration across many tests with subtle differences.
+  NgTestBed<T> addInjector(InjectorFactory factory) {
+    return fork(
+      rootInjector: ([Injector parent]) => _rootInjector(factory(parent)),
+    );
   }
 
   /// Returns a new instance of [NgTestBed] with [stabilizers] added.
@@ -205,9 +288,10 @@ class NgTestBed<T> {
     _checkForActiveTest();
     return new Future<NgTestFixture<T>>.sync(() {
       _checkForActiveTest();
-      return bootstrapForTest(
-        type,
+      return bootstrapForTest<T>(
+        _componentFactory ?? typeToFactory(T),
         _host ?? _defaultHost(),
+        _rootInjector,
         beforeChangeDetection: beforeChangeDetection,
         addProviders: _concat(_providers, /*_stabilizers*/ const []),
       ).then((componentRef) async {
@@ -233,16 +317,25 @@ class NgTestBed<T> {
   /// Creates a new instance of [NgTestBed].
   ///
   /// Any non-null value overrides the existing properties.
-  NgTestBed<T> fork({
+  NgTestBed<E> fork<E extends T>({
     Element host,
+    ComponentFactory<E> component,
     Iterable<Object> providers,
+    InjectorFactory rootInjector,
     Iterable<Object> stabilizers,
   }) {
-    return new NgTestBed<T>._(
+    return new NgTestBed<E>._(
       host: host ?? _host,
       providers: providers ?? _providers,
       stabilizers: stabilizers ?? _stabilizers,
+      rootInjector: rootInjector ?? _rootInjector,
+      component: component ?? _componentFactory,
     );
+  }
+
+  /// Returns a new instance of [NgTestBed] with [component] overrode.
+  NgTestBed<E> setComponent<E extends T>(ComponentFactory<E> component) {
+    return fork(component: component);
   }
 
   /// Returns a new instance of [NgTestBed] with [host] overrode.
