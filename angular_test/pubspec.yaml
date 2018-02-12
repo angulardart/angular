@@ -30,4 +30,9 @@ dependency_overrides:
     path: ../angular_ast
   angular_compiler:
     path: ../angular_compiler
+  build_runner:
+    git:
+      url: https://github.com/dart-lang/build.git
+      ref: disable-perf-tracking-in-low-resource-mode
+      path: build_runner
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
