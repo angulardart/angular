@@ -18,7 +18,7 @@ jobs:
       env: PKG="_goldens"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_0
+      script: ./tool/travis.sh command_01
       env: PKG="_goldens"
       dart: dev
     - stage: analyze
@@ -78,7 +78,7 @@ jobs:
       env: PKG="angular_ast"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_1
+      script: ./tool/travis.sh test_0
       env: PKG="angular_ast"
       dart: dev
     - stage: analyze
@@ -86,7 +86,7 @@ jobs:
       env: PKG="angular_compiler"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_1
+      script: ./tool/travis.sh test_0
       env: PKG="angular_compiler"
       dart: dev
     - stage: analyze
@@ -102,7 +102,7 @@ jobs:
       env: PKG="angular_router"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_2
+      script: ./tool/travis.sh test_1
       env: PKG="angular_router"
       dart: dev
     - stage: unit_test
@@ -118,7 +118,7 @@ jobs:
       env: PKG="angular_test"
       dart: dev
     - stage: unit_test
-      script: ./tool/travis.sh test_2
+      script: ./tool/travis.sh test_1
       env: PKG="angular_test"
       dart: dev
     - stage: unit_test

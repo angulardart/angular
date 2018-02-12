@@ -102,16 +102,11 @@ while (( "$#" )); do
     ;;
   test_0) echo
     echo -e '\033[1mTASK: test_0\033[22m'
-    echo -e 'pub run test -p vm --precompiled build'
-    pub run test -p vm --precompiled build
-    ;;
-  test_1) echo
-    echo -e '\033[1mTASK: test_1\033[22m'
     echo -e 'pub run test'
     pub run test
     ;;
-  test_2) echo
-    echo -e '\033[1mTASK: test_2\033[22m'
+  test_1) echo
+    echo -e '\033[1mTASK: test_1\033[22m'
     echo -e 'pub run test -p vm'
     pub run test -p vm
     ;;
