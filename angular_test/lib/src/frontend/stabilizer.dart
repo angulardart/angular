@@ -8,6 +8,9 @@ import 'package:angular/di.dart';
 
 import '../errors.dart';
 
+/// Creates a [NgTestStabilizer], optionally from an [Injector].
+typedef NgTestStabilizerFactory = NgTestStabilizer Function(Injector);
+
 /// Abstraction around services that change the state of the DOM asynchronously.
 ///
 /// One strategy of testing Angular components is to interact with their emitted
