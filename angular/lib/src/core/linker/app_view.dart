@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:meta/meta.dart';
 import 'package:angular/src/core/app_view_consts.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
@@ -12,6 +11,8 @@ import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/platform/dom/shared_styles_host.dart';
+import 'package:angular/src/runtime.dart';
+import 'package:meta/meta.dart';
 
 import 'app_view_utils.dart';
 import 'component_factory.dart';
@@ -387,12 +388,9 @@ abstract class AppView<T> {
     }
 
     // Sanity check in dev-mode that a destroyed view is not checked again.
-    assert((() {
-      if (viewData.destroyed) {
-        throw new ViewDestroyedException('detectChanges');
-      }
-      return true;
-    })());
+    if (isDevMode && viewData.destroyed) {
+      throw new ViewDestroyedException('detectChanges');
+    }
 
     if (lastGuardedView != null) {
       // Run change detection in "slow-mode" to catch thrown exceptions.
