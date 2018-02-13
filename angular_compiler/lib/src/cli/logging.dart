@@ -7,9 +7,19 @@ import 'package:stack_trace/stack_trace.dart';
 /// Executes the provided [fn], capturing [BuildError]s and forwarding to logs.
 ///
 /// * [showInternalTraces]: If `true`, [BuildError.stackTrace] is printed.
-T runBuildZoned<T>(T Function() fn, {bool showInternalTraces: false}) {
-  return runZoned(
-    fn,
+Future<T> runBuildZoned<T>(
+  Future<T> Function() fn, {
+  bool showInternalTraces: false,
+}) {
+  final completer = new Completer<T>.sync();
+  runZoned(
+    () {
+      fn().then((result) {
+        if (!completer.isCompleted) {
+          completer.complete(result);
+        }
+      });
+    },
     onError: (e, s) {
       if (e is BuildError) {
         build.log.severe(
@@ -24,11 +34,15 @@ T runBuildZoned<T>(T Function() fn, {bool showInternalTraces: false}) {
           s,
         );
       }
+      if (!completer.isCompleted) {
+        completer.complete();
+      }
     },
     zoneSpecification: new ZoneSpecification(
       print: (_, __, ___, line) => build.log.fine(line),
     ),
   );
+  return completer.future;
 }
 
 /// Base error type for all fatal errors encountered while compiling.
