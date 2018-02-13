@@ -10,14 +10,10 @@ Issues that only effect a specific part of the framework.
 | --------------------------------- | -------------------------------------------------------------------------------- |
 | [`area: analysis`][a1]            | (WIP)                                                                            |
 | [`area: ast`][a2]                 | Occurs in `package:angular_ast`                                                  |
-| [`area: compiler`][a3]            | Occurs in `package:angular_compiler` _or_ the compiler sub-parts of the main     |
-                                      package. In general, anything that occurs at _compile-time_ should be assigned   |
-                                      this label.                                                                      |
+| [`area: compiler`][a3]            | Occurs in `package:angular_compiler` _or_ anything at compile-time, in general.  |
 | [`area: forms`][a4]               | Occurs in `package:angular_forms`                                                |
 | [`area: router`][a5]              | Occurs in `package:angular_router`                                               |
-| [`area: runtime`][a6]             | Occurs in the main package (`package:angular`). In general anything that occurs  |
-                                      at runtime that is not part of one of the other _area_ labels should be assigned |
-                                      this label.                                                                      |
+| [`area: runtime`][a6]             | Occurs in the main package (`package:angular`), but _not_ at compile-time.       |
 | [`area: test`][a7]                | Occurs in `package:angular_test` or in our own test suites.                      |
 
 [a1]: https://github.com/dart-lang/angular/labels/area%3A%20analysis
@@ -37,8 +33,7 @@ Issues that are specifically tagged in order to track relevance to the team.
 | [`breaking change`][o1]           | This issue, if implemented, would be a breaking change to its respective _area_. |
 | [`chore`][o2]                     | This issue requires internal re-organization, grunge work (not a feature).       |
 | [`documentation`][o3]             | This issue requires documentation fixes or changes to close.                     |
-| [`migrate internal users`][o4]    | This issue requires a non-trivial amount of migration of internal users in order |
-                                      to close, which is common for some (not all) _breaking changes_.                 |
+| [`migrate internal users`][o4]    | This issue requires a non-trivial amount of migration of internal users.         |
 | [`needs review`][o5]              | This issue requires a closer review by the team or other Dart team members.      |
 | [`new feature`][o6]               | This issue represents a new feature or addition.                                 |
 | [`priority`][o7]                  | This is a high priority issue, that should be resolved ASAP.                     |
