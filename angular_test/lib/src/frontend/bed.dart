@@ -293,7 +293,7 @@ class NgTestBed<T> {
         _host ?? _defaultHost(),
         _rootInjector,
         beforeChangeDetection: beforeChangeDetection,
-        addProviders: _concat(_providers, /*_stabilizers*/ const []),
+        addProviders: _providers,
       ).then((componentRef) async {
         _checkForActiveTest();
         final allStabilizers = new NgTestStabilizer.all(
