@@ -84,7 +84,7 @@ ComponentFactory<T> typeToFactory<T>(Object typeOrFactory) =>
 ///
 /// **WARNING**: This API is not considered part of the stable API.
 @experimental
-Injector rootInjector(InjectorFactory createAppInjector) {
+Injector rootInjector(Injector createAppInjector(Injector parent)) {
   // TODO(matanl): Use a generated injector once the API is stable.
   return createAppInjector(browserStaticPlatform().injector);
 }
