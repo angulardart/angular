@@ -75,6 +75,10 @@ abstract class AbstractControl {
   void markAsTouched() {
     _touched = true;
   }
+   
+  void markAsUntouched() {
+    _touched = false;    
+  }
 
   void markAsDirty({bool onlySelf, bool emitEvent}) {
     onlySelf = onlySelf == true;
