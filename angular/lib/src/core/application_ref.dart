@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 
+import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 import '../facade/exceptions.dart' show BaseException, ExceptionHandler;
@@ -29,7 +30,7 @@ bool _inPlatformCreate = false;
 /// Creates a platform.
 /// Platforms have to be eagerly created via this function.
 PlatformRefImpl createPlatform(Injector injector) {
-  assert((() {
+  if (isDevMode) {
     if (_inPlatformCreate) {
       throw new BaseException('Already creating a platform...');
     }
@@ -37,8 +38,7 @@ PlatformRefImpl createPlatform(Injector injector) {
       throw new BaseException('There can be only one platform. Destroy the '
           'previous one to create a new one.');
     }
-    return true;
-  })());
+  }
   _inPlatformCreate = true;
   sharedStylesHost ??= new DomSharedStylesHost(document);
   try {
@@ -134,13 +134,10 @@ class PlatformRefImpl extends PlatformRef {
 
   /// Given an injector, gets platform initializers to initialize at bootstrap.
   void init(Injector injector) {
-    assert((() {
-      if (!_inPlatformCreate) {
-        throw new BaseException(
-            'Platforms have to be initialized via `createPlatform`!');
-      }
-      return true;
-    })());
+    if (isDevMode && !_inPlatformCreate) {
+      throw new BaseException(
+          'Platforms have to be initialized via `createPlatform`!');
+    }
     _injector = injector;
 
     List initializers = injector.get(PLATFORM_INITIALIZER, null);
@@ -401,14 +398,11 @@ class ApplicationRefImpl extends ApplicationRef {
     ComponentFactory<T> componentFactory, [
     Injector parent,
   ]) {
-    assert((() {
-      if (!_asyncInitDone) {
-        throw new BaseException(
-            'Cannot bootstrap as there are still asynchronous initializers '
-            'running. Wait for them using waitForAsyncInitializers().');
-      }
-      return true;
-    })());
+    if (isDevMode && !_asyncInitDone) {
+      throw new BaseException(
+          'Cannot bootstrap as there are still asynchronous initializers '
+          'running. Wait for them using waitForAsyncInitializers().');
+    }
 
     return run(() {
       _rootComponentFactories.add(componentFactory);
@@ -476,12 +470,9 @@ class ApplicationRefImpl extends ApplicationRef {
     // Protect against tick being called recursively in development mode.
     //
     // This is mostly to assert valid changes to the framework, not user code.
-    assert((() {
-      if (_runningTick) {
-        throw new BaseException('ApplicationRef.tick is called recursively');
-      }
-      return true;
-    })());
+    if (isDevMode && _runningTick) {
+      throw new BaseException('ApplicationRef.tick is called recursively');
+    }
 
     // Run the top-level 'tick' (i.e. detectChanges on root components).
     try {

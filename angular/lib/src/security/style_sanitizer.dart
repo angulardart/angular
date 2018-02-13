@@ -1,3 +1,4 @@
+import 'package:angular/src/runtime.dart';
 import 'package:logging/logging.dart';
 
 import 'url_sanitizer.dart';
@@ -104,10 +105,9 @@ String internalSanitizeStyle(String value) {
     }
     if (!failed) return value;
   }
-  assert((() {
+  if (isDevMode) {
     _logger.warning('Sanitizing unsafe style value $value '
         '(see http://g.co/ng/security#xss).');
-    return true;
-  })());
+  }
   return 'unsafe';
 }

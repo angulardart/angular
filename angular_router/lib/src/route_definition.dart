@@ -4,8 +4,9 @@
 
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime.dart';
+import 'package:meta/meta.dart';
 
 import 'route_path.dart';
 import 'url.dart';
@@ -45,12 +46,12 @@ abstract class RouteDefinition {
   /// When assertions are enabled, throws [StateError]. Otherwise does nothing.
   @mustCallSuper
   void assertValid() {
-    assert(() {
-      if (path == null) {
-        throw new StateError('Must have a non-null `path` string');
-      }
-      return true;
-    }());
+    if (!isDevMode) {
+      return;
+    }
+    if (path == null) {
+      throw new StateError('Must have a non-null `path` string');
+    }
   }
 
   /// Define a route from [path] that loads [component] into an outlet.
@@ -161,12 +162,9 @@ abstract class RouteDefinition {
 
   /// Returns as a valid URL with [paramValues] filled into [parameters].
   String toUrl([Map<String, String> paramValues = const {}]) {
-    assert(() {
-      if (paramValues == null) {
-        throw new ArgumentError.notNull('paramValues');
-      }
-      return true;
-    }());
+    if (isDevMode && paramValues == null) {
+      throw new ArgumentError.notNull('paramValues');
+    }
     var url = '/' + path;
     for (final parameter in parameters) {
       url = url.replaceFirst(
@@ -199,14 +197,14 @@ class ComponentRouteDefinition extends RouteDefinition {
 
   @override
   void assertValid() {
-    assert(() {
-      if (component is! Type && component is! ComponentFactory) {
-        throw new StateError(
-          'Must have a valid (non-null) `component` type (got $Component).',
-        );
-      }
-      return true;
-    }());
+    if (!isDevMode) {
+      return;
+    }
+    if (component is! Type && component is! ComponentFactory) {
+      throw new StateError(
+        'Must have a valid (non-null) `component` type (got $Component).',
+      );
+    }
     super.assertValid();
   }
 }
@@ -230,12 +228,12 @@ class DeferredRouteDefinition extends RouteDefinition {
 
   @override
   void assertValid() {
-    assert(() {
-      if (loader == null) {
-        throw new StateError('Must have a non-null `loader` function');
-      }
-      return true;
-    }());
+    if (!isDevMode) {
+      return;
+    }
+    if (loader == null) {
+      throw new StateError('Must have a non-null `loader` function');
+    }
     super.assertValid();
   }
 }
@@ -259,15 +257,15 @@ class RedirectRouteDefinition extends RouteDefinition {
 
   @override
   void assertValid() {
-    assert(() {
-      if (redirectTo == null) {
-        throw new StateError('Must have a non-null `redirectTo` string');
-      }
-      if (redirectTo == path) {
-        throw new StateError('Cannot redirect from `redirectTo` to `path');
-      }
-      return true;
-    }());
+    if (!isDevMode) {
+      return;
+    }
+    if (redirectTo == null) {
+      throw new StateError('Must have a non-null `redirectTo` string');
+    }
+    if (redirectTo == path) {
+      throw new StateError('Cannot redirect from `redirectTo` to `path');
+    }
     super.assertValid();
   }
 }

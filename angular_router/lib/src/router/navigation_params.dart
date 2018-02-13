@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 /// Additional parameters for [Router.navigate].
@@ -43,14 +44,14 @@ class NavigationParams {
   /// When assertions are enabled, throws [StateError]. Otherwise does nothing.
   @mustCallSuper
   void assertValid() {
-    assert(() {
-      if (fragment == null) {
-        throw new StateError('Must have a non-null `fragment` type');
-      }
-      if (queryParameters == null) {
-        throw new StateError('Must have a non-null `query` type');
-      }
-      return true;
-    }());
+    if (!isDevMode) {
+      return;
+    }
+    if (fragment == null) {
+      throw new StateError('Must have a non-null `fragment` type');
+    }
+    if (queryParameters == null) {
+      throw new StateError('Must have a non-null `query` type');
+    }
   }
 }
