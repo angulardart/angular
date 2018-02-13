@@ -57,10 +57,6 @@ NgTestBed<T> createDynamicTestBed<T>({
   );
 }
 
-// https://github.com/dart-lang/angular/issues/549.
-NgTestStabilizer createZoneStabilizer(NgZone ngZone) =>
-    new NgZoneStabilizer(ngZone);
-
 /// An immutable builder for creating a pre-configured AngularDart application.
 ///
 /// The root component type [T] that is created is essentially the same as a
@@ -113,18 +109,13 @@ class NgTestBed<T> {
     return new Injector.empty(parent);
   }
 
-  static const _lifecycleProviders = const <Object>[
-    const Provider(
-      NgZoneStabilizer,
-      useFactory: createZoneStabilizer,
-      deps: const [NgZone],
-    ),
+  static final List<NgTestStabilizerFactory> _lifecycleStabilizers = [
+    (i) => new NgZoneStabilizer(i.get(NgZone)),
   ];
-  static const _lifecycleStabilizers = const <Object>[NgZoneStabilizer];
 
   final Element _host;
   final List<Object> _providers;
-  final List<Object> _stabilizers;
+  final List<NgTestStabilizerFactory> _stabilizers;
 
   // Used only with .forComponent:
   final ComponentFactory<T> _componentFactory;
@@ -198,7 +189,7 @@ class NgTestBed<T> {
   }) {
     return new NgTestBed<T>._(
       host: host,
-      providers: watchAngularLifecycle ? _lifecycleProviders : const [],
+      providers: const [],
       stabilizers: watchAngularLifecycle ? _lifecycleStabilizers : const [],
     );
   }
@@ -206,7 +197,7 @@ class NgTestBed<T> {
   NgTestBed._({
     Element host,
     Iterable<Object> providers,
-    Iterable<Object> stabilizers,
+    Iterable<NgTestStabilizerFactory> stabilizers,
     InjectorFactory rootInjector,
     ComponentFactory<T> component,
   })
@@ -223,7 +214,7 @@ class NgTestBed<T> {
     @required bool watchAngularLifecycle,
   })
       : _host = host,
-        _providers = watchAngularLifecycle ? _lifecycleProviders : const [],
+        _providers = const [],
         _stabilizers = watchAngularLifecycle ? _lifecycleStabilizers : const [],
         _rootInjector = rootInjector,
         _componentFactory = component;
@@ -251,7 +242,7 @@ class NgTestBed<T> {
   }
 
   /// Returns a new instance of [NgTestBed] with [stabilizers] added.
-  NgTestBed<T> addStabilizers(Iterable<Object> stabilizers) {
+  NgTestBed<T> addStabilizers(Iterable<NgTestStabilizerFactory> stabilizers) {
     return fork(stabilizers: _concat(_stabilizers, stabilizers));
   }
 
@@ -297,9 +288,7 @@ class NgTestBed<T> {
       ).then((componentRef) async {
         _checkForActiveTest();
         final allStabilizers = new NgTestStabilizer.all(
-          _stabilizers.map<NgTestStabilizer>((s) {
-            return componentRef.injector.get(s) as NgTestStabilizer;
-          }),
+          _stabilizers.map((s) => s(componentRef.injector)),
         );
         await allStabilizers.stabilize();
         final testFixture = new NgTestFixture<T>(
@@ -322,7 +311,7 @@ class NgTestBed<T> {
     ComponentFactory<E> component,
     Iterable<Object> providers,
     InjectorFactory rootInjector,
-    Iterable<Object> stabilizers,
+    Iterable<NgTestStabilizerFactory> stabilizers,
   }) {
     return new NgTestBed<E>._(
       host: host ?? _host,
