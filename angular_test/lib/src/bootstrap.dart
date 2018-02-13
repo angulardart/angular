@@ -97,7 +97,8 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   Injector appInjector, {
   void beforeChangeDetection(E componentInstance),
 }) {
-  sharedStylesHost ??= new DomSharedStylesHost.fromElement(hostElement);
+  // TODO: Consider using hostElement instead.
+  sharedStylesHost ??= new DomSharedStylesHost(document);
   final componentRef = componentFactory.create(appInjector);
   final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
   if (!isDefaultChangeDetectionStrategy(cdMode) &&
