@@ -35,8 +35,6 @@ void main() {
 @Component(
   selector: 'example',
   template: '[{{ready}}]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ExampleBenchmark implements Benchmark {
   @override
