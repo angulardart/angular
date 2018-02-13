@@ -1,0 +1,13 @@
+name: examples.hello_world
+
+dependencies:
+  angular: ^5.0.0-alpha
+
+# DO NOT REMOVE. We don't publish this package, it is just for testing.
+dependency_overrides:
+  angular:
+    path: ../../angular
+  angular_ast:
+    path: ../../angular_ast
+  angular_compiler:
+    path: ../../angular_compiler
