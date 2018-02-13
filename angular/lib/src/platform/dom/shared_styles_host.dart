@@ -8,9 +8,10 @@ class DomSharedStylesHost implements SharedStylesHost {
   final _stylesSet = new Set<String>();
   // Native ShadowDOM hosts.
   List _nativeHosts;
-  final HeadElement _rootHost;
+  final HtmlElement _rootHost;
 
   DomSharedStylesHost(HtmlDocument doc) : _rootHost = doc.head;
+  DomSharedStylesHost.fromElement(this._rootHost);
 
   @override
   dynamic createStyleElement(String css) {

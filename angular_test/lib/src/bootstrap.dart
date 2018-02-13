@@ -9,8 +9,9 @@ import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/platform/dom/shared_styles_host.dart';
 
 /// Returns an application injector for [providers] based on a [platform].
 Injector createTestInjector(List<dynamic> providers) {
@@ -23,7 +24,7 @@ Injector createTestInjector(List<dynamic> providers) {
       providers,
     ], browserStaticPlatform().injector);
   }
-  appViewUtils ??= appInjector.get(AppViewUtils);
+  initAngular(appInjector);
   return appInjector;
 }
 
@@ -52,10 +53,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
     throw new ArgumentError.notNull('rootInjector');
   }
   // This should be kept in sync with 'bootstrapStatic' as much as possible.
-  final appInjector = rootInjector(createTestInjector([
-    bootstrapLegacyModule,
-    addProviders,
-  ]));
+  final appInjector = rootInjector(createTestInjector(addProviders));
   final ApplicationRefImpl appRef = appInjector.get(ApplicationRef);
   NgZoneError caughtError;
   final NgZone ngZone = appInjector.get(NgZone);
@@ -99,6 +97,7 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   Injector appInjector, {
   void beforeChangeDetection(E componentInstance),
 }) {
+  sharedStylesHost ??= new DomSharedStylesHost.fromElement(hostElement);
   final componentRef = componentFactory.create(appInjector);
   final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
   if (!isDefaultChangeDetectionStrategy(cdMode) &&
