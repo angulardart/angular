@@ -23,6 +23,13 @@ import 'view_compiler_utils.dart'
         getViewFactoryName,
         toTemplateExtension;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 /// Compiled node in the view (such as text node) that is not an element.
 class CompileNode {
   /// Parent of node.

@@ -51,6 +51,13 @@ import 'template_ast.dart'
 import 'template_optimize.dart';
 import 'template_preparser.dart' show preparseElement;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 // Group 1 = 'bind-'
 // Group 2 = 'var-'
 // Group 3 = 'let-'

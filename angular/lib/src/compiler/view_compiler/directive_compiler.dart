@@ -70,6 +70,7 @@ class DirectiveCompiler {
     }
     var changeDetectorClass = new o.ClassStmt(
         changeDetectorClassName,
+        // ignore: argument_type_not_assignable
         superClassExpr,
         _nameResolver.fields ?? const [],
         const [],
@@ -109,6 +110,7 @@ class DirectiveCompiler {
           new o.WriteClassMemberExpr('el', new o.ReadVarExpr('e')).toStmt());
       statements.add(new o.InvokeMemberMethodExpr('initCd', const []).toStmt());
     }
+    // ignore: argument_type_not_assignable
     return new o.ClassMethod(null, constructorArgs, statements);
   }
 

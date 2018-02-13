@@ -4,6 +4,10 @@ import 'package:angular/di.dart' show PipeTransform, Pipe;
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+
 /// Creates a new [List] or [String] containing a subset (slice) of the
 /// elements.
 ///

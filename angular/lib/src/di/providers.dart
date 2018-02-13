@@ -3,6 +3,7 @@
 // See `provider.dart` for the current implementation.
 
 import 'package:meta/meta.dart';
+import 'package:angular/src/runtime.dart';
 
 import '../core/di/opaque_token.dart';
 
@@ -175,7 +176,7 @@ class Provider<T> {
     if (useExisting != null) {
       return builder.useExisting(useExisting);
     }
-    return builder.useClass(useClass ?? token, deps: deps);
+    return builder.useClass(useClass ?? unsafeCast<Type>(token), deps: deps);
   }
 
   // Internal. See `listOfMulti`.
@@ -225,6 +226,7 @@ class ClassProvider<T> extends Provider<T> {
   })
       : super._(
           token,
+          // ignore: argument_type_not_assignable
           useClass: useClass ?? token,
           multi: multi,
         );

@@ -11,6 +11,13 @@ import 'compiler_utils.dart';
 import 'output/output_ast.dart' as o;
 import 'selector.dart' show CssSelector;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 // group 1: 'property' from '[property]'
 // group 2: 'event' from '(event)'
 var HOST_REG_EXP = new RegExp(r'^(?:(?:\[([^\]]+)\])|(?:\(([^\)]+)\)))$');

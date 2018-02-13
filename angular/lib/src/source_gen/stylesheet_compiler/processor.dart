@@ -9,6 +9,10 @@ import 'package:angular_compiler/angular_compiler.dart';
 import 'ng_compiler.dart';
 import 'zone.dart' as zone;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+
 Future<Map<AssetId, String>> processStylesheet(
     AssetReader reader, AssetId stylesheetId, CompilerFlags flags) async {
   final stylesheetUrl = toAssetUri(stylesheetId);

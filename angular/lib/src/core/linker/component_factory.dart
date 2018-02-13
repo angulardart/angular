@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:angular/src/core/di.dart' show Injector;
 import 'package:angular/src/di/reflector.dart' show runtimeTypeProvider;
+import 'package:angular/src/runtime.dart';
 
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
 import 'app_view.dart';
@@ -85,7 +86,9 @@ class ComponentFactory<T> {
   ]) {
     // Note: Host views don't need a declarationViewContainer!
     final AppView<dynamic> hostView = _viewFactory(null, null);
-    return hostView.createHostView(injector, projectableNodes ?? const []);
+    return unsafeCast<ComponentRef<T>>(
+      hostView.createHostView(injector, projectableNodes ?? const []),
+    );
   }
 }
 

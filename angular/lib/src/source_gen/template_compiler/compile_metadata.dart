@@ -22,6 +22,10 @@ import 'package:angular_compiler/angular_compiler.dart';
 
 import 'dart_object_utils.dart' as dart_objects;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
   final Logger _logger;

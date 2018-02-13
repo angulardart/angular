@@ -47,6 +47,7 @@ class DebugElement extends DebugNode {
   dynamic nativeElement;
 
   DebugElement(dynamic nativeNode, dynamic parent, RenderDebugInfo _debugInfo)
+      // ignore: argument_type_not_assignable
       : super(nativeNode, parent, _debugInfo) {
     this.properties = {};
     this.childNodes = [];
@@ -67,6 +68,7 @@ class DebugElement extends DebugNode {
     }
   }
 
+  // ignore: return_of_invalid_type
   Map get attributes => nativeElement.attributes;
 
   void insertChildrenAfter(DebugNode child, List<DebugNode> newChildren) {

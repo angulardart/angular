@@ -58,6 +58,13 @@ import 'view_compiler_utils.dart'
         identifierFromTagName,
         ViewCompileDependency;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 var rootSelectorVar = o.variable("rootSelector");
 
 class ViewBuilderVisitor implements TemplateAstVisitor {

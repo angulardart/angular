@@ -11,6 +11,7 @@ library angular.experimental;
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 import 'src/bootstrap/modules.dart';
@@ -70,7 +71,8 @@ ComponentRef<T> bootstrapFactory<T>(
 ComponentFactory<T> typeToFactory<T>(Object typeOrFactory) =>
     typeOrFactory is ComponentFactory<T>
         ? typeOrFactory
-        : reflector.getComponent(typeOrFactory);
+        : unsafeCast<ComponentFactory<T>>(
+            reflector.getComponent(unsafeCast<Type>(typeOrFactory)));
 
 /// Creates a root application injector by invoking [createAppInjector].
 ///
@@ -106,7 +108,7 @@ Injector rootMinimalInjector() => minimalApp(_platformInjector());
 /// **WARNING**: This API is not considered part of the stable API.
 @experimental
 void initAngular(Injector injector) {
-  appViewUtils = injector.get(AppViewUtils);
+  appViewUtils = unsafeCast<AppViewUtils>(injector.get(AppViewUtils));
 }
 
 /// Returns `true` when AngularDart has modified the DOM.

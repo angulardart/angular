@@ -1,3 +1,5 @@
+import 'package:angular/src/runtime.dart';
+
 import '../../core/di/decorators.dart';
 import '../../core/di/opaque_token.dart';
 import '../../facade/lang.dart' show assertionsEnabled;
@@ -90,7 +92,10 @@ class _RuntimeInjector extends HierarchicalInjector
   dynamic resolveAndInstantiate(dynamic providerOrType) {
     final provider = providerOrType is Provider
         ? providerOrType
-        : new Provider(providerOrType, useClass: providerOrType);
+        : new Provider(
+            providerOrType,
+            useClass: unsafeCast<Type>(providerOrType),
+          );
     return buildAtRuntime(provider, this);
   }
 
@@ -221,7 +226,7 @@ void _assertProviders(Iterable<Provider<Object>> providers) {
     } else if (provider.useFactory == noValueProvided &&
         provider.useExisting == null &&
         provider.token is Type) {
-      reflector.getFactory(provider.token);
+      reflector.getFactory(unsafeCast<Type>(provider.token));
     }
   }
 }

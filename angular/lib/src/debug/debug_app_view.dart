@@ -1,4 +1,3 @@
-// ignore_for_file: DEAD_CODE
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
@@ -32,6 +31,14 @@ import 'debug_node.dart'
 export 'package:angular/src/core/linker/app_view.dart';
 
 export 'debug_context.dart' show StaticNodeDebugInfo, DebugContext;
+
+// ignore_for_file: DEAD_CODE
+
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
 
 // RegExp to match anchor comment when logging bindings for debugging.
 final RegExp _templateBindingsExp = new RegExp(r'^template bindings=(.*)$');
@@ -354,6 +361,7 @@ void _setGlobalVar(String path, value) {
   Object obj = window;
   for (var i = 0; i < parts.length - 1; i++) {
     var name = parts[i];
+    // ignore: non_bool_negation_expression
     if (!js_util.callMethod(obj, 'hasOwnProperty', [name])) {
       js_util.setProperty(obj, name, js_util.newObject());
     }
