@@ -1,52 +1,145 @@
-# TODO(travis-ci/travis-ci#8836): Remove once the travis issue is resolved.
+# Created with https://github.com/dart-lang/mono_repo
+language: dart
+
+# Gives more resources on Travis (8GB Ram, 2 CPUs).
+# Do not remove without verifying w/ Travis.
 sudo: required
 addons:
   chrome: stable
 
-# Created with https://github.com/dart-lang/mono_repo
-language: dart
+jobs:
+  include:
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_0
+      env: PKG="_goldens"
+      dart: dev
+    - stage: build
+      script: ./tool/travis.sh command_00
+      env: PKG="_goldens"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_01
+      env: PKG="_goldens"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_1
+      env: PKG="_tests"
+      dart: dev
+    - stage: build
+      script: ./tool/travis.sh command_00
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_02
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_03
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_04
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_05
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_06
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_07
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_08
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_09
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_10
+      env: PKG="_tests"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_11
+      env: PKG="_tests"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_2
+      env: PKG="angular"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_2
+      env: PKG="angular_ast"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh test_0
+      env: PKG="angular_ast"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_2
+      env: PKG="angular_compiler"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh test_0
+      env: PKG="angular_compiler"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_2
+      env: PKG="angular_forms"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_1
+      env: PKG="angular_router"
+      dart: dev
+    - stage: build
+      script: ./tool/travis.sh command_00
+      env: PKG="angular_router"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh test_1
+      env: PKG="angular_router"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_12
+      env: PKG="angular_router"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_1
+      env: PKG="angular_test"
+      dart: dev
+    - stage: build
+      script: ./tool/travis.sh command_00
+      env: PKG="angular_test"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh test_1
+      env: PKG="angular_test"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_13
+      env: PKG="angular_test"
+      dart: dev
 
-dart:
-  - dev
-
-env:
-  - PKG=_goldens TASK=dartanalyzer_0
-  - PKG=_goldens TASK=test_00
-  - PKG=_goldens/generator TASK=dartanalyzer_0
-  - PKG=_tests TASK=dartanalyzer_1
-  - PKG=_tests TASK=test_04
-  - PKG=_tests TASK=test_05
-  - PKG=_tests TASK=test_06
-  - PKG=_tests TASK=test_07
-  - PKG=_tests TASK=test_08
-  - PKG=_tests TASK=test_09
-  - PKG=_tests TASK=test_10
-  - PKG=_tests TASK=test_11
-  - PKG=_tests TASK=test_12
-  - PKG=_tests TASK=test_13
-  - PKG=angular TASK=dartanalyzer_0
-  - PKG=angular_ast TASK=dartanalyzer_0
-  - PKG=angular_ast TASK=test_00
-  - PKG=angular_compiler TASK=dartanalyzer_0
-  - PKG=angular_compiler TASK=test_00
-  - PKG=angular_forms TASK=dartanalyzer_0
-  - PKG=angular_router TASK=dartanalyzer_1
-  - PKG=angular_router TASK=test_01
-  - PKG=angular_router TASK=test_02
-  - PKG=angular_router/example TASK=dartanalyzer_0
-  - PKG=angular_test TASK=dartanalyzer_1
-  - PKG=angular_test TASK=test_01
-  - PKG=angular_test TASK=test_03
-
-script: ./tool/travis.sh
+stages:
+  - analyze
+  - build
+  - unit_test
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
   only: [master]
 
 cache:
- directories:
-   - $HOME/.pub-cache
-   - _tests/.dart_tool
-   - angular_router/.dart_tool
-   - angular_test/.dart_tool
+  directories:
+    - $HOME/.pub-cache
+    - _goldens/.dart_tool
+    - _tests/.dart_tool
+    - angular_router/.dart_tool
+    - angular_test/.dart_tool
+

@@ -14,11 +14,14 @@ import 'bootstrap_test.template.dart' as ng_generated;
 void main() {
   ng_generated.initReflector();
 
+  Injector _noopInjector([Injector i]) => new Injector.empty(i);
+
   test('should create a new component in the DOM', () async {
     final host = new Element.div();
     final test = await bootstrapForTest(
-      NewComponentInDom,
+      ng_generated.NewComponentInDomNgFactory,
       host,
+      _noopInjector,
     );
     expect(host.text, contains('Hello World'));
     test.destroy();
@@ -27,8 +30,9 @@ void main() {
   test('should call a handler before initial load', () async {
     final host = new Element.div();
     final test = await bootstrapForTest<BeforeChangeDetection>(
-      BeforeChangeDetection,
+      ng_generated.BeforeChangeDetectionNgFactory,
       host,
+      _noopInjector,
       beforeChangeDetection: (comp) => comp.users.add('Mati'),
     );
     expect(host.text, contains('Hello Mati!'));
@@ -38,11 +42,9 @@ void main() {
   test('should include user-specified providers', () async {
     final host = new Element.div();
     final test = await bootstrapForTest(
-      AddProviders,
+      ng_generated.AddProvidersNgFactory,
       host,
-      addProviders: const [
-        TestService,
-      ],
+      ([i]) => new Injector.map({TestService: new TestService()}, i),
     );
     AddProviders instance = test.instance;
     expect(instance._testService, isNotNull);
@@ -51,7 +53,11 @@ void main() {
 
   test('should throw if the root component is OnPush', () async {
     expect(
-      bootstrapForTest(OnPushComponent, new DivElement()),
+      bootstrapForTest(
+        ng_generated.OnPushComponentNgFactory,
+        new DivElement(),
+        _noopInjector,
+      ),
       throwsUnsupportedError,
     );
   }, skip: 'See https://github.com/dart-lang/angular2/issues/329');

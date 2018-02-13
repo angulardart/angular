@@ -2,18 +2,30 @@ name: _tests
 author: Dart Team <web@dartlang.org>
 description: Tests for AngularDart.
 environment:
-  sdk: '>=2.0.0-dev.3.0 <2.0.0'
+  sdk: '>=2.0.0-dev.20.0 <2.0.0'
+
+dependencies:
+  # No strict dependencies, we always use dependency_overrides.
+  angular:
+  angular_test:
+
+  # Actual valid dependencies required.
+  collection: ^1.14.5
+  meta: ^1.1.2
+  quiver: ^0.28.0
+  test: ^0.12.30+1
+
 dev_dependencies:
-  angular: any # always overridden
-  angular_forms: any # always overridden
-  angular_test: any # always overridden
-  build_web_compilers: ^0.2.1
-  build_runner: ^0.7.8
+  # No strict dependencies, we always use dependency_overrides.
+  angular_forms:
+
+  # Actual valid dependencies required.
+  analyzer: ^0.31.0+1
+  build_runner: ^0.7.9
   build_test: ^0.10.0
-  cli_util: ^0.1.0
+  build_web_compilers: ^0.3.0
   mockito: '>=0.11.0 <3.0.0'
   source_span: ^1.4.0
-  test: ^0.12.6
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:

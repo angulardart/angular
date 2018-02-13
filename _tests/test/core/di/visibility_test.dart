@@ -47,6 +47,12 @@ void main() {
         var testFixture = await testBed.create();
         expect(testFixture.rootElement, isNotNull);
       });
+
+      test('component may provide itself via another token', () async {
+        final testBed = new NgTestBed<ShouldInjectAliasedLocal>();
+        final testFixture = await testBed.create();
+        expect(testFixture.text, testFixture.assertOnlyInstance.text);
+      });
     });
 
     group('all', () {
@@ -192,6 +198,35 @@ class MyDirectiveNeedsService {
   final SomeService someService;
   MyDirectiveNeedsService(
       this.someService, ViewContainerRef ref, TemplateRef templateRef);
+}
+
+abstract class Dependency {
+  String get text;
+}
+
+@Component(
+  selector: 'should-inject-aliased-local',
+  template: '<injects-aliased-local></injects-aliased-local>',
+  directives: const [InjectsAliasedLocal],
+  providers: const [
+    const Provider(Dependency, useExisting: ShouldInjectAliasedLocal),
+  ],
+  visibility: Visibility.local,
+)
+class ShouldInjectAliasedLocal extends Dependency {
+  final String text = 'Hello';
+}
+
+@Component(
+  selector: 'injects-aliased-local',
+  template: '{{dependency.text}}',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
+class InjectsAliasedLocal {
+  final Dependency dependency;
+
+  InjectsAliasedLocal(this.dependency);
 }
 
 @Component(

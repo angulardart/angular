@@ -8,6 +8,8 @@ import 'directive_test.template.dart' as ng_generated;
 
 /// Verifies whether injection through directives/components is correct.
 void main() {
+  // TODO(matanl): Remove once this is the default.
+  InjectionError.enableBetterErrors = true;
   ng_generated.initReflector();
 
   tearDown(disposeAnyRunningTest);
@@ -142,6 +144,63 @@ void main() {
     ]);
     final fixture = await testBed.create();
     expect(fixture.assertOnlyInstance.childView.example, ['A', 'B', 'C']);
+  });
+
+  test('should throw a readable error message on a 1-node failure', () {
+    final testBed = new NgTestBed<WillFailInjecting1Node>();
+    expect(
+      () => testBed.create(),
+      throwsA(
+        predicate(
+          (e) => '$e'.endsWith('No provider found for $MissingService'),
+        ),
+      ),
+    );
+  });
+
+  test('should throw a readable error message on a 2-node failure', () {
+    // NOTE: In an ideal scenario, this would throw a better error, i.e.
+    //   InjectsMissingService -> MissingService
+    //
+    // ... but this would require enter() and leave() wrapping around the
+    // successful cases in AppView-local injection (and changes to the
+    // generated code).
+    //
+    // If we end up doing this, we should modify the test accordingly.
+    final testBed = new NgTestBed<WillFailInjecting2Node>();
+    expect(
+      () => testBed.create(),
+      throwsA(
+        predicate(
+          (e) => '$e'.endsWith('No provider found for $MissingService'),
+        ),
+      ),
+      reason: 'AppView does not trace local injections',
+    );
+  });
+
+  test('should throw a readable erro message on a 2-node/parent failure', () {
+    // Passes, unlike the missing error case, because the parent injector, in
+    // this case a ReflectiveInjector, *does* trace the individual calls.
+    final testBed = new NgTestBed<WillFailInjecting2NodeParent>().addProviders([
+      new Provider(
+        InjectsMissingService,
+        useFactory: (Object willNotBeCalled) => null,
+        deps: const [
+          MissingService,
+        ],
+      )
+    ]);
+    expect(
+      () => testBed.create(),
+      throwsA(
+        predicate(
+          (e) => '$e'.contains(''
+              'No provider found for $MissingService: '
+              '$InjectsMissingService -> $MissingService.'),
+        ),
+      ),
+    );
   });
 }
 
@@ -490,6 +549,8 @@ const listOfStringToken = const OpaqueToken<List<String>>('listOfString');
     ChildThatInjectsTypedToken,
     NgIf,
   ],
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class SupportsTypedTokenInNestedViews {
   @ViewChild('tag')
@@ -501,9 +562,52 @@ class SupportsTypedTokenInNestedViews {
 @Component(
   selector: 'child-that-injects-token',
   template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class ChildThatInjectsTypedToken {
   final List<String> example;
 
   ChildThatInjectsTypedToken(@Inject(listOfStringToken) this.example);
+}
+
+class MissingService {}
+
+@Component(
+  selector: 'will-fail-injecting-1-node',
+  template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
+class WillFailInjecting1Node {
+  WillFailInjecting1Node(MissingService _);
+}
+
+class InjectsMissingService {
+  InjectsMissingService(MissingService _);
+}
+
+@Component(
+  selector: 'will-fail-injecting-2-node',
+  providers: const [
+    const Provider(
+      InjectsMissingService,
+    ),
+  ],
+  template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
+class WillFailInjecting2Node {
+  WillFailInjecting2Node(InjectsMissingService _);
+}
+
+@Component(
+  selector: 'will-fail-injecting-2-node',
+  template: '',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
+)
+class WillFailInjecting2NodeParent {
+  WillFailInjecting2NodeParent(InjectsMissingService _);
 }

@@ -161,7 +161,7 @@ class ReflectableEmitter {
     // Prepare to write code.
     _importBuffer = new StringBuffer();
     _initReflectorBuffer = new StringBuffer();
-    _dartEmitter = new _SplitDartEmitter(_importBuffer, _allocator);
+    _dartEmitter = new SplitDartEmitter(_importBuffer, _allocator);
     _libraryBuilder = new LibraryBuilder();
 
     // Reference _ngRef if we do any registration.
@@ -373,10 +373,10 @@ class ReflectableEmitter {
 // on the existing "Output AST" format (string-based).
 //
 // Once/if all code is using code_builder, this can be safely removed.
-class _SplitDartEmitter extends DartEmitter {
+class SplitDartEmitter extends DartEmitter {
   final StringSink _writeImports;
 
-  _SplitDartEmitter(
+  SplitDartEmitter(
     this._writeImports, [
     Allocator allocator = Allocator.none,
   ])

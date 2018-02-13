@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:barback/barback.dart' as barback;
 import 'package:build/build.dart';
 import 'package:source_gen/src/utils.dart';
 
@@ -8,11 +7,11 @@ import 'package:source_gen/src/utils.dart';
 abstract class NgAssetReader {
   const NgAssetReader();
 
-  const factory NgAssetReader.fromBarback(barback.Transform transform) =
-      _BarbackAssetReader;
-
   const factory NgAssetReader.fromBuildStep(BuildStep buildStep) =
       _BuildStepAssetReader;
+
+  /// Returns whether [url] is readable.
+  Future<bool> canRead(String url);
 
   /// Returns [url]'s contents as a string.
   Future<String> readText(String url);
@@ -34,26 +33,30 @@ abstract class NgAssetReader {
       .replaceAll('%7C', r'/');
 }
 
-class _BarbackAssetReader extends NgAssetReader {
-  final barback.Transform _transform;
-
-  const _BarbackAssetReader(this._transform);
-
-  @override
-  Future<String> readText(String url) async {
-    final id = new barback.AssetId.parse(url);
-    return _transform.readInputAsString(id);
-  }
-}
-
 class _BuildStepAssetReader extends NgAssetReader {
   final BuildStep _buildStep;
 
   const _BuildStepAssetReader(this._buildStep);
 
   @override
+  Future<bool> canRead(String url) {
+    final asset = new AssetId.resolve(_normalize(url));
+    return _buildStep.canRead(asset);
+  }
+
+  @override
   Future<String> readText(String url) async {
-    url = _normalize(url);
-    return _buildStep.readAsString(new AssetId.resolve(url));
+    final asset = new AssetId.resolve(_normalize(url));
+    return _buildStep.readAsString(asset).catchError((e) async {
+      if (!await _buildStep.canRead(asset)) {
+        // TODO: https://github.com/dart-lang/angular/issues/851.
+        log.severe(''
+            'Unable to read file:\n'
+            '  "$url"\n  '
+            'Ensure the file exists on disk and is available to the compiler.');
+        return '';
+      }
+      throw e;
+    });
   }
 }

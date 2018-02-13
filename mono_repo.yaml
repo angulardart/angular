@@ -1,0 +1,16 @@
+_goldens:
+  published: false
+_tests:
+  published: false
+angular:
+  published: true
+angular_ast:
+  published: true
+angular_compiler:
+  published: true
+angular_forms:
+  published: true
+angular_router:
+  published: true
+angular_test:
+  published: true

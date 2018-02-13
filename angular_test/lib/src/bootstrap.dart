@@ -9,18 +9,22 @@ import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/platform/dom/shared_styles_host.dart';
 
 /// Returns an application injector for [providers] based on a [platform].
-///
-/// Optionally can include the deprecated router APIs [withRouter].
 Injector createTestInjector(List<dynamic> providers) {
-  final appInjector = ReflectiveInjector.resolveAndCreate([
-    bootstrapLegacyModule,
-    providers,
-  ], browserStaticPlatform().injector);
-  appViewUtils ??= appInjector.get(AppViewUtils);
+  Injector appInjector;
+  if (providers.isEmpty) {
+    appInjector = rootMinimalInjector();
+  } else {
+    appInjector = ReflectiveInjector.resolveAndCreate([
+      bootstrapLegacyModule,
+      providers,
+    ], browserStaticPlatform().injector);
+  }
+  initAngular(appInjector);
   return appInjector;
 }
 
@@ -32,23 +36,24 @@ Injector createTestInjector(List<dynamic> providers) {
 /// If [beforeChangeDetection] is specified, allows interacting with instance of
 /// component created _before_ the initial change detection occurs; for example
 /// setting up properties or state.
-Future<ComponentRef> bootstrapForTest<E>(
-  Type appComponentType,
-  Element hostElement, {
+Future<ComponentRef<E>> bootstrapForTest<E>(
+  ComponentFactory<E> componentFactory,
+  Element hostElement,
+  InjectorFactory rootInjector, {
   void beforeChangeDetection(E componentInstance),
   List addProviders: const [],
 }) {
-  if (appComponentType == null) {
-    throw new ArgumentError.notNull('appComponentType');
+  if (componentFactory == null) {
+    throw new ArgumentError.notNull('componentFactory');
   }
   if (hostElement == null) {
     throw new ArgumentError.notNull('hostElement');
   }
+  if (rootInjector == null) {
+    throw new ArgumentError.notNull('rootInjector');
+  }
   // This should be kept in sync with 'bootstrapStatic' as much as possible.
-  final appInjector = createTestInjector([
-    bootstrapLegacyModule,
-    addProviders,
-  ]);
+  final appInjector = rootInjector(createTestInjector(addProviders));
   final ApplicationRefImpl appRef = appInjector.get(ApplicationRef);
   NgZoneError caughtError;
   final NgZone ngZone = appInjector.get(NgZone);
@@ -58,7 +63,7 @@ Future<ComponentRef> bootstrapForTest<E>(
   return appRef.run(() {
     return _runAndLoadComponent(
       appRef,
-      appComponentType,
+      componentFactory,
       hostElement,
       appInjector,
       beforeChangeDetection: beforeChangeDetection,
@@ -85,14 +90,15 @@ Future<ComponentRef> bootstrapForTest<E>(
   });
 }
 
-Future<ComponentRef> _runAndLoadComponent<E>(
+Future<ComponentRef<E>> _runAndLoadComponent<E>(
   ApplicationRefImpl appRef,
-  Type appComponentType,
+  ComponentFactory<E> componentFactory,
   Element hostElement,
   Injector appInjector, {
   void beforeChangeDetection(E componentInstance),
 }) {
-  final componentFactory = typeToFactory(appComponentType);
+  // TODO: Consider using hostElement instead.
+  sharedStylesHost ??= new DomSharedStylesHost(document);
   final componentRef = componentFactory.create(appInjector);
   final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
   if (!isDefaultChangeDetectionStrategy(cdMode) &&
@@ -101,7 +107,7 @@ Future<ComponentRef> _runAndLoadComponent<E>(
         'The root component in an Angular test or application must use the '
         'default form of change detection (ChangeDetectionStrategy.Default). '
         'Instead got ${(componentRef.hostView as ViewRefImpl).appView.cdMode} '
-        'on component $appComponentType.');
+        'on component $E.');
   }
   if (beforeChangeDetection != null) {
     beforeChangeDetection(componentRef.instance);

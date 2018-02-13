@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime.dart';
 
 import '../lifecycle.dart';
 import '../route_definition.dart';
@@ -81,7 +82,7 @@ class RouterOutlet implements OnInit, OnDestroy {
   ///     distinct parameters.
   @Input()
   set routes(List<RouteDefinition> routes) {
-    assert(() {
+    if (isDevMode) {
       for (final route in routes) {
         route.assertValid();
       }
@@ -94,8 +95,7 @@ class RouterOutlet implements OnInit, OnDestroy {
           hasDefault = true;
         }
       }
-      return true;
-    }());
+    }
     _routes = routes;
   }
 

@@ -1,3 +1,22 @@
+* Removed built-in support for `package:pageloader`. The current version of
+  `pageloader` relies on `dart:mirrors`, which is being removed from the web
+  compilers (dart2js, dartdevc). There is a new (internal-only, right now)
+  version of `pageloader` in development that uses code generation, but it is
+  not available externally yet. We'll consider re-adding support once available
+  or through another package (i.e. `angular_pageloader` or similar).
+
+* Added `NgTestBed.forComponent`, which takes a `ComponentFactory<T>`, and
+  optionally an `InjectorFactory`. This allows writing tests entirely free
+  of any invocations of `initReflector()`.
+
+* **BREAKING CHANGE**: Adding stabilizers to `NgTestBed` now takes a factory
+  function of type `NgTestStabilizer Function(Injector)`, which is aliased as
+  `NgTestStabilizerFactory`. This allows using `NgTestBed` without any dynamic
+  reflective factories (i.e. `initReflector()`) and doesn't have impact to
+  most users.
+
+## 2.0.0-alpha+3
+
 * Removed support for `pub run angular_test`. This is no longer strictly
   needed, as it was just a convenience for running both the build system and
   test runner. Similar functionality is supported out of the box by

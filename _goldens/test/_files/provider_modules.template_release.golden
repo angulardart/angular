@@ -1,0 +1,138 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'provider_modules.dart';
+export 'provider_modules.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'provider_modules.dart' as import1;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/angular.dart';
+import 'dart:core';
+import 'package:angular/src/core/di/opaque_token.dart' as import9;
+
+const List<dynamic> styles$ProviderModulesComponent = const [];
+
+class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesComponent> {
+  static RenderComponentType _renderType;
+  ViewProviderModulesComponent0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('provider-modules');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$ProviderModulesComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.ProviderModulesComponent> build() {
+    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(AppView<dynamic> parentView, num parentIndex) {
+  return new ViewProviderModulesComponent0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$ProviderModulesComponentHost = const [];
+
+class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
+  ViewProviderModulesComponent0 _compView_0;
+  import1.ProviderModulesComponent _ProviderModulesComponent_0_4;
+  import1.FooService __FooService_0_5;
+  Duration __fooToken_0_6;
+  List<dynamic> __barToken_0_7;
+  dynamic __bazToken_0_8;
+  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.FooService get _FooService_0_5 {
+    if ((this.__FooService_0_5 == null)) {
+      (__FooService_0_5 = new import1.FooService());
+    }
+    return this.__FooService_0_5;
+  }
+
+  Duration get _fooToken_0_6 {
+    if ((this.__fooToken_0_6 == null)) {
+      (__fooToken_0_6 = const Duration(seconds: 500));
+    }
+    return this.__fooToken_0_6;
+  }
+
+  List<dynamic> get _barToken_0_7 {
+    if ((this.__barToken_0_7 == null)) {
+      (__barToken_0_7 = const ['a', 'b', 'c']);
+    }
+    return this.__barToken_0_7;
+  }
+
+  dynamic get _bazToken_0_8 {
+    if ((this.__bazToken_0_8 == null)) {
+      (__bazToken_0_8 = import1.getSomeValues());
+    }
+    return this.__bazToken_0_8;
+  }
+
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewProviderModulesComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _ProviderModulesComponent_0_4 = new import1.ProviderModulesComponent();
+    _compView_0.create(_ProviderModulesComponent_0_4, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.ProviderModulesComponent>(0, this, rootEl, _ProviderModulesComponent_0_4);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.ProviderModulesComponent) && (0 == nodeIndex))) {
+      return _ProviderModulesComponent_0_4;
+    }
+    if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
+      return _FooService_0_5;
+    }
+    if ((identical(token, const import9.OpaqueToken('fooToken')) && (0 == nodeIndex))) {
+      return _fooToken_0_6;
+    }
+    if ((identical(token, const import9.OpaqueToken('barToken')) && (0 == nodeIndex))) {
+      return _barToken_0_7;
+    }
+    if ((identical(token, const import9.OpaqueToken('bazToken')) && (0 == nodeIndex))) {
+      return _bazToken_0_8;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_ProviderModulesComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewProviderModulesComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.ProviderModulesComponent> ProviderModulesComponentNgFactory = const ComponentFactory<import1.ProviderModulesComponent>('provider-modules', viewFactory_ProviderModulesComponentHost0, _ProviderModulesComponentMetadata);
+const _ProviderModulesComponentMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerFactory(FooService, () => new FooService());
+  _ngRef.registerComponent(ProviderModulesComponent, ProviderModulesComponentNgFactory);
+  _ref0.initReflector();
+}

@@ -5,8 +5,9 @@
 import 'dart:async';
 import 'dart:html';
 
+import 'package:meta/meta.dart';
 import 'package:angular/angular.dart';
-import 'package:pageloader/html.dart';
+import 'package:angular/experimental.dart';
 
 import '../bootstrap.dart';
 import '../errors.dart';
@@ -56,10 +57,6 @@ NgTestBed<T> createDynamicTestBed<T>({
   );
 }
 
-// https://github.com/dart-lang/angular/issues/549.
-NgTestStabilizer createZoneStabilizer(NgZone ngZone) =>
-    new NgZoneStabilizer(ngZone);
-
 /// An immutable builder for creating a pre-configured AngularDart application.
 ///
 /// The root component type [T] that is created is essentially the same as a
@@ -102,38 +99,68 @@ NgTestStabilizer createZoneStabilizer(NgZone ngZone) =>
 /// });
 /// ```
 class NgTestBed<T> {
-  static PageLoader _createPageLoader<T>(
-    Element rootElement,
-    NgTestFixture<T> fixture,
-  ) {
-    return new HtmlPageLoader(
-      rootElement,
-      executeSyncedFn: (fn) async {
-        await fn();
-        return fixture.update();
-      },
-    );
-  }
-
   static Element _defaultHost() {
     final host = new Element.tag('ng-test-bed');
     document.body.append(host);
     return host;
   }
 
-  static const _lifecycleProviders = const <Object>[
-    const Provider(
-      NgZoneStabilizer,
-      useFactory: createZoneStabilizer,
-      deps: const [NgZone],
-    ),
+  static Injector _defaultRootInjector([Injector parent]) {
+    return new Injector.empty(parent);
+  }
+
+  static final List<NgTestStabilizerFactory> _lifecycleStabilizers = [
+    (i) => new NgZoneStabilizer(i.get(NgZone)),
   ];
-  static const _lifecycleStabilizers = const <Object>[NgZoneStabilizer];
 
   final Element _host;
-  final PageLoader Function(Element, NgTestFixture<T>) _pageLoaderFactory;
   final List<Object> _providers;
-  final List<Object> _stabilizers;
+  final List<NgTestStabilizerFactory> _stabilizers;
+
+  // Used only with .forComponent:
+  final ComponentFactory<T> _componentFactory;
+  final InjectorFactory _rootInjector;
+
+  /// Create a new [NgTestBed] that uses the provided [component] factory.
+  ///
+  /// There are some differences between this API and the normal [NgTestBed]:
+  /// * [addProviders] will throw [UnsupportedError]; instead, the [addInjector]
+  ///   API allows you to wrap the previous [Injector], if any, to provide
+  ///   additional services. In most cases just [rootInjector] is enough, and
+  ///   you could re-use providers via [GenerateInjector].
+  ///
+  /// ```dart
+  /// main() {
+  ///   final ngTestBed = NgTestBed.forComponent(
+  ///     SomeComponentNgFactory,
+  ///     rootInjector: (parent) => new Injector.map({
+  ///       Service: new Service(),
+  ///     }, parent),
+  ///   );
+  /// }
+  /// ```
+  ///
+  /// **NOTE**: This is the only way to use [NgTestBed] without requiring use
+  /// of the `initReflector()` API on startup.
+  static NgTestBed<T> forComponent<T>(
+    ComponentFactory<T> component, {
+    Element host,
+    InjectorFactory rootInjector: _defaultRootInjector,
+    bool watchAngularLifecycle: true,
+  }) {
+    if (T == dynamic) {
+      throw new GenericTypeMissingError();
+    }
+    if (component == null) {
+      throw new ArgumentError.notNull('component');
+    }
+    return new NgTestBed<T>._useComponentFactory(
+      component: component,
+      rootInjector: rootInjector,
+      host: host,
+      watchAngularLifecycle: watchAngularLifecycle,
+    );
+  }
 
   /// Create a new empty [NgTestBed] that creates a component type [T].
   ///
@@ -162,38 +189,61 @@ class NgTestBed<T> {
   }) {
     return new NgTestBed<T>._(
       host: host,
-      providers: watchAngularLifecycle ? _lifecycleProviders : const <Object>[],
-      stabilizers:
-          watchAngularLifecycle ? _lifecycleStabilizers : const <Object>[],
+      providers: const [],
+      stabilizers: watchAngularLifecycle ? _lifecycleStabilizers : const [],
     );
   }
 
   NgTestBed._({
     Element host,
     Iterable<Object> providers,
-    Iterable<Object> stabilizers,
-    PageLoader Function(Element element, NgTestFixture<T> fixture) pageLoader,
+    Iterable<NgTestStabilizerFactory> stabilizers,
+    InjectorFactory rootInjector,
+    ComponentFactory<T> component,
   })
       : _host = host,
         _providers = providers.toList(),
         _stabilizers = stabilizers.toList(),
-        _pageLoaderFactory = pageLoader;
+        _rootInjector = rootInjector ?? _defaultRootInjector,
+        _componentFactory = component;
+
+  NgTestBed._useComponentFactory({
+    @required Element host,
+    @required ComponentFactory<T> component,
+    @required InjectorFactory rootInjector,
+    @required bool watchAngularLifecycle,
+  })
+      : _host = host,
+        _providers = const [],
+        _stabilizers = watchAngularLifecycle ? _lifecycleStabilizers : const [],
+        _rootInjector = rootInjector,
+        _componentFactory = component;
+
+  /// Whether this is the new-style [ComponentFactory]-backed [NgTestBed].
+  bool get _usesComponentFactory => _componentFactory != null;
 
   /// Returns a new instance of [NgTestBed] with [providers] added.
   NgTestBed<T> addProviders(Iterable<Object> providers) {
+    if (_usesComponentFactory) {
+      throw new UnsupportedError('Use "addInjector" instead');
+    }
     return fork(providers: _concat(_providers, providers));
   }
 
-  /// Returns a new instance of [NgTestBed] with [stabilizers] added.
-  NgTestBed<T> addStabilizers(Iterable<Object> stabilizers) {
-    return fork(stabilizers: _concat(_stabilizers, stabilizers));
+  /// Returns a new instance of [NgTestBed] with the root injector wrapped.
+  ///
+  /// That is, [factory] will _supplement_ the existing injector(s). In most
+  /// cases this is likely not required unless you are re-using test
+  /// configuration across many tests with subtle differences.
+  NgTestBed<T> addInjector(InjectorFactory factory) {
+    return fork(
+      rootInjector: ([Injector parent]) => _rootInjector(factory(parent)),
+    );
   }
 
-  /// Returns a new instance of [NgTestBed] with [createPageLoader] set.
-  NgTestBed<T> setPageLoader(
-    PageLoader createPageLoader(Element element, NgTestFixture<T> fixture),
-  ) {
-    return fork(createPageLoader: createPageLoader);
+  /// Returns a new instance of [NgTestBed] with [stabilizers] added.
+  NgTestBed<T> addStabilizers(Iterable<NgTestStabilizerFactory> stabilizers) {
+    return fork(stabilizers: _concat(_stabilizers, stabilizers));
   }
 
   /// Creates a new test application with [T] as the root component.
@@ -229,22 +279,24 @@ class NgTestBed<T> {
     _checkForActiveTest();
     return new Future<NgTestFixture<T>>.sync(() {
       _checkForActiveTest();
-      return bootstrapForTest(
-        type,
+      return bootstrapForTest<T>(
+        _componentFactory ?? typeToFactory(T),
         _host ?? _defaultHost(),
+        _rootInjector,
         beforeChangeDetection: beforeChangeDetection,
-        addProviders: _concat(_providers, /*_stabilizers*/ const []),
+        // Internal: In non-static mode, force use of the legacy injector.
+        // TODO: Make this explicit instead of relying on non-empty list.
+        addProviders: _providers.isEmpty
+            ? _usesComponentFactory ? _providers : [[]]
+            : _providers,
       ).then((componentRef) async {
         _checkForActiveTest();
         final allStabilizers = new NgTestStabilizer.all(
-          _stabilizers.map<NgTestStabilizer>((s) {
-            return componentRef.injector.get(s) as NgTestStabilizer;
-          }),
+          _stabilizers.map((s) => s(componentRef.injector)),
         );
         await allStabilizers.stabilize();
         final testFixture = new NgTestFixture<T>(
           componentRef.injector.get(ApplicationRef),
-          _pageLoaderFactory ?? _createPageLoader,
           componentRef,
           allStabilizers,
         );
@@ -258,19 +310,25 @@ class NgTestBed<T> {
   /// Creates a new instance of [NgTestBed].
   ///
   /// Any non-null value overrides the existing properties.
-  NgTestBed<T> fork({
+  NgTestBed<E> fork<E extends T>({
     Element host,
+    ComponentFactory<E> component,
     Iterable<Object> providers,
-    Iterable<Object> stabilizers,
-    PageLoader Function(Element element, NgTestFixture<T> fixture)
-        createPageLoader,
+    InjectorFactory rootInjector,
+    Iterable<NgTestStabilizerFactory> stabilizers,
   }) {
-    return new NgTestBed<T>._(
+    return new NgTestBed<E>._(
       host: host ?? _host,
       providers: providers ?? _providers,
       stabilizers: stabilizers ?? _stabilizers,
-      pageLoader: createPageLoader ?? _pageLoaderFactory,
+      rootInjector: rootInjector ?? _rootInjector,
+      component: component ?? _componentFactory,
     );
+  }
+
+  /// Returns a new instance of [NgTestBed] with [component] overrode.
+  NgTestBed<E> setComponent<E extends T>(ComponentFactory<E> component) {
+    return fork(component: component);
   }
 
   /// Returns a new instance of [NgTestBed] with [host] overrode.

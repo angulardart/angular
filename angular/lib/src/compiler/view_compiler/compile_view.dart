@@ -1179,28 +1179,29 @@ class CompileView implements AppViewBuilder {
   }
 
   @override
-  void addInjectable(int nodeIndex, int childNodeCount, ProviderAst provider,
-      o.Expression providerExpr, List<CompileTokenMetadata> aliases) {
-    var indexCondition;
-    if (childNodeCount > 0) {
-      indexCondition = o
-          .literal(nodeIndex)
-          .lowerEquals(InjectMethodVars.nodeIndex)
-          .and(InjectMethodVars.nodeIndex
-              .lowerEquals(o.literal(nodeIndex + childNodeCount)));
-    } else {
-      indexCondition = o.literal(nodeIndex).equals(InjectMethodVars.nodeIndex);
+  void addInjectable(
+    int nodeIndex,
+    int childNodeCount,
+    ProviderAst provider,
+    o.Expression providerExpr,
+    List<CompileTokenMetadata> aliases,
+  ) {
+    final tokenConditions = <o.Expression>[];
+    if (provider.visibleForInjection) {
+      tokenConditions.add(_createTokenCondition(provider.token));
     }
-    o.Expression tokenCondition = InjectMethodVars.token
-        .identical(createDiTokenExpression(provider.token));
     if (aliases != null) {
-      for (var alias in aliases) {
-        tokenCondition = tokenCondition.or(
-            InjectMethodVars.token.identical(createDiTokenExpression(alias)));
+      for (final alias in aliases) {
+        tokenConditions.add(_createTokenCondition(alias));
       }
     }
-    _injectorGetMethod.addStmt(new o.IfStmt(tokenCondition.and(indexCondition),
-        [new o.ReturnStatement(providerExpr)]));
+    if (tokenConditions.isEmpty) return; // No visible tokens for this provider.
+    final tokenCondition = tokenConditions
+        .reduce((expression, condition) => expression.or(condition));
+    final indexCondition = _createIndexCondition(nodeIndex, childNodeCount);
+    final condition = tokenCondition.and(indexCondition);
+    _injectorGetMethod.addStmt(
+        new o.IfStmt(condition, [new o.ReturnStatement(providerExpr)]));
   }
 
   @override
@@ -1260,3 +1261,21 @@ List<o.Statement> _addReturnValueIfNotEmpty(
     return new List.from(statements)..addAll([new o.ReturnStatement(value)]);
   }
 }
+
+/// Creates an expression to check that 'nodeIndex' is in the given range.
+///
+/// The given range is inclusive: [start, start + length].
+o.Expression _createIndexCondition(int start, int length) {
+  final index = InjectMethodVars.nodeIndex;
+  final lowerBound = o.literal(start);
+  if (length > 0) {
+    final upperBound = o.literal(start + length);
+    return lowerBound.lowerEquals(index).and(index.lowerEquals(upperBound));
+  } else {
+    return lowerBound.equals(index);
+  }
+}
+
+/// Creates an expression to check that 'token' is identical to a [token].
+o.Expression _createTokenCondition(CompileTokenMetadata token) =>
+    InjectMethodVars.token.identical(createDiTokenExpression(token));

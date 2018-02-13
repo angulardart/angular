@@ -1,5 +1,7 @@
 /// A dependency Injection container.
-export "../di/injector/injector.dart" show Injector;
+export "../di/errors.dart" show InjectionError, NoProviderError;
+export "../di/injector/injector.dart"
+    show GenerateInjector, Injector, InjectorFactory;
 export "../di/injector/runtime.dart" show ReflectiveInjector;
 export "../di/module.dart" hide internalModuleToList;
 export "di/decorators.dart";

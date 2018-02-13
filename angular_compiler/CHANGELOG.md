@@ -1,3 +1,19 @@
+### New features
+
+* Added an internal `cli.dart` library.
+* Added `SplitDartEmitter` for internal use.
+* Added `$QueryList` as a `TypeChecker`.
+
+### Bug fixes
+
+* Removed all remaining (invalid) references to `package:barback`.
+
+### Breaking changes
+
+* Added `canRead` to `NgAssetReader`.
+
+## 0.4.0-alpha+5
+
 ### Bug fixes
 
 * `linkTypeOf` correctly resolves bound types (i.e. `<T>`) in most cases, and

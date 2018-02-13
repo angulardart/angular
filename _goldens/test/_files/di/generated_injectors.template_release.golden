@@ -1,0 +1,79 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'generated_injectors.dart';
+export 'generated_injectors.dart';
+import 'package:angular/angular.dart';
+import 'generated_injectors.template.dart' as ng;
+import 'generated_injectors.template.dart' as _ref0;
+import 'package:angular/angular.template.dart' as _ref1;
+import 'package:angular/src/di/injector/injector.dart' as _i1;
+import 'package:angular/src/di/injector/hierarchical.dart' as _i2;
+import 'generated_injectors.dart' as _i3;
+
+_i1.Injector doGenerate$Injector([_i1.Injector parent]) => new _Injector$doGenerate._(parent);
+
+class _Injector$doGenerate extends _i2.HierarchicalInjector {
+  _Injector$doGenerate._([_i1.Injector parent]) : super(parent);
+
+  _i3.Example _field0;
+
+  _i3.Example _getExample$0() => _field0 ??= new _i3.Example();
+  String _getString$1() => 'dynamic';
+  String _getString$2() => 'String';
+  dynamic _getdynamic$3() => const _i3.Example();
+  dynamic _getdynamic$4() => _i3.instanceOfExamplePrime;
+  dynamic _getdynamic$5() => _i3.ExampleTheta.instance;
+  dynamic _getdynamic$6() => const [const _i3.Example(), _i3.instanceOfExamplePrime, _i3.ExampleTheta.instance];
+  dynamic _getdynamic$7() => const {'instanceOfExample': const _i3.Example(), _i3.instanceOfExamplePrime: 'instanceOfExamplePrime'};
+  String _getString$8() => 'A';
+  String _getString$9() => 'B';
+  _i1.Injector _getInjector$10() => this;
+  @override
+  Object injectFromSelfOptional(Object token, [Object orElse = _i1.throwIfNotFound]) {
+    if (identical(token, _i3.Example)) {
+      return _getExample$0();
+    }
+    if (identical(token, const _i1.OpaqueToken<dynamic>('someToken'))) {
+      return _getString$1();
+    }
+    if (identical(token, const _i1.OpaqueToken<String>('someToken'))) {
+      return _getString$2();
+    }
+    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken1'))) {
+      return _getdynamic$3();
+    }
+    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken2'))) {
+      return _getdynamic$4();
+    }
+    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken3'))) {
+      return _getdynamic$5();
+    }
+    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken4'))) {
+      return _getdynamic$6();
+    }
+    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken5'))) {
+      return _getdynamic$7();
+    }
+    if (identical(token, _i1.Injector)) {
+      return _getInjector$10();
+    }
+    if (identical(token, const _i1.MultiToken<dynamic>('someMultiToken'))) {
+      return [_getString$8(), _getString$9()];
+    }
+    return orElse;
+  }
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ref0.initReflector();
+  _ref1.initReflector();
+}

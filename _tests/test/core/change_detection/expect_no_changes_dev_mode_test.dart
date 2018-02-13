@@ -1,4 +1,3 @@
-@Tags(const ['codegen'])
 @TestOn('browser')
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
@@ -25,6 +24,8 @@ void main() {
   template: r'''
     <div>{{counter}}</div>
   ''',
+  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  visibility: Visibility.all,
 )
 class IllegalChangeDetectionComponent {
   var _counter = 0;

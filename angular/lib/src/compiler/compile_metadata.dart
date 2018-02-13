@@ -267,7 +267,7 @@ class CompileTokenMap<V> {
 
 /// Metadata regarding compilation of a type.
 class CompileTypeMetadata
-    implements CompileIdentifierMetadata<Type>, CompileMetadataWithType {
+    implements CompileIdentifierMetadata<Type>, CompileMetadataWithType<Type> {
   @override
   String name;
 
@@ -349,8 +349,8 @@ class CompileQueryMetadata {
   /// Whether this is typed `dart:html`'s `Element` (or a sub-type).
   final bool isElementType;
 
-  /// Whether this is typed `dart:core`'s `List`.
-  final bool isListType;
+  /// Whether this is typed specifically `QueryList`.
+  final bool isQueryListType;
 
   /// Optional type to read for given match.
   ///
@@ -365,7 +365,7 @@ class CompileQueryMetadata {
     this.first: false,
     this.propertyName,
     this.isElementType: false,
-    this.isListType: false,
+    this.isQueryListType: false,
     this.read,
   });
 }

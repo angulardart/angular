@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../errors.dart' as errors;
 import 'empty.dart';
 import 'hierarchical.dart';
 import 'map.dart';
@@ -8,18 +9,16 @@ import 'runtime.dart';
 // TODO(matanl): Remove export after we have a 'runtime.dart' import.
 export '../../core/di/opaque_token.dart' show MultiToken, OpaqueToken;
 
-/// **INTERNAL ONLY**: Work in progress.
-class InjectionToken<T> {}
-
-/// **INTERNAL ONLY**: Placeholder until we support 1.25.0+ (function syntax).
-typedef T OrElseInject<T>(Injector injector, Object token);
-
 /// **INTERNAL ONLY**: Sentinel value for determining a missing DI instance.
 const Object throwIfNotFound = const Object();
 
+/// **INTERNAL ONLY**: Throws "no provider found for {token}".
 Null throwsNotFound(Injector injector, Object token) {
-  throw new ArgumentError('No provider found for $token.');
+  throw errors.noProviderError(token);
 }
+
+/// Defines a function that creates an injector around a [parent] injector.
+typedef InjectorFactory = Injector Function([Injector parent]);
 
 /// Support for imperatively loading dependency injected services at runtime.
 ///
@@ -35,26 +34,6 @@ abstract class Injector {
   /// Can be used as the root injector in a hierarchy to form the default
   /// implementation (for provider not found).
   const factory Injector.empty([HierarchicalInjector parent]) = EmptyInjector;
-
-  /// An _annotation_ used to generate an [Injector] at compile-time.
-  ///
-  /// **EXPERIMENTAL**: Not yet supported.
-  ///
-  /// Example use:
-  /// ```
-  /// @Injector.generate(const [
-  ///   const Provider(A, useClass: APrime),
-  /// ])
-  /// Injector fooInjector([HierarchicalInjector parent]) {
-  ///   return fooInjector$Generated(parent);
-  /// }
-  /// ```
-  ///
-  /// It is a **runtime error** to use the resulting [Injector] object, so make
-  /// sure to _only_ use `@Injector.generate` as an annotation on a top-level
-  /// or static method.
-  @experimental
-  const factory Injector.generate(List<Object> providers) = _GenerateInjector;
 
   /// Create a new [Injector] that uses a basic [map] of token->instance.
   ///
@@ -96,11 +75,14 @@ abstract class Injector {
   /// - Throws an error (default behavior).
   ///
   /// An injector always returns itself if [Injector] is given as a token.
+  @mustCallSuper
   dynamic get(Object token, [Object notFoundValue = throwIfNotFound]) {
+    errors.debugInjectorEnter(token);
     final result = injectOptional(token, notFoundValue);
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
+    errors.debugInjectorLeave(token);
     return result;
   }
 
@@ -108,12 +90,6 @@ abstract class Injector {
   ///
   /// ```dart
   /// final rpcService = injector.inject<RpcService>();
-  /// ```
-  ///
-  /// _or_:
-  ///
-  /// ```dart
-  ///
   /// ```
   ///
   /// **EXPERIMENTAL**: Reified types are currently not supported in all of the
@@ -129,29 +105,26 @@ abstract class Injector {
   Object injectOptional(Object token, [Object orElse]);
 }
 
-/// Used as a compiler-only base class for inheritance.
-abstract class GeneratedInjector extends HierarchicalInjector {
-  GeneratedInjector([Injector parent]) : super(parent ?? const EmptyInjector());
-}
+/// Annotates a method to generate an [Injector] factory at compile-time.
+///
+/// Using `@GenerateInjector` is conceptually similar to using `@Component` or
+/// `@Directive` with a `providers: const [ ... ]` argument, or to creating a
+/// an injector at runtime with [ReflectiveInjector], but like a component or
+/// directive that injector is generated ahead of time, during compilation:
+///
+/// ```
+/// import 'my_file.template.dart' as ng;
+///
+/// @GenerateInjector(const [
+///   const Provider(A, useClass: APrime),
+/// ])
+/// // The generated factory is your method's name, suffixed with `$Injector`.
+/// final InjectorFactory example = example$Injector;
+/// ```
+class GenerateInjector {
+  // Used internally via analysis only.
+  // ignore: unused_field
+  final List<Object> _providersOrModules;
 
-// Used as a token-type for the AngularDart compiler.
-class _GenerateInjector implements Injector {
-  final List<Object> providersOrModules;
-
-  const _GenerateInjector(this.providersOrModules);
-
-  @override
-  get(Object token, [Object notFoundValue = throwIfNotFound]) {
-    throw new UnsupportedError('Not a runtime class.');
-  }
-
-  @override
-  T inject<T>(Object token) {
-    throw new UnsupportedError('Not a runtime class.');
-  }
-
-  @override
-  injectOptional(Object token, [Object orElse]) {
-    throw new UnsupportedError('Not a runtime class.');
-  }
+  const GenerateInjector(this._providersOrModules);
 }

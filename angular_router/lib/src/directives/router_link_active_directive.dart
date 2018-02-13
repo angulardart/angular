@@ -7,6 +7,7 @@ import 'dart:html';
 
 import 'package:collection/collection.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime.dart';
 
 import '../router/router.dart';
 import '../router/router_state.dart';
@@ -52,13 +53,10 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
       _classes = [classes];
     } else if (classes is List<String>) {
       _classes = classes;
-    } else {
-      // Only throw in production.
-      assert(() {
-        throw new ArgumentError(
-          'Expected a string or list of strings. Got $classes.',
-        );
-      }());
+    } else if (isDevMode) {
+      throw new ArgumentError(
+        'Expected a string or list of strings. Got $classes.',
+      );
     }
   }
 

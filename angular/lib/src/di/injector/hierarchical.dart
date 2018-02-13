@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../errors.dart' as errors;
 import 'empty.dart';
 import 'injector.dart';
 
@@ -8,22 +9,27 @@ import 'injector.dart';
 /// Hierarchical injection is a popular pattern in AngularDart given that the
 /// component tree naturally forms a tree structure of components (and
 /// implicitly, injectors).
+///
+/// **NOTE**: This is not a user-visible class.
 abstract class HierarchicalInjector extends Injector {
   @protected
   final HierarchicalInjector parent;
 
   @visibleForTesting
-  const HierarchicalInjector([this.parent = const EmptyInjector()]);
+  const HierarchicalInjector([HierarchicalInjector parent])
+      : parent = parent ?? const Injector.empty();
 
   /// **INTERNAL ONLY**: Used to implement [EmptyInjector] efficiently.
   const HierarchicalInjector.maybeEmpty([this.parent]);
 
   @override
   T inject<T>(Object token) {
+    errors.debugInjectorEnter(token);
     final result = injectOptional(token);
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
+    errors.debugInjectorLeave(token);
     return result;
   }
 
@@ -32,10 +38,12 @@ abstract class HierarchicalInjector extends Injector {
     Object token, [
     Object orElse = throwIfNotFound,
   ]) {
+    errors.debugInjectorEnter(token);
     var result = injectFromSelfOptional(token, orElse);
     if (identical(result, orElse)) {
       result = injectFromAncestryOptional(token, orElse);
     }
+    errors.debugInjectorLeave(token);
     return result;
   }
 

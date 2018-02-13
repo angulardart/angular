@@ -1,3 +1,7 @@
+## 1.0.1-alpha+5
+
+_Maintenance release, to support the latest package:angular alpha._
+
 ## 1.0.1-alpha+4
 
 _Maintenance release, to support the latest package:angular alpha._

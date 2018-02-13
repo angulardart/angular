@@ -11,6 +11,7 @@
 //   injection.
 //
 // **DO NOT USE**: The API of this library can and will change at any time.
+import 'package:angular/src/runtime.dart';
 export '../core/di/decorators.dart' show Host, Inject, Optional, Self, SkipSelf;
 export '../core/di/opaque_token.dart' show OpaqueToken;
 
@@ -46,12 +47,9 @@ void registerComponent(Type type, dynamic /*ComponentFactory*/ component) {
 /// Returns the static factory for [type].
 /*ComponentFactory*/ dynamic getComponent(Type type) {
   final component = _components[type];
-  assert((() {
-    if (component == null) {
-      throw new StateError('Could not find a component factory for $type.');
-    }
-    return true;
-  })());
+  if (isDevMode && component == null) {
+    throw new StateError('Could not find a component factory for $type.');
+  }
   return component;
 }
 
@@ -68,12 +66,9 @@ void registerFactory(Object typeOrFunc, Function factory) {
 /// Returns a factory function for creating [type].
 Function getFactory(Type type) {
   final factory = _factories[type];
-  assert((() {
-    if (factory == null) {
-      throw new StateError('Could not find a factory for $type.');
-    }
-    return true;
-  })());
+  if (isDevMode && factory == null) {
+    throw new StateError('Could not find a factory for $type.');
+  }
   return factory;
 }
 
