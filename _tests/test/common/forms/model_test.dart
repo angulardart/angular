@@ -40,6 +40,23 @@ void main() {
           expect(c.dirty, true);
         });
       });
+      group('touched', () {
+        test('should be false after creating a control', () {
+          var c = new Control('value');
+          expect(c.touched, false);
+        });
+        test('should be true after touching the control', () {
+          var c = new Control('value');
+          c.markAsTouched();
+          expect(c.touched, true);
+        });
+        test('should be false after marking the control as untouched', () {
+          var c = new Control('value');
+          c.markAsTouched();
+          c.markAsUntouched();
+          expect(c.touched, false);
+        });
+      });
       group('updateValue', () {
         Control c;
         ControlGroup g;
