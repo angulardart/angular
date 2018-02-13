@@ -7,6 +7,13 @@ import 'component_loader.dart' show ComponentLoader;
 import 'component_resolver.dart' show ComponentResolver;
 import 'view_container_ref.dart' show ViewContainerRef;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 /// Supports imperatively loading and binding new components at runtime.
 ///
 /// It will soon be required to instead use `ComponentLoader`, which is a nearly

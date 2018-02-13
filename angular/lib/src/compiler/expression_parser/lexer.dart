@@ -1,5 +1,12 @@
 import '../../facade/exceptions.dart' show BaseException;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 enum TokenType { Character, Identifier, Keyword, String, Operator, Number }
 
 class Lexer {

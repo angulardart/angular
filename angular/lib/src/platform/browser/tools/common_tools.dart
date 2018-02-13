@@ -21,6 +21,8 @@ class AngularTools {
 /// corresponds to the `ng.profiler` in the dev console.
 class AngularProfiler {
   final ApplicationRef appRef;
+
+  // ignore: field_initializer_not_assignable
   AngularProfiler(ComponentRef ref) : appRef = ref.injector.get(ApplicationRef);
 
   /// Exercises change detection in a loop and then prints the average amount of
@@ -38,6 +40,7 @@ class AngularProfiler {
   /// ng.profiler.timeChangeDetection({record: true})
   /// ```
   ChangeDetectionPerfRecord timeChangeDetection(dynamic config) {
+    // ignore: non_bool_operand
     var record = config != null && config["record"];
     var profileName = 'Change Detection';
     // Profiler is not available in Android browsers, nor in IE 9

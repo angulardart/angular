@@ -1,5 +1,6 @@
 import 'package:angular/src/di/injector/injector.dart' show Injector;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
+import 'package:angular/src/runtime.dart';
 
 import 'app_view.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
@@ -30,7 +31,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// Returns the [ViewRef] for the View located in this container at the
   /// specified index.
   @override
-  EmbeddedViewRef get(num index) {
+  EmbeddedViewRef get(int index) {
     return nestedViews[index].viewData.ref;
   }
 
@@ -162,7 +163,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     }
     final result = <T>[];
     for (var i = 0, l = nestedViews.length; i < l; i++) {
-      result.addAll(callback(nestedViews[i]));
+      result.addAll(callback(unsafeCast<U>(nestedViews[i])));
     }
     return result;
   }

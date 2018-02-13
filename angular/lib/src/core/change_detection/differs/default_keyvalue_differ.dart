@@ -1,5 +1,12 @@
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 class DefaultKeyValueDiffer {
   final _records = new Map<dynamic, KeyValueChangeRecord>();
   KeyValueChangeRecord _mapHead;

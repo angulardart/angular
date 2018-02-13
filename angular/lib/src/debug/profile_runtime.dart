@@ -43,6 +43,7 @@ void _setGlobalVar(String path, value) {
   Object obj = window;
   for (var i = 0; i < parts.length - 1; i++) {
     var name = parts[i];
+    // ignore: non_bool_negation_expression
     if (!js_util.callMethod(obj, 'hasOwnProperty', [name])) {
       js_util.setProperty(obj, name, js_util.newObject());
     }

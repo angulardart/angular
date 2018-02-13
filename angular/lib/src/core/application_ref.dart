@@ -21,6 +21,13 @@ import 'render/api.dart' show sharedStylesHost;
 import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 /// Create an Angular zone.
 NgZone createNgZone() => new NgZone(enableLongStackTrace: assertionsEnabled());
 

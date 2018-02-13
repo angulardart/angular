@@ -29,6 +29,7 @@ class DomSharedStylesHost implements SharedStylesHost {
       _stylesSet.add(style);
       _styles.add(style);
       additions.add(style);
+      // ignore: argument_type_not_assignable
       _rootHost.append(createStyleElement(style));
     }
     if (_nativeHosts != null) {

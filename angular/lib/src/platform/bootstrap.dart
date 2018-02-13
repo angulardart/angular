@@ -123,8 +123,11 @@ Future<ComponentRef<T>> bootstrapStatic<T>(
       ? [bootstrapLegacyModule, customProviders]
       : bootstrapLegacyModule;
   final platformRef = browserStaticPlatform();
-  final appInjector =
-      ReflectiveInjector.resolveAndCreate(appProviders, platformRef.injector);
+  final appInjector = ReflectiveInjector.resolveAndCreate(
+    appProviders,
+    // ignore: argument_type_not_assignable
+    platformRef.injector,
+  );
   return coreLoadAndBootstrap<T>(appInjector, appComponentType);
 }
 

@@ -5,6 +5,9 @@ import '../../core/change_detection/differs/default_iterable_differ.dart'
 import '../../core/linker.dart'
     show ViewContainerRef, ViewRef, TemplateRef, EmbeddedViewRef;
 
+// TODO: Remove the following line (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+
 /// The `NgFor` directive instantiates a template once per item from an
 /// iterable. The context for each instantiated template inherits from the outer
 /// context with the given loop variable set to the current item from the

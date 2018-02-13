@@ -3,6 +3,13 @@ import 'package:source_span/source_span.dart';
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart" show TemplateAst;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 class _DebugState {
   num nodeIndex;
   TemplateAst sourceAst;

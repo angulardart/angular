@@ -46,6 +46,13 @@ import "property_binder.dart"
         bindDirectiveInputs,
         bindDirectiveHostProps;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 /// Visits view nodes to generate code for bindings.
 ///
 /// Called by ViewCompiler for each top level CompileView and the

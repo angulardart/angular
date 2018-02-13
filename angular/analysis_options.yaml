@@ -1,5 +1,10 @@
+# This is a copy of ../analysis_options.yaml, with implicit-casts: false, and an "exclude: ...".
+
 analyzer:
- strong-mode: true
+ strong-mode:
+   implicit-casts: false
+ exclude:
+    - "tools/analyzer_plugin/bin/plugin.dart"
  errors:
    unused_element: error
    unused_import: error

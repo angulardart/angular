@@ -422,7 +422,7 @@ class _QueryListCompileQuery extends CompileQuery {
 }
 
 class _ListCompileQuery extends CompileQuery {
-  o.ReadPropExpr _queryDirtyField;
+  o.ReadClassMemberExpr _queryDirtyField;
   o.ClassField _classField;
 
   _ListCompileQuery(
@@ -446,7 +446,7 @@ class _ListCompileQuery extends CompileQuery {
   /// Inserts a `bool {property}` field in the generated view.
   ///
   /// Returns an expression pointing to that field.
-  o.Expression _createQueryDirtyField({
+  o.ReadClassMemberExpr _createQueryDirtyField({
     @required CompileQueryMetadata metadata,
     @required int nodeIndex,
     @required int queryIndex,

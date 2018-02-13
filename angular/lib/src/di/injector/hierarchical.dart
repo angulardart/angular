@@ -1,3 +1,4 @@
+import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 import '../errors.dart' as errors;
@@ -17,6 +18,8 @@ abstract class HierarchicalInjector extends Injector {
 
   @visibleForTesting
   const HierarchicalInjector([HierarchicalInjector parent])
+      // Cannot use unsafeCast here, because it would make this non-const.
+      // ignore: const_field_initializer_not_assignable, field_initializer_not_assignable
       : parent = parent ?? const Injector.empty();
 
   /// **INTERNAL ONLY**: Used to implement [EmptyInjector] efficiently.
@@ -30,7 +33,7 @@ abstract class HierarchicalInjector extends Injector {
       return throwsNotFound(this, token);
     }
     errors.debugInjectorLeave(token);
-    return result;
+    return unsafeCast<T>(result);
   }
 
   @override
@@ -60,7 +63,7 @@ abstract class HierarchicalInjector extends Injector {
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
-    return result;
+    return unsafeCast<T>(result);
   }
 
   /// Injects and returns an object representing [token] from this injector.
@@ -87,7 +90,7 @@ abstract class HierarchicalInjector extends Injector {
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
-    return result;
+    return unsafeCast<T>(result);
   }
 
   /// Injects and returns an object representing [token] from the parent.
@@ -115,7 +118,7 @@ abstract class HierarchicalInjector extends Injector {
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
-    return result;
+    return unsafeCast<T>(result);
   }
 
   /// Injects and returns an object representing [token] from ancestors.

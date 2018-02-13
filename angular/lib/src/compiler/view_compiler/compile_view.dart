@@ -55,6 +55,12 @@ import 'view_compiler_utils.dart'
         ViewCompileDependency;
 import 'view_name_resolver.dart';
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 /// Visibility of NodeReference within AppView implementation.
 enum NodeReferenceVisibility {
   classPublic, // Visible across build and change detectors or other closures.
@@ -894,6 +900,7 @@ class CompileView implements AppViewBuilder {
 
     List<o.Expression> changeDetectorParams;
     if (providerHasChangeDetector) {
+      // ignore: list_element_type_not_assignable
       changeDetectorParams = [resolvedProviderValueExpr];
       if (directiveMetadata.changeDetection ==
           ChangeDetectionStrategy.Stateful) {

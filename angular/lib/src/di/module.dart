@@ -62,7 +62,7 @@ class Module {
 ///
 /// **DO NOT USE**: This function may break or change at any time.
 List<Provider<Object>> internalModuleToList(Module module) {
-  final result = <dynamic>[];
+  final result = <Provider<Object>>[];
   final includes = module.include;
   for (var i = 0, l = includes.length; i < l; i++) {
     result.addAll(internalModuleToList(includes[i]));

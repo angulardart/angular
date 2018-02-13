@@ -115,7 +115,7 @@ class NgZone {
   final List<Timer> _pendingTimers = <Timer>[];
 
   /// enabled in development mode as they significantly impact perf.
-  NgZone({enableLongStackTrace: false}) {
+  NgZone({bool enableLongStackTrace: false}) {
     _outerZone = Zone.current;
 
     if (enableLongStackTrace) {
@@ -137,7 +137,7 @@ class NgZone {
 
   Zone _createInnerZone(Zone zone,
       {void handleUncaughtError(
-          Zone _, ZoneDelegate __, Zone ___, dynamic ____, StackTrace s)}) {
+          Zone _, ZoneDelegate __, Zone ___, Object ____, StackTrace s)}) {
     return zone.fork(
         specification: new ZoneSpecification(
             scheduleMicrotask: _scheduleMicrotask,
