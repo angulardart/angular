@@ -284,7 +284,11 @@ class NgTestBed<T> {
         _host ?? _defaultHost(),
         _rootInjector,
         beforeChangeDetection: beforeChangeDetection,
-        addProviders: _providers,
+        // Internal: In non-static mode, force use of the legacy injector.
+        // TODO: Make this explicit instead of relying on non-empty list.
+        addProviders: _providers.isEmpty
+            ? _usesComponentFactory ? _providers : [[]]
+            : _providers,
       ).then((componentRef) async {
         _checkForActiveTest();
         final allStabilizers = new NgTestStabilizer.all(
