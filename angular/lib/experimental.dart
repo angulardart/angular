@@ -10,6 +10,7 @@ library angular.experimental;
 
 import 'dart:html';
 
+import 'package:angular/angular.dart';
 import 'package:meta/meta.dart';
 
 import 'src/bootstrap/modules.dart';
@@ -49,7 +50,7 @@ Injector _platformInjector() {
 @experimental
 ComponentRef<T> bootstrapFactory<T>(
   ComponentFactory<T> factory, [
-  Injector createAppInjector(Injector parent),
+  InjectorFactory createAppInjector,
 ]) {
   final appInjector = createAppInjector == null
       ? minimalApp(_platformInjector())
@@ -75,7 +76,7 @@ ComponentFactory<T> typeToFactory<T>(Object typeOrFactory) =>
 ///
 /// ```dart
 /// main() {
-///   var injector = rootInjector((parent) {
+///   var injector = rootLegacyInjector((parent) {
 ///     return new Injector.map({ /* ... */ }, parent);
 ///   });
 /// }
@@ -83,10 +84,18 @@ ComponentFactory<T> typeToFactory<T>(Object typeOrFactory) =>
 ///
 /// **WARNING**: This API is not considered part of the stable API.
 @experimental
-Injector rootInjector(Injector createAppInjector(Injector parent)) {
+Injector rootInjector(InjectorFactory createAppInjector) {
   // TODO(matanl): Use a generated injector once the API is stable.
   return createAppInjector(browserStaticPlatform().injector);
 }
+
+/// Create a root minimal application (no runtime providers) injector.
+///
+/// Unlike [rootInjector], this method does not rely on `initReflector`.
+///
+/// **WARNING**: This API is not considered part of the stable API.
+@experimental
+Injector rootMinimalInjector() => minimalApp(_platformInjector());
 
 /// Initializes the global application state from an application [injector].
 ///

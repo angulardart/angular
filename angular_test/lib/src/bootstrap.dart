@@ -13,13 +13,16 @@ import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
 
 /// Returns an application injector for [providers] based on a [platform].
-///
-/// Optionally can include the deprecated router APIs [withRouter].
 Injector createTestInjector(List<dynamic> providers) {
-  final appInjector = ReflectiveInjector.resolveAndCreate([
-    bootstrapLegacyModule,
-    providers,
-  ], browserStaticPlatform().injector);
+  Injector appInjector;
+  if (providers.isEmpty) {
+    appInjector = rootMinimalInjector();
+  } else {
+    appInjector = ReflectiveInjector.resolveAndCreate([
+      bootstrapLegacyModule,
+      providers,
+    ], browserStaticPlatform().injector);
+  }
   appViewUtils ??= appInjector.get(AppViewUtils);
   return appInjector;
 }
