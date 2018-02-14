@@ -1,0 +1,30 @@
+name: _benchmarks
+author: Dart Team <web@dartlang.org>
+description: Benchmarks for AngularDart.
+environment:
+  sdk: '>=2.0.0-dev.20.0 <2.0.0'
+
+dependencies:
+  # No strict dependencies, we always use dependency_overrides.
+  angular:
+
+dev_dependencies:
+  # No strict dependencies, we always use dependency_overrides.
+  angular_test:
+
+  # Actual valid dependencies required.
+  build_runner: ^0.7.9
+  build_test: ^0.10.0
+  build_web_compilers: ^0.3.0
+  test: ^0.12.30+1
+
+# DO NOT REMOVE. We don't publish this package, it is just for testing.
+dependency_overrides:
+  angular:
+    path: ../angular
+  angular_ast:
+    path: ../angular_ast
+  angular_compiler:
+    path: ../angular_compiler
+  angular_test:
+    path: ../angular_test
