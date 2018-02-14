@@ -33,6 +33,9 @@ final InjectorFactory example = example$Injector;
   this is not intended to be a breaking change it could have timing
   implications.
 
+* Both `COMMON_DIRECTIVES` and `CORE_DIRECTIVES` are now deprecated, and
+  should be replaced by `coreDirectives`. This is a no-op change (alias).
+
 ### Bug fixes
 
 * An invalid event binding (`<comp (event-with-no-expression)>`) no longer
