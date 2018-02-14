@@ -16,3 +16,7 @@ angular_router:
   published: true
 angular_test:
   published: true
+examples/hello_world:
+  published: false
+examples/hello_world_no_reflector:
+  published: false
