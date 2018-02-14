@@ -1,3 +1,5 @@
+_benchmarks:
+  published: false
 _goldens:
   published: false
 _tests:
