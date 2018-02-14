@@ -298,7 +298,7 @@ abstract class CompileQuery {
   /// ```dart
   /// import2.QueryList _query_ChildDirective_0;
   /// ```
-  o.AbstractClassPart createClassField();
+  o.ClassField createClassField();
 
   /// Return code that will set the query contents at change-detection time.
   ///
@@ -380,7 +380,7 @@ class _QueryListCompileQuery extends CompileQuery {
   }
 
   @override
-  o.AbstractClassPart createClassField({bool viewQuery: false}) => _classField;
+  o.ClassField createClassField({bool viewQuery: false}) => _classField;
 
   @override
   List<o.Statement> createDynamicUpdates() {
@@ -484,7 +484,7 @@ class _ListCompileQuery extends CompileQuery {
   }
 
   @override
-  o.AbstractClassPart createClassField() => _classField;
+  o.ClassField createClassField() => _classField;
 
   @override
   List<o.Statement> createDynamicUpdates() {

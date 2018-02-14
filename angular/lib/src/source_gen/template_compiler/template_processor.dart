@@ -72,7 +72,7 @@ Future<TemplateCompilerOutputs> processTemplates(
   }
   final compiledTemplates = logElapsedSync(() {
     return templateCompiler.compile(compileComponentsData);
-  }, operationName: 'compile', assetId: buildStep.inputId);
+  }, operationName: 'compile', assetId: buildStep.inputId, log: log);
 
   return new TemplateCompilerOutputs(
     compiledTemplates,

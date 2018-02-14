@@ -55,12 +55,6 @@ import 'view_compiler_utils.dart'
         ViewCompileDependency;
 import 'view_name_resolver.dart';
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
 /// Visibility of NodeReference within AppView implementation.
 enum NodeReferenceVisibility {
   classPublic, // Visible across build and change detectors or other closures.
@@ -222,7 +216,7 @@ abstract class AppViewBuilder {
 
   /// Constructs a pure proxy and stores instance in class member.
   void createPureProxy(
-      o.Expression fn, num argCount, o.ReadClassMemberExpr pureProxyProp);
+      o.Expression fn, int argCount, o.ReadClassMemberExpr pureProxyProp);
 
   /// Writes literal attribute values on the element itself and those
   /// contributed from directives on the ast node.
@@ -677,7 +671,7 @@ class CompileView implements AppViewBuilder {
   }
 
   @override
-  o.Expression createViewContainer(
+  o.ReadClassMemberExpr createViewContainer(
       NodeReference nodeReference, int nodeIndex, bool isPrivate,
       [int parentNodeIndex]) {
     o.Expression renderNode = nodeReference.toReadExpr();
@@ -871,8 +865,8 @@ class CompileView implements AppViewBuilder {
       bool isEager,
       CompileElement compileElement,
       {bool forceDynamic: false}) {
-    var resolvedProviderValueExpr;
-    var type;
+    o.Expression resolvedProviderValueExpr;
+    o.OutputType type;
     if (isMulti) {
       resolvedProviderValueExpr = o.literalArr(providerValueExpressions);
       type = new o.ArrayType(provider.multiProviderType != null
@@ -890,12 +884,14 @@ class CompileView implements AppViewBuilder {
             directiveMetadata != null &&
             directiveMetadata.requiresDirectiveChangeDetector;
 
-    CompileIdentifierMetadata changeDetectorType;
+    CompileIdentifierMetadata changeDetectorClass;
+    o.OutputType changeDetectorType;
     if (providerHasChangeDetector) {
-      changeDetectorType = new CompileIdentifierMetadata(
+      changeDetectorClass = new CompileIdentifierMetadata(
           name: directiveMetadata.identifier.name + 'NgCd',
           moduleUrl:
               toTemplateExtension(directiveMetadata.identifier.moduleUrl));
+      changeDetectorType = o.importType(changeDetectorClass);
     }
 
     List<o.Expression> changeDetectorParams;
@@ -917,17 +913,16 @@ class CompileView implements AppViewBuilder {
           provider.dynamicallyReachable) {
         if (providerHasChangeDetector) {
           nameResolver.addField(new o.ClassField(propName,
-              outputType: o.importType(changeDetectorType),
+              outputType: changeDetectorType,
               modifiers: const [o.StmtModifier.Private]));
           _createMethod.addStmt(new o.WriteClassMemberExpr(
                   propName,
                   o
-                      .importExpr(changeDetectorType)
+                      .importExpr(changeDetectorClass)
                       .instantiate(changeDetectorParams))
               .toStmt());
           return new o.ReadPropExpr(
-              new o.ReadClassMemberExpr(
-                  propName, o.importType(changeDetectorType)),
+              new o.ReadClassMemberExpr(propName, changeDetectorType),
               'instance',
               outputType: forceDynamic ? o.DYNAMIC_TYPE : type);
         } else {
@@ -954,16 +949,14 @@ class CompileView implements AppViewBuilder {
       nameResolver.addField(new o.ClassField(internalField,
           outputType: forceDynamic
               ? o.DYNAMIC_TYPE
-              : (providerHasChangeDetector
-                  ? o.importType(changeDetectorType)
-                  : type),
+              : (providerHasChangeDetector ? changeDetectorType : type),
           modifiers: const [o.StmtModifier.Private]));
       var getter = new CompileMethod(genDebugInfo);
       getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
 
       if (providerHasChangeDetector) {
         resolvedProviderValueExpr =
-            o.importExpr(changeDetectorType).instantiate(changeDetectorParams);
+            o.importExpr(changeDetectorClass).instantiate(changeDetectorParams);
       }
       // Note: Equals is important for JS so that it also checks the undefined case!
       var statements = <o.Statement>[
@@ -1020,7 +1013,7 @@ class CompileView implements AppViewBuilder {
   @override
   void createPureProxy(
     o.Expression fn,
-    num argCount,
+    int argCount,
     o.ReadClassMemberExpr pureProxyProp, {
     o.OutputType pureProxyType,
   }) {

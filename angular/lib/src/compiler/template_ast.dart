@@ -312,8 +312,8 @@ enum ProviderAstType {
 /// Position where content is to be projected (instance of <ng-content> in
 /// a template).
 class NgContentAst implements TemplateAst {
-  final num index;
-  final num ngContentIndex;
+  final int index;
+  final int ngContentIndex;
   final SourceSpan sourceSpan;
 
   NgContentAst(this.index, this.ngContentIndex, this.sourceSpan);
