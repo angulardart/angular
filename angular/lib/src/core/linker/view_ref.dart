@@ -32,21 +32,21 @@ abstract class ViewRef {
 ///       <li///ngFor="let  item of items">{{item}}</li>
 ///     </ul>
 ///
-///     ... we have two [ProtoViewRef]s:
+///     ... we have two [EmbeddedViewRef]s:
 ///
-///     Outer [ProtoViewRef]:
+///     Outer [EmbeddedViewRef]:
 ///     Count: {{items.length}}
 ///     <ul>
 ///       <template ngFor let-item [ngForOf]="items"></template>
 ///     </ul>
 ///
-///     Inner [ProtoViewRef]:
+///     Inner [EmbeddedViewRef]:
 ///       <li>{{item}}</li>
 ///
 /// Notice that the original template is broken down into two separate
-/// [ProtoViewRef]s.
+/// [EmbeddedViewRef]s.
 ///
-/// The outer/inner [ProtoViewRef]s are then assembled into views like so:
+/// The outer/inner [EmbeddedViewRef]s are then assembled into views like so:
 ///
 /// <!-- ViewRef: outer-0 -->
 /// Count: 2

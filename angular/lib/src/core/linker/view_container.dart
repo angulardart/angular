@@ -11,9 +11,10 @@ import 'view_container_ref.dart';
 import 'view_ref.dart' show EmbeddedViewRef, ViewRef, ViewRefImpl;
 import 'view_type.dart';
 
-/// A ViewContainer is created for elements that contain
-/// a nested component or a `<template>` element to provide an insertion point
-/// that is needed for attaching children post initialization.
+/// A container providing an insertion point for attaching children.
+///
+/// This is created for components containing a nested component or a
+/// `<template>` element so they can be attached after initialization.
 class ViewContainer extends ComponentLoader implements ViewContainerRef {
   final int index;
   final int parentIndex;

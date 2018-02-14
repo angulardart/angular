@@ -152,7 +152,7 @@ class AppViewData<T> {
   }
 }
 
-/// Base class for a generated templates for a given [Component] type [T].
+/// Base class for a generated template for a given [Component] type [T].
 abstract class AppView<T> {
   AppViewData<T> viewData;
 
