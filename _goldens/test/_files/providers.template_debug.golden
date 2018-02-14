@@ -48,83 +48,92 @@ AppView<import2.ProvidersComponent> viewFactory_ProvidersComponent0(AppView<dyna
 
 const List<dynamic> styles$ProvidersComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = [
-  new StaticNodeDebugInfo([import2.ProvidersComponent, import2.MyInjectableTypeAnnotation, import2.MyUseFactory, import2.MyUseClass, import2.MyUseExisting, import2.MyUseExistingNested, import2.MyUseValue, const import10.OpaqueToken('useValueString'), const import10.OpaqueToken('useValueList'), const import10.OpaqueToken('useValueMap'), const import10.OpaqueToken('useEnums')], import2.ProvidersComponent, <String, dynamic>{})
+  new StaticNodeDebugInfo([import2.ProvidersComponent, import2.MyTypeAnnotation, import2.MyInjectableTypeAnnotation, import2.MyUseFactory, import2.MyUseClass, import2.MyUseExisting, import2.MyUseExistingNested, import2.MyUseValue, const import10.OpaqueToken('useValueString'), const import10.OpaqueToken('useValueList'), const import10.OpaqueToken('useValueMap'), const import10.OpaqueToken('useEnums')], import2.ProvidersComponent, <String, dynamic>{})
 ];
 
 class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   ViewProvidersComponent0 _compView_0;
   import2.ProvidersComponent _ProvidersComponent_0_4;
-  import2.MyInjectableTypeAnnotation __MyInjectableTypeAnnotation_0_5;
-  dynamic __MyUseFactory_0_6;
-  import2.MyUseClass __MyUseClass_0_7;
-  import2.MyUseValue __MyUseValue_0_10;
-  String __useValueString_0_11;
-  List<dynamic> __useValueList_0_12;
-  Map<String, dynamic> __useValueMap_0_13;
-  dynamic __useEnums_0_14;
+  import2.MyTypeAnnotation __MyTypeAnnotation_0_5;
+  import2.MyInjectableTypeAnnotation __MyInjectableTypeAnnotation_0_6;
+  dynamic __MyUseFactory_0_7;
+  import2.MyUseClass __MyUseClass_0_8;
+  import2.MyUseValue __MyUseValue_0_11;
+  String __useValueString_0_12;
+  List<dynamic> __useValueList_0_13;
+  Map<String, dynamic> __useValueMap_0_14;
+  dynamic __useEnums_0_15;
   _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ProvidersComponentHost0);
-  import2.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_5 {
+  import2.MyTypeAnnotation get _MyTypeAnnotation_0_5 {
     dbg(0, 0, 0);
-    if ((this.__MyInjectableTypeAnnotation_0_5 == null)) {
-      (__MyInjectableTypeAnnotation_0_5 = new import2.MyInjectableTypeAnnotation());
+    if ((this.__MyTypeAnnotation_0_5 == null)) {
+      (__MyTypeAnnotation_0_5 = new import2.MyTypeAnnotation());
     }
-    return this.__MyInjectableTypeAnnotation_0_5;
+    return this.__MyTypeAnnotation_0_5;
   }
 
-  dynamic get _MyUseFactory_0_6 {
+  import2.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_6 {
     dbg(0, 0, 0);
-    if ((this.__MyUseFactory_0_6 == null)) {
-      (__MyUseFactory_0_6 = import2.ProvidersComponent.createService(this.injectorGet(import11.NgZone, this.viewData.parentIndex)));
+    if ((this.__MyInjectableTypeAnnotation_0_6 == null)) {
+      (__MyInjectableTypeAnnotation_0_6 = new import2.MyInjectableTypeAnnotation());
     }
-    return this.__MyUseFactory_0_6;
+    return this.__MyInjectableTypeAnnotation_0_6;
   }
 
-  import2.MyUseClass get _MyUseClass_0_7 {
+  dynamic get _MyUseFactory_0_7 {
     dbg(0, 0, 0);
-    if ((this.__MyUseClass_0_7 == null)) {
-      (__MyUseClass_0_7 = new import2.MyUseClass());
+    if ((this.__MyUseFactory_0_7 == null)) {
+      (__MyUseFactory_0_7 = import2.ProvidersComponent.createService(this.injectorGet(import11.NgZone, this.viewData.parentIndex)));
     }
-    return this.__MyUseClass_0_7;
+    return this.__MyUseFactory_0_7;
   }
 
-  import2.MyUseValue get _MyUseValue_0_10 {
+  import2.MyUseClass get _MyUseClass_0_8 {
     dbg(0, 0, 0);
-    if ((this.__MyUseValue_0_10 == null)) {
-      (__MyUseValue_0_10 = const import2.MyUseValue('Matan'));
+    if ((this.__MyUseClass_0_8 == null)) {
+      (__MyUseClass_0_8 = new import2.MyUseClass());
     }
-    return this.__MyUseValue_0_10;
+    return this.__MyUseClass_0_8;
   }
 
-  String get _useValueString_0_11 {
+  import2.MyUseValue get _MyUseValue_0_11 {
     dbg(0, 0, 0);
-    if ((this.__useValueString_0_11 == null)) {
-      (__useValueString_0_11 = 'foo');
+    if ((this.__MyUseValue_0_11 == null)) {
+      (__MyUseValue_0_11 = const import2.MyUseValue('Matan'));
     }
-    return this.__useValueString_0_11;
+    return this.__MyUseValue_0_11;
   }
 
-  List<dynamic> get _useValueList_0_12 {
+  String get _useValueString_0_12 {
     dbg(0, 0, 0);
-    if ((this.__useValueList_0_12 == null)) {
-      (__useValueList_0_12 = const [const import2.MyUseValue('Andrew'), const import2.MyUseValue('Matan'), const import2.MyUseValue.named(optional: true)]);
+    if ((this.__useValueString_0_12 == null)) {
+      (__useValueString_0_12 = 'foo');
     }
-    return this.__useValueList_0_12;
+    return this.__useValueString_0_12;
   }
 
-  Map<String, dynamic> get _useValueMap_0_13 {
+  List<dynamic> get _useValueList_0_13 {
     dbg(0, 0, 0);
-    if ((this.__useValueMap_0_13 == null)) {
-      (__useValueMap_0_13 = const {'Andrew': const import2.MyUseValue('Andrew'), 'Matan': const import2.MyUseValue('Matan')});
+    if ((this.__useValueList_0_13 == null)) {
+      (__useValueList_0_13 = const [const import2.MyUseValue('Andrew'), const import2.MyUseValue('Matan'), const import2.MyUseValue.named(optional: true)]);
     }
-    return this.__useValueMap_0_13;
+    return this.__useValueList_0_13;
   }
 
-  dynamic get _useEnums_0_14 {
+  Map<String, dynamic> get _useValueMap_0_14 {
     dbg(0, 0, 0);
-    if ((this.__useEnums_0_14 == null)) {
-      (__useEnums_0_14 = import2.MyEnum.first);
+    if ((this.__useValueMap_0_14 == null)) {
+      (__useValueMap_0_14 = const {'Andrew': const import2.MyUseValue('Andrew'), 'Matan': const import2.MyUseValue('Matan')});
     }
-    return this.__useEnums_0_14;
+    return this.__useValueMap_0_14;
+  }
+
+  dynamic get _useEnums_0_15 {
+    dbg(0, 0, 0);
+    if ((this.__useEnums_0_15 == null)) {
+      (__useEnums_0_15 = import2.MyEnum.first);
+    }
+    return this.__useEnums_0_15;
   }
 
   @override
@@ -143,29 +152,32 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, import2.ProvidersComponent) && (0 == nodeIndex))) {
       return _ProvidersComponent_0_4;
     }
+    if ((identical(token, import2.MyTypeAnnotation) && (0 == nodeIndex))) {
+      return _MyTypeAnnotation_0_5;
+    }
     if ((identical(token, import2.MyInjectableTypeAnnotation) && (0 == nodeIndex))) {
-      return _MyInjectableTypeAnnotation_0_5;
+      return _MyInjectableTypeAnnotation_0_6;
     }
     if ((identical(token, import2.MyUseFactory) && (0 == nodeIndex))) {
-      return _MyUseFactory_0_6;
+      return _MyUseFactory_0_7;
     }
     if ((((identical(token, import2.MyUseClass) || identical(token, import2.MyUseExisting)) || identical(token, import2.MyUseExistingNested)) && (0 == nodeIndex))) {
-      return _MyUseClass_0_7;
+      return _MyUseClass_0_8;
     }
     if ((identical(token, import2.MyUseValue) && (0 == nodeIndex))) {
-      return _MyUseValue_0_10;
+      return _MyUseValue_0_11;
     }
     if ((identical(token, const import10.OpaqueToken('useValueString')) && (0 == nodeIndex))) {
-      return _useValueString_0_11;
+      return _useValueString_0_12;
     }
     if ((identical(token, const import10.OpaqueToken('useValueList')) && (0 == nodeIndex))) {
-      return _useValueList_0_12;
+      return _useValueList_0_13;
     }
     if ((identical(token, const import10.OpaqueToken('useValueMap')) && (0 == nodeIndex))) {
-      return _useValueMap_0_13;
+      return _useValueMap_0_14;
     }
     if ((identical(token, const import10.OpaqueToken('useEnums')) && (0 == nodeIndex))) {
-      return _useEnums_0_14;
+      return _useEnums_0_15;
     }
     return notFoundResult;
   }

@@ -47,69 +47,77 @@ const List<dynamic> styles$ProvidersComponentHost = const [];
 class _ViewProvidersComponentHost0 extends AppView<dynamic> {
   ViewProvidersComponent0 _compView_0;
   import1.ProvidersComponent _ProvidersComponent_0_4;
-  import1.MyInjectableTypeAnnotation __MyInjectableTypeAnnotation_0_5;
-  dynamic __MyUseFactory_0_6;
-  import1.MyUseClass __MyUseClass_0_7;
-  import1.MyUseValue __MyUseValue_0_10;
-  String __useValueString_0_11;
-  List<dynamic> __useValueList_0_12;
-  Map<String, dynamic> __useValueMap_0_13;
-  dynamic __useEnums_0_14;
+  import1.MyTypeAnnotation __MyTypeAnnotation_0_5;
+  import1.MyInjectableTypeAnnotation __MyInjectableTypeAnnotation_0_6;
+  dynamic __MyUseFactory_0_7;
+  import1.MyUseClass __MyUseClass_0_8;
+  import1.MyUseValue __MyUseValue_0_11;
+  String __useValueString_0_12;
+  List<dynamic> __useValueList_0_13;
+  Map<String, dynamic> __useValueMap_0_14;
+  dynamic __useEnums_0_15;
   _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
-  import1.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_5 {
-    if ((this.__MyInjectableTypeAnnotation_0_5 == null)) {
-      (__MyInjectableTypeAnnotation_0_5 = new import1.MyInjectableTypeAnnotation());
+  import1.MyTypeAnnotation get _MyTypeAnnotation_0_5 {
+    if ((this.__MyTypeAnnotation_0_5 == null)) {
+      (__MyTypeAnnotation_0_5 = new import1.MyTypeAnnotation());
     }
-    return this.__MyInjectableTypeAnnotation_0_5;
+    return this.__MyTypeAnnotation_0_5;
   }
 
-  dynamic get _MyUseFactory_0_6 {
-    if ((this.__MyUseFactory_0_6 == null)) {
-      (__MyUseFactory_0_6 = import1.ProvidersComponent.createService(this.injectorGet(import8.NgZone, this.viewData.parentIndex)));
+  import1.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_6 {
+    if ((this.__MyInjectableTypeAnnotation_0_6 == null)) {
+      (__MyInjectableTypeAnnotation_0_6 = new import1.MyInjectableTypeAnnotation());
     }
-    return this.__MyUseFactory_0_6;
+    return this.__MyInjectableTypeAnnotation_0_6;
   }
 
-  import1.MyUseClass get _MyUseClass_0_7 {
-    if ((this.__MyUseClass_0_7 == null)) {
-      (__MyUseClass_0_7 = new import1.MyUseClass());
+  dynamic get _MyUseFactory_0_7 {
+    if ((this.__MyUseFactory_0_7 == null)) {
+      (__MyUseFactory_0_7 = import1.ProvidersComponent.createService(this.injectorGet(import8.NgZone, this.viewData.parentIndex)));
     }
-    return this.__MyUseClass_0_7;
+    return this.__MyUseFactory_0_7;
   }
 
-  import1.MyUseValue get _MyUseValue_0_10 {
-    if ((this.__MyUseValue_0_10 == null)) {
-      (__MyUseValue_0_10 = const import1.MyUseValue('Matan'));
+  import1.MyUseClass get _MyUseClass_0_8 {
+    if ((this.__MyUseClass_0_8 == null)) {
+      (__MyUseClass_0_8 = new import1.MyUseClass());
     }
-    return this.__MyUseValue_0_10;
+    return this.__MyUseClass_0_8;
   }
 
-  String get _useValueString_0_11 {
-    if ((this.__useValueString_0_11 == null)) {
-      (__useValueString_0_11 = 'foo');
+  import1.MyUseValue get _MyUseValue_0_11 {
+    if ((this.__MyUseValue_0_11 == null)) {
+      (__MyUseValue_0_11 = const import1.MyUseValue('Matan'));
     }
-    return this.__useValueString_0_11;
+    return this.__MyUseValue_0_11;
   }
 
-  List<dynamic> get _useValueList_0_12 {
-    if ((this.__useValueList_0_12 == null)) {
-      (__useValueList_0_12 = const [const import1.MyUseValue('Andrew'), const import1.MyUseValue('Matan'), const import1.MyUseValue.named(optional: true)]);
+  String get _useValueString_0_12 {
+    if ((this.__useValueString_0_12 == null)) {
+      (__useValueString_0_12 = 'foo');
     }
-    return this.__useValueList_0_12;
+    return this.__useValueString_0_12;
   }
 
-  Map<String, dynamic> get _useValueMap_0_13 {
-    if ((this.__useValueMap_0_13 == null)) {
-      (__useValueMap_0_13 = const {'Andrew': const import1.MyUseValue('Andrew'), 'Matan': const import1.MyUseValue('Matan')});
+  List<dynamic> get _useValueList_0_13 {
+    if ((this.__useValueList_0_13 == null)) {
+      (__useValueList_0_13 = const [const import1.MyUseValue('Andrew'), const import1.MyUseValue('Matan'), const import1.MyUseValue.named(optional: true)]);
     }
-    return this.__useValueMap_0_13;
+    return this.__useValueList_0_13;
   }
 
-  dynamic get _useEnums_0_14 {
-    if ((this.__useEnums_0_14 == null)) {
-      (__useEnums_0_14 = import1.MyEnum.first);
+  Map<String, dynamic> get _useValueMap_0_14 {
+    if ((this.__useValueMap_0_14 == null)) {
+      (__useValueMap_0_14 = const {'Andrew': const import1.MyUseValue('Andrew'), 'Matan': const import1.MyUseValue('Matan')});
     }
-    return this.__useEnums_0_14;
+    return this.__useValueMap_0_14;
+  }
+
+  dynamic get _useEnums_0_15 {
+    if ((this.__useEnums_0_15 == null)) {
+      (__useEnums_0_15 = import1.MyEnum.first);
+    }
+    return this.__useEnums_0_15;
   }
 
   @override
@@ -127,29 +135,32 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
     if ((identical(token, import1.ProvidersComponent) && (0 == nodeIndex))) {
       return _ProvidersComponent_0_4;
     }
+    if ((identical(token, import1.MyTypeAnnotation) && (0 == nodeIndex))) {
+      return _MyTypeAnnotation_0_5;
+    }
     if ((identical(token, import1.MyInjectableTypeAnnotation) && (0 == nodeIndex))) {
-      return _MyInjectableTypeAnnotation_0_5;
+      return _MyInjectableTypeAnnotation_0_6;
     }
     if ((identical(token, import1.MyUseFactory) && (0 == nodeIndex))) {
-      return _MyUseFactory_0_6;
+      return _MyUseFactory_0_7;
     }
     if ((((identical(token, import1.MyUseClass) || identical(token, import1.MyUseExisting)) || identical(token, import1.MyUseExistingNested)) && (0 == nodeIndex))) {
-      return _MyUseClass_0_7;
+      return _MyUseClass_0_8;
     }
     if ((identical(token, import1.MyUseValue) && (0 == nodeIndex))) {
-      return _MyUseValue_0_10;
+      return _MyUseValue_0_11;
     }
     if ((identical(token, const import9.OpaqueToken('useValueString')) && (0 == nodeIndex))) {
-      return _useValueString_0_11;
+      return _useValueString_0_12;
     }
     if ((identical(token, const import9.OpaqueToken('useValueList')) && (0 == nodeIndex))) {
-      return _useValueList_0_12;
+      return _useValueList_0_13;
     }
     if ((identical(token, const import9.OpaqueToken('useValueMap')) && (0 == nodeIndex))) {
-      return _useValueMap_0_13;
+      return _useValueMap_0_14;
     }
     if ((identical(token, const import9.OpaqueToken('useEnums')) && (0 == nodeIndex))) {
-      return _useEnums_0_14;
+      return _useEnums_0_15;
     }
     return notFoundResult;
   }

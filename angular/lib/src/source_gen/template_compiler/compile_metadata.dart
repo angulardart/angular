@@ -34,12 +34,6 @@ class CompileTypeMetadataVisitor
 
   @override
   CompileTypeMetadata visitClassElement(ClassElement element) {
-    if (!annotation_matcher.isInjectable(element)) {
-      _logger.warning(''
-          'Ignoring class: $element. This may be a breaking change, see '
-          'https://github.com/dart-lang/angular/issues/849.');
-      return null;
-    }
     if (element.isPrivate) {
       _logger.severe('Provided classes must be public: $element');
       return null;
