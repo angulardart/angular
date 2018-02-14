@@ -75,6 +75,11 @@ while (( "$#" )); do
     echo -e 'dartanalyzer --fatal-warnings .'
     dartanalyzer --fatal-warnings .
     ;;
+  dartanalyzer_4) echo
+    echo -e '\033[1mTASK: dartanalyzer_4\033[22m'
+    echo -e 'dartanalyzer --fatal-warnings web'
+    dartanalyzer --fatal-warnings web
+    ;;
   test_0) echo
     echo -e '\033[1mTASK: test_0\033[22m'
     echo -e 'pub run test'
