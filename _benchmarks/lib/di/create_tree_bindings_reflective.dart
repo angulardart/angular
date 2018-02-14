@@ -12,8 +12,6 @@ import 'src/tree_bindings.dart';
     NgIf,
   ],
   template: r'',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CreateTreeBindingsReflectiveBenchmark implements Benchmark {
   @override

@@ -9,12 +9,4 @@ stages:
     - command: pub run build_runner build --fail-on-severe
   - unit_test:
     - command: pub run build_runner test -- -p vm
-    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/common
-    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/compiler
-    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/core
-    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/di
-    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/integration
-    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/platform
-    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/security
-    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/source_gen
-    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure -j1 test/symbol_inspector
+    - command: pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure
