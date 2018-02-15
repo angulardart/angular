@@ -139,6 +139,7 @@ cache:
     # MANUALLY ADDED. Do not remove.
     - _benchmarks/.dart_tool
     - _goldens/.dart_tool
+    - _tests/.dart_tool
     - angular_router/.dart_tool
     - angular_test/.dart_tool
     - examples/hello_world/.dart_tool
