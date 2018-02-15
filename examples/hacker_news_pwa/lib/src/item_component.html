@@ -1,0 +1,12 @@
+<div>
+  <div class="primary">
+    <a [href]="item['url']">{{item['title']}}</a>
+  </div>
+  <span class="secondary">
+    <template [ngIf]="showDetail">{{points}} by {{item['user']}}&ngsp;</template>
+    {{item['time_ago']}}
+    <template [ngIf]="showDetail">
+      &ngsp;|&ngsp;<a [routerLink]="discussUrl">{{discuss}}</a>
+    </template>
+  </span>
+</div>

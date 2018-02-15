@@ -1,0 +1,9 @@
+# See https://github.com/dart-lang/mono_repo for details
+dart:
+  - dev
+
+stages:
+  - analyze:
+    - dartanalyzer: --fatal-warnings web
+  - build:
+    - command: pub run build_runner build --config=release --fail-on-severe

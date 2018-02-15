@@ -1,0 +1,13 @@
+<div class="header">
+  <button (click)="toggleVisibility()">
+    [{{hidden ? showCommentText : '-'}}]
+  </button>
+  <span>{{comment['user']}} {{comment['time_ago']}}</span>
+</div>
+<div [hidden]="hidden">
+  <div class="content" [innerHtml]="content"></div>
+  <comment
+      *ngFor="let comment of comment['comments']"
+      [comment]="comment">
+  </comment>
+</div>
