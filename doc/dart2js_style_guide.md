@@ -70,7 +70,7 @@ class Animal implements Comparable<Animal> {
 
 ## Keep `toString` terse if `assertionsEnabled` is `false`
 
-Developer prefer to see explained, actionable, and comprehensive error and
+Developers prefer to see explained, actionable, and comprehensive error and
 `toString()` messaging when developing an application. Nothing is worse than
 getting an exception that says `"change detection failed"`.
 
