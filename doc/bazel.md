@@ -1,4 +1,4 @@
-# Building with Blaze
+# Building with Bazel
 
 ## Collecting metrics
 
@@ -13,23 +13,25 @@ add logging to the compiler, import [angular\_compiler/cli.dart][cli] and use
 one of the provided logging functions.
 
 There are two caveats to be aware of when collecting compilation metrics with
-Blaze: caching and filtering.
+Bazel: caching and filtering.
 
-Firstly, Blaze reuses the cached outputs of every target that hasn't changed
+Firstly, Bazel reuses the cached outputs of every target that hasn't changed
 since it was last built. When an output is reused, the Angular compiler isn't
 run for the target which produces it. Be sure to clear to any cached outputs
 before collecting compilation metrics to ensure complete coverage of your
 target.
 
-Secondly, Blaze filters the output of all subpackages, meaning you likely won't
+Secondly, Bazel filters the output of all subpackages, meaning you likely won't
 see logged metrics for any dependencies of the target you're compiling. To
 prevent filtering and see metrics for the entire build, use
 [`--auto_output_filter=none`][auto_output_filter].
 
 ```
-$ blaze clean
-$ blaze build --auto_output_filter=none //<path>:<target>
+$ bazel clean
+$ bazel build --auto_output_filter=none //<path>:<target>
 ```
 
-[auto_output_filter]: https://g3doc.corp.google.com/devtools/blaze/g3doc/user-manual.html#flag--auto_output_filter
-[cli]: https://cs.corp.google.com/piper///depot/google3/third_party/dart_src/angular/angular_compiler/lib/cli.dart
+(`--auto_output_filter` is only currently supported on the internal Bazel)
+
+[auto_output_filter]: https://github.com/bazelbuild/bazel/issues/3330
+[cli]: https://github.com/dart-lang/angular/blob/master/angular_compiler/lib/cli.dart
