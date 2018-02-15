@@ -1,4 +1,4 @@
-name: hacker_news_pwa
+name: examples.hacker_news_pwa
 environment:
   sdk: '>=2.0.0-dev.20.0 <2.0.0'
 
