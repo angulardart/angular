@@ -413,6 +413,15 @@ void main() {
           ),
         );
       });
+
+      test('should treat an OpaqueToken identical to @Inject', () {
+        final injector = new Injector.slowReflective([
+          const Provider(baseUrl, useValue: 'https://site.com/api/'),
+          InjectsBaseUrl,
+        ]);
+        final InjectsBaseUrl service = injector.get(InjectsBaseUrl);
+        expect(service.url, 'https://site.com/api/');
+      }, skip: 'Working on https://github.com/dart-lang/angular/issues/288');
     });
 
     group('.generate', () {
@@ -507,6 +516,11 @@ void main() {
           ),
         );
       });
+
+      test('should treat an OpaqueToken identical to @Inject', () {
+        final InjectsBaseUrl service = injector.get(InjectsBaseUrl);
+        expect(service.url, 'https://site.com/api');
+      }, skip: 'Working on https://github.com/dart-lang/angular/issues/288');
     });
   });
 }
@@ -596,6 +610,10 @@ Null willNeverBeCalled2(Object _, Object __) => null;
   // We are going to expect these are also different bindings.
   const Provider(unnamedTokenOfDynamic, useValue: 5),
   const Provider(unnamedTokenOfString, useValue: 6),
+
+  // Tests that @Inject(baseUrl) === @baseUrl
+  const Provider(baseUrl, useValue: 'https://site.com/api/'),
+  InjectsBaseUrl,
 ])
 final InjectorFactory exampleGenerated = ng.exampleGenerated$Injector;
 
@@ -625,4 +643,14 @@ class C {
 
   @override
   String toString() => 'C: $debugMessage';
+}
+
+const baseUrl = const OpaqueToken<String>('baseUrl');
+
+@Injectable()
+class InjectsBaseUrl {
+  final String url;
+
+  // Identical to writing @Inject(baseUrl).
+  InjectsBaseUrl(@baseUrl this.url);
 }
