@@ -12,10 +12,6 @@ import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 /// by [RenderComponentType].
 abstract class SharedStylesHost {
   void addStyles(List<String> styles);
-  void addHost(dynamic hostNode);
-  void removeHost(dynamic hostNode);
-  List<String> getAllStyles();
-  dynamic createStyleElement(String css);
 }
 
 /// Application level shared style host to shim styles for components.

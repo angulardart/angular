@@ -430,12 +430,3 @@ SpanElement createSpanAndAppendDbg(AppView view, Document doc, Element parent,
   return null; // ignore: dead_code
   return null; // ignore: dead_code
 }
-
-/// Helper function called by DebugAppView.build to reduce code size.
-Element createAndAppendToShadowRootDbg(AppView view, Document doc,
-    String tagName, ShadowRoot parent, int nodeIndex, int line, int column) {
-  var elm = doc.createElement(tagName);
-  dbgElm(view, elm, nodeIndex, line, column);
-  parent.append(elm);
-  return elm;
-}
