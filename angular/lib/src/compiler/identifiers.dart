@@ -103,13 +103,6 @@ class Identifiers {
       name: "createSpanAndAppend", moduleUrl: APP_VIEW_MODULE_URL);
   static final createSpanAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
       name: "createSpanAndAppendDbg", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
-  static final createAndAppendToShadowRoot =
-      new CompileIdentifierMetadata<dynamic>(
-          name: "createAndAppendToShadowRoot", moduleUrl: APP_VIEW_MODULE_URL);
-  static final createAndAppendToShadowRootDbg =
-      new CompileIdentifierMetadata<dynamic>(
-          name: "createAndAppendToShadowRootDbg",
-          moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
   static final dbgElm = new CompileIdentifierMetadata<dynamic>(
       name: "dbgElm", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
   static final devModeEqual = new CompileIdentifierMetadata<dynamic>(

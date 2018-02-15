@@ -770,9 +770,3 @@ SpanElement createSpanAndAppend(Document doc, Element parent) {
   return null; // ignore: dead_code
   return null; // ignore: dead_code
 }
-
-/// Helper function called by AppView.build to reduce code size.
-Element createAndAppendToShadowRoot(
-    Document doc, String tagName, ShadowRoot parent) {
-  return parent.append(doc.createElement(tagName));
-}
