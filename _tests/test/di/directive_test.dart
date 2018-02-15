@@ -202,6 +202,12 @@ void main() {
       ),
     );
   });
+
+  test('should treat an OpaqueToken identical to @Inject', () async {
+    final fixture = await new NgTestBed<InjectsBaseUrl>().create();
+    final InjectsBaseUrl service = fixture.assertOnlyInstance;
+    expect(service.url, 'https://site.com/api');
+  }, skip: 'Working on https://github.com/dart-lang/angular/issues/288');
 }
 
 @Component(
@@ -610,4 +616,17 @@ class WillFailInjecting2Node {
 )
 class WillFailInjecting2NodeParent {
   WillFailInjecting2NodeParent(InjectsMissingService _);
+}
+
+const baseUrl = const OpaqueToken<String>('baseUrl');
+
+@Component(
+  selector: 'injects-base-url',
+  template: '',
+)
+class InjectsBaseUrl {
+  final String url;
+
+  // Identical to writing @Inject(baseUrl).
+  InjectsBaseUrl(@baseUrl this.url);
 }
