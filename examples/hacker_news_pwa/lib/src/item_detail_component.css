@@ -1,0 +1,12 @@
+:host {
+  background: #fff;
+  display: block;
+  padding: 16px;
+}
+
+/* Scroll only pre-formatted comments rather than entire page. */
+:host ::ng-deep pre {
+  background: #eee;
+  padding: 8px;
+  overflow-x: scroll;
+}

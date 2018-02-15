@@ -1,0 +1,20 @@
+<!-- Loading view -->
+<template [ngIf]="items == null">
+  <div>Loading...</div>
+</template>
+
+<!-- Loaded empty view -->
+<template [ngIf]="items != null && items.isEmpty">
+  <div>There are no more items.</div>
+</template>
+
+<!-- Loaded items view -->
+<template [ngIf]="items != null && items.isNotEmpty">
+<article *ngFor="let item of items; let i = index">
+  <span class="rank">{{i + startingRank}}</span>
+  <item [item]="item"></item>
+</article>
+<div>
+  <a [routerLink]="nextPageUrl">More</a>
+</div>
+</template>

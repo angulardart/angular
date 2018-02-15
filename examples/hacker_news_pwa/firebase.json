@@ -1,0 +1,21 @@
+{
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "*.ng_placeholder",
+      "packages/"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/",
+        "headers": [{"key": "Link", "value": "</main.dart.js>;rel=preload;as=script"}]
+      }
+    ]
+  }
+}

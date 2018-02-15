@@ -1,0 +1,45 @@
+a {
+  align-items: center;
+  color: #bbb;
+  display: flex;
+  padding: 0 8px;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fff;
+}
+
+header {
+  background: #212121;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
+  display: flex;
+  height: 56px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+img {
+  width: 40px;
+}
+
+main {
+  margin: 56px auto 0 auto;
+  max-width: 800px;
+}
+
+nav {
+  display: flex;
+  height: 100%;
+  margin: 0 auto;
+  max-width: 800px;
+  width: 100%;
+}
+
+.active-route {
+  border-bottom: 2px solid #fff;
+  /* This keeps content vertically centered. */
+  border-top: 2px solid transparent;
+  color: #fff;
+}
