@@ -18,9 +18,6 @@ var testDataIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ExternalClass",
     moduleUrl:
         'asset:_tests/test/compiler/output/output_emitter_util$MODULE_SUFFIX');
-var eventEmitterIdentifier = new CompileIdentifierMetadata<dynamic>(
-    name: "EventEmitter",
-    moduleUrl: 'asset:angular/lib/src/facade/async$MODULE_SUFFIX');
 var enumIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ViewType.HOST",
     moduleUrl: 'asset:angular/lib/src/core/linker/view_type$MODULE_SUFFIX');
@@ -188,7 +185,6 @@ List<o.Statement> _getExpressionsStmts = [
     ],
     ["not", o.not(o.literal(false))],
     ["externalTestIdentifier", o.importExpr(testDataIdentifier)],
-    ["externalSrcIdentifier", o.importExpr(eventEmitterIdentifier)],
     ["externalEnumIdentifier", o.importExpr(enumIdentifier)],
     ["externalInstance", o.variable("externalInstance")],
     ["dynamicInstance", o.variable("dynamicInstance")],
