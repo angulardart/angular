@@ -109,6 +109,14 @@ jobs:
       dart: dev
     - stage: analyze
       script: ./tool/travis.sh dartanalyzer_4
+      env: PKG="examples/hacker_news_pwa"
+      dart: dev
+    - stage: build
+      script: ./tool/travis.sh command_7
+      env: PKG="examples/hacker_news_pwa"
+      dart: dev
+    - stage: analyze
+      script: ./tool/travis.sh dartanalyzer_4
       env: PKG="examples/hello_world"
       dart: dev
     - stage: build
