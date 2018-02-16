@@ -1,4 +1,4 @@
-- Added `markAsUntouched` method to `AbstractControl`.
+-   Added `markAsUntouched` method to `AbstractControl`.
 
 ## 1.0.1-alpha+5
 
@@ -27,10 +27,11 @@ _Maintenance release, to support the latest package:angular alpha._
 
 -   Support breaking changes in angular 5.0.0-alpha
 -   Allow expressions for maxlength/minlength validators. Breaking change does
-    not support string values for maxlength/minlength anymore.
-    `minlength="12"` now should be written `[minlength]="12"`
+    not support string values for maxlength/minlength anymore. `minlength="12"`
+    now should be written `[minlength]="12"`
 
 ## 1.0.0
+
 -   Support for angular 4.0.0.
 
 ## 0.1.0

@@ -6,15 +6,18 @@ Our [issue labels](https://github.com/dart-lang/angular/labels):
 
 Issues that only effect a specific part of the framework.
 
-| Label                             | Description                                                                      |
-| --------------------------------- | -------------------------------------------------------------------------------- |
-| [`area: analysis`][a1]            | (WIP)                                                                            |
-| [`area: ast`][a2]                 | Occurs in `package:angular_ast`                                                  |
-| [`area: compiler`][a3]            | Occurs in `package:angular_compiler` _or_ anything at compile-time, in general.  |
-| [`area: forms`][a4]               | Occurs in `package:angular_forms`                                                |
-| [`area: router`][a5]              | Occurs in `package:angular_router`                                               |
-| [`area: runtime`][a6]             | Occurs in the main package (`package:angular`), but _not_ at compile-time.       |
-| [`area: test`][a7]                | Occurs in `package:angular_test` or in our own test suites.                      |
+| Label                  | Description                                         |
+| ---------------------- | --------------------------------------------------- |
+| [`area: analysis`][a1] | (WIP)                                               |
+| [`area: ast`][a2]      | Occurs in `package:angular_ast`                     |
+| [`area: compiler`][a3] | Occurs in `package:angular_compiler` _or_ anything  |
+:                        : at compile-time, in general.                        :
+| [`area: forms`][a4]    | Occurs in `package:angular_forms`                   |
+| [`area: router`][a5]   | Occurs in `package:angular_router`                  |
+| [`area: runtime`][a6]  | Occurs in the main package (`package:angular`), but |
+:                        : _not_ at compile-time.                              :
+| [`area: test`][a7]     | Occurs in `package:angular_test` or in our own test |
+:                        : suites.                                             :
 
 [a1]: https://github.com/dart-lang/angular/labels/area%3A%20analysis
 [a2]: https://github.com/dart-lang/angular/labels/area%3A%20ast
@@ -28,16 +31,25 @@ Issues that only effect a specific part of the framework.
 
 Issues that are specifically tagged in order to track relevance to the team.
 
-| Label                             | Description                                                                      |
-| --------------------------------- | -------------------------------------------------------------------------------- |
-| [`breaking change`][o1]           | This issue, if implemented, would be a breaking change to its respective _area_. |
-| [`chore`][o2]                     | This issue requires internal re-organization, grunge work (not a feature).       |
-| [`documentation`][o3]             | This issue requires documentation fixes or changes to close.                     |
-| [`migrate internal users`][o4]    | This issue requires a non-trivial amount of migration of internal users.         |
-| [`needs review`][o5]              | This issue requires a closer review by the team or other Dart team members.      |
-| [`new feature`][o6]               | This issue represents a new feature or addition.                                 |
-| [`priority`][o7]                  | This is a high priority issue, that should be resolved ASAP.                     |
-| [`release blocker`][o8]           | This issue, if not resolved, would block the next stable release.                |
+| Label                          | Description                                 |
+| ------------------------------ | ------------------------------------------- |
+| [`breaking change`][o1]        | This issue, if implemented, would be a      |
+:                                : breaking change to its respective _area_.   :
+| [`chore`][o2]                  | This issue requires internal                |
+:                                : re-organization, grunge work (not a         :
+:                                : feature).                                   :
+| [`documentation`][o3]          | This issue requires documentation fixes or  |
+:                                : changes to close.                           :
+| [`migrate internal users`][o4] | This issue requires a non-trivial amount of |
+:                                : migration of internal users.                :
+| [`needs review`][o5]           | This issue requires a closer review by the  |
+:                                : team or other Dart team members.            :
+| [`new feature`][o6]            | This issue represents a new feature or      |
+:                                : addition.                                   :
+| [`priority`][o7]               | This is a high priority issue, that should  |
+:                                : be resolved ASAP.                           :
+| [`release blocker`][o8]        | This issue, if not resolved, would block    |
+:                                : the next stable release.                    :
 
 [o1]: https://github.com/dart-lang/angular/labels/%E2%9B%91%20breaking%20change
 [o2]: https://github.com/dart-lang/angular/labels/%E2%99%BB%EF%B8%8F%20%20%20chore
@@ -52,12 +64,16 @@ Issues that are specifically tagged in order to track relevance to the team.
 
 Issues explaining why something was closed when it is non-obvious.
 
-| Label                             | Description                                                                      |
-| --------------------------------- | -------------------------------------------------------------------------------- |
-| [`resolution: as intended`][r1]   | This issue was closed because it is working as intended by the team.             |
-| [`resolution: duplicate`][r2]     | This issue was closed because it is a duplicate of another issue.                |
-| [`resolution: not planned`][r3]   | This issue was closed because the work required is not planned.                  |
-| [`resolution: on hold`][r4]       | This issue is temporarily closed and may be revisited in the future.             |
+| Label                           | Description                              |
+| ------------------------------- | ---------------------------------------- |
+| [`resolution: as intended`][r1] | This issue was closed because it is      |
+:                                 : working as intended by the team.         :
+| [`resolution: duplicate`][r2]   | This issue was closed because it is a    |
+:                                 : duplicate of another issue.              :
+| [`resolution: not planned`][r3] | This issue was closed because the work   |
+:                                 : required is not planned.                 :
+| [`resolution: on hold`][r4]     | This issue is temporarily closed and may |
+:                                 : be revisited in the future.              :
 
 [r1]: https://github.com/dart-lang/angular/labels/resolution%3A%20as%20intended
 [r2]: https://github.com/dart-lang/angular/labels/resolution%3A%20duplicate
@@ -68,12 +84,16 @@ Issues explaining why something was closed when it is non-obvious.
 
 Issues explaining why progress on this issue appears to stall.
 
-| Label                             | Description                                                                      |
-| --------------------------------- | -------------------------------------------------------------------------------- |
-| [`state: blocked`][s1]            | Progress on this issue has stalled because of another issue or dependency.       |
-| [`state: merging`][s2]            | This pull request is being merged back into the main branch internally.          |
-| [`state: needs info`][s3]         | Progress on this issue has stalled because of lack of information from the user. |
-| [`state: syncing`][s4]            | This pull request is being synced back into GitHub from the internal branch.     |
+| Label                     | Description                                     |
+| ------------------------- | ----------------------------------------------- |
+| [`state: blocked`][s1]    | Progress on this issue has stalled because of   |
+:                           : another issue or dependency.                    :
+| [`state: merging`][s2]    | This pull request is being merged back into the |
+:                           : main branch internally.                         :
+| [`state: needs info`][s3] | Progress on this issue has stalled because of   |
+:                           : lack of information from the user.              :
+| [`state: syncing`][s4]    | This pull request is being synced back into     |
+:                           : GitHub from the internal branch.                :
 
 [s1]: https://github.com/dart-lang/angular/labels/%E2%9B%94%20state%3A%20blocked
 [s2]: https://github.com/dart-lang/angular/labels/%E2%A4%B5%20state%3A%20merging
@@ -84,33 +104,41 @@ Issues explaining why progress on this issue appears to stall.
 
 Issues highlighting what external dependencies are causing this issue.
 
-| Label                             | Description                                                                      |
-| --------------------------------- | -------------------------------------------------------------------------------- |
-| [`dependency: analyzer`][d1]      | Progress on this issue requires `package:analyzer` changes or input.             |
-| [`dependency: build`][d2]         | Progress on this issue requires `package:build_*` changes or input.              |
-| [`dependency: dart`][d3]          | Progress on this issue requires Dart SDK changes or input.                       |
-| [`dependency: test`][d4]          | Progress on this issue requires `package:test_*` changes or input.               |
+| Label                        | Description                              |
+| ---------------------------- | ---------------------------------------- |
+| [`dependency: analyzer`][d1] | Progress on this issue requires          |
+:                              : `package\:analyzer` changes or input.    :
+| [`dependency: build`][d2]    | Progress on this issue requires          |
+:                              : `package\:build_*` changes or input.     :
+| [`dependency: dart`][d3]     | Progress on this issue requires Dart SDK |
+:                              : changes or input.                        :
+| [`dependency: test`][d4]     | Progress on this issue requires          |
+:                              : `package\:test_*` changes or input.      :
 
 [d1]: https://github.com/dart-lang/angular/labels/%E2%9C%89%20dependency%3A%20analyzer
 [d2]: https://github.com/dart-lang/angular/labels/%E2%9C%89%20dependency%3A%20build
 [d3]: https://github.com/dart-lang/angular/labels/%E2%9C%89%20dependency%3A%20dart
 [d4]: https://github.com/dart-lang/angular/labels/%E2%9C%89%20dependency%3A%20test
 
-
 ## Misc
 
 Other labels that don't fit in above.
 
-| Label                             | Description                                                                      |
-| --------------------------------- | -------------------------------------------------------------------------------- |
-| [`experience: dev cycle`][m1]     | Effects the development cycle of users.                                          |
-| [`experience: new user`][m2]      | Effects the experience of a new user to AngularDart or Dart.                     |
-| [`feedback: discussion`][m3]      | This issue is centered around discussion of a topic.                             |
-| [`feedback: rfc`][m4]             | This issue is a _proposal_ for large-ish changes.                                |
-| [`good first issue`][m5]          | This issue would be great for first-time contributors!                           |
-| [`problem: bug`][m6]              | There is a bug in the framework.                                                 |
-| [`problem: perf`][m7]             | There are performance issues in the framework.                                   |
-| [`question`][m8]                  | This is just a question.                                                         |
+| Label                         | Description                                 |
+| ----------------------------- | ------------------------------------------- |
+| [`experience: dev cycle`][m1] | Effects the development cycle of users.     |
+| [`experience: new user`][m2]  | Effects the experience of a new user to     |
+:                               : AngularDart or Dart.                        :
+| [`feedback: discussion`][m3]  | This issue is centered around discussion of |
+:                               : a topic.                                    :
+| [`feedback: rfc`][m4]         | This issue is a _proposal_ for large-ish    |
+:                               : changes.                                    :
+| [`good first issue`][m5]      | This issue would be great for first-time    |
+:                               : contributors!                               :
+| [`problem: bug`][m6]          | There is a bug in the framework.            |
+| [`problem: perf`][m7]         | There are performance issues in the         |
+:                               : framework.                                  :
+| [`question`][m8]              | This is just a question.                    |
 
 [m1]: https://github.com/dart-lang/angular/labels/%E2%9B%88%20experience%3A%20dev%20cycle
 [m2]: https://github.com/dart-lang/angular/labels/%E2%9B%88%20experience%3A%20new%20user
