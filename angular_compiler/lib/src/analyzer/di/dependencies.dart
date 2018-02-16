@@ -98,10 +98,13 @@ class DependencyReader {
       bool isOptionalAndNotInjectable() =>
           parameter.parameterKind == ParameterKind.POSITIONAL &&
           $Optional.firstAnnotationOfExact(parameter) == null &&
-          $Inject.firstAnnotationOf(parameter) == null;
+          $Inject.firstAnnotationOf(parameter) == null &&
+          $OpaqueToken.firstAnnotationOf(parameter) == null;
       if (!isNamed() && !isOptionalAndNotInjectable()) {
         final token = _tokenReader.parseTokenParameter(parameter);
-        bool usesInject() => $Inject.firstAnnotationOfExact(parameter) != null;
+        bool usesInject() =>
+            $Inject.firstAnnotationOfExact(parameter) != null ||
+            $OpaqueToken.firstAnnotationOf(parameter) != null;
         positional.add(
           new DependencyElement(
             token,

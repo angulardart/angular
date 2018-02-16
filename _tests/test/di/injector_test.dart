@@ -421,7 +421,7 @@ void main() {
         ]);
         final InjectsBaseUrl service = injector.get(InjectsBaseUrl);
         expect(service.url, 'https://site.com/api/');
-      }, skip: 'Working on https://github.com/dart-lang/angular/issues/288');
+      });
     });
 
     group('.generate', () {
@@ -519,8 +519,8 @@ void main() {
 
       test('should treat an OpaqueToken identical to @Inject', () {
         final InjectsBaseUrl service = injector.get(InjectsBaseUrl);
-        expect(service.url, 'https://site.com/api');
-      }, skip: 'Working on https://github.com/dart-lang/angular/issues/288');
+        expect(service.url, 'https://site.com/api/');
+      });
     });
   });
 }

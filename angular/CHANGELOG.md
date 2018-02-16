@@ -20,6 +20,22 @@ import 'my_file.template.dart' as ng;
 final InjectorFactory example = example$Injector;
 ```
 
+* You are now able to use an `OpaqueToken` or `MultiToken` as an annotation
+  directly instead of wrapping it in `@Inject`. For example, the following
+  classes are identically understood by AngularDart:
+
+```dart
+const baseUrl = const OpaqueToken<String>('baseUrl');
+
+class Comp1 {
+  Comp1(@Inject(baseUrl) String url);
+}
+
+class Comp2 {
+  Comp2(@baseUrl String url);
+}
+```
+
 ### Breaking changes
 
 *   Restricted the default visibility of all components and directives to

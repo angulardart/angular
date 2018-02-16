@@ -211,6 +211,11 @@ void main() {
       class ExampleServiceWithDynamicDeps {
         ExampleServiceWithDynamicDeps(@Inject(someToken) a);
       }
+
+      @Injectable()
+      class ExampleServiceWithDynamicDeps2 {
+        ExampleServiceWithDynamicDeps2(@someToken a);
+      }
     '''));
     final emitter = new ReflectableEmitter(
       output,
@@ -261,6 +266,18 @@ void main() {
           );
           _ngRef.registerDependencies(
             ExampleServiceWithDynamicDeps,
+            const [
+              const [
+                const _ngRef.Inject(const _ngRef.OpaqueToken<dynamic>('someToken'))
+              ]
+            ]
+          );
+          _ngRef.registerFactory(
+            ExampleServiceWithDynamicDeps2,
+            (dynamic p0) => new ExampleServiceWithDynamicDeps2(p0)
+          );
+          _ngRef.registerDependencies(
+            ExampleServiceWithDynamicDeps2,
             const [
               const [
                 const _ngRef.Inject(const _ngRef.OpaqueToken<dynamic>('someToken'))

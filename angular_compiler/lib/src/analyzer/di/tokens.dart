@@ -80,9 +80,11 @@ class TokenReader {
   ///
   /// Uses the type definition, unless `@Inject` is specified.
   TokenElement parseTokenParameter(ParameterElement element) {
-    final inject = $Inject.firstAnnotationOfExact(element);
-    return inject != null
-        ? parseTokenObject(inject.getField('token'), element)
+    final DartObject constTypeOrToken =
+        $Inject.firstAnnotationOfExact(element)?.getField('token') ??
+            $OpaqueToken.firstAnnotationOf(element);
+    return constTypeOrToken != null
+        ? parseTokenObject(constTypeOrToken)
         : parseTokenType(element);
   }
 

@@ -206,8 +206,8 @@ void main() {
   test('should treat an OpaqueToken identical to @Inject', () async {
     final fixture = await new NgTestBed<InjectsBaseUrl>().create();
     final InjectsBaseUrl service = fixture.assertOnlyInstance;
-    expect(service.url, 'https://site.com/api');
-  }, skip: 'Working on https://github.com/dart-lang/angular/issues/288');
+    expect(service.url, 'https://site.com/api/');
+  });
 }
 
 @Component(
@@ -623,6 +623,9 @@ const baseUrl = const OpaqueToken<String>('baseUrl');
 @Component(
   selector: 'injects-base-url',
   template: '',
+  providers: const [
+    const Provider(baseUrl, useValue: 'https://site.com/api/'),
+  ],
 )
 class InjectsBaseUrl {
   final String url;
