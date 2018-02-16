@@ -258,12 +258,15 @@ class CompileTypeMetadataVisitor
     }
   }
 
-  CompileTokenMetadata _getToken(ParameterElement p) =>
+  CompileTokenMetadata _getToken(
+          ParameterElement p) =>
       _hasAnnotation(p, Attribute)
           ? _tokenForAttribute(p)
           : _hasAnnotation(p, Inject)
               ? _tokenForInject(p)
-              : _tokenForType(p.type);
+              : $OpaqueToken.hasAnnotationOf(p)
+                  ? _tokenForOpaqueToken(p)
+                  : _tokenForType(p.type);
 
   CompileTokenMetadata _tokenForAttribute(ParameterElement p) =>
       new CompileTokenMetadata(
@@ -275,6 +278,11 @@ class CompileTypeMetadataVisitor
     final injectToken = annotation.computeConstantValue();
     final token = dart_objects.getField(injectToken, 'token');
     return _token(token, annotation);
+  }
+
+  CompileTokenMetadata _tokenForOpaqueToken(ParameterElement p) {
+    final annotation = $OpaqueToken.firstAnnotationOf(p);
+    return _token(annotation);
   }
 
   CompileTokenMetadata _annotationToToken(ElementAnnotationImpl annotation) {

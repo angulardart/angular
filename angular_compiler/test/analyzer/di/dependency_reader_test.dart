@@ -36,6 +36,9 @@ void main() {
         external Example createExampleInject(@Inject(someToken) Engine engine);
 
         @Injectable()
+        external Example createExampleInjectToken(@someToken Engine engine);
+
+        @Injectable()
         external Example createExampleDynamic(@Inject(Engine) engine);
 
         const someToken = const OpaqueToken('someToken');
@@ -160,6 +163,19 @@ void main() {
 
     test('a function with a parameter annotated with @Inject', () {
       final function = functionNamed('createExampleInject');
+      final deps = reader.parseDependencies(function);
+      expect(deps.positional, [
+        new DependencyElement(
+          new OpaqueTokenElement('someToken', isMultiToken: false),
+          type: new TypeTokenElement(
+            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+          ),
+        ),
+      ]);
+    });
+
+    test('a function with a parameter annotated with an OpaqueToken', () {
+      final function = functionNamed('createExampleInjectToken');
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
         new DependencyElement(
