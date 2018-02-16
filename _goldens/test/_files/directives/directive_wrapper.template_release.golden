@@ -177,7 +177,7 @@ class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
     if ((identical(token, import10.DefaultValueAccessor) && (1 == nodeIndex))) {
       return _DefaultValueAccessor_1_4;
     }
-    if ((identical(token, const import12.OpaqueToken<import13.ControlValueAccessor<dynamic>>('NgValueAccessor')) && (1 == nodeIndex))) {
+    if ((identical(token, const import12.MultiToken<import13.ControlValueAccessor<dynamic>>('NgValueAccessor')) && (1 == nodeIndex))) {
       return _NgValueAccessor_1_5;
     }
     if (((identical(token, import11.NgControlName) || identical(token, import14.NgControl)) && (1 == nodeIndex))) {

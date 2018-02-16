@@ -1,17 +1,7 @@
 import 'dart:async';
 import 'dart:html' show Event;
 
-import 'package:angular/angular.dart'
-    show
-        Directive,
-        Inject,
-        Input,
-        AfterChanges,
-        Optional,
-        Output,
-        Provider,
-        Self,
-        Visibility;
+import 'package:angular/angular.dart';
 
 import '../model.dart' show Control, ControlGroup;
 import '../validators.dart' show Validators, NG_VALIDATORS;
@@ -20,9 +10,6 @@ import 'form_interface.dart' show Form;
 import 'ng_control.dart' show NgControl;
 import 'ng_control_group.dart';
 import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
-
-const formDirectiveProvider =
-    const Provider(ControlContainer, useExisting: NgFormModel);
 
 /// Binds an existing control group to a DOM element.
 ///
@@ -96,10 +83,11 @@ const formDirectiveProvider =
 /// ```
 @Directive(
   selector: '[ngFormModel]',
-  providers: const [formDirectiveProvider],
+  providers: const [
+    const ExistingProvider(ControlContainer, NgFormModel),
+  ],
   host: const {'(submit)': 'onSubmit(\$event)'},
   exportAs: 'ngForm',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class NgFormModel extends ControlContainer implements Form, AfterChanges {
