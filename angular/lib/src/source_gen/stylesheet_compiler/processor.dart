@@ -6,7 +6,7 @@ import 'package:angular/src/compiler/source_module.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 
-import 'ng_compiler.dart';
+import '../common/ng_compiler.dart';
 import 'zone.dart' as zone;
 
 // TODO: Remove the following lines (for --no-implicit-casts).
@@ -14,11 +14,11 @@ import 'zone.dart' as zone;
 // ignore_for_file: invalid_assignment
 
 Future<Map<AssetId, String>> processStylesheet(
-    AssetReader reader, AssetId stylesheetId, CompilerFlags flags) async {
+    BuildStep buildStep, AssetId stylesheetId, CompilerFlags flags) async {
   final stylesheetUrl = toAssetUri(stylesheetId);
-  final templateCompiler = zone.templateCompiler ??
-      createTemplateCompiler(new NgAssetReader.fromBuildStep(reader), flags);
-  final cssText = await reader.readAsString(stylesheetId);
+  final templateCompiler =
+      zone.templateCompiler ?? createTemplateCompiler(buildStep, flags);
+  final cssText = await buildStep.readAsString(stylesheetId);
   final sourceModules =
       templateCompiler.compileStylesheet(stylesheetUrl, cssText);
 
