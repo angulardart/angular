@@ -11,10 +11,9 @@ import '../validators.dart' show Validators, NG_VALIDATORS;
 /// @Directive(
 ///   selector: '[custom-validator]',
 ///   providers: const [
-///     const Provider(
+///     const ExistingProvider.forToken(
 ///       NG_VALIDATORS,
-///       useExisting: CustomValidatorDirective,
-///       multi: true,
+///       CustomValidatorDirective,
 ///     ),
 ///   ]
 /// )
@@ -68,11 +67,7 @@ const ValidatorFn REQUIRED = Validators.required;
       '[required][ngFormControl],'
       '[required][ngModel]',
   providers: const [
-    const Provider(
-      NG_VALIDATORS,
-      useValue: REQUIRED,
-      multi: true,
-    ),
+    const ValueProvider.forToken(NG_VALIDATORS, REQUIRED),
   ],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
@@ -90,11 +85,7 @@ class RequiredValidator {}
       '[minlength][ngFormControl],'
       '[minlength][ngModel]',
   providers: const [
-    const Provider(
-      NG_VALIDATORS,
-      useExisting: MinLengthValidator,
-      multi: true,
-    ),
+    const ExistingProvider.forToken(NG_VALIDATORS, MinLengthValidator),
   ],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
@@ -135,11 +126,7 @@ class MinLengthValidator implements Validator {
       '[maxlength][ngFormControl],'
       '[maxlength][ngModel]',
   providers: const [
-    const Provider(
-      NG_VALIDATORS,
-      useExisting: MaxLengthValidator,
-      multi: true,
-    ),
+    const ExistingProvider.forToken(NG_VALIDATORS, MaxLengthValidator),
   ],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
@@ -183,11 +170,7 @@ class MaxLengthValidator implements Validator {
       '[pattern][ngFormControl],'
       '[pattern][ngModel]',
   providers: const [
-    const Provider(
-      NG_VALIDATORS,
-      useExisting: PatternValidator,
-      multi: true,
-    ),
+    const ExistingProvider.forToken(NG_VALIDATORS, PatternValidator),
   ],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,

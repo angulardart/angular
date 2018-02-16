@@ -1,12 +1,14 @@
 import 'dart:html';
 
-import 'package:angular/angular.dart' show Directive, Provider, Visibility;
+import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart'
     show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
 
-const CHECKBOX_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
-    useExisting: CheckboxControlValueAccessor, multi: true);
+const CHECKBOX_VALUE_ACCESSOR = const ExistingProvider.forToken(
+  NG_VALUE_ACCESSOR,
+  CheckboxControlValueAccessor,
+);
 
 /// The accessor for writing a value and listening to changes on a checkbox input element.
 ///

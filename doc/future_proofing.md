@@ -19,7 +19,7 @@ defer-loaded entrypoints in their application:
 import 'main.template.dart' as ng;
 
 void main() {
-  ng.enableSlowComponentLoader();
+  ng.initReflector();
 }
 ```
 
@@ -37,15 +37,15 @@ and other defer-loaded entrypoints):
 import 'main.template.dart' as ng;
 
 void main() {
-  ng.enableReflectiveInjector();
+  ng.initReflector();
 }
 ```
 
 ... or it's also possible that a more long-term, `RuntimeProvider`, will be used
-to provide some API compatibility without needing `enableReflectiveInjector`:
+to provide some API compatibility without needing `initReflector`:
 
 ```dart
-final injector = new Injector.fromRuntime([
+final injector = new Injector.slowReflective([
   provide(Foo, useValue: new Foo()),
   provide(Foo, useFactory: (Bar bar) => new Foo(bar), deps: [Bar]),
 ]);
@@ -54,3 +54,52 @@ final injector = new Injector.fromRuntime([
 Notice that `useClass` would no longer be supported, only manually specifying
 a factory function, _and_ manually specifying a `deps: [ ... ]` list - we would
 no longer store this information as part of our code generation steps.
+
+## Type `OpaqueToken` and `MultiToken` wherever possible
+
+i.e. `OpaqueToken<String>(...)` instead of `OpaqueToken(...)`.
+
+## Use the typed {`Class`|`Existing`|`Factory`|`Value`}`Provider` types
+
+`const Provider(Foo, useClass: FooImpl)` to `const ClassProvider(Foo, FooImpl)`
+
+`const Provider(Foo, useExisting: Bar)` to `const ExistingProvider(Foo, Bar)`
+
+`const Provider(Foo, useFactory: createFoo)` to `const FactoryProvider(Foo, createFoo)`
+
+`const Provider(Foo, useValue: 5)` to `const ValueProvider(Foo, 5)`
+
+When binding to an `OpaqueToken` or `MultiToken`, use a `forToken` constructor:
+
+```dart
+const usPresidents = const MultiToken<String>('usPresidents');
+
+const usPresidentsProviders = const [
+  const ValueProvider.forToken(usPresidents, 'George Washington'),
+  const ValueProvider.forToken(usPresidents, 'Abraham Lincoln'),
+];
+```
+
+## Use `MultiToken` instead of `multi: true`
+
+**BEFORE**:
+
+```dart
+const appValidators = const OpaqueToken<AppValidator>('appValidators');
+
+const providers = const [
+  const Provider(appValidators, useValue: validatorA, multi: true),
+  const Provider(appValidators, useValue: validatorB, multi: true),
+];
+```
+
+**AFTER**:
+
+```dart
+const appValidators = const MultiToken<AppValidator>('appValidators');
+
+const providers = const [
+  const Provider(appValidators, useValue: validatorA),
+  const Provider(appValidators, useValue: validatorB),
+];
+```

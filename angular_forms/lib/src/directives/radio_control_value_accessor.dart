@@ -1,23 +1,16 @@
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:angular/angular.dart'
-    show
-        Directive,
-        Injectable,
-        Injector,
-        Input,
-        OnInit,
-        OnDestroy,
-        Provider,
-        Visibility;
+import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 import 'ng_control.dart' show NgControl;
 
-const RADIO_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
-    useExisting: RadioControlValueAccessor, multi: true);
+const RADIO_VALUE_ACCESSOR = const ExistingProvider.forToken(
+  NG_VALUE_ACCESSOR,
+  RadioControlValueAccessor,
+);
 
 /// Internal class used by Angular to uncheck radio buttons with the matching
 /// name.

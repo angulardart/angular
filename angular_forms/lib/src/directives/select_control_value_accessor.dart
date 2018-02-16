@@ -1,22 +1,16 @@
 import 'dart:html';
 
-import 'package:angular/angular.dart'
-    show
-        Directive,
-        Provider,
-        ElementRef,
-        Input,
-        OnDestroy,
-        Host,
-        Optional,
-        Visibility;
+import 'package:angular/angular.dart';
 import 'package:angular/src/facade/lang.dart' show isPrimitive;
 
 import 'control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 
-const SELECT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
-    useExisting: SelectControlValueAccessor, multi: true);
+const SELECT_VALUE_ACCESSOR = const ExistingProvider.forToken(
+  NG_VALUE_ACCESSOR,
+  SelectControlValueAccessor,
+);
+
 String _buildValueString(String id, dynamic value) {
   if (id == null) return '$value';
   if (!isPrimitive(value)) value = 'Object';

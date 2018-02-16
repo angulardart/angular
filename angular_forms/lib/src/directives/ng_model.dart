@@ -1,18 +1,7 @@
 import 'dart:async';
 
-import 'package:angular/angular.dart'
-    show
-        AfterChanges,
-        ComponentState,
-        Directive,
-        Inject,
-        Input,
-        OnInit,
-        Optional,
-        Output,
-        Provider,
-        Self,
-        Visibility;
+import 'package:angular/angular.dart';
+
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
 import 'control_value_accessor.dart'
@@ -20,8 +9,6 @@ import 'control_value_accessor.dart'
 import 'ng_control.dart' show NgControl;
 import 'shared.dart' show setUpControl, selectValueAccessor, composeValidators;
 import 'validators.dart' show ValidatorFn;
-
-const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 
 /// Creates a form [NgControl] instance from a domain model and binds it to a
 /// form control element. The form [NgControl] instance tracks the value,
@@ -59,9 +46,10 @@ const formControlBinding = const Provider(NgControl, useExisting: NgModel);
 /// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngModel
 @Directive(
   selector: '[ngModel]:not([ngControl]):not([ngFormControl])',
-  providers: const [formControlBinding],
+  providers: const [
+    const ExistingProvider(NgControl, NgModel),
+  ],
   exportAs: 'ngForm',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class NgModel extends NgControl

@@ -151,7 +151,7 @@ const ComponentFactory<import1.TestFooComponent> TestFooComponentNgFactory = con
 const List<dynamic> styles$InputFormTest = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InputFormTest0 = [
   new StaticNodeDebugInfo([import11.NgFormModel, import12.ControlContainer], null, <String, dynamic>{}),
-  new StaticNodeDebugInfo([import13.DefaultValueAccessor, const import14.OpaqueToken<import15.ControlValueAccessor<dynamic>>('NgValueAccessor'), import16.NgControlName, import17.NgControl], null, <String, dynamic>{})
+  new StaticNodeDebugInfo([import13.DefaultValueAccessor, const import14.MultiToken<import15.ControlValueAccessor<dynamic>>('NgValueAccessor'), import16.NgControlName, import17.NgControl], null, <String, dynamic>{})
 ];
 
 class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
@@ -194,7 +194,7 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
     if ((identical(token, import13.DefaultValueAccessor) && (1 == nodeIndex))) {
       return _DefaultValueAccessor_1_4;
     }
-    if ((identical(token, const import14.OpaqueToken<import15.ControlValueAccessor<dynamic>>('NgValueAccessor')) && (1 == nodeIndex))) {
+    if ((identical(token, const import14.MultiToken<import15.ControlValueAccessor<dynamic>>('NgValueAccessor')) && (1 == nodeIndex))) {
       return _NgValueAccessor_1_5;
     }
     if (((identical(token, import16.NgControlName) || identical(token, import17.NgControl)) && (1 == nodeIndex))) {

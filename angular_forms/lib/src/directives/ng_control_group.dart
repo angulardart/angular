@@ -1,15 +1,4 @@
-import 'package:angular/angular.dart'
-    show
-        Directive,
-        Inject,
-        Input,
-        OnDestroy,
-        OnInit,
-        Optional,
-        Provider,
-        Self,
-        SkipSelf,
-        Visibility;
+import 'package:angular/angular.dart';
 
 import '../model.dart' show ControlGroup;
 import '../validators.dart' show NG_VALIDATORS;
@@ -17,9 +6,6 @@ import 'control_container.dart' show ControlContainer;
 import 'form_interface.dart' show Form;
 import 'shared.dart' show controlPath, composeValidators;
 import 'validators.dart' show ValidatorFn;
-
-const controlGroupProvider =
-    const Provider(ControlContainer, useExisting: NgControlGroup);
 
 /// Creates and binds a control group to a DOM element.
 ///
@@ -67,9 +53,10 @@ const controlGroupProvider =
 /// form.
 @Directive(
   selector: '[ngControlGroup]',
-  providers: const [controlGroupProvider],
+  providers: const [
+    const ExistingProvider(ControlContainer, NgControlGroup),
+  ],
   exportAs: 'ngForm',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {

@@ -1,12 +1,14 @@
 import 'dart:html';
 
-import 'package:angular/angular.dart' show Directive, Provider, Visibility;
+import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart'
     show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
 
-const NUMBER_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
-    useExisting: NumberValueAccessor, multi: true);
+const NUMBER_VALUE_ACCESSOR = const ExistingProvider.forToken(
+  NG_VALUE_ACCESSOR,
+  NumberValueAccessor,
+);
 
 typedef dynamic _SimpleChangeFn(value);
 
