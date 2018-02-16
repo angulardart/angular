@@ -23,9 +23,9 @@ void main() {
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
-        navigate(router, 'destination'),
+        navigate(router, '/destination'),
         emitsInOrder([
-          null, // Router.onNavigationStart,
+          '/destination', // Router.onNavigationStart,
           NavigationResult.SUCCESS,
         ]),
       );
@@ -37,7 +37,7 @@ void main() {
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
-        navigate(router, 'destination'),
+        navigate(router, '/destination'),
         emits(NavigationResult.BLOCKED_BY_GUARD),
       );
     });
@@ -48,9 +48,9 @@ void main() {
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
-        navigate(router, 'destination'),
+        navigate(router, '/destination'),
         emitsInOrder([
-          null, // Router.onNavigationStart
+          '/destination', // Router.onNavigationStart
           NavigationResult.BLOCKED_BY_GUARD,
         ]),
       );
@@ -61,9 +61,9 @@ void main() {
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
-        navigate(router, 'redirection'),
+        navigate(router, '/redirection'),
         emitsInOrder([
-          null, // Router.onNavigationStart
+          '/redirection', // Router.onNavigationStart
           NavigationResult.SUCCESS,
         ]),
       );

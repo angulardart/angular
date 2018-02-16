@@ -30,7 +30,7 @@ class RouterImpl extends Router {
   final RouterHook _routerHook;
   RouterState _activeState;
   Iterable<ComponentRef> _activeComponentRefs = [];
-  StreamController<Null> _onNavigationStart;
+  StreamController<String> _onNavigationStart;
   RouterOutlet _rootOutlet;
 
   RouterImpl(this._location, @Optional() this._routerHook) {
@@ -59,8 +59,8 @@ class RouterImpl extends Router {
   RouterState get current => _activeState;
 
   @override
-  Stream<Null> get onNavigationStart {
-    _onNavigationStart ??= new StreamController<Null>.broadcast(sync: true);
+  Stream<String> get onNavigationStart {
+    _onNavigationStart ??= new StreamController<String>.broadcast(sync: true);
     return _onNavigationStart.stream;
   }
 
@@ -117,7 +117,7 @@ class RouterImpl extends Router {
       if (!await _canNavigate()) {
         return NavigationResult.BLOCKED_BY_GUARD;
       } else {
-        _onNavigationStart?.add(null);
+        _onNavigationStart?.add(path);
       }
     }
 
