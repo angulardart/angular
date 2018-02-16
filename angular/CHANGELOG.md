@@ -1,5 +1,8 @@
 ### New features
 
+*   The compiler now reports an actionable error when an annotation is used on a
+    private class member.
+
 *   Added `InjectionError` and `NoProviderError`, which _may_ be thrown during
     dependency injection when `InjectionError.enableBetterErrors` is set to
     `true`. This is an experiment, and we may not complete this feature (and it

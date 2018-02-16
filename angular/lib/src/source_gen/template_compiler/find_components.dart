@@ -280,7 +280,7 @@ class ComponentVisitor
   }) {
     for (ElementAnnotation annotation in element.metadata) {
       if (safeMatcherType(Input, log)(annotation)) {
-        if (isSetter) {
+        if (isSetter && element.isPublic) {
           final isField = element is FieldElement;
           // Resolves specified generic type parameters.
           final setter = _directiveClassElement.type
@@ -303,28 +303,28 @@ class ComponentVisitor
             }
           }
         } else {
-          log.severe('@Input can only be used on a setter or non-final '
+          log.severe('@Input can only be used on a public setter or non-final '
               'field, but was found on $element.');
         }
       } else if (safeMatcherType(Output, log)(annotation)) {
-        if (isGetter) {
+        if (isGetter && element.isPublic) {
           _addPropertyBindingTo(_outputs, annotation, element);
         } else {
-          log.severe('@Output can only be used on a getter or a field, but '
-              'was found on $element.');
+          log.severe('@Output can only be used on a public getter or field, '
+              'but was found on $element.');
         }
       } else if (safeMatcherType(HostBinding, log)(annotation)) {
-        if (isGetter) {
+        if (isGetter && element.isPublic) {
           _addHostBinding(annotation, element);
         } else {
-          log.severe('@HostBinding can only be used on a getter or a field, '
-              'but was found on $element.');
+          log.severe('@HostBinding can only be used on a public getter or '
+              'field, but was found on $element.');
         }
       } else if (safeMatcherTypes(const [
         ContentChildren,
         ContentChild,
       ], log)(annotation)) {
-        if (isSetter) {
+        if (isSetter && element.isPublic) {
           _queries.add(_getQuery(
             annotation.computeConstantValue(),
             // Avoid emitting the '=' part of the setter.
@@ -332,15 +332,14 @@ class ComponentVisitor
             _fieldOrPropertyType(element),
           ));
         } else {
-          log.severe(''
-              'ContentChild or ContentChildren annotation '
-              'can only be used on a setter, but was found on $element.');
+          log.severe('@ContentChild or @ContentChildren can only be used on a '
+              'public setter or non-final field, but was found on $element.');
         }
       } else if (safeMatcherTypes(const [
         ViewChildren,
         ViewChild,
       ], log)(annotation)) {
-        if (isSetter) {
+        if (isSetter && element.isPublic) {
           _viewQueries.add(_getQuery(
             annotation.computeConstantValue(),
             // Avoid emitting the '=' part of the setter.
@@ -348,9 +347,8 @@ class ComponentVisitor
             _fieldOrPropertyType(element),
           ));
         } else {
-          log.severe(''
-              'ViewChild or ViewChildren annotation '
-              'can only be used on a setter, but was found on $element.');
+          log.severe('@ViewChild or @ViewChildren can only be used on a public '
+              'setter or non-final field, but was found on $element.');
         }
       }
     }
