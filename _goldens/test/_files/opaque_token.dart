@@ -32,7 +32,6 @@ const listOfDurationToken = const OpaqueToken<List<Duration>>('listOfDuration');
     InjectsTypedTokenFromSomeParent,
     NgIf,
   ],
-  visibility: Visibility.local,
 )
 class ContainsChildComponent {
   bool someValue = true;
@@ -41,7 +40,6 @@ class ContainsChildComponent {
 @Component(
   selector: 'injects-typed-token-from-parent',
   template: '',
-  visibility: Visibility.local,
 )
 class InjectsTypedTokenFromSomeParent {
   final List<Duration> example;

@@ -25,7 +25,9 @@ import 'router_link_directive.dart';
 ///   <a routerLink="/user/bob">Bob</a>
 /// </div>
 /// ```
-@Directive(selector: '[routerLinkActive]', visibility: Visibility.local)
+@Directive(
+  selector: '[routerLinkActive]',
+)
 class RouterLinkActive implements AfterViewInit, OnDestroy {
   final Element _element;
   final Router _router;

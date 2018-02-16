@@ -19,7 +19,6 @@ class Dependent {
   providers: const [
     const Provider(Dependency, useExisting: DependencyWithDependentInView),
   ],
-  visibility: Visibility.local,
 )
 class DependencyWithDependentInView implements Dependency {}
 
@@ -29,7 +28,6 @@ class DependencyWithDependentInView implements Dependency {}
   providers: const [
     const Provider(Dependency, useExisting: DependencyWithContent),
   ],
-  visibility: Visibility.local,
 )
 class DependencyWithContent implements Dependency {}
 

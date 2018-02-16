@@ -11,17 +11,17 @@ enum Visibility {
   ///   providers: const [
   ///     const Provider(PublicDependency, useExisting: PrivateImplementation),
   ///   ],
-  ///   visibility: Visibility.local,
+  ///
   /// )
   /// class PrivateImplementation extends PublicDependency {}
   /// ```
   ///
   /// In this example, `PrivateImplementation` can't be injected directly, but
   /// it will be provided to satisfy a dependency on `PublicDependency`.
+  ///
+  /// This is the default visibility and need not be explicitly set.
   local,
 
   /// Can be injected anywhere in the subtree rooted where this is provided.
-  ///
-  /// This is the default visibility and need not be explicitly set.
   all,
 }

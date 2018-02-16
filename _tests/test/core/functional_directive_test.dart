@@ -108,7 +108,6 @@ void addChildDivDirective(Element element) {
   selector: 'test-invoke-once',
   template: '<div id="test" addChildDiv></div>',
   directives: const [addChildDivDirective],
-  visibility: Visibility.local,
 )
 class TestInvokeOnceComponent {}
 
@@ -116,7 +115,6 @@ class TestInvokeOnceComponent {}
   selector: 'test-invoke-each-build',
   template: '<div id="test" *ngIf="visible" addChildDiv></div>',
   directives: const [addChildDivDirective, NgIf],
-  visibility: Visibility.local,
 )
 class TestInvokeEachBuildComponent {
   bool visible = true;
@@ -141,7 +139,6 @@ void addAttributesDirective(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes></div>',
   directives: const [addAttributesDirective],
-  visibility: Visibility.local,
 )
 class TestDependencyInjectionComponent {}
 
@@ -157,7 +154,6 @@ void addAttributesForTokenDirective(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes></div>',
   directives: const [addAttributesForTokenDirective],
-  visibility: Visibility.local,
 )
 class TestDependencyInjectionViaTokenComponent {}
 
@@ -170,14 +166,12 @@ void embedTextDirective(Element element, @Attribute('embedText') String text) {
   selector: 'test-attribute-injection',
   template: '<div embedText="hello world"></div>',
   directives: const [embedTextDirective],
-  visibility: Visibility.local,
 )
 class TestAttributeInjectionComponent {}
 
 @Component(
   selector: 'content-host',
   template: '<ng-content></ng-content>',
-  visibility: Visibility.local,
 )
 class ContentHostComponent {}
 
@@ -185,7 +179,6 @@ class ContentHostComponent {}
   selector: 'test-content-projection',
   template: '<content-host><div id="test" addAttributes></div></content-host>',
   directives: const [addAttributesDirective, ContentHostComponent],
-  visibility: Visibility.local,
 )
 class TestContentProjectionComponent {}
 
@@ -207,7 +200,6 @@ void ifDirective(
     <template if="false"><div id="second"></div></template>
   ''',
   directives: const [ifDirective],
-  visibility: Visibility.local,
 )
 class TestFunctionalStructuralDirectiveComponent {}
 
@@ -233,7 +225,6 @@ void recordTextDirective(HtmlElement element, TextRecorder textRecorder) {
     </div>
   ''',
   directives: const [recordTextDirective],
-  visibility: Visibility.local,
 )
 class TestInvocationAfterSubtreeCreationComponent {}
 
@@ -246,7 +237,6 @@ void serviceProviderDirective() {}
 @Component(
   selector: 'service-consumer',
   template: '',
-  visibility: Visibility.local,
 )
 class ServiceConsumerComponent {
   final Service service;
@@ -261,6 +251,5 @@ class ServiceConsumerComponent {
     </div>
   ''',
   directives: const [serviceProviderDirective, ServiceConsumerComponent],
-  visibility: Visibility.local,
 )
 class TestProvidesServiceComponent {}

@@ -81,11 +81,12 @@ class InjectsVisibilityLocalComponent {
   selector: 'should-fail-to-inject-parent-component',
   template: '<injects-visibility-local></injects-visibility-local>',
   directives: const [InjectsVisibilityLocalComponent],
-  visibility: Visibility.local,
 )
 class ShouldFailToInjectParentComponent {}
 
-@Directive(selector: '[visibility-none]', visibility: Visibility.local)
+@Directive(
+  selector: '[visibility-none]',
+)
 class VisibilityNoneDirective {}
 
 @Component(
@@ -182,7 +183,6 @@ class MyComponentWithServiceTest {}
     const Provider(SomeService, useExisting: MyChildComponentProvidesService)
   ],
   template: '<div></div>',
-  visibility: Visibility.local,
 )
 class MyChildComponentProvidesService implements SomeService {
   @override
@@ -211,7 +211,6 @@ abstract class Dependency {
   providers: const [
     const Provider(Dependency, useExisting: ShouldInjectAliasedLocal),
   ],
-  visibility: Visibility.local,
 )
 class ShouldInjectAliasedLocal extends Dependency {
   final String text = 'Hello';

@@ -1,6 +1,6 @@
 import 'dart:html';
 
-import 'package:angular/core.dart' show DoCheck, Directive, Input, Visibility;
+import 'package:angular/core.dart' show DoCheck, Directive, Input;
 
 import '../../core/change_detection/differs/default_keyvalue_differ.dart'
     show DefaultKeyValueDiffer, KeyValueChangeRecord;
@@ -59,7 +59,6 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngStyle
 @Directive(
   selector: '[ngStyle]',
-  visibility: Visibility.local,
 )
 class NgStyle implements DoCheck {
   final Element _ngElement;

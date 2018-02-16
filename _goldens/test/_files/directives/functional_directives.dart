@@ -17,6 +17,5 @@ void generateTextDirective(HtmlElement element, TextService textService) {
   template: '<div generateText><div></div></div>',
   directives: const [generateTextDirective],
   providers: const [TextService],
-  visibility: Visibility.local,
 )
 class AppComponent {}

@@ -1,4 +1,4 @@
-import 'package:angular/core.dart' show Directive, Input, Visibility;
+import 'package:angular/core.dart' show Directive, Input;
 import 'package:angular/src/core/linker.dart'
     show ViewContainerRef, TemplateRef;
 import 'package:angular/src/core/linker/app_view_utils.dart';
@@ -36,7 +36,6 @@ import 'package:angular/src/facade/lang.dart';
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngIf
 @Directive(
   selector: '[ngIf]',
-  visibility: Visibility.local,
 )
 class NgIf {
   final TemplateRef _templateRef;
