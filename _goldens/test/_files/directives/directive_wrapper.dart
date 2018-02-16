@@ -100,9 +100,9 @@ class InputFormTest {
 }
 
 @Directive(
-    host: const {'[attr.data-msg]': 'msg'},
-    selector: '[fastDirective]',
-    visibility: Visibility.local)
+  host: const {'[attr.data-msg]': 'msg'},
+  selector: '[fastDirective]',
+)
 class FastDirective extends ComponentState {
   Element element;
   String msg;
@@ -119,11 +119,11 @@ class FastDirective extends ComponentState {
 }
 
 @Component(
-    selector: 'directive-container',
-    template: r'<div class="target1" fastDirective [name]="finalName"></div>'
-        '<div class="target2" fastDirective [name]="nonFinal"></div>',
-    directives: const [FastDirective],
-    visibility: Visibility.local)
+  selector: 'directive-container',
+  template: r'<div class="target1" fastDirective [name]="finalName"></div>'
+      '<div class="target2" fastDirective [name]="nonFinal"></div>',
+  directives: const [FastDirective],
+)
 class DirectiveContainerTest {
   final String finalName = "xyz";
   String nonFinal = "abc";

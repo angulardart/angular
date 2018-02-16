@@ -1,4 +1,4 @@
-import 'package:angular/core.dart' show Directive, DoCheck, Input, Visibility;
+import 'package:angular/core.dart' show Directive, DoCheck, Input;
 import 'package:angular/src/core/linker.dart'
     show EmbeddedViewRef, TemplateRef, ViewContainerRef;
 
@@ -40,7 +40,9 @@ import 'package:angular/src/core/linker.dart'
 ///   };
 /// }
 /// ```
-@Directive(selector: '[ngTemplateOutlet]', visibility: Visibility.local)
+@Directive(
+  selector: '[ngTemplateOutlet]',
+)
 class NgTemplateOutlet implements DoCheck {
   final ViewContainerRef _viewContainerRef;
 

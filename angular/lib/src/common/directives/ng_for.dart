@@ -1,4 +1,4 @@
-import 'package:angular/core.dart' show DoCheck, Directive, Input, Visibility;
+import 'package:angular/core.dart' show DoCheck, Directive, Input;
 
 import '../../core/change_detection/differs/default_iterable_differ.dart'
     show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
@@ -93,7 +93,6 @@ import '../../core/linker.dart'
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngFor
 @Directive(
   selector: '[ngFor][ngForOf]',
-  visibility: Visibility.local,
 )
 class NgFor implements DoCheck {
   final ViewContainerRef _viewContainer;
