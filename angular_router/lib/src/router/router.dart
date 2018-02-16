@@ -35,14 +35,17 @@ abstract class Router {
   /// state and is updated _after_ all subscribers are notified.
   RouterState get current;
 
-  /// Notifies subscribers when a navigation request starts.
+  /// Emits the requested path when navigation starts.
   ///
-  /// This occurs after all active [CanNavigate] implementions permit
+  /// This occurs after all active [CanNavigate] implementations permit
   /// navigation, but before any other router lifecycle method are invoked. Note
   /// that this does not necessary indicate the start of a successful
   /// navigation, as it could be blocked by another lifecycle implementation or
   /// be an invalid request.
-  Stream<Null> get onNavigationStart;
+  ///
+  /// Note that for redirected routes, the requested path, not the path it
+  /// redirects to, is emitted.
+  Stream<String> get onNavigationStart;
 
   Stream<RouterState> get stream;
 
