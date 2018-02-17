@@ -8,6 +8,9 @@ import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
 
 import 'unparser.dart' show Unparser;
 
+throwsWithMatch(RegExp regExp) =>
+    throwsA(predicate((e) => regExp.hasMatch(e.toString())));
+
 void main() {
   Parser createParser() {
     return new Parser(new Lexer());
@@ -178,7 +181,7 @@ void main() {
         test("should throw on incorrect ternary operator syntax", () {
           expectActionError(
               "true?1",
-              throwsWith(new RegExp(
+              throwsWithMatch(new RegExp(
                   "Parser Error: Conditional expression true\\?1 requires all 3 expressions")));
         });
       });
@@ -190,7 +193,7 @@ void main() {
         test("should throw on missing null case", () {
           expectActionError(
               "null ??",
-              throwsWith(new RegExp(
+              throwsWithMatch(new RegExp(
                   "Parser Error: Unexpected end of expression: null \\?\\?")));
         });
       });
@@ -231,13 +234,13 @@ void main() {
       test("should throw a reasonable error for unconsumed tokens", () {
         expectActionError(
             ")",
-            throwsWith(
+            throwsWithMatch(
                 new RegExp("Unexpected token \\) at column 1 in \\[\\)\\]")));
       });
       test("should throw on missing expected token", () {
         expectActionError(
             "a(b",
-            throwsWith(new RegExp(
+            throwsWithMatch(new RegExp(
                 "Missing expected \\) at the end of the expression \\[a\\(b\\]")));
       });
       test("should not crash when encountering an invalid event", () {

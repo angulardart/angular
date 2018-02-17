@@ -4,8 +4,8 @@ import 'dart:async';
 
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:_tests/test_util.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/common/pipes/invalid_pipe_argument_exception.dart';
 
 void main() {
   group('Stream', () {
@@ -167,7 +167,7 @@ void main() {
     test('should throw when given an invalid object', () {
       var pipe = new AsyncPipe(null);
       expect(() => pipe.transform('some bogus object'),
-          throwsAnInvalidPipeArgumentException);
+          throwsA(new isInstanceOf<InvalidPipeArgumentException>()));
     });
   });
 }
