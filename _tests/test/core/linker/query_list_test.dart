@@ -1,6 +1,7 @@
 @TestOn('browser')
+import 'dart:async';
+
 import 'package:test/test.dart';
-import 'package:_tests/fake_async.dart';
 import 'package:angular/src/core/linker/query_list.dart' show QueryList;
 
 // ignore_for_file: deprecated_member_use
@@ -49,28 +50,28 @@ void main() {
       expect(queryList.last, "three");
     });
     group("simple observable interface", () {
-      test("should fire callbacks on change", fakeAsync(() {
+      test("should fire callbacks on change", () async {
         var fires = 0;
         queryList.changes.listen((_) {
           fires += 1;
         });
         queryList.notifyOnChanges();
-        tick();
+        await new Future.microtask(() => null);
         expect(fires, 1);
         queryList.notifyOnChanges();
-        tick();
+        await new Future.microtask(() => null);
         expect(fires, 2);
-      }));
-      test("should provides query list as an argument", fakeAsync(() {
+      });
+      test("should provides query list as an argument", () async {
         var recorded;
         queryList.changes.listen((dynamic v) {
           recorded = v;
         });
         queryList.reset(["one"]);
         queryList.notifyOnChanges();
-        tick();
+        await new Future.microtask(() => null);
         expect(recorded, queryList);
-      }));
+      });
     });
   });
 }
