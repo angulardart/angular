@@ -1,5 +1,4 @@
 @TestOn('browser')
-
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
@@ -51,8 +50,6 @@ void main() {
   selector: 'accessor-test',
   template: '<input type="text" integer [(ngModel)]="value">',
   directives: const [IntValueAccessor, NgModel],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class AccessorTestComponent {
   @ViewChild(NgModel)
@@ -76,8 +73,6 @@ typedef dynamic ChangeFunctionSimple(value);
       multi: true,
     ),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class IntValueAccessor implements ControlValueAccessor, Validator {
   HtmlElement _elementRef;
