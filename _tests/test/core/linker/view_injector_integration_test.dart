@@ -601,7 +601,7 @@ class ImpurePipe implements PipeTransform {
 }
 
 @Pipe('pipeNeedsChangeDetectorRef')
-class PipeNeedsChangeDetectorRef {
+class PipeNeedsChangeDetectorRef implements PipeTransform {
   ChangeDetectorRef changeDetectorRef;
   PipeNeedsChangeDetectorRef(this.changeDetectorRef);
   dynamic transform(dynamic value) {
