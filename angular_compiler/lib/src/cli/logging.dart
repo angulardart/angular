@@ -4,6 +4,8 @@ import 'package:build/build.dart' as build;
 import 'package:meta/meta.dart';
 import 'package:stack_trace/stack_trace.dart';
 
+import 'messages.dart';
+
 /// Executes the provided [fn], capturing [BuildError]s and forwarding to logs.
 ///
 /// * [showInternalTraces]: If `true`, [BuildError.stackTrace] is printed.
@@ -29,7 +31,8 @@ Future<T> runBuildZoned<T>(
         );
       } else {
         build.log.severe(
-          'Unhandled exception in compiler. Please report a bug!',
+          'Unhandled exception in the AngularDart compiler!\n\n'
+              'Please report a bug: ${messages.urlFileBugs}',
           e,
           s,
         );
