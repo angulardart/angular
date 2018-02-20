@@ -12,3 +12,4 @@ import 'package:meta/meta.dart';
 
 export 'src/cli/builder.dart';
 export 'src/cli/logging.dart';
+export 'src/cli/messages.dart' show messages;

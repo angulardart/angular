@@ -1,6 +1,6 @@
 ### New features
 
-*   Added an internal `cli.dart` library.
+*   Added an internal `cli.dart` library. See `lib/cli.dart` for details.
 *   Added `SplitDartEmitter` for internal use.
 *   Added `$QueryList` as a `TypeChecker`.
 
