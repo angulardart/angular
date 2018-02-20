@@ -1,4 +1,15 @@
+### New features
+
 -   Added `markAsUntouched` method to `AbstractControl`.
+
+### Deprecations
+
+-   `FormBuilder` instance methods `group`, `control`, and `array` are now
+    deprecated. For `FormBuilder.control`, just call `new Control(value,
+    validator)` directly. For `FormBuilder.group` and `FormBuilder.array`, use
+    the static methods `FormBuilder.controlGroup` and `FormBuilder.controlArray`
+    respectively. In a future release, `FormBuilder` will not not be
+    `Injectable`.
 
 ## 1.0.1-alpha+5
 
