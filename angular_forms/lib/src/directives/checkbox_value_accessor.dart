@@ -5,7 +5,10 @@ import 'package:angular/angular.dart';
 import 'control_value_accessor.dart'
     show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
 
-const CHECKBOX_VALUE_ACCESSOR = const ExistingProvider.forToken(
+// TODO: Remove <ControlValueAccessor> after #908 is resolved:
+// https://github.com/dart-lang/angular/issues/908
+const CHECKBOX_VALUE_ACCESSOR =
+    const ExistingProvider<ControlValueAccessor>.forToken(
   NG_VALUE_ACCESSOR,
   CheckboxControlValueAccessor,
 );

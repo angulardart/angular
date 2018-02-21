@@ -6,7 +6,10 @@ import 'package:angular/src/facade/lang.dart' show isPrimitive;
 import 'control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 
-const SELECT_VALUE_ACCESSOR = const ExistingProvider.forToken(
+// TODO: Remove <ControlValueAccessor> after #908 is resolved:
+// https://github.com/dart-lang/angular/issues/908
+const SELECT_VALUE_ACCESSOR =
+    const ExistingProvider<ControlValueAccessor>.forToken(
   NG_VALUE_ACCESSOR,
   SelectControlValueAccessor,
 );
