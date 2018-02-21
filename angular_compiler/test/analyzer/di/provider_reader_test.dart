@@ -198,7 +198,16 @@ void main() {
       expect(
         reader.parseProvider(providers[6]),
         new UseClassProviderElement(
-          new OpaqueTokenElement('exampleToken', isMultiToken: false),
+          new OpaqueTokenElement(
+            'exampleToken',
+            isMultiToken: false,
+            classUrl: new TypeLink(
+              'OpaqueToken',
+              ''
+                  'package:angular'
+                  '/src/core/di/opaque_token.dart',
+            ),
+          ),
           null,
           linkTypeOf($Example.type),
           dependencies: new DependencyInvocation(
