@@ -3,6 +3,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../link.dart';
 import '../types.dart';
@@ -34,14 +35,7 @@ class TokenReader {
       return new TypeTokenElement(linkTypeOf(constant.typeValue));
     }
     if (constant.instanceOf($OpaqueToken)) {
-      final value = constant.objectValue;
-      return new OpaqueTokenElement(
-        constant.read('_desc').stringValue,
-        isMultiToken: constant.instanceOf($MultiToken),
-        typeUrl: value.type.typeArguments.isNotEmpty
-            ? linkTypeOf(value.type.typeArguments.first)
-            : null,
-      );
+      return _parseOpaqueToken(constant);
     }
     if (allowLiteralTokens) {
       if (constant.isInt) {
@@ -74,6 +68,75 @@ class TokenReader {
         'object',
         'Could not parse into a token for dependency injection. Only a `Type` '
         'or an `OpaqueToken` is supported, but ${object.type} was used.');
+  }
+
+  /// Returns [object] parsed into an [OpaqueTokenElement].
+  OpaqueTokenElement _parseOpaqueToken(ConstantReader constant) {
+    final value = constant.objectValue;
+    return new OpaqueTokenElement(
+      constant.read('_desc').stringValue,
+      isMultiToken: constant.instanceOf($MultiToken),
+      classUrl: linkToOpaqueToken(constant.objectValue.type),
+      typeUrl: value.type.typeArguments.isNotEmpty
+          ? linkTypeOf(value.type.typeArguments.first)
+          : null,
+    );
+  }
+
+  /// Returns [type] as a [TypeLink] to the corresponding class definition.
+  ///
+  /// Runs a number of validations to ensure that the class is defined properly
+  /// and in a way that the AngularDart compilers are able to use for code
+  /// generation.
+  TypeLink linkToOpaqueToken(DartType type) {
+    if (!$OpaqueToken.isAssignableFromType(type)) {
+      BuildError.throwForElement(type.element, 'Must implement OpaqueToken.');
+    }
+    if ($OpaqueToken.isExactlyType(type) || $MultiToken.isExactlyType(type)) {
+      return linkTypeOf(type);
+    }
+    final clazz = type.element as ClassElement;
+    if (clazz.interfaces.isNotEmpty || clazz.mixins.isNotEmpty) {
+      BuildError.throwForElement(
+        type.element,
+        'A sub-type of OpaqueToken cannot implement or mixin any interfaces.',
+      );
+    }
+    if (clazz.isPrivate || clazz.isAbstract) {
+      BuildError.throwForElement(type.element,
+          'Must not be abstract or a private (i.e. prefixed with `_`) class.');
+    }
+    if (clazz.constructors.length != 1 ||
+        clazz.unnamedConstructor == null ||
+        !clazz.unnamedConstructor.isConst ||
+        clazz.unnamedConstructor.parameters.isNotEmpty ||
+        clazz.typeParameters.isNotEmpty) {
+      BuildError.throwForElement(
+        type.element,
+        ''
+            'A sub-type of OpaqueToken must have a single unnamed const '
+            'constructor with no parameters or type parameters. For example, '
+            'consider writing instead:\n'
+            '  class ${clazz.name} extends ${clazz.supertype.name} {\n'
+            '    const ${clazz.name}();\n'
+            '  }\n\n'
+            'We may loosten these restrictions in the future. See: '
+            'https://github.com/dart-lang/angular/issues/899',
+      );
+    }
+    if (!$OpaqueToken.isExactlyType(clazz.supertype) &&
+        !$MultiToken.isExactlyType(clazz.supertype)) {
+      BuildError.throwForElement(
+        type.element,
+        ''
+            'A sub-type of OpaqueToken must directly extend OpaqueToken or '
+            'MultiToken, and cannot extend another class that in turn extends '
+            'OpaqueToken or MultiToken.\n\n'
+            'We may loosten these restrictions in the future. See: '
+            'https://github.com/dart-lang/angular/issues/899',
+      );
+    }
+    return linkTypeOf(type);
   }
 
   /// Returns [element] parsed into a [TokenElement].
@@ -151,12 +214,19 @@ class OpaqueTokenElement implements TokenElement {
   /// Whether this represents a `MultiToken` class.
   final bool isMultiToken;
 
-  /// What the type of the token is, or `null` if it is `dynamic`.
+  /// What the type of the class of the token is.
+  ///
+  /// This could be a built-in, like `OpaqueToken` or `MultiToken`, _or_ a user
+  /// created class that _extends_ either built-in token type.
+  final TypeLink classUrl;
+
+  /// What the type argument of the token is, or `null` if it is `dynamic`.
   final TypeLink typeUrl;
 
   @visibleForTesting
   const OpaqueTokenElement(
     this.identifier, {
+    @required this.classUrl,
     this.typeUrl,
     @required this.isMultiToken,
   });
@@ -165,6 +235,7 @@ class OpaqueTokenElement implements TokenElement {
   bool operator ==(Object o) {
     if (o is OpaqueTokenElement) {
       return identifier == o.identifier &&
+              classUrl == o.classUrl &&
               isMultiToken == o.isMultiToken &&
               typeUrl == o.typeUrl ||
           _bothTypesDynamic(typeUrl, o.typeUrl);
@@ -178,12 +249,15 @@ class OpaqueTokenElement implements TokenElement {
 
   @override
   int get hashCode {
-    return identifier.hashCode ^ isMultiToken.hashCode ^ typeUrl.hashCode;
+    return identifier.hashCode ^
+        classUrl.hashCode ^
+        isMultiToken.hashCode ^
+        typeUrl.hashCode;
   }
 
   @override
   String toString() {
-    return '${isMultiToken ? 'MultiToken' : 'OpaqueToken'} {$identifier:${typeUrl ?? _dynamic}';
+    return '${classUrl.symbol} {$identifier:${typeUrl ?? _dynamic}';
   }
 }
 
