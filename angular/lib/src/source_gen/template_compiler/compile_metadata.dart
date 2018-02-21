@@ -38,7 +38,10 @@ class CompileTypeMetadataVisitor
       _logger.severe('Provided classes must be public: $element');
       return null;
     }
-    return _getCompileTypeMetadata(element);
+    return _getCompileTypeMetadata(
+      element,
+      enforceClassCanBeCreated: true,
+    );
   }
 
   @override
@@ -52,24 +55,23 @@ class CompileTypeMetadataVisitor
   ///
   /// Otherwise, use the first encountered.
   ConstructorElement unnamedConstructor(ClassElement element) {
-    var constructors = element.constructors;
+    ConstructorElement constructor;
+    final constructors = element.constructors;
     if (constructors.isEmpty) {
-      _logger.severe('Invalid @Injectable() annotation: '
-          'No constructors found for class ${element.name}.');
+      _logger.severe('No constructors found for class ${element.name}.');
       return null;
     }
 
-    var constructor = constructors.firstWhere(
+    constructor = constructors.firstWhere(
         (constructor) => strings.isEmpty(constructor.name),
         orElse: () => constructors.first);
 
     if (constructor.isPrivate) {
-      _logger.severe('Invalid @Injectable() annotation: '
-          'Cannot use private constructor on class ${element.name}');
+      _logger.severe('Cannot use private constructor on class ${element.name}');
       return null;
     }
     if (element.isAbstract && !constructor.isFactory) {
-      _logger.warning('Invalid @Injectable() annotation: '
+      _logger.warning(
           'Found a constructor for abstract class ${element.name} but it is '
           'not a "factory", and cannot be invoked');
       return null;
@@ -135,7 +137,10 @@ class CompileTypeMetadataVisitor
     if (!dart_objects.isNull(maybeUseClass)) {
       var type = maybeUseClass.toTypeValue();
       if (type is InterfaceType) {
-        return _getCompileTypeMetadata(type.element);
+        return _getCompileTypeMetadata(
+          type.element,
+          enforceClassCanBeCreated: true,
+        );
       } else {
         _logger.severe(
             'Provider.useClass can only be used with a class, but found '
@@ -144,7 +149,10 @@ class CompileTypeMetadataVisitor
     } else if (_hasNoUseValue(provider) && _notAnythingElse(provider)) {
       final typeValue = token.toTypeValue();
       if (typeValue != null && !typeValue.isDartCoreNull) {
-        return _getCompileTypeMetadata(typeValue.element);
+        return _getCompileTypeMetadata(
+          typeValue.element,
+          enforceClassCanBeCreated: true,
+        );
       }
     }
     return null;
@@ -179,12 +187,22 @@ class CompileTypeMetadataVisitor
     return null;
   }
 
-  CompileTypeMetadata _getCompileTypeMetadata(ClassElement element) =>
+  /// If [enforceClassCanBeCreated] is `true` will emit a warning (later an
+  /// error) that there is invalid configuration. We don't need this for every
+  /// piece of metadata.
+  ///
+  /// See https://github.com/dart-lang/angular/issues/906 for details.
+  CompileTypeMetadata _getCompileTypeMetadata(
+    ClassElement element, {
+    bool enforceClassCanBeCreated: false,
+  }) =>
       new CompileTypeMetadata(
         moduleUrl: moduleUrl(element),
         name: element.name,
         diDeps: _getCompileDiDependencyMetadata(
-          unnamedConstructor(element)?.parameters ?? [],
+          enforceClassCanBeCreated
+              ? unnamedConstructor(element)?.parameters ?? []
+              : [],
           element,
         ),
       );
