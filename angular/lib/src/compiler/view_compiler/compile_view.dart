@@ -6,7 +6,7 @@ import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/source_gen/common/names.dart'
     show toTemplateExtension;
-import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../compile_metadata.dart'
     show
