@@ -11,6 +11,7 @@
 ### Breaking changes
 
 *   Added `canRead` to `NgAssetReader`.
+*   Moved `CompilerFlags` and `Profile` to `cli.dart`.
 
 ## 0.4.0-alpha+5
 

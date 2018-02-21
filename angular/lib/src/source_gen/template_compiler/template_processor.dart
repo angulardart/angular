@@ -4,6 +4,7 @@ import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/source_gen/common/logging.dart';
 import 'package:angular/src/source_gen/common/ng_compiler.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 

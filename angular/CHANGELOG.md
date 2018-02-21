@@ -126,13 +126,11 @@ class Comp2 {
     `DependencyImpl` to inject `Dependency`, not just those constructed in the
     same view.
 
-<!-- NOT YET ENABLED
-* Services that were _not_ marked `@Injectable()` are _no longer skipped_ when
-  provided in `providers: const [ ... ]` for a `@Directive` or `@Component`.
-  This choice made sense when `@Injectable()` was required, but this is no
-  longer the case. Additionally, the warning that was printed to console has
-  been removed.
--->
+*   Services that were _not_ marked `@Injectable()` are _no longer skipped_ when
+    provided in `providers: const [ ... ]` for a `@Directive` or `@Component`.
+    This choice made sense when `@Injectable()` was required, but this is no
+    longer the case. Additionally, the warning that was printed to console has
+    been removed.
 
 *   It is no longer a build warning to have an injectable service with multiple
     constructors. This was originally meant to keep injection from being too
@@ -179,6 +177,10 @@ class Comp2 {
       Has a "template" property set to a string that is a file.
       This is a common mistake, did you mean "templateUrl" instead?
     ```
+
+*  If a private class is annotated with `@Injectable()` the compiler fails. In
+   practice this caused a compilation error later in DDC/Dart2JS, but now the
+   AngularDart compiler will not emit invalid code.
 
 ## 5.0.0-alpha+5
 

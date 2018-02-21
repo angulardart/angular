@@ -1,5 +1,5 @@
 import 'package:angular/builder.dart' as angular;
-import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 
 BuilderOptions _withoutExtensions(BuilderOptions options) =>
