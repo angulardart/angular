@@ -173,7 +173,16 @@ void main() {
     test('should support a MultiToken', () {
       // provide(someToken, useValue: 1, multi: true)
       // provide(someToken, useValue: 2, multi: true)
-      final someToken = new OpaqueTokenElement('someToken', isMultiToken: true);
+      final someToken = new OpaqueTokenElement(
+        'someToken',
+        isMultiToken: true,
+        classUrl: new TypeLink(
+          'MultiToken',
+          ''
+              'package:angular'
+              '/src/core/di/opaque_token.dart',
+        ),
+      );
       emitter.visitProvideValue(
         0,
         someToken,
