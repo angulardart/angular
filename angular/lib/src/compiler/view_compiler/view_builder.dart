@@ -130,7 +130,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
     NodeReference elementRef = isHostRootView
         ? new NodeReference.appViewRoot()
-        : new NodeReference(parent, nodeIndex, ast);
+        : new NodeReference(parent, nodeIndex);
 
     var directives = <CompileDirectiveMetadata>[];
     for (var dir in ast.directives) directives.add(dir.directive);

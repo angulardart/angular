@@ -68,21 +68,18 @@ class NodeReference {
   final CompileElement parent;
   final int nodeIndex;
   final String _name;
-  final TemplateAst _ast;
 
   NodeReferenceVisibility _visibility = NodeReferenceVisibility.classPublic;
 
-  NodeReference(this.parent, this.nodeIndex, this._ast)
-      : _name = '_el_$nodeIndex';
-  NodeReference.textNode(this.parent, this.nodeIndex, this._ast)
+  NodeReference(this.parent, this.nodeIndex) : _name = '_el_$nodeIndex';
+  NodeReference.textNode(this.parent, this.nodeIndex)
       : _name = '_text_$nodeIndex';
-  NodeReference.anchor(this.parent, this.nodeIndex, this._ast)
+  NodeReference.anchor(this.parent, this.nodeIndex)
       : _name = '_anchor_$nodeIndex',
         _visibility = NodeReferenceVisibility.build;
   NodeReference.appViewRoot()
       : parent = null,
         nodeIndex = -1,
-        _ast = null,
         _name = appViewRootElementName;
 
   void lockVisibility(NodeReferenceVisibility visibility) {
@@ -95,7 +92,6 @@ class NodeReference {
   }
 
   o.Expression toReadExpr() {
-    assert(_ast != null);
     return _visibility == NodeReferenceVisibility.classPublic
         ? new o.ReadClassMemberExpr(_name)
         : o.variable(_name);
@@ -411,7 +407,7 @@ class CompileView implements AppViewBuilder {
   @override
   NodeReference createTextNode(
       CompileElement parent, int nodeIndex, String text, TemplateAst ast) {
-    var renderNode = new NodeReference.textNode(parent, nodeIndex, ast);
+    var renderNode = new NodeReference.textNode(parent, nodeIndex);
     renderNode.lockVisibility(NodeReferenceVisibility.build);
     _createMethod.addStmt(new o.DeclareVarStmt(
         renderNode._name,
@@ -435,8 +431,7 @@ class CompileView implements AppViewBuilder {
       CompileElement parent, int nodeIndex, TemplateAst ast) {
     // If Text field is bound, we need access to the renderNode beyond
     // build method and write reference to class member.
-    NodeReference renderNode =
-        new NodeReference.textNode(parent, nodeIndex, ast);
+    NodeReference renderNode = new NodeReference.textNode(parent, nodeIndex);
     nameResolver.addField(new o.ClassField(renderNode._name,
         outputType: o.importType(Identifiers.HTML_TEXT_NODE),
         modifiers: const [o.StmtModifier.Private]));
@@ -652,7 +647,7 @@ class CompileView implements AppViewBuilder {
 
   NodeReference createViewContainerAnchor(
       CompileElement parent, int nodeIndex, TemplateAst ast) {
-    NodeReference renderNode = new NodeReference.anchor(parent, nodeIndex, ast);
+    NodeReference renderNode = new NodeReference.anchor(parent, nodeIndex);
     var assignCloneAnchorNodeExpr =
         (renderNode.toReadExpr() as o.ReadVarExpr).set(_cloneAnchorNodeExpr);
     _createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
