@@ -11,6 +11,13 @@ dependencies:
   angular: '^5.0.0-alpha+5'
   meta: ^1.1.2
 
+dev_dependencies:
+  angular_test: ^2.0.0-alpha+3
+  build_runner: ^0.7.9
+  build_test: ^0.10.0
+  build_web_compilers: ^0.3.0
+  test: ^0.12.30+1
+
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
   angular:
