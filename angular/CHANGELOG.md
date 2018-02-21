@@ -182,6 +182,10 @@ class Comp2 {
    practice this caused a compilation error later in DDC/Dart2JS, but now the
    AngularDart compiler will not emit invalid code.
 
+*  Removed spurious/incorrect warnings about classes that are used as
+   interfaces needing `@Injectable` (or needing to be non-abstract), which
+   are wrong and confusing.
+
 ## 5.0.0-alpha+5
 
 ### New features
