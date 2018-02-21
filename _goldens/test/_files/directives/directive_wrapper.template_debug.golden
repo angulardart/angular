@@ -160,7 +160,7 @@ class ViewInputFormTest0 extends DebugAppView<import1.InputFormTest> {
   dynamic _ControlContainer_0_5;
   import3.InputElement _el_1;
   import13.DefaultValueAccessor _DefaultValueAccessor_1_4;
-  List<dynamic> _NgValueAccessor_1_5;
+  List<import15.ControlValueAccessor> _NgValueAccessor_1_5;
   import16.NgControlName _NgControlName_1_6;
   var _expr_0;
   static RenderComponentType _renderType;
