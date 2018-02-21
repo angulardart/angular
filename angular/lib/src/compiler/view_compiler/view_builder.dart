@@ -2,8 +2,8 @@ import 'package:angular/src/compiler/output/output_ast.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
+import 'package:angular_compiler/cli.dart';
 
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompileTypeMetadata;
