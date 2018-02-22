@@ -2,6 +2,12 @@
 
 -   Added `markAsUntouched` method to `AbstractControl`.
 
+### Breaking Changes
+
+-   Changed type of `AbstractControl.statusChanges` from `Stream<dynamic>` to
+    `Stream<String>`. This now matches the type for `AbstractControl.status`,
+    which as always been a `String`.
+
 ### Deprecations
 
 -   `FormBuilder` instance methods `group`, `control`, and `array` are now
