@@ -208,6 +208,12 @@ void main() {
     final InjectsBaseUrl service = fixture.assertOnlyInstance;
     expect(service.url, 'https://site.com/api/');
   });
+
+  test('should support a custom OpaqueToken', () async {
+    final fixture = await new NgTestBed<InjectsXsrfToken>().create();
+    final InjectsXsrfToken service = fixture.assertOnlyInstance;
+    expect(service.token, 'ABC123');
+  });
 }
 
 @Component(
@@ -632,4 +638,22 @@ class InjectsBaseUrl {
 
   // Identical to writing @Inject(baseUrl).
   InjectsBaseUrl(@baseUrl this.url);
+}
+
+class XsrfToken extends OpaqueToken<String> {
+  const XsrfToken();
+}
+
+@Injectable()
+@Component(
+  selector: 'injects-xsrf-token',
+  template: '',
+  providers: const [
+    const Provider(const XsrfToken(), useValue: 'ABC123'),
+  ],
+)
+class InjectsXsrfToken {
+  final String token;
+
+  InjectsXsrfToken(@XsrfToken() this.token);
 }

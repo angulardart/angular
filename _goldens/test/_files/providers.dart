@@ -40,6 +40,7 @@ import 'package:angular/angular.dart';
       'Matan': const MyUseValue('Matan')
     }),
     const Provider(const OpaqueToken('useEnums'), useValue: MyEnum.first),
+    const Provider(const XsrfToken(), useValue: 'ABC123'),
   ],
   viewProviders: const [
     const Provider(MyUseValue, useValue: const MyUseValue('Matan'))
@@ -78,3 +79,7 @@ const useValueList = const OpaqueToken('useValueList');
 const useValueMap = const OpaqueToken('useValueMap');
 
 enum MyEnum { first, second }
+
+class XsrfToken extends OpaqueToken<String> {
+  const XsrfToken();
+}
