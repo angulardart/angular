@@ -68,3 +68,12 @@ const testToken = const OpaqueToken('test');
 bool injectableFactory(html.Window value) => value != null;
 
 createLinkedHashMap(string) => {string: 'Hello World'};
+
+class XsrfToken extends OpaqueToken<String> {
+  const XsrfToken();
+}
+
+@Injectable()
+class InjectsXsrfToken {
+  InjectsXsrfToken(@XsrfToken() String token);
+}
