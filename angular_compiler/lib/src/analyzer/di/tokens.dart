@@ -257,7 +257,7 @@ class OpaqueTokenElement implements TokenElement {
 
   @override
   String toString() {
-    return '${classUrl.symbol} {$identifier:${typeUrl ?? _dynamic}';
+    return '${classUrl.symbol} {$identifier:${typeUrl ?? _dynamic}}';
   }
 }
 

@@ -29,8 +29,9 @@ import 'dart_object_utils.dart' as dart_objects;
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
   final Logger _logger;
+  final LibraryReader _library;
 
-  CompileTypeMetadataVisitor(this._logger);
+  CompileTypeMetadataVisitor(this._logger, this._library);
 
   @override
   CompileTypeMetadata visitClassElement(ClassElement element) {
@@ -122,7 +123,7 @@ class CompileTypeMetadataVisitor
       useExisting: _getUseExisting(provider),
       useFactory: _getUseFactory(provider),
       useValue: _getUseValue(provider),
-      multi: $MultiToken.isExactlyType(token.type) ||
+      multi: $MultiToken.isAssignableFromType(token.type) ||
           dart_objects.coerceBool(
             provider,
             'multi',
@@ -369,30 +370,20 @@ class CompileTypeMetadataVisitor
   }
 
   CompileTokenMetadata _canonicalOpaqueToken(DartObject object) {
-    // We could make this static, but it actually shouldn't be used elsewhere.
-    const moduleUrl = ''
-        'asset:angular'
-        '/lib/src/core/di/opaque_token.dart';
-
-    // The actual string name/identifier of the token.
-    final description = dart_objects.coerceString(object, '_desc');
-
-    // Generic type T of {Opaque|Multi}Token<T>, if any.
-    final genericType = typeArgumentOf(object);
-
-    // Whether this is a MultiToken or OpaqueToken.
-    final isMultiToken = $MultiToken.isExactlyType(object.type);
+    // Re-use code from angular_compiler :)
+    const reader = const TokenReader();
+    final token = reader.parseTokenObject(object) as OpaqueTokenElement;
 
     // Create an identifier referencing {Opaque|Multi}Token<T>.
+    final typeArgument =
+        token.typeUrl == null ? null : fromTypeLink(token.typeUrl, _library);
     final tokenId = new CompileIdentifierMetadata(
-      name: isMultiToken ? 'MultiToken' : 'OpaqueToken',
-      moduleUrl: moduleUrl,
-      genericTypes: genericType.isDynamic
-          ? const <CompileIdentifierMetadata>[]
-          : [fromDartType(genericType)],
+      name: token.classUrl.symbol,
+      moduleUrl: linkToReference(token.classUrl, _library).url,
+      genericTypes: typeArgument != null ? [typeArgument] : const [],
     );
     return new CompileTokenMetadata(
-      value: description,
+      value: token.identifier.isNotEmpty ? token.identifier : null,
       identifier: tokenId,
       identifierIsInstance: true,
     );
