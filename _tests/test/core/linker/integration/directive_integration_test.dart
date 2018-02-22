@@ -6,7 +6,6 @@ import 'dart:html';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 
 import 'directive_integration_test.template.dart' as ng_generated;
 
@@ -24,19 +23,19 @@ void main() {
   test('should consume directive input binding', () async {
     final testBed = new NgTestBed<BoundDirectiveInputComponent>();
     final testFixture = await testBed.create();
-    final divs = testFixture.rootElement.children.map(getDebugNode).toList();
+    final directives = testFixture.assertOnlyInstance.directives;
     await testFixture.update((component) => component.value = 'New property');
-    expect(divs[0].inject(MyDir).dirProp, 'New property');
-    expect(divs[1].inject(MyDir).dirProp, 'Hi there!');
-    expect(divs[2].inject(MyDir).dirProp, 'Hi there!');
-    expect(divs[3].inject(MyDir).dirProp, 'One more New property');
+    expect(directives[0].dirProp, 'New property');
+    expect(directives[1].dirProp, 'Hi there!');
+    expect(directives[2].dirProp, 'Hi there!');
+    expect(directives[3].dirProp, 'One more New property');
   });
 
   test('should support multiple directives on a single node', () async {
     final testBed = new NgTestBed<MultipleDirectivesComponent>();
     final testFixture = await testBed.create();
-    final child = getDebugNode(testFixture.rootElement.querySelector('child'));
-    expect(child.inject(MyDir).dirProp, 'Hello world!');
+    final directive = testFixture.assertOnlyInstance.directive;
+    expect(directive.dirProp, 'Hello world!');
     expect(testFixture.text, 'hello');
   });
 
@@ -57,30 +56,31 @@ void main() {
       () async {
     final testBed = new NgTestBed<OverrideNativePropertyComponent>();
     final testFixture = await testBed.create();
-    final div = getDebugNode(testFixture.rootElement.querySelector('div'));
-    expect(div.inject(IdDir).id, 'some_id');
+    final directive = testFixture.assertOnlyInstance.directive;
+    expect(directive.id, 'some_id');
     await testFixture.update((component) => component.value = 'other_id');
-    expect(div.inject(IdDir).id, 'other_id');
+    expect(directive.id, 'other_id');
   });
 
   test('should support directives whose selector matches event binding',
       () async {
     final testBed = new NgTestBed<EventDirectiveComponent>();
     final testFixture = await testBed.create();
-    final p = getDebugNode(testFixture.rootElement.querySelector('p'));
-    expect(p.inject(EventDir), isNotNull);
+    expect(testFixture.assertOnlyInstance.directive, isNotNull);
   });
 
   test('should read directives metadata from their binding token', () async {
     final testBed = new NgTestBed<RetrievesDependencyFromHostComponent>();
-    await testBed.create(); // Directive constructor tests expected condition.
+    final testFixture = await testBed.create();
+    final needsPublicApi = testFixture.assertOnlyInstance.needsPublicApi;
+    expect(needsPublicApi.api, const isInstanceOf<PrivateImpl>());
   });
 
   test('should consume pipe binding', () async {
     final testBed = new NgTestBed<PipedDirectiveInputComponent>();
     final testFixture = await testBed.create();
-    final div = getDebugNode(testFixture.rootElement.querySelector('div'));
-    expect(div.getLocal('dir').dirProp, 'aa');
+    final directive = testFixture.assertOnlyInstance.directive;
+    expect(directive.dirProp, 'aa');
   });
 
   test('should not bind attribute matcher when generating host view', () async {
@@ -100,8 +100,6 @@ void main() {
 @Component(
   selector: 'input[type=text][width]',
   template: 'Test',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SimpleInput {
   @Input()
@@ -111,8 +109,6 @@ class SimpleInput {
 @Component(
   selector: 'button[width]',
   template: 'Test',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SimpleButton {
   @Input()
@@ -122,8 +118,6 @@ class SimpleButton {
 @Directive(
   selector: '[my-dir]',
   exportAs: 'myDir',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyDir {
   @Input('elProp')
@@ -139,11 +133,12 @@ class MyDir {
   directives: const [
     MyDir,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundDirectiveInputComponent {
   String value = 'Initial value';
+
+  @ViewChildren(MyDir)
+  List<MyDir> directives;
 }
 
 @Injectable()
@@ -157,8 +152,6 @@ class MyService {
   viewProviders: const [
     MyService,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildComponent {
   String value;
@@ -174,8 +167,6 @@ class ChildComponent {
   directives: const [
     ChildComponent,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ParentComponent {}
 
@@ -186,11 +177,12 @@ class ParentComponent {}
     ChildComponent,
     MyDir,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MultipleDirectivesComponent {
   String value = 'Hello world!';
+
+  @ViewChild(MyDir)
+  MyDir directive;
 }
 
 @Component(
@@ -199,15 +191,11 @@ class MultipleDirectivesComponent {
   directives: const [
     MyDir,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UnboundDirectiveInputComponent {}
 
 @Directive(
   selector: '[no-duplicate]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DuplicateDir {
   DuplicateDir(HtmlElement element) {
@@ -222,15 +210,11 @@ class DuplicateDir {
     DuplicateDir,
     DuplicateDir,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DuplicateDirectivesComponent {}
 
 @Directive(
   selector: '[id]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class IdDir {
   @Input()
@@ -243,17 +227,16 @@ class IdDir {
   directives: const [
     IdDir,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class OverrideNativePropertyComponent {
   String value = 'some_id';
+
+  @ViewChild(IdDir)
+  IdDir directive;
 }
 
 @Directive(
   selector: '[customEvent]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class EventDir {
   final _streamController = new StreamController<String>();
@@ -268,10 +251,11 @@ class EventDir {
   directives: const [
     EventDir,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class EventDirectiveComponent {
+  @ViewChild(EventDir)
+  EventDir directive;
+
   void doNothing() {}
 }
 
@@ -283,20 +267,16 @@ class PublicApi {}
   providers: const [
     const Provider(PublicApi, useExisting: PrivateImpl),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PrivateImpl extends PublicApi {}
 
 @Directive(
   selector: '[needs-public-api]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsPublicApi {
-  NeedsPublicApi(@Host() PublicApi api) {
-    expect(api, new isInstanceOf<PrivateImpl>());
-  }
+  final PublicApi api;
+
+  NeedsPublicApi(@Host() this.api);
 }
 
 @Component(
@@ -306,10 +286,11 @@ class NeedsPublicApi {
     PrivateImpl,
     NeedsPublicApi,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class RetrievesDependencyFromHostComponent {}
+class RetrievesDependencyFromHostComponent {
+  @ViewChild(NeedsPublicApi)
+  NeedsPublicApi needsPublicApi;
+}
 
 @Pipe('double')
 class DoublePipe implements PipeTransform {
@@ -325,9 +306,10 @@ class DoublePipe implements PipeTransform {
   pipes: const [
     DoublePipe,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PipedDirectiveInputComponent {
   String value = 'a';
+
+  @ViewChild('dir')
+  MyDir directive;
 }
