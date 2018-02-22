@@ -1,4 +1,4 @@
-import 'di.dart' show OpaqueToken;
+import 'di.dart' show MultiToken, OpaqueToken;
 
 /// A dependency injection token representing a unique ID for the application.
 ///
@@ -13,12 +13,10 @@ import 'di.dart' show OpaqueToken;
 ///     ],
 ///   )
 /// ```
-const OpaqueToken APP_ID = const OpaqueToken('APP_ID');
+const APP_ID = const OpaqueToken<String>('APP_ID');
 
-/// A function that will be executed when a platform is initialized.
-const OpaqueToken PLATFORM_INITIALIZER =
-    const OpaqueToken("Platform Initializer");
+/// Functions that will be executed when a platform is initialized.
+const PLATFORM_INITIALIZER = const MultiToken<Function>('NG_PLATFORM_INIT');
 
-/// A function that will be executed when an application is initialized.
-const OpaqueToken APP_INITIALIZER =
-    const OpaqueToken("Application Initializer");
+/// Functions that will be executed when an application is initialized.
+const APP_INITIALIZER = const MultiToken<Function>('NG_APP_INIT');

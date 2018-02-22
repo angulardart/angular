@@ -188,7 +188,7 @@ class PushCmpWithRefHostComponent {
 class PushCmpWithAsyncPipe {
   int numberOfChecks = 0;
   Future<int> future;
-  Completer completer;
+  Completer<int> completer;
 
   PushCmpWithAsyncPipe() {
     completer = new Completer();
