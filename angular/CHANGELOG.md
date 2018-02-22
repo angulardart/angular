@@ -178,13 +178,24 @@ class Comp2 {
       This is a common mistake, did you mean "templateUrl" instead?
     ```
 
-*  If a private class is annotated with `@Injectable()` the compiler fails. In
-   practice this caused a compilation error later in DDC/Dart2JS, but now the
-   AngularDart compiler will not emit invalid code.
+*   If a private class is annotated with `@Injectable()` the compiler fails. In
+    practice this caused a compilation error later in DDC/Dart2JS, but now the
+    AngularDart compiler will not emit invalid code.
 
-*  Removed spurious/incorrect warnings about classes that are used as
-   interfaces needing `@Injectable` (or needing to be non-abstract), which
-   are wrong and confusing.
+*   Removed spurious/incorrect warnings about classes that are used as
+    interfaces needing `@Injectable` (or needing to be non-abstract), which
+    are wrong and confusing.
+
+*   Fixed a case where the compiler generated incorrect code when a directive D
+    was applied to the host element of component C where
+
+    *   C implements D,
+    *   C provides D as an alias for itself, and
+    *   C has `Visibility.local`.
+
+    Normally the local reference for C would be reused instead of creating a new
+    D. Giving C local visibility incorrectly prevented this assignment and
+    generated code to inject D from the parent injector.
 
 ## 5.0.0-alpha+5
 

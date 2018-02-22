@@ -33,8 +33,6 @@ void main() {
   template: '<child-component class="mytarget" someDirective>'
       '</child-component>',
   directives: const [ChildComponent, SomeDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestContainer {}
 
@@ -42,8 +40,6 @@ class TestContainer {}
   selector: 'child-component',
   template: '<div>ChildHello</div>',
   providers: const [const Provider(SomeDirective, useExisting: ChildComponent)],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildComponent extends SomeDirective {}
 
@@ -56,8 +52,6 @@ class ChildComponent extends SomeDirective {}
     '[attr.data-xyz]': 'dataXyz',
     '[class.is-disabled]': 'disabled'
   },
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SomeDirective {
   String dataXyz = 'abc';
