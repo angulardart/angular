@@ -7,10 +7,7 @@ import 'control_value_accessor.dart'
     show NG_VALUE_ACCESSOR, ControlValueAccessor;
 import 'ng_control.dart' show NgControl;
 
-// TODO: Remove <ControlValueAccessor> after #908 is resolved:
-// https://github.com/dart-lang/angular/issues/908
-const RADIO_VALUE_ACCESSOR =
-    const ExistingProvider<ControlValueAccessor>.forToken(
+const RADIO_VALUE_ACCESSOR = const ExistingProvider.forToken(
   NG_VALUE_ACCESSOR,
   RadioControlValueAccessor,
 );
