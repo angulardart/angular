@@ -58,5 +58,7 @@ class SomeDirective {
   bool disabled = true;
   void handleClick(Event e) {}
 
-  void handleKeyPress(KeyEvent e) {}
+  // TODO: Should be 'KeyEvent'.
+  // See https://github.com/dart-lang/angular/issues/915.
+  void handleKeyPress(Event e) {}
 }
