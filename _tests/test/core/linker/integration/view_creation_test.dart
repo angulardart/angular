@@ -6,7 +6,6 @@ import 'dart:html';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 
 import 'view_creation_test.template.dart' as ng_generated;
 
@@ -27,8 +26,7 @@ void main() {
       provide(ANCHOR_ELEMENT, useValue: template),
     ]);
     final testFixture = await testBed.create();
-    final nestedDiv = testFixture.rootElement.firstChild.firstChild;
-    final viewport = getDebugNode(nestedDiv).inject(SomeImperativeViewport);
+    final viewport = testFixture.assertOnlyInstance.viewport;
     expect(viewport.anchor.text, '');
     await testFixture.update((component) => component.ctxBoolProp = true);
     expect(viewport.anchor.text, 'hello');
@@ -62,43 +60,36 @@ void main() {
     test('should support @Input', () async {
       final testBed = new NgTestBed<DecoratorsComponent>();
       final testFixture = await testBed.create();
-      final debugNode = getDebugNode(testFixture.rootElement.firstChild);
-      final directive = debugNode.inject(DirectiveWithPropDecorators);
+      final directive = testFixture.assertOnlyInstance.directive;
       expect(directive.dirProp, 'foo');
     });
 
     test('should support @HostBinding', () async {
       final testBed = new NgTestBed<DecoratorsComponent>();
       final testFixture = await testBed.create();
+      await testFixture.update((component) {
+        component.directive.myAttr = 'bar';
+      });
       final directiveElement = testFixture.rootElement.children.first;
-      final debugNode = getDebugNode(directiveElement);
-      final directive = debugNode.inject(DirectiveWithPropDecorators);
-      await testFixture.update((_) => directive.myAttr = 'bar');
       expect(directiveElement.attributes, containsPair('my-attr', 'bar'));
     });
 
     test('should support @Output', () async {
       final testBed = new NgTestBed<DecoratorsComponent>();
       final testFixture = await testBed.create();
-      final directiveElement = testFixture.rootElement.children.first;
-      final debugNode = getDebugNode(directiveElement);
-      final directive = debugNode.inject(DirectiveWithPropDecorators);
-      var component;
-      await testFixture.update((instance) {
-        component = instance;
+      await testFixture.update((component) {
         expect(component.value, isNull);
-        directive.fireEvent('fired!');
+        component.directive.fireEvent('fired!');
       });
-      expect(component.value, 'called');
+      expect(testFixture.assertOnlyInstance.value, 'called');
     });
 
     test('should support @HostListener', () async {
       final testBed = new NgTestBed<DecoratorsComponent>();
       final testFixture = await testBed.create();
-      final directiveElement = testFixture.rootElement.children.first;
-      final debugNode = getDebugNode(directiveElement);
-      final directive = debugNode.inject(DirectiveWithPropDecorators);
+      final directive = testFixture.assertOnlyInstance.directive;
       expect(directive.target, isNull);
+      final directiveElement = testFixture.rootElement.children.first;
       directiveElement.dispatchEvent(new MouseEvent('click'));
       await testFixture.update();
       expect(directive.target, directiveElement);
@@ -144,8 +135,6 @@ void main() {
 @Component(
   selector: 'simple-imp-cmp',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SimpleImperativeViewComponent {
   SimpleImperativeViewComponent(ElementRef elementRef) {
@@ -158,8 +147,6 @@ const ANCHOR_ELEMENT = const OpaqueToken('AnchorElement');
 
 @Directive(
   selector: '[someImpvp]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SomeImperativeViewport {
   ViewContainerRef vc;
@@ -190,17 +177,16 @@ class SomeImperativeViewport {
   selector: 'moves-embedded-view',
   template: '<div><div *someImpvp="ctxBoolProp">hello</div></div>',
   directives: const [SomeImperativeViewport],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MovesEmbeddedViewComponent {
   bool ctxBoolProp = false;
+
+  @ViewChild(SomeImperativeViewport)
+  SomeImperativeViewport viewport;
 }
 
 @Directive(
   selector: '[has-property]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PropertyDirective {
   @Input('property')
@@ -211,8 +197,6 @@ class PropertyDirective {
   selector: 'unknown-property-on-directive',
   template: '<div has-property [property]="value"></div>',
   directives: const [PropertyDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UnknownPropertyOnDirectiveComponent {
   String value = 'Hello world!';
@@ -220,8 +204,6 @@ class UnknownPropertyOnDirectiveComponent {
 
 @Directive(
   selector: '[title]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveWithTitle {
   @Input()
@@ -232,8 +214,6 @@ class DirectiveWithTitle {
   selector: 'overridden-property',
   template: '<span [title]="name"></span>',
   directives: const [DirectiveWithTitle],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class OverriddenPropertyComponent {
   String name = 'TITLE';
@@ -242,8 +222,6 @@ class OverriddenPropertyComponent {
 @Directive(
   selector: '[title]',
   host: const {'[title]': 'title'},
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveWithTitleAndHostProperty {
   @Input()
@@ -254,8 +232,6 @@ class DirectiveWithTitleAndHostProperty {
   selector: 'directive-updates-dom',
   template: '<span [title]="name"></span>',
   directives: const [DirectiveWithTitleAndHostProperty],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveUpdatesDomComponent {
   String name = 'TITLE';
@@ -263,8 +239,6 @@ class DirectiveUpdatesDomComponent {
 
 @Directive(
   selector: 'with-prop-decorators',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveWithPropDecorators {
   final StreamController<String> _streamController =
@@ -296,11 +270,12 @@ class DirectiveWithPropDecorators {
 <with-prop-decorators elProp="foo" (elEvent)="value='called'">
 </with-prop-decorators>''',
   directives: const [DirectiveWithPropDecorators],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DecoratorsComponent {
   String value;
+
+  @ViewChild(DirectiveWithPropDecorators)
+  DirectiveWithPropDecorators directive;
 }
 
 @Component(
@@ -317,24 +292,18 @@ class DecoratorsComponent {
   </foreignObject>
 </svg>
 ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SvgElementsComponent {}
 
 @Component(
   selector: 'namespace-attribute',
   template: '<svg:use xlink:href="#id"/>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NamespaceAttributeComponent {}
 
 @Component(
   selector: 'namespace-attribute-binding',
   template: '<svg:use [attr.xlink:href]="value"/>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NamespaceAttributeBindingComponent {
   String value;
