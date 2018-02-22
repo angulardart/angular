@@ -1,3 +1,5 @@
+## 2.0.0-alpha+4
+
 *   Removed built-in support for `package:pageloader`. The current version of
     `pageloader` relies on `dart:mirrors`, which is being removed from the web
     compilers (dart2js, dartdevc). There is a new (internal-only, right now)

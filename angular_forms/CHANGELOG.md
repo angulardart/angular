@@ -1,3 +1,5 @@
+## 1.0.1-alpha+6
+
 ### New features
 
 -   Added `markAsUntouched` method to `AbstractControl`.

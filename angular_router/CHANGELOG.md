@@ -1,3 +1,5 @@
+## 2.0.0-alpha+6
+
 ### New features
 
 *   `Router.onNavigationStart` now emits the requested navigation path.
