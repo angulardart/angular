@@ -8,10 +8,8 @@ export 'directive_wrapper.dart';
 import 'dart:async';
 import 'dart:html';
 import 'package:angular/angular.dart';
-import 'package:angular_forms/angular_forms.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular_forms/angular_forms.template.dart' as _ref1;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'directive_wrapper.dart' as import1;
 import 'dart:html' as import2;
@@ -21,14 +19,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular_forms/src/directives/ng_form_model.dart' as import9;
-import 'package:angular_forms/src/directives/default_value_accessor.dart' as import10;
-import 'package:angular_forms/src/directives/control_value_accessor.dart' as import11;
-import 'package:angular_forms/src/directives/ng_control_name.dart' as import12;
-import 'package:angular/src/core/di/opaque_token.dart' as import13;
-import 'package:angular_forms/src/directives/ng_control.dart' as import14;
-import 'package:angular_forms/src/directives/control_container.dart' as import15;
-import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import16;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import9;
 
 const List<dynamic> styles$TestFooComponent = const ['div._ngcontent-%COMP% { font-size:10px; }'];
 
@@ -62,17 +53,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final subscription_1 = _DirectiveWithOutput_0_5.eventXyz.listen(eventHandler1(_ChildDirective_0_4.instance.handleXyzEventFromOtherDirective));
     init(const [], [subscription_0, subscription_1]);
     return null;
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.ChildDirective) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
-      return _ChildDirective_0_4.instance;
-    }
-    if ((identical(token, import1.DirectiveWithOutput) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
-      return _DirectiveWithOutput_0_5;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -112,14 +92,6 @@ class _ViewTestFooComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TestFooComponent) && (0 == nodeIndex))) {
-      return _TestFooComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -135,142 +107,6 @@ AppView viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, num paren
 }
 
 const ComponentFactory<import1.TestFooComponent> TestFooComponentNgFactory = const ComponentFactory<import1.TestFooComponent>('test-foo', viewFactory_TestFooComponentHost0, _TestFooComponentMetadata);
-const List<dynamic> styles$InputFormTest = const [];
-
-class ViewInputFormTest0 extends AppView<import1.InputFormTest> {
-  import2.DivElement _el_0;
-  import9.NgFormModel _NgFormModel_0_4;
-  dynamic _ControlContainer_0_5;
-  import2.InputElement _el_1;
-  import10.DefaultValueAccessor _DefaultValueAccessor_1_4;
-  List<import11.ControlValueAccessor> _NgValueAccessor_1_5;
-  import12.NgControlName _NgControlName_1_6;
-  var _expr_0;
-  static RenderComponentType _renderType;
-  ViewInputFormTest0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('input-form-test');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$InputFormTest);
-    setupComponentType(_renderType);
-  }
-  @override
-  ComponentRef<import1.InputFormTest> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
-    var doc = import2.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _NgFormModel_0_4 = new import9.NgFormModel(null);
-    _ControlContainer_0_5 = _NgFormModel_0_4;
-    _el_1 = createAndAppend(doc, 'input', _el_0);
-    createAttr(_el_1, 'ngControl', 'login');
-    createAttr(_el_1, 'type', 'text');
-    _DefaultValueAccessor_1_4 = new import10.DefaultValueAccessor(_el_1);
-    _NgValueAccessor_1_5 = [_DefaultValueAccessor_1_4];
-    _NgControlName_1_6 = new import12.NgControlName(_ControlContainer_0_5, null, _NgValueAccessor_1_5);
-    import6.appViewUtils.eventManager.addEventListener(_el_0, 'submit', eventHandler1(_NgFormModel_0_4.onSubmit));
-    _el_1.addEventListener('input', eventHandler1(_handle_input_1_0));
-    _el_1.addEventListener('blur', eventHandler0(_DefaultValueAccessor_1_4.touchHandler));
-    init(const [], null);
-    return null;
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import10.DefaultValueAccessor) && (1 == nodeIndex))) {
-      return _DefaultValueAccessor_1_4;
-    }
-    if ((identical(token, const import13.MultiToken<import11.ControlValueAccessor<dynamic>>('NgValueAccessor')) && (1 == nodeIndex))) {
-      return _NgValueAccessor_1_5;
-    }
-    if (((identical(token, import12.NgControlName) || identical(token, import14.NgControl)) && (1 == nodeIndex))) {
-      return _NgControlName_1_6;
-    }
-    if ((identical(token, import9.NgFormModel) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
-      return _NgFormModel_0_4;
-    }
-    if ((identical(token, import15.ControlContainer) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
-      return _ControlContainer_0_5;
-    }
-    return notFoundResult;
-  }
-
-  @override
-  void detectChangesInternal() {
-    final import1.InputFormTest _ctx = ctx;
-    bool changed = false;
-    bool firstCheck = (this.cdState == 0);
-    changed = false;
-    final currVal_0 = _ctx.form;
-    if (!identical(_expr_0, currVal_0)) {
-      _NgFormModel_0_4.form = currVal_0;
-      changed = true;
-      _expr_0 = currVal_0;
-    }
-    if (changed) {
-      _NgFormModel_0_4.ngAfterChanges();
-    }
-    changed = false;
-    if (firstCheck) {
-      _NgControlName_1_6.name = 'login';
-      changed = true;
-    }
-    if (changed) {
-      _NgControlName_1_6.ngAfterChanges();
-    }
-  }
-
-  @override
-  void destroyInternal() {
-    _NgControlName_1_6.ngOnDestroy();
-  }
-
-  void _handle_input_1_0($event) {
-    _DefaultValueAccessor_1_4.onChange($event.target.value);
-  }
-}
-
-AppView<import1.InputFormTest> viewFactory_InputFormTest0(AppView<dynamic> parentView, num parentIndex) {
-  return new ViewInputFormTest0(parentView, parentIndex);
-}
-
-const List<dynamic> styles$InputFormTestHost = const [];
-
-class _ViewInputFormTestHost0 extends AppView<dynamic> {
-  ViewInputFormTest0 _compView_0;
-  import1.InputFormTest _InputFormTest_0_4;
-  _ViewInputFormTestHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
-  @override
-  ComponentRef build() {
-    _compView_0 = new ViewInputFormTest0(this, 0);
-    rootEl = _compView_0.rootEl;
-    _InputFormTest_0_4 = new import1.InputFormTest();
-    _compView_0.create(_InputFormTest_0_4, projectableNodes);
-    init0(rootEl);
-    return new ComponentRef<import1.InputFormTest>(0, this, rootEl, _InputFormTest_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.InputFormTest) && (0 == nodeIndex))) {
-      return _InputFormTest_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
-  void detectChangesInternal() {
-    _compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    _compView_0?.destroy();
-  }
-}
-
-AppView viewFactory_InputFormTestHost0(AppView<dynamic> parentView, num parentIndex) {
-  return new _ViewInputFormTestHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.InputFormTest> InputFormTestNgFactory = const ComponentFactory<import1.InputFormTest>('input-form-test', viewFactory_InputFormTestHost0, _InputFormTestMetadata);
 const List<dynamic> styles$DirectiveContainerTest = const [];
 
 class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest> {
@@ -348,7 +184,7 @@ AppView viewFactory_DirectiveContainerTestHost0(AppView<dynamic> parentView, num
 
 const ComponentFactory<import1.DirectiveContainerTest> DirectiveContainerTestNgFactory = const ComponentFactory<import1.DirectiveContainerTest>('directive-container', viewFactory_DirectiveContainerTestHost0, _DirectiveContainerTestMetadata);
 
-class ChildDirectiveNgCd extends import16.DirectiveChangeDetector {
+class ChildDirectiveNgCd extends import9.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
   var _expr_1;
@@ -373,7 +209,7 @@ class ChildDirectiveNgCd extends import16.DirectiveChangeDetector {
   }
 }
 
-class FastDirectiveNgCd extends import16.DirectiveChangeDetector {
+class FastDirectiveNgCd extends import9.DirectiveChangeDetector {
   final import1.FastDirective instance;
   var _expr_0;
   FastDirectiveNgCd(this.instance, AppView v, import2.Element e) {
@@ -392,7 +228,6 @@ class FastDirectiveNgCd extends import16.DirectiveChangeDetector {
 }
 
 const _TestFooComponentMetadata = const [];
-const _InputFormTestMetadata = const [];
 const _DirectiveContainerTestMetadata = const [];
 var _visited = false;
 void initReflector() {
@@ -403,8 +238,6 @@ void initReflector() {
 
   _ngRef.registerComponent(TestFooComponent, TestFooComponentNgFactory);
   _ngRef.registerFactory(MyInjectableClass, () => new MyInjectableClass());
-  _ngRef.registerComponent(InputFormTest, InputFormTestNgFactory);
   _ngRef.registerComponent(DirectiveContainerTest, DirectiveContainerTestNgFactory);
   _ref0.initReflector();
-  _ref1.initReflector();
 }
