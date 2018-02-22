@@ -34,20 +34,25 @@ const _statefulDirectiveFields = const [
   _visibilityProperty,
 ];
 
-AngularArtifacts findComponentsAndDirectives(Element element) {
-  var componentVisitor = new NormalizedComponentVisitor();
-  element.accept(componentVisitor);
+AngularArtifacts findComponentsAndDirectives(LibraryReader library) {
+  var componentVisitor = new NormalizedComponentVisitor(library);
+  library.element.accept(componentVisitor);
   return new AngularArtifacts(
-      componentVisitor.components, componentVisitor.directives);
+    componentVisitor.components,
+    componentVisitor.directives,
+  );
 }
 
 class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   final List<NormalizedComponentWithViewDirectives> components = [];
   final List<CompileDirectiveMetadata> directives = [];
+  final LibraryReader _library;
+
+  NormalizedComponentVisitor(this._library);
 
   @override
   Null visitClassElement(ClassElement element) {
-    final directive = element.accept(new ComponentVisitor());
+    final directive = element.accept(new ComponentVisitor(_library));
     if (directive != null) {
       if (directive.isComponent) {
         var pipes = _visitPipes(element);
@@ -62,7 +67,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   @override
   Null visitFunctionElement(FunctionElement element) {
-    final directive = element.accept(new ComponentVisitor());
+    final directive = element.accept(new ComponentVisitor(_library));
     if (directive != null) {
       directives.add(directive);
     }
@@ -73,7 +78,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         element,
         'pipes',
         safeMatcher(isPipe, log),
-        () => new PipeVisitor(log),
+        () => new PipeVisitor(log, _library),
       );
 
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) =>
@@ -81,7 +86,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         element,
         _directivesProperty,
         safeMatcher(isDirective, log),
-        () => new ComponentVisitor(),
+        () => new ComponentVisitor(_library),
       );
 
   List<T> _visitTypes<T>(
@@ -176,6 +181,8 @@ class ComponentVisitor
   final _queries = <CompileQueryMetadata>[];
   final _viewQueries = <CompileQueryMetadata>[];
 
+  final LibraryReader _library;
+
   /// Whether the component being visited re-implements 'noSuchMethod'.
   bool _implementsNoSuchMethod = false;
 
@@ -183,6 +190,8 @@ class ComponentVisitor
   ///
   /// This is used to look up resolved type information.
   ClassElement _directiveClassElement;
+
+  ComponentVisitor(this._library);
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
@@ -222,7 +231,7 @@ class ComponentVisitor
       }
     }
     if (invalid) return null;
-    final type = element.accept(new CompileTypeMetadataVisitor(log));
+    final type = element.accept(new CompileTypeMetadataVisitor(log, _library));
     final selector = coerceString(annotationValue, 'selector');
     return new CompileDirectiveMetadata(
       type: type,
@@ -519,7 +528,7 @@ class ComponentVisitor
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     CompileTypeMetadata componentType =
-        element.accept(new CompileTypeMetadataVisitor(log));
+        element.accept(new CompileTypeMetadataVisitor(log, _library));
     final template = isComp
         ? _createTemplateMetadata(annotationValue, componentType)
         : new CompileTemplateMetadata();
@@ -606,7 +615,7 @@ class ComponentVisitor
   List<CompileProviderMetadata> _extractProviders(
           DartObject component, String providerField) =>
       visitAll(coerceList(component, providerField),
-          new CompileTypeMetadataVisitor(log).createProviderMetadata);
+          new CompileTypeMetadataVisitor(log, _library).createProviderMetadata);
 
   List<CompileIdentifierMetadata> _extractExports(
       ElementAnnotationImpl annotation, ClassElement element) {

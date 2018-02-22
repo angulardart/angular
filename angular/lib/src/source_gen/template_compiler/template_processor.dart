@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:analyzer/dart/element/element.dart';
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/source_gen/common/logging.dart';
 import 'package:angular/src/source_gen/common/ng_compiler.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
-import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:source_gen/source_gen.dart';
 
 import 'find_components.dart';
 import 'template_compiler_outputs.dart';
@@ -47,7 +48,7 @@ Future<TemplateCompilerOutputs> processTemplates(
         resolver.isLibrary(new AssetId.resolve(uri, from: buildStep.inputId)),
   ).resolve(element);
   final AngularArtifacts compileComponentsData = logElapsedSync(
-      () => findComponentsAndDirectives(element),
+      () => findComponentsAndDirectives(new LibraryReader(element)),
       operationName: 'findComponents',
       assetId: buildStep.inputId,
       log: log);

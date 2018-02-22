@@ -1,9 +1,10 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
-import 'package:logging/logging.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
+import 'package:logging/logging.dart';
+import 'package:source_gen/source_gen.dart';
 
 import '../../compiler/output/convert.dart';
 import 'compile_metadata.dart';
@@ -12,8 +13,9 @@ import 'find_components.dart';
 
 class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   final Logger _logger;
+  final LibraryReader _library;
 
-  PipeVisitor(this._logger);
+  PipeVisitor(this._logger, this._library);
 
   @override
   CompilePipeMetadata visitClassElement(ClassElement element) {
@@ -50,7 +52,7 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
     }
     final value = annotation.computeConstantValue();
     return new CompilePipeMetadata(
-      type: element.accept(new CompileTypeMetadataVisitor(_logger)),
+      type: element.accept(new CompileTypeMetadataVisitor(_logger, _library)),
       transformType: fromFunctionType(transformType),
       name: coerceString(value, 'name'),
       pure: coerceBool(value, 'pure', defaultTo: true),

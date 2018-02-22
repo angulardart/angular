@@ -1,4 +1,6 @@
 import 'package:analyzer/dart/element/type.dart';
+import 'package:angular_compiler/angular_compiler.dart';
+import 'package:source_gen/source_gen.dart';
 
 import '../../source_gen/common/url_resolver.dart';
 import '../compile_metadata.dart';
@@ -26,6 +28,30 @@ o.OutputType fromDartType(DartType dartType) {
       moduleUrl: moduleUrl(dartType.element),
       // Most o.ExternalTypes are not created, but those that are (like
       // OpaqueToken<...> need this generic type.
+      genericTypes: typeArguments,
+    ),
+    typeArguments,
+  );
+}
+
+/// Creates an AST from code generation from [typeLink].
+o.OutputType fromTypeLink(TypeLink typeLink, LibraryReader library) {
+  if (typeLink == null || typeLink.isDynamic || typeLink.isPrivate) {
+    return null;
+  }
+  var typeArguments = new List<o.OutputType>(typeLink.generics.length);
+  for (var i = 0; i < typeArguments.length; i++) {
+    final arg = fromTypeLink(typeLink.generics[i], library);
+    if (arg == null) {
+      typeArguments = const [];
+      break;
+    }
+    typeArguments[i] = arg;
+  }
+  return new o.ExternalType(
+    new CompileIdentifierMetadata(
+      name: typeLink.symbol,
+      moduleUrl: linkToReference(typeLink, library).url,
       genericTypes: typeArguments,
     ),
     typeArguments,
