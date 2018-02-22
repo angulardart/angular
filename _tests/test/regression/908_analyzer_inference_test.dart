@@ -23,7 +23,6 @@ void main() {
     expect(
       interfaces,
       isTypedList,
-      skip: 'Blocked by https://github.com/dart-lang/angular/issues/908',
     );
   });
 
@@ -38,7 +37,6 @@ void main() {
     expect(
       interfaces,
       isTypedList,
-      reason: 'Even with #908, this is typed correctly <SomeInterface>',
     );
   });
 }
