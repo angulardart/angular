@@ -87,9 +87,6 @@ class _ViewInjectableComponentHost0 extends AppView<dynamic> {
     if ((identical(token, const import9.OpaqueToken('test')) && (0 == nodeIndex))) {
       return _test_0_4;
     }
-    if ((identical(token, import1.InjectableComponent) && (0 == nodeIndex))) {
-      return _InjectableComponent_0_5;
-    }
     if ((identical(token, import1.SomeDep) && (0 == nodeIndex))) {
       return _SomeDep_0_6;
     }

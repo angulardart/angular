@@ -97,9 +97,6 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, const import10.OpaqueToken('test')) && (0 == nodeIndex))) {
       return _test_0_4;
     }
-    if ((identical(token, import2.InjectableComponent) && (0 == nodeIndex))) {
-      return _InjectableComponent_0_5;
-    }
     if ((identical(token, import2.SomeDep) && (0 == nodeIndex))) {
       return _SomeDep_0_6;
     }

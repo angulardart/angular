@@ -14,8 +14,6 @@ import 'package:angular/angular.dart';
     <another #q2></another>
     <another #q3 *ngIf="someValue"></another>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class QueriesComponent {
   bool someValue = false;
@@ -59,8 +57,6 @@ class QueriesComponent {
       <another></another>
     </template>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class EmbeddedQueries {
   @ViewChildren(AnotherDirective)
@@ -81,8 +77,6 @@ class EmbeddedQueries {
       <another></another>
     </template>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class EmbeddedQueriesList {
   @ViewChildren(AnotherDirective)
@@ -91,8 +85,6 @@ class EmbeddedQueriesList {
 
 @Directive(
   selector: 'another',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class AnotherDirective {}
 
@@ -113,8 +105,6 @@ class AnotherDirective {}
       </div>
     </div>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NestedNgForQueriesList {
   final items = [1, 2, 3];

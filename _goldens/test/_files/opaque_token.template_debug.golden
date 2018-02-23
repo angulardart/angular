@@ -86,9 +86,6 @@ class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
     if ((identical(token, const import10.OpaqueToken('baseUrlDescription')) && (0 == nodeIndex))) {
       return _baseUrlDescription_0_4;
     }
-    if ((identical(token, import2.HasOpaqueTokens) && (0 == nodeIndex))) {
-      return _HasOpaqueTokens_0_5;
-    }
     return notFoundResult;
   }
 

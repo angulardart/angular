@@ -5,8 +5,6 @@ import 'package:angular/angular.dart';
   template: '<div>CheckOnce</div>',
   host: const {'[id]': 'id'},
   changeDetection: ChangeDetectionStrategy.CheckOnce,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CheckOnceComponent {
   String id;
@@ -16,8 +14,6 @@ class CheckOnceComponent {
   selector: 'Checked',
   template: '<div>Checked</div>',
   changeDetection: ChangeDetectionStrategy.Checked,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CheckedComponent {}
 
@@ -25,8 +21,6 @@ class CheckedComponent {}
   selector: 'CheckAlways',
   template: '<div>CheckAlways</div>',
   changeDetection: ChangeDetectionStrategy.CheckAlways,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CheckAlwaysComponent {}
 
@@ -34,8 +28,6 @@ class CheckAlwaysComponent {}
   selector: 'Detached',
   template: '<div>Detached</div>',
   changeDetection: ChangeDetectionStrategy.Detached,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DetachedComponent {}
 
@@ -43,8 +35,6 @@ class DetachedComponent {}
   selector: 'OnPush',
   template: '<div>OnPush</div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class OnPushComponent {}
 
@@ -52,8 +42,6 @@ class OnPushComponent {}
   selector: 'Stateful',
   template: '<div>Stateful</div>',
   changeDetection: ChangeDetectionStrategy.Stateful,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class StatefulComponent extends ComponentState {}
 
@@ -61,7 +49,5 @@ class StatefulComponent extends ComponentState {}
   selector: 'Default',
   template: '<div>Default</div>',
   changeDetection: ChangeDetectionStrategy.Default,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DefaultComponent {}

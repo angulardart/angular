@@ -159,9 +159,6 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.ProvidersComponent) && (0 == nodeIndex))) {
-      return _ProvidersComponent_0_4;
-    }
     if ((identical(token, import2.MyTypeAnnotation) && (0 == nodeIndex))) {
       return _MyTypeAnnotation_0_5;
     }
