@@ -5,7 +5,6 @@ import 'dart:html';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'error_integration_test.template.dart' as ng_generated;
@@ -89,20 +88,13 @@ void main() {
         'should provide an error context when an error happens in an '
         'event handler', () async {
       var testBed = new NgTestBed<MyCompWithEventException>();
-      MyCompWithEventException comp;
-      var fixture = await testBed.create(
-          beforeChangeDetection: (MyCompWithEventException component) {
-        comp = component;
-      });
-      DebugElement debugElement = getDebugNode(fixture.rootElement);
-      DirectiveEmittingEvent directive =
-          debugElement.children[0].inject(DirectiveEmittingEvent);
-      await fixture.update((MyCompWithEventException component) {
-        directive.fireEvent('boom');
+      var fixture = await testBed.create();
+      await fixture.update((component) {
+        component.emitter.fireEvent('boom');
       }).catchError((e) {
         expect(e.toString(), contains('exceptionOnEventSample'));
       });
-      expect(comp.eventHandlerCalled, true);
+      expect(fixture.assertOnlyInstance.eventHandlerCalled, true);
     });
     test(
         'should specify a location of an error that happened '
@@ -143,8 +135,6 @@ class SomeDirectiveMissingAnnotation {}
   selector: 'my-comp-missing-dir-annotation',
   template: '',
   directives: const [SomeDirectiveMissingAnnotation],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyCompWithDirectiveMissingAnnotation {
   String ctxProp;
@@ -167,15 +157,11 @@ class MyCompWithDirectiveMissingAnnotation {
   selector: 'my-comp-with-throwing-directive',
   directives: const [DirectiveThrowingAnError],
   template: '<directive-throwing-error></directive-throwing-error>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyCompWithThrowingDirective {}
 
 @Directive(
   selector: 'directive-throwing-error',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveThrowingAnError {
   DirectiveThrowingAnError() {
@@ -219,8 +205,6 @@ void functionThatThrowsNonError() {
 @Component(
   selector: 'throwing-component',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ThrowingComponent {
   ThrowingComponent() {
@@ -231,8 +215,6 @@ class ThrowingComponent {
 @Component(
   selector: 'throwing-component2',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ThrowingComponent2 {
   ThrowingComponent2() {
@@ -244,8 +226,6 @@ class ThrowingComponent2 {
   selector: 'container-with-throwing',
   template: '<throwing-component></throwing-component>',
   directives: const [ThrowingComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContainerWithThrowingComponent {
   dynamic value;
@@ -255,8 +235,6 @@ class ContainerWithThrowingComponent {
   selector: 'container-with-throwing2',
   template: '<throwing-component></throwing-component>',
   directives: const [ThrowingComponent2],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContainerWithThrowingComponent2 {
   dynamic value;
@@ -265,8 +243,6 @@ class ContainerWithThrowingComponent2 {
 @Component(
   selector: 'mycomp-with-cd-exception',
   template: '<input [value]="one.two" #local>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyCompWithCdException {
   SomeModel one = new SomeModel('initial value');
@@ -280,8 +256,6 @@ class SomeModel {
 @Component(
   selector: 'mycomp-with-cd-exception-interpolation',
   template: '<div>{{one.two}}</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyCompWithCdExceptionInterpolate {
   SomeModel one = new SomeModel('initial value');
@@ -290,8 +264,6 @@ class MyCompWithCdExceptionInterpolate {
 @Component(
   selector: 'mycomp-with-cd-exception-onelement',
   template: '<div [title]="one.two"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyCompWithCdExceptionOnElement {
   SomeModel one = new SomeModel('initial value');
@@ -300,8 +272,6 @@ class MyCompWithCdExceptionOnElement {
 @Component(
   selector: 'mycomp-with-cd-exception-onproperty',
   template: '<mycomp-child [prop1]="one.two"></mycomp-child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyCompWithCdExceptionOnProperty {
   SomeModel one = new SomeModel('initial value');
@@ -310,8 +280,6 @@ class MyCompWithCdExceptionOnProperty {
 @Component(
   selector: 'mycomp-child',
   template: '<div>{{prop1}}</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyCompChild {
   String prop1 = 'defaultProp1';
@@ -322,11 +290,13 @@ class MyCompChild {
   template: '<span emitter listener (event)="throwError()" #local>'
       '</span>',
   directives: const [DirectiveEmittingEvent, DirectiveListeningEvent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyCompWithEventException {
   bool eventHandlerCalled = false;
+
+  @ViewChild(DirectiveEmittingEvent)
+  DirectiveEmittingEvent emitter;
+
   void throwError() {
     eventHandlerCalled = true;
     throw new Exception('exceptionOnEventSample');
@@ -335,8 +305,6 @@ class MyCompWithEventException {
 
 @Directive(
   selector: '[emitter]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveEmittingEvent {
   String msg = '';
@@ -352,9 +320,8 @@ class DirectiveEmittingEvent {
 }
 
 @Directive(
-  selector: '[listener]', host: const {'(event)': 'onEvent(\$event)'},
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  selector: '[listener]',
+  host: const {'(event)': 'onEvent(\$event)'},
 )
 class DirectiveListeningEvent {
   String msg = '';
