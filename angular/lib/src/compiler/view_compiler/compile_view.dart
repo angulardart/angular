@@ -871,14 +871,14 @@ class CompileView implements AppViewBuilder {
             )
           : o.DYNAMIC_TYPE);
     } else {
-      resolvedProviderValueExpr = providerValueExpressions[0];
+      resolvedProviderValueExpr = providerValueExpressions.first;
       if (provider.typeArgument != null) {
         type = o.importType(
           provider.typeArgument,
           provider.typeArgument.genericTypes,
         );
       } else {
-        type = providerValueExpressions[0].type;
+        type = resolvedProviderValueExpr.type;
       }
     }
 
@@ -986,7 +986,7 @@ class CompileView implements AppViewBuilder {
               ? o.DYNAMIC_TYPE
               : (providerHasChangeDetector ? changeDetectorType : type)));
     }
-    return new o.ReadClassMemberExpr(propName);
+    return new o.ReadClassMemberExpr(propName, type);
   }
 
   @override
