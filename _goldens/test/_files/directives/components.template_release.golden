@@ -60,14 +60,6 @@ class _ViewTestSubComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TestSubComponent) && (0 == nodeIndex))) {
-      return _TestSubComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }

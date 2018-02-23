@@ -90,9 +90,6 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.ProviderModulesComponent) && (0 == nodeIndex))) {
-      return _ProviderModulesComponent_0_4;
-    }
     if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
       return _FooService_0_5;
     }

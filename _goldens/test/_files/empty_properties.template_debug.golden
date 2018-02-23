@@ -79,23 +79,6 @@ class ViewEmptyPropertiesComponent0 extends DebugAppView<import1.EmptyProperties
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.FancyButtonComponent) && (0 == nodeIndex))) {
-      return _FancyButtonComponent_0_4;
-    }
-    if ((identical(token, import1.FancyButtonComponent) && (1 == nodeIndex))) {
-      return _FancyButtonComponent_1_4;
-    }
-    if ((identical(token, import1.FancyButtonComponent) && (2 == nodeIndex))) {
-      return _FancyButtonComponent_2_4;
-    }
-    if ((identical(token, import1.FancyButtonComponent) && (3 == nodeIndex))) {
-      return _FancyButtonComponent_3_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
@@ -147,14 +130,6 @@ class _ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
     _compView_0.create(_EmptyPropertiesComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import1.EmptyPropertiesComponent>(0, this, rootEl, _EmptyPropertiesComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.EmptyPropertiesComponent) && (0 == nodeIndex))) {
-      return _EmptyPropertiesComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -213,14 +188,6 @@ class _ViewFancyButtonComponentHost0 extends DebugAppView<dynamic> {
     _compView_0.create(_FancyButtonComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import1.FancyButtonComponent>(0, this, rootEl, _FancyButtonComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.FancyButtonComponent) && (0 == nodeIndex))) {
-      return _FancyButtonComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override

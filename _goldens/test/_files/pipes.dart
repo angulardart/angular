@@ -46,8 +46,6 @@ class TypesPipe implements PipeTransform {
     {{ "lifecycle" | lifecycle }}
     {{ "types" | types:1:2:c:d }}
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class Comp {
   C c;

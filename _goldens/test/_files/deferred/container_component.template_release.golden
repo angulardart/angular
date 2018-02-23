@@ -85,14 +85,6 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, deflib0.DeferredChildComponent) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
-      return _DeferredChildComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -125,14 +117,6 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, deflib2.SampleComponent) && (0 == nodeIndex))) {
-      return _SampleComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -161,14 +145,6 @@ class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
     _compView_0.create(_TestContainerComponent_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.TestContainerComponent>(0, this, rootEl, _TestContainerComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TestContainerComponent) && (0 == nodeIndex))) {
-      return _TestContainerComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override

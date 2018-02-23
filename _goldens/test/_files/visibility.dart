@@ -5,8 +5,6 @@ abstract class Dependency {}
 @Component(
   selector: 'dependent',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class Dependent {
   Dependent(Dependency _);
@@ -39,7 +37,5 @@ class DependencyWithContent implements Dependency {}
     </dependency>
   ''',
   directives: const [Dependency, Dependent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DependencyAndDependentInView {}

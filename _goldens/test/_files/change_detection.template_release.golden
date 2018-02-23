@@ -69,14 +69,6 @@ class _ViewCheckOnceComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.CheckOnceComponent) && (0 == nodeIndex))) {
-      return _CheckOnceComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     _compView_0.detectHostChanges(firstCheck);
@@ -134,14 +126,6 @@ class _ViewCheckedComponentHost0 extends AppView<dynamic> {
     _compView_0.create(_CheckedComponent_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.CheckedComponent>(0, this, rootEl, _CheckedComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.CheckedComponent) && (0 == nodeIndex))) {
-      return _CheckedComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -203,14 +187,6 @@ class _ViewCheckAlwaysComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.CheckAlwaysComponent) && (0 == nodeIndex))) {
-      return _CheckAlwaysComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -269,14 +245,6 @@ class _ViewDetachedComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.DetachedComponent) && (0 == nodeIndex))) {
-      return _DetachedComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -332,14 +300,6 @@ class _ViewOnPushComponentHost0 extends AppView<dynamic> {
     _compView_0.create(_OnPushComponent_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.OnPushComponent>(0, this, rootEl, _OnPushComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.OnPushComponent) && (0 == nodeIndex))) {
-      return _OnPushComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -403,14 +363,6 @@ class _ViewStatefulComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.StatefulComponent) && (0 == nodeIndex))) {
-      return _StatefulComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -466,14 +418,6 @@ class _ViewDefaultComponentHost0 extends AppView<dynamic> {
     _compView_0.create(_DefaultComponent_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.DefaultComponent>(0, this, rootEl, _DefaultComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.DefaultComponent) && (0 == nodeIndex))) {
-      return _DefaultComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
