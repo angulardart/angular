@@ -864,12 +864,22 @@ class CompileView implements AppViewBuilder {
     o.OutputType type;
     if (isMulti) {
       resolvedProviderValueExpr = o.literalArr(providerValueExpressions);
-      type = new o.ArrayType(provider.multiProviderType != null
-          ? o.importType(provider.multiProviderType)
+      type = new o.ArrayType(provider.typeArgument != null
+          ? o.importType(
+              provider.typeArgument,
+              provider.typeArgument.genericTypes,
+            )
           : o.DYNAMIC_TYPE);
     } else {
       resolvedProviderValueExpr = providerValueExpressions[0];
-      type = providerValueExpressions[0].type;
+      if (provider.typeArgument != null) {
+        type = o.importType(
+          provider.typeArgument,
+          provider.typeArgument.genericTypes,
+        );
+      } else {
+        type = providerValueExpressions[0].type;
+      }
     }
 
     type ??= o.DYNAMIC_TYPE;

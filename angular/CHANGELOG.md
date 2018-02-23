@@ -220,6 +220,10 @@ class Comp {
     D. Giving C local visibility incorrectly prevented this assignment and
     generated code to inject D from the parent injector.
 
+*  Fixed a bug where `Provider<List<T>>` was treated as `Provider<List>` when
+   compiled as part of the view compiler (`@Component.providers:`). Now the
+   additional generic types flow through the compiler.
+
 ## 5.0.0-alpha+5
 
 ### New features

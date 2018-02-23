@@ -584,7 +584,7 @@ void main() {
           return new CompileProviderMetadata(
               token: createToken(token),
               multi: multi,
-              multiType: multiType,
+              typeArgument: multiType,
               useClass: new CompileTypeMetadata(
                   name: '''provider${ nextProviderId ++}'''),
               deps: deps.map(createDep).toList());
