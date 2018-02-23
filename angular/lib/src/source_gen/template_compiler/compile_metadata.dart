@@ -117,6 +117,19 @@ class CompileTypeMetadataVisitor
       }
     }
     final token = dart_objects.getField(provider, 'token');
+
+    // Workaround for analyzer bug.
+    // https://github.com/dart-lang/angular/issues/917
+    if (multiType == null &&
+        $OpaqueToken.isAssignableFromType(token.type) &&
+        token.type.typeArguments.isNotEmpty) {
+      // If we see a Provider<dynamic> (no generic type), but the token is a
+      // typed OpaqueToken<T>, pretend that the Provider was actually inferred
+      // as Provider<T>.
+      final opaqueTokenGenericType = token.type.typeArguments.first.element;
+      multiType = _getCompileTypeMetadata(opaqueTokenGenericType);
+    }
+
     return new CompileProviderMetadata(
       token: _token(token),
       useClass: _getUseClass(provider, token),
