@@ -6,7 +6,6 @@ import 'dart:html';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 
 import 'on_push_test.template.dart' as ng_generated;
 
@@ -18,8 +17,7 @@ void main() {
   test('should use ChangeDetectorRef to manually request a check', () async {
     final testBed = new NgTestBed<ManualCheckComponent>();
     final testFixture = await testBed.create();
-    final childCmpNoTemplate = testFixture.rootElement.firstChild;
-    final cmp = getDebugNode(childCmpNoTemplate).getLocal('cmp');
+    final cmp = testFixture.assertOnlyInstance.child;
     expect(cmp.numberOfChecks, 1);
     await testFixture.update();
     expect(cmp.numberOfChecks, 1);
@@ -30,8 +28,7 @@ void main() {
   test('should check component when bindings update', () async {
     final testBed = new NgTestBed<PushCmpHostComponent>();
     final testFixture = await testBed.create();
-    final pushCmp = testFixture.rootElement.firstChild;
-    final cmp = getDebugNode(pushCmp).getLocal('cmp');
+    final cmp = testFixture.assertOnlyInstance.child;
     expect(cmp.numberOfChecks, 1);
     await testFixture.update((component) => component.ctxProp = 'two');
     expect(cmp.numberOfChecks, 2);
@@ -40,22 +37,22 @@ void main() {
   test('should check when an event is fired', () async {
     final testBed = new NgTestBed<PushCmpHostComponent>();
     final testFixture = await testBed.create();
-    final pushCmp = testFixture.rootElement.children.first;
-    final cmp = getDebugNode(pushCmp).getLocal('cmp');
+    final cmp = testFixture.assertOnlyInstance.child;
+    final cmpElement = testFixture.rootElement.children.first;
     expect(cmp.numberOfChecks, 1);
     // Regular element.
     await testFixture.update((_) {
-      pushCmp.children[0].dispatchEvent(new MouseEvent('click'));
+      cmpElement.children[0].dispatchEvent(new MouseEvent('click'));
     });
     expect(cmp.numberOfChecks, 2);
     // Element inside an *ngIf.
     await testFixture.update((_) {
-      pushCmp.children[1].dispatchEvent(new MouseEvent('click'));
+      cmpElement.children[1].dispatchEvent(new MouseEvent('click'));
     });
     expect(cmp.numberOfChecks, 3);
     // Element inside a child component.
     await testFixture.update((_) {
-      pushCmp.children[2].children.first.dispatchEvent(new MouseEvent('click'));
+      cmpElement.children[2].children[0].dispatchEvent(new MouseEvent('click'));
     });
     expect(cmp.numberOfChecks, 4);
   });
@@ -63,8 +60,7 @@ void main() {
   test('should not affect updating bindings', () async {
     final testBed = new NgTestBed<PushCmpWithRefHostComponent>();
     final testFixture = await testBed.create();
-    final pushCmpWithRef = testFixture.rootElement.children.first;
-    final cmp = getDebugNode(pushCmpWithRef).getLocal('cmp');
+    final cmp = testFixture.assertOnlyInstance.child;
     expect(cmp.prop, 'one');
     await testFixture.update((component) => component.ctxProp = 'two');
     expect(cmp.prop, 'two');
@@ -73,8 +69,7 @@ void main() {
   test('should check when async pipe requests check', () async {
     final testBed = new NgTestBed<PushCmpWithAsyncPipeHostCmp>();
     final testFixture = await testBed.create();
-    final pushCmpWithAsyncPipe = testFixture.rootElement.children.first;
-    final cmp = getDebugNode(pushCmpWithAsyncPipe).getLocal('cmp');
+    final cmp = testFixture.assertOnlyInstance.child;
     expect(cmp.numberOfChecks, 1);
     await testFixture.update();
     expect(cmp.numberOfChecks, 1);
@@ -87,8 +82,6 @@ void main() {
   selector: 'push-cmp-with-ref',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '{{field}}',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PushCmpWithRef {
   int numberOfChecks;
@@ -114,16 +107,15 @@ class PushCmpWithRef {
   selector: 'manual-check',
   template: '<push-cmp-with-ref #cmp></push-cmp-with-ref>',
   directives: const [PushCmpWithRef],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class ManualCheckComponent {}
+class ManualCheckComponent {
+  @ViewChild('cmp')
+  PushCmpWithRef child;
+}
 
 @Component(
   selector: 'event-cmp',
   template: '<div (click)="noop()"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class EventCmp {
   void noop() {}
@@ -135,8 +127,6 @@ class EventCmp {
   template: '{{field}}<div (click)="noop()"></div><div *ngIf="true" '
       '(click)="noop()"></div><event-cmp></event-cmp>',
   directives: const [EventCmp, NgIf],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PushCmp {
   int numberOfChecks;
@@ -159,22 +149,24 @@ class PushCmp {
   selector: 'push-cmp-host',
   template: '<push-cmp [prop]="ctxProp" #cmp></push-cmp>',
   directives: const [PushCmp],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PushCmpHostComponent {
   String ctxProp = 'one';
+
+  @ViewChild('cmp')
+  PushCmp child;
 }
 
 @Component(
   selector: 'push-cmp-with-ref-host',
   template: '<push-cmp-with-ref [prop]="ctxProp" #cmp></push-cmp-with-ref>',
   directives: const [PushCmpWithRef],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PushCmpWithRefHostComponent {
   String ctxProp = 'one';
+
+  @ViewChild('cmp')
+  PushCmpWithRef child;
 }
 
 @Component(
@@ -182,8 +174,6 @@ class PushCmpWithRefHostComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '{{field | async}}',
   pipes: const [AsyncPipe],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PushCmpWithAsyncPipe {
   int numberOfChecks = 0;
@@ -209,7 +199,8 @@ class PushCmpWithAsyncPipe {
   selector: 'push-cmp-with-async-host',
   template: '<push-cmp-with-async #cmp></push-cmp-with-async>',
   directives: const [PushCmpWithAsyncPipe],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class PushCmpWithAsyncPipeHostCmp {}
+class PushCmpWithAsyncPipeHostCmp {
+  @ViewChild('cmp')
+  PushCmpWithAsyncPipe child;
+}
