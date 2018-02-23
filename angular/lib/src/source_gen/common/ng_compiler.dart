@@ -11,6 +11,7 @@ import 'package:angular/src/compiler/style_compiler.dart';
 import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/compiler/view_compiler/view_compiler.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 
 OfflineCompiler createTemplateCompiler(
     BuildStep buildStep, CompilerFlags flags) {

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:build/build.dart';
-import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../common/names.dart';
 import 'processor.dart';

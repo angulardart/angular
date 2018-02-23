@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import 'analyzer.dart';
-import 'flags.dart';
 
 const _htmlImport = "import 'dart:html';";
 const _angularImport = "import 'package:angular/angular.dart';";

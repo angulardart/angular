@@ -1,6 +1,14 @@
+## 1.0.1-alpha+6
+
 ### New features
 
 -   Added `markAsUntouched` method to `AbstractControl`.
+
+### Breaking Changes
+
+-   Changed type of `AbstractControl.statusChanges` from `Stream<dynamic>` to
+    `Stream<String>`. This now matches the type for `AbstractControl.status`,
+    which as always been a `String`.
 
 ### Deprecations
 

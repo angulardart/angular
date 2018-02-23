@@ -1,3 +1,5 @@
+## 5.0.0-alpha+6
+
 ### New features
 
 *   The compiler now reports an actionable error when an annotation is used on a
@@ -36,6 +38,27 @@ class Comp1 {
 
 class Comp2 {
   Comp2(@baseUrl String url);
+}
+```
+
+* You are now able to `extend` `OpaqueToken` or `MulitToken` to provide
+  custom application-specific injection tokens. For example, providing a
+  specific token for XSRF purposes:
+
+```dart
+class XsrfToken extends OpaqueToken<String> {
+  const XsrfToken();
+}
+
+@Component(
+  providers: const [
+    const ValueProvider.forToken(const XsrfToken(), 'ABC123'),
+  ],
+)
+class Comp {
+  Comp(@XsrfToken() String token) {
+    print(token); // ABC123
+  }
 }
 ```
 
@@ -126,13 +149,11 @@ class Comp2 {
     `DependencyImpl` to inject `Dependency`, not just those constructed in the
     same view.
 
-<!-- NOT YET ENABLED
-* Services that were _not_ marked `@Injectable()` are _no longer skipped_ when
-  provided in `providers: const [ ... ]` for a `@Directive` or `@Component`.
-  This choice made sense when `@Injectable()` was required, but this is no
-  longer the case. Additionally, the warning that was printed to console has
-  been removed.
--->
+*   Services that were _not_ marked `@Injectable()` are _no longer skipped_ when
+    provided in `providers: const [ ... ]` for a `@Directive` or `@Component`.
+    This choice made sense when `@Injectable()` was required, but this is no
+    longer the case. Additionally, the warning that was printed to console has
+    been removed.
 
 *   It is no longer a build warning to have an injectable service with multiple
     constructors. This was originally meant to keep injection from being too
@@ -179,6 +200,25 @@ class Comp2 {
       Has a "template" property set to a string that is a file.
       This is a common mistake, did you mean "templateUrl" instead?
     ```
+
+*   If a private class is annotated with `@Injectable()` the compiler fails. In
+    practice this caused a compilation error later in DDC/Dart2JS, but now the
+    AngularDart compiler will not emit invalid code.
+
+*   Removed spurious/incorrect warnings about classes that are used as
+    interfaces needing `@Injectable` (or needing to be non-abstract), which
+    are wrong and confusing.
+
+*   Fixed a case where the compiler generated incorrect code when a directive D
+    was applied to the host element of component C where
+
+    *   C implements D,
+    *   C provides D as an alias for itself, and
+    *   C has `Visibility.local`.
+
+    Normally the local reference for C would be reused instead of creating a new
+    D. Giving C local visibility incorrectly prevented this assignment and
+    generated code to inject D from the parent injector.
 
 ## 5.0.0-alpha+5
 
