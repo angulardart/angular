@@ -41,6 +41,27 @@ class Comp2 {
 }
 ```
 
+* You are now able to `extend` `OpaqueToken` or `MulitToken` to provide
+  custom application-specific injection tokens. For example, providing a
+  specific token for XSRF purposes:
+
+```dart
+class XsrfToken extends OpaqueToken<String> {
+  const XsrfToken();
+}
+
+@Component(
+  providers: const [
+    const ValueProvider.forToken(const XsrfToken(), 'ABC123'),
+  ],
+)
+class Comp {
+  Comp(@XsrfToken() String token) {
+    print(token); // ABC123
+  }
+}
+```
+
 ### Breaking changes
 
 *   Restricted the default visibility of all components and directives to
