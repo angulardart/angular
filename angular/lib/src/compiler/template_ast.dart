@@ -233,7 +233,7 @@ class ProviderAst implements TemplateAst {
   final bool multiProvider;
 
   /// May be non-null if [multiProvider] is `true`.
-  final CompileTypeMetadata multiProviderType;
+  final CompileTypeMetadata typeArgument;
 
   /// Whether provider should be eagerly created at build time.
   ///
@@ -274,7 +274,7 @@ class ProviderAst implements TemplateAst {
     this.sourceSpan, {
     this.eager,
     this.dynamicallyReachable: true,
-    this.multiProviderType,
+    this.typeArgument,
     this.visibleForInjection: true,
     this.implementedByDirectiveWithNoVisibility: false,
   });

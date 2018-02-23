@@ -553,8 +553,11 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }, params, ctx, ",");
   }
 
-  void _visitIdentifier(CompileIdentifierMetadata value,
-      List<o.OutputType> typeParams, dynamic context) {
+  void _visitIdentifier(
+    CompileIdentifierMetadata value,
+    List<o.OutputType> typeParams,
+    dynamic context,
+  ) {
     EmitterVisitorContext ctx = context;
     String prefix = '';
     bool isDeferred = false;

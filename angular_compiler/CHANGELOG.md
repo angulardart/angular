@@ -5,6 +5,7 @@
 *   Added an internal `cli.dart` library. See `lib/cli.dart` for details.
 *   Added `SplitDartEmitter` for internal use.
 *   Added `$QueryList` as a `TypeChecker`.
+*   Expose the `$Provider` `TypeChecker`.
 
 ### Bug fixes
 

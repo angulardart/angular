@@ -359,7 +359,7 @@ CompileProviderMetadata _transformProvider(CompileProviderMetadata provider,
     useValue: useValue,
     deps: deps,
     multi: provider.multi,
-    multiType: provider.multiType,
+    typeArgument: provider.typeArgument,
   );
 }
 
@@ -376,7 +376,7 @@ ProviderAst _transformProviderAst(ProviderAst provider,
     eager: provider.eager || forceEager,
     dynamicallyReachable: provider.dynamicallyReachable,
     visibleForInjection: provider.visibleForInjection,
-    multiProviderType: provider.multiProviderType,
+    typeArgument: provider.typeArgument,
     implementedByDirectiveWithNoVisibility:
         provider.implementedByDirectiveWithNoVisibility,
   );
@@ -496,7 +496,7 @@ class _ProviderResolver {
           sourceSpan,
           eager: eager,
           implementedByDirectiveWithNoVisibility: hasLocalImplementation,
-          multiProviderType: provider.multiType,
+          typeArgument: provider.typeArgument,
           visibleForInjection: provider.visibility == Visibility.all,
         );
         _providersByToken.add(provider.token, resolvedProvider);

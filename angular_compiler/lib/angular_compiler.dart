@@ -42,6 +42,7 @@ export 'src/analyzer.dart'
         $Optional,
         $Output,
         $Pipe,
+        $Provider,
         $QueryList,
         $Self,
         $SkipSelf,

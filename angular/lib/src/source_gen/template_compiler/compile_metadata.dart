@@ -108,28 +108,41 @@ class CompileTypeMetadataVisitor
         useClass: metadata,
       );
     }
-    CompileTypeMetadata multiType;
+    CompileTypeMetadata providerTypeArgument;
     final typeArguments = provider.type?.typeArguments;
     if (typeArguments != null && typeArguments.isNotEmpty) {
       final genericType = typeArguments.first;
       if (!genericType.isDynamic) {
-        multiType = _getCompileTypeMetadata(genericType.element);
+        providerTypeArgument = _getCompileTypeMetadata(
+          genericType.element,
+          genericTypes: genericType is ParameterizedType
+              ? genericType.typeArguments
+              : const [],
+        );
       }
     }
     final token = dart_objects.getField(provider, 'token');
 
     // Workaround for analyzer bug.
     // https://github.com/dart-lang/angular/issues/917
-    if (multiType == null &&
+    if (providerTypeArgument == null &&
         $OpaqueToken.isAssignableFromType(token.type) &&
+        // Only apply "auto inference" to "new-type" Providers like
+        // Value, Class, Existing, FactoryProvider.
+        !$Provider.isExactlyType(provider.type) &&
         token.type.typeArguments.isNotEmpty) {
       // If we see a Provider<dynamic> (no generic type), but the token is a
       // typed OpaqueToken<T>, pretend that the Provider was actually inferred
-      // as Provider<T>.
-      final opaqueTokenGenericType = token.type.typeArguments.first.element;
-      multiType = _getCompileTypeMetadata(opaqueTokenGenericType);
+      // as Provider<T>:
+      // (Again, see https://github.com/dart-lang/angular/issues/917)
+      final opaqueTokenGeneric = token.type.typeArguments.first;
+      providerTypeArgument = _getCompileTypeMetadata(
+        opaqueTokenGeneric.element,
+        genericTypes: opaqueTokenGeneric is ParameterizedType
+            ? opaqueTokenGeneric.typeArguments
+            : const [],
+      );
     }
-
     return new CompileProviderMetadata(
       token: _token(token),
       useClass: _getUseClass(provider, token),
@@ -142,7 +155,7 @@ class CompileTypeMetadataVisitor
             'multi',
             defaultTo: false,
           ),
-      multiType: multiType,
+      typeArgument: providerTypeArgument,
     );
   }
 
@@ -209,6 +222,7 @@ class CompileTypeMetadataVisitor
   CompileTypeMetadata _getCompileTypeMetadata(
     ClassElement element, {
     bool enforceClassCanBeCreated: false,
+    List<DartType> genericTypes: const [],
   }) =>
       new CompileTypeMetadata(
         moduleUrl: moduleUrl(element),
@@ -219,6 +233,7 @@ class CompileTypeMetadataVisitor
               : [],
           element,
         ),
+        genericTypes: genericTypes.map(fromDartType).toList(),
       );
 
   CompileTypeMetadata _getFunctionCompileTypeMetadata(
