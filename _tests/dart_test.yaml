@@ -9,4 +9,5 @@ tags:
 # on travis.
 override_platforms:
   chrome:
-    headless: false
+    settings:
+      headless: false
