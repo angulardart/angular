@@ -3,7 +3,6 @@
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 
 import 'dependency_injection_test.template.dart' as ng_generated;
 
@@ -15,39 +14,30 @@ void main() {
   test('should support bindings', () async {
     final testBed = new NgTestBed<ProvideConsumeInjectableComponent>();
     final testFixture = await testBed.create();
-    final debugNode = getDebugNode(testFixture.rootElement.children.first);
-    final consumer = debugNode.getLocal('consumer');
+    final consumer = testFixture.assertOnlyInstance.consumer;
     expect(consumer.injectable, new isInstanceOf<InjectableService>());
   });
 
   test('should support viewProviders', () async {
     final testBed = new NgTestBed<ProvidesInjectableInViewComponent>();
     final testFixture = await testBed.create();
-    final debugNode = getDebugNode(testFixture.rootElement.children.first);
-    final consumer = debugNode.getLocal('consumer');
+    final consumer = testFixture.assertOnlyInstance.consumer;
     expect(consumer.injectable, new isInstanceOf<InjectableService>());
   });
 
   test('should support unbounded lookup', () async {
     final testBed = new NgTestBed<ProvidesInjectableUnboundedComponent>();
     final testFixture = await testBed.create();
-    final debugNode = getDebugNode(testFixture.rootElement.children.first);
-    final dir = debugNode.getLocal('dir');
+    final dir = testFixture.assertOnlyInstance.container;
     expect(dir.directive.injectable, new isInstanceOf<InjectableService>());
   });
 
   test('should support the event-bus scenario', () async {
     final testBed = new NgTestBed<EventBusComponent>();
     final testFixture = await testBed.create();
-    final grandParentElement = getDebugNode(testFixture.rootElement
-        .querySelector('grand-parent-providing-event-bus'));
-    final parentElement = getDebugNode(
-        testFixture.rootElement.querySelector('parent-providing-event-bus'));
-    final childElement = getDebugNode(
-        testFixture.rootElement.querySelector('child-consuming-event-bus'));
-    final grandParent = grandParentElement.inject(GrandParentProvidingEventBus);
-    final parent = parentElement.inject(ParentProvidingEventBus);
-    final child = childElement.inject(ChildConsumingEventBus);
+    final grandParent = testFixture.assertOnlyInstance.grandParent;
+    final parent = testFixture.assertOnlyInstance.parent;
+    final child = parent.child;
     expect(grandParent.bus.name, 'grandparent');
     expect(parent.bus.name, 'parent');
     expect(parent.grandParentBus, grandParent.bus);
@@ -57,8 +47,7 @@ void main() {
   test('should instantiate bindings lazily', () async {
     final testBed = new NgTestBed<LazyBindingsComponent>();
     final testFixture = await testBed.create();
-    final debugNode = getDebugNode(testFixture.rootElement.children.first);
-    final providing = debugNode.getLocal('providing');
+    final providing = testFixture.assertOnlyInstance.providing;
     expect(providing.created, false);
     await testFixture.update((component) => component.visible = true);
     expect(providing.created, true);
@@ -67,8 +56,7 @@ void main() {
   test('should inject @Host', () async {
     final testBed = new NgTestBed<InjectsHostComponent>();
     final testFixture = await testBed.create();
-    final someDirective = testFixture.rootElement.children.first;
-    final cmp = getDebugNode(someDirective).getLocal('cmp');
+    final cmp = testFixture.assertOnlyInstance.compWithHost;
     expect(cmp.myHost, new isInstanceOf<SomeDirective>());
   });
 
@@ -76,8 +64,7 @@ void main() {
       () async {
     final testBed = new NgTestBed<InjectsHostThroughViewContainer>();
     final testFixture = await testBed.create();
-    final cmpWithHost = testFixture.rootElement.querySelector('cmp-with-host');
-    final cmp = getDebugNode(cmpWithHost).getLocal('cmp');
+    final cmp = testFixture.assertOnlyInstance.compWithHost;
     expect(cmp.myHost, new isInstanceOf<SomeDirective>());
   });
 }
@@ -88,8 +75,6 @@ class InjectableService {}
 @Component(
   selector: 'directive-consuming-injectable',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveConsumingInjectable {
   InjectableService injectable;
@@ -101,8 +86,6 @@ class DirectiveConsumingInjectable {
 @Directive(
   selector: 'directive-providing-injectable',
   providers: const [InjectableService],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveProvidingInjectable {}
 
@@ -116,10 +99,11 @@ class DirectiveProvidingInjectable {}
     DirectiveConsumingInjectable,
     DirectiveProvidingInjectable,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class ProvideConsumeInjectableComponent {}
+class ProvideConsumeInjectableComponent {
+  @ViewChild('consumer')
+  DirectiveConsumingInjectable consumer;
+}
 
 @Component(
   selector: 'provides-injectable-in-view',
@@ -128,10 +112,11 @@ class ProvideConsumeInjectableComponent {}
 </directive-consuming-injectable>''',
   directives: const [DirectiveConsumingInjectable],
   viewProviders: const [InjectableService],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class ProvidesInjectableInViewComponent {}
+class ProvidesInjectableInViewComponent {
+  @ViewChild('consumer')
+  DirectiveConsumingInjectable consumer;
+}
 
 @Component(
   selector: 'directive-containing-directive-consuming-an-injectable',
@@ -139,7 +124,6 @@ class ProvidesInjectableInViewComponent {}
 <directive-consuming-injectable-unbounded>
 </directive-consuming-injectable-unbounded>''',
   directives: const [DirectiveConsumingInjectableUnbounded],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class DirectiveContainingDirectiveConsumingAnInjectable {
@@ -149,8 +133,6 @@ class DirectiveContainingDirectiveConsumingAnInjectable {
 @Component(
   selector: 'directive-consuming-injectable-unbounded',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveConsumingInjectableUnbounded {
   InjectableService injectable;
@@ -172,10 +154,11 @@ class DirectiveConsumingInjectableUnbounded {
     DirectiveProvidingInjectable,
     DirectiveContainingDirectiveConsumingAnInjectable,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class ProvidesInjectableUnboundedComponent {}
+class ProvidesInjectableUnboundedComponent {
+  @ViewChild('dir')
+  DirectiveContainingDirectiveConsumingAnInjectable container;
+}
 
 class EventBus {
   final EventBus parentEventBus;
@@ -191,8 +174,6 @@ const grandParentBus = const EventBus(null, 'grandparent');
   providers: const [
     const Provider(EventBus, useValue: grandParentBus),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class GrandParentProvidingEventBus {
   EventBus bus;
@@ -213,20 +194,19 @@ EventBus createParentBus(EventBus parentEventBus) {
   ],
   directives: const [ChildConsumingEventBus],
   template: '<child-consuming-event-bus></child-consuming-event-bus>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ParentProvidingEventBus {
   EventBus bus;
   EventBus grandParentBus;
+
+  @ViewChild(ChildConsumingEventBus)
+  ChildConsumingEventBus child;
 
   ParentProvidingEventBus(this.bus, @SkipSelf() this.grandParentBus);
 }
 
 @Directive(
   selector: 'child-consuming-event-bus',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildConsumingEventBus {
   EventBus bus;
@@ -244,10 +224,14 @@ class ChildConsumingEventBus {
     GrandParentProvidingEventBus,
     ParentProvidingEventBus,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class EventBusComponent {}
+class EventBusComponent {
+  @ViewChild(GrandParentProvidingEventBus)
+  GrandParentProvidingEventBus grandParent;
+
+  @ViewChild(ParentProvidingEventBus)
+  ParentProvidingEventBus parent;
+}
 
 InjectableService createInjectableWithLogging(Injector injector) {
   injector.get(ComponentProvidingLoggingInjectable).created = true;
@@ -261,7 +245,6 @@ InjectableService createInjectableWithLogging(Injector injector) {
         useFactory: createInjectableWithLogging, deps: const [Injector])
   ],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class ComponentProvidingLoggingInjectable {
@@ -280,16 +263,16 @@ class ComponentProvidingLoggingInjectable {
     DirectiveConsumingInjectable,
     NgIf,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class LazyBindingsComponent {
   bool visible = false;
+
+  @ViewChild('providing')
+  ComponentProvidingLoggingInjectable providing;
 }
 
 @Directive(
   selector: 'some-directive',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class SomeDirective {}
@@ -298,8 +281,6 @@ class SomeDirective {}
   selector: 'cmp-with-host',
   template: '<p>Component with an injected host</p>',
   directives: const [SomeDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CompWithHost {
   SomeDirective myHost;
@@ -314,10 +295,11 @@ class CompWithHost {
   template:
       '<some-directive><cmp-with-host #cmp></cmp-with-host></some-directive>',
   directives: const [CompWithHost, SomeDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectsHostComponent {}
+class InjectsHostComponent {
+  @ViewChild('cmp')
+  CompWithHost compWithHost;
+}
 
 @Component(
   selector: 'injects-host-through-view-container',
@@ -328,7 +310,8 @@ class InjectsHostComponent {}
   </p>
 </some-directive>''',
   directives: const [CompWithHost, NgIf, SomeDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectsHostThroughViewContainer {}
+class InjectsHostThroughViewContainer {
+  @ViewChild('cmp')
+  CompWithHost compWithHost;
+}

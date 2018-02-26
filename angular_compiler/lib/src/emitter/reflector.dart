@@ -52,8 +52,6 @@ class ReflectableEmitter {
   Reference get _Self => _ngRef('Self');
   Reference get _Host => _ngRef('Host');
   Reference get _Inject => _ngRef('Inject');
-  Reference get _MultiToken => _ngRef('MultiToken');
-  Reference get _OpaqueToken => _ngRef('OpaqueToken');
 
   ReflectableEmitter(
     this._output,
@@ -318,11 +316,10 @@ class ReflectableEmitter {
       return _Inject.constInstance([refer(token.literal)]);
     }
     if (token is OpaqueTokenElement) {
-      final classType = token.isMultiToken ? _MultiToken : _OpaqueToken;
+      final classType = linkToReference(token.classUrl, _library);
       final tokenInstance = classType.constInstance(
-        [literalString(token.identifier)],
+        token.identifier.isNotEmpty ? [literalString(token.identifier)] : [],
         {},
-        [linkToReference(token.typeUrl, _library)],
       );
       return _Inject.constInstance([tokenInstance]);
     }

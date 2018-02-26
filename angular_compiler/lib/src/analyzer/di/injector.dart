@@ -125,17 +125,12 @@ class InjectorReader {
       return _referSafe(token.link.symbol, token.link.import);
     }
     final opaqueToken = token as OpaqueTokenElement;
-    final tokenClass = opaqueToken.isMultiToken ? 'MultiToken' : 'OpaqueToken';
-    final preciseToken = new TypeReference((b) {
-      b.symbol = tokenClass;
-      b.url = _runtime;
-      if (opaqueToken.typeUrl != null) {
-        b.types.add(linkToReference(opaqueToken.typeUrl, libraryReader));
-      }
-    });
-    return preciseToken.constInstance([
-      literalString(opaqueToken.identifier),
-    ]);
+    final preciseToken = linkToReference(opaqueToken.classUrl, libraryReader);
+    return preciseToken.constInstance(
+      opaqueToken.identifier.isNotEmpty
+          ? [literalString(opaqueToken.identifier)]
+          : [],
+    );
   }
 
   List<Expression> _computeDependencies(Iterable<DependencyElement> deps) {

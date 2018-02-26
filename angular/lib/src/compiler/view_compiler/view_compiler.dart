@@ -1,6 +1,6 @@
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
-import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 
 import 'package:source_span/source_span.dart';
 

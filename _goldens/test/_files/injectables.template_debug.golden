@@ -9,7 +9,8 @@ import 'dart:html' as html;
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'dart:html' as _i1;
+import 'injectables.dart' as _i1;
+import 'dart:html' as _i2;
 import 'package:angular/src/debug/debug_context.dart';
 import 'package:angular/src/debug/debug_app_view.dart';
 import 'injectables.dart' as import2;
@@ -96,9 +97,6 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
     if ((identical(token, const import10.OpaqueToken('test')) && (0 == nodeIndex))) {
       return _test_0_4;
     }
-    if ((identical(token, import2.InjectableComponent) && (0 == nodeIndex))) {
-      return _InjectableComponent_0_5;
-    }
     if ((identical(token, import2.SomeDep) && (0 == nodeIndex))) {
       return _SomeDep_0_6;
     }
@@ -136,8 +134,12 @@ void initReflector() {
   _ngRef.registerFactory(SomeDep, () => new SomeDep());
   _ngRef.registerFactory(BaseService, () => new BaseService());
   _ngRef.registerFactory(InjectableService, () => new InjectableService());
+  _ngRef.registerFactory(InjectsXsrfToken, (String p0) => new InjectsXsrfToken(p0));
+  _ngRef.registerDependencies(InjectsXsrfToken, const [
+    const [const _ngRef.Inject(const _i1.XsrfToken())]
+  ]);
   _ngRef.registerDependencies(injectableFactory, const [
-    const [_i1.Window]
+    const [_i2.Window]
   ]);
   _ref0.initReflector();
 }

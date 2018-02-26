@@ -9,8 +9,6 @@ import 'package:angular/angular.dart';
     </div>
     ''',
   directives: const [NgIf, NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestFooComponent {
   final bool foo = true;

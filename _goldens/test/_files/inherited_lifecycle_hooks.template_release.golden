@@ -55,14 +55,6 @@ class _ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.LifecycleHooksComponent) && (0 == nodeIndex))) {
-      return _LifecycleHooksComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {

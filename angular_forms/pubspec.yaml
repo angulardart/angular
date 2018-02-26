@@ -2,20 +2,21 @@ name: angular_forms
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Forms framework for AngularDart.
-version: 1.0.1-alpha+5
+version: 1.0.1-alpha+6
 
 environment:
   sdk: '>=2.0.0-dev.20.0 <2.0.0'
 
 dependencies:
-  angular: '^5.0.0-alpha+5'
+  angular: '^5.0.0-alpha+6'
   meta: ^1.1.2
 
 dev_dependencies:
-  angular_test: ^2.0.0-alpha+3
+  angular_test: ^2.0.0-alpha+4
   build_runner: ^0.7.9
   build_test: ^0.10.0
   build_web_compilers: ^0.3.0
+  mockito: '>=0.11.0 <3.0.0'
   test: ^0.12.30+1
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
@@ -26,4 +27,6 @@ dependency_overrides:
     path: ../angular_ast
   angular_compiler:
     path: ../angular_compiler
+  angular_test:
+    path: ../angular_test
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===

@@ -422,6 +422,16 @@ void main() {
         final InjectsBaseUrl service = injector.get(InjectsBaseUrl);
         expect(service.url, 'https://site.com/api/');
       });
+
+      test('should support a user type that extends OpaqueToken', () {
+        final injector = new Injector.slowReflective([
+          const Provider(const XsrfToken(), useValue: 'ABC123'),
+          InjectsXsrfToken,
+        ]);
+        expect(injector.get(const XsrfToken()), 'ABC123');
+        final InjectsXsrfToken service = injector.get(InjectsXsrfToken);
+        expect(service.token, 'ABC123');
+      });
     });
 
     group('.generate', () {
@@ -521,6 +531,12 @@ void main() {
         final InjectsBaseUrl service = injector.get(InjectsBaseUrl);
         expect(service.url, 'https://site.com/api/');
       });
+
+      test('should support a user type that extends OpaqueToken', () {
+        expect(injector.get(const XsrfToken()), 'ABC123');
+        final InjectsXsrfToken service = injector.get(InjectsXsrfToken);
+        expect(service.token, 'ABC123');
+      });
     });
   });
 }
@@ -614,6 +630,10 @@ Null willNeverBeCalled2(Object _, Object __) => null;
   // Tests that @Inject(baseUrl) === @baseUrl
   const Provider(baseUrl, useValue: 'https://site.com/api/'),
   InjectsBaseUrl,
+
+  // Tests that class T extends OpaqueToken
+  const Provider(const XsrfToken(), useValue: 'ABC123'),
+  InjectsXsrfToken,
 ])
 final InjectorFactory exampleGenerated = ng.exampleGenerated$Injector;
 
@@ -653,4 +673,15 @@ class InjectsBaseUrl {
 
   // Identical to writing @Inject(baseUrl).
   InjectsBaseUrl(@baseUrl this.url);
+}
+
+class XsrfToken extends OpaqueToken<String> {
+  const XsrfToken();
+}
+
+@Injectable()
+class InjectsXsrfToken {
+  final String token;
+
+  InjectsXsrfToken(@XsrfToken() this.token);
 }

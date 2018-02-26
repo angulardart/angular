@@ -62,14 +62,6 @@ class _ViewDependentHost0 extends DebugAppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.Dependent) && (0 == nodeIndex))) {
-      return _Dependent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -111,14 +103,6 @@ class ViewDependencyWithDependentInView0 extends DebugAppView<import2.Dependency
     _compView_0.create(_Dependent_0_4, []);
     init(const [], null, [_el_0]);
     return null;
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.Dependent) && (0 == nodeIndex))) {
-      return _Dependent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -281,14 +265,6 @@ class ViewDependencyAndDependentInView0 extends DebugAppView<import2.DependencyA
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.Dependent) && (1 == nodeIndex))) {
-      return _Dependent_1_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_1.detectChanges();
   }
@@ -321,14 +297,6 @@ class _ViewDependencyAndDependentInViewHost0 extends DebugAppView<dynamic> {
     _compView_0.create(_DependencyAndDependentInView_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.DependencyAndDependentInView>(0, this, rootEl, _DependencyAndDependentInView_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.DependencyAndDependentInView) && (0 == nodeIndex))) {
-      return _DependencyAndDependentInView_0_4;
-    }
-    return notFoundResult;
   }
 
   @override

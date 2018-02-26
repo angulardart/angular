@@ -6,7 +6,7 @@ import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/source_gen/common/names.dart'
     show toTemplateExtension;
-import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../compile_metadata.dart'
     show
@@ -864,12 +864,22 @@ class CompileView implements AppViewBuilder {
     o.OutputType type;
     if (isMulti) {
       resolvedProviderValueExpr = o.literalArr(providerValueExpressions);
-      type = new o.ArrayType(provider.multiProviderType != null
-          ? o.importType(provider.multiProviderType)
+      type = new o.ArrayType(provider.typeArgument != null
+          ? o.importType(
+              provider.typeArgument,
+              provider.typeArgument.genericTypes,
+            )
           : o.DYNAMIC_TYPE);
     } else {
-      resolvedProviderValueExpr = providerValueExpressions[0];
-      type = providerValueExpressions[0].type;
+      resolvedProviderValueExpr = providerValueExpressions.first;
+      if (provider.typeArgument != null) {
+        type = o.importType(
+          provider.typeArgument,
+          provider.typeArgument.genericTypes,
+        );
+      } else {
+        type = resolvedProviderValueExpr.type;
+      }
     }
 
     type ??= o.DYNAMIC_TYPE;
@@ -976,7 +986,7 @@ class CompileView implements AppViewBuilder {
               ? o.DYNAMIC_TYPE
               : (providerHasChangeDetector ? changeDetectorType : type)));
     }
-    return new o.ReadClassMemberExpr(propName);
+    return new o.ReadClassMemberExpr(propName, type);
   }
 
   @override

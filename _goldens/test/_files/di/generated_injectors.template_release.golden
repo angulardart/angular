@@ -12,6 +12,7 @@ import 'package:angular/angular.template.dart' as _ref1;
 import 'package:angular/src/di/injector/injector.dart' as _i1;
 import 'package:angular/src/di/injector/hierarchical.dart' as _i2;
 import 'generated_injectors.dart' as _i3;
+import 'package:angular/src/core/di/opaque_token.dart' as _i4;
 
 _i1.Injector doGenerate$Injector([_i1.Injector parent]) => new _Injector$doGenerate._(parent);
 
@@ -28,40 +29,44 @@ class _Injector$doGenerate extends _i2.HierarchicalInjector {
   dynamic _getdynamic$5() => _i3.ExampleTheta.instance;
   dynamic _getdynamic$6() => const [const _i3.Example(), _i3.instanceOfExamplePrime, _i3.ExampleTheta.instance];
   dynamic _getdynamic$7() => const {'instanceOfExample': const _i3.Example(), _i3.instanceOfExamplePrime: 'instanceOfExamplePrime'};
-  String _getString$8() => 'A';
-  String _getString$9() => 'B';
-  _i1.Injector _getInjector$10() => this;
+  dynamic _getdynamic$8() => 'ABC123';
+  String _getString$9() => 'A';
+  String _getString$10() => 'B';
+  _i1.Injector _getInjector$11() => this;
   @override
   Object injectFromSelfOptional(Object token, [Object orElse = _i1.throwIfNotFound]) {
     if (identical(token, _i3.Example)) {
       return _getExample$0();
     }
-    if (identical(token, const _i1.OpaqueToken<dynamic>('someToken'))) {
+    if (identical(token, const _i4.OpaqueToken<dynamic>('someToken'))) {
       return _getString$1();
     }
-    if (identical(token, const _i1.OpaqueToken<String>('someToken'))) {
+    if (identical(token, const _i4.OpaqueToken<String>('someToken'))) {
       return _getString$2();
     }
-    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken1'))) {
+    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken1'))) {
       return _getdynamic$3();
     }
-    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken2'))) {
+    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken2'))) {
       return _getdynamic$4();
     }
-    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken3'))) {
+    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken3'))) {
       return _getdynamic$5();
     }
-    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken4'))) {
+    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken4'))) {
       return _getdynamic$6();
     }
-    if (identical(token, const _i1.OpaqueToken<dynamic>('arbitraryToken5'))) {
+    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken5'))) {
       return _getdynamic$7();
     }
-    if (identical(token, _i1.Injector)) {
-      return _getInjector$10();
+    if (identical(token, const _i3.XsrfToken())) {
+      return _getdynamic$8();
     }
-    if (identical(token, const _i1.MultiToken<dynamic>('someMultiToken'))) {
-      return [_getString$8(), _getString$9()];
+    if (identical(token, _i1.Injector)) {
+      return _getInjector$11();
+    }
+    if (identical(token, const _i4.MultiToken<dynamic>('someMultiToken'))) {
+      return [_getString$9(), _getString$10()];
     }
     return orElse;
   }

@@ -5,7 +5,6 @@ import 'dart:html';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 
 import 'template_test.template.dart' as ng_generated;
 
@@ -27,8 +26,7 @@ void main() {
     final testBed = new NgTestBed<DestroyParentViewComponent>();
     final testFixture = await testBed.create();
     final ngIfElement = testFixture.rootElement.children.first;
-    final templateBindings = ngIfElement.childNodes.first;
-    final someViewport = getDebugNode(templateBindings).inject(SomeViewport);
+    final someViewport = testFixture.assertOnlyInstance.viewport;
     expect(ngIfElement.children, hasLength(2));
     expect(someViewport.container, hasLength(2));
     await testFixture.update((component) => component.visible = false);
@@ -63,8 +61,6 @@ void main() {
 
 @Directive(
   selector: '[some-viewport]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SomeViewport {
   final ViewContainerRef container;
@@ -82,8 +78,6 @@ class SomeViewport {
   directives: const [
     SomeViewport,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TemplateDirectiveComponent {}
 
@@ -96,18 +90,17 @@ class TemplateDirectiveComponent {}
     NgIf,
     SomeViewport,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DestroyParentViewComponent {
   bool visible = true;
+
+  @ViewChild(SomeViewport)
+  SomeViewport viewport;
 }
 
 @Component(
   selector: 'empty-template',
   template: '<template></template>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class EmptyTemplateComponent {}
 
@@ -117,15 +110,11 @@ class EmptyTemplateComponent {}
   directives: const [
     SomeViewport,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TemplatePropertyComponent {}
 
 @Directive(
   selector: '[toolbarpart]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ToolbarPart {
   final TemplateRef templateRef;
@@ -135,8 +124,6 @@ class ToolbarPart {
 
 @Directive(
   selector: '[toolbarVc]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ToolbarViewContainer {
   final ViewContainerRef vc;
@@ -157,8 +144,6 @@ class ToolbarViewContainer {
     NgFor,
     ToolbarViewContainer,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ToolbarComponent {
   @ContentChildren(ToolbarPart)
@@ -169,7 +154,6 @@ class ToolbarComponent {
 
 @Directive(
   selector: 'some-directive',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class SomeDirective {}
@@ -178,8 +162,6 @@ class SomeDirective {}
   selector: 'cmp-with-host',
   template: '<p>Component with an injected host</p>',
   directives: const [SomeDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CompWithHost {
   SomeDirective myHost;
@@ -202,8 +184,6 @@ class CompWithHost {
     ToolbarComponent,
     ToolbarPart,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TemplateRefTransplantComponent {
   String prop = 'From component';

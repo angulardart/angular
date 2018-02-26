@@ -81,14 +81,6 @@ class _ViewHostComponentHost0 extends DebugAppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.HostComponent) && (0 == nodeIndex))) {
-      return _HostComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     _compView_0.detectHostChanges(firstCheck);

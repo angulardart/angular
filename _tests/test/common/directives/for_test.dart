@@ -7,7 +7,6 @@ import 'dart:html';
 import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular_test/angular_test.dart';
 
 import 'for_test.template.dart' as ng_generated;
@@ -295,23 +294,19 @@ void main() {
     test("should allow using a custom template", () async {
       var testBed = new NgTestBed<NgForCustomTemplateTest>();
       var testFixture = await testBed.create();
-      var childComp =
-          (getDebugNode(testFixture.rootElement) as DebugElement).children[0];
-      await testFixture.update((NgForCustomTemplateTest component) {
-        childComp.componentInstance.items = ["a", "b", "c"];
+      await testFixture.update((component) {
+        component.child.items = ["a", "b", "c"];
       });
-      expect(childComp.nativeElement, hasTextContent("0: a;1: b;2: c;"));
+      expect(testFixture.text, hasTextContent("0: a;1: b;2: c;"));
     });
 
     test("should use a default template if a custom one is null", () async {
       var testBed = new NgTestBed<NgForCustomTemplateNullTest>();
       var testFixture = await testBed.create();
-      var childComp =
-          (getDebugNode(testFixture.rootElement) as DebugElement).children[0];
       await testFixture.update((NgForCustomTemplateNullTest component) {
-        childComp.componentInstance.items = ["a", "b", "c"];
+        component.child.items = ["a", "b", "c"];
       });
-      expect(childComp.nativeElement, hasTextContent("0: a;1: b;2: c;"));
+      expect(testFixture.text, hasTextContent("0: a;1: b;2: c;"));
     });
 
     test(
@@ -319,12 +314,10 @@ void main() {
         'custom one are present', () async {
       var testBed = new NgTestBed<NgForCustomTemplatePrecedenceTest>();
       var testFixture = await testBed.create();
-      var childComp =
-          (getDebugNode(testFixture.rootElement) as DebugElement).children[0];
       await testFixture.update((NgForCustomTemplatePrecedenceTest component) {
-        childComp.componentInstance.items = ["a", "b", "c"];
+        component.child.items = ["a", "b", "c"];
       });
-      expect(childComp.nativeElement, hasTextContent("0: a;1: b;2: c;"));
+      expect(testFixture.text, hasTextContent("0: a;1: b;2: c;"));
     });
 
     group("track by", () {
@@ -487,8 +480,6 @@ class BaseTestComponent {
   template: '<div><copy-me template="ngFor let item of items">'
       '{{item.toString()}};</copy-me></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForItemsTest extends BaseTestComponent {
   @ContentChild(TemplateRef)
@@ -500,8 +491,6 @@ class NgForItemsTest extends BaseTestComponent {
   template: '<ul><li template="ngFor let item of items">{{item["name"]}};'
       '</li></ul>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForOptionsTest {
   @ContentChild(TemplateRef)
@@ -524,8 +513,6 @@ class NgForOptionsTest {
   selector: 'ngfor-null-test',
   template: '<ul><li template="ngFor let item of null">{{item}};</li></ul>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForNullTest extends NgForOptionsTest {}
 
@@ -534,8 +521,6 @@ class NgForNullTest extends NgForOptionsTest {}
   template: '<div><copy-me template="ngFor let item of items">'
       '{{item.toString()}};</copy-me></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForObjectItemInstanceTest {
   List items;
@@ -558,8 +543,6 @@ class NgForObjectItemInstanceTest {
       '</div>'
       '</div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForNestedTest {
   List items;
@@ -573,8 +556,6 @@ class NgForNestedTest {
       '{{subitem}}-{{item.length}};'
       '</div>|</template></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForNestedTemplateTest {
   List items;
@@ -586,8 +567,6 @@ class NgForNestedTemplateTest {
       'let-i="index"><div>{{i}}|</div>'
       '<div *ngIf="i % 2 == 0">even|</div></template></div>',
   directives: const [NgIf, NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForNestedLastIfTest {
   List items;
@@ -598,8 +577,6 @@ class NgForNestedLastIfTest {
   template: '<div><copy-me template="ngFor: let item of items; let i=index">'
       '{{i.toString()}}</copy-me></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForIndexTest {
   List items;
@@ -610,8 +587,6 @@ class NgForIndexTest {
   template: '<div><copy-me template="ngFor: let item of items; '
       'let isFirst=first">{{isFirst.toString()}}</copy-me></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForFirstTest {
   List items;
@@ -622,8 +597,6 @@ class NgForFirstTest {
   template: '<div><copy-me template="ngFor: let item of items; '
       'let isLast=last\">{{isLast.toString()}}</copy-me></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForLastTest {
   List items;
@@ -634,8 +607,6 @@ class NgForLastTest {
   template: '<div><copy-me template="ngFor: let item of items; '
       'let isEven=even\">{{isEven.toString()}}</copy-me></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForEvenTest {
   List items;
@@ -646,8 +617,6 @@ class NgForEvenTest {
   template: '<div><copy-me template=\"ngFor: let item of items; '
       'let isOdd=odd\">{{isOdd.toString()}}</copy-me></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForOddTest {
   List items;
@@ -658,10 +627,10 @@ class NgForOddTest {
   template: '<test-cmp><li template="let item; let i=index">'
       '{{i}}: {{item}};</li></test-cmp>',
   directives: const [NgFor, NgForCustomTemplateComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForCustomTemplateTest {
+  @ViewChild(NgForCustomTemplateComponent)
+  NgForCustomTemplateComponent child;
   List items;
 }
 
@@ -670,8 +639,6 @@ class NgForCustomTemplateTest {
   template: '<ul><template ngFor [ngForOf]="items" '
       '[ngForTemplate]="contentTpl"></template></ul>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForCustomTemplateComponent {
   @ContentChild(TemplateRef)
@@ -683,10 +650,10 @@ class NgForCustomTemplateComponent {
   selector: 'ng-for-custom-template-container2',
   template: '<test-cmp></test-cmp>',
   directives: const [NgFor, NgForCustomTemplateNullComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForCustomTemplateNullTest {
+  @ViewChild(NgForCustomTemplateNullComponent)
+  NgForCustomTemplateNullComponent child;
   List items;
 }
 
@@ -696,8 +663,6 @@ class NgForCustomTemplateNullTest {
       '[ngForTemplate]="contentTpl" let-i="index">'
       '{{i}}: {{item}};</template></ul>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForCustomTemplateNullComponent {
   @ContentChild(TemplateRef)
@@ -710,10 +675,10 @@ class NgForCustomTemplateNullComponent {
   template: '<test-cmp><li template="let item; let i=index">'
       '{{i}}: {{item}};</li></test-cmp>',
   directives: const [NgFor, NgForCustomTemplatePrecedenceComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForCustomTemplatePrecedenceTest {
+  @ViewChild(NgForCustomTemplatePrecedenceComponent)
+  NgForCustomTemplatePrecedenceComponent child;
   List items;
 }
 
@@ -723,8 +688,6 @@ class NgForCustomTemplatePrecedenceTest {
       '[ngForTemplate]="contentTpl" let-i="index">'
       '{{i}}=> {{item}};</template></ul>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForCustomTemplatePrecedenceComponent {
   @ContentChild(TemplateRef)
@@ -746,8 +709,6 @@ class Foo {
       '<p>{{items[i]}}</p><div>{{colorOfItem(items[i])}}</div>'
       '</template>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TrackByIdTest {
   List items;
@@ -763,8 +724,6 @@ class TrackByIdTest {
   template: '<div><template ngFor let-item [ngForOf]="items" '
       '[ngForTrackBy]="trackByIndex">{{item}}</template></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TrackByIndexTest {
   List items;
@@ -783,8 +742,6 @@ class TrackByIndexTest {
       '<button (click)="mutateItem(i)">mutate</button>'
       '</div>',
   directives: const [ObjectToEdit, NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ObjectEditorComponent {
   List<String> entities;
@@ -799,9 +756,8 @@ class ObjectEditorComponent {
 }
 
 @Component(
-  selector: 'object-to-edit', template: '<p>{{objectId}}</p>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  selector: 'object-to-edit',
+  template: '<p>{{objectId}}</p>',
 )
 class ObjectToEdit {
   dynamic _value;
@@ -818,8 +774,6 @@ class ObjectToEdit {
   template: '<div><span template="ngFor let item of items">'
       '{{item.toString()}};</span></div>',
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgForHashcodeTest {
   List<HashcodeTestItem> items;

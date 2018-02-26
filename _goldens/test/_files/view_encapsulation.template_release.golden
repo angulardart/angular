@@ -60,14 +60,6 @@ class _ViewEmulatedComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.EmulatedComponent) && (0 == nodeIndex))) {
-      return _EmulatedComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -123,14 +115,6 @@ class _ViewNoneComponentHost0 extends AppView<dynamic> {
     _compView_0.create(_NoneComponent_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.NoneComponent>(0, this, rootEl, _NoneComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.NoneComponent) && (0 == nodeIndex))) {
-      return _NoneComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override

@@ -60,14 +60,18 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   final onErrorSub = ngZone.onError.listen((e) {
     caughtError = e;
   });
-  return appRef.run(() {
+  // Code works improperly when .run is typed to return FutureOr:
+  // https://github.com/dart-lang/sdk/issues/32285.
+  return appRef.run<ComponentRef<E>>(() {
     return _runAndLoadComponent(
       appRef,
       componentFactory,
       hostElement,
       appInjector,
       beforeChangeDetection: beforeChangeDetection,
-    ).then((componentRef) async {
+    ).then((ComponentRef<E> componentRef) async {
+      // ComponentRef<E> is due to weirdness around type promotion:
+      // https://github.com/dart-lang/sdk/issues/32284
       hostElement.append(componentRef.location);
       await ngZone.onTurnDone.first;
       // Required to prevent onTurnDone to become re-entrant, as described in

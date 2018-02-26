@@ -22,8 +22,6 @@ import 'package:angular/angular.dart';
       ],
     ),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InjectableComponent {
   final BaseService service;
@@ -68,3 +66,12 @@ const testToken = const OpaqueToken('test');
 bool injectableFactory(html.Window value) => value != null;
 
 createLinkedHashMap(string) => {string: 'Hello World'};
+
+class XsrfToken extends OpaqueToken<String> {
+  const XsrfToken();
+}
+
+@Injectable()
+class InjectsXsrfToken {
+  InjectsXsrfToken(@XsrfToken() String token);
+}
