@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:angular/core.dart' show Pipe, ChangeDetectorRef, OnDestroy;
+import 'package:angular/core.dart'
+    show ChangeDetectorRef, OnDestroy, Pipe, PipeTransform;
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
@@ -78,7 +79,7 @@ final _observableStrategy = new ObservableStrategy();
 /// ```
 ///
 @Pipe('async', pure: false)
-class AsyncPipe implements OnDestroy {
+class AsyncPipe implements OnDestroy, PipeTransform {
   Object _latestValue;
   Object _subscription;
   dynamic /* Stream | Future | EventEmitter */ _obj;

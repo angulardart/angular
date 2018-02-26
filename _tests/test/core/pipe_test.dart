@@ -55,7 +55,7 @@ class Example {
 }
 
 @Pipe('nop')
-class NopPipe {
+class NopPipe implements PipeTransform {
   List<int> transform(List<int> values) => values;
 }
 
@@ -71,7 +71,7 @@ class NopComponent {
 }
 
 @Pipe('pure')
-class PurePipe {
+class PurePipe implements PipeTransform {
   static PurePipe singleton = new PurePipe._();
 
   int _invocations = 0;
