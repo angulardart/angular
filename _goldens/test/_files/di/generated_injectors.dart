@@ -37,6 +37,8 @@ import 'generated_injectors.template.dart' as ng;
       instanceOfExamplePrime: 'instanceOfExamplePrime',
     },
   ),
+
+  const Provider(const XsrfToken(), useValue: 'ABC123'),
 ])
 final InjectorFactory doGenerate = ng.doGenerate$Injector;
 
@@ -66,3 +68,7 @@ const arbitraryToken5 = const OpaqueToken('arbitraryToken5');
 
 const instanceOfExample = const Example();
 const instanceOfExamplePrime = const ExamplePrime._withPrivateConstructor();
+
+class XsrfToken extends OpaqueToken<String> {
+  const XsrfToken();
+}

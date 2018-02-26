@@ -1,3 +1,4 @@
+import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 /// A token to be used instead of [Type] when configuring dependency injection.
@@ -19,8 +20,7 @@ import 'package:meta/meta.dart';
 class OpaqueToken<T> {
   final String _desc;
 
-  const factory OpaqueToken([String description]) = OpaqueToken<T>._;
-  const OpaqueToken._([this._desc = '']);
+  const OpaqueToken([this._desc = '']);
 
   @override
   bool operator ==(other) => other is OpaqueToken && _desc == other._desc;
@@ -32,7 +32,12 @@ class OpaqueToken<T> {
   toJson() => toString();
 
   @override
-  String toString() => "const OpaqueToken<$T>('$_desc')";
+  String toString() {
+    if (isDevMode) {
+      return "OpaqueToken (${super.toString()}) <$T>('$_desc')";
+    }
+    return super.toString();
+  }
 }
 
 /// A token representing multiple values of [T] for dependency injection.
@@ -60,8 +65,7 @@ class OpaqueToken<T> {
 /// variations of the `multi: true` APIs.
 @optionalTypeArgs
 class MultiToken<T> extends OpaqueToken<T> {
-  const factory MultiToken([String description]) = MultiToken<T>._;
-  const MultiToken._([String description = '']) : super._(description);
+  const MultiToken([String description = '']) : super(description);
 
   @override
   bool operator ==(other) => other is MultiToken && _desc == other._desc;
@@ -70,5 +74,10 @@ class MultiToken<T> extends OpaqueToken<T> {
   int get hashCode => super.hashCode;
 
   @override
-  String toString() => "const MultiToken<$T>('$_desc')";
+  String toString() {
+    if (isDevMode) {
+      return "MultiToken (${super.toString()}) <$T>('$_desc')";
+    }
+    return super.toString();
+  }
 }

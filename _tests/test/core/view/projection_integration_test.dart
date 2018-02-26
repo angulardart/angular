@@ -6,7 +6,6 @@ import 'package:angular/core.dart'
     show Component, Directive, Input, ViewChild, ViewChildren, Visibility;
 import 'package:angular/src/core/linker.dart'
     show ElementRef, TemplateRef, ViewContainerRef;
-import 'package:angular/src/debug/debug_node.dart' show getAllDebugNodes;
 import 'package:angular_test/angular_test.dart';
 
 import 'projection_integration_test.template.dart' as ng_generated;
@@ -105,18 +104,10 @@ void main() {
     test('should support moving non projected light dom around', () async {
       var testBed = new NgTestBed<MoveLightDomTest>();
       var fixture = await testBed.create();
-
-      // Have to search for the directive because it's not in the DOM at all.
-      ManualViewportDirective sourceDirective;
-      getAllDebugNodes().forEach((debug) {
-        if (debug.providerTokens.contains(ManualViewportDirective)) {
-          sourceDirective = debug.inject(ManualViewportDirective);
-        }
-      });
-
       expect(fixture.text, 'START()END');
       await fixture.update((MoveLightDomTest component) {
-        component.projectDirective.show(sourceDirective.templateRef);
+        component.projectDirective
+            .show(component.manualViewportDirective.templateRef);
       });
       expect(fixture.text, 'START(A)END');
     });
@@ -415,10 +406,11 @@ class TextNodeAfterStyleComponent {
       '</empty>'
       'START(<div project></div>)END',
   directives: const [Empty, ProjectDirective, ManualViewportDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MoveLightDomTest {
+  @ViewChild(ManualViewportDirective)
+  ManualViewportDirective manualViewportDirective;
+
   @ViewChild(ProjectDirective)
   ProjectDirective projectDirective;
 }

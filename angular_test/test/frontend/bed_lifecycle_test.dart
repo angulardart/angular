@@ -55,8 +55,6 @@ void main() {
 @Component(
   selector: 'test',
   template: '{{value}}',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class AngularLifecycle {
   String value = '';
@@ -66,8 +64,6 @@ class AngularLifecycle {
   selector: 'test',
   directives: const [ChildWithLifeCycles],
   template: '<child [name]="name"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgOnChangesInitOrder {
   String name;
@@ -76,7 +72,6 @@ class NgOnChangesInitOrder {
 @Component(
   selector: 'child',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class ChildWithLifeCycles implements OnChanges, OnInit {

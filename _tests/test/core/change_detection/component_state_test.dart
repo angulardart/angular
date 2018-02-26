@@ -37,7 +37,7 @@ void main() {
       expect(targetElement.attributes['data-msg'], 'Hello xyz');
       targetElement = testRoot.rootElement.querySelector('.target2');
       expect(targetElement.attributes['data-msg'], 'Hello abc');
-    });
+    }, skip: true /* TODO(b/72112609) */);
   });
 }
 

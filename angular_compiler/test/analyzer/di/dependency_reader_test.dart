@@ -166,7 +166,16 @@ void main() {
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
         new DependencyElement(
-          new OpaqueTokenElement('someToken', isMultiToken: false),
+          new OpaqueTokenElement(
+            'someToken',
+            isMultiToken: false,
+            classUrl: new TypeLink(
+              'OpaqueToken',
+              ''
+                  'package:angular'
+                  '/src/core/di/opaque_token.dart',
+            ),
+          ),
           type: new TypeTokenElement(
             new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
@@ -179,7 +188,16 @@ void main() {
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
         new DependencyElement(
-          new OpaqueTokenElement('someToken', isMultiToken: false),
+          new OpaqueTokenElement(
+            'someToken',
+            isMultiToken: false,
+            classUrl: new TypeLink(
+              'OpaqueToken',
+              ''
+                  'package:angular'
+                  '/src/core/di/opaque_token.dart',
+            ),
+          ),
           type: new TypeTokenElement(
             new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),

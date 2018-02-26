@@ -268,7 +268,7 @@ void main() {
             ExampleServiceWithDynamicDeps,
             const [
               const [
-                const _ngRef.Inject(const _ngRef.OpaqueToken<dynamic>('someToken'))
+                const _ngRef.Inject(const OpaqueToken<dynamic>('someToken'))
               ]
             ]
           );
@@ -280,7 +280,7 @@ void main() {
             ExampleServiceWithDynamicDeps2,
             const [
               const [
-                const _ngRef.Inject(const _ngRef.OpaqueToken<dynamic>('someToken'))
+                const _ngRef.Inject(const OpaqueToken<dynamic>('someToken'))
               ]
             ]
           );

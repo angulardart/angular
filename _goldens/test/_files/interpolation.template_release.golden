@@ -72,14 +72,6 @@ class _ViewInterpolationComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.InterpolationComponent) && (0 == nodeIndex))) {
-      return _InterpolationComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -147,14 +139,6 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
     _compView_0.create(_InterpolationComponentNoWhitespace_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.InterpolationComponentNoWhitespace>(0, this, rootEl, _InterpolationComponentNoWhitespace_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.InterpolationComponentNoWhitespace) && (0 == nodeIndex))) {
-      return _InterpolationComponentNoWhitespace_0_4;
-    }
-    return notFoundResult;
   }
 
   @override

@@ -359,7 +359,7 @@ CompileProviderMetadata _transformProvider(CompileProviderMetadata provider,
     useValue: useValue,
     deps: deps,
     multi: provider.multi,
-    multiType: provider.multiType,
+    typeArgument: provider.typeArgument,
   );
 }
 
@@ -376,7 +376,7 @@ ProviderAst _transformProviderAst(ProviderAst provider,
     eager: provider.eager || forceEager,
     dynamicallyReachable: provider.dynamicallyReachable,
     visibleForInjection: provider.visibleForInjection,
-    multiProviderType: provider.multiProviderType,
+    typeArgument: provider.typeArgument,
     implementedByDirectiveWithNoVisibility:
         provider.implementedByDirectiveWithNoVisibility,
   );
@@ -467,9 +467,12 @@ class _ProviderResolver {
 
   // Updates tokenMap by creating new ProviderAst or by adding/replacing new entry
   // for existing ProviderAst.
-  void _resolveProviders(CompileDirectiveMetadata directiveContext,
-      List<CompileProviderMetadata> providers, ProviderAstType providerType,
-      {bool eager}) {
+  void _resolveProviders(
+    CompileDirectiveMetadata directiveContext,
+    List<CompileProviderMetadata> providers,
+    ProviderAstType providerType, {
+    bool eager,
+  }) {
     for (var provider in providers) {
       var resolvedProvider = _providersByToken.get(provider.token);
       if (resolvedProvider != null &&
@@ -479,15 +482,12 @@ class _ProviderResolver {
             '${resolvedProvider.token.name}',
             sourceSpan));
       }
+      final existing = provider.useExisting;
+      final hasLocalImplementation = existing != null &&
+          directiveContext.visibility == Visibility.local &&
+          directiveContext.type.name == existing.identifier.name &&
+          directiveContext.type.moduleUrl == existing.identifier.moduleUrl;
       if (resolvedProvider == null) {
-        bool implementedByDirectiveWithNoVisibility =
-            provider.useExisting != null &&
-                provider.useExisting.identifier != null &&
-                provider.useExisting.identifier.name ==
-                    directiveContext.type.name &&
-                provider.useExisting.identifier.moduleUrl ==
-                    directiveContext.type.moduleUrl &&
-                directiveContext.visibility == Visibility.local;
         resolvedProvider = new ProviderAst(
           provider.token,
           provider.multi,
@@ -495,9 +495,8 @@ class _ProviderResolver {
           providerType,
           sourceSpan,
           eager: eager,
-          implementedByDirectiveWithNoVisibility:
-              implementedByDirectiveWithNoVisibility,
-          multiProviderType: provider.multiType,
+          implementedByDirectiveWithNoVisibility: hasLocalImplementation,
+          typeArgument: provider.typeArgument,
           visibleForInjection: provider.visibility == Visibility.all,
         );
         _providersByToken.add(provider.token, resolvedProvider);
@@ -505,7 +504,9 @@ class _ProviderResolver {
         if (!provider.multi) {
           resolvedProvider.providers.clear();
         }
-        resolvedProvider.providers.add(provider);
+        resolvedProvider
+          ..providers.add(provider)
+          ..implementedByDirectiveWithNoVisibility = hasLocalImplementation;
       }
     }
   }

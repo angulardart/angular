@@ -6,7 +6,6 @@ import 'dart:html';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 
 import 'outputs_test.template.dart' as ng_generated;
 
@@ -18,9 +17,8 @@ void main() {
   test('should support directive outputs on regular elements', () async {
     final testBed = new NgTestBed<ElementWithEventDirectivesComponent>();
     final testFixture = await testBed.create();
-    final debugDiv = getDebugNode(testFixture.rootElement.firstChild);
-    final emitter = debugDiv.inject(EventEmitterDirective);
-    final listener = debugDiv.inject(EventListenerDirective);
+    final emitter = testFixture.assertOnlyInstance.emitter;
+    final listener = testFixture.assertOnlyInstance.listener;
     expect(listener.msg, isNull);
     await testFixture.update((_) => emitter.fireEvent('fired!'));
     expect(listener.msg, 'fired!');
@@ -29,34 +27,29 @@ void main() {
   test('should support directive outputs on template elements', () async {
     final testBed = new NgTestBed<TemplateWithEventDirectivesComponent>();
     final testFixture = await testBed.create();
-    final debugDiv = getDebugNode(testFixture.rootElement.firstChild);
-    final component = debugDiv.inject(TemplateWithEventDirectivesComponent);
-    final emitter = debugDiv.inject(EventEmitterDirective);
-    final listener = debugDiv.inject(EventListenerDirective);
+    final component = testFixture.assertOnlyInstance;
     expect(component.msg, isNull);
-    expect(listener.msg, isNull);
-    await testFixture.update((_) => emitter.fireEvent('fired!'));
+    expect(component.listener.msg, isNull);
+    await testFixture.update((_) => component.emitter.fireEvent('fired!'));
     expect(component.msg, 'fired!');
-    expect(listener.msg, 'fired!');
+    expect(component.listener.msg, 'fired!');
   });
 
   test('should support [()] syntax', () async {
     final testBed = new NgTestBed<TwoWayBindingComponent>();
     final testFixture = await testBed.create();
-    final debugDiv = getDebugNode(testFixture.rootElement.firstChild);
-    final component = debugDiv.inject(TwoWayBindingComponent);
-    final directive = debugDiv.inject(DirectiveWithTwoWayBinding);
-    expect(directive.control, 'one');
-    await testFixture.update((_) => directive.triggerChange('two'));
+    final component = testFixture.assertOnlyInstance;
+    expect(component.directive.control, 'one');
+    await testFixture.update((_) => component.directive.triggerChange('two'));
     expect(component.ctxProp, 'two');
-    expect(directive.control, 'two');
+    expect(component.directive.control, 'two');
   });
 
   test('should support render events', () async {
     final testBed = new NgTestBed<ElementWithDomEventComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.children.first;
-    final listener = getDebugNode(div).inject(DomEventListenerDirective);
+    final listener = testFixture.assertOnlyInstance.listener;
     await testFixture.update((_) => div.dispatchEvent(new Event('domEvent')));
     expect(listener.eventTypes, ['domEvent']);
   });
@@ -80,8 +73,6 @@ void main() {
 
 @Directive(
   selector: '[emitter]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class EventEmitterDirective {
   String msg;
@@ -96,9 +87,8 @@ class EventEmitterDirective {
 }
 
 @Directive(
-  selector: '[listener]', host: const {'(event)': 'onEvent(\$event)'},
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  selector: '[listener]',
+  host: const {'(event)': 'onEvent(\$event)'},
 )
 class EventListenerDirective {
   String msg;
@@ -112,26 +102,32 @@ class EventListenerDirective {
   selector: 'event-directives',
   template: '<div emitter listener></div>',
   directives: const [EventEmitterDirective, EventListenerDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class ElementWithEventDirectivesComponent {}
+class ElementWithEventDirectivesComponent {
+  @ViewChild(EventEmitterDirective)
+  EventEmitterDirective emitter;
+
+  @ViewChild(EventListenerDirective)
+  EventListenerDirective listener;
+}
 
 @Component(
   selector: 'template-event-directives',
   template: '<template emitter listener (event)="msg=\$event"></template>',
   directives: const [EventEmitterDirective, EventListenerDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TemplateWithEventDirectivesComponent {
   String msg;
+
+  @ViewChild(EventEmitterDirective)
+  EventEmitterDirective emitter;
+
+  @ViewChild(EventListenerDirective)
+  EventListenerDirective listener;
 }
 
 @Directive(
   selector: '[two-way]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveWithTwoWayBinding {
   final _streamController = new StreamController<String>();
@@ -151,11 +147,12 @@ class DirectiveWithTwoWayBinding {
   selector: 'two-way-binding',
   template: '<div [(control)]="ctxProp" two-way></div>',
   directives: const [DirectiveWithTwoWayBinding],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TwoWayBindingComponent {
   String ctxProp = 'one';
+
+  @ViewChild(DirectiveWithTwoWayBinding)
+  DirectiveWithTwoWayBinding directive;
 }
 
 @Directive(
@@ -163,8 +160,6 @@ class TwoWayBindingComponent {
   host: const {
     '(domEvent)': 'onEvent(\$event.type)',
   },
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DomEventListenerDirective {
   List<String> eventTypes = [];
@@ -178,16 +173,15 @@ class DomEventListenerDirective {
   selector: 'element-with-dom-event',
   template: '<div listener></div>',
   directives: const [DomEventListenerDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class ElementWithDomEventComponent {}
+class ElementWithDomEventComponent {
+  @ViewChild(DomEventListenerDirective)
+  DomEventListenerDirective listener;
+}
 
 @Directive(
   selector: '[listenerprevent]',
   host: const {'(click)': 'onEvent(\$event)'},
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveListeningDomEventPrevent {
   onEvent(Event event) {
@@ -198,8 +192,6 @@ class DirectiveListeningDomEventPrevent {
 @Directive(
   selector: '[listenernoprevent]',
   host: const {'(click)': 'onEvent(\$event)'},
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveListeningDomEventNoPrevent {
   onEvent(Event event) {}
@@ -213,7 +205,5 @@ class DirectiveListeningDomEventNoPrevent {
     DirectiveListeningDomEventNoPrevent,
     DirectiveListeningDomEventPrevent,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestPreventDefaultComponent {}

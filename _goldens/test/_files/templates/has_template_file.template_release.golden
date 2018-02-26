@@ -62,14 +62,6 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.HasTemplateFileComponent) && (0 == nodeIndex))) {
-      return _HasTemplateFileComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }

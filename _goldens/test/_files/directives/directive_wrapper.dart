@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:html';
 import 'package:angular/angular.dart';
-import 'package:angular_forms/angular_forms.dart';
 
 @Directive(
   selector: '[some-child-directive]',
@@ -14,8 +13,6 @@ import 'package:angular_forms/angular_forms.dart';
     '[attr.aria-disabled]': 'disabledStr',
     '[class.is-disabled]': 'disabled',
   },
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildDirective {
   Element element;
@@ -51,8 +48,6 @@ class ChildDirective {
 
 @Directive(
   selector: '[directive-with-output]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveWithOutput {
   String msg;
@@ -68,12 +63,13 @@ class DirectiveWithOutput {
 
 @Component(
   selector: 'test-foo',
-  template:
-      '<div some-child-directive directive-with-output [row]="rowIndex" (trigger)="onTrigger">Foo</div>',
+  template: r'''
+    <div some-child-directive directive-with-output [row]="rowIndex" (trigger)="onTrigger">
+      Foo
+    </div>
+  ''',
   directives: const [ChildDirective, DirectiveWithOutput],
   styles: const ['div { font-size: 10px; }'],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestFooComponent {
   int get rowIndex => 5;
@@ -83,20 +79,6 @@ class TestFooComponent {
 @Injectable()
 class MyInjectableClass {
   String get title => 'hello';
-}
-
-@Component(
-  selector: 'input-form-test',
-  directives: const [formDirectives],
-  template: '''
-<div [ngFormModel]="form">
-  <input type="text" ngControl="login">
-</div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
-)
-class InputFormTest {
-  ControlGroup form;
 }
 
 @Directive(
@@ -120,8 +102,10 @@ class FastDirective extends ComponentState {
 
 @Component(
   selector: 'directive-container',
-  template: r'<div class="target1" fastDirective [name]="finalName"></div>'
-      '<div class="target2" fastDirective [name]="nonFinal"></div>',
+  template: r'''
+    <div class="target1" fastDirective [name]="finalName"></div>
+    <div class="target2" fastDirective [name]="nonFinal"></div>
+  ''',
   directives: const [FastDirective],
 )
 class DirectiveContainerTest {

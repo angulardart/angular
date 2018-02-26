@@ -17,7 +17,7 @@ void main() {
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       expect(content.style.maxWidth, '40px');
-    });
+    }, skip: 'See https://github.com/dart-lang/angular/issues/844');
     test('should update styles specified in an map literal', () async {
       var testBed = new NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
@@ -82,8 +82,6 @@ void main() {
   selector: 'map-literal-test',
   directives: const [NgStyle],
   template: '<div [ngStyle]="{\'max-width\': \'40px\'}"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MapLiteralTest {}
 
@@ -91,8 +89,6 @@ class MapLiteralTest {}
   selector: 'map-update-test',
   directives: const [NgStyle],
   template: '<div [ngStyle]="map"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MapUpdateTest {
   Map<String, String> map;
@@ -102,8 +98,6 @@ class MapUpdateTest {
   selector: 'map-update-with-default-test',
   directives: const [NgStyle],
   template: '<div style="font-size: 12px" [ngStyle]="map"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MapUpdateWithDefaultTest {
   Map<String, String> map;
@@ -113,8 +107,6 @@ class MapUpdateWithDefaultTest {
   selector: 'map-update-with-style-expr-test',
   directives: const [NgStyle],
   template: '<div [style.font-size.px]="12" [ngStyle]="map"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MapUpdateWithStyleExprTest {
   Map<String, String> map;

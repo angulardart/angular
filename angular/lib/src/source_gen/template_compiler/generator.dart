@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
-import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 
 import 'code_builder.dart';
 import 'template_processor.dart';

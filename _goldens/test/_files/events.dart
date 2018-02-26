@@ -7,8 +7,6 @@ import 'package:angular/angular.dart';
   template: r'''
     <button (click)="onClick()"></button>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UsesNativeEvents {
   @HostListener('focus')
@@ -25,16 +23,12 @@ class UsesNativeEvents {
   template: r'''
     <has-angular-events (foo)="onFoo()"></has-angular-events>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UsesAngularEvents {}
 
 @Component(
   selector: 'has-angular-events',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class HasAngularEvents {
   @Output()

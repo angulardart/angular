@@ -68,17 +68,6 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
-      return _AnotherDirective_0_4;
-    }
-    if ((identical(token, import1.AnotherDirective) && (1 == nodeIndex))) {
-      return _AnotherDirective_1_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     final import1.QueriesComponent _ctx = ctx;
     _NgIf_2_7.ngIf = _ctx.someValue;
@@ -127,14 +116,6 @@ class _ViewQueriesComponent1 extends AppView<import1.QueriesComponent> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
-      return _AnotherDirective_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void dirtyParentQueriesInternal() {
     (parentView as ViewQueriesComponent0)._viewQuery_AnotherDirective_5.setDirty();
   }
@@ -160,14 +141,6 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
     _compView_0.create(_QueriesComponent_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.QueriesComponent>(0, this, rootEl, _QueriesComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.QueriesComponent) && (0 == nodeIndex))) {
-      return _QueriesComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -224,14 +197,6 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
-      return _AnotherDirective_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     if (_viewQuery_AnotherDirective_0.dirty) {
       _viewQuery_AnotherDirective_0.reset([
@@ -269,14 +234,6 @@ class _ViewEmbeddedQueries1 extends AppView<import1.EmbeddedQueries> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
-      return _AnotherDirective_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void dirtyParentQueriesInternal() {
     (parentView as ViewEmbeddedQueries0)._viewQuery_AnotherDirective_0.setDirty();
   }
@@ -299,14 +256,6 @@ class _ViewEmbeddedQueries2 extends AppView<import1.EmbeddedQueries> {
     _AnotherDirective_0_4 = new import1.AnotherDirective();
     init0(_el_0);
     return null;
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
-      return _AnotherDirective_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -333,14 +282,6 @@ class _ViewEmbeddedQueriesHost0 extends AppView<dynamic> {
     _compView_0.create(_EmbeddedQueries_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.EmbeddedQueries>(0, this, rootEl, _EmbeddedQueries_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.EmbeddedQueries) && (0 == nodeIndex))) {
-      return _EmbeddedQueries_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -392,14 +333,6 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
-      return _AnotherDirective_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     if (_query_AnotherDirective_1_0_isDirty) {
       ctx.viewChildren = import9.flattenNodes([
@@ -436,14 +369,6 @@ class _ViewEmbeddedQueriesList1 extends AppView<import1.EmbeddedQueriesList> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
-      return _AnotherDirective_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void dirtyParentQueriesInternal() {
     (parentView as ViewEmbeddedQueriesList0)._query_AnotherDirective_1_0_isDirty = true;
   }
@@ -466,14 +391,6 @@ class _ViewEmbeddedQueriesList2 extends AppView<import1.EmbeddedQueriesList> {
     _AnotherDirective_0_4 = new import1.AnotherDirective();
     init0(_el_0);
     return null;
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) && (0 == nodeIndex))) {
-      return _AnotherDirective_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -500,14 +417,6 @@ class _ViewEmbeddedQueriesListHost0 extends AppView<dynamic> {
     _compView_0.create(_EmbeddedQueriesList_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.EmbeddedQueriesList>(0, this, rootEl, _EmbeddedQueriesList_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.EmbeddedQueriesList) && (0 == nodeIndex))) {
-      return _EmbeddedQueriesList_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -675,14 +584,6 @@ class _ViewNestedNgForQueriesList3 extends AppView<import1.NestedNgForQueriesLis
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.AnotherDirective) && (1 == nodeIndex))) {
-      return _AnotherDirective_1_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void dirtyParentQueriesInternal() {
     (parentView.parentView.parentView as ViewNestedNgForQueriesList0)._query_taggedItem_1_0_isDirty = true;
   }
@@ -706,14 +607,6 @@ class _ViewNestedNgForQueriesListHost0 extends AppView<dynamic> {
     _compView_0.create(_NestedNgForQueriesList_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.NestedNgForQueriesList>(0, this, rootEl, _NestedNgForQueriesList_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.NestedNgForQueriesList) && (0 == nodeIndex))) {
-      return _NestedNgForQueriesList_0_4;
-    }
-    return notFoundResult;
   }
 
   @override

@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:angular_compiler/angular_compiler.dart';
 import 'package:build/build.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:source_gen/source_gen.dart';
 
+import 'flags.dart';
 import 'logging.dart';
 
 /// Compiles `.dart` files and `.html`, `.css` files for AngularDart.

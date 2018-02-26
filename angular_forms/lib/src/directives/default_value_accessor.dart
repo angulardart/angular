@@ -5,10 +5,7 @@ import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart';
 
-// TODO: Remove <ControlValueAccessor> after #908 is resolved:
-// https://github.com/dart-lang/angular/issues/908
-const DEFAULT_VALUE_ACCESSOR =
-    const ExistingProvider<ControlValueAccessor>.forToken(
+const DEFAULT_VALUE_ACCESSOR = const ExistingProvider.forToken(
   NG_VALUE_ACCESSOR,
   DefaultValueAccessor,
 );
