@@ -13,7 +13,7 @@ import 'view_ref.dart' show ViewRef;
 ///
 /// [ComponentRef] provides access to the Component Instance as well other
 /// objects related to this Component Instance and allows you to destroy the
-/// Component Instance via the [#destroy] method.
+/// Component Instance via the [ComponentRef.destroy] method.
 class ComponentRef<C> {
   final AppView _parentView;
   final int _nodeIndex;
@@ -59,6 +59,27 @@ class ComponentRef<C> {
   }
 }
 
+/// Backing implementation behind a `class` [T] annotated with `@Component`.
+///
+/// For example, if this lives in `example.dart`:
+/// ```dart
+/// @Component(
+///   selector: 'example',
+///   template: '...',
+/// )
+/// class Example {}
+/// ```
+///
+/// ... then `ExampleNgFactory` is generated in `example.template.dart`, and
+/// can be accessed by importing this generated file. For example:
+/// ```dart
+/// import 'example.template.dart' as ng;
+///
+/// getComponentFactory() {
+///   final ComponentFactory<ng.Example> comp = ng.ExampleNgFactory;
+///   // Can now use 'comp' as a ComponentFactory<Example>.
+/// }
+/// ```
 class ComponentFactory<T> {
   final String selector;
 
