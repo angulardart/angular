@@ -6,7 +6,7 @@ import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/source_gen/common/names.dart'
     show toTemplateExtension;
-import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../compile_metadata.dart'
     show
@@ -68,21 +68,18 @@ class NodeReference {
   final CompileElement parent;
   final int nodeIndex;
   final String _name;
-  final TemplateAst _ast;
 
   NodeReferenceVisibility _visibility = NodeReferenceVisibility.classPublic;
 
-  NodeReference(this.parent, this.nodeIndex, this._ast)
-      : _name = '_el_$nodeIndex';
-  NodeReference.textNode(this.parent, this.nodeIndex, this._ast)
+  NodeReference(this.parent, this.nodeIndex) : _name = '_el_$nodeIndex';
+  NodeReference.textNode(this.parent, this.nodeIndex)
       : _name = '_text_$nodeIndex';
-  NodeReference.anchor(this.parent, this.nodeIndex, this._ast)
+  NodeReference.anchor(this.parent, this.nodeIndex)
       : _name = '_anchor_$nodeIndex',
         _visibility = NodeReferenceVisibility.build;
   NodeReference.appViewRoot()
       : parent = null,
         nodeIndex = -1,
-        _ast = null,
         _name = appViewRootElementName;
 
   void lockVisibility(NodeReferenceVisibility visibility) {
@@ -95,7 +92,6 @@ class NodeReference {
   }
 
   o.Expression toReadExpr() {
-    assert(_ast != null);
     return _visibility == NodeReferenceVisibility.classPublic
         ? new o.ReadClassMemberExpr(_name)
         : o.variable(_name);
@@ -411,7 +407,7 @@ class CompileView implements AppViewBuilder {
   @override
   NodeReference createTextNode(
       CompileElement parent, int nodeIndex, String text, TemplateAst ast) {
-    var renderNode = new NodeReference.textNode(parent, nodeIndex, ast);
+    var renderNode = new NodeReference.textNode(parent, nodeIndex);
     renderNode.lockVisibility(NodeReferenceVisibility.build);
     _createMethod.addStmt(new o.DeclareVarStmt(
         renderNode._name,
@@ -435,8 +431,7 @@ class CompileView implements AppViewBuilder {
       CompileElement parent, int nodeIndex, TemplateAst ast) {
     // If Text field is bound, we need access to the renderNode beyond
     // build method and write reference to class member.
-    NodeReference renderNode =
-        new NodeReference.textNode(parent, nodeIndex, ast);
+    NodeReference renderNode = new NodeReference.textNode(parent, nodeIndex);
     nameResolver.addField(new o.ClassField(renderNode._name,
         outputType: o.importType(Identifiers.HTML_TEXT_NODE),
         modifiers: const [o.StmtModifier.Private]));
@@ -652,7 +647,7 @@ class CompileView implements AppViewBuilder {
 
   NodeReference createViewContainerAnchor(
       CompileElement parent, int nodeIndex, TemplateAst ast) {
-    NodeReference renderNode = new NodeReference.anchor(parent, nodeIndex, ast);
+    NodeReference renderNode = new NodeReference.anchor(parent, nodeIndex);
     var assignCloneAnchorNodeExpr =
         (renderNode.toReadExpr() as o.ReadVarExpr).set(_cloneAnchorNodeExpr);
     _createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
@@ -869,12 +864,22 @@ class CompileView implements AppViewBuilder {
     o.OutputType type;
     if (isMulti) {
       resolvedProviderValueExpr = o.literalArr(providerValueExpressions);
-      type = new o.ArrayType(provider.multiProviderType != null
-          ? o.importType(provider.multiProviderType)
+      type = new o.ArrayType(provider.typeArgument != null
+          ? o.importType(
+              provider.typeArgument,
+              provider.typeArgument.genericTypes,
+            )
           : o.DYNAMIC_TYPE);
     } else {
-      resolvedProviderValueExpr = providerValueExpressions[0];
-      type = providerValueExpressions[0].type;
+      resolvedProviderValueExpr = providerValueExpressions.first;
+      if (provider.typeArgument != null) {
+        type = o.importType(
+          provider.typeArgument,
+          provider.typeArgument.genericTypes,
+        );
+      } else {
+        type = resolvedProviderValueExpr.type;
+      }
     }
 
     type ??= o.DYNAMIC_TYPE;
@@ -981,7 +986,7 @@ class CompileView implements AppViewBuilder {
               ? o.DYNAMIC_TYPE
               : (providerHasChangeDetector ? changeDetectorType : type)));
     }
-    return new o.ReadClassMemberExpr(propName);
+    return new o.ReadClassMemberExpr(propName, type);
   }
 
   @override

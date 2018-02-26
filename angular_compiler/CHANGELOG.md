@@ -1,8 +1,11 @@
+## 0.4.0-alpha+6
+
 ### New features
 
-*   Added an internal `cli.dart` library.
+*   Added an internal `cli.dart` library. See `lib/cli.dart` for details.
 *   Added `SplitDartEmitter` for internal use.
 *   Added `$QueryList` as a `TypeChecker`.
+*   Expose the `$Provider` `TypeChecker`.
 
 ### Bug fixes
 
@@ -11,6 +14,7 @@
 ### Breaking changes
 
 *   Added `canRead` to `NgAssetReader`.
+*   Moved `CompilerFlags` and `Profile` to `cli.dart`.
 
 ## 0.4.0-alpha+5
 

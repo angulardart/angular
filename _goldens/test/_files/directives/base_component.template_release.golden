@@ -51,14 +51,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import4.TestSubComponent) && (2 == nodeIndex))) {
-      return _TestSubComponent_2_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_2.detectChanges();
   }
@@ -87,14 +79,6 @@ class _ViewTestFooComponentHost0 extends AppView<dynamic> {
     _compView_0.create(_TestFooComponent_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TestFooComponent) && (0 == nodeIndex))) {
-      return _TestFooComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override

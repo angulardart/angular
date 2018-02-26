@@ -72,7 +72,15 @@ jobs:
       env: PKG="angular_compiler"
       dart: dev
     - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_3
+      script: ./tool/travis.sh dartanalyzer_2
+      env: PKG="angular_forms"
+      dart: dev
+    - stage: build
+      script: ./tool/travis.sh command_0
+      env: PKG="angular_forms"
+      dart: dev
+    - stage: unit_test
+      script: ./tool/travis.sh command_5
       env: PKG="angular_forms"
       dart: dev
     - stage: analyze

@@ -68,14 +68,6 @@ class _ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.EmulatedComponent) && (0 == nodeIndex))) {
-      return _EmulatedComponent_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -137,14 +129,6 @@ class _ViewNoneComponentHost0 extends DebugAppView<dynamic> {
     _compView_0.create(_NoneComponent_0_4, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
     return new ComponentRef<import2.NoneComponent>(0, this, rootEl, _NoneComponent_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.NoneComponent) && (0 == nodeIndex))) {
-      return _NoneComponent_0_4;
-    }
-    return notFoundResult;
   }
 
   @override

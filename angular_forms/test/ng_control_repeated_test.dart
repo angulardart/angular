@@ -37,8 +37,6 @@ void main() {
              title="Input #{{idx}}:{{val}}">
     </form>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class AppComponent {
   Iterable<String> values;

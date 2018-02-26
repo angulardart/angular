@@ -5,11 +5,11 @@ import 'package:angular_forms/angular_forms.dart';
 @Component(
   selector: 'my-deferred-input',
   directives: const [formDirectives, NgIf],
-  template: r'<template [ngIf]="inputEnabled">'
-      '<input [(ngModel)]="model"> {{ model }}'
-      '</template>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  template: r'''
+    <template [ngIf]="inputEnabled">
+      <input [(ngModel)]="model"> {{ model }}
+    </template>
+  ''',
 )
 class DeferredInputComponent {
   String model = 'initial text';

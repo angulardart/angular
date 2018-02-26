@@ -582,7 +582,15 @@ class CompileElement extends CompileNode {
       currElement = this;
       if (!dep.isSkipSelf) {
         final providerAst = _resolvedProviders.get(requestOrigin);
-        if (providerAst == null || providerAst.visibleForInjection) {
+        if (providerAst == null ||
+            providerAst.visibleForInjection ||
+            // This condition is only reached when a component implements a
+            // directive that's applied to its host element, and provides itself
+            // in place of the directive. In this case we don't care if the
+            // request origin (the directive itself) is visible, since this
+            // wouldn't prevent you from applying the directive in the absence
+            // of the component.
+            requestingProviderType == ProviderAstType.Directive) {
           result = _instances.get(dep.token);
         }
       }

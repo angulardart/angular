@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:html' show Event;
 
 import 'package:meta/meta.dart';
-import 'package:angular/angular.dart'
-    show Directive, Inject, Optional, Output, Provider, Self, Visibility;
+import 'package:angular/angular.dart';
 
 import '../model.dart' show AbstractControl, ControlGroup, Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -12,9 +11,6 @@ import 'form_interface.dart' show Form;
 import 'ng_control.dart' show NgControl;
 import 'ng_control_group.dart' show NgControlGroup;
 import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
-
-const formDirectiveProvider =
-    const Provider(ControlContainer, useExisting: NgForm);
 
 /// If `NgForm` is bound in a component, `<form>` elements in that component
 /// will be upgraded to use the Angular form system.
@@ -73,10 +69,11 @@ const formDirectiveProvider =
 /// ```
 @Directive(
   selector: 'form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]',
-  providers: const [formDirectiveProvider],
+  providers: const [
+    const ExistingProvider(ControlContainer, NgForm),
+  ],
   host: const {'(submit)': 'onSubmit(\$event)'},
   exportAs: 'ngForm',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class NgForm extends ControlContainer implements Form {

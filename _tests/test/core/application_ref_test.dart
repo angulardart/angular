@@ -8,15 +8,7 @@ import 'package:logging/logging.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
-import 'package:angular/core.dart'
-    show
-        Injector,
-        Provider,
-        APP_INITIALIZER,
-        Component,
-        ReflectiveInjector,
-        ChangeDetectorRef,
-        Visibility;
+import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
 import 'package:angular/src/core/application_ref.dart'
     show
@@ -142,8 +134,10 @@ void main() {
           initializerDone = true;
         });
         var app = createApplication([
-          new Provider(APP_INITIALIZER,
-              useValue: () => completer.future, multi: true)
+          new ValueProvider.forToken(
+            APP_INITIALIZER,
+            () => completer.future,
+          )
         ]);
         await completer.future.then(expectAsync1((_) {
           coreLoadAndBootstrap(app.injector, MyComp).then((compRef) {
@@ -155,8 +149,10 @@ void main() {
     group('coreBootstrap', () {
       test('should throw if an APP_INITIIALIZER is not yet resolved', () async {
         var app = createApplication([
-          new Provider(APP_INITIALIZER,
-              useValue: () => new Completer().future, multi: true)
+          new ValueProvider.forToken(
+            APP_INITIALIZER,
+            () => new Completer().future,
+          )
         ]);
         expect(
             () => app.bootstrap(someCompFactory),

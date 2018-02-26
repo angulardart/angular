@@ -62,14 +62,6 @@ class _ViewUsesNativeEventsHost0 extends AppView<dynamic> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.UsesNativeEvents) && (0 == nodeIndex))) {
-      return _UsesNativeEvents_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -111,14 +103,6 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   }
 
   @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.HasAngularEvents) && (0 == nodeIndex))) {
-      return _HasAngularEvents_0_4;
-    }
-    return notFoundResult;
-  }
-
-  @override
   void detectChangesInternal() {
     _compView_0.detectChanges();
   }
@@ -147,14 +131,6 @@ class _ViewUsesAngularEventsHost0 extends AppView<dynamic> {
     _compView_0.create(_UsesAngularEvents_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.UsesAngularEvents>(0, this, rootEl, _UsesAngularEvents_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.UsesAngularEvents) && (0 == nodeIndex))) {
-      return _UsesAngularEvents_0_4;
-    }
-    return notFoundResult;
   }
 
   @override
@@ -208,14 +184,6 @@ class _ViewHasAngularEventsHost0 extends AppView<dynamic> {
     _compView_0.create(_HasAngularEvents_0_4, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.HasAngularEvents>(0, this, rootEl, _HasAngularEvents_0_4);
-  }
-
-  @override
-  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.HasAngularEvents) && (0 == nodeIndex))) {
-      return _HasAngularEvents_0_4;
-    }
-    return notFoundResult;
   }
 
   @override

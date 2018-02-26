@@ -14,21 +14,21 @@ void main() {
 
   tearDown(disposeAnyRunningTest);
 
-  test('should assign a component to a ref-', () async {
+  test('should assign a component to a reference', () async {
     final testBed = new NgTestBed<ComponentReferenceBindingComponent>();
     final testFixture = await testBed.create();
-    final child = getDebugNode(testFixture.rootElement.querySelector('child'));
-    expect(child.getLocal('alice'), new isInstanceOf<ChildComponent>());
+    expect(testFixture.assertOnlyInstance.child,
+        new isInstanceOf<ChildComponent>());
   });
 
-  test('should assign a directive to a ref-', () async {
+  test('should assign a directive to a reference', () async {
     final testBed = new NgTestBed<DirectiveReferenceBindingComponent>();
     final testFixture = await testBed.create();
-    final div = getDebugNode(testFixture.rootElement.firstChild.firstChild);
-    expect(div.getLocal('localdir'), new isInstanceOf<ExportDir>());
+    expect(testFixture.assertOnlyInstance.directive,
+        new isInstanceOf<ExportDir>());
   });
 
-  test('should assign an element to a ref-', () async {
+  test('should assign an element to a reference', () async {
     final testBed = new NgTestBed<ElementReferenceBindingComponent>();
     final testFixture = await testBed.create();
     final div = getDebugNode(testFixture.rootElement.children.first);
@@ -41,28 +41,23 @@ void main() {
     expect(testFixture.text, 'hello|hello|hello');
   });
 
-  test('should assign two component instances each with a ref-', () async {
+  test('should assign two component instances each with a reference', () async {
     final testBed = new NgTestBed<TwoComponentReferencesComponent>();
     final testFixture = await testBed.create();
-    final p = getDebugNode(testFixture.rootElement.children.first);
-    expect(p.getLocal('alice'), new isInstanceOf<ChildComponent>());
-    expect(p.getLocal('bob'), new isInstanceOf<ChildComponent>());
-    expect(p.getLocal('alice'), isNot(p.getLocal('bob')));
-  });
-
-  test('should support ref- shorthand syntax #', () async {
-    final testBed = new NgTestBed<ShorthandRefComponent>();
-    final testFixture = await testBed.create();
-    final child = getDebugNode(testFixture.rootElement.querySelector('child'));
-    expect(child.getLocal('alice'), new isInstanceOf<ChildComponent>());
+    final alice = testFixture.assertOnlyInstance.alice;
+    final bob = testFixture.assertOnlyInstance.bob;
+    expect(alice, new isInstanceOf<ChildComponent>());
+    expect(bob, new isInstanceOf<ChildComponent>());
+    expect(alice, isNot(bob));
   });
 
   test('should be case sensitive', () async {
     final testBed = new NgTestBed<CaseSensitiveRefComponent>();
     final testFixture = await testBed.create();
-    final child = getDebugNode(testFixture.rootElement.querySelector('child'));
-    expect(child.getLocal('superAlice'), new isInstanceOf<ChildComponent>());
-    expect(child.getLocal('superalice'), isNull);
+    final caseSensitive = testFixture.assertOnlyInstance.caseSensitive;
+    final caseInsensitive = testFixture.assertOnlyInstance.caseInsensitive;
+    expect(caseSensitive, new isInstanceOf<ChildComponent>());
+    expect(caseInsensitive, isNull);
   });
 }
 
@@ -77,8 +72,6 @@ class MyService {
   viewProviders: const [
     MyService,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildComponent {
   String value;
@@ -92,16 +85,15 @@ class ChildComponent {
   selector: 'component-reference-binding',
   template: '<p><child #alice></child></p>',
   directives: const [ChildComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class ComponentReferenceBindingComponent {}
+class ComponentReferenceBindingComponent {
+  @ViewChild('alice')
+  ChildComponent child;
+}
 
 @Directive(
   selector: '[export-dir]',
   exportAs: 'dir',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ExportDir {}
 
@@ -109,16 +101,15 @@ class ExportDir {}
   selector: 'directive-reference-binding',
   template: '<div><div export-dir #localdir="dir"></div></div>',
   directives: const [ExportDir],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DirectiveReferenceBindingComponent {}
+class DirectiveReferenceBindingComponent {
+  @ViewChild('localdir')
+  ExportDir directive;
+}
 
 @Component(
   selector: 'element-reference-binding',
   template: '<div><div #alice><i>Hello</i></div></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ElementReferenceBindingComponent {}
 
@@ -130,8 +121,6 @@ class ElementReferenceBindingComponent {}
     ChildComponent,
     NgIf,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UseRefBeforeDeclarationComponent {}
 
@@ -139,25 +128,24 @@ class UseRefBeforeDeclarationComponent {}
   selector: 'two-component-references',
   template: '<p><child #alice></child><child #bob></child></p>',
   directives: const [ChildComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class TwoComponentReferencesComponent {}
+class TwoComponentReferencesComponent {
+  @ViewChild('alice')
+  ChildComponent alice;
 
-@Component(
-  selector: 'shorthand-ref',
-  template: '<child #alice></child>',
-  directives: const [ChildComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
-)
-class ShorthandRefComponent {}
+  @ViewChild('bob')
+  ChildComponent bob;
+}
 
 @Component(
   selector: 'case-sensitive-ref',
   template: '<child #superAlice></child>',
   directives: const [ChildComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class CaseSensitiveRefComponent {}
+class CaseSensitiveRefComponent {
+  @ViewChild('superAlice')
+  ChildComponent caseSensitive;
+
+  @ViewChild('superalice')
+  ChildComponent caseInsensitive;
+}

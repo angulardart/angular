@@ -1,4 +1,4 @@
-import 'package:angular/angular.dart' show OpaqueToken;
+import 'package:angular/angular.dart';
 
 import 'directives/validators.dart' show ValidatorFn;
 import 'model.dart' as model_module;
@@ -6,7 +6,7 @@ import 'model.dart' as model_module;
 ///  Providers for validators to be used for [Control]s in a form.
 ///
 ///  Provide this using `multi: true` to add validators.
-const NG_VALIDATORS = const OpaqueToken<dynamic>('NgValidators');
+const NG_VALIDATORS = const MultiToken<dynamic>('NgValidators');
 
 ///  Provides a set of validators used by form controls.
 ///

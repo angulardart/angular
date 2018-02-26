@@ -146,14 +146,14 @@ void main() {
           c.updateValue('');
           expect(c.errors, {'required': true});
         });
-        test("should update the parent group's validity", () {
+        test('should update the parent group\'s validity', () {
           var c = new Control('someValue');
           var g = new ControlGroup({'one': c});
           expect(g.valid, true);
           c.setErrors({'someError': true});
           expect(g.valid, false);
         });
-        test("should not reset parent's errors", () {
+        test('should not reset parent\'s errors', () {
           var c = new Control('someValue');
           var g = new ControlGroup({'one': c});
           g.setErrors({'someGroupError': true});
@@ -294,8 +294,8 @@ void main() {
           c1.updateValue('new1');
         });
         test(
-            "should fire an event after the control's observable "
-            "fired an event", () async {
+            'should fire an event after the control\'s observable fired an '
+            'event', () async {
           var controlCallbackIsCalled = false;
           c1.valueChanges.listen(expectAsync1((value) {
             controlCallbackIsCalled = true;
@@ -455,8 +455,8 @@ void main() {
           c1.updateValue('new1');
         });
         test(
-            "should fire an event after the control's observable "
-            "fired an event", () async {
+            'should fire an event after the control\'s observable '
+            'fired an event', () async {
           var controlCallbackIsCalled = false;
           c1.valueChanges.listen(expectAsync1((value) {
             controlCallbackIsCalled = true;

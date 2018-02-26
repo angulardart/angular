@@ -929,6 +929,8 @@ class Output {
 ///
 /// ### Example
 ///
+/// With class bindings:
+///
 /// The following example creates a directive that sets the `valid` and
 /// `invalid` classes on the DOM element that has ngModel directive on it.
 ///
@@ -954,6 +956,27 @@ class Output {
 ///   var prop;
 ///  }
 /// ```
+///
+/// With attribute bindings:
+///
+/// The following example creates a checkbox component which reflects its state
+/// as attributes on the host element.  When the checkbox is disabled, it sets
+/// the tabindex to -1 to move it out of tab order. When the checkbox is checked
+/// the host element will add a "checked" boolean attribute.
+///
+/// ```dart
+/// @Component(selector: 'ng-checkbox', template: '...')
+/// class NgCheckboxComponent {
+///    bool disabled;
+///    bool isChecked;
+///
+///   @HostBinding('attr.tabindex')
+///   String get tabIndex => disabled ? '-1' : '1';
+///
+///   @HostBinding('attr.checked')
+///   String get checked => isChecked ? '' : null;
+/// }
+///```
 class HostBinding {
   final String hostPropertyName;
   const HostBinding([this.hostPropertyName]);

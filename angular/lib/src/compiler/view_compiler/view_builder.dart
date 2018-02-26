@@ -2,8 +2,8 @@ import 'package:angular/src/compiler/output/output_ast.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
+import 'package:angular_compiler/cli.dart';
 
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompileTypeMetadata;
@@ -130,7 +130,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
     NodeReference elementRef = isHostRootView
         ? new NodeReference.appViewRoot()
-        : new NodeReference(parent, nodeIndex, ast);
+        : new NodeReference(parent, nodeIndex);
 
     var directives = <CompileDirectiveMetadata>[];
     for (var dir in ast.directives) directives.add(dir.directive);

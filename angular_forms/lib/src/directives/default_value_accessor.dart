@@ -1,12 +1,14 @@
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:angular/angular.dart' show Directive, Provider, Visibility;
+import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart';
 
-const DEFAULT_VALUE_ACCESSOR = const Provider(NG_VALUE_ACCESSOR,
-    useExisting: DefaultValueAccessor, multi: true);
+const DEFAULT_VALUE_ACCESSOR = const ExistingProvider.forToken(
+  NG_VALUE_ACCESSOR,
+  DefaultValueAccessor,
+);
 
 /// The default accessor for writing a value and listening to changes that is used by the
 /// [NgModel], [NgFormControl], and [NgControlName] directives.

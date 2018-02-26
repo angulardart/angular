@@ -18,18 +18,15 @@ void main() {
       test('should instantiate directives that have no dependencies', () async {
         var testBed = new NgTestBed<NoDependencyTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].inject(SimpleDirective),
-            new isInstanceOf<SimpleDirective>());
+        expect(fixture.assertOnlyInstance.simpleDirective, isNotNull);
       });
       test('should instantiate directives that depend on another directive',
           () async {
         var testBed = new NgTestBed<SimpleDependencyTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var d = el.children[0].inject(NeedsDirective);
-        expect(d, new isInstanceOf<NeedsDirective>());
-        expect(d.dependency, new isInstanceOf<SimpleDirective>());
+        var directive = fixture.assertOnlyInstance.needsDirective;
+        expect(directive, isNotNull);
+        expect(directive.dependency, isNotNull);
       });
       test('should instantiate providers that have dependencies with SkipSelf',
           () async {
@@ -56,12 +53,8 @@ void main() {
           'viewProviders providers', () async {
         var testBed = new NgTestBed<ViewProviderProviderTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(
-            el.children[0]
-                .inject(ViewProviderProviderNeedsServiceComponent)
-                .service,
-            'service');
+        var service = fixture.assertOnlyInstance.needsServiceComponent.service;
+        expect(service, 'service');
       });
       test('should instantiate multi providers', () async {
         var testBed = new NgTestBed<MultiProviderTest>();
@@ -102,45 +95,40 @@ void main() {
           'on providers of other directives', () async {
         var testBed = new NgTestBed<NestedDirectiveProvideTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].children[0].inject(NeedsService).service,
-            'parentService');
+        var needsService = fixture.assertOnlyInstance.needsService;
+        expect(needsService.service, 'parentService');
       });
       test(
           'should instantiate directives that depend '
           'on providers in a parent view', () async {
         var testBed = new NgTestBed<ParentViewProvideTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].children[0].inject(NeedsService).service,
-            'parentService');
+        var needsService = fixture.assertOnlyInstance.needsService;
+        expect(needsService.service, 'parentService');
       });
       test(
           'should instantiate directives that depend '
           'on providers of a component', () async {
         var testBed = new NgTestBed<DirectiveProviderTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].children[0].inject(NeedsService).service,
-            'hostService');
+        var needsService = fixture.assertOnlyInstance.child.needsService;
+        expect(needsService.service, 'hostService');
       });
       test(
           'should instantiate directives that depend '
           'on view providers of a component', () async {
         var testBed = new NgTestBed<DirectiveViewProviderTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].children[0].inject(NeedsService).service,
-            'hostService');
+        var needsService = fixture.assertOnlyInstance.child.needsService;
+        expect(needsService.service, 'hostService');
       });
       test(
           'should instantiate directives in a root embedded view '
           'that depend on view providers of a component', () async {
-        var testBed = new NgTestBed<DirectiveViewProviderTest>();
+        var testBed = new NgTestBed<DirectiveEmbeddedViewProviderTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].children[0].inject(NeedsService).service,
-            'hostService');
+        var needsService = fixture.assertOnlyInstance.child.needsService;
+        expect(needsService.service, 'hostService');
       });
       test(
           'should instantiate directives that depend '
@@ -148,17 +136,16 @@ void main() {
         var testBed = new NgTestBed<AppProviderTest>().addProviders(
             [const Provider('appService', useValue: 'appService')]);
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].inject(NeedsAppService).service, 'appService');
+        var needsAppService = fixture.assertOnlyInstance.needsAppService;
+        expect(needsAppService.service, 'appService');
       });
       test('should instantiate directives that depend on other directives',
           () async {
         var testBed = new NgTestBed<DependOnOtherDirectiveTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var d = el.children[0].children[0].inject(NeedsDirective);
-        expect(d, new isInstanceOf<NeedsDirective>());
-        expect(d.dependency, new isInstanceOf<SimpleDirective>());
+        var needsDirective = fixture.assertOnlyInstance.needsDirective;
+        expect(needsDirective, isNotNull);
+        expect(needsDirective.dependency, isNotNull);
       });
       test('should throw when a dependency cannot be resolved', () async {
         var testBed = new NgTestBed<ThrowWhenUnresolvedDependencyTest>();
@@ -171,17 +158,17 @@ void main() {
           () async {
         var testBed = new NgTestBed<InjectMissingOptionalTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(
-            el.children[0].inject(OptionallyNeedsDirective).dependency, isNull);
+        var optionallyNeedsDirective =
+            fixture.assertOnlyInstance.optionallyNeedsDirective;
+        expect(optionallyNeedsDirective.dependency, isNull);
       });
       test('should instantiate directives that depend on the host component',
           () async {
         var testBed = new NgTestBed<DependOnHostComponentTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var d = el.children[0].children[0].inject(NeedsComponentFromHost);
-        expect(d.dependency, new isInstanceOf<DependOnHostSimpleComponent>());
+        var needsComponentFromHost =
+            fixture.assertOnlyInstance.child.needsComponentFromHost;
+        expect(needsComponentFromHost.dependency, isNotNull);
       });
       test(
           'should instantiate host view for components '
@@ -189,16 +176,14 @@ void main() {
         var testBed = new NgTestBed<NeedsHostAppService>().addProviders(
             [const Provider('appService', useValue: 'appService')]);
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.componentInstance.service, 'appService');
+        expect(fixture.assertOnlyInstance.service, 'appService');
       });
     });
     group('static attributes', () {
       test('should be injectable', () async {
         var testBed = new NgTestBed<InjectStaticAttributeTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var needsAttribute = el.children[0].inject(NeedsAttribute);
+        var needsAttribute = fixture.assertOnlyInstance.needsAttribute;
         expect(needsAttribute.typeAttribute, 'text');
         expect(needsAttribute.titleAttribute, '');
         expect(needsAttribute.fooAttribute, null);
@@ -206,8 +191,7 @@ void main() {
       test('should be injectable without type annotation', () async {
         var testBed = new NgTestBed<InjectStaticAttributeNoTypeTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var needsAttribute = el.children[0].inject(NeedsAttributeNoType);
+        var needsAttribute = fixture.assertOnlyInstance.needsAttributeNoType;
         expect(needsAttribute.fooAttribute, 'bar');
       });
     });
@@ -215,25 +199,23 @@ void main() {
       test('should inject ElementRef', () async {
         var testBed = new NgTestBed<InjectElementRefTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].inject(NeedsElementRef).elementRef.nativeElement,
-            el.children[0].nativeElement);
+        var needsElementRef = fixture.assertOnlyInstance.needsElementRef;
+        expect(needsElementRef.elementRef.nativeElement,
+            fixture.rootElement.firstChild);
       });
 
       test('should inject Element', () async {
         var testBed = new NgTestBed<InjectElementTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].inject(NeedsElement).element,
-            el.children[0].nativeElement);
+        var needsElement = fixture.assertOnlyInstance.needsElement;
+        expect(needsElement.element, fixture.rootElement.firstChild);
       });
 
       test('should inject HtmlElement', () async {
         var testBed = new NgTestBed<InjectHtmlElementTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].inject(NeedsHtmlElement).element,
-            el.children[0].nativeElement);
+        var needsHtmlElement = fixture.assertOnlyInstance.needsHtmlElement;
+        expect(needsHtmlElement.element, fixture.rootElement.firstChild);
       });
 
       test(
@@ -241,14 +223,12 @@ void main() {
           'view into the component via a proxy', () async {
         var testBed = new NgTestBed<InjectChangeDetectorTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var comp = el.children[0].inject(PushComponentNeedsChangeDetectorRef);
-        await fixture.update((_) {
-          comp.counter = 1;
+        await fixture.update((component) {
+          component.child.counter = 1;
         });
         expect(fixture.text, '0');
-        await fixture.update((_) {
-          comp.changeDetectorRef.markForCheck();
+        await fixture.update((component) {
+          component.child.changeDetectorRef.markForCheck();
         });
         expect(fixture.text, '1');
       });
@@ -257,17 +237,12 @@ void main() {
           'component into directives', () async {
         var testBed = new NgTestBed<InjectChangeDetectorDirectiveTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var comp =
-            el.children[0].inject(PushComponentWithChangeDetectorDirective);
-        await fixture.update((_) {
-          comp.counter = 1;
+        await fixture.update((component) {
+          component.child.counter = 1;
         });
         expect(fixture.text, '0');
-        await fixture.update((_) {
-          el.children[0].children[0]
-              .inject(DirectiveNeedsChangeDetectorRef)
-              .changeDetectorRef
+        await fixture.update((component) {
+          component.child.directiveNeedsChangeDetectorRef.changeDetectorRef
               .markForCheck();
         });
         expect(fixture.text, '1');
@@ -275,30 +250,19 @@ void main() {
       test('should inject ViewContainerRef', () async {
         var testBed = new NgTestBed<InjectViewContainerRefTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(
-            el.children[0]
-                .inject(NeedsViewContainerRef)
-                .viewContainer
-                .element
-                .nativeElement,
-            el.children[0].nativeElement);
+        var needsViewContainerRef =
+            fixture.assertOnlyInstance.needsViewContainerRef;
+        expect(needsViewContainerRef.viewContainer.element.nativeElement,
+            fixture.rootElement.firstChild);
       });
       test('should inject TemplateRef', () async {
         var testBed = new NgTestBed<InjectTemplateRefTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(
-            el.childNodes[0]
-                .inject(NeedsTemplateRef)
-                .templateRef
-                .elementRef
-                .nativeElement,
-            el.childNodes[0]
-                .inject(NeedsViewContainerRef)
-                .viewContainer
-                .element
-                .nativeElement);
+        var needsTemplateRef = fixture.assertOnlyInstance.needsTemplateRef;
+        var needsViewContainerRef =
+            fixture.assertOnlyInstance.needsViewContainerRef;
+        expect(needsTemplateRef.templateRef.elementRef.nativeElement,
+            needsViewContainerRef.viewContainer.element.nativeElement);
       });
       test('should throw if there is no TemplateRef', () async {
         var testBed = new NgTestBed<ThrowIfNoTemplateRefTest>();
@@ -312,45 +276,42 @@ void main() {
           'when the dependency is optional', () async {
         var testBed = new NgTestBed<OptionalTemplateRefTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].inject(OptionallyNeedsTemplateRef).templateRef,
-            isNull);
+        var optionallyNeedsTemplateRef =
+            fixture.assertOnlyInstance.optionallyNeedsTemplateRef;
+        expect(optionallyNeedsTemplateRef.templateRef, isNull);
       });
     });
     group('pipes', () {
       test('should instantiate pipes that have dependencies', () async {
         var testBed = new NgTestBed<PipeDependencyTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].inject(SimpleDirective).value.service,
-            'pipeService');
+        var directive = fixture.assertOnlyInstance.directive;
+        expect(directive.value.service, 'pipeService');
       });
       test('should overwrite pipes with later entry in the pipes array',
           () async {
         var testBed = new NgTestBed<DuplicatePipeTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        expect(el.children[0].inject(SimpleDirective).value,
-            new isInstanceOf<DuplicatePipe2>());
+        var directive = fixture.assertOnlyInstance.directive;
+        expect(directive.value, new isInstanceOf<DuplicatePipe2>());
       });
       test('should inject ChangeDetectorRef into pipes', () async {
         var testBed = new NgTestBed<PipeChangeDetectorRefTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var cdRef = el.children[0]
-            .inject(DirectiveNeedsChangeDetectorRef)
-            .changeDetectorRef;
-        expect(el.children[0].inject(SimpleDirective).value.changeDetectorRef,
-            cdRef);
+        var directive = fixture.assertOnlyInstance.directive;
+        var needsChangeDetectorRef =
+            fixture.assertOnlyInstance.needsChangeDetectorRef;
+        expect(directive.value.changeDetectorRef,
+            needsChangeDetectorRef.changeDetectorRef);
       });
       test('should cache pure pipes', () async {
         var testBed = new NgTestBed<CachePurePipesTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var purePipe1 = el.children[0].inject(SimpleDirective).value;
-        var purePipe2 = el.children[1].inject(SimpleDirective).value;
-        var purePipe3 = el.children[2].inject(SimpleDirective).value;
-        var purePipe4 = el.children[3].inject(SimpleDirective).value;
+        var directives = fixture.assertOnlyInstance.directives;
+        var purePipe1 = directives[0].value;
+        var purePipe2 = directives[1].value;
+        var purePipe3 = directives[2].value;
+        var purePipe4 = directives[3].value;
         expect(purePipe1, new isInstanceOf<PurePipe>());
         expect(purePipe2, purePipe1);
         expect(purePipe3, purePipe1);
@@ -359,11 +320,11 @@ void main() {
       test('should not cache impure pipes', () async {
         var testBed = new NgTestBed<NoCacheImpurePipesTest>();
         var fixture = await testBed.create();
-        var el = getDebugNode(fixture.rootElement) as DebugElement;
-        var impurePipe1 = el.children[0].inject(SimpleDirective).value;
-        var impurePipe2 = el.children[1].inject(SimpleDirective).value;
-        var impurePipe3 = el.children[2].inject(SimpleDirective).value;
-        var impurePipe4 = el.children[3].inject(SimpleDirective).value;
+        var directives = fixture.assertOnlyInstance.directives;
+        var impurePipe1 = directives[0].value;
+        var impurePipe2 = directives[1].value;
+        var impurePipe3 = directives[2].value;
+        var impurePipe4 = directives[3].value;
         expect(impurePipe1, new isInstanceOf<ImpurePipe>());
         expect(impurePipe2, new isInstanceOf<ImpurePipe>());
         expect(impurePipe2, isNot(impurePipe1));
@@ -378,7 +339,6 @@ void main() {
 
 @Directive(
   selector: '[simpleDirective]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class SimpleDirective {
@@ -388,8 +348,6 @@ class SimpleDirective {
 
 @Directive(
   selector: '[optionallyNeedsDirective]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class OptionallyNeedsDirective {
   SimpleDirective dependency;
@@ -400,8 +358,6 @@ class OptionallyNeedsDirective {
 
 @Directive(
   selector: '[needsComponentFromHost]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsComponentFromHost {
   DependOnHostSimpleComponent dependency;
@@ -412,8 +368,6 @@ class NeedsComponentFromHost {
 
 @Directive(
   selector: '[needsDirective]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsDirective {
   SimpleDirective dependency;
@@ -424,8 +378,6 @@ class NeedsDirective {
 
 @Directive(
   selector: '[needsService]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsService {
   dynamic service;
@@ -436,8 +388,6 @@ class NeedsService {
 
 @Directive(
   selector: '[needsAppService]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsAppService {
   dynamic service;
@@ -449,8 +399,6 @@ class NeedsAppService {
 @Component(
   selector: 'needsHostAppService',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsHostAppService {
   dynamic service;
@@ -461,8 +409,6 @@ class NeedsHostAppService {
 
 @Directive(
   selector: '[needsAttribute]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsAttribute {
   var typeAttribute;
@@ -480,8 +426,6 @@ class NeedsAttribute {
 
 @Directive(
   selector: '[needsAttributeNoType]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsAttributeNoType {
   var fooAttribute;
@@ -492,8 +436,6 @@ class NeedsAttributeNoType {
 
 @Directive(
   selector: '[needsElementRef]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsElementRef {
   var elementRef;
@@ -504,8 +446,6 @@ class NeedsElementRef {
 
 @Directive(
   selector: '[needsElement]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsElement {
   Element element;
@@ -516,8 +456,6 @@ class NeedsElement {
 
 @Directive(
   selector: '[needsHtmlElement]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsHtmlElement {
   HtmlElement element;
@@ -528,8 +466,6 @@ class NeedsHtmlElement {
 
 @Directive(
   selector: '[needsViewContainerRef]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsViewContainerRef {
   var viewContainer;
@@ -540,8 +476,6 @@ class NeedsViewContainerRef {
 
 @Directive(
   selector: '[needsTemplateRef]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NeedsTemplateRef {
   var templateRef;
@@ -552,8 +486,6 @@ class NeedsTemplateRef {
 
 @Directive(
   selector: '[optionallyNeedsTemplateRef]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class OptionallyNeedsTemplateRef {
   var templateRef;
@@ -564,8 +496,6 @@ class OptionallyNeedsTemplateRef {
 
 @Directive(
   selector: '[directiveNeedsChangeDetectorRef]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveNeedsChangeDetectorRef {
   ChangeDetectorRef changeDetectorRef;
@@ -576,8 +506,6 @@ class DirectiveNeedsChangeDetectorRef {
   selector: 'componentNeedsChangeDetectorRef',
   template: '{{counter}}',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PushComponentNeedsChangeDetectorRef {
   ChangeDetectorRef changeDetectorRef;
@@ -638,25 +566,25 @@ class DuplicatePipe2 implements PipeTransform {
   selector: 'no-dependency-test',
   template: '<div simpleDirective></div>',
   directives: const [SimpleDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class NoDependencyTest {}
+class NoDependencyTest {
+  @ViewChild(SimpleDirective)
+  SimpleDirective simpleDirective;
+}
 
 @Component(
   selector: 'simple-dependency-test',
   template: '<div simpleDirective needsDirective></div>',
   directives: const [SimpleDirective, NeedsDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class SimpleDependencyTest {}
+class SimpleDependencyTest {
+  @ViewChild(NeedsDirective)
+  NeedsDirective needsDirective;
+}
 
 @Directive(
   selector: '[simpleDirective]',
   providers: const [const Provider('injectable1', useValue: 'injectable1')],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SkipSelfSimpleDirective {}
 
@@ -669,8 +597,6 @@ class SkipSelfSimpleDirective {}
       useFactory: skipSelfFactory,
     ),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SkipSelfSomeOtherDirective {}
 
@@ -681,8 +607,6 @@ String skipSelfFactory(@SkipSelf() @Inject('injectable1') val) =>
   selector: 'skip-self-test',
   template: '<div simpleDirective><span someOtherDirective></span></div>',
   directives: const [SkipSelfSimpleDirective, SkipSelfSomeOtherDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SkipSelfTest {}
 
@@ -690,8 +614,6 @@ class SkipSelfTest {}
   selector: 'provider-dependency-test',
   template: '<div simpleDirective></div>',
   directives: const [ProviderDependencySimpleDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ProviderDependencyTest {}
 
@@ -704,8 +626,6 @@ class ProviderDependencyTest {}
       useFactory: providerDependencyFactory,
     ),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ProviderDependencySimpleDirective {}
 
@@ -716,8 +636,6 @@ String providerDependencyFactory(@Inject('injectable1') val) =>
   selector: 'view-provider-dependency-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [ViewProviderSimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ViewProviderDependencyTest {}
 
@@ -728,8 +646,6 @@ class ViewProviderDependencyTest {}
     const Provider('injectable1', useValue: 'injectable1'),
     const Provider('injectable2', useFactory: viewProviderDependencyFactory),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ViewProviderSimpleComponent {}
 
@@ -740,17 +656,16 @@ String viewProviderDependencyFactory(@Inject('injectable1') val) =>
   selector: 'view-provider-provider-test',
   template: '<needsServiceComponent></needsServiceComponent>',
   directives: const [ViewProviderProviderNeedsServiceComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class ViewProviderProviderTest {}
+class ViewProviderProviderTest {
+  @ViewChild(ViewProviderProviderNeedsServiceComponent)
+  ViewProviderProviderNeedsServiceComponent needsServiceComponent;
+}
 
 @Component(
   selector: 'needsServiceComponent',
   template: '',
   viewProviders: const [const Provider('service', useValue: 'service')],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ViewProviderProviderNeedsServiceComponent {
   dynamic service;
@@ -763,8 +678,6 @@ class ViewProviderProviderNeedsServiceComponent {
   selector: 'multi-provider-test',
   template: '<div simpleDirective></div>',
   directives: const [MultiProviderSimpleDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MultiProviderTest {}
 
@@ -774,8 +687,6 @@ class MultiProviderTest {}
     const Provider('injectable1', useValue: 'injectable11', multi: true),
     const Provider('injectable1', useValue: 'injectable12', multi: true),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MultiProviderSimpleDirective {}
 
@@ -783,8 +694,6 @@ class MultiProviderSimpleDirective {}
   selector: 'lazy-initialization-test',
   template: '<div simpleDirective></div>',
   directives: const [LazyInitializationSimpleDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class LazyInitializationTest {}
 
@@ -793,8 +702,6 @@ class LazyInitializationTest {}
   providers: const [
     const Provider('service', useFactory: lazyCreationFactory),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class LazyInitializationSimpleDirective {}
 
@@ -805,8 +712,6 @@ lazyCreationFactory() => _lazilyCreated = true;
   selector: 'lazy-initialization-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [ViewProviderLazyInitializationSimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ViewProviderLazyInitializationTest {}
 
@@ -816,8 +721,6 @@ class ViewProviderLazyInitializationTest {}
   providers: const [
     const Provider('service', useFactory: lazyCreationFactory),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ViewProviderLazyInitializationSimpleComponent {}
 
@@ -825,8 +728,6 @@ class ViewProviderLazyInitializationSimpleComponent {}
   selector: 'view-providers-fail-test',
   template: '<simpleComponent needsService></simpleComponent>',
   directives: const [ViewProvidersFailSimpleComponent, NeedsService],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ViewProvidersFailTest {}
 
@@ -836,8 +737,6 @@ class ViewProvidersFailTest {}
   viewProviders: const [
     const Provider('service', useValue: 'service'),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ViewProvidersFailSimpleComponent {}
 
@@ -845,18 +744,17 @@ class ViewProvidersFailSimpleComponent {}
   selector: 'nested-directive-provide-test',
   template: '<div simpleDirective><div needsService></div></div>',
   directives: const [ParentServiceSimpleDirective, NeedsService],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class NestedDirectiveProvideTest {}
+class NestedDirectiveProvideTest {
+  @ViewChild(NeedsService)
+  NeedsService needsService;
+}
 
 @Directive(
   selector: '[simpleDirective]',
   providers: const [
     const Provider('service', useValue: 'parentService'),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ParentServiceSimpleDirective {}
 
@@ -865,19 +763,21 @@ class ParentServiceSimpleDirective {}
   template: '<div simpleDirective><template [ngIf]="true">'
       '<div *ngIf="true" needsService></div></template></div>',
   directives: const [ParentServiceSimpleDirective, NeedsService, NgIf],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class ParentViewProvideTest {}
+class ParentViewProvideTest {
+  @ViewChild(NeedsService)
+  NeedsService needsService;
+}
 
 @Component(
   selector: 'directive-provider-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DirectiveProviderSimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DirectiveProviderTest {}
+class DirectiveProviderTest {
+  @ViewChild(DirectiveProviderSimpleComponent)
+  DirectiveProviderSimpleComponent child;
+}
 
 @Component(
   selector: 'simpleComponent',
@@ -886,19 +786,21 @@ class DirectiveProviderTest {}
   providers: const [
     const Provider('service', useValue: 'hostService'),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DirectiveProviderSimpleComponent {}
+class DirectiveProviderSimpleComponent {
+  @ViewChild(NeedsService)
+  NeedsService needsService;
+}
 
 @Component(
   selector: 'directive-provider-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DirectiveViewProviderSimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DirectiveViewProviderTest {}
+class DirectiveViewProviderTest {
+  @ViewChild(DirectiveViewProviderSimpleComponent)
+  DirectiveViewProviderSimpleComponent child;
+}
 
 @Component(
   selector: 'simpleComponent',
@@ -907,19 +809,21 @@ class DirectiveViewProviderTest {}
   viewProviders: const [
     const Provider('service', useValue: 'hostService'),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DirectiveViewProviderSimpleComponent {}
+class DirectiveViewProviderSimpleComponent {
+  @ViewChild(NeedsService)
+  NeedsService needsService;
+}
 
 @Component(
   selector: 'directive-provider-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DirectiveEmbeddedViewProviderSimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DirectiveEmbeddedViewProviderTest {}
+class DirectiveEmbeddedViewProviderTest {
+  @ViewChild(DirectiveEmbeddedViewProviderSimpleComponent)
+  DirectiveEmbeddedViewProviderSimpleComponent child;
+}
 
 @Component(
   selector: 'simpleComponent',
@@ -928,35 +832,36 @@ class DirectiveEmbeddedViewProviderTest {}
   viewProviders: const [
     const Provider('service', useValue: 'hostService'),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DirectiveEmbeddedViewProviderSimpleComponent {}
+class DirectiveEmbeddedViewProviderSimpleComponent {
+  @ViewChild(NeedsService)
+  NeedsService needsService;
+}
 
 @Component(
   selector: 'app-provider-test',
   template: '<div needsAppService></div>',
   directives: const [NeedsAppService],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class AppProviderTest {}
+class AppProviderTest {
+  @ViewChild(NeedsAppService)
+  NeedsAppService needsAppService;
+}
 
 @Component(
   selector: 'depend-on-other-directive-test',
   template: '<div simpleDirective><div needsDirective></div></div>',
   directives: const [SimpleDirective, NeedsDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DependOnOtherDirectiveTest {}
+class DependOnOtherDirectiveTest {
+  @ViewChild(NeedsDirective)
+  NeedsDirective needsDirective;
+}
 
 @Component(
   selector: 'throw-when-unresolved-dependency-test',
   template: '<div needsService></div>',
   directives: const [NeedsService],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ThrowWhenUnresolvedDependencyTest {}
 
@@ -964,131 +869,145 @@ class ThrowWhenUnresolvedDependencyTest {}
   selector: 'inject-missing-optional-test',
   template: '<div optionallyNeedsDirective></div>',
   directives: const [OptionallyNeedsDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectMissingOptionalTest {}
+class InjectMissingOptionalTest {
+  @ViewChild(OptionallyNeedsDirective)
+  OptionallyNeedsDirective optionallyNeedsDirective;
+}
 
 @Component(
   selector: 'depend-on-host-component-test',
   template: '<simpleComponent></simpleComponent>',
   directives: const [DependOnHostSimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DependOnHostComponentTest {}
+class DependOnHostComponentTest {
+  @ViewChild(DependOnHostSimpleComponent)
+  DependOnHostSimpleComponent child;
+}
 
 @Component(
   selector: 'simpleComponent',
   template: '<div needsComponentFromHost></div>',
   directives: const [NeedsComponentFromHost],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
-class DependOnHostSimpleComponent {}
+class DependOnHostSimpleComponent {
+  @ViewChild(NeedsComponentFromHost)
+  NeedsComponentFromHost needsComponentFromHost;
+}
 
 @Component(
   selector: 'inject-static-attribute-test',
   template: '<div needsAttribute type="text" title></div>',
   directives: const [NeedsAttribute],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectStaticAttributeTest {}
+class InjectStaticAttributeTest {
+  @ViewChild(NeedsAttribute)
+  NeedsAttribute needsAttribute;
+}
 
 @Component(
   selector: 'inject-static-attribute-no-type-test',
   template: '<div needsAttributeNoType foo=\'bar\'></div>',
   directives: const [NeedsAttributeNoType],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectStaticAttributeNoTypeTest {}
+class InjectStaticAttributeNoTypeTest {
+  @ViewChild(NeedsAttributeNoType)
+  NeedsAttributeNoType needsAttributeNoType;
+}
 
 @Component(
   selector: 'inject-element-ref-test',
   template: '<div needsElementRef></div>',
   directives: const [NeedsElementRef],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectElementRefTest {}
+class InjectElementRefTest {
+  @ViewChild(NeedsElementRef)
+  NeedsElementRef needsElementRef;
+}
 
 @Component(
   selector: 'inject-element-test',
   template: '<div needsElement></div>',
   directives: const [NeedsElement],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectElementTest {}
+class InjectElementTest {
+  @ViewChild(NeedsElement)
+  NeedsElement needsElement;
+}
 
 @Component(
   selector: 'inject-html-element-test',
   template: '<div needsHtmlElement></div>',
   directives: const [NeedsHtmlElement],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectHtmlElementTest {}
+class InjectHtmlElementTest {
+  @ViewChild(NeedsHtmlElement)
+  NeedsHtmlElement needsHtmlElement;
+}
 
 @Component(
   selector: 'inject-change-detector-test',
   template:
       '<componentNeedsChangeDetectorRef></componentNeedsChangeDetectorRef>',
   directives: const [PushComponentNeedsChangeDetectorRef],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectChangeDetectorTest {}
+class InjectChangeDetectorTest {
+  @ViewChild(PushComponentNeedsChangeDetectorRef)
+  PushComponentNeedsChangeDetectorRef child;
+}
 
 @Component(
   selector: 'inject-change-detector-directive-test',
   template:
       '<componentNeedsChangeDetectorRef></componentNeedsChangeDetectorRef>',
   directives: const [PushComponentWithChangeDetectorDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectChangeDetectorDirectiveTest {}
+class InjectChangeDetectorDirectiveTest {
+  @ViewChild(PushComponentWithChangeDetectorDirective)
+  PushComponentWithChangeDetectorDirective child;
+}
 
 @Component(
   selector: 'componentNeedsChangeDetectorRef',
   template: '{{counter}}<div directiveNeedsChangeDetectorRef></div>',
   directives: const [DirectiveNeedsChangeDetectorRef],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PushComponentWithChangeDetectorDirective {
   num counter = 0;
-  PushComponentWithChangeDetectorDirective();
+
+  @ViewChild(DirectiveNeedsChangeDetectorRef)
+  DirectiveNeedsChangeDetectorRef directiveNeedsChangeDetectorRef;
 }
 
 @Component(
   selector: 'inject-view-container-ref-test',
   template: '<div needsViewContainerRef></div>',
   directives: const [NeedsViewContainerRef],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectViewContainerRefTest {}
+class InjectViewContainerRefTest {
+  @ViewChild(NeedsViewContainerRef)
+  NeedsViewContainerRef needsViewContainerRef;
+}
 
 @Component(
   selector: 'inject-template-ref-test',
   template: '<template needsViewContainerRef needsTemplateRef></template>',
   directives: const [NeedsViewContainerRef, NeedsTemplateRef],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class InjectTemplateRefTest {}
+class InjectTemplateRefTest {
+  @ViewChild(NeedsTemplateRef)
+  NeedsTemplateRef needsTemplateRef;
+
+  @ViewChild(NeedsViewContainerRef)
+  NeedsViewContainerRef needsViewContainerRef;
+}
 
 @Component(
   selector: 'throw-if-no-template-ref-test',
   template: '<div needsTemplateRef></div>',
   directives: const [NeedsTemplateRef],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ThrowIfNoTemplateRefTest {}
 
@@ -1096,10 +1015,11 @@ class ThrowIfNoTemplateRefTest {}
   selector: 'optional-template-ref-test',
   template: '<div optionallyNeedsTemplateRef></div>',
   directives: const [OptionallyNeedsTemplateRef],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class OptionalTemplateRefTest {}
+class OptionalTemplateRefTest {
+  @ViewChild(OptionallyNeedsTemplateRef)
+  OptionallyNeedsTemplateRef optionallyNeedsTemplateRef;
+}
 
 @Component(
   selector: 'pipe-dependency-test',
@@ -1107,20 +1027,22 @@ class OptionalTemplateRefTest {}
   directives: const [SimpleDirective],
   pipes: const [PipeNeedsService],
   providers: const [const Provider('service', useValue: 'pipeService')],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class PipeDependencyTest {}
+class PipeDependencyTest {
+  @ViewChild(SimpleDirective)
+  SimpleDirective directive;
+}
 
 @Component(
   selector: 'duplicate-pipe-test',
   template: '<div [simpleDirective]="true | duplicatePipe"></div>',
   directives: const [SimpleDirective],
   pipes: const [DuplicatePipe1, DuplicatePipe2],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class DuplicatePipeTest {}
+class DuplicatePipeTest {
+  @ViewChild(SimpleDirective)
+  SimpleDirective directive;
+}
 
 @Component(
   selector: 'pipe-change-detector-ref-test',
@@ -1128,10 +1050,14 @@ class DuplicatePipeTest {}
       'directiveNeedsChangeDetectorRef></div>',
   directives: const [SimpleDirective, DirectiveNeedsChangeDetectorRef],
   pipes: const [PipeNeedsChangeDetectorRef],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class PipeChangeDetectorRefTest {}
+class PipeChangeDetectorRefTest {
+  @ViewChild(SimpleDirective)
+  SimpleDirective directive;
+
+  @ViewChild(DirectiveNeedsChangeDetectorRef)
+  DirectiveNeedsChangeDetectorRef needsChangeDetectorRef;
+}
 
 @Component(
   selector: 'cache-pure-pipes-test',
@@ -1141,10 +1067,11 @@ class PipeChangeDetectorRefTest {}
       '</div>',
   directives: const [SimpleDirective, NgFor],
   pipes: const [PurePipe],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class CachePurePipesTest {}
+class CachePurePipesTest {
+  @ViewChildren(SimpleDirective)
+  List<SimpleDirective> directives;
+}
 
 @Component(
   selector: 'no-cache-impure-pipes-test',
@@ -1154,7 +1081,8 @@ class CachePurePipesTest {}
       '</div>',
   directives: const [SimpleDirective, NgFor],
   pipes: const [ImpurePipe],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
-class NoCacheImpurePipesTest {}
+class NoCacheImpurePipesTest {
+  @ViewChildren(SimpleDirective)
+  List<SimpleDirective> directives;
+}

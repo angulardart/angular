@@ -3,7 +3,6 @@ import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/common/directives/ng_template_outlet.dart';
-import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular_test/angular_test.dart';
 
 import 'ng_template_outlet_test.template.dart' as ng_generated;
@@ -26,8 +25,7 @@ void main() {
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       expect(element, hasTextContent(""));
-      DebugElement debugElement = getDebugNode(element);
-      CaptureTplRefs refs = debugElement.children[0].getLocal("refs");
+      CaptureTplRefs refs = testFixture.assertOnlyInstance.refs;
       await testFixture.update((TestInsertContentComponent componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.first;
       });
@@ -37,8 +35,7 @@ void main() {
       var testBed = new NgTestBed<TestClearContentComponent>();
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
-      DebugElement debugElement = getDebugNode(element);
-      CaptureTplRefs refs = debugElement.children[0].getLocal("refs");
+      CaptureTplRefs refs = testFixture.assertOnlyInstance.refs;
       await testFixture.update((TestClearContentComponent componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.first;
       });
@@ -54,8 +51,7 @@ void main() {
       var testBed = new NgTestBed<TestChangeContentComponent>();
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
-      DebugElement debugElement = getDebugNode(element);
-      CaptureTplRefs refs = debugElement.children[0].getLocal("refs");
+      CaptureTplRefs refs = testFixture.assertOnlyInstance.refs;
       await testFixture.update((TestChangeContentComponent componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.first;
       });
@@ -113,9 +109,8 @@ void main() {
 }
 
 @Directive(
-  selector: "tpl-refs", exportAs: "tplRefs",
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  selector: "tpl-refs",
+  exportAs: "tplRefs",
 )
 class CaptureTplRefs {
   @ContentChildren(TemplateRef)
@@ -126,8 +121,6 @@ class CaptureTplRefs {
   selector: "test-cmp",
   directives: const [NgTemplateOutlet, CaptureTplRefs],
   template: "",
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestComponent {
   TemplateRef currentTplRef;
@@ -137,8 +130,6 @@ class TestComponent {
   selector: "test-cmp-null",
   directives: const [NgTemplateOutlet, CaptureTplRefs],
   template: '<template [ngTemplateOutlet]="null"></template>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestWithNullComponent {
   TemplateRef currentTplRef;
@@ -149,11 +140,12 @@ class TestWithNullComponent {
   directives: const [NgTemplateOutlet, CaptureTplRefs],
   template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
       '<template [ngTemplateOutlet]="currentTplRef"></template>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestInsertContentComponent {
   TemplateRef currentTplRef;
+
+  @ViewChild('refs')
+  CaptureTplRefs refs;
 }
 
 @Component(
@@ -161,11 +153,12 @@ class TestInsertContentComponent {
   directives: const [NgTemplateOutlet, CaptureTplRefs],
   template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
       '<template [ngTemplateOutlet]="currentTplRef"></template>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestClearContentComponent {
   TemplateRef currentTplRef;
+
+  @ViewChild('refs')
+  CaptureTplRefs refs;
 }
 
 @Component(
@@ -174,11 +167,12 @@ class TestClearContentComponent {
   template: '<tpl-refs #refs="tplRefs"><template>foo</template><template>'
       'bar</template></tpl-refs><template '
       '[ngTemplateOutlet]="currentTplRef"></template>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestChangeContentComponent {
   TemplateRef currentTplRef;
+
+  @ViewChild('refs')
+  CaptureTplRefs refs;
 }
 
 @Component(
@@ -191,8 +185,6 @@ class TestChangeContentComponent {
     </template>
   ''',
   directives: const [NgTemplateOutlet],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestContextChangeComponent {
   Map<String, dynamic> context = {
@@ -210,8 +202,6 @@ class TestContextChangeComponent {
     </template>
   ''',
   directives: const [NgTemplateOutlet],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestContextProxyChangeComponent {
   String contextValue = 'foo';
@@ -228,8 +218,6 @@ class TestContextProxyChangeComponent {
     </template>
   ''',
   directives: const [NgTemplateOutlet],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestContextTemplateRefChangeComponent {
   bool isGreeting = true;

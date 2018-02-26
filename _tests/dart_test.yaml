@@ -4,3 +4,10 @@ presets:
 tags:
   # Tests that fail with pub serve/pub run test.
   known_pub_serve_failure:
+
+# TODO(https://github.com/dart-lang/test/issues/772): Headless chrome times out
+# on travis.
+override_platforms:
+  chrome:
+    settings:
+      headless: false

@@ -1,18 +1,6 @@
 import 'dart:async';
 
-import 'package:angular/angular.dart'
-    show
-        AfterChanges,
-        Directive,
-        Inject,
-        Input,
-        OnDestroy,
-        Optional,
-        Output,
-        Provider,
-        Self,
-        SkipSelf,
-        Visibility;
+import 'package:angular/angular.dart';
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -24,13 +12,10 @@ import 'ng_control.dart' show NgControl;
 import 'shared.dart' show controlPath, composeValidators, selectValueAccessor;
 import 'validators.dart' show ValidatorFn;
 
-const controlNameBinding =
-    const Provider(NgControl, useExisting: NgControlName);
-
 /// Creates and binds a control with a specified name to a DOM element.
 ///
 /// This directive can only be used as a child of [NgForm] or [NgFormModel].
-
+///
 /// ### Example
 ///
 /// In this example, we create the login and password controls.
@@ -82,9 +67,10 @@ const controlNameBinding =
 /// ```
 @Directive(
   selector: '[ngControl]',
-  providers: const [controlNameBinding],
+  providers: const [
+    const ExistingProvider(NgControl, NgControlName),
+  ],
   exportAs: 'ngForm',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class NgControlName extends NgControl implements AfterChanges, OnDestroy {

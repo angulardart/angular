@@ -1,16 +1,6 @@
 import 'dart:async';
 
-import 'package:angular/angular.dart'
-    show
-        Directive,
-        Inject,
-        Input,
-        AfterChanges,
-        Optional,
-        Output,
-        Provider,
-        Self,
-        Visibility;
+import 'package:angular/angular.dart';
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -19,9 +9,6 @@ import 'control_value_accessor.dart'
 import 'ng_control.dart' show NgControl;
 import 'shared.dart' show setUpControl, composeValidators, selectValueAccessor;
 import 'validators.dart' show ValidatorFn;
-
-const formControlBinding =
-    const Provider(NgControl, useExisting: NgFormControl);
 
 /// Binds an existing [Control] to a DOM element.
 ///
@@ -71,9 +58,10 @@ const formControlBinding =
 /// ```
 @Directive(
   selector: '[ngFormControl]',
-  providers: const [formControlBinding],
+  providers: const [
+    const ExistingProvider(NgControl, NgFormControl),
+  ],
   exportAs: 'ngForm',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class NgFormControl extends NgControl implements AfterChanges {

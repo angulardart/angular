@@ -78,9 +78,6 @@ class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
     if ((identical(token, const import8.OpaqueToken('baseUrlDescription')) && (0 == nodeIndex))) {
       return _baseUrlDescription_0_4;
     }
-    if ((identical(token, import1.HasOpaqueTokens) && (0 == nodeIndex))) {
-      return _HasOpaqueTokens_0_5;
-    }
     return notFoundResult;
   }
 

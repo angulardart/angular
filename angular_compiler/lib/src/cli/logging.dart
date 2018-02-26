@@ -1,8 +1,12 @@
 import 'dart:async';
 
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart' as build;
 import 'package:meta/meta.dart';
+import 'package:source_span/source_span.dart';
 import 'package:stack_trace/stack_trace.dart';
+
+import 'messages.dart';
 
 /// Executes the provided [fn], capturing [BuildError]s and forwarding to logs.
 ///
@@ -29,7 +33,8 @@ Future<T> runBuildZoned<T>(
         );
       } else {
         build.log.severe(
-          'Unhandled exception in compiler. Please report a bug!',
+          'Unhandled exception in the AngularDart compiler!\n\n'
+              'Please report a bug: ${messages.urlFileBugs}',
           e,
           s,
         );
@@ -60,6 +65,33 @@ class BuildError extends Error {
 
   BuildError(this.message, [Trace trace])
       : stackTrace = trace ?? new Trace.current();
+
+  /// Throws a [BuildError] caused by analyzing the provided [element].
+  @alwaysThrows
+  static throwForElement(
+    Element element,
+    String message, [
+    Trace trace,
+  ]) {
+    // TODO(matanl): Once AnalysisDriver is available, revisit:
+    // https://github.com/dart-lang/angular/issues/902#issuecomment-366330965
+    final source = element.source;
+    if (source == null) {
+      logWarning('Could not find source $element: the next error may be terse');
+      throw new BuildError(message, trace);
+    }
+    final sourceUrl = source.uri;
+    final sourceContents = source.contents.data;
+    final sourceFile = new SourceFile.fromString(
+      sourceContents,
+      url: sourceUrl,
+    );
+    final sourceSpan = sourceFile.span(
+      element.nameOffset,
+      element.nameLength + element.nameOffset,
+    );
+    throw new BuildError(sourceSpan.message(message), trace);
+  }
 
   @override
   String toString() => message;
