@@ -47,16 +47,16 @@ const List<dynamic> styles$DeferredChildComponentHost = const [];
 
 class _ViewDeferredChildComponentHost0 extends AppView<dynamic> {
   ViewDeferredChildComponent0 _compView_0;
-  import1.DeferredChildComponent _DeferredChildComponent_0_4;
+  import1.DeferredChildComponent _DeferredChildComponent_0_5;
   _ViewDeferredChildComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDeferredChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DeferredChildComponent_0_4 = new import1.DeferredChildComponent();
-    _compView_0.create(_DeferredChildComponent_0_4, projectableNodes);
+    _DeferredChildComponent_0_5 = new import1.DeferredChildComponent();
+    _compView_0.create(_DeferredChildComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.DeferredChildComponent>(0, this, rootEl, _DeferredChildComponent_0_4);
+    return new ComponentRef<import1.DeferredChildComponent>(0, this, rootEl, _DeferredChildComponent_0_5);
   }
 
   @override

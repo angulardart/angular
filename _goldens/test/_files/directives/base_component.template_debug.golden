@@ -34,7 +34,7 @@ class ViewTestFooComponent0 extends DebugAppView<import3.TestFooComponent> {
   import4.DivElement _el_0;
   import4.Element _el_2;
   import5.ViewTestSubComponent0 _compView_2;
-  import1.TestSubComponent _TestSubComponent_2_4;
+  import1.TestSubComponent _TestSubComponent_2_5;
   static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex) : super(import8.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponent0) {
     rootEl = import4.document.createElement('test-foo');
@@ -53,8 +53,8 @@ class ViewTestFooComponent0 extends DebugAppView<import3.TestFooComponent> {
     _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     dbgElm(this, _el_2, 2, 0, 14);
-    _TestSubComponent_2_4 = new import1.TestSubComponent();
-    _compView_2.create(_TestSubComponent_2_4, []);
+    _TestSubComponent_2_5 = new import1.TestSubComponent();
+    _compView_2.create(_TestSubComponent_2_5, []);
     init(const [], null, [_el_0, _text_1, _el_2]);
     return null;
   }
@@ -81,17 +81,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
 
 class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
-  import3.TestFooComponent _TestFooComponent_0_4;
+  import3.TestFooComponent _TestFooComponent_0_5;
   _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import8.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _TestFooComponent_0_4 = new import3.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_4, projectableNodes);
+    _TestFooComponent_0_5 = new import3.TestFooComponent();
+    _compView_0.create(_TestFooComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import3.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_4);
+    return new ComponentRef<import3.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_5);
   }
 
   @override

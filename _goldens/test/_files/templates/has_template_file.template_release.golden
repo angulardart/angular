@@ -49,16 +49,16 @@ const List<dynamic> styles$HasTemplateFileComponentHost = const [];
 
 class _ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   ViewHasTemplateFileComponent0 _compView_0;
-  import2.HasTemplateFileComponent _HasTemplateFileComponent_0_4;
+  import2.HasTemplateFileComponent _HasTemplateFileComponent_0_5;
   _ViewHasTemplateFileComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasTemplateFileComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasTemplateFileComponent_0_4 = new import2.HasTemplateFileComponent();
-    _compView_0.create(_HasTemplateFileComponent_0_4, projectableNodes);
+    _HasTemplateFileComponent_0_5 = new import2.HasTemplateFileComponent();
+    _compView_0.create(_HasTemplateFileComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import2.HasTemplateFileComponent>(0, this, rootEl, _HasTemplateFileComponent_0_4);
+    return new ComponentRef<import2.HasTemplateFileComponent>(0, this, rootEl, _HasTemplateFileComponent_0_5);
   }
 
   @override

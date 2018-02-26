@@ -22,16 +22,16 @@ const List<dynamic> styles$EmptyPropertiesComponent = const [];
 class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesComponent> {
   import2.Element _el_0;
   ViewFancyButtonComponent0 _compView_0;
-  import1.FancyButtonComponent _FancyButtonComponent_0_4;
+  import1.FancyButtonComponent _FancyButtonComponent_0_5;
   import2.Element _el_1;
   ViewFancyButtonComponent0 _compView_1;
-  import1.FancyButtonComponent _FancyButtonComponent_1_4;
+  import1.FancyButtonComponent _FancyButtonComponent_1_5;
   import2.Element _el_2;
   ViewFancyButtonComponent0 _compView_2;
-  import1.FancyButtonComponent _FancyButtonComponent_2_4;
+  import1.FancyButtonComponent _FancyButtonComponent_2_5;
   import2.Element _el_3;
   ViewFancyButtonComponent0 _compView_3;
-  import1.FancyButtonComponent _FancyButtonComponent_3_4;
+  import1.FancyButtonComponent _FancyButtonComponent_3_5;
   static RenderComponentType _renderType;
   ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('empty-properties');
@@ -45,23 +45,23 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     createAttr(_el_0, 'raised', '');
-    _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
-    _compView_0.create(_FancyButtonComponent_0_4, []);
+    _FancyButtonComponent_0_5 = new import1.FancyButtonComponent();
+    _compView_0.create(_FancyButtonComponent_0_5, []);
     _compView_1 = new ViewFancyButtonComponent0(this, 1);
     _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
-    _FancyButtonComponent_1_4 = new import1.FancyButtonComponent();
-    _compView_1.create(_FancyButtonComponent_1_4, []);
+    _FancyButtonComponent_1_5 = new import1.FancyButtonComponent();
+    _compView_1.create(_FancyButtonComponent_1_5, []);
     _compView_2 = new ViewFancyButtonComponent0(this, 2);
     _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
-    _FancyButtonComponent_2_4 = new import1.FancyButtonComponent();
-    _compView_2.create(_FancyButtonComponent_2_4, []);
+    _FancyButtonComponent_2_5 = new import1.FancyButtonComponent();
+    _compView_2.create(_FancyButtonComponent_2_5, []);
     _compView_3 = new ViewFancyButtonComponent0(this, 3);
     _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
-    _FancyButtonComponent_3_4 = new import1.FancyButtonComponent();
-    _compView_3.create(_FancyButtonComponent_3_4, []);
+    _FancyButtonComponent_3_5 = new import1.FancyButtonComponent();
+    _compView_3.create(_FancyButtonComponent_3_5, []);
     init(const [], null);
     return null;
   }
@@ -70,16 +70,16 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      (_FancyButtonComponent_0_4.raised = true);
+      (_FancyButtonComponent_0_5.raised = true);
     }
     if (firstCheck) {
-      (_FancyButtonComponent_1_4.raised = true);
+      (_FancyButtonComponent_1_5.raised = true);
     }
     if (firstCheck) {
-      (_FancyButtonComponent_2_4.raised = true);
+      (_FancyButtonComponent_2_5.raised = true);
     }
     if (firstCheck) {
-      (_FancyButtonComponent_3_4.raised = false);
+      (_FancyButtonComponent_3_5.raised = false);
     }
     _compView_0.detectChanges();
     _compView_1.detectChanges();
@@ -104,16 +104,16 @@ const List<dynamic> styles$EmptyPropertiesComponentHost = const [];
 
 class _ViewEmptyPropertiesComponentHost0 extends AppView<dynamic> {
   ViewEmptyPropertiesComponent0 _compView_0;
-  import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_4;
+  import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_5;
   _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmptyPropertiesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _EmptyPropertiesComponent_0_4 = new import1.EmptyPropertiesComponent();
-    _compView_0.create(_EmptyPropertiesComponent_0_4, projectableNodes);
+    _EmptyPropertiesComponent_0_5 = new import1.EmptyPropertiesComponent();
+    _compView_0.create(_EmptyPropertiesComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.EmptyPropertiesComponent>(0, this, rootEl, _EmptyPropertiesComponent_0_4);
+    return new ComponentRef<import1.EmptyPropertiesComponent>(0, this, rootEl, _EmptyPropertiesComponent_0_5);
   }
 
   @override
@@ -157,16 +157,16 @@ const List<dynamic> styles$FancyButtonComponentHost = const [];
 
 class _ViewFancyButtonComponentHost0 extends AppView<dynamic> {
   ViewFancyButtonComponent0 _compView_0;
-  import1.FancyButtonComponent _FancyButtonComponent_0_4;
+  import1.FancyButtonComponent _FancyButtonComponent_0_5;
   _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewFancyButtonComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
-    _compView_0.create(_FancyButtonComponent_0_4, projectableNodes);
+    _FancyButtonComponent_0_5 = new import1.FancyButtonComponent();
+    _compView_0.create(_FancyButtonComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.FancyButtonComponent>(0, this, rootEl, _FancyButtonComponent_0_4);
+    return new ComponentRef<import1.FancyButtonComponent>(0, this, rootEl, _FancyButtonComponent_0_5);
   }
 
   @override

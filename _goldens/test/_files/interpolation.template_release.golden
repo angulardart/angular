@@ -59,16 +59,16 @@ const List<dynamic> styles$InterpolationComponentHost = const [];
 
 class _ViewInterpolationComponentHost0 extends AppView<dynamic> {
   ViewInterpolationComponent0 _compView_0;
-  import1.InterpolationComponent _InterpolationComponent_0_4;
+  import1.InterpolationComponent _InterpolationComponent_0_5;
   _ViewInterpolationComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponent_0_4 = new import1.InterpolationComponent();
-    _compView_0.create(_InterpolationComponent_0_4, projectableNodes);
+    _InterpolationComponent_0_5 = new import1.InterpolationComponent();
+    _compView_0.create(_InterpolationComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.InterpolationComponent>(0, this, rootEl, _InterpolationComponent_0_4);
+    return new ComponentRef<import1.InterpolationComponent>(0, this, rootEl, _InterpolationComponent_0_5);
   }
 
   @override
@@ -129,16 +129,16 @@ const List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 
 class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
-  import1.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_4;
+  import1.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
   _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponentNoWhitespace_0_4 = new import1.InterpolationComponentNoWhitespace();
-    _compView_0.create(_InterpolationComponentNoWhitespace_0_4, projectableNodes);
+    _InterpolationComponentNoWhitespace_0_5 = new import1.InterpolationComponentNoWhitespace();
+    _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.InterpolationComponentNoWhitespace>(0, this, rootEl, _InterpolationComponentNoWhitespace_0_4);
+    return new ComponentRef<import1.InterpolationComponentNoWhitespace>(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
   }
 
   @override

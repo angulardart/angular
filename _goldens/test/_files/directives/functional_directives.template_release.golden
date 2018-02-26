@@ -50,30 +50,30 @@ const List<dynamic> styles$AppComponentHost = const [];
 
 class _ViewAppComponentHost0 extends AppView<dynamic> {
   ViewAppComponent0 _compView_0;
-  import1.AppComponent _AppComponent_0_4;
-  import1.TextService __TextService_0_5;
+  import1.AppComponent _AppComponent_0_5;
+  import1.TextService __TextService_0_6;
   _ViewAppComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
-  import1.TextService get _TextService_0_5 {
-    if ((this.__TextService_0_5 == null)) {
-      (__TextService_0_5 = new import1.TextService());
+  import1.TextService get _TextService_0_6 {
+    if ((this.__TextService_0_6 == null)) {
+      (__TextService_0_6 = new import1.TextService());
     }
-    return this.__TextService_0_5;
+    return this.__TextService_0_6;
   }
 
   @override
   ComponentRef build() {
     _compView_0 = new ViewAppComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _AppComponent_0_4 = new import1.AppComponent();
-    _compView_0.create(_AppComponent_0_4, projectableNodes);
+    _AppComponent_0_5 = new import1.AppComponent();
+    _compView_0.create(_AppComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.AppComponent>(0, this, rootEl, _AppComponent_0_4);
+    return new ComponentRef<import1.AppComponent>(0, this, rootEl, _AppComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.TextService) && (0 == nodeIndex))) {
-      return _TextService_0_5;
+      return _TextService_0_6;
     }
     return notFoundResult;
   }

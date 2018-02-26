@@ -49,16 +49,16 @@ const List<dynamic> styles$UsesNativeEventsHost = const [];
 
 class _ViewUsesNativeEventsHost0 extends AppView<dynamic> {
   ViewUsesNativeEvents0 _compView_0;
-  import1.UsesNativeEvents _UsesNativeEvents_0_4;
+  import1.UsesNativeEvents _UsesNativeEvents_0_5;
   _ViewUsesNativeEventsHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewUsesNativeEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesNativeEvents_0_4 = new import1.UsesNativeEvents();
-    _compView_0.create(_UsesNativeEvents_0_4, projectableNodes);
+    _UsesNativeEvents_0_5 = new import1.UsesNativeEvents();
+    _compView_0.create(_UsesNativeEvents_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.UsesNativeEvents>(0, this, rootEl, _UsesNativeEvents_0_4);
+    return new ComponentRef<import1.UsesNativeEvents>(0, this, rootEl, _UsesNativeEvents_0_5);
   }
 
   @override
@@ -82,7 +82,7 @@ const List<dynamic> styles$UsesAngularEvents = const [];
 class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   import2.Element _el_0;
   ViewHasAngularEvents0 _compView_0;
-  import1.HasAngularEvents _HasAngularEvents_0_4;
+  import1.HasAngularEvents _HasAngularEvents_0_5;
   static RenderComponentType _renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('uses-angular-events');
@@ -95,9 +95,9 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     _compView_0 = new ViewHasAngularEvents0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _HasAngularEvents_0_4 = new import1.HasAngularEvents();
-    _compView_0.create(_HasAngularEvents_0_4, []);
-    final subscription_0 = _HasAngularEvents_0_4.foo.listen(eventHandler0(ctx.onFoo));
+    _HasAngularEvents_0_5 = new import1.HasAngularEvents();
+    _compView_0.create(_HasAngularEvents_0_5, []);
+    final subscription_0 = _HasAngularEvents_0_5.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0]);
     return null;
   }
@@ -121,16 +121,16 @@ const List<dynamic> styles$UsesAngularEventsHost = const [];
 
 class _ViewUsesAngularEventsHost0 extends AppView<dynamic> {
   ViewUsesAngularEvents0 _compView_0;
-  import1.UsesAngularEvents _UsesAngularEvents_0_4;
+  import1.UsesAngularEvents _UsesAngularEvents_0_5;
   _ViewUsesAngularEventsHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewUsesAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesAngularEvents_0_4 = new import1.UsesAngularEvents();
-    _compView_0.create(_UsesAngularEvents_0_4, projectableNodes);
+    _UsesAngularEvents_0_5 = new import1.UsesAngularEvents();
+    _compView_0.create(_UsesAngularEvents_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.UsesAngularEvents>(0, this, rootEl, _UsesAngularEvents_0_4);
+    return new ComponentRef<import1.UsesAngularEvents>(0, this, rootEl, _UsesAngularEvents_0_5);
   }
 
   @override
@@ -174,16 +174,16 @@ const List<dynamic> styles$HasAngularEventsHost = const [];
 
 class _ViewHasAngularEventsHost0 extends AppView<dynamic> {
   ViewHasAngularEvents0 _compView_0;
-  import1.HasAngularEvents _HasAngularEvents_0_4;
+  import1.HasAngularEvents _HasAngularEvents_0_5;
   _ViewHasAngularEventsHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasAngularEvents_0_4 = new import1.HasAngularEvents();
-    _compView_0.create(_HasAngularEvents_0_4, projectableNodes);
+    _HasAngularEvents_0_5 = new import1.HasAngularEvents();
+    _compView_0.create(_HasAngularEvents_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.HasAngularEvents>(0, this, rootEl, _HasAngularEvents_0_4);
+    return new ComponentRef<import1.HasAngularEvents>(0, this, rootEl, _HasAngularEvents_0_5);
   }
 
   @override

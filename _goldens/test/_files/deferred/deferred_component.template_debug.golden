@@ -54,17 +54,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DeferredChildComponentHost0 = [
 
 class _ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
   ViewDeferredChildComponent0 _compView_0;
-  import2.DeferredChildComponent _DeferredChildComponent_0_4;
+  import2.DeferredChildComponent _DeferredChildComponent_0_5;
   _ViewDeferredChildComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DeferredChildComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDeferredChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _DeferredChildComponent_0_4 = new import2.DeferredChildComponent();
-    _compView_0.create(_DeferredChildComponent_0_4, projectableNodes);
+    _DeferredChildComponent_0_5 = new import2.DeferredChildComponent();
+    _compView_0.create(_DeferredChildComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DeferredChildComponent>(0, this, rootEl, _DeferredChildComponent_0_4);
+    return new ComponentRef<import2.DeferredChildComponent>(0, this, rootEl, _DeferredChildComponent_0_5);
   }
 
   @override

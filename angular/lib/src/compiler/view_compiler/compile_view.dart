@@ -14,7 +14,6 @@ import '../compile_metadata.dart'
         CompileIdentifierMetadata,
         CompileTokenMetadata,
         CompilePipeMetadata,
-        CompileProviderMetadata,
         CompileQueryMetadata,
         CompileTokenMap;
 import '../identifiers.dart';
@@ -204,8 +203,7 @@ abstract class AppViewBuilder {
       {bool forceDynamic: false});
 
   /// Calls function directive on view startup.
-  void callFunctionalDirective(
-      CompileProviderMetadata provider, List<o.Expression> parameters);
+  void callFunctionalDirective(o.Expression invokeExpr);
 
   /// Creates a pipe and stores reference expression in fieldName.
   void createPipeInstance(String pipeFieldName, CompilePipeMetadata pipeMeta);
@@ -990,11 +988,8 @@ class CompileView implements AppViewBuilder {
   }
 
   @override
-  void callFunctionalDirective(
-      CompileProviderMetadata provider, List<o.Expression> parameters) {
-    // Add functional directive invocation.
-    final invokeExpr = o.importExpr(provider.useClass).callFn(parameters);
-    _createMethod.addStmt(invokeExpr.toStmt());
+  void callFunctionalDirective(o.Expression invokeExpression) {
+    _createMethod.addStmt(invokeExpression.toStmt());
   }
 
   @override
