@@ -30,8 +30,9 @@ dev_dependencies:
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:
   test:
-    url: git://github.com/dart-lang/test.git
-    ref: debug-travis
+    git:
+      url: git://github.com/dart-lang/test.git
+      ref: debug-travis
   angular:
     path: ../angular
   angular_ast:
