@@ -23,7 +23,7 @@ AbstractControl _find(AbstractControl control,
   });
 }
 
-abstract class AbstractControl {
+abstract class AbstractControl<T> {
   /// Indicates that a Control is valid, i.e. that no errors exist in the input
   /// value.
   static const VALID = 'VALID';
@@ -37,8 +37,8 @@ abstract class AbstractControl {
   static const PENDING = 'PENDING';
 
   ValidatorFn validator;
-  dynamic _value;
-  final _valueChanges = new StreamController.broadcast();
+  T _value;
+  final _valueChanges = new StreamController<T>.broadcast();
   final _statusChanges = new StreamController<String>.broadcast();
   String _status;
   Map<String, dynamic> _errors;
@@ -50,7 +50,7 @@ abstract class AbstractControl {
     updateValueAndValidity(onlySelf: true, emitEvent: false);
   }
 
-  dynamic get value => _value;
+  T get value => _value;
 
   /// The validation status of the control.
   ///
@@ -70,7 +70,7 @@ abstract class AbstractControl {
 
   bool get untouched => !_touched;
 
-  Stream<dynamic> get valueChanges => _valueChanges.stream;
+  Stream<T> get valueChanges => _valueChanges.stream;
 
   Stream<String> get statusChanges => _statusChanges.stream;
 
@@ -221,7 +221,7 @@ abstract class AbstractControl {
 /// With [NgFormControl] or [NgFormModel] an existing [Control] can be
 /// bound to a DOM element instead. This `Control` can be configured with a
 /// custom validation function.
-class Control extends AbstractControl {
+class Control<T> extends AbstractControl<T> {
   Function _onChange;
   String _rawValue;
 
@@ -238,7 +238,7 @@ class Control extends AbstractControl {
   /// If `emitModelToViewChange` is `true`, the view will be notified about the
   /// new value via an `onChange` event. This is the default behavior if
   /// `emitModelToViewChange` is not specified.
-  void updateValue(dynamic value,
+  void updateValue(T value,
       {bool onlySelf,
       bool emitEvent,
       bool emitModelToViewChange,
@@ -284,7 +284,7 @@ class Control extends AbstractControl {
 /// `ControlGroup` is one of the three fundamental building blocks used to
 /// define forms in Angular, along with [Control] and [ControlArray].
 /// [ControlArray] can also contain other controls, but is of variable length.
-class ControlGroup extends AbstractControl {
+class ControlGroup extends AbstractControl<Map<String, dynamic>> {
   final Map<String, AbstractControl> controls;
   final Map<String, bool> _optionals;
 
@@ -367,7 +367,7 @@ class ControlGroup extends AbstractControl {
 /// `AbstractControl`s used to instantiate the `ControlArray` directly, as that
 /// will result in strange and unexpected behavior such as broken change
 /// detection.
-class ControlArray extends AbstractControl {
+class ControlArray extends AbstractControl<List> {
   List<AbstractControl> controls;
 
   ControlArray(this.controls, [ValidatorFn validator]) : super(validator) {

@@ -202,7 +202,7 @@ void main() {
         test('should run the validator when the value changes', () {
           Map<String, bool> simpleValidator(c) =>
               c.controls['one'].value != 'correct' ? {'broken': true} : null;
-          var c = new Control(null);
+          var c = new Control<String>(null);
           var g = new ControlGroup({'one': c}, null, simpleValidator);
           c.updateValue('correct');
           expect(g.valid, true);
@@ -392,7 +392,7 @@ void main() {
         test('should run the validator when the value changes', () {
           Map<String, dynamic> simpleValidator(c) =>
               c.controls[0].value != 'correct' ? {'broken': true} : null;
-          var c = new Control(null);
+          var c = new Control<String>(null);
           var g = new ControlArray([c], simpleValidator);
           c.updateValue('correct');
           expect(g.valid, true);

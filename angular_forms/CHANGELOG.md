@@ -2,7 +2,11 @@
 
 ### New features
 
--   Added `markAsUntouched` method to `AbstractControl`.
+-   Add `markAsUntouched` method to `AbstractControl`.
+-   Add a type annotation, `T`, to `AbstractControl`, which is tied to the type
+    of `value`.
+-   `ControlGroup` now `extends AbstractControl<Map<String, dynamic>>`.
+-   `ControlArray` now `extends AbstractControl<List>`.
 
 ### Breaking Changes
 
