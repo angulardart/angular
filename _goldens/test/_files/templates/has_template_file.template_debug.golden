@@ -56,17 +56,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 = [
 
 class _ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
   ViewHasTemplateFileComponent0 _compView_0;
-  import3.HasTemplateFileComponent _HasTemplateFileComponent_0_4;
+  import3.HasTemplateFileComponent _HasTemplateFileComponent_0_5;
   _ViewHasTemplateFileComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasTemplateFileComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasTemplateFileComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _HasTemplateFileComponent_0_4 = new import3.HasTemplateFileComponent();
-    _compView_0.create(_HasTemplateFileComponent_0_4, projectableNodes);
+    _HasTemplateFileComponent_0_5 = new import3.HasTemplateFileComponent();
+    _compView_0.create(_HasTemplateFileComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import3.HasTemplateFileComponent>(0, this, rootEl, _HasTemplateFileComponent_0_4);
+    return new ComponentRef<import3.HasTemplateFileComponent>(0, this, rootEl, _HasTemplateFileComponent_0_5);
   }
 
   @override

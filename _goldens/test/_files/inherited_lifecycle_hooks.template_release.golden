@@ -42,40 +42,40 @@ const List<dynamic> styles$LifecycleHooksComponentHost = const [];
 
 class _ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
   ViewLifecycleHooksComponent0 _compView_0;
-  import1.LifecycleHooksComponent _LifecycleHooksComponent_0_4;
+  import1.LifecycleHooksComponent _LifecycleHooksComponent_0_5;
   _ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewLifecycleHooksComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _LifecycleHooksComponent_0_4 = new import1.LifecycleHooksComponent();
-    _compView_0.create(_LifecycleHooksComponent_0_4, projectableNodes);
+    _LifecycleHooksComponent_0_5 = new import1.LifecycleHooksComponent();
+    _compView_0.create(_LifecycleHooksComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.LifecycleHooksComponent>(0, this, rootEl, _LifecycleHooksComponent_0_4);
+    return new ComponentRef<import1.LifecycleHooksComponent>(0, this, rootEl, _LifecycleHooksComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      _LifecycleHooksComponent_0_4.ngOnInit();
+      _LifecycleHooksComponent_0_5.ngOnInit();
     }
-    _LifecycleHooksComponent_0_4.ngDoCheck();
+    _LifecycleHooksComponent_0_5.ngDoCheck();
     if (firstCheck) {
-      _LifecycleHooksComponent_0_4.ngAfterContentInit();
+      _LifecycleHooksComponent_0_5.ngAfterContentInit();
     }
-    _LifecycleHooksComponent_0_4.ngAfterContentChecked();
+    _LifecycleHooksComponent_0_5.ngAfterContentChecked();
     _compView_0.detectChanges();
     if (firstCheck) {
-      _LifecycleHooksComponent_0_4.ngAfterViewInit();
+      _LifecycleHooksComponent_0_5.ngAfterViewInit();
     }
-    _LifecycleHooksComponent_0_4.ngAfterViewChecked();
+    _LifecycleHooksComponent_0_5.ngAfterViewChecked();
   }
 
   @override
   void destroyInternal() {
     _compView_0?.destroy();
-    _LifecycleHooksComponent_0_4.ngOnDestroy();
+    _LifecycleHooksComponent_0_5.ngOnDestroy();
   }
 }
 

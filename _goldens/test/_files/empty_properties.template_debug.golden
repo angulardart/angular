@@ -30,16 +30,16 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmptyPropertiesComponent0 = [
 class ViewEmptyPropertiesComponent0 extends DebugAppView<import1.EmptyPropertiesComponent> {
   import3.Element _el_0;
   ViewFancyButtonComponent0 _compView_0;
-  import1.FancyButtonComponent _FancyButtonComponent_0_4;
+  import1.FancyButtonComponent _FancyButtonComponent_0_5;
   import3.Element _el_1;
   ViewFancyButtonComponent0 _compView_1;
-  import1.FancyButtonComponent _FancyButtonComponent_1_4;
+  import1.FancyButtonComponent _FancyButtonComponent_1_5;
   import3.Element _el_2;
   ViewFancyButtonComponent0 _compView_2;
-  import1.FancyButtonComponent _FancyButtonComponent_2_4;
+  import1.FancyButtonComponent _FancyButtonComponent_2_5;
   import3.Element _el_3;
   ViewFancyButtonComponent0 _compView_3;
-  import1.FancyButtonComponent _FancyButtonComponent_3_4;
+  import1.FancyButtonComponent _FancyButtonComponent_3_5;
   static RenderComponentType _renderType;
   ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmptyPropertiesComponent0) {
     rootEl = import3.document.createElement('empty-properties');
@@ -54,26 +54,26 @@ class ViewEmptyPropertiesComponent0 extends DebugAppView<import1.EmptyProperties
     parentRenderNode.append(_el_0);
     dbgElm(this, _el_0, 0, 0, 0);
     createAttr(_el_0, 'raised', '');
-    _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
-    _compView_0.create(_FancyButtonComponent_0_4, []);
+    _FancyButtonComponent_0_5 = new import1.FancyButtonComponent();
+    _compView_0.create(_FancyButtonComponent_0_5, []);
     _compView_1 = new ViewFancyButtonComponent0(this, 1);
     _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     dbgElm(this, _el_1, 1, 1, 0);
-    _FancyButtonComponent_1_4 = new import1.FancyButtonComponent();
-    _compView_1.create(_FancyButtonComponent_1_4, []);
+    _FancyButtonComponent_1_5 = new import1.FancyButtonComponent();
+    _compView_1.create(_FancyButtonComponent_1_5, []);
     _compView_2 = new ViewFancyButtonComponent0(this, 2);
     _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     dbgElm(this, _el_2, 2, 2, 0);
-    _FancyButtonComponent_2_4 = new import1.FancyButtonComponent();
-    _compView_2.create(_FancyButtonComponent_2_4, []);
+    _FancyButtonComponent_2_5 = new import1.FancyButtonComponent();
+    _compView_2.create(_FancyButtonComponent_2_5, []);
     _compView_3 = new ViewFancyButtonComponent0(this, 3);
     _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
     dbgElm(this, _el_3, 3, 3, 0);
-    _FancyButtonComponent_3_4 = new import1.FancyButtonComponent();
-    _compView_3.create(_FancyButtonComponent_3_4, []);
+    _FancyButtonComponent_3_5 = new import1.FancyButtonComponent();
+    _compView_3.create(_FancyButtonComponent_3_5, []);
     init(const [], null, [_el_0, _el_1, _el_2, _el_3]);
     return null;
   }
@@ -82,16 +82,16 @@ class ViewEmptyPropertiesComponent0 extends DebugAppView<import1.EmptyProperties
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      (_FancyButtonComponent_0_4.raised = true);
+      (_FancyButtonComponent_0_5.raised = true);
     }
     if (firstCheck) {
-      (_FancyButtonComponent_1_4.raised = true);
+      (_FancyButtonComponent_1_5.raised = true);
     }
     if (firstCheck) {
-      (_FancyButtonComponent_2_4.raised = true);
+      (_FancyButtonComponent_2_5.raised = true);
     }
     if (firstCheck) {
-      (_FancyButtonComponent_3_4.raised = false);
+      (_FancyButtonComponent_3_5.raised = false);
     }
     _compView_0.detectChanges();
     _compView_1.detectChanges();
@@ -119,17 +119,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmptyPropertiesComponentHost0 = [
 
 class _ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
   ViewEmptyPropertiesComponent0 _compView_0;
-  import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_4;
+  import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_5;
   _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmptyPropertiesComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmptyPropertiesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _EmptyPropertiesComponent_0_4 = new import1.EmptyPropertiesComponent();
-    _compView_0.create(_EmptyPropertiesComponent_0_4, projectableNodes);
+    _EmptyPropertiesComponent_0_5 = new import1.EmptyPropertiesComponent();
+    _compView_0.create(_EmptyPropertiesComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import1.EmptyPropertiesComponent>(0, this, rootEl, _EmptyPropertiesComponent_0_4);
+    return new ComponentRef<import1.EmptyPropertiesComponent>(0, this, rootEl, _EmptyPropertiesComponent_0_5);
   }
 
   @override
@@ -177,17 +177,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_FancyButtonComponentHost0 = [
 
 class _ViewFancyButtonComponentHost0 extends DebugAppView<dynamic> {
   ViewFancyButtonComponent0 _compView_0;
-  import1.FancyButtonComponent _FancyButtonComponent_0_4;
+  import1.FancyButtonComponent _FancyButtonComponent_0_5;
   _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_FancyButtonComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewFancyButtonComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _FancyButtonComponent_0_4 = new import1.FancyButtonComponent();
-    _compView_0.create(_FancyButtonComponent_0_4, projectableNodes);
+    _FancyButtonComponent_0_5 = new import1.FancyButtonComponent();
+    _compView_0.create(_FancyButtonComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import1.FancyButtonComponent>(0, this, rootEl, _FancyButtonComponent_0_4);
+    return new ComponentRef<import1.FancyButtonComponent>(0, this, rootEl, _FancyButtonComponent_0_5);
   }
 
   @override

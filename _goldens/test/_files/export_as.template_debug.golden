@@ -54,17 +54,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
 
 class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
-  import2.TestFooComponent _TestFooComponent_0_4;
+  import2.TestFooComponent _TestFooComponent_0_5;
   _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _TestFooComponent_0_4 = new import2.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_4, projectableNodes);
+    _TestFooComponent_0_5 = new import2.TestFooComponent();
+    _compView_0.create(_TestFooComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_4);
+    return new ComponentRef<import2.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_5);
   }
 
   @override

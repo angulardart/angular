@@ -111,16 +111,16 @@ const List<dynamic> styles$CompHost = const [];
 
 class _ViewCompHost0 extends AppView<dynamic> {
   ViewComp0 _compView_0;
-  import1.Comp _Comp_0_4;
+  import1.Comp _Comp_0_5;
   _ViewCompHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    _Comp_0_4 = new import1.Comp();
-    _compView_0.create(_Comp_0_4, projectableNodes);
+    _Comp_0_5 = new import1.Comp();
+    _compView_0.create(_Comp_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.Comp>(0, this, rootEl, _Comp_0_4);
+    return new ComponentRef<import1.Comp>(0, this, rootEl, _Comp_0_5);
   }
 
   @override

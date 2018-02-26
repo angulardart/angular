@@ -26,6 +26,7 @@ class Identifiers {
   static final ViewContainer = new CompileIdentifierMetadata<dynamic>(
       name: "ViewContainer",
       moduleUrl: "asset:angular/lib/src/core/linker/view_container.dart");
+  static final ViewContainerToken = identifierToken(ViewContainer);
   static final ElementRef = new CompileIdentifierMetadata<dynamic>(
       name: "ElementRef",
       moduleUrl: "asset:angular/lib/src/core/linker/element_ref.dart");

@@ -6,8 +6,7 @@ import '../compile_metadata.dart'
         CompileIdentifierMetadata,
         CompileTokenMetadata,
         CompileQueryMetadata,
-        CompileProviderMetadata,
-        CompileDiDependencyMetadata;
+        CompileProviderMetadata;
 import '../identifiers.dart' show Identifiers, identifierToken;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
@@ -17,11 +16,11 @@ import 'compile_view.dart' show CompileView, NodeReference;
 import 'view_compiler_utils.dart'
     show
         createDiTokenExpression,
-        convertValueToOutputAst,
         injectFromViewParentInjector,
         getPropertyInView,
         getViewFactoryName,
         toTemplateExtension;
+import 'ir/providers_node.dart';
 
 /// Compiled node in the view (such as text node) that is not an element.
 class CompileNode {
@@ -44,7 +43,7 @@ class CompileNode {
 }
 
 /// Compiled element in the view.
-class CompileElement extends CompileNode {
+class CompileElement extends CompileNode implements ProvidersNodeHost {
   // If true, we know for sure it is html and not svg or other type
   // so we can create code for more exact type HtmlElement.
   final bool isHtmlElement;
@@ -64,20 +63,10 @@ class CompileElement extends CompileNode {
   /// Expression that contains reference to componentView (root View class).
   o.Expression _compViewExpr;
 
-  /// Maps from a provider token to expression that will return instance
-  /// at runtime. Builtin(s) are populated eagerly, ProviderAst based
-  /// instances are added on demand.
-  final _instances = new CompileTokenMap<o.Expression>();
-
-  /// We track which providers are just 'useExisting' for another provider on
-  /// this component. This way, we can detect when we don't need to generate
-  /// a getter for them.
-  final _aliases = new CompileTokenMap<List<CompileTokenMetadata>>();
-  final _aliasedProviders = new CompileTokenMap<CompileTokenMetadata>();
-  CompileTokenMap<ProviderAst> _resolvedProviders;
   var _queryCount = 0;
   final _queries = new CompileTokenMap<List<CompileQuery>>();
   final Logger _logger;
+  ProvidersNode _providers;
 
   List<List<o.Expression>> contentNodesByNgContentIndex;
   CompileView embeddedView;
@@ -103,6 +92,7 @@ class CompileElement extends CompileNode {
       {this.isHtmlElement: false,
       this.hasTemplateRefQuery: false})
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
+    _providers = new ProvidersNode(this, parent?._providers, _directives);
     if (references.isNotEmpty) {
       referenceTokens = <String, CompileTokenMetadata>{};
       int referenceCount = references.length;
@@ -115,18 +105,18 @@ class CompileElement extends CompileNode {
     elementRef = o
         .importExpr(Identifiers.ElementRef)
         .instantiate([renderNode.toReadExpr()]);
-    _instances.add(Identifiers.ElementRefToken, this.elementRef);
-    _instances.add(Identifiers.ElementToken, renderNode.toReadExpr());
-    _instances.add(Identifiers.HtmlElementToken, renderNode.toReadExpr());
+
+    _providers.add(Identifiers.ElementRefToken, this.elementRef);
+    _providers.add(Identifiers.ElementToken, renderNode.toReadExpr());
+    _providers.add(Identifiers.HtmlElementToken, renderNode.toReadExpr());
     var readInjectorExpr =
         new o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
-    _instances.add(Identifiers.InjectorToken, readInjectorExpr);
+    _providers.add(Identifiers.InjectorToken, readInjectorExpr);
 
     if (hasViewContainer || hasEmbeddedView) {
       appViewContainer = view.createViewContainer(renderNode, nodeIndex,
           !hasViewContainer, isRootElement ? null : parent.nodeIndex);
-      _instances.add(
-          identifierToken(Identifiers.ViewContainer), appViewContainer);
+      _providers.add(Identifiers.ViewContainerToken, appViewContainer);
     }
   }
 
@@ -187,8 +177,8 @@ class CompileElement extends CompileNode {
 
   void beforeChildren(bool componentIsDeferred) {
     if (hasViewContainer &&
-        !_instances.containsKey(Identifiers.ViewContainerRefToken)) {
-      _instances.add(Identifiers.ViewContainerRefToken, appViewContainer);
+        !_providers.containsLocalProvider(Identifiers.ViewContainerRefToken)) {
+      _providers.add(Identifiers.ViewContainerRefToken, appViewContainer);
     }
 
     if (referenceTokens != null) {
@@ -199,11 +189,28 @@ class CompileElement extends CompileNode {
       });
     }
 
-    _prepareProviderInstances(componentIsDeferred);
+    // Access builtins with special visibility.
+    if (component != null) {
+      _providers.add(
+          Identifiers.ChangeDetectorRefToken, _compViewExpr.prop('ref'));
+    } else {
+      _providers.add(
+          Identifiers.ChangeDetectorRefToken, new o.ReadClassMemberExpr('ref'));
+    }
+
+    // ComponentLoader is currently just an alias for ViewContainerRef with
+    // a smaller API that is also usable outside of the context of a
+    // structural directive.
+    if (appViewContainer != null) {
+      _providers.add(Identifiers.ComponentLoaderToken, appViewContainer);
+    }
+    _providers.addDirectiveProviders(
+        _resolvedProvidersArray, componentIsDeferred);
 
     directiveInstances = <o.Expression>[];
     for (var directive in _directives) {
-      var directiveInstance = _instances.get(identifierToken(directive.type));
+      var directiveInstance =
+          _providers.buildReadExpr(identifierToken(directive.type));
       directiveInstances.add(directiveInstance);
       for (var queryMeta in directive.queries) {
         _addQuery(queryMeta, directiveInstance);
@@ -220,8 +227,9 @@ class CompileElement extends CompileNode {
     // For each reference token create CompileTokenMetadata to read query.
     if (referenceTokens != null) {
       referenceTokens.forEach((String varName, token) {
-        var varValue =
-            token != null ? _instances.get(token) : renderNode.toReadExpr();
+        var varValue = token != null
+            ? _providers.buildReadExpr(token)
+            : renderNode.toReadExpr();
         view.nameResolver.addLocal(varName, varValue);
         var varToken = new CompileTokenMetadata(value: varName);
         queriesWithReads.addAll(_getQueriesFor(varToken)
@@ -235,7 +243,7 @@ class CompileElement extends CompileNode {
       o.Expression value;
       if (queryWithRead.read.identifier != null) {
         // query for an identifier
-        value = _instances.get(queryWithRead.read);
+        value = _providers.buildReadExpr(queryWithRead.read);
       } else {
         // query for a reference
         var token = (referenceTokens != null)
@@ -245,7 +253,7 @@ class CompileElement extends CompileNode {
         //
         // HOWEVER, if specifically typed as Element or HtmlElement, use that.
         value = token != null
-            ? _instances.get(token)
+            ? _providers.buildReadExpr(token)
             : queryWithRead.query.metadata.isElementType
                 ? renderNode.toReadExpr()
                 : elementRef;
@@ -258,133 +266,25 @@ class CompileElement extends CompileNode {
 
   bool get publishesTemplateRef => _publishesTemplateRef;
 
-  void _prepareProviderInstances(bool componentIsDeferred) {
-    // Create a lookup map from token to provider.
-    _resolvedProviders = new CompileTokenMap<ProviderAst>();
-    for (ProviderAst provider in _resolvedProvidersArray) {
-      _resolvedProviders.add(provider.token, provider);
-    }
-    // Create all the provider instances, some in the view constructor (eager),
-    // some as getters (eager=false). We rely on the fact that they are
-    // already sorted topologically.
-    for (ProviderAst resolvedProvider in _resolvedProvidersArray) {
-      if (resolvedProvider.providerType ==
-          ProviderAstType.FunctionalDirective) {
-        continue;
-      }
-      var providerValueExpressions = <o.Expression>[];
-      var isLocalAlias = false;
-      CompileDirectiveMetadata directiveMetadata;
-      for (var provider in resolvedProvider.providers) {
-        o.Expression providerValue;
-        if (provider.useExisting != null) {
-          // If this provider is just an alias for another provider on this
-          // component, we don't need to generate a getter.
-          if (_instances.containsKey(provider.useExisting) &&
-              !resolvedProvider.eager &&
-              !resolvedProvider.multiProvider) {
-            isLocalAlias = true;
-            break;
-          }
-          // Given the token and visibility defined by providerType,
-          // get value based on existing expression mapped to token.
-          providerValue = _getDependency(resolvedProvider.providerType,
-              new CompileDiDependencyMetadata(token: provider.useExisting),
-              requestOrigin:
-                  resolvedProvider.implementedByDirectiveWithNoVisibility
-                      ? provider.token
-                      : null);
-          directiveMetadata = null;
-        } else if (provider.useFactory != null) {
-          var parameters = <o.Expression>[];
-          for (var paramDep in provider.deps ?? provider.useFactory.diDeps) {
-            parameters
-                .add(_getDependency(resolvedProvider.providerType, paramDep));
-          }
-          providerValue = o.importExpr(provider.useFactory).callFn(parameters);
-        } else if (provider.useClass != null) {
-          var paramDeps = provider.deps ?? provider.useClass.diDeps;
-          // Resolve constructor parameters for class.
-          var parameters = <o.Expression>[];
-          for (var paramDep in paramDeps) {
-            parameters
-                .add(_getDependency(resolvedProvider.providerType, paramDep));
-          }
-          var classType = provider.useClass.identifier;
-          // Check if class is a directive.
-          for (var dir in _directives) {
-            if (dir.identifier == classType) {
-              directiveMetadata = dir;
-              break;
-            }
-          }
-          providerValue = o
-              .importExpr(provider.useClass)
-              .instantiate(parameters, o.importType(provider.useClass));
-        } else {
-          providerValue = convertValueToOutputAst(provider.useValue);
-        }
-        providerValueExpressions.add(providerValue);
-      }
-      if (isLocalAlias) {
-        // This provider is just an alias for an existing field/instance
-        // on the same view class, so just add the existing reference for this
-        // token.
-        var provider = resolvedProvider.providers.single;
-        var alias = provider.useExisting;
-        if (_aliasedProviders.containsKey(alias)) {
-          alias = _aliasedProviders.get(alias);
-        }
-        if (!_aliases.containsKey(alias)) {
-          _aliases.add(alias, <CompileTokenMetadata>[]);
-        }
-        _aliases.get(alias).add(provider.token);
-        _aliasedProviders.add(resolvedProvider.token, alias);
-        _instances.add(resolvedProvider.token, _instances.get(alias));
-      } else {
-        // Create a new field property for this provider.
-        var propName =
-            '_${resolvedProvider.token.name}_${nodeIndex}_${_instances.size}';
-        var instance = view.createProvider(
-            propName,
-            directiveMetadata,
-            resolvedProvider,
-            providerValueExpressions,
-            resolvedProvider.multiProvider,
-            resolvedProvider.eager,
-            this,
-            forceDynamic:
-                (resolvedProvider.providerType == ProviderAstType.Component) &&
-                    componentIsDeferred);
-        _instances.add(resolvedProvider.token, instance);
-      }
-    }
-  }
-
   void afterChildren(int childNodeCount) {
     for (ProviderAst resolvedProvider in _resolvedProvidersArray) {
       if (resolvedProvider.providerType ==
           ProviderAstType.FunctionalDirective) {
-        // Get function parameter dependencies.
-        final parameters = <o.Expression>[];
-        final provider = resolvedProvider.providers.first;
-        for (var dep in provider.deps) {
-          parameters.add(_getDependency(resolvedProvider.providerType, dep));
-        }
+        o.Expression invokeExpression =
+            _providers.createFunctionalDirectiveExpression(resolvedProvider);
         // Add functional directive invocation.
-        view.callFunctionalDirective(provider, parameters);
+        view.callFunctionalDirective(invokeExpression);
         continue;
       }
 
       if (!resolvedProvider.dynamicallyReachable ||
-          _aliasedProviders.containsKey(resolvedProvider.token)) continue;
+          _providers.isAliasedProvider(resolvedProvider.token)) continue;
 
       // Note: afterChildren is called after recursing into children.
       // This is good so that an injector match in an element that is closer to
       // a requesting element matches first.
-      var providerExpr = _instances.get(resolvedProvider.token);
-
-      var aliases = _aliases.get(resolvedProvider.token);
+      var providerExpr = _providers.buildReadExpr(resolvedProvider.token);
+      var aliases = _providers.getAliases(resolvedProvider.token);
 
       // Note: view providers are only visible on the injector of that element.
       // This is not fully correct as the rules during codegen don't allow a
@@ -445,7 +345,7 @@ class CompileElement extends CompileNode {
             value: nestedComponentId.value);
 
     var templateRefExpr =
-        _instances.get(identifierToken(Identifiers.TemplateRef));
+        _providers.buildReadExpr(Identifiers.TemplateRefToken);
 
     final args = [
       o.importDeferred(prefixedId),
@@ -475,8 +375,46 @@ class CompileElement extends CompileNode {
   }
 
   o.Expression getComponent() => component != null
-      ? _instances.get(identifierToken(component.type))
+      ? _providers.buildReadExpr(identifierToken(component.type))
       : null;
+
+  // NodeProvidersHost implementation.
+  @override
+  o.Expression createProviderInstance(
+      ProviderAst resolvedProvider,
+      CompileDirectiveMetadata directiveMetadata,
+      List<o.Expression> providerValueExpressions,
+      bool componentIsDeferred,
+      int uniqueId) {
+    // Create a new field property for this provider.
+    var propName = '_${resolvedProvider.token.name}_${nodeIndex}_$uniqueId';
+    return view.createProvider(
+        propName,
+        directiveMetadata,
+        resolvedProvider,
+        providerValueExpressions,
+        resolvedProvider.multiProvider,
+        resolvedProvider.eager,
+        this,
+        forceDynamic:
+            (resolvedProvider.providerType == ProviderAstType.Component) &&
+                componentIsDeferred);
+  }
+
+  @override
+  o.Expression buildInjectFromParentExpr(ProvidersNode source,
+      o.Expression value, CompileTokenMetadata token, bool optional) {
+    // If request was made on a service resolving to a private directive,
+    // use requested dependency to call injectorGet instead of directive
+    // that redirects using useExisting type provider.
+    value ??= injectFromViewParentInjector(view, token, optional);
+    CompileElement currElement = this;
+    while (currElement != null) {
+      if (currElement._providers == source) break;
+      currElement = currElement.parent;
+    }
+    return getPropertyInView(value, view, currElement.view);
+  }
 
   List<o.Expression> getProviderTokens() {
     return _resolvedProvidersArray
@@ -522,93 +460,6 @@ class CompileElement extends CompileNode {
     view.nameResolver.addField(query.createClassField());
     addQueryToTokenMap(this._queries, query);
     return query;
-  }
-
-  o.Expression _getLocalDependency(
-      ProviderAstType requestingProviderType, CompileTokenMetadata token) {
-    if (token == null) return null;
-
-    // Access builtins with special visibility.
-    if (token.equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
-      if (identical(requestingProviderType, ProviderAstType.Component)) {
-        return _compViewExpr.prop('ref');
-      } else {
-        return new o.ReadClassMemberExpr('ref');
-      }
-    }
-
-    // ComponentLoader is currently just an alias for ViewContainerRef with
-    // a smaller API that is also usable outside of the context of a
-    // structural directive.
-    if (token.equalsTo(identifierToken(Identifiers.ComponentLoader))) {
-      return appViewContainer;
-    }
-
-    // Access regular providers on the element. For provider instances with an
-    // associated provider AST, ensure the provider is visible for injection.
-    final providerAst = _resolvedProviders.get(token);
-    if (providerAst == null || providerAst.visibleForInjection) {
-      return _instances.get(token);
-    }
-
-    return null;
-  }
-
-  o.Expression _getDependency(
-      ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep,
-      {CompileTokenMetadata requestOrigin}) {
-    CompileElement currElement = this;
-    o.Expression result;
-    if (dep.isValue) {
-      result = o.literal(dep.value);
-    }
-    if (result == null && !dep.isSkipSelf) {
-      result = _getLocalDependency(requestingProviderType, dep.token);
-    }
-
-    // check parent elements
-    while (result == null && currElement.parent.parent != null) {
-      currElement = currElement.parent;
-      result = currElement._getLocalDependency(
-          ProviderAstType.PublicService, dep.token);
-    }
-
-    // If component has a service with useExisting: provider pointing to itself,
-    // we need to search for providerAst using the service interface but
-    // query _instances with the component type to get correct instance.
-    // [requestOrigin] below points to the service whereas dep.token will
-    // reference the component type.
-    if (result == null && requestOrigin != null) {
-      currElement = this;
-      if (!dep.isSkipSelf) {
-        final providerAst = _resolvedProviders.get(requestOrigin);
-        if (providerAst == null ||
-            providerAst.visibleForInjection ||
-            // This condition is only reached when a component implements a
-            // directive that's applied to its host element, and provides itself
-            // in place of the directive. In this case we don't care if the
-            // request origin (the directive itself) is visible, since this
-            // wouldn't prevent you from applying the directive in the absence
-            // of the component.
-            requestingProviderType == ProviderAstType.Directive) {
-          result = _instances.get(dep.token);
-        }
-      }
-      // See if we have local dependency to origin service.
-      while (result == null && currElement.parent.parent != null) {
-        currElement = currElement.parent;
-        final providerAst = currElement._resolvedProviders.get(requestOrigin);
-        if (providerAst == null || providerAst.visibleForInjection) {
-          result = currElement._instances.get(dep.token);
-        }
-      }
-    }
-    // If request was made on a service resolving to a private directive,
-    // use requested dependency to call injectorGet instead of directive
-    // that redirects using useExisting type provider.
-    result ??= injectFromViewParentInjector(
-        view, requestOrigin ?? dep.token, dep.isOptional);
-    return getPropertyInView(result, view, currElement.view);
   }
 }
 

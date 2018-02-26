@@ -54,96 +54,96 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponentHost0 = [
 
 class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   ViewProvidersComponent0 _compView_0;
-  import2.ProvidersComponent _ProvidersComponent_0_4;
-  import2.MyTypeAnnotation __MyTypeAnnotation_0_5;
-  import2.MyInjectableTypeAnnotation __MyInjectableTypeAnnotation_0_6;
-  dynamic __MyUseFactory_0_7;
-  import2.MyUseClass __MyUseClass_0_8;
-  import2.MyUseValue __MyUseValue_0_11;
-  String __useValueString_0_12;
-  List<dynamic> __useValueList_0_13;
-  Map<String, dynamic> __useValueMap_0_14;
-  dynamic __useEnums_0_15;
-  String __XsrfToken_0_16;
+  import2.ProvidersComponent _ProvidersComponent_0_5;
+  import2.MyTypeAnnotation __MyTypeAnnotation_0_6;
+  import2.MyInjectableTypeAnnotation __MyInjectableTypeAnnotation_0_7;
+  dynamic __MyUseFactory_0_8;
+  import2.MyUseClass __MyUseClass_0_9;
+  import2.MyUseValue __MyUseValue_0_12;
+  String __useValueString_0_13;
+  List<dynamic> __useValueList_0_14;
+  Map<String, dynamic> __useValueMap_0_15;
+  dynamic __useEnums_0_16;
+  String __XsrfToken_0_17;
   _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ProvidersComponentHost0);
-  import2.MyTypeAnnotation get _MyTypeAnnotation_0_5 {
+  import2.MyTypeAnnotation get _MyTypeAnnotation_0_6 {
     dbg(0, 0, 0);
-    if ((this.__MyTypeAnnotation_0_5 == null)) {
-      (__MyTypeAnnotation_0_5 = new import2.MyTypeAnnotation());
+    if ((this.__MyTypeAnnotation_0_6 == null)) {
+      (__MyTypeAnnotation_0_6 = new import2.MyTypeAnnotation());
     }
-    return this.__MyTypeAnnotation_0_5;
+    return this.__MyTypeAnnotation_0_6;
   }
 
-  import2.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_6 {
+  import2.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_7 {
     dbg(0, 0, 0);
-    if ((this.__MyInjectableTypeAnnotation_0_6 == null)) {
-      (__MyInjectableTypeAnnotation_0_6 = new import2.MyInjectableTypeAnnotation());
+    if ((this.__MyInjectableTypeAnnotation_0_7 == null)) {
+      (__MyInjectableTypeAnnotation_0_7 = new import2.MyInjectableTypeAnnotation());
     }
-    return this.__MyInjectableTypeAnnotation_0_6;
+    return this.__MyInjectableTypeAnnotation_0_7;
   }
 
-  dynamic get _MyUseFactory_0_7 {
+  dynamic get _MyUseFactory_0_8 {
     dbg(0, 0, 0);
-    if ((this.__MyUseFactory_0_7 == null)) {
-      (__MyUseFactory_0_7 = import2.ProvidersComponent.createService(this.injectorGet(import12.NgZone, this.viewData.parentIndex)));
+    if ((this.__MyUseFactory_0_8 == null)) {
+      (__MyUseFactory_0_8 = import2.ProvidersComponent.createService(this.injectorGet(import12.NgZone, this.viewData.parentIndex)));
     }
-    return this.__MyUseFactory_0_7;
+    return this.__MyUseFactory_0_8;
   }
 
-  import2.MyUseClass get _MyUseClass_0_8 {
+  import2.MyUseClass get _MyUseClass_0_9 {
     dbg(0, 0, 0);
-    if ((this.__MyUseClass_0_8 == null)) {
-      (__MyUseClass_0_8 = new import2.MyUseClass());
+    if ((this.__MyUseClass_0_9 == null)) {
+      (__MyUseClass_0_9 = new import2.MyUseClass());
     }
-    return this.__MyUseClass_0_8;
+    return this.__MyUseClass_0_9;
   }
 
-  import2.MyUseValue get _MyUseValue_0_11 {
+  import2.MyUseValue get _MyUseValue_0_12 {
     dbg(0, 0, 0);
-    if ((this.__MyUseValue_0_11 == null)) {
-      (__MyUseValue_0_11 = const import2.MyUseValue('Matan'));
+    if ((this.__MyUseValue_0_12 == null)) {
+      (__MyUseValue_0_12 = const import2.MyUseValue('Matan'));
     }
-    return this.__MyUseValue_0_11;
+    return this.__MyUseValue_0_12;
   }
 
-  String get _useValueString_0_12 {
+  String get _useValueString_0_13 {
     dbg(0, 0, 0);
-    if ((this.__useValueString_0_12 == null)) {
-      (__useValueString_0_12 = 'foo');
+    if ((this.__useValueString_0_13 == null)) {
+      (__useValueString_0_13 = 'foo');
     }
-    return this.__useValueString_0_12;
+    return this.__useValueString_0_13;
   }
 
-  List<dynamic> get _useValueList_0_13 {
+  List<dynamic> get _useValueList_0_14 {
     dbg(0, 0, 0);
-    if ((this.__useValueList_0_13 == null)) {
-      (__useValueList_0_13 = const [const import2.MyUseValue('Andrew'), const import2.MyUseValue('Matan'), const import2.MyUseValue.named(optional: true)]);
+    if ((this.__useValueList_0_14 == null)) {
+      (__useValueList_0_14 = const [const import2.MyUseValue('Andrew'), const import2.MyUseValue('Matan'), const import2.MyUseValue.named(optional: true)]);
     }
-    return this.__useValueList_0_13;
+    return this.__useValueList_0_14;
   }
 
-  Map<String, dynamic> get _useValueMap_0_14 {
+  Map<String, dynamic> get _useValueMap_0_15 {
     dbg(0, 0, 0);
-    if ((this.__useValueMap_0_14 == null)) {
-      (__useValueMap_0_14 = const {'Andrew': const import2.MyUseValue('Andrew'), 'Matan': const import2.MyUseValue('Matan')});
+    if ((this.__useValueMap_0_15 == null)) {
+      (__useValueMap_0_15 = const {'Andrew': const import2.MyUseValue('Andrew'), 'Matan': const import2.MyUseValue('Matan')});
     }
-    return this.__useValueMap_0_14;
+    return this.__useValueMap_0_15;
   }
 
-  dynamic get _useEnums_0_15 {
+  dynamic get _useEnums_0_16 {
     dbg(0, 0, 0);
-    if ((this.__useEnums_0_15 == null)) {
-      (__useEnums_0_15 = import2.MyEnum.first);
+    if ((this.__useEnums_0_16 == null)) {
+      (__useEnums_0_16 = import2.MyEnum.first);
     }
-    return this.__useEnums_0_15;
+    return this.__useEnums_0_16;
   }
 
-  String get _XsrfToken_0_16 {
+  String get _XsrfToken_0_17 {
     dbg(0, 0, 0);
-    if ((this.__XsrfToken_0_16 == null)) {
-      (__XsrfToken_0_16 = 'ABC123');
+    if ((this.__XsrfToken_0_17 == null)) {
+      (__XsrfToken_0_17 = 'ABC123');
     }
-    return this.__XsrfToken_0_16;
+    return this.__XsrfToken_0_17;
   }
 
   @override
@@ -151,43 +151,43 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
     _compView_0 = new ViewProvidersComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _ProvidersComponent_0_4 = new import2.ProvidersComponent();
-    _compView_0.create(_ProvidersComponent_0_4, projectableNodes);
+    _ProvidersComponent_0_5 = new import2.ProvidersComponent();
+    _compView_0.create(_ProvidersComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.ProvidersComponent>(0, this, rootEl, _ProvidersComponent_0_4);
+    return new ComponentRef<import2.ProvidersComponent>(0, this, rootEl, _ProvidersComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.MyTypeAnnotation) && (0 == nodeIndex))) {
-      return _MyTypeAnnotation_0_5;
+      return _MyTypeAnnotation_0_6;
     }
     if ((identical(token, import2.MyInjectableTypeAnnotation) && (0 == nodeIndex))) {
-      return _MyInjectableTypeAnnotation_0_6;
+      return _MyInjectableTypeAnnotation_0_7;
     }
     if ((identical(token, import2.MyUseFactory) && (0 == nodeIndex))) {
-      return _MyUseFactory_0_7;
+      return _MyUseFactory_0_8;
     }
     if ((((identical(token, import2.MyUseClass) || identical(token, import2.MyUseExisting)) || identical(token, import2.MyUseExistingNested)) && (0 == nodeIndex))) {
-      return _MyUseClass_0_8;
+      return _MyUseClass_0_9;
     }
     if ((identical(token, import2.MyUseValue) && (0 == nodeIndex))) {
-      return _MyUseValue_0_11;
+      return _MyUseValue_0_12;
     }
     if ((identical(token, const import10.OpaqueToken('useValueString')) && (0 == nodeIndex))) {
-      return _useValueString_0_12;
+      return _useValueString_0_13;
     }
     if ((identical(token, const import10.OpaqueToken('useValueList')) && (0 == nodeIndex))) {
-      return _useValueList_0_13;
+      return _useValueList_0_14;
     }
     if ((identical(token, const import10.OpaqueToken('useValueMap')) && (0 == nodeIndex))) {
-      return _useValueMap_0_14;
+      return _useValueMap_0_15;
     }
     if ((identical(token, const import10.OpaqueToken('useEnums')) && (0 == nodeIndex))) {
-      return _useEnums_0_15;
+      return _useEnums_0_16;
     }
     if ((identical(token, const import11.XsrfToken()) && (0 == nodeIndex))) {
-      return _XsrfToken_0_16;
+      return _XsrfToken_0_17;
     }
     return notFoundResult;
   }

@@ -34,11 +34,11 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   bool _query_q2_1_4_isDirty = true;
   final import2.QueryList _viewQuery_AnotherDirective_5 = new import2.QueryList();
   import3.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_4;
+  import1.AnotherDirective _AnotherDirective_0_5;
   import3.Element _el_1;
-  import1.AnotherDirective _AnotherDirective_1_4;
+  import1.AnotherDirective _AnotherDirective_1_5;
   ViewContainer _appEl_2;
-  NgIf _NgIf_2_7;
+  NgIf _NgIf_2_9;
   static RenderComponentType _renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import3.document.createElement('queries');
@@ -51,14 +51,14 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     project(parentRenderNode, 0);
     var doc = import3.document;
     _el_0 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
     _el_1 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_1_4 = new import1.AnotherDirective();
+    _AnotherDirective_1_5 = new import1.AnotherDirective();
     var _anchor_2 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_2);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
-    TemplateRef _TemplateRef_2_6 = new TemplateRef(_appEl_2, viewFactory_QueriesComponent1);
-    _NgIf_2_7 = new NgIf(_appEl_2, _TemplateRef_2_6);
+    TemplateRef _TemplateRef_2_8 = new TemplateRef(_appEl_2, viewFactory_QueriesComponent1);
+    _NgIf_2_9 = new NgIf(_appEl_2, _TemplateRef_2_8);
     ctx.viewChildFromField = new ElementRef(_el_1);
     ctx.readDIFromElementRef = new ElementRef(_el_1);
     ctx.readDIFromElement = _el_1;
@@ -70,7 +70,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   @override
   void detectChangesInternal() {
     final import1.QueriesComponent _ctx = ctx;
-    _NgIf_2_7.ngIf = _ctx.someValue;
+    _NgIf_2_9.ngIf = _ctx.someValue;
     _appEl_2.detectChangesInNestedViews();
     if (_viewQuery_q2_0.dirty) {
       _viewQuery_q2_0.reset([new ElementRef(_el_1)]);
@@ -79,10 +79,10 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     }
     if (_viewQuery_AnotherDirective_5.dirty) {
       _viewQuery_AnotherDirective_5.reset([
-        [_AnotherDirective_0_4],
-        [_AnotherDirective_1_4],
+        [_AnotherDirective_0_5],
+        [_AnotherDirective_1_5],
         _appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
-          return [nestedView._AnotherDirective_0_4];
+          return [nestedView._AnotherDirective_0_5];
         })
       ]);
       ctx.usingTypeFromField = _viewQuery_AnotherDirective_5;
@@ -102,7 +102,7 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponent0(AppView<dynamic>
 
 class _ViewQueriesComponent1 extends AppView<import1.QueriesComponent> {
   import3.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_4;
+  import1.AnotherDirective _AnotherDirective_0_5;
   _ViewQueriesComponent1(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewQueriesComponent0._renderType;
   }
@@ -110,7 +110,7 @@ class _ViewQueriesComponent1 extends AppView<import1.QueriesComponent> {
   ComponentRef<import1.QueriesComponent> build() {
     var doc = import3.document;
     _el_0 = doc.createElement('another');
-    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0(_el_0);
     return null;
   }
@@ -129,7 +129,7 @@ const List<dynamic> styles$QueriesComponentHost = const [];
 
 class _ViewQueriesComponentHost0 extends AppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
-  import1.QueriesComponent _QueriesComponent_0_4;
+  import1.QueriesComponent _QueriesComponent_0_5;
   final import2.QueryList _query_AnotherDirective_0_0 = new import2.QueryList();
   bool _query_AnotherDirective_0_1_isDirty = true;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
@@ -137,17 +137,17 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewQueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _QueriesComponent_0_4 = new import1.QueriesComponent();
-    _compView_0.create(_QueriesComponent_0_4, projectableNodes);
+    _QueriesComponent_0_5 = new import1.QueriesComponent();
+    _compView_0.create(_QueriesComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.QueriesComponent>(0, this, rootEl, _QueriesComponent_0_4);
+    return new ComponentRef<import1.QueriesComponent>(0, this, rootEl, _QueriesComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
     if (_query_AnotherDirective_0_0.dirty) {
       _query_AnotherDirective_0_0.reset([]);
-      _QueriesComponent_0_4.contentChildrenFromField = _query_AnotherDirective_0_0;
+      _QueriesComponent_0_5.contentChildrenFromField = _query_AnotherDirective_0_0;
       _query_AnotherDirective_0_0.notifyOnChanges();
     }
     _compView_0.detectChanges();
@@ -169,7 +169,7 @@ const List<dynamic> styles$EmbeddedQueries = const [];
 class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
   final import2.QueryList _viewQuery_AnotherDirective_0 = new import2.QueryList();
   import3.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_4;
+  import1.AnotherDirective _AnotherDirective_0_5;
   ViewContainer _appEl_1;
   ViewContainer _appEl_2;
   static RenderComponentType _renderType;
@@ -183,15 +183,15 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
     var _anchor_1 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
-    TemplateRef _TemplateRef_1_5 = new TemplateRef(_appEl_1, viewFactory_EmbeddedQueries1);
+    TemplateRef _TemplateRef_1_7 = new TemplateRef(_appEl_1, viewFactory_EmbeddedQueries1);
     var _anchor_2 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_2);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
-    TemplateRef _TemplateRef_2_5 = new TemplateRef(_appEl_2, viewFactory_EmbeddedQueries2);
+    TemplateRef _TemplateRef_2_7 = new TemplateRef(_appEl_2, viewFactory_EmbeddedQueries2);
     init(const [], null);
     return null;
   }
@@ -200,12 +200,12 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
   void detectChangesInternal() {
     if (_viewQuery_AnotherDirective_0.dirty) {
       _viewQuery_AnotherDirective_0.reset([
-        [_AnotherDirective_0_4],
+        [_AnotherDirective_0_5],
         _appEl_1.mapNestedViews((_ViewEmbeddedQueries1 nestedView) {
-          return [nestedView._AnotherDirective_0_4];
+          return [nestedView._AnotherDirective_0_5];
         }),
         _appEl_2.mapNestedViews((_ViewEmbeddedQueries2 nestedView) {
-          return [nestedView._AnotherDirective_0_4];
+          return [nestedView._AnotherDirective_0_5];
         })
       ]);
       ctx.viewChildren = _viewQuery_AnotherDirective_0;
@@ -220,7 +220,7 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries0(AppView<dynamic> p
 
 class _ViewEmbeddedQueries1 extends AppView<import1.EmbeddedQueries> {
   import3.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_4;
+  import1.AnotherDirective _AnotherDirective_0_5;
   _ViewEmbeddedQueries1(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedQueries0._renderType;
   }
@@ -228,7 +228,7 @@ class _ViewEmbeddedQueries1 extends AppView<import1.EmbeddedQueries> {
   ComponentRef<import1.EmbeddedQueries> build() {
     var doc = import3.document;
     _el_0 = doc.createElement('another');
-    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0(_el_0);
     return null;
   }
@@ -245,7 +245,7 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries1(AppView<dynamic> p
 
 class _ViewEmbeddedQueries2 extends AppView<import1.EmbeddedQueries> {
   import3.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_4;
+  import1.AnotherDirective _AnotherDirective_0_5;
   _ViewEmbeddedQueries2(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedQueries0._renderType;
   }
@@ -253,7 +253,7 @@ class _ViewEmbeddedQueries2 extends AppView<import1.EmbeddedQueries> {
   ComponentRef<import1.EmbeddedQueries> build() {
     var doc = import3.document;
     _el_0 = doc.createElement('another');
-    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0(_el_0);
     return null;
   }
@@ -272,16 +272,16 @@ const List<dynamic> styles$EmbeddedQueriesHost = const [];
 
 class _ViewEmbeddedQueriesHost0 extends AppView<dynamic> {
   ViewEmbeddedQueries0 _compView_0;
-  import1.EmbeddedQueries _EmbeddedQueries_0_4;
+  import1.EmbeddedQueries _EmbeddedQueries_0_5;
   _ViewEmbeddedQueriesHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmbeddedQueries0(this, 0);
     rootEl = _compView_0.rootEl;
-    _EmbeddedQueries_0_4 = new import1.EmbeddedQueries();
-    _compView_0.create(_EmbeddedQueries_0_4, projectableNodes);
+    _EmbeddedQueries_0_5 = new import1.EmbeddedQueries();
+    _compView_0.create(_EmbeddedQueries_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.EmbeddedQueries>(0, this, rootEl, _EmbeddedQueries_0_4);
+    return new ComponentRef<import1.EmbeddedQueries>(0, this, rootEl, _EmbeddedQueries_0_5);
   }
 
   @override
@@ -305,7 +305,7 @@ const List<dynamic> styles$EmbeddedQueriesList = const [];
 class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
   bool _query_AnotherDirective_1_0_isDirty = true;
   import3.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_4;
+  import1.AnotherDirective _AnotherDirective_0_5;
   ViewContainer _appEl_1;
   ViewContainer _appEl_2;
   static RenderComponentType _renderType;
@@ -319,15 +319,15 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
     final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
     var doc = import3.document;
     _el_0 = createAndAppend(doc, 'another', parentRenderNode);
-    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
     var _anchor_1 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
-    TemplateRef _TemplateRef_1_5 = new TemplateRef(_appEl_1, viewFactory_EmbeddedQueriesList1);
+    TemplateRef _TemplateRef_1_7 = new TemplateRef(_appEl_1, viewFactory_EmbeddedQueriesList1);
     var _anchor_2 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_2);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
-    TemplateRef _TemplateRef_2_5 = new TemplateRef(_appEl_2, viewFactory_EmbeddedQueriesList2);
+    TemplateRef _TemplateRef_2_7 = new TemplateRef(_appEl_2, viewFactory_EmbeddedQueriesList2);
     init(const [], null);
     return null;
   }
@@ -336,12 +336,12 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
   void detectChangesInternal() {
     if (_query_AnotherDirective_1_0_isDirty) {
       ctx.viewChildren = import9.flattenNodes([
-        [_AnotherDirective_0_4],
+        [_AnotherDirective_0_5],
         _appEl_1.mapNestedViews((_ViewEmbeddedQueriesList1 nestedView) {
-          return [nestedView._AnotherDirective_0_4];
+          return [nestedView._AnotherDirective_0_5];
         }),
         _appEl_2.mapNestedViews((_ViewEmbeddedQueriesList2 nestedView) {
-          return [nestedView._AnotherDirective_0_4];
+          return [nestedView._AnotherDirective_0_5];
         })
       ]);
       _query_AnotherDirective_1_0_isDirty = false;
@@ -355,7 +355,7 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList0(AppView<dy
 
 class _ViewEmbeddedQueriesList1 extends AppView<import1.EmbeddedQueriesList> {
   import3.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_4;
+  import1.AnotherDirective _AnotherDirective_0_5;
   _ViewEmbeddedQueriesList1(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedQueriesList0._renderType;
   }
@@ -363,7 +363,7 @@ class _ViewEmbeddedQueriesList1 extends AppView<import1.EmbeddedQueriesList> {
   ComponentRef<import1.EmbeddedQueriesList> build() {
     var doc = import3.document;
     _el_0 = doc.createElement('another');
-    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0(_el_0);
     return null;
   }
@@ -380,7 +380,7 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList1(AppView<dy
 
 class _ViewEmbeddedQueriesList2 extends AppView<import1.EmbeddedQueriesList> {
   import3.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_4;
+  import1.AnotherDirective _AnotherDirective_0_5;
   _ViewEmbeddedQueriesList2(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedQueriesList0._renderType;
   }
@@ -388,7 +388,7 @@ class _ViewEmbeddedQueriesList2 extends AppView<import1.EmbeddedQueriesList> {
   ComponentRef<import1.EmbeddedQueriesList> build() {
     var doc = import3.document;
     _el_0 = doc.createElement('another');
-    _AnotherDirective_0_4 = new import1.AnotherDirective();
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0(_el_0);
     return null;
   }
@@ -407,16 +407,16 @@ const List<dynamic> styles$EmbeddedQueriesListHost = const [];
 
 class _ViewEmbeddedQueriesListHost0 extends AppView<dynamic> {
   ViewEmbeddedQueriesList0 _compView_0;
-  import1.EmbeddedQueriesList _EmbeddedQueriesList_0_4;
+  import1.EmbeddedQueriesList _EmbeddedQueriesList_0_5;
   _ViewEmbeddedQueriesListHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmbeddedQueriesList0(this, 0);
     rootEl = _compView_0.rootEl;
-    _EmbeddedQueriesList_0_4 = new import1.EmbeddedQueriesList();
-    _compView_0.create(_EmbeddedQueriesList_0_4, projectableNodes);
+    _EmbeddedQueriesList_0_5 = new import1.EmbeddedQueriesList();
+    _compView_0.create(_EmbeddedQueriesList_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.EmbeddedQueriesList>(0, this, rootEl, _EmbeddedQueriesList_0_4);
+    return new ComponentRef<import1.EmbeddedQueriesList>(0, this, rootEl, _EmbeddedQueriesList_0_5);
   }
 
   @override
@@ -440,7 +440,7 @@ const List<dynamic> styles$NestedNgForQueriesList = const [];
 class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList> {
   bool _query_taggedItem_1_0_isDirty = true;
   ViewContainer _appEl_0;
-  NgIf _NgIf_0_7;
+  NgIf _NgIf_0_9;
   static RenderComponentType _renderType;
   ViewNestedNgForQueriesList0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import3.document.createElement('test');
@@ -453,8 +453,8 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_6 = new TemplateRef(_appEl_0, viewFactory_NestedNgForQueriesList1);
-    _NgIf_0_7 = new NgIf(_appEl_0, _TemplateRef_0_6);
+    TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_NestedNgForQueriesList1);
+    _NgIf_0_9 = new NgIf(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
     return null;
   }
@@ -462,7 +462,7 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
   @override
   void detectChangesInternal() {
     final import1.NestedNgForQueriesList _ctx = ctx;
-    _NgIf_0_7.ngIf = _ctx.conditionA;
+    _NgIf_0_9.ngIf = _ctx.conditionA;
     _appEl_0.detectChangesInNestedViews();
     if (_query_taggedItem_1_0_isDirty) {
       ctx.taggedItems = _appEl_0.mapNestedViews((_ViewNestedNgForQueriesList1 nestedView) {
@@ -489,7 +489,7 @@ AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList0(AppV
 class _ViewNestedNgForQueriesList1 extends AppView<import1.NestedNgForQueriesList> {
   import3.DivElement _el_0;
   ViewContainer _appEl_1;
-  NgIf _NgIf_1_7;
+  NgIf _NgIf_1_9;
   _ViewNestedNgForQueriesList1(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedNgForQueriesList0._renderType;
   }
@@ -500,8 +500,8 @@ class _ViewNestedNgForQueriesList1 extends AppView<import1.NestedNgForQueriesLis
     var _anchor_1 = ngAnchor.clone(false);
     _el_0.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
-    TemplateRef _TemplateRef_1_6 = new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList2);
-    _NgIf_1_7 = new NgIf(_appEl_1, _TemplateRef_1_6);
+    TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList2);
+    _NgIf_1_9 = new NgIf(_appEl_1, _TemplateRef_1_8);
     init0(_el_0);
     return null;
   }
@@ -509,7 +509,7 @@ class _ViewNestedNgForQueriesList1 extends AppView<import1.NestedNgForQueriesLis
   @override
   void detectChangesInternal() {
     final import1.NestedNgForQueriesList _ctx = ctx;
-    _NgIf_1_7.ngIf = _ctx.conditionB;
+    _NgIf_1_9.ngIf = _ctx.conditionB;
     _appEl_1.detectChangesInNestedViews();
   }
 
@@ -526,7 +526,7 @@ AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList1(AppV
 class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesList> {
   import3.DivElement _el_0;
   ViewContainer _appEl_1;
-  import13.NgFor _NgFor_1_7;
+  import13.NgFor _NgFor_1_9;
   _ViewNestedNgForQueriesList2(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedNgForQueriesList0._renderType;
   }
@@ -537,8 +537,8 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
     var _anchor_1 = ngAnchor.clone(false);
     _el_0.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
-    TemplateRef _TemplateRef_1_6 = new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList3);
-    _NgFor_1_7 = new import13.NgFor(_appEl_1, _TemplateRef_1_6);
+    TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList3);
+    _NgFor_1_9 = new import13.NgFor(_appEl_1, _TemplateRef_1_8);
     init0(_el_0);
     return null;
   }
@@ -549,10 +549,10 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
       if (!identical(_ctx.items, null)) {
-        (_NgFor_1_7.ngForOf = _ctx.items);
+        (_NgFor_1_9.ngForOf = _ctx.items);
       }
     }
-    _NgFor_1_7.ngDoCheck();
+    _NgFor_1_9.ngDoCheck();
     _appEl_1.detectChangesInNestedViews();
   }
 
@@ -569,7 +569,7 @@ AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList2(AppV
 class _ViewNestedNgForQueriesList3 extends AppView<import1.NestedNgForQueriesList> {
   import3.DivElement _el_0;
   import3.Element _el_1;
-  import1.AnotherDirective _AnotherDirective_1_4;
+  import1.AnotherDirective _AnotherDirective_1_5;
   _ViewNestedNgForQueriesList3(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedNgForQueriesList0._renderType;
   }
@@ -578,7 +578,7 @@ class _ViewNestedNgForQueriesList3 extends AppView<import1.NestedNgForQueriesLis
     var doc = import3.document;
     _el_0 = doc.createElement('div');
     _el_1 = createAndAppend(doc, 'another', _el_0);
-    _AnotherDirective_1_4 = new import1.AnotherDirective();
+    _AnotherDirective_1_5 = new import1.AnotherDirective();
     init0(_el_0);
     return null;
   }
@@ -597,16 +597,16 @@ const List<dynamic> styles$NestedNgForQueriesListHost = const [];
 
 class _ViewNestedNgForQueriesListHost0 extends AppView<dynamic> {
   ViewNestedNgForQueriesList0 _compView_0;
-  import1.NestedNgForQueriesList _NestedNgForQueriesList_0_4;
+  import1.NestedNgForQueriesList _NestedNgForQueriesList_0_5;
   _ViewNestedNgForQueriesListHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewNestedNgForQueriesList0(this, 0);
     rootEl = _compView_0.rootEl;
-    _NestedNgForQueriesList_0_4 = new import1.NestedNgForQueriesList();
-    _compView_0.create(_NestedNgForQueriesList_0_4, projectableNodes);
+    _NestedNgForQueriesList_0_5 = new import1.NestedNgForQueriesList();
+    _compView_0.create(_NestedNgForQueriesList_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.NestedNgForQueriesList>(0, this, rootEl, _NestedNgForQueriesList_0_4);
+    return new ComponentRef<import1.NestedNgForQueriesList>(0, this, rootEl, _NestedNgForQueriesList_0_5);
   }
 
   @override

@@ -66,25 +66,25 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = [
 
 class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   ViewHasOpaqueTokens0 _compView_0;
-  String _baseUrlDescription_0_4;
-  import2.HasOpaqueTokens _HasOpaqueTokens_0_5;
+  String _baseUrlDescription_0_5;
+  import2.HasOpaqueTokens _HasOpaqueTokens_0_6;
   _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasOpaqueTokensHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _baseUrlDescription_0_4 = 'https://localhost';
-    _HasOpaqueTokens_0_5 = new import2.HasOpaqueTokens(_baseUrlDescription_0_4);
-    _compView_0.create(_HasOpaqueTokens_0_5, projectableNodes);
+    _baseUrlDescription_0_5 = 'https://localhost';
+    _HasOpaqueTokens_0_6 = new import2.HasOpaqueTokens(_baseUrlDescription_0_5);
+    _compView_0.create(_HasOpaqueTokens_0_6, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.HasOpaqueTokens>(0, this, rootEl, _HasOpaqueTokens_0_5);
+    return new ComponentRef<import2.HasOpaqueTokens>(0, this, rootEl, _HasOpaqueTokens_0_6);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, const import10.OpaqueToken('baseUrlDescription')) && (0 == nodeIndex))) {
-      return _baseUrlDescription_0_4;
+      return _baseUrlDescription_0_5;
     }
     return notFoundResult;
   }
@@ -112,7 +112,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ContainsChildComponent0 = [
 
 class ViewContainsChildComponent0 extends DebugAppView<import2.ContainsChildComponent> {
   ViewContainer _appEl_0;
-  NgIf _NgIf_0_7;
+  NgIf _NgIf_0_9;
   static RenderComponentType _renderType;
   ViewContainsChildComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponent0) {
     rootEl = import3.document.createElement('contains-child-component');
@@ -126,8 +126,8 @@ class ViewContainsChildComponent0 extends DebugAppView<import2.ContainsChildComp
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 9);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_6 = new TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
-    _NgIf_0_7 = new NgIf(_appEl_0, _TemplateRef_0_6);
+    TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
+    _NgIf_0_9 = new NgIf(_appEl_0, _TemplateRef_0_8);
     init(const [], null, [_anchor_0]);
     return null;
   }
@@ -136,7 +136,7 @@ class ViewContainsChildComponent0 extends DebugAppView<import2.ContainsChildComp
   void detectChangesInternal() {
     final import2.ContainsChildComponent _ctx = ctx;
     dbg(0, 0, 9);
-    _NgIf_0_7.ngIf = _ctx.someValue;
+    _NgIf_0_9.ngIf = _ctx.someValue;
     _appEl_0.detectChangesInNestedViews();
   }
 
@@ -158,7 +158,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ContainsChildComponent1 = [
 class _ViewContainsChildComponent1 extends DebugAppView<import2.ContainsChildComponent> {
   import3.DivElement _el_0;
   ViewContainer _appEl_1;
-  NgIf _NgIf_1_7;
+  NgIf _NgIf_1_9;
   _ViewContainsChildComponent1(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponent1) {
     componentType = ViewContainsChildComponent0._renderType;
   }
@@ -171,8 +171,8 @@ class _ViewContainsChildComponent1 extends DebugAppView<import2.ContainsChildCom
     _el_0.append(_anchor_1);
     dbgElm(this, _anchor_1, 1, 1, 11);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
-    TemplateRef _TemplateRef_1_6 = new TemplateRef(_appEl_1, viewFactory_ContainsChildComponent2);
-    _NgIf_1_7 = new NgIf(_appEl_1, _TemplateRef_1_6);
+    TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_ContainsChildComponent2);
+    _NgIf_1_9 = new NgIf(_appEl_1, _TemplateRef_1_8);
     init0Dbg(_el_0, [_el_0, _anchor_1]);
     return null;
   }
@@ -181,7 +181,7 @@ class _ViewContainsChildComponent1 extends DebugAppView<import2.ContainsChildCom
   void detectChangesInternal() {
     final import2.ContainsChildComponent _ctx = ctx;
     dbg(1, 1, 11);
-    _NgIf_1_7.ngIf = _ctx.someValue;
+    _NgIf_1_9.ngIf = _ctx.someValue;
     _appEl_1.detectChangesInNestedViews();
   }
 
@@ -204,7 +204,7 @@ class _ViewContainsChildComponent2 extends DebugAppView<import2.ContainsChildCom
   import3.DivElement _el_0;
   import3.Element _el_1;
   ViewInjectsTypedTokenFromSomeParent0 _compView_1;
-  import2.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_1_4;
+  import2.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_1_5;
   _ViewContainsChildComponent2(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponent2) {
     componentType = ViewContainsChildComponent0._renderType;
   }
@@ -217,8 +217,8 @@ class _ViewContainsChildComponent2 extends DebugAppView<import2.ContainsChildCom
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
     dbgElm(this, _el_1, 1, 2, 8);
-    _InjectsTypedTokenFromSomeParent_1_4 = new import2.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
-    _compView_1.create(_InjectsTypedTokenFromSomeParent_1_4, []);
+    _InjectsTypedTokenFromSomeParent_1_5 = new import2.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
+    _compView_1.create(_InjectsTypedTokenFromSomeParent_1_5, []);
     init0Dbg(_el_0, [_el_0, _el_1]);
     return null;
   }
@@ -245,17 +245,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ContainsChildComponentHost0 = [
 
 class _ViewContainsChildComponentHost0 extends DebugAppView<dynamic> {
   ViewContainsChildComponent0 _compView_0;
-  import2.ContainsChildComponent _ContainsChildComponent_0_4;
+  import2.ContainsChildComponent _ContainsChildComponent_0_5;
   _ViewContainsChildComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewContainsChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _ContainsChildComponent_0_4 = new import2.ContainsChildComponent();
-    _compView_0.create(_ContainsChildComponent_0_4, projectableNodes);
+    _ContainsChildComponent_0_5 = new import2.ContainsChildComponent();
+    _compView_0.create(_ContainsChildComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.ContainsChildComponent>(0, this, rootEl, _ContainsChildComponent_0_4);
+    return new ComponentRef<import2.ContainsChildComponent>(0, this, rootEl, _ContainsChildComponent_0_5);
   }
 
   @override
@@ -303,17 +303,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InjectsTypedTokenFromSomeParentHost0 = 
 
 class _ViewInjectsTypedTokenFromSomeParentHost0 extends DebugAppView<dynamic> {
   ViewInjectsTypedTokenFromSomeParent0 _compView_0;
-  import2.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_0_4;
+  import2.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_0_5;
   _ViewInjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InjectsTypedTokenFromSomeParentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInjectsTypedTokenFromSomeParent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _InjectsTypedTokenFromSomeParent_0_4 = new import2.InjectsTypedTokenFromSomeParent(this.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
-    _compView_0.create(_InjectsTypedTokenFromSomeParent_0_4, projectableNodes);
+    _InjectsTypedTokenFromSomeParent_0_5 = new import2.InjectsTypedTokenFromSomeParent(this.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
+    _compView_0.create(_InjectsTypedTokenFromSomeParent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.InjectsTypedTokenFromSomeParent>(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_4);
+    return new ComponentRef<import2.InjectsTypedTokenFromSomeParent>(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_5);
   }
 
   @override

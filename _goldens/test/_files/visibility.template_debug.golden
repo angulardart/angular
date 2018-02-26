@@ -48,17 +48,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependentHost0 = [
 
 class _ViewDependentHost0 extends DebugAppView<dynamic> {
   ViewDependent0 _compView_0;
-  import2.Dependent _Dependent_0_4;
+  import2.Dependent _Dependent_0_5;
   _ViewDependentHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _Dependent_0_4 = new import2.Dependent(this.injectorGet(import2.Dependency, viewData.parentIndex));
-    _compView_0.create(_Dependent_0_4, projectableNodes);
+    _Dependent_0_5 = new import2.Dependent(this.injectorGet(import2.Dependency, viewData.parentIndex));
+    _compView_0.create(_Dependent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.Dependent>(0, this, rootEl, _Dependent_0_4);
+    return new ComponentRef<import2.Dependent>(0, this, rootEl, _Dependent_0_5);
   }
 
   @override
@@ -85,7 +85,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithDependentInView0 = [
 class ViewDependencyWithDependentInView0 extends DebugAppView<import2.DependencyWithDependentInView> {
   import7.Element _el_0;
   ViewDependent0 _compView_0;
-  import2.Dependent _Dependent_0_4;
+  import2.Dependent _Dependent_0_5;
   static RenderComponentType _renderType;
   ViewDependencyWithDependentInView0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithDependentInView0) {
     rootEl = import7.document.createElement('dependency-with-dependent-in-view');
@@ -99,8 +99,8 @@ class ViewDependencyWithDependentInView0 extends DebugAppView<import2.Dependency
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     dbgElm(this, _el_0, 0, 0, 0);
-    _Dependent_0_4 = new import2.Dependent(parentView.injectorGet(import2.Dependency, viewData.parentIndex));
-    _compView_0.create(_Dependent_0_4, []);
+    _Dependent_0_5 = new import2.Dependent(parentView.injectorGet(import2.Dependency, viewData.parentIndex));
+    _compView_0.create(_Dependent_0_5, []);
     init(const [], null, [_el_0]);
     return null;
   }
@@ -127,23 +127,23 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithDependentInViewHost0 = [
 
 class _ViewDependencyWithDependentInViewHost0 extends DebugAppView<dynamic> {
   ViewDependencyWithDependentInView0 _compView_0;
-  import2.DependencyWithDependentInView _DependencyWithDependentInView_0_4;
+  import2.DependencyWithDependentInView _DependencyWithDependentInView_0_5;
   _ViewDependencyWithDependentInViewHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithDependentInViewHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _DependencyWithDependentInView_0_4 = new import2.DependencyWithDependentInView();
-    _compView_0.create(_DependencyWithDependentInView_0_4, projectableNodes);
+    _DependencyWithDependentInView_0_5 = new import2.DependencyWithDependentInView();
+    _compView_0.create(_DependencyWithDependentInView_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DependencyWithDependentInView>(0, this, rootEl, _DependencyWithDependentInView_0_4);
+    return new ComponentRef<import2.DependencyWithDependentInView>(0, this, rootEl, _DependencyWithDependentInView_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.Dependency) && (0 == nodeIndex))) {
-      return _DependencyWithDependentInView_0_4;
+      return _DependencyWithDependentInView_0_5;
     }
     return notFoundResult;
   }
@@ -195,23 +195,23 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithContentHost0 = [
 
 class _ViewDependencyWithContentHost0 extends DebugAppView<dynamic> {
   ViewDependencyWithContent0 _compView_0;
-  import2.DependencyWithContent _DependencyWithContent_0_4;
+  import2.DependencyWithContent _DependencyWithContent_0_5;
   _ViewDependencyWithContentHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithContentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithContent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _DependencyWithContent_0_4 = new import2.DependencyWithContent();
-    _compView_0.create(_DependencyWithContent_0_4, projectableNodes);
+    _DependencyWithContent_0_5 = new import2.DependencyWithContent();
+    _compView_0.create(_DependencyWithContent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DependencyWithContent>(0, this, rootEl, _DependencyWithContent_0_4);
+    return new ComponentRef<import2.DependencyWithContent>(0, this, rootEl, _DependencyWithContent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import2.Dependency) && (0 == nodeIndex))) {
-      return _DependencyWithContent_0_4;
+      return _DependencyWithContent_0_5;
     }
     return notFoundResult;
   }
@@ -242,7 +242,7 @@ class ViewDependencyAndDependentInView0 extends DebugAppView<import2.DependencyA
   import7.Element _el_0;
   import7.Element _el_1;
   ViewDependent0 _compView_1;
-  import2.Dependent _Dependent_1_4;
+  import2.Dependent _Dependent_1_5;
   static RenderComponentType _renderType;
   ViewDependencyAndDependentInView0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyAndDependentInView0) {
     rootEl = import7.document.createElement('dependency-and-dependent-in-view');
@@ -258,8 +258,8 @@ class ViewDependencyAndDependentInView0 extends DebugAppView<import2.DependencyA
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
     dbgElm(this, _el_1, 1, 1, 6);
-    _Dependent_1_4 = new import2.Dependent(parentView.injectorGet(import2.Dependency, viewData.parentIndex));
-    _compView_1.create(_Dependent_1_4, []);
+    _Dependent_1_5 = new import2.Dependent(parentView.injectorGet(import2.Dependency, viewData.parentIndex));
+    _compView_1.create(_Dependent_1_5, []);
     init(const [], null, [_el_0, _el_1]);
     return null;
   }
@@ -286,17 +286,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependencyAndDependentInViewHost0 = [
 
 class _ViewDependencyAndDependentInViewHost0 extends DebugAppView<dynamic> {
   ViewDependencyAndDependentInView0 _compView_0;
-  import2.DependencyAndDependentInView _DependencyAndDependentInView_0_4;
+  import2.DependencyAndDependentInView _DependencyAndDependentInView_0_5;
   _ViewDependencyAndDependentInViewHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyAndDependentInViewHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyAndDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _DependencyAndDependentInView_0_4 = new import2.DependencyAndDependentInView();
-    _compView_0.create(_DependencyAndDependentInView_0_4, projectableNodes);
+    _DependencyAndDependentInView_0_5 = new import2.DependencyAndDependentInView();
+    _compView_0.create(_DependencyAndDependentInView_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DependencyAndDependentInView>(0, this, rootEl, _DependencyAndDependentInView_0_4);
+    return new ComponentRef<import2.DependencyAndDependentInView>(0, this, rootEl, _DependencyAndDependentInView_0_5);
   }
 
   @override

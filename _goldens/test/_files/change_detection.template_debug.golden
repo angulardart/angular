@@ -63,17 +63,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = [
 
 class _ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckOnceComponent0 _compView_0;
-  import2.CheckOnceComponent _CheckOnceComponent_0_4;
+  import2.CheckOnceComponent _CheckOnceComponent_0_5;
   _ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckOnceComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _CheckOnceComponent_0_4 = new import2.CheckOnceComponent();
-    _compView_0.create(_CheckOnceComponent_0_4, projectableNodes);
+    _CheckOnceComponent_0_5 = new import2.CheckOnceComponent();
+    _compView_0.create(_CheckOnceComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.CheckOnceComponent>(0, this, rootEl, _CheckOnceComponent_0_4);
+    return new ComponentRef<import2.CheckOnceComponent>(0, this, rootEl, _CheckOnceComponent_0_5);
   }
 
   @override
@@ -129,17 +129,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = [
 
 class _ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckedComponent0 _compView_0;
-  import2.CheckedComponent _CheckedComponent_0_4;
+  import2.CheckedComponent _CheckedComponent_0_5;
   _ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckedComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _CheckedComponent_0_4 = new import2.CheckedComponent();
-    _compView_0.create(_CheckedComponent_0_4, projectableNodes);
+    _CheckedComponent_0_5 = new import2.CheckedComponent();
+    _compView_0.create(_CheckedComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.CheckedComponent>(0, this, rootEl, _CheckedComponent_0_4);
+    return new ComponentRef<import2.CheckedComponent>(0, this, rootEl, _CheckedComponent_0_5);
   }
 
   @override
@@ -193,17 +193,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 = [
 
 class _ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckAlwaysComponent0 _compView_0;
-  import2.CheckAlwaysComponent _CheckAlwaysComponent_0_4;
+  import2.CheckAlwaysComponent _CheckAlwaysComponent_0_5;
   _ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckAlwaysComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _CheckAlwaysComponent_0_4 = new import2.CheckAlwaysComponent();
-    _compView_0.create(_CheckAlwaysComponent_0_4, projectableNodes);
+    _CheckAlwaysComponent_0_5 = new import2.CheckAlwaysComponent();
+    _compView_0.create(_CheckAlwaysComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.CheckAlwaysComponent>(0, this, rootEl, _CheckAlwaysComponent_0_4);
+    return new ComponentRef<import2.CheckAlwaysComponent>(0, this, rootEl, _CheckAlwaysComponent_0_5);
   }
 
   @override
@@ -257,17 +257,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = [
 
 class _ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   ViewDetachedComponent0 _compView_0;
-  import2.DetachedComponent _DetachedComponent_0_4;
+  import2.DetachedComponent _DetachedComponent_0_5;
   _ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DetachedComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _DetachedComponent_0_4 = new import2.DetachedComponent();
-    _compView_0.create(_DetachedComponent_0_4, projectableNodes);
+    _DetachedComponent_0_5 = new import2.DetachedComponent();
+    _compView_0.create(_DetachedComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DetachedComponent>(0, this, rootEl, _DetachedComponent_0_4);
+    return new ComponentRef<import2.DetachedComponent>(0, this, rootEl, _DetachedComponent_0_5);
   }
 
   @override
@@ -321,17 +321,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = [
 
 class _ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   ViewOnPushComponent0 _compView_0;
-  import2.OnPushComponent _OnPushComponent_0_4;
+  import2.OnPushComponent _OnPushComponent_0_5;
   _ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_OnPushComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _OnPushComponent_0_4 = new import2.OnPushComponent();
-    _compView_0.create(_OnPushComponent_0_4, projectableNodes);
+    _OnPushComponent_0_5 = new import2.OnPushComponent();
+    _compView_0.create(_OnPushComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.OnPushComponent>(0, this, rootEl, _OnPushComponent_0_4);
+    return new ComponentRef<import2.OnPushComponent>(0, this, rootEl, _OnPushComponent_0_5);
   }
 
   @override
@@ -387,17 +387,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = [
 
 class _ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   ViewStatefulComponent0 _compView_0;
-  import2.StatefulComponent _StatefulComponent_0_4;
+  import2.StatefulComponent _StatefulComponent_0_5;
   _ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_StatefulComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewStatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _StatefulComponent_0_4 = new import2.StatefulComponent();
-    _compView_0.create(_StatefulComponent_0_4, projectableNodes);
+    _StatefulComponent_0_5 = new import2.StatefulComponent();
+    _compView_0.create(_StatefulComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.StatefulComponent>(0, this, rootEl, _StatefulComponent_0_4);
+    return new ComponentRef<import2.StatefulComponent>(0, this, rootEl, _StatefulComponent_0_5);
   }
 
   @override
@@ -451,17 +451,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = [
 
 class _ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   ViewDefaultComponent0 _compView_0;
-  import2.DefaultComponent _DefaultComponent_0_4;
+  import2.DefaultComponent _DefaultComponent_0_5;
   _ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DefaultComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _DefaultComponent_0_4 = new import2.DefaultComponent();
-    _compView_0.create(_DefaultComponent_0_4, projectableNodes);
+    _DefaultComponent_0_5 = new import2.DefaultComponent();
+    _compView_0.create(_DefaultComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DefaultComponent>(0, this, rootEl, _DefaultComponent_0_4);
+    return new ComponentRef<import2.DefaultComponent>(0, this, rootEl, _DefaultComponent_0_5);
   }
 
   @override

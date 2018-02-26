@@ -53,14 +53,14 @@ class ViewTestContainerComponent0 extends DebugAppView<import3.TestContainerComp
     parentRenderNode.append(_anchor_1);
     dbgElm(this, _anchor_1, 1, 1, 26);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
-    TemplateRef _TemplateRef_1_5 = new TemplateRef(_appEl_1, viewFactory_TestContainerComponent1);
-    loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_5);
+    TemplateRef _TemplateRef_1_7 = new TemplateRef(_appEl_1, viewFactory_TestContainerComponent1);
+    loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_7);
     var _anchor_2 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_2);
     dbgElm(this, _anchor_2, 2, 2, 24);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
-    TemplateRef _TemplateRef_2_5 = new TemplateRef(_appEl_2, viewFactory_TestContainerComponent2);
-    loadDeferred(deflib2.loadLibrary, deflib3.loadLibrary, _appEl_2, _TemplateRef_2_5);
+    TemplateRef _TemplateRef_2_7 = new TemplateRef(_appEl_2, viewFactory_TestContainerComponent2);
+    loadDeferred(deflib2.loadLibrary, deflib3.loadLibrary, _appEl_2, _TemplateRef_2_7);
     init(const [], null, [_text_0, _anchor_1, _anchor_2]);
     return null;
   }
@@ -84,7 +84,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponent1 = [
 class _ViewTestContainerComponent1 extends DebugAppView<import3.TestContainerComponent> {
   import9.Element _el_0;
   AppView _compView_0;
-  dynamic _DeferredChildComponent_0_4;
+  dynamic _DeferredChildComponent_0_5;
   _ViewTestContainerComponent1(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestContainerComponent1) {
     componentType = ViewTestContainerComponent0._renderType;
   }
@@ -93,10 +93,10 @@ class _ViewTestContainerComponent1 extends DebugAppView<import3.TestContainerCom
     _compView_0 = deflib1.viewFactory_DeferredChildComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
     dbgElm(this, _el_0, 0, 1, 6);
-    _DeferredChildComponent_0_4 = new deflib0.DeferredChildComponent();
+    _DeferredChildComponent_0_5 = new deflib0.DeferredChildComponent();
     import9.Text _text_1 = new import9.Text('Foo');
     dbgElm(this, _text_1, 1, 1, 36);
-    _compView_0.create(_DeferredChildComponent_0_4, []);
+    _compView_0.create(_DeferredChildComponent_0_5, []);
     init0Dbg(_el_0, [_el_0, _text_1]);
     return null;
   }
@@ -123,7 +123,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponent2 = [
 class _ViewTestContainerComponent2 extends DebugAppView<import3.TestContainerComponent> {
   import9.Element _el_0;
   AppView _compView_0;
-  dynamic _SampleComponent_0_4;
+  dynamic _SampleComponent_0_5;
   _ViewTestContainerComponent2(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestContainerComponent2) {
     componentType = ViewTestContainerComponent0._renderType;
   }
@@ -132,8 +132,8 @@ class _ViewTestContainerComponent2 extends DebugAppView<import3.TestContainerCom
     _compView_0 = deflib3.viewFactory_SampleComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
     dbgElm(this, _el_0, 0, 2, 6);
-    _SampleComponent_0_4 = new deflib2.SampleComponent();
-    _compView_0.create(_SampleComponent_0_4, []);
+    _SampleComponent_0_5 = new deflib2.SampleComponent();
+    _compView_0.create(_SampleComponent_0_5, []);
     init0Dbg(_el_0, [_el_0]);
     return null;
   }
@@ -160,17 +160,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponentHost0 = [
 
 class _ViewTestContainerComponentHost0 extends DebugAppView<dynamic> {
   ViewTestContainerComponent0 _compView_0;
-  import3.TestContainerComponent _TestContainerComponent_0_4;
+  import3.TestContainerComponent _TestContainerComponent_0_5;
   _ViewTestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestContainerComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestContainerComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _TestContainerComponent_0_4 = new import3.TestContainerComponent();
-    _compView_0.create(_TestContainerComponent_0_4, projectableNodes);
+    _TestContainerComponent_0_5 = new import3.TestContainerComponent();
+    _compView_0.create(_TestContainerComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import3.TestContainerComponent>(0, this, rootEl, _TestContainerComponent_0_4);
+    return new ComponentRef<import3.TestContainerComponent>(0, this, rootEl, _TestContainerComponent_0_5);
   }
 
   @override

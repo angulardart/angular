@@ -32,10 +32,10 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
 class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   import3.DivElement _el_0;
   import3.Element _el_3;
-  import1.TestDirective _TestDirective_3_4;
+  import1.TestDirective _TestDirective_3_5;
   import3.Element _el_5;
   ViewTestSubComponent0 _compView_5;
-  import1.TestSubComponent _TestSubComponent_5_4;
+  import1.TestSubComponent _TestSubComponent_5_5;
   static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponent0) {
     rootEl = import3.document.createElement('test-foo');
@@ -54,7 +54,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 30);
     _el_3 = createAndAppendDbg(this, doc, 'directive', parentRenderNode, 3, 1, 17);
-    _TestDirective_3_4 = new import1.TestDirective();
+    _TestDirective_3_5 = new import1.TestDirective();
     import3.Text _text_4 = new import3.Text('A component:');
     parentRenderNode.append(_text_4);
     dbgElm(this, _text_4, 4, 1, 40);
@@ -62,8 +62,8 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
     dbgElm(this, _el_5, 5, 2, 17);
-    _TestSubComponent_5_4 = new import1.TestSubComponent();
-    _compView_5.create(_TestSubComponent_5_4, []);
+    _TestSubComponent_5_5 = new import1.TestSubComponent();
+    _compView_5.create(_TestSubComponent_5_5, []);
     init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4, _el_5]);
     return null;
   }
@@ -90,17 +90,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
 
 class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
-  import1.TestFooComponent _TestFooComponent_0_4;
+  import1.TestFooComponent _TestFooComponent_0_5;
   _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _TestFooComponent_0_4 = new import1.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_4, projectableNodes);
+    _TestFooComponent_0_5 = new import1.TestFooComponent();
+    _compView_0.create(_TestFooComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import1.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_4);
+    return new ComponentRef<import1.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_5);
   }
 
   @override
@@ -154,17 +154,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = [
 
 class _ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
   ViewTestSubComponent0 _compView_0;
-  import1.TestSubComponent _TestSubComponent_0_4;
+  import1.TestSubComponent _TestSubComponent_0_5;
   _ViewTestSubComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestSubComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _TestSubComponent_0_4 = new import1.TestSubComponent();
-    _compView_0.create(_TestSubComponent_0_4, projectableNodes);
+    _TestSubComponent_0_5 = new import1.TestSubComponent();
+    _compView_0.create(_TestSubComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import1.TestSubComponent>(0, this, rootEl, _TestSubComponent_0_4);
+    return new ComponentRef<import1.TestSubComponent>(0, this, rootEl, _TestSubComponent_0_5);
   }
 
   @override

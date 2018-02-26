@@ -30,7 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForComponent0 = [
 
 class ViewNestedNgForComponent0 extends DebugAppView<import4.NestedNgForComponent> {
   ViewContainer _appEl_0;
-  import2.NgFor _NgFor_0_7;
+  import2.NgFor _NgFor_0_9;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewNestedNgForComponent0(AppView<dynamic> parentView, num parentIndex) : super(import8.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponent0) {
@@ -45,8 +45,8 @@ class ViewNestedNgForComponent0 extends DebugAppView<import4.NestedNgForComponen
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 10);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_6 = new TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
-    _NgFor_0_7 = new import2.NgFor(_appEl_0, _TemplateRef_0_6);
+    TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
+    _NgFor_0_9 = new import2.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null, [_anchor_0]);
     return null;
   }
@@ -57,11 +57,11 @@ class ViewNestedNgForComponent0 extends DebugAppView<import4.NestedNgForComponen
     dbg(0, 0, 10);
     final currVal_0 = _ctx.matrix;
     if (import11.checkBinding(_expr_0, currVal_0)) {
-      _NgFor_0_7.ngForOf = currVal_0;
+      _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
     if (!import11.AppViewUtils.throwOnChanges) {
-      _NgFor_0_7.ngDoCheck();
+      _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
   }
@@ -84,7 +84,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForComponent1 = [
 class _ViewNestedNgForComponent1 extends DebugAppView<import4.NestedNgForComponent> {
   import10.Element _el_0;
   ViewContainer _appEl_1;
-  import2.NgFor _NgFor_1_7;
+  import2.NgFor _NgFor_1_9;
   var _expr_0;
   _ViewNestedNgForComponent1(AppView<dynamic> parentView, num parentIndex) : super(import8.ViewType.EMBEDDED, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponent1) {
     componentType = ViewNestedNgForComponent0._renderType;
@@ -98,8 +98,8 @@ class _ViewNestedNgForComponent1 extends DebugAppView<import4.NestedNgForCompone
     _el_0.append(_anchor_1);
     dbgElm(this, _anchor_1, 1, 1, 11);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
-    TemplateRef _TemplateRef_1_6 = new TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
-    _NgFor_1_7 = new import2.NgFor(_appEl_1, _TemplateRef_1_6);
+    TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
+    _NgFor_1_9 = new import2.NgFor(_appEl_1, _TemplateRef_1_8);
     init0Dbg(_el_0, [_el_0, _anchor_1]);
     return null;
   }
@@ -110,11 +110,11 @@ class _ViewNestedNgForComponent1 extends DebugAppView<import4.NestedNgForCompone
     dbg(1, 1, 11);
     final currVal_0 = local_row;
     if (import11.checkBinding(_expr_0, currVal_0)) {
-      _NgFor_1_7.ngForOf = currVal_0;
+      _NgFor_1_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
     if (!import11.AppViewUtils.throwOnChanges) {
-      _NgFor_1_7.ngDoCheck();
+      _NgFor_1_9.ngDoCheck();
     }
     _appEl_1.detectChangesInNestedViews();
   }
@@ -173,17 +173,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForComponentHost0 = [
 
 class _ViewNestedNgForComponentHost0 extends DebugAppView<dynamic> {
   ViewNestedNgForComponent0 _compView_0;
-  import4.NestedNgForComponent _NestedNgForComponent_0_4;
+  import4.NestedNgForComponent _NestedNgForComponent_0_5;
   _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import8.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewNestedNgForComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _NestedNgForComponent_0_4 = new import4.NestedNgForComponent();
-    _compView_0.create(_NestedNgForComponent_0_4, projectableNodes);
+    _NestedNgForComponent_0_5 = new import4.NestedNgForComponent();
+    _compView_0.create(_NestedNgForComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import4.NestedNgForComponent>(0, this, rootEl, _NestedNgForComponent_0_4);
+    return new ComponentRef<import4.NestedNgForComponent>(0, this, rootEl, _NestedNgForComponent_0_5);
   }
 
   @override

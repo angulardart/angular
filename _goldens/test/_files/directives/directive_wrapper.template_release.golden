@@ -25,8 +25,8 @@ const List<dynamic> styles$TestFooComponent = const ['div._ngcontent-%COMP% { fo
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   import2.DivElement _el_0;
-  ChildDirectiveNgCd _ChildDirective_0_4;
-  import1.DirectiveWithOutput _DirectiveWithOutput_0_5;
+  ChildDirectiveNgCd _ChildDirective_0_5;
+  import1.DirectiveWithOutput _DirectiveWithOutput_0_6;
   String _expr_0;
   static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -43,14 +43,14 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     createAttr(_el_0, 'role', 'button');
     createAttr(_el_0, 'some-child-directive', '');
     addShimC(_el_0);
-    _ChildDirective_0_4 = new ChildDirectiveNgCd(new import1.ChildDirective(_el_0, new ElementRef(_el_0)));
-    _DirectiveWithOutput_0_5 = new import1.DirectiveWithOutput();
+    _ChildDirective_0_5 = new ChildDirectiveNgCd(new import1.ChildDirective(_el_0, new ElementRef(_el_0)));
+    _DirectiveWithOutput_0_6 = new import1.DirectiveWithOutput();
     import2.Text _text_1 = new import2.Text('Foo');
     _el_0.append(_text_1);
-    _el_0.addEventListener('click', eventHandler1(_ChildDirective_0_4.instance.handleClick));
-    _el_0.addEventListener('keypress', eventHandler1(_ChildDirective_0_4.instance.handleKeyPress));
-    final subscription_0 = _ChildDirective_0_4.instance.trigger.listen(eventHandler1(_handle_trigger_0_0));
-    final subscription_1 = _DirectiveWithOutput_0_5.eventXyz.listen(eventHandler1(_ChildDirective_0_4.instance.handleXyzEventFromOtherDirective));
+    _el_0.addEventListener('click', eventHandler1(_ChildDirective_0_5.instance.handleClick));
+    _el_0.addEventListener('keypress', eventHandler1(_ChildDirective_0_5.instance.handleKeyPress));
+    final subscription_0 = _ChildDirective_0_5.instance.trigger.listen(eventHandler1(_handle_trigger_0_0));
+    final subscription_1 = _DirectiveWithOutput_0_6.eventXyz.listen(eventHandler1(_ChildDirective_0_5.instance.handleXyzEventFromOtherDirective));
     init(const [], [subscription_0, subscription_1]);
     return null;
   }
@@ -60,10 +60,10 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final import1.TestFooComponent _ctx = ctx;
     final currVal_0 = _ctx.rowIndex;
     if (!identical(_expr_0, currVal_0)) {
-      _ChildDirective_0_4.instance.gridRow = currVal_0;
+      _ChildDirective_0_5.instance.gridRow = currVal_0;
       _expr_0 = currVal_0;
     }
-    _ChildDirective_0_4.detectHostChanges(this, _el_0);
+    _ChildDirective_0_5.detectHostChanges(this, _el_0);
   }
 
   void _handle_trigger_0_0($event) {
@@ -79,16 +79,16 @@ const List<dynamic> styles$TestFooComponentHost = const [];
 
 class _ViewTestFooComponentHost0 extends AppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
-  import1.TestFooComponent _TestFooComponent_0_4;
+  import1.TestFooComponent _TestFooComponent_0_5;
   _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestFooComponent_0_4 = new import1.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_4, projectableNodes);
+    _TestFooComponent_0_5 = new import1.TestFooComponent();
+    _compView_0.create(_TestFooComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_4);
+    return new ComponentRef<import1.TestFooComponent>(0, this, rootEl, _TestFooComponent_0_5);
   }
 
   @override
@@ -111,9 +111,9 @@ const List<dynamic> styles$DirectiveContainerTest = const [];
 
 class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest> {
   import2.DivElement _el_0;
-  FastDirectiveNgCd _FastDirective_0_4;
+  FastDirectiveNgCd _FastDirective_0_5;
   import2.DivElement _el_1;
-  FastDirectiveNgCd _FastDirective_1_4;
+  FastDirectiveNgCd _FastDirective_1_5;
   static RenderComponentType _renderType;
   ViewDirectiveContainerTest0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('directive-container');
@@ -127,11 +127,11 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     _el_0.className = 'target1';
     createAttr(_el_0, 'fastDirective', '');
-    _FastDirective_0_4 = new FastDirectiveNgCd(new import1.FastDirective(_el_0), this, _el_0);
+    _FastDirective_0_5 = new FastDirectiveNgCd(new import1.FastDirective(_el_0), this, _el_0);
     _el_1 = createDivAndAppend(doc, parentRenderNode);
     _el_1.className = 'target2';
     createAttr(_el_1, 'fastDirective', '');
-    _FastDirective_1_4 = new FastDirectiveNgCd(new import1.FastDirective(_el_1), this, _el_1);
+    _FastDirective_1_5 = new FastDirectiveNgCd(new import1.FastDirective(_el_1), this, _el_1);
     init(const [], null);
     return null;
   }
@@ -141,9 +141,9 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
     final import1.DirectiveContainerTest _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      (_FastDirective_0_4.instance.name = _ctx.finalName);
+      (_FastDirective_0_5.instance.name = _ctx.finalName);
     }
-    _FastDirective_1_4.instance.name = _ctx.nonFinal;
+    _FastDirective_1_5.instance.name = _ctx.nonFinal;
   }
 }
 
@@ -155,16 +155,16 @@ const List<dynamic> styles$DirectiveContainerTestHost = const [];
 
 class _ViewDirectiveContainerTestHost0 extends AppView<dynamic> {
   ViewDirectiveContainerTest0 _compView_0;
-  import1.DirectiveContainerTest _DirectiveContainerTest_0_4;
+  import1.DirectiveContainerTest _DirectiveContainerTest_0_5;
   _ViewDirectiveContainerTestHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDirectiveContainerTest0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DirectiveContainerTest_0_4 = new import1.DirectiveContainerTest();
-    _compView_0.create(_DirectiveContainerTest_0_4, projectableNodes);
+    _DirectiveContainerTest_0_5 = new import1.DirectiveContainerTest();
+    _compView_0.create(_DirectiveContainerTest_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.DirectiveContainerTest>(0, this, rootEl, _DirectiveContainerTest_0_4);
+    return new ComponentRef<import1.DirectiveContainerTest>(0, this, rootEl, _DirectiveContainerTest_0_5);
   }
 
   @override

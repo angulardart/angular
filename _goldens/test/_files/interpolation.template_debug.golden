@@ -67,17 +67,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentHost0 = [
 
 class _ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
   ViewInterpolationComponent0 _compView_0;
-  import2.InterpolationComponent _InterpolationComponent_0_4;
+  import2.InterpolationComponent _InterpolationComponent_0_5;
   _ViewInterpolationComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InterpolationComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _InterpolationComponent_0_4 = new import2.InterpolationComponent();
-    _compView_0.create(_InterpolationComponent_0_4, projectableNodes);
+    _InterpolationComponent_0_5 = new import2.InterpolationComponent();
+    _compView_0.create(_InterpolationComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.InterpolationComponent>(0, this, rootEl, _InterpolationComponent_0_4);
+    return new ComponentRef<import2.InterpolationComponent>(0, this, rootEl, _InterpolationComponent_0_5);
   }
 
   @override
@@ -144,17 +144,17 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentNoWhitespaceHost0
 
 class _ViewInterpolationComponentNoWhitespaceHost0 extends DebugAppView<dynamic> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
-  import2.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_4;
+  import2.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
   _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InterpolationComponentNoWhitespaceHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
     dbgIdx(rootEl, 0);
-    _InterpolationComponentNoWhitespace_0_4 = new import2.InterpolationComponentNoWhitespace();
-    _compView_0.create(_InterpolationComponentNoWhitespace_0_4, projectableNodes);
+    _InterpolationComponentNoWhitespace_0_5 = new import2.InterpolationComponentNoWhitespace();
+    _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.InterpolationComponentNoWhitespace>(0, this, rootEl, _InterpolationComponentNoWhitespace_0_4);
+    return new ComponentRef<import2.InterpolationComponentNoWhitespace>(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
   }
 
   @override

@@ -42,16 +42,16 @@ const List<dynamic> styles$DependentHost = const [];
 
 class _ViewDependentHost0 extends AppView<dynamic> {
   ViewDependent0 _compView_0;
-  import1.Dependent _Dependent_0_4;
+  import1.Dependent _Dependent_0_5;
   _ViewDependentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _Dependent_0_4 = new import1.Dependent(this.injectorGet(import1.Dependency, viewData.parentIndex));
-    _compView_0.create(_Dependent_0_4, projectableNodes);
+    _Dependent_0_5 = new import1.Dependent(this.injectorGet(import1.Dependency, viewData.parentIndex));
+    _compView_0.create(_Dependent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.Dependent>(0, this, rootEl, _Dependent_0_4);
+    return new ComponentRef<import1.Dependent>(0, this, rootEl, _Dependent_0_5);
   }
 
   @override
@@ -75,7 +75,7 @@ const List<dynamic> styles$DependencyWithDependentInView = const [];
 class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithDependentInView> {
   import5.Element _el_0;
   ViewDependent0 _compView_0;
-  import1.Dependent _Dependent_0_4;
+  import1.Dependent _Dependent_0_5;
   static RenderComponentType _renderType;
   ViewDependencyWithDependentInView0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependency-with-dependent-in-view');
@@ -88,8 +88,8 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
     _compView_0 = new ViewDependent0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _Dependent_0_4 = new import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
-    _compView_0.create(_Dependent_0_4, []);
+    _Dependent_0_5 = new import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
+    _compView_0.create(_Dependent_0_5, []);
     init(const [], null);
     return null;
   }
@@ -113,22 +113,22 @@ const List<dynamic> styles$DependencyWithDependentInViewHost = const [];
 
 class _ViewDependencyWithDependentInViewHost0 extends AppView<dynamic> {
   ViewDependencyWithDependentInView0 _compView_0;
-  import1.DependencyWithDependentInView _DependencyWithDependentInView_0_4;
+  import1.DependencyWithDependentInView _DependencyWithDependentInView_0_5;
   _ViewDependencyWithDependentInViewHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DependencyWithDependentInView_0_4 = new import1.DependencyWithDependentInView();
-    _compView_0.create(_DependencyWithDependentInView_0_4, projectableNodes);
+    _DependencyWithDependentInView_0_5 = new import1.DependencyWithDependentInView();
+    _compView_0.create(_DependencyWithDependentInView_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.DependencyWithDependentInView>(0, this, rootEl, _DependencyWithDependentInView_0_4);
+    return new ComponentRef<import1.DependencyWithDependentInView>(0, this, rootEl, _DependencyWithDependentInView_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.Dependency) && (0 == nodeIndex))) {
-      return _DependencyWithDependentInView_0_4;
+      return _DependencyWithDependentInView_0_5;
     }
     return notFoundResult;
   }
@@ -175,22 +175,22 @@ const List<dynamic> styles$DependencyWithContentHost = const [];
 
 class _ViewDependencyWithContentHost0 extends AppView<dynamic> {
   ViewDependencyWithContent0 _compView_0;
-  import1.DependencyWithContent _DependencyWithContent_0_4;
+  import1.DependencyWithContent _DependencyWithContent_0_5;
   _ViewDependencyWithContentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithContent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DependencyWithContent_0_4 = new import1.DependencyWithContent();
-    _compView_0.create(_DependencyWithContent_0_4, projectableNodes);
+    _DependencyWithContent_0_5 = new import1.DependencyWithContent();
+    _compView_0.create(_DependencyWithContent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.DependencyWithContent>(0, this, rootEl, _DependencyWithContent_0_4);
+    return new ComponentRef<import1.DependencyWithContent>(0, this, rootEl, _DependencyWithContent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.Dependency) && (0 == nodeIndex))) {
-      return _DependencyWithContent_0_4;
+      return _DependencyWithContent_0_5;
     }
     return notFoundResult;
   }
@@ -217,7 +217,7 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
   import5.Element _el_0;
   import5.Element _el_1;
   ViewDependent0 _compView_1;
-  import1.Dependent _Dependent_1_4;
+  import1.Dependent _Dependent_1_5;
   static RenderComponentType _renderType;
   ViewDependencyAndDependentInView0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependency-and-dependent-in-view');
@@ -232,8 +232,8 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
     _compView_1 = new ViewDependent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
-    _Dependent_1_4 = new import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
-    _compView_1.create(_Dependent_1_4, []);
+    _Dependent_1_5 = new import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
+    _compView_1.create(_Dependent_1_5, []);
     init(const [], null);
     return null;
   }
@@ -257,16 +257,16 @@ const List<dynamic> styles$DependencyAndDependentInViewHost = const [];
 
 class _ViewDependencyAndDependentInViewHost0 extends AppView<dynamic> {
   ViewDependencyAndDependentInView0 _compView_0;
-  import1.DependencyAndDependentInView _DependencyAndDependentInView_0_4;
+  import1.DependencyAndDependentInView _DependencyAndDependentInView_0_5;
   _ViewDependencyAndDependentInViewHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyAndDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DependencyAndDependentInView_0_4 = new import1.DependencyAndDependentInView();
-    _compView_0.create(_DependencyAndDependentInView_0_4, projectableNodes);
+    _DependencyAndDependentInView_0_5 = new import1.DependencyAndDependentInView();
+    _compView_0.create(_DependencyAndDependentInView_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.DependencyAndDependentInView>(0, this, rootEl, _DependencyAndDependentInView_0_4);
+    return new ComponentRef<import1.DependencyAndDependentInView>(0, this, rootEl, _DependencyAndDependentInView_0_5);
   }
 
   @override
