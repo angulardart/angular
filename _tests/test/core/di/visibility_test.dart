@@ -53,6 +53,15 @@ void main() {
         final testFixture = await testBed.create();
         expect(testFixture.text, testFixture.assertOnlyInstance.text);
       });
+
+      test('directive may provide itself for a multi-token', () async {
+        final testBed = new NgTestBed<ShouldInjectMultiToken>();
+        final testFixture = await testBed.create();
+        expect(testFixture.assertOnlyInstance.child.dependencies, [
+          const isInstanceOf<VisibilityLocalImplementation>(),
+          const isInstanceOf<VisibilityAllImplementation>(),
+        ]);
+      });
     });
 
     group('all', () {
@@ -248,4 +257,54 @@ class InjectsVisibilityAllComponent {
 class ShouldInjectParentComponent {
   @ViewChild(InjectsVisibilityAllComponent)
   InjectsVisibilityAllComponent child;
+}
+
+abstract class Interface {}
+
+const implementations = const MultiToken<Interface>();
+
+@Directive(
+  selector: '[all]',
+  providers: const [
+    const ExistingProvider.forToken(
+      implementations,
+      VisibilityAllImplementation,
+    ),
+  ],
+  visibility: Visibility.all,
+)
+class VisibilityAllImplementation implements Interface {}
+
+@Directive(
+  selector: '[local]',
+  providers: const [
+    const ExistingProvider.forToken(
+      implementations,
+      VisibilityLocalImplementation,
+    ),
+  ],
+)
+class VisibilityLocalImplementation implements Interface {}
+
+@Component(
+  selector: 'injects-multi-token',
+  template: '',
+)
+class InjectsMultiToken {
+  final List<Interface> dependencies;
+  InjectsMultiToken(@implementations this.dependencies);
+}
+
+@Component(
+  selector: 'should-injects-multi-token',
+  template: '<injects-multi-token local all></injects-multi-token>',
+  directives: const [
+    InjectsMultiToken,
+    VisibilityLocalImplementation,
+    VisibilityAllImplementation,
+  ],
+)
+class ShouldInjectMultiToken {
+  @ViewChild(InjectsMultiToken)
+  InjectsMultiToken child;
 }
