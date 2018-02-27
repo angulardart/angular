@@ -2,6 +2,7 @@
   "hosting": {
     "public": "build/web",
     "ignore": [
+      "*.module",
       "*.ng_placeholder",
       "packages/"
     ],
