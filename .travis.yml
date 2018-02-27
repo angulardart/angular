@@ -38,19 +38,19 @@ jobs:
     - stage: analyze
       script: ./tool/travis.sh dartanalyzer_2
       env: PKG="_tests"
-      dart: dev
+      dart: 2.0.0-dev.26.0
     - stage: build
       script: ./tool/travis.sh command_0
       env: PKG="_tests"
-      dart: dev
+      dart: 2.0.0-dev.26.0
     - stage: unit_test
       script: ./tool/travis.sh command_3
       env: PKG="_tests"
-      dart: dev
+      dart: 2.0.0-dev.26.0
     - stage: unit_test
       script: ./tool/travis.sh command_4
       env: PKG="_tests"
-      dart: dev
+      dart: 2.0.0-dev.26.0
     - stage: analyze
       script: ./tool/travis.sh dartanalyzer_3
       env: PKG="angular"
