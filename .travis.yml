@@ -149,6 +149,11 @@ stages:
 branches:
   only: [master]
 
+# MANUALLY ADDED. Do not remove.
+after_success:
+  - ./tool/deploy.sh
+# END MANUAL EDITS.
+
 cache:
   directories:
     - $HOME/.pub-cache

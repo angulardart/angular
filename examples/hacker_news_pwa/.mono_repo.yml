@@ -6,4 +6,5 @@ stages:
   - analyze:
     - dartanalyzer: --fatal-warnings web
   - build:
-    - command: pub run build_runner build --config=release --fail-on-severe
+    - command: pub run build_runner build --config=release --fail-on-severe -o build
+
