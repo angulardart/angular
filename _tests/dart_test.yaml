@@ -10,4 +10,4 @@ tags:
 override_platforms:
   chrome:
     settings:
-      headless: true
+      headless: false
