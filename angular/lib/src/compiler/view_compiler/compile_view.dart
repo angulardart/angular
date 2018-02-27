@@ -27,7 +27,6 @@ import '../template_ast.dart'
         ProviderAst,
         ProviderAstType,
         VariableAst;
-import 'compile_binding.dart' show CompileBinding;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_pipe.dart' show CompilePipe;
@@ -279,7 +278,6 @@ class CompileView implements AppViewBuilder {
   /// List of references to view containers used by embedded templates
   /// and child components.
   List<o.Expression> viewContainers = [];
-  final _bindings = <CompileBinding>[];
   List<o.Statement> classStatements = [];
   CompileMethod _createMethod;
   CompileMethod _injectorGetMethod;
@@ -395,12 +393,6 @@ class CompileView implements AppViewBuilder {
 
   // Returns list of references to view children.
   List<o.Expression> get viewChildren => _viewChildren;
-
-  // Adds a binding to the view and returns binding index.
-  int addBinding(CompileNode node, TemplateAst sourceAst) {
-    _bindings.add(new CompileBinding(node, sourceAst));
-    return _bindings.length - 1;
-  }
 
   void afterNodes() {
     for (var pipe in pipes) {

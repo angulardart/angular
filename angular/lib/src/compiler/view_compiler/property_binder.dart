@@ -150,7 +150,6 @@ void _bindLiteral(
 
 void bindRenderText(
     BoundTextAst boundText, CompileNode compileNode, CompileView view) {
-  view.addBinding(compileNode, boundText);
   int bindingIndex = view.nameResolver.createUniqueBindIndex();
   // Expression for current value of expression when value is re-read.
   var currValExpr = createCurrValueExpr(bindingIndex);
@@ -442,7 +441,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   // directiveAst contains the target directive we are updating.
   // input is a BoundPropertyAst that contains binding metadata.
   for (var input in directiveAst.inputs) {
-    view.addBinding(compileElement, input);
     var bindingIndex = view.nameResolver.createUniqueBindIndex();
     dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
     var fieldExpr = createBindFieldExpr(bindingIndex);
@@ -627,7 +625,6 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       compileElement.nodeIndex, compileElement.sourceAst);
 
   var input = directiveAst.inputs.single;
-  view.addBinding(compileElement, input);
   var bindingIndex = view.nameResolver.createUniqueBindIndex();
   dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
   var fieldExpr = createBindFieldExpr(bindingIndex);
