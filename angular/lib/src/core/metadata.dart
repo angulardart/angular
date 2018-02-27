@@ -221,6 +221,10 @@ class Directive {
   final String exportAs;
 
   /// Whether this directive will be provided for injection.
+  ///
+  /// By default this is [Visibility.local], which prevents injecting the
+  /// directive class by default, but provides a code-size and runtime
+  /// performance benefit. See [Visibility] for details.
   final Visibility visibility;
 
   const Directive({
@@ -229,7 +233,7 @@ class Directive {
         this.host,
     this.providers,
     this.exportAs,
-    this.visibility,
+    this.visibility: Visibility.local,
   });
 }
 
@@ -338,7 +342,7 @@ class Component extends Directive {
         Map<String, String> host,
     String exportAs,
     List providers,
-    Visibility visibility,
+    Visibility visibility: Visibility.local,
     this.viewProviders,
     this.exports,
     this.changeDetection: ChangeDetectionStrategy.Default,
