@@ -1,5 +1,8 @@
+# Execute this from the ROOT of the repository only.
 #!/bin/bash
 set -e
+
+pushd examples/hacker_news_pwa
 
 # Deploys examples/hacker_news_pwa to Firebase!
 
@@ -10,3 +13,5 @@ if [ -n "$TRAVIS_BUILD_ID" ]; then
 else
   firebase deploy --non-interactive
 fi
+
+popd
