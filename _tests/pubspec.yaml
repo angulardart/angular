@@ -29,6 +29,10 @@ dev_dependencies:
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:
+  test:
+    git:
+      url: git://github.com/dart-lang/test.git
+      ref: 75c760c05f646344ee07bfbf1eeef0d086d29149
   angular:
     path: ../angular
   angular_ast:
