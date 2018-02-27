@@ -3,9 +3,11 @@ targets:
     builders:
       build_web_compilers|entrypoint:
         generate_for:
-        - web/**.dart
+          - web/main.dart
         options:
           compiler: dart2js
           dart2js_args:
-          - --trust-type-annotations
-          - --trust-primitives
+            - --fast-startup
+            - --minify
+            - --trust-type-annotations
+            - --trust-primitives

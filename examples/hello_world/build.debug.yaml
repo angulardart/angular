@@ -8,6 +8,5 @@ targets:
           compiler: dart2js
           dart2js_args:
             - --fast-startup
-            - --minify
             - --trust-type-annotations
             - --trust-primitives
