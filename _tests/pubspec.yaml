@@ -32,7 +32,7 @@ dependency_overrides:
   test:
     git:
       url: git://github.com/dart-lang/test.git
-      ref: 0a10d7e1aa66dc1297fe0585c2326d04904d69bf
+      ref: 8c0926cdc9ac2c8f79be6b399cba8ae295d7beae
   angular:
     path: ../angular
   angular_ast:
