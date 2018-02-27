@@ -31,7 +31,6 @@ const String _visibilityProperty = 'visibility';
 const _statefulDirectiveFields = const [
   'exportAs',
   'host',
-  _visibilityProperty,
 ];
 
 AngularArtifacts findComponentsAndDirectives(LibraryReader library) {
@@ -229,6 +228,15 @@ class ComponentVisitor
         log.severe("Functional directives don't support '$field': $element");
         invalid = true;
       }
+    }
+    final visibility = coerceEnum(
+      annotationValue,
+      _visibilityProperty,
+      Visibility.values,
+    );
+    if (visibility != Visibility.local) {
+      log.severe('Functional directives must be visibility: Visibility.local');
+      invalid = true;
     }
     if (invalid) return null;
     final type = element.accept(new CompileTypeMetadataVisitor(log, _library));
