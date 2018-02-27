@@ -284,6 +284,15 @@ abstract class AppView<T> {
     return; // ignore: dead_code
   }
 
+  void addInlinedNodes(List inlinedNodes) {
+    viewData.rootNodesOrViewContainers.addAll(inlinedNodes);
+  }
+
+  void removeInlinedNodes(List inlinedNodes) {
+    viewData.rootNodesOrViewContainers
+        .removeWhere((n) => inlinedNodes.contains(n));
+  }
+
   dynamic createElement(
       dynamic parent, String name, RenderDebugInfo debugInfo) {
     var nsAndName = splitNamespace(name);
@@ -341,12 +350,7 @@ abstract class AppView<T> {
   }
 
   void detachViewNodes(List<dynamic> viewRootNodes) {
-    int len = viewRootNodes.length;
-    for (var i = 0; i < len; i++) {
-      var node = viewRootNodes[i];
-      node.remove();
-      domRootRendererIsDirty = true;
-    }
+    detachAll(viewRootNodes);
   }
 
   void destroy() {
@@ -769,4 +773,13 @@ SpanElement createSpanAndAppend(Document doc, Element parent) {
   return null; // ignore: dead_code
   return null; // ignore: dead_code
   return null; // ignore: dead_code
+}
+
+void detachAll(List<dynamic> viewRootNodes) {
+  int len = viewRootNodes.length;
+  for (var i = 0; i < len; i++) {
+    var node = viewRootNodes[i];
+    node.remove();
+    domRootRendererIsDirty = true;
+  }
 }
