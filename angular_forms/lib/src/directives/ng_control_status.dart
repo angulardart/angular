@@ -1,4 +1,4 @@
-import 'package:angular/angular.dart' show Directive, Self, Visibility;
+import 'package:angular/angular.dart' show Directive, Self;
 
 import 'ng_control.dart' show NgControl;
 
@@ -14,8 +14,6 @@ import 'ng_control.dart' show NgControl;
     '[class.ng-valid]': 'ngClassValid',
     '[class.ng-invalid]': 'ngClassInvalid'
   },
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 @Deprecated('Use listeners or variable binding on the control itself instead. '
     'This adds overhead for every form control whether the class is '

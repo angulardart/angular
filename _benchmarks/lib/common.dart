@@ -33,8 +33,6 @@ abstract class Benchmark {
     <button id="run" (click)="doStart()">Run</button>
     <button id="reset" (click)="doReset()">Reset</button>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BenchmarkComponent implements AfterViewInit {
   final ComponentLoader _loader;

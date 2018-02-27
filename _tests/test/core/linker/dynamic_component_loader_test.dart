@@ -132,8 +132,6 @@ _Predicate<DebugElement> filterByDirective(Type type) {
 @Component(
   selector: 'child-cmp',
   template: 'CHILD_{{ctxProp}}',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildComp {
   Element element;
@@ -146,16 +144,12 @@ class ChildComp {
 @Component(
   selector: 'dummy',
   template: 'DynamicallyLoaded;',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DynamicallyLoaded {}
 
 @Component(
   selector: 'dummy',
   template: 'DynamicallyLoaded;',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DynamicallyLoadedThrows {
   DynamicallyLoadedThrows() {
@@ -166,8 +160,6 @@ class DynamicallyLoadedThrows {
 @Component(
   selector: 'dummy',
   template: 'DynamicallyLoaded2;',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DynamicallyLoaded2 {}
 
@@ -175,8 +167,6 @@ class DynamicallyLoaded2 {}
   selector: 'dummy',
   host: const {'[id]': 'id'},
   template: 'DynamicallyLoadedWithHostProps;',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DynamicallyLoadedWithHostProps {
   String id;
@@ -188,8 +178,6 @@ class DynamicallyLoadedWithHostProps {
 @Component(
   selector: 'dummy',
   template: 'dynamic(<ng-content></ng-content>)',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DynamicallyLoadedWithNgContent {
   String id;
@@ -202,8 +190,6 @@ class DynamicallyLoadedWithNgContent {
   selector: 'my-comp',
   directives: const [],
   template: '<div #loc></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyComp {
   bool ctxBoolProp;

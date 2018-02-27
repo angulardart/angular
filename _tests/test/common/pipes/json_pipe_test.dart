@@ -74,8 +74,6 @@ void main() {
   selector: 'test-comp',
   template: '{{data | json}}',
   pipes: const [JsonPipe],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestComp {
   dynamic data;

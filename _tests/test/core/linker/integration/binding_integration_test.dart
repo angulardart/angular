@@ -104,8 +104,6 @@ void main() {
 @Component(
   selector: 'bound-text',
   template: '<div>{{text}}</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundTextComponent {
   String text = 'Initial text';
@@ -114,8 +112,6 @@ class BoundTextComponent {
 @Component(
   selector: 'bound-property',
   template: '<div [id]="id"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundPropertyComponent {
   String id = 'Initial ID';
@@ -124,8 +120,6 @@ class BoundPropertyComponent {
 @Component(
   selector: 'bound-aria-attribute',
   template: '<div [attr.aria-label]="label"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundAriaAttributeComponent {
   String label = 'Initial label';
@@ -134,8 +128,6 @@ class BoundAriaAttributeComponent {
 @Component(
   selector: 'bound-attribute',
   template: '<div [attr.foo]="value"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundAttributeComponent {
   String value = 'Initial value';
@@ -144,8 +136,6 @@ class BoundAttributeComponent {
 @Component(
   selector: 'bound-style',
   template: '<div [style.height.px]="height"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundStyleComponent {
   int height = 10;
@@ -154,8 +144,6 @@ class BoundStyleComponent {
 @Component(
   selector: 'bound-mismatched-property',
   template: '<div [tabindex]="index"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundMismatchedPropertyComponent {
   int index = 0;
@@ -164,8 +152,6 @@ class BoundMismatchedPropertyComponent {
 @Component(
   selector: 'bound-camel-case-property',
   template: '<div [tabIndex]="index"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundCamelCasePropertyComponent {
   int index = 1;
@@ -174,8 +160,6 @@ class BoundCamelCasePropertyComponent {
 @Component(
   selector: 'bound-inner-html',
   template: '<div [innerHtml]="html"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundInnerHtmlComponent {
   String html = 'Initial <span>HTML</span>';
@@ -184,8 +168,6 @@ class BoundInnerHtmlComponent {
 @Component(
   selector: 'bound-class-name-alias',
   template: '<div class="initial" [class]="classes"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundClassNameAlias {
   String classes = 'foo bar';

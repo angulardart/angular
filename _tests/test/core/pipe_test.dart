@@ -46,8 +46,6 @@ void main() {
   pipes: const [
     DatePipe,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class Example {
   // April 29, 2014, 6:04am.
@@ -63,8 +61,6 @@ class NopPipe implements PipeTransform {
   selector: 'nop',
   template: '{{values | nop}}',
   pipes: const [NopPipe],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NopComponent {
   final values = [1, 2, 3];
@@ -91,8 +87,6 @@ class PurePipe implements PipeTransform {
   selector: 'test-pure-pipe',
   template: '{{value | pure}}',
   pipes: const [PurePipe],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestPurePipeComponent {
   String value;

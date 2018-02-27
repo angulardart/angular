@@ -36,8 +36,6 @@ void main() {
     ChildHostDirective,
     NgIf,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ViewChildTest {
   @ViewChild('portal')
@@ -54,7 +52,5 @@ class ViewChildTest {
 
 @Directive(
   selector: '[childHost]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildHostDirective {}

@@ -47,8 +47,6 @@ void main() {
 @Component(
   selector: 'test',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CatchSynchronousErrors {
   static _runTest() async {
@@ -63,8 +61,6 @@ class CatchSynchronousErrors {
 @Component(
   selector: 'test',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CatchAsynchronousErrors {
   static _runTest() async {
@@ -79,8 +75,6 @@ class CatchAsynchronousErrors {
 @Component(
   selector: 'test',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CatchConstructorErrors {
   static _runTest() async {
@@ -99,8 +93,6 @@ class CatchConstructorErrors {
 @Component(
   selector: 'test',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CatchConstructorAsyncErrors {
   static _runTest() async {
@@ -121,8 +113,6 @@ class CatchConstructorAsyncErrors {
 @Component(
   selector: 'test',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CatchOnInitErrors implements OnInit {
   static _runTest() async {
@@ -143,8 +133,6 @@ class CatchOnInitErrors implements OnInit {
   selector: 'test',
   template: '<child [trueToError]="value"></child>',
   directives: const [ChildChangeDetectionError],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CatchInChangeDetection {
   static _runTest() async {
@@ -161,8 +149,6 @@ class CatchInChangeDetection {
 @Component(
   selector: 'child',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildChangeDetectionError {
   @Input()
@@ -176,8 +162,6 @@ class ChildChangeDetectionError {
 @Component(
   selector: 'test',
   template: '<h1>Hello {{name}}</h1>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class RegressionTest631 {
   static _runTest() async {

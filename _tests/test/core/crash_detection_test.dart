@@ -109,8 +109,6 @@ class ValueService {
   selector: 'no-crash',
   template: '<child></child>',
   directives: const [ChildComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NoCrash {}
 
@@ -118,8 +116,6 @@ class NoCrash {}
 @Component(
   selector: 'child',
   template: 'Value: {{service.value}}',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildComponent {
   final ValueService service;
@@ -138,8 +134,6 @@ class ChildComponent {
     ErrorComponent,
     NgIf,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class Crash {
   bool startCrashing = false;
@@ -148,8 +142,6 @@ class Crash {
 @Component(
   selector: 'error',
   template: 'Error({{first}})',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ErrorComponent {
   List<int> listThatWillNPE;
@@ -181,8 +173,6 @@ class RpcService {
     <oninit *ngIf="startCrashing"></oninit>
     <error *ngIf="startCrashing"></error>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CrashOnInit {
   bool startCrashing = false;
@@ -191,8 +181,6 @@ class CrashOnInit {
 @Component(
   selector: 'oninit',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class OnInitComponent implements OnInit {
   final RpcService _rpc;

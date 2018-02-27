@@ -69,8 +69,6 @@ const ValidatorFn REQUIRED = Validators.required;
   providers: const [
     const ValueProvider.forToken(NG_VALIDATORS, REQUIRED),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class RequiredValidator {}
 
@@ -87,8 +85,6 @@ class RequiredValidator {}
   providers: const [
     const ExistingProvider.forToken(NG_VALIDATORS, MinLengthValidator),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MinLengthValidator implements Validator {
   @HostBinding('attr.minlength')
@@ -128,8 +124,6 @@ class MinLengthValidator implements Validator {
   providers: const [
     const ExistingProvider.forToken(NG_VALIDATORS, MaxLengthValidator),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MaxLengthValidator implements Validator {
   @HostBinding('attr.maxlength')
@@ -172,8 +166,6 @@ class MaxLengthValidator implements Validator {
   providers: const [
     const ExistingProvider.forToken(NG_VALIDATORS, PatternValidator),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PatternValidator implements Validator {
   final ValidatorFn _validator;

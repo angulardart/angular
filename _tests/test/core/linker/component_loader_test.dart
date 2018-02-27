@@ -43,8 +43,6 @@ void main() {
 @Component(
   selector: 'comp-with-custom-location',
   template: r'Before<template #location></template>After',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CompWithCustomLocation {
   final ComponentLoader loader;
@@ -61,15 +59,11 @@ class CompWithCustomLocation {
     DirectiveThatIsLocation,
   ],
   template: r'Before<template location></template>After',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CompWithDirective {}
 
 @Directive(
   selector: '[location]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveThatIsLocation {
   DirectiveThatIsLocation(ComponentLoader loader) {
@@ -81,8 +75,6 @@ class DirectiveThatIsLocation {
   selector: 'comp-with-service',
   providers: const [Service],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CompWithService {
   final Service service;
@@ -100,7 +92,5 @@ class Service {
 @Component(
   selector: 'dynamic-comp',
   template: 'Dynamic',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DynamicComp {}

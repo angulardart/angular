@@ -1,3 +1,7 @@
+### Breaking changes
+
+*   `SafeInnerHtmlDirective` is no longer injectable.
+
 ## 5.0.0-alpha+6
 
 ### New features

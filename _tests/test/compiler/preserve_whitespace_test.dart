@@ -94,8 +94,6 @@ String defaultWithWhitespace = '\n'
       '     <div> <span>  </span>  <span> </span>  World</div>\n'
       '     <div>{{value1}} {{value2}}</div>\n',
   preserveWhitespace: true,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DefaultWhiteSpaceComponent {
   String get value1 => 'V1';
@@ -109,8 +107,6 @@ class DefaultWhiteSpaceComponent {
   template: '<div>{{value1}}&ngsp;&ngsp;test1 &ngsp; test2{{value2}}</div>\n'
       '<div>test0&ngsp;&ngsp;test1 &ngsp; test2</div>\n',
   preserveWhitespace: true,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgSpaceComponent {
   String get value1 => 'V1';
@@ -124,8 +120,6 @@ class NgSpaceComponent {
   template: '<div>{{value1}}&nbsp;&nbsp;test1 &nbsp; test2{{value2}}</div>\n'
       '<div>test0&nbsp;&nbsp;test1 &nbsp; test2</div>\n',
   preserveWhitespace: true,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NbSpaceComponent {
   String get value1 => 'V1';
@@ -140,8 +134,6 @@ class NbSpaceComponent {
         <div> <span>  </span>  <span> </span>  World</div>
         <div>{{value1}} {{value2}}</div>
      ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class WhiteSpaceComponentExplicitFalse {
   String get value1 => 'V1';
@@ -155,8 +147,6 @@ class WhiteSpaceComponentExplicitFalse {
       '     <div> <span>  </span>  <span> </span>  World</div>\n'
       '     <div>{{value1}} {{value2}}</div>\n',
   preserveWhitespace: true,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class WhiteSpaceComponentExplicitTrue {
   String get value1 => 'V1';
@@ -166,8 +156,6 @@ class WhiteSpaceComponentExplicitTrue {
 @Component(
   selector: 'test-interpolate1-leftspace',
   template: '\n    \n    {{value1}}',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class Interpolate1LeftComponent {
   String get value1 => 'V1';
@@ -178,8 +166,6 @@ class Interpolate1LeftComponent {
 @Component(
   selector: 'test-interpolate',
   template: '\n    \n    {{value1}}  {{value2}}  \n      ',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InterpolateComponent {
   String get value1 => 'V1';
@@ -190,8 +176,6 @@ class InterpolateComponent {
 @Component(
   selector: 'test-interpolatebetweentext',
   template: '<span> prefix {{value1}} postfix </span>\n      ',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InterpolateBetweenTextComponent {
   String get value1 => 'V1';
@@ -201,8 +185,6 @@ class InterpolateBetweenTextComponent {
 @Component(
   selector: 'test-interpolatebetweentextnewline',
   template: '<span>\n prefix {{value1}} postfix \n</span>\n      ',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InterpolateBetweenTextNewlineComponent {
   String get value1 => 'V1';
@@ -212,8 +194,6 @@ class InterpolateBetweenTextNewlineComponent {
 @Component(
   selector: 'test-textbeforeinterpolate',
   template: '<span> prefix {{value1}} </span>\n      ',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TextBeforeInterpolateComponent {
   String get value1 => 'V1';
