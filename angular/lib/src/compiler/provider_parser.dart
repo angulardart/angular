@@ -482,11 +482,8 @@ class _ProviderResolver {
             '${resolvedProvider.token.name}',
             sourceSpan));
       }
-      final existing = provider.useExisting;
-      final hasLocalImplementation = existing != null &&
-          directiveContext.visibility == Visibility.local &&
-          directiveContext.type.name == existing.identifier.name &&
-          directiveContext.type.moduleUrl == existing.identifier.moduleUrl;
+      final hasLocalImplementation =
+          _hasLocalImplementation(directiveContext, provider);
       if (resolvedProvider == null) {
         resolvedProvider = new ProviderAst(
           provider.token,
@@ -502,14 +499,30 @@ class _ProviderResolver {
         _providersByToken.add(provider.token, resolvedProvider);
       } else {
         if (!provider.multi) {
-          resolvedProvider.providers.clear();
+          // Overwrite existing provider.
+          resolvedProvider
+            ..providers.clear()
+            ..implementedByDirectiveWithNoVisibility = hasLocalImplementation;
+        } else if (!resolvedProvider.implementedByDirectiveWithNoVisibility) {
+          // True if any provider for a multi-token has a local implementation.
+          resolvedProvider.implementedByDirectiveWithNoVisibility =
+              hasLocalImplementation;
         }
-        resolvedProvider
-          ..providers.add(provider)
-          ..implementedByDirectiveWithNoVisibility = hasLocalImplementation;
+        resolvedProvider.providers.add(provider);
       }
     }
   }
+}
+
+/// Whether the provider uses the existing [directive] with `Visibility.local`.
+bool _hasLocalImplementation(
+  CompileDirectiveMetadata directive,
+  CompileProviderMetadata provider,
+) {
+  return provider.useExisting != null &&
+      directive.visibility == Visibility.local &&
+      directive.type.name == provider.useExisting.identifier.name &&
+      directive.type.moduleUrl == provider.useExisting.identifier.moduleUrl;
 }
 
 CompileTokenMap<List<CompileQueryMetadata>> _getViewQueries(

@@ -1,3 +1,10 @@
+### Bug fixes
+
+*   The code generated for injecting a multi-token will now correctly inject a
+    provider that uses an existing directive with `Visibility.local`. This
+    previously failed if another existing directive with `Visibility.all` was
+    provided for the same multi-token, after the one with `Visibility.local`.
+
 ## 5.0.0-alpha+6
 
 ### New features
