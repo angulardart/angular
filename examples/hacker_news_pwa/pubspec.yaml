@@ -23,5 +23,3 @@ dependency_overrides:
     path: ../../angular_compiler
   angular_router:
     path: ../../angular_router
-  # Removable after https://github.com/isoos/pwa/pull/18.
-  args: '^1.0.0'
