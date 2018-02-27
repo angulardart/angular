@@ -106,14 +106,10 @@ class Identifiers {
       name: "createSpanAndAppendDbg", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
   static final dbgElm = new CompileIdentifierMetadata<dynamic>(
       name: "dbgElm", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
-  static final detachAll = new CompileIdentifierMetadata<dynamic>(
-      name: "detachAll", moduleUrl: APP_VIEW_MODULE_URL);
   static final devModeEqual = new CompileIdentifierMetadata<dynamic>(
       name: "devModeEqual", moduleUrl: CD_MODULE_URL);
   static final identical =
       new CompileIdentifierMetadata<dynamic>(name: "identical");
-  static final moveNodesAfterSibling = new CompileIdentifierMetadata<dynamic>(
-      name: "moveNodesAfterSibling", moduleUrl: APP_VIEW_MODULE_URL);
   static final profileSetup = new CompileIdentifierMetadata<dynamic>(
       name: "profileSetup", moduleUrl: PROFILE_RUNTIME_MODULE_URL);
   static final profileMarkStart = new CompileIdentifierMetadata<dynamic>(
