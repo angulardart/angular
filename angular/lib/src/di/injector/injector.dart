@@ -18,6 +18,25 @@ Null throwsNotFound(Injector injector, Object token) {
 }
 
 /// Defines a function that creates an injector around a [parent] injector.
+///
+/// An [InjectorFactory] can be as simple as a closure or function:
+/// ```dart
+/// class Example {}
+///
+/// /// Returns an [Injector] that provides an `Example` service.
+/// Injector createInjector([Injector parent]) {
+///   return new Injector.map({
+///     Example: new Example(),
+///   }, parent);
+/// }
+///
+/// void main() {
+///   var injector = createInjector();
+///   print(injector.get(Example)); // 'Instance of Example'.
+/// }
+/// ```
+///
+/// You may also _generate_ an [InjectorFactory] using [GenerateInjector].
 typedef InjectorFactory = Injector Function([Injector parent]);
 
 /// Support for imperatively loading dependency injected services at runtime.
