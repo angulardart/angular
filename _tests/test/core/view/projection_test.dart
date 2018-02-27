@@ -169,8 +169,6 @@ void main() {
       '<div>A</div>'
       '</simple>',
   directives: const [SimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContainerWithSimpleComponent {}
 
@@ -180,17 +178,14 @@ class ContainerWithSimpleComponent {}
       '{{testValue}}'
       '</simple>{{\')END\'}}',
   directives: const [SimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContainerWithProjectedInterpolation {
   String testValue = "VALUE1";
 }
 
 @Component(
-  selector: 'simple', template: 'SIMPLE(<ng-content></ng-content>)',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  selector: 'simple',
+  template: 'SIMPLE(<ng-content></ng-content>)',
 )
 class SimpleComponent {}
 
@@ -200,8 +195,6 @@ class SimpleComponent {}
       '{{testValue}}'
       '</simple>{{\')END\'}}',
   directives: const [SimpleComponent2],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContainerWithProjectedInterpolationNested {
   String testValue = "VALUE2";
@@ -210,8 +203,6 @@ class ContainerWithProjectedInterpolationNested {
 @Component(
   selector: 'simple',
   template: 'SIMPLE(<div><ng-content></ng-content></div>)',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SimpleComponent2 {}
 
@@ -221,8 +212,6 @@ class SimpleComponent2 {}
       '{{testValue}}'
       '</simple>{{\')END\'}}',
   directives: const [SimpleComponentWithBinding],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContainerWithProjectedInterpolationBound {
   String testValue = "VALUE3";
@@ -232,8 +221,6 @@ class ContainerWithProjectedInterpolationBound {
   selector: 'simple',
   template: 'SIMPLE(<div><ng-content></ng-content></div>'
       '<div [tabIndex]=\"0\">XY</div>)',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SimpleComponentWithBinding {}
 
@@ -243,8 +230,6 @@ class SimpleComponentWithBinding {}
       '<div class="left">A</div><div>B</div><div>C</div>'
       '</conditional-content>',
   directives: const [ConditionalContentComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContainerABCWithConditionalComponent {
   @ViewChild(ConditionalContentComponent)
@@ -256,8 +241,6 @@ class ContainerABCWithConditionalComponent {
   template: '<div>(<div *manual><ng-content select=".left"></ng-content></div>'
       ', <ng-content></ng-content>)</div>',
   directives: const [ManualViewportDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ConditionalContentComponent {
   @ViewChild(ManualViewportDirective)
@@ -266,8 +249,6 @@ class ConditionalContentComponent {
 
 @Directive(
   selector: "[manual]",
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ManualViewportDirective {
   ViewContainerRef vc;
@@ -289,8 +270,6 @@ class ManualViewportDirective {
   styles: const [".blueStyle { color: blue}"],
   encapsulation: ViewEncapsulation.Emulated,
   directives: const [SimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContainerWithStyleEmulated {}
 
@@ -300,8 +279,6 @@ class ContainerWithStyleEmulated {}
   styles: const [".redStyle { color: red}"],
   encapsulation: ViewEncapsulation.None,
   directives: const [SimpleComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContainerWithStyleNotEmulated {}
 
@@ -312,8 +289,6 @@ class ContainerWithStyleNotEmulated {}
       '<span list-item>item2</span>'
       '</mylist>',
   directives: const [MyListComponent, MyListItemComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyListUserProjectionTest {}
 
@@ -324,16 +299,12 @@ class MyListUserProjectionTest {}
       '</mylist-item>'
       '<div>TheEnd</div>',
   directives: const [MyListItemComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyListComponent {}
 
 @Component(
   selector: 'mylist-item',
   template: '<ng-content></ng-content>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MyListItemComponent {}
 
@@ -346,8 +317,6 @@ class MyListItemComponent {}
 <div class="rejected">
   <ng-content></ng-content>
 </div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectExactAttributeComponent {}
 
@@ -359,8 +328,6 @@ class SelectExactAttributeComponent {}
   <div id="foo">Should be selected.</div>
 </select-exact-attribute>''',
   directives: const [SelectExactAttributeComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectExactAttributeTestComponent {}
 
@@ -373,8 +340,6 @@ class SelectExactAttributeTestComponent {}
 <div class="rejected">
   <ng-content></ng-content>
 </div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectHyphenAttributeComponent {}
 
@@ -386,8 +351,6 @@ class SelectHyphenAttributeComponent {}
   <div id="foo-bar-baz-qux">Should be selected.</div>
 </select-hyphen-attribute>''',
   directives: const [SelectHyphenAttributeComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectHyphenAttributeTestComponent {}
 
@@ -400,8 +363,6 @@ class SelectHyphenAttributeTestComponent {}
 <div class="rejected">
   <ng-content></ng-content>
 </div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectListAttributeComponent {}
 
@@ -413,8 +374,6 @@ class SelectListAttributeComponent {}
   <div id="foo bar baz qux">Should be selected.</div>
 </select-list-attribute>''',
   directives: const [SelectListAttributeComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectListAttributeTestComponent {}
 
@@ -427,8 +386,6 @@ class SelectListAttributeTestComponent {}
 <div class="rejected">
   <ng-content></ng-content>
 </div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectPrefixAttributeComponent {}
 
@@ -440,8 +397,6 @@ class SelectPrefixAttributeComponent {}
   <div id="foo bar baz qux">Should be selected.</div>
 </select-prefix-attribute>''',
   directives: const [SelectPrefixAttributeComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectPrefixAttributeTestComponent {}
 
@@ -454,8 +409,6 @@ class SelectPrefixAttributeTestComponent {}
 <div class="rejected">
   <ng-content></ng-content>
 </div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectSetAttributeComponent {}
 
@@ -467,8 +420,6 @@ class SelectSetAttributeComponent {}
   <div id="bar baz qux">Should be selected.</div>
 </select-set-attribute>''',
   directives: const [SelectSetAttributeComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectSetAttributeTestComponent {}
 
@@ -481,8 +432,6 @@ class SelectSetAttributeTestComponent {}
 <div class="rejected">
   <ng-content></ng-content>
 </div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectSubstringAttributeComponent {}
 
@@ -494,8 +443,6 @@ class SelectSubstringAttributeComponent {}
   <div id="foobarbazqux">Should be selected.</div>
 </select-substring-attribute>''',
   directives: const [SelectSubstringAttributeComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectSubstringAttributeTestComponent {}
 
@@ -508,8 +455,6 @@ class SelectSubstringAttributeTestComponent {}
 <div class="rejected">
   <ng-content></ng-content>
 </div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectSuffixAttributeComponent {}
 
@@ -521,8 +466,6 @@ class SelectSuffixAttributeComponent {}
   <div id="foo bar baz qux">Should be selected.</div>
 </select-suffix-attribute>''',
   directives: const [SelectSuffixAttributeComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelectSuffixAttributeTestComponent {}
 
@@ -535,8 +478,6 @@ class SelectSuffixAttributeTestComponent {}
 <div class="rejected">
   <ng-content></ng-content>
 </div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgContentSelectComponent {}
 
@@ -550,8 +491,6 @@ class NgContentSelectComponent {}
   <ng-content></ng-content>
 </ng-content-select>''',
   directives: const [NgContentSelectComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgProjectAsComponent {}
 
@@ -563,7 +502,5 @@ class NgProjectAsComponent {}
   <div id="ng-id" title="foo bar baz qux">Should be selected.</div>
 </ng-project-as>''',
   directives: const [NgProjectAsComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgProjectAsTestComponent {}

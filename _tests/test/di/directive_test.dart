@@ -222,8 +222,6 @@ void main() {
   directives: const [
     CompParent,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestParent {
   @ViewChild(CompParent)
@@ -241,8 +239,6 @@ class TestParent {
     B,
     const Provider(C, useValue: const C('oldC')),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CompParent {
   @ViewChild(CompChild1)
@@ -259,8 +255,6 @@ class CompParent {
     B,
     const Provider(C, useValue: const C('newC')),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CompChild1 {
   final B b;
@@ -274,8 +268,6 @@ class CompChild1 {
 @Component(
   selector: 'child-2',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CompChild2 {
   final A a;
@@ -308,8 +300,6 @@ class C {
 @Component(
   selector: 'using-element-injector',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UsingElementInjector {
   final Injector injector;
@@ -323,8 +313,6 @@ class UsingElementInjector {
   providers: const [
     const Provider(ExampleServiceOptionals, useClass: ExampleServiceOptionals),
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UsingInjectAndOptional {
   final ExampleServiceOptionals service;
@@ -359,8 +347,6 @@ const usPresidentsToken = const OpaqueToken<String>('usPresidents');
     ),
   ],
   template: "{{usPresidents}}",
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ReifiedMultiGenerics {
   final List<String> usPresidents;
@@ -392,8 +378,6 @@ const arbitraryToken = const OpaqueToken<Arbitrary>('arbitrary');
     ),
   ],
   template: r'<button arbitrary></button>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UsesTypedTokensComponent {
   @ViewChild(UsesTypedTokensDirective)
@@ -402,8 +386,6 @@ class UsesTypedTokensComponent {
 
 @Directive(
   selector: '[arbitrary]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UsesTypedTokensDirective {
   final List<Arbitrary> arbitrary;
@@ -421,8 +403,6 @@ class UsesTypedTokensDirective {
     ),
   ],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SupportsInferredProviders {
   final List<Arbitrary> arbitrary;
@@ -439,8 +419,6 @@ const usPresidentsMulti = const MultiToken<String>('usPresidents');
     const ValueProvider.forToken(usPresidentsMulti, 'Abraham Lincoln'),
   ],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SupportsMultiToken {
   final List<String> values;
@@ -458,8 +436,6 @@ const fooMultiToken = const MultiToken<String>('fooToken');
     const ValueProvider.forToken(fooMultiToken, 'World'),
   ],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NoClashTokens {
   final List<String> fooTokenFromOpaque;
@@ -481,8 +457,6 @@ const barTypedToken2 = const OpaqueToken<bool>('barTypedToken');
     const ValueProvider.forToken(barTypedToken2, 2),
   ],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SupportsTypedToken {
   final Injector injector;
@@ -500,8 +474,6 @@ const aDynamicTokenNamedB = const OpaqueToken('B');
     const Provider(aDynamicTokenNamedB, useValue: 'B'),
   ],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ProperTokenIdentity {
   final Injector injector;
@@ -518,8 +490,6 @@ class ExampleService {}
     const Provider(ExampleService),
   ],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SupportsImplicitClass {
   final Injector injector;
@@ -537,8 +507,6 @@ const unnamedTokenOfString = const OpaqueToken<String>();
     const Provider(unnamedTokenOfString, useValue: 2),
   ],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SupportsUnnamedToken {
   final Injector injector;
@@ -561,8 +529,6 @@ const listOfStringToken = const OpaqueToken<List<String>>('listOfString');
     ChildThatInjectsTypedToken,
     NgIf,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SupportsTypedTokenInNestedViews {
   @ViewChild('tag')
@@ -574,8 +540,6 @@ class SupportsTypedTokenInNestedViews {
 @Component(
   selector: 'child-that-injects-token',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildThatInjectsTypedToken {
   final List<String> example;
@@ -588,8 +552,6 @@ class MissingService {}
 @Component(
   selector: 'will-fail-injecting-1-node',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class WillFailInjecting1Node {
   WillFailInjecting1Node(MissingService _);
@@ -607,8 +569,6 @@ class InjectsMissingService {
     ),
   ],
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class WillFailInjecting2Node {
   WillFailInjecting2Node(InjectsMissingService _);
@@ -617,8 +577,6 @@ class WillFailInjecting2Node {
 @Component(
   selector: 'will-fail-injecting-2-node',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class WillFailInjecting2NodeParent {
   WillFailInjecting2NodeParent(InjectsMissingService _);

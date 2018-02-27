@@ -66,16 +66,12 @@ void main() {
 @Component(
   selector: 'test',
   template: 'Hello World',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NewComponentInDom {}
 
 @Component(
   selector: 'test',
   template: 'Hello {{users.first}}!',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BeforeChangeDetection {
   // This will fail with an NPE if not initialized before change detection.
@@ -85,8 +81,6 @@ class BeforeChangeDetection {
 @Component(
   selector: 'test',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class AddProviders {
   final TestService _testService;
@@ -101,8 +95,6 @@ class TestService {}
   selector: 'test',
   template: '{{"Hello World"}}',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class OnPushComponent {}
 
@@ -110,7 +102,5 @@ class OnPushComponent {}
   selector: 'test',
   template: '',
   changeDetection: ChangeDetectionStrategy.Stateful,
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class XXXComponent extends ComponentState {}

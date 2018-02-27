@@ -134,16 +134,12 @@ void main() {
 @Component(
   selector: 'heroes',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class HeroesComponent {}
 
 @Component(
   selector: 'villains',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class VillainsComponent {}
 

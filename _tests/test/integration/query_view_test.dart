@@ -96,8 +96,6 @@ void main() {
     <value [value]="2"></value>
     <value [value]="3"></value>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDirectViewChildren extends HasChildren<ValueDirective> {
   @override
@@ -113,8 +111,6 @@ class TestDirectViewChildren extends HasChildren<ValueDirective> {
   template: r'''
     <value [value]="1"></value>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDirectViewChild extends HasChild<ValueDirective> {
   @override
@@ -137,8 +133,6 @@ class TestDirectViewChild extends HasChild<ValueDirective> {
       <value [value]="3"></value>
     </template>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestViewChildrenAndEmbedded extends HasChildren<ValueDirective> {
   @override
@@ -157,8 +151,6 @@ class TestViewChildrenAndEmbedded extends HasChildren<ValueDirective> {
       <value [value]="1"></value>
     </template>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDirectViewChildEmbedded extends HasChild<ValueDirective> {
   @override
@@ -180,8 +172,6 @@ class TestDirectViewChildEmbedded extends HasChild<ValueDirective> {
       </template>
     </template>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestViewChildNestedOnOff extends HasChild<ValueDirective> {
   @override
@@ -202,8 +192,6 @@ class TestViewChildNestedOnOff extends HasChild<ValueDirective> {
       </div>
     </div>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestViewChildNestedNgIfOffOn extends HasChild<ValueDirective> {
   var outerDiv = false;
@@ -227,8 +215,6 @@ class TestViewChildNestedNgIfOffOn extends HasChild<ValueDirective> {
       </div>
     </div>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestViewChildNestedNgIfOffOnAsync extends HasChild<ValueDirective>
     implements AfterViewInit {
@@ -257,8 +243,6 @@ class TestViewChildNestedNgIfOffOnAsync extends HasChild<ValueDirective>
     <value [value]="2"></value>
     <value [value]="3"></value>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDirectViewChildrenList extends HasChildren<ValueDirective> {
   @override
@@ -276,8 +260,6 @@ class TestDirectViewChildrenList extends HasChildren<ValueDirective> {
     <value [value]="2"></value>
     <value [value]="3"></value>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDirectViewChildrenListSetter extends HasChildren<ValueDirective> {
   @ViewChildren(ValueDirective)
@@ -304,8 +286,6 @@ class TestDirectViewChildrenListSetter extends HasChildren<ValueDirective> {
       <value [value]="3"></value>
     </template>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestViewChildrenAndEmbeddedList extends HasChildren<ValueDirective> {
   @override
@@ -326,8 +306,6 @@ class TestViewChildrenAndEmbeddedList extends HasChildren<ValueDirective> {
       </div>
     </div>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestNestedNgForQueriesList {
   final items = [1, 2, 3];
@@ -353,8 +331,6 @@ class TestNestedNgForQueriesList {
     </div>
     <div #taggedDiv>7</div>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestNestedAndStaticNgForQueriesList {
   final items = [4, 5, 6];

@@ -144,8 +144,6 @@ class _GetValue<T extends ValueTest> {
 @Component(
   selector: 'child',
   template: r'{{value}}',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildComponent {
   @Input()
@@ -162,8 +160,6 @@ abstract class ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'<child [value]="10"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestLiterals implements ValueTest {
   @ViewChild(ChildComponent)
@@ -178,8 +174,6 @@ class TestLiterals implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="'string'"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestStripQuotes implements ValueTest {
   @ViewChild(ChildComponent)
@@ -194,8 +188,6 @@ class TestStripQuotes implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="\'a\n\nb\'"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestNewLines implements ValueTest {
   @ViewChild(ChildComponent)
@@ -210,8 +202,6 @@ class TestNewLines implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="10 + 2"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestAddOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -226,8 +216,6 @@ class TestAddOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="10 - 2"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestMinusOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -242,8 +230,6 @@ class TestMinusOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="10 * 2"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestMultiplyOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -258,8 +244,6 @@ class TestMultiplyOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="10 / 2"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDivisionOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -274,8 +258,6 @@ class TestDivisionOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="11 % 2"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestModulusOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -290,8 +272,6 @@ class TestModulusOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="1 == 1"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestEqualityOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -306,8 +286,6 @@ class TestEqualityOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="1 != 1"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestNotEqualsOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -322,8 +300,6 @@ class TestNotEqualsOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="1 === 1"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestIdentityOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -338,8 +314,6 @@ class TestIdentityOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="1 !== 1"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestNotIdenticalOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -354,8 +328,6 @@ class TestNotIdenticalOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="1 < 2"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestLessThanOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -370,8 +342,6 @@ class TestLessThanOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="2 > 1"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestGreaterThanOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -386,8 +356,6 @@ class TestGreaterThanOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="1 <= 2"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestLessThanOrEqualsOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -402,8 +370,6 @@ class TestLessThanOrEqualsOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="2 >= 1"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestGreaterThanOrEqualsOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -418,8 +384,6 @@ class TestGreaterThanOrEqualsOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="true && false"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestAndOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -434,8 +398,6 @@ class TestAndOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="val1 || val2"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestOrOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -454,8 +416,6 @@ class TestOrOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="!true"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestNegateOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -470,8 +430,6 @@ class TestNegateOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="!!true"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDoubleNegationOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -486,8 +444,6 @@ class TestDoubleNegationOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="1 > 2 ? 'yes' : 'no'"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestTernaryOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -502,8 +458,6 @@ class TestTernaryOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="map['foo']"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestMapAccess implements ValueTest {
   @ViewChild(ChildComponent)
@@ -520,8 +474,6 @@ class TestMapAccess implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="list[1]"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestListAccess implements ValueTest {
   @ViewChild(ChildComponent)
@@ -538,8 +490,6 @@ class TestListAccess implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="list.length"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestPropertyAccess implements ValueTest {
   @ViewChild(ChildComponent)
@@ -556,8 +506,6 @@ class TestPropertyAccess implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="list.length.isEven"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestChainedPropertyAccess implements ValueTest {
   @ViewChild(ChildComponent)
@@ -574,8 +522,6 @@ class TestChainedPropertyAccess implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="list.toList().length.isEven"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestFunctionCall implements ValueTest {
   @ViewChild(ChildComponent)
@@ -592,8 +538,6 @@ class TestFunctionCall implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="null"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestAssignNull implements ValueTest {
   @ViewChild(ChildComponent)
@@ -608,8 +552,6 @@ class TestAssignNull implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="map?.keys"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestElvisOperation implements ValueTest {
   @ViewChild(ChildComponent)
@@ -626,8 +568,6 @@ class TestElvisOperation implements ValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="map?.keys ?? 'Hello'"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestNullAwareOperation implements ValueTest {
   @ViewChild(ChildComponent)

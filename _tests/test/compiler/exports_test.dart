@@ -119,8 +119,6 @@ void main() {
   selector: 'interpolate-constant-test',
   template: '<div>{{myConst}}</div>',
   exports: const [myConst],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InterpolateConstantTest {}
 
@@ -128,8 +126,6 @@ class InterpolateConstantTest {}
   selector: 'interpolate-static-field-test',
   template: '<div>{{MyClass.staticField}}</div>',
   exports: const [MyClass],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InterpolateStaticFieldTest {}
 
@@ -137,8 +133,6 @@ class InterpolateStaticFieldTest {}
   selector: 'interpolate-enum-test',
   template: '<div>{{MyEnum.a}}</div>',
   exports: const [MyEnum],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InterpolateEnumTest {}
 
@@ -146,8 +140,6 @@ class InterpolateEnumTest {}
   selector: 'interpolate-top-level-function-test',
   template: '<div>{{myFunc("hello")}}</div>',
   exports: const [myFunc],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InterpolateTopLevelFunctionTest {}
 
@@ -155,8 +147,6 @@ class InterpolateTopLevelFunctionTest {}
   selector: 'interpolate-static-function-test',
   template: '<div>{{MyClass.staticFunc("hello")}}</div>',
   exports: const [MyClass],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InterpolateStaticFunctionTest {}
 
@@ -165,8 +155,6 @@ class InterpolateStaticFunctionTest {}
   template: '<div *ngFor="let item of myList">{{item}}</div>',
   exports: const [myList],
   directives: const [NgFor],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class StaticNgForTest {}
 
@@ -174,8 +162,6 @@ class StaticNgForTest {}
   selector: 'static-event-handler-test',
   template: '<div (click)="staticClickHandler()"></div>',
   exports: const [staticClickHandler],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class StaticEventHandlerTest {}
 
@@ -183,8 +169,6 @@ class StaticEventHandlerTest {}
   selector: 'static-event-handler-target-test',
   template: '<div (click)="MyClass.clickHandled = true"></div>',
   exports: const [MyClass],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class StaticEventHandlerTargetTest {}
 
@@ -192,8 +176,6 @@ class StaticEventHandlerTargetTest {}
   selector: 'static-event-handle-arg-test',
   template: '<div (click)="handleClick(myList)"></div>',
   exports: const [myList],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class StaticEventHandlerArgTest {
   Function clickHandler;
@@ -207,16 +189,12 @@ class StaticEventHandlerArgTest {
   selector: 'static-library-prefix-test',
   template: '<p>{{lib.myConst}}</p>',
   exports: const [lib.myConst],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class StaticLibraryPrefixTest {}
 
 @Component(
   selector: 'self-refer-test',
   template: '<p>{{SelfReferTest.staticField}}</p>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelfReferTest {
   static String staticField = 'hello';
@@ -225,8 +203,6 @@ class SelfReferTest {
 @Component(
   selector: 'self-refer-host-binding-test',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SelfReferHostBindingTest {
   @HostBinding('title')

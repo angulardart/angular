@@ -108,8 +108,6 @@ void main() {
   selector: 'component-with-event-test',
   template: '<component-with-event></component-with-event>',
   directives: const [ComponentWithEvent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ComponentWithEventTest {}
 
@@ -123,8 +121,6 @@ class ComponentWithEventTest {}
       (blur)="onBlur()"
       [attr.has-focus]="hasFocus">
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ComponentWithEvent {
   bool hasFocus = false;
@@ -146,8 +142,6 @@ class ComponentWithEvent {
     '(blur)': 'onBlur()',
   },
   template: '<div [attr.has-focus]="hasFocus"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ComponentWithHostEvent {
   bool hasFocus = false;
@@ -165,8 +159,6 @@ class ComponentWithHostEvent {
 @Component(
   selector: 'component-with-annotation',
   template: '<div [attr.has-focus]="hasFocus"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ComponentWithHostAnnotation {
   bool hasFocus = false;
@@ -185,8 +177,6 @@ class ComponentWithHostAnnotation {
 @Component(
   selector: 'component-with-annotation2',
   template: '<div [attr.was-clicked]="wasClicked"></div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ComponentWithHost$Event {
   bool wasClicked = false;
@@ -208,8 +198,6 @@ class ComponentWithHost$Event {
   template: r'''
     <input #input type="text" />
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ComponentWithDirectiveWithHost {
   @ViewChild('input', read: DirectiveWithHost$EventPropertyChain)
@@ -218,8 +206,6 @@ class ComponentWithDirectiveWithHost {
 
 @Directive(
   selector: 'input[type=text]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveWithHost$EventPropertyChain {
   var lastValue;
@@ -233,8 +219,6 @@ class DirectiveWithHost$EventPropertyChain {
 @Component(
   selector: 'component-with-two-annotations',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ComponentWithTwoAnnotations {
   String capturedEvent;

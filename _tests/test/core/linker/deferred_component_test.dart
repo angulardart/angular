@@ -65,8 +65,6 @@ void main() {
       <my-deferred-view @deferred></my-deferred-view>
     </section>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SimpleContainerTest {
   final ChangeDetectorRef cdRef;
@@ -89,8 +87,6 @@ class SimpleContainerTest {
       <my-deferred-view @deferred></my-deferred-view>
     </section>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NestedContainerTest {
   bool show = false;
@@ -104,8 +100,6 @@ class NestedContainerTest {
       <my-deferred-view @deferred [title]="'Hello World'"></my-deferred-view>
     </section>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class PropertyContainerTest {}
 
@@ -118,8 +112,6 @@ class PropertyContainerTest {}
       <my-deferred-view @deferred (selected)="onSelected()"></my-deferred-view>
     </section>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class EventContainerTest {
   int count = 0;

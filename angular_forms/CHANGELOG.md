@@ -1,3 +1,13 @@
+### Breaking changes
+
+-   The following directives are no longer injectable:
+
+    -   `NgControlStatus`
+    -   `RequiredValidator`
+    -   `MinLengthValidator`
+    -   `MaxLengthValidator`
+    -   `PatternValidator`
+
 ## 1.0.1-alpha+6
 
 ### New features

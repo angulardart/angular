@@ -61,8 +61,6 @@ void main() {
 @Component(
   selector: 'right-precedence-conditional',
   template: '{{"red" + (hasBorder ? " border" : "")}}',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class RightPrecedenceConditionalComponent {
   bool hasBorder = false;
@@ -71,16 +69,12 @@ class RightPrecedenceConditionalComponent {
 @Component(
   selector: 'interpolate-class-binding',
   template: '<div [class.foo]="true" #element>{{element.className}}</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InterpolateClassBindingComponent {}
 
 @Component(
   selector: 'content-host',
   template: '<ng-content></ng-content>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContentHostComponent {}
 
@@ -92,7 +86,5 @@ class ContentHostComponent {}
     NgClass,
     NgIf,
   ],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ContentProviderComponent {}

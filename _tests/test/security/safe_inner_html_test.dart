@@ -39,8 +39,6 @@ void main() {
        <span class="other-element">Secure</span>
        <div [innerHtml]="trustedHtml"></div>
     ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NormalInnerHtmlTest {
   String get trustedHtml => r'''
@@ -57,8 +55,6 @@ class NormalInnerHtmlTest {
        <span class="other-element">Secure</span>
        <div [safeInnerHtml]="trustedHtml"></div>
     ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TrustedInnerHtmlTest {
   /// Value will be bound directly to the DOM.
@@ -78,8 +74,6 @@ class TrustedInnerHtmlTest {
   template: r'''
     <div [safeInnerHtml]="untrustedHtml"></div>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class UntrustedInnerHtmlTest {
   String untrustedHtml = '<script>Bad thing</script>';

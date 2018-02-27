@@ -243,8 +243,6 @@ void main() {
 @Component(
   selector: 'root',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class RootComponent {
   final StreamController<String> _outputController =
@@ -286,16 +284,12 @@ class RootComponent {
     <query-target #view></query-target>
     <query-target #view></query-target>''',
   directives: const [QueryTargetComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DerivedComponent extends RootComponent {}
 
 @Component(
   selector: 'query-target',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class QueryTargetComponent {}
 
@@ -310,8 +304,6 @@ class QueryTargetComponent {}
       <query-target #content></query-target>
     </derived>''',
   directives: const [DerivedComponent, QueryTargetComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDerivedComponent {
   @ViewChild(DerivedComponent)
@@ -325,8 +317,6 @@ class TestDerivedComponent {
 @Component(
   selector: 'override',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class OverrideComponent extends RootComponent {
   String get title => 'overridden';
@@ -350,8 +340,6 @@ class OverrideComponent extends RootComponent {
         (output)="receivedOutput = \$event">
     </override>''',
   directives: const [OverrideComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestOverrideComponent {
   @ViewChild(OverrideComponent)
@@ -369,8 +357,6 @@ class TestOverrideComponent {
     <query-target #view></query-target>
     <query-target #view></query-target>''',
   directives: const [QueryTargetComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class AnnotatedDerivedComponent extends RootComponent {
   @HostBinding('id')
@@ -396,8 +382,6 @@ class AnnotatedDerivedComponent extends RootComponent {
       <query-target #content></query-target>
     </annotated-derived>''',
   directives: const [AnnotatedDerivedComponent, QueryTargetComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestAnnotatedDerivedComponent {
   @ViewChild(AnnotatedDerivedComponent)
@@ -406,8 +390,6 @@ class TestAnnotatedDerivedComponent {
 
 @Directive(
   selector: 'base',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BaseDirective {
   @Input()
@@ -417,8 +399,6 @@ class BaseDirective {
 @Component(
   selector: 'directive-derived',
   template: '<div>{{input}}</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DirectiveDerivedComponent extends BaseDirective {}
 
@@ -426,8 +406,6 @@ class DirectiveDerivedComponent extends BaseDirective {}
   selector: 'test-directive-derived',
   template: '<directive-derived [input]="input"></directive-derived>',
   directives: const [DirectiveDerivedComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDirectiveDerivedComponent {
   String input;
@@ -441,8 +419,6 @@ class DescriptionInput {
 @Component(
   selector: 'inherit-metadata',
   template: '<div>{{description}}</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class InheritMetadataComponent extends DescriptionInput {}
 
@@ -450,8 +426,6 @@ class InheritMetadataComponent extends DescriptionInput {}
   selector: 'test-inherit-metadata',
   template: '<inherit-metadata [description]="description"></inherit-metadata>',
   directives: const [InheritMetadataComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestInheritMetadataComponent {
   String description;
@@ -460,8 +434,6 @@ class TestInheritMetadataComponent {
 @Component(
   selector: 'implement-metadata',
   template: '<div>{{description}}</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ImplementMetadataComponent implements DescriptionInput {
   String description;
@@ -472,8 +444,6 @@ class ImplementMetadataComponent implements DescriptionInput {
   template:
       '<implement-metadata [description]="description"></implement-metadata>',
   directives: const [ImplementMetadataComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestImplementMetadataComponent {
   String description;
@@ -482,8 +452,6 @@ class TestImplementMetadataComponent {
 @Component(
   selector: 'mixin-metadata',
   template: '<div>{{description}}</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MixinMetadataComponent extends Object with DescriptionInput {}
 
@@ -491,8 +459,6 @@ class MixinMetadataComponent extends Object with DescriptionInput {}
   selector: 'test-mixin-metadata',
   template: '<mixin-metadata [description]="description"></mixin-metadata>',
   directives: const [MixinMetadataComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestMixinMetadataComponent {
   String description;
@@ -516,8 +482,6 @@ class BazAttribute {
 @Component(
   selector: 'multiple-supertypes',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MultipleSupertypesComponent extends FooAttribute
     with BarAttribute
@@ -529,8 +493,6 @@ class MultipleSupertypesComponent extends FooAttribute
   selector: 'test-multiple-supertypes',
   template: '<multiple-supertypes></multiple-supertypes>',
   directives: const [MultipleSupertypesComponent],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestMultipleSupertypesComponent {
   @ViewChild(MultipleSupertypesComponent)
@@ -551,15 +513,11 @@ class OverrideFooAttributes extends Attributes {
 @Component(
   selector: 'test-most-derived-metadata',
   template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestMostDerivedMetadataComponent extends OverrideFooAttributes {}
 
 @Directive(
   selector: '[tooltip]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TooltipDirective {
   @Input()
@@ -568,8 +526,6 @@ class TooltipDirective {
 
 @Directive(
   selector: '[fancyTooltip]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class FancyTooltipDirective extends TooltipDirective {
   @Input()
@@ -580,8 +536,6 @@ class FancyTooltipDirective extends TooltipDirective {
   selector: 'test-directive-inherit-metadata',
   template: '<div fancyTooltip [tooltip]="tooltipMessage"></div>',
   directives: const [FancyTooltipDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDirectiveInheritMetadataComponent {
   @ViewChild(FancyTooltipDirective)
@@ -594,8 +548,6 @@ class TestDirectiveInheritMetadataComponent {
   selector: 'test-directive-override-binding',
   template: '<div [fancyTooltip]="tooltipMessage"></div>',
   directives: const [FancyTooltipDirective],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestDirectiveAliasInputComponent {
   @ViewChild(FancyTooltipDirective)
@@ -616,8 +568,6 @@ class MixinImplementsInterface implements MixinInterface {
 @Component(
   selector: 'mixes-in-interface',
   template: '<div>{{input}}</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class MixesInInterface extends Object with MixinImplementsInterface {}
 
@@ -625,8 +575,6 @@ class MixesInInterface extends Object with MixinImplementsInterface {}
   selector: 'test-mixes-in-interface',
   template: '<mixes-in-interface [input]="input"></mixes-in-interface>',
   directives: const [MixesInInterface],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestMixesInInterface {
   String input;

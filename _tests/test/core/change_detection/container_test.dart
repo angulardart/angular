@@ -89,8 +89,6 @@ void main() {
 @Component(
   selector: 'child',
   template: r'{{value}}',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class ChildComponent {
   var _value;
@@ -109,8 +107,6 @@ class ChildComponent {
   selector: 'test',
   directives: const [ChildComponent],
   template: '<child [value]="boundValue"></child>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundValueTest {
   var boundValue;
@@ -123,8 +119,6 @@ class BoundValueTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="{'key': value}"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundMapTest {
   var value;
@@ -137,8 +131,6 @@ class BoundMapTest {
   selector: 'test',
   directives: const [ChildComponent],
   template: r'''<child [value]="[value]"></child>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class BoundListTest {
   var value;

@@ -23,9 +23,8 @@ void main() {
 }
 
 @Component(
-  selector: 'uses-element', template: '<div #div>1</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  selector: 'uses-element',
+  template: '<div #div>1</div>',
 )
 class UsesElement {
   @ViewChild('div')
@@ -33,9 +32,8 @@ class UsesElement {
 }
 
 @Component(
-  selector: 'uses-element', template: '<div #div>2</div>',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  selector: 'uses-element',
+  template: '<div #div>2</div>',
 )
 class UsesHtmlElement {
   @ViewChild('div')

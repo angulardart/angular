@@ -99,8 +99,6 @@ void main() {
   selector: 'test-comp',
   template: '{{(data | slice:1).join(\',\') }}',
   pipes: const [SlicePipe],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestComp {
   dynamic data = [];

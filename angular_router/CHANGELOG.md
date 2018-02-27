@@ -1,3 +1,7 @@
+### Breaking changes
+
+*   `RouterOutlet` is no longer injectable.
+
 ## 2.0.0-alpha+6
 
 ### New features

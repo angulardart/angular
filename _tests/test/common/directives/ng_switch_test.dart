@@ -106,8 +106,6 @@ void main() {
     <template ngSwitchCase="a"><li>when a</li></template>
     <template ngSwitchCase="b"><li>when b</li></template>
   </ul></div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SwitchWhenTest {
   String switchValue;
@@ -121,8 +119,6 @@ class SwitchWhenTest {
     <li template="ngSwitchCase 'a'">when a</li>
     <li template="ngSwitchDefault">when default</li>
   </ul></div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SwitchDefaultTest {
   String switchValue;
@@ -140,8 +136,6 @@ class SwitchDefaultTest {
     <template ngSwitchDefault><li>when default1;</li></template>
     <template ngSwitchDefault><li>when default2;</li></template>
   </ul></div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SwitchMultipleWhenTest {
   String switchValue;
@@ -156,8 +150,6 @@ class SwitchMultipleWhenTest {
     <template [ngSwitchCase]="when2"><li>when 2;</li></template>
     <template ngSwitchDefault><li>when default;</li></template>
   </ul></div>''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SwitchWhenValueTest {
   String switchValue;
@@ -175,8 +167,6 @@ class SwitchWhenValueTest {
     <template ngSwitchDefault>default case</template>
   </div>
   ''',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SwitchEqualStringsTest {
   String switchCase;

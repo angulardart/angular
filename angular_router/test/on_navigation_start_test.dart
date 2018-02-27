@@ -80,9 +80,8 @@ const canDeactivateToken = const OpaqueToken<bool>('canDeactivateToken');
 const canNavigateToken = const OpaqueToken<bool>('canNavigateToken');
 
 @Component(
-  selector: 'home', template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  selector: 'home',
+  template: '',
 )
 class HomeComponent implements CanDeactivate, CanNavigate {
   final bool _canDeactivate;
@@ -103,9 +102,8 @@ class HomeComponent implements CanDeactivate, CanNavigate {
 }
 
 @Component(
-  selector: 'destination', template: '',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
+  selector: 'destination',
+  template: '',
 )
 class DestinationComponent {}
 
@@ -114,8 +112,6 @@ class DestinationComponent {}
   template: '<router-outlet [routes]="routes"></router-outlet>',
   directives: const [RouterOutlet],
   providers: const [routerProvidersTest],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class TestComponent {
   final Router router;

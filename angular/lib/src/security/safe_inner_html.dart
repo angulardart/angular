@@ -32,8 +32,6 @@ import 'package:angular/security.dart';
 ///   }
 @Directive(
   selector: '[safeInnerHtml]',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class SafeInnerHtmlDirective {
   final Element _element;

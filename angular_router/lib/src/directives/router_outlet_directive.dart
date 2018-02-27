@@ -31,13 +31,10 @@ import '../router_hook.dart';
 /// ```
 @Directive(
   selector: 'router-outlet',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class RouterOutlet implements OnInit, OnDestroy {
   final ViewContainerRef _viewContainerRef;
   final Router _router;
-  final bool isRootOutlet;
   final RouterHook _routerHook;
 
   // A mapping of {ComponentFactory} -> created {ComponentRef}.
@@ -50,13 +47,11 @@ class RouterOutlet implements OnInit, OnDestroy {
   List<RouteDefinition> _routes = const [];
 
   RouterOutlet(
-    @Optional() @SkipSelf() RouterOutlet parentOutlet,
     @Optional() RouterOutletToken token,
     this._viewContainerRef,
     this._router,
     @Optional() this._routerHook,
-  )
-      : isRootOutlet = parentOutlet == null {
+  ) {
     token?.routerOutlet = this;
   }
 
@@ -104,9 +99,7 @@ class RouterOutlet implements OnInit, OnDestroy {
 
   @override
   void ngOnInit() {
-    if (isRootOutlet) {
-      _router.registerRootOutlet(this);
-    }
+    _router.registerRootOutlet(this);
   }
 
   @override
@@ -115,9 +108,7 @@ class RouterOutlet implements OnInit, OnDestroy {
       loadedComponent.destroy();
     }
     _viewContainerRef.clear();
-    if (isRootOutlet) {
-      _router.unregisterRootOutlet(this);
-    }
+    _router.unregisterRootOutlet(this);
   }
 
   Future<ComponentFactory> _coerceFactory(Object typeOrFactory) async {
