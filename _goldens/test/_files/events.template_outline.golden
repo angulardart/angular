@@ -36,5 +36,12 @@ external AppView<_user.HasAngularEvents> viewFactory_HasAngularEvents0(AppView<d
 class ViewHasAngularEvents0 extends AppView<_user.HasAngularEvents> {
   external ViewHasAngularEvents0(AppView<dynamic> parentView, num parentIndex);
 }
+// For @Component class HasManyNativeHostEvents.
+const List<dynamic> styles$HasManyNativeHostEvents = const [];
+external ComponentFactory get HasManyNativeHostEventsNgFactory;
+external AppView<_user.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEvents0(AppView<dynamic> parentView, num parentIndex);
+class ViewHasManyNativeHostEvents0 extends AppView<_user.HasManyNativeHostEvents> {
+  external ViewHasManyNativeHostEvents0(AppView<dynamic> parentView, num parentIndex);
+}
 
 external void initReflector();
