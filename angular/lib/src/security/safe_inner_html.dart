@@ -15,24 +15,25 @@ import 'package:angular/security.dart';
 /// **trusted** data sources should be used when using `[safeInnerHtml]`.
 ///
 /// __Example use__:
-///   @Component(
-///     selector: 'my-component',
-///     directives: const [SafeInnerHtmlDirective],
-///     template: r'''
-///       <div [safeInnerHtml]="trustedHtml"></div>
-///     '''
-///   )
-///   class MyComponent {
-///     /// WARNING: This will be embedded directly into the HTML.
-///     final String trustedHtml;
 ///
-///     MyComponent(DomSanitizationService domSecurityService)
-///         : trustedHtml = domSecurityService.bypassSecurityTrustHtml(
+/// ```dart
+/// @Component(
+///   selector: 'my-component',
+///   directives: const [SafeInnerHtmlDirective],
+///   template: '''
+///     <div [safeInnerHtml]="trustedHtml"></div>
+///   ''',
+/// )
+/// class MyComponent {
+///   /// WARNING: This will be embedded directly into the HTML.
+///   final SafeHtml trustedHtml;
+///
+///   MyComponent(DomSanitizationService domSanitizationService)
+///       : trustedHtml = domSanitizationService.bypassSecurityTrustHtml(
 ///             'I solemnly swear that this <script></script> is OK!');
-///   }
-@Directive(
-  selector: '[safeInnerHtml]',
-)
+/// }
+/// ```
+@Directive(selector: '[safeInnerHtml]')
 class SafeInnerHtmlDirective {
   final Element _element;
 
@@ -40,9 +41,9 @@ class SafeInnerHtmlDirective {
 
   @Input()
   set safeInnerHtml(safeInnerHtml) {
-    if (safeInnerHtml is SafeHtmlImpl) {
+    if (safeInnerHtml is SafeHtml) {
       _element.setInnerHtml(
-        safeInnerHtml.changingThisWillBypassSecurityTrust,
+        safeInnerHtml.toString(),
         treeSanitizer: NodeTreeSanitizer.trusted,
       );
     } else if (safeInnerHtml == null) {

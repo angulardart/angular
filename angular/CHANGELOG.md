@@ -2,6 +2,20 @@
 
 *   `SafeInnerHtmlDirective` is no longer injectable.
 
+*   The following types were never intended for external use and are no longer
+    exported by `package:angular/security.dart`:
+
+    *   `SafeHtmlImpl`
+    *   `SafeScriptImpl`
+    *   `SafeStyleImpl`
+    *   `SafeResourceUrlImpl`
+    *   `SafeUrlImpl`
+    *   `SafeValueImpl`
+
+    To mark a value as safe, users should inject `DomSanitizationService` and
+    invoke the corresponding `bypassSecurityTrust*()` method, instead of
+    constructing these types directly.
+
 ## 5.0.0-alpha+6
 
 ### New features
