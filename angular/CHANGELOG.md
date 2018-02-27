@@ -2,6 +2,8 @@
 
 ### New features
 
+*   The compiler optimizes `NgIf` usages where the content is pure HTML.
+
 *   The compiler now reports an actionable error when an annotation is used on a
     private class member.
 

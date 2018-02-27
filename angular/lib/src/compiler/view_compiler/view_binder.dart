@@ -1,4 +1,5 @@
 import 'package:source_span/source_span.dart';
+
 import '../../core/linker/view_type.dart';
 import '../expression_parser/parser.dart';
 import '../output/output_ast.dart' as o;
@@ -41,10 +42,11 @@ import "lifecycle_binder.dart"
 import "property_binder.dart"
     show
         bindAndWriteToRenderer,
-        bindRenderText,
-        bindRenderInputs,
+        bindDirectiveHostProps,
         bindDirectiveInputs,
-        bindDirectiveHostProps;
+        bindInlinedNgIf,
+        bindRenderInputs,
+        bindRenderText;
 
 // TODO: Remove the following lines (for --no-implicit-casts).
 // ignore_for_file: argument_type_not_assignable
@@ -65,27 +67,23 @@ void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
   }
 }
 
-class ViewBinderVisitor implements TemplateAstVisitor {
+class ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
   final CompileView view;
   num _nodeIndex = 0;
   ViewBinderVisitor(this.view);
 
-  dynamic visitBoundText(BoundTextAst ast, dynamic context) {
+  void visitBoundText(BoundTextAst ast, dynamic context) {
     var node = this.view.nodes[_nodeIndex++];
     bindRenderText(ast, node, this.view);
-    return null;
   }
 
-  dynamic visitText(TextAst ast, dynamic context) {
+  void visitText(TextAst ast, dynamic context) {
     _nodeIndex++;
-    return null;
   }
 
-  dynamic visitNgContent(NgContentAst ast, dynamic context) {
-    return null;
-  }
+  void visitNgContent(NgContentAst ast, dynamic context) {}
 
-  dynamic visitElement(ElementAst ast, dynamic context) {
+  void visitElement(ElementAst ast, dynamic context) {
     var compileElement = (view.nodes[_nodeIndex++] as CompileElement);
     var listeners =
         collectEventListeners(ast.outputs, ast.directives, compileElement);
@@ -135,11 +133,14 @@ class ViewBinderVisitor implements TemplateAstVisitor {
       bindDirectiveDestroyLifecycleCallbacks(
           directiveAst.directive, directiveInstance, compileElement);
     }
-    return null;
   }
 
-  dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
-    var compileElement = (this.view.nodes[this._nodeIndex++] as CompileElement);
+  void visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
+    var compileElement = this.view.nodes[this._nodeIndex++] as CompileElement;
+    if (compileElement.embeddedView.isInlined) {
+      visitInlinedTemplate(ast, compileElement);
+      return;
+    }
     // The template parser ensures these listeners are for directive outputs,
     // so they all must be registered as stream subscriptions.
     var eventListeners =
@@ -160,43 +161,32 @@ class ViewBinderVisitor implements TemplateAstVisitor {
           directiveAst.directive, directiveInstance, compileElement);
     }
     bindView(compileElement.embeddedView, ast.children);
-    return null;
   }
 
-  dynamic visitAttr(AttrAst ast, dynamic context) {
-    return null;
+  void visitInlinedTemplate(
+      EmbeddedTemplateAst ast, CompileElement compileElement) {
+    var directiveAst = ast.directives.single;
+    bindInlinedNgIf(directiveAst, compileElement);
   }
 
-  dynamic visitDirective(DirectiveAst ast, dynamic context) {
-    return null;
-  }
+  void visitAttr(AttrAst ast, dynamic context) {}
 
-  dynamic visitEvent(BoundEventAst ast, dynamic context) {
+  void visitDirective(DirectiveAst ast, dynamic context) {}
+
+  void visitEvent(BoundEventAst ast, dynamic context) {
     var eventTargetAndNames = context as Map<String, BoundEventAst>;
     assert(eventTargetAndNames != null);
-    return null;
   }
 
-  dynamic visitReference(ReferenceAst ast, dynamic context) {
-    return null;
-  }
+  void visitReference(ReferenceAst ast, dynamic context) {}
 
-  dynamic visitVariable(VariableAst ast, dynamic context) {
-    return null;
-  }
+  void visitVariable(VariableAst ast, dynamic context) {}
 
-  dynamic visitDirectiveProperty(
-      BoundDirectivePropertyAst ast, dynamic context) {
-    return null;
-  }
+  void visitDirectiveProperty(BoundDirectivePropertyAst ast, dynamic context) {}
 
-  dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context) {
-    return null;
-  }
+  void visitElementProperty(BoundElementPropertyAst ast, dynamic context) {}
 
-  dynamic visitProvider(ProviderAst ast, dynamic context) {
-    return null;
-  }
+  void visitProvider(ProviderAst ast, dynamic context) {}
 }
 
 void bindViewHostProperties(CompileView view, Parser parser,
