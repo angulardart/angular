@@ -17,8 +17,8 @@ In order to update the goldens, do the following:
 
 * Change to the `_goldens` directory.
 * `pub upgrade`
-* `pub run build_runner -o build`
-* `dart tool/goldens.dart`
+* `pub run build_runner build -o build`
+* `dart tool/update.dart`
 
 # Adding a new golden
 
