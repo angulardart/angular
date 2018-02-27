@@ -26,7 +26,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 = [null, null
 class ViewHasTemplateFileComponent0 extends DebugAppView<import3.HasTemplateFileComponent> {
   import4.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewHasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasTemplateFileComponent0) {
+  ViewHasTemplateFileComponent0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasTemplateFileComponent0) {
     rootEl = import4.document.createElement('has-template-file');
     _renderType ??= import9.appViewUtils.createRenderType('asset:_goldens/test/_files/templates/has_template_file.html', ViewEncapsulation.Emulated, styles$HasTemplateFileComponent);
     setupComponentType(_renderType);
@@ -45,7 +45,7 @@ class ViewHasTemplateFileComponent0 extends DebugAppView<import3.HasTemplateFile
   }
 }
 
-AppView<import3.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import3.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewHasTemplateFileComponent0(parentView, parentIndex);
 }
 
@@ -57,7 +57,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 = [
 class _ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
   ViewHasTemplateFileComponent0 _compView_0;
   import3.HasTemplateFileComponent _HasTemplateFileComponent_0_5;
-  _ViewHasTemplateFileComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasTemplateFileComponentHost0);
+  _ViewHasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasTemplateFileComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasTemplateFileComponent0(this, 0);
@@ -80,7 +80,7 @@ class _ViewHasTemplateFileComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_HasTemplateFileComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_HasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
 }
 

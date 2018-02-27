@@ -22,7 +22,7 @@ const List<dynamic> styles$EmulatedComponent = const [];
 class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
   import2.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewEmulatedComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewEmulatedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('Emulated');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$EmulatedComponent);
     setupComponentType(_renderType);
@@ -39,7 +39,7 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
   }
 }
 
-AppView<import1.EmulatedComponent> viewFactory_EmulatedComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.EmulatedComponent> viewFactory_EmulatedComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewEmulatedComponent0(parentView, parentIndex);
 }
 
@@ -48,7 +48,7 @@ const List<dynamic> styles$EmulatedComponentHost = const [];
 class _ViewEmulatedComponentHost0 extends AppView<dynamic> {
   ViewEmulatedComponent0 _compView_0;
   import1.EmulatedComponent _EmulatedComponent_0_5;
-  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmulatedComponent0(this, 0);
@@ -70,7 +70,7 @@ class _ViewEmulatedComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_EmulatedComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_EmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewEmulatedComponentHost0(parentView, parentIndex);
 }
 
@@ -80,7 +80,7 @@ const List<dynamic> styles$NoneComponent = const [];
 class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
   import2.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewNoneComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewNoneComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('None');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$NoneComponent);
     setupComponentType(_renderType);
@@ -97,7 +97,7 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
   }
 }
 
-AppView<import1.NoneComponent> viewFactory_NoneComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.NoneComponent> viewFactory_NoneComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewNoneComponent0(parentView, parentIndex);
 }
 
@@ -106,7 +106,7 @@ const List<dynamic> styles$NoneComponentHost = const [];
 class _ViewNoneComponentHost0 extends AppView<dynamic> {
   ViewNoneComponent0 _compView_0;
   import1.NoneComponent _NoneComponent_0_5;
-  _ViewNoneComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewNoneComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewNoneComponent0(this, 0);
@@ -128,7 +128,7 @@ class _ViewNoneComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_NoneComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_NoneComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewNoneComponentHost0(parentView, parentIndex);
 }
 

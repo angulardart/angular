@@ -29,7 +29,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   import1.DirectiveWithOutput _DirectiveWithOutput_0_6;
   String _expr_0;
   static RenderComponentType _renderType;
-  ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-foo');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.Emulated, styles$TestFooComponent);
     setupComponentType(_renderType);
@@ -71,7 +71,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   }
 }
 
-AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewTestFooComponent0(parentView, parentIndex);
 }
 
@@ -80,7 +80,7 @@ const List<dynamic> styles$TestFooComponentHost = const [];
 class _ViewTestFooComponentHost0 extends AppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
   import1.TestFooComponent _TestFooComponent_0_5;
-  _ViewTestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewTestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
@@ -102,7 +102,7 @@ class _ViewTestFooComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewTestFooComponentHost0(parentView, parentIndex);
 }
 
@@ -115,7 +115,7 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
   import2.DivElement _el_1;
   FastDirectiveNgCd _FastDirective_1_5;
   static RenderComponentType _renderType;
-  ViewDirectiveContainerTest0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDirectiveContainerTest0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('directive-container');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$DirectiveContainerTest);
     setupComponentType(_renderType);
@@ -147,7 +147,7 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
   }
 }
 
-AppView<import1.DirectiveContainerTest> viewFactory_DirectiveContainerTest0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.DirectiveContainerTest> viewFactory_DirectiveContainerTest0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewDirectiveContainerTest0(parentView, parentIndex);
 }
 
@@ -156,7 +156,7 @@ const List<dynamic> styles$DirectiveContainerTestHost = const [];
 class _ViewDirectiveContainerTestHost0 extends AppView<dynamic> {
   ViewDirectiveContainerTest0 _compView_0;
   import1.DirectiveContainerTest _DirectiveContainerTest_0_5;
-  _ViewDirectiveContainerTestHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDirectiveContainerTestHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDirectiveContainerTest0(this, 0);
@@ -178,7 +178,7 @@ class _ViewDirectiveContainerTestHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_DirectiveContainerTestHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_DirectiveContainerTestHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewDirectiveContainerTestHost0(parentView, parentIndex);
 }
 

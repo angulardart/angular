@@ -432,7 +432,7 @@ o.ClassMethod _createViewClassConstructor(
   var viewConstructorArgs = [
     new o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
-    new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE)
+    new o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE)
   ];
   var superConstructorArgs = [
     createEnumExpression(Identifiers.ViewType, view.viewType),
@@ -567,7 +567,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
   var viewFactoryArgs = [
     new o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
-    new o.FnParam(ViewConstructorVars.parentIndex.name, o.NUMBER_TYPE),
+    new o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE),
   ];
   var initRenderCompTypeStmts = [];
   var factoryReturnType;

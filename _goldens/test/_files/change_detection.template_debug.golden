@@ -26,7 +26,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   import3.DivElement _el_0;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewCheckOnceComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_CheckOnceComponent0) {
+  ViewCheckOnceComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_CheckOnceComponent0) {
     rootEl = import3.document.createElement('CheckOnce');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class CheckOnceComponent - inline template', ViewEncapsulation.None, styles$CheckOnceComponent);
     setupComponentType(_renderType);
@@ -52,7 +52,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   }
 }
 
-AppView<import2.CheckOnceComponent> viewFactory_CheckOnceComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.CheckOnceComponent> viewFactory_CheckOnceComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewCheckOnceComponent0(parentView, parentIndex);
 }
 
@@ -64,7 +64,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = [
 class _ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckOnceComponent0 _compView_0;
   import2.CheckOnceComponent _CheckOnceComponent_0_5;
-  _ViewCheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckOnceComponentHost0);
+  _ViewCheckOnceComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckOnceComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCheckOnceComponent0(this, 0);
@@ -89,7 +89,7 @@ class _ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_CheckOnceComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_CheckOnceComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCheckOnceComponentHost0(parentView, parentIndex);
 }
 
@@ -100,7 +100,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponent0 = [null, null];
 class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewCheckedComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_CheckedComponent0) {
+  ViewCheckedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_CheckedComponent0) {
     rootEl = import3.document.createElement('Checked');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class CheckedComponent - inline template', ViewEncapsulation.None, styles$CheckedComponent);
     setupComponentType(_renderType);
@@ -118,7 +118,7 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   }
 }
 
-AppView<import2.CheckedComponent> viewFactory_CheckedComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.CheckedComponent> viewFactory_CheckedComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewCheckedComponent0(parentView, parentIndex);
 }
 
@@ -130,7 +130,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = [
 class _ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckedComponent0 _compView_0;
   import2.CheckedComponent _CheckedComponent_0_5;
-  _ViewCheckedComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckedComponentHost0);
+  _ViewCheckedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckedComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCheckedComponent0(this, 0);
@@ -153,7 +153,7 @@ class _ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_CheckedComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_CheckedComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCheckedComponentHost0(parentView, parentIndex);
 }
 
@@ -164,7 +164,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponent0 = [null, null];
 class ViewCheckAlwaysComponent0 extends DebugAppView<import2.CheckAlwaysComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewCheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_CheckAlwaysComponent0) {
+  ViewCheckAlwaysComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_CheckAlwaysComponent0) {
     rootEl = import3.document.createElement('CheckAlways');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class CheckAlwaysComponent - inline template', ViewEncapsulation.None, styles$CheckAlwaysComponent);
     setupComponentType(_renderType);
@@ -182,7 +182,7 @@ class ViewCheckAlwaysComponent0 extends DebugAppView<import2.CheckAlwaysComponen
   }
 }
 
-AppView<import2.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewCheckAlwaysComponent0(parentView, parentIndex);
 }
 
@@ -194,7 +194,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 = [
 class _ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   ViewCheckAlwaysComponent0 _compView_0;
   import2.CheckAlwaysComponent _CheckAlwaysComponent_0_5;
-  _ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckAlwaysComponentHost0);
+  _ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CheckAlwaysComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
@@ -217,7 +217,7 @@ class _ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_CheckAlwaysComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_CheckAlwaysComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCheckAlwaysComponentHost0(parentView, parentIndex);
 }
 
@@ -228,7 +228,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponent0 = [null, null];
 class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewDetachedComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_DetachedComponent0) {
+  ViewDetachedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_DetachedComponent0) {
     rootEl = import3.document.createElement('Detached');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class DetachedComponent - inline template', ViewEncapsulation.None, styles$DetachedComponent);
     setupComponentType(_renderType);
@@ -246,7 +246,7 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   }
 }
 
-AppView<import2.DetachedComponent> viewFactory_DetachedComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.DetachedComponent> viewFactory_DetachedComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewDetachedComponent0(parentView, parentIndex);
 }
 
@@ -258,7 +258,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = [
 class _ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   ViewDetachedComponent0 _compView_0;
   import2.DetachedComponent _DetachedComponent_0_5;
-  _ViewDetachedComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DetachedComponentHost0);
+  _ViewDetachedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DetachedComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDetachedComponent0(this, 0);
@@ -281,7 +281,7 @@ class _ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_DetachedComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_DetachedComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewDetachedComponentHost0(parentView, parentIndex);
 }
 
@@ -292,7 +292,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponent0 = [null, null];
 class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewOnPushComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_OnPushComponent0) {
+  ViewOnPushComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_OnPushComponent0) {
     rootEl = import3.document.createElement('OnPush');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class OnPushComponent - inline template', ViewEncapsulation.None, styles$OnPushComponent);
     setupComponentType(_renderType);
@@ -310,7 +310,7 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   }
 }
 
-AppView<import2.OnPushComponent> viewFactory_OnPushComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.OnPushComponent> viewFactory_OnPushComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewOnPushComponent0(parentView, parentIndex);
 }
 
@@ -322,7 +322,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = [
 class _ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   ViewOnPushComponent0 _compView_0;
   import2.OnPushComponent _OnPushComponent_0_5;
-  _ViewOnPushComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_OnPushComponentHost0);
+  _ViewOnPushComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_OnPushComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewOnPushComponent0(this, 0);
@@ -345,7 +345,7 @@ class _ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_OnPushComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_OnPushComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewOnPushComponentHost0(parentView, parentIndex);
 }
 
@@ -356,7 +356,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponent0 = [null, null];
 class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewStatefulComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_StatefulComponent0) {
+  ViewStatefulComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce, nodeDebugInfos_StatefulComponent0) {
     rootEl = import3.document.createElement('Stateful');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class StatefulComponent - inline template', ViewEncapsulation.None, styles$StatefulComponent);
     setupComponentType(_renderType);
@@ -376,7 +376,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
   }
 }
 
-AppView<import2.StatefulComponent> viewFactory_StatefulComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.StatefulComponent> viewFactory_StatefulComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewStatefulComponent0(parentView, parentIndex);
 }
 
@@ -388,7 +388,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = [
 class _ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   ViewStatefulComponent0 _compView_0;
   import2.StatefulComponent _StatefulComponent_0_5;
-  _ViewStatefulComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_StatefulComponentHost0);
+  _ViewStatefulComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_StatefulComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewStatefulComponent0(this, 0);
@@ -411,7 +411,7 @@ class _ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_StatefulComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_StatefulComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewStatefulComponentHost0(parentView, parentIndex);
 }
 
@@ -422,7 +422,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponent0 = [null, null];
 class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewDefaultComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DefaultComponent0) {
+  ViewDefaultComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DefaultComponent0) {
     rootEl = import3.document.createElement('Default');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/change_detection.dart class DefaultComponent - inline template', ViewEncapsulation.None, styles$DefaultComponent);
     setupComponentType(_renderType);
@@ -440,7 +440,7 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   }
 }
 
-AppView<import2.DefaultComponent> viewFactory_DefaultComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.DefaultComponent> viewFactory_DefaultComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewDefaultComponent0(parentView, parentIndex);
 }
 
@@ -452,7 +452,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = [
 class _ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   ViewDefaultComponent0 _compView_0;
   import2.DefaultComponent _DefaultComponent_0_5;
-  _ViewDefaultComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DefaultComponentHost0);
+  _ViewDefaultComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DefaultComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDefaultComponent0(this, 0);
@@ -475,7 +475,7 @@ class _ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_DefaultComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_DefaultComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewDefaultComponentHost0(parentView, parentIndex);
 }
 

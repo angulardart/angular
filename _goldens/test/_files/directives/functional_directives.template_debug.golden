@@ -30,7 +30,7 @@ class ViewAppComponent0 extends DebugAppView<import1.AppComponent> {
   import3.DivElement _el_0;
   import3.DivElement _el_1;
   static RenderComponentType _renderType;
-  ViewAppComponent0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_AppComponent0) {
+  ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_AppComponent0) {
     rootEl = import3.document.createElement('app');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/directives/functional_directives.dart class AppComponent - inline template', ViewEncapsulation.None, styles$AppComponent);
     setupComponentType(_renderType);
@@ -48,7 +48,7 @@ class ViewAppComponent0 extends DebugAppView<import1.AppComponent> {
   }
 }
 
-AppView<import1.AppComponent> viewFactory_AppComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.AppComponent> viewFactory_AppComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewAppComponent0(parentView, parentIndex);
 }
 
@@ -61,7 +61,7 @@ class _ViewAppComponentHost0 extends DebugAppView<dynamic> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_5;
   import1.TextService __TextService_0_6;
-  _ViewAppComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_AppComponentHost0);
+  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_AppComponentHost0);
   import1.TextService get _TextService_0_6 {
     dbg(0, 0, 0);
     if ((this.__TextService_0_6 == null)) {
@@ -100,7 +100,7 @@ class _ViewAppComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_AppComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_AppComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewAppComponentHost0(parentView, parentIndex);
 }
 

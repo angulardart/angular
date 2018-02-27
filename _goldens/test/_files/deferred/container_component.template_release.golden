@@ -31,7 +31,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   ViewContainer _appEl_1;
   ViewContainer _appEl_2;
   static RenderComponentType _renderType;
-  ViewTestContainerComponent0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewTestContainerComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import6.document.createElement('test-container');
     _renderType ??= import7.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$TestContainerComponent);
     setupComponentType(_renderType);
@@ -62,7 +62,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewTestContainerComponent0(parentView, parentIndex);
 }
 
@@ -70,7 +70,7 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
   import6.Element _el_0;
   AppView _compView_0;
   dynamic _DeferredChildComponent_0_5;
-  _ViewTestContainerComponent1(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
@@ -95,7 +95,7 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent1(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent1(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewTestContainerComponent1(parentView, parentIndex);
 }
 
@@ -103,7 +103,7 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
   import6.Element _el_0;
   AppView _compView_0;
   dynamic _SampleComponent_0_5;
-  _ViewTestContainerComponent2(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent2(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
@@ -127,7 +127,7 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewTestContainerComponent2(parentView, parentIndex);
 }
 
@@ -136,7 +136,7 @@ const List<dynamic> styles$TestContainerComponentHost = const [];
 class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
   ViewTestContainerComponent0 _compView_0;
   import1.TestContainerComponent _TestContainerComponent_0_5;
-  _ViewTestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewTestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestContainerComponent0(this, 0);
@@ -158,7 +158,7 @@ class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestContainerComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_TestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewTestContainerComponentHost0(parentView, parentIndex);
 }
 

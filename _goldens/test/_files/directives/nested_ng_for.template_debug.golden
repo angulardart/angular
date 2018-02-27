@@ -33,7 +33,7 @@ class ViewNestedNgForComponent0 extends DebugAppView<import4.NestedNgForComponen
   import2.NgFor _NgFor_0_9;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewNestedNgForComponent0(AppView<dynamic> parentView, num parentIndex) : super(import8.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponent0) {
+  ViewNestedNgForComponent0(AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponent0) {
     rootEl = import10.document.createElement('nested-ng-for');
     _renderType ??= import11.appViewUtils.createRenderType('asset:_goldens/test/_files/directives/nested_ng_for.dart class NestedNgForComponent - inline template', ViewEncapsulation.None, styles$NestedNgForComponent);
     setupComponentType(_renderType);
@@ -72,7 +72,7 @@ class ViewNestedNgForComponent0 extends DebugAppView<import4.NestedNgForComponen
   }
 }
 
-AppView<import4.NestedNgForComponent> viewFactory_NestedNgForComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import4.NestedNgForComponent> viewFactory_NestedNgForComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewNestedNgForComponent0(parentView, parentIndex);
 }
 
@@ -86,7 +86,7 @@ class _ViewNestedNgForComponent1 extends DebugAppView<import4.NestedNgForCompone
   ViewContainer _appEl_1;
   import2.NgFor _NgFor_1_9;
   var _expr_0;
-  _ViewNestedNgForComponent1(AppView<dynamic> parentView, num parentIndex) : super(import8.ViewType.EMBEDDED, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponent1) {
+  _ViewNestedNgForComponent1(AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.EMBEDDED, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponent1) {
     componentType = ViewNestedNgForComponent0._renderType;
   }
   @override
@@ -125,7 +125,7 @@ class _ViewNestedNgForComponent1 extends DebugAppView<import4.NestedNgForCompone
   }
 }
 
-AppView<import4.NestedNgForComponent> viewFactory_NestedNgForComponent1(AppView<dynamic> parentView, num parentIndex) {
+AppView<import4.NestedNgForComponent> viewFactory_NestedNgForComponent1(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewNestedNgForComponent1(parentView, parentIndex);
 }
 
@@ -135,7 +135,7 @@ class _ViewNestedNgForComponent2 extends DebugAppView<import4.NestedNgForCompone
   import10.DivElement _el_0;
   import10.Text _text_1;
   var _expr_0;
-  _ViewNestedNgForComponent2(AppView<dynamic> parentView, num parentIndex) : super(import8.ViewType.EMBEDDED, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponent2) {
+  _ViewNestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.EMBEDDED, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponent2) {
     componentType = ViewNestedNgForComponent0._renderType;
   }
   @override
@@ -162,7 +162,7 @@ class _ViewNestedNgForComponent2 extends DebugAppView<import4.NestedNgForCompone
   }
 }
 
-AppView<import4.NestedNgForComponent> viewFactory_NestedNgForComponent2(AppView<dynamic> parentView, num parentIndex) {
+AppView<import4.NestedNgForComponent> viewFactory_NestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewNestedNgForComponent2(parentView, parentIndex);
 }
 
@@ -174,7 +174,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForComponentHost0 = [
 class _ViewNestedNgForComponentHost0 extends DebugAppView<dynamic> {
   ViewNestedNgForComponent0 _compView_0;
   import4.NestedNgForComponent _NestedNgForComponent_0_5;
-  _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import8.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponentHost0);
+  _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NestedNgForComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewNestedNgForComponent0(this, 0);
@@ -197,7 +197,7 @@ class _ViewNestedNgForComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_NestedNgForComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_NestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewNestedNgForComponentHost0(parentView, parentIndex);
 }
 

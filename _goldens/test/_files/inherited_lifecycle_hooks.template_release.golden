@@ -21,7 +21,7 @@ const List<dynamic> styles$LifecycleHooksComponent = const [];
 
 class ViewLifecycleHooksComponent0 extends AppView<import1.LifecycleHooksComponent> {
   static RenderComponentType _renderType;
-  ViewLifecycleHooksComponent0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewLifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('lifecycle-hooks');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$LifecycleHooksComponent);
     setupComponentType(_renderType);
@@ -34,7 +34,7 @@ class ViewLifecycleHooksComponent0 extends AppView<import1.LifecycleHooksCompone
   }
 }
 
-AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewLifecycleHooksComponent0(parentView, parentIndex);
 }
 
@@ -43,7 +43,7 @@ const List<dynamic> styles$LifecycleHooksComponentHost = const [];
 class _ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
   ViewLifecycleHooksComponent0 _compView_0;
   import1.LifecycleHooksComponent _LifecycleHooksComponent_0_5;
-  _ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewLifecycleHooksComponent0(this, 0);
@@ -79,7 +79,7 @@ class _ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_LifecycleHooksComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_LifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewLifecycleHooksComponentHost0(parentView, parentIndex);
 }
 
