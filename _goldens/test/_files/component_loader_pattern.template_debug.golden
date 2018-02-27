@@ -28,7 +28,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestComponent0 = [];
 
 class ViewTestComponent0 extends DebugAppView<import2.TestComponent> {
   static RenderComponentType _renderType;
-  ViewTestComponent0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestComponent0) {
+  ViewTestComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestComponent0) {
     rootEl = import7.document.createElement('test');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/component_loader_pattern.dart class TestComponent - inline template', ViewEncapsulation.None, styles$TestComponent);
     setupComponentType(_renderType);
@@ -41,7 +41,7 @@ class ViewTestComponent0 extends DebugAppView<import2.TestComponent> {
   }
 }
 
-AppView<import2.TestComponent> viewFactory_TestComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.TestComponent> viewFactory_TestComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewTestComponent0(parentView, parentIndex);
 }
 
@@ -53,7 +53,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestComponentHost0 = [
 class _ViewTestComponentHost0 extends DebugAppView<dynamic> {
   ViewTestComponent0 _compView_0;
   import2.TestComponent _TestComponent_0_5;
-  _ViewTestComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestComponentHost0);
+  _ViewTestComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestComponent0(this, 0);
@@ -76,7 +76,7 @@ class _ViewTestComponentHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_TestComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewTestComponentHost0(parentView, parentIndex);
 }
 

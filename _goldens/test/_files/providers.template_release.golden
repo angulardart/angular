@@ -24,7 +24,7 @@ const List<dynamic> styles$ProvidersComponent = const [];
 
 class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   static RenderComponentType _renderType;
-  ViewProvidersComponent0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewProvidersComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('providers');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$ProvidersComponent);
     setupComponentType(_renderType);
@@ -39,7 +39,7 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   }
 }
 
-AppView<import1.ProvidersComponent> viewFactory_ProvidersComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.ProvidersComponent> viewFactory_ProvidersComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewProvidersComponent0(parentView, parentIndex);
 }
 
@@ -58,7 +58,7 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
   Map<String, dynamic> __useValueMap_0_15;
   dynamic __useEnums_0_16;
   String __XsrfToken_0_17;
-  _ViewProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewProvidersComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.MyTypeAnnotation get _MyTypeAnnotation_0_6 {
     if ((this.__MyTypeAnnotation_0_6 == null)) {
       (__MyTypeAnnotation_0_6 = new import1.MyTypeAnnotation());
@@ -185,7 +185,7 @@ class _ViewProvidersComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_ProvidersComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_ProvidersComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewProvidersComponentHost0(parentView, parentIndex);
 }
 

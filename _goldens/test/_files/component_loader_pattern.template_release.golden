@@ -25,7 +25,7 @@ const List<dynamic> styles$TestComponent = const [];
 
 class ViewTestComponent0 extends AppView<import1.TestComponent> {
   static RenderComponentType _renderType;
-  ViewTestComponent0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewTestComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('test');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$TestComponent);
     setupComponentType(_renderType);
@@ -38,7 +38,7 @@ class ViewTestComponent0 extends AppView<import1.TestComponent> {
   }
 }
 
-AppView<import1.TestComponent> viewFactory_TestComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.TestComponent> viewFactory_TestComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewTestComponent0(parentView, parentIndex);
 }
 
@@ -47,7 +47,7 @@ const List<dynamic> styles$TestComponentHost = const [];
 class _ViewTestComponentHost0 extends AppView<dynamic> {
   ViewTestComponent0 _compView_0;
   import1.TestComponent _TestComponent_0_5;
-  _ViewTestComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewTestComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestComponent0(this, 0);
@@ -69,7 +69,7 @@ class _ViewTestComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_TestComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewTestComponentHost0(parentView, parentIndex);
 }
 

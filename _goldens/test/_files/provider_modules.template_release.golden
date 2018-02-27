@@ -23,7 +23,7 @@ const List<dynamic> styles$ProviderModulesComponent = const [];
 
 class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesComponent> {
   static RenderComponentType _renderType;
-  ViewProviderModulesComponent0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('provider-modules');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$ProviderModulesComponent);
     setupComponentType(_renderType);
@@ -36,7 +36,7 @@ class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesCompo
   }
 }
 
-AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewProviderModulesComponent0(parentView, parentIndex);
 }
 
@@ -49,7 +49,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   Duration __fooToken_0_7;
   List<dynamic> __barToken_0_8;
   dynamic __bazToken_0_9;
-  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, num parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.FooService get _FooService_0_6 {
     if ((this.__FooService_0_6 == null)) {
       (__FooService_0_6 = new import1.FooService());
@@ -116,7 +116,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_ProviderModulesComponentHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_ProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewProviderModulesComponentHost0(parentView, parentIndex);
 }
 

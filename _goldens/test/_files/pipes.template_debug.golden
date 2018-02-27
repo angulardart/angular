@@ -40,7 +40,7 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   import2.TypesPipe _pipe_types_3;
   String Function(String, int, dynamic, import2.C, void Function(String)) _pipe_types_3_0;
   static RenderComponentType _renderType;
-  ViewComp0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_Comp0) {
+  ViewComp0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_Comp0) {
     rootEl = import3.document.createElement('comp');
     _renderType ??= import9.appViewUtils.createRenderType('asset:_goldens/test/_files/pipes.dart class Comp - inline template', ViewEncapsulation.None, styles$Comp);
     setupComponentType(_renderType);
@@ -118,7 +118,7 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   }
 }
 
-AppView<import2.Comp> viewFactory_Comp0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import2.Comp> viewFactory_Comp0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewComp0(parentView, parentIndex);
 }
 
@@ -130,7 +130,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_CompHost0 = [
 class _ViewCompHost0 extends DebugAppView<dynamic> {
   ViewComp0 _compView_0;
   import2.Comp _Comp_0_5;
-  _ViewCompHost0(AppView<dynamic> parentView, num parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompHost0);
+  _ViewCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewComp0(this, 0);
@@ -153,7 +153,7 @@ class _ViewCompHost0 extends DebugAppView<dynamic> {
   }
 }
 
-AppView viewFactory_CompHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_CompHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCompHost0(parentView, parentIndex);
 }
 

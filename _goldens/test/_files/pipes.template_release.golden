@@ -37,7 +37,7 @@ class ViewComp0 extends AppView<import1.Comp> {
   import1.TypesPipe _pipe_types_3;
   String Function(String, int, dynamic, import1.C, void Function(String)) _pipe_types_3_0;
   static RenderComponentType _renderType;
-  ViewComp0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewComp0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp');
     _renderType ??= import7.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$Comp);
     setupComponentType(_renderType);
@@ -103,7 +103,7 @@ class ViewComp0 extends AppView<import1.Comp> {
   }
 }
 
-AppView<import1.Comp> viewFactory_Comp0(AppView<dynamic> parentView, num parentIndex) {
+AppView<import1.Comp> viewFactory_Comp0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewComp0(parentView, parentIndex);
 }
 
@@ -112,7 +112,7 @@ const List<dynamic> styles$CompHost = const [];
 class _ViewCompHost0 extends AppView<dynamic> {
   ViewComp0 _compView_0;
   import1.Comp _Comp_0_5;
-  _ViewCompHost0(AppView<dynamic> parentView, num parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewComp0(this, 0);
@@ -134,7 +134,7 @@ class _ViewCompHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_CompHost0(AppView<dynamic> parentView, num parentIndex) {
+AppView viewFactory_CompHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCompHost0(parentView, parentIndex);
 }
 
