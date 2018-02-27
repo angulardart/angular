@@ -26,8 +26,8 @@ while (( "$#" )); do
     ;;
   command_1) echo
     echo -e '\033[1mTASK: command_1\033[22m'
-    echo -e 'pub run build_runner test -o build -- -p chrome'
-    pub run build_runner test -o build -- -p chrome || EXIT_CODE=$?
+    echo -e 'pub run build_runner test -o build -- -p firefox'
+    pub run build_runner test -o build -- -p firefox || EXIT_CODE=$?
     ;;
   command_2) echo
     echo -e '\033[1mTASK: command_2\033[22m'
@@ -41,18 +41,18 @@ while (( "$#" )); do
     ;;
   command_4) echo
     echo -e '\033[1mTASK: command_4\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure'
-    pub run build_runner test -- --platform=chrome --exclude-tags=known_pub_serve_failure || EXIT_CODE=$?
+    echo -e 'pub run build_runner test -- --platform=firefox --exclude-tags=known_pub_serve_failure'
+    pub run build_runner test -- --platform=firefox --exclude-tags=known_pub_serve_failure || EXIT_CODE=$?
     ;;
   command_5) echo
     echo -e '\033[1mTASK: command_5\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome -j1'
-    pub run build_runner test -- --platform=chrome -j1 || EXIT_CODE=$?
+    echo -e 'pub run build_runner test -- --platform=firefox -j1'
+    pub run build_runner test -- --platform=firefox -j1 || EXIT_CODE=$?
     ;;
   command_6) echo
     echo -e '\033[1mTASK: command_6\033[22m'
-    echo -e 'pub run build_runner test -- --platform=chrome --timeout=4x -x skip_on_travis -j1'
-    pub run build_runner test -- --platform=chrome --timeout=4x -x skip_on_travis -j1 || EXIT_CODE=$?
+    echo -e 'pub run build_runner test -- --platform=firefox --timeout=4x -x skip_on_travis -j1'
+    pub run build_runner test -- --platform=firefox --timeout=4x -x skip_on_travis -j1 || EXIT_CODE=$?
     ;;
   command_7) echo
     echo -e '\033[1mTASK: command_7\033[22m'
