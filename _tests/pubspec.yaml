@@ -2,7 +2,7 @@ name: _tests
 author: Dart Team <web@dartlang.org>
 description: Tests for AngularDart.
 environment:
-  sdk: '>=2.0.0-dev.20.0 <2.0.0'
+  sdk: '2.0.0-dev.3.0'
 
 dependencies:
   # No strict dependencies, we always use dependency_overrides.
@@ -13,7 +13,7 @@ dependencies:
   collection: ^1.14.5
   meta: ^1.1.2
   quiver: ^0.28.0
-  test: ^0.12.30+1
+  test: 0.12.30+1
 
 dev_dependencies:
   # No strict dependencies, we always use dependency_overrides.

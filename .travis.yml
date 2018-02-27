@@ -7,16 +7,6 @@ language: dart
 sudo: required
 addons:
   chrome: stable
-  apt:
-   packages:
-    - google-chrome-stable
-    - libnss3
-    - libnss3-tools
-    - libfontconfig1
-    - wget
-    - ca-certificates
-    - apt-transport-https
-    - inotify-tools
 # END MANUAL EDITS.
 
 jobs:
