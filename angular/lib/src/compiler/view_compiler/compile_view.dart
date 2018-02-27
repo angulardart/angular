@@ -70,16 +70,11 @@ class NodeReference {
   NodeReferenceVisibility _visibility = NodeReferenceVisibility.classPublic;
 
   NodeReference(this.parent, this.nodeIndex) : _name = '_el_$nodeIndex';
-  NodeReference.inlinedNode(this.parent, this.nodeIndex, int inlinedNodeIndex)
-      : _name = '_el_${nodeIndex}_$inlinedNodeIndex';
   NodeReference.textNode(this.parent, this.nodeIndex)
       : _name = '_text_$nodeIndex';
-  NodeReference.inlinedTextNode(
-      this.parent, this.nodeIndex, int inlinedNodeIndex)
-      : _name = '_text_${nodeIndex}_$inlinedNodeIndex';
-  NodeReference.anchor(this.parent, this.nodeIndex,
-      [this._visibility = NodeReferenceVisibility.build])
-      : _name = '_anchor_$nodeIndex';
+  NodeReference.anchor(this.parent, this.nodeIndex)
+      : _name = '_anchor_$nodeIndex',
+        _visibility = NodeReferenceVisibility.build;
   NodeReference.appViewRoot()
       : parent = null,
         nodeIndex = -1,
@@ -256,14 +251,12 @@ class CompileView implements AppViewBuilder {
   final _cloneAnchorNodeExpr = o
       .importExpr(Identifiers.ngAnchor)
       .callMethod('clone', [o.literal(false)]);
-  final bool isInlined;
 
   int viewIndex;
   CompileElement declarationElement;
   List<VariableAst> templateVariables;
   ViewType viewType;
   CompileTokenMap<List<CompileQuery>> viewQueries;
-  bool hasInlinedView = false;
 
   /// Contains references to view children so we can generate code for
   /// change detection and destroy.
@@ -320,8 +313,7 @@ class CompileView implements AppViewBuilder {
       this.viewIndex,
       this.declarationElement,
       this.templateVariables,
-      this.deferredModules,
-      {this.isInlined: false}) {
+      this.deferredModules) {
     _createMethod = new CompileMethod(genDebugInfo);
     _injectorGetMethod = new CompileMethod(genDebugInfo);
     _updateContentQueriesMethod = new CompileMethod(genDebugInfo);
@@ -332,11 +324,7 @@ class CompileView implements AppViewBuilder {
     afterContentLifecycleCallbacksMethod = new CompileMethod(genDebugInfo);
     afterViewLifecycleCallbacksMethod = new CompileMethod(genDebugInfo);
     destroyMethod = new CompileMethod(genDebugInfo);
-    if (isInlined) {
-      nameResolver = declarationElement.view.nameResolver;
-    } else {
-      nameResolver = new ViewNameResolver(this);
-    }
+    nameResolver = new ViewNameResolver(this);
     viewType = getViewType(component, viewIndex);
     className = '${viewIndex == 0 && viewType != ViewType.HOST ? '' : '_'}'
         'View${component.type.name}$viewIndex';
@@ -409,28 +397,12 @@ class CompileView implements AppViewBuilder {
   @override
   NodeReference createTextNode(
       CompileElement parent, int nodeIndex, String text, TemplateAst ast) {
-    NodeReference renderNode;
-    if (isInlined) {
-      renderNode = new NodeReference.inlinedTextNode(
-          parent, declarationElement.nodeIndex, nodeIndex);
-      nameResolver.addField(new o.ClassField(renderNode._name,
-          outputType: o.importType(Identifiers.HTML_TEXT_NODE),
-          modifiers: const [o.StmtModifier.Private]));
-      _createMethod.addStmt(renderNode
-          .toWriteExpr(o
-              .importExpr(Identifiers.HTML_TEXT_NODE)
-              .instantiate([o.literal(text)]))
-          .toStmt());
-    } else {
-      renderNode = new NodeReference.textNode(parent, nodeIndex);
-      renderNode.lockVisibility(NodeReferenceVisibility.build);
-      _createMethod.addStmt(new o.DeclareVarStmt(
-          renderNode._name,
-          o
-              .importExpr(Identifiers.HTML_TEXT_NODE)
-              .instantiate([o.literal(text)]),
-          o.importType(Identifiers.HTML_TEXT_NODE)));
-    }
+    var renderNode = new NodeReference.textNode(parent, nodeIndex);
+    renderNode.lockVisibility(NodeReferenceVisibility.build);
+    _createMethod.addStmt(new o.DeclareVarStmt(
+        renderNode._name,
+        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([o.literal(text)]),
+        o.importType(Identifiers.HTML_TEXT_NODE)));
     var parentRenderNodeExpr = _getParentRenderNode(parent);
     if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
       // Write append code.
@@ -663,34 +635,12 @@ class CompileView implements AppViewBuilder {
     return appViewRef;
   }
 
-  /// Creates a node 'anchor' to mark the insertion point for dynamically
-  /// created elements.
-  ///
-  /// If [topLevel] is `true`, the anchor node is available to any method in the
-  /// view. This is useful for inlined views, which are built in the
-  /// `detectChanges` method. Otherwise, the anchor is local to this view's
-  /// build method.
   NodeReference createViewContainerAnchor(
-      CompileElement parent, int nodeIndex, TemplateAst ast, bool topLevel) {
-    var visibility = topLevel
-        ? NodeReferenceVisibility.classPublic
-        : NodeReferenceVisibility.build;
-    NodeReference renderNode =
-        new NodeReference.anchor(parent, nodeIndex, visibility);
-    if (topLevel) {
-      nameResolver.addField(new o.ClassField(renderNode._name,
-          outputType: o.importType(Identifiers.HTML_COMMENT_NODE)));
-    }
-    o.Expression assignCloneAnchorNodeExpr =
-        renderNode.toWriteExpr(_cloneAnchorNodeExpr);
-    o.Statement assignCloneAnchorStmt;
-    if (topLevel) {
-      assignCloneAnchorStmt = assignCloneAnchorNodeExpr.toStmt();
-    } else {
-      assignCloneAnchorStmt =
-          (assignCloneAnchorNodeExpr as o.WriteVarExpr).toDeclStmt();
-    }
-    _createMethod.addStmt(assignCloneAnchorStmt);
+      CompileElement parent, int nodeIndex, TemplateAst ast) {
+    NodeReference renderNode = new NodeReference.anchor(parent, nodeIndex);
+    var assignCloneAnchorNodeExpr =
+        (renderNode.toReadExpr() as o.ReadVarExpr).set(_cloneAnchorNodeExpr);
+    _createMethod.addStmt(assignCloneAnchorNodeExpr.toDeclStmt());
     var parentNode = _getParentRenderNode(parent);
     if (parentNode != o.NULL_EXPR) {
       var addCommentStmt =

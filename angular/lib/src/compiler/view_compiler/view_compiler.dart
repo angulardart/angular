@@ -97,9 +97,7 @@ class ViewCompiler {
     var nodes = view.nodes;
     for (int i = 0; i < nodeCount; i++) {
       var node = nodes[i];
-      if (node is CompileElement &&
-          node.embeddedView != null &&
-          !node.embeddedView.isInlined) {
+      if (node is CompileElement && node.embeddedView != null) {
         finishView(node.embeddedView, targetStatements);
       }
     }
@@ -135,10 +133,9 @@ class ViewCompiler {
   ///     const StaticNodeDebugInfo(const [
   ///       import1.AcxDarkTheme,
   ///       import2.MaterialButtonComponent,
-  ///       import3.ButtonDirective,
-  ///       import2.MaterialButtonComponent,
-  ///     ],
-  ///     const <String, dynamic>{}),
+  ///       import3.ButtonDirective
+  ///     ]
+  ///     ,import2.MaterialButtonComponent,const <String, dynamic>{}),
   /// const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
   o.Expression createStaticNodeDebugInfos(
       CompileView view, List<o.Statement> targetStatements) {

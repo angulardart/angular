@@ -55,7 +55,6 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   final bool hasViewContainer;
   final bool hasEmbeddedView;
   final bool hasTemplateRefQuery;
-  final bool isInlined;
 
   /// Reference to optional view container created for this element.
   o.ReadClassMemberExpr appViewContainer;
@@ -91,8 +90,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       List<ReferenceAst> references,
       this._logger,
       {this.isHtmlElement: false,
-      this.hasTemplateRefQuery: false,
-      this.isInlined: false})
+      this.hasTemplateRefQuery: false})
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
     _providers = new ProvidersNode(this, parent?._providers, _directives);
     if (references.isNotEmpty) {
@@ -115,7 +113,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
         new o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
     _providers.add(Identifiers.InjectorToken, readInjectorExpr);
 
-    if ((hasViewContainer || hasEmbeddedView) && !isInlined) {
+    if (hasViewContainer || hasEmbeddedView) {
       appViewContainer = view.createViewContainer(renderNode, nodeIndex,
           !hasViewContainer, isRootElement ? null : parent.nodeIndex);
       _providers.add(Identifiers.ViewContainerToken, appViewContainer);
@@ -139,17 +137,15 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   o.Expression get componentView => _compViewExpr;
 
   void setEmbeddedView(CompileView view) {
-    if (!isInlined) {
-      if (appViewContainer == null) {
-        throw new StateError('Expecting appView container to host view');
-      }
-      if (view.viewFactory == null) {
-        throw new StateError('Expecting viewFactory initialization before '
-            'embedding view');
-      }
+    if (appViewContainer == null) {
+      throw new StateError('Expecting appView container to host view');
+    }
+    if (view.viewFactory == null) {
+      throw new StateError('Expecting viewFactory initialization before '
+          'embedding view');
     }
     embeddedView = view;
-    if (view != null && !view.isInlined) {
+    if (view != null) {
       var createTemplateRefExpr = o
           .importExpr(Identifiers.TemplateRef)
           .instantiate([this.appViewContainer, view.viewFactory],
