@@ -34,3 +34,27 @@ class HasAngularEvents {
   @Output()
   Stream<Null> get foo => const Stream.empty();
 }
+
+@Component(
+  selector: 'material-button-like',
+  template: '',
+)
+class HasManyNativeHostEvents {
+  @HostListener('mousedown')
+  void onMouseDown(Object e) {}
+
+  @HostListener('mouseup')
+  void onMouseUp(Object e) {}
+
+  @HostListener('click')
+  void onClick(Object e) {}
+
+  @HostListener('keypress')
+  void onKeyPress(Object e) {}
+
+  @HostListener('focus')
+  void onFocus(Object e) {}
+
+  @HostListener('blur')
+  void onBlur(Object e) {}
+}

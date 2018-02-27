@@ -222,9 +222,75 @@ AppView viewFactory_HasAngularEventsHost0(AppView<dynamic> parentView, num paren
 }
 
 const ComponentFactory<import2.HasAngularEvents> HasAngularEventsNgFactory = const ComponentFactory<import2.HasAngularEvents>('has-angular-events', viewFactory_HasAngularEventsHost0, _HasAngularEventsMetadata);
+const List<dynamic> styles$HasManyNativeHostEvents = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasManyNativeHostEvents0 = [];
+
+class ViewHasManyNativeHostEvents0 extends DebugAppView<import2.HasManyNativeHostEvents> {
+  static RenderComponentType _renderType;
+  ViewHasManyNativeHostEvents0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasManyNativeHostEvents0) {
+    rootEl = import3.document.createElement('material-button-like');
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/events.dart class HasManyNativeHostEvents - inline template', ViewEncapsulation.None, styles$HasManyNativeHostEvents);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import2.HasManyNativeHostEvents> build() {
+    final import2.HasManyNativeHostEvents _ctx = ctx;
+    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    init(const [], null, []);
+    rootEl.addEventListener('mousedown', eventHandler0(_ctx.onMouseDown));
+    rootEl.addEventListener('mouseup', eventHandler0(_ctx.onMouseUp));
+    rootEl.addEventListener('click', eventHandler0(_ctx.onClick));
+    rootEl.addEventListener('keypress', eventHandler0(_ctx.onKeyPress));
+    rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
+    rootEl.addEventListener('blur', eventHandler0(_ctx.onBlur));
+    return null;
+  }
+}
+
+AppView<import2.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEvents0(AppView<dynamic> parentView, num parentIndex) {
+  return new ViewHasManyNativeHostEvents0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$HasManyNativeHostEventsHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasManyNativeHostEventsHost0 = [
+  new StaticNodeDebugInfo([import2.HasManyNativeHostEvents], import2.HasManyNativeHostEvents, <String, dynamic>{})
+];
+
+class _ViewHasManyNativeHostEventsHost0 extends DebugAppView<dynamic> {
+  ViewHasManyNativeHostEvents0 _compView_0;
+  import2.HasManyNativeHostEvents _HasManyNativeHostEvents_0_5;
+  _ViewHasManyNativeHostEventsHost0(AppView<dynamic> parentView, num parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasManyNativeHostEventsHost0);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewHasManyNativeHostEvents0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _HasManyNativeHostEvents_0_5 = new import2.HasManyNativeHostEvents();
+    _compView_0.create(_HasManyNativeHostEvents_0_5, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import2.HasManyNativeHostEvents>(0, this, rootEl, _HasManyNativeHostEvents_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_HasManyNativeHostEventsHost0(AppView<dynamic> parentView, num parentIndex) {
+  return new _ViewHasManyNativeHostEventsHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import2.HasManyNativeHostEvents> HasManyNativeHostEventsNgFactory = const ComponentFactory<import2.HasManyNativeHostEvents>('material-button-like', viewFactory_HasManyNativeHostEventsHost0, _HasManyNativeHostEventsMetadata);
 const _UsesNativeEventsMetadata = const [];
 const _UsesAngularEventsMetadata = const [];
 const _HasAngularEventsMetadata = const [];
+const _HasManyNativeHostEventsMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -235,5 +301,6 @@ void initReflector() {
   _ngRef.registerComponent(UsesNativeEvents, UsesNativeEventsNgFactory);
   _ngRef.registerComponent(UsesAngularEvents, UsesAngularEventsNgFactory);
   _ngRef.registerComponent(HasAngularEvents, HasAngularEventsNgFactory);
+  _ngRef.registerComponent(HasManyNativeHostEvents, HasManyNativeHostEventsNgFactory);
   _ref0.initReflector();
 }
