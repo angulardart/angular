@@ -4,7 +4,6 @@ import 'dart:html';
 
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_test/angular_test.dart';
 
@@ -625,9 +624,10 @@ void main() {
       test('should not create a form when ngNoForm is used', () async {
         var testBed = new NgTestBed<NgNoFormTest>();
         var fixture = await testBed.create();
-        var form = fixture.rootElement.querySelector('form');
-        var debugNode = getDebugNode(form);
-        expect(debugNode.providerTokens, isEmpty);
+        await fixture.update((form) {
+          expect(form.hasForm.ngForm, isNotNull);
+          expect(form.noForm.ngForm, isNull);
+        });
       });
       test('should remove controls', () async {
         var testBed = new NgTestBed<RemoveControlsTest>();
@@ -1135,10 +1135,32 @@ class TemplateSubmitTest {
 
 @Component(
   selector: 'ngnoform-test',
-  directives: const [formDirectives],
-  template: '<form ngNoForm></form>',
+  directives: const [formDirectives, NoNgFormChild],
+  template: ''''
+  <form>
+    <ng-form-child #hasForm></ng-form-child>
+  </form>
+  <form ngNoForm>
+      <ng-form-child #noForm></ng-form-child>
+  </form>''',
 )
-class NgNoFormTest {}
+class NgNoFormTest {
+  @ViewChild('hasForm')
+  NoNgFormChild hasForm;
+
+  @ViewChild('noForm')
+  NoNgFormChild noForm;
+}
+
+@Component(
+  selector: 'ng-form-child',
+  template: '',
+)
+class NoNgFormChild {
+  final ControlContainer ngForm;
+
+  NoNgFormChild(@Optional() this.ngForm);
+}
 
 @Component(
     selector: 'remove-controls-test',
