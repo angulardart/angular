@@ -154,8 +154,6 @@ deploy:
   skip_cleanup: true
   on:
     repo: dart-lang/angular
-    #branch: master
-    branch: i978_better_deploy
     condition: -d "examples/hacker_news_pwa/build/web"
   provider: firebase
   token:
