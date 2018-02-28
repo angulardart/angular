@@ -30,7 +30,8 @@ class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileCompo
   }
   @override
   ComponentRef<import2.HasTemplateFileComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     addShimC(_el_0);

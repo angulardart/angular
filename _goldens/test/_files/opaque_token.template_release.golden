@@ -34,7 +34,8 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   }
   @override
   ComponentRef<import1.HasOpaqueTokens> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _text_0 = new import2.Text('');
     parentRenderNode.append(_text_0);
     init(const [], null);
@@ -110,7 +111,8 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
   }
   @override
   ComponentRef<import1.ContainsChildComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
@@ -253,7 +255,8 @@ class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedT
   }
   @override
   ComponentRef<import1.InjectsTypedTokenFromSomeParent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
     return null;
   }

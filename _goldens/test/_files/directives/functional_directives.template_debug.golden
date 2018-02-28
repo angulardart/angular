@@ -37,7 +37,8 @@ class ViewAppComponent0 extends DebugAppView<import1.AppComponent> {
   }
   @override
   ComponentRef<import1.AppComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     createAttr(_el_0, 'generateText', '');

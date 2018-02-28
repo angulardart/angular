@@ -34,7 +34,8 @@ class ViewInterpolationComponent0 extends DebugAppView<import2.InterpolationComp
   }
   @override
   ComponentRef<import2.InterpolationComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     _text_1 = new import3.Text('');
@@ -111,7 +112,8 @@ class ViewInterpolationComponentNoWhitespace0 extends DebugAppView<import2.Inter
   }
   @override
   ComponentRef<import2.InterpolationComponentNoWhitespace> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     _text_1 = new import3.Text('');

@@ -13,6 +13,7 @@ import '../template_ast.dart'
     show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst, ElementAst;
 import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
 import 'compile_view.dart' show CompileView, NodeReference;
+import 'ir/providers_node.dart';
 import 'view_compiler_utils.dart'
     show
         createDiTokenExpression,
@@ -20,7 +21,6 @@ import 'view_compiler_utils.dart'
         getPropertyInView,
         getViewFactoryName,
         toTemplateExtension;
-import 'ir/providers_node.dart';
 
 /// Compiled node in the view (such as text node) that is not an element.
 class CompileNode {

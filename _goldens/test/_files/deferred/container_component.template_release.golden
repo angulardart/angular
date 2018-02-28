@@ -38,7 +38,8 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     import6.Text _text_0 = new import6.Text('\'');
     parentRenderNode.append(_text_0);
     var _anchor_1 = ngAnchor.clone(false);

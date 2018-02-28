@@ -31,7 +31,8 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   }
   @override
   ComponentRef<import1.AppComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     createAttr(_el_0, 'generateText', '');
