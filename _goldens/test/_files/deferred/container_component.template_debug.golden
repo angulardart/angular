@@ -45,7 +45,8 @@ class ViewTestContainerComponent0 extends DebugAppView<import3.TestContainerComp
   }
   @override
   ComponentRef<import3.TestContainerComponent> build() {
-    final import9.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import9.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     import9.Text _text_0 = new import9.Text('\'');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);

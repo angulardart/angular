@@ -35,7 +35,8 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   }
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);

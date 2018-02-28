@@ -31,7 +31,8 @@ class ViewLifecycleHooksComponent0 extends DebugAppView<import2.LifecycleHooksCo
   }
   @override
   ComponentRef<import2.LifecycleHooksComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null, []);
     return null;
   }

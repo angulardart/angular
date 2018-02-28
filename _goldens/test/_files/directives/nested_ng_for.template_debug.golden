@@ -40,7 +40,8 @@ class ViewNestedNgForComponent0 extends DebugAppView<import4.NestedNgForComponen
   }
   @override
   ComponentRef<import4.NestedNgForComponent> build() {
-    final import10.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import10.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 10);

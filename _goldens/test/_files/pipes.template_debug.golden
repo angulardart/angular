@@ -47,7 +47,8 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   }
   @override
   ComponentRef<import2.Comp> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     import3.Text _text_0 = new import3.Text('    ');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);

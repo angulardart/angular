@@ -33,7 +33,8 @@ class ViewProviderModulesComponent0 extends DebugAppView<import2.ProviderModules
   }
   @override
   ComponentRef<import2.ProviderModulesComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null, []);
     return null;
   }

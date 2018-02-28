@@ -24,7 +24,7 @@ abstract class TemplateAst {
 /// A segment of text within the template.
 class TextAst implements TemplateAst {
   final String value;
-  final num ngContentIndex;
+  final int ngContentIndex;
   final SourceSpan sourceSpan;
 
   TextAst(this.value, this.ngContentIndex, this.sourceSpan);
@@ -36,7 +36,7 @@ class TextAst implements TemplateAst {
 /// A bound expression within the text of a template.
 class BoundTextAst implements TemplateAst {
   final AST value;
-  final num ngContentIndex;
+  final int ngContentIndex;
   final SourceSpan sourceSpan;
 
   BoundTextAst(this.value, this.ngContentIndex, this.sourceSpan);
@@ -140,7 +140,7 @@ class ElementAst implements TemplateAst {
   final List<ProviderAst> providers;
   final ElementProviderUsage elementProviderUsage;
   final List<TemplateAst> children;
-  final num ngContentIndex;
+  final int ngContentIndex;
   final SourceSpan sourceSpan;
 
   ElementAst(
@@ -174,7 +174,7 @@ class EmbeddedTemplateAst implements TemplateAst {
   final List<TemplateAst> children;
   final ElementProviderUsage elementProviderUsage;
   final bool hasDeferredComponent;
-  final num ngContentIndex;
+  final int ngContentIndex;
   final SourceSpan sourceSpan;
 
   EmbeddedTemplateAst(

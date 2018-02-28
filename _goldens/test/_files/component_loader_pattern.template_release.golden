@@ -32,7 +32,8 @@ class ViewTestComponent0 extends AppView<import1.TestComponent> {
   }
   @override
   ComponentRef<import1.TestComponent> build() {
-    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
     return null;
   }

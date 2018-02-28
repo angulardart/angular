@@ -16,6 +16,14 @@
     invoke the corresponding `bypassSecurityTrust*()` method, instead of
     constructing these types directly.
 
+### Bug fixes
+
+*   The view compiler hoists `this.rootEl` as a `final` local variable to help
+    Dart2JS know that its type stays the same and that repeated accesses to the
+    class instance variable is not needed. This should help remove interceptors
+    and reduce code-size a bit, especially for users of `@HostBinding` or
+    `@HostListener` (https://github.com/dart-lang/angular/issues/450).
+
 ## 5.0.0-alpha+6
 
 ### New features

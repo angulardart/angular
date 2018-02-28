@@ -44,7 +44,8 @@ class ViewComp0 extends AppView<import1.Comp> {
   }
   @override
   ComponentRef<import1.Comp> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     import2.Text _text_0 = new import2.Text('    ');
     parentRenderNode.append(_text_0);
     _text_1 = new import2.Text('');

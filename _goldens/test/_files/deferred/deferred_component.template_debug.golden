@@ -32,7 +32,8 @@ class ViewDeferredChildComponent0 extends DebugAppView<import2.DeferredChildComp
   }
   @override
   ComponentRef<import2.DeferredChildComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Child');
