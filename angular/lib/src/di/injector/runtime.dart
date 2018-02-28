@@ -2,7 +2,6 @@ import 'package:angular/src/runtime.dart';
 
 import '../../core/di/decorators.dart';
 import '../../core/di/opaque_token.dart';
-import '../../facade/lang.dart' show assertionsEnabled;
 import '../errors.dart' as errors;
 import '../providers.dart';
 import '../reflector.dart' as reflector;
@@ -20,7 +19,7 @@ abstract class ReflectiveInjector implements HierarchicalInjector {
   ]) {
     // Return the default implementation.
     final flatProviders = _flattenProviders(providersOrLists);
-    if (assertionsEnabled()) {
+    if (isDevMode) {
       _assertProviders(flatProviders.providers.values);
       _assertProviders(flatProviders.multiProviders);
     }

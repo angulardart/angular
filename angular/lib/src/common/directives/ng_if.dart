@@ -2,7 +2,7 @@ import 'package:angular/core.dart' show Directive, Input;
 import 'package:angular/src/core/linker.dart'
     show ViewContainerRef, TemplateRef;
 import 'package:angular/src/core/linker/app_view_utils.dart';
-import 'package:angular/src/facade/lang.dart';
+import 'package:angular/src/runtime.dart';
 
 /// Causes an element and its contents to be conditionally added/removed from
 /// the DOM based on the value of the given boolean template expression.
@@ -51,7 +51,7 @@ class NgIf {
     // Legacy support for cases where `null` is still passed to NgIf.
     newCondition = newCondition == true;
     // In dev-mode, use `checkBinding`. In prod-mode, use `looseIdentical`.
-    if (assertionsEnabled()) {
+    if (isDevMode) {
       if (!checkBinding(newCondition, _prevCondition)) return;
     } else {
       if (identical(newCondition, _prevCondition)) return;
