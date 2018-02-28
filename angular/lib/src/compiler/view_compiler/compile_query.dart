@@ -5,6 +5,7 @@ import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
+import 'ir/view_storage.dart';
 import "view_compiler_utils.dart" show getPropertyInView;
 
 class _QueryValues {
@@ -50,6 +51,7 @@ abstract class CompileQuery {
 
   factory CompileQuery({
     @required CompileQueryMetadata metadata,
+    @required ViewStorage storage,
     @required CompileView queryRoot,
     @required o.Expression boundField,
     @required int nodeIndex,
@@ -58,6 +60,7 @@ abstract class CompileQuery {
     if (_useNewQuery(metadata)) {
       return new _ListCompileQuery(
         metadata,
+        storage,
         queryRoot,
         boundField,
         nodeIndex: nodeIndex,
@@ -66,6 +69,7 @@ abstract class CompileQuery {
     }
     return new _QueryListCompileQuery(
       metadata,
+      storage,
       queryRoot,
       boundField,
       nodeIndex: nodeIndex,
@@ -75,6 +79,7 @@ abstract class CompileQuery {
 
   factory CompileQuery.viewQuery({
     @required CompileQueryMetadata metadata,
+    @required ViewStorage storage,
     @required CompileView queryRoot,
     @required o.Expression boundField,
     @required int queryIndex,
@@ -82,6 +87,7 @@ abstract class CompileQuery {
     if (_useNewQuery(metadata)) {
       return new _ListCompileQuery(
         metadata,
+        storage,
         queryRoot,
         boundField,
         nodeIndex: 1,
@@ -90,6 +96,7 @@ abstract class CompileQuery {
     }
     return new _QueryListCompileQuery(
       metadata,
+      storage,
       queryRoot,
       boundField,
       nodeIndex: -1,
@@ -292,14 +299,6 @@ abstract class CompileQuery {
     return pathToRoot;
   }
 
-  /// Create class-member level field in order to store persistent state.
-  ///
-  /// For example, in the original implementation this wrote the following:
-  /// ```dart
-  /// import2.QueryList _query_ChildDirective_0;
-  /// ```
-  o.ClassField createClassField();
-
   /// Return code that will set the query contents at change-detection time.
   ///
   /// This is the general case, where the value of the query is not known at
@@ -321,10 +320,11 @@ abstract class CompileQuery {
 
 class _QueryListCompileQuery extends CompileQuery {
   o.Expression _queryList;
-  o.ClassField _classField;
+  ViewStorageItem _storageItem;
 
   _QueryListCompileQuery(
     CompileQueryMetadata metadata,
+    ViewStorage storage,
     CompileView queryRoot,
     o.Expression boundField, {
     @required int nodeIndex,
@@ -332,6 +332,7 @@ class _QueryListCompileQuery extends CompileQuery {
   })
       : super._base(metadata, queryRoot, boundField) {
     _queryList = _createQueryListField(
+      storage: storage,
       metadata: metadata,
       nodeIndex: nodeIndex,
       queryIndex: queryIndex,
@@ -345,6 +346,7 @@ class _QueryListCompileQuery extends CompileQuery {
   ///
   /// Returns an expression pointing to that field.
   o.Expression _createQueryListField({
+    @required ViewStorage storage,
     @required CompileQueryMetadata metadata,
     @required int nodeIndex,
     @required int queryIndex,
@@ -362,13 +364,13 @@ class _QueryListCompileQuery extends CompileQuery {
       property = '_query_${selector}_${nodeIndex}_$queryIndex';
     }
     // final QueryList _query_foo_0_0 = new QueryList();
-    _classField = new o.ClassField(
+    _storageItem = storage.allocate(
       property,
       outputType: o.importType(Identifiers.QueryList),
       modifiers: [o.StmtModifier.Private, o.StmtModifier.Final],
       initializer: o.importExpr(Identifiers.QueryList).instantiate([]),
     );
-    return new o.ReadClassMemberExpr(property);
+    return storage.buildReadExpr(_storageItem);
   }
 
   @override
@@ -378,9 +380,6 @@ class _QueryListCompileQuery extends CompileQuery {
       queryListField.callMethod('setDirty', []).toStmt(),
     );
   }
-
-  @override
-  o.ClassField createClassField({bool viewQuery: false}) => _classField;
 
   @override
   List<o.Statement> createDynamicUpdates() {
@@ -422,19 +421,22 @@ class _QueryListCompileQuery extends CompileQuery {
 }
 
 class _ListCompileQuery extends CompileQuery {
-  o.ReadClassMemberExpr _queryDirtyField;
-  o.ClassField _classField;
+  ViewStorageItem _dirtyField;
+  ViewStorage _storage;
 
   _ListCompileQuery(
     CompileQueryMetadata metadata,
+    ViewStorage storage,
     CompileView queryRoot,
     o.Expression boundField, {
     @required int nodeIndex,
     @required int queryIndex,
   })
       : super._base(metadata, queryRoot, boundField) {
-    _queryDirtyField = _createQueryDirtyField(
+    _storage = storage;
+    _dirtyField = _createQueryDirtyField(
       metadata: metadata,
+      storage: storage,
       nodeIndex: nodeIndex,
       queryIndex: queryIndex,
     );
@@ -446,8 +448,9 @@ class _ListCompileQuery extends CompileQuery {
   /// Inserts a `bool {property}` field in the generated view.
   ///
   /// Returns an expression pointing to that field.
-  o.ReadClassMemberExpr _createQueryDirtyField({
+  ViewStorageItem _createQueryDirtyField({
     @required CompileQueryMetadata metadata,
+    @required ViewStorage storage,
     @required int nodeIndex,
     @required int queryIndex,
   }) {
@@ -464,17 +467,17 @@ class _ListCompileQuery extends CompileQuery {
       property = '_query_${selector}_${nodeIndex}_${queryIndex}_isDirty';
     }
     // bool _query_foo_0_0_isDirty = true;
-    _classField = new o.ClassField(property,
+    ViewStorageItem field = storage.allocate(property,
         outputType: o.BOOL_TYPE,
         modifiers: [o.StmtModifier.Private],
         initializer: o.literal(true));
-    return new o.ReadClassMemberExpr(property);
+    return field;
   }
 
   @override
   void _setParentQueryAsDirty(CompileView origin) {
     final o.ReadPropExpr queryDirtyField = getPropertyInView(
-      _queryDirtyField,
+      _storage.buildReadExpr(_dirtyField),
       origin,
       _queryRoot,
     );
@@ -484,19 +487,16 @@ class _ListCompileQuery extends CompileQuery {
   }
 
   @override
-  o.ClassField createClassField() => _classField;
-
-  @override
   List<o.Statement> createDynamicUpdates() {
     if (_isStatic) {
       return const [];
     }
     final statements = <o.Statement>[]
       ..addAll(_createUpdates())
-      ..add(_queryDirtyField.set(o.literal(false)).toStmt());
+      ..add(_storage.buildWriteExpr(_dirtyField, o.literal(false)).toStmt());
     return [
       new o.IfStmt(
-        _queryDirtyField,
+        _storage.buildReadExpr(_dirtyField),
         statements,
       ),
     ];

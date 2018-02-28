@@ -226,6 +226,7 @@ void bindViewHostProperties(CompileView view, Parser parser,
       renderNode.toReadExpr(),
       compileElement.isHtmlElement,
       view.nameResolver,
+      view.storage,
       method,
       view.genDebugInfo,
       updatingHostAttribute: true);

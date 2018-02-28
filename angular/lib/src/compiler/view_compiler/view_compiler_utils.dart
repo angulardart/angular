@@ -69,7 +69,7 @@ o.Expression getPropertyInView(
 
     if (readMemberExpr != null) {
       // Note: Don't cast for members of the AppView base class...
-      if (definedView.nameResolver.fields
+      if (definedView.storage.fields
               .any((field) => field.name == readMemberExpr.name) ||
           definedView.getters
               .any((field) => field.name == readMemberExpr.name)) {

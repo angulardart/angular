@@ -8,7 +8,6 @@ import "view_compiler_utils.dart" show getPropertyInView;
 
 /// State shared amongst all name resolvers of a view, regardless of scope.
 class _ViewNameResolverState {
-  final List<o.ClassField> fields = [];
   final Map<String, o.Expression> locals = {};
   final Map<String, o.OutputType> localTypes = {};
   final Map<String, o.DeclareVarStmt> localDeclarations = {};
@@ -44,12 +43,6 @@ class ViewNameResolver implements NameResolver {
     _state.locals[name] = e;
     _state.localTypes[name] = type;
   }
-
-  void addField(o.ClassField field) {
-    _state.fields.add(field);
-  }
-
-  List<o.ClassField> get fields => _state.fields;
 
   @override
   o.Expression getLocal(String name) {

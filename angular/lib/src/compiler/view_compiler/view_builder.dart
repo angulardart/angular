@@ -412,7 +412,7 @@ o.ClassStmt createViewClass(
   var viewClass = new o.ClassStmt(
       view.className,
       o.importExpr(superClass, typeParams: [getContextType(view)]),
-      view.nameResolver.fields,
+      view.storage.fields,
       view.getters,
       viewConstructor,
       viewMethods

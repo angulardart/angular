@@ -24,6 +24,7 @@ import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart' show convertCdExpressionToIr;
+import 'ir/view_storage.dart';
 import 'view_builder.dart' show buildUpdaterFunctionName;
 import 'view_compiler_utils.dart'
     show
@@ -57,6 +58,7 @@ o.ReadVarExpr createCurrValueExpr(num exprIndex) =>
 void bind(
     CompileDirectiveMetadata viewDirective,
     ViewNameResolver nameResolver,
+    ViewStorage storage,
     o.ReadVarExpr currValExpr,
     o.ReadClassMemberExpr fieldExpr,
     ast.AST parsedExpression,
@@ -89,9 +91,9 @@ void bind(
     return;
   }
   bool isPrimitive = isPrimitiveFieldType(fieldType);
-  nameResolver.addField(new o.ClassField(fieldExpr.name,
+  ViewStorageItem previousValueField = storage.allocate(fieldExpr.name,
       modifiers: const [o.StmtModifier.Private],
-      outputType: isPrimitive ? fieldType : null));
+      outputType: isPrimitive ? fieldType : null);
   method.addStmt(currValExpr
       .set(checkExpression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
@@ -107,7 +109,7 @@ void bind(
       condition,
       new List.from(actions)
         ..addAll([
-          new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()
+          storage.buildWriteExpr(previousValueField, currValExpr).toStmt()
         ])));
 }
 
@@ -158,6 +160,7 @@ void bindRenderText(
   bind(
       view.component,
       view.nameResolver,
+      view.storage,
       currValExpr,
       valueField,
       boundText.value,
@@ -199,6 +202,7 @@ void bindAndWriteToRenderer(
     o.Expression renderNode,
     bool isHtmlElement,
     ViewNameResolver nameResolver,
+    ViewStorage storage,
     CompileMethod targetMethod,
     bool genDebugInfo,
     {bool updatingHostAttribute: false,
@@ -290,6 +294,7 @@ void bindAndWriteToRenderer(
     bind(
         directiveMeta,
         nameResolver,
+        storage,
         currValExpr,
         fieldExpr,
         boundProp.value,
@@ -354,6 +359,7 @@ void bindRenderInputs(
       renderNode.toReadExpr(),
       compileElement.isHtmlElement,
       view.nameResolver,
+      view.storage,
       view.detectChangesRenderPropertiesMethod,
       view.genDebugInfo);
 }
@@ -529,6 +535,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
       bind(
           view.component,
           view.nameResolver,
+          view.storage,
           currValExpr,
           fieldExpr,
           input.value,
@@ -577,9 +584,9 @@ void bindToUpdateMethod(
   }
   // Add class field to store previous value.
   bool isPrimitive = isPrimitiveFieldType(fieldType);
-  view.nameResolver.addField(new o.ClassField(fieldExpr.name,
+  ViewStorageItem previousValueField = view.storage.allocate(fieldExpr.name,
       outputType: isPrimitive ? fieldType : null,
-      modifiers: const [o.StmtModifier.Private]));
+      modifiers: const [o.StmtModifier.Private]);
   // Generate: final currVal_0 = ctx.expression.
   method.addStmt(currValExpr
       .set(checkExpression)
@@ -590,7 +597,7 @@ void bindToUpdateMethod(
   if (actions.length == 1) {
     method.addStmt(actions.first);
     method.addStmt(
-        new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt());
+        view.storage.buildWriteExpr(previousValueField, currValExpr).toStmt());
   } else {
     // Otherwise use traditional checkBinding call.
     o.Expression condition;

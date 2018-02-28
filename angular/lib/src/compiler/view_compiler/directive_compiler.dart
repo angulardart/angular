@@ -13,7 +13,9 @@ import '../schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import "../template_ast.dart" show BoundElementPropertyAst;
 import '../template_parser.dart';
 import 'compile_method.dart';
+import 'compile_view.dart' show CompileViewStorage;
 import 'constants.dart' show DetectChangesVars, EventHandlerVars;
+import 'ir/view_storage.dart';
 import 'property_binder.dart' show bindAndWriteToRenderer;
 import 'view_name_resolver.dart';
 
@@ -32,6 +34,7 @@ class DirectiveCompiler {
   final Parser _parser;
   final ElementSchemaRegistry _schemaRegistry;
   final viewMethods = <o.ClassMethod>[];
+  final CompileViewStorage _storage = new CompileViewStorage();
 
   bool _hasChangeDetector = false;
   bool _implementsComponentState;
@@ -72,7 +75,7 @@ class DirectiveCompiler {
         changeDetectorClassName,
         // ignore: argument_type_not_assignable
         superClassExpr,
-        _nameResolver.fields ?? const [],
+        _storage.fields ?? const [],
         const [],
         ctor,
         viewMethods);
@@ -85,17 +88,17 @@ class DirectiveCompiler {
   o.ClassMethod _createChangeDetectorConstructor(
       CompileDirectiveMetadata meta) {
     var instanceType = o.importType(meta.type.identifier);
-    _nameResolver.addField(new o.ClassField(
+    ViewStorageItem instance = _storage.allocate(
       'instance',
       outputType: instanceType,
       modifiers: [
         o.StmtModifier.Final,
       ],
-    ));
+    );
     var statements = [];
     if (hasOnChangesLifecycle || usesSetState) {
       statements.add(new o.WriteClassMemberExpr(
-              'directive', new o.ReadClassMemberExpr('instance'))
+              'directive', _storage.buildReadExpr(instance))
           .toStmt());
     }
     var constructorArgs = [new o.FnParam('this.instance')];
@@ -153,6 +156,7 @@ class DirectiveCompiler {
         o.variable('el'),
         false,
         _nameResolver,
+        _storage,
         method,
         genDebugInfo,
         updatingHostAttribute: true);
