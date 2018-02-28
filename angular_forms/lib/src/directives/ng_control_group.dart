@@ -60,10 +60,12 @@ import 'validators.dart' show ValidatorFn;
   visibility: Visibility.all,
 )
 class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
-  final List<dynamic> _validators;
+  final ValidatorFn validator;
   final ControlContainer _parent;
+
   NgControlGroup(@SkipSelf() this._parent,
-      @Optional() @Self() @Inject(NG_VALIDATORS) this._validators);
+      @Optional() @Self() @Inject(NG_VALIDATORS) List validators)
+      : validator = composeValidators(validators);
 
   @Input('ngControlGroup')
   @override
@@ -92,6 +94,4 @@ class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
   /// Get the [Form] to which this group belongs.
   @override
   Form get formDirective => _parent.formDirective;
-
-  ValidatorFn get validator => composeValidators(_validators);
 }

@@ -1,15 +1,13 @@
-import 'dart:async';
-import 'dart:html' show Event;
-
 import 'package:angular/angular.dart';
 
-import '../model.dart' show Control, ControlGroup;
+import '../model.dart' show ControlGroup;
 import '../validators.dart' show Validators, NG_VALIDATORS;
+import 'abstract_form.dart' show AbstractForm;
 import 'control_container.dart' show ControlContainer;
-import 'form_interface.dart' show Form;
 import 'ng_control.dart' show NgControl;
 import 'ng_control_group.dart';
 import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
+import 'validators.dart' show ValidatorFn;
 
 /// Binds an existing control group to a DOM element.
 ///
@@ -86,64 +84,46 @@ import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
   providers: const [
     const ExistingProvider(ControlContainer, NgFormModel),
   ],
-  host: const {'(submit)': 'onSubmit(\$event)'},
   exportAs: 'ngForm',
   visibility: Visibility.all,
 )
-class NgFormModel extends ControlContainer implements Form, AfterChanges {
-  final List<dynamic> _validators;
+class NgFormModel extends AbstractForm implements AfterChanges {
+  final ValidatorFn _validator;
+
   bool _formChanged = false;
   ControlGroup _form;
+
+  ControlGroup get form => _form;
+
   @Input('ngFormModel')
   set form(ControlGroup value) {
     _form = value;
     _formChanged = true;
   }
 
-  ControlGroup get form => _form;
   List<NgControl> directives = [];
-  final _ngSubmit = new StreamController<ControlGroup>.broadcast(sync: true);
-  final _ngBeforeSubmit =
-      new StreamController<ControlGroup>.broadcast(sync: true);
 
-  NgFormModel(@Optional() @Self() @Inject(NG_VALIDATORS) this._validators);
-
-  @Output()
-  Stream<ControlGroup> get ngSubmit => _ngSubmit.stream;
-  @Output()
-  Stream<ControlGroup> get ngBeforeSubmit => _ngBeforeSubmit.stream;
+  NgFormModel(@Optional() @Self() @Inject(NG_VALIDATORS) List validators)
+      : _validator = composeValidators(validators);
 
   @override
   void ngAfterChanges() {
     _checkFormPresent();
     if (_formChanged) {
       _formChanged = false;
-      var sync = composeValidators(_validators);
-      _form.validator = Validators.compose([_form.validator, sync]);
+      _form.validator = Validators.compose([_form.validator, _validator]);
       _form.updateValueAndValidity(onlySelf: true, emitEvent: false);
     }
     _updateDomValue();
   }
 
   @override
-  Form get formDirective => this;
-
-  @override
-  ControlGroup get control => _form;
-
-  @override
-  List<String> get path => [];
-
-  @override
   void addControl(NgControl dir) {
-    dynamic ctrl = form.find(dir.path);
+    var ctrl = getControl(dir);
     setUpControl(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
     directives.add(dir);
   }
-
-  @override
-  Control getControl(NgControl dir) => form?.find(dir.path) as Control;
 
   @override
   void removeControl(NgControl dir) {
@@ -152,7 +132,7 @@ class NgFormModel extends ControlContainer implements Form, AfterChanges {
 
   @override
   void addControlGroup(NgControlGroup dir) {
-    dynamic ctrl = form.find(dir.path);
+    var ctrl = form.find(dir.path);
     setUpControlGroup(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
   }
@@ -160,25 +140,9 @@ class NgFormModel extends ControlContainer implements Form, AfterChanges {
   @override
   void removeControlGroup(NgControlGroup dir) {}
 
-  @override
-  ControlGroup getControlGroup(NgControlGroup dir) =>
-      (form.find(dir.path) as ControlGroup);
-
-  @override
-  void updateModel(NgControl dir, dynamic value) {
-    var ctrl = (form.find(dir.path) as Control);
-    ctrl.updateValue(value);
-  }
-
-  void onSubmit(Event event) {
-    _ngBeforeSubmit.add(form);
-    _ngSubmit.add(form);
-    event.preventDefault();
-  }
-
   void _updateDomValue() {
     for (var dir in directives) {
-      dynamic ctrl = form.find(dir.path);
+      var ctrl = form.find(dir.path);
       dir.valueAccessor.writeValue(ctrl.value);
     }
   }
