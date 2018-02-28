@@ -31,7 +31,8 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   }
   @override
   ComponentRef<import1.ProvidersComponent> build() {
-    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     import5.Text _text_0 = new import5.Text('Hello');
     parentRenderNode.append(_text_0);
     init(const [], null);

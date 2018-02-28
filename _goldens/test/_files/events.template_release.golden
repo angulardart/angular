@@ -31,12 +31,13 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
   @override
   ComponentRef<import1.UsesNativeEvents> build() {
     final import1.UsesNativeEvents _ctx = ctx;
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'button', parentRenderNode);
     _el_0.addEventListener('click', eventHandler0(ctx.onClick));
     init(const [], null);
-    rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
+    _rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
     return null;
   }
 }
@@ -91,7 +92,8 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   }
   @override
   ComponentRef<import1.UsesAngularEvents> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = new ViewHasAngularEvents0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -160,7 +162,8 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
   }
   @override
   ComponentRef<import1.HasAngularEvents> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
     return null;
   }
@@ -214,14 +217,15 @@ class ViewHasManyNativeHostEvents0 extends AppView<import1.HasManyNativeHostEven
   @override
   ComponentRef<import1.HasManyNativeHostEvents> build() {
     final import1.HasManyNativeHostEvents _ctx = ctx;
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    rootEl.addEventListener('mousedown', eventHandler0(_ctx.onMouseDown));
-    rootEl.addEventListener('mouseup', eventHandler0(_ctx.onMouseUp));
-    rootEl.addEventListener('click', eventHandler0(_ctx.onClick));
-    rootEl.addEventListener('keypress', eventHandler0(_ctx.onKeyPress));
-    rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
-    rootEl.addEventListener('blur', eventHandler0(_ctx.onBlur));
+    _rootEl.addEventListener('mousedown', eventHandler0(_ctx.onMouseDown));
+    _rootEl.addEventListener('mouseup', eventHandler0(_ctx.onMouseUp));
+    _rootEl.addEventListener('click', eventHandler0(_ctx.onClick));
+    _rootEl.addEventListener('keypress', eventHandler0(_ctx.onKeyPress));
+    _rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
+    _rootEl.addEventListener('blur', eventHandler0(_ctx.onBlur));
     return null;
   }
 }

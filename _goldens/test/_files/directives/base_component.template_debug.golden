@@ -43,7 +43,8 @@ class ViewTestFooComponent0 extends DebugAppView<import3.TestFooComponent> {
   }
   @override
   ComponentRef<import3.TestFooComponent> build() {
-    final import4.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import4.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import4.Text _text_1 = new import4.Text('Foo');

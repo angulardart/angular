@@ -35,7 +35,8 @@ class ViewTestComponent0 extends DebugAppView<import2.TestComponent> {
   }
   @override
   ComponentRef<import2.TestComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null, []);
     return null;
   }

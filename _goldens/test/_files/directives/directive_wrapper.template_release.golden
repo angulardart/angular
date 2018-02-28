@@ -36,7 +36,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   }
   @override
   ComponentRef<import1.TestFooComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     createAttr(_el_0, 'directive-with-output', '');
@@ -122,7 +123,8 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
   }
   @override
   ComponentRef<import1.DirectiveContainerTest> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     _el_0.className = 'target1';

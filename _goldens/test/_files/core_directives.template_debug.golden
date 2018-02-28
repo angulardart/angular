@@ -43,7 +43,8 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
   }
   @override
   ComponentRef<import5.TestFooComponent> build() {
-    final import11.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import11.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 9);

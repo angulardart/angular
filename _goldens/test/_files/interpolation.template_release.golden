@@ -31,7 +31,8 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   }
   @override
   ComponentRef<import1.InterpolationComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     _text_1 = new import2.Text('');
@@ -101,7 +102,8 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
   }
   @override
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     _text_1 = new import2.Text('');

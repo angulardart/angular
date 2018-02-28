@@ -34,7 +34,8 @@ class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
   }
   @override
   ComponentRef<import2.ProvidersComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     import7.Text _text_0 = new import7.Text('Hello');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);

@@ -28,7 +28,8 @@ class ViewDependent0 extends AppView<import1.Dependent> {
   }
   @override
   ComponentRef<import1.Dependent> build() {
-    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
     return null;
   }
@@ -84,7 +85,8 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
   }
   @override
   ComponentRef<import1.DependencyWithDependentInView> build() {
-    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = new ViewDependent0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -160,7 +162,8 @@ class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> 
   }
   @override
   ComponentRef<import1.DependencyWithContent> build() {
-    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     project(parentRenderNode, 0);
     init(const [], null);
     return null;
@@ -226,7 +229,8 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
   }
   @override
   ComponentRef<import1.DependencyAndDependentInView> build() {
-    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
     _el_0 = createAndAppend(doc, 'dependency', parentRenderNode);
     _compView_1 = new ViewDependent0(this, 1);

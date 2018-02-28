@@ -37,7 +37,8 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   }
   @override
   ComponentRef<import2.HasOpaqueTokens> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _text_0 = new import3.Text('');
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
@@ -121,7 +122,8 @@ class ViewContainsChildComponent0 extends DebugAppView<import2.ContainsChildComp
   }
   @override
   ComponentRef<import2.ContainsChildComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 9);
@@ -286,7 +288,8 @@ class ViewInjectsTypedTokenFromSomeParent0 extends DebugAppView<import2.InjectsT
   }
   @override
   ComponentRef<import2.InjectsTypedTokenFromSomeParent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null, []);
     return null;
   }

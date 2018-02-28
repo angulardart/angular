@@ -37,7 +37,8 @@ class ViewInjectableComponent0 extends DebugAppView<import2.InjectableComponent>
   }
   @override
   ComponentRef<import2.InjectableComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Inject!');
