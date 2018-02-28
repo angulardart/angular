@@ -15,7 +15,13 @@
     "headers": [
       {
         "source": "/",
-        "headers": [{"key": "Link", "value": "</main.dart.js>;rel=preload;as=script"}]
+        "headers": [{
+          "key": "Link",
+          "value": "</main.dart.js>;rel=preload;as=script"
+        }, {
+          "key" : "Cache-Control",
+          "value" : "max-age=86400"
+        }]
       }
     ]
   }
