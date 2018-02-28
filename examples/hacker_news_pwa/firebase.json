@@ -15,13 +15,25 @@
     "headers": [
       {
         "source": "/",
-        "headers": [{
-          "key": "Link",
-          "value": "</main.dart.js>;rel=preload;as=script"
-        }, {
-          "key" : "Cache-Control",
-          "value" : "max-age=86400"
-        }]
+        "headers": [
+          {
+            "key": "Link",
+            "value": "</main.dart.js>;rel=preload;as=script"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604801"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(js|svg)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604801"
+          }
+        ]
       }
     ]
   }
