@@ -34,7 +34,8 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   }
   @override
   ComponentRef<import1.InjectableComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('Inject!');

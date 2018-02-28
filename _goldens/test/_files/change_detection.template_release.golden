@@ -30,7 +30,8 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
   }
   @override
   ComponentRef<import1.CheckOnceComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('CheckOnce');
@@ -98,7 +99,8 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
   }
   @override
   ComponentRef<import1.CheckedComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('Checked');
@@ -156,7 +158,8 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
   }
   @override
   ComponentRef<import1.CheckAlwaysComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('CheckAlways');
@@ -214,7 +217,8 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
   }
   @override
   ComponentRef<import1.DetachedComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('Detached');
@@ -272,7 +276,8 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
   }
   @override
   ComponentRef<import1.OnPushComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('OnPush');
@@ -331,7 +336,8 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
   @override
   ComponentRef<import1.StatefulComponent> build() {
     final import1.StatefulComponent _ctx = ctx;
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('Stateful');
@@ -390,7 +396,8 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
   }
   @override
   ComponentRef<import1.DefaultComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('Default');

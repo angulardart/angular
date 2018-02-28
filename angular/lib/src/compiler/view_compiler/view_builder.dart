@@ -4,6 +4,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart'
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 import 'package:angular_compiler/cli.dart';
+import 'package:meta/meta.dart';
 
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompileTypeMetadata;
@@ -58,13 +59,6 @@ import 'view_compiler_utils.dart'
         identifierFromTagName,
         ViewCompileDependency;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
 var rootSelectorVar = o.variable("rootSelector");
 
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
@@ -87,7 +81,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   }
 
   void _addRootNodeAndProject(
-      CompileNode node, num ngContentIndex, CompileElement parent) {
+      CompileNode node, int ngContentIndex, CompileElement parent) {
     var vcAppEl = (node is CompileElement && node.hasViewContainer)
         ? node.appViewContainer
         : null;
@@ -570,7 +564,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
     new o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE),
   ];
   var initRenderCompTypeStmts = [];
-  var factoryReturnType;
+  o.OutputType factoryReturnType;
   if (view.viewType == ViewType.HOST) {
     factoryReturnType = o.importType(Identifiers.AppView);
   } else {
@@ -592,13 +586,20 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
 }
 
 List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
-  o.Expression parentRenderNodeExpr = o.NULL_EXPR;
-  var parentRenderNodeStmts = <o.Statement>[];
-  bool isComponent = view.viewType == ViewType.COMPONENT;
+  // Hoist the `rootEl` class field as `_rootEl` locally for Dart2JS.
+  o.ReadVarExpr cachedRootEl;
+  final parentRenderNodeStmts = <o.Statement>[];
+  final isComponent = view.viewType == ViewType.COMPONENT;
   if (isComponent) {
+    cachedRootEl = o.variable('_rootEl');
+    parentRenderNodeStmts.add(cachedRootEl
+        .set(new o.ReadClassMemberExpr(appViewRootElementName))
+        .toDeclStmt(null, [o.StmtModifier.Final]));
     final nodeType = o.importType(Identifiers.HTML_HTML_ELEMENT);
-    parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
-        "initViewRoot", [new o.ReadClassMemberExpr(appViewRootElementName)]);
+    final parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
+      "initViewRoot",
+      [cachedRootEl],
+    );
     parentRenderNodeStmts.add(parentRenderNodeVar
         .set(parentRenderNodeExpr)
         .toDeclStmt(nodeType, [o.StmtModifier.Final]));
@@ -657,7 +658,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   //
   // init(rootNodes, subscriptions);
   // or init0 if we have a single root node with no subscriptions.
-  var renderNodesArrayExpr;
+  Expression renderNodesArrayExpr;
   if (view.genConfig.genDebugInfo) {
     final renderNodes =
         view.nodes.map((node) => node.renderNode.toReadExpr()).toList();
@@ -682,7 +683,12 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   }
 
   if (isComponentRoot) {
-    _writeComponentHostEventListeners(view, parser, statements);
+    _writeComponentHostEventListeners(
+      view,
+      parser,
+      statements,
+      rootEl: cachedRootEl,
+    );
   }
 
   if (isComponentRoot &&
@@ -731,13 +737,17 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
 /// Writes shared event handler wiring for events that are directly defined
 /// on host property of @Component annotation.
 void _writeComponentHostEventListeners(
-    CompileView view, Parser parser, List<o.Statement> statements) {
+  CompileView view,
+  Parser parser,
+  List<o.Statement> statements, {
+  @required o.Expression rootEl,
+}) {
   CompileDirectiveMetadata component = view.component;
   for (String eventName in component.hostListeners.keys) {
     String handlerSource = component.hostListeners[eventName];
     var handlerAst = parser.parseAction(handlerSource, '', component.exports);
     HandlerType handlerType = handlerTypeFromExpression(handlerAst);
-    var handlerExpr;
+    o.Expression handlerExpr;
     var numArgs;
     if (handlerType == HandlerType.notSimple) {
       var context = new o.ReadClassMemberExpr('ctx');
@@ -767,19 +777,24 @@ void _writeComponentHostEventListeners(
       numArgs = handlerType == HandlerType.simpleNoArgs ? 0 : 1;
     }
 
-    final wrappedHandlerExpr =
-        new o.InvokeMemberMethodExpr('eventHandler$numArgs', [handlerExpr]);
-    final rootElExpr = new o.ReadClassMemberExpr(appViewRootElementName);
+    final wrappedHandlerExpr = new o.InvokeMemberMethodExpr(
+      'eventHandler$numArgs',
+      [handlerExpr],
+    );
 
-    var listenExpr;
+    o.Expression listenExpr;
     if (isNativeHtmlEvent(eventName)) {
-      listenExpr = rootElExpr.callMethod(
-          'addEventListener', [o.literal(eventName), wrappedHandlerExpr]);
+      listenExpr = rootEl.callMethod(
+        'addEventListener',
+        [o.literal(eventName), wrappedHandlerExpr],
+      );
     } else {
       final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
       final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
-      listenExpr = eventManagerExpr.callMethod('addEventListener',
-          [rootElExpr, o.literal(eventName), wrappedHandlerExpr]);
+      listenExpr = eventManagerExpr.callMethod(
+        'addEventListener',
+        [rootEl, o.literal(eventName), wrappedHandlerExpr],
+      );
     }
     statements.add(listenExpr.toStmt());
   }

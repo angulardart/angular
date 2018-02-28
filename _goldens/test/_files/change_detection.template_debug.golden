@@ -33,7 +33,8 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
   }
   @override
   ComponentRef<import2.CheckOnceComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('CheckOnce');
@@ -107,7 +108,8 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
   }
   @override
   ComponentRef<import2.CheckedComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Checked');
@@ -171,7 +173,8 @@ class ViewCheckAlwaysComponent0 extends DebugAppView<import2.CheckAlwaysComponen
   }
   @override
   ComponentRef<import2.CheckAlwaysComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('CheckAlways');
@@ -235,7 +238,8 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
   }
   @override
   ComponentRef<import2.DetachedComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Detached');
@@ -299,7 +303,8 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
   }
   @override
   ComponentRef<import2.OnPushComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('OnPush');
@@ -364,7 +369,8 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
   @override
   ComponentRef<import2.StatefulComponent> build() {
     final import2.StatefulComponent _ctx = ctx;
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Stateful');
@@ -429,7 +435,8 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
   }
   @override
   ComponentRef<import2.DefaultComponent> build() {
-    final import3.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Default');

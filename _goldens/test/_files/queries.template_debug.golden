@@ -54,7 +54,8 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
   }
   @override
   ComponentRef<import1.QueriesComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     dbg(null, 0, 4);
     project(parentRenderNode, 0);
     var doc = import6.document;
@@ -208,7 +209,8 @@ class ViewEmbeddedQueries0 extends DebugAppView<import1.EmbeddedQueries> {
   }
   @override
   ComponentRef<import1.EmbeddedQueries> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import6.document;
     _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 0, 4);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
@@ -367,7 +369,8 @@ class ViewEmbeddedQueriesList0 extends DebugAppView<import1.EmbeddedQueriesList>
   }
   @override
   ComponentRef<import1.EmbeddedQueriesList> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import6.document;
     _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 0, 4);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
@@ -521,7 +524,8 @@ class ViewNestedNgForQueriesList0 extends DebugAppView<import1.NestedNgForQuerie
   }
   @override
   ComponentRef<import1.NestedNgForQueriesList> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var _anchor_0 = ngAnchor.clone(false);
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 9);

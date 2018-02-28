@@ -31,7 +31,8 @@ class ViewDependent0 extends DebugAppView<import2.Dependent> {
   }
   @override
   ComponentRef<import2.Dependent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null, []);
     return null;
   }
@@ -94,7 +95,8 @@ class ViewDependencyWithDependentInView0 extends DebugAppView<import2.Dependency
   }
   @override
   ComponentRef<import2.DependencyWithDependentInView> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = new ViewDependent0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -176,7 +178,8 @@ class ViewDependencyWithContent0 extends DebugAppView<import2.DependencyWithCont
   }
   @override
   ComponentRef<import2.DependencyWithContent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     dbg(null, 0, 0);
     project(parentRenderNode, 0);
     init(const [], null, []);
@@ -251,7 +254,8 @@ class ViewDependencyAndDependentInView0 extends DebugAppView<import2.DependencyA
   }
   @override
   ComponentRef<import2.DependencyAndDependentInView> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import7.document;
     _el_0 = createAndAppendDbg(this, doc, 'dependency', parentRenderNode, 0, 0, 4);
     _compView_1 = new ViewDependent0(this, 1);

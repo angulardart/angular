@@ -28,7 +28,8 @@ class ViewLifecycleHooksComponent0 extends AppView<import1.LifecycleHooksCompone
   }
   @override
   ComponentRef<import1.LifecycleHooksComponent> build() {
-    final import5.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
     return null;
   }

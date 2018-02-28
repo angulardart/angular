@@ -33,7 +33,8 @@ class ViewHasTemplateFileComponent0 extends DebugAppView<import3.HasTemplateFile
   }
   @override
   ComponentRef<import3.HasTemplateFileComponent> build() {
-    final import4.HtmlElement parentRenderNode = initViewRoot(rootEl);
+    final _rootEl = rootEl;
+    final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import4.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     addShimC(_el_0);
