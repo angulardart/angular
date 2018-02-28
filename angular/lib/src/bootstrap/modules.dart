@@ -17,11 +17,11 @@ import 'package:angular/src/core/testability/testability.dart';
 import 'package:angular/src/core/zone.dart';
 import 'package:angular/src/di/providers.dart';
 import 'package:angular/src/facade/exception_handler.dart';
-import 'package:angular/src/facade/lang.dart';
 import 'package:angular/src/platform/browser/exceptions.dart';
 import 'package:angular/src/platform/dom/events/dom_events.dart';
 import 'package:angular/src/platform/dom/events/event_manager.dart';
 import 'package:angular/src/platform/dom/events/key_events.dart';
+import 'package:angular/src/runtime.dart';
 import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular/src/security/dom_sanitization_service_impl.dart';
 
@@ -82,7 +82,7 @@ final InjectorFactory minimalApp = ng.minimalApp$Injector;
 HtmlDocument getDocument() => document;
 
 /// Creates an AngularDart zone, enabling async stack traces in developer mode.
-NgZone createNgZone() => new NgZone(enableLongStackTrace: assertionsEnabled());
+NgZone createNgZone() => new NgZone(enableLongStackTrace: isDevMode);
 
 /// Creates a random [APP_ID] for use in CSS encapsulation.
 String createRandomAppId() {
