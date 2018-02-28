@@ -13,6 +13,13 @@
     `Control`, and `ControlContainer.control` will return a `ControlGroup`.
     There may be some unnecessary casts that can now be cleaned up.
 
+-   `FormBuilder` instance methods `group`, `control`, and `array` have been
+    removed. For `FormBuilder.control`, just call `new Control(value,
+    validator)` directly. For `FormBuilder.group` and `FormBuilder.array`, use
+    the static methods `FormBuilder.controlGroup` and
+    `FormBuilder.controlArray`, respectively. `FormBuilder` is no longer
+    `Injectable`.
+
 ## 1.0.1-alpha+6
 
 ### New features

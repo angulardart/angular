@@ -9,7 +9,6 @@ library angular_forms; // name the library so we can run dartdoc on it by name.
 
 import 'src/directives/radio_control_value_accessor.dart'
     show RadioControlRegistry;
-import 'src/form_builder.dart' show FormBuilder;
 
 export 'src/directives.dart'
     show
@@ -58,7 +57,7 @@ export 'src/validators.dart' show NG_VALIDATORS, Validators;
 /// ```dart
 /// bootstrap(MyApp, [FORM_PROVIDERS]);
 /// ````
-const List<Type> FORM_PROVIDERS = const [FormBuilder, RadioControlRegistry];
+const List<Type> FORM_PROVIDERS = const [RadioControlRegistry];
 
 /// See [FORM_PROVIDERS] instead.
 const FORM_BINDINGS = FORM_PROVIDERS;

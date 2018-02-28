@@ -1,5 +1,3 @@
-import 'package:angular/angular.dart' show Injectable;
-
 import 'directives/validators.dart';
 import 'model.dart' as model_module;
 
@@ -42,19 +40,7 @@ import 'model.dart' as model_module;
 ///   }
 /// }
 /// ```
-@Injectable()
 class FormBuilder {
-  @Deprecated('Use static method FormBuilder.controlGroup instead.')
-  model_module.ControlGroup group(Map<String, dynamic> controlsConfig,
-      [Map<String, dynamic> extra]) {
-    var optionals =
-        ((extra != null ? extra['optionals'] : null) as Map<String, bool>);
-    ValidatorFn validator =
-        extra != null ? extra['validator'] as ValidatorFn : null;
-    return controlGroup(controlsConfig,
-        validator: validator, optionals: optionals);
-  }
-
   /// Construct a new [ControlGroup] with the given map of configuration.
   /// Valid keys for the `extra` parameter map are [optionals] and [validator].
   ///
@@ -66,16 +52,6 @@ class FormBuilder {
     var controls = _reduceControls(controlsConfig);
     return new model_module.ControlGroup(controls, optionals, validator);
   }
-
-  /// Construct a new [Control] with the given [value], and [validator].
-  @Deprecated('Use new Control(value, validator) directly')
-  model_module.Control control(Object value, [ValidatorFn validator]) =>
-      new model_module.Control(value, validator);
-
-  @Deprecated('Use static method FormBuilder.controlArray instead.')
-  model_module.ControlArray array(List<dynamic> controlsConfig,
-          [ValidatorFn validator]) =>
-      controlArray(controlsConfig, validator);
 
   /// Construct an array of [Control]s from the given [controlsConfig] array of
   /// configuration, with the given optional [validator].
@@ -102,4 +78,7 @@ class FormBuilder {
       return new model_module.Control(controlConfig, null);
     }
   }
+
+  // Prevents instantiating this class.
+  FormBuilder._();
 }
