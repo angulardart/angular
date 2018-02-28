@@ -8,6 +8,11 @@
     -   `MaxLengthValidator`
     -   `PatternValidator`
 
+-   Properly typed the generic parameter on subclasses of
+    `AbstractControlDirective`. Now, `NgControl.control` will return a
+    `Control`, and `ControlContainer.control` will return a `ControlGroup`.
+    There may be some unnecessary casts that can now be cleaned up.
+
 ## 1.0.1-alpha+6
 
 ### New features

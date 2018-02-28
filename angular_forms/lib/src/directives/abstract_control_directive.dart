@@ -4,6 +4,8 @@ import '../model.dart' show AbstractControl;
 ///
 /// Only used internally in the forms package.
 abstract class AbstractControlDirective<T extends AbstractControl> {
+  String name;
+
   T get control;
 
   dynamic get value => control?.value;
