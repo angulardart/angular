@@ -20,7 +20,7 @@
           "value": "</main.dart.js>;rel=preload;as=script"
         }, {
           "key" : "Cache-Control",
-          "value" : "max-age=300"
+          "value" : "max-age=86400"
         }]
       }
     ],
