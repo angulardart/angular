@@ -1,0 +1,42 @@
+<div ngControlGroup="address">
+    <material-input
+            type="text"
+            floatingLabel
+            label="Address 1"
+            ngControl="address1"
+            [(ngModel)]="address1"
+            required
+            #address1Control="ngForm">
+    </material-input>
+    <material-input
+            type="text"
+            floatingLabel
+            label="Address 2"
+            ngControl="address2"
+            [(ngModel)]="address2"
+            [requiredFirst]="address1Control">
+    </material-input>
+    <material-input
+            type="text"
+            floatingLabel
+            label="City"
+            ngControl="city"
+            [(ngModel)]="city"
+            required>
+    </material-input>
+    <material-auto-suggest-input
+            ngControl="state"
+            floatingLabel
+            label="State"
+            [suggestions]="states"
+            [(inputText)]="state">
+    </material-auto-suggest-input>
+    <material-input
+            type="text"
+            floatingLabel
+            label="Zip Code"
+            ngControl="zip"
+            [(ngModel)]="zip"
+            required>
+    </material-input>
+</div>

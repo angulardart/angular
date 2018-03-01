@@ -1,0 +1,57 @@
+<form #myForm="ngForm">
+    <section>
+        <material-input
+                type="text"
+                floatingLabel
+                label="First Name"
+                ngControl="first-name"
+                [(ngModel)]="firstName"
+                required>
+        </material-input>
+    </section>
+    <section>
+        <material-input
+                type="text"
+                floatingLabel
+                label="Last Name"
+                ngControl="last-name"
+                [(ngModel)]="lastName"
+                required>
+        </material-input>
+    </section>
+    <address-cmp></address-cmp>
+
+    <material-yes-no-buttons
+            saveCancel
+            yesHighlighted
+            raised
+            [yesDisabled]="!myForm.valid"
+            (yes)="onSubmit()"
+            (no)="onClear()">
+    </material-yes-no-buttons>
+</form>
+
+<div *ngIf="person != null">
+    <div>
+        First Name: {{person.firstName}}
+    </div>
+    <div>
+        Last Name: {{person.lastName}}
+    </div>
+    <div>
+        <div>
+            Address
+        </div>
+        <div>
+            {{person.address.address1}}
+        </div>
+        <div>
+            {{person.address.address2}}
+        </div>
+        <div>
+            <span>{{person.address.city}}</span>
+            <span> {{person.address.state}}</span>
+            <span> {{person.address.zip}}</span>
+        </div>
+    </div>
+</div>
