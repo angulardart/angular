@@ -54,7 +54,7 @@ case $TASK in
     ;;
 
   test:release)
-    echo -e '\033[1mTASK: Testing [tes:release]\033[22m'
+    echo -e '\033[1mTASK: Testing [test:release]\033[22m'
     echo -e 'pub run build_runner test --config=release --fail-on-severe -- -P travis'
     pub run build_runner test --config=release --fail-on-severe -- -P travis
     ;;
