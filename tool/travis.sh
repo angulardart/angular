@@ -56,8 +56,8 @@ while (( "$#" )); do
     ;;
   command_7) echo
     echo -e '\033[1mTASK: command_7\033[22m'
-    echo -e 'pub run build_runner build --config=release --fail-on-severe'
-    pub run build_runner build --config=release --fail-on-severe || EXIT_CODE=$?
+    echo -e 'pub run build_runner build --config=release --fail-on-severe -o build'
+    pub run build_runner build --config=release --fail-on-severe -o build || EXIT_CODE=$?
     ;;
   dartanalyzer_0) echo
     echo -e '\033[1mTASK: dartanalyzer_0\033[22m'

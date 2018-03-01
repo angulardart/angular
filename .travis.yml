@@ -150,9 +150,14 @@ branches:
   only: [master]
 
 # MANUALLY ADDED. Do not remove.
-after_success:
-  - ./tool/deploy.sh
-# END MANUAL EDITS.
+deploy:
+  skip_cleanup: true
+  on:
+    repo: dart-lang/angular
+    condition: -d "examples/hacker_news_pwa/build/web"
+  provider: firebase
+  message: "Travis deploy from commit $TRAVIS_COMMIT"
+  project: dart-hn
 
 cache:
   directories:
@@ -172,3 +177,4 @@ before_install:
  - export DISPLAY=:99.0
  - sh -e /etc/init.d/xvfb start
  - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+# END MANUAL EDITS.
