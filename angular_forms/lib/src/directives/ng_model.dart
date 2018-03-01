@@ -13,12 +13,16 @@ import 'validators.dart' show ValidatorFn;
 /// Creates a form [NgControl] instance from a domain model and binds it to a
 /// form control element. The form [NgControl] instance tracks the value,
 /// user interaction, and validation status of the control and keeps the view
-/// synced with the model. If used within a parent form, the directive will
-/// also register itself with the form as a child control.
+/// synced with the model.
 ///
-/// This directive can be used by itself or as part of a larger form. All you
-/// need is the `ngModel` selector to activate it. For a two-way binding, use
-/// the `[(ngModel)]` syntax to ensure the model updates in both directions.
+/// This directive is intended to be used as a stand-alone value. If you would
+/// like to use it as part of a larger form, then it must be assigned a
+/// name using `ngControl="name". See [NgControlName] directive
+/// for more details.
+///
+/// All you need is the `ngModel` selector to activate it. For a
+/// two-way binding, use the `[(ngModel)]` syntax to ensure the model
+/// updates in both directions.
 ///
 /// Learn more about `ngModel` in the [Forms][] and [Template Syntax][TS] pages.
 ///
