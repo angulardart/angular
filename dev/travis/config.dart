@@ -12,18 +12,18 @@ void main() {
 
   // Find packages.
   final include = new Glob('**/pubspec.yaml');
-  final exclude = new Glob('dev/**');
+  final exclude = [new Glob('dev/**'), new Glob('angular/tools/**')];
 
   // Make build stages.
   final stages = <String>[];
 
   for (final pubspec in include.listSync()) {
-    final package = p.basename(p.dirname(pubspec.path));
-    if (exclude.matches(package)) {
+    final package = p.normalize(p.dirname(pubspec.path));
+    if (exclude.any((e) => e.matches(package))) {
       continue;
     }
 
-    // Every package has a presubmit and build phase.
+    // Every package has a pre-submit and build phase.
     stages.add(_analyze(package));
     stages.add(_build(package));
 
