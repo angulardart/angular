@@ -32,61 +32,61 @@ jobs:
   include:
 
     - stage: presubmit
-      script: ./tool/travis.sh angular_ast analyzer
+      script: ./tool/travis.sh analyze angular_ast
 
     - stage: building
-      script: ./tool/travis.sh angular_ast build
+      script: ./tool/travis.sh build angular_ast
       cache:
         directories:
           - angular_ast/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh angular_ast test
+      script: ./tool/travis.sh test angular_ast
       cache:
         directories:
           - angular_ast/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh angular_compiler analyzer
+      script: ./tool/travis.sh analyze angular_compiler
 
     - stage: building
-      script: ./tool/travis.sh angular_compiler build
+      script: ./tool/travis.sh build angular_compiler
       cache:
         directories:
           - angular_compiler/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh angular_compiler test
+      script: ./tool/travis.sh test angular_compiler
       cache:
         directories:
           - angular_compiler/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh _goldens analyzer
+      script: ./tool/travis.sh analyze _goldens
 
     - stage: building
-      script: ./tool/travis.sh _goldens build
+      script: ./tool/travis.sh build _goldens
       cache:
         directories:
           - _goldens/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh _goldens test
+      script: ./tool/travis.sh test _goldens
       cache:
         directories:
           - _goldens/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh _tests analyzer
+      script: ./tool/travis.sh analyze _tests
 
     - stage: building
-      script: ./tool/travis.sh _tests build
+      script: ./tool/travis.sh build _tests
       cache:
         directories:
           - _tests/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh _tests test
+      script: ./tool/travis.sh test _tests
       cache:
         directories:
           - _tests/.dart_tool
@@ -98,7 +98,7 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: presubmit
-      script: ./tool/travis.sh build analyzer
+      script: ./tool/travis.sh analyze build
 
     - stage: building
       script: ./tool/travis.sh build build
@@ -107,16 +107,16 @@ jobs:
           - build/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh angular_test analyzer
+      script: ./tool/travis.sh analyze angular_test
 
     - stage: building
-      script: ./tool/travis.sh angular_test build
+      script: ./tool/travis.sh build angular_test
       cache:
         directories:
           - angular_test/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh angular_test test
+      script: ./tool/travis.sh test angular_test
       cache:
         directories:
           - angular_test/.dart_tool
@@ -128,61 +128,70 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: presubmit
-      script: ./tool/travis.sh analyzer_plugin analyzer
+      script: ./tool/travis.sh analyze build
 
     - stage: building
-      script: ./tool/travis.sh analyzer_plugin build
+      script: ./tool/travis.sh build build
+      cache:
+        directories:
+          - build/.dart_tool
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze analyzer_plugin
+
+    - stage: building
+      script: ./tool/travis.sh build analyzer_plugin
       cache:
         directories:
           - analyzer_plugin/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh angular analyzer
+      script: ./tool/travis.sh analyze angular
 
     - stage: building
-      script: ./tool/travis.sh angular build
+      script: ./tool/travis.sh build angular
       cache:
         directories:
           - angular/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh hello_world analyzer
+      script: ./tool/travis.sh analyze hello_world
 
     - stage: building
-      script: ./tool/travis.sh hello_world build
+      script: ./tool/travis.sh build hello_world
       cache:
         directories:
           - hello_world/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh hello_world_no_reflector analyzer
+      script: ./tool/travis.sh analyze hello_world_no_reflector
 
     - stage: building
-      script: ./tool/travis.sh hello_world_no_reflector build
+      script: ./tool/travis.sh build hello_world_no_reflector
       cache:
         directories:
           - hello_world_no_reflector/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh hacker_news_pwa analyzer
+      script: ./tool/travis.sh analyze hacker_news_pwa
 
     - stage: building
-      script: ./tool/travis.sh hacker_news_pwa build
+      script: ./tool/travis.sh build hacker_news_pwa
       cache:
         directories:
           - hacker_news_pwa/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh _benchmarks analyzer
+      script: ./tool/travis.sh analyze _benchmarks
 
     - stage: building
-      script: ./tool/travis.sh _benchmarks build
+      script: ./tool/travis.sh build _benchmarks
       cache:
         directories:
           - _benchmarks/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh _benchmarks test
+      script: ./tool/travis.sh test _benchmarks
       cache:
         directories:
           - _benchmarks/.dart_tool
@@ -194,34 +203,25 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: presubmit
-      script: ./tool/travis.sh build analyzer
+      script: ./tool/travis.sh analyze travis
 
     - stage: building
-      script: ./tool/travis.sh build build
-      cache:
-        directories:
-          - build/.dart_tool
-
-    - stage: presubmit
-      script: ./tool/travis.sh travis analyzer
-
-    - stage: building
-      script: ./tool/travis.sh travis build
+      script: ./tool/travis.sh build travis
       cache:
         directories:
           - travis/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh angular_forms analyzer
+      script: ./tool/travis.sh analyze angular_forms
 
     - stage: building
-      script: ./tool/travis.sh angular_forms build
+      script: ./tool/travis.sh build angular_forms
       cache:
         directories:
           - angular_forms/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh angular_forms test
+      script: ./tool/travis.sh test angular_forms
       cache:
         directories:
           - angular_forms/.dart_tool
@@ -233,16 +233,16 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: presubmit
-      script: ./tool/travis.sh angular_router analyzer
+      script: ./tool/travis.sh analyze angular_router
 
     - stage: building
-      script: ./tool/travis.sh angular_router build
+      script: ./tool/travis.sh build angular_router
       cache:
         directories:
           - angular_router/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh angular_router test
+      script: ./tool/travis.sh test angular_router
       cache:
         directories:
           - angular_router/.dart_tool

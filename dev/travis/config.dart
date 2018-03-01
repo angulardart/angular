@@ -82,14 +82,14 @@ bool _hasCustomTestScript(String path) {
 String _analyze(String package) {
   return [
     '    - stage: presubmit',
-    '      script: ./tool/travis.sh $package analyzer',
+    '      script: ./tool/travis.sh analyze $package',
   ].join('\n');
 }
 
 String _build(String package, {bool release: false}) {
   return [
     '    - stage: building',
-    '      script: ./tool/travis.sh $package build${release ? ':release': ''}',
+    '      script: ./tool/travis.sh build${release ? ':release': ''} $package',
     '      cache:',
     '        directories:',
     '          - $package/.dart_tool',
@@ -114,7 +114,7 @@ String _test(
   }
   final out = [
     '    - stage: testing',
-    '      script: ./tool/travis.sh $package test${release ? ':release' : ''}',
+    '      script: ./tool/travis.sh test${release ? ':release' : ''} $package',
     '      cache:',
     '        directories:',
     '          - $package/.dart_tool',
