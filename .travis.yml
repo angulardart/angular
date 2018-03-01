@@ -156,9 +156,6 @@ deploy:
     repo: dart-lang/angular
     condition: -d "examples/hacker_news_pwa/build/web"
   provider: firebase
-  token:
-    # Created by kevmoo
-    secure: "onLskcM902pl6N8gtTp/oqRQmtLt6xjnJx8WW8r0tIaYdiQyhHn3sm6rFFyEiYBuIjpNS1+zK3pkDZ2dT1ZIVXPeQ7Zyo1TkbwqRDdWIuy9Qcv8RjAnRvhC2jh41e5nFuLQ1cNJQV6JtpF+sXfc7vpFs5Iaq+X9M4E7Z/HqHQ8IDRXXTLMvZpshSHr+ReaLzNp5p9ShxNNGEoDERZ4+O5sd39Al7fEoczSQNsq9BObWyhmR04lKBGLf7ECasp/qbrWExkiRODS1Izwd1LfLtHeNUoTHfbRs3tSxB74eVp+BBwtkni5Zp+llY/DFZgxw2GWC7iVT0PbjAqzdb+DKgiYjdIVC8wwOMV4C3eeZbwVGiAAQtt+NgpLKKpslp/+Cj+F8sDgSWeUJmtxQhNtV/sJDD+Ai4ijOubjba0WuGmuDgNzVWMPrsKNL+e6sMATR1omAWfUKIaYjAo0vk2KFoQbrwpl8qRQLrchrzgTi6JEs000cnVJYimlmcSK8dJdd1wkw/wiOAoD9oR9/ApUQaC7p8GnqIjhwR+dI5efj/zteBZI3HL/EbVEarpRlx4GKcCzYmC7ANSCJtex/d6fArBnWSKvoQHcedLkAbqpB622ir+d+QeRRSbyxSYkVgKFDNje8j32wZ3zNYXPqzwEPFy/ecpDTkrY9ltbZwncnsrtc="
   message: "Travis deploy from commit $TRAVIS_COMMIT"
   project: dart-hn
 
