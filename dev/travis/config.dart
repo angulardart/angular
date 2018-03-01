@@ -12,7 +12,13 @@ void main() {
 
   // Find packages.
   final include = new Glob('**/pubspec.yaml');
-  final exclude = [new Glob('dev/**'), new Glob('angular/tools/**')];
+
+  // TODO: Perhaps just import .gitignore as well.
+  final exclude = [
+    new Glob('dev/**'),
+    new Glob('angular/tools/**'),
+    new Glob('**/build'),
+  ];
 
   // Make build stages.
   final stages = <String>[];

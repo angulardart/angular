@@ -111,24 +111,6 @@ jobs:
 
     - stage: presubmit
       script: ./tool/travis.sh analyze
-      env: PKG="_tests/build"
-
-    - stage: building
-      script: ./tool/travis.sh build
-      env: PKG="_tests/build"
-      cache:
-        directories:
-          - _tests/build/.dart_tool
-
-    - stage: testing
-      script: ./tool/travis.sh test
-      env: PKG="_tests/build"
-      cache:
-        directories:
-          - _tests/build/.dart_tool
-
-    - stage: presubmit
-      script: ./tool/travis.sh analyze
       env: PKG="angular_test"
 
     - stage: building
@@ -150,24 +132,6 @@ jobs:
         - export DISPLAY=:99.0
         - sh -e /etc/init.d/xvfb start
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
-
-    - stage: presubmit
-      script: ./tool/travis.sh analyze
-      env: PKG="angular_test/build"
-
-    - stage: building
-      script: ./tool/travis.sh build
-      env: PKG="angular_test/build"
-      cache:
-        directories:
-          - angular_test/build/.dart_tool
-
-    - stage: testing
-      script: ./tool/travis.sh test
-      env: PKG="angular_test/build"
-      cache:
-        directories:
-          - angular_test/build/.dart_tool
 
     - stage: presubmit
       script: ./tool/travis.sh analyze

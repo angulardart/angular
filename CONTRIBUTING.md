@@ -104,7 +104,7 @@ utilizing [build stages](https://docs.travis-ci.com/user/build-stages/). In
 order to run tests locally, use the following script (on POSIX systems):
 
 ```bash
-$ tool/travis.sh <task> <pkg>
+$ PKG=<pkg> tool/travis.sh <task>
 ```
 
 Valid packages (`<pkg>`) include:
@@ -134,13 +134,19 @@ Some example runs:
 
 ```bash
 # Runs the analyzer on package:angular.
-tool/travis.sh analyze angular
+PKG=angular tool/travis.sh analyze
 
 # Runs tests with DDC on package:_tests.
-tool/travis.sh test _tests
+PKG=_tests tool/travis.sh test
 
 # Runs tests with the Dart VM on package:angular_compiler.
-tool/travis.sh test angular_compiler
+PKG=angular_compiler tool/travis.sh test
+```
+
+To regenerate the `.travis.yml` script:
+
+```bash
+dart dev/travis/config.dart
 ```
 
 **NOTE**: We recommend running with `dartfmt` before sending pull-requests, but
