@@ -1,174 +1,232 @@
-# Created with https://github.com/dart-lang/mono_repo
 language: dart
 
-# MANUALLY ADDED. Do not remove.
-# Gives more resources on Travis (8GB Ram, 2 CPUs).
+# We currently are building against the Dart2 SDK.
+dart:
+  - dev
+
+# Gives more resources on Travis (8GB Ram, 2CPUs).
 # Do not remove without verifying w/ Travis.
 sudo: required
-addons:
-  chrome: stable
-# END MANUAL EDITS.
-
-jobs:
-  include:
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_0
-      env: PKG="_benchmarks"
-      dart: dev
-    - stage: build
-      script: ./tool/travis.sh command_0
-      env: PKG="_benchmarks"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh command_1
-      env: PKG="_benchmarks"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_1
-      env: PKG="_goldens"
-      dart: dev
-    - stage: build
-      script: ./tool/travis.sh command_0
-      env: PKG="_goldens"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh command_2
-      env: PKG="_goldens"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_2
-      env: PKG="_tests"
-      dart: dev
-    - stage: build
-      script: ./tool/travis.sh command_0
-      env: PKG="_tests"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh command_3
-      env: PKG="_tests"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh command_4
-      env: PKG="_tests"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_3
-      env: PKG="angular"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_3
-      env: PKG="angular_ast"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh test_0
-      env: PKG="angular_ast"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_3
-      env: PKG="angular_compiler"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh test_0
-      env: PKG="angular_compiler"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_2
-      env: PKG="angular_forms"
-      dart: dev
-    - stage: build
-      script: ./tool/travis.sh command_0
-      env: PKG="angular_forms"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh command_5
-      env: PKG="angular_forms"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_2
-      env: PKG="angular_router"
-      dart: dev
-    - stage: build
-      script: ./tool/travis.sh command_0
-      env: PKG="angular_router"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh test_1
-      env: PKG="angular_router"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh command_5
-      env: PKG="angular_router"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_2
-      env: PKG="angular_test"
-      dart: dev
-    - stage: build
-      script: ./tool/travis.sh command_0
-      env: PKG="angular_test"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh test_1
-      env: PKG="angular_test"
-      dart: dev
-    - stage: unit_test
-      script: ./tool/travis.sh command_6
-      env: PKG="angular_test"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_4
-      env: PKG="examples/hacker_news_pwa"
-      dart: dev
-    - stage: build
-      script: ./tool/travis.sh command_7
-      env: PKG="examples/hacker_news_pwa"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_4
-      env: PKG="examples/hello_world"
-      dart: dev
-    - stage: build
-      script: ./tool/travis.sh command_0
-      env: PKG="examples/hello_world"
-      dart: dev
-    - stage: analyze
-      script: ./tool/travis.sh dartanalyzer_4
-      env: PKG="examples/hello_world_no_reflector"
-      dart: dev
-    - stage: build
-      script: ./tool/travis.sh command_0
-      env: PKG="examples/hello_world_no_reflector"
-      dart: dev
-
-stages:
-  - analyze
-  - build
-  - unit_test
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
   only: [master]
 
-# MANUALLY ADDED. Do not remove.
-after_success:
-  - ./tool/deploy.sh
-# END MANUAL EDITS.
-
+# Re-use downloaded pub packages.
 cache:
   directories:
     - $HOME/.pub-cache
-    # MANUALLY ADDED. Do not remove.
-    - _benchmarks/.dart_tool
-    - _goldens/.dart_tool
-    - _tests/.dart_tool
-    - angular_router/.dart_tool
-    - angular_test/.dart_tool
-    - examples/hello_world/.dart_tool
-    - examples/hello_world_no_reflector/.dart_tool
-    # END MANUAL EDITS.
 
-# Necessary for Chrome and Firefox to run
-before_install:
- - export DISPLAY=:99.0
- - sh -e /etc/init.d/xvfb start
- - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+# Build stages: https://docs.travis-ci.com/user/build-stages/.
+stages:
+  - presubmit
+  - testing
+
+jobs:
+  include:
+
+    ###########################################################################
+    # presubmit: Check things that should fail fast(er).
+    ###########################################################################
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="_benchmarks"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="_goldens"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="_tests"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_ast"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_compiler"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_forms"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_router"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_test"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="examples/hacker_news_pwa"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="examples/hello_world"
+        - TASK="analyzer"
+
+    - stage: presubmit
+      script: ./tool/travis.sh
+      env:
+        - PKG="examples/hello_world_no_reflector"
+        - TASK="analyzer"
+
+    ###########################################################################
+    # testing: Unit testing.
+    # #########################################################################
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="_benchmarks"
+        - TASK="dartdevc"
+      addons:
+        chrome: stable
+      before_install:
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+      cache:
+        directories:
+          - _benchmarks/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="_benchmarks"
+        - TASK="dart2js"
+      addons:
+        chrome: stable
+      before_install:
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+      cache:
+        directories:
+          - _benchmarks/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="_goldens"
+        - TASK="dartvm"
+      cache:
+        directories:
+          - _goldens/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="_tests"
+        - TASK="dartdevc"
+      addons:
+        chrome: stable
+      before_install:
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+      cache:
+        directories:
+          - _tests/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="_tests"
+        - TASK="dartvm"
+      cache:
+        directories:
+          - _tests/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_ast"
+        - TASK="dartvm"
+      cache:
+        directories:
+          - angular_ast/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_compiler"
+        - TASK="dartvm"
+      cache:
+        directories:
+          - angular_compiler/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_forms"
+        - TASK="dartdevc"
+      addons:
+        chrome: stable
+      before_install:
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+      cache:
+        directories:
+          - angular_forms/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_router"
+        - TASK="dartdevc"
+      addons:
+        chrome: stable
+      before_install:
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+      cache:
+        directories:
+          - angular_router/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh
+      env:
+        - PKG="angular_test"
+        - TASK="dartdevc"
+      addons:
+        chrome: stable
+      before_install:
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+      cache:
+        directories:
+          - angular_test/.dart_tool

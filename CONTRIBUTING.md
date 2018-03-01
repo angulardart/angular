@@ -91,3 +91,57 @@ quick process, we promise!
 [github-pulls]: https://github.com/dart-lang/angular/pulls
 [individual-cla]: http://code.google.com/legal/individual-cla-v1.0.html
 [stack-overflow]: https://stackoverflow.com/questions/tagged/angular-dart
+
+## Running travis
+
+Our automated tests on Travis check the following:
+
+* `dartanalyzer` (static analysis), failing on any errors or warnings.
+* Unit tests (in the VM, Dart2JS, and DartDev).
+
+Due to a complex set of packages, we have a more complex travis setup that is
+utilizing [build stages](https://docs.travis-ci.com/user/build-stages/). In
+order to run tests locally, use the following script (on POSIX systems):
+
+```bash
+$ PKG=<package name> TASK=<task name> tool/travis.sh
+```
+
+Valid packages (`PKG=`) include:
+
+* `_benchmarks`
+* `_goldens`
+* `_tests`
+* `angular`
+* `angular_ast`
+* `angular_compiler`
+* `angular_forms`
+* `angular_router`
+* `angular_test`
+* `examples/hacker_news_pwa`
+* `examples/hello_world`
+* `examples/hello_world_no_reflector`
+
+Valid tasks (`TASK=`) include:
+
+* `analyzer` (Runs `dartanalyzer --fatal-warnings .`)
+* `dartdevc` (Runs `pub run build_runner test -- -p chrome -r expanded -x fails-on-travis`)
+* `dart2js` (Runs `pub run build_runner test --config release -- -p chrome -r expanded -x fails-on-travis`)
+* `dartvm` (Runs `pub run build_runner test -- -p vm -r expanded -x fails-on-travis`)
+
+Some example runs:
+
+```bash
+# Runs the analyzer on package:angular.
+PKG=angular TASK=analyzer tool/travis.sh
+
+# Runs tests with DDC on package:_tests.
+PKG=_tests TASK=dartdevc tool/travis.sh
+
+# Runs tests with the Dart VM on package:angular_compiler.
+PKG=angular_compiler TASK=dartvm tool/travis.sh
+```
+
+**NOTE**: We recommend running with `dartfmt` before sending pull-requests, but
+do not validate on Travis as our source of truth is internal at Google, with a
+possible version skew on `dartfmt` output.
