@@ -28,25 +28,25 @@ case $TASK in
   analyzer)
     echo -e '\033[1mTASK: Dart Analyzer [analyzer]\033[22m'
     echo -e 'dartanalyzer --fatal-warnings .'
-    dartanalyzer --fatal-warnings . || EXIT_CODE=$?
+    dartanalyzer --fatal-warnings .
     ;;
 
   dartdevc)
     echo -e '\033[1mTASK: Testing with DartDevCompiler [dartdevc]\033[22m'
     echo -e 'pub run build_runner test -- -p chrome -r expanded -x fails-on-travis'
-    pub run build_runner test -- -p chrome -r expanded -x fails-on-travis || EXIT_CODE=$?
+    pub run build_runner test -- -p chrome -r expanded -x fails-on-travis
     ;;
 
   dart2js)
     echo -e '\033[1mTASK: Testing with Dart2JS [dart2js]\033[22m'
     echo -e 'pub run build_runner test -- -p chrome -r expanded -x fails-on-travis'
-    pub run build_runner test --config release -- -p chrome -r expanded -x fails-on-travis || EXIT_CODE=$?
+    pub run build_runner test --config release -- -p chrome -r expanded -x fails-on-travis
     ;;
 
   dartvm)
     echo -e '\033[1mTASK: Testing with Dart VM [dartvm]\033[22m'
     echo -e 'pub run test -p vm -r expanded -x fails-on-travis'
-    pub run build_runner test -- -p vm -r expanded -x fails-on-travis || EXIT_CODE=$?
+    pub run build_runner test -- -p vm -r expanded -x fails-on-travis
     ;;
 
   *)
@@ -54,5 +54,3 @@ case $TASK in
     exit 1
     ;;
 esac
-
-exit $EXIT_CODE
