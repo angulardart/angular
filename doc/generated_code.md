@@ -68,7 +68,7 @@ Each `@Directive` generates `{Type}NgCd` _iff_:
 
 ## `initReflector`
 
-A closed-world graph all imported files (that are not `deferred`) that have
+A closed-world graph of all imported files (that are not `deferred`) that have
 generated code (`.template.dart`). This is used to prime a behind-the-scenes
 mapping of `Type` -> _metadata_, which in turn is used for some legacy APIs in
 AngularDart (`ReflectiveInjector`, `DynamicComponentLoader`).

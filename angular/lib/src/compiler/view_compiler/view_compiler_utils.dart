@@ -137,12 +137,14 @@ o.Expression createDebugInfoTokenExpression(CompileTokenMetadata token) {
   }
 }
 
-o.Expression createFlatArray(List<o.Expression> expressions) {
+o.Expression createFlatArray(List<o.Expression> expressions,
+    {bool constForEmpty: true}) {
   // Simplify: No items.
   if (expressions.isEmpty) {
     return o.literalArr(
       const [],
-      new o.ArrayType(null, const [o.TypeModifier.Const]),
+      new o.ArrayType(
+          null, constForEmpty ? const [o.TypeModifier.Const] : const []),
     );
   }
   // Check for [].addAll([x,y,z]) case and optimize.

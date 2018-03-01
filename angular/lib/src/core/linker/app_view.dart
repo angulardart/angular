@@ -88,6 +88,12 @@ class AppViewData<T> {
   /// **INTERNAL ONLY**: Not part of the supported public API.
   List rootNodesOrViewContainers;
 
+  /// Tracks nodes created as a result of an inlined NgIf being set to 'true'.
+  ///
+  /// We must track them so we can remove them from the DOM if the view is
+  /// destroyed.
+  List<Node> inlinedNodes;
+
   /// Index of this view within the [parentView].
   final int parentIndex;
 
@@ -124,6 +130,14 @@ class AppViewData<T> {
     if (_cdState != value) {
       _cdState = value;
       updateSkipChangeDetectionFlag();
+    }
+  }
+
+  void addInlinedNodes(List<Node> nodes) {
+    if (inlinedNodes == null) {
+      inlinedNodes = nodes;
+    } else {
+      inlinedNodes.addAll(nodes);
     }
   }
 
@@ -284,6 +298,23 @@ abstract class AppView<T> {
     return; // ignore: dead_code
   }
 
+  void addInlinedNodes(Node anchor, List<Node> inlinedNodes,
+      [bool isRoot = false]) {
+    moveNodesAfterSibling(anchor, inlinedNodes);
+    if (isRoot) {
+      viewData.rootNodesOrViewContainers.addAll(inlinedNodes);
+    } else {
+      viewData.addInlinedNodes(inlinedNodes);
+    }
+  }
+
+  void removeInlinedNodes(List<Node> inlinedNodes, [bool isRoot = false]) {
+    detachAll(inlinedNodes);
+    var nodeList =
+        isRoot ? viewData.rootNodesOrViewContainers : viewData.inlinedNodes;
+    nodeList.removeWhere((n) => inlinedNodes.contains(n));
+  }
+
   dynamic createElement(
       dynamic parent, String name, RenderDebugInfo debugInfo) {
     var nsAndName = splitNamespace(name);
@@ -340,13 +371,8 @@ abstract class AppView<T> {
     destroy();
   }
 
-  void detachViewNodes(List<dynamic> viewRootNodes) {
-    int len = viewRootNodes.length;
-    for (var i = 0; i < len; i++) {
-      var node = viewRootNodes[i];
-      node.remove();
-      domRootRendererIsDirty = true;
-    }
+  void detachViewNodes(List<Node> viewRootNodes) {
+    detachAll(viewRootNodes);
   }
 
   void destroy() {
@@ -365,6 +391,8 @@ abstract class AppView<T> {
   void destroyInternal() {}
 
   ChangeDetectorRef get changeDetectorRef => viewData.ref;
+
+  List<Node> get inlinedNodes => viewData.inlinedNodes;
 
   List<Node> get flatRootNodes =>
       _flattenNestedViews(viewData.rootNodesOrViewContainers);
@@ -769,4 +797,13 @@ SpanElement createSpanAndAppend(Document doc, Element parent) {
   return null; // ignore: dead_code
   return null; // ignore: dead_code
   return null; // ignore: dead_code
+}
+
+void detachAll(List<Node> viewRootNodes) {
+  int len = viewRootNodes.length;
+  for (var i = 0; i < len; i++) {
+    Node node = viewRootNodes[i];
+    node.remove();
+    domRootRendererIsDirty = true;
+  }
 }

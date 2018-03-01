@@ -28,6 +28,7 @@ import 'ir/view_storage.dart';
 import 'view_builder.dart' show buildUpdaterFunctionName;
 import 'view_compiler_utils.dart'
     show
+        createFlatArray,
         createSetAttributeParams,
         outlinerDeprecated,
         unwrapDirective,
@@ -68,7 +69,8 @@ void bind(
     CompileMethod literalMethod,
     bool genDebugInfo,
     {o.OutputType fieldType,
-    bool isHostComponent: false}) {
+    bool isHostComponent: false,
+    o.Expression fieldExprInitializer}) {
   parsedExpression =
       rewriteInterpolate(parsedExpression, viewDirective.analyzedClass);
   var checkExpression = convertCdExpressionToIr(
@@ -93,6 +95,7 @@ void bind(
   bool isPrimitive = isPrimitiveFieldType(fieldType);
   ViewStorageItem previousValueField = storage.allocate(fieldExpr.name,
       modifiers: const [o.StmtModifier.Private],
+      initializer: fieldExprInitializer,
       outputType: isPrimitive ? fieldType : null);
   method.addStmt(currValExpr
       .set(checkExpression)
@@ -615,6 +618,86 @@ void bindToUpdateMethod(
           ..addAll([
             new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()
           ])));
+  }
+}
+
+void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
+  assert(directiveAst.directive.identifier.name == 'NgIf',
+      'Inlining a template that is not an NgIf');
+  var view = compileElement.view;
+  var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
+  var dynamicInputsMethod = new CompileMethod(view.genDebugInfo);
+  var constantInputsMethod = new CompileMethod(view.genDebugInfo);
+  dynamicInputsMethod.resetDebugInfo(
+      compileElement.nodeIndex, compileElement.sourceAst);
+
+  var input = directiveAst.inputs.single;
+  var bindingIndex = view.nameResolver.createUniqueBindIndex();
+  dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
+  var fieldExpr = createBindFieldExpr(bindingIndex);
+  var currValExpr = createCurrValueExpr(bindingIndex);
+
+  var embeddedView = compileElement.embeddedView;
+
+  var buildStmts = <o.Statement>[];
+  embeddedView.writeBuildStatements(buildStmts);
+  var rootNodes = createFlatArray(embeddedView.rootNodesOrViewContainers);
+  var anchor = compileElement.renderNode.toReadExpr();
+  var isRoot = compileElement.view != compileElement.parent.view;
+  var buildArgs = [anchor, rootNodes];
+  var destroyArgs = [rootNodes];
+  if (isRoot) {
+    buildArgs.add(o.literal(true));
+    destroyArgs.add(o.literal(true));
+  }
+  buildStmts
+      .add(new o.InvokeMemberMethodExpr('addInlinedNodes', buildArgs).toStmt());
+
+  var destroyStmts = <o.Statement>[
+    new o.InvokeMemberMethodExpr('removeInlinedNodes', destroyArgs).toStmt(),
+  ];
+
+  List<o.Statement> statements;
+  ast.AST condition;
+
+  if (isImmutable(input.value, view.component.analyzedClass)) {
+    // If the input is immutable, we don't need to handle the case where the
+    // condition is false since in that case we simply do nothing.
+    statements = <o.Statement>[
+      new o.IfStmt(currValExpr, buildStmts),
+    ];
+    condition = input.value;
+  } else {
+    statements = <o.Statement>[
+      new o.IfStmt(currValExpr, buildStmts, destroyStmts)
+    ];
+    // This hack is to allow legacy NgIf behavior on null inputs
+    condition =
+        new ast.Binary('==', input.value, new ast.LiteralPrimitive(true));
+  }
+
+  bind(
+      view.component,
+      view.nameResolver,
+      view.storage,
+      currValExpr,
+      fieldExpr,
+      condition,
+      DetectChangesVars.cachedCtx,
+      statements,
+      dynamicInputsMethod,
+      constantInputsMethod,
+      view.genDebugInfo,
+      fieldType: o.BOOL_TYPE,
+      isHostComponent: false,
+      fieldExprInitializer: o.literal(false));
+
+  if (constantInputsMethod.isNotEmpty) {
+    detectChangesInInputsMethod.addStmt(new o.IfStmt(
+        DetectChangesVars.firstCheck, constantInputsMethod.finish()));
+  }
+  if (dynamicInputsMethod.isNotEmpty) {
+    detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
   }
 }
 

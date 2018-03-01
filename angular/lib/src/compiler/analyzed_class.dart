@@ -60,6 +60,10 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
     return isImmutable(expression.condition, analyzedClass) &&
         isImmutable(expression.nullExp, analyzedClass);
   }
+  if (expression is ast.Binary) {
+    return isImmutable(expression.left, analyzedClass) &&
+        isImmutable(expression.right, analyzedClass);
+  }
   if (expression is ast.Interpolation) {
     return expression.expressions.every((e) => isImmutable(e, analyzedClass));
   }
