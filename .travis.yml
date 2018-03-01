@@ -32,61 +32,73 @@ jobs:
   include:
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze angular_ast
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_ast"
 
     - stage: building
-      script: ./tool/travis.sh build angular_ast
+      script: ./tool/travis.sh build
+      env: PKG="angular_ast"
       cache:
         directories:
           - angular_ast/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test angular_ast
+      script: ./tool/travis.sh test
+      env: PKG="angular_ast"
       cache:
         directories:
           - angular_ast/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze angular_compiler
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_compiler"
 
     - stage: building
-      script: ./tool/travis.sh build angular_compiler
+      script: ./tool/travis.sh build
+      env: PKG="angular_compiler"
       cache:
         directories:
           - angular_compiler/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test angular_compiler
+      script: ./tool/travis.sh test
+      env: PKG="angular_compiler"
       cache:
         directories:
           - angular_compiler/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze _goldens
+      script: ./tool/travis.sh analyze
+      env: PKG="_goldens"
 
     - stage: building
-      script: ./tool/travis.sh build _goldens
+      script: ./tool/travis.sh build
+      env: PKG="_goldens"
       cache:
         directories:
           - _goldens/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test _goldens
+      script: ./tool/travis.sh test
+      env: PKG="_goldens"
       cache:
         directories:
           - _goldens/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze _tests
+      script: ./tool/travis.sh analyze
+      env: PKG="_tests"
 
     - stage: building
-      script: ./tool/travis.sh build _tests
+      script: ./tool/travis.sh build
+      env: PKG="_tests"
       cache:
         directories:
           - _tests/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test _tests
+      script: ./tool/travis.sh test
+      env: PKG="_tests"
       cache:
         directories:
           - _tests/.dart_tool
@@ -98,31 +110,37 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze _tests/build
+      script: ./tool/travis.sh analyze
+      env: PKG="_tests/build"
 
     - stage: building
-      script: ./tool/travis.sh build _tests/build
+      script: ./tool/travis.sh build
+      env: PKG="_tests/build"
       cache:
         directories:
           - _tests/build/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test _tests/build
+      script: ./tool/travis.sh test
+      env: PKG="_tests/build"
       cache:
         directories:
           - _tests/build/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze angular_test
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_test"
 
     - stage: building
-      script: ./tool/travis.sh build angular_test
+      script: ./tool/travis.sh build
+      env: PKG="angular_test"
       cache:
         directories:
           - angular_test/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test angular_test
+      script: ./tool/travis.sh test
+      env: PKG="angular_test"
       cache:
         directories:
           - angular_test/.dart_tool
@@ -134,67 +152,81 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze angular_test/build
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_test/build"
 
     - stage: building
-      script: ./tool/travis.sh build angular_test/build
+      script: ./tool/travis.sh build
+      env: PKG="angular_test/build"
       cache:
         directories:
           - angular_test/build/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test angular_test/build
+      script: ./tool/travis.sh test
+      env: PKG="angular_test/build"
       cache:
         directories:
           - angular_test/build/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze angular
+      script: ./tool/travis.sh analyze
+      env: PKG="angular"
 
     - stage: building
-      script: ./tool/travis.sh build angular
+      script: ./tool/travis.sh build
+      env: PKG="angular"
       cache:
         directories:
           - angular/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze examples/hello_world
+      script: ./tool/travis.sh analyze
+      env: PKG="examples/hello_world"
 
     - stage: building
-      script: ./tool/travis.sh build examples/hello_world
+      script: ./tool/travis.sh build
+      env: PKG="examples/hello_world"
       cache:
         directories:
           - examples/hello_world/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze examples/hello_world_no_reflector
+      script: ./tool/travis.sh analyze
+      env: PKG="examples/hello_world_no_reflector"
 
     - stage: building
-      script: ./tool/travis.sh build examples/hello_world_no_reflector
+      script: ./tool/travis.sh build
+      env: PKG="examples/hello_world_no_reflector"
       cache:
         directories:
           - examples/hello_world_no_reflector/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze examples/hacker_news_pwa
+      script: ./tool/travis.sh analyze
+      env: PKG="examples/hacker_news_pwa"
 
     - stage: building
-      script: ./tool/travis.sh build examples/hacker_news_pwa
+      script: ./tool/travis.sh build
+      env: PKG="examples/hacker_news_pwa"
       cache:
         directories:
           - examples/hacker_news_pwa/.dart_tool
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze _benchmarks
+      script: ./tool/travis.sh analyze
+      env: PKG="_benchmarks"
 
     - stage: building
-      script: ./tool/travis.sh build _benchmarks
+      script: ./tool/travis.sh build
+      env: PKG="_benchmarks"
       cache:
         directories:
           - _benchmarks/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test _benchmarks
+      script: ./tool/travis.sh test
+      env: PKG="_benchmarks"
       cache:
         directories:
           - _benchmarks/.dart_tool
@@ -206,16 +238,19 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze angular_forms
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_forms"
 
     - stage: building
-      script: ./tool/travis.sh build angular_forms
+      script: ./tool/travis.sh build
+      env: PKG="angular_forms"
       cache:
         directories:
           - angular_forms/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test angular_forms
+      script: ./tool/travis.sh test
+      env: PKG="angular_forms"
       cache:
         directories:
           - angular_forms/.dart_tool
@@ -227,16 +262,19 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: presubmit
-      script: ./tool/travis.sh analyze angular_router
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_router"
 
     - stage: building
-      script: ./tool/travis.sh build angular_router
+      script: ./tool/travis.sh build
+      env: PKG="angular_router"
       cache:
         directories:
           - angular_router/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test angular_router
+      script: ./tool/travis.sh test
+      env: PKG="angular_router"
       cache:
         directories:
           - angular_router/.dart_tool

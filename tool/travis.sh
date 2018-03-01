@@ -9,7 +9,6 @@ set -e
 
 # Check arguments.
 TASK=$1
-PKG=$2
 
 if [ -z "$PKG" ]; then
   echo -e '\033[31mPKG argument must be set!\033[0m'
