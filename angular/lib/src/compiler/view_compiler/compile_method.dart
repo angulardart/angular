@@ -3,16 +3,9 @@ import 'package:source_span/source_span.dart';
 import "../output/output_ast.dart" as o;
 import "../template_ast.dart" show TemplateAst;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
 class _DebugState {
-  num nodeIndex;
-  TemplateAst sourceAst;
+  final int nodeIndex;
+  final TemplateAst sourceAst;
   _DebugState(this.nodeIndex, this.sourceAst);
 }
 
@@ -67,12 +60,12 @@ class CompileMethod {
     }
   }
 
-  o.Expression resetDebugInfoExpr(num nodeIndex, TemplateAst templateAst) {
+  o.Expression resetDebugInfoExpr(int nodeIndex, TemplateAst templateAst) {
     var res = _updateDebugContext(new _DebugState(nodeIndex, templateAst));
     return res ?? o.NULL_EXPR;
   }
 
-  void resetDebugInfo(num nodeIndex, TemplateAst templateAst) {
+  void resetDebugInfo(int nodeIndex, TemplateAst templateAst) {
     _newState = new _DebugState(nodeIndex, templateAst);
   }
 

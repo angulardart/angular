@@ -226,6 +226,9 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
       throw new BaseException("Component views can't be moved!");
     }
     view.detachViewNodes(view.flatRootNodes);
+    if (view.inlinedNodes != null) {
+      view.detachViewNodes(view.inlinedNodes);
+    }
     view.removeFromContentChildren(this);
     return view;
   }
