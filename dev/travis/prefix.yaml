@@ -1,0 +1,32 @@
+# Automatically generated from dev/travis/config.dart.
+#
+# To re-generate, run from the root:
+# $ dart dev/travis/config.dart
+language: dart
+
+# We currently are building against the Dart2 SDK.
+dart:
+  - dev
+
+# Gives more resources on Travis (8GB Ram, 2CPUs).
+# Do not remove without verifying w/ Travis.
+sudo: required
+
+# Only building master means that we don't run two builds for each pull request.
+branches:
+  only: [master]
+
+# Re-use downloaded pub packages everywhere.
+cache:
+  directories:
+    - $HOME/.pub-cache
+
+# Build stages: https://docs.travis-ci.com/user/build-stages/.
+stages:
+  - presubmit
+  - building
+  - testing
+  - deploying
+
+jobs:
+  include:

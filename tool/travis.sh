@@ -7,46 +7,57 @@
 # Fast fail the script on failures.
 set -e
 
-# Check environment variables.
+# Check arguments.
+TASK=$1
+PKG=$2
+
 if [ -z "$PKG" ]; then
-  echo -e '\033[31mPKG environment variable must be set!\033[0m'
+  echo -e '\033[31mPKG argument must be set!\033[0m'
+  echo -e '\033[31mExample: tool/travis.sh angular analyzer\033[0m'
   exit 1
 fi
 
 if [ -z "$TASK" ]; then
-  echo -e '\033[31mTASK environment variable must be set!\033[0m'
+  echo -e '\033[31mTASK argument must be set!\033[0m'
+  echo -e '\033[31mExample: tool/travis.sh angular analyzer\033[0m'
   exit 1
 fi
 
 # Navigate to the correct sub-directory, and run "pub upgrade".
 pushd $PKG
-pub upgrade
+PUB_ALLOW_PRERELEASE_SDK=quiet pub upgrade
 EXIT_CODE=1
 
 # Run the correct task type.
 case $TASK in
-  analyzer)
+  analyze)
     echo -e '\033[1mTASK: Dart Analyzer [analyzer]\033[22m'
     echo -e 'dartanalyzer --fatal-warnings .'
     dartanalyzer --fatal-warnings .
     ;;
 
-  dartdevc)
-    echo -e '\033[1mTASK: Testing with DartDevCompiler [dartdevc]\033[22m'
-    echo -e 'pub run build_runner test -- -p chrome -r expanded -x fails-on-travis'
-    pub run build_runner test -- -p chrome -r expanded -x fails-on-travis
+  build)
+    echo -e '\033[1mTASK: Building Only [build]\033[22m'
+    echo -e 'pub run build_runner build --fail-on-severe'
+    pub run build_runner build --fail-on-severe
     ;;
 
-  dart2js)
-    echo -e '\033[1mTASK: Testing with Dart2JS [dart2js]\033[22m'
-    echo -e 'pub run build_runner test -- -p chrome -r expanded -x fails-on-travis'
-    pub run build_runner test --config release -- -p chrome -r expanded -x fails-on-travis
+  build:release)
+    echo -e '\033[1mTASK: Building Only [build:release]\033[22m'
+    echo -e 'pub run build_runner build --config=release --fail-on-severe'
+    pub run build_runner build --config=release --fail-on-severe
     ;;
 
-  dartvm)
-    echo -e '\033[1mTASK: Testing with Dart VM [dartvm]\033[22m'
-    echo -e 'pub run test -p vm -r expanded -x fails-on-travis'
-    pub run build_runner test -- -p vm -r expanded -x fails-on-travis
+  test)
+    echo -e '\033[1mTASK: Testing [test]\033[22m'
+    echo -e 'pub run build_runner test --fail-on-severe -- -P travis'
+    pub run build_runner test --fail-on-severe -- -P travis
+    ;;
+
+  test:release)
+    echo -e '\033[1mTASK: Testing [tes:release]\033[22m'
+    echo -e 'pub run build_runner test --config=release --fail-on-severe -- -P travis'
+    pub run build_runner test --config=release --fail-on-severe -- -P travis
     ;;
 
   *)

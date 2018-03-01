@@ -104,10 +104,10 @@ utilizing [build stages](https://docs.travis-ci.com/user/build-stages/). In
 order to run tests locally, use the following script (on POSIX systems):
 
 ```bash
-$ PKG=<package name> TASK=<task name> tool/travis.sh
+$ tool/travis.sh <task> <pkg>
 ```
 
-Valid packages (`PKG=`) include:
+Valid packages (`<pkg>`) include:
 
 * `_benchmarks`
 * `_goldens`
@@ -122,24 +122,25 @@ Valid packages (`PKG=`) include:
 * `examples/hello_world`
 * `examples/hello_world_no_reflector`
 
-Valid tasks (`TASK=`) include:
+Valid tasks (`<task>`) include:
 
-* `analyzer` (Runs `dartanalyzer --fatal-warnings .`)
-* `dartdevc` (Runs `pub run build_runner test -- -p chrome -r expanded -x fails-on-travis`)
-* `dart2js` (Runs `pub run build_runner test --config release -- -p chrome -r expanded -x fails-on-travis`)
-* `dartvm` (Runs `pub run build_runner test -- -p vm -r expanded -x fails-on-travis`)
+* `analyze` (Runs `dartanalyzer --fatal-warnings .`)
+* `build` (Runs `pub run build_runner build --fail-on-severe`)
+* `build:release` (Runs `pub run build_runner build --config=release --fail-on-severe`)
+* `test` (Runs `pub run build_runner test --fail-on-severe -- -r expanded -x fails-on-travis`)
+* `test:release` (Runs `pub run build_runner test --config=release --fail-on-severe -- -r expanded -x fails-on-travis`)
 
 Some example runs:
 
 ```bash
 # Runs the analyzer on package:angular.
-PKG=angular TASK=analyzer tool/travis.sh
+tool/travis.sh analyze angular
 
 # Runs tests with DDC on package:_tests.
-PKG=_tests TASK=dartdevc tool/travis.sh
+tool/travis.sh test _tests
 
 # Runs tests with the Dart VM on package:angular_compiler.
-PKG=angular_compiler TASK=dartvm tool/travis.sh
+tool/travis.sh test angular_compiler
 ```
 
 **NOTE**: We recommend running with `dartfmt` before sending pull-requests, but
