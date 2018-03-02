@@ -16,19 +16,6 @@ and many more projects.
 <img src="https://2.bp.blogspot.com/-T50YZP5hlW4/Vv07k1PPVmI/AAAAAAAAM_Q/kVo8eImMOFUWLYqXg_xGzaWPvvlO7lhng/s0/adwords-dart.png" width="800" alt="Built with AngularDart">
 </a>
 
-**NOTE**: As of `angular 5.0.0-alpha+1` [`dependency_overrides`][dep_overrides] are **required**:
-
-```yaml
-dependency_overrides:
-  analyzer: ^0.31.0-alpha.1
-```
-
-This is because we are starting to use and support the Dart 2.0.0 SDK, which is evolving. We expect
-to no longer require overrides once we are at a beta release, but this is unlikely until sometime
-in early 2018.
-
-[dep_overrides]: https://www.dartlang.org/tools/pub/dependencies#dependency-overrides
-
 ## New to AngularDart?
 
 Ramp up quickly with our docs, codelabs, and examples:
