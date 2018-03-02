@@ -126,6 +126,7 @@ class CompileTypeMetadataVisitor
     // Workaround for analyzer bug.
     // https://github.com/dart-lang/angular/issues/917
     if (providerTypeArgument == null &&
+        token?.type != null &&
         $OpaqueToken.isAssignableFromType(token.type) &&
         // Only apply "auto inference" to "new-type" Providers like
         // Value, Class, Existing, FactoryProvider.
