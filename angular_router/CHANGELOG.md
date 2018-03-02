@@ -2,6 +2,11 @@
 
 *   `RouterOutlet` is no longer injectable.
 
+### Bug fixes
+
+*   `RouterPath.toUrl()` no longer generates an incorrect URL with an extra '/'
+    when a parent route has an empty path.
+
 ## 2.0.0-alpha+6
 
 ### New features
