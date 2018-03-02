@@ -67,7 +67,7 @@ void main() {
     });
 
     group('path', () {
-      test('path should return a slash-trimmed version of the path', () {
+      test('should return a slash-trimmed version of the path', () {
         RoutePath routePath = new RoutePath(path: '/path/');
         expect(routePath.path, 'path');
         routePath =
@@ -76,7 +76,7 @@ void main() {
       });
     });
 
-    group('toUrl', () {
+    group('toUrl()', () {
       RoutePath routePath;
 
       setUpAll(() {
@@ -121,6 +121,14 @@ void main() {
             }),
             '/path1/:param1/path2/:param2/path3/:param3?param%201=one');
       });
+    });
+
+    test('toUrl() should handle empty parent path', () {
+      final a = new RoutePath(path: '');
+      final b = new RoutePath(path: 'foo', parent: a);
+      final c = new RoutePath(path: '', parent: b);
+      final d = new RoutePath(path: 'bar', parent: c);
+      expect(d.toUrl(), '/foo/bar');
     });
   });
 }

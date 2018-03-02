@@ -1,3 +1,4 @@
+import 'location.dart';
 import 'route_definition.dart';
 import 'url.dart';
 
@@ -42,15 +43,20 @@ class RoutePath {
             ? new RoutePath.fromRoutes(routes.take(routes.length - 1))
             : null;
 
-  String toUrl(
-      {Map<String, String> parameters = const {},
-      Map<String, String> queryParameters,
-      String fragment}) {
-    var url = parent?.toUrl(parameters: parameters) ?? '';
-    url += '/$path';
-    parameters.forEach((key, val) {
-      url = url.replaceFirst(':$key', Uri.encodeComponent(val));
-    });
+  String toUrl({
+    Map<String, String> parameters,
+    Map<String, String> queryParameters,
+    String fragment,
+  }) {
+    // Don't pass parameters to parent URL. These are populated only once the
+    // complete URL has been constructed.
+    final parentUrl = parent != null ? parent.toUrl() : '/';
+    var url = Location.joinWithSlash(parentUrl, path);
+    if (parameters != null) {
+      for (final key in parameters.keys) {
+        url = url.replaceFirst(':$key', Uri.encodeComponent(parameters[key]));
+      }
+    }
     return new Url(url, queryParameters: queryParameters, fragment: fragment)
         .toString();
   }
