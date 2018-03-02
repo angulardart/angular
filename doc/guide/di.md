@@ -1,13 +1,20 @@
-# Dependency Injection
+# Effective Angular: Dependency Injection
+
+> **NOTE**: This is a work-in-progress, and not yet final. Some of the links may be substituted with `(...)`, and some TODOs or missing parts may be in the documentation.
 
 There are many different ways to use AngularDart to provide and utilize dependency injection throughout your application, components, and services. This guide is meant to serve as a **development tool** and to help push **best practices** from the developers of the AngularDart framework.
 
 * [Providers](#providers)
-    * [DO use the "named" providers](#do-use-the-named-providers)
-    * [DO use factories for configuration](#do-use-factories-for-configuration)
-    * [DO use `const` providers](#do-use-const-providers)
+	* [DO use the "named" providers](#do-use-the-named-providers)
+	* [DO use factories for configuration](#do-use-factories-for-configuration)
+	* [DO use `const` providers](#do-use-const-providers)
+	* [DO use the `.forToken` constructor for tokens](#do-use-the-fortoken-constructor-for-tokens)
+* [Tokens](#tokens)
+	* [DO use typed `OpaqueToken<T>`](#do-use-typed-opaquetokent)
+	* [AVOID using arbitrary tokens](#avoid-using-arbitrary-tokens)
+	* [PREFER `MultiToken<T>` to `multi: true`](#...)
 * [Injectors](#injectors)
-    * [AVOID using `ReflectiveInjector`](#avoid-using-reflectiveinjector)
+	* [AVOID using `ReflectiveInjector`](#avoid-using-reflectiveinjector)
 
 ## Providers
 
@@ -33,7 +40,7 @@ Instead, use the "named" providers (`ClassProvider`, `ExistingProvider`, `Factor
 **GOOD**:
 
 ```dart
-const ClassProvider(Foo, CachedFoo);
+const ClassProvider(Foo, useClass: CachedFoo);
 const ExistingProvider(Foo, OtherFoo);
 const FactoryProvider(Foo, createCachedFoo);
 const ValueProvider(Foo, null);
@@ -89,6 +96,147 @@ void main() {
   ]);
 }
 ```
+
+### DO use the `.forToken` constructor for tokens
+
+In alignment with [DO use typed `OpaqueToken<T>`](#...) and [DO use the "named" providers](#...), the `.forToken` constructor should be used in order for type inference to determine the type of the provider.
+
+**BAD**:
+
+```dart
+const appBaseHref = const OpaqueToken<String>('appBaseHref');
+
+// This is created as `Provider<dynamic>`.
+const Provider(appBaseHref, useValue: '1234'); 
+```
+
+**GOOD**:
+
+```dart
+const appBaseHref = const OpaqueToken<String>('appBaseHref');
+
+// This is created as `Provider<String>`.
+const ValueProvider.forToken(appBaseHref, '1234'); 
+```
+
+## Tokens
+
+### DO use typed `OpaqueToken<T>`
+
+In the past the `OpaqueToken` class was only useful as a convention for declaring arbitrary tokens (i.e. that were not based on a class `Type`). For example, you wouldn't want to bind something to `String` (too common), so you'd create an `OpaqueToken`:
+
+```dart
+const appBaseHref = const OpaqueToken('appBaseHref');
+```
+
+However, this also meant that it was undocumented (unless manually added with dartdocs) what the expected _type_ of `APP_BASE_HREF` was (in this case a `String`). This hurt both developer productivity _and_ the compiler (we don't know what to expect, so we typed it as `dynamic` always).
+
+**BAD**: Using `OpaqueToken<dynamic>` implicity or explicitly.
+
+```dart
+// If not defined, const OpaqueToken(...) is of type <dynamic>.
+const appBaseHref = const OpaqueToken('appBaseHref');
+```
+
+**GOOD**: Using `OpaqueToken<T>` where `T` is not `dynamic`:
+
+```dart
+const appBaseHref = const OpaqueToken<String>('appBaseHref');
+```
+
+**GOOD**: Use your own `class` that extends `OpaqueToken<T>`.
+
+Another option is to create your own "custom" token type. It's up to your and your team whether this is more ergonomic/documenting/clarifying than relying on a string-based description (`'appBaseHref'`).
+
+```dart
+class AppBaseHref extends OpaqueToken<String> {
+  const AppBaseHref(); 
+}
+
+// Optional.
+const appBaseHref = const AppBaseHref(); 
+
+// Can be used with .forToken now, for example:
+const ValueProvider.forToken(appBaseHref, '/');
+
+// Or as an parameter for injection:
+class Comp {
+  Comp(@appBaseHref String href) { ... }
+}  
+```
+
+### AVOID using arbitrary tokens
+
+With the older style `Provider(...)` and `provide(...)` it's still type-safe and permitted to use arbitrary tokens, such as strings, numbers, or even custom classes. There are some bugs in the compiler, and it's unlikely support for this feature will be kept long-term in AngularDart.
+
+**BAD**:
+
+```dart
+const Provider('Hello', useValue: 'Hello World'); 
+```
+
+_or_
+
+```dart
+class HelloMessage {
+  const HelloMessage(); 
+}
+
+// In later configuration.
+const Provider(const HelloMessage(), useValue: 'Hello World');  
+```
+
+
+**GOOD**: Use a `Type` or `OpaqueToken<T>` instead.
+
+```dart
+const helloMessage = const OpaqueToken<String>('Hello');
+
+// In later configuration.
+const ValueProvider.forToken(helloMessage, 'Hello World');
+```
+
+_or_
+
+```dart
+class HelloMessage extends OpaqueToken<String> {
+  const HelloMessage();
+} 
+const helloMessage = const HelloMessage();
+
+// In later configuration.
+const ValueProvider.forToken(helloMessage, 'Hello World'); 
+```
+
+### PREFER `MultiToken<T>` to `multi: true`
+
+Providers can be created with explicit configuration of `multi: true`, which means that when they are injected a `List` is returned instead of all tokens that are configured for that token/type.
+
+**BAD**: Using `multi: true` for this configuration.
+
+```dart
+const usPresident = const OpaqueToken<String>('usPresident'); 
+
+const usPresidentProviders = const [
+  const Provider(usPresident, useValue: 'George', multi: true),
+  const Provider(usPresident, useValue: 'Abe', multi: true), 
+]; 
+```
+
+This pattern is _verbose_, _error prone_, and not very self-documenting for users. You could forget `multi: true`, clients would not know that injecting `usPresident` gives them a `List`.
+
+**GOOD**: Using `MultiToken` for this configuration instead.
+
+```dart
+const usPresidents = const MultiToken<String>('usPresidents');
+
+const usPresidentsProviders = const [
+  const ValueProvider.forToken(usPresidents, 'George'),
+  const ValueProvider.forToken(usPresidents, 'Abe'), 
+];  
+```
+
+As an added bonus, this pattern works better for Dart2; we're able to tell, statically, in the compiler, that `usPresidents` must return `List<String>` not a `List<dynamic>`.
 
 ## Injectors
 
