@@ -1,5 +1,7 @@
 import "package:angular/src/facade/lang.dart" show jsSplit;
 
+import 'compile_metadata.dart';
+
 const MODULE_SUFFIX = ".dart";
 
 List<String> splitAtColon(String input, List<String> defaultValues) {
@@ -22,4 +24,11 @@ String packageToAssetScheme(String uri) {
   int pos = path.indexOf('/');
   assert(pos != -1);
   return 'asset:${path.substring(0, pos)}/lib${path.substring(pos)}';
+}
+
+String templateModuleUrl(CompileTypeMetadata type) {
+  var moduleUrl = type.moduleUrl;
+  var urlWithoutSuffix =
+      moduleUrl.substring(0, moduleUrl.length - MODULE_SUFFIX.length);
+  return '$urlWithoutSuffix.template$MODULE_SUFFIX';
 }
