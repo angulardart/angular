@@ -9,6 +9,7 @@ There are many different ways to use AngularDart to provide and utilize dependen
 	* [DO use factories for configuration](#do-use-factories-for-configuration)
 	* [DO use `const` providers](#do-use-const-providers)
 	* [DO use the `.forToken` constructor for tokens](#do-use-the-fortoken-constructor-for-tokens)
+	* [PREFER `ClassProvider` to a `Type`](#...)
 * [Tokens](#tokens)
 	* [DO use typed `OpaqueToken<T>`](#do-use-typed-opaquetokent)
 	* [AVOID using arbitrary tokens](#avoid-using-arbitrary-tokens)
@@ -117,6 +118,30 @@ const appBaseHref = const OpaqueToken<String>('appBaseHref');
 
 // This is created as `Provider<String>`.
 const ValueProvider.forToken(appBaseHref, '1234'); 
+```
+
+### PREFER `ClassProvider` to a `Type`
+
+While slightly more terse, the following pattern is not recommended:
+
+```dart
+class HeroService {}
+ 
+const someProviders = const [
+  HeroService,  
+]; 
+```
+
+> In future versions of AngularDart, a new `Module` class will _require_ that all providers are explicitly of type (or super-type of) `Provider`, and `Type` will not be allowed: [https://github.com/dart-lang/angular/issues/543](https://github.com/dart-lang/angular/issues/543).
+
+**GOOD**: Use `ClassProvider` instead.
+
+```dart
+class HeroService {}
+ 
+const someProviders = const [
+  const ClassProvider(HeroService),  
+]; 
 ```
 
 ## Tokens
