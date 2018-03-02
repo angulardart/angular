@@ -4,6 +4,7 @@ presets:
   travis:
     tags:
       fails-on-travis:
+        skip: 'This test currently fails on travis. See code for TODOs.'
     reporter: expanded
 
 platforms:
