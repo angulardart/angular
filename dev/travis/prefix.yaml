@@ -1,0 +1,51 @@
+# Automatically generated from dev/travis/config.dart.
+#
+# To re-generate, run from the root:
+# $ dart dev/travis/config.dart
+language: dart
+
+# We currently are building against the Dart2 SDK.
+dart:
+  - dev
+
+# Gives more resources on Travis (8GB Ram, 2CPUs).
+# Do not remove without verifying w/ Travis.
+sudo: required
+
+# Only building master means that we don't run two builds for each pull request.
+branches:
+  only: [master]
+
+# Re-use downloaded pub packages everywhere.
+cache:
+  directories:
+    - $HOME/.pub-cache
+
+# Don't run travis when only markdown files are updated.
+before_install:
+  - |
+      if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        TRAVIS_COMMIT_RANGE="FETCH_HEAD...$TRAVIS_BRANCH"
+      fi
+      git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qvE '(\.md$)' || {
+        echo "Only docs were updated, stopping build process."
+        exit
+      }
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/29a036e0f0b99a936c46
+    on_success: change
+    on_failure: always
+    on_start: never
+
+# Build stages: https://docs.travis-ci.com/user/build-stages/.
+stages:
+  - presubmit
+  - building
+  - testing
+  - deploying
+
+jobs:
+  include:

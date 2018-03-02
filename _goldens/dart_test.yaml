@@ -1,0 +1,10 @@
+# TODO(https://github.com/dart-lang/test/pull/777):
+# Add this to a common dart_test.yaml configuration.
+presets:
+  travis:
+    tags:
+      fails-on-travis:
+    reporter: expanded
+
+platforms:
+  - vm
