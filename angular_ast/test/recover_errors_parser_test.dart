@@ -343,7 +343,7 @@ void main() {
     expect(property.expression, null);
     expect(property.value, '[');
 
-    checkException(ScannerErrorCode.EXPECTED_TOKEN, 15, 1);
+    checkException(ScannerErrorCode.EXPECTED_TOKEN, 16, 1);
   });
 
   test('Should parse event decorators with invalid dart value', () {
@@ -356,7 +356,7 @@ void main() {
     expect(event.expression, null);
     expect(event.value, '[');
 
-    checkException(ScannerErrorCode.EXPECTED_TOKEN, 15, 1);
+    checkException(ScannerErrorCode.EXPECTED_TOKEN, 16, 1);
   });
 
   test('Should parse banana decorator with invalid dart value', () {
