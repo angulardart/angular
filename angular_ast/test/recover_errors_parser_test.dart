@@ -344,7 +344,8 @@ void main() {
     expect(property.value, '[');
 
     checkException(ScannerErrorCode.EXPECTED_TOKEN, 16, 1);
-  });
+    // TODO: https://github.com/dart-lang/angular/issues/1001
+  }, tags: ['fails-on-travis']);
 
   test('Should parse event decorators with invalid dart value', () {
     var asts = parse('<div (myEvnt)="["></div>', parseExpression: true);
@@ -357,7 +358,8 @@ void main() {
     expect(event.value, '[');
 
     checkException(ScannerErrorCode.EXPECTED_TOKEN, 16, 1);
-  });
+    // TODO: https://github.com/dart-lang/angular/issues/1001
+  }, tags: ['fails-on-travis']);
 
   test('Should parse banana decorator with invalid dart value', () {
     var asts = parse(
