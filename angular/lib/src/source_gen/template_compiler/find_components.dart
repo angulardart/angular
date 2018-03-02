@@ -9,6 +9,7 @@ import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/offline_compiler.dart';
+import 'package:angular/src/compiler/output/convert.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
@@ -315,8 +316,15 @@ class ComponentVisitor
               _inputTypes[element.displayName] =
                   new CompileTypeMetadata(name: typeName);
             } else {
+              // Convert any generic type parameters from the input's type to
+              // our internal output AST.
+              final typeArguments = resolvedType is ParameterizedType
+                  ? resolvedType.typeArguments.map(fromDartType).toList()
+                  : const [];
               _inputTypes[element.displayName] = new CompileTypeMetadata(
-                  moduleUrl: moduleUrl(element), name: typeName);
+                  moduleUrl: moduleUrl(element),
+                  name: typeName,
+                  genericTypes: typeArguments);
             }
           }
         } else {

@@ -74,11 +74,12 @@ void bind(
   parsedExpression =
       rewriteInterpolate(parsedExpression, viewDirective.analyzedClass);
   var checkExpression = convertCdExpressionToIr(
-      nameResolver,
-      context,
-      parsedExpression,
-      viewDirective.template.preserveWhitespace,
-      _isBoolType(fieldType));
+    nameResolver,
+    context,
+    parsedExpression,
+    viewDirective.template.preserveWhitespace,
+    fieldType,
+  );
   if (isImmutable(parsedExpression, viewDirective.analyzedClass)) {
     // If the expression is a literal, it will never change, so we can run it
     // once on the first change detection.
@@ -462,7 +463,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           DetectChangesVars.cachedCtx,
           input.value,
           view.component.template.preserveWhitespace,
-          true);
+          o.BOOL_TYPE);
       dynamicInputsMethod.addStmt(directiveInstance
           .prop(input.directiveName)
           .set(checkExpression)
@@ -476,7 +477,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           DetectChangesVars.cachedCtx,
           input.value,
           view.component.template.preserveWhitespace,
-          _isBoolType(fieldType));
+          fieldType);
       if (isImmutable(input.value, view.component.analyzedClass)) {
         constantInputsMethod.addStmt(directiveInstance
             .prop(input.directiveName)
@@ -529,7 +530,9 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     CompileTypeMetadata inputTypeMeta = directive.inputTypes != null
         ? directive.inputTypes[input.directiveName]
         : null;
-    var inputType = inputTypeMeta != null ? o.importType(inputTypeMeta) : null;
+    var inputType = inputTypeMeta != null
+        ? o.importType(inputTypeMeta, inputTypeMeta.genericTypes)
+        : null;
     if (isStatefulComp) {
       bindToUpdateMethod(view, currValExpr, fieldExpr, input.value,
           DetectChangesVars.cachedCtx, statements, dynamicInputsMethod,
@@ -575,12 +578,8 @@ void bindToUpdateMethod(
     List<o.Statement> actions,
     CompileMethod method,
     {o.OutputType fieldType}) {
-  var checkExpression = convertCdExpressionToIr(
-      view.nameResolver,
-      context,
-      parsedExpression,
-      view.component.template.preserveWhitespace,
-      _isBoolType(fieldType));
+  var checkExpression = convertCdExpressionToIr(view.nameResolver, context,
+      parsedExpression, view.component.template.preserveWhitespace, fieldType);
   if (checkExpression == null) {
     // e.g. an empty expression was given
     return;
@@ -731,15 +730,6 @@ bool isPrimitiveTypeName(String typeName) {
     case 'bool':
     case 'String':
       return true;
-  }
-  return false;
-}
-
-bool _isBoolType(o.OutputType type) {
-  if (type == o.BOOL_TYPE) return true;
-  if (type is o.ExternalType) {
-    String name = type.value.name;
-    return 'bool' == name.trim();
   }
   return false;
 }

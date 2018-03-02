@@ -17,7 +17,7 @@ void main() {
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       expect(content.style.maxWidth, '40px');
-    }, skip: 'See https://github.com/dart-lang/angular/issues/844');
+    });
     test('should update styles specified in an map literal', () async {
       var testBed = new NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
