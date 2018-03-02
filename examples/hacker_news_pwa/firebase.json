@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "build/web",
+    "public": "examples/hacker_news_pwa/build/web",
     "ignore": [
       "*.module",
       "*.ng_placeholder",

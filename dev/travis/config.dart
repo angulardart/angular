@@ -9,6 +9,9 @@ void main() {
   final prefix = new File(
     p.join('dev', 'travis', 'prefix.yaml'),
   ).readAsStringSync();
+  final postfix = new File(
+    p.join('dev', 'travis', 'postfix.yaml'),
+  ).readAsStringSync();
 
   // Find packages.
   final include = new Glob('**/pubspec.yaml');
@@ -22,16 +25,23 @@ void main() {
 
   // Make build stages.
   final stages = <String>[];
+  final packages = include
+      .listSync()
+      .map((pubspec) => p.normalize(p.dirname(pubspec.path)))
+      .toList()
+        ..sort();
 
-  for (final pubspec in include.listSync()) {
-    final package = p.normalize(p.dirname(pubspec.path));
+  for (final package in packages) {
     if (exclude.any((e) => e.matches(package))) {
       continue;
     }
 
     // Every package has a pre-submit and build phase.
     stages.add(_analyze(package));
-    stages.add(_build(package));
+
+    if (_isBuildable(package)) {
+      stages.add(_build(package));
+    }
 
     // Some packages will also build in "release" (Dart2JS) mode.
     if (_hasReleaseMode(package)) {
@@ -44,7 +54,7 @@ void main() {
     if (_hasTests(package)) {
       final requiresBrowser = _hasBrowserTests(package);
       stages.add(_test(package, browser: requiresBrowser));
-      if (_hasReleaseMode(pubspec.path)) {
+      if (_hasReleaseMode(package)) {
         // TODO(https://github.com/dart-lang/build/issues/1078):
         // Dart2JS tests w/ build_runner doesn't work yet.
         // stages.add(_test(package, browser: requiresBrowser));
@@ -55,6 +65,8 @@ void main() {
   new File('.travis.yml').writeAsStringSync([
     prefix,
     stages.join('\n\n'),
+    '',
+    postfix,
     '',
   ].join('\n'));
 }
@@ -84,6 +96,11 @@ bool _hasBrowserTests(String path) {
 bool _hasCustomTestScript(String path) {
   return new File(p.join('tool', 'test.sh')).existsSync();
 }
+
+/// Whether there is `build_runner` in `pubspec.yaml`.
+bool _isBuildable(String path) => new File(p.join(path, 'pubspec.yaml'))
+    .readAsStringSync()
+    .contains('build_runner:');
 
 String _analyze(String package) {
   return [

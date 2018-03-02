@@ -4,8 +4,14 @@ set -e
 
 pushd examples/hacker_news_pwa
 
-# Deploys examples/hacker_news_pwa to Firebase!
+# Output a merged build folder.
+pub run build_runner build --config=release --fail-on-severe -o build
 
+# Prepare to deploy.
+pushd build
+
+# Deploys examples/hacker_news_pwa to Firebase!
+#
 # If we are on Travis, we expect `$FIREBASE_TOKEN` to be set.
 # Otherwise you should be logged in locally with the Firebase CLI.
 if [ -n "$TRAVIS_BUILD_ID" ]; then
@@ -14,4 +20,5 @@ else
   firebase deploy --non-interactive
 fi
 
+popd
 popd
