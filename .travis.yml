@@ -67,7 +67,9 @@ jobs:
           - _goldens/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test
+      script:
+        - cd _goldens
+        - ./tool/test.sh
       env: PKG="_goldens"
       cache:
         directories:
@@ -256,3 +258,4 @@ deploy:
   provider: firebase
   message: "Travis deploy from commit $TRAVIS_COMMIT"
   project: dart-hn
+

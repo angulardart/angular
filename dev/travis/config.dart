@@ -94,7 +94,7 @@ bool _hasBrowserTests(String path) {
 
 /// Whether there is a custom `tool/test.sh` in this package.
 bool _hasCustomTestScript(String path) {
-  return new File(p.join('tool', 'test.sh')).existsSync();
+  return new File(p.join(path, 'tool', 'test.sh')).existsSync();
 }
 
 /// Whether there is `build_runner` in `pubspec.yaml`.
