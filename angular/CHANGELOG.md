@@ -33,6 +33,11 @@
 *   Fixed a cast warning caused by untyped code generated for change detecting
     collection literals in templates.
 
+*   The view compiler is now able to tell when `exports` which are static reads
+    of the component class are immutable and `String` type. This allows us to
+    optimize them when they are used in template bindings. See
+    https://github.com/dart-lang/angular/issues/995 for more information.
+
 ## 5.0.0-alpha+6
 
 ### New features

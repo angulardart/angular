@@ -670,6 +670,8 @@ class ComponentVisitor
       } else {
         name = id.name;
       }
+
+      // TODO(het): Also store the `DartType` since we know it statically.
       exports.add(new CompileIdentifierMetadata(
         name: name,
         prefix: prefix,
