@@ -91,3 +91,64 @@ quick process, we promise!
 [github-pulls]: https://github.com/dart-lang/angular/pulls
 [individual-cla]: http://code.google.com/legal/individual-cla-v1.0.html
 [stack-overflow]: https://stackoverflow.com/questions/tagged/angular-dart
+
+## Running travis
+
+Our automated tests on Travis check the following:
+
+* `dartanalyzer` (static analysis), failing on any errors or warnings.
+* Unit tests (in the VM, Dart2JS, and DartDev).
+
+Due to a complex set of packages, we have a more complex travis setup that is
+utilizing [build stages](https://docs.travis-ci.com/user/build-stages/). In
+order to run tests locally, use the following script (on POSIX systems):
+
+```bash
+$ PKG=<pkg> tool/travis.sh <task>
+```
+
+Valid packages (`<pkg>`) include:
+
+* `_benchmarks`
+* `_goldens`
+* `_tests`
+* `angular`
+* `angular_ast`
+* `angular_compiler`
+* `angular_forms`
+* `angular_router`
+* `angular_test`
+* `examples/hacker_news_pwa`
+* `examples/hello_world`
+* `examples/hello_world_no_reflector`
+
+Valid tasks (`<task>`) include:
+
+* `analyze` (Runs `dartanalyzer --fatal-warnings .`)
+* `build` (Runs `pub run build_runner build --fail-on-severe`)
+* `build:release` (Runs `pub run build_runner build --config=release --fail-on-severe`)
+* `test` (Runs `pub run build_runner test --fail-on-severe -- -r expanded -x fails-on-travis`)
+* `test:release` (Runs `pub run build_runner test --config=release --fail-on-severe -- -r expanded -x fails-on-travis`)
+
+Some example runs:
+
+```bash
+# Runs the analyzer on package:angular.
+PKG=angular tool/travis.sh analyze
+
+# Runs tests with DDC on package:_tests.
+PKG=_tests tool/travis.sh test
+
+# Runs tests with the Dart VM on package:angular_compiler.
+PKG=angular_compiler tool/travis.sh test
+```
+
+To regenerate the `.travis.yml` script:
+
+```bash
+dart dev/travis/config.dart
+```
+
+**NOTE**: We recommend running with `dartfmt` before sending pull-requests, but
+do not validate on Travis as our source of truth is internal at Google, with a
+possible version skew on `dartfmt` output.

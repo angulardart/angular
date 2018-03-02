@@ -30,6 +30,8 @@ void main() {
     }
     findFiles = new Glob(p.join(path, _inputFiles));
   } else {
+    // TODO(https://github.com/dart-lang/build/issues/1079):
+    // Use a similar approach to Bazel to avoid special configuration for tests.
     path = 'build';
     if (!new File(p.join(path, 'test', '.packages')).existsSync()) {
       // Build runner specific: We require --precompiled=build.
