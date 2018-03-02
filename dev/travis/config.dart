@@ -45,9 +45,7 @@ void main() {
 
     // Some packages will also build in "release" (Dart2JS) mode.
     if (_hasReleaseMode(package)) {
-      // TODO(https://github.com/dart-lang/build/issues/1078):
-      // Dart2JS tests w/ build_runner doesn't work yet.
-      // stages.add(_build(package, release: true));
+      stages.add(_build(package, release: true));
     }
 
     // Some packages will have tests.
@@ -55,9 +53,7 @@ void main() {
       final requiresBrowser = _hasBrowserTests(package);
       stages.add(_test(package, browser: requiresBrowser));
       if (_hasReleaseMode(package)) {
-        // TODO(https://github.com/dart-lang/build/issues/1078):
-        // Dart2JS tests w/ build_runner doesn't work yet.
-        // stages.add(_test(package, browser: requiresBrowser));
+        stages.add(_test(package, browser: requiresBrowser));
       }
     }
   }

@@ -6,5 +6,6 @@
 # Fast fail the script on failures.
 set -e
 
+pub upgrade
 pub run build_runner build -o build
 pub run test
