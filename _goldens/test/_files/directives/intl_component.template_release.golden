@@ -183,8 +183,6 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
   import2.Text _text_1;
   import2.ButtonElement _el_2;
   import2.Text _text_3;
-  var _expr_0;
-  var _expr_1;
   static RenderComponentType _renderType;
   ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-with-final');
@@ -208,15 +206,12 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
 
   @override
   void detectChangesInternal() {
-    final currVal_0 = import6.interpolate0(import1.CompWithFinalStatic.okMessage);
-    if (!identical(_expr_0, currVal_0)) {
-      _text_1.text = currVal_0;
-      _expr_0 = currVal_0;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      (_text_1.text = (import1.CompWithFinalStatic.okMessage ?? ''));
     }
-    final currVal_1 = import6.interpolate0(import1.CompWithFinalStatic.cancelMessage);
-    if (!identical(_expr_1, currVal_1)) {
-      _text_3.text = currVal_1;
-      _expr_1 = currVal_1;
+    if (firstCheck) {
+      (_text_3.text = (import1.CompWithFinalStatic.cancelMessage ?? ''));
     }
   }
 }
