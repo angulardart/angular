@@ -16,6 +16,10 @@ There are many different ways to use AngularDart to provide and utilize dependen
 	* [PREFER `MultiToken<T>` to `multi: true`](#...)
 * [Injectors](#injectors)
 	* [AVOID using `ReflectiveInjector`](#avoid-using-reflectiveinjector)
+* [Components](#components)
+	* [AVOID using injection to configure individual components](#...)
+* [Annotations](#annotations)
+	* [PREFER omitting `@Injectable()` where possible](#...) 
 
 ## Providers
 
@@ -317,3 +321,105 @@ final InjectorFactory heroInjector = ng.heroInjector$Injector;
 ```
 
 ## Components
+
+### AVOID using injection to configure individual components
+
+Imagine you have a component (`HeroComponent`, or `<hero-component>`) that requires a model object (`HeroData`) in order to render. You could use `@Input()` _or_ could use dependency injection.
+
+```dart
+Class HeroData {
+  final bool hasPowerOfFlight;
+  final bool vulnerableToGreenGlowingRocks;
+
+  HeroData({
+    this.hasPowerOfFlight: false,
+    this.vulnerableToGreenGlowingRocks: false,    
+  });
+}
+```
+
+**BAD**: Using dependency injection for configuration.
+
+```dart
+@Component(
+  selector: 'hero-component',
+  template: 'I am a HERO, but can I fly: {{canIFly}}',
+)
+class HeroComponent {
+  final HeroData _heroData;
+
+  HeroComponent(this._heroData);
+  
+  String get canIFly {
+    return _heroData.hasPowerOfFlight ? 'Yes' : 'No';
+  }
+} 
+```
+
+While this might _look_ pleasing (i.e. for testing), it means it becomes very verbose, confusing, and difficult to have multiple hero components with different configurations - probably not what you want. Use `@Input` instead.
+
+**GOOD**: Using `@Input()` instead for configuration.
+
+```dart
+@Component(
+  selector: 'hero-component',
+  template: 'I am a HERO, but can I fly: {{canIFly}}',
+)
+class HeroComponent {
+  @Input('can-fly')
+  bool hasPowerOfFlight = false;
+  
+  String get canIFly {
+    return hasPowerOfFlight ? 'Yes' : 'No';
+  }
+} 
+```
+
+**GOOD**: Using dependency injection when configuring app-wide components.
+
+If you want to, for example, set a property on _all_ `HeroComponent`s, then dependency injection is perfectly fine (and preferred if you will have many of them). You could also consider using `@Optional()` in order to avoid making it a required service.
+
+```dart
+abstract class HeroAuthentication {
+  bool isLoggedInAsHero(String name);
+}
+ 
+@Component(
+  selector: 'hero-component', 
+  template: '...',
+)
+class HeroComponent {
+  final HeroAuthentication _auth;
+
+  HeroComponent(@Optional() this._auth);
+
+  @Input()
+  set name(String name) {
+    if (_auth != null && !_auth.isLoggedInAsHero(name)) {
+      throw new ArgumentError('Not logged in!'); 
+    }
+    // ...
+  }
+}
+```
+
+## Annotations
+
+### PREFER omitting `@Injectable()` where possible
+
+While sometimes not clear, the `@Injectable()` annotation is actually a legacy feature that is required for runtime-configuration of injectors.
+
+> **NOTE**: For teams or users still utilizing the `bootstrapStatic` (most users as of this writing) method or creating `ReflectiveInjector`s at runtime, _disregard this part of the guide_, but also know that this pattern is not desirable long-term - it increases the code-size of your app somewhat dramatically.
+
+**BAD**:
+
+```dart
+@Injectable()
+class HeroService {} 
+```
+
+**GOOD**:
+
+```dart
+class HeroService {}
+```
