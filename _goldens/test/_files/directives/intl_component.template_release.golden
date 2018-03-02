@@ -1,0 +1,270 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'intl_component.dart';
+export 'intl_component.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'intl_component.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/angular.dart';
+
+const List<dynamic> styles$CompWithoutFinal = const [];
+
+class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
+  import2.ButtonElement _el_0;
+  import2.Text _text_1;
+  import2.ButtonElement _el_2;
+  import2.Text _text_3;
+  var _expr_0;
+  var _expr_1;
+  static RenderComponentType _renderType;
+  ViewCompWithoutFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('comp-without-final');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithoutFinal);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.CompWithoutFinal> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    _text_1 = new import2.Text('');
+    _el_0.append(_text_1);
+    _el_2 = createAndAppend(doc, 'button', parentRenderNode);
+    _text_3 = new import2.Text('');
+    _el_2.append(_text_3);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.CompWithoutFinal _ctx = ctx;
+    final currVal_0 = (_ctx.okMessage ?? '');
+    if (!identical(_expr_0, currVal_0)) {
+      _text_1.text = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = (_ctx.cancelMessage ?? '');
+    if (!identical(_expr_1, currVal_1)) {
+      _text_3.text = currVal_1;
+      _expr_1 = currVal_1;
+    }
+  }
+}
+
+AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinal0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewCompWithoutFinal0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$CompWithoutFinalHost = const [];
+
+class _ViewCompWithoutFinalHost0 extends AppView<dynamic> {
+  ViewCompWithoutFinal0 _compView_0;
+  import1.CompWithoutFinal _CompWithoutFinal_0_5;
+  _ViewCompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewCompWithoutFinal0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _CompWithoutFinal_0_5 = new import1.CompWithoutFinal();
+    _compView_0.create(_CompWithoutFinal_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.CompWithoutFinal>(0, this, rootEl, _CompWithoutFinal_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_CompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewCompWithoutFinalHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.CompWithoutFinal> CompWithoutFinalNgFactory = const ComponentFactory<import1.CompWithoutFinal>('comp-without-final', viewFactory_CompWithoutFinalHost0, _CompWithoutFinalMetadata);
+const List<dynamic> styles$CompWithFinal = const [];
+
+class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
+  import2.ButtonElement _el_0;
+  import2.Text _text_1;
+  import2.ButtonElement _el_2;
+  import2.Text _text_3;
+  static RenderComponentType _renderType;
+  ViewCompWithFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('comp-with-final');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithFinal);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.CompWithFinal> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    _text_1 = new import2.Text('');
+    _el_0.append(_text_1);
+    _el_2 = createAndAppend(doc, 'button', parentRenderNode);
+    _text_3 = new import2.Text('');
+    _el_2.append(_text_3);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.CompWithFinal _ctx = ctx;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      (_text_1.text = (_ctx.okMessage ?? ''));
+    }
+    if (firstCheck) {
+      (_text_3.text = (_ctx.cancelMessage ?? ''));
+    }
+  }
+}
+
+AppView<import1.CompWithFinal> viewFactory_CompWithFinal0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewCompWithFinal0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$CompWithFinalHost = const [];
+
+class _ViewCompWithFinalHost0 extends AppView<dynamic> {
+  ViewCompWithFinal0 _compView_0;
+  import1.CompWithFinal _CompWithFinal_0_5;
+  _ViewCompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewCompWithFinal0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _CompWithFinal_0_5 = new import1.CompWithFinal();
+    _compView_0.create(_CompWithFinal_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.CompWithFinal>(0, this, rootEl, _CompWithFinal_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_CompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewCompWithFinalHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.CompWithFinal> CompWithFinalNgFactory = const ComponentFactory<import1.CompWithFinal>('comp-with-final', viewFactory_CompWithFinalHost0, _CompWithFinalMetadata);
+const List<dynamic> styles$CompWithFinalStatic = const [];
+
+class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
+  import2.ButtonElement _el_0;
+  import2.Text _text_1;
+  import2.ButtonElement _el_2;
+  import2.Text _text_3;
+  static RenderComponentType _renderType;
+  ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('comp-with-final');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithFinalStatic);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.CompWithFinalStatic> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    _text_1 = new import2.Text('');
+    _el_0.append(_text_1);
+    _el_2 = createAndAppend(doc, 'button', parentRenderNode);
+    _text_3 = new import2.Text('');
+    _el_2.append(_text_3);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.CompWithFinalStatic _ctx = ctx;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      (_text_1.text = (_ctx.okMessage ?? ''));
+    }
+    if (firstCheck) {
+      (_text_3.text = (_ctx.cancelMessage ?? ''));
+    }
+  }
+}
+
+AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewCompWithFinalStatic0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$CompWithFinalStaticHost = const [];
+
+class _ViewCompWithFinalStaticHost0 extends AppView<dynamic> {
+  ViewCompWithFinalStatic0 _compView_0;
+  import1.CompWithFinalStatic _CompWithFinalStatic_0_5;
+  _ViewCompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewCompWithFinalStatic0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _CompWithFinalStatic_0_5 = new import1.CompWithFinalStatic();
+    _compView_0.create(_CompWithFinalStatic_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.CompWithFinalStatic>(0, this, rootEl, _CompWithFinalStatic_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_CompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewCompWithFinalStaticHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.CompWithFinalStatic> CompWithFinalStaticNgFactory = const ComponentFactory<import1.CompWithFinalStatic>('comp-with-final', viewFactory_CompWithFinalStaticHost0, _CompWithFinalStaticMetadata);
+const _CompWithoutFinalMetadata = const [];
+const _CompWithFinalMetadata = const [];
+const _CompWithFinalStaticMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(CompWithoutFinal, CompWithoutFinalNgFactory);
+  _ngRef.registerComponent(CompWithFinal, CompWithFinalNgFactory);
+  _ngRef.registerComponent(CompWithFinalStatic, CompWithFinalStaticNgFactory);
+  _ref0.initReflector();
+}
