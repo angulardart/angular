@@ -87,53 +87,68 @@ class ViewNameResolver implements NameResolver {
   }
 
   @override
-  o.Expression createLiteralList(List<o.Expression> values) {
-    if (identical(values.length, 0)) {
+  o.Expression createLiteralList(
+    List<o.Expression> values, {
+    o.OutputType type,
+  }) {
+    if (values.isEmpty) {
       return o.importExpr(Identifiers.EMPTY_ARRAY);
     }
     var proxyExpr =
         new o.ReadClassMemberExpr('_arr_${_state.literalListCount++}');
     List<o.FnParam> proxyParams = [];
     List<o.Expression> proxyReturnEntries = [];
-    for (var i = 0; i < values.length; i++) {
+    final numValues = values.length;
+    for (var i = 0; i < numValues; i++) {
       var paramName = 'p$i';
       proxyParams.add(new o.FnParam(paramName));
       proxyReturnEntries.add(o.variable(paramName));
     }
+    final listType = _createListTypeFrom(type);
+    final pureProxyType =
+        new o.FunctionType(listType, new List.filled(numValues, listType.of));
     _state.view.createPureProxy(
         o.fn(
             proxyParams,
             [new o.ReturnStatement(o.literalArr(proxyReturnEntries))],
             new o.ArrayType(o.DYNAMIC_TYPE)),
-        values.length,
-        proxyExpr);
+        numValues,
+        proxyExpr,
+        pureProxyType: pureProxyType);
     return proxyExpr.callFn(values);
   }
 
   @override
   o.Expression createLiteralMap(
-      List<List<dynamic /* String | o . Expression */ >> entries) {
-    if (identical(entries.length, 0)) {
+    List<List<dynamic /* String | o.Expression */ >> entries, {
+    o.OutputType type,
+  }) {
+    if (entries.isEmpty) {
       return o.importExpr(Identifiers.EMPTY_MAP);
     }
     var proxyExpr =
         new o.ReadClassMemberExpr('_map_${_state.literalMapCount++}');
     List<o.FnParam> proxyParams = [];
-    List<List<dynamic /* String | o . Expression */ >> proxyReturnEntries = [];
+    List<List<dynamic /* String | o.Expression */ >> proxyReturnEntries = [];
     List<o.Expression> values = [];
-    for (var i = 0; i < entries.length; i++) {
+    final numEntries = entries.length;
+    for (var i = 0; i < numEntries; i++) {
       var paramName = 'p$i';
       proxyParams.add(new o.FnParam(paramName));
       proxyReturnEntries.add([entries[i][0], o.variable(paramName)]);
       values.add((entries[i][1] as o.Expression));
     }
+    final mapType = _createMapTypeFrom(type);
+    final pureProxyType = new o.FunctionType(
+        mapType, new List.filled(numEntries, mapType.valueType));
     _state.view.createPureProxy(
         o.fn(
             proxyParams,
             [new o.ReturnStatement(o.literalMap(proxyReturnEntries))],
             new o.MapType(o.DYNAMIC_TYPE)),
-        entries.length,
-        proxyExpr);
+        numEntries,
+        proxyExpr,
+        pureProxyType: pureProxyType);
     return proxyExpr.callFn(values);
   }
 
@@ -142,4 +157,32 @@ class ViewNameResolver implements NameResolver {
 
   @override
   ViewNameResolver scope() => new ViewNameResolver._scope(_state);
+}
+
+/// Creates a List<T> type assignable to [type].
+///
+/// It's possible that [type] can't be assigned a list, in which case we rely on
+/// analysis of the generated code to report the incompatibility.
+o.ArrayType _createListTypeFrom(o.OutputType type) {
+  if (type is o.ExternalType &&
+      type.typeParams.isNotEmpty &&
+      (type.value.name == 'List' ||
+          type.value.name == 'Iterable' ||
+          type.value.name == 'dynamic')) {
+    return new o.ArrayType(type.typeParams.first);
+  }
+  return new o.ArrayType(o.DYNAMIC_TYPE);
+}
+
+/// Creates a Map<String, V> type assignable to [type].
+///
+/// It's possible that [type] and can't be assigned a map, in which case we rely
+/// on analysis of the generated code to report the incompatibility.
+o.MapType _createMapTypeFrom(o.OutputType type) {
+  if (type is o.ExternalType &&
+      type.typeParams.isNotEmpty &&
+      (type.value.name == 'Map' || type.value.name == 'dynamic')) {
+    return new o.MapType(type.typeParams[1]);
+  }
+  return new o.MapType(o.DYNAMIC_TYPE);
 }

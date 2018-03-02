@@ -16,6 +16,12 @@
     invoke the corresponding `bypassSecurityTrust*()` method, instead of
     constructing these types directly.
 
+*   Private types can't be used in template collection literals bound to an
+    input. This is a consequence of fixing a cast warning that is soon to be an
+    error caused by the code generated for change detecting collection literals
+    in templates. See https://github.com/dart-lang/angular/issues/844 for more
+    information.
+
 ### Bug fixes
 
 *   The view compiler hoists `this.rootEl` as a `final` local variable to help
@@ -23,6 +29,9 @@
     class instance variable is not needed. This should help remove interceptors
     and reduce code-size a bit, especially for users of `@HostBinding` or
     `@HostListener` (https://github.com/dart-lang/angular/issues/450).
+
+*   Fixed a cast warning caused by untyped code generated for change detecting
+    collection literals in templates.
 
 ## 5.0.0-alpha+6
 
