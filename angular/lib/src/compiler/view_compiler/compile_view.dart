@@ -16,6 +16,7 @@ import '../compile_metadata.dart'
         CompilePipeMetadata,
         CompileQueryMetadata,
         CompileTokenMap;
+import '../compiler_utils.dart';
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
@@ -50,8 +51,7 @@ import 'view_compiler_utils.dart'
         getViewFactoryName,
         identifierFromTagName,
         injectFromViewParentInjector,
-        mergeHtmlAndDirectiveAttrs,
-        ViewCompileDependency;
+        mergeHtmlAndDirectiveAttrs;
 import 'view_name_resolver.dart';
 
 /// Visibility of NodeReference within AppView implementation.
@@ -159,7 +159,6 @@ abstract class AppViewBuilder {
       NodeReference elementRef,
       int nodeIndex,
       ElementAst ast,
-      List<ViewCompileDependency> targetDependencies,
       {bool isDeferred});
 
   /// Creates call to AppView.create to build an AppView.
@@ -615,12 +614,11 @@ class CompileView implements AppViewBuilder {
       NodeReference elementRef,
       int nodeIndex,
       bool isDeferred,
-      ElementAst ast,
-      List<ViewCompileDependency> targetDeps) {
+      ElementAst ast) {
     CompileIdentifierMetadata componentViewIdentifier =
-        new CompileIdentifierMetadata(name: 'View${childComponent.type.name}0');
-    targetDeps.add(
-        new ViewCompileDependency(childComponent, componentViewIdentifier));
+        new CompileIdentifierMetadata(
+            name: 'View${childComponent.type.name}0',
+            moduleUrl: templateModuleUrl(childComponent.type));
 
     bool isHostRootView = nodeIndex == 0 && viewType == ViewType.HOST;
     var elementType = isHostRootView
@@ -647,9 +645,8 @@ class CompileView implements AppViewBuilder {
       // deferredLibName.viewFactory_SomeComponent(...)
       CompileIdentifierMetadata nestedComponentIdentifier =
           new CompileIdentifierMetadata(
-              name: getViewFactoryName(childComponent, 0));
-      targetDeps.add(
-          new ViewCompileDependency(childComponent, nestedComponentIdentifier));
+              name: getViewFactoryName(childComponent, 0),
+              moduleUrl: templateModuleUrl(childComponent.type));
 
       var importExpr = o.importExpr(nestedComponentIdentifier);
       _createMethod.addStmt(new o.WriteClassMemberExpr(appViewRef._name,
@@ -745,10 +742,9 @@ class CompileView implements AppViewBuilder {
       NodeReference elementRef,
       int nodeIndex,
       ElementAst ast,
-      List<ViewCompileDependency> targetDependencies,
       {bool isDeferred}) {
-    AppViewReference compAppViewExpr = _createAppViewNodeAndComponent(parent,
-        component, elementRef, nodeIndex, isDeferred, ast, targetDependencies);
+    AppViewReference compAppViewExpr = _createAppViewNodeAndComponent(
+        parent, component, elementRef, nodeIndex, isDeferred, ast);
 
     if (_isRootNodeOfHost(nodeIndex)) {
       // Assign root element created by viewfactory call to our own root.

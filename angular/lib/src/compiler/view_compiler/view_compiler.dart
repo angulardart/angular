@@ -18,14 +18,12 @@ import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
 import 'view_binder.dart' show bindView, bindViewHostProperties;
 import 'view_builder.dart';
-import 'view_compiler_utils.dart'
-    show outlinerDeprecated, ViewCompileDependency;
+import 'view_compiler_utils.dart' show outlinerDeprecated;
 
 class ViewCompileResult {
   List<o.Statement> statements;
   String viewFactoryVar;
-  List<ViewCompileDependency> dependencies;
-  ViewCompileResult(this.statements, this.viewFactoryVar, this.dependencies);
+  ViewCompileResult(this.statements, this.viewFactoryVar);
 }
 
 /// Compiles a single component to a set of CompileView(s) and generates top
@@ -50,17 +48,15 @@ class ViewCompiler {
       List<CompilePipeMetadata> pipes,
       Map<String, String> deferredModules) {
     var statements = <o.Statement>[];
-    var dependencies = <ViewCompileDependency>[];
     var view = new CompileView(component, _genConfig, pipes, styles, 0,
         new CompileElement.root(), [], deferredModules);
-    buildView(view, template, stylesCompileResult, dependencies);
+    buildView(view, template, stylesCompileResult);
     // Need to separate binding from creation to be able to refer to
     // variables that have been declared after usage.
     bindView(view, template);
     bindHostProperties(view);
     finishView(view, statements);
-    return new ViewCompileResult(
-        statements, view.viewFactory.name, dependencies);
+    return new ViewCompileResult(statements, view.viewFactory.name);
   }
 
   void bindHostProperties(CompileView view) {
@@ -76,13 +72,10 @@ class ViewCompiler {
   }
 
   /// Builds the view and returns number of nested views generated.
-  int buildView(
-      CompileView view,
-      List<TemplateAst> template,
-      StylesCompileResult stylesCompileResult,
-      List<ViewCompileDependency> targetDependencies) {
-    var builderVisitor = new ViewBuilderVisitor(
-        view, parser, targetDependencies, stylesCompileResult);
+  int buildView(CompileView view, List<TemplateAst> template,
+      StylesCompileResult stylesCompileResult) {
+    var builderVisitor =
+        new ViewBuilderVisitor(view, parser, stylesCompileResult);
     templateVisitAll(builderVisitor, template,
         view.declarationElement.parent ?? view.declarationElement);
     return builderVisitor.nestedViewCount;

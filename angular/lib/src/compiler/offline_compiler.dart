@@ -4,12 +4,8 @@ import 'dart:convert';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'compile_metadata.dart'
-    show
-        CompileDirectiveMetadata,
-        CompilePipeMetadata,
-        CompileTypeMetadata,
-        createHostComponentMeta;
-import 'compiler_utils.dart' show MODULE_SUFFIX;
+    show CompileDirectiveMetadata, CompilePipeMetadata, createHostComponentMeta;
+import 'compiler_utils.dart' show MODULE_SUFFIX, templateModuleUrl;
 import 'directive_normalizer.dart' show DirectiveNormalizer;
 import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
@@ -19,7 +15,7 @@ import 'style_compiler.dart' show StyleCompiler, StylesCompileResult;
 import 'template_ast.dart';
 import 'template_parser.dart' show TemplateParser;
 import 'view_compiler/directive_compiler.dart';
-import 'view_compiler/view_compiler.dart' show ViewCompiler, ViewCompileResult;
+import 'view_compiler/view_compiler.dart' show ViewCompiler;
 
 /// List of components and directives in source module.
 class AngularArtifacts {
@@ -84,9 +80,9 @@ class OfflineCompiler {
     }
     String moduleUrl;
     if (components.isNotEmpty) {
-      moduleUrl = _templateModuleUrl(components[0].component.type);
+      moduleUrl = templateModuleUrl(components[0].component.type);
     } else if (artifacts.directives.isNotEmpty) {
-      moduleUrl = _templateModuleUrl(artifacts.directives.first.type);
+      moduleUrl = templateModuleUrl(artifacts.directives.first.type);
     } else {
       throw new BaseException('No components nor injectorModules given');
     }
@@ -183,7 +179,7 @@ class OfflineCompiler {
     var viewResult = _viewCompiler.compileComponent(compMeta, parsedTemplate,
         styleResult, o.variable(styleResult.stylesVar), pipes, deferredModules);
     targetStatements.addAll(_resolveStyleStatements(styleResult));
-    targetStatements.addAll(_resolveViewStatements(viewResult));
+    targetStatements.addAll(viewResult.statements);
     return viewResult.viewFactoryVar;
   }
 
@@ -198,26 +194,12 @@ class OfflineCompiler {
   }
 }
 
-List<o.Statement> _resolveViewStatements(ViewCompileResult compileResult) {
-  for (var dep in compileResult.dependencies) {
-    dep.factoryPlaceholder.moduleUrl = _templateModuleUrl(dep.comp.type);
-  }
-  return compileResult.statements;
-}
-
 List<o.Statement> _resolveStyleStatements(StylesCompileResult compileResult) {
   for (var dep in compileResult.dependencies) {
     dep.valuePlaceholder.moduleUrl =
         _stylesModuleUrl(dep.sourceUrl, dep.isShimmed);
   }
   return compileResult.statements;
-}
-
-String _templateModuleUrl(CompileTypeMetadata type) {
-  var moduleUrl = type.moduleUrl;
-  var urlWithoutSuffix =
-      moduleUrl.substring(0, moduleUrl.length - MODULE_SUFFIX.length);
-  return '$urlWithoutSuffix.template$MODULE_SUFFIX';
 }
 
 String _stylesModuleUrl(String stylesheetUrl, bool shim) {

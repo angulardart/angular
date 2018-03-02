@@ -57,15 +57,13 @@ import 'view_compiler_utils.dart'
         createSetAttributeStatement,
         detectHtmlElementFromTagName,
         componentFromDirectives,
-        identifierFromTagName,
-        ViewCompileDependency;
+        identifierFromTagName;
 
 var rootSelectorVar = o.variable("rootSelector");
 
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   final CompileView view;
   final Parser parser;
-  final List<ViewCompileDependency> targetDependencies;
   final StylesCompileResult stylesCompileResult;
 
   /// This is `true` if this is building a view that will be inlined into it's
@@ -82,8 +80,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   static final defaultDocVarName = 'doc';
   String docVarName;
 
-  ViewBuilderVisitor(
-      this.view, this.parser, this.targetDependencies, this.stylesCompileResult,
+  ViewBuilderVisitor(this.view, this.parser, this.stylesCompileResult,
       {this.isInlinedView: false});
 
   bool _isRootNode(CompileElement parent) {
@@ -169,7 +166,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       ElementAst ast,
       {bool isDeferred: false}) {
     AppViewReference compAppViewExpr = view.createComponentNodeAndAppend(
-        component, parent, elementRef, nodeIndex, ast, targetDependencies,
+        component, parent, elementRef, nodeIndex, ast,
         isDeferred: isDeferred);
 
     if (view.viewType != ViewType.HOST) {
@@ -317,7 +314,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     // Create a visitor for embedded view and visit all nodes.
     var embeddedViewVisitor = new ViewBuilderVisitor(
-        embeddedView, parser, targetDependencies, stylesCompileResult,
+        embeddedView, parser, stylesCompileResult,
         isInlinedView: isSimpleNgIf);
     templateVisitAll(
         embeddedViewVisitor,

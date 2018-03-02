@@ -28,13 +28,6 @@ const bool outlinerDeprecated = false;
 /// Variable name used to read viewData.parentIndex in build functions.
 const String cachedParentIndexVarName = 'parentIdx';
 
-/// Component dependency and associated identifier.
-class ViewCompileDependency {
-  CompileDirectiveMetadata comp;
-  CompileIdentifierMetadata factoryPlaceholder;
-  ViewCompileDependency(this.comp, this.factoryPlaceholder);
-}
-
 // Creates method parameters list for AppView set attribute calls.
 List<o.Expression> createSetAttributeParams(o.Expression renderNode,
     String attrNs, String attrName, o.Expression valueExpr) {
