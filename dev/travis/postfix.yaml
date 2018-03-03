@@ -1,14 +1,19 @@
-# Create a merged output build/.
-before_deploy:
-  - pushd examples/hacker_news_pwa
-  - pub run build_runner build -o build --fail-on-severe
-  - popd
-
-deploy:
-  skip_cleanup: true
-  on:
-    repo: dart-lang/angular
-    condition: -d "examples/hacker_news_pwa/build/web"
-  provider: firebase
-  message: "Travis deploy from commit $TRAVIS_COMMIT"
-  project: dart-hn
+    # Deploy the PWA application to Firebase.
+    # See https://docs.travis-ci.com/user/build-stages/#Build-Stages-and-Deployments.
+    - stage: deploying
+      script: skip
+      env: PKG="examples/hacker_news_pwa"
+      cache:
+        directories:
+          - examples/hacker_news_pwa/.dart_tool
+      before_deploy:
+        - pushd examples/hacker_news_pwa
+        - pub run build_runner build -o build --fail-on-severe
+        - popd
+      deploy:
+        skip_cleanup: true
+          on:
+            repo: dart-lang/angular
+          provider: firebase
+          message: "Travis deploy from commit $TRAVIS_COMMIT"
+          project: dart-hn
