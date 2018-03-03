@@ -21,6 +21,25 @@ cache:
   directories:
     - $HOME/.pub-cache
 
+# Don't run travis when only markdown files are updated.
+before_install:
+  - |
+      if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        TRAVIS_COMMIT_RANGE="FETCH_HEAD...$TRAVIS_BRANCH"
+      fi
+      git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qvE '(\.md$)' || {
+        echo "Only docs were updated, stopping build process."
+        exit
+      }
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/29a036e0f0b99a936c46
+    on_success: change
+    on_failure: always
+    on_start: never
+
 # Build stages: https://docs.travis-ci.com/user/build-stages/.
 stages:
   - presubmit
@@ -285,18 +304,24 @@ jobs:
         directories:
           - examples/hello_world_no_reflector/.dart_tool
 
-# Create a merged output build/.
-before_deploy:
-  - pushd examples/hacker_news_pwa
-  - pub run build_runner build -o build --fail-on-severe
-  - popd
-
-deploy:
-  skip_cleanup: true
-  on:
-    repo: dart-lang/angular
-    condition: -d "examples/hacker_news_pwa/.dart_tool/build"
-  provider: firebase
-  message: "Travis deploy from commit $TRAVIS_COMMIT"
-  project: dart-hn
+    # Deploy the PWA application to Firebase.
+    # See https://docs.travis-ci.com/user/build-stages/#Build-Stages-and-Deployments.
+    - stage: deploying
+      script: skip
+      env: PKG="examples/hacker_news_pwa"
+      cache:
+        directories:
+          - examples/hacker_news_pwa/.dart_tool
+      before_deploy:
+        - pushd examples/hacker_news_pwa
+        - pub upgrade
+        - pub run build_runner build -o build --fail-on-severe --config release
+        - popd
+      deploy:
+        skip_cleanup: true
+          on:
+            repo: dart-lang/angular
+          provider: firebase
+          message: "Travis deploy from commit $TRAVIS_COMMIT"
+          project: dart-hn
 
