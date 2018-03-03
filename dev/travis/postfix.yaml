@@ -8,7 +8,7 @@
           - examples/hacker_news_pwa/.dart_tool
       before_deploy:
         - pushd examples/hacker_news_pwa
-        - pub run build_runner build -o build --fail-on-severe
+        - pub run build_runner build -o build --fail-on-severe --config release
         - popd
       deploy:
         skip_cleanup: true
