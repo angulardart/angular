@@ -29,6 +29,10 @@ dependencies:
   source_span: ^1.4.0
   tuple: ^1.0.1
 
+  # "Forces" support for optional builders.
+  # See https://github.com/dart-lang/angular/issues/988.
+  build_resolvers: ^0.2.0
+
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
   angular_ast:
