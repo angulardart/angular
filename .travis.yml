@@ -319,9 +319,8 @@ jobs:
         - popd
       deploy:
         skip_cleanup: true
-          on:
-            repo: dart-lang/angular
-          provider: firebase
-          message: "Travis deploy from commit $TRAVIS_COMMIT"
-          project: dart-hn
-
+        on:
+          repo: dart-lang/angular
+        provider: firebase
+        message: "Travis deploy from commit $TRAVIS_COMMIT"
+        project: dart-hn
