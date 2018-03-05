@@ -22,6 +22,10 @@
     in templates. See https://github.com/dart-lang/angular/issues/844 for more
     information.
 
+*   `OpaqueToken` and `MultiToken` no longer have overriden `operator==` and
+    `hashCode` methods/fields. This wasn't supported, in practice, in most of
+    the DI systems, but any custom use of this class may have relied on this.
+
 ### Bug fixes
 
 *   The view compiler hoists `this.rootEl` as a `final` local variable to help
