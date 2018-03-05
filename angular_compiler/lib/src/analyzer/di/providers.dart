@@ -47,7 +47,9 @@ class ProviderReader {
 
   ProviderElement _parseProvider(DartObject o) {
     final reader = new ConstantReader(o);
-    final token = _tokenReader.parseTokenObject(o.getField('token'));
+    final token = _tokenReader.parseTokenObject(
+      reader.read('token').objectValue,
+    );
     final useClass = reader.read('useClass');
     if (!useClass.isNull) {
       return _parseUseClass(token, o, useClass.typeValue.element);
