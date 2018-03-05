@@ -22,7 +22,7 @@ enum NavigationResult { SUCCESS, BLOCKED_BY_GUARD, INVALID_ROUTE }
 ///
 ///   @override
 ///   void ngOnInit() {
-///     _router.stream.listen((newState) {
+///     _router.onRouteActivated.listen((newState) {
 ///       print('Navigating from ${_router.current} to $newState');
 ///     });
 ///   }
@@ -47,6 +47,12 @@ abstract class Router {
   /// redirects to, is emitted.
   Stream<String> get onNavigationStart;
 
+  /// Emits the next router state after a new route is activated.
+  ///
+  /// Note, this should occur before [current] is updated.
+  Stream<RouterState> get onRouteActivated => stream;
+
+  @Deprecated("Renamed to 'onRouteActivated'")
   Stream<RouterState> get stream;
 
   /// Attempts to navigate to a route that matches [path].

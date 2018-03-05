@@ -24,7 +24,7 @@ import 'router_state.dart';
 /// internal details for the average user.
 @Injectable()
 class RouterImpl extends Router {
-  final StreamController<RouterState> _streamController =
+  final StreamController<RouterState> _onRouteActivated =
       new StreamController<RouterState>.broadcast(sync: true);
   final Location _location;
   final RouterHook _routerHook;
@@ -64,7 +64,8 @@ class RouterImpl extends Router {
     return _onNavigationStart.stream;
   }
 
-  Stream<RouterState> get stream => _streamController.stream;
+  @override
+  Stream<RouterState> get stream => _onRouteActivated.stream;
 
   @override
   void registerRootOutlet(RouterOutlet routerOutlet) {
@@ -433,7 +434,7 @@ class RouterImpl extends Router {
       }
     }
 
-    _streamController.add(nextState);
+    _onRouteActivated.add(nextState);
     _activeState = nextState;
     _activeComponentRefs = mutableNextState.components;
   }

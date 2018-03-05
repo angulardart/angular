@@ -2,6 +2,9 @@
 
 *   `RouterOutlet` is no longer injectable.
 
+*   Renamed `Router.stream` to `Router.onRouteActivated`. `Router.stream` is now
+    deprecated and will be removed after next release.
+
 ### Bug fixes
 
 *   `RouterPath.toUrl()` no longer generates an incorrect URL with an extra '/'
