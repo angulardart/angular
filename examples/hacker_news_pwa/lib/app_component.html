@@ -3,13 +3,13 @@
     <a href="https://webdev.dartlang.org/angular">
       <img src="/images/logo.svg" alt="AngularDart logo">
     </a>
-    <a [routerLink]="newsUrl" routerLinkActive="active-route">top</a>
-    <a [routerLink]="newUrl" routerLinkActive="active-route">new</a>
-    <a [routerLink]="showUrl" routerLinkActive="active-route">show</a>
-    <a [routerLink]="askUrl" routerLinkActive="active-route">ask</a>
-    <a [routerLink]="jobsUrl" routerLinkActive="active-route">jobs</a>
+    <a [routerLink]="AppComponent.newsUrl" routerLinkActive="active-route">top</a>
+    <a [routerLink]="AppComponent.newUrl" routerLinkActive="active-route">new</a>
+    <a [routerLink]="AppComponent.showUrl" routerLinkActive="active-route">show</a>
+    <a [routerLink]="AppComponent.askUrl" routerLinkActive="active-route">ask</a>
+    <a [routerLink]="AppComponent.jobsUrl" routerLinkActive="active-route">jobs</a>
   </nav>
 </header>
 <main>
-  <router-outlet [routes]="routes"></router-outlet>
+  <router-outlet [routes]="AppComponent.routes"></router-outlet>
 </main>
