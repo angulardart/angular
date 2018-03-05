@@ -1,22 +1,27 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:http/browser_client.dart';
+import 'package:angular/angular.dart';
+import 'package:http/http.dart';
+
+/// Represents the base URL for HTTP requests using [HackerNewsService].
+const baseUrl = const OpaqueToken<String>('baseUrl');
+const defaultBaseUrl = 'https://node-hnapi.herokuapp.com';
 
 class HackerNewsService {
-  static const String baseUrl = 'https://node-hnapi.herokuapp.com';
-  final BrowserClient _client;
+  final String _baseUrl;
+  final BaseClient _client;
 
-  HackerNewsService() : _client = new BrowserClient();
+  HackerNewsService(this._baseUrl, this._client);
 
   Future<List<Map>> getFeed(String name, int page) async {
-    final url = '$baseUrl/$name?page=$page';
+    final url = '$_baseUrl/$name?page=$page';
     final response = await _client.get(url);
     return JSON.decode(response.body);
   }
 
   Future<Map> getItem(String id) async {
-    final url = '$baseUrl/item/$id';
+    final url = '$_baseUrl/item/$id';
     final response = await _client.get(url);
     return JSON.decode(response.body);
   }
