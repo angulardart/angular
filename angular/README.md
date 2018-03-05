@@ -38,7 +38,7 @@ a set of [community contributed tutorials][comm].
 [codelab1]: https://codelabs.developers.google.com/codelabs/your-first-angulardart-web-app/
 [tutorial]: https://webdev.dartlang.org/angular/tutorial
 [codelabs]: https://webdev.dartlang.org/codelabs
-[comm]: https://dart.academy/tag/angular2/
+[comm]: https://dart.academy/tag/angular/
 [webdev_components]: https://webdev.dartlang.org/components
 
 
