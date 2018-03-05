@@ -17,6 +17,8 @@ builders:
       - templateCompiler
       - stylesheetCompiler
     auto_apply: dependents
+    # See https://github.com/dart-lang/angular/issues/988.
+    is_optional: true
     required_inputs:
       - ".css"
     build_extensions:
