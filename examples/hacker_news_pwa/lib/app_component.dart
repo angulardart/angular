@@ -15,12 +15,13 @@ import 'src/routes.dart';
   directives: const [routerDirectives],
 )
 class AppComponent {
-  final newsUrl = newsRoutePath.toUrl();
-  final newUrl = newRoutePath.toUrl();
-  final showUrl = showRoutePath.toUrl();
-  final askUrl = askRoutePath.toUrl();
-  final jobsUrl = jobsRoutePath.toUrl();
-  final routes = [
+  static final newsUrl = newsRoutePath.toUrl();
+  static final newUrl = newRoutePath.toUrl();
+  static final showUrl = showRoutePath.toUrl();
+  static final askUrl = askRoutePath.toUrl();
+  static final jobsUrl = jobsRoutePath.toUrl();
+
+  static final routes = [
     new RouteDefinition(
       routePath: newsRoutePath,
       component: feed.FeedComponentNgFactory,

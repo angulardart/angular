@@ -7,6 +7,6 @@ void main() {
   final cache = new DynamicCache('hacker-news-service');
   new Worker()
     ..offlineUrls = offline.offlineUrls
-    ..router.registerGetUrl(HackerNewsService.baseUrl, cache.networkFirst)
+    ..router.registerGetUrl(defaultBaseUrl, cache.networkFirst)
     ..run(version: offline.lastModified);
 }
