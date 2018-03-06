@@ -1,16 +1,6 @@
-# TODO(https://github.com/dart-lang/test/pull/777):
-# Add this to a common dart_test.yaml configuration.
-presets:
-  travis:
-    # TODO(https://github.com/dart-lang/test/issues/772):
-    # Remove this once headless chrome works on travis.
-    override_platforms:
-      chrome:
-        settings:
-          headless: false
-    tags:
-      fails-on-travis:
-    reporter: expanded
+# Include common configuration.
+include: ../dev/config/dart_test_repo.yaml
 
+# This repository has only web tests.
 platforms:
   - chrome
