@@ -12,7 +12,7 @@ class HackerNewsService {
   final String _baseUrl;
   final BaseClient _client;
 
-  HackerNewsService(this._baseUrl, this._client);
+  HackerNewsService(@baseUrl this._baseUrl, this._client);
 
   Future<List<Map>> getFeed(String name, int page) async {
     final url = '$_baseUrl/$name?page=$page';
