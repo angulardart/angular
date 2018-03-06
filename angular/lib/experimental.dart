@@ -8,6 +8,7 @@
 @experimental
 library angular.experimental;
 
+import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
@@ -32,9 +33,11 @@ export 'src/bootstrap/modules.dart' show bootstrapLegacyModule;
 // This injector is cached and re-used across every bootstrap(...) call.
 Injector _platformInjector() {
   final platformRef = new PlatformRefImpl();
+  final throwingComponentLoader = new _ThrowingSlowComponentLoader();
   return new Injector.map({
     PlatformRef: platformRef,
     PlatformRefImpl: platformRef,
+    SlowComponentLoader: throwingComponentLoader
   });
 }
 
@@ -127,4 +130,18 @@ bool isDomRenderDirty() => app_view.domRootRendererIsDirty;
 @experimental
 void resetDomRenderDirty() {
   app_view.domRootRendererIsDirty = false;
+}
+
+class _ThrowingSlowComponentLoader implements SlowComponentLoader {
+  @override
+  Future<ComponentRef<T>> load<T>(Type type, Injector injector) {
+    throw new UnimplementedError('Don\'t use SlowComponentLoader');
+  }
+
+  @override
+  Future<ComponentRef<T>> loadNextToLocation<T>(
+      Type type, ViewContainerRef location,
+      [Injector injector]) {
+    throw new UnimplementedError('Don\'t use SlowComponentLoader');
+  }
 }
