@@ -13,9 +13,35 @@ typedef void DefaultIterableCallback(
   int currentIndex,
 );
 
-typedef dynamic TrackByFn(int index, dynamic item);
+/// A function that can be used to return a unique key for [item] at [index].
+///
+/// By default, [item] itself is used as the key to track to instantiate a new
+/// template per item in `*ngFor`. If the data ever changes, AngularDart will
+/// consider any object with a different identity (`identical`) to be different
+/// - and destroy and re-create a new node.
+///
+/// To optimize performance when you have a way to determine uniqueness other
+/// than identity, such as an `id` field on an object returned from the server,
+/// you may specify a [TrackByFn]`:
+/// ```
+/// class MyComp {
+///   Object trackByEmployeeId(int index, dynamic item) {
+///     return item is Employee ? item.id : item;
+///   }
+/// }
+///
+/// class Employee {
+///   int id;
+/// }
+/// ```
+///
+/// **NOTE**: It is not safe to simply _assume_ that the second parameter is
+/// of your custom type (neither [TrackByFn] nor `NgFor` allow that) at this
+/// time: https://github.com/dart-lang/angular/issues/1020. You must use an `as`
+/// cast or `is` check. See the example above.
+typedef Object TrackByFn(int index, dynamic item);
 
-var trackByIdentity = (int index, dynamic item) => item;
+Object _trackByIdentity(int index, dynamic item) => item;
 
 class DefaultIterableDiffer {
   final TrackByFn _trackByFn;
@@ -45,7 +71,7 @@ class DefaultIterableDiffer {
   static const bool _useIdentity = identical(1.0, 1);
 
   DefaultIterableDiffer([TrackByFn trackByFn])
-      : _trackByFn = trackByFn ?? trackByIdentity;
+      : _trackByFn = trackByFn ?? _trackByIdentity;
 
   DefaultIterableDiffer clone(TrackByFn trackByFn) {
     var differ = new DefaultIterableDiffer(trackByFn);
