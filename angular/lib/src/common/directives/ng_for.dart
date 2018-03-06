@@ -123,6 +123,9 @@ class NgFor implements DoCheck {
     }
   }
 
+  /// Optionally; set a function used to determine uniqueness of an element.
+  ///
+  /// See [TrackByFn] for more details on how to use this parameter type.
   @Input()
   set ngForTrackBy(TrackByFn value) {
     _ngForTrackBy = value;
