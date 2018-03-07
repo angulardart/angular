@@ -38,3 +38,11 @@ stages:
 
 jobs:
   include:
+
+    # Verify that .travis.yml is not out of date.
+    - stage: presubmit
+      script:
+        - pushd dev/travis
+        - pub get
+        - popd
+        - dart dev/travis/config.dart -d

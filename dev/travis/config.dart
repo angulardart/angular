@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:args/args.dart';
 import 'package:glob/glob.dart';
 import 'package:path/path.dart' as p;
 
 /// Writes `<root>/.travis.yml` based on the configuration in this file.
-void main() {
+void main(List<String> args) {
+  final results = _argParser.parse(args);
+  final dryRun = results['dry-run'] as bool;
+
   // Start the preamble of .travis.yml.
   final prefix = new File(
     p.join('dev', 'travis', 'prefix.yaml'),
@@ -60,14 +64,37 @@ void main() {
     }
   }
 
-  new File('.travis.yml').writeAsStringSync([
+  final output = new File('.travis.yml');
+  final contents = ([
     prefix,
     stages.join('\n\n'),
     '',
     postfix,
     '',
   ].join('\n'));
+
+  if (dryRun) {
+    if (output.readAsStringSync().trimRight() != contents.trimRight()) {
+      exitCode = 1;
+      stderr.writeln(
+        '${output.path} was not updated. Run dev/travis/config.dart.',
+      );
+    } else {
+      stdout.writeln('No updates needed to ${output.path}.');
+    }
+    return;
+  }
+  output.writeAsStringSync(contents);
 }
+
+final _argParser = new ArgParser()
+  ..addFlag(
+    'dry-run',
+    abbr: 'd',
+    defaultsTo: false,
+    negatable: false,
+    help: 'Returns an exit code of "1" if we would change .travis.yml.',
+  );
 
 /// Whether there is a `test/` directory in this [path].
 bool _hasTests(String path) {
