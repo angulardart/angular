@@ -18,7 +18,7 @@ dev_dependencies:
   dart_style: ^1.0.9
   meta: ^1.1.0
   path: ^1.5.1
-  test: ^0.12.30+1
+  test: ^0.12.32
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:
