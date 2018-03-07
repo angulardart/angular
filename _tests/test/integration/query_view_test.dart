@@ -1,6 +1,7 @@
 @TestOn('browser')
 
 import 'dart:async';
+import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
@@ -69,7 +70,7 @@ void main() {
       final testBed = new NgTestBed<TestNestedNgForQueriesList>();
       final fixture = await testBed.create();
       expect(
-        fixture.assertOnlyInstance.taggedDivs.map((e) => e.nativeElement.text),
+        fixture.assertOnlyInstance.taggedDivs.map((e) => e.text),
         ['1', '2', '3'],
       );
     });
@@ -79,7 +80,7 @@ void main() {
       final testBed = new NgTestBed<TestNestedAndStaticNgForQueriesList>();
       final fixture = await testBed.create();
       expect(
-        fixture.assertOnlyInstance.taggedDivs.map((e) => e.nativeElement.text),
+        fixture.assertOnlyInstance.taggedDivs.map((e) => e.text),
         ['1', '2', '3', '4', '5', '6', '7'],
       );
     });
@@ -310,8 +311,8 @@ class TestViewChildrenAndEmbeddedList extends HasChildren<ValueDirective> {
 class TestNestedNgForQueriesList {
   final items = [1, 2, 3];
 
-  @ViewChildren('taggedDiv')
-  List<ElementRef> taggedDivs;
+  @ViewChildren('taggedDiv', read: Element)
+  List<Element> taggedDivs;
 }
 
 @Component(
@@ -335,6 +336,6 @@ class TestNestedNgForQueriesList {
 class TestNestedAndStaticNgForQueriesList {
   final items = [4, 5, 6];
 
-  @ViewChildren('taggedDiv')
-  List<ElementRef> taggedDivs;
+  @ViewChildren('taggedDiv', read: Element)
+  List<Element> taggedDivs;
 }

@@ -64,25 +64,6 @@ abstract class Injector {
     HierarchicalInjector parent,
   ]) = MapInjector;
 
-  /// Creates a new [Injector] that resolves `Provider` instances at runtime.
-  ///
-  /// **EXPERIMENTAL**: Not yet supported.
-  ///
-  /// This is an **expensive** operation without any sort of caching or
-  /// optimizations that manually walks the nested [providersOrLists], and uses
-  /// a form of runtime reflection to figure out how to map the providers to
-  /// runnable code.
-  ///
-  /// Using this function can **disable all tree-shaking** for any `@Injectable`
-  /// annotated function or class in your _entire_ transitive application, and
-  /// is provided for legacy compatibility only.
-  @experimental
-  factory Injector.slowReflective(
-    List<Object> providersOrLists, [
-    HierarchicalInjector parent = const EmptyInjector(),
-  ]) =>
-      ReflectiveInjector.resolveAndCreate(providersOrLists, parent);
-
   /// Returns an instance from the injector based on the provided [token].
   ///
   /// ```
