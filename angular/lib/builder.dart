@@ -29,7 +29,6 @@ const _useTemplateOutlinesInstead = 'outline-only';
 const _defaultFlags = const CompilerFlags(
   genDebugInfo: false,
   useLegacyStyleEncapsulation: false,
-  useAstPkg: true,
 );
 
 // Default extensions of the output `[.outline].template.dart` file(s).

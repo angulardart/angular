@@ -27,6 +27,8 @@ import 'template_preparser.dart';
 // ignore_for_file: non_bool_operand
 // ignore_for_file: return_of_invalid_type
 
+const _templateElement = 'template';
+
 /// A [TemplateParser] which uses the `angular_ast` package to parse angular
 /// templates.
 class AstTemplateParser implements TemplateParser {
@@ -576,13 +578,13 @@ class _ParseContext {
     var boundDirectives = _toAst(
         _matchTemplateDirectives(templateContext.directives, template),
         template.sourceSpan,
-        TEMPLATE_ELEMENT,
+        _templateElement,
         _location(template),
         templateContext);
     var firstComponent = _firstComponent(boundDirectives);
     return new _ParseContext._(
         templateContext,
-        TEMPLATE_ELEMENT,
+        _templateElement,
         boundDirectives,
         true,
         _createSelector(firstComponent),
@@ -787,7 +789,7 @@ CssSelector _elementSelector(ast.ElementAst astNode) => _selector(
     astNode.name, astNode.attributes, astNode.properties, astNode.events);
 
 CssSelector _templateSelector(ast.EmbeddedTemplateAst astNode) => _selector(
-    TEMPLATE_ELEMENT, astNode.attributes, astNode.properties, astNode.events);
+    _templateElement, astNode.attributes, astNode.properties, astNode.events);
 
 CssSelector _selector(String elementName, List<ast.AttributeAst> attributes,
     List<ast.PropertyAst> properties, List<ast.EventAst> events) {
@@ -1201,7 +1203,7 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
 
   void _validatePipeNames(AST ast, SourceSpan sourceSpan) {
     if (ast == null) return;
-    var collector = new PipeCollector();
+    var collector = new _PipeCollector();
     ast.visit(collector);
     for (String pipeName in collector.pipes) {
       if (!_pipeNames.contains(pipeName)) {
@@ -1235,6 +1237,17 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
   ng.TemplateAst visitEvent(ng.BoundEventAst ast, _) {
     _validatePipeNames(ast.handler, ast.sourceSpan);
     return super.visitEvent(ast, null);
+  }
+}
+
+class _PipeCollector extends RecursiveAstVisitor {
+  Set<String> pipes = new Set<String>();
+
+  Null visitPipe(BindingPipe ast, dynamic context) {
+    this.pipes.add(ast.name);
+    ast.exp.visit(this);
+    this.visitAll(ast.args as List<AST>, context);
+    return null;
   }
 }
 

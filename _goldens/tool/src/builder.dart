@@ -20,7 +20,6 @@ Builder debugBuilder(BuilderOptions options) {
     defaultFlags: const CompilerFlags(
       genDebugInfo: true,
       ignoreNgPlaceholderForGoldens: true,
-      useAstPkg: true,
     ),
     templateExtension: options.config['extensions']['debug'],
   );
@@ -39,7 +38,6 @@ Builder releaseBuilder(BuilderOptions options) {
     defaultFlags: const CompilerFlags(
       genDebugInfo: false,
       ignoreNgPlaceholderForGoldens: true,
-      useAstPkg: true,
     ),
     templateExtension: options.config['extensions']['release'],
   );
@@ -58,7 +56,6 @@ Builder outlineBuilder(BuilderOptions options) {
     defaultFlags: const CompilerFlags(
       genDebugInfo: false,
       ignoreNgPlaceholderForGoldens: true,
-      useAstPkg: true,
     ),
     extension: options.config['extensions']['outline'],
   );

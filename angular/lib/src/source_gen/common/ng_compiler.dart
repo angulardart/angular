@@ -8,7 +8,6 @@ import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/compiler/output/dart_emitter.dart';
 import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular/src/compiler/style_compiler.dart';
-import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/compiler/view_compiler/view_compiler.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
@@ -18,9 +17,7 @@ OfflineCompiler createTemplateCompiler(
   var parser = new ng.Parser(new ng.Lexer());
   var htmlParser = new HtmlParser();
   var schemaRegistry = new DomElementSchemaRegistry();
-  var templateParser = flags.useAstPkg
-      ? new AstTemplateParser(schemaRegistry, parser)
-      : new TemplateParserImpl(parser, schemaRegistry, htmlParser);
+  var templateParser = new AstTemplateParser(schemaRegistry, parser);
   final reader = new NgAssetReader.fromBuildStep(buildStep);
   return new OfflineCompiler(
       new DirectiveNormalizer(htmlParser, reader),
