@@ -12,7 +12,16 @@ import 'injector.dart';
 
 /// An injector that resolves [Provider] instances with runtime information.
 abstract class ReflectiveInjector implements HierarchicalInjector {
-  /// Create a new [RuntimeInjector] by resolving [providersOrLists] at runtime.
+  /// Creates a new [Injector] that resolves `Provider` instances at runtime.
+  ///
+  /// This is an **expensive** operation without any sort of caching or
+  /// optimizations that manually walks the nested [providersOrLists], and uses
+  /// a form of runtime reflection to figure out how to map the providers to
+  /// runnable code.
+  ///
+  /// Using this function can **disable all tree-shaking** for any `@Injectable`
+  /// annotated function or class in your _entire_ transitive application, and
+  /// is provided for legacy compatibility only.
   static ReflectiveInjector resolveAndCreate(
     List<Object> providersOrLists, [
     HierarchicalInjector parent = const EmptyInjector(),

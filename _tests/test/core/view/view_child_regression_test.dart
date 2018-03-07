@@ -1,4 +1,6 @@
 @TestOn('browser')
+import 'dart:html';
+
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
@@ -15,8 +17,8 @@ void main() {
       component.showChildHost = true;
     });
     await fixture.update((component) {
-      expect(component.portalElement.nativeElement, isNotNull);
-      expect(component.containerElement.nativeElement, isNotNull);
+      expect(component.portalElement, isNotNull);
+      expect(component.containerElement, isNotNull);
       expect(component.markerViewContainer, isNotNull);
     });
   });
@@ -38,11 +40,11 @@ void main() {
   ],
 )
 class ViewChildTest {
-  @ViewChild('portal')
-  ElementRef portalElement;
+  @ViewChild('portal', read: Element)
+  Element portalElement;
 
-  @ViewChild('container')
-  ElementRef containerElement;
+  @ViewChild('container', read: Element)
+  Element containerElement;
 
   @ViewChild('marker', read: ViewContainerRef)
   ViewContainerRef markerViewContainer;

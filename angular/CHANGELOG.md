@@ -22,9 +22,19 @@
     in templates. See https://github.com/dart-lang/angular/issues/844 for more
     information.
 
-*   `OpaqueToken` and `MultiToken` no longer have overriden `operator==` and
-    `hashCode` methods/fields. This wasn't supported, in practice, in most of
+*   `OpaqueToken` and `MultiToken` no longer have an overrode `operator==` and
+    `hashCode` methods/fields. This was bnot supported, in practice, in most of
     the DI systems, but any custom use of this class may have relied on this.
+
+*   The following classes are being moved to `deprecated.dart`. They may be
+    removed by `5.0-beta`, but use should be minimized/migrated off as soon
+    as possible:
+
+    *   `ComponentResolver`
+    *   `ElementRef`
+    *   `QueryList`
+    *   `ReflectiveInjector`
+    *   `SlowComponentLoader`
 
 ### Bug fixes
 
