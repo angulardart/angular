@@ -5,7 +5,7 @@ description: Parser and utilities for AngularDart templates
 version: 0.4.3
 
 environment:
-  sdk: '>=2.0.0-dev.20.0 <2.0.0'
+  sdk: ">=2.0.0-dev.28.0 <2.0.0"
 
 dependencies:
   analyzer: ^0.31.0+1

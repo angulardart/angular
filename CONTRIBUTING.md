@@ -143,11 +143,7 @@ PKG=_tests tool/travis.sh test
 PKG=angular_compiler tool/travis.sh test
 ```
 
-To regenerate the `.travis.yml` script:
-
-```bash
-dart dev/travis/config.dart
-```
+To regenerate the `.travis.yml` script, see [dev/README.md#travis](dev/README.md#travis).
 
 **NOTE**: We recommend running with `dartfmt` before sending pull-requests, but
 do not validate on Travis as our source of truth is internal at Google, with a
