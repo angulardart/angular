@@ -16,17 +16,20 @@ practices** from the developers of the AngularDart framework.
     *   [DO use `const` providers](#do-use-const-providers)
     *   [DO use the `.forToken` constructor for
         tokens](#do-use-the-fortoken-constructor-for-tokens)
-    *   [PREFER `ClassProvider` to a `Type`](#...)
+    *   [PREFER `ClassProvider` to a `Type`](#prefer-classprovider-to-a-type)
 *   [Tokens](#tokens)
     *   [DO use typed `OpaqueToken<T>`](#do-use-typed-opaquetokent)
     *   [AVOID using arbitrary tokens](#avoid-using-arbitrary-tokens)
-    *   [PREFER `MultiToken<T>` to `multi: true`](#...)
+    *   [PREFER `MultiToken<T>` to `multi:
+        true`](#prefer-multitokent-to-multi-true)
 *   [Injectors](#injectors)
     *   [AVOID using `ReflectiveInjector`](#avoid-using-reflectiveinjector)
 *   [Components](#components)
-    *   [AVOID using injection to configure individual components](#...)
+    *   [AVOID using injection to configure individual
+        components](#avoid-using-injection-to-configure-individual-components)
 *   [Annotations](#annotations)
-    *   [PREFER omitting `@Injectable()` where possible](#...)
+    *   [PREFER omitting `@Injectable()` where
+        possible](#prefer-omitting-injectable-where-possible)
 
 ## Providers
 
