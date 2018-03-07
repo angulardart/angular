@@ -12,7 +12,7 @@ void main() {
   ng_generated.initReflector();
 
   test('should throw ArgumentError on a missing provider', () {
-    final injector = new Injector.slowReflective([
+    final injector = ReflectiveInjector.resolveAndCreate([
       const Provider(ServiceInjectingToken, useClass: ServiceInjectingToken),
       // Intentionally omit a binding for "stringToken".
     ]);
