@@ -39,6 +39,14 @@ stages:
 jobs:
   include:
 
+    # Verify that .travis.yml is not out of date.
+    - stage: presubmit
+      script:
+        - pushd dev/travis
+        - pub get
+        - popd
+        - dart dev/travis/config.dart -d
+
     - stage: presubmit
       script: ./tool/travis.sh analyze
       env: PKG="_benchmarks"
@@ -313,3 +321,4 @@ jobs:
         provider: firebase
         message: "Travis deploy from commit $TRAVIS_COMMIT"
         project: dart-hn
+
