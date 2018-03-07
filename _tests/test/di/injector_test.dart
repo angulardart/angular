@@ -168,19 +168,19 @@ void main() {
       });
 
       test('should resolve a Type', () {
-        i = new Injector.slowReflective([ExampleService]);
+        i = ReflectiveInjector.resolveAndCreate([ExampleService]);
         expect(i.get(ExampleService), const isInstanceOf<ExampleService>());
       });
 
       test('should resolve a Provider', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(ExampleService),
         ]);
         expect(i.get(ExampleService), const isInstanceOf<ExampleService>());
       });
 
       test('should resolve a Provider.useClass', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(ExampleService, useClass: ExampleService2),
         ]);
         expect(i.get(ExampleService), const isInstanceOf<ExampleService2>());
@@ -188,21 +188,21 @@ void main() {
 
       test('should resolve a Provider.useValue', () {
         final serviceValue = new ExampleService();
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(ExampleService, useValue: serviceValue),
         ]);
         expect(i.get(ExampleService), serviceValue);
       });
 
       test('should resolve a Provider.useFactory', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(ExampleService, useFactory: createExampleService),
         ]);
         expect(i.get(ExampleService), const isInstanceOf<ExampleService>());
       });
 
       test('should resolve a Provider.useFactory with deps', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(String, useValue: 'Hello World'),
           new Provider(List, useFactory: createListWith),
         ]);
@@ -210,7 +210,7 @@ void main() {
       });
 
       test('should resolve a Provider.useFactory with manual deps', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(#fooBar, useValue: 'Hello World'),
           new Provider(List, useFactory: createListWith, deps: [#fooBar]),
         ]);
@@ -218,7 +218,7 @@ void main() {
       });
 
       test('should resolve a Provider.useExisting', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(ExampleService2),
           new Provider(ExampleService, useExisting: ExampleService2),
         ]);
@@ -226,7 +226,7 @@ void main() {
       });
 
       test('should resolve a multi binding', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(#fooBar, useValue: 1, multi: true),
           new Provider(#fooBar, useValue: 2, multi: true),
         ]);
@@ -234,14 +234,14 @@ void main() {
       });
 
       test('should resolve @Optional', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(List, useFactory: createListWithOptional),
         ]);
         expect(i.get(List), [null]);
       });
 
       test('should inject things in order of most-recently added', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(#a, useValue: 1),
           new Provider(#a, useValue: 2),
         ]);
@@ -249,14 +249,14 @@ void main() {
       });
 
       test('should return itself for "Injector"', () {
-        i = new Injector.slowReflective([
+        i = ReflectiveInjector.resolveAndCreate([
           new Provider(#theInjector, useFactory: (i) => [i], deps: [Injector]),
         ]);
         expect(i.get(#theInjector), [i]);
       });
 
       test('should thrown when a provider was not found', () {
-        i = new Injector.slowReflective([]);
+        i = ReflectiveInjector.resolveAndCreate([]);
         expect(() => i.get(#ABC), throwsNoProviderError);
       });
 
@@ -284,7 +284,7 @@ void main() {
 
       test('should reify a MultiProvider<T> in strong-mode runtimes', () {
         const usPresidents = const OpaqueToken<String>('usPresidents');
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           const Provider<String>(
             usPresidents,
             useValue: 'George W.',
@@ -301,7 +301,7 @@ void main() {
 
       test('should support MultiToken instead of multi: true', () {
         const usPresidentsMulti = const MultiToken<String>('usPresidents');
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           const ValueProvider.forToken(usPresidentsMulti, 'George W.'),
           const ValueProvider.forToken(usPresidentsMulti, 'Abraham L.'),
         ]);
@@ -312,7 +312,7 @@ void main() {
       });
 
       test('should consider opaque tokens with different types unique', () {
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           const Provider(typedTokenOfDynamic, useValue: 1),
           const Provider(typedTokenOfString, useValue: 2),
         ]);
@@ -321,7 +321,7 @@ void main() {
       });
 
       test('should consider opaque tokens with different nested types', () {
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           const Provider(typedTokenOfListDynamic, useValue: 3),
           const Provider(typedTokenOfListString, useValue: 4),
         ]);
@@ -330,7 +330,7 @@ void main() {
       });
 
       test('should consider Provider(T) as Provider(T, useClass: T)', () {
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           const Provider(ExampleService),
         ]);
         expect(
@@ -340,7 +340,7 @@ void main() {
       });
 
       test('should accept unnammed tokens', () {
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           const Provider(unnamedTokenOfDynamic, useValue: 1),
           const Provider(unnamedTokenOfString, useValue: 2),
         ]);
@@ -349,7 +349,7 @@ void main() {
       });
 
       test('should throw a readable error message on a 1-node failure', () {
-        final injector = new Injector.slowReflective([]);
+        final injector = ReflectiveInjector.resolveAndCreate([]);
         expect(
           () => injector.get(ExampleService),
           throwsA(
@@ -361,7 +361,7 @@ void main() {
       });
 
       test('should throw a readable error message on a 2-node failure', () {
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           new Provider(
             ExampleService,
             useFactory: (Null willNeverBeCalled) => null,
@@ -386,7 +386,7 @@ void main() {
         //     ExampleService3 + ExampleService4
         //
         // ... where ExampleService4 is missing.
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           new Provider(
             ExampleService,
             useFactory: (Null willNeverBeCalled) => null,
@@ -415,7 +415,7 @@ void main() {
       });
 
       test('should treat an OpaqueToken identical to @Inject', () {
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           const Provider(baseUrl, useValue: 'https://site.com/api/'),
           InjectsBaseUrl,
         ]);
@@ -424,7 +424,7 @@ void main() {
       });
 
       test('should support a user type that extends OpaqueToken', () {
-        final injector = new Injector.slowReflective([
+        final injector = ReflectiveInjector.resolveAndCreate([
           const Provider(const XsrfToken(), useValue: 'ABC123'),
           InjectsXsrfToken,
         ]);

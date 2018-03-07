@@ -137,8 +137,7 @@ void main() {
   template: '',
 )
 class SimpleImperativeViewComponent {
-  SimpleImperativeViewComponent(ElementRef elementRef) {
-    final hostElement = elementRef.nativeElement;
+  SimpleImperativeViewComponent(Element hostElement) {
     hostElement.append(new Text('hello imp view'));
   }
 }
