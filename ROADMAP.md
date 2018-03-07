@@ -17,36 +17,36 @@ View our [milestones][] for the most up-to-date information.
 
 ## Performance
 
--   Compilation emits idiomatic and performant Dart code with static types.
--   Change detection is cheap by default, and moving towards a reactive model.
--   Avoids checking values that are immutable or constant literals.
--   Most hooks into the framework feel idiomatic and are lightweight.
+*   Compilation emits idiomatic and performant Dart code with static types.
+*   Change detection is cheap by default, and moving towards a reactive model.
+*   Avoids checking values that are immutable or constant literals.
+*   Most hooks into the framework feel idiomatic and are lightweight.
 
 ## Code Size
 
--   Dart's [tree-shaking][] removes features not used by all applications.
--   Static dependency injection prunes providers not used at runtime.
--   Building in "release mode" removes developer or debug-only code paths.
--   Allow easy code-splitting (deferred loading) with and without using a
+*   Dart's [tree-shaking][] removes features not used by all applications.
+*   Static dependency injection prunes providers not used at runtime.
+*   Building in "release mode" removes developer or debug-only code paths.
+*   Allow easy code-splitting (deferred loading) with and without using a
     router.
--   AngularDart is suitable as a framework for a [progressive web app][pwa].
+*   AngularDart is suitable as a framework for a [progressive web app][pwa].
 
 [tree-shaking]: https://webdev.dartlang.org/tools/dart2js#helping-dart2js-generate-better-code
 [pwa]: https://developers.google.com/web/progressive-web-apps/
 
 ## Productivity
 
--   Supports the [DartDevCompiler (DDC)][ddc] and [strong mode][strong].
--   Supports lifecycle event inheritence (i.e. `NgOnDestroy` in a super class).
--   Supports inheriting `@Input` and `@Output` annotations across super classes.
--   IntelliJ/Analysis server plugin for linting and auto-complete.
+*   Supports the [DartDevCompiler (DDC)][ddc] and [strong mode][strong].
+*   Supports lifecycle event inheritence (i.e. `NgOnDestroy` in a super class).
+*   Supports inheriting `@Input` and `@Output` annotations across super classes.
+*   IntelliJ/Analysis server plugin for linting and auto-complete.
 
 ## Other Priorities
 
--   A "batteries included" testing framework, i.e.
+*   A "batteries included" testing framework, i.e.
     [`angular_test`][angular_test].
--   A single repository for 1st-party AngularDart packages.
--   Make it easier to accept external contributions, and be more transparent.
+*   A single repository for 1st-party AngularDart packages.
+*   Make it easier to accept external contributions, and be more transparent.
 
 [ddc]: https://github.com/dart-lang/sdk/tree/master/pkg/dev_compiler
 [strong]: https://www.dartlang.org/guides/language/sound-dart
