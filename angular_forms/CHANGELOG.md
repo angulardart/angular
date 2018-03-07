@@ -1,3 +1,5 @@
+## 1.0.1-alpha+7
+
 ### Breaking changes
 
 -   The following directives are no longer injectable:

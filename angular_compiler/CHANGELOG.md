@@ -1,3 +1,7 @@
+## 0.4.0-alpha+7
+
+*   Maintenence release.
+
 ## 0.4.0-alpha+6
 
 ### New features

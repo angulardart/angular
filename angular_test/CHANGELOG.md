@@ -1,3 +1,7 @@
+## 2.0.0-alpha+5
+
+*   Maintenance release, supporting newer package versions.
+
 ## 2.0.0-alpha+4
 
 *   Removed built-in support for `package:pageloader`. The current version of
