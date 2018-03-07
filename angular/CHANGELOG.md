@@ -1,3 +1,7 @@
+## 5.0.0-alpha+7
+
+**NOTE**: We now require a dev SDK of `>=2.0.0-dev.28.0`.
+
 ### Breaking changes
 
 *   `SafeInnerHtmlDirective` is no longer injectable.
@@ -22,7 +26,7 @@
     in templates. See https://github.com/dart-lang/angular/issues/844 for more
     information.
 
-*   `OpaqueToken` and `MultiToken` no longer have overriden `operator==` and
+*   `OpaqueToken` and `MultiToken` no longer have overridden `operator==` and
     `hashCode` methods/fields. This wasn't supported, in practice, in most of
     the DI systems, but any custom use of this class may have relied on this.
 

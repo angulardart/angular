@@ -1,3 +1,7 @@
+## 0.4.3+1
+
+-   Maintenance release, supporting newer package versions.
+
 ## 0.4.3
 
 -   Maintenance release, supporting newer package versions.
