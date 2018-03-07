@@ -1,47 +1,26 @@
 import 'dart:io';
 
-import 'package:args/args.dart';
-import 'package:glob/glob.dart';
 import 'package:path/path.dart' as p;
+
+import 'package:angular.dev/dry.dart';
+import 'package:angular.dev/find.dart';
 
 /// Writes `<root>/.travis.yml` based on the configuration in this file.
 void main(List<String> args) {
-  final results = _argParser.parse(args);
-  final dryRun = results['dry-run'] as bool;
+  final dryRun = isDryRun(args);
 
   // Start the preamble of .travis.yml.
-  final prefix = new File(
-    p.join('dev', 'travis', 'prefix.yaml'),
-  )
+  final prefix = new File(p.join('dev', 'tool', 'travis', 'prefix.yaml'))
       .readAsStringSync();
-  final postfix = new File(
-    p.join('dev', 'travis', 'postfix.yaml'),
-  )
+  final postfix = new File(p.join('dev', 'tool', 'travis', 'postfix.yaml'))
       .readAsStringSync();
-
-  // Find packages.
-  final include = new Glob('**/pubspec.yaml');
-
-  // TODO: Perhaps just import .gitignore as well.
-  final exclude = [
-    new Glob('dev/**'),
-    new Glob('angular/tools/**'),
-    new Glob('**/build'),
-  ];
 
   // Make build stages.
   final stages = <String>[];
-  final packages = include
-      .listSync()
-      .map((pubspec) => p.normalize(p.dirname(pubspec.path)))
-      .toList()
-        ..sort();
+  final packages =
+      findRelevantPubspecs().map((f) => p.normalize(p.dirname(f.path)));
 
   for (final package in packages) {
-    if (exclude.any((e) => e.matches(package))) {
-      continue;
-    }
-
     // Every package has a pre-submit and build phase.
     stages.add(_analyze(package));
 
@@ -86,15 +65,6 @@ void main(List<String> args) {
   }
   output.writeAsStringSync(contents);
 }
-
-final _argParser = new ArgParser()
-  ..addFlag(
-    'dry-run',
-    abbr: 'd',
-    defaultsTo: false,
-    negatable: false,
-    help: 'Returns an exit code of "1" if we would change .travis.yml.',
-  );
 
 /// Whether there is a `test/` directory in this [path].
 bool _hasTests(String path) {
