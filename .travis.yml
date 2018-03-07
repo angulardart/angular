@@ -39,13 +39,13 @@ stages:
 jobs:
   include:
 
-    # Verify that .travis.yml is not out of date.
+    # 1. Verify that .travis.yml is not out of date.
+    # 2. Verify that pubspec.yaml is updated for all packages.
     - stage: presubmit
       script:
-        - pushd dev/travis
-        - pub get
-        - popd
-        - dart dev/travis/config.dart -d
+        - pub global activate --source path dev
+        - pub global run angular.dev:travis -d
+        - pub global run angular.dev:pubspec -d
 
     - stage: presubmit
       script: ./tool/travis.sh analyze

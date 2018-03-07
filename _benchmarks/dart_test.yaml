@@ -1,5 +1,5 @@
 # Include common configuration.
-include: ../dev/config/dart_test_repo.yaml
+include: ../dev/tool/test/dart_test_repo.yaml
 
 # This repository only has web tests.
 platforms:

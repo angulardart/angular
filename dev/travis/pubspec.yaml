@@ -1,6 +1,0 @@
-name: dev.travis
-
-dev_dependencies:
-  args: ^1.4.1
-  glob: ^1.1.5
-  path: ^1.5.1
