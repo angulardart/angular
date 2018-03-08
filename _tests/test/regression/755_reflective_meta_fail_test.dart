@@ -7,8 +7,6 @@ import '755_reflective_meta_fail_test.template.dart' as ng_generated;
 
 // Source: https://github.com/dart-lang/angular/issues/755.
 void main() {
-  // TODO(matanl): Remove once this is the default.
-  InjectionError.enableBetterErrors = true;
   ng_generated.initReflector();
 
   test('should throw ArgumentError on a missing provider', () {
