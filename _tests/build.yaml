@@ -1,5 +1,5 @@
 targets:
-  _tests:
+  $default:
     builders:
       angular:
         options:
