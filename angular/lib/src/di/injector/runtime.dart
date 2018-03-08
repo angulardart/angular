@@ -258,6 +258,9 @@ _FlatProviders _flattenProviders(
       if (_isMultiProvider(item)) {
         multiProviders.add(item);
       }
+      // Even if `item` is a multi provider, we still add it to the map of
+      // regular providers to indicate that a multi provider for that token
+      // exists.
       allProviders[item.token] = item;
     } else if (item is Type) {
       allProviders[item] = new Provider(item, useClass: item);
