@@ -154,7 +154,7 @@ void main() {
       });
     });
 
-    group('.slowReflective', () {
+    group('ReflectiveInjector', () {
       Injector i;
 
       setUpAll(() {
@@ -430,6 +430,28 @@ void main() {
         final InjectsXsrfToken service = injector.get(InjectsXsrfToken);
         expect(service.token, 'ABC123');
       });
+
+      test('should support a Module class instead of a List', () {
+        final injector = ReflectiveInjector.resolveAndCreate([
+          const Module(
+            include: const [
+              const Module(
+                provide: const [
+                  const ValueProvider(ExampleService, const ExampleService()),
+                ],
+              ),
+            ],
+            provide: const [
+              const ValueProvider(ExampleService2, const ExampleService2()),
+              const ExistingProvider(ExampleService, ExampleService2),
+            ],
+          ),
+        ]);
+        expect(
+          injector.get(ExampleService),
+          const isInstanceOf<ExampleService2>(),
+        );
+      });
     });
 
     group('.generate', () {
@@ -535,6 +557,13 @@ void main() {
         final InjectsXsrfToken service = injector.get(InjectsXsrfToken);
         expect(service.token, 'ABC123');
       });
+
+      test('should support Module', () {
+        expect(
+          exampleFromModule().get(ExampleService),
+          const isInstanceOf<ExampleService2>(),
+        );
+      });
     });
   });
 }
@@ -559,7 +588,9 @@ class ExampleService {
   const ExampleService();
 }
 
-class ExampleService2 implements ExampleService {}
+class ExampleService2 implements ExampleService {
+  const ExampleService2();
+}
 
 class ExampleService3 {}
 
@@ -634,6 +665,23 @@ Null willNeverBeCalled2(Object _, Object __) => null;
   InjectsXsrfToken,
 ])
 final InjectorFactory exampleGenerated = ng.exampleGenerated$Injector;
+
+@GenerateInjector.fromModules(const [
+  const Module(
+    include: const [
+      const Module(
+        provide: const [
+          const ValueProvider(ExampleService, const ExampleService()),
+        ],
+      ),
+    ],
+    provide: const [
+      const ValueProvider(ExampleService2, const ExampleService2()),
+      const ExistingProvider(ExampleService, ExampleService2),
+    ],
+  ),
+])
+final InjectorFactory exampleFromModule = ng.exampleFromModule$Injector;
 
 ExampleService createExampleService() => new ExampleService();
 List createListWith(String item) => [item];

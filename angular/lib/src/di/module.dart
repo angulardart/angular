@@ -18,18 +18,18 @@ import 'providers.dart';
 /// ```dart
 /// // Before.
 /// const carModule = const [
-///   const Provider(Car, useClass: AmericanCar),
+///   const ClassProvider(Car, useClass: AmericanCar),
 /// ];
 ///
 /// const autoShopModule = const [
 ///   carModule,
-///   const Provider(Oil, useClass: GenericOil),
+///   const ClassProvider(Oil, useClass: GenericOil),
 /// ];
 ///
 /// // After.
 /// const carModule = const Module(
 ///   provide: const [
-///     const Provider(Car, useClass: AmericanCar),
+///     const ClassProvider(Car, useClass: AmericanCar),
 ///   ],
 /// );
 ///
@@ -38,7 +38,7 @@ import 'providers.dart';
 ///     carModule,
 ///   ],
 ///   provide: const [
-///     const Provider(Oil, useClass: GenericOil),
+///     const ClassProvider(Oil, useClass: GenericOil),
 ///   ],
 /// );
 /// ```
@@ -47,6 +47,7 @@ class Module {
   final List<Module> include;
   final List<Provider<Object>> provide;
 
+  @literal
   const factory Module({
     List<Module> include,
     List<Provider<Object>> provide,

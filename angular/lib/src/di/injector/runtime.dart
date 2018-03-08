@@ -3,6 +3,7 @@ import 'package:angular/src/runtime.dart';
 import '../../core/di/decorators.dart';
 import '../../core/di/opaque_token.dart';
 import '../errors.dart' as errors;
+import '../module.dart';
 import '../providers.dart';
 import '../reflector.dart' as reflector;
 
@@ -260,6 +261,9 @@ _FlatProviders _flattenProviders(
       allProviders[item.token] = item;
     } else if (item is Type) {
       allProviders[item] = new Provider(item, useClass: item);
+    } else if (item is Module) {
+      final providers = internalModuleToList(item);
+      _flattenProviders(providers, allProviders, multiProviders);
     } else {
       assert(false, 'Unsupported: $item');
     }
