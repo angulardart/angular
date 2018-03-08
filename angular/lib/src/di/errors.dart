@@ -20,10 +20,6 @@ void debugInjectorEnter(Object token) {
   if (!isDevMode) {
     return;
   }
-  // Don't affect performance (as much) when this feature isn't enabled.
-  if (!InjectionError.enableBetterErrors) {
-    return;
-  }
   if (_tokenStack == null) {
     _tokenStack = [token];
   } else {
@@ -46,9 +42,9 @@ void debugInjectorLeave(Object token) {
 
 /// Returns an error describing that [token] was not found as a provider.
 Error noProviderError(Object token) {
-  // Only in developer mode, and only when a flag is set.
+  // Only in developer mode.
   // There are already users relying on an ArgumentError _always_ being thrown.
-  if (isDevMode && InjectionError.enableBetterErrors) {
+  if (isDevMode) {
     final error = new NoProviderError._(token, _tokenStack);
     // IMPORTANT: Clears the stack after reporting the error.
     _tokenStack = null;
