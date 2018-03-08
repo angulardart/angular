@@ -3,6 +3,11 @@
 *   Removes the old template parser completely. The new template parser was made
     the default in `5.0.0-alpha+5`.
 
+*   `InjectionError.enableBetterErrors` was removed, it is now the (only) option
+    and is always enabled at development time. We are still waiting for fixes
+    to the view compiler to complete this feature:
+    https://github.com/dart-lang/angular/issues/434
+
 ## 5.0.0-alpha+7
 
 **NOTE**: We now require a dev SDK of `>=2.0.0-dev.28.0`.

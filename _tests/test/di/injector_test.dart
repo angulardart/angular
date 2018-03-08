@@ -10,8 +10,6 @@ import 'package:_tests/matchers.dart';
 import 'injector_test.template.dart' as ng;
 
 void main() {
-  // TODO(matanl): Remove once this is the default.
-  InjectionError.enableBetterErrors = true;
   ng.initReflector();
 
   group('Injector', () {

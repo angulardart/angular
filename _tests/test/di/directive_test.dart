@@ -8,8 +8,6 @@ import 'directive_test.template.dart' as ng_generated;
 
 /// Verifies whether injection through directives/components is correct.
 void main() {
-  // TODO(matanl): Remove once this is the default.
-  InjectionError.enableBetterErrors = true;
   ng_generated.initReflector();
 
   tearDown(disposeAnyRunningTest);
