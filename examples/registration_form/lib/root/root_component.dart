@@ -18,16 +18,10 @@ import 'package:examples.registration_form/address/address_component.dart';
       popupBindings,
     ])
 class RootComponent {
-  @ViewChild('myForm')
-  ControlContainer myForm;
-
-  String firstName;
-  String lastName;
-
   Person person;
 
-  void onSubmit() {
-    person = _createPerson();
+  void onSubmit(NgForm form) {
+    person = _createPerson(form.value);
   }
 
   // TODO(alorenzen): Reset form inputs.
@@ -35,27 +29,23 @@ class RootComponent {
     person = null;
   }
 
-  Person _createPerson() {
+  Person _createPerson(Map<String, dynamic> values) {
     return new Person(
-      firstName: _controls['first-name'].value,
-      lastName: _controls['last-name'].value,
-      address: _createAddress(),
+      firstName: values['first-name'],
+      lastName: values['last-name'],
+      address: _createAddress(values['address']),
     );
   }
 
-  Address _createAddress() {
+  Address _createAddress(Map<String, dynamic> values) {
     return new Address(
-      address1: _addressControls['address1'].value,
-      address2: _addressControls['address2'].value,
-      city: _addressControls['city'].value,
-      state: _addressControls['state'].value,
-      zip: _addressControls['zip'].value,
+      address1: values['address1'],
+      address2: values['address2'],
+      city: values['city'],
+      state: values['state'],
+      zip: values['zip'],
     );
   }
-
-  Map<String, AbstractControl> get _controls => myForm.control.controls;
-  Map<String, AbstractControl> get _addressControls =>
-      (_controls['address'] as ControlGroup).controls;
 }
 
 class Person {

@@ -15,16 +15,13 @@ import 'package:angular_forms/angular_forms.dart';
       RequiredFirstValidator,
       RequiredState
     ])
-class AddressComponent {
-  String address1;
-  String address2;
-  String city;
-  String state;
-  String zip;
-}
+class AddressComponent {}
 
-/// A [Validator] which validates that the [requiredFirst] value is preset when
-/// this control has a value set.
+/// Validator that ensures that [requiredFirst] control has a value before this
+/// control.
+///
+/// For example an address input where given two address lines the second line
+/// shouldn't be the only one with a value.
 // TODO(alorenzen): Improve the interop between the two Controls. Errors should
 // clear when requiredFirst value is set.
 @Directive(selector: '[requiredFirst]', providers: const [

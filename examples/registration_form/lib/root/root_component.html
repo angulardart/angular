@@ -1,3 +1,4 @@
+<!-- Initialize local variable myForm with the NgForm instance. -->
 <form #myForm="ngForm">
     <section>
         <material-input
@@ -5,7 +6,6 @@
                 floatingLabel
                 label="First Name"
                 ngControl="first-name"
-                [(ngModel)]="firstName"
                 required>
         </material-input>
     </section>
@@ -15,7 +15,6 @@
                 floatingLabel
                 label="Last Name"
                 ngControl="last-name"
-                [(ngModel)]="lastName"
                 required>
         </material-input>
     </section>
@@ -26,8 +25,9 @@
             yesHighlighted
             raised
             [yesDisabled]="!myForm.valid"
-            (yes)="onSubmit()"
+            (yes)="onSubmit(myForm)"
             (no)="onClear()">
+        <!-- Passes myForm value to callback methods. -->
     </material-yes-no-buttons>
 </form>
 
