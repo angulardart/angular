@@ -1,6 +1,8 @@
 import 'package:meta/meta.dart';
 
 import '../errors.dart' as errors;
+import '../module.dart';
+
 import 'empty.dart';
 import 'hierarchical.dart';
 import 'map.dart';
@@ -127,4 +129,10 @@ class GenerateInjector {
   final List<Object> _providersOrModules;
 
   const GenerateInjector(this._providersOrModules);
+
+  /// Generate an [Injector] from [Module]s instead of untyped lists.
+  @experimental
+  const factory GenerateInjector.fromModules(
+    List<Module> modules,
+  ) = GenerateInjector;
 }
