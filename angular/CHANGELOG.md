@@ -8,6 +8,12 @@
     to the view compiler to complete this feature:
     https://github.com/dart-lang/angular/issues/434
 
+### Bug Fixes
+
+*   Misspelled or otherwise erroneous annotations on classes now produce a more
+    understandable error message, including the element that was annotated and
+    the annotation that was not resolved.
+
 ## 5.0.0-alpha+7
 
 **NOTE**: We now require a dev SDK of `>=2.0.0-dev.28.0`.

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart' as build;
 import 'package:meta/meta.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stack_trace/stack_trace.dart';
 
@@ -31,6 +32,13 @@ Future<T> runBuildZoned<T>(
           null,
           showInternalTraces ? e.stackTrace : null,
         );
+      } else if (e is UnresolvedAnnotationException) {
+        final elementSpan = spanForElement(e.annotatedElement);
+        final annotation = e.annotationSource.text;
+        final buffer = new StringBuffer()
+          ..writeln(elementSpan.message('Could not resolve "$annotation"'))
+          ..writeln(messages.analysisFailureReasons);
+        build.log.severe(buffer, null, showInternalTraces ? s : null);
       } else {
         build.log.severe(
           'Unhandled exception in the AngularDart compiler!\n\n'
