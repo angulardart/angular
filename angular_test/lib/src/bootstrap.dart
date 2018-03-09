@@ -22,9 +22,8 @@ Injector createTestInjector(List<dynamic> providers) {
     appInjector = ReflectiveInjector.resolveAndCreate([
       bootstrapLegacyModule,
       providers,
-    ], browserStaticPlatform().injector);
+    ], platformRef.injector);
   }
-  initAngular(appInjector);
   return appInjector;
 }
 

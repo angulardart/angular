@@ -39,7 +39,7 @@ targets:
 
 By disabling this flag, AngularDart may choose to generate additional code to
 support legacy classes like `SlowComponentLoader` and `ReflectiveInjector`. If
-you are using `fastBoot` (formally known as `bootstrapFactory`) then this can
+you are using `runApp` (formally known as `bootstrapFactory`) then this can
 always safely be `true`.
 
 Defaults to `true` in AngularDart ^5.0.0-alpha+2.

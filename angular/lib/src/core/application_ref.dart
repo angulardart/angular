@@ -5,18 +5,16 @@ import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 import '../facade/exceptions.dart' show BaseException, ExceptionHandler;
-import '../platform/dom/shared_styles_host.dart';
-import 'application_tokens.dart' show PLATFORM_INITIALIZER, APP_INITIALIZER;
+import 'application_tokens.dart' show APP_INITIALIZER;
 import 'change_detection/change_detector_ref.dart';
 import 'change_detection/constants.dart';
 import 'di.dart';
 import 'linker/app_view.dart'
-    show lastGuardedView, caughtException, caughtStack, AppView;
+    show lastGuardedView, caughtException, caughtStack;
 import 'linker/app_view_utils.dart';
 import 'linker/component_factory.dart' show ComponentRef, ComponentFactory;
 import 'linker/component_resolver.dart';
 import 'linker/view_ref.dart';
-import 'render/api.dart' show sharedStylesHost;
 import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
@@ -29,43 +27,6 @@ import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
 /// Create an Angular zone.
 NgZone createNgZone() => new NgZone(enableLongStackTrace: isDevMode);
-
-PlatformRefImpl _platform;
-bool _inPlatformCreate = false;
-
-/// Creates a platform.
-/// Platforms have to be eagerly created via this function.
-PlatformRefImpl createPlatform(Injector injector) {
-  if (isDevMode) {
-    if (_inPlatformCreate) {
-      throw new BaseException('Already creating a platform...');
-    }
-    if (_platform != null && !_platform.disposed) {
-      throw new BaseException('There can be only one platform. Destroy the '
-          'previous one to create a new one.');
-    }
-  }
-  _inPlatformCreate = true;
-  sharedStylesHost ??= new DomSharedStylesHost(document);
-  try {
-    _platform = injector.get(PlatformRef) as PlatformRefImpl;
-    _platform.init(injector);
-  } finally {
-    _inPlatformCreate = false;
-  }
-  return _platform;
-}
-
-/// Dispose the existing platform.
-void disposePlatform() {
-  if (_platform != null && !_platform.disposed) {
-    _platform.dispose();
-  }
-}
-
-/// Returns the current platform.
-PlatformRef getPlatform() =>
-    _platform != null && !_platform.disposed ? _platform : null;
 
 /// Shortcut for ApplicationRef.bootstrap.
 ///
@@ -98,125 +59,6 @@ Future<ComponentRef<T>> coreLoadAndBootstrap<T>(
     await appRef.waitForAsyncInitializers();
     return appRef.bootstrap(factory);
   });
-}
-
-/// The Angular platform is the entry point for Angular on a web page. Each page
-/// has exactly one platform, and services (such as reflection) which are common
-/// to every Angular application running on the page are bound in its scope.
-///
-/// A page's platform is initialized implicitly when `bootstrap()` is called, or
-/// explicitly by calling `createPlatform()`.
-abstract class PlatformRef {
-  /// Register a listener to be called when the platform is disposed.
-  void registerDisposeListener(void dispose());
-
-  /// Retrieve the platform [Injector], which is the parent injector for
-  /// every Angular application on the page and provides singleton providers.
-  Injector get injector;
-
-  /// Destroy the Angular platform and all Angular applications on the page.
-  void dispose();
-
-  // Schedules change detection and view update to be executed on next
-  /// animation frame.
-  void scheduleViewUpdate(
-      ViewUpdateCallback callback, AppView view, Element el);
-}
-
-typedef void ViewUpdateCallback(AppView view, Element el);
-
-@Injectable()
-class PlatformRefImpl extends PlatformRef {
-  final List<ApplicationRef> _applications = [];
-  final List<Function> _disposeListeners = [];
-  bool _disposed = false;
-  Injector _injector;
-  // When true, indicates that we have already scheduled an animation frame
-  // callback.
-  bool _rafScheduled = false;
-  List<AppView> _targetViews;
-  List<Element> _targetElements;
-  List<ViewUpdateCallback> _viewUpdateCallbacks;
-
-  /// Given an injector, gets platform initializers to initialize at bootstrap.
-  void init(Injector injector) {
-    if (isDevMode && !_inPlatformCreate) {
-      throw new BaseException(
-          'Platforms have to be initialized via `createPlatform`!');
-    }
-    _injector = injector;
-
-    List initializers = injector.get(PLATFORM_INITIALIZER, null);
-    if (initializers == null) return;
-    for (var initializer in initializers) {
-      initializer();
-    }
-  }
-
-  void registerDisposeListener(void dispose()) {
-    _disposeListeners.add(dispose);
-  }
-
-  Injector get injector => _injector;
-
-  bool get disposed => _disposed;
-
-  void addApplication(ApplicationRef appRef) {
-    _applications.add(appRef);
-  }
-
-  void dispose() {
-    for (var app in _applications) {
-      app.dispose();
-    }
-    _applications.clear();
-    for (var dispose in _disposeListeners) {
-      dispose();
-    }
-    _disposeListeners.clear();
-    _disposed = true;
-  }
-
-  void _applicationDisposed(ApplicationRef app) {
-    _applications.remove(app);
-  }
-
-  @override
-  void scheduleViewUpdate(
-      ViewUpdateCallback callback, AppView view, Element el) {
-    if (_targetViews == null) {
-      _targetViews = <AppView>[];
-      _targetElements = <Element>[];
-      _viewUpdateCallbacks = <ViewUpdateCallback>[];
-    }
-    _targetViews.add(view);
-    _targetElements.add(el);
-    _viewUpdateCallbacks.add(callback);
-    if (_rafScheduled == false) {
-      _rafScheduled = true;
-      window.requestAnimationFrame(_onAnimationFrame);
-    }
-  }
-
-  void _onAnimationFrame(num _) {
-    int i = 0;
-    try {
-      while (i < _targetViews.length) {
-        _viewUpdateCallbacks[i](_targetViews[i], _targetElements[i]);
-        ++i;
-      }
-    } catch (e, s) {
-      ExceptionHandler exceptionHandler = _injector.get(ExceptionHandler);
-      exceptionHandler?.call(e, s);
-      _viewUpdateCallbacks.removeAt(i);
-      _targetViews.removeAt(i);
-      _targetElements.removeAt(i);
-    }
-    _targetViews.clear();
-    _targetElements.clear();
-    _viewUpdateCallbacks.clear();
-    _rafScheduled = false;
-  }
 }
 
 /// A reference to an Angular application running on a page.
@@ -292,7 +134,6 @@ abstract class ApplicationRef {
 
 @Injectable()
 class ApplicationRefImpl extends ApplicationRef {
-  final PlatformRefImpl _platform;
   final NgZone _zone;
   final Injector _injector;
   final List<Function> _bootstrapListeners = [];
@@ -307,7 +148,7 @@ class ApplicationRefImpl extends ApplicationRef {
   Future<bool> _asyncInitDonePromise;
   bool _asyncInitDone;
 
-  ApplicationRefImpl(this._platform, this._zone, this._injector) {
+  ApplicationRefImpl(this._zone, this._injector) {
     NgZone zone = _injector.get(NgZone);
     _enforceNoNewChanges = isDevMode;
     zone.run(() {
@@ -447,6 +288,7 @@ class ApplicationRefImpl extends ApplicationRef {
             .get(TestabilityRegistry)
             .registerApplication(compRef.location, testability);
       }
+      appViewUtils = unsafeCast<AppViewUtils>(injector.get(AppViewUtils));
       _loadComponent(compRef);
       return compRef;
     });
@@ -565,7 +407,6 @@ class ApplicationRefImpl extends ApplicationRef {
       subscription.cancel();
     }
     _streamSubscriptions.clear();
-    _platform._applicationDisposed(this);
   }
 
   @override
