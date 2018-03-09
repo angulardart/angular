@@ -1,0 +1,42 @@
+<div ngControlGroup="address">
+    <material-input
+            type="text"
+            floatingLabel
+            label="Address 1"
+            ngControl="address1"
+            required
+            #address1Control="ngForm">
+      <!-- Binds address1Control local variable to the ngForm directive for
+           this element. -->
+    </material-input>
+    <material-input
+            type="text"
+            floatingLabel
+            label="Address 2"
+            ngControl="address2"
+            [requiredFirst]="address1Control">
+      <!-- Binds the value of address1Control local variable, in this case
+           the NgControl bound to that input, to requiredFirst directive input.
+         -->
+    </material-input>
+    <material-input
+            type="text"
+            floatingLabel
+            label="City"
+            ngControl="city"
+            required>
+    </material-input>
+    <material-auto-suggest-input
+            ngControl="state"
+            floatingLabel
+            label="State"
+            [suggestions]="states">
+    </material-auto-suggest-input>
+    <material-input
+            type="text"
+            floatingLabel
+            label="Zip Code"
+            ngControl="zip"
+            required>
+    </material-input>
+</div>
