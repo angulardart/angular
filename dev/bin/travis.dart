@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:path/path.dart' as p;
 
-import 'package:angular.dev/dry.dart';
-import 'package:angular.dev/find.dart';
+import 'package:dev/dry.dart';
+import 'package:dev/find.dart';
 
 /// Writes `<root>/.travis.yml` based on the configuration in this file.
 void main(List<String> args) {
