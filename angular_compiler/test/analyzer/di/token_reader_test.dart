@@ -66,13 +66,8 @@ void main() {
         );
       });
 
-      test('for an arbitrary class', () {
-        final token = reader.parseTokenObject(tokens[5]);
-        expect(token, const isInstanceOf<LiteralTokenElement>());
-        expect(
-          '${(token as LiteralTokenElement).literal}',
-          'const Example()',
-        );
+      test('for an arbitrary class throws', () {
+        expect(() => reader.parseTokenObject(tokens[5]), throwsBuildError);
       });
     });
 

@@ -8,6 +8,10 @@
     to the view compiler to complete this feature:
     https://github.com/dart-lang/angular/issues/434
 
+*   Support for injecting services by an arbitrary object or literal is being
+    discontinued for compile-time injection. You'll receive a build exception;
+    fix by instead either providing by a `Type` or `OpaqueToken`/`MultiToken`. 
+
 ### Bug Fixes
 
 *   Misspelled or otherwise erroneous annotations on classes now produce a more
