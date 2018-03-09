@@ -47,23 +47,13 @@ void main() {
       );
     });
 
-    group('LiteralToken', () {
+    group('LiteralToken throws', () {
       test('for a String', () {
-        final token = reader.parseTokenObject(tokens[3]);
-        expect(token, const isInstanceOf<LiteralTokenElement>());
-        expect(
-          '${(token as LiteralTokenElement).literal}',
-          'r\'someString\'',
-        );
+        expect(() => reader.parseTokenObject(tokens[3]), throwsBuildError);
       });
 
       test('for an int', () {
-        final token = reader.parseTokenObject(tokens[4]);
-        expect(token, const isInstanceOf<LiteralTokenElement>());
-        expect(
-          '${(token as LiteralTokenElement).literal}',
-          '1234',
-        );
+        expect(() => reader.parseTokenObject(tokens[4]), throwsBuildError);
       });
 
       test('for an arbitrary class throws', () {
