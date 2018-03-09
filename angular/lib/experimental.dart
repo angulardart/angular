@@ -8,6 +8,7 @@
 @experimental
 library angular.experimental;
 
+import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
@@ -32,9 +33,11 @@ export 'src/bootstrap/modules.dart' show bootstrapLegacyModule;
 // This injector is cached and re-used across every bootstrap(...) call.
 Injector _platformInjector() {
   final platformRef = new PlatformRefImpl();
+  final throwingComponentLoader = new _ThrowingSlowComponentLoader();
   return new Injector.map({
     PlatformRef: platformRef,
     PlatformRefImpl: platformRef,
+    SlowComponentLoader: throwingComponentLoader
   });
 }
 
@@ -128,3 +131,27 @@ bool isDomRenderDirty() => app_view.domRootRendererIsDirty;
 void resetDomRenderDirty() {
   app_view.domRootRendererIsDirty = false;
 }
+
+/// Implementation of [SlowComponentLoader] that throws an UnimplementedError
+/// when used.
+///
+/// This is to allow a migration path for common components that may need to
+/// inject [SlowComponentLoader] for the legacy `bootstrapStatic` method, but
+/// won't actually use it in apps that called `bootstrapFactory`.
+class _ThrowingSlowComponentLoader implements SlowComponentLoader {
+  @override
+  Future<ComponentRef<T>> load<T>(Type type, Injector injector) {
+    throw new UnimplementedError(_slowComponentLoaderWarning);
+  }
+
+  @override
+  Future<ComponentRef<T>> loadNextToLocation<T>(
+      Type type, ViewContainerRef location,
+      [Injector injector]) {
+    throw new UnimplementedError(_slowComponentLoaderWarning);
+  }
+}
+
+const _slowComponentLoaderWarning = 'You are using bootstrapFactory, which no '
+    'longer supports loading a component with SlowComponentLoader. Please '
+    'migrate this code to use ComponentLoader instead.';

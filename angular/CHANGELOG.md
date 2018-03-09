@@ -14,6 +14,11 @@
     understandable error message, including the element that was annotated and
     the annotation that was not resolved.
 
+*   `bootstrapFactory` now injects an implementation of `SlowComponentLoader`
+    that always throws. This is to allow a migration path for common components
+    that still injet `SlowComponentLoader` into apps that are using the new
+    bootstrap.
+
 ## 5.0.0-alpha+7
 
 **NOTE**: We now require a dev SDK of `>=2.0.0-dev.28.0`.
