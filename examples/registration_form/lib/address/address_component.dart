@@ -1,20 +1,20 @@
+import 'package:angular_components/material_input/material_input.dart';
+import 'package:angular_components/material_input/material_auto_suggest_input.dart';
 import 'package:angular/angular.dart';
-import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
 
 @Component(
-    selector: 'address-cmp',
-    templateUrl: 'address_component.html',
-    exports: [
-      states
-    ],
-    directives: [
-      formDirectives,
-      materialInputDirectives,
-      MaterialAutoSuggestInputComponent,
-      RequiredFirstValidator,
-      RequiredState
-    ])
+  selector: 'address-cmp',
+  templateUrl: 'address_component.html',
+  exports: [states],
+  directives: [
+    formDirectives,
+    materialInputDirectives,
+    MaterialAutoSuggestInputComponent,
+    RequiredFirstValidator,
+    RequiredState
+  ],
+)
 class AddressComponent {}
 
 /// Validator that ensures that [requiredFirst] control has a value before this

@@ -1,22 +1,25 @@
+import 'package:angular_components/laminate/popup/module.dart';
+import 'package:angular_components/material_input/material_input.dart';
+import 'package:angular_components/material_yes_no_buttons/material_yes_no_buttons.dart';
 import 'package:angular/angular.dart';
-import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:examples.registration_form/address/address_component.dart';
 
 @Component(
-    selector: 'hello-world',
-    templateUrl: 'root_component.html',
-    directives: [
-      formDirectives,
-      materialInputDirectives,
-      MaterialYesNoButtonsComponent,
-      MaterialSaveCancelButtonsDirective,
-      NgIf,
-      AddressComponent
-    ],
-    providers: [
-      popupBindings,
-    ])
+  selector: 'hello-world',
+  templateUrl: 'root_component.html',
+  directives: [
+    formDirectives,
+    materialInputDirectives,
+    MaterialYesNoButtonsComponent,
+    MaterialSaveCancelButtonsDirective,
+    NgIf,
+    AddressComponent
+  ],
+  providers: [
+    popupBindings,
+  ],
+)
 class RootComponent {
   Person person;
 
