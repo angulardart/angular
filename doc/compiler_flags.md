@@ -43,20 +43,3 @@ you are using `fastBoot` (formally known as `bootstrapFactory`) then this can
 always safely be `true`.
 
 Defaults to `true` in AngularDart ^5.0.0-alpha+2.
-
-## `use_new_template_parser`
-
-```yaml
-targets:
-  $default:
-    builders:
-      angular:
-        options:
-          use_new_template_parser: false
-```
-
-By disabling this flag, AngularDart will use the older, less-strict template
-parser, which will eventually be removed. Only disable this option if you need
-additional time to migrate.
-
-Defaults to `true` in AngularDart ^5.0.0-alpha+5.
