@@ -13,7 +13,6 @@ import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/component_loader.dart';
 import 'package:angular/src/core/linker/component_resolver.dart';
 import 'package:angular/src/core/linker/dynamic_component_loader.dart';
-import 'package:angular/src/core/testability/testability.dart';
 import 'package:angular/src/core/zone.dart';
 import 'package:angular/src/di/providers.dart';
 import 'package:angular/src/facade/exception_handler.dart';
@@ -58,7 +57,7 @@ const bootstrapMinimalModule = const <Object>[
   // Custom events and fallback if the compiler does not detect an event.
   eventPluginModule,
 
-  // HTML/DOM sanitization.
+  // HTML/DOM sanitizers.
   const Provider(ExceptionHandler, useClass: BrowserExceptionHandler),
   const Provider(SanitizationService, useExisting: DomSanitizationService),
   const Provider(DomSanitizationService, useClass: DomSanitizationServiceImpl),
@@ -69,9 +68,6 @@ const bootstrapMinimalModule = const <Object>[
   const Provider(APP_ID, useFactory: createRandomAppId, deps: const []),
   const Provider(AppViewUtils),
   const Provider(ComponentLoader),
-
-  // Disable Testability.
-  const Provider(Testability, useValue: null),
 ];
 
 /// An experimental application [Injector] that is statically generated.
@@ -101,5 +97,4 @@ const bootstrapLegacyModule = const <Object>[
   bootstrapMinimalModule,
   const Provider(ComponentResolver, useClass: ComponentResolver),
   const Provider(SlowComponentLoader),
-  const Provider(Testability, useClass: Testability),
 ];

@@ -1,5 +1,4 @@
 import 'package:angular/angular.dart';
-import 'package:angular/experimental.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:http/http.dart';
 import 'package:http/browser_client.dart';
@@ -32,8 +31,8 @@ void main() {
   new pwa.Client();
 
   // Start AngularDart.
-  bootstrapFactory(
+  runApp(
     app.AppComponentNgFactory,
-    hackerNewsApp,
+    createInjector: hackerNewsApp,
   );
 }

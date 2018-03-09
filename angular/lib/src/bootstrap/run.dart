@@ -1,23 +1,18 @@
-import 'dart:html';
+import 'dart:async';
+
+import 'package:meta/meta.dart';
 
 import '../core/application_ref.dart';
 import '../core/linker.dart' show ComponentFactory, ComponentRef;
 import '../core/linker/app_view_utils.dart';
-import '../core/render/api.dart';
+import '../di/injector/hierarchical.dart';
 import '../di/injector/injector.dart';
-import '../platform/dom/shared_styles_host.dart';
+import '../di/injector/runtime.dart';
+import '../di/reflector.dart' as reflector;
 import '../runtime.dart';
 
 import 'modules.dart';
-
-/// Creates a new injector for platform-level services.
-Injector _platformInjector() {
-  final platformRef = new PlatformRefImpl();
-  return new Injector.map({
-    PlatformRef: platformRef,
-    PlatformRefImpl: platformRef,
-  });
-}
+import 'platform.dart';
 
 /// Starts a new AngularDart application with [componentFactory] as the root.
 ///
@@ -46,6 +41,7 @@ Injector _platformInjector() {
 /// Optionally may supply a [createInjector] function in order to provide
 /// services to the root of the application:
 ///
+/// ```
 /// // Assume this file is "main.dart".
 /// import 'package:angular/angular.dart';
 /// import 'main.template.dart' as ng;
@@ -85,20 +81,147 @@ ComponentRef<T> runApp<T>(
   ComponentFactory<T> componentFactory, {
   InjectorFactory createInjector,
 }) {
-  if (isDevMode) {
-    if (componentFactory == null) {
-      throw new ArgumentError.notNull('componentFactory');
-    }
+  if (isDevMode && componentFactory == null) {
+    throw new ArgumentError.notNull('componentFactory');
   }
-  var appInjector = minimalApp(_platformInjector());
+  var appInjector = minimalApp(internalPlatform.injector);
   if (createInjector != null) {
     appInjector = createInjector(appInjector);
   }
-  // Both of these global variables are spected to be set as part of the
-  // bootstrap process. We should probably merge this concept with the platform
-  // at some point.
-  appViewUtils = unsafeCast<AppViewUtils>(appInjector.get(AppViewUtils));
-  sharedStylesHost ??= new DomSharedStylesHost(document);
   final appRef = unsafeCast<ApplicationRef>(appInjector.get(ApplicationRef));
+  appViewUtils = unsafeCast<AppViewUtils>(appInjector.get(AppViewUtils));
   return appRef.bootstrap(componentFactory, appInjector);
 }
+
+/// Starts a new AngularDart application in legacy mode, with [initReflector].
+///
+/// This method was formally known as `bootstrap` or `bootstrapStatic`, and
+/// requires initializing a chain of generated `initReflector()` calls, starting
+/// at the root:
+/// ```dart
+/// // Assume this file is "main.dart".
+/// import 'package:angular/angular.dart';
+/// import 'main.template.dart' as ng;
+///
+/// @Component(
+///   selector: 'hello-world',
+///   template: '',
+/// )
+/// class HelloWorld {}
+///
+/// void main() {
+///   runAppLegacy(HelloWorld, initReflector: ng.initReflector);
+/// }
+/// ```
+///
+/// You may pass either [rootProviders] or [createInjector] but not both in
+/// order to configure root injectable services. The [createInjector] option
+/// is available mainly as a transitional API to [runApp].
+///
+/// It is preferred to use [runApp] wherever possible, but note that the
+/// following services are _not_ supported and require [runAppLegacy]:
+/// * `APP_INITIALIZER`
+/// * `ComponentResolver`
+/// * `ReflectiveInjector`
+/// * `SlowComponentLoader`
+///
+/// Returns a [ComponentRef] of [componentType].
+Future<ComponentRef<T>> runAppLegacy<T>(
+  Type componentType, {
+  List<Object> rootProviders,
+  InjectorFactory createInjector,
+  @required void Function() initReflector,
+}) {
+  if (isDevMode && rootProviders != null && createInjector != null) {
+    throw new ArgumentError('Specify either customProviders or createInjector');
+  }
+  final platformRef = internalPlatform;
+  createInjector ??= ([injector]) {
+    return ReflectiveInjector.resolveAndCreate(
+      [rootProviders ?? [], bootstrapLegacyModule],
+      unsafeCast<HierarchicalInjector>(injector),
+    );
+  };
+  final appInjector = createInjector(platformRef.injector);
+  final appRef = unsafeCast<ApplicationRef>(appInjector.get(ApplicationRef));
+  appViewUtils = unsafeCast<AppViewUtils>(appInjector.get(AppViewUtils));
+  return appRef.waitForAsyncInitializers().then((_) {
+    return appRef.bootstrap(
+      unsafeCast<ComponentFactory<T>>(reflector.getComponent(componentType)),
+      appInjector,
+    );
+  });
+}
+
+const _errorMessage = 'Renamed "runAppLegacy". See doc comments for details';
+
+/// See [runAppLegacy].
+///
+/// This method only worked in AngularDart 4.x and below, and relied on the
+/// pub transformer automatically rewriting this function to [bootstrapStatic].
+/// In AngularDart 5.x+, this rewrite should be done manually.
+///
+/// **BEFORE**:
+/// ```
+/// import 'package:angular/angular.dart';
+///
+/// void main() {
+///   bootstrap(AppComponent, [providers]);
+/// }
+///
+/// @Component(
+///   selector: 'app',
+///   template: 'Hello World',
+/// )
+/// class AppComponent {}
+/// ```
+///
+/// **AFTER**:
+/// ```
+/// // assume this file is main.dart
+/// import 'package:angular/angular.dart';
+///
+/// import 'main.template.dart' as ng;
+///
+/// void main() {
+///   runAppLegacy(
+///     AppComponent,
+///     rootProviders: [providers],
+///     initReflector: ng.initReflector,
+///   );
+/// }
+/// ```
+@Deprecated(_errorMessage)
+@alwaysThrows
+Future<ComponentRef<T>> bootstrap<T>(
+  Type appComponentType, [
+  List<Object> customProviders,
+]) =>
+    throw new UnsupportedError(_errorMessage);
+
+/// See [runAppLegacy].
+///
+/// The API has changed slightly. Instead of:
+/// ```
+/// await bootstrapStatic(AppComponent, [providers], ng.initReflector);
+/// ```
+///
+/// ... using [runAppLegacy]:
+/// ```
+/// runAppLegacy(
+///   AppComponent,
+///   customProviders: [providers],
+///   initReflector: ng.initReflector,
+/// );
+/// ```
+@Deprecated('Renamed "runAppLegacy"')
+Future<ComponentRef<T>> bootstrapStatic<T>(
+  Type componentType, [
+  List<Object> rootProviders,
+  void Function() initReflector,
+]) =>
+    new Future<ComponentRef<T>>.value(runAppLegacy(
+      componentType,
+      rootProviders: rootProviders,
+      initReflector: initReflector,
+    ));
