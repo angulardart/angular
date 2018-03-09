@@ -13,14 +13,16 @@ import '../types.dart';
 /// In AngularDart this is either an `OpaqueToken` or a `Type`.
 class TokenReader {
   /// Whether to allow arbitrary `const/new` objects as tokens.
+  @deprecated
   final bool allowArbitraryTokens;
 
   /// Whether to allow [int] and [String] to be tokens.
+  @deprecated
   final bool allowLiteralTokens;
 
   const TokenReader({
-    this.allowArbitraryTokens: true,
-    this.allowLiteralTokens: true,
+    this.allowArbitraryTokens: false,
+    this.allowLiteralTokens: false,
   });
 
   /// Returns [object] parsed into a [TokenElement].
@@ -63,11 +65,17 @@ class TokenReader {
         return new LiteralTokenElement('const ${revive.source.fragment}()');
       }
     }
-    throw new ArgumentError.value(
-        object,
-        'object',
-        'Could not parse into a token for dependency injection. Only a `Type` '
-        'or an `OpaqueToken` is supported, but ${object.type} was used.');
+    final error =
+        'Not a valid token for injection: $object. In previous versions of '
+        'AngularDart it was valid to try and inject by other token types '
+        'expressable in Dart. However, compile-time injection now only '
+        'supports either "Type", "OpaqueToken", "MultiToken" or a class '
+        'extending "OpaqueToken" or "MultiToken".\n\n'
+        'However: ${object.type} was passed, which is not supported';
+    if (element != null) {
+      BuildError.throwForElement(element, error);
+    }
+    throw new BuildError(error);
   }
 
   /// Returns [object] parsed into an [OpaqueTokenElement].

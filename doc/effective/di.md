@@ -234,8 +234,9 @@ class Comp {
 
 With the older style `Provider(...)` and `provide(...)` it's still type-safe and
 permitted to use arbitrary tokens, such as strings, numbers, or even custom
-classes. There are some bugs in the compiler, and it's unlikely support for this
-feature will be kept long-term in AngularDart.
+classes. However, these are no longer supported in any form of compile-time
+injection (i.e. they only work with runtime-configured injectors like
+`ReflectiveInjetor` or `Injector.map`).
 
 **BAD**:
 
