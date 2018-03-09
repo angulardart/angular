@@ -2,6 +2,9 @@
 
 *   Removed `use_new_template_parser` flag. The old parser was removed.
 *   Requires `source_gen >= 0.7.6`.
+*   Removed support for parsing arbitrary objects or literal values as a
+    provider token from `TokenReader`. In a future version of the compiler
+    these arguments will be completely removed.
 
 ### Bug Fixes
 
