@@ -1,0 +1,4 @@
+analyzer:
+  plugins:
+    angular:
+      enabled: true
