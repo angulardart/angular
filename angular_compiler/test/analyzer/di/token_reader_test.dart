@@ -72,7 +72,7 @@ void main() {
     });
 
     test('invalid token type', () {
-      expect(() => reader.parseTokenObject(tokens[2]), throwsArgumentError);
+      expect(() => reader.parseTokenObject(tokens[2]), throwsBuildError);
     });
   });
 
