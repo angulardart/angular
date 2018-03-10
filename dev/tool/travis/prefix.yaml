@@ -44,5 +44,5 @@ jobs:
     - stage: presubmit
       script:
         - pub global activate --source path dev
-        - pub global run angular.dev:travis -d
-        - pub global run angular.dev:pubspec -d
+        - pub global run dev:travis -d
+        - pub global run dev:pubspec -d

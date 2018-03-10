@@ -11,8 +11,8 @@ From the root (i.e. `angular`) run the following:
 $ pub global activate --source path dev
 ```
 
-You now have the `angular.dev` set of tools installed. Make sure to only run
-them from the root of this repository (i.e. directly in `angular`).
+You now have the `dev` set of tools installed. Make sure to only run them from
+the root of this repository (i.e. directly in `angular`).
 
 ## Commands
 
@@ -25,7 +25,7 @@ This generates and keeps elements in sync across `pubspec.yaml` files.
 **Example use:**
 
 ```bash
-$ pub global run angular.dev:pubspec
+$ pub global run dev:pubspec
 ```
 
 ### `travis`
@@ -39,7 +39,7 @@ This generates the root `.travis.yml` from:
 **Example use:**
 
 ```bash
-$ pub global run angular.dev:travis
+$ pub global run dev:travis
 ```
 
 For the configurable portion, _conventions_ are used over _configuration_ for
