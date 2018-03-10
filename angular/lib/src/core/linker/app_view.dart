@@ -14,6 +14,8 @@ import 'package:angular/src/platform/dom/shared_styles_host.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
+import '../zone.dart' show NgZone;
+
 import 'app_view_utils.dart';
 import 'component_factory.dart';
 import 'exceptions.dart' show ViewDestroyedException;
@@ -639,10 +641,15 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
+  final NgZone _ngZone = appViewUtils.eventManager.getZone();
+
+  /// Used to bind to event streams where the event itself is ignored.
+  ///
+  /// Returns a function that invokes a zero-argument event [handler].
   void Function(E) eventHandler0<E>(void Function() handler) {
     return (E event) {
       markPathToRootAsCheckOnce();
-      appViewUtils.eventManager.getZone().runGuarded(handler);
+      _ngZone.runGuarded(handler);
     };
   }
 
@@ -654,10 +661,31 @@ abstract class AppView<T> {
   // parameter of the event listener is a subclass of Event. The Event passed in
   // from EventTarget.addEventListener() can then be safely coerced back to its
   // known type.
+
+  /// Used to bind to event streams where the event is passed to the component.
+  ///
+  /// Returns a function that invokes a one-argument event [handler].
   void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
+    if (isDevMode) {
+      return _eventHandler1Debug<E, F>(handler);
+    }
     return (E event) {
       markPathToRootAsCheckOnce();
-      appViewUtils.eventManager.getZone().runGuarded(() => handler(event as F));
+      _ngZone.runGuarded(() {
+        handler(event as F);
+      });
+    };
+  }
+
+  /// Variant of [eventHandler1] that provides better runtime errors.
+  void Function(E) _eventHandler1Debug<E, F extends E>(void Function(F) fn) {
+    return (E event) {
+      if (event is F) {
+        markPathToRootAsCheckOnce();
+        _ngZone.runGuarded(() => fn(event));
+      } else {
+        throw new InvalidHandlerError(F, E, ctx ?? fn);
+      }
     };
   }
 

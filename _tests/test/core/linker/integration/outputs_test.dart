@@ -69,6 +69,11 @@ void main() {
     expect(inputPrevent.checked, false);
     expect(inputNoPrevent.checked, true);
   });
+
+  test('should throw a readable error message on a cast failure', () async {
+    final testBed = new NgTestBed<TestCastErrorsComponent>();
+    expect(testBed.create, throwsTypeError);
+  });
 }
 
 @Directive(
@@ -207,3 +212,24 @@ class DirectiveListeningDomEventNoPrevent {
   ],
 )
 class TestPreventDefaultComponent {}
+
+@Directive(
+  selector: 'event-of-list',
+)
+class EmitsEventOfTypeList {
+  @Output()
+  Stream<List> get stream => new Stream.fromIterable([[]]);
+}
+
+@Component(
+  selector: 'test-cast-errors',
+  template: r'<event-of-list (stream)="handleEvent($event)"></event-of-list>',
+  directives: const [
+    EmitsEventOfTypeList,
+  ],
+)
+class TestCastErrorsComponent {
+  void handleEvent(List<String> event) {}
+}
+
+final throwsTypeError = throwsA(const isInstanceOf<TypeError>());
