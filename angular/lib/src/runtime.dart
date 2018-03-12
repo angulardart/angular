@@ -5,4 +5,5 @@
 /// rely on.
 library angular.src.runtime;
 
+export 'runtime/errors.dart' show InvalidHandlerError;
 export 'runtime/optimizations.dart' show isDevMode, unsafeCast;
