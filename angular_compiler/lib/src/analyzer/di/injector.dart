@@ -67,8 +67,7 @@ class InjectorReader {
     this.libraryReader, {
     this.moduleReader: const ModuleReader(),
     this.doNotScope,
-  })
-      : this.annotation = new ConstantReader(
+  }) : this.annotation = new ConstantReader(
           $GenerateInjector.firstAnnotationOfExact(field),
         );
 

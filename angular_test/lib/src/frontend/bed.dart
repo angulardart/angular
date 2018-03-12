@@ -200,8 +200,7 @@ class NgTestBed<T> {
     Iterable<NgTestStabilizerFactory> stabilizers,
     InjectorFactory rootInjector,
     ComponentFactory<T> component,
-  })
-      : _host = host,
+  })  : _host = host,
         _providers = providers.toList(),
         _stabilizers = stabilizers.toList(),
         _rootInjector = rootInjector ?? _defaultRootInjector,
@@ -212,8 +211,7 @@ class NgTestBed<T> {
     @required ComponentFactory<T> component,
     @required InjectorFactory rootInjector,
     @required bool watchAngularLifecycle,
-  })
-      : _host = host,
+  })  : _host = host,
         _providers = const [],
         _stabilizers = watchAngularLifecycle ? _lifecycleStabilizers : const [],
         _rootInjector = rootInjector,

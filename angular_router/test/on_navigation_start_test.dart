@@ -90,8 +90,7 @@ class HomeComponent implements CanDeactivate, CanNavigate {
   HomeComponent(
     @Optional() @Inject(canDeactivateToken) bool canDeactivate,
     @Optional() @Inject(canNavigateToken) bool canNavigate,
-  )
-      : _canDeactivate = canDeactivate ?? true,
+  )   : _canDeactivate = canDeactivate ?? true,
         _canNavigate = canNavigate ?? true;
 
   @override

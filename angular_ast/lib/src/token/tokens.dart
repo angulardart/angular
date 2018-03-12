@@ -470,8 +470,7 @@ class NgToken implements NgBaseToken<NgTokenType> {
     this.type,
     this.offset, {
     bool errorSynthetic: false,
-  })
-      : errorSynthetic = errorSynthetic;
+  }) : errorSynthetic = errorSynthetic;
 
   @override
   bool operator ==(Object o) {

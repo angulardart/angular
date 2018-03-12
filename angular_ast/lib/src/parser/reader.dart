@@ -79,8 +79,7 @@ class NgTokenReversibleReader<TokenType> extends NgTokenReader<TokenType> {
   NgTokenReversibleReader._(
     SourceFile source,
     Iterator<NgBaseToken> iterator,
-  )
-      : super._(source, iterator);
+  ) : super._(source, iterator);
 
   /// Scans forward for the next peek type that isn't ignoreType
   /// For example, `peekTypeIgnoringType(whitespace)` will peek

@@ -55,8 +55,7 @@ class _ParsedCommentAst extends TemplateAst with CommentAst {
     NgToken startCommentToken,
     this._valueToken,
     NgToken endCommentToken,
-  )
-      : super.parsed(
+  ) : super.parsed(
           startCommentToken,
           endCommentToken,
           sourceFile,
@@ -75,6 +74,5 @@ class _SyntheticCommentAst extends SyntheticTemplateAst with CommentAst {
   _SyntheticCommentAst.from(
     TemplateAst origin,
     this.value,
-  )
-      : super.from(origin);
+  ) : super.from(origin);
 }

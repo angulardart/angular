@@ -116,8 +116,7 @@ class ParsedEmbeddedContentAst extends TemplateAst with EmbeddedContentAst {
     this.ngProjectAsToken,
     this.ngProjectAsEqualSign,
     this.ngProjectAsValueToken,
-  ])
-      : super.parsed(
+  ]) : super.parsed(
           startElementToken,
           endElementToken,
           sourceFile,
@@ -163,8 +162,7 @@ class _SyntheticEmbeddedContentAst extends SyntheticTemplateAst
     TemplateAst origin, [
     this.selector = '*',
     this.ngProjectAs,
-  ])
-      : super.from(origin) {
+  ]) : super.from(origin) {
     this.closeComplement = new CloseElementAst('ng-content');
   }
 }

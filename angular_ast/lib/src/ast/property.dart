@@ -140,8 +140,7 @@ class ParsedPropertyAst extends TemplateAst
     this.suffixToken, [
     this.valueToken,
     this.equalSignToken,
-  ])
-      : super.parsed(
+  ]) : super.parsed(
             prefixToken,
             valueToken == null ? suffixToken : valueToken.rightQuote,
             sourceFile) {
@@ -217,8 +216,7 @@ class _SyntheticPropertyAst extends SyntheticTemplateAst with PropertyAst {
     this.expression,
     this.postfix,
     this.unit,
-  ])
-      : super.from(origin);
+  ]) : super.from(origin);
 
   @override
   ExpressionAst expression;

@@ -95,8 +95,7 @@ class ReflectableReader {
     this.recordDirectivesAsInjectables: true,
     this.recordPipesAsInjectables: true,
     this.recordRouterAnnotationsForComponents: true,
-  })
-      : hasInput = _nullHasInput,
+  })  : hasInput = _nullHasInput,
         isLibrary = _nullIsLibrary;
 
   static FutureOr<bool> _nullHasInput(_) => false;

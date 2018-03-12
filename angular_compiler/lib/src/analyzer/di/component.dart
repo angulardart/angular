@@ -41,8 +41,7 @@ class ComponentReader {
     this.dependencyReader: const DependencyReader(),
     this.appliedDirectives: const [],
     this.moduleReader: const ModuleReader(),
-  })
-      : this.annotation = new ConstantReader(
+  }) : this.annotation = new ConstantReader(
           $Component.firstAnnotationOfExact(component),
         );
 

@@ -26,8 +26,7 @@ class RecursiveAstParser {
     this._voidElements,
     this._svgElements,
     this.exceptionHandler,
-  )
-      : _reader = new NgTokenReversibleReader<NgTokenType>(sourceFile, tokens),
+  )   : _reader = new NgTokenReversibleReader<NgTokenType>(sourceFile, tokens),
         _source = sourceFile;
 
   /// Iterates through and returns the top-level AST nodes from the tokens.

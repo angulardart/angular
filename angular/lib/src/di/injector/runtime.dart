@@ -62,8 +62,7 @@ class _RuntimeInjector extends HierarchicalInjector
     this._providers,
     this._multiProviders,
     HierarchicalInjector parent,
-  )
-      : super(parent) {
+  ) : super(parent) {
     assert(parent != null, 'A parent injector is always required.');
     // Injectors as a contract must return themselves if `Injector` is a token.
     _instances[Injector] = this;

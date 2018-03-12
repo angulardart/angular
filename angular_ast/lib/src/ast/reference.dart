@@ -100,8 +100,7 @@ class ParsedReferenceAst extends TemplateAst
     this.nameToken, [
     this.valueToken,
     this.equalSignToken,
-  ])
-      : super.parsed(
+  ]) : super.parsed(
           prefixToken,
           valueToken != null ? valueToken.rightQuote : nameToken,
           sourceFile,
@@ -148,8 +147,7 @@ class _SyntheticReferenceAst extends SyntheticTemplateAst with ReferenceAst {
     TemplateAst origin,
     this.variable, [
     this.identifier,
-  ])
-      : super.from(origin);
+  ]) : super.from(origin);
 
   @override
   final String identifier;

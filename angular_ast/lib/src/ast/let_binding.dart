@@ -100,8 +100,7 @@ class ParsedLetBindingAst extends TemplateAst
     this.nameToken, [
     this.valueToken,
     this.equalSignToken,
-  ])
-      : super.parsed(
+  ]) : super.parsed(
           prefixToken,
           valueToken == null ? nameToken : valueToken.rightQuote,
           sourceFile,
@@ -151,6 +150,5 @@ class _SyntheticLetBindingAst extends SyntheticTemplateAst with LetBindingAst {
     TemplateAst origin,
     this.name, [
     this.value,
-  ])
-      : super.from(origin);
+  ]) : super.from(origin);
 }

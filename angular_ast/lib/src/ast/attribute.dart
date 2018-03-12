@@ -106,8 +106,7 @@ class ParsedAttributeAst extends TemplateAst
     this.valueToken,
     this.equalSignToken,
     this.mustaches,
-  ])
-      : super.parsed(
+  ]) : super.parsed(
           nameToken,
           (valueToken == null ? nameToken : valueToken.rightQuote),
           sourceFile,
@@ -179,6 +178,5 @@ class _SyntheticAttributeAst extends SyntheticTemplateAst with AttributeAst {
     this.name, [
     this.value,
     this.mustaches,
-  ])
-      : super.from(origin);
+  ]) : super.from(origin);
 }

@@ -109,8 +109,7 @@ class CompileProviderMetadata {
     this.visibility: Visibility.all,
     bool multi,
     this.typeArgument,
-  })
-      : this.multi = multi == true;
+  }) : this.multi = multi == true;
 
   @override
   // ignore: hash_and_equals
@@ -595,8 +594,7 @@ class CompilePipeMetadata implements CompileMetadataWithType {
     this.name,
     bool pure,
     List<LifecycleHooks> lifecycleHooks,
-  })
-      : this.pure = pure ?? true,
+  })  : this.pure = pure ?? true,
         this.lifecycleHooks = lifecycleHooks ?? const [];
 
   @override

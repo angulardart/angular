@@ -268,14 +268,12 @@ class NgParserWarningCode extends ErrorCode {
     String name,
     String message, [
     String correction,
-  ])
-      : super(name, message, correction);
+  ]) : super(name, message, correction);
 
   NgParserWarningCode.DART_PARSER(
     String message, [
     String correction,
-  ])
-      : super('DART_PARSER', message, correction);
+  ]) : super('DART_PARSER', message, correction);
 
   @override
   ErrorSeverity get errorSeverity => ErrorSeverity.ERROR;

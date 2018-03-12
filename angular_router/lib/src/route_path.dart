@@ -32,8 +32,7 @@ class RoutePath {
     this.parent,
     this.useAsDefault: false,
     this.additionalData,
-  })
-      : this.path = Url.trimSlashes(path);
+  }) : this.path = Url.trimSlashes(path);
 
   RoutePath.fromRoutes(Iterable<RouteDefinition> routes)
       : path = routes.isNotEmpty ? Url.trimSlashes(routes.last.path) : '',

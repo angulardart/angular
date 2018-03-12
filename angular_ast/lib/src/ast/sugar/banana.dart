@@ -102,8 +102,7 @@ class ParsedBananaAst extends TemplateAst
     this.suffixToken,
     this.valueToken,
     this.equalSignToken,
-  )
-      : super.parsed(
+  ) : super.parsed(
             prefixToken,
             (valueToken != null ? valueToken.rightQuote : suffixToken),
             sourceFile);
@@ -154,6 +153,5 @@ class _SyntheticBananaAst extends SyntheticTemplateAst with BananaAst {
     TemplateAst origin,
     this.name, [
     this.value,
-  ])
-      : super.from(origin);
+  ]) : super.from(origin);
 }

@@ -72,8 +72,7 @@ class ParsedCloseElementAst extends TemplateAst with CloseElementAst {
     this.identifierToken,
     NgToken closeElementEnd, {
     ElementAst openComplement,
-  })
-      : super.parsed(closeElementStart, closeElementEnd, sourceFile);
+  }) : super.parsed(closeElementStart, closeElementEnd, sourceFile);
 
   @override
   String get name => identifierToken.lexeme;
@@ -88,8 +87,7 @@ class _SyntheticCloseElementAst extends SyntheticTemplateAst
   _SyntheticCloseElementAst.from(
     TemplateAst origin,
     this.name,
-  )
-      : super.from(origin);
+  ) : super.from(origin);
 
   @override
   final String name;
