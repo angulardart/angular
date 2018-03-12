@@ -60,8 +60,7 @@ class ReflectableEmitter {
     this.reflectorSource: '$_package/src/di/reflector.dart',
     List<String> deferredModules,
     this.deferredModuleSource,
-  })
-      : _allocator = allocator ?? Allocator.none,
+  })  : _allocator = allocator ?? Allocator.none,
         deferredModules = deferredModules ?? const [];
 
   /// Whether we have one or more URLs that need `initReflector` called on them.
@@ -376,8 +375,7 @@ class SplitDartEmitter extends DartEmitter {
   SplitDartEmitter(
     this._writeImports, [
     Allocator allocator = Allocator.none,
-  ])
-      : super(allocator);
+  ]) : super(allocator);
 
   @override
   visitDirective(Directive spec, [_]) {

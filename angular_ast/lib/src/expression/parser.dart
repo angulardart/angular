@@ -62,8 +62,7 @@ class _NgExpressionParser extends Parser {
   _NgExpressionParser(
     Source source,
     AnalysisErrorListener errorListener,
-  )
-      : super.withoutFasta(source, errorListener);
+  ) : super.withoutFasta(source, errorListener);
 
   @override
   Expression parseBitwiseOrExpression() {

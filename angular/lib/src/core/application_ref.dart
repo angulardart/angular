@@ -194,11 +194,11 @@ class PlatformRefImpl extends PlatformRef {
     _viewUpdateCallbacks.add(callback);
     if (_rafScheduled == false) {
       _rafScheduled = true;
-      window.requestAnimationFrame(_onAnimationFrame);
+      scheduleMicrotask(_onAnimationFrame);
     }
   }
 
-  void _onAnimationFrame(num _) {
+  void _onAnimationFrame() {
     int i = 0;
     try {
       while (i < _targetViews.length) {

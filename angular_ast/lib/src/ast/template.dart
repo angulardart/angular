@@ -184,8 +184,7 @@ class _ParsedEmbeddedTemplateAst extends TemplateAst with EmbeddedTemplateAst {
     this.references: const [],
     this.letBindings: const [],
     this.hasDeferredComponent: false,
-  })
-      : super.parsed(beginToken, endToken, sourceFile);
+  }) : super.parsed(beginToken, endToken, sourceFile);
 
   @override
   final List<AttributeAst> attributes;
@@ -222,8 +221,7 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     this.references: const [],
     this.letBindings: const [],
     this.hasDeferredComponent: false,
-  })
-      : closeComplement = new CloseElementAst('template');
+  }) : closeComplement = new CloseElementAst('template');
 
   _SyntheticEmbeddedTemplateAst.from(
     TemplateAst origin, {
@@ -234,8 +232,7 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     this.references: const [],
     this.letBindings: const [],
     this.hasDeferredComponent: false,
-  })
-      : closeComplement = new CloseElementAst('template'),
+  })  : closeComplement = new CloseElementAst('template'),
         super.from(origin);
 
   @override

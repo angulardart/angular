@@ -14,8 +14,7 @@ class MapInjector extends HierarchicalInjector {
   const MapInjector(
     this._providers, [
     HierarchicalInjector parent = const EmptyInjector(),
-  ])
-      : super(parent);
+  ]) : super(parent);
 
   @override
   Object injectFromSelfOptional(

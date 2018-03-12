@@ -52,8 +52,7 @@ class HashLocationStrategy extends LocationStrategy {
   HashLocationStrategy(
     this._platformLocation, [
     @Optional() @Inject(APP_BASE_HREF) String baseHref,
-  ])
-      : _baseHref = baseHref ?? '';
+  ]) : _baseHref = baseHref ?? '';
 
   @override
   void onPopState(html.EventListener fn) {

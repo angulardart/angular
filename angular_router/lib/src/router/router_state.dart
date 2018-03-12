@@ -31,8 +31,7 @@ class RouterState extends Url {
     Map<String, String> parameters,
     String fragment: '',
     Map<String, String> queryParameters,
-  })
-      : this.parameters = new Map.unmodifiable(parameters ?? {}),
+  })  : this.parameters = new Map.unmodifiable(parameters ?? {}),
         this.routes = new List.unmodifiable(routes ?? []),
         super(path, queryParameters: queryParameters, fragment: fragment);
 

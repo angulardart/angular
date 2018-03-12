@@ -37,8 +37,7 @@ void main() {
         parseExpression(
           expression,
           sourceUrl: '/test/expression/parser_test.dart#inline',
-        )
-            .toSource(),
+        ).toSource(),
         expression,
       );
     });

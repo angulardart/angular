@@ -70,8 +70,7 @@ class ParsedInterpolationAst extends TemplateAst with InterpolationAst {
     NgToken beginToken,
     this.valueToken,
     NgToken endToken,
-  )
-      : super.parsed(beginToken, endToken, sourceFile);
+  ) : super.parsed(beginToken, endToken, sourceFile);
 
   @override
   String get value => valueToken.lexeme;
@@ -88,8 +87,7 @@ class _SyntheticInterpolationAst extends SyntheticTemplateAst
     TemplateAst origin,
     this.value,
     this.expression,
-  )
-      : super.from(origin);
+  ) : super.from(origin);
 
   @override
   final String value;

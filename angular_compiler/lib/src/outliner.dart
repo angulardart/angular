@@ -42,8 +42,7 @@ class TemplateOutliner implements Builder {
   TemplateOutliner(
     this._compilerFlags, {
     @required String extension,
-  })
-      : _extension = extension,
+  })  : _extension = extension,
         buildExtensions = {
           '.dart': [extension],
         };

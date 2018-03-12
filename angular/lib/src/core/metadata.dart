@@ -354,8 +354,7 @@ class Component extends Directive {
     this.directives,
     this.pipes,
     this.encapsulation,
-  })
-      : super(
+  }) : super(
           selector: selector,
           host: host,
           exportAs: exportAs,
@@ -558,8 +557,7 @@ class ContentChildren extends _Query {
     Object selector, {
     bool descendants: true,
     Object read,
-  })
-      : super(
+  }) : super(
           selector,
           descendants: descendants,
           read: read,
@@ -588,8 +586,7 @@ class ContentChild extends _Query {
   const ContentChild(
     Object selector, {
     Object read,
-  })
-      : super(
+  }) : super(
           selector,
           descendants: true,
           first: true,
@@ -638,8 +635,7 @@ abstract class _ViewQuery extends _Query {
     bool descendants: false,
     bool first: false,
     Object read,
-  })
-      : super(
+  }) : super(
           selector,
           descendants: descendants,
           first: first,
@@ -733,8 +729,7 @@ class ViewChildren extends _ViewQuery {
   const ViewChildren(
     Object selector, {
     Object read,
-  })
-      : super(
+  }) : super(
           selector,
           descendants: true,
           read: read,
@@ -817,8 +812,7 @@ class ViewChild extends _ViewQuery {
   const ViewChild(
     Object selector, {
     Object read,
-  })
-      : super(
+  }) : super(
           selector,
           descendants: true,
           first: true,

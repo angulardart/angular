@@ -102,8 +102,7 @@ class ParsedStarAst extends TemplateAst
     this.nameToken, [
     this.valueToken,
     this.equalSignToken,
-  ])
-      : super.parsed(prefixToken,
+  ]) : super.parsed(prefixToken,
             valueToken != null ? valueToken.rightQuote : nameToken, sourceFile);
 
   /// Name `directive` in `*directive`.
@@ -149,8 +148,7 @@ class _SyntheticStarAst extends SyntheticTemplateAst with StarAst {
     TemplateAst origin,
     this.name, [
     this.value,
-  ])
-      : super.from(origin);
+  ]) : super.from(origin);
 
   @override
   final String name;

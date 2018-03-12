@@ -22,8 +22,7 @@ void main(List<String> args) {
     final yaml = loadYamlDocument(
       pubspec.readAsStringSync(),
       sourceUrl: pubspec.path,
-    )
-        .contents;
+    ).contents;
     if (yaml is YamlMap && yaml.containsKey('environment')) {
       final node = yaml.nodes['environment'];
       if (node is YamlMap && node.containsKey('sdk')) {

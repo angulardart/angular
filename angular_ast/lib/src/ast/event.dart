@@ -116,8 +116,7 @@ class ParsedEventAst extends TemplateAst
     this.suffixToken, [
     this.valueToken,
     this.equalSignToken,
-  ])
-      : super.parsed(
+  ]) : super.parsed(
           prefixToken,
           valueToken == null ? suffixToken : valueToken.rightQuote,
           sourceFile,
@@ -197,6 +196,5 @@ class _SyntheticEventAst extends SyntheticTemplateAst with EventAst {
     this.value, [
     this.expression,
     this.reductions = const [],
-  ])
-      : super.from(origin);
+  ]) : super.from(origin);
 }

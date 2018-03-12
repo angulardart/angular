@@ -49,8 +49,7 @@ class _ParsedTextAst extends TemplateAst with TextAst {
   _ParsedTextAst(
     SourceFile sourceFile,
     NgToken textToken,
-  )
-      : super.parsed(textToken, textToken, sourceFile);
+  ) : super.parsed(textToken, textToken, sourceFile);
 
   @override
   String get value => beginToken.lexeme;

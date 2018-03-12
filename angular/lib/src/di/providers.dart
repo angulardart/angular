@@ -223,8 +223,7 @@ class ClassProvider<T> extends Provider<T> {
     Object token, {
     Type useClass,
     bool multi: false,
-  })
-      : super._(
+  }) : super._(
           token,
           // ignore: argument_type_not_assignable
           useClass: useClass ?? token,
@@ -256,8 +255,7 @@ class ExistingProvider<T> extends Provider<T> {
     Object token,
     Object useExisting, {
     bool multi,
-  })
-      : super._(
+  }) : super._(
           token,
           useExisting: useExisting,
           multi: multi,
@@ -296,8 +294,7 @@ class FactoryProvider<T> extends Provider<T> {
     Function useFactory, {
     bool multi,
     List<Object> deps,
-  })
-      : super._(
+  }) : super._(
           token,
           useFactory: useFactory,
           multi: multi,
@@ -336,8 +333,7 @@ class ValueProvider<T> extends Provider<T> {
     Object token,
     T useValue, {
     bool multi,
-  })
-      : super._(
+  }) : super._(
           token,
           useValue: useValue,
           multi: multi,

@@ -150,8 +150,7 @@ class NgParser {
   // Prevent inheritance.
   const NgParser._({
     bool toolFriendlyAstOrigin: false,
-  })
-      : _toolFriendlyAstOrigin = toolFriendlyAstOrigin;
+  }) : _toolFriendlyAstOrigin = toolFriendlyAstOrigin;
 
   /// Return a series of tokens by incrementally scanning [template].
   ///

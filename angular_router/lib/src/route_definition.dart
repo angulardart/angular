@@ -187,8 +187,7 @@ class ComponentRouteDefinition extends RouteDefinition {
     bool useAsDefault,
     additionalData,
     RoutePath routePath,
-  })
-      : super._(
+  }) : super._(
           path: path,
           useAsDefault: useAsDefault,
           additionalData: additionalData,
@@ -219,8 +218,7 @@ class DeferredRouteDefinition extends RouteDefinition {
     bool useAsDefault,
     additionalData,
     RoutePath routePath,
-  })
-      : super._(
+  }) : super._(
             path: path,
             useAsDefault: useAsDefault,
             additionalData: additionalData,
@@ -248,8 +246,7 @@ class RedirectRouteDefinition extends RouteDefinition {
     bool useAsDefault,
     additionalData,
     RoutePath routePath,
-  })
-      : super._(
+  }) : super._(
             path: path,
             useAsDefault: useAsDefault,
             additionalData: additionalData,

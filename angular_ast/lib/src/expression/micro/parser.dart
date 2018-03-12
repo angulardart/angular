@@ -31,8 +31,7 @@ class NgMicroParser {
       expression.length,
       tokens,
       origin,
-    )
-        .parse();
+    ).parse();
   }
 }
 

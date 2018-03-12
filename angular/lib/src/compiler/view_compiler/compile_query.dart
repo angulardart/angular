@@ -108,8 +108,7 @@ abstract class CompileQuery {
     this.metadata,
     this._queryRoot,
     this._boundField,
-  )
-      : _values = new _QueryValues(_queryRoot);
+  ) : _values = new _QueryValues(_queryRoot);
 
   /// Whether this query requires "flattenNodes".
   ///
@@ -329,8 +328,7 @@ class _QueryListCompileQuery extends CompileQuery {
     o.Expression boundField, {
     @required int nodeIndex,
     @required int queryIndex,
-  })
-      : super._base(metadata, queryRoot, boundField) {
+  }) : super._base(metadata, queryRoot, boundField) {
     _queryList = _createQueryListField(
       storage: storage,
       metadata: metadata,
@@ -431,8 +429,7 @@ class _ListCompileQuery extends CompileQuery {
     o.Expression boundField, {
     @required int nodeIndex,
     @required int queryIndex,
-  })
-      : super._base(metadata, queryRoot, boundField) {
+  }) : super._base(metadata, queryRoot, boundField) {
     _storage = storage;
     _dirtyField = _createQueryDirtyField(
       metadata: metadata,

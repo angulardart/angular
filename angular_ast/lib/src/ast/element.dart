@@ -213,8 +213,7 @@ class ParsedElementAst extends TemplateAst with ElementAst {
     this.bananas: const [],
     this.stars: const [],
     this.annotations: const [],
-  })
-      : super.parsed(openElementStart, openElementEnd, sourceFile);
+  }) : super.parsed(openElementStart, openElementEnd, sourceFile);
 
   /// Name (tag) of the element.
   @override
@@ -286,8 +285,7 @@ class _SyntheticElementAst extends SyntheticTemplateAst with ElementAst {
     this.bananas: const [],
     this.stars: const [],
     this.annotations: const [],
-  })
-      : super.from(origin);
+  }) : super.from(origin);
 
   @override
   final String name;

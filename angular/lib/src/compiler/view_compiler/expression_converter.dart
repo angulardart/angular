@@ -118,8 +118,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     this._implicitReceiver,
     this._preserveWhitespace,
     this._boundType,
-  )
-      : _visitingRoot = true {
+  ) : _visitingRoot = true {
     assert(_nameResolver != null);
   }
 
