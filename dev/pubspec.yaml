@@ -1,5 +1,5 @@
 # Development tools for working on the AngularDart repository.
-name: angular.dev
+name: dev
 
 dependencies:
   args: ^1.4.1
