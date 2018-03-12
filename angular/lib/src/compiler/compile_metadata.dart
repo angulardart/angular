@@ -41,7 +41,7 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
 
   final String name;
   final String moduleUrl;
-  final value;
+  final T value;
 
   CompileIdentifierMetadata(
       {this.name,
@@ -65,22 +65,14 @@ class CompileDiDependencyMetadata {
   CompileTokenMetadata token;
   dynamic value;
   CompileDiDependencyMetadata(
-      {bool isAttribute,
-      bool isSelf,
-      bool isHost,
-      bool isSkipSelf,
-      bool isOptional,
-      bool isValue,
+      {this.isAttribute: false,
+      this.isSelf: false,
+      this.isHost: false,
+      this.isSkipSelf: false,
+      this.isOptional: false,
+      this.isValue: false,
       this.token,
-      this.value})
-      :
-        // TODO: Make the defaults of the constructor 'false' instead of doing this.
-        this.isAttribute = isAttribute == true,
-        this.isSelf = isSelf == true,
-        this.isHost = isHost == true,
-        this.isSkipSelf = isSkipSelf == true,
-        this.isOptional = isOptional == true,
-        this.isValue = isValue == true;
+      this.value});
 }
 
 class CompileProviderMetadata {
@@ -107,9 +99,9 @@ class CompileProviderMetadata {
     this.useFactory,
     this.deps,
     this.visibility: Visibility.all,
-    bool multi,
+    this.multi: false,
     this.typeArgument,
-  }) : this.multi = multi == true;
+  });
 
   @override
   // ignore: hash_and_equals
@@ -150,7 +142,7 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata<Function> {
   String moduleUrl;
 
   @override
-  dynamic value;
+  Function value;
 
   @override
   List<o.OutputType> get genericTypes => const [];
@@ -162,9 +154,8 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata<Function> {
       this.moduleUrl,
       this.prefix,
       this.emitPrefix: false,
-      List<CompileDiDependencyMetadata> diDeps,
-      this.value})
-      : this.diDeps = diDeps ?? const [];
+      this.diDeps: const [],
+      this.value});
 
   @override
   CompileIdentifierMetadata<Function> get identifier => this;
@@ -176,8 +167,8 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   CompileIdentifierMetadata identifier;
   bool identifierIsInstance;
 
-  CompileTokenMetadata({this.value, this.identifier, bool identifierIsInstance})
-      : this.identifierIsInstance = identifierIsInstance == true;
+  CompileTokenMetadata(
+      {this.value, this.identifier, this.identifierIsInstance: false});
 
   // Used to determine unique-ness of CompileTokenMetadata.
   //
@@ -289,7 +280,7 @@ class CompileTypeMetadata
   bool isHost;
 
   @override
-  dynamic value;
+  Type value;
 
   List<CompileDiDependencyMetadata> diDeps;
 
@@ -300,12 +291,10 @@ class CompileTypeMetadata
       {this.name,
       this.moduleUrl,
       this.prefix,
-      bool isHost,
+      this.isHost: false,
       this.value,
       this.genericTypes: const [],
-      List<CompileDiDependencyMetadata> diDeps})
-      : this.isHost = isHost == true,
-        this.diDeps = diDeps ?? const [];
+      this.diDeps: const []});
 
   @override
   CompileIdentifierMetadata<Type> get identifier => this;
@@ -380,27 +369,21 @@ class CompileQueryMetadata {
 
 /// Metadata regarding compilation of a template.
 class CompileTemplateMetadata {
-  ViewEncapsulation encapsulation;
-  String template;
-  String templateUrl;
-  bool preserveWhitespace;
-  List<String> styles;
-  List<String> styleUrls;
-  List<String> ngContentSelectors;
+  final ViewEncapsulation encapsulation;
+  final String template;
+  final String templateUrl;
+  final bool preserveWhitespace;
+  final List<String> styles;
+  final List<String> styleUrls;
+  final List<String> ngContentSelectors;
   CompileTemplateMetadata(
-      {ViewEncapsulation encapsulation,
+      {this.encapsulation: ViewEncapsulation.Emulated,
       this.template,
       this.templateUrl,
-      bool preserveWhitespace,
-      List<String> styles,
-      List<String> styleUrls,
-      List<String> ngContentSelectors}) {
-    this.encapsulation = encapsulation ?? ViewEncapsulation.Emulated;
-    this.styles = styles ?? <String>[];
-    this.styleUrls = styleUrls ?? <String>[];
-    this.ngContentSelectors = ngContentSelectors ?? <String>[];
-    this.preserveWhitespace = preserveWhitespace ?? false;
-  }
+      this.preserveWhitespace: false,
+      this.styles: const [],
+      this.styleUrls: const [],
+      this.ngContentSelectors: const []});
 }
 
 enum CompileDirectiveMetadataType {
@@ -462,28 +445,28 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   }
 
   @override
-  CompileTypeMetadata type;
+  final CompileTypeMetadata type;
 
   /// User-land class where the component annotation originated.
-  CompileTypeMetadata originType;
+  final CompileTypeMetadata originType;
 
   final CompileDirectiveMetadataType metadataType;
-  String selector;
-  String exportAs;
-  int changeDetection;
-  Map<String, String> inputs;
-  Map<String, CompileTypeMetadata> inputTypes;
-  Map<String, String> outputs;
-  Map<String, String> hostListeners;
-  Map<String, String> hostProperties;
-  Map<String, String> hostAttributes;
-  List<LifecycleHooks> lifecycleHooks;
-  List<CompileProviderMetadata> providers;
-  List<CompileProviderMetadata> viewProviders;
-  List<CompileIdentifierMetadata> exports;
-  List<CompileQueryMetadata> queries;
-  List<CompileQueryMetadata> viewQueries;
-  CompileTemplateMetadata template;
+  final String selector;
+  final String exportAs;
+  final int changeDetection;
+  final Map<String, String> inputs;
+  final Map<String, CompileTypeMetadata> inputTypes;
+  final Map<String, String> outputs;
+  final Map<String, String> hostListeners;
+  final Map<String, String> hostProperties;
+  final Map<String, String> hostAttributes;
+  final List<LifecycleHooks> lifecycleHooks;
+  final List<CompileProviderMetadata> providers;
+  final List<CompileProviderMetadata> viewProviders;
+  final List<CompileIdentifierMetadata> exports;
+  final List<CompileQueryMetadata> queries;
+  final List<CompileQueryMetadata> viewQueries;
+  final CompileTemplateMetadata template;
   final AnalyzedClass analyzedClass;
   bool _requiresDirectiveChangeDetector;
 
@@ -506,24 +489,13 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.analyzedClass,
     this.template,
     this.visibility: Visibility.all,
-    List<LifecycleHooks> lifecycleHooks,
-    // CompileProviderMetadata | CompileTypeMetadata |
-    // CompileIdentifierMetadata | List
-    List providers,
-    // CompileProviderMetadata | CompileTypeMetadata |
-    // CompileIdentifierMetadata | List
-    List viewProviders,
-    List exports,
-    List<CompileQueryMetadata> queries,
-    List<CompileQueryMetadata> viewQueries,
-  }) {
-    this.lifecycleHooks = lifecycleHooks ?? [];
-    this.providers = providers as List<CompileProviderMetadata> ?? [];
-    this.viewProviders = viewProviders as List<CompileProviderMetadata> ?? [];
-    this.exports = exports as List<CompileIdentifierMetadata> ?? [];
-    this.queries = queries ?? [];
-    this.viewQueries = viewQueries ?? [];
-  }
+    this.lifecycleHooks: const [],
+    this.providers: const [],
+    this.viewProviders: const [],
+    this.exports: const [],
+    this.queries: const [],
+    this.viewQueries: const [],
+  });
 
   @override
   CompileIdentifierMetadata get identifier => type;
@@ -592,10 +564,9 @@ class CompilePipeMetadata implements CompileMetadataWithType {
     this.type,
     this.transformType,
     this.name,
-    bool pure,
-    List<LifecycleHooks> lifecycleHooks,
-  })  : this.pure = pure ?? true,
-        this.lifecycleHooks = lifecycleHooks ?? const [];
+    this.pure: true,
+    this.lifecycleHooks: const [],
+  });
 
   @override
   CompileIdentifierMetadata get identifier => type;

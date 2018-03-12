@@ -7,7 +7,7 @@ void main() {
   group("CompileMetadata", () {
     group("TemplateMetadata", () {
       test("should use ViewEncapsulation.Emulated by default", () {
-        expect(new CompileTemplateMetadata(encapsulation: null).encapsulation,
+        expect(new CompileTemplateMetadata().encapsulation,
             ViewEncapsulation.Emulated);
       });
     });
