@@ -37,7 +37,7 @@ void main() {
     group('addControl & addControlGroup', () {
       test('should create a control with the given name', () async {
         await fixture.update((cmp) {
-          expect(cmp.formModel.find(['person', 'login']), isNotNull);
+          expect(cmp.formModel.findPath(['person', 'login']), isNotNull);
         });
       });
     });
@@ -48,8 +48,8 @@ void main() {
           cmp.needsLogin = false;
         });
         await fixture.update((cmp) {
-          expect(cmp.formModel.find(['person']), isNull);
-          expect(cmp.formModel.find(['person', 'login']), isNull);
+          expect(cmp.formModel.findPath(['person']), isNull);
+          expect(cmp.formModel.findPath(['person', 'login']), isNull);
         });
       });
     });

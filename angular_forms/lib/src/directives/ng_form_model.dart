@@ -132,7 +132,7 @@ class NgFormModel extends AbstractForm implements AfterChanges {
 
   @override
   void addControlGroup(NgControlGroup dir) {
-    var ctrl = form.find(dir.path);
+    var ctrl = form.findPath(dir.path);
     setUpControlGroup(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
   }
@@ -142,7 +142,7 @@ class NgFormModel extends AbstractForm implements AfterChanges {
 
   void _updateDomValue() {
     for (var dir in directives) {
-      var ctrl = form.find(dir.path);
+      var ctrl = form.findPath(dir.path);
       dir.valueAccessor.writeValue(ctrl.value);
     }
   }

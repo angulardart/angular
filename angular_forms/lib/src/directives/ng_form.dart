@@ -137,6 +137,6 @@ class NgForm extends AbstractForm {
   @protected
   ControlGroup findContainer(List<String> path) {
     path.removeLast();
-    return path.isEmpty ? form : (form.find(path) as ControlGroup);
+    return path.isEmpty ? form : (form.findPath(path) as ControlGroup);
   }
 }
