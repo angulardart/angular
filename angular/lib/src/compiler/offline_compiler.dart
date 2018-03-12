@@ -5,13 +5,13 @@ import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata, createHostComponentMeta;
-import 'compiler_utils.dart' show MODULE_SUFFIX, templateModuleUrl;
+import 'compiler_utils.dart' show stylesModuleUrl, templateModuleUrl;
 import 'directive_normalizer.dart' show DirectiveNormalizer;
 import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
 import 'source_module.dart';
-import 'style_compiler.dart' show StyleCompiler, StylesCompileResult;
+import 'style_compiler.dart' show StyleCompiler;
 import 'template_ast.dart';
 import 'template_parser.dart' show TemplateParser;
 import 'view_compiler/directive_compiler.dart';
@@ -154,16 +154,10 @@ class OfflineCompiler {
     var shimStyles =
         _styleCompiler.compileStylesheet(stylesheetUrl, cssText, true);
     return [
-      _createSourceModule(
-          _stylesModuleUrl(stylesheetUrl, false),
-          _resolveStyleStatements(plainStyles),
-          [plainStyles.stylesVar],
-          _deferredModules),
-      _createSourceModule(
-          _stylesModuleUrl(stylesheetUrl, true),
-          _resolveStyleStatements(shimStyles),
-          [shimStyles.stylesVar],
-          _deferredModules)
+      _createSourceModule(stylesModuleUrl(stylesheetUrl, false),
+          plainStyles.statements, [plainStyles.stylesVar], _deferredModules),
+      _createSourceModule(stylesModuleUrl(stylesheetUrl, true),
+          shimStyles.statements, [shimStyles.stylesVar], _deferredModules)
     ];
   }
 
@@ -178,7 +172,7 @@ class OfflineCompiler {
         compMeta.template.template, directives, pipes, compMeta.type.name);
     var viewResult = _viewCompiler.compileComponent(compMeta, parsedTemplate,
         styleResult, o.variable(styleResult.stylesVar), pipes, deferredModules);
-    targetStatements.addAll(_resolveStyleStatements(styleResult));
+    targetStatements.addAll(styleResult.statements);
     targetStatements.addAll(viewResult.statements);
     return viewResult.viewFactoryVar;
   }
@@ -192,20 +186,6 @@ class OfflineCompiler {
         moduleUrl, statements, exportedVars, deferredModules);
     return new SourceModule(moduleUrl, sourceCode, deferredModules);
   }
-}
-
-List<o.Statement> _resolveStyleStatements(StylesCompileResult compileResult) {
-  for (var dep in compileResult.dependencies) {
-    dep.valuePlaceholder.moduleUrl =
-        _stylesModuleUrl(dep.sourceUrl, dep.isShimmed);
-  }
-  return compileResult.statements;
-}
-
-String _stylesModuleUrl(String stylesheetUrl, bool shim) {
-  return shim
-      ? '$stylesheetUrl.shim$MODULE_SUFFIX'
-      : '$stylesheetUrl$MODULE_SUFFIX';
 }
 
 void _assertComponent(CompileDirectiveMetadata meta) {

@@ -32,3 +32,9 @@ String templateModuleUrl(CompileTypeMetadata type) {
       moduleUrl.substring(0, moduleUrl.length - MODULE_SUFFIX.length);
   return '$urlWithoutSuffix.template$MODULE_SUFFIX';
 }
+
+String stylesModuleUrl(String stylesheetUrl, bool shim) {
+  return shim
+      ? '$stylesheetUrl.shim$MODULE_SUFFIX'
+      : '$stylesheetUrl$MODULE_SUFFIX';
+}

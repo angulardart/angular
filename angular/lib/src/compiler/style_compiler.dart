@@ -3,6 +3,7 @@ import 'package:angular_compiler/cli.dart';
 
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileDirectiveMetadata;
+import 'compiler_utils.dart';
 import "output/output_ast.dart" as o;
 import "shadow_css.dart";
 import "style_url_resolver.dart" show extractStyleUrls;
@@ -13,22 +14,13 @@ final HOST_ATTR = '$HOST_ATTR_PREFIX$COMPONENT_VARIABLE';
 final CONTENT_ATTR_PREFIX = '_ngcontent-';
 final CONTENT_ATTR = '$CONTENT_ATTR_PREFIX$COMPONENT_VARIABLE';
 
-class StylesCompileDependency {
-  String sourceUrl;
-  bool isShimmed;
-  CompileIdentifierMetadata valuePlaceholder;
-  StylesCompileDependency(
-      this.sourceUrl, this.isShimmed, this.valuePlaceholder);
-}
-
 class StylesCompileResult {
   final List<o.Statement> statements;
   final String stylesVar;
-  final List<StylesCompileDependency> dependencies;
   final bool usesHostAttribute;
   final bool usesContentAttribute;
-  StylesCompileResult(this.statements, this.stylesVar, this.dependencies,
-      this.usesHostAttribute, this.usesContentAttribute);
+  StylesCompileResult(this.statements, this.stylesVar, this.usesHostAttribute,
+      this.usesContentAttribute);
 }
 
 class StyleCompiler {
@@ -57,7 +49,7 @@ class StyleCompiler {
   StylesCompileResult compileStylesheet(
       String stylesheetUrl, String cssText, bool isShimmed) {
     var styleWithImports = extractStyleUrls(stylesheetUrl, cssText);
-    return this._compileStyles(getStylesVarName(null), [styleWithImports.style],
+    return this._compileStyles(getStylesVarName(), [styleWithImports.style],
         styleWithImports.styleUrls, isShimmed);
   }
 
@@ -68,12 +60,10 @@ class StyleCompiler {
     for (int s = 0; s < styleCount; s++) {
       styleExpressions.add(o.literal(this._shimIfNeeded(plainStyles[s], shim)));
     }
-    var dependencies = <StylesCompileDependency>[];
     for (var i = 0; i < absUrls.length; i++) {
-      var identifier =
-          new CompileIdentifierMetadata(name: getStylesVarName(null));
-      dependencies
-          .add(new StylesCompileDependency(absUrls[i], shim, identifier));
+      var identifier = new CompileIdentifierMetadata(
+          name: getStylesVarName(),
+          moduleUrl: stylesModuleUrl(absUrls[i], shim));
       styleExpressions.add(new o.ExternalExpr(identifier));
     }
 
@@ -84,8 +74,8 @@ class StyleCompiler {
         .set(o.literalArr(styleExpressions,
             new o.ArrayType(o.DYNAMIC_TYPE, [o.TypeModifier.Const])))
         .toDeclStmt(null, [o.StmtModifier.Const]);
-    return new StylesCompileResult([stmt], stylesVar, dependencies,
-        usesHostAttribute, usesContentAttribute);
+    return new StylesCompileResult(
+        [stmt], stylesVar, usesHostAttribute, usesContentAttribute);
   }
 
   String _shimIfNeeded(String style, bool shim) {
@@ -108,5 +98,5 @@ class StyleCompiler {
 ///
 /// Styles are assigned to style_componentTypeName variables and
 /// passed onto ViewUtils.createRenderComponentType for creating the prototype.
-String getStylesVarName(CompileDirectiveMetadata component) =>
+String getStylesVarName([CompileDirectiveMetadata component]) =>
     component != null ? 'styles\$${component.type.name}' : 'styles';
