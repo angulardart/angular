@@ -45,11 +45,11 @@ abstract class AbstractForm extends ControlContainer implements Form {
   List<String> get path => [];
 
   @override
-  Control getControl(NgControl dir) => form?.find(dir.path) as Control;
+  Control getControl(NgControl dir) => form?.findPath(dir.path) as Control;
 
   @override
   ControlGroup getControlGroup(NgControlGroup dir) =>
-      (form?.find(dir.path) as ControlGroup);
+      (form?.findPath(dir.path) as ControlGroup);
 
   @override
   void updateModel(NgControl dir, dynamic value) {

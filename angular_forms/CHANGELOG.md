@@ -1,3 +1,10 @@
+### Breaking changes
+
+*   `AbstractControl.find` now only accepts a String. To supply a list, use
+    `AbstractControl.findPath` instead. Also, for `find` or `findPath`,
+    `ControlArray` index is now calling `int.parse` instead of expecting a raw
+    number.
+
 ## 1.0.1-alpha+7
 
 ### Breaking changes

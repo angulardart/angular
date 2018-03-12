@@ -480,26 +480,26 @@ void main() {
           a.push(c2);
         });
       });
-      group('find', () {
+      group('findPath', () {
         test('should return null when path is null', () {
           var g = new ControlGroup({});
-          expect(g.find(null), null);
+          expect(g.findPath(null), null);
         });
         test('should return null when path is empty', () {
           var g = new ControlGroup({});
-          expect(g.find([]), null);
+          expect(g.findPath([]), null);
         });
         test('should return null when path is invalid', () {
           var g = new ControlGroup({});
-          expect(g.find(['one', 'two']), null);
+          expect(g.findPath(['one', 'two']), null);
         });
         test('should return a child of a control group', () {
           var g = new ControlGroup({
             'one': new Control('111'),
             'nested': new ControlGroup({'two': new Control('222')})
           });
-          expect(g.find(['nested', 'two']).value, '222');
-          expect(g.find(['one']).value, '111');
+          expect(g.findPath(['nested', 'two']).value, '222');
+          expect(g.findPath(['one']).value, '111');
           expect(g.find('nested/two').value, '222');
           expect(g.find('one').value, '111');
         });
@@ -507,7 +507,7 @@ void main() {
           var g = new ControlGroup({
             'array': new ControlArray([new Control('111')])
           });
-          expect(g.find(['array', 0]).value, '111');
+          expect(g.findPath(['array', '0']).value, '111');
         });
       });
     });

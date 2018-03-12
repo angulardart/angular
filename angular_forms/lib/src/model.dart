@@ -4,18 +4,13 @@ import 'package:meta/meta.dart';
 
 import 'directives/validators.dart' show ValidatorFn;
 
-AbstractControl _find(AbstractControl control,
-    dynamic /* List< dynamic /* String | num */ > | String */ path) {
-  if (path == null) return null;
-  if (path is String) {
-    path = (path as String).split('/');
-  }
-  if (path is List && path.isEmpty) return null;
-  return (path as List<dynamic /* String | num */ >).fold(control, (v, name) {
+AbstractControl _find(AbstractControl control, List<String> path) {
+  if (path == null || path.isEmpty) return null;
+  return path.fold(control, (v, name) {
     if (v is ControlGroup) {
       return v.controls[name];
     } else if (v is ControlArray) {
-      var index = (name as num);
+      var index = int.parse(name);
       return v.at(index);
     } else {
       return null;
@@ -159,14 +154,25 @@ abstract class AbstractControl<T> {
     markAsDirty(emitEvent: false);
   }
 
-  AbstractControl find(
-          dynamic /* List< dynamic /* String | num */ > | String */ path) =>
-      _find(this, path);
+  /// Walks the path supplied to find matching control.
+  ///
+  /// Uses `/` as a deliminator.
+  ///
+  /// If no match is found, returns null.
+  AbstractControl find(String path) => findPath(path?.split('/'));
+
+  /// Walks the path to find the matching control.
+  ///
+  /// If no match is found, returns null.
+  ///
+  /// For [ControlGroups], matches on name. For [ControlArray], it parses an int
+  /// to match on index.
+  AbstractControl findPath(List<String> path) => _find(this, path);
 
   getError(String errorCode, [List<String> path]) {
     AbstractControl control = this;
     if (path != null && path.isNotEmpty) {
-      control = find(path);
+      control = findPath(path);
     }
     if (control == null || control._errors == null) {
       return null;
