@@ -8,6 +8,7 @@ import 'package:angular/angular.dart';
 import 'ng_zone_test.template.dart' as ng_generated;
 
 void main() {
+  onEnterAndonLeaveInsideParentRun = true;
   ng_generated.initReflector();
 
   group('$NgZone', () {
@@ -123,6 +124,51 @@ void main() {
         zone.run(() {
           expect(NgZone.isInAngularZone(), true);
         });
+      });
+    });
+
+    group('nested zone', () {
+      NgZone nestedZone;
+
+      setUp(() {
+        createNgZone(enableLongStackTrace: false);
+        zone.run(() {
+          nestedZone = new NgZone();
+        });
+        log = <String>[];
+        subs.addAll([
+          nestedZone.onEventDone.listen((_) => log.add('nested onEventDone')),
+          nestedZone.onMicrotaskEmpty
+              .listen((_) => log.add('nested onMicrotaskEmpty')),
+          nestedZone.onTurnDone.listen((_) => log.add('nested onTurnDone')),
+          nestedZone.onTurnStart.listen((_) => log.add('nested onTurnStart')),
+        ]);
+      });
+
+      test('should have all events contained within parent zone', () async {
+        final onCompleter = new Completer<Null>();
+        nestedZone.run(() {
+          log.add('--- entered zone ---');
+          scheduleMicrotask(() {
+            log.add('--- ran microtask ---');
+            onCompleter.complete();
+          });
+        });
+        expect(zone.hasPendingMicrotasks, true);
+        await onCompleter.future;
+        expect(zone.hasPendingMicrotasks, false);
+        expect(log, [
+          'onTurnStart',
+          'nested onTurnStart',
+          '--- entered zone ---',
+          '--- ran microtask ---',
+          'nested onEventDone',
+          'nested onMicrotaskEmpty',
+          'nested onTurnDone',
+          'onEventDone',
+          'onMicrotaskEmpty',
+          'onTurnDone'
+        ]);
       });
     });
 

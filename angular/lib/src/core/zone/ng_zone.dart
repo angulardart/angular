@@ -75,6 +75,10 @@ import 'package:stack_trace/stack_trace.dart';
 ///   }
 /// }
 /// ```
+
+/// For testing of fix to run functionality only - do not use.
+bool onEnterAndonLeaveInsideParentRun = false;
+
 class NgZone {
   static bool isInAngularZone() {
     return Zone.current['isAngularZone'] == true;
@@ -138,6 +142,18 @@ class NgZone {
   Zone _createInnerZone(Zone zone,
       {void handleUncaughtError(
           Zone _, ZoneDelegate __, Zone ___, Object ____, StackTrace s)}) {
+    if (onEnterAndonLeaveInsideParentRun) {
+      return zone.fork(
+          specification: new ZoneSpecification(
+              scheduleMicrotask: _scheduleMicrotask,
+              run: _runInside,
+              runUnary: _runUnaryInside,
+              runBinary: _runBinaryInside,
+              handleUncaughtError: handleUncaughtError,
+              createTimer: _createTimer),
+          zoneValues: {'isAngularZone': true});
+    }
+
     return zone.fork(
         specification: new ZoneSpecification(
             scheduleMicrotask: _scheduleMicrotask,
@@ -196,6 +212,43 @@ class NgZone {
     } finally {
       _onLeave();
     }
+  }
+
+  /// The following three methods will eventually replace the _run methods
+  /// after it is verified to be working.
+  R _runInside<R>(Zone self, ZoneDelegate parent, Zone zone, R fn()) {
+    return parent.run(zone, () {
+      try {
+        _onEnter();
+        return fn();
+      } finally {
+        _onLeave();
+      }
+    });
+  }
+
+  R _runUnaryInside<R, T>(
+      Zone self, ZoneDelegate parent, Zone zone, R fn(T arg), T arg) {
+    return parent.runUnary(zone, (T arg) {
+      try {
+        _onEnter();
+        return fn(arg);
+      } finally {
+        _onLeave();
+      }
+    }, arg);
+  }
+
+  R _runBinaryInside<R, T1, T2>(Zone self, ZoneDelegate parent, Zone zone,
+      R fn(T1 arg1, T2 arg2), T1 arg1, T2 arg2) {
+    return parent.runBinary(zone, (T1 arg1, T2 arg2) {
+      try {
+        _onEnter();
+        return fn(arg1, arg2);
+      } finally {
+        _onLeave();
+      }
+    }, arg1, arg2);
   }
 
   void _onEnter() {
