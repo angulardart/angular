@@ -39,9 +39,9 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
   final List<o.OutputType> genericTypes;
   final String prefix;
 
-  String name;
-  String moduleUrl;
-  dynamic value;
+  final String name;
+  final String moduleUrl;
+  final value;
 
   CompileIdentifierMetadata(
       {this.name,
@@ -84,17 +84,17 @@ class CompileDiDependencyMetadata {
 }
 
 class CompileProviderMetadata {
-  CompileTokenMetadata token;
-  CompileTypeMetadata useClass;
+  final CompileTokenMetadata token;
+  final CompileTypeMetadata useClass;
   dynamic useValue;
-  CompileTokenMetadata useExisting;
-  CompileFactoryMetadata useFactory;
-  List<CompileDiDependencyMetadata> deps;
+  final CompileTokenMetadata useExisting;
+  final CompileFactoryMetadata useFactory;
+  final List<CompileDiDependencyMetadata> deps;
 
-  bool multi;
+  final bool multi;
 
   // TODO(matanl): Refactor to avoid two fields for multi-providers.
-  CompileTypeMetadata typeArgument;
+  final CompileTypeMetadata typeArgument;
 
   /// Restricts where the provider is injectable.
   final Visibility visibility;
