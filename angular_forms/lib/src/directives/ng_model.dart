@@ -7,8 +7,7 @@ import '../validators.dart' show NG_VALIDATORS;
 import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import 'ng_control.dart' show NgControl;
-import 'shared.dart' show setUpControl, composeValidators;
-import 'validators.dart' show ValidatorFn;
+import 'shared.dart' show setUpControl;
 
 /// Creates a form [NgControl] instance from a domain model and binds it to a
 /// form control element. The form [NgControl] instance tracks the value,
@@ -59,7 +58,6 @@ import 'validators.dart' show ValidatorFn;
 class NgModel extends NgControl
     with ComponentState
     implements AfterChanges, OnInit {
-  final List<dynamic> _validators;
   Control _control;
   StreamController _update;
   dynamic _model;
@@ -84,12 +82,12 @@ class NgModel extends NgControl
       @Optional()
       @Self()
       @Inject(NG_VALIDATORS)
-          this._validators,
+          List validators,
       @Optional()
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors)
-      : super(valueAccessors) {
+      : super(valueAccessors, validators) {
     _init(valueAccessors);
   }
 
@@ -127,9 +125,6 @@ class NgModel extends NgControl
 
   @override
   List<String> get path => [];
-
-  @override
-  ValidatorFn get validator => composeValidators(_validators);
 
   @override
   void viewToModelUpdate(dynamic newValue) {
