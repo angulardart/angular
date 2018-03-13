@@ -7,8 +7,7 @@ import '../validators.dart' show NG_VALIDATORS;
 import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import 'ng_control.dart' show NgControl;
-import 'shared.dart' show setUpControl, composeValidators;
-import 'validators.dart' show ValidatorFn;
+import 'shared.dart' show setUpControl;
 
 /// Binds an existing [Control] to a DOM element.
 ///
@@ -65,7 +64,6 @@ import 'validators.dart' show ValidatorFn;
   visibility: Visibility.all,
 )
 class NgFormControl extends NgControl implements AfterChanges {
-  final /* Array<Validator|Function> */ List<dynamic> _validators;
   bool _formChanged = false;
   Control _form;
   @Input('ngFormControl')
@@ -91,12 +89,12 @@ class NgFormControl extends NgControl implements AfterChanges {
       @Optional()
       @Self()
       @Inject(NG_VALIDATORS)
-          this._validators,
+          List validators,
       @Optional()
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors)
-      : super(valueAccessors);
+      : super(valueAccessors, validators);
 
   @Output('ngModelChange')
   Stream get update => _update.stream;
@@ -119,9 +117,6 @@ class NgFormControl extends NgControl implements AfterChanges {
 
   @override
   List<String> get path => [];
-
-  @override
-  ValidatorFn get validator => composeValidators(_validators);
 
   @override
   Control get control => form;
