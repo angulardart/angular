@@ -204,7 +204,7 @@ class ViewCompWithFinalStatic0 extends DebugAppView<import2.CompWithFinalStatic>
   import3.Text _text_3;
   static RenderComponentType _renderType;
   ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompWithFinalStatic0) {
-    rootEl = import3.document.createElement('comp-with-final');
+    rootEl = import3.document.createElement('comp-with-final-static');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/directives/intl_component.dart class CompWithFinalStatic - inline template', ViewEncapsulation.None, styles$CompWithFinalStatic);
     setupComponentType(_renderType);
   }
@@ -276,10 +276,94 @@ AppView viewFactory_CompWithFinalStaticHost0(AppView<dynamic> parentView, int pa
   return new _ViewCompWithFinalStaticHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.CompWithFinalStatic> CompWithFinalStaticNgFactory = const ComponentFactory<import2.CompWithFinalStatic>('comp-with-final', viewFactory_CompWithFinalStaticHost0, _CompWithFinalStaticMetadata);
+const ComponentFactory<import2.CompWithFinalStatic> CompWithFinalStaticNgFactory = const ComponentFactory<import2.CompWithFinalStatic>('comp-with-final-static', viewFactory_CompWithFinalStaticHost0, _CompWithFinalStaticMetadata);
+const List<dynamic> styles$CompWithExternalFinal = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_CompWithExternalFinal0 = [null, null, null, null];
+
+class ViewCompWithExternalFinal0 extends DebugAppView<import2.CompWithExternalFinal> {
+  import3.ButtonElement _el_0;
+  import3.Text _text_1;
+  import3.ButtonElement _el_2;
+  import3.Text _text_3;
+  static RenderComponentType _renderType;
+  ViewCompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompWithExternalFinal0) {
+    rootEl = import3.document.createElement('comp-with-external-final');
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/directives/intl_component.dart class CompWithExternalFinal - inline template', ViewEncapsulation.None, styles$CompWithExternalFinal);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import2.CompWithExternalFinal> build() {
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import3.document;
+    _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
+    _text_1 = new import3.Text('');
+    _el_0.append(_text_1);
+    dbgElm(this, _text_1, 1, 0, 12);
+    _el_2 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 2, 1, 4);
+    _text_3 = new import3.Text('');
+    _el_2.append(_text_3);
+    dbgElm(this, _text_3, 3, 1, 12);
+    init(const [], null, [_el_0, _text_1, _el_2, _text_3]);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      (_text_1.text = (import2.Messages.okMessage ?? ''));
+    }
+    if (firstCheck) {
+      (_text_3.text = (import2.Messages.cancelMessage ?? ''));
+    }
+  }
+}
+
+AppView<import2.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewCompWithExternalFinal0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$CompWithExternalFinalHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_CompWithExternalFinalHost0 = [
+  new StaticNodeDebugInfo([import2.CompWithExternalFinal], import2.CompWithExternalFinal, <String, dynamic>{})
+];
+
+class _ViewCompWithExternalFinalHost0 extends DebugAppView<dynamic> {
+  ViewCompWithExternalFinal0 _compView_0;
+  import2.CompWithExternalFinal _CompWithExternalFinal_0_5;
+  _ViewCompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompWithExternalFinalHost0);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewCompWithExternalFinal0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _CompWithExternalFinal_0_5 = new import2.CompWithExternalFinal();
+    _compView_0.create(_CompWithExternalFinal_0_5, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import2.CompWithExternalFinal>(0, this, rootEl, _CompWithExternalFinal_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_CompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewCompWithExternalFinalHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import2.CompWithExternalFinal> CompWithExternalFinalNgFactory = const ComponentFactory<import2.CompWithExternalFinal>('comp-with-external-final', viewFactory_CompWithExternalFinalHost0, _CompWithExternalFinalMetadata);
 const _CompWithoutFinalMetadata = const [];
 const _CompWithFinalMetadata = const [];
 const _CompWithFinalStaticMetadata = const [];
+const _CompWithExternalFinalMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -290,5 +374,6 @@ void initReflector() {
   _ngRef.registerComponent(CompWithoutFinal, CompWithoutFinalNgFactory);
   _ngRef.registerComponent(CompWithFinal, CompWithFinalNgFactory);
   _ngRef.registerComponent(CompWithFinalStatic, CompWithFinalStaticNgFactory);
+  _ngRef.registerComponent(CompWithExternalFinal, CompWithExternalFinalNgFactory);
   _ref0.initReflector();
 }

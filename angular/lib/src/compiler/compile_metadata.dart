@@ -43,13 +43,17 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
   final String moduleUrl;
   final T value;
 
+  /// If this identifier refers to a class declaration, this is non-null.
+  final AnalyzedClass analyzedClass;
+
   CompileIdentifierMetadata(
       {this.name,
       this.moduleUrl,
       this.prefix,
       this.emitPrefix: false,
       this.genericTypes: const [],
-      this.value});
+      this.value,
+      this.analyzedClass});
 
   @override
   CompileIdentifierMetadata<T> get identifier => this;
@@ -159,6 +163,9 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata<Function> {
 
   @override
   CompileIdentifierMetadata<Function> get identifier => this;
+
+  @override
+  AnalyzedClass get analyzedClass => null;
 }
 
 class CompileTokenMetadata implements CompileMetadataWithIdentifier {
@@ -301,6 +308,9 @@ class CompileTypeMetadata
 
   @override
   CompileTypeMetadata get type => this;
+
+  @override
+  AnalyzedClass get analyzedClass => null;
 
   @override
   // ignore: hash_and_equals

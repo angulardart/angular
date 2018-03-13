@@ -1,3 +1,8 @@
+### New features
+
+*   Compiler can optimize field accesses to classes that are statically accessed
+    using `exports`.
+
 ### Breaking changes
 
 *   Removes the old template parser completely. The new template parser was made
@@ -12,7 +17,7 @@
     discontinued for compile-time injection. You'll receive a build exception;
     fix by instead either providing by a `Type` or `OpaqueToken`/`MultiToken`.
 
-### Bug Fixes
+### Bug fixes
 
 *   Testability now includes ComponentState updates. Due to prior use of
     animationFrame callback, testbed was not able to detect stable state.

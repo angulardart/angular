@@ -639,7 +639,9 @@ class ComponentVisitor
 
     // There is an implicit "export" for the directive class itself
     exports.add(new CompileIdentifierMetadata(
-        name: element.name, moduleUrl: moduleUrl(element.library)));
+        name: element.name,
+        moduleUrl: moduleUrl(element.library),
+        analyzedClass: new AnalyzedClass(element)));
 
     var arguments = annotation.annotationAst.arguments.arguments;
     NamedExpression exportsArg = arguments.firstWhere(
@@ -658,6 +660,7 @@ class ComponentVisitor
     for (Identifier id in staticNames) {
       String name;
       String prefix;
+      AnalyzedClass analyzedClass;
       if (id is PrefixedIdentifier) {
         // We only allow prefixed identifiers to have library prefixes.
         if (id.prefix.staticElement is! PrefixElement) {
@@ -671,11 +674,16 @@ class ComponentVisitor
         name = id.name;
       }
 
+      if (id.staticElement is ClassElement) {
+        analyzedClass = new AnalyzedClass(id.staticElement);
+      }
+
       // TODO(het): Also store the `DartType` since we know it statically.
       exports.add(new CompileIdentifierMetadata(
         name: name,
         prefix: prefix,
         moduleUrl: moduleUrl(id.staticElement.library),
+        analyzedClass: analyzedClass,
       ));
     }
     return exports;

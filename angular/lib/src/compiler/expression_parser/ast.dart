@@ -1,3 +1,4 @@
+import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 
 class AST {
@@ -16,7 +17,11 @@ class EmptyExpr extends AST {
 }
 
 class StaticRead extends AST {
-  CompileIdentifierMetadata id;
+  final CompileIdentifierMetadata id;
+
+  /// The analyzed class being read, if this is a class reference.
+  AnalyzedClass get analyzedClass => id.analyzedClass;
+
   StaticRead(this.id);
 
   @override
