@@ -1246,7 +1246,7 @@ class _PipeCollector extends RecursiveAstVisitor {
   Null visitPipe(BindingPipe ast, dynamic context) {
     this.pipes.add(ast.name);
     ast.exp.visit(this);
-    this.visitAll(ast.args as List<AST>, context);
+    this.visitAll(ast.args, context);
     return null;
   }
 }
