@@ -2,7 +2,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/src/type_checker.dart';
 
-import '../source_gen/common/url_resolver.dart';
 import 'expression_parser/ast.dart' as ast;
 
 final stringTypeChecker = new TypeChecker.fromRuntime(String);
@@ -72,13 +71,14 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
     if (analyzedClass == null) return false;
     var receiver = expression.receiver;
     if (receiver is ast.ImplicitReceiver ||
-        (receiver is ast.StaticRead &&
-            _isAnalyzedClass(receiver, analyzedClass))) {
-      var field = analyzedClass._classElement.getField(expression.name);
+        (receiver is ast.StaticRead && receiver.analyzedClass != null)) {
+      var clazz =
+          receiver is ast.StaticRead ? receiver.analyzedClass : analyzedClass;
+      var field = clazz._classElement.getField(expression.name);
       if (field != null) {
         return !field.isSynthetic && (field.isFinal || field.isConst);
       }
-      var method = analyzedClass._classElement.getMethod(expression.name);
+      var method = clazz._classElement.getMethod(expression.name);
       if (method != null) {
         // methods are immutable
         return true;
@@ -87,12 +87,6 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
     return false;
   }
   return false;
-}
-
-bool _isAnalyzedClass(ast.StaticRead staticRead, AnalyzedClass analyzedClass) {
-  var id = staticRead.id;
-  return id.name == analyzedClass._classElement.name &&
-      id.moduleUrl == moduleUrl(analyzedClass._classElement.library);
 }
 
 // TODO(het): preserve any source info in the new expression
@@ -121,9 +115,10 @@ ast.AST rewriteInterpolate(ast.AST original, AnalyzedClass analyzedClass) {
       if (analyzedClass == null) return original;
       var receiver = expression.receiver;
       if (receiver is ast.ImplicitReceiver ||
-          (receiver is ast.StaticRead &&
-              _isAnalyzedClass(receiver, analyzedClass))) {
-        var field = analyzedClass._classElement.getField(expression.name);
+          receiver is ast.StaticRead && receiver.analyzedClass != null) {
+        var clazz =
+            receiver is ast.StaticRead ? receiver.analyzedClass : analyzedClass;
+        var field = clazz._classElement.getField(expression.name);
         if (field != null) {
           if (stringTypeChecker.isExactlyType(field.type)) {
             return new ast.IfNull(expression, new ast.LiteralPrimitive(''));

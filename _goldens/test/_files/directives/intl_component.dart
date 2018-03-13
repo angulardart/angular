@@ -5,6 +5,11 @@ class IntlLike {
   static String message(String name, {String desc}) => '';
 }
 
+class Messages {
+  static final okMessage = IntlLike.message('ok', desc: 'OK');
+  static final cancelMessage = IntlLike.message('cancel', desc: 'Cancel');
+}
+
 @Component(
   selector: 'comp-without-final',
   template: r'''
@@ -33,7 +38,7 @@ class CompWithFinal {
 }
 
 @Component(
-  selector: 'comp-with-final',
+  selector: 'comp-with-final-static',
   template: r'''
     <button>{{CompWithFinalStatic.okMessage}}</button>
     <button>{{CompWithFinalStatic.cancelMessage}}</button>
@@ -43,3 +48,13 @@ class CompWithFinalStatic {
   static final okMessage = IntlLike.message('ok', desc: 'OK');
   static final cancelMessage = IntlLike.message('cancel', desc: 'Cancel');
 }
+
+@Component(
+  selector: 'comp-with-external-final',
+  template: r'''
+    <button>{{Messages.okMessage}}</button>
+    <button>{{Messages.cancelMessage}}</button>
+''',
+  exports: const [Messages],
+)
+class CompWithExternalFinal {}

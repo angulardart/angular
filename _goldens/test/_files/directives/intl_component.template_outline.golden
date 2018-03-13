@@ -35,5 +35,12 @@ external AppView<_user.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(App
 class ViewCompWithFinalStatic0 extends AppView<_user.CompWithFinalStatic> {
   external ViewCompWithFinalStatic0(AppView<dynamic> parentView, num parentIndex);
 }
+// For @Component class CompWithExternalFinal.
+const List<dynamic> styles$CompWithExternalFinal = const [];
+external ComponentFactory get CompWithExternalFinalNgFactory;
+external AppView<_user.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(AppView<dynamic> parentView, num parentIndex);
+class ViewCompWithExternalFinal0 extends AppView<_user.CompWithExternalFinal> {
+  external ViewCompWithExternalFinal0(AppView<dynamic> parentView, num parentIndex);
+}
 
 external void initReflector();
