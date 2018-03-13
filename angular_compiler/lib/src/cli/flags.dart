@@ -6,7 +6,6 @@ import 'package:meta/meta.dart';
 const _argDebugMode = 'debug';
 const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
-const _argAstPkg = 'use_new_template_parser';
 const _argFastBoot = 'fast_boot';
 
 /// Compiler-wide configuration (flags) to allow opting in/out.
@@ -40,14 +39,6 @@ class CompilerFlags {
       help: ''
           'Whether to emit additional code that may be used by tooling '
           'in order to profile performance or other runtime information.',
-    )
-    ..addFlag(
-      _argAstPkg,
-      defaultsTo: null,
-      hide: true,
-      help: ''
-          'Whether to use pkg:angular_ast for parsing template files instead '
-          'of the existing template parser.',
     )
     ..addFlag(_argFastBoot,
         defaultsTo: null,
@@ -85,17 +76,12 @@ class CompilerFlags {
   @experimental
   final bool ignoreNgPlaceholderForGoldens;
 
-  /// Whether to opt-in to using the new angular_ast package for parsing
-  /// template files.
-  final bool useAstPkg;
-
   const CompilerFlags({
     @required this.genDebugInfo,
     this.ignoreNgPlaceholderForGoldens: false,
     this.profileFor: Profile.none,
     this.useFastBoot: true,
     this.useLegacyStyleEncapsulation: false,
-    this.useAstPkg: false,
   });
 
   /// Creates flags by parsing command-line arguments.
@@ -139,7 +125,6 @@ class CompilerFlags {
         _argDebugMode,
         _argProfileFor,
         _argLegacyStyle,
-        _argAstPkg,
         _argFastBoot,
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
@@ -168,11 +153,6 @@ class CompilerFlags {
       log('Invalid value for "$_argLegacyStyle": $useLegacyStyle');
       useLegacyStyle = null;
     }
-    var useAstPkg = options[_argAstPkg];
-    if (useAstPkg != null && useAstPkg is! bool) {
-      log('Invalid value for "$_argAstPkg": $useAstPkg');
-      useAstPkg = null;
-    }
     var useFastBoot = options[_argFastBoot];
     if (useFastBoot != null && useFastBoot is! bool) {
       log('Invalid value for "$_argFastBoot": $useFastBoot');
@@ -183,7 +163,6 @@ class CompilerFlags {
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
-      useAstPkg: useAstPkg ?? defaultTo.useAstPkg,
       useFastBoot: useFastBoot ?? defaultTo.useFastBoot,
     );
   }

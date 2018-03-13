@@ -1,43 +1,26 @@
 import 'dart:io';
 
-import 'package:glob/glob.dart';
 import 'package:path/path.dart' as p;
 
+import 'package:dev/dry.dart';
+import 'package:dev/find.dart';
+
 /// Writes `<root>/.travis.yml` based on the configuration in this file.
-void main() {
+void main(List<String> args) {
+  final dryRun = isDryRun(args);
+
   // Start the preamble of .travis.yml.
-  final prefix = new File(
-    p.join('dev', 'travis', 'prefix.yaml'),
-  )
+  final prefix = new File(p.join('dev', 'tool', 'travis', 'prefix.yaml'))
       .readAsStringSync();
-  final postfix = new File(
-    p.join('dev', 'travis', 'postfix.yaml'),
-  )
+  final postfix = new File(p.join('dev', 'tool', 'travis', 'postfix.yaml'))
       .readAsStringSync();
-
-  // Find packages.
-  final include = new Glob('**/pubspec.yaml');
-
-  // TODO: Perhaps just import .gitignore as well.
-  final exclude = [
-    new Glob('dev/**'),
-    new Glob('angular/tools/**'),
-    new Glob('**/build'),
-  ];
 
   // Make build stages.
   final stages = <String>[];
-  final packages = include
-      .listSync()
-      .map((pubspec) => p.normalize(p.dirname(pubspec.path)))
-      .toList()
-        ..sort();
+  final packages =
+      findRelevantPubspecs().map((f) => p.normalize(p.dirname(f.path)));
 
   for (final package in packages) {
-    if (exclude.any((e) => e.matches(package))) {
-      continue;
-    }
-
     // Every package has a pre-submit and build phase.
     stages.add(_analyze(package));
 
@@ -60,13 +43,27 @@ void main() {
     }
   }
 
-  new File('.travis.yml').writeAsStringSync([
+  final output = new File('.travis.yml');
+  final contents = ([
     prefix,
     stages.join('\n\n'),
     '',
     postfix,
     '',
   ].join('\n'));
+
+  if (dryRun) {
+    if (output.readAsStringSync().trimRight() != contents.trimRight()) {
+      exitCode = 1;
+      stderr.writeln(
+        '${output.path} was not updated. Run dev/travis/config.dart.',
+      );
+    } else {
+      stdout.writeln('No updates needed to ${output.path}.');
+    }
+    return;
+  }
+  output.writeAsStringSync(contents);
 }
 
 /// Whether there is a `test/` directory in this [path].

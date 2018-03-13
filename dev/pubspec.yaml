@@ -1,0 +1,12 @@
+# Development tools for working on the AngularDart repository.
+name: dev
+
+dependencies:
+  args: ^1.4.1
+  glob: ^1.1.5
+  path: ^1.5.1
+  yaml: ^2.1.13
+
+executables:
+  pubspec:
+  travis:

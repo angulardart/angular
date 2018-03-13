@@ -27,7 +27,6 @@ import 'package:angular/src/facade/exception_handler.dart'
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'application_ref_test.template.dart' as ng_generated;
-import 'core_mocks.dart';
 
 void main() {
   ng_generated.initReflector();
@@ -70,7 +69,7 @@ void main() {
 
     group('ApplicationRef', () {
       test('should throw when reentering tick', () async {
-        var cdRef = new MockChangeDetectorRef();
+        var cdRef = new _MockChangeDetectorRef();
         var ref = createApplication([]);
         when(cdRef.detectChanges()).thenAnswer((_) {
           ref.tick();
@@ -85,7 +84,7 @@ void main() {
       test('should pass tick errors to exceptionHandler', () async {
         var ref = createApplication([]);
         await ref.waitForAsyncInitializers().whenComplete(expectAsync0(() {
-          var cdRef = new MockChangeDetectorRef();
+          var cdRef = new _MockChangeDetectorRef();
           when(cdRef.detectChanges()).thenThrow(new BaseException('Test'));
           ref.registerChangeDetector(cdRef);
           try {
@@ -159,7 +158,7 @@ void main() {
             throwsWith('Cannot bootstrap as there are still '
                 'asynchronous initializers running. Wait for them using '
                 'waitForAsyncInitializers().'));
-      }, tags: 'known_pub_serve_failure');
+      });
     });
   });
 }
@@ -169,6 +168,8 @@ void main() {
   template: '',
 )
 class MyComp {}
+
+class _MockChangeDetectorRef extends Mock implements ChangeDetectorRef {}
 
 class _MockComponentFactory extends ComponentFactory {
   final ComponentRef _compRef;
@@ -202,7 +203,7 @@ class _MockComponentRef extends ComponentRef {
   Injector get injector => _injector;
 
   @override
-  ChangeDetectorRef get changeDetectorRef => new MockChangeDetectorRef();
+  ChangeDetectorRef get changeDetectorRef => new _MockChangeDetectorRef();
 
   @override
   void onDestroy(Function cb) {}

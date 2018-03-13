@@ -1,4 +1,3 @@
-@Tags(const ['known_pub_serve_failure'])
 @TestOn('browser')
 import 'dart:async';
 import 'dart:html';

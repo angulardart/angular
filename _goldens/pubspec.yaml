@@ -2,7 +2,7 @@ name: _goldens
 author: Dart Team <web@dartlang.org>
 description: Goldens for AngularDart.
 environment:
-  sdk: '>=2.0.0-dev.20.0 <2.0.0'
+  sdk: ">=2.0.0-dev.28.0 <2.0.0"
 
 dependencies:
   # No strict dependencies, we always use dependency_overrides.
@@ -18,7 +18,7 @@ dev_dependencies:
   dart_style: ^1.0.9
   meta: ^1.1.0
   path: ^1.5.1
-  test: ^0.12.30+1
+  test: ^0.12.32
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:

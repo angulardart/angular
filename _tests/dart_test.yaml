@@ -1,18 +1,7 @@
-presets:
-  travis:
-    exclude_tags: known_pub_serve_failure
-tags:
-  # Tests that fail with pub serve/pub run test.
-  known_pub_serve_failure:
-    skip: "This is a prior known failure for travis."
+# Include common configuration.
+include: ../dev/tool/test/dart_test_repo.yaml
 
-# TODO(https://github.com/dart-lang/test/issues/772): Headless chrome times out
-# on travis.
-override_platforms:
-  chrome:
-    settings:
-      headless: false
-
+# This repository has both web and VM tests.
 platforms:
   - chrome
   - vm

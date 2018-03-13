@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:angular/core.dart'
     show Component, Directive, Input, ViewChild, ViewChildren;
 import 'package:angular/src/core/linker.dart'
-    show ElementRef, TemplateRef, ViewContainerRef;
+    show TemplateRef, ViewContainerRef;
 import 'package:angular_test/angular_test.dart';
 
 import 'projection_integration_test.template.dart' as ng_generated;
@@ -640,10 +640,8 @@ class RecursiveTree {
   template: '<d>{{tagName}}</d>',
 )
 class CmpD {
-  String tagName;
-  CmpD(ElementRef elementRef) {
-    this.tagName = (elementRef.nativeElement as Element).tagName.toLowerCase();
-  }
+  final String tagName;
+  CmpD(Element element) : tagName = element.tagName.toLowerCase();
 }
 
 @Component(
@@ -651,10 +649,8 @@ class CmpD {
   template: '<c>{{tagName}}</c>',
 )
 class CmpC {
-  String tagName;
-  CmpC(ElementRef elementRef) {
-    this.tagName = (elementRef.nativeElement as Element).tagName.toLowerCase();
-  }
+  final String tagName;
+  CmpC(Element element) : tagName = element.tagName.toLowerCase();
 }
 
 @Component(

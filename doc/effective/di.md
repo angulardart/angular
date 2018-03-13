@@ -16,17 +16,20 @@ practices** from the developers of the AngularDart framework.
     *   [DO use `const` providers](#do-use-const-providers)
     *   [DO use the `.forToken` constructor for
         tokens](#do-use-the-fortoken-constructor-for-tokens)
-    *   [PREFER `ClassProvider` to a `Type`](#...)
+    *   [PREFER `ClassProvider` to a `Type`](#prefer-classprovider-to-a-type)
 *   [Tokens](#tokens)
     *   [DO use typed `OpaqueToken<T>`](#do-use-typed-opaquetokent)
     *   [AVOID using arbitrary tokens](#avoid-using-arbitrary-tokens)
-    *   [PREFER `MultiToken<T>` to `multi: true`](#...)
+    *   [PREFER `MultiToken<T>` to `multi:
+        true`](#prefer-multitokent-to-multi-true)
 *   [Injectors](#injectors)
     *   [AVOID using `ReflectiveInjector`](#avoid-using-reflectiveinjector)
 *   [Components](#components)
-    *   [AVOID using injection to configure individual components](#...)
+    *   [CONSIDER avoiding using injection to configure individual
+        components](#avoid-using-injection-to-configure-individual-components)
 *   [Annotations](#annotations)
-    *   [PREFER omitting `@Injectable()` where possible](#...)
+    *   [PREFER omitting `@Injectable()` where
+        possible](#prefer-omitting-injectable-where-possible)
 
 ## Providers
 
@@ -231,8 +234,9 @@ class Comp {
 
 With the older style `Provider(...)` and `provide(...)` it's still type-safe and
 permitted to use arbitrary tokens, such as strings, numbers, or even custom
-classes. There are some bugs in the compiler, and it's unlikely support for this
-feature will be kept long-term in AngularDart.
+classes. However, these are no longer supported in any form of compile-time
+injection (i.e. they only work with runtime-configured injectors like
+`ReflectiveInjetor` or `Injector.map`).
 
 **BAD**:
 
@@ -366,7 +370,7 @@ final InjectorFactory heroInjector = ng.heroInjector$Injector;
 
 ## Components
 
-### AVOID using injection to configure individual components
+### CONSIDER avoiding using injection to configure individual components
 
 Imagine you have a component (`HeroComponent`, or `<hero-component>`) that
 requires a model object (`HeroData`) in order to render. You could use
@@ -452,6 +456,60 @@ class HeroComponent {
     // ...
   }
 }
+```
+
+**GOOD**: Using dependency injection when it makes the component API cleaner.
+
+If some configuration data to a component isn't dynamic consider making that
+configuration injectable. This signals to the user that this value can't change
+during the lifecycle of the component, and the configuration is available to be
+used immediately instead of waiting for certain lifecycle methods. You should
+also consider using `@Optional()` in order to avoid making it a required
+dependency and thus harder for users to use. Prefer to have reasonable defaults
+for these configurations so users of your Component can use it easier.
+
+These components can then be configured with directives that provide the
+configuration to allow users to easily support different options on individual
+instances, or from the root of the application to change the behavior for all
+instances of the component.
+
+```dart
+@Component(
+  selector: 'number-input',
+  template: '...',
+)
+class NumberInputComponent {
+  final NumberFormat _format;
+  String text; // What we show to the user.
+
+  NumberInputComponent(@Optional() NumberFormat format) :
+      // We are giving it a nice default so it can be used out of the box.
+      _format ??= new NumberFormat.decimalPattern();
+
+  @Input()
+  set value(num value) {
+    text = _format.format(value);
+    // ...
+  }
+  // ...
+}
+
+@Directive(
+  selector: '[currencyFormat]',
+  providers: const [
+    const FactoryProvider<NumberFormat>(
+        NumberFormat, CurrencyFormatDirective.currencyFormat)
+  ],
+)
+class CurrencyFormatDirective {
+  static NumberFormat currencyFormat() => new NumberFormat.simpleCurrency();
+}
+```
+
+In client template:
+
+```html
+<number-input currencyFormat [value]="cost"></number-input>
 ```
 
 ## Annotations

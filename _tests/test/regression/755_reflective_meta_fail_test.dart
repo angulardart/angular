@@ -7,12 +7,10 @@ import '755_reflective_meta_fail_test.template.dart' as ng_generated;
 
 // Source: https://github.com/dart-lang/angular/issues/755.
 void main() {
-  // TODO(matanl): Remove once this is the default.
-  InjectionError.enableBetterErrors = true;
   ng_generated.initReflector();
 
   test('should throw ArgumentError on a missing provider', () {
-    final injector = new Injector.slowReflective([
+    final injector = ReflectiveInjector.resolveAndCreate([
       const Provider(ServiceInjectingToken, useClass: ServiceInjectingToken),
       // Intentionally omit a binding for "stringToken".
     ]);
