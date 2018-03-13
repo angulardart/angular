@@ -21,19 +21,24 @@ $ pub run build_runner serve
 
 ## Running the unit tests
 
-Unit (sometimes called "component") tests are in `test/unit`.
-
-Using `build_runner` for our build tool, we can run them using a [`preset`][]
-in our `dart_test.yaml`, `unit`:
+Unit (sometimes called "component") tests are in `test/`.
 
 [`preset`]: https://github.com/dart-lang/test/blob/master/doc/configuration.md#configuration-presets
 
 ```bash
-$ pub run build_runner test -- -P unit
+$ pub run build_runner test
 ```
 
-_**NOTE**: Arguments after `--` are to `package:test`._
+## Debugging the unit tests
 
-## Running the end-to-end tests
+You can view the tests locally. Simply start the development server:
 
-_WORK IN PROGRESS: There currently are no integration tests._
+```bash
+$ pub run build_runner serve
+```
+
+And navigate to `localhost:8081/<test_name>.debug.html`. For example:
+
+```
+http://localhost:8081/issue_list_test.debug.html
+```
