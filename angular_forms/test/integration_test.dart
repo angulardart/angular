@@ -771,14 +771,15 @@ void main() {
 @Directive(selector: '[wrapped-value]', host: const {
   '(input)': 'handleOnInput(\$event.target.value)',
   '[value]': 'value'
-})
+}, providers: [
+  const ExistingProvider.forToken(
+    NG_VALUE_ACCESSOR,
+    WrappedAccessor,
+  )
+])
 class WrappedAccessor implements ControlValueAccessor {
   var value;
   Function onChange;
-
-  WrappedAccessor(NgControl cd) {
-    cd.valueAccessor = this;
-  }
 
   void writeValue(value) {
     this.value = '!$value!';
@@ -795,15 +796,16 @@ class WrappedAccessor implements ControlValueAccessor {
   }
 }
 
-@Component(selector: 'my-input', template: '')
+@Component(selector: 'my-input', template: '', providers: [
+  const ExistingProvider.forToken(
+    NG_VALUE_ACCESSOR,
+    MyInput,
+  )
+])
 class MyInput implements ControlValueAccessor {
   @Output('input')
   StreamController onInput = new StreamController.broadcast();
   String value;
-
-  MyInput(NgControl cd) {
-    cd.valueAccessor = this;
-  }
 
   void writeValue(value) {
     this.value = '!$value!';

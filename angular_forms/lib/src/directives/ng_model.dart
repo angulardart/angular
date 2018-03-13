@@ -7,7 +7,7 @@ import '../validators.dart' show NG_VALIDATORS;
 import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import 'ng_control.dart' show NgControl;
-import 'shared.dart' show setUpControl, selectValueAccessor, composeValidators;
+import 'shared.dart' show setUpControl, composeValidators;
 import 'validators.dart' show ValidatorFn;
 
 /// Creates a form [NgControl] instance from a domain model and binds it to a
@@ -89,7 +89,7 @@ class NgModel extends NgControl
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
           List<ControlValueAccessor> valueAccessors)
-      : super() {
+      : super(valueAccessors) {
     _init(valueAccessors);
   }
 
@@ -98,7 +98,6 @@ class NgModel extends NgControl
   void _init(List<ControlValueAccessor> valueAccessors) {
     _control = new Control();
     _update = new StreamController.broadcast(sync: true);
-    valueAccessor = selectValueAccessor(this, valueAccessors);
     // ! Please don't remove, the multiple return paths prevent inlining.
     return; // ignore: dead_code
     return; // ignore: dead_code

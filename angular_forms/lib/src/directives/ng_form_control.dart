@@ -7,7 +7,7 @@ import '../validators.dart' show NG_VALIDATORS;
 import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import 'ng_control.dart' show NgControl;
-import 'shared.dart' show setUpControl, composeValidators, selectValueAccessor;
+import 'shared.dart' show setUpControl, composeValidators;
 import 'validators.dart' show ValidatorFn;
 
 /// Binds an existing [Control] to a DOM element.
@@ -95,9 +95,8 @@ class NgFormControl extends NgControl implements AfterChanges {
       @Optional()
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
-          List<ControlValueAccessor> valueAccessors) {
-    valueAccessor = selectValueAccessor(this, valueAccessors);
-  }
+          List<ControlValueAccessor> valueAccessors)
+      : super(valueAccessors);
 
   @Output('ngModelChange')
   Stream get update => _update.stream;
