@@ -37,7 +37,7 @@ class ImplicitReceiver extends AST {
 
 /// Multiple expressions separated by a semicolon.
 class Chain extends AST {
-  List<dynamic> expressions;
+  List<AST> expressions;
   Chain(this.expressions);
   @override
   R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
@@ -121,7 +121,7 @@ class KeyedWrite extends AST {
 class BindingPipe extends AST {
   AST exp;
   String name;
-  List<dynamic> args;
+  List<AST> args;
   BindingPipe(this.exp, this.name, this.args);
 
   @override
@@ -139,7 +139,7 @@ class LiteralPrimitive extends AST {
 }
 
 class LiteralArray extends AST {
-  List<dynamic> expressions;
+  List<AST> expressions;
   LiteralArray(this.expressions);
 
   @override
@@ -148,8 +148,8 @@ class LiteralArray extends AST {
 }
 
 class LiteralMap extends AST {
-  List<dynamic> keys;
-  List<dynamic> values;
+  List<String> keys;
+  List<AST> values;
   LiteralMap(this.keys, this.values);
 
   @override
@@ -159,8 +159,8 @@ class LiteralMap extends AST {
 }
 
 class Interpolation extends AST {
-  List<dynamic> strings;
-  List<dynamic> expressions;
+  List<String> strings;
+  List<AST> expressions;
   Interpolation(this.strings, this.expressions);
 
   @override
@@ -192,7 +192,7 @@ class PrefixNot extends AST {
 class MethodCall extends AST {
   AST receiver;
   String name;
-  List<dynamic> args;
+  List<AST> args;
   MethodCall(this.receiver, this.name, this.args);
 
   @override
@@ -203,7 +203,7 @@ class MethodCall extends AST {
 class SafeMethodCall extends AST {
   AST receiver;
   String name;
-  List<dynamic> args;
+  List<AST> args;
   SafeMethodCall(this.receiver, this.name, this.args);
 
   @override
@@ -213,7 +213,7 @@ class SafeMethodCall extends AST {
 
 class FunctionCall extends AST {
   AST target;
-  List<dynamic> args;
+  List<AST> args;
   FunctionCall(this.target, this.args);
 
   @override
@@ -278,7 +278,7 @@ class RecursiveAstVisitor implements AstVisitor {
 
   @override
   dynamic visitChain(Chain ast, dynamic context) {
-    return this.visitAll(ast.expressions as List<AST>, context);
+    return this.visitAll(ast.expressions, context);
   }
 
   @override
@@ -297,14 +297,14 @@ class RecursiveAstVisitor implements AstVisitor {
   @override
   dynamic visitPipe(BindingPipe ast, dynamic context) {
     ast.exp.visit(this);
-    this.visitAll(ast.args as List<AST>, context);
+    this.visitAll(ast.args, context);
     return null;
   }
 
   @override
   dynamic visitFunctionCall(FunctionCall ast, dynamic context) {
     ast.target.visit(this);
-    this.visitAll(ast.args as List<AST>, context);
+    this.visitAll(ast.args, context);
     return null;
   }
 
@@ -322,7 +322,7 @@ class RecursiveAstVisitor implements AstVisitor {
 
   @override
   dynamic visitInterpolation(Interpolation ast, dynamic context) {
-    return this.visitAll(ast.expressions as List<AST>, context);
+    return this.visitAll(ast.expressions, context);
   }
 
   @override
@@ -342,12 +342,12 @@ class RecursiveAstVisitor implements AstVisitor {
 
   @override
   dynamic visitLiteralArray(LiteralArray ast, dynamic context) {
-    return this.visitAll(ast.expressions as List<AST>, context);
+    return this.visitAll(ast.expressions, context);
   }
 
   @override
   dynamic visitLiteralMap(LiteralMap ast, dynamic context) {
-    return this.visitAll(ast.values as List<AST>, context);
+    return this.visitAll(ast.values, context);
   }
 
   @override
@@ -358,7 +358,7 @@ class RecursiveAstVisitor implements AstVisitor {
   @override
   dynamic visitMethodCall(MethodCall ast, dynamic context) {
     ast.receiver.visit(this);
-    return this.visitAll(ast.args as List<AST>, context);
+    return this.visitAll(ast.args, context);
   }
 
   @override
@@ -389,7 +389,7 @@ class RecursiveAstVisitor implements AstVisitor {
   @override
   dynamic visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
     ast.receiver.visit(this);
-    return this.visitAll(ast.args as List<AST>, context);
+    return this.visitAll(ast.args, context);
   }
 
   @override
@@ -488,8 +488,8 @@ class AstTransformer implements AstVisitor<AST, Null> {
   @override
   AST visitEmptyExpr(EmptyExpr ast, _) => new EmptyExpr();
 
-  List<dynamic> _visitAll(List<dynamic> asts) {
-    var res = new List(asts.length);
+  List<AST> _visitAll(List<AST> asts) {
+    var res = new List<AST>(asts.length);
     for (var i = 0; i < asts.length; ++i) {
       res[i] = asts[i].visit(this);
     }

@@ -185,7 +185,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     _visitingRoot = false;
     _Mode mode = context;
     ensureStatementMode(mode, ast);
-    return visitAll(ast.expressions as List<compiler_ast.AST>, mode);
+    return visitAll(ast.expressions, mode);
   }
 
   dynamic visitConditional(compiler_ast.Conditional ast, dynamic context) {
@@ -210,8 +210,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     _visitingRoot = false;
     _Mode mode = context;
     var input = ast.exp.visit(this, _Mode.Expression);
-    var args = visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)
-        as List<o.Expression>;
+    var args = visitAll(ast.args, _Mode.Expression) as List<o.Expression>;
     var value = _nameResolver.callPipe(ast.name, input, args);
     return convertToStatementIfNeeded(mode, value);
   }
@@ -221,8 +220,9 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     _Mode mode = context;
     return convertToStatementIfNeeded(
         mode,
-        ast.target.visit(this, _Mode.Expression).callFn(
-            visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)));
+        ast.target
+            .visit(this, _Mode.Expression)
+            .callFn(visitAll(ast.args, _Mode.Expression)));
   }
 
   dynamic visitIfNull(compiler_ast.IfNull ast, dynamic context) {
@@ -326,8 +326,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     return convertToStatementIfNeeded(
       mode,
       _nameResolver.createLiteralList(
-          visitAll(ast.expressions as List<compiler_ast.AST>, mode)
-              as List<o.Expression>,
+          visitAll(ast.expressions, mode) as List<o.Expression>,
           type: isRootExpression ? _boundType : null),
     );
   }
@@ -356,8 +355,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
   dynamic visitMethodCall(compiler_ast.MethodCall ast, dynamic context) {
     _visitingRoot = false;
     _Mode mode = context;
-    var args = visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression)
-        as List<o.Expression>;
+    var args = visitAll(ast.args, _Mode.Expression) as List<o.Expression>;
     var result;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
@@ -424,7 +422,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor {
     _visitingRoot = false;
     _Mode mode = context;
     var receiver = ast.receiver.visit(this, _Mode.Expression);
-    var args = visitAll(ast.args as List<compiler_ast.AST>, _Mode.Expression);
+    var args = visitAll(ast.args, _Mode.Expression);
     return convertToStatementIfNeeded(
         mode,
         receiver
