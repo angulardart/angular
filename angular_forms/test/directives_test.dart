@@ -21,8 +21,6 @@ class CustomValidatorDirective implements Validator {
   }
 }
 
-class MockNgControl extends Mock implements NgControl {}
-
 Matcher throwsWith(String s) =>
     throwsA(predicate((e) => e.toString().contains(s)));
 
