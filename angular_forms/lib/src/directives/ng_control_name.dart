@@ -9,7 +9,7 @@ import 'control_value_accessor.dart'
     show ControlValueAccessor, NG_VALUE_ACCESSOR;
 import 'form_interface.dart' show Form;
 import 'ng_control.dart' show NgControl;
-import 'shared.dart' show controlPath, composeValidators, selectValueAccessor;
+import 'shared.dart' show controlPath, composeValidators;
 import 'validators.dart' show ValidatorFn;
 
 /// Creates and binds a control with a specified name to a DOM element.
@@ -99,9 +99,8 @@ class NgControlName extends NgControl implements AfterChanges, OnDestroy {
       @Optional()
       @Self()
       @Inject(NG_VALUE_ACCESSOR)
-          List<ControlValueAccessor> valueAccessors) {
-    valueAccessor = selectValueAccessor(this, valueAccessors);
-  }
+          List<ControlValueAccessor> valueAccessors)
+      : super(valueAccessors);
 
   @Input('ngControl')
   @override

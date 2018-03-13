@@ -31,32 +31,30 @@ Future<Null> flushMicrotasks() async => await new Future.microtask(() => null);
 void main() {
   group('Shared selectValueAccessor', () {
     DefaultValueAccessor defaultAccessor;
-    NgControl dir;
     setUp(() {
       defaultAccessor = new DefaultValueAccessor(null);
-      dir = new MockNgControl();
     });
     test('should throw when given an empty array', () {
-      expect(() => selectValueAccessor(dir, []),
+      expect(() => selectValueAccessor([]),
           throwsWith('No valid value accessor for'));
     });
     test('should return the default value accessor when no other provided', () {
-      expect(selectValueAccessor(dir, [defaultAccessor]), defaultAccessor);
+      expect(selectValueAccessor([defaultAccessor]), defaultAccessor);
     });
     test('should return checkbox accessor when provided', () {
       var checkboxAccessor = new CheckboxControlValueAccessor(null);
-      expect(selectValueAccessor(dir, [defaultAccessor, checkboxAccessor]),
+      expect(selectValueAccessor([defaultAccessor, checkboxAccessor]),
           checkboxAccessor);
     });
     test('should return select accessor when provided', () {
       var selectAccessor = new SelectControlValueAccessor(null);
-      expect(selectValueAccessor(dir, [defaultAccessor, selectAccessor]),
+      expect(selectValueAccessor([defaultAccessor, selectAccessor]),
           selectAccessor);
     });
     test('should throw when more than one build-in accessor is provided', () {
       var checkboxAccessor = new CheckboxControlValueAccessor(null);
       var selectAccessor = new SelectControlValueAccessor(null);
-      expect(() => selectValueAccessor(dir, [checkboxAccessor, selectAccessor]),
+      expect(() => selectValueAccessor([checkboxAccessor, selectAccessor]),
           throwsWith('More than one built-in value accessor matches'));
     });
     test('should return custom accessor when provided', () {
@@ -64,12 +62,12 @@ void main() {
       var checkboxAccessor = new CheckboxControlValueAccessor(null);
       expect(
           selectValueAccessor(
-              dir, [defaultAccessor, customAccessor, checkboxAccessor]),
+              [defaultAccessor, customAccessor, checkboxAccessor]),
           customAccessor);
     });
     test('should throw when more than one custom accessor is provided', () {
       ControlValueAccessor customAccessor = new MockValueAccessor();
-      expect(() => selectValueAccessor(dir, [customAccessor, customAccessor]),
+      expect(() => selectValueAccessor([customAccessor, customAccessor]),
           throwsWith('More than one custom value accessor matches'));
     });
   });

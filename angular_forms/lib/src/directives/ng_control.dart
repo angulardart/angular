@@ -1,6 +1,7 @@
 import '../model.dart' show Control;
 import 'abstract_control_directive.dart' show AbstractControlDirective;
 import 'control_value_accessor.dart' show ControlValueAccessor;
+import 'shared.dart' show selectValueAccessor;
 import 'validators.dart' show ValidatorFn;
 
 /// A base class that all control directive extend.
@@ -9,7 +10,11 @@ import 'validators.dart' show ValidatorFn;
 /// Used internally by Angular forms.
 abstract class NgControl extends AbstractControlDirective<Control> {
   ControlValueAccessor valueAccessor;
+
   ValidatorFn get validator;
 
   void viewToModelUpdate(dynamic newValue);
+
+  NgControl(List<ControlValueAccessor> valueAccessors)
+      : valueAccessor = selectValueAccessor(valueAccessors);
 }

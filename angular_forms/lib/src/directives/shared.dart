@@ -45,7 +45,7 @@ void setUpControlGroup(ControlGroup control, NgControlGroup dir) {
 }
 
 void _throwError(AbstractControlDirective dir, String message) {
-  if (dir.path != null) {
+  if (dir?.path != null) {
     message = "$message (${dir.path.join(" -> ")})";
   }
   throw new ArgumentError(message);
@@ -65,7 +65,7 @@ bool isPropertyUpdated(Map<String, dynamic> changes, dynamic viewModel) {
 }
 
 ControlValueAccessor selectValueAccessor(
-    NgControl dir, List<ControlValueAccessor> valueAccessors) {
+    List<ControlValueAccessor> valueAccessors) {
   if (valueAccessors == null) return null;
   ControlValueAccessor defaultAccessor;
   ControlValueAccessor builtinAccessor;
@@ -78,17 +78,17 @@ ControlValueAccessor selectValueAccessor(
         v is SelectControlValueAccessor ||
         v is RadioControlValueAccessor) {
       if (builtinAccessor != null)
-        _throwError(dir, 'More than one built-in value accessor matches');
+        _throwError(null, 'More than one built-in value accessor matches');
       builtinAccessor = v;
     } else {
       if (customAccessor != null)
-        _throwError(dir, 'More than one custom value accessor matches');
+        _throwError(null, 'More than one custom value accessor matches');
       customAccessor = v;
     }
   }
   if (customAccessor != null) return customAccessor;
   if (builtinAccessor != null) return builtinAccessor;
   if (defaultAccessor != null) return defaultAccessor;
-  _throwError(dir, 'No valid value accessor for');
+  _throwError(null, 'No valid value accessor for');
   return null;
 }
