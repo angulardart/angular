@@ -1189,64 +1189,93 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   }
 }
 
-/// Visitor that verifies all pipes in the template are valid.
+/// Visitor that verifies all pipe invocations in the template are valid.
 ///
-/// First, we visit all [AST] values to extract the pipe names declared in the
-/// template, and then we verify that those names are actually defined by a
-/// [CompilePipeMetadata] entry.
+/// First, we visit all [AST] values to extract the pipe invocations in the
+/// template. Then we verify that each pipe is defined by a
+/// [CompilePipeMetadata] entry, and invoked with the correct number of
+/// arguments.
 class _PipeValidator extends RecursiveTemplateVisitor<Null> {
-  final List<String> _pipeNames;
+  final Map<String, CompilePipeMetadata> _pipesByName;
   final _AstExceptionHandler _exceptionHandler;
 
-  _PipeValidator(List<CompilePipeMetadata> pipes, this._exceptionHandler)
-      : _pipeNames = pipes.map((pipe) => pipe.name).toList();
+  factory _PipeValidator(
+    List<CompilePipeMetadata> pipes,
+    _AstExceptionHandler exceptionHandler,
+  ) {
+    final pipesByName = <String, CompilePipeMetadata>{};
+    for (var pipe in pipes) {
+      pipesByName[pipe.name] = pipe;
+    }
+    return new _PipeValidator._(pipesByName, exceptionHandler);
+  }
 
-  void _validatePipeNames(AST ast, SourceSpan sourceSpan) {
+  _PipeValidator._(this._pipesByName, this._exceptionHandler);
+
+  void _validatePipes(AST ast, SourceSpan sourceSpan) {
     if (ast == null) return;
     var collector = new _PipeCollector();
     ast.visit(collector);
-    for (String pipeName in collector.pipes) {
-      if (!_pipeNames.contains(pipeName)) {
+    for (var pipeName in collector.pipeInvocations.keys) {
+      final pipe = _pipesByName[pipeName];
+      if (pipe == null) {
         _exceptionHandler.handleParseError(new TemplateParseError(
             "The pipe '$pipeName' could not be found.",
             sourceSpan,
             ParseErrorLevel.FATAL));
+      } else {
+        for (var numArgs in collector.pipeInvocations[pipeName]) {
+          // Don't include the required parameter to the left of the pipe name.
+          final numParams = pipe.transformType.paramTypes.length - 1;
+          if (numArgs > numParams) {
+            _exceptionHandler.handleParseError(new TemplateParseError(
+                "The pipe '$pipeName' was invoked with too many arguments: "
+                '$numParams expected, but $numArgs found.',
+                sourceSpan,
+                ParseErrorLevel.FATAL));
+          }
+        }
       }
     }
   }
 
   @override
   ng.TemplateAst visitBoundText(ng.BoundTextAst ast, _) {
-    _validatePipeNames(ast.value, ast.sourceSpan);
+    _validatePipes(ast.value, ast.sourceSpan);
     return super.visitBoundText(ast, null);
   }
 
   @override
   ng.TemplateAst visitDirectiveProperty(ng.BoundDirectivePropertyAst ast, _) {
-    _validatePipeNames(ast.value, ast.sourceSpan);
+    _validatePipes(ast.value, ast.sourceSpan);
     return super.visitDirectiveProperty(ast, null);
   }
 
   @override
   ng.TemplateAst visitElementProperty(ng.BoundElementPropertyAst ast, _) {
-    _validatePipeNames(ast.value, ast.sourceSpan);
+    _validatePipes(ast.value, ast.sourceSpan);
     return super.visitElementProperty(ast, null);
   }
 
   @override
   ng.TemplateAst visitEvent(ng.BoundEventAst ast, _) {
-    _validatePipeNames(ast.handler, ast.sourceSpan);
+    _validatePipes(ast.handler, ast.sourceSpan);
     return super.visitEvent(ast, null);
   }
 }
 
 class _PipeCollector extends RecursiveAstVisitor {
-  Set<String> pipes = new Set<String>();
+  /// Records the number of arguments of each pipe invocation by name.
+  ///
+  /// Note this is the number of arguments specified to the right-hand side of
+  /// the pipe binding. This does not include the required argument to the left-
+  /// hand side of the '|'.
+  final Map<String, List<int>> pipeInvocations = {};
 
   Null visitPipe(BindingPipe ast, dynamic context) {
-    this.pipes.add(ast.name);
+    (pipeInvocations[ast.name] ??= []).add(ast.args.length);
     ast.exp.visit(this);
-    this.visitAll(ast.args, context);
+    visitAll(ast.args, context);
     return null;
   }
 }

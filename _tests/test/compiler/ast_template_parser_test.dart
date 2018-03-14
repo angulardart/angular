@@ -9,6 +9,7 @@ import 'package:angular/src/compiler/expression_parser/lexer.dart';
 import 'package:angular/src/compiler/expression_parser/parser.dart';
 import 'package:angular/src/compiler/identifiers.dart'
     show identifierToken, Identifiers;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular/src/compiler/schema/element_schema_registry.dart'
     show ElementSchemaRegistry;
@@ -1918,9 +1919,10 @@ void main() {
     group('pipes', () {
       test('should allow pipes that have been defined as dependencies', () {
         var testPipe = new CompilePipeMetadata(
-            name: 'test',
-            type: new CompileTypeMetadata(
-                moduleUrl: someModuleUrl, name: 'DirA'));
+          name: 'test',
+          transformType: new o.FunctionType(o.STRING_TYPE, [o.STRING_TYPE]),
+          type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
+        );
         // Should not throw.
         parse('{{a | test}}', [], [testPipe]);
       });
@@ -1934,6 +1936,22 @@ void main() {
                 'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: The pipe \'test\' could not be found.\n'
                 '{{a | test}}\n'
                 '^^^^^^^^^^^^'));
+      });
+
+      test('should report error if invoked with too many arguments', () {
+        final testPipe = new CompilePipeMetadata(
+          name: 'test',
+          transformType: new o.FunctionType(o.STRING_TYPE, [o.STRING_TYPE]),
+          type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
+        );
+        expect(
+            () => parse('{{a | test:12}}', [], [testPipe]),
+            throwsWith(
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: The pipe '
+                "'test' was invoked with too many arguments: 0 expected, but 1 "
+                'found.\n'
+                '{{a | test:12}}\n'
+                '^^^^^^^^^^^^^^^'));
       });
     });
 
