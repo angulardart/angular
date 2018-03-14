@@ -43,6 +43,6 @@ jobs:
     # 2. Verify that pubspec.yaml is updated for all packages.
     - stage: presubmit
       script:
-        - pub global activate --source path dev
-        - pub global run dev:travis -d
-        - pub global run dev:pubspec -d
+        - pub get
+        - pub run dev:travis -d
+        - pub run dev:pubspec -d

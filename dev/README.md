@@ -8,7 +8,7 @@ it to work in an all-in-one-tool like `mono_repo`.
 From the root (i.e. `angular`) run the following:
 
 ```bash
-$ pub global activate --source path dev
+$ pub get
 ```
 
 You now have the `dev` set of tools installed. Make sure to only run them from
@@ -25,7 +25,7 @@ This generates and keeps elements in sync across `pubspec.yaml` files.
 **Example use:**
 
 ```bash
-$ pub global run dev:pubspec
+$ pub run dev:pubspec
 ```
 
 ### `travis`
@@ -39,7 +39,7 @@ This generates the root `.travis.yml` from:
 **Example use:**
 
 ```bash
-$ pub global run dev:travis
+$ pub run dev:travis
 ```
 
 For the configurable portion, _conventions_ are used over _configuration_ for
