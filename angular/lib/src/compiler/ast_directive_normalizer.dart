@@ -163,9 +163,9 @@ class AstDirectiveNormalizer implements DirectiveNormalizer {
       encapsulation: encapsulation,
       template: template,
       templateUrl: templateAbsUrl,
-      styles: allInlineStyles,
+      styles: allResolvedStyles,
       styleUrls: allExternalStyles,
-      ngContentSelectors: [],
+      ngContentSelectors: visitor.ngContentSelectors,
       preserveWhitespace: preserveWhitespace,
     );
   }
