@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AngularDart Github Viewer</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="packages/ng_bootstrap/all.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 10px;
+            width: 100%;
+            height: 100%;
+        }
+        .loading {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+<ng-app>
+    <div class="loading">
+        <img src="favicon.png" alt="Angular Dart is loading..." />
+    </div>
+</ng-app>
+<script src="main.dart.js"></script>
+</body>
+</html>
