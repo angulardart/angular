@@ -3,6 +3,9 @@
 *   Compiler can optimize field accesses to classes that are statically accessed
     using `exports`.
 
+*   Compiler will now set immutable `Text` node values at component build time.
+    For more details see https://github.com/dart-lang/angular/issues/993
+
 ### Breaking changes
 
 *   Removes the old template parser completely. The new template parser was made

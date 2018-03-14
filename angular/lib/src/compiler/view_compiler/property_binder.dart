@@ -153,6 +153,10 @@ void _bindLiteral(
 
 void bindRenderText(
     BoundTextAst boundText, CompileNode compileNode, CompileView view) {
+  if (isImmutable(boundText.value, view.component.analyzedClass)) {
+    // We already set the value to the text node at creation
+    return;
+  }
   int bindingIndex = view.nameResolver.createUniqueBindIndex();
   // Expression for current value of expression when value is re-read.
   var currValExpr = createCurrValueExpr(bindingIndex);

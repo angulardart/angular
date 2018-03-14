@@ -1,4 +1,6 @@
 import 'package:source_span/source_span.dart';
+import 'package:angular/src/compiler/analyzed_class.dart';
+import 'package:angular/src/compiler/view_compiler/expression_converter.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
@@ -22,11 +24,12 @@ import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
     show
         AttrAst,
-        TemplateAst,
+        BoundTextAst,
         ElementAst,
         NgContentAst,
         ProviderAst,
         ProviderAstType,
+        TemplateAst,
         VariableAst;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
@@ -133,7 +136,7 @@ abstract class AppViewBuilder {
       CompileElement parent, int nodeIndex, String text, TemplateAst ast);
 
   NodeReference createBoundTextNode(
-      CompileElement parent, int nodeIndex, TemplateAst ast);
+      CompileElement parent, int nodeIndex, BoundTextAst ast);
 
   /// Create an html node and appends to parent element.
   void createElement(CompileElement parent, NodeReference elementRef,
@@ -449,7 +452,7 @@ class CompileView implements AppViewBuilder {
 
   @override
   NodeReference createBoundTextNode(
-      CompileElement parent, int nodeIndex, TemplateAst ast) {
+      CompileElement parent, int nodeIndex, BoundTextAst ast) {
     // If Text field is bound, we need access to the renderNode beyond
     // build method and write reference to class member.
     NodeReference renderNode = new NodeReference.textNode(parent, nodeIndex);
@@ -458,8 +461,20 @@ class CompileView implements AppViewBuilder {
         modifiers: const [o.StmtModifier.Private]);
 
     var parentRenderNodeExpr = _getParentRenderNode(parent);
+    o.Expression initialText = o.literal('');
+    if (component.analyzedClass != null &&
+        isImmutable(ast.value, component.analyzedClass)) {
+      var newValue = rewriteInterpolate(ast.value, component.analyzedClass);
+      initialText = convertCdExpressionToIr(
+        nameResolver,
+        new o.ReadClassMemberExpr('ctx'),
+        newValue,
+        component.template.preserveWhitespace,
+        o.STRING_TYPE,
+      );
+    }
     var createRenderNodeExpr = storage.buildWriteExpr(renderNodeItem,
-        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([o.literal('')]));
+        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([initialText]));
     _createMethod.addStmt(createRenderNodeExpr.toStmt());
 
     if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {

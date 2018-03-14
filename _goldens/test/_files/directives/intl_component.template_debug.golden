@@ -130,27 +130,15 @@ class ViewCompWithFinal0 extends DebugAppView<import2.CompWithFinal> {
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
-    _text_1 = new import3.Text('');
+    _text_1 = new import3.Text((ctx.okMessage ?? ''));
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 12);
     _el_2 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 2, 1, 4);
-    _text_3 = new import3.Text('');
+    _text_3 = new import3.Text((ctx.cancelMessage ?? ''));
     _el_2.append(_text_3);
     dbgElm(this, _text_3, 3, 1, 12);
     init(const [], null, [_el_0, _text_1, _el_2, _text_3]);
     return null;
-  }
-
-  @override
-  void detectChangesInternal() {
-    final import2.CompWithFinal _ctx = ctx;
-    bool firstCheck = (this.cdState == 0);
-    if (firstCheck) {
-      (_text_1.text = (_ctx.okMessage ?? ''));
-    }
-    if (firstCheck) {
-      (_text_3.text = (_ctx.cancelMessage ?? ''));
-    }
   }
 }
 
@@ -214,26 +202,15 @@ class ViewCompWithFinalStatic0 extends DebugAppView<import2.CompWithFinalStatic>
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
-    _text_1 = new import3.Text('');
+    _text_1 = new import3.Text((import2.CompWithFinalStatic.okMessage ?? ''));
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 12);
     _el_2 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 2, 1, 4);
-    _text_3 = new import3.Text('');
+    _text_3 = new import3.Text((import2.CompWithFinalStatic.cancelMessage ?? ''));
     _el_2.append(_text_3);
     dbgElm(this, _text_3, 3, 1, 12);
     init(const [], null, [_el_0, _text_1, _el_2, _text_3]);
     return null;
-  }
-
-  @override
-  void detectChangesInternal() {
-    bool firstCheck = (this.cdState == 0);
-    if (firstCheck) {
-      (_text_1.text = (import2.CompWithFinalStatic.okMessage ?? ''));
-    }
-    if (firstCheck) {
-      (_text_3.text = (import2.CompWithFinalStatic.cancelMessage ?? ''));
-    }
   }
 }
 
@@ -297,26 +274,15 @@ class ViewCompWithExternalFinal0 extends DebugAppView<import2.CompWithExternalFi
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
-    _text_1 = new import3.Text('');
+    _text_1 = new import3.Text((import2.Messages.okMessage ?? ''));
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 12);
     _el_2 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 2, 1, 4);
-    _text_3 = new import3.Text('');
+    _text_3 = new import3.Text((import2.Messages.cancelMessage ?? ''));
     _el_2.append(_text_3);
     dbgElm(this, _text_3, 3, 1, 12);
     init(const [], null, [_el_0, _text_1, _el_2, _text_3]);
     return null;
-  }
-
-  @override
-  void detectChangesInternal() {
-    bool firstCheck = (this.cdState == 0);
-    if (firstCheck) {
-      (_text_1.text = (import2.Messages.okMessage ?? ''));
-    }
-    if (firstCheck) {
-      (_text_3.text = (import2.Messages.cancelMessage ?? ''));
-    }
   }
 }
 
