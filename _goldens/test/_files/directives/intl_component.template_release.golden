@@ -118,25 +118,13 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_1 = new import2.Text('');
+    _text_1 = new import2.Text((ctx.okMessage ?? ''));
     _el_0.append(_text_1);
     _el_2 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_3 = new import2.Text('');
+    _text_3 = new import2.Text((ctx.cancelMessage ?? ''));
     _el_2.append(_text_3);
     init(const [], null);
     return null;
-  }
-
-  @override
-  void detectChangesInternal() {
-    final import1.CompWithFinal _ctx = ctx;
-    bool firstCheck = (this.cdState == 0);
-    if (firstCheck) {
-      (_text_1.text = (_ctx.okMessage ?? ''));
-    }
-    if (firstCheck) {
-      (_text_3.text = (_ctx.cancelMessage ?? ''));
-    }
   }
 }
 
@@ -195,24 +183,13 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_1 = new import2.Text('');
+    _text_1 = new import2.Text((import1.CompWithFinalStatic.okMessage ?? ''));
     _el_0.append(_text_1);
     _el_2 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_3 = new import2.Text('');
+    _text_3 = new import2.Text((import1.CompWithFinalStatic.cancelMessage ?? ''));
     _el_2.append(_text_3);
     init(const [], null);
     return null;
-  }
-
-  @override
-  void detectChangesInternal() {
-    bool firstCheck = (this.cdState == 0);
-    if (firstCheck) {
-      (_text_1.text = (import1.CompWithFinalStatic.okMessage ?? ''));
-    }
-    if (firstCheck) {
-      (_text_3.text = (import1.CompWithFinalStatic.cancelMessage ?? ''));
-    }
   }
 }
 
@@ -271,24 +248,13 @@ class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> 
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_1 = new import2.Text('');
+    _text_1 = new import2.Text((import1.Messages.okMessage ?? ''));
     _el_0.append(_text_1);
     _el_2 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_3 = new import2.Text('');
+    _text_3 = new import2.Text((import1.Messages.cancelMessage ?? ''));
     _el_2.append(_text_3);
     init(const [], null);
     return null;
-  }
-
-  @override
-  void detectChangesInternal() {
-    bool firstCheck = (this.cdState == 0);
-    if (firstCheck) {
-      (_text_1.text = (import1.Messages.okMessage ?? ''));
-    }
-    if (firstCheck) {
-      (_text_3.text = (import1.Messages.cancelMessage ?? ''));
-    }
   }
 }
 

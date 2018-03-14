@@ -39,20 +39,11 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   ComponentRef<import2.HasOpaqueTokens> build() {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = new import3.Text('');
+    _text_0 = new import3.Text((ctx.baseUrl ?? ''));
     parentRenderNode.append(_text_0);
     dbgElm(this, _text_0, 0, 0, 0);
     init(const [], null, [_text_0]);
     return null;
-  }
-
-  @override
-  void detectChangesInternal() {
-    final import2.HasOpaqueTokens _ctx = ctx;
-    bool firstCheck = (this.cdState == 0);
-    if (firstCheck) {
-      (_text_0.text = (_ctx.baseUrl ?? ''));
-    }
   }
 }
 
