@@ -20,7 +20,7 @@ dependencies:
   analyzer: '^0.31.0+1'
   angular_ast: ^0.4.3
   angular_compiler: ^0.4.0-alpha+7
-  build: ^0.12.0+1
+  build: ^0.12.0+2
   code_builder: '^3.0.1'
   csslib: ^0.14.1
   path: ^1.5.1
