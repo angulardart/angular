@@ -13,9 +13,9 @@ dev_dependencies:
   angular_test:
 
   # Actual valid dependencies required.
-  build_runner: ^0.7.9
-  build_test: ^0.10.0
-  build_web_compilers: ^0.3.0
+  build_runner: ^0.8.0
+  build_test: ^0.10.1+1
+  build_web_compilers: ^0.3.4+1
   test: ^0.12.32
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
