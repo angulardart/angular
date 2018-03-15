@@ -1,0 +1,31 @@
+name: examples.github_issues
+environment:
+  sdk: ">=2.0.0-dev.28.0 <2.0.0"
+
+dependencies:
+  angular: ^5.0.0-alpha
+  angular_forms: ^1.0.1-alpha+7
+  markdown: ^1.1.1
+  ng_bootstrap: ^1.0.0-alpha
+  sass_builder: ^1.1.4
+
+dev_dependencies:
+  angular_test: ^2.0.0-alpha
+  build_runner: ^0.7.9
+  build_test: ^0.10.0
+  build_web_compilers: ^0.3.0
+  mockito: ^2.2.3
+  test: ^0.12.32+1
+
+# DO NOT REMOVE. We don't publish this package, it is just for testing.
+dependency_overrides:
+  angular:
+    path: ../../angular
+  angular_ast:
+    path: ../../angular_ast
+  angular_compiler:
+    path: ../../angular_compiler
+  angular_forms:
+    path: ../../angular_forms
+  angular_test:
+    path: ../../angular_test

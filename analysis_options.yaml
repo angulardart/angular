@@ -11,6 +11,10 @@ analyzer:
 
    # The noise of deprecations isn't worth the effort.
    deprecated_member_use: ignore
+ exclude:
+   - "**/.dart_tool/**"
+   - "**/build/**"
+
 linter:
   rules:
     - avoid_empty_else

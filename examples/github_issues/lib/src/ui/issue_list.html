@@ -1,0 +1,41 @@
+<h2>
+    <img src="favicon.png" alt="Angular Dart"> Open Issues
+</h2>
+<bs-progress *ngIf="isLoading" class="striped warning" [value]="progress"></bs-progress>
+<table class="table">
+    <caption>
+        Open issues on https://github.com/dart-lang/angular
+    </caption>
+    <thead>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Action</th>
+    </thead>
+    <tbody>
+    <template ngFor let-issue [ngForOf]="issues">
+        <tr class="github-issue">
+            <td class="id">{{issue.id}}</td>
+            <td class="title">
+                <issue-title [issue]="issue"></issue-title>
+            </td>
+            <td class="author">{{issue.author}}</td>
+            <td>
+                <bs-toggle-button
+                        class="btn btn-primary"
+                        [ngModel]="showDescriptionFor == issue"
+                        (ngModelChange)="toggleDescription(issue)">
+                    {{showDescriptionFor == issue ? 'Hide' : 'More'}}
+                </bs-toggle-button>
+            </td>
+        </tr>
+        <tr class="expansion" *ngIf="showDescriptionFor == issue">
+            <td colspan="4">
+                <em *ngIf="issue.description.isEmpty">No content</em>
+                <issue-description *ngIf="issue.description.isNotEmpty" [issue]="issue">
+                </issue-description>
+            </td>
+        </tr>
+    </template>
+    </tbody>
+</table>
