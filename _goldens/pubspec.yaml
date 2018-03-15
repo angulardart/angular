@@ -13,8 +13,8 @@ dev_dependencies:
   angular_forms:
 
   # Actual valid dependencies required.
-  build_runner: ^0.7.9
-  build_test: ^0.10.0
+  build_runner: ^0.8.0
+  build_test: ^0.10.1+1
   dart_style: ^1.0.9
   meta: ^1.1.0
   path: ^1.5.1
