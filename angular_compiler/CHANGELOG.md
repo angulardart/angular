@@ -11,6 +11,7 @@
 *   Misspelled or otherwise erroneous annotations on classes now produce a more
     understandable error message, including the element that was annotated and
     the annotation that was not resolved.
+*   Fix a bug where `throwFailure` hit an NPE without a stack trace.
 
 ## 0.4.0-alpha+7
 
