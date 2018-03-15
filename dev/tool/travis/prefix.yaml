@@ -46,3 +46,4 @@ jobs:
         - pub get
         - pub run dev:travis -d
         - pub run dev:pubspec -d
+        - pub run dev:deps
