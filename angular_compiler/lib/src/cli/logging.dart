@@ -133,5 +133,5 @@ void logWarning(String message) => build.log.warning(message);
 /// May optionally wrap a caught stack [trace].
 @alwaysThrows
 void throwFailure(String message, [StackTrace trace]) {
-  throw new BuildError(message, new Trace.from(trace));
+  throw new BuildError(message, trace != null ? new Trace.from(trace) : null);
 }
