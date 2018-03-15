@@ -76,12 +76,17 @@ class CompilerFlags {
   @experimental
   final bool ignoreNgPlaceholderForGoldens;
 
+  /// Whether to use a new implementation of `preserveWhitespace: false`.
+  @experimental
+  final bool useNewPreserveWhitespace;
+
   const CompilerFlags({
-    @required this.genDebugInfo,
+    this.genDebugInfo: false,
     this.ignoreNgPlaceholderForGoldens: false,
     this.profileFor: Profile.none,
     this.useFastBoot: true,
     this.useLegacyStyleEncapsulation: false,
+    this.useNewPreserveWhitespace: false,
   });
 
   /// Creates flags by parsing command-line arguments.

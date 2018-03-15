@@ -57,6 +57,7 @@ export 'src/visitor.dart'
         ExpressionParserVisitor,
         HumanizingTemplateAstVisitor,
         IdentityTemplateAstVisitor,
+        MinimizeWhitespaceVisitor,
         TemplateAstVisitor,
         DesugarVisitor,
         RecursiveTemplateAstVisitor;

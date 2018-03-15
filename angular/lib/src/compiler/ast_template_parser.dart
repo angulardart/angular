@@ -1,7 +1,8 @@
-import 'package:source_span/source_span.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:angular/src/facade/exceptions.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
 import 'package:angular_ast/src/expression/micro.dart';
+import 'package:source_span/source_span.dart';
 
 import 'chars.dart';
 import 'compile_metadata.dart';
@@ -32,12 +33,14 @@ const _templateElement = 'template';
 /// A [TemplateParser] which uses the `angular_ast` package to parse angular
 /// templates.
 class AstTemplateParser implements TemplateParser {
+  final CompilerFlags flags;
+
   @override
   final ElementSchemaRegistry schemaRegistry;
 
   final Parser parser;
 
-  AstTemplateParser(this.schemaRegistry, this.parser);
+  AstTemplateParser(this.schemaRegistry, this.parser, this.flags);
 
   /// Parses the template into a structured tree of [ng.TemplateAst] nodes.
   ///
@@ -137,6 +140,9 @@ class AstTemplateParser implements TemplateParser {
   List<ast.TemplateAst> _filterElements(
       List<ast.TemplateAst> parsedAst, bool preserveWhitespace) {
     var filteredElements = new _ElementFilter().visitAll(parsedAst);
+    if (flags.useNewPreserveWhitespace) {
+      return new ast.MinimizeWhitespaceVisitor().visitAll(filteredElements);
+    }
     return new _PreserveWhitespaceVisitor()
         .visitAll(filteredElements, preserveWhitespace);
   }

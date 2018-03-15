@@ -6,6 +6,7 @@ import 'package:angular/src/compiler/expression_parser/parser.dart';
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../resolve_util.dart';
 import 'template_humanizer_util.dart';
@@ -15,7 +16,7 @@ void main() {
   final expressionParser = new Parser(expressionLexer);
   final schemaRegistry = new DomElementSchemaRegistry();
   final templateParser =
-      new AstTemplateParser(schemaRegistry, expressionParser);
+      new AstTemplateParser(schemaRegistry, expressionParser, new CompilerFlags(),);
 
   List getHumanizedTemplate(
     NormalizedComponentWithViewDirectives component,
