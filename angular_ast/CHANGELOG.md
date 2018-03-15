@@ -1,3 +1,5 @@
+*   Added `MinimizeWhitespaceVisitor`.
+
 ## 0.4.3+1
 
 *   Maintenance release, supporting newer package versions.
