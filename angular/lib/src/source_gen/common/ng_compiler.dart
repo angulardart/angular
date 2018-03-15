@@ -17,7 +17,7 @@ OfflineCompiler createTemplateCompiler(
   var parser = new ng.Parser(new ng.Lexer());
   var htmlParser = new HtmlParser();
   var schemaRegistry = new DomElementSchemaRegistry();
-  var templateParser = new AstTemplateParser(schemaRegistry, parser);
+  var templateParser = new AstTemplateParser(schemaRegistry, parser, flags);
   final reader = new NgAssetReader.fromBuildStep(buildStep);
   return new OfflineCompiler(
       new DirectiveNormalizer(htmlParser, reader),

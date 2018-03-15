@@ -14,6 +14,7 @@ import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular/src/compiler/schema/element_schema_registry.dart'
     show ElementSchemaRegistry;
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular_compiler/cli.dart';
 
 import 'schema_registry_mock.dart' show MockSchemaRegistry;
 import 'template_humanizer_util.dart';
@@ -70,8 +71,8 @@ void main() {
   void setUpParser({ElementSchemaRegistry elementSchemaRegistry}) {
     elementSchemaRegistry ??= new MockSchemaRegistry(
         {'invalidProp': false}, {'mappedAttr': 'mappedProp'});
-    final parser =
-        new AstTemplateParser(elementSchemaRegistry, new Parser(new Lexer()));
+    final parser = new AstTemplateParser(
+        elementSchemaRegistry, new Parser(new Lexer()), new CompilerFlags());
     parse = (template, directives, [pipes]) =>
         parser.parse(component, template, directives, pipes ?? [], 'TestComp');
   }
