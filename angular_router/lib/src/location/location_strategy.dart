@@ -29,31 +29,13 @@ abstract class LocationStrategy {
   String getBaseHref();
 }
 
-/// The `APP_BASE_HREF` token represents the base href to be used with the
-/// [PathLocationStrategy].
+/// The [appBaseHref] token represents the base HREF to be used for the router.
 ///
-/// If you're using [PathLocationStrategy], you must provide a provider to a string
-/// representing the URL prefix that should be preserved when generating and recognizing
-/// URLs.
-///
-/// ### Example
-///
+/// For example, if your site is at `/my/app` on your host:
+/// ```dart
+/// const ValueProvider.forToken(appBaseHref, '/my/app');
 /// ```
-/// import 'package:angular/angular.dart' show Component;
-/// import 'package:angular_router/angular_router.dart'
-///   show APP_BASE_HREF, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig;
-///
-/// @Component({directives: [ROUTER_DIRECTIVES]})
-/// @RouteConfig([
-///  {...},
-/// ])
-/// class AppCmp {
-///   // ...
-/// }
-///
-/// bootstrap(AppCmp, [
-///   ROUTER_PROVIDERS,
-///   provide(APP_BASE_HREF, {useValue: '/my/app'})
-/// ]);
-/// ```
-const OpaqueToken APP_BASE_HREF = const OpaqueToken('appBaseHref');
+const appBaseHref = const OpaqueToken<String>('appBaseHref');
+
+@Deprecated('Use "appBaseHref" instead')
+const APP_BASE_HREF = appBaseHref;

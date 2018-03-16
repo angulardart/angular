@@ -1,3 +1,7 @@
+### Breaking changes
+
+*   `APP_BASE_HREF` is being renamed `appBaseHref`.
+
 ## 2.0.0-alpha+7
 
 ### Breaking changes
