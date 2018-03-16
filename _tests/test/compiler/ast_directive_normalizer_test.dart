@@ -1,6 +1,5 @@
-import 'dart:async';
-
 @TestOn('vm')
+import 'dart:async';
 import 'package:angular/core.dart';
 import 'package:angular/src/compiler/ast_directive_normalizer.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
