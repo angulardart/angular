@@ -1,4 +1,5 @@
 import 'package:build/build.dart' hide AssetReader;
+import 'package:angular/src/compiler/ast_directive_normalizer.dart';
 import 'package:angular/src/compiler/ast_template_parser.dart';
 import 'package:angular/src/compiler/directive_normalizer.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart' as ng;
@@ -13,16 +14,22 @@ import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
 
 OfflineCompiler createTemplateCompiler(
-    BuildStep buildStep, CompilerFlags flags) {
-  var parser = new ng.Parser(new ng.Lexer());
-  var htmlParser = new HtmlParser();
-  var schemaRegistry = new DomElementSchemaRegistry();
-  var templateParser = new AstTemplateParser(schemaRegistry, parser, flags);
+  BuildStep buildStep,
+  CompilerFlags flags,
+) {
   final reader = new NgAssetReader.fromBuildStep(buildStep);
+  final normalizer = flags.useNewTemplateNormalizer
+      ? new AstDirectiveNormalizer(reader)
+      : new DirectiveNormalizer(new HtmlParser(), reader);
+  final parser = new ng.Parser(new ng.Lexer());
+  final schemaRegistry = new DomElementSchemaRegistry();
+  final templateParser = new AstTemplateParser(schemaRegistry, parser, flags);
   return new OfflineCompiler(
-      new DirectiveNormalizer(htmlParser, reader),
-      templateParser,
-      new StyleCompiler(flags),
-      new ViewCompiler(flags, parser, schemaRegistry),
-      new DartEmitter(), {});
+    normalizer,
+    templateParser,
+    new StyleCompiler(flags),
+    new ViewCompiler(flags, parser, schemaRegistry),
+    new DartEmitter(),
+    {},
+  );
 }

@@ -80,11 +80,18 @@ class CompilerFlags {
   @experimental
   final bool useNewPreserveWhitespace;
 
+  /// Whether to use a new implementation for template normalization.
+  ///
+  /// This processes inline and external stylesheets, external templates.
+  @experimental
+  final bool useNewTemplateNormalizer;
+
   const CompilerFlags({
     this.genDebugInfo: false,
     this.ignoreNgPlaceholderForGoldens: false,
     this.profileFor: Profile.none,
     this.useFastBoot: true,
+    this.useNewTemplateNormalizer: false,
     this.useLegacyStyleEncapsulation: false,
     this.useNewPreserveWhitespace: false,
   });
