@@ -33,7 +33,7 @@
 
 *   `bootstrapFactory` now injects an implementation of `SlowComponentLoader`
     that always throws. This is to allow a migration path for common components
-    that still injet `SlowComponentLoader` into apps that are using the new
+    that still inject `SlowComponentLoader` into apps that are using the new
     bootstrap.
 
 *   `List<Element>` and `List<HtmlElement>` for `@ViewChildren` and
