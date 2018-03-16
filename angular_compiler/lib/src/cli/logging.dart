@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
+// TODO(https://github.com/dart-lang/sdk/issues/32454):
+// ignore: implementation_imports
+import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart' as build;
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
@@ -73,6 +76,32 @@ class BuildError extends Error {
 
   BuildError(this.message, [Trace trace])
       : stackTrace = trace ?? new Trace.current();
+
+  // TODO: Remove internal API once ElementAnnotation has source information.
+  // https://github.com/dart-lang/sdk/issues/32454
+  static SourceSpan _getSourceSpanFrom(ElementAnnotation annotation) {
+    final internals = annotation as ElementAnnotationImpl;
+    final astNode = internals.annotationAst;
+    final contents = annotation.source.contents.data;
+    final start = astNode.offset;
+    final end = start + astNode.length;
+    return new SourceSpan(
+      new SourceLocation(start, sourceUrl: annotation.source.uri),
+      new SourceLocation(end, sourceUrl: annotation.source.uri),
+      contents.substring(start, end),
+    );
+  }
+
+  /// Throws a [BuildError] caused by analyzing the provided [annotation].
+  @alwaysThrows
+  static throwForAnnotation(
+    ElementAnnotation annotation,
+    String message, [
+    Trace trace,
+  ]) {
+    final sourceSpan = _getSourceSpanFrom(annotation);
+    throw new BuildError(sourceSpan.message(message), trace);
+  }
 
   /// Throws a [BuildError] caused by analyzing the provided [element].
   @alwaysThrows

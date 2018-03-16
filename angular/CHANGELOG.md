@@ -38,6 +38,8 @@
     `@ContentChildren` no longer require `read: Element`, and the type is
     correctly inferred the same as a single child is.
 
+*   Missing a selector for a query (such as `@ViewChild`) throws a better error.
+
 ## 5.0.0-alpha+7
 
 **NOTE**: We now require a dev SDK of `>=2.0.0-dev.28.0`.
