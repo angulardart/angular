@@ -409,6 +409,7 @@ class ComponentVisitor
     ];
   }
 
+  static final _coreIterable = new TypeChecker.fromUrl('dart:core#Iterable');
   static final _htmlElement = new TypeChecker.fromUrl('dart:html#Element');
 
   CompileQueryMetadata _getQuery(
@@ -429,7 +430,12 @@ class ComponentVisitor
       first: coerceBool(value, 'first', defaultTo: false),
       propertyName: propertyName,
       isElementType: propertyType?.element != null &&
-          _htmlElement.isAssignableFromType(propertyType),
+              _htmlElement.isAssignableFromType(propertyType) ||
+          // A bit imprecise, but this will cover 'Iterable' and 'List'.
+          _coreIterable.isAssignableFromType(propertyType) &&
+              propertyType is ParameterizedType &&
+              _htmlElement
+                  .isAssignableFromType(propertyType.typeArguments.first),
       isQueryListType: propertyType?.element != null &&
           $QueryList.isExactlyType(propertyType),
       read: readType != null

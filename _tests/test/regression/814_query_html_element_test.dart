@@ -20,6 +20,16 @@ void main() {
     final fixture = await new NgTestBed<UsesHtmlElement>().create();
     expect(fixture.assertOnlyInstance.element.text, '2');
   });
+
+  test('should support @ViewChildren with Element', () async {
+    final fixture = await new NgTestBed<UsesListOfElement>().create();
+    expect(fixture.assertOnlyInstance.elements.map((e) => e.text), ['1', '2']);
+  });
+
+  test('should support @ViewChildren with HtmlElement', () async {
+    final fixture = await new NgTestBed<UsesListOfHtmlElement>().create();
+    expect(fixture.assertOnlyInstance.elements.map((e) => e.text), ['1', '2']);
+  });
 }
 
 @Component(
@@ -38,4 +48,22 @@ class UsesElement {
 class UsesHtmlElement {
   @ViewChild('div')
   HtmlElement element;
+}
+
+@Component(
+  selector: 'uses-list-of-element',
+  template: '<div #div>1</div><div #div>2</div>',
+)
+class UsesListOfElement {
+  @ViewChildren('div')
+  List<Element> elements;
+}
+
+@Component(
+  selector: 'uses-list-of-element',
+  template: '<div #div>1</div><div #div>2</div>',
+)
+class UsesListOfHtmlElement {
+  @ViewChildren('div')
+  List<HtmlElement> elements;
 }
