@@ -3,10 +3,6 @@ import 'package:angular/core.dart';
 
 import 'invalid_pipe_argument_exception.dart';
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-
 /// Formats a date value to a string based on the requested format.
 ///
 /// WARNINGS:

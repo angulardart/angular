@@ -5,10 +5,6 @@ import 'html_sanitizer.dart';
 import 'style_sanitizer.dart';
 import 'url_sanitizer.dart';
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-
 @Injectable()
 class DomSanitizationServiceImpl implements DomSanitizationService {
   @override
