@@ -1,3 +1,10 @@
+## 2.0.0-alpha
+
+**NOTE**: This used to be `1.0.1-alpha`, but has changed to be `2.0.0-alpha` due
+to the fact that there are breaking changes in the previous dev releases. Future
+development releases are moving to `2.x.x`, and a `1.0.1` will never be
+released.
+
 ### Breaking changes
 
 *   `AbstractControl.find` now only accepts a String. To supply a list, use

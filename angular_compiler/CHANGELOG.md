@@ -1,3 +1,5 @@
+## 0.4.0-alpha+8
+
 ### Breaking changes
 
 *   Removed `use_new_template_parser` flag. The old parser was removed.

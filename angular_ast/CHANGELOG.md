@@ -1,3 +1,5 @@
+## 0.4.4
+
 *   Added `MinimizeWhitespaceVisitor`.
 
 ## 0.4.3+1
