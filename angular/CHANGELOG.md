@@ -34,6 +34,10 @@
     that still injet `SlowComponentLoader` into apps that are using the new
     bootstrap.
 
+*   `List<Element>` and `List<HtmlElement>` for `@ViewChildren` and
+    `@ContentChildren` no longer require `read: Element`, and the type is
+    correctly inferred the same as a single child is.
+
 ## 5.0.0-alpha+7
 
 **NOTE**: We now require a dev SDK of `>=2.0.0-dev.28.0`.
