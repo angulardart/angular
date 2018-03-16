@@ -23,7 +23,7 @@ void main() {
 
   final failingDeps = new List<String>();
   allDependencies.forEach((package, versions) {
-    final intersection = VersionConstraint.intersection(versions);
+    final intersection = new VersionConstraint.intersection(versions);
     if (intersection.isEmpty) {
       failingDeps.add(package);
     }
