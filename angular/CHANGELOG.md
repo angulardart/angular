@@ -1,3 +1,5 @@
+## 5.0.0-alpha+8
+
 ### New features
 
 *   Compiler can optimize field accesses to classes that are statically accessed

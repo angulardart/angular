@@ -1,3 +1,7 @@
+## 2.0.0-alpha+6
+
+*   Maintenance release, supporting newer package versions.
+
 ## 2.0.0-alpha+5
 
 *   Maintenance release, supporting newer package versions.
