@@ -6,12 +6,6 @@ import 'expression_parser/ast.dart' as ast;
 
 final stringTypeChecker = new TypeChecker.fromRuntime(String);
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
 /// A wrapper around [ClassElement] which exposes the functionality
 /// needed for the view compiler to find types for expressions.
 class AnalyzedClass {
@@ -156,7 +150,7 @@ bool canBeNull(ast.AST expression) {
 /// * `PropertyRead`
 /// * `SafeMethodCall`
 /// * `SafePropertyRead`
-class _TypeResolver extends ast.AstVisitor {
+class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   final DartType _dynamicType;
   final InterfaceType _implicitReceiverType;
 
