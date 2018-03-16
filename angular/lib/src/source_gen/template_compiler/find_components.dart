@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
@@ -351,7 +352,7 @@ class ComponentVisitor
       ], log)(annotation)) {
         if (isSetter && element.isPublic) {
           _queries.add(_getQuery(
-            annotation.computeConstantValue(),
+            annotation,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
             _fieldOrPropertyType(element),
@@ -366,7 +367,7 @@ class ComponentVisitor
       ], log)(annotation)) {
         if (isSetter && element.isPublic) {
           _viewQueries.add(_getQuery(
-            annotation.computeConstantValue(),
+            annotation,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
             _fieldOrPropertyType(element),
@@ -389,8 +390,17 @@ class ComponentVisitor
     return null;
   }
 
-  List<CompileTokenMetadata> _getSelectors(DartObject value) {
+  List<CompileTokenMetadata> _getSelectors(
+    ElementAnnotation annotation,
+    DartObject value,
+  ) {
     var selector = getField(value, 'selector');
+    if (isNull(selector)) {
+      BuildError.throwForAnnotation(
+        annotation,
+        'Missing selector argument for "@${value.type.name}"',
+      );
+    }
     var selectorString = selector?.toStringValue();
     if (selectorString != null) {
       return selectorString
@@ -413,19 +423,14 @@ class ComponentVisitor
   static final _htmlElement = new TypeChecker.fromUrl('dart:html#Element');
 
   CompileQueryMetadata _getQuery(
-    annotationOrObject,
+    ElementAnnotation annotation,
     String propertyName,
     DartType propertyType,
   ) {
-    DartObject value;
-    if (annotationOrObject is ElementAnnotation) {
-      value = annotationOrObject.computeConstantValue();
-    } else {
-      value = annotationOrObject;
-    }
+    final value = annotation.computeConstantValue();
     final readType = getField(value, 'read')?.toTypeValue();
     return new CompileQueryMetadata(
-      selectors: _getSelectors(value),
+      selectors: _getSelectors(annotation, value),
       descendants: coerceBool(value, 'descendants', defaultTo: false),
       first: coerceBool(value, 'first', defaultTo: false),
       propertyName: propertyName,
