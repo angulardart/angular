@@ -144,9 +144,17 @@ class ExpressionParserVisitor implements TemplateAstVisitor<dynamic, Null> {
         e.errorCode,
         e.offset,
         e.length,
+        'Failed parsing [$expression] at offer $offset: ${e.message}',
       ));
     } on AngularParserException catch (e) {
-      exceptionHandler.handle(e);
+      exceptionHandler.handle(
+        new AngularParserException(
+          e.errorCode,
+          e.offset,
+          e.length,
+          'Failed parsing [$expression] at offset $offset',
+        ),
+      );
     }
     return null;
   }

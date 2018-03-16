@@ -15,11 +15,15 @@ class AngularParserException extends Error {
   /// Offset of where the exception was detected.
   final int offset;
 
+  /// Details of the exception
+  final String message;
+
   AngularParserException(
     this.errorCode,
     this.offset,
-    this.length,
-  );
+    this.length, [
+    this.message = '',
+  ]);
 
   @override
   bool operator ==(Object o) {
@@ -35,5 +39,5 @@ class AngularParserException extends Error {
   int get hashCode => hash3(errorCode, length, offset);
 
   @override
-  String toString() => 'AngularParserException{$errorCode}';
+  String toString() => 'AngularParserException{$errorCode}: $message';
 }
