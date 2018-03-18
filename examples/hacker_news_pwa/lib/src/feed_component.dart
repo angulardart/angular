@@ -11,8 +11,8 @@ const itemsPerPage = 30;
 @Component(
   selector: 'feed',
   templateUrl: 'feed_component.html',
-  styleUrls: const ['feed_component.css'],
   directives: const [ItemComponent, NgFor, NgIf, routerDirectives],
+  encapsulation: ViewEncapsulation.None,
 )
 class FeedComponent implements OnActivate {
   final HackerNewsService _hackerNewsService;
