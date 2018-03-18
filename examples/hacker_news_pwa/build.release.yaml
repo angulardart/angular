@@ -11,3 +11,4 @@ targets:
           - --minify
           - --trust-type-annotations
           - --trust-primitives
+          - --dump-info
