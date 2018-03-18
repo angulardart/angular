@@ -35,7 +35,7 @@ Future<Null> main() async {
   // a flash-of-unstyled-content (Loading...) for the initial load, which hurts
   // PWA scores.
   _service = new HackerNewsService(defaultBaseUrl, new BrowserClient());
-  Future<Null> future;
+  Future future;
   if (window.location.search.isEmpty) {
     var feed = window.location.pathname.split('/').last;
     if (feed == '') {
