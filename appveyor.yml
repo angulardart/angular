@@ -1,0 +1,23 @@
+branches:
+  only:
+    - master
+
+version: '1.0.{build}'
+
+install:
+  - ps: wget https://storage.googleapis.com/dart-archive/channels/dev/release/latest/sdk/dartsdk-windows-x64-release.zip -OutFile dart-sdk.zip
+  - cmd: echo "Unzipping dart-sdk..."
+  - cmd: 7z x dart-sdk.zip -o"C:\tools" -y > nul
+  - set PATH=%PATH%;C:\tools\dart-sdk\bin
+  - set PATH=%PATH%;%APPDATA%\Pub\Cache\bin
+  - cd examples/github_issues
+  - pub get && exit 0
+
+build: off
+
+test_script:
+  - pub run build_runner test --fail-on-severe
+
+cache:
+  - examples\github_issues\.dart_tool
+  - C:\Users\appveyor\AppData\Roaming\Pub\Cache
