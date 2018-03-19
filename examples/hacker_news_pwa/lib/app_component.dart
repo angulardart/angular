@@ -11,8 +11,11 @@ import 'src/routes.dart';
 @Component(
   selector: 'app',
   templateUrl: 'app_component.html',
-  styleUrls: const ['app_component.css'],
   directives: const [routerDirectives],
+  // Disabled. We use global styles that are used before the JavaScript loads.
+  //
+  // See web/index.html's <style> tag.
+  encapsulation: ViewEncapsulation.None,
 )
 class AppComponent {
   static final newsUrl = newsRoutePath.toUrl();

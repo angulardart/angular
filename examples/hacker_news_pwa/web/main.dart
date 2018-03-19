@@ -1,8 +1,9 @@
+import 'dart:async';
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
 import 'package:angular_router/angular_router.dart';
-import 'package:http/http.dart';
-import 'package:http/browser_client.dart';
 import 'package:pwa/client.dart' as pwa;
 
 // We are ignoring files that will be generated at compile-time.
@@ -16,22 +17,37 @@ import 'main.template.dart' as ng;
 
 @GenerateInjector(const [
   // HTTP and Services.
-  const ClassProvider(HackerNewsService),
-  const FactoryProvider(BaseClient, createBrowserClient),
-  const ValueProvider.forToken(baseUrl, defaultBaseUrl),
+  const FactoryProvider(HackerNewsService, getNewsService),
 
   // SPA Router.
   routerProviders,
 ])
 final InjectorFactory hackerNewsApp = ng.hackerNewsApp$Injector;
 
-BrowserClient createBrowserClient() => new BrowserClient();
+HackerNewsService _service;
+HackerNewsService getNewsService() => _service;
 
-void main() {
+Future<Null> main() async {
+  // Start fetching the articles if we are a first time viewer.
+  //
+  // This will make the perceived first load faster, and allow us to avoid
+  // a flash-of-unstyled-content (Loading...) for the initial load, which hurts
+  // PWA scores.
+  _service = new HackerNewsService(defaultBaseUrl);
+  Future future;
+  if (window.location.search.isEmpty) {
+    var feed = window.location.pathname.split('/').last;
+    if (feed == '') {
+      feed = 'news';
+    }
+    future = _service.getFeed(feed, 1);
+  }
+
   // Install service worker.
   new pwa.Client();
 
-  // Start AngularDart.
+  // Start AngularDart after fetched.
+  await future;
   bootstrapFactory(
     app.AppComponentNgFactory,
     hackerNewsApp,
