@@ -5,6 +5,7 @@
   <meta name="theme-color" content="#212121">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="Description" content="A Hacker News reader implemented as a Progressive Web App using AngularDart.">
+  <link rel="prefetch" href="https://node-hnapi.herokuapp.com/news?page=1" as="fetch" crossorigin />
   <base href="/">
   <title>Hacker News - AngularDart PWA</title>
   <script defer src="main.dart.js"></script>
@@ -24,11 +25,157 @@
       -webkit-font-smoothing: antialiased;
       overflow-y:scroll;
     }
+    app header {
+      background: #212121;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
+      display: flex;
+      height: 56px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+    app nav {
+      display: flex;
+      height: 100%;
+      margin: 0 auto;
+      max-width: 800px;
+      width: 100%;
+    }
+    app nav a {
+      align-items: center;
+      color: #bbb;
+      display: flex;
+      padding: 0 8px;
+      text-decoration: none;
+    }
+    app nav a:hover {
+      color: #fff;
+    }
+    app nav a.active {
+      border-bottom: 2px solid #fff;
+      border-top: 2px solid transparent;
+      color: #fff;
+    }
+    app nav img {
+      width: 40px;
+    }
+    app main {
+      margin: 56px auto 0 auto;
+      max-width: 800px;
+    }
+    app article {
+      align-items: center;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      min-height: 56px;
+      padding: 12px 0;
+    }
+    app item {
+      padding-right: 16px;
+      min-height: 50px;
+    }
+    app .rank {
+      color: #212121;
+      font-weight: 600;
+      min-width: 56px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
   <app>
-    <noscript>This application requires JavaScript.</noscript>
+    <header>
+      <nav>
+        <a href="https://webdev.dartlang.org/angular">
+          <img src="/images/logo.svg" alt="AngularDart logo" />
+        </a>
+        <a href="top">top</a>
+        <a href="new">new</a>
+        <a href="show">show</a>
+        <a href="ask">ask</a>
+        <a href="jobs">jobs</a>
+      </nav>
+    </header>
+    <main>
+      <noscript>This application requires JavaScript.</noscript>
+      <article>
+        <span class="rank">1</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">2</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">3</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">4</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">5</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">6</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">7</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">8</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">9</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">10</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">11</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">12</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">13</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">14</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">15</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">16</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">17</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">18</span>
+        <item></item>
+      </article>
+      <article>
+        <span class="rank">19</span>
+        <item></item>
+      </article>
+    </main>
   </app>
 </body>
 </html>
