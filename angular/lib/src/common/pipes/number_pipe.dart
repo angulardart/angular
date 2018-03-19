@@ -6,6 +6,10 @@ import 'invalid_pipe_argument_exception.dart';
 
 final RegExp _re = new RegExp("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+
 /// Internal base class for numeric pipes.
 class _NumberPipe {
   static String _format(num value, _NumberFormatStyle style, String digits,

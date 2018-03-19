@@ -4,6 +4,12 @@ import "package:angular/src/core/di.dart" show Injectable;
 
 import "event_manager.dart" show EventManagerPlugin;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 var modifierKeys = ["alt", "control", "meta", "shift"];
 Map<String, dynamic /* (event: KeyboardEvent) => boolean */ >
     modifierKeyGetters = {

@@ -5,6 +5,9 @@ import 'package:angular/core.dart' show DoCheck, Directive, Input;
 import '../../core/change_detection/differs/default_keyvalue_differ.dart'
     show DefaultKeyValueDiffer, KeyValueChangeRecord;
 
+// TODO: Remove the following line (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+
 /// The `NgStyle` directive changes an element's style based on the bound style
 /// expression:
 ///
