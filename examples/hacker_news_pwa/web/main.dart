@@ -4,7 +4,6 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
 import 'package:angular_router/angular_router.dart';
-import 'package:http/browser_client.dart';
 import 'package:pwa/client.dart' as pwa;
 
 // We are ignoring files that will be generated at compile-time.
@@ -34,7 +33,7 @@ Future<Null> main() async {
   // This will make the perceived first load faster, and allow us to avoid
   // a flash-of-unstyled-content (Loading...) for the initial load, which hurts
   // PWA scores.
-  _service = new HackerNewsService(defaultBaseUrl, new BrowserClient());
+  _service = new HackerNewsService(defaultBaseUrl);
   Future future;
   if (window.location.search.isEmpty) {
     var feed = window.location.pathname.split('/').last;
