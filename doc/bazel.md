@@ -1,4 +1,6 @@
-# Building with Bazel
+---
+title: Building with Bazel
+---
 
 ## Collecting metrics
 
@@ -26,9 +28,9 @@ see logged metrics for any dependencies of the target you're compiling. To
 prevent filtering and see metrics for the entire build, use
 [`--auto_output_filter=none`][auto_output_filter].
 
-```
+```terminal
 $ bazel clean
-$ bazel build --auto_output_filter=none //<path>:<target>
+$ bazel build --auto_output_filter=none # <path>:<target>
 ```
 
 (`--auto_output_filter` is only currently supported on the internal Bazel)
