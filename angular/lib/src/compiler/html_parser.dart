@@ -5,6 +5,13 @@ import 'html_lexer.dart' show HtmlToken, HtmlTokenType, tokenizeHtml;
 import 'html_tags.dart' show getHtmlTagDefinition, getNsPrefix, mergeNsAndName;
 import 'parse_util.dart' show ParseError;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 class HtmlTreeError extends ParseError {
   String elementName;
   static HtmlTreeError create(String elementName, SourceSpan span, String msg) {

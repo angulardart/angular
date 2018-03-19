@@ -15,6 +15,13 @@ import 'selector.dart' show CssSelector;
 import 'template_ast.dart'
     show BoundElementPropertyAst, PropertyBindingType, TemplateAst;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 const CLASS_ATTR = 'class';
 final PROPERTY_PARTS_SEPARATOR = '.';
 const ATTRIBUTE_PREFIX = 'attr';

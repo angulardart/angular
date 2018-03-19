@@ -4,6 +4,12 @@ import 'html_tags.dart'
     show getHtmlTagDefinition, HtmlTagContentType, NAMED_ENTITIES;
 import 'parse_util.dart' show ParseError;
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 enum HtmlTokenType {
   TAG_OPEN_START,
   TAG_OPEN_END,

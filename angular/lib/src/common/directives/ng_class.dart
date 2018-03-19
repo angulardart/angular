@@ -3,6 +3,10 @@ import 'package:angular/core.dart' show DoCheck, Input, OnDestroy, Directive;
 import 'package:angular/src/core/change_detection/differs/default_iterable_differ.dart';
 import 'package:angular/src/core/change_detection/differs/default_keyvalue_differ.dart';
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+
 /// The [NgClass] directive conditionally adds and removes CSS classes on an
 /// HTML element based on an expression's evaluation result.
 ///

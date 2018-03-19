@@ -8,6 +8,13 @@ import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart' show convertCdStatementToIr, NameResolver;
 import 'parse_utils.dart';
 
+// TODO: Remove the following lines (for --no-implicit-casts).
+// ignore_for_file: argument_type_not_assignable
+// ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
+// ignore_for_file: non_bool_operand
+// ignore_for_file: return_of_invalid_type
+
 /// Generates code to listen to a single eventName on a [CompileElement].
 ///
 /// Since multiple directives on an element could potentially listen to the
