@@ -122,7 +122,12 @@ class AstDirectiveNormalizer implements DirectiveNormalizer {
   ) {
     // Parse the template, and visit to find <style>/<link> and <ng-content>.
     final visitor = new _TemplateNormalizerVisitor();
-    final parsedNodes = ast.parse(template, sourceUrl: templateAbsUrl);
+    final parsedNodes = ast.parse(
+      template,
+      // TODO: Use the full-file path when possible.
+      // Otherwise, the analyzer crashes today seeing an 'asset:...' URL.
+      sourceUrl: Uri.parse(templateAbsUrl).replace(scheme: 'file').toFilePath(),
+    );
     parsedNodes.forEach((a) => a.accept(visitor));
 
     final allInlineStyles = templateMeta.styles + visitor.inlineStyles;
@@ -144,10 +149,8 @@ class AstDirectiveNormalizer implements DirectiveNormalizer {
     // Try to resolve <style> import statements.
     for (final inlineStyle in allInlineStyles) {
       final import = extractStyleUrls(templateAbsUrl, inlineStyle);
-      for (final url in import.styleUrls) {
-        allExternalStyles.add(url);
-        allResolvedStyles.add(import.style);
-      }
+      allExternalStyles.addAll(import.styleUrls);
+      allResolvedStyles.add(import.style);
     }
 
     // Optimization: Turn off encapsulation when there are no styles to apply.
