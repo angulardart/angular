@@ -10,9 +10,7 @@ class DomEventsPlugin extends EventManagerPlugin {
   Function addEventListener(
     covariant Element element,
     String eventName,
-    // TODO(matanl): This used to be `void @checked ...`.
-    // Add back in after https://github.com/dart-lang/dart_style/issues/659.
-    covariant callback(Event event),
+    covariant void callback(Event event),
   ) {
     element.addEventListener(eventName, callback);
     return null;

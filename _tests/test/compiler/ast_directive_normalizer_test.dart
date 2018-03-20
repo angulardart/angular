@@ -112,15 +112,16 @@ void main() {
     );
     metadata = await normalizer.normalizeDirective(metadata);
     expect(
-        metadata.template.styleUrls,
-        orderedEquals([
-          'package:a/3.css',
-          'package:a/1.css',
-          'package:a/2.css',
+      metadata.template.styleUrls,
+      orderedEquals([
+        'package:a/3.css',
+        'package:a/1.css',
+        'package:a/2.css',
 
-          // @import URLs are not resolved at build-time.
-          'packages/a/4.css',
-        ]));
+        // @import URLs are not resolved at build-time.
+        'packages/a/4.css',
+      ]),
+    );
   });
 
   test('should turn off view encapsulation if there are no styles', () async {
@@ -136,6 +137,45 @@ void main() {
     );
     metadata = await normalizer.normalizeDirective(metadata);
     expect(metadata.template.encapsulation, ViewEncapsulation.None);
+  });
+
+  test('should resolve inline stylesheets', () async {
+    reader = new FakeAssetReader({
+      'package:a/1.css': ':host { color: red }',
+      'package:a/2.css': ':host { width: 10px; }',
+      'package:a/3.css': ':host { height: 10px; }',
+      'package:a/4.css': ':host { background: #FFF; }',
+    });
+    normalizer = new AstDirectiveNormalizer(reader);
+    metadata = new CompileDirectiveMetadata(
+      metadataType: CompileDirectiveMetadataType.Component,
+      type: new CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
+      template: new CompileTemplateMetadata(
+        template: r'''
+          <link href="3.css" rel="stylesheet" />
+          <style>
+            :host { padding: 10px; }
+          </style>
+        ''',
+        styleUrls: [
+          '1.css',
+          '2.css',
+        ],
+        styles: [
+          ':host { margin: 10px; }',
+        ],
+      ),
+    );
+    metadata = await normalizer.normalizeDirective(metadata);
+    expect(metadata.template.encapsulation, ViewEncapsulation.Emulated);
+    expect(
+      metadata.template.styles,
+      [
+        contains(':host { margin: 10px; }'),
+        contains(':host { padding: 10px; }'),
+      ],
+      reason: 'Only a two inline styles should have been processed',
+    );
   });
 }
 
