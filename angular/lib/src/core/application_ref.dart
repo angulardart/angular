@@ -286,7 +286,6 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
   bool _asyncInitDone;
 
   ApplicationRefImpl(this._platform, this._zone, this._injector) {
-    NgZone zone = _injector.get(NgZone);
     zone.run(() {
       _exceptionHandler = _injector.get(ExceptionHandler);
     });

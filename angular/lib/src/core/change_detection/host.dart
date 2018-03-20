@@ -178,16 +178,20 @@ abstract class ChangeDetectionHost {
   /// Exceptions will be forwarded to the exception handler and rethrown.
   FutureOr<R> run<R>(FutureOr<R> Function() callback) {
     return runInZone(() {
-      final result = callback();
-      if (result is Future<R>) {
-        return result.then((result) {
+      try {
+        final result = callback();
+        if (result is Future<R>) {
+          return result.then((result) {
+            return result;
+          }, onError: (e, s) {
+            return new Future.error(e);
+          });
+        } else {
           return result;
-        }, onError: (e, s) {
-          final sCasted = unsafeCast<StackTrace>(s);
-          handleUncaughtException(e, sCasted);
-        });
-      } else {
-        return result;
+        }
+      } catch (e, s) {
+        handleUncaughtException(e, s);
+        rethrow;
       }
     });
   }
