@@ -6,7 +6,10 @@ import 'package:angular/angular.dart';
 
 /// Represents the base URL for HTTP requests using [HackerNewsService].
 const baseUrl = const OpaqueToken<String>('baseUrl');
-const defaultBaseUrl = 'https://node-hnapi.herokuapp.com';
+
+// Provided by https://github.com/cheeaun/node-hnapi/
+// Used with appreciation!
+const defaultBaseUrl = 'https://api.hackernews.io';
 
 class HackerNewsService {
   final String _baseUrl;
