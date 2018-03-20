@@ -49,14 +49,18 @@ case $TASK in
 
   test)
     echo -e '\033[1mTASK: Testing [test]\033[22m'
-    echo -e 'pub run build_runner test --fail-on-severe -- -P travis'
-    pub run build_runner test --fail-on-severe -- -P travis
+    echo -e 'pub run build_runner test --fail-on-severe -- -P travis -p chrome'
+    pub run build_runner test --fail-on-severe -- -P travis -p chrome
+    echo -e 'pub run test -P travis -p vm'
+    pub run test -P travis -p vm
     ;;
 
   test:release)
     echo -e '\033[1mTASK: Testing [test:release]\033[22m'
-    echo -e 'pub run build_runner test --config=release --fail-on-severe -- -P travis'
-    pub run build_runner test --config=release --fail-on-severe -- -P travis
+    echo -e 'pub run build_runner test --config=release --fail-on-severe -- -P travis -p chrome'
+    pub run build_runner test --config=release --fail-on-severe -- -P travis -p chrome
+    echo -e 'pub run test -P travis -p vm'
+    pub run test -P travis -p vm
     ;;
 
   *)
