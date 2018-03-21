@@ -60,8 +60,6 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   final onErrorSub = ngZone.onError.listen((e) {
     caughtError = e;
   });
-  // Code works improperly when .run is typed to return FutureOr:
-  // https://github.com/dart-lang/sdk/issues/32285.
   return appRef.run<ComponentRef<E>>(() {
     return _runAndLoadComponent(
       appRef,
@@ -83,16 +81,25 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
       // no longer using Streams or fixing dart:async.
       await new Future.value();
       onErrorSub.cancel();
+      bootstrapForTestError = bootstrapForTestTrace = null;
       if (caughtError != null) {
-        return new Future.error(
-          caughtError.error,
-          new StackTrace.fromString(caughtError.stackTrace.join('\n')),
+        bootstrapForTestError = caughtError.error;
+        bootstrapForTestTrace = new StackTrace.fromString(
+          caughtError.stackTrace.join('\n'),
         );
+        return null;
       }
       return componentRef;
     });
   });
 }
+
+// Workaround: Returning in the body of bootstrapForTest triggers a timeout.
+//
+// If this value is set, the return value of bootstrapForTest is null, and this
+// is the cause of the failure.
+Object bootstrapForTestError;
+StackTrace bootstrapForTestTrace;
 
 Future<ComponentRef<E>> _runAndLoadComponent<E>(
   ApplicationRefImpl appRef,

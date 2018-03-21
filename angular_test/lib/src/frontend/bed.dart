@@ -288,6 +288,12 @@ class NgTestBed<T> {
             ? _usesComponentFactory ? _providers : [[]]
             : _providers,
       ).then((componentRef) async {
+        if (bootstrapForTestError != null) {
+          return new Future.error(
+            bootstrapForTestError,
+            bootstrapForTestTrace,
+          );
+        }
         _checkForActiveTest();
         final allStabilizers = new NgTestStabilizer.all(
           _stabilizers.map((s) => s(componentRef.injector)),
