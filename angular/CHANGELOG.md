@@ -27,6 +27,10 @@
     }
     ```
 
+### Breaking changes
+
+*   The field `COMMON_PIPES` is being renamed to `commonPipes`.
+
 ## 5.0.0-alpha+8
 
 ### New features
