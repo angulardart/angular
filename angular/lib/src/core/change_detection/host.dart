@@ -184,7 +184,9 @@ abstract class ChangeDetectionHost {
           return result.then((result) {
             return result;
           }, onError: (e, s) {
-            return new Future.error(e);
+            final StackTrace sCasted = unsafeCast(s);
+            handleUncaughtException(e, sCasted);
+            return new Future.error(e, sCasted);
           });
         } else {
           return result;
