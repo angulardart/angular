@@ -36,6 +36,3 @@ abstract class LocationStrategy {
 /// const ValueProvider.forToken(appBaseHref, '/my/app');
 /// ```
 const appBaseHref = const OpaqueToken<String>('appBaseHref');
-
-@Deprecated('Use "appBaseHref" instead')
-const APP_BASE_HREF = appBaseHref;
