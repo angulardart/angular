@@ -7,7 +7,7 @@ final newsRoutePath = new RoutePath(
 );
 
 final newRoutePath = new RoutePath(
-  path: '/new',
+  path: '/newest',
   additionalData: const {'feed': 'newest'},
 );
 

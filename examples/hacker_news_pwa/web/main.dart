@@ -27,7 +27,7 @@ final InjectorFactory hackerNewsApp = ng.hackerNewsApp$Injector;
 HackerNewsService _service;
 HackerNewsService getNewsService() => _service;
 
-Future<Null> main() async {
+void main() async {
   // Start fetching the articles if we are a first time viewer.
   //
   // This will make the perceived first load faster, and allow us to avoid
@@ -37,7 +37,7 @@ Future<Null> main() async {
   Future future;
   if (window.location.search.isEmpty) {
     var feed = window.location.pathname.split('/').last;
-    if (feed == '') {
+    if (feed.isEmpty) {
       feed = 'news';
     }
     future = _service.getFeed(feed, 1);
