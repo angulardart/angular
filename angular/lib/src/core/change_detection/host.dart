@@ -185,7 +185,7 @@ abstract class ChangeDetectionHost {
     // This is only used in the async API, but we don't have enough information
     // to conditionally create it, and we need to creat it _outside_ of the
     // zone.
-    final completer = new Completer<R>.sync();
+    final completer = new Completer<R>();
 
     // Run the users callback, and handle uncaught exceptions.
     runInZone(() {

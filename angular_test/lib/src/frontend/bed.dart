@@ -37,10 +37,10 @@ Future<Null> disposeAnyRunningTest() async => activeTest?.dispose();
 ///
 /// This is for compatibility reasons only and should not be used otherwise.
 Future<NgTestFixture<T>> createDynamicFixture<T>(
-    NgTestBed<T> bed,
-    Type type, {
-      void Function(T componentInstance) beforeChangeDetection,
-    }) {
+  NgTestBed<T> bed,
+  Type type, {
+  void Function(T componentInstance) beforeChangeDetection,
+}) {
   return bed._createDynamic(type, beforeChangeDetection: beforeChangeDetection);
 }
 
@@ -110,7 +110,7 @@ class NgTestBed<T> {
   }
 
   static final List<NgTestStabilizerFactory> _lifecycleStabilizers = [
-        (i) => new NgZoneStabilizer(i.get(NgZone)),
+    (i) => new NgZoneStabilizer(i.get(NgZone)),
   ];
 
   final Element _host;
@@ -143,11 +143,11 @@ class NgTestBed<T> {
   /// **NOTE**: This is the only way to use [NgTestBed] without requiring use
   /// of the `initReflector()` API on startup.
   static NgTestBed<T> forComponent<T>(
-      ComponentFactory<T> component, {
-        Element host,
-        InjectorFactory rootInjector: _defaultRootInjector,
-        bool watchAngularLifecycle: true,
-      }) {
+    ComponentFactory<T> component, {
+    Element host,
+    InjectorFactory rootInjector: _defaultRootInjector,
+    bool watchAngularLifecycle: true,
+  }) {
     if (T == dynamic) {
       throw new GenericTypeMissingError();
     }
@@ -262,9 +262,9 @@ class NgTestBed<T> {
 
   // Used for compatibility only. See `create` for public API.
   Future<NgTestFixture<T>> _createDynamic(
-      Type type, {
-        void Function(T instance) beforeChangeDetection,
-      }) {
+    Type type, {
+    void Function(T instance) beforeChangeDetection,
+  }) {
     // We *purposefully* do not use async/await here - that always adds an
     // additional micro-task - we want this to fail fast without entering an
     // asynchronous event if another test is running.
