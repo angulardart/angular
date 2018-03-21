@@ -276,12 +276,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, CompileElement parent) {
     var nodeIndex = view.nodes.length;
-    var isSimpleNgIf = !visitingProjectedContent && _isSimpleNgIf(ast);
-    if (isSimpleNgIf) {
+    var isPureHtml = !visitingProjectedContent && _isPureHtml(ast);
+    if (isPureHtml) {
       view.hasInlinedView = true;
     }
     NodeReference nodeReference =
-        view.createViewContainerAnchor(parent, nodeIndex, ast, isSimpleNgIf);
+        view.createViewContainerAnchor(parent, nodeIndex, ast, isPureHtml);
     var directives =
         ast.directives.map((directiveAst) => directiveAst.directive).toList();
     var compileElement = new CompileElement(
@@ -298,7 +298,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         ast.references,
         logger,
         hasTemplateRefQuery: parent.hasTemplateRefQuery,
-        isInlined: isSimpleNgIf);
+        isInlined: isPureHtml);
     view.nodes.add(compileElement);
     nestedViewCount++;
     var embeddedView = new CompileView(
@@ -310,12 +310,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         compileElement,
         ast.variables,
         view.deferredModules,
-        isInlined: isSimpleNgIf);
+        isInlined: isPureHtml);
 
     // Create a visitor for embedded view and visit all nodes.
     var embeddedViewVisitor = new ViewBuilderVisitor(
         embeddedView, parser, stylesCompileResult,
-        isInlinedView: isSimpleNgIf);
+        isInlinedView: isPureHtml);
     templateVisitAll(
         embeddedViewVisitor,
         ast.children,
@@ -323,11 +323,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
             embeddedView.declarationElement);
     nestedViewCount += embeddedViewVisitor.nestedViewCount;
 
-    if (!isSimpleNgIf) {
+    if (!isPureHtml) {
       compileElement.beforeChildren(false);
     }
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
-    if (!isSimpleNgIf) {
+    if (!isPureHtml) {
       compileElement.afterChildren(0);
     }
     if (ast.hasDeferredComponent) {
@@ -775,12 +775,12 @@ void _writeComponentHostEventListeners(
     var handlerAst = parser.parseAction(handlerSource, '', component.exports);
     HandlerType handlerType = handlerTypeFromExpression(handlerAst);
     o.Expression handlerExpr;
-    var numArgs;
+    int numArgs;
     if (handlerType == HandlerType.notSimple) {
       var context = new o.ReadClassMemberExpr('ctx');
-      var actionExpr = convertStmtIntoExpression(
-          convertCdStatementToIr(view.nameResolver, context, handlerAst, false)
-              .last);
+      var actionStmts = convertCdStatementToIr(
+          view.nameResolver, context, handlerAst, component);
+      var actionExpr = convertStmtIntoExpression(actionStmts.last);
       List<o.Statement> stmts = <o.Statement>[
         new o.ReturnStatement(actionExpr)
       ];
@@ -795,9 +795,9 @@ void _writeComponentHostEventListeners(
       numArgs = 1;
     } else {
       var context = DetectChangesVars.cachedCtx;
-      var actionExpr = convertStmtIntoExpression(
-          convertCdStatementToIr(view.nameResolver, context, handlerAst, false)
-              .last);
+      var actionStmts = convertCdStatementToIr(
+          view.nameResolver, context, handlerAst, component);
+      var actionExpr = convertStmtIntoExpression(actionStmts.last);
       assert(actionExpr is o.InvokeMethodExpr);
       var callExpr = actionExpr as o.InvokeMethodExpr;
       handlerExpr = new o.ReadPropExpr(callExpr.receiver, callExpr.name);
@@ -909,14 +909,14 @@ void writeInputUpdater(
       .add(o.fn(arguments, statements, o.BOOL_TYPE).toDeclStmt(name));
 }
 
-final _isPureHtml = new IsPureHtmlVisitor();
+final _pureHtmlVisitor = new IsPureHtmlVisitor();
 
-bool _isSimpleNgIf(EmbeddedTemplateAst ast) {
+bool _isPureHtml(EmbeddedTemplateAst ast) {
   if (ast.directives.length != 1) return false;
   var isNgIf = ast.directives.single.directive.identifier.name == 'NgIf';
   if (!isNgIf) return false;
 
-  return ast.children.every((t) => t.visit(_isPureHtml, null));
+  return ast.children.every((t) => t.visit(_pureHtmlVisitor, null));
 }
 
 /// Constructs name of global function that can be used to update an input

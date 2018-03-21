@@ -1,3 +1,32 @@
+### New features
+
+*   Static properties and methods of a component may now be referenced without a
+    receiver in the component's own template.
+
+    **Before:** `ExampleComponent` as receiver is necessary.
+
+    ```dart
+    @Component(
+      selector: 'example',
+      template: '<h1>{{ExampleComponent.title}}</h1>',
+    )
+    class ExampleComponent {
+      static String title;
+    }
+    ```
+
+    **After**: No receiver is necessary.
+
+    ```dart
+    @Component(
+      selector: 'example',
+      template: '<h1>{{title}}</h1>',
+    )
+    class ExampleComponent {
+      static String title;
+    }
+    ```
+
 ## 5.0.0-alpha+8
 
 ### New features
