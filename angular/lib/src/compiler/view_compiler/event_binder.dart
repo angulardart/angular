@@ -6,14 +6,8 @@ import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart' show convertCdStatementToIr, NameResolver;
+import 'ir/provider_source.dart';
 import 'parse_utils.dart';
-
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
 
 /// Generates code to listen to a single eventName on a [CompileElement].
 ///
@@ -68,7 +62,7 @@ class CompileEventListener {
   }
 
   void addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
-      o.Expression directiveInstance) {
+      ProviderSource directiveInstance) {
     if (_isSimple) {
       _handlerType = hostEvent.handlerType;
       _isSimple = _method.isEmpty && _handlerType != HandlerType.notSimple;
@@ -77,7 +71,8 @@ class CompileEventListener {
       _hasComponentHostListener = true;
     }
     _method.resetDebugInfo(compileElement.nodeIndex, hostEvent);
-    var context = directiveInstance ?? new o.ReadClassMemberExpr('ctx');
+    var context =
+        directiveInstance?.build() ?? new o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(_nameResolver, context,
         hostEvent.handler, compileElement.view.component);
     _method.addStmts(actionStmts);
@@ -120,7 +115,7 @@ class CompileEventListener {
   }
 
   o.Expression _createEventHandlerExpr() {
-    var handlerExpr;
+    o.Expression handlerExpr;
     var numArgs;
 
     if (_isSimple) {

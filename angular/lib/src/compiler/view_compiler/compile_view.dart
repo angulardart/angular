@@ -42,6 +42,7 @@ import 'constants.dart'
         DetectChangesVars,
         ViewProperties,
         InjectMethodVars;
+import 'ir/providers_node.dart';
 import 'ir/view_storage.dart';
 import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'
@@ -360,7 +361,9 @@ class CompileView implements AppViewBuilder {
     }
     viewQueries = new CompileTokenMap<List<CompileQuery>>();
     if (viewType == ViewType.COMPONENT) {
-      var directiveInstance = new o.ReadClassMemberExpr('ctx');
+      var directiveInstance = new BuiltInSource(
+          identifierToken(this.component.type),
+          new o.ReadClassMemberExpr('ctx'));
       var queryIndex = -1;
       for (CompileQueryMetadata metadata in component.viewQueries) {
         queryIndex++;
@@ -368,7 +371,7 @@ class CompileView implements AppViewBuilder {
           metadata: metadata,
           storage: storage,
           queryRoot: this,
-          boundField: directiveInstance,
+          boundDirective: directiveInstance,
           queryIndex: queryIndex,
         );
         addQueryToTokenMap(viewQueries, query);

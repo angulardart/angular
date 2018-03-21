@@ -5,6 +5,7 @@ import "../identifiers.dart" show Identifiers;
 import "../output/output_ast.dart" as o;
 import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
+import 'ir/provider_source.dart';
 import 'ir/view_storage.dart';
 import "view_compiler_utils.dart" show getPropertyInView;
 
@@ -32,7 +33,7 @@ abstract class CompileQuery {
   /// An expression that accesses the component's instance.
   ///
   /// In practice, this is almost always `this.ctx`.
-  final o.Expression _boundField;
+  final ProviderSource _boundDirective;
 
   /// Extracted metadata information from the user-code.
   final CompileQueryMetadata metadata;
@@ -53,7 +54,7 @@ abstract class CompileQuery {
     @required CompileQueryMetadata metadata,
     @required ViewStorage storage,
     @required CompileView queryRoot,
-    @required o.Expression boundField,
+    @required ProviderSource boundDirective,
     @required int nodeIndex,
     @required int queryIndex,
   }) {
@@ -62,7 +63,7 @@ abstract class CompileQuery {
         metadata,
         storage,
         queryRoot,
-        boundField,
+        boundDirective,
         nodeIndex: nodeIndex,
         queryIndex: queryIndex,
       );
@@ -71,7 +72,7 @@ abstract class CompileQuery {
       metadata,
       storage,
       queryRoot,
-      boundField,
+      boundDirective,
       nodeIndex: nodeIndex,
       queryIndex: queryIndex,
     );
@@ -81,7 +82,7 @@ abstract class CompileQuery {
     @required CompileQueryMetadata metadata,
     @required ViewStorage storage,
     @required CompileView queryRoot,
-    @required o.Expression boundField,
+    @required ProviderSource boundDirective,
     @required int queryIndex,
   }) {
     if (_useNewQuery(metadata)) {
@@ -89,7 +90,7 @@ abstract class CompileQuery {
         metadata,
         storage,
         queryRoot,
-        boundField,
+        boundDirective,
         nodeIndex: 1,
         queryIndex: queryIndex,
       );
@@ -98,7 +99,7 @@ abstract class CompileQuery {
       metadata,
       storage,
       queryRoot,
-      boundField,
+      boundDirective,
       nodeIndex: -1,
       queryIndex: queryIndex,
     );
@@ -107,7 +108,7 @@ abstract class CompileQuery {
   CompileQuery._base(
     this.metadata,
     this._queryRoot,
-    this._boundField,
+    this._boundDirective,
   ) : _values = new _QueryValues(_queryRoot);
 
   /// Whether this query requires "flattenNodes".
@@ -325,10 +326,10 @@ class _QueryListCompileQuery extends CompileQuery {
     CompileQueryMetadata metadata,
     ViewStorage storage,
     CompileView queryRoot,
-    o.Expression boundField, {
+    ProviderSource boundDirective, {
     @required int nodeIndex,
     @required int queryIndex,
-  }) : super._base(metadata, queryRoot, boundField) {
+  }) : super._base(metadata, queryRoot, boundDirective) {
     _queryList = _createQueryListField(
       storage: storage,
       metadata: metadata,
@@ -400,10 +401,14 @@ class _QueryListCompileQuery extends CompileQuery {
     final statements = [
       _queryList.callMethod('reset', [o.literalArr(values)]).toStmt(),
     ];
-    if (_boundField != null) {
+    if (_boundDirective != null) {
       final valueExpr = _isSingle ? _queryList.prop('first') : _queryList;
       statements.add(
-        _boundField.prop(metadata.propertyName).set(valueExpr).toStmt(),
+        _boundDirective
+            .build()
+            .prop(metadata.propertyName)
+            .set(valueExpr)
+            .toStmt(),
       );
     }
     if (!_isSingle) {
@@ -426,10 +431,10 @@ class _ListCompileQuery extends CompileQuery {
     CompileQueryMetadata metadata,
     ViewStorage storage,
     CompileView queryRoot,
-    o.Expression boundField, {
+    ProviderSource boundDirective, {
     @required int nodeIndex,
     @required int queryIndex,
-  }) : super._base(metadata, queryRoot, boundField) {
+  }) : super._base(metadata, queryRoot, boundDirective) {
     _storage = storage;
     _dirtyField = _createQueryDirtyField(
       metadata: metadata,
@@ -528,8 +533,9 @@ class _ListCompileQuery extends CompileQuery {
       }
       result = _createUpdatesStaticOnly(queryValueExpressions);
     }
-
-    return [_boundField.prop(metadata.propertyName).set(result).toStmt()];
+    return [
+      _boundDirective.build().prop(metadata.propertyName).set(result).toStmt()
+    ];
   }
 
   // Only static elements are the result of the query.
