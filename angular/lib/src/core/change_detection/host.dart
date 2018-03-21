@@ -177,25 +177,38 @@ abstract class ChangeDetectionHost {
   ///
   /// Exceptions will be forwarded to the exception handler and rethrown.
   FutureOr<R> run<R>(FutureOr<R> Function() callback) {
-    return runInZone(() {
+    // The reason for the complexity of this code is that unhandled exceptions
+    // in a Future.error will never be triggered upwards/returned here; so we
+    // need to create our own set of wrappers/code to implement.
+    FutureOr<R> result;
+
+    // This is only used in the async API, but we don't have enough information
+    // to conditionally create it, and we need to creat it _outside_ of the
+    // zone.
+    final completer = new Completer<R>.sync();
+
+    // Run the users callback, and handle uncaught exceptions.
+    runInZone(() {
       try {
-        final result = callback();
-        if (result is Future<R>) {
-          return result.then((result) {
-            return result;
+        result = callback();
+        if (result is Future) {
+          result = completer.future;
+          final Future<R> resultCast = unsafeCast(result);
+          resultCast.then((result) {
+            completer.complete(result);
           }, onError: (e, s) {
             final StackTrace sCasted = unsafeCast(s);
+            completer.completeError(e, sCasted);
             handleUncaughtException(e, sCasted);
-            return new Future.error(e, sCasted);
           });
-        } else {
-          return result;
         }
       } catch (e, s) {
         handleUncaughtException(e, s);
         rethrow;
       }
     });
+
+    return result;
   }
 
   /// Executes the [callback] function within the current `NgZone`.
