@@ -12,7 +12,7 @@ dependencies:
   meta: ^1.1.2
 
 dev_dependencies:
-  angular_test: ^2.0.0-alpha+8
+  angular_test: ^2.0.0-alpha+6
   build_runner: ^0.8.0
   build_test: ^0.10.1+1
   build_web_compilers: ^0.3.4+1
