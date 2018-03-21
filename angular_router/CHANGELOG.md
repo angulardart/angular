@@ -1,3 +1,7 @@
+### Breaking changes
+
+*   `APP_BASE_HREF` was removed in favor of `appBaseHref`.
+
 ## 2.0.0-alpha+8
 
 ### Breaking changes

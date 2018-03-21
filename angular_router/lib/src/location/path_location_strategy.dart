@@ -3,7 +3,7 @@ import 'dart:html' as html;
 import 'package:angular/angular.dart' show Injectable, Inject, Optional;
 
 import 'location.dart' show Location;
-import 'location_strategy.dart' show LocationStrategy, APP_BASE_HREF;
+import 'location_strategy.dart' show LocationStrategy, appBaseHref;
 import 'platform_location.dart' show PlatformLocation;
 
 /// `PathLocationStrategy` is a [LocationStrategy] used to configure the
@@ -15,10 +15,10 @@ import 'platform_location.dart' show PlatformLocation;
 /// provided in [ROUTER_PROVIDERS].
 ///
 /// If you're using `PathLocationStrategy`, you must provide a provider for
-/// [APP_BASE_HREF] to a string representing the URL prefix that should
+/// [appBaseHref] to a string representing the URL prefix that should
 /// be preserved when generating and recognizing URLs.
 ///
-/// For instance, if you provide an `APP_BASE_HREF` of `'/my/app'` and call
+/// For instance, if you provide an `appBaseHref` of `'/my/app'` and call
 /// `location.go('/foo')`, the browser's URL will become
 /// `example.com/my/app/foo`.
 ///
@@ -28,7 +28,7 @@ import 'platform_location.dart' show PlatformLocation;
 /// import 'package:angular/angular.dart' show bootstrap, Component, provide;
 /// import 'package:angular_router/angular_router.dart'
 ///   show
-///     APP_BASE_HREF,
+///     appBaseHref,
 ///     Location,
 ///     ROUTER_DIRECTIVES,
 ///     ROUTER_PROVIDERS,
@@ -46,7 +46,7 @@ import 'platform_location.dart' show PlatformLocation;
 ///
 /// bootstrap(AppCmp, [
 ///   ROUTER_PROVIDERS, // includes binding to PathLocationStrategy
-///   provide(APP_BASE_HREF, {useValue: '/my/app'})
+///   provide(appBaseHref, {useValue: '/my/app'})
 /// ]);
 /// ```
 @Injectable()
@@ -54,11 +54,11 @@ class PathLocationStrategy extends LocationStrategy {
   PlatformLocation _platformLocation;
   String _baseHref;
   PathLocationStrategy(this._platformLocation,
-      [@Optional() @Inject(APP_BASE_HREF) String href]) {
+      [@Optional() @Inject(appBaseHref) String href]) {
     href ??= _platformLocation.getBaseHrefFromDOM();
     if (href == null) {
       throw new ArgumentError(
-          'No base href set. Please provide a value for the APP_BASE_HREF token or add a base element to the document.');
+          'No base href set. Please provide a value for the appBaseHref token or add a base element to the document.');
     }
     _baseHref = href;
   }

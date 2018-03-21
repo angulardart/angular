@@ -78,7 +78,7 @@ class Location {
   /// Given a string representing a URL, returns the platform-specific external
   /// URL path. If the given URL doesn't begin with a leading slash (`'/'`),
   /// this method adds one before normalizing. This method will also add a hash
-  /// if `HashLocationStrategy` is used, or the `APP_BASE_HREF` if the
+  /// if `HashLocationStrategy` is used, or the `appBaseHref` if the
   /// `PathLocationStrategy` is in use.
   String prepareExternalUrl(String url) {
     if (url.isNotEmpty && !url.startsWith('/')) {

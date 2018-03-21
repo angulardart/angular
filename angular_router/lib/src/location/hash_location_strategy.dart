@@ -3,7 +3,7 @@ import 'dart:html' as html;
 import 'package:angular/angular.dart' show Injectable, Inject, Optional;
 
 import 'location.dart' show Location;
-import 'location_strategy.dart' show LocationStrategy, APP_BASE_HREF;
+import 'location_strategy.dart' show LocationStrategy, appBaseHref;
 import 'platform_location.dart' show PlatformLocation;
 
 /// `HashLocationStrategy` is a [LocationStrategy] used to configure the
@@ -51,7 +51,7 @@ class HashLocationStrategy extends LocationStrategy {
 
   HashLocationStrategy(
     this._platformLocation, [
-    @Optional() @Inject(APP_BASE_HREF) String baseHref,
+    @Optional() @Inject(appBaseHref) String baseHref,
   ]) : _baseHref = baseHref ?? '';
 
   @override
