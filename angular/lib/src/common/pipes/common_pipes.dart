@@ -1,5 +1,3 @@
-// This module provides a set of common Pipes.
-
 import 'async_pipe.dart' show AsyncPipe;
 import 'date_pipe.dart' show DatePipe;
 import 'json_pipe.dart' show JsonPipe;
@@ -9,12 +7,12 @@ import 'replace_pipe.dart' show ReplacePipe;
 import 'slice_pipe.dart' show SlicePipe;
 import 'uppercase_pipe.dart' show UpperCasePipe;
 
-/// A collection of Angular core pipes that are likely to be used in each and
-/// every application.
+/// A collection of built-in AngularDart core pipes.
 ///
 /// This collection can be used to quickly enumerate all the built-in pipes in
-/// the `pipes` property of the `@Component` decorator.
-const COMMON_PIPES = const [
+/// the `pipes` property of the `@Component` annotation. For most applications
+/// it's recommended to only reference the _exact_ pipes you use, however.
+const commonPipes = const [
   AsyncPipe,
   UpperCasePipe,
   LowerCasePipe,
@@ -26,3 +24,7 @@ const COMMON_PIPES = const [
   DatePipe,
   ReplacePipe
 ];
+
+/// See [commonPipes], as this field is deprecated.
+@Deprecated('Renamed to commonPipes')
+const COMMON_PIPES = commonPipes;
