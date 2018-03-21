@@ -1,6 +1,8 @@
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
+import '../analyzed_class.dart';
 import '../chars.dart';
+import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../expression_parser/ast.dart' as compiler_ast;
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
@@ -51,23 +53,24 @@ o.Expression convertCdExpressionToIr(
   NameResolver nameResolver,
   o.Expression implicitReceiver,
   compiler_ast.AST expression,
-  bool preserveWhitespace,
+  CompileDirectiveMetadata metadata,
   o.OutputType boundType,
 ) {
   assert(nameResolver != null);
-  var visitor = new _AstToIrVisitor(
-      nameResolver, implicitReceiver, preserveWhitespace, boundType);
+  var visitor =
+      new _AstToIrVisitor(nameResolver, implicitReceiver, metadata, boundType);
   return expression.visit(visitor, _Mode.Expression);
 }
 
 List<o.Statement> convertCdStatementToIr(
-    NameResolver nameResolver,
-    o.Expression implicitReceiver,
-    compiler_ast.AST stmt,
-    bool preserveWhitespace) {
+  NameResolver nameResolver,
+  o.Expression implicitReceiver,
+  compiler_ast.AST stmt,
+  CompileDirectiveMetadata metadata,
+) {
   assert(nameResolver != null);
-  var visitor = new _AstToIrVisitor(
-      nameResolver, implicitReceiver, preserveWhitespace, null);
+  var visitor =
+      new _AstToIrVisitor(nameResolver, implicitReceiver, metadata, null);
   var statements = <o.Statement>[];
   flattenStatements(stmt.visit(visitor, _Mode.Statement), statements);
   return statements;
@@ -99,7 +102,7 @@ dynamic /* o.Expression | o.Statement */ convertToStatementIfNeeded(
 class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
   final NameResolver _nameResolver;
   final o.Expression _implicitReceiver;
-  final bool _preserveWhitespace;
+  final CompileDirectiveMetadata _metadata;
 
   /// The type to which this expression is bound.
   ///
@@ -116,7 +119,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
   _AstToIrVisitor(
     this._nameResolver,
     this._implicitReceiver,
-    this._preserveWhitespace,
+    this._metadata,
     this._boundType,
   ) : _visitingRoot = true {
     assert(_nameResolver != null);
@@ -235,7 +238,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
   /// Trim text in preserve whitespace mode if it contains \n preceding
   /// interpolation.
   String compressWhitespacePreceding(String value) {
-    if (_preserveWhitespace ||
+    if (_metadata.template.preserveWhitespace ||
         value.contains('\u00A0') ||
         value.contains(ngSpace) ||
         !value.contains('\n')) return replaceNgSpace(value);
@@ -245,7 +248,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
   /// Trim text in preserve whitespace mode if it contains \n following
   /// interpolation.
   String compressWhitespaceFollowing(String value) {
-    if (_preserveWhitespace ||
+    if (_metadata.template.preserveWhitespace ||
         value.contains('\u00A0') ||
         value.contains(ngSpace) ||
         !value.contains('\n')) return replaceNgSpace(value);
@@ -339,18 +342,17 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
   dynamic visitMethodCall(compiler_ast.MethodCall ast, _Mode mode) {
     _visitingRoot = false;
     var args = visitAll(ast.args, _Mode.Expression) as List<o.Expression>;
-    var result;
-    var receiver = ast.receiver.visit(this, _Mode.Expression);
+    o.Expression result;
+    o.Expression receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
       var varExpr = _nameResolver.getLocal(ast.name);
       if (varExpr != null) {
         result = varExpr.callFn(args);
       } else {
-        receiver = _implicitReceiver;
+        receiver = _getImplicitOrStaticReceiver(ast.name, isStaticMethod);
       }
     }
     result ??= receiver.callMethod(ast.name, args);
-
     return convertToStatementIfNeeded(mode, result);
   }
 
@@ -362,12 +364,12 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
 
   dynamic visitPropertyRead(compiler_ast.PropertyRead ast, _Mode mode) {
     _visitingRoot = false;
-    var result;
-    var receiver = ast.receiver.visit(this, _Mode.Expression);
+    o.Expression result;
+    o.Expression receiver = ast.receiver.visit(this, _Mode.Expression);
     if (identical(receiver, IMPLICIT_RECEIVER)) {
       result = _nameResolver.getLocal(ast.name);
       if (result == null) {
-        receiver = _implicitReceiver;
+        receiver = _getImplicitOrStaticReceiver(ast.name, isStaticGetter);
       }
     }
     result ??= receiver.prop(ast.name);
@@ -382,7 +384,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
       if (varExpr != null) {
         throw new BaseException("Cannot assign to a reference or variable!");
       }
-      receiver = _implicitReceiver;
+      receiver = _getImplicitOrStaticReceiver(ast.name, isStaticSetter);
     }
     return convertToStatementIfNeeded(mode,
         receiver.prop(ast.name).set(ast.value.visit(this, _Mode.Expression)));
@@ -414,6 +416,20 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
 
   dynamic visitAll(List<compiler_ast.AST> asts, _Mode mode) {
     return asts.map((ast) => ast.visit(this, mode)).toList();
+  }
+
+  /// Returns the receiver necessary to access [memberName].
+  ///
+  /// If [memberName] is a static member of the current view's component,
+  /// determined by the predicate [isStaticMember], the static receiver is
+  /// returned. Otherwise the implicit receiver is returned.
+  o.Expression _getImplicitOrStaticReceiver(
+    String memberName,
+    bool Function(String, AnalyzedClass) isStaticMember,
+  ) {
+    return isStaticMember(memberName, _metadata.analyzedClass)
+        ? o.importExpr(_metadata.identifier)
+        : _implicitReceiver;
   }
 }
 

@@ -775,12 +775,12 @@ void _writeComponentHostEventListeners(
     var handlerAst = parser.parseAction(handlerSource, '', component.exports);
     HandlerType handlerType = handlerTypeFromExpression(handlerAst);
     o.Expression handlerExpr;
-    var numArgs;
+    int numArgs;
     if (handlerType == HandlerType.notSimple) {
       var context = new o.ReadClassMemberExpr('ctx');
-      var actionExpr = convertStmtIntoExpression(
-          convertCdStatementToIr(view.nameResolver, context, handlerAst, false)
-              .last);
+      var actionStmts = convertCdStatementToIr(
+          view.nameResolver, context, handlerAst, component);
+      var actionExpr = convertStmtIntoExpression(actionStmts.last);
       List<o.Statement> stmts = <o.Statement>[
         new o.ReturnStatement(actionExpr)
       ];
@@ -795,9 +795,9 @@ void _writeComponentHostEventListeners(
       numArgs = 1;
     } else {
       var context = DetectChangesVars.cachedCtx;
-      var actionExpr = convertStmtIntoExpression(
-          convertCdStatementToIr(view.nameResolver, context, handlerAst, false)
-              .last);
+      var actionStmts = convertCdStatementToIr(
+          view.nameResolver, context, handlerAst, component);
+      var actionExpr = convertStmtIntoExpression(actionStmts.last);
       assert(actionExpr is o.InvokeMethodExpr);
       var callExpr = actionExpr as o.InvokeMethodExpr;
       handlerExpr = new o.ReadPropExpr(callExpr.receiver, callExpr.name);

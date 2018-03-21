@@ -77,7 +77,7 @@ void bind(
     nameResolver,
     context,
     parsedExpression,
-    viewDirective.template.preserveWhitespace,
+    viewDirective,
     fieldType,
   );
   if (isImmutable(parsedExpression, viewDirective.analyzedClass)) {
@@ -466,7 +466,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           view.nameResolver,
           DetectChangesVars.cachedCtx,
           input.value,
-          view.component.template.preserveWhitespace,
+          view.component,
           o.BOOL_TYPE);
       dynamicInputsMethod.addStmt(directiveInstance
           .prop(input.directiveName)
@@ -476,12 +476,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     }
     if (isStatefulDirective) {
       var fieldType = o.importType(directiveAst.directive.inputTypes[input]);
-      var checkExpression = convertCdExpressionToIr(
-          view.nameResolver,
-          DetectChangesVars.cachedCtx,
-          input.value,
-          view.component.template.preserveWhitespace,
-          fieldType);
+      var checkExpression = convertCdExpressionToIr(view.nameResolver,
+          DetectChangesVars.cachedCtx, input.value, view.component, fieldType);
       if (isImmutable(input.value, view.component.analyzedClass)) {
         constantInputsMethod.addStmt(directiveInstance
             .prop(input.directiveName)
@@ -582,8 +578,8 @@ void bindToUpdateMethod(
     List<o.Statement> actions,
     CompileMethod method,
     {o.OutputType fieldType}) {
-  var checkExpression = convertCdExpressionToIr(view.nameResolver, context,
-      parsedExpression, view.component.template.preserveWhitespace, fieldType);
+  var checkExpression = convertCdExpressionToIr(
+      view.nameResolver, context, parsedExpression, view.component, fieldType);
   if (checkExpression == null) {
     // e.g. an empty expression was given
     return;
