@@ -89,6 +89,21 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
   return false;
 }
 
+bool isStaticGetter(String name, AnalyzedClass analyzedClass) {
+  final getter = analyzedClass._classElement.getGetter(name);
+  return getter != null && getter.isStatic;
+}
+
+bool isStaticMethod(String name, AnalyzedClass analyzedClass) {
+  final method = analyzedClass._classElement.getMethod(name);
+  return method != null && method.isStatic;
+}
+
+bool isStaticSetter(String name, AnalyzedClass analyzedClass) {
+  final setter = analyzedClass._classElement.getSetter(name);
+  return setter != null && setter.isStatic;
+}
+
 // TODO(het): preserve any source info in the new expression
 /// If this interpolation can be optimized, returns the optimized expression.
 /// Otherwise, returns the original expression.

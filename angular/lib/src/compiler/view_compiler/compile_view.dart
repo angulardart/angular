@@ -469,7 +469,7 @@ class CompileView implements AppViewBuilder {
         nameResolver,
         new o.ReadClassMemberExpr('ctx'),
         newValue,
-        component.template.preserveWhitespace,
+        component,
         o.STRING_TYPE,
       );
     }

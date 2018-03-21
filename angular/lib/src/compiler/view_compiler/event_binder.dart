@@ -78,11 +78,8 @@ class CompileEventListener {
     }
     _method.resetDebugInfo(compileElement.nodeIndex, hostEvent);
     var context = directiveInstance ?? new o.ReadClassMemberExpr('ctx');
-    var actionStmts = convertCdStatementToIr(
-        _nameResolver,
-        context,
-        hostEvent.handler,
-        this.compileElement.view.component.template.preserveWhitespace);
+    var actionStmts = convertCdStatementToIr(_nameResolver, context,
+        hostEvent.handler, compileElement.view.component);
     _method.addStmts(actionStmts);
   }
 
