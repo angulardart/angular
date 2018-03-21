@@ -177,22 +177,18 @@ abstract class ChangeDetectionHost {
   ///
   /// Exceptions will be forwarded to the exception handler and rethrown.
   FutureOr<R> run<R>(FutureOr<R> Function() callback) {
-    // The reason for the complexity of this code is that unhandled exceptions
-    // in a Future.error will never be triggered upwards/returned here; so we
-    // need to create our own set of wrappers/code to implement.
-    FutureOr<R> result;
-
-    // This is only used in the async API, but we don't have enough information
-    // to conditionally create it, and we need to creat it _outside_ of the
-    // zone.
-    final completer = new Completer<R>();
-
     // Run the users callback, and handle uncaught exceptions.
+    //
+    // **NOTE**: It might be tempting to try and optimize this, but this is
+    // required otherwise tests timeout - the completer needs to be created
+    // outside as Dart swallows rejected futures outside the 'onError: '
+    // callback for Future.
+    final completer = new Completer<R>();
+    FutureOr<R> result;
     runInZone(() {
       try {
         result = callback();
         if (result is Future) {
-          result = completer.future;
           final Future<R> resultCast = unsafeCast(result);
           resultCast.then((result) {
             completer.complete(result);
@@ -207,8 +203,7 @@ abstract class ChangeDetectionHost {
         rethrow;
       }
     });
-
-    return result;
+    return result is Future ? completer.future : result;
   }
 
   /// Executes the [callback] function within the current `NgZone`.
