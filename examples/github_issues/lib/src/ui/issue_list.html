@@ -1,7 +1,7 @@
 <h2>
     <img src="favicon.png" alt="Angular Dart"> Open Issues
 </h2>
-<bs-progress *ngIf="isLoading" class="striped warning" [value]="progress"></bs-progress>
+<material-progress *ngIf="isLoading" [activeProgress]="progress"></material-progress>
 <table class="table">
     <caption>
         Open issues on https://github.com/dart-lang/angular
@@ -21,12 +21,11 @@
             </td>
             <td class="author">{{issue.author}}</td>
             <td>
-                <bs-toggle-button
-                        class="btn btn-primary"
-                        [ngModel]="showDescriptionFor == issue"
-                        (ngModelChange)="toggleDescription(issue)">
-                    {{showDescriptionFor == issue ? 'Hide' : 'More'}}
-                </bs-toggle-button>
+                <material-toggle
+                        [checked]="showDescriptionFor == issue"
+                        (checkedChange)="toggleDescription(issue)"
+                        label="{{showDescriptionFor == issue ? 'Hide' : 'More'}}">
+                </material-toggle>
             </td>
         </tr>
         <tr class="expansion" *ngIf="showDescriptionFor == issue">

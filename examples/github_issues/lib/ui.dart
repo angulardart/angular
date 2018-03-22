@@ -1,23 +1,24 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart';
-import 'package:angular_forms/angular_forms.dart';
 import 'package:angular/security.dart';
+import 'package:angular_components/material_progress/material_progress.dart';
+import 'package:angular_components/material_toggle/material_toggle.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:ng_bootstrap/ng_bootstrap.dart';
 
 import 'api.dart';
 
 @Component(
   selector: 'issue-list',
   directives: const [
-    bsDirectives,
-    coreDirectives,
-    formDirectives,
+    NgFor,
+    NgIf,
     IssueBodyComponent,
     IssueTitleComponent,
+    MaterialProgressComponent,
+    MaterialToggleComponent,
   ],
-  styleUrls: const ['src/ui/issue_list.css'],
+  styleUrls: const ['src/ui/issue_list.scss.css'],
   templateUrl: 'src/ui/issue_list.html',
 )
 class IssueListComponent implements OnInit {
