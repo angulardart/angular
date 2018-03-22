@@ -1,4 +1,4 @@
-# Hacker News PWA in AngularDart 
+# Hacker News PWA in AngularDart
 
 <img width="834" src="https://user-images.githubusercontent.com/168174/36634757-57637b9a-195e-11e8-82f9-07c882f0471c.png">
 
@@ -44,9 +44,10 @@ $ firebase deploy
 
 ## Updating service worker cached assets
 
-Run the following command to update the list of assets the service worker will
+Run the following commands to update the list of assets the service worker will
 cache to be accessible offline.
 
 ```shell
-$ pub run pwa --exclude "packages/**,*.ng_placeholder"
+$ pub run build_runner build --config=release --output build
+$ pub run pwa --exclude "packages/**,.packages,*.dart,*.js.deps,*.js.info.json,*.js.map,*.js.tar.gz,*.module"
 ```
