@@ -24,7 +24,3 @@ const commonPipes = const [
   DatePipe,
   ReplacePipe
 ];
-
-/// See [commonPipes], as this field is deprecated.
-@Deprecated('Renamed to commonPipes')
-const COMMON_PIPES = commonPipes;

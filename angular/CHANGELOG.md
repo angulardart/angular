@@ -29,7 +29,7 @@
 
 ### Breaking changes
 
-*   The field `COMMON_PIPES` is being renamed to `commonPipes`.
+*   The field `COMMON_PIPES` has been renamed to `commonPipes`.
 
 ## 5.0.0-alpha+8
 

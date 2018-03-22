@@ -1,7 +1,7 @@
 // This module provides a set of common Pipes.
 
 export 'pipes/async_pipe.dart' show AsyncPipe;
-export 'pipes/common_pipes.dart' show COMMON_PIPES, commonPipes;
+export 'pipes/common_pipes.dart' show commonPipes;
 export 'pipes/date_pipe.dart' show DatePipe;
 export 'pipes/json_pipe.dart' show JsonPipe;
 export 'pipes/lowercase_pipe.dart' show LowerCasePipe;
