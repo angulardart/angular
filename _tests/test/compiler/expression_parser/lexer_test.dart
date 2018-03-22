@@ -134,6 +134,14 @@ void main() {
         expect(tokens.length, 1);
         expect(tokens[0].toString(), " ");
       });
+      test('should tokenize unicode {} escapes', () {
+        // U+22     "
+        // U+9      TAB
+        // U+1F389  PARTY POPPER
+        final tokens = lex(r'"\u{22}\u{9}\u{1f389}"');
+        expect(tokens, hasLength(1));
+        expect(tokens[0].toString(), '"\t\u{1f389}');
+      });
       test("should tokenize relation", () {
         List<Token> tokens = lex("! == != < > <= >= === !==");
         expectOperatorToken(tokens[0], 0, "!");
@@ -222,6 +230,26 @@ void main() {
         },
             throwsWith("Lexer Error: Invalid unicode escape [\\u1''b] at "
                 "column 2 in expression ['\\u1''bla']"));
+        expect(
+            () => lex(r'"\u{110000}"'),
+            throwsWith(r'Lexer Error: Invalid unicode escape [\u110000] at '
+                r'column 2 in expression ["\u{110000}"]'));
+      });
+      test('should throw error on incomplete unicode escapes', () {
+        expect(
+            () => lex(r'"\u1"'),
+            throwsWith('Lexer Error: Expected four hexadecimal digits at '
+                r'column 3 in expression ["\u1"]'));
+        expect(
+            () => lex(r'"\u{1"'),
+            throwsWith('Lexer Error: Incomplete escape sequence at column 2 in '
+                r'expression ["\u{1"]'));
+      });
+      test('should throw error on unicode escape with too many digits', () {
+        expect(
+            () => lex(r"'\u{1234567}'"),
+            throwsWith("Lexer Error: Expected '}' at column 10 in expression "
+                r"['\u{1234567}']"));
       });
       test("should tokenize hash as operator", () {
         List<Token> tokens = lex("#");
