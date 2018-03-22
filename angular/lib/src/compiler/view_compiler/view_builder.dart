@@ -144,8 +144,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     CompileDirectiveMetadata component = componentFromDirectives(directives);
 
     if (component != null) {
-      bool isDeferred = false;
-      isDeferred = nodeIndex == 0 &&
+      bool isDeferred = nodeIndex == 0 &&
           (view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
           (view.declarationElement.sourceAst as EmbeddedTemplateAst)
               .hasDeferredComponent;
@@ -189,7 +188,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         ast.references,
         logger,
         isHtmlElement: detectHtmlElementFromTagName(ast.name),
-        hasTemplateRefQuery: parent.hasTemplateRefQuery);
+        hasTemplateRefQuery: parent.hasTemplateRefQuery,
+        isDeferredComponent: isDeferred);
 
     view.nodes.add(compileElement);
 
@@ -200,7 +200,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     // beforeChildren() -> _prepareProviderInstances will create the actual
     // directive and component instances.
-    compileElement.beforeChildren(isDeferred);
+    compileElement.beforeChildren();
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     bool oldVisitingProjectedContent = visitingProjectedContent;
     visitingProjectedContent = true;
@@ -268,7 +268,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     view.nodes.add(compileElement);
     // beforeChildren() -> _prepareProviderInstances will create the actual
     // directive and component instances.
-    compileElement.beforeChildren(false);
+    compileElement.beforeChildren();
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(view.nodes.length - nodeIndex - 1);
@@ -324,7 +324,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     nestedViewCount += embeddedViewVisitor.nestedViewCount;
 
     if (!isPureHtml) {
-      compileElement.beforeChildren(false);
+      compileElement.beforeChildren();
     }
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     if (!isPureHtml) {

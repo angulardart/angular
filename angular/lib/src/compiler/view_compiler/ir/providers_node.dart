@@ -10,8 +10,6 @@ class ProvidersNode {
   final ProvidersNodeHost _host;
   final ProvidersNode _parent;
 
-  final List<CompileDirectiveMetadata> _directives;
-
   /// Maps from a provider token to expression that will return instance
   /// at runtime. Builtin(s) are populated eagerly, ProviderAst based
   /// instances are added on demand.
@@ -30,8 +28,7 @@ class ProvidersNode {
   final CompileTokenMap<ProviderAst> _resolvedProviders =
       new CompileTokenMap<ProviderAst>();
 
-  ProvidersNode(
-      this._host, this._parent, this._directives, this._isAppViewHost);
+  ProvidersNode(this._host, this._parent, this._isAppViewHost);
 
   bool containsLocalProvider(CompileTokenMetadata token) =>
       _instances.containsKey(token);
@@ -49,8 +46,12 @@ class ProvidersNode {
 
   ProviderSource get(CompileTokenMetadata token) => _instances.get(token);
 
-  void addDirectiveProviders(
-      final List<ProviderAst> providerList, bool componentIsDeferred) {
+  /// Given a list of directives (and component itself), adds providers for
+  /// each directive at this node. Code generators that want to build
+  /// instances can handle the createProviderInstance callback on the
+  /// host interface.
+  void addDirectiveProviders(final List<ProviderAst> providerList,
+      final List<CompileDirectiveMetadata> directives) {
     // Create a lookup map from token to provider.
     for (ProviderAst provider in providerList) {
       _resolvedProviders.add(provider.token, provider);
@@ -95,8 +96,10 @@ class ProvidersNode {
           providerSource =
               _addClassProvider(provider, resolvedProvider.providerType);
           var classType = provider.useClass.identifier;
-          // Check if class is a directive.
-          for (var dir in _directives) {
+          // Check if class is a directive and keep track of directiveMetadata
+          // for the directive so we can determine if the provider has
+          // an associated change detector class.
+          for (var dir in directives) {
             if (dir.identifier == classType) {
               directiveMetadata = dir;
               break;
@@ -127,14 +130,8 @@ class ProvidersNode {
         var token = resolvedProvider.token;
         _instances.add(
             token,
-            new LiteralValueSource(
-                token,
-                _host.createProviderInstance(
-                    resolvedProvider,
-                    directiveMetadata,
-                    providerSources,
-                    componentIsDeferred,
-                    _instances.size)));
+            _host.createProviderInstance(resolvedProvider, directiveMetadata,
+                providerSources, _instances.size));
       }
     }
   }
@@ -245,12 +242,11 @@ class ProvidersNode {
 
 /// Interface to be implemented by NodeProviders users.
 abstract class ProvidersNodeHost {
-  /// Creates an instance for a provider and returns referencing expression.
-  o.Expression createProviderInstance(
+  /// Creates an eager instance for a provider and returns reference to source.
+  ProviderSource createProviderInstance(
       ProviderAst resolvedProvider,
       CompileDirectiveMetadata directiveMetadata,
       List<ProviderSource> providerValueExpressions,
-      bool componentIsDeferred,
       int uniqueId);
 
   /// Creates ProviderSource to call injectorGet on parent view that contains
@@ -326,11 +322,10 @@ class FunctionalDirectiveSource extends ProviderSource {
 /// dynamic lookup (injectorGet).
 class DynamicProviderSource extends ProviderSource {
   ProvidersNode parentProviders;
-  final CompileTokenMetadata token;
   final bool optional;
   final bool _isAppViewHost;
-  DynamicProviderSource(
-      this.parentProviders, this.token, this.optional, this._isAppViewHost)
+  DynamicProviderSource(this.parentProviders, CompileTokenMetadata token,
+      this.optional, this._isAppViewHost)
       : super(token);
 
   @override
