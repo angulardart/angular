@@ -37,6 +37,15 @@ stages:
   - deploying
 
 jobs:
+  # Both of these packages have external dependencies that will not always
+  # pass at MASTER/HEAD for our mono repository. It's OK for these to fail and
+  # not block the build.
+  #
+  # See https://github.com/dart-lang/angular/issues/1114.
+  allow_failures:
+    - env: PKG="examples/github_issues"
+    - env: PKG="examples/registration_form"
+
   include:
 
     # 1. Verify that .travis.yml is not out of date.
