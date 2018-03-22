@@ -20,8 +20,23 @@ import 'constants.dart';
 /// could be merged in directly to avoid having inheritance if necessary. For
 /// now this is just for ease of testing and not breaking existing code.
 abstract class ChangeDetectionHost {
+  /// The current host being executed (synchronously) via [tick].
+  static ChangeDetectionHost _current;
+
+  /// **INTERNAL ONLY**: Whether a crash was detected during the last `tick()`.
+  static bool get checkForCrashes => _current?._lastGuardedView != null;
+
+  /// **INTERNAL ONLY**: Register a crash during [view.detectCrash].
+  static void handleCrash(AppView<void> view, Object error, StackTrace trace) {
+    final current = _current;
+    current
+      .._lastGuardedView = view
+      .._lastCaughtException = error
+      .._lastCaughtTrace = trace;
+  }
+
   /// Whether a second pass of change detection should be executed.
-  static bool get _enforceNoNewChanges => isDevMode;
+  static final _enforceNoNewChanges = isDevMode;
 
   /// If a crash is detected during zone-based change detection, then this view
   /// is set (non-null). Change detection is re-run (synchronously) in a
@@ -65,6 +80,7 @@ abstract class ChangeDetectionHost {
     //
     // If at least one occurs, we will re-run looking for the failing component.
     try {
+      _current = this;
       _runningTick = true;
       _runTick();
     } catch (e, s) {
@@ -73,6 +89,7 @@ abstract class ChangeDetectionHost {
       }
       rethrow;
     } finally {
+      _current = null;
       _runningTick = false;
       _resetViewErrors();
     }
@@ -83,13 +100,11 @@ abstract class ChangeDetectionHost {
     final detectors = _changeDetectors;
     final length = detectors.length;
     for (var i = 0; i < length; i++) {
-      final detector = detectors[i];
-      detector.detectChanges();
+      detectors[i].detectChanges();
     }
     if (_enforceNoNewChanges) {
       for (var i = 0; i < length; i++) {
-        final detector = detectors[i];
-        detector.checkNoChanges();
+        detectors[i].checkNoChanges();
       }
     }
   }
@@ -162,19 +177,33 @@ abstract class ChangeDetectionHost {
   ///
   /// Exceptions will be forwarded to the exception handler and rethrown.
   FutureOr<R> run<R>(FutureOr<R> Function() callback) {
-    return runInZone(() {
-      final result = callback();
-      if (result is Future<R>) {
-        return result.then((result) {
-          return result;
-        }, onError: (e, s) {
-          final sCasted = unsafeCast<StackTrace>(s);
-          handleUncaughtException(e, sCasted);
-        });
-      } else {
-        return result;
+    // Run the users callback, and handle uncaught exceptions.
+    //
+    // **NOTE**: It might be tempting to try and optimize this, but this is
+    // required otherwise tests timeout - the completer needs to be created
+    // outside as Dart swallows rejected futures outside the 'onError: '
+    // callback for Future.
+    final completer = new Completer<R>();
+    FutureOr<R> result;
+    runInZone(() {
+      try {
+        result = callback();
+        if (result is Future) {
+          final Future<R> resultCast = unsafeCast(result);
+          resultCast.then((result) {
+            completer.complete(result);
+          }, onError: (e, s) {
+            final StackTrace sCasted = unsafeCast(s);
+            completer.completeError(e, sCasted);
+            handleUncaughtException(e, sCasted);
+          });
+        }
+      } catch (e, s) {
+        handleUncaughtException(e, s);
+        rethrow;
       }
     });
+    return result is Future ? completer.future : result;
   }
 
   /// Executes the [callback] function within the current `NgZone`.
