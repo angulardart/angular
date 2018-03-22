@@ -35,8 +35,9 @@ void main() async {
   // PWA scores.
   _service = new HackerNewsService(defaultBaseUrl);
   Future future;
-  if (window.location.search.isEmpty) {
-    var feed = window.location.pathname.split('/').last;
+  final path = window.location.pathname;
+  if (window.location.search.isEmpty && !path.startsWith('/item')) {
+    var feed = path.split('/').last;
     if (feed.isEmpty) {
       feed = 'news';
     }
