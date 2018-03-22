@@ -32,6 +32,7 @@ import "event_binder.dart"
         collectEventListeners,
         CompileEventListener,
         bindDirectiveOutputs;
+import 'ir/provider_source.dart';
 import "lifecycle_binder.dart"
     show
         bindDirectiveAfterContentLifecycleCallbacks,
@@ -47,7 +48,6 @@ import "property_binder.dart"
         bindInlinedNgIf,
         bindRenderInputs,
         bindRenderText;
-import 'ir/provider_source.dart';
 
 // TODO: Remove the following lines (for --no-implicit-casts).
 // ignore_for_file: argument_type_not_assignable

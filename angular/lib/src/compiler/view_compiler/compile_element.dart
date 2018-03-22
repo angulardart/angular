@@ -58,6 +58,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   final bool hasEmbeddedView;
   final bool hasTemplateRefQuery;
   final bool isInlined;
+  final bool isDeferredComponent;
 
   /// Reference to optional view container created for this element.
   o.ReadClassMemberExpr appViewContainer;
@@ -94,9 +95,10 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       this._logger,
       {this.isHtmlElement: false,
       this.hasTemplateRefQuery: false,
-      this.isInlined: false})
+      this.isInlined: false,
+      this.isDeferredComponent: false})
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
-    _providers = new ProvidersNode(this, parent?._providers, _directives,
+    _providers = new ProvidersNode(this, parent?._providers,
         view == null || view.viewType == ViewType.HOST);
     if (references.isNotEmpty) {
       referenceTokens = <String, CompileTokenMetadata>{};
@@ -182,7 +184,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     }
   }
 
-  void beforeChildren(bool componentIsDeferred) {
+  void beforeChildren() {
     if (hasViewContainer &&
         !_providers.containsLocalProvider(Identifiers.ViewContainerRefToken)) {
       _providers.add(Identifiers.ViewContainerRefToken, appViewContainer);
@@ -211,8 +213,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     if (appViewContainer != null) {
       _providers.add(Identifiers.ComponentLoaderToken, appViewContainer);
     }
-    _providers.addDirectiveProviders(
-        _resolvedProvidersArray, componentIsDeferred);
+    _providers.addDirectiveProviders(_resolvedProvidersArray, _directives);
 
     directiveInstances = <ProviderSource>[];
     for (var directive in _directives) {
@@ -384,17 +385,16 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
 
   // NodeProvidersHost implementation.
   @override
-  o.Expression createProviderInstance(
+  ProviderSource createProviderInstance(
       ProviderAst resolvedProvider,
       CompileDirectiveMetadata directiveMetadata,
       List<ProviderSource> providerSources,
-      bool componentIsDeferred,
       int uniqueId) {
     // Create a new field property for this provider.
     var propName = '_${resolvedProvider.token.name}_${nodeIndex}_$uniqueId';
     List<o.Expression> providerValueExpressions =
         providerSources.map((ProviderSource s) => s.build()).toList();
-    return view.createProvider(
+    o.Expression providerExpr = view.createProvider(
         propName,
         directiveMetadata,
         resolvedProvider,
@@ -404,7 +404,8 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
         this,
         forceDynamic:
             (resolvedProvider.providerType == ProviderAstType.Component) &&
-                componentIsDeferred);
+                isDeferredComponent);
+    return new LiteralValueSource(resolvedProvider.token, providerExpr);
   }
 
   @override
