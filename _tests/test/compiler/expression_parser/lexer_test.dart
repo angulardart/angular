@@ -142,6 +142,11 @@ void main() {
         expect(tokens, hasLength(1));
         expect(tokens[0].toString(), '"\t\u{1f389}');
       });
+      test('should tokenize unicode interspersed in string', () {
+        final tokens = lex(r'"cat \u{1f431} and dog \u{1f436} emojis!"');
+        expect(tokens, hasLength(1));
+        expect(tokens[0].toString(), 'cat \u{1f431} and dog \u{1f436} emojis!');
+      });
       test("should tokenize relation", () {
         List<Token> tokens = lex("! == != < > <= >= === !==");
         expectOperatorToken(tokens[0], 0, "!");
