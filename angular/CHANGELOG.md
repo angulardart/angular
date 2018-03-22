@@ -31,6 +31,12 @@
 
 *   The field `COMMON_PIPES` has been renamed to `commonPipes`.
 
+### Bug fixes
+
+*   String literals bound in templates now support Unicode escapes of the form
+    `\u{?-??????}`. This enables support for Unicode supplementary planes, which
+    includes emojis!
+
 ## 5.0.0-alpha+8
 
 ### New features
