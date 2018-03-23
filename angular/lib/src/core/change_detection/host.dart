@@ -46,6 +46,10 @@ abstract class ChangeDetectionHost {
     AppView<void> view,
     Element host,
   ) {
+    // Directives or components that have crashed are no longer checked.
+    if (view.cdState == ChangeDetectorState.Errored) {
+      return;
+    }
     final current = _current;
     assert(current != null, 'No current ChangeDetectionHost in context');
     current._scheduleViewUpdate(callback, view, host);
@@ -102,7 +106,7 @@ abstract class ChangeDetectionHost {
       try {
         update.callback(update.view, update.host);
       } catch (e, s) {
-        handleUncaughtException(e, s);
+        reportViewException(update.view, e, s);
         rethrow;
       }
     }
