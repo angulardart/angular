@@ -532,7 +532,7 @@ void main() {
     expect(element.endToken.offset, 129);
     expect(element.closeComplement.beginToken.offset, 130);
     expect(element.closeComplement.endToken.offset, 142);
-  });
+  }, skip: 'Not supported - https://github.com/dart-lang/angular/issues/1121');
 
   test('should parse and preserve strict offsets within interpolations', () {
     var templateString = '''
@@ -548,8 +548,8 @@ void main() {
   });
 
   test('should parse expressions in attr-value interpolations', () {
-    var templateString = '''
-<div someAttr="{{ 1 + 2 }} nonmustache {{ 3 + 4 }}"></div>''';
+    var templateString =
+        '''<div someAttr="{{ 1 + 2 }} nonmustache {{ 3 + 4 }}"></div>''';
     var asts = parse(templateString);
     var element = asts[0] as ElementAst;
 
@@ -580,7 +580,7 @@ void main() {
     expect(mustache2.endToken.lexeme, '}}');
     expect(mustache2.endToken.errorSynthetic, false);
     expect(mustache2.expression.expression.toString(), '3 + 4');
-  });
+  }, skip: 'Not supported - https://github.com/dart-lang/angular/issues/1121');
 
   // Moved from expression/micro/parser_test.dart
   test(
@@ -612,5 +612,5 @@ void main() {
         ],
       )
     ]);
-  });
+  }, skip: 'Not supported - https://github.com/dart-lang/angular/issues/1121');
 }

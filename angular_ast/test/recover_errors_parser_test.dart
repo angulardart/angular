@@ -333,33 +333,43 @@ void main() {
     checkException(NgParserWarningCode.DUPLICATE_SELECT_DECORATOR, 24, 21);
   });
 
-  test('Should parse property decorators with invalid dart value', () {
-    var asts = parse('<div [myProp]="["></div>', parseExpression: true);
-    expect(asts.length, 1);
+  test(
+    'Should parse property decorators with invalid dart value',
+    () {
+      var asts = parse('<div [myProp]="["></div>', parseExpression: true);
+      expect(asts.length, 1);
 
-    var element = asts[0] as ElementAst;
-    expect(element.properties.length, 1);
-    var property = element.properties[0];
-    expect(property.expression, null);
-    expect(property.value, '[');
+      var element = asts[0] as ElementAst;
+      expect(element.properties.length, 1);
+      var property = element.properties[0];
+      expect(property.expression, null);
+      expect(property.value, '[');
 
-    checkException(ScannerErrorCode.EXPECTED_TOKEN, 16, 1);
-    // TODO: https://github.com/dart-lang/angular/issues/1001
-  }, tags: ['fails-on-travis']);
+      checkException(ScannerErrorCode.EXPECTED_TOKEN, 16, 1);
+      // TODO: https://github.com/dart-lang/angular/issues/1001
+    },
+    tags: ['fails-on-travis'],
+    skip: 'Not supported - https://github.com/dart-lang/angular/issues/1121',
+  );
 
-  test('Should parse event decorators with invalid dart value', () {
-    var asts = parse('<div (myEvnt)="["></div>', parseExpression: true);
-    expect(asts.length, 1);
+  test(
+    'Should parse event decorators with invalid dart value',
+    () {
+      var asts = parse('<div (myEvnt)="["></div>', parseExpression: true);
+      expect(asts.length, 1);
 
-    var element = asts[0] as ElementAst;
-    expect(element.events.length, 1);
-    var event = element.events[0];
-    expect(event.expression, null);
-    expect(event.value, '[');
+      var element = asts[0] as ElementAst;
+      expect(element.events.length, 1);
+      var event = element.events[0];
+      expect(event.expression, null);
+      expect(event.value, '[');
 
-    checkException(ScannerErrorCode.EXPECTED_TOKEN, 16, 1);
-    // TODO: https://github.com/dart-lang/angular/issues/1001
-  }, tags: ['fails-on-travis']);
+      checkException(ScannerErrorCode.EXPECTED_TOKEN, 16, 1);
+      // TODO: https://github.com/dart-lang/angular/issues/1001
+    },
+    tags: ['fails-on-travis'],
+    skip: 'Not supported - https://github.com/dart-lang/angular/issues/1121',
+  );
 
   test('Should parse banana decorator with invalid dart value', () {
     var asts = parse(
@@ -382,7 +392,7 @@ void main() {
     expect(e1.errorCode, ScannerErrorCode.EXPECTED_TOKEN);
     var e2 = recoveringExceptionHandler.exceptions[1];
     expect(e2.errorCode, ScannerErrorCode.EXPECTED_TOKEN);
-  });
+  }, skip: 'Not supported - https://github.com/dart-lang/angular/issues/1121');
 
   test('Should parse star(non micro) decorator with invalid dart value', () {
     var asts =
@@ -397,7 +407,7 @@ void main() {
     expect(recoveringExceptionHandler.exceptions.length, 1);
     var exception = recoveringExceptionHandler.exceptions[0];
     expect(exception.errorCode, ScannerErrorCode.EXPECTED_TOKEN);
-  });
+  }, skip: 'Not supported - https://github.com/dart-lang/angular/issues/1121');
 
   test('Should parse star(micro) decorator with invalid dart value', () {
     var asts = parse(
