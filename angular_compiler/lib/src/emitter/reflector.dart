@@ -311,9 +311,6 @@ class ReflectableEmitter {
   }
 
   Expression _token(TokenElement token) {
-    if (token is LiteralTokenElement) {
-      return _Inject.constInstance([refer(token.literal)]);
-    }
     if (token is OpaqueTokenElement) {
       final classType = linkToReference(token.classUrl, _library);
       final tokenInstance = classType.constInstance(
