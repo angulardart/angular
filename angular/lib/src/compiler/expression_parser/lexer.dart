@@ -307,34 +307,25 @@ class _Scanner {
   }
 
   Token scanString() {
-    num start = index;
-    num quote = peek;
-    this.advance();
-    List<String> buffer;
-    num marker = index;
-    String input = this.input;
-    while (peek != quote) {
-      if (peek == $BACKSLASH) {
-        buffer ??= <String>[];
-        buffer.add(input.substring(marker, index));
-        advance();
-        num unescapedCode;
-        if (peek == $u) {
-          // 4 character hex code for unicode character.
-          String hex = input.substring(index + 1, index + 5);
-          try {
-            unescapedCode = int.parse(hex, radix: 16);
-          } catch (e) {
-            this.error('Invalid unicode escape [\\u$hex]', 0);
-          }
-          for (num i = 0; i < 5; i++) {
-            advance();
-          }
-        } else {
-          unescapedCode = unescape(peek);
-          advance();
+    final quote = peek;
+    final start = index;
+    advance(); // Consume opening quote.
+    StringBuffer buffer;
+    var marker = index;
+    while (true) {
+      if (peek == quote) {
+        var value = input.substring(marker, index);
+        if (buffer != null) {
+          // Only use buffer if it was created for an escaped code point.
+          buffer.write(value);
+          value = buffer.toString();
         }
-        buffer.add(new String.fromCharCode(unescapedCode));
+        advance(); // Consume closing quote.
+        return newStringToken(start, value);
+      } else if (peek == $BACKSLASH) {
+        buffer ??= new StringBuffer();
+        buffer.write(input.substring(marker, index));
+        buffer.writeCharCode(_consumeEscape());
         marker = index;
       } else if (peek == $EOF) {
         error('Unterminated quote', 0);
@@ -342,21 +333,60 @@ class _Scanner {
         advance();
       }
     }
-    String last = input.substring(marker, index);
-    advance();
-    // Compute the unescaped string value.
-    String unescaped = last;
-    if (buffer != null) {
-      buffer.add(last);
-      unescaped = buffer.join('');
-    }
-    return newStringToken(start, unescaped);
   }
 
   void error(String message, int offset) {
     int position = this.index + offset;
     throw new ScannerError(
         'Lexer Error: $message at column $position in expression [$input]');
+  }
+
+  int _consumeEscape() {
+    advance(); // Consume '\'.
+    final escapeStart = index;
+    // Check if we're consuming a Unicode code point.
+    if (peek == $u) {
+      advance(); // Consume 'u'.
+      String hex;
+      if (peek == $LBRACE) {
+        advance(); // Consume '{'.
+        final start = index;
+        // Consume 1-6 hexadecimal digits.
+        for (var i = 0; i < 6; ++i) {
+          if (peek == $EOF) {
+            error('Incomplete escape sequence', escapeStart - index);
+          } else if (i != 0 && peek == $RBRACE) {
+            break;
+          } else {
+            advance();
+          }
+        }
+        hex = input.substring(start, index);
+        if (peek != $RBRACE) {
+          error("Expected '}'", 0);
+        }
+        advance(); // Consume '}'.
+      } else {
+        // Consume exactly 4 hexadecimal digits.
+        if (index + 4 >= input.length) {
+          error('Expected four hexadecimal digits', 0);
+        }
+        final start = index;
+        for (var i = 4; i > 0; --i) {
+          advance();
+        }
+        hex = input.substring(start, index);
+      }
+      final unescaped = int.parse(hex, radix: 16, onError: (_) => null);
+      if (unescaped == null || unescaped > 0x10FFFF) {
+        error('Invalid unicode escape [\\u$hex]', escapeStart - index);
+      }
+      return unescaped;
+    } else {
+      final unescaped = unescape(peek);
+      advance();
+      return unescaped;
+    }
   }
 }
 
