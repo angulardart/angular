@@ -107,7 +107,7 @@ class IssueListPO {
 
   IssueListPO(this._root);
 
-  Element get _progressBar => _root.querySelector('bs-progress');
+  Element get _progressBar => _root.querySelector('material-progress');
 
   Future<List<IssueItemPO>> _items() async => _root
       .querySelectorAll('.github-issue')
@@ -131,7 +131,7 @@ class IssueItemPO {
 
   IssueItemPO(this._root);
 
-  Element get _toggleButton => _root.querySelector('bs-toggle-button');
+  Element get _toggleButton => _root.querySelector('.material-toggle');
   Element get _author => _root.querySelector('.author');
   Element get _title => _root.querySelector('.title');
 
@@ -142,7 +142,7 @@ class IssueItemPO {
   Future<String> get title async => _title.text;
 
   /// Whether the button is toggled.
-  Future<bool> get isToggled async => _toggleButton.text == 'Hide';
+  Future<bool> get isToggled async => _toggleButton.classes.contains('checked');
 
   /// Toggle the button.
   Future<void> toggle() async => _toggleButton.click();
