@@ -2,20 +2,20 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:analyzer/analyzer.dart' as analyzer;
 import 'package:meta/meta.dart';
 import 'package:source_span/src/span.dart';
 
 import '../ast.dart';
 import '../exception_handler/exception_handler.dart';
-import '../expression/parser.dart';
 import '../token/tokens.dart';
 import '../visitor.dart';
 
 /// Wraps a parsed Dart [Expression] as an Angular [ExpressionAst].
 class ExpressionAst implements TemplateAst {
   /// Dart expression.
-  final analyzer.Expression expression;
+  ///
+  /// TODO: Bring in the "old" parser from pkg/angular/src/compiler.
+  final Null expression;
 
   /// Create a new expression AST wrapping a Dart expression.
   const ExpressionAst(this.expression);
@@ -27,17 +27,13 @@ class ExpressionAst implements TemplateAst {
     @required String sourceUrl,
     ExceptionHandler exceptionHandler,
   }) {
-    var paddedExpression = ' ' * offset + expression;
-    return new ExpressionAst(parseExpression(
-      paddedExpression,
-      sourceUrl: sourceUrl,
-    ));
+    return new ExpressionAst(null);
   }
 
   @override
   bool operator ==(Object o) {
     if (o is ExpressionAst) {
-      return o.expression.toSource() == expression.toSource();
+      return true;
     }
     return false;
   }

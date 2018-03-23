@@ -161,7 +161,8 @@ class HumanizingTemplateAstVisitor
 
   @override
   String visitExpression(ExpressionAst astNode, [_]) {
-    return astNode.expression.toSource();
+    // TODO: Restore once we have a working expression parser in this package.
+    return '';
   }
 
   @override

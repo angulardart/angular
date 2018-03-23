@@ -1,3 +1,8 @@
+*  **BREAKING CHANGE**: We no longer support parsing Dart expressions as part
+   of parsing the template AST. We hope to re-add some support for this by
+   migrating the existing parser in `package:angular`, but we are likely not to
+   have a stable API for some time.
+
 ## 0.4.4
 
 *   Added `MinimizeWhitespaceVisitor`.
