@@ -1,6 +1,7 @@
 import 'directives/checkbox_value_accessor.dart'
     show CheckboxControlValueAccessor;
 import 'directives/default_value_accessor.dart' show DefaultValueAccessor;
+import 'directives/memorized_form.dart' show MemorizedForm;
 import 'directives/ng_control_group.dart' show NgControlGroup;
 import 'directives/ng_control_name.dart' show NgControlName;
 import 'directives/ng_form.dart' show NgForm;
@@ -28,6 +29,7 @@ export 'directives/control_value_accessor.dart'
     show ControlValueAccessor, TouchFunction, ChangeFunction, NG_VALUE_ACCESSOR;
 export 'directives/default_value_accessor.dart' show DefaultValueAccessor;
 export 'directives/form_interface.dart' show Form;
+export 'directives/memorized_form.dart' show MemorizedForm;
 export 'directives/ng_control.dart' show NgControl;
 export 'directives/ng_control_group.dart' show NgControlGroup;
 export 'directives/ng_control_name.dart' show NgControlName;
@@ -73,6 +75,7 @@ const List<Type> formDirectives = const [
   NgModel,
   NgFormModel,
   NgForm,
+  MemorizedForm,
   NgSelectOption,
   DefaultValueAccessor,
   NumberValueAccessor,

@@ -24,6 +24,7 @@ export 'src/directives.dart'
         DefaultValueAccessor,
         Form,
         MaxLengthValidator,
+        MemorizedForm,
         MinLengthValidator,
         NgControl,
         NgControlGroup,
