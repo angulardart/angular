@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 
 import 'package:meta/meta.dart';
 
@@ -35,6 +36,21 @@ abstract class ChangeDetectionHost {
       .._lastCaughtTrace = trace;
   }
 
+  /// **INTERNAL ONLY**: Registers a [callback] to execute change detection.
+  ///
+  /// This is used as an alternative to the "automatic" change detection of
+  /// [tick] for components that prefer _telling_ AngularDart that their state
+  /// is invalidated (i.e. `ComponentState`).
+  static void scheduleViewUpdate(
+    void Function(AppView<void>, Element) callback,
+    AppView<void> view,
+    Element host,
+  ) {
+    final current = _current;
+    assert(current != null, 'No current ChangeDetectionHost in context');
+    current._scheduleViewUpdate(callback, view, host);
+  }
+
   /// Whether a second pass of change detection should be executed.
   static final _enforceNoNewChanges = isDevMode;
 
@@ -63,6 +79,34 @@ abstract class ChangeDetectionHost {
   /// Removes a change [detector] from this host (no longer checked).
   void unregisterChangeDetector(ChangeDetectorRef detector) {
     _changeDetectors.remove(detector);
+  }
+
+  final List<_ScheduledViewUpdate> _scheduledUpdates = [];
+  void _scheduleViewUpdate(
+    void Function(AppView<void>, Element) callback,
+    AppView<void> view,
+    Element host,
+  ) {
+    final updates = _scheduledUpdates;
+    if (updates.isEmpty) {
+      scheduleMicrotask(_runViewUpdates);
+    }
+    updates.add(new _ScheduledViewUpdate(callback, view, host));
+  }
+
+  void _runViewUpdates() {
+    final updates = _scheduledUpdates;
+    assert(updates.isNotEmpty, 'Expected at least one update');
+    for (var i = 0, l = updates.length; i < l; i++) {
+      final update = updates[i];
+      try {
+        update.callback(update.view, update.host);
+      } catch (e, s) {
+        handleUncaughtException(e, s);
+        rethrow;
+      }
+    }
+    updates.clear();
   }
 
   /// Runs a change detection pass on all registered root components.
@@ -212,4 +256,12 @@ abstract class ChangeDetectionHost {
   @protected
   @visibleForOverriding
   R runInZone<R>(R Function() callback);
+}
+
+class _ScheduledViewUpdate {
+  final void Function(AppView<void>, Element) callback;
+  final AppView<void> view;
+  final Element host;
+
+  const _ScheduledViewUpdate(this.callback, this.view, this.host);
 }
