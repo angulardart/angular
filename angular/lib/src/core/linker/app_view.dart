@@ -5,6 +5,7 @@ import 'dart:js_util' as js_util;
 import 'package:angular/src/core/app_view_consts.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
+import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/di/errors.dart' as di_errors;
 import 'package:angular/src/di/injector/element.dart';
 import 'package:angular/src/di/injector/injector.dart'
@@ -36,19 +37,6 @@ export 'package:angular/src/core/change_detection/component_state.dart';
 /// Template anchor `<!-- template bindings={}` for cloning.
 @visibleForTesting
 final ngAnchor = new Comment('template bindings={}');
-
-/// ***INTERNAL ONLY**: Whether a crash was detected in change detection.
-///
-/// When non-null, change detection is re-run (synchronously), in a slow-mode
-/// that individually checks components, and disables change detection for them
-/// if there is a failure detected.
-AppView lastGuardedView;
-
-/// Exception caught for [lastGuardedView].
-dynamic caughtException;
-
-/// Stack trace caught for [lastGuardedView].
-dynamic caughtStack;
 
 /// Set to `true` when Angular modified the DOM.
 ///
@@ -427,7 +415,7 @@ abstract class AppView<T> {
       throw new ViewDestroyedException('detectChanges');
     }
 
-    if (lastGuardedView != null) {
+    if (ChangeDetectionHost.checkForCrashes) {
       // Run change detection in "slow-mode" to catch thrown exceptions.
       detectCrash();
     } else {
@@ -454,9 +442,7 @@ abstract class AppView<T> {
     try {
       detectChangesInternal();
     } catch (e, s) {
-      lastGuardedView = this;
-      caughtException = e;
-      caughtStack = s;
+      ChangeDetectionHost.handleCrash(this, e, s);
     }
   }
 
