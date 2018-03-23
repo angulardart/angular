@@ -1,6 +1,7 @@
 targets:
   examples.github_issues:
     sources:
+      include: ["lib/**", "web/**", "test/**"]
       exclude: ["lib/builder.dart"]
     builders:
       sass_builder|sass_builder:
