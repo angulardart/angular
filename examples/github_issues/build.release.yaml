@@ -1,0 +1,26 @@
+targets:
+  examples.github_issues:
+    sources:
+      include: ["lib/**", "web/**", "test/**"]
+      exclude: ["lib/builder.dart"]
+    builders:
+      sass_builder|sass_builder:
+        enabled: False
+      examples.github_issues|scss_builder:
+        enabled: True
+  scss_builder:
+    sources: ["lib/builder.dart"]
+    dependencies:
+      - build
+      - sass_builder
+
+
+builders:
+  scss_builder:
+    target: "scss_builder"
+    import: "package:examples.github_issues/builder.dart"
+    builder_factories: ["scssBuilder"]
+    build_to: cache
+    build_extensions:
+      .scss: [".scss.css"]
+      .sass: [".scss.css"]
