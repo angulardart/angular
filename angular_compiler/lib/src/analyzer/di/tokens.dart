@@ -12,18 +12,7 @@ import '../types.dart';
 ///
 /// In AngularDart this is either an `OpaqueToken` or a `Type`.
 class TokenReader {
-  /// Whether to allow arbitrary `const/new` objects as tokens.
-  @deprecated
-  final bool allowArbitraryTokens;
-
-  /// Whether to allow [int] and [String] to be tokens.
-  @deprecated
-  final bool allowLiteralTokens;
-
-  const TokenReader({
-    this.allowArbitraryTokens: false,
-    this.allowLiteralTokens: false,
-  });
+  const TokenReader();
 
   /// Returns [object] parsed into a [TokenElement].
   ///
@@ -38,32 +27,6 @@ class TokenReader {
     }
     if (constant.instanceOf($OpaqueToken)) {
       return _parseOpaqueToken(constant);
-    }
-    if (allowLiteralTokens) {
-      if (constant.isInt) {
-        return new LiteralTokenElement('${constant.intValue}');
-      }
-      if (constant.isString) {
-        return new LiteralTokenElement("r'${constant.stringValue}'");
-      }
-    }
-    if (allowArbitraryTokens) {
-      final revive = constant.revive();
-      if (revive != null) {
-        if (element != null) {
-          // Hacky case for supporting @Inject(some_lib.someConstField).
-          final expression = element
-              .computeNode()
-              .metadata
-              .firstWhere((a) => a.name.name == 'Inject')
-              .arguments
-              .arguments
-              .first
-              .toSource();
-          return new LiteralTokenElement('$expression');
-        }
-        return new LiteralTokenElement('const ${revive.source.fragment}()');
-      }
     }
     final error =
         'Not a valid token for injection: $object. In previous versions of '
@@ -267,25 +230,4 @@ class OpaqueTokenElement implements TokenElement {
   String toString() {
     return '${classUrl.symbol} {$identifier:${typeUrl ?? _dynamic}}';
   }
-}
-
-/// A statically parsed literal (such as a `String`).
-///
-/// This is considered soft-deprecated.
-class LiteralTokenElement implements TokenElement {
-  /// Literal token.
-  final String literal;
-
-  @visibleForTesting
-  const LiteralTokenElement(this.literal);
-
-  @override
-  bool operator ==(Object o) =>
-      o is LiteralTokenElement && literal == o.literal;
-
-  @override
-  int get hashCode => literal.hashCode;
-
-  @override
-  String toString() => literal;
 }
