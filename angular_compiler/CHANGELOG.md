@@ -1,3 +1,7 @@
+### Breaking changes
+
+*   `TokenReady` no longer supports arbitrary const objects or literals.
+
 ## 0.4.0-alpha+8
 
 ### Breaking changes
