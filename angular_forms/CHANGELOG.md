@@ -1,3 +1,8 @@
+## New Features
+
+*   Add `MemorizedForm` directive. This is a form that will not remove controls
+    if the control is taken out of the view, for example with a [NgIf].
+
 ## 2.0.0-alpha
 
 **NOTE**: This used to be `1.0.1-alpha`, but has changed to be `2.0.0-alpha` due
