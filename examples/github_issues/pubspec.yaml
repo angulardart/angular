@@ -7,7 +7,7 @@ dependencies:
   angular: ^5.0.0-alpha
   angular_forms: ^1.0.1-alpha+7
   markdown: ^1.1.1
-  sass_builder: ^1.1.4
+  sass_builder: ^1.1.5
 
 dev_dependencies:
   angular_test: ^2.0.0-alpha
