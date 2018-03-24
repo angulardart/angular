@@ -31,6 +31,8 @@
 
 *   The field `COMMON_PIPES` has been renamed to `commonPipes`.
 
+*   Removed the deprecated `QueryList` class, `List` is used instead, only.
+
 ## 5.0.0-alpha+8
 
 ### New features

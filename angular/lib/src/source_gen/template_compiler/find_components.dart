@@ -441,8 +441,6 @@ class ComponentVisitor
               propertyType is ParameterizedType &&
               _htmlElement
                   .isAssignableFromType(propertyType.typeArguments.first),
-      isQueryListType: propertyType?.element != null &&
-          $QueryList.isExactlyType(propertyType),
       read: readType != null
           ? new CompileTokenMetadata(
               identifier: new CompileIdentifierMetadata(
