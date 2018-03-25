@@ -53,7 +53,7 @@ enum LifecycleHooks {
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#onchanges
 /// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#onchanges
 abstract class OnChanges {
-  void ngOnChanges(Map<String, SimpleChange> changes);
+  ngOnChanges(Map<String, SimpleChange> changes);
 }
 
 /// Implement this interface to get notified when any data-bound property of
@@ -64,7 +64,7 @@ abstract class OnChanges {
 /// them has changed.
 ///
 abstract class AfterChanges {
-  void ngAfterChanges();
+  ngAfterChanges();
 }
 
 /// Implement to execute [ngOnInit] after the first change-detection completed.
@@ -108,7 +108,7 @@ abstract class OnInit {
   /// Executed after the first change detection run for a directive.
   ///
   /// _See [OnInit] for a full description._
-  void ngOnInit();
+  ngOnInit();
 }
 
 /// Implement to execute [ngOnDestroy] before your component is destroyed.
@@ -152,7 +152,7 @@ abstract class OnDestroy {
   /// Executed before the directive is removed from the DOM and destroyed.
   ///
   /// _See [OnDestroy] for a full description._
-  void ngOnDestroy();
+  ngOnDestroy();
 }
 
 /// Implement this interface to override the default change detection algorithm
@@ -220,7 +220,7 @@ abstract class OnDestroy {
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#docheck
 /// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#onchangeslifecycle-hooks#docheck
 abstract class DoCheck {
-  void ngDoCheck();
+  ngDoCheck();
 }
 
 /// Implement this interface to get notified when your directive's content has
@@ -274,7 +274,7 @@ abstract class DoCheck {
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#aftercontent
 /// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#after-content
 abstract class AfterContentInit {
-  void ngAfterContentInit();
+  ngAfterContentInit();
 }
 
 /// Implement this interface to get notified after every check of your
@@ -328,7 +328,7 @@ abstract class AfterContentInit {
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#aftercontent
 /// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#after-content
 abstract class AfterContentChecked {
-  void ngAfterContentChecked();
+  ngAfterContentChecked();
 }
 
 /// Implement this interface to get notified when your component's view has been
@@ -379,7 +379,7 @@ abstract class AfterContentChecked {
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#afterview
 /// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#after-view
 abstract class AfterViewInit {
-  void ngAfterViewInit();
+  ngAfterViewInit();
 }
 
 /// Implement this interface to get notified after every check of your
@@ -430,5 +430,5 @@ abstract class AfterViewInit {
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#afterview
 /// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#after-view
 abstract class AfterViewChecked {
-  void ngAfterViewChecked();
+  ngAfterViewChecked();
 }

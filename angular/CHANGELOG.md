@@ -31,19 +31,6 @@
 
 *   The field `COMMON_PIPES` has been renamed to `commonPipes`.
 
-*   Methods in lifecycle hooks have `void` return type. This is breaking change
-    if the override doesn't specify return type and uses `return` without any
-    value. To fix add a `void` or `Future<void>` return type to the override:
-
-    ```dart
-    class MyComp implements OnInit {
-      @override
-      void ngOnInit() {
-        // ...
-      }
-    }
-    ```
-
 ### Bug fixes
 
 *   String literals bound in templates now support Unicode escapes of the form
