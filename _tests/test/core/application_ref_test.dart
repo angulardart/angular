@@ -35,7 +35,7 @@ void main() {
     });
 
     test('destroy bootstrapped components', () {
-      final comp = appRef.bootstrap<NullComponent>(ng.NullComponentNgFactory);
+      final comp = appRef.bootstrap<HelloComponent>(ng.HelloComponentNgFactory);
       final view = comp.hostView;
       expect(view.destroyed, isFalse);
 
@@ -59,17 +59,29 @@ void main() {
 
   group('bootstrap should', () {
     test('replace an existing element if in the DOM', () {
-      // TODO.
+      final existing = new Element.tag('hello-component')..text = 'Loading...';
+      document.body.append(existing);
+      final comp = appRef.bootstrap<HelloComponent>(ng.HelloComponentNgFactory);
+      expect(comp.location.text, 'Hello World');
+      expect(
+        document.body.querySelector('hello-component'),
+        same(comp.location),
+      );
     });
 
     test('create a new element if missing from the DOM', () {
-      // TODO.
+      final comp = appRef.bootstrap<HelloComponent>(ng.HelloComponentNgFactory);
+      expect(comp.location.text, 'Hello World');
+      expect(
+        document.body.querySelector('hello-component'),
+        same(comp.location),
+      );
     });
   });
 }
 
 @Component(
-  selector: 'null-component',
-  template: '',
+  selector: 'hello-component',
+  template: 'Hello World',
 )
-class NullComponent {}
+class HelloComponent {}
