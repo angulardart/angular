@@ -92,7 +92,7 @@ class CompilerFlags {
     this.profileFor: Profile.none,
     this.useFastBoot: true,
     this.useNewTemplateNormalizer: false,
-    this.useLegacyStyleEncapsulation: false,
+    this.useLegacyStyleEncapsulation: true,
     this.useNewPreserveWhitespace: false,
   });
 
