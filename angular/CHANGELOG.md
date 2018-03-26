@@ -31,6 +31,8 @@
 
 *   The field `COMMON_PIPES` has been renamed to `commonPipes`.
 
+*   The field `zone` in `ApplicationRef` has been reen removed from the API.
+
 ### Bug fixes
 
 *   String literals bound in templates now support Unicode escapes of the form
