@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 
 import 'package:meta/meta.dart';
 
@@ -35,6 +36,25 @@ abstract class ChangeDetectionHost {
       .._lastCaughtTrace = trace;
   }
 
+  /// **INTERNAL ONLY**: Registers a [callback] to execute change detection.
+  ///
+  /// This is used as an alternative to the "automatic" change detection of
+  /// [tick] for components that prefer _telling_ AngularDart that their state
+  /// is invalidated (i.e. `ComponentState`).
+  static void scheduleViewUpdate(
+    void Function(AppView<void>, Element) callback,
+    AppView<void> view,
+    Element host,
+  ) {
+    // Directives or components that have crashed are no longer checked.
+    if (view.cdState == ChangeDetectorState.Errored) {
+      return;
+    }
+    final current = _current;
+    assert(current != null, 'No current ChangeDetectionHost in context');
+    current._scheduleViewUpdate(callback, view, host);
+  }
+
   /// Whether a second pass of change detection should be executed.
   static final _enforceNoNewChanges = isDevMode;
 
@@ -63,6 +83,48 @@ abstract class ChangeDetectionHost {
   /// Removes a change [detector] from this host (no longer checked).
   void unregisterChangeDetector(ChangeDetectorRef detector) {
     _changeDetectors.remove(detector);
+  }
+
+  // The reason for having 3 lists instead of a single class is to reduce GC.
+  final List<void Function(AppView<void>, Element)> _scheduledCallbacks = [];
+  final List<AppView<void>> _scheduledViews = [];
+  final List<Element> _scheduledElements = [];
+
+  void _scheduleViewUpdate(
+    void Function(AppView<void>, Element) callback,
+    AppView<void> view,
+    Element host,
+  ) {
+    final callbacks = _scheduledCallbacks;
+    final views = _scheduledViews;
+    final elements = _scheduledElements;
+    if (callbacks.isEmpty) {
+      scheduleMicrotask(_runViewUpdates);
+    }
+    callbacks.add(callback);
+    views.add(view);
+    elements.add(host);
+  }
+
+  void _runViewUpdates() {
+    final callbacks = _scheduledCallbacks;
+    final views = _scheduledViews;
+    final elements = _scheduledElements;
+    assert(callbacks.isNotEmpty, 'Expected at least one update');
+    for (var i = 0, l = callbacks.length; i < l; i++) {
+      final callback = callbacks[i];
+      final view = views[i];
+      final host = elements[i];
+      try {
+        callback(view, host);
+      } catch (e, s) {
+        reportViewException(view, e, s);
+        rethrow;
+      }
+    }
+    callbacks.clear();
+    views.clear();
+    elements.clear();
   }
 
   /// Runs a change detection pass on all registered root components.

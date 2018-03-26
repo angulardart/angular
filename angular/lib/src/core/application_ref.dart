@@ -114,11 +114,6 @@ abstract class PlatformRef {
 
   /// Destroy the Angular platform and all Angular applications on the page.
   void dispose();
-
-  // Schedules change detection and view update to be executed on next
-  /// animation frame.
-  void scheduleViewUpdate(
-      ViewUpdateCallback callback, AppView view, Element el);
 }
 
 typedef void ViewUpdateCallback(AppView view, Element el);
@@ -129,12 +124,6 @@ class PlatformRefImpl extends PlatformRef {
   final List<Function> _disposeListeners = [];
   bool _disposed = false;
   Injector _injector;
-  // When true, indicates that we have already scheduled an animation frame
-  // callback.
-  bool _rafScheduled = false;
-  List<AppView> _targetViews;
-  List<Element> _targetElements;
-  List<ViewUpdateCallback> _viewUpdateCallbacks;
 
   /// Given an injector, gets platform initializers to initialize at bootstrap.
   void init(Injector injector) {
@@ -177,43 +166,6 @@ class PlatformRefImpl extends PlatformRef {
 
   void _applicationDisposed(ApplicationRef app) {
     _applications.remove(app);
-  }
-
-  @override
-  void scheduleViewUpdate(
-      ViewUpdateCallback callback, AppView view, Element el) {
-    if (_targetViews == null) {
-      _targetViews = <AppView>[];
-      _targetElements = <Element>[];
-      _viewUpdateCallbacks = <ViewUpdateCallback>[];
-    }
-    _targetViews.add(view);
-    _targetElements.add(el);
-    _viewUpdateCallbacks.add(callback);
-    if (_rafScheduled == false) {
-      _rafScheduled = true;
-      scheduleMicrotask(_onAnimationFrame);
-    }
-  }
-
-  void _onAnimationFrame() {
-    int i = 0;
-    try {
-      while (i < _targetViews.length) {
-        _viewUpdateCallbacks[i](_targetViews[i], _targetElements[i]);
-        ++i;
-      }
-    } catch (e, s) {
-      ExceptionHandler exceptionHandler = _injector.get(ExceptionHandler);
-      exceptionHandler?.call(e, s);
-      _viewUpdateCallbacks.removeAt(i);
-      _targetViews.removeAt(i);
-      _targetElements.removeAt(i);
-    }
-    _targetViews.clear();
-    _targetElements.clear();
-    _viewUpdateCallbacks.clear();
-    _rafScheduled = false;
   }
 }
 
