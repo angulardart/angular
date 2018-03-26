@@ -258,9 +258,6 @@ abstract class ApplicationRef implements ChangeDetectionHost {
   /// Retrieve the application [Injector].
   Injector get injector;
 
-  /// Retrieve the application [NgZone].
-  NgZone get zone;
-
   /// Dispose of this application and all of its components.
   void dispose();
 
@@ -286,7 +283,7 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
   bool _asyncInitDone;
 
   ApplicationRefImpl(this._platform, this._zone, this._injector) {
-    zone.run(() {
+    _zone.run(() {
       _exceptionHandler = _injector.get(ExceptionHandler);
     });
     // <bool> due to https://github.com/dart-lang/sdk/issues/32284.
@@ -398,9 +395,6 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
 
   @override
   Injector get injector => _injector;
-
-  @override
-  NgZone get zone => _zone;
 
   @override
   void dispose() {
