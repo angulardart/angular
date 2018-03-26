@@ -418,15 +418,18 @@ class RouterImpl extends Router {
     });
 
     RouterOutlet currentOutlet = _rootOutlet;
-    for (var component in mutableNextState.components) {
-      final factory = mutableNextState.factories[component];
-      await currentOutlet.activate(
-        factory,
-        _activeState,
-        nextState,
-      );
-      // Grab the cached componentRef in case the outlet recreated it.
-      component = await currentOutlet.prepare(factory);
+    for (var i = 0, len = mutableNextState.components.length; i < len; ++i) {
+      // Get the ComponentRef created during route resolution.
+      final resolvedComponent = mutableNextState.components[i];
+      final factory = mutableNextState.factories[resolvedComponent];
+      await currentOutlet.activate(factory, _activeState, nextState);
+      // Grab the cached ComponentRef in case the outlet recreated it.
+      final component = await currentOutlet.prepare(factory);
+      if (!identical(component, resolvedComponent)) {
+        // Replace the resolved ComponentRef with the active ComponentRef so
+        // that lifecycle methods are invoked on the correct instance.
+        mutableNextState.components[i] = component;
+      }
       currentOutlet = component.injector.get(RouterOutletToken).routerOutlet;
 
       if (component.instance is OnActivate) {

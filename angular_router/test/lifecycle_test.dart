@@ -124,29 +124,25 @@ void main() {
     log.clear();
     expect(
         await router.navigate('/parent/first-child'), NavigationResult.SUCCESS);
-    expect(
-      log,
-      [
-        '$ParentComponent[1].canNavigate', // Currently instance [0].
-        '$SecondChildComponent[1].canNavigate', // Currently instance [0].
-        '$FirstChildComponent[1].ngOnInit',
-        '$ParentComponent[1].canDeactivate', // Currently instance [0].
-        '$SecondChildComponent[1].canDeactivate', // Currently instance [0].
-        '$ParentComponent[1].canActivate',
-        '$FirstChildComponent[1].canActivate',
-        '$ParentComponent[1].onDeactivate', // Currently instance [0].
-        '$SecondChildComponent[1].onDeactivate', // Currently instance [0].
-        '$ParentComponent[1].canReuse',
-        '$SecondChildComponent[1].ngOnDestroy',
-        '$FirstChildComponent[1].ngOnDestroy',
-        '$ParentComponent[1].ngOnDestroy',
-        '$ParentComponent[2].ngOnInit',
-        '$ParentComponent[2].onActivate',
-        '$FirstChildComponent[2].ngOnInit',
-        '$FirstChildComponent[2].onActivate',
-      ],
-      skip: 'https://github.com/dart-lang/angular/issues/1134',
-    );
+    expect(log, [
+      '$ParentComponent[1].canNavigate',
+      '$SecondChildComponent[1].canNavigate',
+      '$FirstChildComponent[1].ngOnInit',
+      '$ParentComponent[1].canDeactivate',
+      '$SecondChildComponent[1].canDeactivate',
+      '$ParentComponent[1].canActivate',
+      '$FirstChildComponent[1].canActivate',
+      '$ParentComponent[1].onDeactivate',
+      '$SecondChildComponent[1].onDeactivate',
+      '$ParentComponent[1].canReuse',
+      '$SecondChildComponent[1].ngOnDestroy',
+      '$FirstChildComponent[1].ngOnDestroy',
+      '$ParentComponent[1].ngOnDestroy',
+      '$ParentComponent[2].ngOnInit',
+      '$ParentComponent[2].onActivate',
+      '$FirstChildComponent[2].ngOnInit',
+      '$FirstChildComponent[2].onActivate',
+    ]);
   });
 
   // /reusable-parent/first-child -> /reusable-parent/second-child
