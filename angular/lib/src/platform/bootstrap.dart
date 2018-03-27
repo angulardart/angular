@@ -138,8 +138,8 @@ PlatformRef browserStaticPlatform() {
   if (platform == null) {
     platform = new PlatformRefImpl();
     final testabilityRegistry = new TestabilityRegistry();
+    createInitDomAdapter(testabilityRegistry)();
     createPlatform(new Injector.map({
-      PLATFORM_INITIALIZER: [createInitDomAdapter(testabilityRegistry)],
       PlatformRef: platform,
       PlatformRefImpl: platform,
       TestabilityRegistry: testabilityRegistry,

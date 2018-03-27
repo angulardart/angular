@@ -132,12 +132,6 @@ class PlatformRefImpl extends PlatformRef {
           'Platforms have to be initialized via `createPlatform`!');
     }
     _injector = injector;
-
-    List initializers = injector.get(PLATFORM_INITIALIZER, null);
-    if (initializers == null) return;
-    for (var initializer in initializers) {
-      initializer();
-    }
   }
 
   void registerDisposeListener(void dispose()) {
