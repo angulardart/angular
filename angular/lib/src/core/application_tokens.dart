@@ -15,8 +15,6 @@ import 'di.dart' show MultiToken, OpaqueToken;
 /// ```
 const APP_ID = const OpaqueToken<String>('APP_ID');
 
-/// Functions that will be executed when a platform is initialized.
-const PLATFORM_INITIALIZER = const MultiToken<Function>('NG_PLATFORM_INIT');
-
 /// Functions that will be executed when an application is initialized.
+@Deprecated('Run functions in the root component instead')
 const APP_INITIALIZER = const MultiToken<Function>('NG_APP_INIT');
