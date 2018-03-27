@@ -3,6 +3,8 @@
    migrating the existing parser in `package:angular`, but we are likely not to
    have a stable API for some time.
 
+*  **BREAKING CHANGE**: Deleted `ExpressionParserVisitor` (related to above).
+
 ## 0.4.4
 
 *   Added `MinimizeWhitespaceVisitor`.

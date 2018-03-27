@@ -5,7 +5,6 @@
 import 'ast.dart';
 
 export 'visitors/desugar_visitor.dart';
-export 'visitors/expression_parser_visitor.dart';
 export 'visitors/humanizing.dart';
 export 'visitors/identity.dart';
 export 'visitors/recursive.dart';
