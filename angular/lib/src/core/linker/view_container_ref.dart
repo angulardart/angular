@@ -55,8 +55,7 @@ abstract class ViewContainerRef implements ComponentLoader {
   /// Instantiates a single [Component] and inserts its Host View into this
   /// container at the specified `index`.
   ///
-  /// The component is instantiated using its [ComponentFactory] which can be
-  /// obtained via [ComponentResolver#resolveComponent].
+  /// The component is instantiated using its [ComponentFactory].
   ///
   /// If `index` is not specified, the new View will be inserted as the last
   /// View in the container.
@@ -64,7 +63,7 @@ abstract class ViewContainerRef implements ComponentLoader {
   /// You can optionally specify the [Injector] that will be used as parent for
   /// the Component.
   ///
-  ///Returns the [ComponentRef] of the Host View created for the newly
+  /// Returns the [ComponentRef] of the Host View created for the newly
   /// instantiated Component.
   ComponentRef<T> createComponent<T>(
     ComponentFactory<T> componentFactory, [

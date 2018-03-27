@@ -54,6 +54,8 @@
     }
     ```
 
+*   Removed deprecated `ComponentResolver` class.
+
 ### Bug fixes
 
 *   String literals bound in templates now support Unicode escapes of the form

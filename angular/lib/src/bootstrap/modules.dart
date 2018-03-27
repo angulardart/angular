@@ -11,7 +11,6 @@ import 'package:angular/src/core/application_tokens.dart';
 import 'package:angular/src/core/di.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/component_loader.dart';
-import 'package:angular/src/core/linker/component_resolver.dart';
 import 'package:angular/src/core/linker/dynamic_component_loader.dart';
 import 'package:angular/src/core/testability/testability.dart';
 import 'package:angular/src/core/zone.dart';
@@ -99,7 +98,6 @@ String createRandomAppId() {
 @experimental
 const bootstrapLegacyModule = const <Object>[
   bootstrapMinimalModule,
-  const Provider(ComponentResolver, useClass: ComponentResolver),
   const Provider(SlowComponentLoader),
   const Provider(Testability, useClass: Testability),
 ];
