@@ -51,7 +51,6 @@ export 'src/recovery_protocol/recovery_protocol.dart';
 export 'src/token/tokens.dart' show NgToken, NgTokenType, NgAttributeValueToken;
 export 'src/visitor.dart'
     show
-        ExpressionParserVisitor,
         HumanizingTemplateAstVisitor,
         IdentityTemplateAstVisitor,
         MinimizeWhitespaceVisitor,

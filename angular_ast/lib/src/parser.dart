@@ -159,7 +159,7 @@ class NgParser {
     String template, {
     @required String sourceUrl,
     bool desugar: true,
-    bool parseExpressions: true,
+    @deprecated bool parseExpressions,
     ExceptionHandler exceptionHandler: const ThrowingExceptionHandler(),
   }) {
     var tokens = const NgLexer().tokenize(template, exceptionHandler);
@@ -180,16 +180,6 @@ class NgParser {
         exceptionHandler: exceptionHandler,
       );
       asts = asts.map((t) => t.accept(desugarVisitor)).toList();
-    }
-
-    if (parseExpressions) {
-      var expressionParserVisitor = new ExpressionParserVisitor(
-        sourceUrl,
-        exceptionHandler: exceptionHandler,
-      );
-      for (var ast in asts) {
-        ast.accept(expressionParserVisitor);
-      }
     }
     return asts;
   }
