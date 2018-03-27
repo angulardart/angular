@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 
 import '../facade/exceptions.dart' show BaseException, ExceptionHandler;
 import '../platform/dom/shared_styles_host.dart';
-import 'application_tokens.dart' show PLATFORM_INITIALIZER, APP_INITIALIZER;
+import 'application_tokens.dart' show APP_INITIALIZER;
 import 'change_detection/host.dart';
 import 'di.dart';
 import 'linker/app_view.dart' show AppView;
@@ -132,12 +132,6 @@ class PlatformRefImpl extends PlatformRef {
           'Platforms have to be initialized via `createPlatform`!');
     }
     _injector = injector;
-
-    List initializers = injector.get(PLATFORM_INITIALIZER, null);
-    if (initializers == null) return;
-    for (var initializer in initializers) {
-      initializer();
-    }
   }
 
   void registerDisposeListener(void dispose()) {

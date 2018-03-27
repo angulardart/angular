@@ -31,7 +31,15 @@
 
 *   The field `COMMON_PIPES` has been renamed to `commonPipes`.
 
-*   The field `zone` in `ApplicationRef` has been reen removed from the API.
+*   The field `zone` in `ApplicationRef` has been removed from the API.
+
+*   The token `PLATFORM_INITIALIZERS` has been removed. This was used sparingly to
+    run functions before the application was started, but can just as easily be
+    converted into running functions in `main()` before.
+
+*   The token `APP_INITIALIZER` is now **DEPRECATED**. It was used sparingly,
+    and can easily be replaced by running functions in your root component with
+    an `*ngIf` guard for initialization.
 
 ### Bug fixes
 
