@@ -13,15 +13,6 @@ void main() {
     );
   }
 
-  List<StandaloneTemplateAst> parsePreserve(String template) {
-    return const NgParser().parse(
-      template,
-      sourceUrl: '/test/parser_test.dart#inline',
-      desugar: false,
-      parseExpressions: false,
-    );
-  }
-
   test('should parse empty string', () {
     expect(parse(''), []);
   });
