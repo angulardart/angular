@@ -78,7 +78,7 @@ class NgForm extends AbstractForm {
   ControlGroup form;
 
   NgForm(@Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic> validators) {
-    form = new ControlGroup({}, null, composeValidators(validators));
+    form = new ControlGroup({}, composeValidators(validators));
   }
 
   Map<String, AbstractControl> get controls => form.controls;

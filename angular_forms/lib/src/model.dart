@@ -292,12 +292,9 @@ class Control<T> extends AbstractControl<T> {
 /// [ControlArray] can also contain other controls, but is of variable length.
 class ControlGroup extends AbstractControl<Map<String, dynamic>> {
   final Map<String, AbstractControl> controls;
-  final Map<String, bool> _optionals;
+  final Map<String, bool> _optionals = {};
 
-  ControlGroup(this.controls,
-      [Map<String, bool> optionals, ValidatorFn validator])
-      : _optionals = optionals ?? {},
-        super(validator) {
+  ControlGroup(this.controls, [ValidatorFn validator]) : super(validator) {
     _setParentForControls(this, controls.values);
   }
 

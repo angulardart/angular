@@ -3,6 +3,12 @@
 *   Add `MemorizedForm` directive. This is a form that will not remove controls
     if the control is taken out of the view, for example with a [NgIf].
 
+## Breaking Changes
+
+*   Remove `optionals` param from `ControlGroup` constructor. This will soon be
+    replaced by `disabled` state for all `Controls`. See
+    https://github.com/dart-lang/angular/issues/1037 for more details.
+
 ## 2.0.0-alpha
 
 **NOTE**: This used to be `1.0.1-alpha`, but has changed to be `2.0.0-alpha` due
