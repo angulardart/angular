@@ -11,9 +11,11 @@ import '../token/tokens.dart';
 import '../visitor.dart';
 
 /// Wraps a parsed Dart [Expression] as an Angular [ExpressionAst].
-class ExpressionAst<T> implements TemplateAst {
+class ExpressionAst implements TemplateAst {
   /// Dart expression.
-  final T expression;
+  ///
+  /// TODO: Bring in the "old" parser from pkg/angular/src/compiler.
+  final Null expression;
 
   /// Create a new expression AST wrapping a Dart expression.
   const ExpressionAst(this.expression);
