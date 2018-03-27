@@ -171,6 +171,7 @@ void main() {
         });
       });
     });
+
     group('ControlGroup', () {
       group('value', () {
         test('should be the reduced value of the child controls', () {
@@ -178,10 +179,12 @@ void main() {
               {'one': new Control('111'), 'two': new Control('222')});
           expect(g.value, {'one': '111', 'two': '222'});
         });
+
         test('should be empty when there are no child controls', () {
           var g = new ControlGroup({});
           expect(g.value, {});
         });
+
         test('should support nested groups', () {
           var g = new ControlGroup({
             'one': new Control('111'),
@@ -198,12 +201,13 @@ void main() {
           });
         });
       });
+
       group('errors', () {
         test('should run the validator when the value changes', () {
           Map<String, bool> simpleValidator(c) =>
               c.controls['one'].value != 'correct' ? {'broken': true} : null;
           var c = new Control<String>(null);
-          var g = new ControlGroup({'one': c}, null, simpleValidator);
+          var g = new ControlGroup({'one': c}, simpleValidator);
           c.updateValue('correct');
           expect(g.valid, true);
           expect(g.errors, null);
@@ -212,80 +216,36 @@ void main() {
           expect(g.errors, {'broken': true});
         });
       });
+
       group('dirty', () {
         Control c;
         ControlGroup g;
+
         setUp(() {
           c = new Control('value');
           g = new ControlGroup({'one': c});
         });
+
         test('should be false after creating a control', () {
           expect(g.dirty, false);
         });
+
         test('should be false after changing the value of the control', () {
           c.markAsDirty();
           expect(g.dirty, true);
         });
       });
-      group('optional components', () {
-        group('contains', () {
-          var group;
-          setUp(() {
-            group = new ControlGroup({
-              'required': new Control('requiredValue'),
-              'optional': new Control('optionalValue')
-            }, {
-              'optional': false
-            });
-          });
-          // rename contains into has
-          test('should return false when the component is not included', () {
-            expect(group.contains('optional'), false);
-          });
-          test(
-              'should return false when there is no component '
-              'with the given name', () {
-            expect(group.contains('something else'), false);
-          });
-          test('should return true when the component is included', () {
-            expect(group.contains('required'), true);
-            group.include('optional');
-            expect(group.contains('optional'), true);
-          });
-        });
-        test('should not include an inactive component into the group value',
-            () {
-          var group = new ControlGroup({
-            'required': new Control('requiredValue'),
-            'optional': new Control('optionalValue')
-          }, {
-            'optional': false
-          });
-          expect(group.value, {'required': 'requiredValue'});
-          group.include('optional');
-          expect(group.value,
-              {'required': 'requiredValue', 'optional': 'optionalValue'});
-        });
-        test('should not run Validators on an inactive component', () {
-          var group = new ControlGroup({
-            'required': new Control('requiredValue', Validators.required),
-            'optional': new Control('', Validators.required)
-          }, {
-            'optional': false
-          });
-          expect(group.valid, true);
-          group.include('optional');
-          expect(group.valid, false);
-        });
-      });
+
       group('valueChanges', () {
         Control c1, c2;
         ControlGroup g;
+
         setUp(() {
           c1 = new Control('old1');
           c2 = new Control('old2');
-          g = new ControlGroup({'one': c1, 'two': c2}, {'two': true});
+          g = new ControlGroup({'one': c1, 'two': c2});
         });
+
         test('should fire an event after the value has been updated', () async {
           g.valueChanges.listen(expectAsync1((value) {
             expect(g.value, {'one': 'new1', 'two': 'old2'});
@@ -293,6 +253,7 @@ void main() {
           }));
           c1.updateValue('new1');
         });
+
         test(
             'should fire an event after the control\'s observable fired an '
             'event', () async {
@@ -305,19 +266,7 @@ void main() {
           }));
           c1.updateValue('new1');
         });
-        test('should fire an event when a control is excluded', () async {
-          g.valueChanges.listen(expectAsync1((value) {
-            expect(value, {'one': 'old1'});
-          }));
-          g.exclude('two');
-        });
-        test('should fire an event when a control is included', () async {
-          g.exclude('two');
-          g.valueChanges.listen(expectAsync1((value) {
-            expect(value, {'one': 'old1', 'two': 'old2'});
-          }));
-          g.include('two');
-        });
+
         test('should fire an event every time a control is updated', () async {
           var loggedValues = [];
           g.valueChanges.listen(expectAsync1((value) {
@@ -333,6 +282,7 @@ void main() {
           c2.updateValue('new2');
         });
       });
+
       group('getError', () {
         test('should return the error when it is present', () {
           var c = new Control('', Validators.required);
@@ -340,6 +290,7 @@ void main() {
           expect(c.getError('required'), true);
           expect(g.getError('required', ['one']), true);
         });
+
         test('should return null otherwise', () {
           var c = new Control('not empty', Validators.required);
           var g = new ControlGroup({'one': c});
@@ -349,6 +300,7 @@ void main() {
         });
       });
     });
+
     group('ControlArray', () {
       group('adding/removing', () {
         ControlArray a;

@@ -27,11 +27,6 @@ void main() {
       expect(group.controls['login'].value, 'some value');
       expect(group.controls['login'].validator == _syncValidator, true);
     });
-    test('should create groups with optional controls', () {
-      var group = FormBuilder
-          .controlGroup({'login': 'some value'}, optionals: {'login': false});
-      expect(group.contains('login'), false);
-    });
     test('should create groups with a custom validator', () {
       var group = FormBuilder
           .controlGroup({'login': 'some value'}, validator: _syncValidator);

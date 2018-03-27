@@ -47,10 +47,9 @@ class FormBuilder {
   /// See the [ControlGroup] constructor for more details.
   static model_module.ControlGroup controlGroup(
       Map<String, dynamic> controlsConfig,
-      {Map<String, bool> optionals,
-      ValidatorFn validator}) {
+      {ValidatorFn validator}) {
     var controls = _reduceControls(controlsConfig);
-    return new model_module.ControlGroup(controls, optionals, validator);
+    return new model_module.ControlGroup(controls, validator);
   }
 
   /// Construct an array of [Control]s from the given [controlsConfig] array of
