@@ -36,23 +36,22 @@ class RouterImpl extends Router {
   RouterImpl(this._location, @Optional() this._routerHook) {
     Url.isHashStrategy = _location.platformStrategy is HashLocationStrategy;
 
-    _location.subscribe((_) async {
-      var url = Url.parse(_location.path());
-
-      var navigationResult = await _navigateRouter(
-          url.path,
-          new NavigationParams(
-              queryParameters: url.queryParameters,
-              fragment: Url.isHashStrategy
-                  ? url.fragment
-                  : Url.normalizeHash(_location.hash()),
-              updateUrl: false));
-
-      // If the back navigation was blocked (DeactivateGuard), push the
-      // activeState back into the history.
-      if (navigationResult == NavigationResult.BLOCKED_BY_GUARD) {
-        _location.replaceState(_activeState.toUrl());
-      }
+    _location.subscribe((_) {
+      final url = Url.parse(_location.path());
+      final fragment = Url.isHashStrategy
+          ? url.fragment
+          : Url.normalizeHash(_location.hash());
+      final navigationParams = new NavigationParams(
+          queryParameters: url.queryParameters,
+          fragment: fragment,
+          updateUrl: false);
+      _navigateRouter(url.path, navigationParams).then((navigationResult) {
+        // If the back navigation was blocked (DeactivateGuard), push the
+        // activeState back into the history.
+        if (navigationResult == NavigationResult.BLOCKED_BY_GUARD) {
+          _location.replaceState(_activeState.toUrl());
+        }
+      });
     });
   }
 
@@ -197,19 +196,19 @@ class RouterImpl extends Router {
 
   /// Translates a navigation request to the MutableRouterState.
   Future<MutableRouterState> _resolveState(
-      String path, NavigationParams navigationParams) async {
-    MutableRouterState routerState =
-        await _resolveStateForOutlet(_rootOutlet, path);
-    if (routerState == null) {
-      return routerState;
-    }
-
-    routerState
-      ..path = path
-      ..fragment = navigationParams?.fragment ?? ''
-      ..queryParameters = navigationParams?.queryParameters ?? {};
-
-    return _attachDefaultChildren(routerState);
+    String path,
+    NavigationParams navigationParams,
+  ) {
+    return _resolveStateForOutlet(_rootOutlet, path).then((routerState) {
+      if (routerState != null) {
+        routerState.path = path;
+        if (navigationParams != null) {
+          routerState.fragment = navigationParams.fragment;
+          routerState.queryParameters = navigationParams.queryParameters;
+        }
+        return _attachDefaultChildren(routerState);
+      }
+    });
   }
 
   /// Recursive function to iterate through route tree.
@@ -230,7 +229,7 @@ class RouterImpl extends Router {
         MutableRouterState routerState;
         final component = await _getTypeFromRoute(route);
         ComponentRef componentRef =
-            component != null ? await outlet.prepare(component) : null;
+            component != null ? outlet.prepare(component) : null;
 
         // TODO(nxl): Handle wildcard paths.
         // Only the prefix matched and the route is not a wildcard path.
@@ -294,15 +293,14 @@ class RouterImpl extends Router {
   ///
   /// Checks if the route is a valid component route and returns the component
   /// type. If the route is not a valid component route, returns null.
-  Future<ComponentFactory> _getTypeFromRoute(RouteDefinition route) async {
-    ComponentFactory component;
+  FutureOr<ComponentFactory> _getTypeFromRoute(RouteDefinition route) {
     if (route is ComponentRouteDefinition) {
-      component = route.component;
+      return route.component;
     }
     if (route is DeferredRouteDefinition) {
-      component = await route.loader();
+      return route.loader();
     }
-    return component;
+    return null;
   }
 
   /// Navigates the remaining router tree and adds the default children.
@@ -340,7 +338,7 @@ class RouterImpl extends Router {
         // The default route has a component, and we need to check for defaults
         // on the child route.
         if (component != null) {
-          final instance = await nextOutlet.prepare(component);
+          final instance = nextOutlet.prepare(component);
           stateSoFar
             ..factories[instance] = component
             ..components.add(instance);
@@ -408,32 +406,32 @@ class RouterImpl extends Router {
 
   /// Activates a [RouterState] in the matched [RouterOutlet]s.
   Future _activateRouterState(MutableRouterState mutableNextState) async {
-    RouterState nextState = mutableNextState.build();
+    final nextState = mutableNextState.build();
 
-    _activeComponentRefs.forEach((componentRef) {
-      if (componentRef.instance is OnDeactivate) {
-        (componentRef.instance as OnDeactivate)
-            .onDeactivate(_activeState, nextState);
+    for (final componentRef in _activeComponentRefs) {
+      final component = componentRef.instance;
+      if (component is OnDeactivate) {
+        component.onDeactivate(_activeState, nextState);
       }
-    });
+    }
 
-    RouterOutlet currentOutlet = _rootOutlet;
+    var currentOutlet = _rootOutlet;
     for (var i = 0, len = mutableNextState.components.length; i < len; ++i) {
       // Get the ComponentRef created during route resolution.
-      final resolvedComponent = mutableNextState.components[i];
-      final factory = mutableNextState.factories[resolvedComponent];
-      await currentOutlet.activate(factory, _activeState, nextState);
+      final resolvedComponentRef = mutableNextState.components[i];
+      final componentFactory = mutableNextState.factories[resolvedComponentRef];
       // Grab the cached ComponentRef in case the outlet recreated it.
-      final component = await currentOutlet.prepare(factory);
-      if (!identical(component, resolvedComponent)) {
+      await currentOutlet.activate(componentFactory, _activeState, nextState);
+      final componentRef = currentOutlet.prepare(componentFactory);
+      if (!identical(componentRef, resolvedComponentRef)) {
         // Replace the resolved ComponentRef with the active ComponentRef so
         // that lifecycle methods are invoked on the correct instance.
-        mutableNextState.components[i] = component;
+        mutableNextState.components[i] = componentRef;
       }
-      currentOutlet = component.injector.get(RouterOutletToken).routerOutlet;
-
-      if (component.instance is OnActivate) {
-        (component.instance as OnActivate).onActivate(_activeState, nextState);
+      currentOutlet = componentRef.injector.get(RouterOutletToken).routerOutlet;
+      final component = componentRef.instance;
+      if (component is OnActivate) {
+        component.onActivate(_activeState, nextState);
       }
     }
 
