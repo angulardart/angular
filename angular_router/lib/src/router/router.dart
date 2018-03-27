@@ -31,8 +31,8 @@ enum NavigationResult { SUCCESS, BLOCKED_BY_GUARD, INVALID_ROUTE }
 abstract class Router {
   /// Current state of the router.
   ///
-  /// During a stream navigation (via [listen]), this represents the previous
-  /// state and is updated _after_ all subscribers are notified.
+  /// Note this isn't updated until after all `onActivate` implementations are
+  /// invoked, and [onRouteActivated] fires.
   RouterState get current;
 
   /// Emits the requested path when navigation starts.
