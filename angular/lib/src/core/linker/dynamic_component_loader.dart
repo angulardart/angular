@@ -4,7 +4,7 @@ import '../di.dart';
 import 'component_factory.dart' show ComponentRef;
 import 'component_loader.dart' show ComponentLoader;
 // ignore: deprecated_member_use
-import 'component_resolver.dart' show ComponentResolver;
+import 'component_resolver.dart' show typeToFactory;
 import 'view_container_ref.dart' show ViewContainerRef;
 
 // TODO: Remove the following lines (for --no-implicit-casts).
@@ -23,18 +23,16 @@ import 'view_container_ref.dart' show ViewContainerRef;
 @Injectable()
 class SlowComponentLoader {
   final ComponentLoader _loader;
-  // ignore: deprecated_member_use
-  final ComponentResolver _resolver;
 
-  const SlowComponentLoader(this._loader, this._resolver);
+  const SlowComponentLoader(this._loader);
 
   /// Creates and loads a new instance of the component defined by [type].
   ///
   /// See [ComponentLoader.loadDetached] for a similar example.
   Future<ComponentRef<T>> load<T>(Type type, Injector injector) {
     // Purposefully don't use async/await to retain timing.
-    // ignore: deprecated_member_use
-    return _resolver.resolveComponent(type).then((component) {
+    final factoryFuture = new Future<T>.value(typeToFactory(type));
+    return factoryFuture.then((component) {
       final reference = _loader.loadDetached<T>(component, injector: injector);
       reference.onDestroy(() {
         reference.location.remove();
@@ -52,8 +50,8 @@ class SlowComponentLoader {
     Injector injector,
   ]) {
     // Purposefully don't use async/await to retain timing.
-    // ignore: deprecated_member_use
-    return _resolver.resolveComponent(type).then((component) {
+    final factoryFuture = new Future<T>.value(typeToFactory(type));
+    return factoryFuture.then((component) {
       return _loader.loadNextToLocation(
         component,
         location,

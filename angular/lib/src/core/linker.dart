@@ -3,8 +3,6 @@
 export "linker/component_factory.dart" show ComponentRef, ComponentFactory;
 export "linker/component_loader.dart" show ComponentLoader;
 // ignore: deprecated_member_use
-export "linker/component_resolver.dart" show ComponentResolver;
-// ignore: deprecated_member_use
 export "linker/dynamic_component_loader.dart" show SlowComponentLoader;
 export "linker/element_ref.dart" show ElementRef;
 export "linker/exceptions.dart"

@@ -13,7 +13,7 @@ import 'di.dart';
 import 'linker/app_view.dart' show AppView;
 import 'linker/app_view_utils.dart';
 import 'linker/component_factory.dart' show ComponentRef, ComponentFactory;
-import 'linker/component_resolver.dart';
+import 'linker/component_resolver.dart' show typeToFactory;
 import 'render/api.dart' show sharedStylesHost;
 import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
@@ -88,11 +88,7 @@ Future<ComponentRef<T>> coreLoadAndBootstrap<T>(
   appViewUtils = injector.get(AppViewUtils);
   ApplicationRef appRef = injector.get(ApplicationRef);
   return await appRef.run(() async {
-    // ignore: deprecated_member_use
-    ComponentResolver componentResolver = injector.get(ComponentResolver);
-    ComponentFactory factory =
-        // ignore: deprecated_member_use
-        await componentResolver.resolveComponent(componentType);
+    final factory = typeToFactory(componentType);
     await appRef.waitForAsyncInitializers();
     return appRef.bootstrap(factory);
   });
