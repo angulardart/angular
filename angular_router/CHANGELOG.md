@@ -2,6 +2,13 @@
 
 *   `APP_BASE_HREF` was removed in favor of `appBaseHref`.
 
+### Bug fixes
+
+*   `CanNavigate`, `CanDeactivate`, and `OnDeactivate` should now always be
+    invoked on the active instance of a component rather than the instance
+    created during route resolution. This previously could occur when navigating
+    away and back to a nested route whose parent was not reusable.
+
 ## 2.0.0-alpha+8
 
 ### Breaking changes
