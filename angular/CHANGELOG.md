@@ -56,6 +56,10 @@
 
 *   Removed deprecated `ComponentResolver` class.
 
+*   Removed deprecated `componentFactories` and `componentTypes` getters from
+    the `ApplicationRef` class. These were used internally by the legacy router
+    and were not intended to be parts of the public API.
+
 ### Bug fixes
 
 *   String literals bound in templates now support Unicode escapes of the form
