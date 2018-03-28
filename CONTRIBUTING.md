@@ -103,6 +103,12 @@ Due to a complex set of packages, we have a more complex travis setup that is
 utilizing [build stages](https://docs.travis-ci.com/user/build-stages/). In
 order to run tests locally, use the following script (on POSIX systems):
 
+``bash
+tool/presubmit.sh
+``
+
+Or, you may specify individual testing tasks:
+
 ```bash
 $ PKG=<pkg> tool/travis.sh <task>
 ```
