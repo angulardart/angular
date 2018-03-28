@@ -86,6 +86,8 @@ class CompilerFlags {
   @experimental
   final bool useNewTemplateNormalizer;
 
+  final bool useAstPkg;
+
   const CompilerFlags({
     this.genDebugInfo: false,
     this.ignoreNgPlaceholderForGoldens: false,
@@ -94,6 +96,7 @@ class CompilerFlags {
     this.useNewTemplateNormalizer: false,
     this.useLegacyStyleEncapsulation: false,
     this.useNewPreserveWhitespace: false,
+    this.useAstPkg: true,
   });
 
   /// Creates flags by parsing command-line arguments.
