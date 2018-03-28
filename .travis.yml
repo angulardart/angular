@@ -81,6 +81,7 @@ jobs:
       cache:
         directories:
           - _benchmarks/.dart_tool
+
       addons:
         chrome: stable
       before_install:
@@ -89,11 +90,12 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: testing
-      script: ./tool/travis.sh test
+      script: ./tool/travis.sh test:release
       env: PKG="_benchmarks"
       cache:
         directories:
           - _benchmarks/.dart_tool
+
       addons:
         chrome: stable
       before_install:
@@ -138,6 +140,7 @@ jobs:
       cache:
         directories:
           - _tests/.dart_tool
+
       addons:
         chrome: stable
       before_install:
@@ -202,6 +205,7 @@ jobs:
       cache:
         directories:
           - angular_forms/.dart_tool
+
       addons:
         chrome: stable
       before_install:
@@ -226,6 +230,7 @@ jobs:
       cache:
         directories:
           - angular_router/.dart_tool
+
       addons:
         chrome: stable
       before_install:
@@ -250,6 +255,7 @@ jobs:
       cache:
         directories:
           - angular_test/.dart_tool
+
       addons:
         chrome: stable
       before_install:
@@ -281,6 +287,7 @@ jobs:
       cache:
         directories:
           - examples/github_issues/.dart_tool
+
       addons:
         chrome: stable
       before_install:
@@ -289,11 +296,12 @@ jobs:
         - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
 
     - stage: testing
-      script: ./tool/travis.sh test
+      script: ./tool/travis.sh test:release
       env: PKG="examples/github_issues"
       cache:
         directories:
           - examples/github_issues/.dart_tool
+
       addons:
         chrome: stable
       before_install:
@@ -386,4 +394,3 @@ jobs:
         provider: firebase
         message: "Travis deploy from commit $TRAVIS_COMMIT"
         project: dart-hn
-
