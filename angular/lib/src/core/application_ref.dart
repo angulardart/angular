@@ -202,12 +202,6 @@ abstract class ApplicationRef implements ChangeDetectionHost {
 
   /// Dispose of this application and all of its components.
   void dispose();
-
-  /// Get a list of component types registered to this application.
-  List<Type> get componentTypes;
-
-  /// Get a list of component factories registered to this application.
-  List<ComponentFactory> get componentFactories;
 }
 
 @Injectable()
@@ -218,8 +212,8 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
   final List<Function> _bootstrapListeners = [];
   final List<Function> _disposeListeners = [];
   final List<ComponentRef> _rootComponents = [];
-  final List<ComponentFactory> _rootComponentFactories = [];
   final List<StreamSubscription> _streamSubscriptions = [];
+
   ExceptionHandler _exceptionHandler;
   Future<bool> _asyncInitDonePromise;
   bool _asyncInitDone;
@@ -283,7 +277,6 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
     }
 
     return run(() {
-      _rootComponentFactories.add(componentFactory);
       var compRef = componentFactory.create(parent ?? _injector, const []);
       Element existingElement =
           document.querySelector(componentFactory.selector);
@@ -353,14 +346,6 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
     _streamSubscriptions.clear();
     _platform._applicationDisposed(this);
   }
-
-  @override
-  List<Type> get componentTypes =>
-      // ignore: deprecated_member_use
-      _rootComponentFactories.map((factory) => factory.componentType).toList();
-
-  @override
-  List<ComponentFactory> get componentFactories => _rootComponentFactories;
 
   @override
   void handleUncaughtException(Object error, [StackTrace trace]) {
