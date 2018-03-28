@@ -170,6 +170,41 @@ void main() {
           expect(g.errors, isNull);
         });
       });
+      group('disabled', () {
+        Control control;
+        ControlGroup group;
+
+        setUp(() {
+          control = new Control('some value');
+          group = new ControlGroup({'one': control});
+        });
+
+        test('should update status', () {
+          expect(control.disabled, false);
+          control.markAsDisabled();
+          expect(control.disabled, true);
+          control.markAsEnabled();
+          expect(control.disabled, false);
+        });
+
+        test('should programatically change value, but not status', () {
+          expect(control.value, 'some value');
+          control.markAsDisabled();
+          expect(control.value, 'some value');
+          control.updateValue('new value');
+          expect(control.value, 'new value',
+              reason: 'Value changes are propagated when disabled.');
+          expect(control.disabled, true);
+        });
+
+        test('should update parent', () {
+          expect(group.disabled, false);
+          control.markAsDisabled();
+          expect(group.disabled, true);
+          control.markAsEnabled();
+          expect(group.disabled, false);
+        });
+      });
     });
 
     group('ControlGroup', () {
@@ -297,6 +332,51 @@ void main() {
           expect(c.getError('invalid'), null);
           expect(g.getError('required', ['one']), null);
           expect(g.getError('required', ['invalid']), null);
+        });
+      });
+
+      group('disabled', () {
+        Control control;
+        ControlGroup group;
+
+        setUp(() {
+          control = new Control('some value');
+          group = new ControlGroup(
+              {'one': control, 'two': new Control('other value')});
+        });
+
+        test('should update status', () {
+          expect(group.disabled, false);
+          group.markAsDisabled();
+          expect(group.disabled, true);
+          group.markAsEnabled();
+          expect(group.disabled, false);
+        });
+
+        test('should ignore values from disabled children', () {
+          expect(group.value, {'one': 'some value', 'two': 'other value'});
+          control.markAsDisabled();
+          expect(group.value, {'two': 'other value'});
+        });
+
+        test('should ignore changes in child values', () {
+          expect(group.value, {'one': 'some value', 'two': 'other value'});
+          group.markAsDisabled();
+          expect(group.value, {'one': 'some value', 'two': 'other value'});
+          control.updateValue('new value');
+          expect(group.disabled, true);
+          expect(group.value, {'one': 'new value', 'two': 'other value'},
+              reason: 'Value changes are propagated when disabled.');
+          group.markAsEnabled();
+          expect(group.value, {'one': 'new value', 'two': 'other value'});
+        });
+
+        test('should update children', () {
+          expect(control.disabled, false);
+          group.markAsDisabled();
+          expect(control.disabled, true);
+          group.markAsEnabled();
+          expect(control.disabled, false);
         });
       });
     });
@@ -460,6 +540,50 @@ void main() {
             'array': new ControlArray([new Control('111')])
           });
           expect(g.findPath(['array', '0']).value, '111');
+        });
+      });
+
+      group('disabled', () {
+        Control control;
+        ControlArray array;
+
+        setUp(() {
+          control = new Control('some value');
+          array = new ControlArray([control, new Control('other value')]);
+        });
+
+        test('should update status', () {
+          expect(array.disabled, false);
+          array.markAsDisabled();
+          expect(array.disabled, true);
+          array.markAsEnabled();
+          expect(array.disabled, false);
+        });
+
+        test('should ignore values from disabled children', () {
+          expect(array.value, ['some value', 'other value']);
+          control.markAsDisabled();
+          expect(array.value, ['other value']);
+        });
+
+        test('should ignore changes in child values', () {
+          expect(array.value, ['some value', 'other value']);
+          array.markAsDisabled();
+          expect(array.value, ['some value', 'other value']);
+          control.updateValue('new value');
+          expect(array.disabled, true);
+          expect(array.value, ['new value', 'other value'],
+              reason: 'Value changes are propagated when disabled.');
+          array.markAsEnabled();
+          expect(array.value, ['new value', 'other value']);
+        });
+
+        test('should update children', () {
+          expect(control.disabled, false);
+          array.markAsDisabled();
+          expect(control.disabled, true);
+          array.markAsEnabled();
+          expect(control.disabled, false);
         });
       });
     });
