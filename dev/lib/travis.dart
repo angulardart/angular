@@ -117,6 +117,9 @@ class _OutputWriter {
     @required bool release,
     @required bool custom,
   }) {
+    // TODO: Support testing in release mode.
+    release = false;
+
     if (custom) {
       stages.addAll([
         '    - stage: testing',

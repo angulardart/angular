@@ -15,8 +15,6 @@ echo "Building _benchmarks in release mode..."
 PKG=_benchmarks tool/travis.sh build:release
 echo "Running tests in _benchmarks in debug mode"
 PKG=_benchmarks tool/travis.sh test
-echo "Running tests in _benchmarks in release mode"
-PKG=_benchmarks tool/travis.sh test:release
 echo "Analyzing _goldens..."
 PKG=_goldens tool/travis.sh analyze
 echo "Building _goldens in debug mode..."
@@ -72,8 +70,6 @@ echo "Building examples/github_issues in release mode..."
 PKG=examples/github_issues tool/travis.sh build:release
 echo "Running tests in examples/github_issues in debug mode"
 PKG=examples/github_issues tool/travis.sh test
-echo "Running tests in examples/github_issues in release mode"
-PKG=examples/github_issues tool/travis.sh test:release
 echo "Analyzing examples/hacker_news_pwa..."
 PKG=examples/hacker_news_pwa tool/travis.sh analyze
 echo "Building examples/hacker_news_pwa in debug mode..."
