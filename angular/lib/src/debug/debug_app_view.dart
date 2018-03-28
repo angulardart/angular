@@ -187,7 +187,7 @@ class DebugAppView<T> extends AppView<T> {
     if (renderElement is Comment) {
       var existingBindings = _templateBindingsExp
           .firstMatch(renderElement.text.replaceAll(_matchNewLine, ''));
-      var parsedBindings = JSON.decode(existingBindings[1]);
+      var parsedBindings = jsonDecode(existingBindings[1]);
       parsedBindings[propertyName] = propertyValue;
       String debugStr =
           const JsonEncoder.withIndent('  ').convert(parsedBindings);
