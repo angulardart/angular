@@ -1,6 +1,6 @@
 @TestOn('vm')
-import 'package:logging/logging.dart';
-import 'package:test/test.dart';
+import 'dart:async';
+
 import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/ast_template_parser.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
@@ -15,6 +15,8 @@ import 'package:angular/src/compiler/schema/element_schema_registry.dart'
     show ElementSchemaRegistry;
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular_compiler/cli.dart';
+import 'package:logging/logging.dart';
+import 'package:test/test.dart';
 
 import 'schema_registry_mock.dart' show MockSchemaRegistry;
 import 'template_humanizer_util.dart';
@@ -66,14 +68,21 @@ void main() {
       type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Root'),
       metadataType: CompileDirectiveMetadataType.Component);
 
-  ParseTemplate parse;
+  ParseTemplate _parse;
+
+  // TODO(matanl): Add common log testing functionality to lib/.
+  parse(template, directive, [pipes]) {
+    return runZoned(() => _parse(template, directive, pipes), zoneValues: {
+      #buildLog: Logger.root,
+    });
+  }
 
   void setUpParser({ElementSchemaRegistry elementSchemaRegistry}) {
     elementSchemaRegistry ??= new MockSchemaRegistry(
         {'invalidProp': false}, {'mappedAttr': 'mappedProp'});
     final parser = new AstTemplateParser(
         elementSchemaRegistry, new Parser(new Lexer()), new CompilerFlags());
-    parse = (template, directives, [pipes]) =>
+    _parse = (template, directives, [pipes]) =>
         parser.parse(component, template, directives, pipes ?? [], 'TestComp');
   }
 

@@ -78,15 +78,15 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   List<CompilePipeMetadata> _visitPipes(ClassElement element) => _visitTypes(
         element,
         'pipes',
-        safeMatcher(isPipe, log),
-        () => new PipeVisitor(log, _library),
+        safeMatcher(isPipe),
+        () => new PipeVisitor(_library),
       );
 
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) =>
       _visitTypes(
         element,
         _directivesProperty,
-        safeMatcher(isDirective, log),
+        safeMatcher(isDirective),
         () => new ComponentVisitor(_library),
       );
 
@@ -97,13 +97,10 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     ElementVisitor<T> visitor(),
   ) {
     return element.metadata
-        .where(safeMatcher(
-          hasDirectives,
-          log,
-        ))
+        .where(safeMatcher(hasDirectives))
         .expand((annotation) => _visitTypeObjects(
               coerceList(annotation.computeConstantValue(), field),
-              safeMatcher(annotationMatcher, log),
+              safeMatcher(annotationMatcher),
               visitor,
               // Only pass the annotation for directives: [ ... ], not other
               // elements. They also can cause problems if not resolved but it
@@ -197,7 +194,7 @@ class ComponentVisitor
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
     final annotation = element.metadata.firstWhere(
-      safeMatcher(isDirective, log),
+      safeMatcher(isDirective),
       orElse: () => null,
     );
     if (annotation == null) return null;
@@ -211,7 +208,7 @@ class ComponentVisitor
   @override
   CompileDirectiveMetadata visitFunctionElement(FunctionElement element) {
     final annotation = element.metadata.firstWhere(
-      safeMatcherType(Directive, log),
+      safeMatcherType(Directive),
       orElse: () => null,
     );
     if (annotation == null) return null;
@@ -241,7 +238,7 @@ class ComponentVisitor
       invalid = true;
     }
     if (invalid) return null;
-    final type = element.accept(new CompileTypeMetadataVisitor(log, _library));
+    final type = element.accept(new CompileTypeMetadataVisitor(_library));
     final selector = coerceString(annotationValue, 'selector');
     return new CompileDirectiveMetadata(
       type: type,
@@ -285,7 +282,7 @@ class ComponentVisitor
   CompileDirectiveMetadata visitMethodElement(MethodElement element) {
     super.visitMethodElement(element);
     for (ElementAnnotation annotation in element.metadata) {
-      if (safeMatcherType(HostListener, log)(annotation)) {
+      if (safeMatcherType(HostListener)(annotation)) {
         _addHostListener(annotation, element);
       }
     }
@@ -298,7 +295,7 @@ class ComponentVisitor
     bool isSetter: false,
   }) {
     for (ElementAnnotation annotation in element.metadata) {
-      if (safeMatcherType(Input, log)(annotation)) {
+      if (safeMatcherType(Input)(annotation)) {
         if (isSetter && element.isPublic) {
           final isField = element is FieldElement;
           // Resolves specified generic type parameters.
@@ -332,14 +329,14 @@ class ComponentVisitor
           log.severe('@Input can only be used on a public setter or non-final '
               'field, but was found on $element.');
         }
-      } else if (safeMatcherType(Output, log)(annotation)) {
+      } else if (safeMatcherType(Output)(annotation)) {
         if (isGetter && element.isPublic) {
           _addPropertyBindingTo(_outputs, annotation, element);
         } else {
           log.severe('@Output can only be used on a public getter or field, '
               'but was found on $element.');
         }
-      } else if (safeMatcherType(HostBinding, log)(annotation)) {
+      } else if (safeMatcherType(HostBinding)(annotation)) {
         if (isGetter && element.isPublic) {
           _addHostBinding(annotation, element);
         } else {
@@ -349,7 +346,7 @@ class ComponentVisitor
       } else if (safeMatcherTypes(const [
         ContentChildren,
         ContentChild,
-      ], log)(annotation)) {
+      ])(annotation)) {
         if (isSetter && element.isPublic) {
           _queries.add(_getQuery(
             annotation,
@@ -364,7 +361,7 @@ class ComponentVisitor
       } else if (safeMatcherTypes(const [
         ViewChildren,
         ViewChild,
-      ], log)(annotation)) {
+      ])(annotation)) {
         if (isSetter && element.isPublic) {
           _viewQueries.add(_getQuery(
             annotation,
@@ -517,7 +514,7 @@ class ComponentVisitor
       _implementsNoSuchMethod = true;
     }
     final annotation = element.metadata
-        .firstWhere(safeMatcher(isDirective, log), orElse: () => null);
+        .firstWhere(safeMatcher(isDirective), orElse: () => null);
     if (annotation != null) {
       // Collect metadata from class annotation.
       final annotationValue = annotation.computeConstantValue();
@@ -550,12 +547,12 @@ class ComponentVisitor
   ) {
     _directiveClassElement = element;
     _collectInheritableMetadata(element);
-    final isComp = safeMatcher(isComponent, log)(annotation);
+    final isComp = safeMatcher(isComponent)(annotation);
     final annotationValue = annotation.computeConstantValue();
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     CompileTypeMetadata componentType =
-        element.accept(new CompileTypeMetadataVisitor(log, _library));
+        element.accept(new CompileTypeMetadataVisitor(_library));
     final template = isComp
         ? _createTemplateMetadata(annotationValue, componentType)
         : new CompileTemplateMetadata();
@@ -642,7 +639,7 @@ class ComponentVisitor
   List<CompileProviderMetadata> _extractProviders(
           DartObject component, String providerField) =>
       visitAll(coerceList(component, providerField),
-          new CompileTypeMetadataVisitor(log, _library).createProviderMetadata);
+          new CompileTypeMetadataVisitor(_library).createProviderMetadata);
 
   List<CompileIdentifierMetadata> _extractExports(
       ElementAnnotationImpl annotation, ClassElement element) {

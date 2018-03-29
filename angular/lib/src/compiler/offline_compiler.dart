@@ -3,10 +3,10 @@ import 'dart:convert';
 
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
+import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata, createHostComponentMeta;
 import 'compiler_utils.dart' show stylesModuleUrl, templateModuleUrl;
-import 'directive_normalizer.dart' show DirectiveNormalizer;
 import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
@@ -47,7 +47,7 @@ const _DEBUG_PRINT_COMPILATION = false;
 
 /// Compiles a view template.
 class OfflineCompiler {
-  final DirectiveNormalizer _directiveNormalizer;
+  final AstDirectiveNormalizer _directiveNormalizer;
   final TemplateParser _templateParser;
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;

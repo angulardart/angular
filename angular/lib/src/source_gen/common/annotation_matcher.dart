@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/element.dart';
-import 'package:logging/logging.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/core/metadata.dart';
 
@@ -9,13 +9,12 @@ import 'package:angular/src/core/metadata.dart';
 /// Wraps an annotation [matcher] so that an error is not thrown.
 AnnotationMatcher safeMatcher(
   AnnotationMatcher matcher,
-  Logger logger,
 ) =>
     (annotation) {
       try {
         return matcher(annotation);
       } on ArgumentError catch (e) {
-        logger.warning('Could not resolve $annotation', e);
+        logWarning('Could not resolve $annotation: $e');
         return false;
       }
     };
@@ -23,23 +22,19 @@ AnnotationMatcher safeMatcher(
 /// Creates a matcher that checks for [type], warning if an error is thrown.
 AnnotationMatcher safeMatcherType(
   Type type,
-  Logger logger,
 ) =>
     safeMatcher(
       (annotation) => matchAnnotation(type, annotation),
-      logger,
     );
 
 /// Creates a matcher that checks for [types], warning if an error is thrown.
-AnnotationMatcher safeMatcherTypes(Iterable<Type> types, Logger logger) =>
-    safeMatcher(
+AnnotationMatcher safeMatcherTypes(Iterable<Type> types) => safeMatcher(
       (annotation) => matchTypes(types, annotation),
-      logger,
     );
 
 /// Like [isInjectable], but writes to a logger on failure.
-bool safeIsInjectable(Element element, Logger logger) =>
-    element.metadata.any(safeMatcher(_isInjectable, logger));
+bool safeIsInjectable(Element element) =>
+    element.metadata.any(safeMatcher(_isInjectable));
 
 /// Checks if any of the [Element]'s metadata is an injectable component.
 bool isInjectable(Element element) => element.metadata.any(_isInjectable);

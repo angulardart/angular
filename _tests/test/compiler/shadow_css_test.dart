@@ -1,6 +1,9 @@
 @TestOn('vm')
-import 'package:test/test.dart';
+import 'dart:async';
+
 import 'package:angular/src/compiler/shadow_css.dart';
+import 'package:logging/logging.dart';
+import 'package:test/test.dart';
 
 const content = 'content';
 const host = 'host';
@@ -59,17 +62,24 @@ String normalizeCSS(String css) {
 /// Shims [css] and compares to the [expected] output for both current and
 /// legacy encapsulation.
 void shimAndExpect(String css, String expected, {String expectedLegacy}) {
-  var actual = shimShadowCss(css, content, host);
-  var actualLegacy =
-      shimShadowCss(css, content, host, useLegacyEncapsulation: true);
-  expect(normalizeCSS(actual), expected);
-  expect(normalizeCSS(actualLegacy), expectedLegacy ?? expected);
+  // TODO(matanl): Add common log testing functionality to lib/.
+  runZoned(() {
+    var actual = shimShadowCss(css, content, host);
+    var actualLegacy =
+        shimShadowCss(css, content, host, useLegacyEncapsulation: true);
+    expect(normalizeCSS(actual), expected);
+    expect(normalizeCSS(actualLegacy), expectedLegacy ?? expected);
+  }, zoneValues: {#buildLog: Logger.root});
 }
 
 /// Shims [css] and compares to the [expected] output for legacy syntax only.
 void legacyShimAndExpect(String css, String expected) {
-  var actual = shimShadowCss(css, content, host, useLegacyEncapsulation: true);
-  expect(normalizeCSS(actual), expected);
+  // TODO(matanl): Add common log testing functionality to lib/.
+  runZoned(() {
+    var actual =
+        shimShadowCss(css, content, host, useLegacyEncapsulation: true);
+    expect(normalizeCSS(actual), expected);
+  }, zoneValues: {#buildLog: Logger.root});
 }
 
 void main() {

@@ -19,7 +19,6 @@ import 'template_ast.dart' as ng;
 import 'template_optimize.dart';
 import 'template_parser.dart';
 import 'template_parser/recursive_template_visitor.dart';
-import 'template_preparser.dart';
 
 // TODO: Remove the following lines (for --no-implicit-casts).
 // ignore_for_file: argument_type_not_assignable
@@ -28,6 +27,14 @@ import 'template_preparser.dart';
 // ignore_for_file: non_bool_operand
 // ignore_for_file: return_of_invalid_type
 
+const NG_CONTENT_SELECT_ATTR = 'select';
+const NG_CONTENT_ELEMENT = 'ng-content';
+const LINK_ELEMENT = 'link';
+const LINK_STYLE_REL_ATTR = 'rel';
+const LINK_STYLE_HREF_ATTR = 'href';
+const LINK_STYLE_REL_VALUE = 'stylesheet';
+const STYLE_ELEMENT = 'style';
+const SCRIPT_ELEMENT = 'script';
 const _templateElement = 'template';
 
 /// A [TemplateParser] which uses the `angular_ast` package to parse angular
