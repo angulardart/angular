@@ -1,7 +1,6 @@
+import 'package:angular_compiler/cli.dart';
 import 'package:csslib/parser.dart';
 import 'package:csslib/visitor.dart';
-
-import 'logging.dart' show logger;
 
 /// This is a limited shim for Shadow DOM CSS styling.
 ///
@@ -99,7 +98,7 @@ String shimShadowCss(String css, String contentClass, String hostClass,
   var styleSheet = parse(css, errors: errors);
 
   if (errors.isNotEmpty) {
-    logger.warning('Errors parsing CSS:\n${errors.join('\n')}');
+    logWarning('Errors parsing CSS:\n${errors.join('\n')}');
   }
 
   var shadowTransformer = useLegacyEncapsulation
@@ -160,7 +159,7 @@ SelectorGroup selectorGroupForProperty(
     {bool remove: false}) {
   var declaration = getDeclaration(declarationGroup, propertyName);
   if (declaration == null) {
-    logger.warning(
+    logWarning(
         declarationGroup.span.message("Expected property '$propertyName'"));
     return null;
   }
@@ -171,7 +170,7 @@ SelectorGroup selectorGroupForProperty(
 
   var selectorGroup = parseSelectorGroupFrom(declaration);
   if (selectorGroup == null) {
-    logger.warning(declaration.expression.span.message('Not a valid selector'));
+    logWarning(declaration.expression.span.message('Not a valid selector'));
     return null;
   }
 
@@ -335,12 +334,12 @@ class CompoundSelector {
 
     if ((x is ElementSelector && y is ElementSelector) ||
         (x is NamespaceSelector && y is NamespaceSelector)) {
-      logger.warning('Compound selector contains multiple type selectors:\n'
+      logWarning('Compound selector contains multiple type selectors:\n'
           '${x.span.message('')}\n'
           '${y.span.message('')}');
       return 0;
     } else if (x is PseudoElementSelector && y is PseudoElementSelector) {
-      logger.warning(
+      logWarning(
           'Compound selector contains multiple pseudo element selectors:\n'
           '${x.span.message('')}\n'
           '${y.span.message('')}');
