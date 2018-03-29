@@ -1,8 +1,8 @@
-import 'package:logging/logging.dart';
-import 'package:source_span/source_span.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
+import 'package:angular_compiler/cli.dart';
+import 'package:source_span/source_span.dart';
 
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../expression_parser/parser.dart' show Parser;
@@ -40,8 +40,6 @@ class DirectiveCompiler {
   bool _implementsComponentState;
   ViewNameResolver _nameResolver;
 
-  Logger _logger;
-
   DirectiveCompiler(
       this.directive, this._parser, this._schemaRegistry, this.genDebugInfo)
       : hasOnChangesLifecycle =
@@ -58,8 +56,6 @@ class DirectiveCompiler {
     var classStmt = _buildChangeDetector();
     return new DirectiveCompileResult(classStmt);
   }
-
-  Logger get logger => _logger ??= new Logger('View Compiler');
 
   o.ClassStmt _buildChangeDetector() {
     var ctor = _createChangeDetectorConstructor(directive);
@@ -132,9 +128,9 @@ class DirectiveCompiler {
     var errorHandler =
         (String message, SourceSpan sourceSpan, [ParseErrorLevel level]) {
       if (level == ParseErrorLevel.FATAL) {
-        logger.severe(message);
+        throwFailure(message);
       } else {
-        logger.warning(message);
+        logWarning(message);
       }
     };
 

@@ -1,5 +1,6 @@
-import 'package:logging/logging.dart';
 import 'package:angular/src/core/linker/view_type.dart';
+import 'package:angular_compiler/cli.dart';
+
 import '../compile_metadata.dart'
     show
         CompileTokenMap,
@@ -69,7 +70,6 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
 
   var _queryCount = 0;
   final _queries = new CompileTokenMap<List<CompileQuery>>();
-  final Logger _logger;
   ProvidersNode _providers;
 
   List<List<o.Expression>> contentNodesByNgContentIndex;
@@ -92,7 +92,6 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       this.hasViewContainer,
       this.hasEmbeddedView,
       List<ReferenceAst> references,
-      this._logger,
       {this.isHtmlElement: false,
       this.hasTemplateRefQuery: false,
       this.isInlined: false,
@@ -129,7 +128,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
 
   CompileElement.root()
       : this(null, null, null, new NodeReference.appViewRoot(), null, null, [],
-            [], false, false, [], null);
+            [], false, false, []);
 
   set componentView(o.Expression componentViewExpr) {
     _compViewExpr = componentViewExpr;
@@ -323,8 +322,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     CompileDirectiveMetadata deferredMeta = deferredElement.component;
     if (deferredMeta == null) {
       ElementAst elemAst = deferredElement.sourceAst;
-      _logger.severe('Cannot defer Unknown component type <${elemAst.name}>');
-      return;
+      throwFailure('Cannot defer Unknown component type <${elemAst.name}>');
     }
     String deferredModuleUrl = deferredMeta.identifier.moduleUrl;
     String prefix = embeddedView.deferredModules[deferredModuleUrl];

@@ -3,7 +3,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
-import 'package:logging/logging.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../../compiler/output/convert.dart';
@@ -12,18 +12,16 @@ import 'dart_object_utils.dart';
 import 'find_components.dart';
 
 class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
-  final Logger _logger;
   final LibraryReader _library;
 
-  PipeVisitor(this._logger, this._library);
+  PipeVisitor(this._library);
 
   @override
   CompilePipeMetadata visitClassElement(ClassElement element) {
     final annotation = element.metadata.firstWhere(isPipe, orElse: () => null);
     if (annotation == null) return null;
     if (element.isPrivate) {
-      _logger.severe('Pipes must be public: $element');
-      return null;
+      throwFailure('Pipes must be public: $element');
     }
     return _createPipeMetadata(annotation, element);
   }
@@ -47,12 +45,11 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
       }
     }
     if (transformType == null) {
-      _logger.severe("Pipe has no 'transform' method: $element");
-      return null;
+      throwFailure("Pipe has no 'transform' method: $element");
     }
     final value = annotation.computeConstantValue();
     return new CompilePipeMetadata(
-      type: element.accept(new CompileTypeMetadataVisitor(_logger, _library)),
+      type: element.accept(new CompileTypeMetadataVisitor(_library)),
       transformType: fromFunctionType(transformType),
       name: coerceString(value, 'name'),
       pure: coerceBool(value, 'pure', defaultTo: true),
