@@ -66,6 +66,12 @@
     `\u{?-??????}`. This enables support for Unicode supplementary planes, which
     includes emojis!
 
+### Internal cleanup
+
+*   Template normalization in the compiler now uses the newer template parser
+    based on `package:angular_ast`. There is no flag to enable the old behavior
+    but please reach out if you see issues in this release.
+
 ## 5.0.0-alpha+8
 
 ### New features
