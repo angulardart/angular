@@ -91,7 +91,7 @@ class CompilerFlags {
     this.ignoreNgPlaceholderForGoldens: false,
     this.profileFor: Profile.none,
     this.useFastBoot: true,
-    this.useNewTemplateNormalizer: false,
+    this.useNewTemplateNormalizer: true,
     this.useLegacyStyleEncapsulation: false,
     this.useNewPreserveWhitespace: false,
   });
