@@ -1,11 +1,11 @@
 name: angular
-version: 5.0.0-alpha+8
+version: 5.0.0-alpha+9
 author: Dart Team <web@dartlang.org>
 description: Fast and productive web framework
 homepage: https://webdev.dartlang.org/angular
 documentation: https://webdev.dartlang.org/angular/api
 environment:
-  sdk: ">=2.0.0-dev.28.0 <2.0.0"
+  sdk: ">=2.0.0-dev.32.0 <2.0.0"
 
 dependencies:
   # Runtime (or runtime *and* the compiler).
@@ -18,8 +18,8 @@ dependencies:
 
   # Compiler. Eventually we want to move these to angular_compiler.
   analyzer: '^0.31.0+1'
-  angular_ast: ^0.4.4
-  angular_compiler: ^0.4.0-alpha+8
+  angular_ast: ^0.5.0
+  angular_compiler: ^0.4.0-alpha+9
   build: ^0.12.0+2
   code_builder: '^3.0.1'
   csslib: ^0.14.1

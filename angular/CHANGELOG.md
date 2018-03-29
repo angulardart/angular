@@ -1,3 +1,5 @@
+## 5.0.0-alpha+9
+
 ### New features
 
 *   Static properties and methods of a component may now be referenced without a
