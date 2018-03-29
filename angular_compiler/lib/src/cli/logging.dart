@@ -74,7 +74,7 @@ class BuildError extends Error {
   @override
   final Trace stackTrace;
 
-  BuildError(this.message, [Trace trace])
+  BuildError([this.message, Trace trace])
       : stackTrace = trace ?? new Trace.current();
 
   // TODO: Remove internal API once ElementAnnotation has source information.
