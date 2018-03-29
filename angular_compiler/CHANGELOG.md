@@ -2,6 +2,10 @@
 
 *   `TokenReader` no longer supports arbitrary const objects or literals.
 
+### Bug Fixes
+
+*   Fixed a bug where the compiler crashed after resolving a bound type failed.
+
 ## 0.4.0-alpha+8
 
 ### Breaking changes

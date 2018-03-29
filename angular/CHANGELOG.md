@@ -66,6 +66,9 @@
     `\u{?-??????}`. This enables support for Unicode supplementary planes, which
     includes emojis!
 
+*   Using `@GenerateInjector` with a `ValueProvider` where the value is either a
+    top-level function or static-class method no longer crashes.
+
 ### Internal cleanup
 
 *   Template normalization in the compiler now uses the newer template parser

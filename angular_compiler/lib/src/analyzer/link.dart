@@ -27,10 +27,15 @@ DartType _resolveBounds(DartType type) {
 
 /// Returns a [TypeLink] to the given statically analyzed [DartType].
 TypeLink linkTypeOf(DartType type) {
+  // Return dynamic type (no type found).
   if (type.element.library == null) {
     return TypeLink.$dynamic;
   }
   type = _resolveBounds(type);
+  // Return dynamic type (no type found) after _resolveBounds.
+  if (type.element.library == null) {
+    return TypeLink.$dynamic;
+  }
   return new TypeLink(
     getTypeName(type),
     normalizeUrl(type.element.library.source.uri).toString(),

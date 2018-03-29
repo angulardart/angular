@@ -12,7 +12,6 @@ void main() {
 
   setUp(() => injector = example());
 
-  // TODO(matanl): Gradually enable actual test cases as they are supported.
   group('should resolve useValue: targeting a', () {
     test('class with a const constructor', () {
       expect(
@@ -55,33 +54,57 @@ void main() {
         const isInstanceOf<ClassWithRedirectingConstructor>(),
       );
     });
+
+    test('top-level function', () {
+      IntIdentityFn fn = injector.get(intIdentityToken);
+      expect(fn(1), 1);
+    });
+
+    test('static-level method', () {
+      StringIdentityFn fn = injector.get(stringIdentityToken);
+      expect(fn('a'), 'a');
+    });
   });
 }
 
+typedef IntIdentityFn = int Function(int);
+const intIdentityToken = const OpaqueToken<IntIdentityFn>();
+
+typedef StringIdentityFn = String Function(String);
+const stringIdentityToken = const OpaqueToken<StringIdentityFn>();
+
 @GenerateInjector(const [
-  const Provider(
+  const ValueProvider(
     ClassWithConstConstructor,
-    useValue: const ClassWithConstConstructor(),
+    const ClassWithConstConstructor(),
   ),
-  const Provider(
+  const ValueProvider(
     ClassWithNamedConstConstructor,
-    useValue: const ClassWithNamedConstConstructor.someName(),
+    const ClassWithNamedConstConstructor.someName(),
   ),
-  const Provider(
+  const ValueProvider(
     ClassWithMultipleConstructors,
-    useValue: const ClassWithMultipleConstructors.isConst(),
+    const ClassWithMultipleConstructors.isConst(),
   ),
-  const Provider(
+  const ValueProvider(
     ClassWithPrivateConstructorAndStaticField,
-    useValue: ClassWithPrivateConstructorAndStaticField.instance,
+    ClassWithPrivateConstructorAndStaticField.instance,
   ),
-  const Provider(
+  const ValueProvider(
     ClassWithPrivateConstructorAndTopLevelField,
-    useValue: topLevelInstance,
+    topLevelInstance,
   ),
-  const Provider(
+  const ValueProvider(
     ClassWithRedirectingConstructor,
-    useValue: const ClassWithRedirectingConstructor(),
+    const ClassWithRedirectingConstructor(),
+  ),
+  const ValueProvider.forToken(
+    intIdentityToken,
+    topLevelMethod,
+  ),
+  const ValueProvider.forToken(
+    stringIdentityToken,
+    StaticClass.staticMethod,
   ),
 ])
 final InjectorFactory example = ng.example$Injector;
@@ -124,4 +147,10 @@ abstract class ClassWithRedirectingConstructor {
 
 class _ConcreteClass implements ClassWithRedirectingConstructor {
   const _ConcreteClass();
+}
+
+int topLevelMethod(int a) => a;
+
+class StaticClass {
+  static String staticMethod(String a) => a;
 }
