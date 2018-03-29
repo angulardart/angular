@@ -2,6 +2,15 @@
 
 *   `APP_BASE_HREF` was removed in favor of `appBaseHref`.
 
+*   When navigating to and from the same implementation of `CanReuse`, if it
+    returns true, the implementation will remain attached to the DOM.
+    Previously, components were unconditionally detached from the DOM on
+    navigation, and reusable components would simply be reattached.
+
+    This *may* be a change to the scroll behavior of your components, as
+    temporarily removing reused components from the DOM could reset the scroll
+    position if no other content was present.
+
 ### Bug fixes
 
 *   `CanNavigate`, `CanDeactivate`, and `OnDeactivate` should now always be

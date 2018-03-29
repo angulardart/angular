@@ -134,26 +134,32 @@ class RouterOutlet implements OnInit, OnDestroy {
     RouterState oldState,
     RouterState newState,
   ) async {
-    var activeInstance = _activeComponent;
-
-    if (activeInstance != null) {
-      if (!await _shouldReuse(activeInstance.instance, oldState, newState)) {
-        _loadedComponents.remove(_activeComponentFactory);
-        activeInstance.destroy();
-        // Clear will the detach and destroy all views.
-        _viewContainerRef.clear();
-      } else {
-        for (int i = _viewContainerRef.length - 1; i >= 0; i--) {
+    final activeComponent = _activeComponent;
+    if (activeComponent != null) {
+      final shouldReuse = await _shouldReuse(
+        activeComponent.instance,
+        oldState,
+        newState,
+      );
+      if (shouldReuse) {
+        // If both routes render the same component, don't detach it from DOM.
+        if (identical(_activeComponentFactory, componentFactory)) return;
+        // Detach the active component, keeping it cached for reuse.
+        for (var i = _viewContainerRef.length - 1; i >= 0; --i) {
           _viewContainerRef.detach(i);
         }
+      } else {
+        // Destroy the active component.
+        _loadedComponents.remove(_activeComponentFactory);
+        activeComponent.destroy();
+        _viewContainerRef.clear();
       }
     }
-
-    // Clear and re-insert the component view.
+    // Render the new component in the outlet.
     _activeComponentFactory = componentFactory;
-    activeInstance = prepare(componentFactory);
-    _viewContainerRef.insert(activeInstance.hostView);
-    activeInstance.changeDetectorRef.detectChanges();
+    final component = prepare(componentFactory);
+    _viewContainerRef.insert(component.hostView);
+    component.changeDetectorRef.detectChanges();
   }
 
   FutureOr<bool> _shouldReuse(
