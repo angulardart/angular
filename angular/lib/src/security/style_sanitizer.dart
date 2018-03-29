@@ -1,5 +1,6 @@
+import 'dart:html';
+
 import 'package:angular/src/runtime.dart';
-import 'package:logging/logging.dart';
 
 import 'url_sanitizer.dart';
 
@@ -47,7 +48,6 @@ final RegExp SAFE_STYLE_VALUE =
 /// of an attack, this code is permissive and allows URLs that sanitize
 /// otherwise.
 final RegExp URL_RE = new RegExp(r'^url\([^)]+\)$');
-final Logger _logger = new Logger('AngularSanitizer');
 
 /// Checks that quotes (" and ') are properly balanced inside a string. Assumes
 /// that neither escape (\) nor any other character that could result in
@@ -106,7 +106,7 @@ String internalSanitizeStyle(String value) {
     if (!failed) return value;
   }
   if (isDevMode) {
-    _logger.warning('Sanitizing unsafe style value $value '
+    window.console.warn('Sanitizing unsafe style value $value '
         '(see http://g.co/ng/security#xss).');
   }
   return 'unsafe';

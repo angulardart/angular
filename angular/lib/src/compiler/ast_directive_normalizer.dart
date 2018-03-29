@@ -6,7 +6,6 @@ import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
 
 import 'compile_metadata.dart';
-import 'directive_normalizer.dart';
 import 'expression_parser/visitor.dart';
 import 'style_url_resolver.dart' show extractStyleUrls, isStyleUrlResolvable;
 
@@ -16,7 +15,7 @@ import 'style_url_resolver.dart' show extractStyleUrls, isStyleUrlResolvable;
 /// content and styles are available to the compilation step as simple strings.
 ///
 /// The normalizer also resolves inline style and stylesheets in the template.
-class AstDirectiveNormalizer implements DirectiveNormalizer {
+class AstDirectiveNormalizer {
   final NgAssetReader _reader;
   const AstDirectiveNormalizer(this._reader);
 
@@ -27,7 +26,6 @@ class AstDirectiveNormalizer implements DirectiveNormalizer {
     astNode.accept(new LegacyExpressionVisitor(exports: exports));
   }
 
-  @override
   Future<CompileDirectiveMetadata> normalizeDirective(
     CompileDirectiveMetadata directive,
   ) {
@@ -35,7 +33,7 @@ class AstDirectiveNormalizer implements DirectiveNormalizer {
     if (!directive.isComponent) {
       return new Future.value(directive);
     }
-    return normalizeTemplate(
+    return _normalizeTemplate(
       directive.type,
       directive.template,
       exports: directive.exports,
@@ -65,8 +63,7 @@ class AstDirectiveNormalizer implements DirectiveNormalizer {
     });
   }
 
-  @override
-  Future<CompileTemplateMetadata> normalizeTemplate(
+  Future<CompileTemplateMetadata> _normalizeTemplate(
     CompileTypeMetadata directiveType,
     CompileTemplateMetadata template, {
     List<CompileIdentifierMetadata> exports,
@@ -74,7 +71,7 @@ class AstDirectiveNormalizer implements DirectiveNormalizer {
     template ??= new CompileTemplateMetadata(template: '');
     if (template.template != null) {
       await _validateTemplateUrlNotMeant(template.template, directiveType);
-      return normalizeLoadedTemplate(
+      return _normalizeLoadedTemplate(
         directiveType,
         template,
         template.template,
@@ -89,7 +86,7 @@ class AstDirectiveNormalizer implements DirectiveNormalizer {
         template.templateUrl,
       );
       return _reader.readText(sourceAbsoluteUrl).then((templateContent) {
-        return normalizeLoadedTemplate(
+        return _normalizeLoadedTemplate(
           directiveType,
           template,
           templateContent,
@@ -126,8 +123,7 @@ class AstDirectiveNormalizer implements DirectiveNormalizer {
     });
   }
 
-  @override
-  CompileTemplateMetadata normalizeLoadedTemplate(
+  CompileTemplateMetadata _normalizeLoadedTemplate(
     CompileTypeMetadata directiveType,
     CompileTemplateMetadata templateMeta,
     String template,

@@ -1,6 +1,7 @@
-import 'package:source_span/source_span.dart';
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/facade/lang.dart' show jsSplit;
+import 'package:angular_compiler/cli.dart';
+import 'package:source_span/source_span.dart';
 
 import '../core/security.dart';
 import 'compile_metadata.dart'
@@ -8,7 +9,6 @@ import 'compile_metadata.dart'
 import 'expression_parser/ast.dart' show AST;
 import 'expression_parser/ast.dart';
 import 'html_tags.dart' show splitNsName, mergeNsAndName;
-import 'logging.dart' show logger;
 import 'parse_util.dart' show ParseError, ParseErrorLevel;
 import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import 'selector.dart' show CssSelector;
@@ -64,7 +64,7 @@ void handleParseErrors(List<ParseError> parseErrors) {
     }
   }
   if (warnings.isNotEmpty) {
-    logger.warning("Template parse warnings:\n${warnings.join('\n')}");
+    logWarning("Template parse warnings:\n${warnings.join('\n')}");
   }
   if (errors.isNotEmpty) {
     var errorString = errors.join('\n');
@@ -145,7 +145,7 @@ BoundElementPropertyAst createElementPropertyAst(
       securityContext, valueExpr, unit, sourceSpan);
 }
 
-List<String> splitClasses(String classAttrValue) {
+List<String> _splitClasses(String classAttrValue) {
   return jsSplit(classAttrValue.trim(), (new RegExp(r'\s+')));
 }
 
@@ -165,7 +165,7 @@ CssSelector createElementCssSelector(
     // the element has this attribute value.
     cssSelector.addAttribute(attrNameNoNs, '=', attrValue);
     if (attrName.toLowerCase() == CLASS_ATTR) {
-      var classes = splitClasses(attrValue);
+      var classes = _splitClasses(attrValue);
       for (var className in classes) {
         cssSelector.addClassName(className);
       }

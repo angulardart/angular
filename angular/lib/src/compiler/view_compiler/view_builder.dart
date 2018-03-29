@@ -12,7 +12,6 @@ import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
 import '../is_pure_html.dart';
-import '../logging.dart';
 import '../output/output_ast.dart' as o;
 import '../provider_parser.dart' show ngIfTokenMetadata, ngForTokenMetadata;
 import '../style_compiler.dart' show StylesCompileResult;
@@ -186,7 +185,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         ast.hasViewContainer,
         false,
         ast.references,
-        logger,
         isHtmlElement: detectHtmlElementFromTagName(ast.name),
         hasTemplateRefQuery: parent.hasTemplateRefQuery,
         isDeferredComponent: isDeferred);
@@ -261,7 +259,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         ast.hasViewContainer,
         false,
         ast.references,
-        logger,
         isHtmlElement: detectHtmlElementFromTagName(tagName),
         hasTemplateRefQuery: parent.hasTemplateRefQuery);
 
@@ -296,7 +293,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         ast.hasViewContainer,
         true,
         ast.references,
-        logger,
         hasTemplateRefQuery: parent.hasTemplateRefQuery,
         isInlined: isPureHtml);
     view.nodes.add(compileElement);
@@ -470,7 +466,7 @@ o.ClassMethod _createViewClassConstructor(
     // No namespace just call [document.createElement].
     String tagName = _tagNameFromComponentSelector(view.component.selector);
     if (tagName.isEmpty) {
-      logger.severe('Component selector is missing tag name in '
+      throwFailure('Component selector is missing tag name in '
           '${view.component.identifier.name} '
           'selector:${view.component.selector}');
     }
@@ -730,7 +726,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   o.Expression resultExpr;
   if (identical(view.viewType, ViewType.HOST)) {
     if (view.nodes.isEmpty) {
-      logger.severe('Template parser has crashed for ${view.className}');
+      throwFailure('Template parser has crashed for ${view.className}');
     }
     var hostElement = view.nodes[0] as CompileElement;
     resultExpr = o.importExpr(Identifiers.ComponentRef).instantiate(

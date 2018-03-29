@@ -8,7 +8,6 @@ import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import '../expression_parser/parser.dart';
 import '../identifiers.dart';
-import '../logging.dart';
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart';
@@ -63,9 +62,9 @@ class ViewCompiler {
     var errorHandler =
         (String message, SourceSpan sourceSpan, [ParseErrorLevel level]) {
       if (level == ParseErrorLevel.FATAL) {
-        logger.severe(message);
+        throwFailure(message);
       } else {
-        logger.warning(message);
+        logWarning(message);
       }
     };
     bindViewHostProperties(view, parser, _schemaRegistry, errorHandler);
