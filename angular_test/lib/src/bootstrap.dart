@@ -7,6 +7,7 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
+import 'package:angular/src/bootstrap/run.dart';
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
@@ -22,7 +23,7 @@ Injector createTestInjector(List<dynamic> providers) {
     appInjector = ReflectiveInjector.resolveAndCreate([
       bootstrapLegacyModule,
       providers,
-    ], browserStaticPlatform().injector);
+    ], platformInjector());
   }
   initAngular(appInjector);
   return appInjector;
