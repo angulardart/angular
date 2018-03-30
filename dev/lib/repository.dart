@@ -3,7 +3,9 @@ library dev.repository;
 
 import 'dart:io' show Directory, File, Process;
 
+import 'package:collection/collection.dart';
 import 'package:glob/glob.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 import 'package:pub_semver/pub_semver.dart';
 import 'package:yaml/yaml.dart' as yaml;
@@ -18,7 +20,6 @@ class Repository {
   ];
 
   static final _defaultExclude = [
-    new Glob('dev/**'),
     new Glob('angular/tools/**'),
     new Glob('**/build/**'),
   ];
@@ -63,11 +64,20 @@ class Repository {
     final packages = _findPubspecs(include, exclude, rootPath: path)
         .map((f) => new Package._(p.relative(p.dirname(f.path), from: path)))
         .toList();
-    return new Repository._(packages, path);
+    return new Repository(packages, path);
   }
 
-  // Internal.
-  const Repository._(this.packages, this.rootPath);
+  @visibleForTesting
+  const Repository(this.packages, this.rootPath);
+
+  @override
+  bool operator ==(o) =>
+      o is Repository &&
+      rootPath == o.rootPath &&
+      const ListEquality().equals(packages, o.packages);
+
+  @override
+  int get hashCode => rootPath.hashCode ^ const ListEquality().hash(packages);
 
   /// Reads `prefix.yaml`, used for generating `.travis.yml`.
   String readTravisPrefix() {
@@ -91,6 +101,15 @@ class Repository {
       'postfix.yaml',
     ));
     return file.readAsStringSync();
+  }
+
+  @override
+  String toString() {
+    final buffer = new StringBuffer('rootPath: $rootPath');
+    for (final package in packages) {
+      buffer.writeln('  $package');
+    }
+    return buffer.toString();
   }
 }
 
@@ -142,18 +161,32 @@ class Package {
       pubspec.readAsStringSync(),
       sourceUrl: pubspec.path,
     ) as yaml.YamlMap;
-    return new Package._with(
+    return new Package(
       dependencies: _parseDependencies(yamlDoc['dependencies']),
       devDependencies: _parseDependencies(yamlDoc['dev_dependencies']),
       path: path,
     );
   }
 
-  const Package._with({
+  @visibleForTesting
+  const Package({
     this.dependencies,
     this.devDependencies,
     this.path,
   });
+
+  @override
+  bool operator ==(o) =>
+      o is Package &&
+      path == o.path &&
+      const MapEquality().equals(dependencies, o.dependencies) &&
+      const MapEquality().equals(devDependencies, o.devDependencies);
+
+  @override
+  int get hashCode =>
+      path.hashCode ^
+      const MapEquality().hash(dependencies) ^
+      const MapEquality().hash(devDependencies);
 
   /// Whether a browser is needed to execute at least 1 test in this package.
   bool get hasBrowserTests {
@@ -191,5 +224,11 @@ class Package {
   /// Runs `pub upgrade` in this package.
   void runPubUpgrade() {
     Process.runSync('pub', ['upgrade'], workingDirectory: path);
+  }
+
+  @override
+  String toString() {
+    final buffer = new StringBuffer();
+
   }
 }
