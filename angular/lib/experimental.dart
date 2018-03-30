@@ -16,13 +16,13 @@ import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 import 'src/bootstrap/modules.dart';
-import 'src/bootstrap/run.dart' show platformInjector;
 import 'src/core/application_ref.dart';
 import 'src/core/linker.dart' show ComponentFactory, ComponentRef;
 import 'src/core/linker/app_view.dart' as app_view;
 import 'src/core/linker/app_view_utils.dart';
 import 'src/core/render/api.dart';
 import 'src/di/injector/injector.dart';
+import 'src/platform/bootstrap.dart';
 import 'src/platform/dom/shared_styles_host.dart';
 
 export 'src/bootstrap/modules.dart' show bootstrapLegacyModule;
@@ -79,7 +79,7 @@ ComponentRef<T> bootstrapFactory<T>(
 @experimental
 Injector rootInjector(Injector createAppInjector(Injector parent)) {
   // TODO(matanl): Use a generated injector once the API is stable.
-  return createAppInjector(platformInjector());
+  return createAppInjector(browserStaticPlatform().injector);
 }
 
 /// Create a root minimal application (no runtime providers) injector.
