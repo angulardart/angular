@@ -69,6 +69,17 @@ void main() {
       '<another></another><template><another></another></template>',
     );
   });
+
+  test('should remove only whitespace before/after interpolations', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <div>
+          {{foo}}
+        </div>
+      '''),
+      '<div>{{foo}}</div>',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {

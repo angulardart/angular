@@ -20,11 +20,11 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$InterpolationComponent = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponent0 = [null, null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponent0 = [null, null];
 
 class ViewInterpolationComponent0 extends DebugAppView<import2.InterpolationComponent> {
   import3.DivElement _el_0;
-  import3.Text _text_2;
+  import3.Text _text_1;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InterpolationComponent0) {
@@ -38,26 +38,20 @@ class ViewInterpolationComponent0 extends DebugAppView<import2.InterpolationComp
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
-    import3.Text _text_1 = new import3.Text('');
+    _text_1 = new import3.Text('');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
-    _text_2 = new import3.Text('');
-    _el_0.append(_text_2);
-    dbgElm(this, _text_2, 2, 1, 2);
-    import3.Text _text_3 = new import3.Text('');
-    _el_0.append(_text_3);
-    dbgElm(this, _text_3, 3, 1, 9);
-    init(const [], null, [_el_0, _text_1, _text_2, _text_3]);
+    dbgElm(this, _text_1, 1, 1, 2);
+    init(const [], null, [_el_0, _text_1]);
     return null;
   }
 
   @override
   void detectChangesInternal() {
     final import2.InterpolationComponent _ctx = ctx;
-    dbg(2, 1, 2);
+    dbg(1, 1, 2);
     final currVal_0 = (_ctx.foo ?? '');
     if (import8.checkBinding(_expr_0, currVal_0)) {
-      _text_2.text = currVal_0;
+      _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }
@@ -104,11 +98,11 @@ AppView viewFactory_InterpolationComponentHost0(AppView<dynamic> parentView, int
 
 const ComponentFactory<import2.InterpolationComponent> InterpolationComponentNgFactory = const ComponentFactory<import2.InterpolationComponent>('interpolation', viewFactory_InterpolationComponentHost0, _InterpolationComponentMetadata);
 const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentNoWhitespace0 = [null, null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentNoWhitespace0 = [null, null];
 
 class ViewInterpolationComponentNoWhitespace0 extends DebugAppView<import2.InterpolationComponentNoWhitespace> {
   import3.DivElement _el_0;
-  import3.Text _text_2;
+  import3.Text _text_1;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InterpolationComponentNoWhitespace0) {
@@ -122,26 +116,20 @@ class ViewInterpolationComponentNoWhitespace0 extends DebugAppView<import2.Inter
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
-    import3.Text _text_1 = new import3.Text('');
+    _text_1 = new import3.Text('');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
-    _text_2 = new import3.Text('');
-    _el_0.append(_text_2);
-    dbgElm(this, _text_2, 2, 1, 2);
-    import3.Text _text_3 = new import3.Text('');
-    _el_0.append(_text_3);
-    dbgElm(this, _text_3, 3, 1, 9);
-    init(const [], null, [_el_0, _text_1, _text_2, _text_3]);
+    dbgElm(this, _text_1, 1, 1, 2);
+    init(const [], null, [_el_0, _text_1]);
     return null;
   }
 
   @override
   void detectChangesInternal() {
     final import2.InterpolationComponentNoWhitespace _ctx = ctx;
-    dbg(2, 1, 2);
+    dbg(1, 1, 2);
     final currVal_0 = (_ctx.foo ?? '');
     if (import8.checkBinding(_expr_0, currVal_0)) {
-      _text_2.text = currVal_0;
+      _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }

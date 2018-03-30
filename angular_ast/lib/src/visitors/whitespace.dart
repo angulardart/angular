@@ -73,6 +73,9 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     if (trimRight) {
       value = value.trimRight();
     }
+    if (value.isEmpty) {
+      return null;
+    }
     return new TextAst.from(text, value);
   }
 
