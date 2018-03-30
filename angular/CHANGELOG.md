@@ -1,3 +1,133 @@
+### Breaking changes
+
+*   The process for starting your AngularDart application changed significantly:
+
+    *   For most applications, we recommend now strongly recommend using the new
+        `runApp` function. Instead of starting your application by passing the
+        `Type` of an `@Component`-annotated `class`, you now pass a
+        `ComponentFactory`, the generated code for a component:
+
+        ```dart
+        import 'package:angular/angular.dart';
+
+        // ignore: uri_has_not_been_generated
+        import 'main.template.dart' as ng;
+
+        void main() {
+          runApp(ng.RootComponentNgFactory);
+        }
+
+        @Component(
+          selector: 'root',
+          template: 'Hello World',
+        )
+        class RootComponent {}
+        ```
+
+        To provide top-level services, use the `createInjector` parameter, and
+        pass a generated `InjectorFactory` for a top-level annotated with
+        `@GenerateInjector`:
+
+        ```dart
+        import 'package:angular/angular.dart';
+
+        // ignore: uri_has_not_been_generated
+        import 'main.template.dart' as ng;
+
+        void main() {
+          runApp(ng.RootComponentNgFactory, createInjector: rootInjector);
+        }
+
+        class HelloService {
+          void sayHello() => print('Hello!');
+        }
+
+        @GenerateInjector(const [
+          const ClassProvider(HelloService),
+        ])
+        final InjectorFactory rootInjector = ng.rootInjector$Injector;
+        ```
+
+        A major difference between `runApp` and previous bootstrapping code is
+        the lack of the `initReflector()` method or call, which is no longer
+        needed. That means using `runApp` disables the use of
+        `SlowComponentLoader` and `ReflectiveInjector`, two APIs that require
+        this extra runtime metadata.
+
+        To enable use of these classes for migration purposes, use
+        `runAppLegacy`:
+
+        ```dart
+        import 'package:angular/angular.dart';
+
+        // ignore: uri_has_not_been_generated
+        import 'main.template.dart' as ng;
+
+        void main() {
+          runAppLegacy(
+            RootComponent,
+            createInjectorFromProviders: [
+              const ClassProvider(HelloService),
+            ],
+            initReflector: ng.initReflector,
+          );
+        }
+        ```
+
+        **NOTE**: `initReflector` and `runAppLegacy` disables tree-shaking on
+        any class annotated with `@Component` or `@Injectable`. We strongly
+        recommend migrating to the `runApp` pattern.
+
+    *   The `APP_INITIALIZERS` token was removed. The closest functionality
+        (running a function that returns a `Future` before creating the root
+        component) is using `runAppAsync` or `runAppLegacyAsync` functions with
+        a `befofreComponentCreated` callback:
+
+        ```dart
+        import 'dart:async';
+
+        import 'package:angular/angular.dart';
+
+        // ignore: uri_has_not_been_generated
+        import 'main.template.dart' as ng;
+
+        Future<String> fetchSomeText() => ...
+
+        void main() {
+          runApp(
+            ng.RootComponentNgFactory,
+            beforeComponentCreated: (injector) {
+              final prefetch = injector.get(Prefetch) as Prefetch;
+              return prefetch.prefetchSomeData();
+            },
+            // @GenerateInjector could be used instead. This is a simple example.
+            createInjector: (parent) {
+              return new Injector.map({
+                Prefetch: new Prefetch();
+              }, parent);
+            },
+          );
+        }
+
+        @Component(
+          selector: 'root',
+          template: 'Hello World',
+        )
+        class RootComponent {}
+
+        class Prefetch {
+          Future<void> prefetchSomeData() => ...
+        }
+        ```
+
+    *   The top-level function `bootstrap` was deleted. This function always
+        threw a runtime exception since `5.0.0-alpha+5`, and was a relic of when
+        a code transformer rewrote it automatically as `bootstrapStatic`.
+
+    *   The top-level function `bootstrapStatic` is now _deprecated_. The
+        closest equivalent is the new `runAppLegacy` _or `runAppLegacyAsync`
+        functions.
+
 ## 5.0.0-alpha+9
 
 ### New features
