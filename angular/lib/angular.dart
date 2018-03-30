@@ -18,20 +18,11 @@
 library angular;
 
 export 'core.dart';
-export 'src/bootstrap/run.dart'
-    show
-        runApp,
-        runAppAsync,
-        runAppLegacy,
-        runAppLegacyAsync,
-        bootstrap,
-        bootstrapStatic;
 export 'src/common/common_directives.dart';
 export 'src/common/directives.dart';
 export 'src/common/pipes.dart';
 export 'src/core/application_ref.dart' show PlatformRef, ApplicationRef;
 export 'src/core/linker.dart';
 export 'src/core/testability/testability.dart';
-export 'src/platform/browser/tools/tools.dart'
-    show enableDebugTools, disableDebugTools;
+export 'src/platform/bootstrap.dart';
 export 'src/platform/dom/events/event_manager.dart' show EventManagerPlugin;
