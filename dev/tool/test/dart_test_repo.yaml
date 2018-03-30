@@ -10,10 +10,11 @@ presets:
   # 2: We use --reporter expanded
   # 3: We skip anything tagged "fails-on-travis".
   travis:
-    # TODO(https://github.com/dart-lang/test/issues/772)
     override_platforms:
       chrome:
         settings:
+          arguments: --no-sandbox
+          # TODO(https://github.com/dart-lang/test/issues/772)
           headless: false
 
     # Don't run any tests that are tagged ["fails-on-travis"].
