@@ -235,10 +235,10 @@ class ViewEmbeddedQueries0 extends DebugAppView<import1.EmbeddedQueries> {
         _viewQuery_AnotherDirective_0.reset([
           [_AnotherDirective_0_5],
           _appEl_1.mapNestedViews((_ViewEmbeddedQueries1 nestedView) {
-            return [nestedView._AnotherDirective_0_5];
+            return [nestedView._AnotherDirective_1_5];
           }),
           _appEl_2.mapNestedViews((_ViewEmbeddedQueries2 nestedView) {
-            return [nestedView._AnotherDirective_0_5];
+            return [nestedView._AnotherDirective_1_5];
           })
         ]);
         ctx.viewChildren = _viewQuery_AnotherDirective_0;
@@ -253,22 +253,28 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries0(AppView<dynamic> p
 }
 
 List<StaticNodeDebugInfo> nodeDebugInfos_EmbeddedQueries1 = [
-  new StaticNodeDebugInfo([import1.AnotherDirective], null, <String, dynamic>{})
+  null,
+  new StaticNodeDebugInfo([import1.AnotherDirective], null, <String, dynamic>{}),
+  null
 ];
 
 class _ViewEmbeddedQueries1 extends DebugAppView<import1.EmbeddedQueries> {
-  import6.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_5;
+  import6.Element _el_1;
+  import1.AnotherDirective _AnotherDirective_1_5;
   _ViewEmbeddedQueries1(AppView<dynamic> parentView, int parentIndex) : super(import10.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmbeddedQueries1) {
     componentType = ViewEmbeddedQueries0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedQueries> build() {
+    import6.Text _text_0 = new import6.Text('\n      ');
+    dbgElm(this, _text_0, 0, 1, 14);
     var doc = import6.document;
-    _el_0 = doc.createElement('another');
-    dbgElm(this, _el_0, 0, 2, 6);
-    _AnotherDirective_0_5 = new import1.AnotherDirective();
-    init0Dbg(_el_0, [_el_0]);
+    _el_1 = doc.createElement('another');
+    dbgElm(this, _el_1, 1, 2, 6);
+    _AnotherDirective_1_5 = new import1.AnotherDirective();
+    import6.Text _text_2 = new import6.Text('\n    ');
+    dbgElm(this, _text_2, 2, 2, 25);
+    init([_text_0, _el_1, _text_2], null, [_text_0, _el_1, _text_2]);
     return null;
   }
 
@@ -283,22 +289,28 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries1(AppView<dynamic> p
 }
 
 List<StaticNodeDebugInfo> nodeDebugInfos_EmbeddedQueries2 = [
-  new StaticNodeDebugInfo([import1.AnotherDirective], null, <String, dynamic>{})
+  null,
+  new StaticNodeDebugInfo([import1.AnotherDirective], null, <String, dynamic>{}),
+  null
 ];
 
 class _ViewEmbeddedQueries2 extends DebugAppView<import1.EmbeddedQueries> {
-  import6.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_5;
+  import6.Element _el_1;
+  import1.AnotherDirective _AnotherDirective_1_5;
   _ViewEmbeddedQueries2(AppView<dynamic> parentView, int parentIndex) : super(import10.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmbeddedQueries2) {
     componentType = ViewEmbeddedQueries0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedQueries> build() {
+    import6.Text _text_0 = new import6.Text('\n      ');
+    dbgElm(this, _text_0, 0, 4, 14);
     var doc = import6.document;
-    _el_0 = doc.createElement('another');
-    dbgElm(this, _el_0, 0, 5, 6);
-    _AnotherDirective_0_5 = new import1.AnotherDirective();
-    init0Dbg(_el_0, [_el_0]);
+    _el_1 = doc.createElement('another');
+    dbgElm(this, _el_1, 1, 5, 6);
+    _AnotherDirective_1_5 = new import1.AnotherDirective();
+    import6.Text _text_2 = new import6.Text('\n    ');
+    dbgElm(this, _text_2, 2, 5, 25);
+    init([_text_0, _el_1, _text_2], null, [_text_0, _el_1, _text_2]);
     return null;
   }
 
@@ -395,10 +407,10 @@ class ViewEmbeddedQueriesList0 extends DebugAppView<import1.EmbeddedQueriesList>
         ctx.viewChildren = import12.flattenNodes([
           [_AnotherDirective_0_5],
           _appEl_1.mapNestedViews((_ViewEmbeddedQueriesList1 nestedView) {
-            return [nestedView._AnotherDirective_0_5];
+            return [nestedView._AnotherDirective_1_5];
           }),
           _appEl_2.mapNestedViews((_ViewEmbeddedQueriesList2 nestedView) {
-            return [nestedView._AnotherDirective_0_5];
+            return [nestedView._AnotherDirective_1_5];
           })
         ]);
         _query_AnotherDirective_1_0_isDirty = false;
@@ -412,22 +424,28 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList0(AppView<dy
 }
 
 List<StaticNodeDebugInfo> nodeDebugInfos_EmbeddedQueriesList1 = [
-  new StaticNodeDebugInfo([import1.AnotherDirective], null, <String, dynamic>{})
+  null,
+  new StaticNodeDebugInfo([import1.AnotherDirective], null, <String, dynamic>{}),
+  null
 ];
 
 class _ViewEmbeddedQueriesList1 extends DebugAppView<import1.EmbeddedQueriesList> {
-  import6.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_5;
+  import6.Element _el_1;
+  import1.AnotherDirective _AnotherDirective_1_5;
   _ViewEmbeddedQueriesList1(AppView<dynamic> parentView, int parentIndex) : super(import10.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmbeddedQueriesList1) {
     componentType = ViewEmbeddedQueriesList0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedQueriesList> build() {
+    import6.Text _text_0 = new import6.Text('\n      ');
+    dbgElm(this, _text_0, 0, 1, 14);
     var doc = import6.document;
-    _el_0 = doc.createElement('another');
-    dbgElm(this, _el_0, 0, 2, 6);
-    _AnotherDirective_0_5 = new import1.AnotherDirective();
-    init0Dbg(_el_0, [_el_0]);
+    _el_1 = doc.createElement('another');
+    dbgElm(this, _el_1, 1, 2, 6);
+    _AnotherDirective_1_5 = new import1.AnotherDirective();
+    import6.Text _text_2 = new import6.Text('\n    ');
+    dbgElm(this, _text_2, 2, 2, 25);
+    init([_text_0, _el_1, _text_2], null, [_text_0, _el_1, _text_2]);
     return null;
   }
 
@@ -442,22 +460,28 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList1(AppView<dy
 }
 
 List<StaticNodeDebugInfo> nodeDebugInfos_EmbeddedQueriesList2 = [
-  new StaticNodeDebugInfo([import1.AnotherDirective], null, <String, dynamic>{})
+  null,
+  new StaticNodeDebugInfo([import1.AnotherDirective], null, <String, dynamic>{}),
+  null
 ];
 
 class _ViewEmbeddedQueriesList2 extends DebugAppView<import1.EmbeddedQueriesList> {
-  import6.Element _el_0;
-  import1.AnotherDirective _AnotherDirective_0_5;
+  import6.Element _el_1;
+  import1.AnotherDirective _AnotherDirective_1_5;
   _ViewEmbeddedQueriesList2(AppView<dynamic> parentView, int parentIndex) : super(import10.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmbeddedQueriesList2) {
     componentType = ViewEmbeddedQueriesList0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedQueriesList> build() {
+    import6.Text _text_0 = new import6.Text('\n      ');
+    dbgElm(this, _text_0, 0, 4, 14);
     var doc = import6.document;
-    _el_0 = doc.createElement('another');
-    dbgElm(this, _el_0, 0, 5, 6);
-    _AnotherDirective_0_5 = new import1.AnotherDirective();
-    init0Dbg(_el_0, [_el_0]);
+    _el_1 = doc.createElement('another');
+    dbgElm(this, _el_1, 1, 5, 6);
+    _AnotherDirective_1_5 = new import1.AnotherDirective();
+    import6.Text _text_2 = new import6.Text('\n    ');
+    dbgElm(this, _text_2, 2, 5, 25);
+    init([_text_0, _el_1, _text_2], null, [_text_0, _el_1, _text_2]);
     return null;
   }
 
