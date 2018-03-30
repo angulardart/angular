@@ -21,10 +21,10 @@ import 'package:angular/angular.dart';
 const List<dynamic> styles$Comp = const [];
 
 class ViewComp0 extends AppView<import1.Comp> {
-  import2.Text _text_0;
-  import2.Text _text_2;
-  import2.Text _text_4;
-  import2.Text _text_6;
+  import2.Text _text_1;
+  import2.Text _text_3;
+  import2.Text _text_5;
+  import2.Text _text_7;
   var _expr_0;
   var _expr_1;
   var _expr_2;
@@ -46,20 +46,24 @@ class ViewComp0 extends AppView<import1.Comp> {
   ComponentRef<import1.Comp> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = new import2.Text('');
+    import2.Text _text_0 = new import2.Text('');
     parentRenderNode.append(_text_0);
-    import2.Text _text_1 = new import2.Text(' ');
+    _text_1 = new import2.Text('');
     parentRenderNode.append(_text_1);
-    _text_2 = new import2.Text('');
+    import2.Text _text_2 = new import2.Text(' ');
     parentRenderNode.append(_text_2);
-    import2.Text _text_3 = new import2.Text(' ');
+    _text_3 = new import2.Text('');
     parentRenderNode.append(_text_3);
-    _text_4 = new import2.Text('');
+    import2.Text _text_4 = new import2.Text(' ');
     parentRenderNode.append(_text_4);
-    import2.Text _text_5 = new import2.Text(' ');
+    _text_5 = new import2.Text('');
     parentRenderNode.append(_text_5);
-    _text_6 = new import2.Text('');
+    import2.Text _text_6 = new import2.Text(' ');
     parentRenderNode.append(_text_6);
+    _text_7 = new import2.Text('');
+    parentRenderNode.append(_text_7);
+    import2.Text _text_8 = new import2.Text('');
+    parentRenderNode.append(_text_8);
     _pipe_pure_0 = new import1.PurePipe();
     _pipe_pure_0_0 = import7.pureProxy1(_pipe_pure_0.transform);
     _pipe_dirty_1 = new import1.DirtyPipe();
@@ -76,22 +80,22 @@ class ViewComp0 extends AppView<import1.Comp> {
     final import1.Comp _ctx = ctx;
     final currVal_0 = import7.interpolate0(_pipe_pure_0_0('foo'));
     if (!identical(_expr_0, currVal_0)) {
-      _text_0.text = currVal_0;
+      _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = import7.interpolate0(_pipe_dirty_1.transform('bar'));
     if (!identical(_expr_1, currVal_1)) {
-      _text_2.text = currVal_1;
+      _text_3.text = currVal_1;
       _expr_1 = currVal_1;
     }
     final currVal_2 = import7.interpolate0(_pipe_lifecycle_2_0('lifecycle'));
     if (!identical(_expr_2, currVal_2)) {
-      _text_4.text = currVal_2;
+      _text_5.text = currVal_2;
       _expr_2 = currVal_2;
     }
     final currVal_3 = import7.interpolate0(_pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d));
     if (!identical(_expr_3, currVal_3)) {
-      _text_6.text = currVal_3;
+      _text_7.text = currVal_3;
       _expr_3 = currVal_3;
     }
   }

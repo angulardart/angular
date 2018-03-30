@@ -204,10 +204,10 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
       _viewQuery_AnotherDirective_0.reset([
         [_AnotherDirective_0_5],
         _appEl_1.mapNestedViews((_ViewEmbeddedQueries1 nestedView) {
-          return [nestedView._AnotherDirective_1_5];
+          return [nestedView._AnotherDirective_0_5];
         }),
         _appEl_2.mapNestedViews((_ViewEmbeddedQueries2 nestedView) {
-          return [nestedView._AnotherDirective_1_5];
+          return [nestedView._AnotherDirective_0_5];
         })
       ]);
       ctx.viewChildren = _viewQuery_AnotherDirective_0;
@@ -221,19 +221,17 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries0(AppView<dynamic> p
 }
 
 class _ViewEmbeddedQueries1 extends AppView<import1.EmbeddedQueries> {
-  import3.Element _el_1;
-  import1.AnotherDirective _AnotherDirective_1_5;
+  import3.Element _el_0;
+  import1.AnotherDirective _AnotherDirective_0_5;
   _ViewEmbeddedQueries1(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedQueries0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedQueries> build() {
-    import3.Text _text_0 = new import3.Text('\n      ');
     var doc = import3.document;
-    _el_1 = doc.createElement('another');
-    _AnotherDirective_1_5 = new import1.AnotherDirective();
-    import3.Text _text_2 = new import3.Text('\n    ');
-    init([_text_0, _el_1, _text_2], null);
+    _el_0 = doc.createElement('another');
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
+    init0(_el_0);
     return null;
   }
 
@@ -248,19 +246,17 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries1(AppView<dynamic> p
 }
 
 class _ViewEmbeddedQueries2 extends AppView<import1.EmbeddedQueries> {
-  import3.Element _el_1;
-  import1.AnotherDirective _AnotherDirective_1_5;
+  import3.Element _el_0;
+  import1.AnotherDirective _AnotherDirective_0_5;
   _ViewEmbeddedQueries2(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedQueries0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedQueries> build() {
-    import3.Text _text_0 = new import3.Text('\n      ');
     var doc = import3.document;
-    _el_1 = doc.createElement('another');
-    _AnotherDirective_1_5 = new import1.AnotherDirective();
-    import3.Text _text_2 = new import3.Text('\n    ');
-    init([_text_0, _el_1, _text_2], null);
+    _el_0 = doc.createElement('another');
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
+    init0(_el_0);
     return null;
   }
 
@@ -345,10 +341,10 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
       ctx.viewChildren = import9.flattenNodes([
         [_AnotherDirective_0_5],
         _appEl_1.mapNestedViews((_ViewEmbeddedQueriesList1 nestedView) {
-          return [nestedView._AnotherDirective_1_5];
+          return [nestedView._AnotherDirective_0_5];
         }),
         _appEl_2.mapNestedViews((_ViewEmbeddedQueriesList2 nestedView) {
-          return [nestedView._AnotherDirective_1_5];
+          return [nestedView._AnotherDirective_0_5];
         })
       ]);
       _query_AnotherDirective_1_0_isDirty = false;
@@ -361,19 +357,17 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList0(AppView<dy
 }
 
 class _ViewEmbeddedQueriesList1 extends AppView<import1.EmbeddedQueriesList> {
-  import3.Element _el_1;
-  import1.AnotherDirective _AnotherDirective_1_5;
+  import3.Element _el_0;
+  import1.AnotherDirective _AnotherDirective_0_5;
   _ViewEmbeddedQueriesList1(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedQueriesList0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedQueriesList> build() {
-    import3.Text _text_0 = new import3.Text('\n      ');
     var doc = import3.document;
-    _el_1 = doc.createElement('another');
-    _AnotherDirective_1_5 = new import1.AnotherDirective();
-    import3.Text _text_2 = new import3.Text('\n    ');
-    init([_text_0, _el_1, _text_2], null);
+    _el_0 = doc.createElement('another');
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
+    init0(_el_0);
     return null;
   }
 
@@ -388,19 +382,17 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList1(AppView<dy
 }
 
 class _ViewEmbeddedQueriesList2 extends AppView<import1.EmbeddedQueriesList> {
-  import3.Element _el_1;
-  import1.AnotherDirective _AnotherDirective_1_5;
+  import3.Element _el_0;
+  import1.AnotherDirective _AnotherDirective_0_5;
   _ViewEmbeddedQueriesList2(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedQueriesList0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedQueriesList> build() {
-    import3.Text _text_0 = new import3.Text('\n      ');
     var doc = import3.document;
-    _el_1 = doc.createElement('another');
-    _AnotherDirective_1_5 = new import1.AnotherDirective();
-    import3.Text _text_2 = new import3.Text('\n    ');
-    init([_text_0, _el_1, _text_2], null);
+    _el_0 = doc.createElement('another');
+    _AnotherDirective_0_5 = new import1.AnotherDirective();
+    init0(_el_0);
     return null;
   }
 

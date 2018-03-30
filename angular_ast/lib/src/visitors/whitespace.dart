@@ -42,6 +42,23 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     return super.visitElement(astNode, true);
   }
 
+  @override
+  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [_]) {
+    if (astNode.childNodes.isNotEmpty) {
+      astNode = new EmbeddedTemplateAst.from(
+        astNode,
+        attributes: astNode.attributes,
+        childNodes: _visitRemovingWhitespace(astNode.childNodes),
+        events: astNode.events,
+        properties: astNode.properties,
+        references: astNode.references,
+        letBindings: astNode.letBindings,
+        hasDeferredComponent: astNode.hasDeferredComponent,
+      );
+    }
+    return super.visitEmbeddedTemplate(astNode, true);
+  }
+
   /// Returns [text], with all significant whitespace reduced to a single space.
   static TextAst _collapseWhitespace(
     TextAst text, {

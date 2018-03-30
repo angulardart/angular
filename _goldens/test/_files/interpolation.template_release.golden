@@ -21,7 +21,7 @@ const List<dynamic> styles$InterpolationComponent = const [];
 
 class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent> {
   import2.DivElement _el_0;
-  import2.Text _text_1;
+  import2.Text _text_2;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -35,8 +35,12 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _text_1 = new import2.Text('');
+    import2.Text _text_1 = new import2.Text('');
     _el_0.append(_text_1);
+    _text_2 = new import2.Text('');
+    _el_0.append(_text_2);
+    import2.Text _text_3 = new import2.Text('');
+    _el_0.append(_text_3);
     init(const [], null);
     return null;
   }
@@ -46,7 +50,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
     final import1.InterpolationComponent _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
     if (!identical(_expr_0, currVal_0)) {
-      _text_1.text = currVal_0;
+      _text_2.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }
@@ -92,7 +96,7 @@ const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
 class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.InterpolationComponentNoWhitespace> {
   import2.DivElement _el_0;
-  import2.Text _text_1;
+  import2.Text _text_2;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -106,8 +110,12 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _text_1 = new import2.Text('');
+    import2.Text _text_1 = new import2.Text('');
     _el_0.append(_text_1);
+    _text_2 = new import2.Text('');
+    _el_0.append(_text_2);
+    import2.Text _text_3 = new import2.Text('');
+    _el_0.append(_text_3);
     init(const [], null);
     return null;
   }
@@ -117,7 +125,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
     final import1.InterpolationComponentNoWhitespace _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
     if (!identical(_expr_0, currVal_0)) {
-      _text_1.text = currVal_0;
+      _text_2.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }

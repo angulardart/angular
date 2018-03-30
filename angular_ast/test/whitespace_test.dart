@@ -57,6 +57,18 @@ void main() {
       '<span>prefix {{value1}} postfix</span>',
     );
   });
+
+  test('should remove all whitespace in <template> tags', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <another></another>
+        <template>
+          <another></another>
+        </template>
+      '''),
+      '<another></another><template><another></another></template>',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {
