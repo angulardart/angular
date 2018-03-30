@@ -122,7 +122,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         'One or more of the following arguments were unresolvable: \n'
         '* ${expressions.join('\n* ')}'
         '\n'
-        'The root cause could be a mispelling, or an import statement that \n'
+        'The root cause could be a misspelling, or an import statement that \n'
         'looks valid but is not resolvable at build time. Bazel users should \n'
         'check their BUILD file to ensure all dependencies are listed.\n\n');
   }
