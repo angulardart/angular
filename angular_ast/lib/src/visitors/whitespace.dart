@@ -2,6 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:meta/meta.dart';
+
 import '../ast.dart';
 import 'recursive.dart';
 
@@ -40,6 +42,25 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     return super.visitElement(astNode, true);
   }
 
+  /// Returns [text], with all significant whitespace reduced to a single space.
+  static TextAst _collapseWhitespace(
+    TextAst text, {
+    @required bool trimLeft,
+    @required bool trimRight,
+  }) {
+    // Collapses all adjacent whitespace into a single space.
+    var value = text.value.replaceAll(_allWhitespace, ' ');
+    if (trimLeft) {
+      value = value.trimLeft();
+    }
+    if (trimRight) {
+      value = value.trimRight();
+    }
+    return new TextAst.from(text, value);
+  }
+
+  static final _allWhitespace = new RegExp(r'\s\s+', multiLine: true);
+
   List<StandaloneTemplateAst> _visitRemovingWhitespace(
     List<StandaloneTemplateAst> childNodes,
   ) {
@@ -53,19 +74,37 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     //
     // ... we should collapse to "<div><span>Hello World</span></div>".
     TemplateAst prevNode;
-    TemplateAst nextNode;
+    TemplateAst nextNode = childNodes.length > 1 ? childNodes[1] : null;
     for (var i = 0, l = childNodes.length; i < l; i++) {
       var currentNode = childNodes[i];
 
-      if (prevNode is! InterpolationAst &&
-          nextNode is! InterpolationAst &&
-          currentNode is TextAst &&
-          currentNode.value.trim().isEmpty) {
-        currentNode = childNodes[i] = null;
+      if (currentNode is TextAst) {
+        // This is because the re-assignment (currentNode =) below disables the
+        // type promotion, but we want everywhere in this if (...) { ... } block
+        // to assume it is a TextAst at this point.
+        final TextAst currentNodeCasted = currentNode;
+
+        // Node i, where i - 1 and i + 1 are not interpolations, we can
+        // completely remove the (text) node. For example, this would take
+        // `<span>\n</span>` and return `<span></span>`.
+        if (prevNode is! InterpolationAst &&
+            nextNode is! InterpolationAst &&
+            currentNodeCasted.value.trim().isEmpty) {
+          currentNode = childNodes[i] = null;
+        } else {
+          // Otherwise, we collapse whitespace:
+          // 1. All adjacent whitespace is collapsed into a single space.
+          // 2. Depending on siblings, *also* trimLeft or trimRight.
+          currentNode = childNodes[i] = _collapseWhitespace(
+            currentNode,
+            trimLeft: prevNode is! InterpolationAst,
+            trimRight: nextNode is! InterpolationAst,
+          );
+        }
       }
 
       prevNode = currentNode;
-      nextNode = i < l - 1 ? childNodes[i + 1] : null;
+      nextNode = i < l - 2 ? childNodes[i + 2] : null;
     }
 
     // Remove any nodes that were removed by processing.

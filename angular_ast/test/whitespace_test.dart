@@ -42,21 +42,21 @@ void main() {
       _parseAndMinifiy('\n    \n    {{value1}}  {{value2}}  \n      '),
       '{{value1}} {{value2}}',
     );
-  }, skip: 'Currently failing');
+  });
 
   test('should not remove between text, interpolation', () {
     expect(
       _parseAndMinifiy('<span> prefix {{value1}} postfix </span>\n      '),
       '<span>prefix {{value1}} postfix</span>',
     );
-  }, skip: 'Currently failing');
+  });
 
   test('should not remove between text, interpolation across lines', () {
     expect(
       _parseAndMinifiy('<span>\n prefix {{value1}} postfix \n</span>\n      '),
       '<span>prefix {{value1}} postfix</span>',
     );
-  }, skip: 'Currently failing');
+  });
 }
 
 String _parseAndMinifiy(String template) {
