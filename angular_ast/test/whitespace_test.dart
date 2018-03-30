@@ -92,6 +92,27 @@ void main() {
       '<div> </div>',
     );
   }, skip: 'Not yet supported');
+
+  test('should retain single whitespaces around tags', () {
+    expect(
+      _parseAndMinifiy('Foo <strong>Bar</strong> Baz'),
+      'Foo <strong>Bar</strong> Baz',
+    );
+  });
+
+  // https://github.com/dart-lang/angular/issues/804#issuecomment-363217553
+  test('should retain whitespace for inline text formatting', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <div class="foo">
+          html space
+        </div>
+        <br><br>
+        <div class="foo">no space</div>
+      '''),
+      '<div class="foo">html space</div><br/><br/><div class="foo">no space</div>',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {
