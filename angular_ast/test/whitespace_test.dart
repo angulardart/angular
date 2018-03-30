@@ -80,6 +80,20 @@ void main() {
       '<div>{{foo}}</div>',
     );
   });
+
+  test('should retain manual &nbsp; inserts', () {
+    expect(
+      _parseAndMinifiy(r'<div>&ngsp;</div>'),
+      '<div> </div>',
+    );
+  });
+
+  test('should retain manual &#32; inserts', () {
+    expect(
+      _parseAndMinifiy(r'<div>&#32;</div>'),
+      '<div> </div>',
+    );
+  }, skip: 'Not yet supported');
 }
 
 String _parseAndMinifiy(String template) {
