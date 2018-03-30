@@ -24,6 +24,15 @@ class Repository {
     new Glob('**/build/**'),
   ];
 
+  static bool _isExcluded(String relativePath, List<Glob> exclude) {
+    for (final glob in exclude) {
+      if (glob.matches(relativePath)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /// Returns a list of files pointing to relevant `pubspec.yaml` files.
   static List<File> _findPubspecs(
     List<Glob> include,
@@ -33,15 +42,16 @@ class Repository {
       include
           .expand((g) => g.listSync(root: rootPath))
           .cast<File>()
-          .where((f) => !exclude.any((g) => g.matches(f.path)))
+          .where(
+              (f) => !_isExcluded(p.relative(f.path, from: rootPath), exclude))
           .toList()
             ..sort((a, b) => a.path.compareTo(b.path));
 
   /// A set of packages found within the repository.
   final List<Package> packages;
 
-  /// Root path.
-  final String rootPath;
+  /// Root path of the repository.
+  final String path;
 
   /// Returns a set of packages in the current repository [path].
   ///
@@ -49,7 +59,6 @@ class Repository {
   /// If [exclude] is not specified, it defaults to
   /// ```
   /// [
-  ///   'dev/**',
   ///   'angular/tools/**',
   ///   '**/build/**',
   /// ]
@@ -62,27 +71,27 @@ class Repository {
     include ??= _defaultInclude;
     exclude ??= _defaultExclude;
     final packages = _findPubspecs(include, exclude, rootPath: path)
-        .map((f) => new Package._(p.relative(p.dirname(f.path), from: path)))
+        .map((f) => new Package.loadAndParse(path, p.dirname(f.path)))
         .toList();
     return new Repository(packages, path);
   }
 
   @visibleForTesting
-  const Repository(this.packages, this.rootPath);
+  const Repository(this.packages, this.path);
 
   @override
   bool operator ==(o) =>
       o is Repository &&
-      rootPath == o.rootPath &&
+      path == o.path &&
       const ListEquality().equals(packages, o.packages);
 
   @override
-  int get hashCode => rootPath.hashCode ^ const ListEquality().hash(packages);
+  int get hashCode => path.hashCode ^ const ListEquality().hash(packages);
 
   /// Reads `prefix.yaml`, used for generating `.travis.yml`.
   String readTravisPrefix() {
     final file = new File(p.join(
-      rootPath,
+      path,
       'dev',
       'tool',
       'travis',
@@ -94,7 +103,7 @@ class Repository {
   /// Reads `postfix.yaml`, used for generating `.travis.yml`.
   String readTravisPostfix() {
     final file = new File(p.join(
-      rootPath,
+      path,
       'dev',
       'tool',
       'travis',
@@ -105,9 +114,9 @@ class Repository {
 
   @override
   String toString() {
-    final buffer = new StringBuffer('rootPath: $rootPath');
+    final buffer = new StringBuffer('\n  path: $path\n');
     for (final package in packages) {
-      buffer.writeln('  $package');
+      buffer.writeln('    ${'$package'.split('\n').join('\n    ')}');
     }
     return buffer.toString();
   }
@@ -117,7 +126,6 @@ class Repository {
 ///
 /// Various metadata are extracted for tooling to use.
 class Package {
-  static const _dartTestYaml = 'dart_test.yaml';
   static const _pubspecYaml = 'pubspec.yaml';
   static const _releaseYaml = 'build.release.yaml';
   static const _testFolder = 'test';
@@ -152,11 +160,19 @@ class Package {
   /// Developer dependencies of this package.
   final Map<String, VersionConstraint> devDependencies;
 
-  /// Path to the package, from the root of the repository.
+  /// Relative path to the package, from [root].
   final String path;
 
-  factory Package._(String path) {
-    final pubspec = new File(p.join(path, _pubspecYaml));
+  /// Absolute path to the repository root.
+  final String root;
+
+  @visibleForTesting
+  factory Package.loadAndParse(String repositoryRootPath, String packagePath) {
+    final pubspec = new File(p.join(
+      repositoryRootPath,
+      packagePath,
+      _pubspecYaml,
+    ));
     final yamlDoc = yaml.loadYaml(
       pubspec.readAsStringSync(),
       sourceUrl: pubspec.path,
@@ -164,15 +180,17 @@ class Package {
     return new Package(
       dependencies: _parseDependencies(yamlDoc['dependencies']),
       devDependencies: _parseDependencies(yamlDoc['dev_dependencies']),
-      path: path,
+      path: p.relative(packagePath, from: repositoryRootPath),
+      root: repositoryRootPath,
     );
   }
 
   @visibleForTesting
   const Package({
-    this.dependencies,
-    this.devDependencies,
-    this.path,
+    this.dependencies: const {},
+    this.devDependencies: const {},
+    @required this.path,
+    @required this.root,
   });
 
   @override
@@ -188,30 +206,29 @@ class Package {
       const MapEquality().hash(dependencies) ^
       const MapEquality().hash(devDependencies);
 
-  /// Whether a browser is needed to execute at least 1 test in this package.
+  /// Whether a browser is likely needed to execute a test in this package.
   bool get hasBrowserTests {
-    final file = new File(p.join(path, _dartTestYaml));
-    if (file.existsSync()) {
-      // TODO: Improve this check.
-      return file.readAsStringSync().contains('chrome');
-    }
-    return false;
+    return devDependencies.containsKey('build_web_compilers');
   }
 
   /// Whether `tool/test.sh` should be used instead of `pub run test`.
   ///
   /// This is usually an indication of custom configuration.
   bool get hasCustomTestScript {
-    return new File(p.join(path, _testScript)).existsSync();
+    return new File(p.join(root, path, _testScript)).existsSync();
   }
 
   /// Whether a `test/` directory exists for this package.
-  bool get hasTests => new Directory(p.join(path, _testFolder)).existsSync();
+  bool get hasTests {
+    return new Directory(p.join(root, path, _testFolder)).existsSync();
+  }
 
   /// Whether a `build.release.yaml` exists in this package.
   ///
   /// This is an indication that Dart2JS should be used, as well as DDC.
-  bool get hasReleaseMode => new File(p.join(path, _releaseYaml)).existsSync();
+  bool get hasReleaseMode {
+    return new File(p.join(root, path, _releaseYaml)).existsSync();
+  }
 
   /// Whether `build_runner` is a dependency of this package.
   bool get isBuildable => devDependencies.containsKey('build_runner');
@@ -229,6 +246,15 @@ class Package {
   @override
   String toString() {
     final buffer = new StringBuffer();
-
+    buffer.writeln('path: $path');
+    buffer.writeln('dependencies:');
+    dependencies.forEach((name, version) {
+      buffer.writeln('  $name: $version');
+    });
+    buffer.writeln('devDependencies:');
+    devDependencies.forEach((name, version) {
+      buffer.writeln('  $name: $version');
+    });
+    return buffer.toString();
   }
 }
