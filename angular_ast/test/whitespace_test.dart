@@ -113,6 +113,26 @@ void main() {
       '<div class="foo">html space</div><br/><br/><div class="foo">no space</div>',
     );
   });
+
+  test('should retain whitespace [regression test for Material]', () {
+    expect(
+      _parseAndMinifiy(r'''
+      <section>
+        <h2>Align with Text</h2>
+        <div>
+          Aligned with
+          <material-input></material-input>
+          text
+        </div>
+      </section>
+      '''),
+      ''
+          '<section>'
+          '<h2>Align with Text</h2>'
+          '<div>Aligned with <material-input></material-input> text</div>'
+          '</section>',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {
