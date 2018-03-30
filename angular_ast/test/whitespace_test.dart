@@ -28,8 +28,6 @@ void main() {
     });
   });
 
-  // TODO: Add tests/support for &ngsp; and friends.
-
   test('should remove inside interpolation on the LHS', () {
     expect(
       _parseAndMinifiy('\n    \n    {{value1}}'),
