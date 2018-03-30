@@ -61,7 +61,6 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
 
   @override
   TemplateAst visitText(TextAst astNode, [_]) {
-    print('>>> visitText($astNode)');
     return new TextAst.from(
       astNode,
       astNode.value.replaceAll(_manualWhitespace, ' '),
