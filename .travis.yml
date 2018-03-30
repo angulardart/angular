@@ -254,11 +254,8 @@ jobs:
       env: PKG="dev"
 
     - stage: testing
-      script: ./tool/travis.sh test
+      script: ./tool/travis.sh test:nobuild}
       env: PKG="dev"
-      cache:
-        directories:
-          - dev/.dart_tool
 
     - stage: presubmit
       script: ./tool/travis.sh analyze

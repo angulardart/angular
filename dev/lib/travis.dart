@@ -23,6 +23,7 @@ class TravisGenerator {
         writer.writeTestStep(
           path: package.path,
           browser: package.hasBrowserTests,
+          buildable: package.isBuildable,
           release: package.hasReleaseMode,
           custom: package.hasCustomTestScript,
         );
@@ -123,11 +124,26 @@ set -e\n
   void writeTestStep({
     @required String path,
     @required bool browser,
+    @required bool buildable,
     @required bool release,
     @required bool custom,
   }) {
     // TODO: Support testing in release mode.
     release = false;
+
+    if (!buildable) {
+      _stages.addAll([
+        '    - stage: testing',
+        '      script: ./tool/travis.sh test:nobuild}',
+        '      env: PKG="$path"',
+        '',
+      ]);
+      _presubmit.addAll([
+        'echo "Running tests in $path in (nobuild)"',
+        'PKG=$path tool/travis.sh test:nobuild',
+      ]);
+      return;
+    }
 
     if (custom) {
       _stages.addAll([
@@ -154,6 +170,7 @@ set -e\n
     if (release) {
       writeTestStep(
         path: path,
+        buildable: buildable,
         browser: browser,
         release: false,
         custom: false,

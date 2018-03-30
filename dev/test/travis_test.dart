@@ -67,6 +67,7 @@ void main() {
       writer.writeTestStep(
         path: 'package_1',
         browser: false,
+        buildable: true,
         release: false,
         custom: false,
       );
@@ -89,6 +90,7 @@ void main() {
       writer.writeTestStep(
         path: 'package_1',
         browser: true,
+        buildable: true,
         release: false,
         custom: false,
       );
@@ -104,6 +106,29 @@ void main() {
           contains('script: ./tool/travis.sh test'),
           contains('env: PKG="package_1"'),
           contains('chrome: stable'),
+        ),
+      );
+    });
+
+    test('writeTestStep should not use build_runner if not buildable', () {
+      writer.writeTestStep(
+        path: 'package_1',
+        browser: false,
+        buildable: false,
+        release: false,
+        custom: false,
+      );
+      expect(
+        writer.toPresubmitScript(),
+        allOf(
+          contains('PKG=package_1 tool/travis.sh test:nobuild'),
+        ),
+      );
+      expect(
+        writer.toTravisDotYaml(),
+        allOf(
+          contains('script: ./tool/travis.sh test:nobuild'),
+          contains('env: PKG="package_1"'),
         ),
       );
     });
