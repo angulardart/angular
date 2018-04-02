@@ -26,7 +26,7 @@ practices** from the developers of the AngularDart framework.
     *   [AVOID using `ReflectiveInjector`](#avoid-using-reflectiveinjector)
 *   [Components](#components)
     *   [CONSIDER avoiding using injection to configure individual
-        components](#avoid-using-injection-to-configure-individual-components)
+        components](#consider-avoiding-using-injection-to-configure-individual-components)
 *   [Annotations](#annotations)
     *   [PREFER omitting `@Injectable()` where
         possible](#prefer-omitting-injectable-where-possible)
