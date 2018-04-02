@@ -6,7 +6,7 @@ import 'repository.dart';
 class TravisGenerator {
   /// Analyzes and returns output files as part of scanning [repository].
   static TravisGenerator generate(Repository repository) {
-    final writer = new _OutputWriter(
+    final writer = new OutputWriter(
       repository.readTravisPrefix(),
       repository.readTravisPostfix(),
     );
@@ -23,16 +23,45 @@ class TravisGenerator {
         writer.writeTestStep(
           path: package.path,
           browser: package.hasBrowserTests,
+          buildable: package.isBuildable,
           release: package.hasReleaseMode,
           custom: package.hasCustomTestScript,
         );
       }
     }
     return new TravisGenerator._(
-      _presubmitPreamble + writer.presubmit.join('\n'),
-      writer.prefix + '\n' + writer.stages.join('\n') + '\n' + writer.postfix,
+      writer.toPresubmitScript(),
+      writer.toTravisDotYaml(),
     );
   }
+
+  /// Emitted `presubmit.sh` as a result of running this generator.
+  final String presubmitScript;
+
+  /// Emitted `.travis.yml` as a result of running this generator.
+  final String travisConfig;
+
+  const TravisGenerator._(this.presubmitScript, this.travisConfig);
+}
+
+/// Encapsulates logic for writing a `.travis.yml` file.
+class OutputWriter {
+  /// Content that should be emitted at the top of the output file.
+  final String _prefix;
+
+  /// Content that should be emitted at the bottom of the output file.
+  final String _postfix;
+
+  /// Stages that should be emitted in between the [_prefix] and [_postfix].
+  ///
+  /// Use `writeXStep` methods to write in a correctly formatted manner.
+  final List<String> _stages = [];
+
+  /// Presubmit script lines, as an alternative to `.travis.yml`.
+  final List<String> _presubmit = [];
+
+  @visibleForTesting
+  OutputWriter(this._prefix, this._postfix);
 
   // Used when generating tool/presubmit.sh.
   static const _presubmitPreamble = '''
@@ -46,43 +75,24 @@ class TravisGenerator {
 set -e\n
 ''';
 
-  /// Emitted `presubmit.sh` as a result of running this generator.
-  final String presubmitScript;
+  String toPresubmitScript() {
+    return _presubmitPreamble + _presubmit.join('\n');
+  }
 
-  /// Emitted `.travis.yml` as a result of running this generator.
-  final String travisConfig;
-
-  const TravisGenerator._(this.presubmitScript, this.travisConfig);
-}
-
-/// Encapsulates logic for writing a `.travis.yml` file.
-class _OutputWriter {
-  /// Content that should be emitted at the top of the output file.
-  final String prefix;
-
-  /// Content that should be emitted at the bottom of the output file.
-  final String postfix;
-
-  /// Stages that should be emitted in between the [prefix] and [postfix].
-  ///
-  /// Use `writeXStep` methods to write in a correctly formatted manner.
-  final List<String> stages = [];
-
-  /// Presubmit script lines, as an alternative to `.travis.yml`.
-  final List<String> presubmit = [];
-
-  _OutputWriter(this.prefix, this.postfix);
+  String toTravisDotYaml() {
+    return _prefix + '\n' + _stages.join('\n') + '\n' + _postfix;
+  }
 
   void writeAnalysisStep({
     @required String path,
   }) {
-    stages.addAll([
+    _stages.addAll([
       '    - stage: presubmit',
       '      script: ./tool/travis.sh analyze',
       '      env: PKG="$path"',
       '',
     ]);
-    presubmit.addAll([
+    _presubmit.addAll([
       'echo "Analyzing $path..."',
       'PKG=$path tool/travis.sh analyze',
     ]);
@@ -96,7 +106,7 @@ class _OutputWriter {
     if (release) {
       writeBuildStep(path: path, release: false);
     }
-    stages.addAll([
+    _stages.addAll([
       '    - stage: building',
       '      script: ./tool/travis.sh build${release ? ':release': ''}',
       '      env: PKG="$path"',
@@ -105,7 +115,7 @@ class _OutputWriter {
       '          - $path/.dart_tool',
       '',
     ]);
-    presubmit.addAll([
+    _presubmit.addAll([
       'echo "Building $path in ${release ? 'release' : 'debug'} mode..."',
       'PKG=$path tool/travis.sh build${release ? ':release': ''}',
     ]);
@@ -114,14 +124,29 @@ class _OutputWriter {
   void writeTestStep({
     @required String path,
     @required bool browser,
+    @required bool buildable,
     @required bool release,
     @required bool custom,
   }) {
     // TODO: Support testing in release mode.
     release = false;
 
+    if (!buildable) {
+      _stages.addAll([
+        '    - stage: testing',
+        '      script: ./tool/travis.sh test:nobuild',
+        '      env: PKG="$path"',
+        '',
+      ]);
+      _presubmit.addAll([
+        'echo "Running tests in $path in (nobuild)"',
+        'PKG=$path tool/travis.sh test:nobuild',
+      ]);
+      return;
+    }
+
     if (custom) {
-      stages.addAll([
+      _stages.addAll([
         '    - stage: testing',
         '      script:',
         '        - cd $path',
@@ -132,7 +157,7 @@ class _OutputWriter {
         '          - $path/.dart_tool',
         '',
       ]);
-      presubmit.addAll([
+      _presubmit.addAll([
         'echo "Running custom test script for $path..."',
         'pushd $path',
         './tool/test.sh',
@@ -145,12 +170,13 @@ class _OutputWriter {
     if (release) {
       writeTestStep(
         path: path,
+        buildable: buildable,
         browser: browser,
         release: false,
         custom: false,
       );
     }
-    stages.addAll([
+    _stages.addAll([
       '    - stage: testing',
       '      script: ./tool/travis.sh test${release ? ':release' : ''}',
       '      env: PKG="$path"',
@@ -159,12 +185,12 @@ class _OutputWriter {
       '          - $path/.dart_tool',
       '',
     ]);
-    presubmit.addAll([
+    _presubmit.addAll([
       'echo "Running tests in $path in ${release ? 'release' : 'debug'} mode"',
       'PKG=$path tool/travis.sh test${release ? ':release': ''}',
     ]);
     if (browser) {
-      stages.addAll(const [
+      _stages.addAll(const [
         r'      addons:',
         r'        chrome: stable',
         r'      before_install:',

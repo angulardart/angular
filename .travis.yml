@@ -251,6 +251,14 @@ jobs:
 
     - stage: presubmit
       script: ./tool/travis.sh analyze
+      env: PKG="dev"
+
+    - stage: testing
+      script: ./tool/travis.sh test:nobuild
+      env: PKG="dev"
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
       env: PKG="examples/github_issues"
 
     - stage: building
