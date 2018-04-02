@@ -31,6 +31,10 @@ abstract class AbstractControl<T> {
   /// occurring and errors are not yet available for the input value.
   static const PENDING = 'PENDING';
 
+  /// Indicates that a FormControl is disabled, i.e. that the control is exempt
+  /// from ancestor calculations of validity or value.
+  static const DISABLED = 'DISABLED';
+
   ValidatorFn validator;
   T _value;
   final _valueChanges = new StreamController<T>.broadcast();
@@ -53,6 +57,10 @@ abstract class AbstractControl<T> {
   String get status => _status;
 
   bool get valid => _status == VALID;
+
+  bool get disabled => _status == DISABLED;
+
+  bool get enabled => !disabled;
 
   /// Returns the errors of this control.
   Map<String, dynamic> get errors => _errors;
@@ -97,23 +105,74 @@ abstract class AbstractControl<T> {
     }
   }
 
+  /// Disables the control. This means the control will be exempt from
+  /// validation checks and excluded from the aggregate value of any
+  /// parent. Its status is `DISABLED`.
+  ///
+  /// If the control has children, all children will be disabled to
+  /// maintain the model.
+  void markAsDisabled({bool updateParent, bool emitEvent}) {
+    updateParent = updateParent ?? true;
+    emitEvent = emitEvent ?? true;
+
+    _status = DISABLED;
+
+    _forEachChild(
+        // Only set self, so that children don't try to update their parent,
+        // and thus create a loop of updates.
+        (c) => c.markAsDisabled(updateParent: false, emitEvent: emitEvent));
+    onUpdate();
+
+    if (emitEvent) _emitEvent();
+
+    _updateAncestors(updateParent: updateParent, emitEvent: emitEvent);
+  }
+
+  /// Enables the control. This means the control will be included in
+  /// validation checks and the aggregate value of its parent. Its
+  /// status is re-calculated based on its value and its validators.
+  ///
+  /// If the control has children, all children will be enabled.
+  void markAsEnabled({bool updateParent, bool emitEvent}) {
+    updateParent = updateParent ?? true;
+    emitEvent = emitEvent ?? true;
+    _status = VALID;
+    _forEachChild(
+        // Only set self, so that children don't try to update their parent,
+        // and thus create a loop of updates.
+        (c) => c.markAsEnabled(updateParent: false, emitEvent: emitEvent));
+    updateValueAndValidity(onlySelf: true, emitEvent: emitEvent);
+    _updateAncestors(updateParent: updateParent, emitEvent: emitEvent);
+  }
+
+  void _updateAncestors({bool updateParent, bool emitEvent}) {
+    if (_parent != null && updateParent) {
+      _parent.updateValueAndValidity(
+          onlySelf: !updateParent, emitEvent: emitEvent);
+      // TODO(alorenzen): Update parent pristine and touched.
+    }
+  }
+
   void setParent(AbstractControl parent) {
     _parent = parent;
   }
 
+  // TODO(alorenzen): Consider renaming `onlySelf` to `updateParent`.
   void updateValueAndValidity({bool onlySelf, bool emitEvent}) {
     onlySelf = onlySelf == true;
     emitEvent = emitEvent ?? true;
     onUpdate();
     _errors = _runValidator();
     _status = _calculateStatus();
-    if (emitEvent) {
-      _valueChanges.add(_value);
-      _statusChanges.add(_status);
-    }
+    if (emitEvent) _emitEvent();
     if (_parent != null && !onlySelf) {
       _parent.updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
     }
+  }
+
+  void _emitEvent() {
+    _valueChanges.add(_value);
+    _statusChanges.add(_status);
   }
 
   Map<String, dynamic> _runValidator() =>
@@ -197,6 +256,7 @@ abstract class AbstractControl<T> {
   }
 
   String _calculateStatus() {
+    if (_allControlsHaveStatus(DISABLED)) return DISABLED;
     if (_errors != null) return INVALID;
     if (_anyControlsHaveStatus(PENDING)) return PENDING;
     if (_anyControlsHaveStatus(INVALID)) return INVALID;
@@ -211,6 +271,9 @@ abstract class AbstractControl<T> {
   void onUpdate();
 
   bool _anyControlsHaveStatus(String status);
+  bool _allControlsHaveStatus(String status);
+
+  void _forEachChild(void callback(AbstractControl c));
 }
 
 /// Defines a part of a form that cannot be divided into other controls.
@@ -269,6 +332,12 @@ class Control<T> extends AbstractControl<T> {
   @override
   bool _anyControlsHaveStatus(String status) => false;
 
+  @override
+  bool _allControlsHaveStatus(String status) => this.status == status;
+
+  @override
+  void _forEachChild(void callback(AbstractControl c)) {}
+
   /// Register a listener for change events.
   ///
   /// Used internally to connect the model with the [ValueAccessor] which will
@@ -292,7 +361,6 @@ class Control<T> extends AbstractControl<T> {
 /// [ControlArray] can also contain other controls, but is of variable length.
 class ControlGroup extends AbstractControl<Map<String, dynamic>> {
   final Map<String, AbstractControl> controls;
-  final Map<String, bool> _optionals = {};
 
   ControlGroup(this.controls, [ValidatorFn validator]) : super(validator) {
     _setParentForControls(this, controls.values);
@@ -311,19 +379,17 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
 
   /// Mark the named control as non-optional.
   void include(String controlName) {
-    _optionals[controlName] = true;
-    updateValueAndValidity();
+    controls[controlName]?.markAsEnabled();
   }
 
   /// Mark the named control as optional.
   void exclude(String controlName) {
-    _optionals[controlName] = false;
-    updateValueAndValidity();
+    controls[controlName]?.markAsDisabled();
   }
 
   /// Check whether there is a control with the given name in the group.
   bool contains(String controlName) =>
-      controls.containsKey(controlName) && _included(controlName);
+      controls.containsKey(controlName) && controls[controlName].enabled;
 
   @override
   void onUpdate() {
@@ -332,22 +398,40 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
 
   @override
   bool _anyControlsHaveStatus(String status) {
-    return controls.keys.any((name) {
-      return contains(name) && controls[name].status == status;
-    });
+    for (var name in controls.keys) {
+      if (contains(name) && controls[name].status == status) return true;
+    }
+    return false;
+  }
+
+  @override
+  bool _allControlsHaveStatus(String status) {
+    if (controls.isEmpty) return this.status == status;
+
+    for (var name in controls.keys) {
+      if (controls[name].status != status) return false;
+    }
+    return true;
+  }
+
+  @override
+  void _forEachChild(void callback(AbstractControl c)) {
+    for (var control in controls.values) {
+      callback(control);
+    }
   }
 
   Map<String, dynamic> _reduceValue() {
     final res = <String, dynamic>{};
-    controls.forEach((name, control) {
-      if (_included(name)) {
-        res[name] = control.value;
+    for (var name in controls.keys) {
+      if (_included(name) || disabled) {
+        res[name] = controls[name].value;
       }
-    });
+    }
     return res;
   }
 
-  bool _included(String controlName) => _optionals[controlName] != false;
+  bool _included(String controlName) => controls[controlName]?.enabled ?? false;
 }
 
 /// Defines a part of a form, of variable length, that can contain other
@@ -405,12 +489,38 @@ class ControlArray extends AbstractControl<List> {
 
   @override
   void onUpdate() {
-    _value = controls.map((control) => control.value).toList();
+    _value = [];
+    for (var control in controls) {
+      if (control.enabled || disabled) {
+        _value.add(control.value);
+      }
+    }
   }
 
   @override
-  bool _anyControlsHaveStatus(String status) =>
-      controls.any((c) => c.status == status);
+  bool _anyControlsHaveStatus(String status) {
+    for (var control in controls) {
+      if (control.status == status) return true;
+    }
+    return false;
+  }
+
+  @override
+  bool _allControlsHaveStatus(String status) {
+    if (controls.isEmpty) return this.status == status;
+
+    for (var control in controls) {
+      if (control.status != status) return false;
+    }
+    return true;
+  }
+
+  @override
+  void _forEachChild(void callback(AbstractControl c)) {
+    for (var control in controls) {
+      callback(control);
+    }
+  }
 }
 
 void _setParentForControls(
