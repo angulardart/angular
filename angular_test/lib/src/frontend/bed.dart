@@ -49,10 +49,12 @@ Future<NgTestFixture<T>> createDynamicFixture<T>(
 /// This is for compatibility reasons only and should not be used otherwise.
 NgTestBed<T> createDynamicTestBed<T>({
   Element host,
+  InjectorFactory rootInjector,
   bool watchAngularLifecycle: true,
 }) {
   return new NgTestBed<T>._allowDynamicType(
     host: host,
+    rootInjector: rootInjector,
     watchAngularLifecycle: watchAngularLifecycle,
   );
 }
@@ -171,6 +173,7 @@ class NgTestBed<T> {
   /// by setting [watchAngularLifecycle] to `false`.
   factory NgTestBed({
     Element host,
+    InjectorFactory rootInjector,
     bool watchAngularLifecycle: true,
   }) {
     if (T == dynamic) {
@@ -178,6 +181,7 @@ class NgTestBed<T> {
     }
     return new NgTestBed<T>._allowDynamicType(
       host: host,
+      rootInjector: rootInjector,
       watchAngularLifecycle: watchAngularLifecycle,
     );
   }
@@ -185,12 +189,14 @@ class NgTestBed<T> {
   // Used for compatibility only.
   factory NgTestBed._allowDynamicType({
     Element host,
+    InjectorFactory rootInjector,
     bool watchAngularLifecycle: true,
   }) {
     return new NgTestBed<T>._(
       host: host,
       providers: const [],
       stabilizers: watchAngularLifecycle ? _lifecycleStabilizers : const [],
+      rootInjector: rootInjector,
     );
   }
 
@@ -278,7 +284,7 @@ class NgTestBed<T> {
     return new Future<NgTestFixture<T>>.sync(() {
       _checkForActiveTest();
       return bootstrapForTest<T>(
-        _componentFactory ?? typeToFactory(T),
+        _componentFactory ?? typeToFactory(type),
         _host ?? _defaultHost(),
         _rootInjector,
         beforeChangeDetection: beforeChangeDetection,

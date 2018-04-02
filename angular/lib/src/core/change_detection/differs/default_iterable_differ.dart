@@ -1,4 +1,5 @@
 import 'package:angular/src/facade/exceptions.dart' show BaseException;
+import 'package:angular/src/runtime.dart';
 
 // TODO: Remove the following lines (for --no-implicit-casts).
 // ignore_for_file: argument_type_not_assignable
@@ -608,48 +609,52 @@ class DefaultIterableDiffer {
   }
 
   String toString() {
-    var list = [];
-    for (var record = this._itHead;
-        !identical(record, null);
-        record = record._next) {
-      list.add(record);
+    if (isDevMode) {
+      var list = [];
+      for (var record = this._itHead;
+          !identical(record, null);
+          record = record._next) {
+        list.add(record);
+      }
+      var previous = [];
+      for (var record = this._previousItHead;
+          !identical(record, null);
+          record = record._nextPrevious) {
+        previous.add(record);
+      }
+      var additions = [];
+      this.forEachAddedItem((record) => additions.add(record));
+      var moves = [];
+      for (var record = this._movesHead;
+          !identical(record, null);
+          record = record._nextMoved) {
+        moves.add(record);
+      }
+      var removals = [];
+      this.forEachRemovedItem((record) => removals.add(record));
+      var identityChanges = [];
+      this.forEachIdentityChange((record) => identityChanges.add(record));
+      return "collection: " +
+          list.join(", ") +
+          "\n" +
+          "previous: " +
+          previous.join(", ") +
+          "\n" +
+          "additions: " +
+          additions.join(", ") +
+          "\n" +
+          "moves: " +
+          moves.join(", ") +
+          "\n" +
+          "removals: " +
+          removals.join(", ") +
+          "\n" +
+          "identityChanges: " +
+          identityChanges.join(", ") +
+          "\n";
+    } else {
+      return super.toString();
     }
-    var previous = [];
-    for (var record = this._previousItHead;
-        !identical(record, null);
-        record = record._nextPrevious) {
-      previous.add(record);
-    }
-    var additions = [];
-    this.forEachAddedItem((record) => additions.add(record));
-    var moves = [];
-    for (var record = this._movesHead;
-        !identical(record, null);
-        record = record._nextMoved) {
-      moves.add(record);
-    }
-    var removals = [];
-    this.forEachRemovedItem((record) => removals.add(record));
-    var identityChanges = [];
-    this.forEachIdentityChange((record) => identityChanges.add(record));
-    return "collection: " +
-        list.join(", ") +
-        "\n" +
-        "previous: " +
-        previous.join(", ") +
-        "\n" +
-        "additions: " +
-        additions.join(", ") +
-        "\n" +
-        "moves: " +
-        moves.join(", ") +
-        "\n" +
-        "removals: " +
-        removals.join(", ") +
-        "\n" +
-        "identityChanges: " +
-        identityChanges.join(", ") +
-        "\n";
   }
 }
 
