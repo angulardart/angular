@@ -135,7 +135,7 @@ class NgTestBed<T> {
   /// main() {
   ///   final ngTestBed = NgTestBed.forComponent(
   ///     SomeComponentNgFactory,
-  ///     rootInjector: (parent) => new Injector.map({
+  ///     rootInjector: ([parent]) => new Injector.map({
   ///       Service: new Service(),
   ///     }, parent),
   ///   );
