@@ -5,6 +5,9 @@
 *   Add `MemorizedForm` directive. This is a form that will not remove controls
     if the control is taken out of the view, for example with a [NgIf].
 
+*   Add `disabled` state to `AbstractControl` models. Note: This is not yet
+    supported in the template-driven directives.
+
 ## Breaking Changes
 
 *   Remove `optionals` param from `ControlGroup` constructor. This will soon be
