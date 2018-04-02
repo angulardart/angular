@@ -134,7 +134,7 @@ set -e\n
     if (!buildable) {
       _stages.addAll([
         '    - stage: testing',
-        '      script: ./tool/travis.sh test:nobuild}',
+        '      script: ./tool/travis.sh test:nobuild',
         '      env: PKG="$path"',
         '',
       ]);

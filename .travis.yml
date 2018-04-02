@@ -254,7 +254,7 @@ jobs:
       env: PKG="dev"
 
     - stage: testing
-      script: ./tool/travis.sh test:nobuild}
+      script: ./tool/travis.sh test:nobuild
       env: PKG="dev"
 
     - stage: presubmit
