@@ -300,7 +300,12 @@ abstract class AppView<T> {
     detachAll(inlinedNodes);
     var nodeList =
         isRoot ? viewData.rootNodesOrViewContainers : viewData.inlinedNodes;
-    nodeList.removeWhere((n) => inlinedNodes.contains(n));
+    for (int i = nodeList.length - 1; i >= 0; i--) {
+      var node = nodeList[i];
+      if (inlinedNodes.contains(node)) {
+        nodeList.remove(node);
+      }
+    }
   }
 
   dynamic createElement(
