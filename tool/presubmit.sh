@@ -62,6 +62,10 @@ echo "Building angular_test in debug mode..."
 PKG=angular_test tool/travis.sh build
 echo "Running tests in angular_test in debug mode"
 PKG=angular_test tool/travis.sh test
+echo "Analyzing dev..."
+PKG=dev tool/travis.sh analyze
+echo "Running tests in dev in (nobuild)"
+PKG=dev tool/travis.sh test:nobuild
 echo "Analyzing examples/github_issues..."
 PKG=examples/github_issues tool/travis.sh analyze
 echo "Building examples/github_issues in debug mode..."

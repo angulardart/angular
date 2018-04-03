@@ -53,6 +53,12 @@ case $TASK in
     pub run build_runner test --fail-on-severe -- -P travis
     ;;
 
+  test:nobuild)
+    echo -e '\033[1mTASK: Testing [test]\033[22m'
+    echo -e 'pub run test -P travis'
+    pub run test -P travis
+    ;;
+
   test:release)
     echo -e '\033[1mTASK: Testing [test:release]\033[22m'
     echo -e 'pub run build_runner test --config=release --fail-on-severe -- -P travis'
