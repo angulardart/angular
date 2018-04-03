@@ -33,6 +33,12 @@ class RouterImpl extends Router {
   StreamController<String> _onNavigationStart;
   RouterOutlet _rootOutlet;
 
+  /// Tracks the latest navigation request.
+  ///
+  /// This is used to synchronize all navigation requests, so that they are run
+  /// sequentially, rather than concurrently.
+  Future<NavigationResult> _lastNavigation = new Future.value();
+
   RouterImpl(this._location, @Optional() this._routerHook) {
     Url.isHashStrategy = _location.platformStrategy is HashLocationStrategy;
 
@@ -45,7 +51,7 @@ class RouterImpl extends Router {
           queryParameters: url.queryParameters,
           fragment: fragment,
           updateUrl: false);
-      _navigateRouter(url.path, navigationParams).then((navigationResult) {
+      _enqueueNavigation(url.path, navigationParams).then((navigationResult) {
         // If the back navigation was blocked (DeactivateGuard), push the
         // activeState back into the history.
         if (navigationResult == NavigationResult.BLOCKED_BY_GUARD) {
@@ -72,7 +78,7 @@ class RouterImpl extends Router {
       _rootOutlet = routerOutlet;
 
       Url url = Url.parse(_location.path());
-      _navigateRouter(
+      _enqueueNavigation(
           url.path,
           new NavigationParams(
               queryParameters: url.queryParameters,
@@ -99,15 +105,23 @@ class RouterImpl extends Router {
     String path, [
     NavigationParams navigationParams,
   ]) {
-    var absolutePath = _getAbsolutePath(path, _activeState);
+    final absolutePath = _getAbsolutePath(path, _activeState);
+    return _enqueueNavigation(absolutePath, navigationParams);
+  }
 
-    return _navigateRouter(absolutePath, navigationParams);
+  /// Enqueues the navigation request to begin after all pending ones complete.
+  Future<NavigationResult> _enqueueNavigation(
+    String path,
+    NavigationParams navigationParams,
+  ) {
+    return _lastNavigation =
+        _lastNavigation.then((_) => _navigate(path, navigationParams));
   }
 
   /// Navigate this router to the given url.
   ///
   /// Path is the full, absolute URL.
-  Future<NavigationResult> _navigateRouter(
+  Future<NavigationResult> _navigate(
     String path,
     NavigationParams navigationParams, {
     bool isRedirect: false,
@@ -148,7 +162,7 @@ class RouterImpl extends Router {
         nextState.routes.last is RedirectRouteDefinition) {
       var redirectUrl =
           (nextState.routes.last as RedirectRouteDefinition).redirectTo;
-      return _navigateRouter(
+      return _navigate(
         _getAbsolutePath(redirectUrl, nextState.build()),
         navigationParams == null
             ? null
