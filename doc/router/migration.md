@@ -241,6 +241,12 @@ For example: `overviewRoute.toUrl() == '/overview'`. We can do things like:
 
 ### Why OnActivate instead of OnInit?
 
-Since the routes exist as an Input(), the router-outlet must be init in order for the route tree to be defined. Thus, the router will initialize components when trying to find the match the route to navigate. Therefore, a component may be initialized but not actually rendered.
+Since the routes exist as an Input(), the router-outlet must be initialized in
+order for the route tree to be defined. Thus, the router will initialize
+components while trying to match a path before navigation. Therefore, a
+component may be initialized but not actually rendered.
 
-OnActivate will have the same guarantees as OnInit, but be safe with the router.
+OnActivate can be used in place of OnInit for initializion after the component
+is rendered. Note that unlike OnInit, OnActivate will be called after the
+component's template bindings are changed detected. This means any state
+initialized in OnActivate will be null for the initial change detection pass.
