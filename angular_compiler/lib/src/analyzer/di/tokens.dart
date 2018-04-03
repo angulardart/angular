@@ -45,7 +45,7 @@ class TokenReader {
   OpaqueTokenElement _parseOpaqueToken(ConstantReader constant) {
     final value = constant.objectValue;
     return new OpaqueTokenElement(
-      constant.read('_desc').stringValue,
+      constant.read('_uniqueName').stringValue,
       isMultiToken: constant.instanceOf($MultiToken),
       classUrl: linkToOpaqueToken(constant.objectValue.type),
       typeUrl: value.type.typeArguments.isNotEmpty

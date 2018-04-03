@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 /// A token to be used instead of [Type] when configuring dependency injection.
 ///
+///
 /// ```
 /// const loginUrl = const OpaqueToken<String>('loginUrl');
 ///
@@ -16,6 +17,10 @@ import 'package:meta/meta.dart';
 /// ```
 ///
 /// The type [T] is not required, but is recommended, otherwise it is `dynamic`.
+///
+/// The only positional argument, `uniqueName`, is used to determine uniqueness
+/// of the token. That is, `const OpaqueToken('SECRET')` is identical to
+/// `const OpaqueToken('SECRET')` in another library or package.
 ///
 /// You may also sub-class [OpaqueToken] to create a "more unique" token:
 /// ```
@@ -39,14 +44,14 @@ import 'package:meta/meta.dart';
 /// referenced using the `const` operator.
 @optionalTypeArgs
 class OpaqueToken<T> {
-  final String _desc;
+  final String _uniqueName;
 
-  const OpaqueToken([this._desc = '']);
+  const OpaqueToken([this._uniqueName = '']);
 
   @override
   String toString() {
     if (isDevMode) {
-      return "OpaqueToken (${super.toString()}) <$T>('$_desc')";
+      return "OpaqueToken (${super.toString()}) <$T>('$_uniqueName')";
     }
     return super.toString();
   }
@@ -74,9 +79,10 @@ class OpaqueToken<T> {
 ///
 /// The type [T] is not required, but is recommended, otherwise it is `dynamic`.
 ///
-/// This is is the preferred mechanism for configuring multiple bound values to
-/// a single token, and will replace `Provider(..., multi: true)` and other
-/// variations of the `multi: true` APIs.
+/// The only positional argument, `uniqueName`, is used to determine uniqueness
+/// of the token. That is, `const MultiToken('SECRETS')` is identical to
+/// `const MultiToken('SECRETS')` in another library or package.
+///
 ///
 /// You may also sub-class [MultiToken] to create a "more unique" token:
 /// ```
@@ -101,17 +107,21 @@ class OpaqueToken<T> {
 /// }
 /// ```
 ///
+/// This is is the preferred mechanism for configuring multiple bound values to
+/// a single token, and will replace `Provider(..., multi: true)` and other
+/// variations of the `multi: true` APIs.
+///
 /// **WARNING**: It is not supported to create a non-const instance of this
 /// class or sub-types of this class. Instances should only be created or
 /// referenced using the `const` operator.
 @optionalTypeArgs
 class MultiToken<T> extends OpaqueToken<T> {
-  const MultiToken([String description = '']) : super(description);
+  const MultiToken([String uniqueName = '']) : super(uniqueName);
 
   @override
   String toString() {
     if (isDevMode) {
-      return "MultiToken (${super.toString()}) <$T>('$_desc')";
+      return "MultiToken (${super.toString()}) <$T>('$_uniqueName')";
     }
     return super.toString();
   }
