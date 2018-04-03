@@ -677,15 +677,16 @@ abstract class AppView<T> {
 Node _findLastRenderNode(dynamic node) {
   Node lastNode;
   if (node is ViewContainer) {
-    ViewContainer appEl = node;
+    final ViewContainer appEl = node;
     lastNode = appEl.nativeElement;
-    if (appEl.nestedViews != null) {
+    var nestedViews = appEl.nestedViews;
+    if (nestedViews != null) {
       // Note: Views might have no root nodes at all!
-      for (var i = appEl.nestedViews.length - 1; i >= 0; i--) {
-        var nestedView = appEl.nestedViews[i];
-        if (nestedView.viewData.rootNodesOrViewContainers.isNotEmpty) {
+      for (var i = nestedViews.length - 1; i >= 0; i--) {
+        var nestedViewData = appEl.nestedViews[i].viewData;
+        if (nestedViewData.rootNodesOrViewContainers.isNotEmpty) {
           lastNode = _findLastRenderNode(
-              nestedView.viewData.rootNodesOrViewContainers.last);
+              nestedViewData.rootNodesOrViewContainers.last);
         }
       }
     }
@@ -730,13 +731,13 @@ List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
   for (var i = 0; i < nodeCount; i++) {
     var node = nodes[i];
     if (node is ViewContainer) {
-      ViewContainer appEl = node;
+      final ViewContainer appEl = node;
       renderNodes.add(appEl.nativeElement);
-      if (appEl.nestedViews != null) {
-        for (var k = 0; k < appEl.nestedViews.length; k++) {
+      final nestedViews = appEl.nestedViews;
+      if (nestedViews != null) {
+        for (var k = 0, len = nestedViews.length; k < len; k++) {
           _flattenNestedViewRenderNodes(
-              appEl.nestedViews[k].viewData.rootNodesOrViewContainers,
-              renderNodes);
+              nestedViews[k].viewData.rootNodesOrViewContainers, renderNodes);
         }
       }
     } else {

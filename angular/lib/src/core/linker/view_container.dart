@@ -56,16 +56,18 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   Injector get injector => parentView.injector(index);
 
   void detectChangesInNestedViews() {
-    if (nestedViews == null) return;
-    for (var i = 0, len = nestedViews.length; i < len; i++) {
-      nestedViews[i].detectChanges();
+    var _nestedViews = nestedViews;
+    if (_nestedViews == null) return;
+    for (var i = 0, len = _nestedViews.length; i < len; i++) {
+      _nestedViews[i].detectChanges();
     }
   }
 
   void destroyNestedViews() {
-    if (nestedViews == null) return;
-    for (var i = 0, len = nestedViews.length; i < len; i++) {
-      nestedViews[i].destroy();
+    var _nestedViews = nestedViews;
+    if (_nestedViews == null) return;
+    for (var i = 0, len = _nestedViews.length; i < len; i++) {
+      _nestedViews[i].destroy();
     }
   }
 
@@ -170,13 +172,13 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   void moveView(AppView view, int currentIndex) {
-    int previousIndex = nestedViews.indexOf(view);
+    List<AppView> views = nestedViews;
+
+    int previousIndex = views.indexOf(view);
 
     if (view.viewData.type == ViewType.COMPONENT) {
       throw new Exception("Component views can't be moved!");
     }
-
-    List<AppView> views = nestedViews;
 
     if (views == null) {
       views = <AppView>[];
@@ -205,15 +207,16 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     if (identical(view.viewData.type, ViewType.COMPONENT)) {
       throw new BaseException("Component views can't be moved!");
     }
-    nestedViews ??= <AppView>[];
-    nestedViews.insert(viewIndex, view);
+    var _nestedViews = nestedViews ?? <AppView>[];
+    _nestedViews.insert(viewIndex, view);
     var refRenderNode;
     if (viewIndex > 0) {
-      var prevView = nestedViews[viewIndex - 1];
+      var prevView = _nestedViews[viewIndex - 1];
       refRenderNode = prevView.lastRootNode;
     } else {
       refRenderNode = nativeElement;
     }
+    nestedViews = _nestedViews;
     if (refRenderNode != null) {
       view.attachViewAfter(refRenderNode, view.flatRootNodes);
     }

@@ -83,6 +83,7 @@ List<T> flattenNodes<T>(List<List<T>> nodes) {
 }
 
 dynamic interpolate0(dynamic p) {
+  if (p is String) return p;
   if (p is SafeValue) return p;
   return p == null ? '' : '$p';
 }
