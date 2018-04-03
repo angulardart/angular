@@ -1,3 +1,11 @@
+### Bug fixes
+
+*   Router navigation requests are now queued to ensure they'll run sequentially
+    in the order they were requested. Previously no attempt was made to
+    synchronise navigation requests, and if multiple were made simultaneously
+    they could run concurrently, interfere with each other, and potentially
+    complete out of order.
+
 ## 2.0.0-alpha+9
 
 ### Breaking changes
