@@ -41,7 +41,7 @@ class RequiredFirstValidator implements Validator {
 }
 
 @Directive(
-    selector: 'material-auto-suggest-input[ngControl^="state"]',
+    selector: 'material-auto-suggest-input[ngControl="state"]',
     providers: const [
       const ExistingProvider.forToken(NG_VALIDATORS, RequiredState)
     ])
