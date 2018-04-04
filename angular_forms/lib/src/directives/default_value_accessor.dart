@@ -57,4 +57,6 @@ class DefaultValueAccessor implements ControlValueAccessor {
   void registerOnTouched(void fn()) {
     onTouched = fn;
   }
+
+  void onDisabledChanged(bool isDisabled) {}
 }

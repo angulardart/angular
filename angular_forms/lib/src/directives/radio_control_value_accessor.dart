@@ -132,4 +132,6 @@ class RadioControlValueAccessor
   void registerOnTouched(dynamic fn()) {
     onTouched = fn;
   }
+
+  void onDisabledChanged(bool isDisabled) {}
 }
