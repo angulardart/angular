@@ -31,7 +31,7 @@ class SlowComponentLoader {
   /// See [ComponentLoader.loadDetached] for a similar example.
   Future<ComponentRef<T>> load<T>(Type type, Injector injector) {
     // Purposefully don't use async/await to retain timing.
-    final factoryFuture = new Future.value(typeToFactory(type));
+    final factoryFuture = new Future<T>.value(typeToFactory(type));
     return factoryFuture.then((component) {
       final reference = _loader.loadDetached<T>(component, injector: injector);
       reference.onDestroy(() {
@@ -50,7 +50,7 @@ class SlowComponentLoader {
     Injector injector,
   ]) {
     // Purposefully don't use async/await to retain timing.
-    final factoryFuture = new Future.value(typeToFactory(type));
+    final factoryFuture = new Future<T>.value(typeToFactory(type));
     return factoryFuture.then((component) {
       return _loader.loadNextToLocation(
         component,
