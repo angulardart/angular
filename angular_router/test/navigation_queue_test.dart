@@ -15,6 +15,8 @@ const secondToken = const OpaqueToken<Future<Null>>('second');
 const thirdToken = const OpaqueToken<Future<Null>>('third');
 
 void main() {
+  ng.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   test('navigation should complete in requested order', () async {
