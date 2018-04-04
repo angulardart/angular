@@ -174,7 +174,10 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
       return asyncInitDonePromise;
     });
     _streamSubscriptions.add(_zone.onError.listen((NgZoneError error) {
-      handleUncaughtException(error.error, error.stackTrace);
+      handleUncaughtException(
+        error.error,
+        new StackTrace.fromString(error.stackTrace.join('\n')),
+      );
     }));
     _streamSubscriptions.add(_zone.onMicrotaskEmpty.listen((_) {
       _zone.runGuarded(() {
