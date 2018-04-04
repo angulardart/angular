@@ -16,7 +16,6 @@ import 'package:angular/src/core/linker/exceptions.dart'
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular/src/core/render/api.dart';
 
 import 'debug_context.dart' show StaticNodeDebugInfo, DebugContext;
 import 'debug_node.dart'
@@ -285,17 +284,6 @@ class DebugAppView<T> extends AppView<T> {
       }
     }
     super.detachViewNodes(viewRootNodes);
-  }
-
-  @override
-  dynamic createElement(
-      dynamic parentElement, String name, RenderDebugInfo debugInfo) {
-    var nativeEl = super.createElement(parentElement, name, debugInfo);
-    var debugEl =
-        new DebugElement(nativeEl, getDebugNode(parentElement), debugInfo);
-    debugEl.name = name;
-    indexDebugNode(debugEl);
-    return nativeEl;
   }
 
   @override
