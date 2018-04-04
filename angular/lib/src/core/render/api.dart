@@ -19,7 +19,8 @@ abstract class SharedStylesHost {
 /// Initialized by RootRenderer.
 SharedStylesHost sharedStylesHost;
 
-final RegExp COMPONENT_REGEX = new RegExp(r'%COMP%');
+/// This matches the component ID placeholder in encapsulating CSS classes.
+final _componentIdPlaceholder = new RegExp(r'%COMP%');
 
 /// Component prototype and runtime style information that are shared
 /// across all instances of a component type.
@@ -31,14 +32,16 @@ class RenderComponentType {
   final ViewEncapsulation encapsulation;
   List<dynamic /* String | List < dynamic > */ > templateStyles;
 
-  static const COMPONENT_VARIABLE = '%COMP%';
-  static const HOST_STYLE_PREFIX = '_nghost-';
-  static const CONTENT_STYLE_PREFIX = '_ngcontent-';
-  static const HOST_ATTR = '$HOST_STYLE_PREFIX$COMPONENT_VARIABLE';
-  static const CONTENT_ATTR = '$CONTENT_STYLE_PREFIX$COMPONENT_VARIABLE';
-  // Content attribute value assigned to elements in template or null if
-  // no assignment is required.
-  String _contentAttr;
+  /// The prefix for CSS classes that style component host elements.
+  static const _hostClassPrefix = '_nghost-';
+
+  /// The prefix for CSS classes that encapsulate styles within component views.
+  static const _viewClassPrefix = '_ngcontent-';
+
+  // View attribute value assigned to elements in template or null if no
+  // assignment is required.
+  String _viewAttr;
+
   // Host attribute name of elements in the template for this component type.
   String _hostAttr;
 
@@ -52,22 +55,16 @@ class RenderComponentType {
     _styles = _flattenStyles(id, templateStyles, []);
     stylesHost.addStyles(this._styles);
     if (encapsulation == ViewEncapsulation.Emulated) {
-      _contentAttr = _shimContentAttribute(id);
-      _hostAttr = _shimHostAttribute(id);
+      _hostAttr = '$_hostClassPrefix$id';
+      _viewAttr = '$_viewClassPrefix$id';
     }
   }
 
-  String get contentAttr => _contentAttr;
+  String get contentAttr => _viewAttr;
 
   String get hostAttr => _hostAttr;
 
   List<String> get styles => _styles;
-
-  String _shimContentAttribute(String componentShortId) =>
-      CONTENT_ATTR.replaceAll(COMPONENT_REGEX, componentShortId);
-
-  String _shimHostAttribute(String componentShortId) =>
-      HOST_ATTR.replaceAll(COMPONENT_REGEX, componentShortId);
 
   List<String> _flattenStyles(
       String compId,
@@ -80,7 +77,7 @@ class RenderComponentType {
       if (style is List) {
         _flattenStyles(compId, style, target);
       } else {
-        style = style.replaceAll(COMPONENT_REGEX, compId);
+        style = style.replaceAll(_componentIdPlaceholder, compId);
         target.add(style);
       }
     }

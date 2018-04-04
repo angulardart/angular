@@ -8,11 +8,14 @@ import "output/output_ast.dart" as o;
 import "shadow_css.dart";
 import "style_url_resolver.dart" show extractStyleUrls;
 
-const COMPONENT_VARIABLE = "%COMP%";
-final HOST_ATTR_PREFIX = '_nghost-';
-final HOST_ATTR = '$HOST_ATTR_PREFIX$COMPONENT_VARIABLE';
-final CONTENT_ATTR_PREFIX = '_ngcontent-';
-final CONTENT_ATTR = '$CONTENT_ATTR_PREFIX$COMPONENT_VARIABLE';
+/// This placeholder is replaced by the component ID at run-time.
+const _componentIdPlaceholder = '%COMP%';
+
+/// This CSS class is used to apply styles to a component's host element.
+const _hostClass = '_nghost-$_componentIdPlaceholder';
+
+/// This CSS class is used to encapsulate styles within a component's view.
+const _viewClass = '_ngcontent-$_componentIdPlaceholder';
 
 class StylesCompileResult {
   final List<o.Statement> statements;
@@ -80,13 +83,13 @@ class StyleCompiler {
 
   String _shimIfNeeded(String style, bool shim) {
     String result = shim
-        ? shimShadowCss(style, CONTENT_ATTR, HOST_ATTR,
+        ? shimShadowCss(style, _viewClass, _hostClass,
             useLegacyEncapsulation: _config.useLegacyStyleEncapsulation)
         : style;
-    if (result.contains(CONTENT_ATTR_PREFIX)) {
+    if (result.contains(_viewClass)) {
       usesContentAttribute = true;
     }
-    if (result.contains(HOST_ATTR_PREFIX)) {
+    if (result.contains(_hostClass)) {
       usesHostAttribute = true;
     }
     return result;
