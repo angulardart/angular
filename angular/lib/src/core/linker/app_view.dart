@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import 'package:angular/src/core/app_view_consts.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/change_detection/host.dart';
@@ -306,21 +305,6 @@ abstract class AppView<T> {
         nodeList.remove(node);
       }
     }
-  }
-
-  dynamic createElement(
-      dynamic parent, String name, RenderDebugInfo debugInfo) {
-    var nsAndName = splitNamespace(name);
-    var el = nsAndName[0] != null
-        ? document.createElementNS(namespaceUris[nsAndName[0]], nsAndName[1])
-        : document.createElement(nsAndName[1]);
-    String contentAttr = componentType.contentAttr;
-    if (contentAttr != null) {
-      el.attributes[contentAttr] = '';
-    }
-    parent?.append(el);
-    domRootRendererIsDirty = true;
-    return el;
   }
 
   void attachViewAfter(dynamic node, List<Node> viewRootNodes) {
