@@ -5,8 +5,7 @@ import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
-import '../facade/exceptions.dart' show BaseException, ExceptionHandler;
-import 'application_tokens.dart' show APP_INITIALIZER;
+import '../facade/exceptions.dart' show ExceptionHandler;
 import 'change_detection/host.dart';
 import 'di.dart';
 import 'linker/app_view.dart' show AppView;
@@ -96,10 +95,6 @@ abstract class ApplicationRef implements ChangeDetectionHost {
   /// Register a listener to be called when the application is disposed.
   void registerDisposeListener(void dispose());
 
-  /// Returns a promise that resolves when all asynchronous application
-  /// initializers are done.
-  Future<dynamic> waitForAsyncInitializers();
-
   /// Bootstrap a new component at the root level of the application.
   ///
   /// When bootstrapping a new root component into an application,
@@ -141,37 +136,10 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
   final List<StreamSubscription> _streamSubscriptions = [];
 
   ExceptionHandler _exceptionHandler;
-  Future<bool> _asyncInitDonePromise;
-  bool _asyncInitDone;
 
   ApplicationRefImpl(this._platform, this._zone, this._injector) {
     _zone.run(() {
       _exceptionHandler = _injector.get(ExceptionHandler);
-    });
-    // <bool> due to https://github.com/dart-lang/sdk/issues/32284.
-    _asyncInitDonePromise = this.run<bool>(() {
-      List<Function> initializers = _injector.get(APP_INITIALIZER, null);
-      var asyncInitResults = <Future>[];
-      Future<bool> asyncInitDonePromise;
-      if (initializers != null) {
-        int initializerCount = initializers.length;
-        for (var i = 0; i < initializerCount; i++) {
-          var initResult = initializers[i]();
-          if (initResult is Future) {
-            asyncInitResults.add(initResult);
-          }
-        }
-      }
-      if (asyncInitResults.length > 0) {
-        asyncInitDonePromise = Future.wait(asyncInitResults).then((_) {
-          _asyncInitDone = true;
-        });
-        _asyncInitDone = false;
-      } else {
-        _asyncInitDone = true;
-        asyncInitDonePromise = new Future.value(true);
-      }
-      return asyncInitDonePromise;
     });
     _streamSubscriptions.add(_zone.onError.listen((NgZoneError error) {
       handleUncaughtException(error.error, error.stackTrace);
@@ -190,18 +158,10 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
     _disposeListeners.add(dispose);
   }
 
-  Future<dynamic> waitForAsyncInitializers() => _asyncInitDonePromise;
-
   ComponentRef<T> bootstrap<T>(
     ComponentFactory<T> componentFactory, [
     Injector parent,
   ]) {
-    if (isDevMode && !_asyncInitDone) {
-      throw new BaseException(
-          'Cannot bootstrap as there are still asynchronous initializers '
-          'running. Wait for them using waitForAsyncInitializers().');
-    }
-
     return run(() {
       var compRef = componentFactory.create(parent ?? _injector, const []);
       Element existingElement =
