@@ -225,8 +225,9 @@ class ClassProvider<T> extends Provider<T> {
     bool multi: false,
   }) : super._(
           token,
+          // TODO: Use ?? once this no longer fails in the CFE-backed Dart2.
           // ignore: argument_type_not_assignable
-          useClass: useClass ?? token,
+          useClass: useClass != null ? useClass : token,
           multi: multi,
         );
 }
