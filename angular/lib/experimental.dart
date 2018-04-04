@@ -16,6 +16,7 @@ import 'src/bootstrap/run.dart' show appInjector;
 import 'src/core/linker/app_view.dart' as app_view;
 import 'src/core/linker/app_view_utils.dart';
 import 'src/di/injector/injector.dart';
+import 'src/runtime.dart';
 
 export 'src/bootstrap/modules.dart' show bootstrapLegacyModule;
 export 'src/core/linker/component_resolver.dart' show typeToFactory;
@@ -39,7 +40,7 @@ Injector rootLegacyInjector(InjectorFactory userInjector) {
         SlowComponentLoader: const SlowComponentLoader(
           const ComponentLoader(),
         ),
-      }, parent);
+      }, unsafeCast(parent));
     }),
   );
 }

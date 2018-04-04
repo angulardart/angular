@@ -57,7 +57,7 @@ Injector appInjector(InjectorFactory userProvidedInjector) {
   final Injector appGlobalInjector = new _LazyInjector({
     ApplicationRef: () => applicationRef,
     AppViewUtils: () => appViewUtils,
-  }, minimalInjector);
+  }, unsafeCast(minimalInjector));
 
   // These are the user-provided overrides.
   final Injector userInjector = userProvidedInjector(appGlobalInjector);
