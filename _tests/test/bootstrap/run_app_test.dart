@@ -13,6 +13,8 @@ import 'run_app_test.template.dart' as ng;
 
 /// A set of functional tests for the bootstrapping process.
 void main() {
+  ng.initReflector();
+
   ComponentRef<HelloWorldComponent> component;
   Element rootDomContainer;
 
