@@ -79,7 +79,7 @@ Injector appInjector(InjectorFactory userProvidedInjector) {
     );
     appViewUtils = new AppViewUtils(
       unsafeCast(userInjector.get(APP_ID)),
-      unsafeCast(minimalInjector.get(SanitizationService)),
+      unsafeCast(userInjector.get(SanitizationService)),
       unsafeCast(minimalInjector.get(EventManager)),
     );
     return userInjector;
