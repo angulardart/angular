@@ -6,26 +6,24 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular/experimental.dart';
+import 'package:angular/src/bootstrap/run.dart';
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/platform/dom/shared_styles_host.dart';
 
-/// Returns an application injector for [providers] based on a [platform].
-Injector createTestInjector(List<dynamic> providers) {
-  Injector appInjector;
+/// Returns an application injector factory for [providers], if any.
+InjectorFactory testInjectorFactory(List<dynamic> providers) {
+  // Identity InjectorFactory (No-op).
   if (providers.isEmpty) {
-    appInjector = rootMinimalInjector();
-  } else {
-    appInjector = ReflectiveInjector.resolveAndCreate([
-      bootstrapLegacyModule,
-      providers,
-    ], browserStaticPlatform().injector);
+    return ([parent]) => parent;
   }
-  initAngular(appInjector);
-  return appInjector;
+  return ([parent]) {
+    return ReflectiveInjector.resolveAndCreate([
+      providers,
+    ], parent);
+  };
 }
 
 /// Returns a future that completes with a new instantiated component.
@@ -39,9 +37,8 @@ Injector createTestInjector(List<dynamic> providers) {
 Future<ComponentRef<E>> bootstrapForTest<E>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
-  InjectorFactory rootInjector, {
-  void beforeChangeDetection(E componentInstance),
-  List addProviders: const [],
+  InjectorFactory userInjector, {
+  void Function(E) beforeChangeDetection,
 }) {
   if (componentFactory == null) {
     throw new ArgumentError.notNull('componentFactory');
@@ -49,14 +46,14 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   if (hostElement == null) {
     throw new ArgumentError.notNull('hostElement');
   }
-  if (rootInjector == null) {
-    throw new ArgumentError.notNull('rootInjector');
+  if (userInjector == null) {
+    throw new ArgumentError.notNull('userInjector');
   }
-  // This should be kept in sync with 'bootstrapStatic' as much as possible.
-  final appInjector = rootInjector(createTestInjector(addProviders));
-  final ApplicationRefImpl appRef = appInjector.get(ApplicationRef);
+  // This should be kept in sync with 'runApp' as much as possible.
+  final injector = appInjector(userInjector);
+  final ApplicationRefImpl appRef = injector.get(ApplicationRef);
   NgZoneError caughtError;
-  final NgZone ngZone = appInjector.get(NgZone);
+  final NgZone ngZone = injector.get(NgZone);
   final onErrorSub = ngZone.onError.listen((e) {
     caughtError = e;
   });
@@ -67,7 +64,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
       appRef,
       componentFactory,
       hostElement,
-      appInjector,
+      injector,
       beforeChangeDetection: beforeChangeDetection,
     ).then((ComponentRef<E> componentRef) async {
       // ComponentRef<E> is due to weirdness around type promotion:
@@ -98,12 +95,12 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   ApplicationRefImpl appRef,
   ComponentFactory<E> componentFactory,
   Element hostElement,
-  Injector appInjector, {
+  Injector injector, {
   void beforeChangeDetection(E componentInstance),
 }) {
   // TODO: Consider using hostElement instead.
   sharedStylesHost ??= new DomSharedStylesHost(document);
-  final componentRef = componentFactory.create(appInjector);
+  final componentRef = componentFactory.create(injector);
   final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
   if (!isDefaultChangeDetectionStrategy(cdMode) &&
       cdMode != ChangeDetectionStrategy.CheckAlways) {

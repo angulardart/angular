@@ -6,15 +6,11 @@ import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 import '../facade/exceptions.dart' show BaseException, ExceptionHandler;
-import '../platform/dom/shared_styles_host.dart';
 import 'application_tokens.dart' show APP_INITIALIZER;
 import 'change_detection/host.dart';
 import 'di.dart';
 import 'linker/app_view.dart' show AppView;
-import 'linker/app_view_utils.dart';
 import 'linker/component_factory.dart' show ComponentRef, ComponentFactory;
-import 'linker/component_resolver.dart' show typeToFactory;
-import 'render/api.dart' show sharedStylesHost;
 import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
@@ -27,72 +23,6 @@ import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
 /// Create an Angular zone.
 NgZone createNgZone() => new NgZone(enableLongStackTrace: isDevMode);
-
-PlatformRefImpl _platform;
-bool _inPlatformCreate = false;
-
-/// Creates a platform.
-/// Platforms have to be eagerly created via this function.
-PlatformRefImpl createPlatform(Injector injector) {
-  if (isDevMode) {
-    if (_inPlatformCreate) {
-      throw new BaseException('Already creating a platform...');
-    }
-    if (_platform != null && !_platform.disposed) {
-      throw new BaseException('There can be only one platform. Destroy the '
-          'previous one to create a new one.');
-    }
-  }
-  _inPlatformCreate = true;
-  sharedStylesHost ??= new DomSharedStylesHost(document);
-  try {
-    _platform = injector.get(PlatformRef) as PlatformRefImpl;
-    _platform.init(injector);
-  } finally {
-    _inPlatformCreate = false;
-  }
-  return _platform;
-}
-
-/// Dispose the existing platform.
-void disposePlatform() {
-  if (_platform != null && !_platform.disposed) {
-    _platform.dispose();
-  }
-}
-
-/// Returns the current platform.
-PlatformRef getPlatform() =>
-    _platform != null && !_platform.disposed ? _platform : null;
-
-/// Shortcut for ApplicationRef.bootstrap.
-///
-/// Requires a platform the be created first.
-ComponentRef<T> coreBootstrap<T>(
-  Injector injector,
-  ComponentFactory<T> componentFactory,
-) {
-  appViewUtils = injector.get(AppViewUtils);
-  ApplicationRef appRef = injector.get(ApplicationRef);
-  return appRef.bootstrap(componentFactory);
-}
-
-/// Resolves the componentFactory for the given component,
-/// waits for asynchronous initializers and bootstraps the component.
-///
-/// Requires a platform the be created first.
-Future<ComponentRef<T>> coreLoadAndBootstrap<T>(
-  Injector injector,
-  Type componentType,
-) async {
-  appViewUtils = injector.get(AppViewUtils);
-  ApplicationRef appRef = injector.get(ApplicationRef);
-  return await appRef.run(() async {
-    final factory = typeToFactory(componentType);
-    await appRef.waitForAsyncInitializers();
-    return appRef.bootstrap(factory);
-  });
-}
 
 /// The Angular platform is the entry point for Angular on a web page. Each page
 /// has exactly one platform, and services (such as reflection) which are common
@@ -123,10 +53,6 @@ class PlatformRefImpl extends PlatformRef {
 
   /// Given an injector, gets platform initializers to initialize at bootstrap.
   void init(Injector injector) {
-    if (isDevMode && !_inPlatformCreate) {
-      throw new BaseException(
-          'Platforms have to be initialized via `createPlatform`!');
-    }
     _injector = injector;
   }
 
