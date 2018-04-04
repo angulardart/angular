@@ -76,6 +76,8 @@ class SelectControlValueAccessor implements ControlValueAccessor {
     onTouched = fn;
   }
 
+  void onDisabledChanged(bool isDisabled) {}
+
   String _registerOption() => (_idCounter++).toString();
 
   String _getOptionId(dynamic value) {

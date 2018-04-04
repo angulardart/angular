@@ -53,4 +53,6 @@ class CheckboxControlValueAccessor implements ControlValueAccessor {
   void registerOnTouched(TouchFunction fn) {
     onTouched = fn;
   }
+
+  void onDisabledChanged(bool isDisabled) {}
 }
