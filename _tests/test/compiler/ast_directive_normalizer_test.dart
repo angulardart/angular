@@ -51,6 +51,32 @@ void main() {
     expect(logs, contains(contains('did you mean "templateUrl"')));
   });
 
+  test('should warn when styles: points to a file URL', () async {
+    final logs = <String>[];
+    final logger = new Logger('test');
+    final sub = logger.onRecord.listen((r) => logs.add('$r'));
+    addTearDown(sub.cancel);
+    reader = new FakeAssetReader({
+      'package:a/a.dart': '',
+      'package:a/a.css': '',
+    });
+    normalizer = new AstDirectiveNormalizer(reader);
+    metadata = new CompileDirectiveMetadata(
+      metadataType: CompileDirectiveMetadataType.Component,
+      type: new CompileTypeMetadata(
+        moduleUrl: 'asset:a/lib/a.dart',
+      ),
+      template: new CompileTemplateMetadata(
+        styles: [
+          'a.css',
+        ],
+        template: '',
+      ),
+    );
+    await scopeLogAsync(() => normalizer.normalizeDirective(metadata), logger);
+    expect(logs, contains(contains('did you mean "styleUrls"')));
+  });
+
   test('should throw when neither a template or templateUrl set', () async {
     reader = new FakeAssetReader();
     normalizer = new AstDirectiveNormalizer(reader);
