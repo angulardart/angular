@@ -69,6 +69,9 @@ class AstDirectiveNormalizer {
     List<CompileIdentifierMetadata> exports,
   }) async {
     template ??= new CompileTemplateMetadata(template: '');
+    if (template.styles != null && template.styles.isNotEmpty) {
+      await _validateStyleUrlsNotMeant(template.styles, directiveType);
+    }
     if (template.template != null) {
       await _validateTemplateUrlNotMeant(template.template, directiveType);
       return _normalizeLoadedTemplate(
@@ -102,7 +105,32 @@ class AstDirectiveNormalizer {
         'Requires either a "template" or "templateUrl"; had neither.');
   }
 
-  Future<Null> _validateTemplateUrlNotMeant(
+  Future<void> _validateStyleUrlsNotMeant(
+    List<String> styles,
+    CompileTypeMetadata directiveType,
+  ) {
+    // Short-circuit.
+    if (styles.every((s) => s.contains('\n') || !s.endsWith('.css'))) {
+      return new Future.value();
+    }
+    return Future.wait(
+      styles.map((content) {
+        return _reader
+            .canRead(_reader.resolveUrl(directiveType.moduleUrl, content))
+            .then((couldRead) {
+          if (couldRead) {
+            // TODO: https://github.com/dart-lang/angular/issues/851.
+            logWarning('Component "${directiveType.name}" in\n  '
+                '${directiveType.moduleUrl}:\n'
+                '  Has a "styles" property set to a string that is a file.\n'
+                '  This is a common mistake, did you mean "styleUrls" instead?');
+          }
+        });
+      }),
+    );
+  }
+
+  Future<void> _validateTemplateUrlNotMeant(
     String content,
     CompileTypeMetadata directiveType,
   ) {
