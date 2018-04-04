@@ -128,6 +128,10 @@
         closest equivalent is the new `runAppLegacy` _or `runAppLegacyAsync`
         functions.
 
+*   The compiler now warns when a `@Component.styles` seems to reference a file
+    on disk, such as `styles: const ['a.css']` (this is usually an accident).
+    We already warned for `template: 'a.html'`.
+
 ## 5.0.0-alpha+9
 
 ### New features
