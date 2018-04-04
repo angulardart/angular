@@ -16,6 +16,8 @@ import 'view_container_ref.dart';
 /// then create the component. Going forward, `ComponentLoader` is preferred._
 @Injectable()
 class ComponentLoader {
+  const ComponentLoader();
+
   /// Creates and loads a new instance of the component defined by [component].
   ///
   /// Returns a [ComponentRef] that is detached from the physical DOM, and may

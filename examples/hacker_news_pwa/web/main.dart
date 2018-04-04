@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular/experimental.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:pwa/client.dart' as pwa;
 
@@ -49,8 +48,8 @@ void main() async {
 
   // Start AngularDart after fetched.
   await future;
-  bootstrapFactory(
+  runApp(
     app.AppComponentNgFactory,
-    hackerNewsApp,
+    createInjector: hackerNewsApp,
   );
 }
