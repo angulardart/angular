@@ -27,5 +27,5 @@ $ pub run build_runner serve --config=release
 
 ```bash
 $ pub get
-$ pun run build_runner build --config=release -o build
+$ pub run build_runner build --config=release -o build
 ```
