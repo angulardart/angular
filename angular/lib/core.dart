@@ -1,7 +1,7 @@
 /// @nodoc
 library angular.core;
 
-export 'src/core/application_tokens.dart' show APP_ID, APP_INITIALIZER;
+export 'src/core/application_tokens.dart' show APP_ID;
 export 'src/core/change_detection.dart';
 export 'src/core/di.dart';
 export 'src/core/metadata.dart';

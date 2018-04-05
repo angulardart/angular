@@ -66,13 +66,13 @@ void main() {
   });
 
   test('runApp should bootstrap from a ComponentFactory', () async {
-    component = await runApp(ng.HelloWorldComponentNgFactory);
+    component = runApp(ng.HelloWorldComponentNgFactory);
     verifyDomAndStyles();
     await verifyTestability();
   });
 
   test('runApp should allow overriding ExceptionHandler', () async {
-    component = await runApp(
+    component = runApp(
       ng.HelloWorldComponentNgFactory,
       createInjector: ([parent]) {
         return new Injector.map({
@@ -100,13 +100,13 @@ void main() {
 
   // i.e. "bootstrapStatic".
   test('runAppLegacy should bootstrap from a Type', () async {
-    component = await runAppLegacy<HelloWorldComponent>(HelloWorldComponent);
+    component = runAppLegacy<HelloWorldComponent>(HelloWorldComponent);
     verifyDomAndStyles();
     await verifyTestability();
   });
 
   test('ApplicationRef should be injectable in a user-application', () async {
-    component = await runAppLegacy<HelloWorldComponent>(
+    component = runAppLegacy<HelloWorldComponent>(
       HelloWorldComponent,
       createInjectorFromProviders: [ServiceThatInjectsApplicationRef],
     );
