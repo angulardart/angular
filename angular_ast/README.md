@@ -50,8 +50,19 @@ error recovery.`
 
 When using RecoveringExceptionHandler, the accumulated exceptions can be
 accessed through the RecoveringExceptionHandler object. Refer to the following
-example: `void parse(String content, String sourceUrl) { var exceptionHandler =
-new RecoveringExceptionHandler(); var asts = parse( content, sourceUrl:
-sourceUrl, desugar: false, parseExpressions: false, exceptionHandler:
-exceptionHandler, ); for (AngularParserException e in
-exceptionHandler.exceptions) { // Do something with exception. } }`
+example: 
+```dart
+void parse(String content, String sourceUrl) {
+  var exceptionHandler = new RecoveringExceptionHandler();
+  var asts = parse(
+    content,
+    sourceUrl: sourceUrl,
+    desugar: false,
+    parseExpressions: false,
+    exceptionHandler: exceptionHandler,
+  );
+  for (AngularParserException e in exceptionHandler.exceptions) {
+    // Do something with exception.
+  }
+}
+```
