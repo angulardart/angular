@@ -42,6 +42,31 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     return super.visitElement(astNode, true);
   }
 
+  @override
+  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [_]) {
+    if (astNode.childNodes.isNotEmpty) {
+      astNode = new EmbeddedTemplateAst.from(
+        astNode,
+        attributes: astNode.attributes,
+        childNodes: _visitRemovingWhitespace(astNode.childNodes),
+        events: astNode.events,
+        properties: astNode.properties,
+        references: astNode.references,
+        letBindings: astNode.letBindings,
+        hasDeferredComponent: astNode.hasDeferredComponent,
+      );
+    }
+    return super.visitEmbeddedTemplate(astNode, true);
+  }
+
+  @override
+  TemplateAst visitText(TextAst astNode, [_]) {
+    return new TextAst.from(
+      astNode,
+      astNode.value.replaceAll(_manualWhitespace, ' '),
+    );
+  }
+
   /// Returns [text], with all significant whitespace reduced to a single space.
   static TextAst _collapseWhitespace(
     TextAst text, {
@@ -56,10 +81,17 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     if (trimRight) {
       value = value.trimRight();
     }
+    if (value.isEmpty) {
+      return null;
+    }
     return new TextAst.from(text, value);
   }
 
   static final _allWhitespace = new RegExp(r'\s\s+', multiLine: true);
+  static const _ngsp = '\uE500';
+
+  // TODO: Add &#32;
+  static final _manualWhitespace = new RegExp('$_ngsp', multiLine: true);
 
   List<StandaloneTemplateAst> _visitRemovingWhitespace(
     List<StandaloneTemplateAst> childNodes,
@@ -90,17 +122,19 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
         if (prevNode is! InterpolationAst &&
             nextNode is! InterpolationAst &&
             currentNodeCasted.value.trim().isEmpty) {
-          currentNode = childNodes[i] = null;
+          currentNode = null;
         } else {
           // Otherwise, we collapse whitespace:
           // 1. All adjacent whitespace is collapsed into a single space.
           // 2. Depending on siblings, *also* trimLeft or trimRight.
-          currentNode = childNodes[i] = _collapseWhitespace(
+          currentNode = _collapseWhitespace(
             currentNode,
-            trimLeft: prevNode is! InterpolationAst,
-            trimRight: nextNode is! InterpolationAst,
+            trimLeft: prevNode is! InterpolationAst && prevNode is! ElementAst,
+            trimRight: nextNode is! InterpolationAst && nextNode is! ElementAst,
           );
         }
+
+        childNodes[i] = currentNode;
       }
 
       prevNode = currentNode;

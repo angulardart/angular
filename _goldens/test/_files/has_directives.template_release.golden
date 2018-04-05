@@ -40,11 +40,11 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     import2.Text _text_1 = new import2.Text('My own template');
     _el_0.append(_text_1);
-    import2.Text _text_2 = new import2.Text('A directive:');
+    import2.Text _text_2 = new import2.Text(' A directive: ');
     parentRenderNode.append(_text_2);
     _el_3 = createAndAppend(doc, 'directive', parentRenderNode);
     _TestDirective_3_5 = new import1.TestDirective();
-    import2.Text _text_4 = new import2.Text('A component:');
+    import2.Text _text_4 = new import2.Text(' A component: ');
     parentRenderNode.append(_text_4);
     _compView_5 = new ViewTestSubComponent0(this, 5);
     _el_5 = _compView_5.rootEl;

@@ -79,7 +79,7 @@ void main() {
       testRoot = await testBed.create();
       expect(testRoot.text, ' prefix V1 ');
     });
-  });
+  }, skip: 'No longer used at HEAD');
 }
 
 String defaultWithWhitespace = '\n'

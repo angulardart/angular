@@ -148,7 +148,7 @@ class AstTemplateParser implements TemplateParser {
       List<ast.TemplateAst> parsedAst, bool preserveWhitespace) {
     var filteredElements = new _ElementFilter().visitAll(parsedAst);
     if (flags.useNewPreserveWhitespace) {
-      return new ast.MinimizeWhitespaceVisitor().visitAll(filteredElements);
+      return new ast.MinimizeWhitespaceVisitor().visitAllRoot(filteredElements);
     }
     return new _PreserveWhitespaceVisitor()
         .visitAll(filteredElements, preserveWhitespace);

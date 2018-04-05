@@ -51,12 +51,12 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     import3.Text _text_1 = new import3.Text('My own template');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 9);
-    import3.Text _text_2 = new import3.Text('A directive:');
+    import3.Text _text_2 = new import3.Text(' A directive: ');
     parentRenderNode.append(_text_2);
     dbgElm(this, _text_2, 2, 0, 30);
     _el_3 = createAndAppendDbg(this, doc, 'directive', parentRenderNode, 3, 1, 17);
     _TestDirective_3_5 = new import1.TestDirective();
-    import3.Text _text_4 = new import3.Text('A component:');
+    import3.Text _text_4 = new import3.Text(' A component: ');
     parentRenderNode.append(_text_4);
     dbgElm(this, _text_4, 4, 1, 40);
     _compView_5 = new ViewTestSubComponent0(this, 5);

@@ -21,13 +21,13 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$Comp = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_Comp0 = [null, null, null, null, null, null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_Comp0 = [null, null, null, null, null, null, null];
 
 class ViewComp0 extends DebugAppView<import2.Comp> {
-  import3.Text _text_1;
-  import3.Text _text_3;
-  import3.Text _text_5;
-  import3.Text _text_7;
+  import3.Text _text_0;
+  import3.Text _text_2;
+  import3.Text _text_4;
+  import3.Text _text_6;
   var _expr_0;
   var _expr_1;
   var _expr_2;
@@ -49,30 +49,27 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   ComponentRef<import2.Comp> build() {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import3.Text _text_0 = new import3.Text('    ');
+    _text_0 = new import3.Text('');
     parentRenderNode.append(_text_0);
-    dbgElm(this, _text_0, 0, 0, 0);
-    _text_1 = new import3.Text('');
+    dbgElm(this, _text_0, 0, 0, 4);
+    import3.Text _text_1 = new import3.Text(' ');
     parentRenderNode.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 4);
-    import3.Text _text_2 = new import3.Text('\n    ');
+    dbgElm(this, _text_1, 1, 0, 22);
+    _text_2 = new import3.Text('');
     parentRenderNode.append(_text_2);
-    dbgElm(this, _text_2, 2, 0, 22);
-    _text_3 = new import3.Text('');
+    dbgElm(this, _text_2, 2, 1, 4);
+    import3.Text _text_3 = new import3.Text(' ');
     parentRenderNode.append(_text_3);
-    dbgElm(this, _text_3, 3, 1, 4);
-    import3.Text _text_4 = new import3.Text('\n    ');
+    dbgElm(this, _text_3, 3, 1, 23);
+    _text_4 = new import3.Text('');
     parentRenderNode.append(_text_4);
-    dbgElm(this, _text_4, 4, 1, 23);
-    _text_5 = new import3.Text('');
+    dbgElm(this, _text_4, 4, 2, 4);
+    import3.Text _text_5 = new import3.Text(' ');
     parentRenderNode.append(_text_5);
-    dbgElm(this, _text_5, 5, 2, 4);
-    import3.Text _text_6 = new import3.Text('\n    ');
+    dbgElm(this, _text_5, 5, 2, 33);
+    _text_6 = new import3.Text('');
     parentRenderNode.append(_text_6);
-    dbgElm(this, _text_6, 6, 2, 33);
-    _text_7 = new import3.Text('');
-    parentRenderNode.append(_text_7);
-    dbgElm(this, _text_7, 7, 3, 4);
+    dbgElm(this, _text_6, 6, 3, 4);
     _pipe_pure_0 = new import2.PurePipe();
     _pipe_pure_0_0 = import9.pureProxy1(_pipe_pure_0.transform);
     _pipe_dirty_1 = new import2.DirtyPipe();
@@ -80,35 +77,35 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
     _pipe_lifecycle_2_0 = import9.pureProxy1(_pipe_lifecycle_2.transform);
     _pipe_types_3 = new import2.TypesPipe();
     _pipe_types_3_0 = import9.pureProxy5(_pipe_types_3.transform);
-    init(const [], null, [_text_0, _text_1, _text_2, _text_3, _text_4, _text_5, _text_6, _text_7]);
+    init(const [], null, [_text_0, _text_1, _text_2, _text_3, _text_4, _text_5, _text_6]);
     return null;
   }
 
   @override
   void detectChangesInternal() {
     final import2.Comp _ctx = ctx;
-    dbg(1, 0, 4);
+    dbg(0, 0, 4);
     final currVal_0 = import9.interpolate0(_pipe_pure_0_0('foo'));
     if (import9.checkBinding(_expr_0, currVal_0)) {
-      _text_1.text = currVal_0;
+      _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
-    dbg(3, 1, 4);
+    dbg(2, 1, 4);
     final currVal_1 = import9.interpolate0(_pipe_dirty_1.transform('bar'));
     if (import9.checkBinding(_expr_1, currVal_1)) {
-      _text_3.text = currVal_1;
+      _text_2.text = currVal_1;
       _expr_1 = currVal_1;
     }
-    dbg(5, 2, 4);
+    dbg(4, 2, 4);
     final currVal_2 = import9.interpolate0(_pipe_lifecycle_2_0('lifecycle'));
     if (import9.checkBinding(_expr_2, currVal_2)) {
-      _text_5.text = currVal_2;
+      _text_4.text = currVal_2;
       _expr_2 = currVal_2;
     }
-    dbg(7, 3, 4);
+    dbg(6, 3, 4);
     final currVal_3 = import9.interpolate0(_pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d));
     if (import9.checkBinding(_expr_3, currVal_3)) {
-      _text_7.text = currVal_3;
+      _text_6.text = currVal_3;
       _expr_3 = currVal_3;
     }
   }

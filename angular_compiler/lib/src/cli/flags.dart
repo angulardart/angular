@@ -86,7 +86,7 @@ class CompilerFlags {
     this.profileFor: Profile.none,
     this.useFastBoot: true,
     this.useLegacyStyleEncapsulation: false,
-    this.useNewPreserveWhitespace: false,
+    this.useNewPreserveWhitespace: true,
   });
 
   /// Creates flags by parsing command-line arguments.
