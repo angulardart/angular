@@ -36,6 +36,7 @@ const LINK_STYLE_REL_VALUE = 'stylesheet';
 const STYLE_ELEMENT = 'style';
 const SCRIPT_ELEMENT = 'script';
 const _templateElement = 'template';
+final CssSelector _textCssSelector = CssSelector.parse('*')[0];
 
 /// A [TemplateParser] which uses the `angular_ast` package to parse angular
 /// templates.
@@ -464,7 +465,7 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitText(ast.TextAst astNode, [_ParseContext context]) =>
       new ng.TextAst(astNode.value,
-          context.findNgContentIndex(TEXT_CSS_SELECTOR), astNode.sourceSpan);
+          context.findNgContentIndex(_textCssSelector), astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitInterpolation(ast.InterpolationAst astNode,
@@ -475,7 +476,7 @@ class _BindDirectivesVisitor
           _location(astNode),
           context.templateContext.exports);
       return new ng.BoundTextAst(element,
-          context.findNgContentIndex(TEXT_CSS_SELECTOR), astNode.sourceSpan);
+          context.findNgContentIndex(_textCssSelector), astNode.sourceSpan);
     } on ParseException catch (e) {
       context.templateContext.reportError(e.message, astNode.sourceSpan);
       return null;

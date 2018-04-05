@@ -88,7 +88,7 @@ String _removeTrailingSlash(String s) {
   return s;
 }
 
-var _cssImportRe = new RegExp(r'@import\s+(?:url\()?\s*(?:(?:[' +
+final _cssImportRe = new RegExp(r'@import\s+(?:url\()?\s*(?:(?:[' +
     "'" +
     r'"]([^' +
     "'" +
@@ -96,4 +96,4 @@ var _cssImportRe = new RegExp(r'@import\s+(?:url\()?\s*(?:(?:[' +
 // TODO: can't use /^[^:/?#.]+:/g due to clang-format bug:
 
 //       https://github.com/angular/angular/issues/4596
-var _urlWithSchemaRe = new RegExp(r'^([a-zA-Z\-\+\.]+):');
+final _urlWithSchemaRe = new RegExp(r'^([a-zA-Z\-\+\.]+):');

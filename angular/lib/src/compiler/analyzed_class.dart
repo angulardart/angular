@@ -4,13 +4,7 @@ import 'package:source_gen/src/type_checker.dart';
 
 import 'expression_parser/ast.dart' as ast;
 
-final stringTypeChecker = new TypeChecker.fromRuntime(String);
-
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
+final _stringTypeChecker = new TypeChecker.fromRuntime(String);
 
 /// A wrapper around [ClassElement] which exposes the functionality
 /// needed for the view compiler to find types for expressions.
@@ -135,7 +129,7 @@ ast.AST rewriteInterpolate(ast.AST original, AnalyzedClass analyzedClass) {
             receiver is ast.StaticRead ? receiver.analyzedClass : analyzedClass;
         var field = clazz._classElement.getField(expression.name);
         if (field != null) {
-          if (stringTypeChecker.isExactlyType(field.type)) {
+          if (_stringTypeChecker.isExactlyType(field.type)) {
             return new ast.IfNull(expression, new ast.LiteralPrimitive(''));
           }
         }
@@ -171,7 +165,7 @@ bool canBeNull(ast.AST expression) {
 /// * `PropertyRead`
 /// * `SafeMethodCall`
 /// * `SafePropertyRead`
-class _TypeResolver extends ast.AstVisitor {
+class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   final DartType _dynamicType;
   final InterfaceType _implicitReceiverType;
 
