@@ -8,7 +8,6 @@ import 'package:meta/meta.dart';
 import '../facade/exceptions.dart' show ExceptionHandler;
 import 'change_detection/host.dart';
 import 'di.dart';
-import 'linker/app_view.dart' show AppView;
 import 'linker/component_factory.dart' show ComponentRef, ComponentFactory;
 import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
@@ -22,67 +21,6 @@ import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
 /// Create an Angular zone.
 NgZone createNgZone() => new NgZone(enableLongStackTrace: isDevMode);
-
-/// The Angular platform is the entry point for Angular on a web page. Each page
-/// has exactly one platform, and services (such as reflection) which are common
-/// to every Angular application running on the page are bound in its scope.
-///
-/// A page's platform is initialized implicitly when `bootstrap()` is called, or
-/// explicitly by calling `createPlatform()`.
-abstract class PlatformRef {
-  /// Register a listener to be called when the platform is disposed.
-  void registerDisposeListener(void dispose());
-
-  /// Retrieve the platform [Injector], which is the parent injector for
-  /// every Angular application on the page and provides singleton providers.
-  Injector get injector;
-
-  /// Destroy the Angular platform and all Angular applications on the page.
-  void dispose();
-}
-
-typedef void ViewUpdateCallback(AppView view, Element el);
-
-@Injectable()
-class PlatformRefImpl extends PlatformRef {
-  final List<ApplicationRef> _applications = [];
-  final List<Function> _disposeListeners = [];
-  bool _disposed = false;
-  Injector _injector;
-
-  /// Given an injector, gets platform initializers to initialize at bootstrap.
-  void init(Injector injector) {
-    _injector = injector;
-  }
-
-  void registerDisposeListener(void dispose()) {
-    _disposeListeners.add(dispose);
-  }
-
-  Injector get injector => _injector;
-
-  bool get disposed => _disposed;
-
-  void addApplication(ApplicationRef appRef) {
-    _applications.add(appRef);
-  }
-
-  void dispose() {
-    for (var app in _applications) {
-      app.dispose();
-    }
-    _applications.clear();
-    for (var dispose in _disposeListeners) {
-      dispose();
-    }
-    _disposeListeners.clear();
-    _disposed = true;
-  }
-
-  void _applicationDisposed(ApplicationRef app) {
-    _applications.remove(app);
-  }
-}
 
 /// A reference to an Angular application running on a page.
 ///
@@ -127,7 +65,6 @@ abstract class ApplicationRef implements ChangeDetectionHost {
 
 @Injectable()
 class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
-  final PlatformRefImpl _platform;
   final NgZone _zone;
   final Injector _injector;
   final List<Function> _bootstrapListeners = [];
@@ -137,7 +74,7 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
 
   ExceptionHandler _exceptionHandler;
 
-  ApplicationRefImpl(this._platform, this._zone, this._injector) {
+  ApplicationRefImpl(this._zone, this._injector) {
     _zone.run(() {
       _exceptionHandler = _injector.get(ExceptionHandler);
     });
@@ -233,7 +170,6 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
       subscription.cancel();
     }
     _streamSubscriptions.clear();
-    _platform._applicationDisposed(this);
   }
 
   @override

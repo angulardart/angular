@@ -29,13 +29,10 @@ Injector _platformInjectorCache;
 /// **INTERNAL ONLY**: Creates a new injector for platform-level services.
 Injector platformInjector() {
   if (_platformInjectorCache == null) {
-    final platformRef = new PlatformRefImpl();
     final testabilityRegistry = new TestabilityRegistry();
     sharedStylesHost ??= new DomSharedStylesHost(document);
     createInitDomAdapter(testabilityRegistry)();
     _platformInjectorCache = new Injector.map({
-      PlatformRef: platformRef,
-      PlatformRefImpl: platformRef,
       TestabilityRegistry: testabilityRegistry,
     });
   }
@@ -73,7 +70,6 @@ Injector appInjector(InjectorFactory userProvidedInjector) {
   // * `AppViewUtils`
   return ngZone.run(() {
     applicationRef = new ApplicationRefImpl(
-      unsafeCast(minimalInjector.get(PlatformRef)),
       ngZone,
       userInjector,
     );
