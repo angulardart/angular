@@ -2,16 +2,9 @@ import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'output_ast.dart' as o;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
-var _SINGLE_QUOTE_ESCAPE_STRING_RE = new RegExp(r'' + "'" + r'|\\|\n|\r|\$');
-var CATCH_ERROR_VAR = o.variable('error');
-var CATCH_STACK_VAR = o.variable('stack');
+final _singleQuoteEscape = new RegExp(r'' + "'" + r'|\\|\n|\r|\$');
+final catchErrorVar = o.variable('error');
+final catchStackVar = o.variable('stack');
 
 abstract class OutputEmitter {
   String emitStatements(String moduleUrl, List<o.Statement> stmts,
@@ -27,7 +20,7 @@ class _EmittedLine {
 class EmitterVisitorContext {
   final Map<String, String> deferredModules;
   final List<String> _exportedVars;
-  num _indent;
+  int _indent;
   int _outputPos;
   // Current method being emitted. Allows expressions access to method
   // parameter names.
@@ -379,10 +372,10 @@ abstract class AbstractEmitterVisitor
           varName = 'this';
           break;
         case o.BuiltinVar.CatchError:
-          varName = CATCH_ERROR_VAR.name;
+          varName = catchErrorVar.name;
           break;
         case o.BuiltinVar.CatchStack:
-          varName = CATCH_STACK_VAR.name;
+          varName = catchStackVar.name;
           break;
         case o.BuiltinVar.MetadataMap:
           varName = 'null';
@@ -581,10 +574,12 @@ abstract class AbstractEmitterVisitor
     ctx.print('{', useNewLine);
     ctx.incIndent();
     this.visitAllObjects((entry) {
-      if (entry[0] is o.Expression) {
-        entry[0].visitExpression(this, ctx);
+      final firstEntry = entry[0];
+      if (firstEntry is o.Expression) {
+        firstEntry.visitExpression(this, ctx);
       } else {
-        ctx.print(escapeSingleQuoteString(entry[0], _escapeDollarInStrings));
+        final firstEntryCasted = firstEntry as String;
+        ctx.print(escapeSingleQuoteString(firstEntryCasted, _escapeDollarInStrings));
       }
       ctx.print(': ');
       entry[1].visitExpression(this, ctx);
@@ -631,11 +626,11 @@ abstract class AbstractEmitterVisitor
   }
 }
 
-dynamic escapeSingleQuoteString(String input, bool escapeDollar) {
+String escapeSingleQuoteString(String input, bool escapeDollar) {
   if (input == null) {
     return null;
   }
-  var body = input.replaceAllMapped(_SINGLE_QUOTE_ESCAPE_STRING_RE, (match) {
+  var body = input.replaceAllMapped(_singleQuoteEscape, (match) {
     if (match[0] == '\$') {
       return escapeDollar ? '\\\$' : '\$';
     } else if (match[0] == '\n') {
@@ -649,4 +644,4 @@ dynamic escapeSingleQuoteString(String input, bool escapeDollar) {
   return "'$body'";
 }
 
-String _createIndent(num count) => '  ' * count;
+String _createIndent(int count) => '  ' * count;
