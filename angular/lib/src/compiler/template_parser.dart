@@ -15,19 +15,11 @@ import 'selector.dart' show CssSelector;
 import 'template_ast.dart'
     show BoundElementPropertyAst, PropertyBindingType, TemplateAst;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
-const CLASS_ATTR = 'class';
-final PROPERTY_PARTS_SEPARATOR = '.';
-const ATTRIBUTE_PREFIX = 'attr';
-const CLASS_PREFIX = 'class';
-const STYLE_PREFIX = 'style';
-final CssSelector TEXT_CSS_SELECTOR = CssSelector.parse('*')[0];
+const _classAttribute = 'class';
+const _propertyPartsSeparator = '.';
+const _attributePrefix = 'attr';
+const _classPrefix = 'class';
+const _stylePrefix = 'style';
 
 class TemplateParseError extends ParseError {
   TemplateParseError(String message, SourceSpan span, ParseErrorLevel level)
@@ -86,7 +78,7 @@ BoundElementPropertyAst createElementPropertyAst(
   PropertyBindingType bindingType;
   String boundPropertyName;
   TemplateSecurityContext securityContext;
-  var parts = name.split(PROPERTY_PARTS_SEPARATOR);
+  var parts = name.split(_propertyPartsSeparator);
   if (identical(parts.length, 1)) {
     boundPropertyName = schemaRegistry.getMappedPropName(parts[0]);
     securityContext =
@@ -106,7 +98,7 @@ BoundElementPropertyAst createElementPropertyAst(
       }
     }
   } else {
-    if (parts[0] == ATTRIBUTE_PREFIX) {
+    if (parts[0] == _attributePrefix) {
       boundPropertyName = parts[1];
       if (boundPropertyName.toLowerCase().startsWith('on')) {
         reportError(
@@ -126,11 +118,11 @@ BoundElementPropertyAst createElementPropertyAst(
         boundPropertyName = mergeNsAndName(ns, name);
       }
       bindingType = PropertyBindingType.Attribute;
-    } else if (parts[0] == CLASS_PREFIX) {
+    } else if (parts[0] == _classPrefix) {
       boundPropertyName = parts[1];
       bindingType = PropertyBindingType.Class;
       securityContext = TemplateSecurityContext.none;
-    } else if (parts[0] == STYLE_PREFIX) {
+    } else if (parts[0] == _stylePrefix) {
       unit = parts.length > 2 ? parts[2] : null;
       boundPropertyName = parts[1];
       bindingType = PropertyBindingType.Style;
@@ -164,7 +156,7 @@ CssSelector createElementCssSelector(
     // attributes of an element here, we use exact match ('=') to specify that
     // the element has this attribute value.
     cssSelector.addAttribute(attrNameNoNs, '=', attrValue);
-    if (attrName.toLowerCase() == CLASS_ATTR) {
+    if (attrName.toLowerCase() == _classAttribute) {
       var classes = _splitClasses(attrValue);
       for (var className in classes) {
         cssSelector.addClassName(className);
