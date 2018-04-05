@@ -1,4 +1,3 @@
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/facade/lang.dart' show jsSplit;
 import 'package:angular_compiler/cli.dart';
 import 'package:source_span/source_span.dart';
@@ -68,7 +67,7 @@ void handleParseErrors(List<ParseError> parseErrors) {
   }
   if (errors.isNotEmpty) {
     var errorString = errors.join('\n');
-    throw new BaseException('Template parse errors:\n$errorString');
+    throw new StateError('Template parse errors:\n$errorString');
   }
 }
 

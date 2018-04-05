@@ -5,7 +5,6 @@ import '../core/change_detection/change_detection.dart'
 import '../core/metadata/lifecycle_hooks.dart' show LifecycleHooks;
 import '../core/metadata/view.dart';
 import '../core/metadata/visibility.dart';
-import '../facade/exceptions.dart' show BaseException;
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';
 import 'output/output_ast.dart' as o;
@@ -238,7 +237,7 @@ class CompileTokenMap<V> {
   void add(CompileTokenMetadata token, V value) {
     var existing = get(token);
     if (existing != null) {
-      throw new BaseException(
+      throw new StateError(
           'Add failed. Token already exists. Token: ${token.name}');
     }
     _tokens.add(token);

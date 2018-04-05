@@ -1,5 +1,6 @@
+import 'package:angular_compiler/cli.dart';
+
 import '../../compiler/compile_metadata.dart';
-import '../../facade/exceptions.dart' show BaseException;
 import '../../facade/lang.dart' show jsSplit;
 import 'ast.dart'
     show
@@ -56,10 +57,25 @@ import 'lexer.dart'
 final _implicitReceiver = new ImplicitReceiver();
 final INTERPOLATION_REGEXP = new RegExp(r'{{([\s\S]*?)}}');
 
-class ParseException extends BaseException {
-  ParseException(String message, String input, String errLocation,
-      [dynamic ctxLocation])
-      : super('Parser Error: $message $errLocation [$input] in $ctxLocation');
+class ParseException extends BuildError {
+  final String _message;
+  final String input;
+  final String errLocation;
+  final dynamic context;
+
+  ParseException(
+    this._message,
+    this.input,
+    this.errLocation, [
+    this.context = '',
+  ]);
+
+  @override
+  String get message =>
+      'Parser Error: $_message $errLocation [$input] $context';
+
+  @override
+  String toString() => _message;
 }
 
 class SplitInterpolation {
@@ -540,7 +556,7 @@ class _ParseAST {
       error('Unexpected token $next');
     }
     // error() throws, so we don't reach here.
-    throw new BaseException('Fell through all cases in parsePrimary');
+    throw new StateError('Fell through all cases in parsePrimary');
   }
 
   List<dynamic> parseExpressionList(num terminator) {

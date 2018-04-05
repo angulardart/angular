@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
-
 import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata, createHostComponentMeta;
@@ -84,7 +82,7 @@ class OfflineCompiler {
     } else if (artifacts.directives.isNotEmpty) {
       moduleUrl = templateModuleUrl(artifacts.directives.first.type);
     } else {
-      throw new BaseException('No components nor injectorModules given');
+      throw new StateError('No components nor injectorModules given');
     }
     var statements = <o.Statement>[];
     var exportedVars = <String>[];
@@ -190,7 +188,7 @@ class OfflineCompiler {
 
 void _assertComponent(CompileDirectiveMetadata meta) {
   if (!meta.isComponent) {
-    throw new BaseException(
+    throw new StateError(
         "Could not compile '${meta.type.name}' because it is not a component.");
   }
 }

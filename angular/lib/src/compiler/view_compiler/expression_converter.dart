@@ -1,5 +1,3 @@
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
-
 import '../analyzed_class.dart';
 import '../chars.dart';
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
@@ -80,13 +78,13 @@ enum _Mode { Statement, Expression }
 
 void ensureStatementMode(_Mode mode, compiler_ast.AST ast) {
   if (!identical(mode, _Mode.Statement)) {
-    throw new BaseException('Expected a statement, but saw $ast');
+    throw new StateError('Expected a statement, but saw $ast');
   }
 }
 
 void ensureExpressionMode(_Mode mode, compiler_ast.AST ast) {
   if (!identical(mode, _Mode.Expression)) {
-    throw new BaseException('Expected an expression, but saw $ast');
+    throw new StateError('Expected an expression, but saw $ast');
   }
 }
 
@@ -175,7 +173,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
         op = o.BinaryOperator.BiggerEquals;
         break;
       default:
-        throw new BaseException('Unsupported operation ${ast.operation}');
+        throw new StateError('Unsupported operation ${ast.operation}');
     }
     return convertToStatementIfNeeded(
         mode,
@@ -382,7 +380,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
     if (identical(receiver, IMPLICIT_RECEIVER)) {
       var varExpr = _nameResolver.getLocal(ast.name);
       if (varExpr != null) {
-        throw new BaseException("Cannot assign to a reference or variable!");
+        throw new StateError("Cannot assign to a reference or variable!");
       }
       receiver = _getImplicitOrStaticReceiver(ast.name, isStaticSetter);
     }

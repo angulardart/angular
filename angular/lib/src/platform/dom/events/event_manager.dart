@@ -1,6 +1,5 @@
 import 'package:angular/src/core/di.dart' show Injectable, Inject, OpaqueToken;
 import 'package:angular/src/core/zone/ng_zone.dart' show NgZone;
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 const OpaqueToken EVENT_MANAGER_PLUGINS =
     const OpaqueToken('EventManagerPlugins');
@@ -40,8 +39,7 @@ class EventManager {
         return plugin;
       }
     }
-    throw new BaseException(
-        'No event manager plugin found for event $eventName');
+    throw new StateError('No event manager plugin found for event $eventName');
   }
 }
 

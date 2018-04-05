@@ -5,7 +5,7 @@ import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
-import '../facade/exceptions.dart' show ExceptionHandler;
+import '../facade/exception_handler.dart' show ExceptionHandler;
 import 'change_detection/host.dart';
 import 'di.dart';
 import 'linker/app_view.dart' show AppView;

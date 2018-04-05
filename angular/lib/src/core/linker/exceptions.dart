@@ -1,6 +1,3 @@
-import 'package:angular/src/facade/exceptions.dart'
-    show BaseException, WrappedException;
-
 /// An error thrown if application changes model breaking the top-down data flow.
 ///
 /// This exception is only thrown in dev mode.
@@ -32,22 +29,11 @@ import 'package:angular/src/facade/exceptions.dart'
 ///   }
 /// }
 /// ```
-class ExpressionChangedAfterItHasBeenCheckedException extends BaseException {
+class ExpressionChangedAfterItHasBeenCheckedException extends AssertionError {
   ExpressionChangedAfterItHasBeenCheckedException(
       dynamic oldValue, dynamic currValue, dynamic context)
       : super("Expression has changed after it was checked. "
             "Previous value: '$oldValue'. Current value: '$currValue'");
-}
-
-/// Thrown when an exception was raised during view creation, change detection or destruction.
-///
-/// This error wraps the original exception to attach additional contextual information that can
-/// be useful for debugging.
-class ViewWrappedException extends WrappedException {
-  ViewWrappedException(
-      dynamic originalException, dynamic originalStack, dynamic context)
-      : super('Error in ${context.source}', originalException, originalStack,
-            context);
 }
 
 /// Thrown when a destroyed view is used.
@@ -55,7 +41,7 @@ class ViewWrappedException extends WrappedException {
 /// This error indicates a bug in the framework.
 ///
 /// This is an internal Angular error.
-class ViewDestroyedException extends BaseException {
+class ViewDestroyedException extends AssertionError {
   ViewDestroyedException(String details)
       : super('Attempt to use a destroyed view: $details');
 }
