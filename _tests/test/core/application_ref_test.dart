@@ -17,7 +17,6 @@ void main() {
   group('dispose should ', () {
     setUp(() {
       appRef = new ApplicationRefImpl(
-        new PlatformRefImpl(),
         new NgZone(enableLongStackTrace: true),
         new Injector.map({
           ExceptionHandler: const BrowserExceptionHandler(),

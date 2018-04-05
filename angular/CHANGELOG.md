@@ -128,6 +128,11 @@
         closest equivalent is the new `runAppLegacy` _or `runAppLegacyAsync`
         functions.
 
+*   The interface `PlatformRef` (and `PlatformRefImpl`) were removed. They were
+    not used, and added an unnecessary code-size overhead to every application.
+
+### New features
+
 *   The compiler now warns when a `@Component.styles` seems to reference a file
     on disk, such as `styles: const ['a.css']` (this is usually an accident).
     We already warned for `template: 'a.html'`.
