@@ -13,7 +13,7 @@ import 'selector.dart' show CssSelector;
 
 // group 1: 'property' from '[property]'
 // group 2: 'event' from '(event)'
-var HOST_REG_EXP = new RegExp(r'^(?:(?:\[([^\]]+)\])|(?:\(([^\)]+)\)))$');
+final _hostRegExp = new RegExp(r'^(?:(?:\[([^\]]+)\])|(?:\(([^\)]+)\)))$');
 
 abstract class CompileMetadataWithIdentifier<T> {
   CompileIdentifierMetadata<T> get identifier;
@@ -438,7 +438,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     assert(outProperties != null);
 
     host?.forEach((key, value) {
-      final matches = HOST_REG_EXP.firstMatch(key);
+      final matches = _hostRegExp.firstMatch(key);
       if (matches == null) {
         outAttributes[key] = value;
       } else if (matches[1] != null) {

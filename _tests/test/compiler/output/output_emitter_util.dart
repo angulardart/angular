@@ -1,6 +1,6 @@
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
-import 'package:angular/src/compiler/compiler_utils.dart' show MODULE_SUFFIX;
+import 'package:angular/src/compiler/compiler_utils.dart' show moduleSuffix;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 
 class ExternalClass {
@@ -17,13 +17,13 @@ class ExternalClass {
 var testDataIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ExternalClass",
     moduleUrl:
-        'asset:_tests/test/compiler/output/output_emitter_util$MODULE_SUFFIX');
+        'asset:_tests/test/compiler/output/output_emitter_util$moduleSuffix');
 var enumIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "ViewType.HOST",
-    moduleUrl: 'asset:angular/lib/src/core/linker/view_type$MODULE_SUFFIX');
+    moduleUrl: 'asset:angular/lib/src/core/linker/view_type$moduleSuffix');
 var baseExceptionIdentifier = new CompileIdentifierMetadata<dynamic>(
     name: "BaseException",
-    moduleUrl: 'asset:angular/lib/src/facade/exceptions$MODULE_SUFFIX');
+    moduleUrl: 'asset:angular/lib/src/facade/exceptions$moduleSuffix');
 var codegenExportsVars = ["getExpressions"];
 List<o.Statement> _getExpressionsStmts = [
   o.variable("readVar").set(o.literal("someValue")).toDeclStmt(),
