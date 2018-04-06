@@ -33,7 +33,7 @@ void main() {
   /// Verify the `Testability` interface is working for this application.
   ///
   /// **NOTE**: We will use the JS API, since that is how users access it.
-  Future<void> verifyTestability() async {
+  void verifyTestability() {
     expect(component.injector.get(Testability), isNotNull);
     JsTestability jsTestability = getAngularTestability(
       rootDomContainer.children.first,
@@ -68,7 +68,7 @@ void main() {
   test('runApp should bootstrap from a ComponentFactory', () async {
     component = runApp(ng.HelloWorldComponentNgFactory);
     verifyDomAndStyles();
-    await verifyTestability();
+    verifyTestability();
   });
 
   test('runApp should allow overriding ExceptionHandler', () async {
@@ -95,14 +95,14 @@ void main() {
       },
     );
     verifyDomAndStyles(innerText: 'Hello Async World!');
-    await verifyTestability();
+    verifyTestability();
   });
 
   // i.e. "bootstrapStatic".
   test('runAppLegacy should bootstrap from a Type', () async {
     component = runAppLegacy<HelloWorldComponent>(HelloWorldComponent);
     verifyDomAndStyles();
-    await verifyTestability();
+    verifyTestability();
   });
 
   test('ApplicationRef should be injectable in a user-application', () async {
