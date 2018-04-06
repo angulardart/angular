@@ -257,9 +257,6 @@ class CompileView implements AppViewBuilder {
   final List<CompilePipeMetadata> pipeMetas;
   final o.Expression styles;
   final Map<String, String> deferredModules;
-  final _cloneAnchorNodeExpr = o
-      .importExpr(Identifiers.ngAnchor)
-      .callMethod('clone', [o.literal(false)]);
   final bool isInlined;
   bool hasInlinedView = false;
 
@@ -699,14 +696,16 @@ class CompileView implements AppViewBuilder {
       storage.allocate(renderNode._name,
           outputType: o.importType(Identifiers.HTML_COMMENT_NODE));
     }
+    o.Expression createAnchor =
+        o.importExpr(Identifiers.createViewContainerAnchor).callFn([]);
     o.Expression assignCloneAnchorNodeExpr =
-        renderNode.toWriteExpr(_cloneAnchorNodeExpr);
+        renderNode.toWriteExpr(createAnchor);
     o.Statement assignCloneAnchorStmt;
     if (topLevel) {
       assignCloneAnchorStmt = assignCloneAnchorNodeExpr.toStmt();
     } else {
-      assignCloneAnchorStmt =
-          (assignCloneAnchorNodeExpr as o.WriteVarExpr).toDeclStmt();
+      assignCloneAnchorStmt = (assignCloneAnchorNodeExpr as o.WriteVarExpr)
+          .toDeclStmt(null, [o.StmtModifier.Final]);
     }
     _createMethod.addStmt(assignCloneAnchorStmt);
     var parentNode = _getParentRenderNode(parent);

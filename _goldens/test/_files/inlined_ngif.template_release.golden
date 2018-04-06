@@ -34,7 +34,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
   ComponentRef<import1.InlinedNgIfComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = ngAnchor.clone(false);
+    _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     init([], null);
     return null;
@@ -111,7 +111,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
   ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = ngAnchor.clone(false);
+    _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     init([], null);
     return null;

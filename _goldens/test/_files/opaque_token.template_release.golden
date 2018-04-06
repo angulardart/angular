@@ -104,7 +104,7 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
   ComponentRef<import1.ContainsChildComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var _anchor_0 = ngAnchor.clone(false);
+    final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
@@ -141,7 +141,7 @@ class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponen
   ComponentRef<import1.ContainsChildComponent> build() {
     var doc = import2.document;
     _el_0 = doc.createElement('div');
-    var _anchor_1 = ngAnchor.clone(false);
+    final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_ContainsChildComponent2);

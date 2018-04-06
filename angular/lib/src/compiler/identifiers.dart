@@ -17,8 +17,6 @@ final PROFILE_RUNTIME_MODULE_URL =
 class Identifiers {
   static final appViewUtils = new CompileIdentifierMetadata<dynamic>(
       name: "appViewUtils", moduleUrl: APP_VIEW_UTILS_MODULE_URL);
-  static final ngAnchor = new CompileIdentifierMetadata<dynamic>(
-      name: 'ngAnchor', moduleUrl: APP_VIEW_MODULE_URL);
   static final AppView = new CompileIdentifierMetadata<dynamic>(
       name: "AppView", moduleUrl: APP_VIEW_MODULE_URL);
   static final DebugAppView = new CompileIdentifierMetadata<dynamic>(
@@ -104,6 +102,8 @@ class Identifiers {
       name: "createSpanAndAppend", moduleUrl: APP_VIEW_MODULE_URL);
   static final createSpanAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
       name: "createSpanAndAppendDbg", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
+  static final createViewContainerAnchor = new CompileIdentifierMetadata(
+      name: 'createViewContainerAnchor', moduleUrl: APP_VIEW_MODULE_URL);
   static final dbgElm = new CompileIdentifierMetadata<dynamic>(
       name: "dbgElm", moduleUrl: DEBUG_APP_VIEW_MODULE_URL);
   static final devModeEqual = new CompileIdentifierMetadata<dynamic>(

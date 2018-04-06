@@ -39,9 +39,9 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = ngAnchor.clone(false);
+    _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    var _anchor_1 = ngAnchor.clone(false);
+    final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
