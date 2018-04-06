@@ -98,7 +98,7 @@ class EmitterVisitorContext {
         : null;
   }
 
-  dynamic toSource() {
+  String toSource() {
     var lines = this._lines;
     if (identical(lines[lines.length - 1].parts.length, 0)) {
       lines = lines.sublist(0, lines.length - 1);

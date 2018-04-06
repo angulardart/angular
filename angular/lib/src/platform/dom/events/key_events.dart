@@ -1,14 +1,9 @@
 import "dart:html";
 
 import "package:angular/src/core/di.dart" show Injectable;
+import 'package:angular/src/runtime.dart';
 
 import "event_manager.dart" show EventManagerPlugin;
-
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
 
 var modifierKeys = ["alt", "control", "meta", "shift"];
 Map<String, dynamic /* (event: KeyboardEvent) => boolean */ >
@@ -113,11 +108,11 @@ class KeyEventsPlugin extends EventManagerPlugin {
     var parsedEvent = KeyEventsPlugin.parseEventName(eventName);
     var outsideHandler =
         KeyEventsPlugin.eventCallback(element, parsedEvent['fullKey'], handler);
-    return this.manager.getZone().runOutsideAngular(() {
+    return unsafeCast(this.manager.getZone().runOutsideAngular(() {
       return element.on[parsedEvent['domEventName']]
           .listen(outsideHandler)
           .cancel;
-    });
+    }));
   }
 
   static Map<String, String> parseEventName(String eventName) {
@@ -174,7 +169,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
   static Function eventCallback(
       dynamic element, dynamic fullKey, Function handler) {
     return (event) {
-      if (KeyEventsPlugin.getEventFullKey(event) == fullKey) {
+      if (KeyEventsPlugin.getEventFullKey(event as KeyboardEvent) == fullKey) {
         handler(event);
       }
     };
