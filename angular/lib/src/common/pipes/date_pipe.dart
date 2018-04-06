@@ -1,11 +1,8 @@
+import 'package:angular/src/runtime.dart';
 import 'package:intl/intl.dart';
 import 'package:angular/core.dart';
 
 import 'invalid_pipe_argument_exception.dart';
-
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
 
 /// Formats a date value to a string based on the requested format.
 ///
@@ -88,12 +85,12 @@ class DatePipe implements PipeTransform {
       throw new InvalidPipeArgumentException(DatePipe, value);
     }
     if (value is num) {
-      value = new DateTime.fromMillisecondsSinceEpoch(value);
+      value = new DateTime.fromMillisecondsSinceEpoch(unsafeCast(value));
     }
     if (DatePipe._ALIASES.containsKey(pattern)) {
       pattern = DatePipe._ALIASES[pattern];
     }
-    return _formatDate(value, Intl.defaultLocale, pattern);
+    return _formatDate(unsafeCast(value), Intl.defaultLocale, pattern);
   }
 
   bool supports(dynamic obj) {

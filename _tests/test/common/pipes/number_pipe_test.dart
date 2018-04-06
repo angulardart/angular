@@ -1,5 +1,4 @@
 import 'package:test/test.dart';
-import 'package:_tests/test_util.dart';
 import 'package:angular/src/common/pipes/number_pipe.dart';
 
 void main() {
@@ -16,9 +15,6 @@ void main() {
           expect(pipe.transform(1.123456, "3.4-5"), "001.12346");
           expect(pipe.transform(1.1234), "1.123");
         });
-        test("should not support other objects", () {
-          expect(() => pipe.transform(new Object()), throwsATypeError);
-        });
       });
     });
     group("PercentPipe", () {
@@ -29,9 +25,6 @@ void main() {
           expect(pipe.transform(1.23), "123%");
           expect(pipe.transform(1.2, ".2"), "120.00%");
         });
-        test("should not support other objects", () {
-          expect(() => pipe.transform(new Object()), throwsATypeError);
-        });
       });
     });
     group("CurrencyPipe", () {
@@ -40,9 +33,6 @@ void main() {
         test("should return correct value for numbers", () {
           expect(pipe.transform(123), "USD123");
           expect(pipe.transform(12, "EUR", false, ".2"), "EUR12.00");
-        });
-        test("should not support other objects", () {
-          expect(() => pipe.transform(new Object()), throwsATypeError);
         });
       });
     });

@@ -9,10 +9,6 @@ import 'package:angular_compiler/cli.dart';
 import '../common/ng_compiler.dart';
 import 'zone.dart' as zone;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-
 Future<Map<AssetId, String>> processStylesheet(
     BuildStep buildStep, AssetId stylesheetId, CompilerFlags flags) async {
   final stylesheetUrl = toAssetUri(stylesheetId);
@@ -24,7 +20,7 @@ Future<Map<AssetId, String>> processStylesheet(
 
   return new Map.fromIterable(sourceModules,
       key: (module) => new AssetId.resolve((module as SourceModule).moduleUrl),
-      value: (module) => writeSourceModule(module));
+      value: (module) => writeSourceModule(module as SourceModule));
 }
 
 /// Writes the full Dart code for the provided [SourceModule].
