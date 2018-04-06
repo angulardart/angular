@@ -73,8 +73,7 @@ class ViewCompiler {
   /// Builds the view and returns number of nested views generated.
   int buildView(CompileView view, List<TemplateAst> template,
       StylesCompileResult stylesCompileResult) {
-    var builderVisitor =
-        new ViewBuilderVisitor(view, parser, stylesCompileResult);
+    var builderVisitor = new ViewBuilderVisitor(view, stylesCompileResult);
     templateVisitAll(builderVisitor, template,
         view.declarationElement.parent ?? view.declarationElement);
     return builderVisitor.nestedViewCount;

@@ -62,7 +62,6 @@ var rootSelectorVar = o.variable("rootSelector");
 
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   final CompileView view;
-  final Parser parser;
   final StylesCompileResult stylesCompileResult;
 
   /// This is `true` if this is building a view that will be inlined into it's
@@ -79,8 +78,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   static final defaultDocVarName = 'doc';
   String docVarName;
 
-  ViewBuilderVisitor(this.view, this.parser, this.stylesCompileResult,
-      {this.isInlinedView: false});
+  ViewBuilderVisitor(
+    this.view,
+    this.stylesCompileResult, {
+    this.isInlinedView: false,
+  });
 
   bool _isRootNode(CompileElement parent) {
     return !identical(parent.view, this.view);
@@ -310,7 +312,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     // Create a visitor for embedded view and visit all nodes.
     var embeddedViewVisitor = new ViewBuilderVisitor(
-        embeddedView, parser, stylesCompileResult,
+        embeddedView, stylesCompileResult,
         isInlinedView: isPureHtml);
     templateVisitAll(
         embeddedViewVisitor,
