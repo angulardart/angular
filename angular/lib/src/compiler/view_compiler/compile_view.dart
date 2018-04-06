@@ -5,7 +5,6 @@ import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/source_gen/common/names.dart'
     show toTemplateExtension;
 import 'package:angular_compiler/cli.dart';
@@ -1086,7 +1085,7 @@ class CompileView implements AppViewBuilder {
         ? Identifiers.pureProxies[argCount]
         : null;
     if (pureProxyId == null) {
-      throw new BaseException(
+      throw new StateError(
           'Unsupported number of argument for pure functions: $argCount');
     }
     _createMethod.addStmt(storage

@@ -1,5 +1,3 @@
-import "package:angular/src/facade/exceptions.dart" show BaseException;
-
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "abstract_emitter.dart"
     show
@@ -36,7 +34,7 @@ String debugOutputAstAsDart(
     } else if (ast is o.OutputType) {
       ast.visitType(converter, ctx);
     } else {
-      throw new BaseException("Don't know how to print debug info for $ast");
+      throw new StateError("Don't know how to print debug info for $ast");
     }
   }
   return ctx.toSource();
@@ -315,7 +313,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         name = "listen";
         break;
       default:
-        throw new BaseException('Unknown builtin method: $method');
+        throw new StateError('Unknown builtin method: $method');
     }
     return name;
   }
@@ -487,7 +485,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         typeStr = "String";
         break;
       default:
-        throw new BaseException('Unsupported builtin type ${type.name}');
+        throw new StateError('Unsupported builtin type ${type.name}');
     }
     ctx.print(typeStr);
     return null;

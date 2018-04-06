@@ -1,6 +1,5 @@
 import 'package:intl/intl.dart';
 import 'package:angular/di.dart' show PipeTransform, Pipe;
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 
 import 'invalid_pipe_argument_exception.dart';
 
@@ -22,7 +21,7 @@ class _NumberPipe {
     if (digits != null) {
       var parts = _re.firstMatch(digits);
       if (parts == null) {
-        throw new BaseException(
+        throw new FormatException(
           '$digits is not a valid digit info for number pipes',
         );
       }

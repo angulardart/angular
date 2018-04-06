@@ -1,3 +1,5 @@
+*   **DEPRECATED**: `throwsInAngular` is now a no-op, and can be removed.
+
 ## 2.0.0-alpha+7
 
 *   Maintenance release, supporting newer package versions.

@@ -1,4 +1,4 @@
-import '../../facade/exceptions.dart' show BaseException;
+import 'package:angular_compiler/cli.dart';
 
 // TODO: Remove the following lines (for --no-implicit-casts).
 // ignore_for_file: argument_type_not_assignable
@@ -149,8 +149,7 @@ const int $BAR = 124;
 const int $RBRACE = 125;
 const int $NBSP = 160;
 
-class ScannerError extends BaseException {
-  @override
+class ScannerError extends Error {
   final String message;
 
   ScannerError(this.message);
@@ -337,7 +336,7 @@ class _Scanner {
 
   void error(String message, int offset) {
     int position = this.index + offset;
-    throw new ScannerError(
+    throw new BuildError(
         'Lexer Error: $message at column $position in expression [$input]');
   }
 

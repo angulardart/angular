@@ -1,5 +1,4 @@
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 
 import '../compile_metadata.dart'
@@ -54,7 +53,7 @@ o.Expression getPropertyInView(
           : viewProp.prop('parentView');
     }
     if (!identical(currView, definedView)) {
-      throw new BaseException('Internal error: Could not calculate a property '
+      throw new StateError('Internal error: Could not calculate a property '
           'in a parent view: $property');
     }
 
