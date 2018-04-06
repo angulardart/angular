@@ -117,7 +117,7 @@ class LegacyExpressionVisitor implements TemplateAstVisitor<Null, Null> {
     if (expression == null) {
       return null;
     }
-    final parsed = _parser.parseAction(expression, offset, _exports);
+    final parsed = _parser.parseAction(expression, '$offset', _exports);
     return new ExpressionAst(parsed);
   }
 
@@ -146,7 +146,7 @@ class LegacyExpressionVisitor implements TemplateAstVisitor<Null, Null> {
     if (expression == null) {
       return null;
     }
-    final parsed = _parser.parseInterpolation(expression, offset, _exports);
+    final parsed = _parser.parseInterpolation(expression, '$offset', _exports);
     return new ExpressionAst(parsed);
   }
 
@@ -173,7 +173,7 @@ class LegacyExpressionVisitor implements TemplateAstVisitor<Null, Null> {
     if (expression == null) {
       return null;
     }
-    final parsed = _parser.parseBinding(expression, offset, _exports);
+    final parsed = _parser.parseBinding(expression, '$offset', _exports);
     return new ExpressionAst(parsed);
   }
 }

@@ -12,13 +12,6 @@ import 'linker/component_factory.dart' show ComponentRef, ComponentFactory;
 import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
 /// Create an Angular zone.
 NgZone createNgZone() => new NgZone(enableLongStackTrace: isDevMode);
 
@@ -76,7 +69,7 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
 
   ApplicationRefImpl(this._zone, this._injector) {
     _zone.run(() {
-      _exceptionHandler = _injector.get(ExceptionHandler);
+      _exceptionHandler = unsafeCast(_injector.get(ExceptionHandler));
     });
     _streamSubscriptions.add(_zone.onError.listen((NgZoneError error) {
       handleUncaughtException(
@@ -102,7 +95,7 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
     ComponentFactory<T> componentFactory, [
     Injector parent,
   ]) {
-    return run(() {
+    return unsafeCast(run(() {
       var compRef = componentFactory.create(parent ?? _injector, const []);
       Element existingElement =
           document.querySelector(componentFactory.selector);
@@ -134,7 +127,7 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
       }
       _loadComponent(compRef);
       return compRef;
-    });
+    }));
   }
 
   void _loadComponent(ComponentRef<dynamic> componentRef) {
