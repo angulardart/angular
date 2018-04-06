@@ -40,13 +40,14 @@ main() {
 }
 ```
 
-Additional flags can be passed to change the behavior of the parser: `String
-sourceUrl: String describing the path of the HTML string. bool desugar:
-(Default: true) Enabled desugaring of banana-syntax, star syntax, and pipes.
-bool parseExpressions: (Default: true) Parses Dart expressions raises exceptions
-if occurred. ExceptionHandler exceptionHandler: (Default:
-ThrowingExceptionHandler) Switch to 'new RecoveringExceptionHandler()' to enable
-error recovery.`
+Additional flags can be passed to change the behavior of the parser: 
+
+| Data type | Name | Description | Default Value |
+|------------|------------|--------------|---------------|
+| `String` | _sourceUrl_ | String describing the path of the HTML string. |  |
+| `bool` | _desugar_ | Enabled desugaring of banana-syntax, star syntax, and pipes. | true |
+| `bool` | _parseExpressions_ | Parses Dart expressions raises exceptions if occurred. | true |
+| `ExceptionHandler` | _exceptionHandler_ | Switch to 'new RecoveringExceptionHandler()' to enable error recovery. | ThrowingExceptionHandler |
 
 When using RecoveringExceptionHandler, the accumulated exceptions can be
 accessed through the RecoveringExceptionHandler object. Refer to the following
