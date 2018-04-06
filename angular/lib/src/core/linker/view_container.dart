@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:angular/src/di/injector/injector.dart' show Injector;
 import 'package:angular/src/runtime.dart';
 
@@ -18,7 +20,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   final int index;
   final int parentIndex;
   final AppView parentView;
-  final dynamic nativeElement;
+  final Node nativeElement;
   List<AppView> nestedViews;
   ElementRef _elementRef;
   Injector _parentInjector;
@@ -186,7 +188,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
 
     views.removeAt(previousIndex);
     views.insert(currentIndex, view);
-    dynamic refRenderNode;
+    Node refRenderNode;
 
     if (currentIndex > 0) {
       AppView prevView = views[currentIndex - 1];
@@ -208,7 +210,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     }
     var _nestedViews = nestedViews ?? <AppView>[];
     _nestedViews.insert(viewIndex, view);
-    var refRenderNode;
+    Node refRenderNode;
     if (viewIndex > 0) {
       var prevView = _nestedViews[viewIndex - 1];
       refRenderNode = prevView.lastRootNode;

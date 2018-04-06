@@ -4,8 +4,8 @@ import "abstract_emitter.dart"
         OutputEmitter,
         EmitterVisitorContext,
         AbstractEmitterVisitor,
-        CATCH_ERROR_VAR,
-        CATCH_STACK_VAR;
+        catchErrorVar,
+        catchStackVar;
 import "output_ast.dart" as o;
 import "path_util.dart" show getImportModulePath;
 
@@ -365,7 +365,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     ctx.incIndent();
     this.visitAllStatements(stmt.bodyStmts, ctx);
     ctx.decIndent();
-    ctx.println('} catch (${CATCH_ERROR_VAR.name}, ${CATCH_STACK_VAR.name}) {');
+    ctx.println('} catch (${catchErrorVar.name}, ${catchStackVar.name}) {');
     ctx.incIndent();
     this.visitAllStatements(stmt.catchStmts, ctx);
     ctx.decIndent();
