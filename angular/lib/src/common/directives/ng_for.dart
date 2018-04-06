@@ -1,12 +1,10 @@
 import 'package:angular/core.dart' show DoCheck, Directive, Input;
+import 'package:angular/src/runtime.dart';
 
 import '../../core/change_detection/differs/default_iterable_differ.dart'
     show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
 import '../../core/linker.dart'
     show ViewContainerRef, ViewRef, TemplateRef, EmbeddedViewRef;
-
-// TODO: Remove the following line (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
 
 /// The `NgFor` directive instantiates a template once per item from an
 /// iterable. The context for each instantiated template inherits from the outer
@@ -163,13 +161,13 @@ class NgFor implements DoCheck {
       } else {
         ViewRef view = _viewContainer.get(adjustedPreviousIndex);
         _viewContainer.move(view, currentIndex);
-        RecordViewTuple tuple = new RecordViewTuple(item, view);
+        RecordViewTuple tuple = new RecordViewTuple(item, unsafeCast(view));
         insertTuples.add(tuple);
       }
     });
 
     for (var i = 0; i < insertTuples.length; i++) {
-      _perViewChange(insertTuples[i].view, insertTuples[i].record);
+      _perViewChange(insertTuples[i].view, unsafeCast(insertTuples[i].record));
     }
     for (var i = 0, len = _viewContainer.length; i < len; i++) {
       var viewRef = _viewContainer.get(i);

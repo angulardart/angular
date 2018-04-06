@@ -1,12 +1,10 @@
 import 'dart:html';
 
 import 'package:angular/core.dart' show DoCheck, Directive, Input;
+import 'package:angular/src/runtime.dart';
 
 import '../../core/change_detection/differs/default_keyvalue_differ.dart'
     show DefaultKeyValueDiffer, KeyValueChangeRecord;
-
-// TODO: Remove the following line (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
 
 /// The `NgStyle` directive changes an element's style based on the bound style
 /// expression:
@@ -80,14 +78,16 @@ class NgStyle implements DoCheck {
     if (_differ == null) return;
     var changes = _differ.diff(_rawStyle);
     if (changes == null) return;
-    changes.forEachAddedItem((KeyValueChangeRecord record) {
-      _ngElement.style.setProperty(record.key, record.currentValue);
-    });
-    changes.forEachChangedItem((KeyValueChangeRecord record) {
-      _ngElement.style.setProperty(record.key, record.currentValue);
-    });
-    changes.forEachRemovedItem((KeyValueChangeRecord record) {
-      _ngElement.style.setProperty(record.key, record.currentValue);
-    });
+    changes
+      ..forEachAddedItem(_setProperty)
+      ..forEachChangedItem(_setProperty)
+      ..forEachRemovedItem(_setProperty);
+  }
+
+  void _setProperty(KeyValueChangeRecord record) {
+    _ngElement.style.setProperty(
+      unsafeCast(record.key),
+      unsafeCast(record.currentValue),
+    );
   }
 }
