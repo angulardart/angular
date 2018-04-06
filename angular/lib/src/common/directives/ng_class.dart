@@ -2,10 +2,7 @@ import 'dart:html';
 import 'package:angular/core.dart' show DoCheck, Input, OnDestroy, Directive;
 import 'package:angular/src/core/change_detection/differs/default_iterable_differ.dart';
 import 'package:angular/src/core/change_detection/differs/default_keyvalue_differ.dart';
-
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
+import 'package:angular/src/runtime.dart';
 
 /// The [NgClass] directive conditionally adds and removes CSS classes on an
 /// HTML element based on an expression's evaluation result.
@@ -61,7 +58,7 @@ class NgClass implements DoCheck, OnDestroy {
   DefaultIterableDiffer _iterableDiffer;
   DefaultKeyValueDiffer _keyValueDiffer;
   List<String> _initialClasses = [];
-  dynamic /* List < String > | Set< String > */ _rawClass;
+  dynamic _rawClass;
   NgClass(this._ngEl);
 
   @Input('class')
@@ -79,7 +76,7 @@ class NgClass implements DoCheck, OnDestroy {
     if (v is String) {
       v = v.split(' ');
     }
-    this._rawClass = (v as dynamic /* List < String > | Set< String > */);
+    this._rawClass = v;
     this._iterableDiffer = null;
     this._keyValueDiffer = null;
     if (v != null) {
@@ -94,13 +91,13 @@ class NgClass implements DoCheck, OnDestroy {
   @override
   void ngDoCheck() {
     if (_iterableDiffer != null) {
-      var changes = _iterableDiffer.diff(_rawClass);
+      var changes = _iterableDiffer.diff(unsafeCast(_rawClass));
       if (changes != null) {
         _applyIterableChanges(changes);
       }
     }
     if (_keyValueDiffer != null) {
-      var changes = _keyValueDiffer.diff(_rawClass);
+      var changes = _keyValueDiffer.diff(unsafeCast(_rawClass));
       if (changes != null) {
         _applyKeyValueChanges(changes);
       }
@@ -119,24 +116,24 @@ class NgClass implements DoCheck, OnDestroy {
 
   void _applyKeyValueChanges(DefaultKeyValueDiffer changes) {
     changes.forEachAddedItem((KeyValueChangeRecord record) {
-      _toggleClass(record.key, record.currentValue);
+      _toggleClass(unsafeCast(record.key), unsafeCast(record.currentValue));
     });
     changes.forEachChangedItem((KeyValueChangeRecord record) {
-      _toggleClass(record.key, record.currentValue);
+      _toggleClass(unsafeCast(record.key), unsafeCast(record.currentValue));
     });
     changes.forEachRemovedItem((KeyValueChangeRecord record) {
       if (record.previousValue != null) {
-        _toggleClass(record.key, false);
+        _toggleClass(unsafeCast(record.key), false);
       }
     });
   }
 
   void _applyIterableChanges(DefaultIterableDiffer changes) {
     changes.forEachAddedItem((CollectionChangeRecord record) {
-      _toggleClass(record.item, true);
+      _toggleClass(unsafeCast(record.item), true);
     });
     changes.forEachRemovedItem((CollectionChangeRecord record) {
-      _toggleClass(record.item, false);
+      _toggleClass(unsafeCast(record.item), false);
     });
   }
 
@@ -155,16 +152,16 @@ class NgClass implements DoCheck, OnDestroy {
     if (rawClassVal != null) {
       if (rawClassVal is List) {
         for (int i = 0, len = rawClassVal.length; i < len; i++) {
-          _toggleClass(rawClassVal[i], !isCleanup);
+          _toggleClass(unsafeCast(rawClassVal[i]), !isCleanup);
         }
       } else if (rawClassVal is Iterable) {
         for (var className in rawClassVal) {
-          _toggleClass(className, !isCleanup);
+          _toggleClass(unsafeCast(className), !isCleanup);
         }
       } else {
         (rawClassVal as Map).forEach((className, expVal) {
           if (expVal != null) {
-            _toggleClass(className, !isCleanup);
+            _toggleClass(unsafeCast(className), !isCleanup);
           }
         });
       }

@@ -4,10 +4,6 @@ import 'package:angular/di.dart' show PipeTransform, Pipe;
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-
 /// Creates a new [List] or [String] containing a subset (slice) of the
 /// elements.
 ///
@@ -57,7 +53,7 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 /// The second example uses the string `'abcdefghij'`.
 @Pipe('slice', pure: false)
 class SlicePipe implements PipeTransform {
-  dynamic transform(dynamic value, num start, [num end]) {
+  dynamic transform(dynamic value, int start, [int end]) {
     if (!this.supports(value)) {
       throw new InvalidPipeArgumentException(SlicePipe, value);
     }

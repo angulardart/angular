@@ -1,13 +1,11 @@
+import 'package:angular/src/runtime.dart';
+
 import '../core/di.dart' show Injectable;
 import '../core/security.dart';
 import 'dom_sanitization_service.dart';
 import 'html_sanitizer.dart';
 import 'style_sanitizer.dart';
 import 'url_sanitizer.dart';
-
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
 
 @Injectable()
 class DomSanitizationServiceImpl implements DomSanitizationService {
@@ -29,7 +27,7 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
           return value.changingThisWillBypassSecurityTrust;
         }
         this._checkNotSafeValue(value, 'Style');
-        return internalSanitizeStyle(value);
+        return internalSanitizeStyle(unsafeCast(value));
       case TemplateSecurityContext.script:
         if (value is SafeScriptImpl) {
           return value.changingThisWillBypassSecurityTrust;
@@ -68,7 +66,7 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
     if (value is SafeValue)
       throw new UnsupportedError(
           'Unexpected SecurityContext $value, expecting html');
-    return sanitizeHtmlInternal(value);
+    return sanitizeHtmlInternal(unsafeCast(value));
   }
 
   @override
