@@ -16,7 +16,6 @@ import 'package:meta/meta.dart';
 
 import 'app_view_utils.dart';
 import 'component_factory.dart';
-import 'exceptions.dart' show ViewDestroyedException;
 import 'template_ref.dart';
 import 'view_container.dart';
 import 'view_ref.dart' show ViewRefImpl;
@@ -404,7 +403,7 @@ abstract class AppView<T> {
 
     // Sanity check in dev-mode that a destroyed view is not checked again.
     if (isDevMode && viewData.destroyed) {
-      throw new ViewDestroyedException('detectChanges');
+      throw new StateError('detectChanges');
     }
 
     if (ChangeDetectionHost.checkForCrashes) {

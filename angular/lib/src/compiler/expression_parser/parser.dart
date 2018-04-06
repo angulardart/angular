@@ -1,5 +1,4 @@
 import '../../compiler/compile_metadata.dart';
-import '../../facade/exceptions.dart' show BaseException;
 import '../../facade/lang.dart' show jsSplit;
 import 'ast.dart'
     show
@@ -56,7 +55,20 @@ import 'lexer.dart'
 final _implicitReceiver = new ImplicitReceiver();
 final INTERPOLATION_REGEXP = new RegExp(r'{{([\s\S]*?)}}');
 
-class ParseException extends BaseException {
+// TODO(matanl): Remove once we can refactor test expectations.
+class _BaseException extends Error {
+  final String _message;
+
+  _BaseException([this._message]);
+
+  String get message => _message;
+
+  String toString() {
+    return this.message;
+  }
+}
+
+class ParseException extends _BaseException {
   ParseException(String message, String input, String errLocation,
       [dynamic ctxLocation])
       : super('Parser Error: $message $errLocation [$input] in $ctxLocation');
@@ -540,7 +552,7 @@ class _ParseAST {
       error('Unexpected token $next');
     }
     // error() throws, so we don't reach here.
-    throw new BaseException('Fell through all cases in parsePrimary');
+    throw new StateError('Fell through all cases in parsePrimary');
   }
 
   List<dynamic> parseExpressionList(num terminator) {

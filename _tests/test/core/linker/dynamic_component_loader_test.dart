@@ -6,7 +6,6 @@ import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/debug/debug_node.dart';
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular_test/angular_test.dart';
 
 import 'dynamic_component_loader_test.template.dart' as ng_generated;
@@ -153,7 +152,7 @@ class DynamicallyLoaded {}
 )
 class DynamicallyLoadedThrows {
   DynamicallyLoadedThrows() {
-    throw new BaseException('ThrownInConstructor');
+    throw new StateError('ThrownInConstructor');
   }
 }
 

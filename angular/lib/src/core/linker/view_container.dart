@@ -1,5 +1,4 @@
 import 'package:angular/src/di/injector/injector.dart' show Injector;
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/runtime.dart';
 
 import 'app_view.dart';
@@ -205,7 +204,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
 
   void attachView(AppView view, int viewIndex) {
     if (identical(view.viewData.type, ViewType.COMPONENT)) {
-      throw new BaseException("Component views can't be moved!");
+      throw new StateError("Component views can't be moved!");
     }
     var _nestedViews = nestedViews ?? <AppView>[];
     _nestedViews.insert(viewIndex, view);
@@ -226,7 +225,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   AppView detachView(int viewIndex) {
     var view = nestedViews.removeAt(viewIndex);
     if (view.viewData.type == ViewType.COMPONENT) {
-      throw new BaseException("Component views can't be moved!");
+      throw new StateError("Component views can't be moved!");
     }
     view.detachViewNodes(view.flatRootNodes);
     if (view.inlinedNodes != null) {

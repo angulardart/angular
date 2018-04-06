@@ -4,7 +4,6 @@
 
 import 'package:matcher/matcher.dart';
 import 'package:test/test.dart';
-import 'package:angular/src/facade/exceptions.dart';
 
 /// Returns a matcher that will match a caught exception that matches [matcher].
 ///
@@ -16,6 +15,7 @@ import 'package:angular/src/facade/exceptions.dart';
 /// ```dart
 /// expect(createComponent(), throwsInAngular(isStateError));
 /// ```
+@Deprecated('No longer useful')
 Matcher throwsInAngular(Matcher matcher) => throwsA(new _OrWrapped(matcher));
 
 class _OrWrapped extends Matcher {
@@ -31,9 +31,6 @@ class _OrWrapped extends Matcher {
 
   @override
   bool matches(item, _) {
-    while (item is WrappedException) {
-      item = item.originalException;
-    }
     return _typeMatcher.matches(item, _);
   }
 }

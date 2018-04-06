@@ -9,4 +9,4 @@ export 'src/core/metadata.dart' show Component, Directive, Input, Output;
 export 'src/core/metadata.dart' show Pipe;
 export 'src/core/zone/ng_zone.dart' hide WrappedTimer;
 // TODO: remove ExceptionHandler and WrappedException after deprecation.
-export 'src/facade/facade.dart' show ExceptionHandler, WrappedException;
+export 'src/facade/facade.dart' show ExceptionHandler;

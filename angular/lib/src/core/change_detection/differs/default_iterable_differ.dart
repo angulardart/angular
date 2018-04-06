@@ -1,4 +1,3 @@
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:angular/src/runtime.dart';
 
 // TODO: Remove the following lines (for --no-implicit-casts).
@@ -208,7 +207,7 @@ class DefaultIterableDiffer {
   DefaultIterableDiffer diff(Iterable collection) {
     if (collection != null) {
       if (collection is! Iterable) {
-        throw new BaseException("Error trying to diff '$collection'");
+        throw new StateError("Error trying to diff '$collection'");
       }
     } else {
       collection = const [];
