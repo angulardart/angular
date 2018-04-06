@@ -9,13 +9,6 @@ import "abstract_emitter.dart"
 import "output_ast.dart" as o;
 import "path_util.dart" show getImportModulePath;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
 var _debugModuleUrl = "asset://debug/lib";
 var _METADATA_MAP_VAR = '_METADATA';
 String debugOutputAstAsDart(
@@ -304,7 +297,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   @override
   String getBuiltinMethodName(o.BuiltinMethod method) {
-    var name;
+    String name;
     switch (method) {
       case o.BuiltinMethod.ConcatArray:
         name = ".addAll";
@@ -399,9 +392,10 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   @override
   dynamic visitLiteralVargsExpr(o.LiteralVargsExpr ast, dynamic context) {
+    EmitterVisitorContext ctx = context;
     this.visitAllExpressions(
       ast.entries,
-      context,
+      ctx,
       ',',
       newLine: ast.entries.isNotEmpty,
       keepOnSameLine: true,
@@ -461,7 +455,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   dynamic visitBuiltinType(o.BuiltinType type, dynamic context) {
     EmitterVisitorContext ctx = context;
-    var typeStr;
+    String typeStr;
     switch (type.name) {
       case o.BuiltinTypeName.Bool:
         typeStr = "bool";
@@ -547,7 +541,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         param.type.visitType(this, ctx);
         ctx.print(" ");
       }
-      ctx.print(param.name);
+      ctx.print(param.name as String);
     }, params, ctx, ",");
   }
 

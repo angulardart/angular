@@ -437,7 +437,7 @@ void flattenStatements(dynamic arg, List<o.Statement> output) {
       flattenStatements(entry, output);
     }
   } else {
-    output.add(arg);
+    output.add(arg as o.Statement);
   }
 }
 

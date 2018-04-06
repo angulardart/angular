@@ -3,6 +3,7 @@ import "../compile_metadata.dart" show CompileIdentifierMetadata;
 // TODO: Remove the following lines (for --no-implicit-casts).
 // ignore_for_file: argument_type_not_assignable
 // ignore_for_file: invalid_assignment
+// ignore_for_file: list_element_type_not_assignable
 // ignore_for_file: non_bool_operand
 // ignore_for_file: return_of_invalid_type
 
@@ -1351,7 +1352,7 @@ class RecursiveExpressionVisitor
 Expression replaceReadClassMemberInExpression(
     Expression newValue, Expression expression) {
   var transformer = new _ReplaceReadClassMemberTransformer(newValue);
-  return expression.visitExpression(transformer, null);
+  return expression.visitExpression(transformer, null) as Expression;
 }
 
 class _ReplaceReadClassMemberTransformer extends ExpressionTransformer {
@@ -1366,13 +1367,13 @@ class _ReplaceReadClassMemberTransformer extends ExpressionTransformer {
 Expression replaceVarInExpression(
     String varName, Expression newValue, Expression expression) {
   var transformer = new _ReplaceVariableTransformer(varName, newValue);
-  return expression.visitExpression(transformer, null);
+  return expression.visitExpression(transformer, null) as Expression;
 }
 
 Statement replaceVarInStatement(
     String varName, Expression newValue, Statement statement) {
   var transformer = new _ReplaceVariableTransformer(varName, newValue);
-  return statement.visitStatement(transformer, null);
+  return statement.visitStatement(transformer, null) as Statement;
 }
 
 class _ReplaceVariableTransformer extends ExpressionTransformer {

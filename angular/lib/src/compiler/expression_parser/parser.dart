@@ -45,13 +45,6 @@ import 'lexer.dart'
         $RPAREN,
         $SLASH;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
 final _implicitReceiver = new ImplicitReceiver();
 final INTERPOLATION_REGEXP = new RegExp(r'{{([\s\S]*?)}}');
 
@@ -92,7 +85,7 @@ class Parser {
   Parser(this._lexer);
 
   ASTWithSource parseAction(
-      String input, dynamic location, List<CompileIdentifierMetadata> exports) {
+      String input, String location, List<CompileIdentifierMetadata> exports) {
     if (input == null) {
       throw new ParseException(
         'Blank expressions are not allowed in event bindings.',
@@ -108,7 +101,7 @@ class Parser {
   }
 
   ASTWithSource parseBinding(
-      String input, dynamic location, List<CompileIdentifierMetadata> exports) {
+      String input, String location, List<CompileIdentifierMetadata> exports) {
     var ast = _parseBindingAst(input, location, exports);
     return new ASTWithSource(ast, input, location);
   }
@@ -133,17 +126,17 @@ class Parser {
   }
 
   TemplateBindingParseResult parseTemplateBindings(
-      String input, dynamic location, List<CompileIdentifierMetadata> exports) {
+      String input, String location, List<CompileIdentifierMetadata> exports) {
     var tokens = _lexer.tokenize(input);
     return new _ParseAST(input, location, tokens, false, exports)
         .parseTemplateBindings();
   }
 
   ASTWithSource parseInterpolation(
-      String input, dynamic location, List<CompileIdentifierMetadata> exports) {
+      String input, String location, List<CompileIdentifierMetadata> exports) {
     var split = splitInterpolation(input, location);
     if (split == null) return null;
-    var expressions = [];
+    var expressions = <AST>[];
     for (var i = 0; i < split.expressions.length; ++i) {
       var tokens = this._lexer.tokenize(_stripComments(split.expressions[i]));
       var ast =
@@ -179,7 +172,7 @@ class Parser {
     return new SplitInterpolation(strings, expressions);
   }
 
-  ASTWithSource wrapLiteralPrimitive(String input, dynamic location) {
+  ASTWithSource wrapLiteralPrimitive(String input, String location) {
     return new ASTWithSource(new LiteralPrimitive(input), input, location);
   }
 
@@ -188,7 +181,7 @@ class Parser {
     return i != null ? input.substring(0, i).trim() : input;
   }
 
-  num _commentStart(String input) {
+  int _commentStart(String input) {
     var outerQuote;
     for (var i = 0; i < input.length - 1; i++) {
       var char = input.codeUnitAt(i);
@@ -204,7 +197,7 @@ class Parser {
     return null;
   }
 
-  void _checkNoInterpolation(String input, dynamic location) {
+  void _checkNoInterpolation(String input, String location) {
     if (input == null) {
       throw new ParseException('Expected non-null value', input, location);
     }
@@ -218,7 +211,7 @@ class Parser {
     }
   }
 
-  num _findInterpolationErrorColumn(List<String> parts, num partInErrIdx) {
+  int _findInterpolationErrorColumn(List<String> parts, int partInErrIdx) {
     var errLocation = '';
     for (var j = 0; j < partInErrIdx; j++) {
       errLocation += j.isEven ? parts[j] : '{{${parts[j]}}}';
@@ -229,12 +222,12 @@ class Parser {
 
 class _ParseAST {
   final String input;
-  final dynamic location;
-  final List<dynamic> tokens;
+  final String location;
+  final List<Token> tokens;
   final bool parseAction;
   Map<String, CompileIdentifierMetadata> exports;
   Map<String, Map<String, CompileIdentifierMetadata>> prefixes;
-  num index = 0;
+  int index = 0;
 
   _ParseAST(this.input, this.location, this.tokens, this.parseAction,
       List<CompileIdentifierMetadata> exports) {
@@ -264,7 +257,7 @@ class _ParseAST {
     index++;
   }
 
-  bool optionalCharacter(num code) {
+  bool optionalCharacter(int code) {
     if (next.isCharacter(code)) {
       advance();
       return true;
@@ -315,7 +308,7 @@ class _ParseAST {
   }
 
   AST parseChain() {
-    var exprs = [];
+    var exprs = <AST>[];
     while (index < tokens.length) {
       var expr = parsePipe();
       exprs.add(expr);
@@ -341,7 +334,7 @@ class _ParseAST {
       }
       do {
         var name = expectIdentifierOrKeyword();
-        var args = [];
+        var args = <AST>[];
         while (optionalCharacter($COLON)) {
           args.add(parseExpression());
         }
@@ -555,8 +548,8 @@ class _ParseAST {
     throw new StateError('Fell through all cases in parsePrimary');
   }
 
-  List<dynamic> parseExpressionList(num terminator) {
-    var result = [];
+  List<AST> parseExpressionList(int terminator) {
+    var result = <AST>[];
     if (!next.isCharacter(terminator)) {
       do {
         result.add(parsePipe());
@@ -566,8 +559,8 @@ class _ParseAST {
   }
 
   LiteralMap parseLiteralMap() {
-    var keys = [];
-    var values = [];
+    var keys = <String>[];
+    var values = <AST>[];
     expectCharacter($LBRACE);
     if (!optionalCharacter($RBRACE)) {
       do {
@@ -611,9 +604,9 @@ class _ParseAST {
     return null;
   }
 
-  List parseCallArguments() {
+  List<AST> parseCallArguments() {
     if (next.isCharacter($RPAREN)) return [];
-    var positionals = [];
+    var positionals = <AST>[];
     do {
       positionals.add(parsePipe());
     } while (optionalCharacter($COMMA));
@@ -624,7 +617,7 @@ class _ParseAST {
     if (!parseAction) {
       error('Binding expression cannot contain chained expression');
     }
-    var exprs = [];
+    var exprs = <AST>[];
     while (index < tokens.length && !next.isCharacter($RBRACE)) {
       var expr = parseExpression();
       exprs.add(expr);
@@ -653,7 +646,7 @@ class _ParseAST {
 
   TemplateBindingParseResult parseTemplateBindings() {
     List<TemplateBinding> bindings = [];
-    var prefix;
+    String prefix;
     List<String> warnings = [];
     while (index < tokens.length) {
       bool keyIsVar = peekKeywordLet();
@@ -679,8 +672,8 @@ class _ParseAST {
         }
       }
       optionalCharacter($COLON);
-      var name;
-      var expression;
+      String name;
+      ASTWithSource expression;
       if (keyIsVar) {
         if (optionalOperator('=')) {
           name = expectTemplateBindingKey();
@@ -702,7 +695,7 @@ class _ParseAST {
     return new TemplateBindingParseResult(bindings, warnings);
   }
 
-  void error(String message, [num index]) {
+  void error(String message, [int index]) {
     index ??= this.index;
     var location = (index < tokens.length)
         ? 'at column ${tokens[index].index + 1} in'

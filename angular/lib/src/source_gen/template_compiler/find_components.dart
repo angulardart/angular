@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -23,10 +24,6 @@ import '../../compiler/view_compiler/property_binder.dart'
 import 'compile_metadata.dart';
 import 'dart_object_utils.dart';
 import 'pipe_visitor.dart';
-
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
 
 const String _directivesProperty = 'directives';
 const String _visibilityProperty = 'visibility';
@@ -105,7 +102,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
               // Only pass the annotation for directives: [ ... ], not other
               // elements. They also can cause problems if not resolved but it
               // is missing directives that blow up in a non-actionable way.
-              annotation: field == _directivesProperty ? annotation : null,
+              annotation: field == _directivesProperty ? annotation as ElementAnnotationImpl : null,
               element: element,
             ))
         .toList();
@@ -316,7 +313,7 @@ class ComponentVisitor
             } else {
               // Convert any generic type parameters from the input's type to
               // our internal output AST.
-              final typeArguments = resolvedType is ParameterizedType
+              final List<o.OutputType> typeArguments = resolvedType is ParameterizedType
                   ? resolvedType.typeArguments.map(fromDartType).toList()
                   : const [];
               _inputTypes[element.displayName] = new CompileTypeMetadata(
@@ -500,7 +497,7 @@ class ComponentVisitor
     final propertyName = element.displayName;
     final bindingName =
         coerceString(value, 'bindingPropertyName', defaultTo: propertyName);
-    _prohibitBindingChange(element.enclosingElement, propertyName, bindingName,
+    _prohibitBindingChange(element.enclosingElement as ClassElement, propertyName, bindingName,
         immutableBindings ?? bindings);
     bindings[propertyName] = bindingName;
   }
@@ -578,7 +575,7 @@ class ComponentVisitor
       lifecycleHooks: extractLifecycleHooks(element),
       providers: _extractProviders(annotationValue, 'providers'),
       viewProviders: _extractProviders(annotationValue, 'viewProviders'),
-      exports: _extractExports(annotation, element),
+      exports: _extractExports(annotation as ElementAnnotationImpl, element),
       queries: _queries,
       viewQueries: _viewQueries,
       template: template,
@@ -683,7 +680,7 @@ class ComponentVisitor
       }
 
       if (id.staticElement is ClassElement) {
-        analyzedClass = new AnalyzedClass(id.staticElement);
+        analyzedClass = new AnalyzedClass(id.staticElement as ClassElement);
       }
 
       // TODO(het): Also store the `DartType` since we know it statically.
