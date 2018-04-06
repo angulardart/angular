@@ -123,7 +123,7 @@
 
 *   Major refactoring of the `angular_router` package. For a migration guide
     from `angular_router` v1, see
-    https://github.com/dart-lang/angular/blob/master/angular_router/g3doc/migration_guide.md.
+    https://github.com/dart-lang/angular/blob/master/doc/router/migration.md.
 
 ## 1.0.2
 
