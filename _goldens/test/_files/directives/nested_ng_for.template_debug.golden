@@ -42,7 +42,7 @@ class ViewNestedNgForComponent0 extends DebugAppView<import4.NestedNgForComponen
   ComponentRef<import4.NestedNgForComponent> build() {
     final _rootEl = rootEl;
     final import10.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var _anchor_0 = ngAnchor.clone(false);
+    final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 10);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
@@ -95,7 +95,7 @@ class _ViewNestedNgForComponent1 extends DebugAppView<import4.NestedNgForCompone
     var doc = import10.document;
     _el_0 = doc.createElement('span');
     dbgElm(this, _el_0, 0, 0, 4);
-    var _anchor_1 = ngAnchor.clone(false);
+    final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     dbgElm(this, _anchor_1, 1, 1, 11);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);

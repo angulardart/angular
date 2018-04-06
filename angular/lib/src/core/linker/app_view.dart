@@ -31,11 +31,14 @@ export 'package:angular/src/core/change_detection/component_state.dart';
 // ignore_for_file: non_bool_operand
 // ignore_for_file: return_of_invalid_type
 
-/// **INTERNAL ONLY**: Will be made private once the reflective compiler is out.
+/// A comment to clone as an anchor for the view container of a `<template>`.
+final _viewContainerAnchor = new Comment();
+
+/// Creates a comment to anchor the view container of a `<template>`.
 ///
-/// Template anchor `<!-- template bindings={}` for cloning.
-@visibleForTesting
-final ngAnchor = new Comment('template bindings={}');
+/// The comment is necessary to anchor the location of the view container since
+/// the `<template>` itself isn't rendered.
+Comment createViewContainerAnchor() => _viewContainerAnchor.clone(false);
 
 /// Set to `true` when Angular modified the DOM.
 ///

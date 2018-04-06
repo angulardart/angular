@@ -63,7 +63,7 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     _el_1 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 1, 2, 4);
     _AnotherDirective_1_5 = new import1.AnotherDirective();
-    var _anchor_2 = ngAnchor.clone(false);
+    final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
     dbgElm(this, _anchor_2, 2, 3, 17);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
@@ -214,12 +214,12 @@ class ViewEmbeddedQueries0 extends DebugAppView<import1.EmbeddedQueries> {
     var doc = import6.document;
     _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 0, 4);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
-    var _anchor_1 = ngAnchor.clone(false);
+    final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
     dbgElm(this, _anchor_1, 1, 1, 4);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_7 = new TemplateRef(_appEl_1, viewFactory_EmbeddedQueries1);
-    var _anchor_2 = ngAnchor.clone(false);
+    final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
     dbgElm(this, _anchor_2, 2, 4, 4);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
@@ -374,12 +374,12 @@ class ViewEmbeddedQueriesList0 extends DebugAppView<import1.EmbeddedQueriesList>
     var doc = import6.document;
     _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 0, 4);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
-    var _anchor_1 = ngAnchor.clone(false);
+    final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
     dbgElm(this, _anchor_1, 1, 1, 4);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_7 = new TemplateRef(_appEl_1, viewFactory_EmbeddedQueriesList1);
-    var _anchor_2 = ngAnchor.clone(false);
+    final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
     dbgElm(this, _anchor_2, 2, 4, 4);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
@@ -526,7 +526,7 @@ class ViewNestedNgForQueriesList0 extends DebugAppView<import1.NestedNgForQuerie
   ComponentRef<import1.NestedNgForQueriesList> build() {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var _anchor_0 = ngAnchor.clone(false);
+    final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 9);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
@@ -583,7 +583,7 @@ class _ViewNestedNgForQueriesList1 extends DebugAppView<import1.NestedNgForQueri
     var doc = import6.document;
     _el_0 = doc.createElement('div');
     dbgElm(this, _el_0, 0, 0, 4);
-    var _anchor_1 = ngAnchor.clone(false);
+    final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     dbgElm(this, _anchor_1, 1, 1, 11);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
@@ -628,7 +628,7 @@ class _ViewNestedNgForQueriesList2 extends DebugAppView<import1.NestedNgForQueri
     var doc = import6.document;
     _el_0 = doc.createElement('div');
     dbgElm(this, _el_0, 0, 1, 6);
-    var _anchor_1 = ngAnchor.clone(false);
+    final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     dbgElm(this, _anchor_1, 1, 2, 13);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);

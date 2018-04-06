@@ -40,7 +40,7 @@ class ViewInlinedNgIfComponent0 extends DebugAppView<import3.InlinedNgIfComponen
   ComponentRef<import3.InlinedNgIfComponent> build() {
     final _rootEl = rootEl;
     final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = ngAnchor.clone(false);
+    _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 5);
     init([], null, [_anchor_0]);
@@ -128,7 +128,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends DebugAppView<impor
   ComponentRef<import3.InlinedNgIfWithImmutableConditionComponent> build() {
     final _rootEl = rootEl;
     final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = ngAnchor.clone(false);
+    _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     dbgElm(this, _anchor_0, 0, 0, 5);
     init([], null, [_anchor_0]);
