@@ -377,16 +377,6 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
     controls.remove(name);
   }
 
-  /// Mark the named control as non-optional.
-  void include(String controlName) {
-    controls[controlName]?.markAsEnabled();
-  }
-
-  /// Mark the named control as optional.
-  void exclude(String controlName) {
-    controls[controlName]?.markAsDisabled();
-  }
-
   /// Check whether there is a control with the given name in the group.
   bool contains(String controlName) =>
       controls.containsKey(controlName) && controls[controlName].enabled;
