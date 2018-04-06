@@ -10,7 +10,6 @@ import 'package:angular/src/di/injector/element.dart';
 import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/platform/dom/shared_styles_host.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
@@ -23,19 +22,6 @@ import 'view_ref.dart' show ViewRefImpl;
 import 'view_type.dart' show ViewType;
 
 export 'package:angular/src/core/change_detection/component_state.dart';
-
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
-/// **INTERNAL ONLY**: Will be made private once the reflective compiler is out.
-///
-/// Template anchor `<!-- template bindings={}` for cloning.
-@visibleForTesting
-final ngAnchor = new Comment('template bindings={}');
 
 /// Set to `true` when Angular modified the DOM.
 ///
@@ -307,7 +293,7 @@ abstract class AppView<T> {
     }
   }
 
-  void attachViewAfter(dynamic node, List<Node> viewRootNodes) {
+  void attachViewAfter(Node node, List<Node> viewRootNodes) {
     moveNodesAfterSibling(node, viewRootNodes);
     domRootRendererIsDirty = true;
   }
@@ -482,10 +468,6 @@ abstract class AppView<T> {
     }
   }
 
-  static void initializeSharedStyleHost(document) {
-    sharedStylesHost ??= new DomSharedStylesHost(document);
-  }
-
   /// Initializes styling to enable css shim for host element.
   HtmlElement initViewRoot(HtmlElement hostElement) {
     if (componentType.hostAttr != null) {
@@ -574,7 +556,7 @@ abstract class AppView<T> {
   /// Projects projectableNodes at specified index. We don't use helper
   /// functions to flatten the tree since it allocates list that are not
   /// required in most cases.
-  void project(Node parentElement, int index) {
+  void project(Element parentElement, int index) {
     if (parentElement == null) return;
     // Optimization for projectables that doesn't include ViewContainer(s).
     // If the projectable is ViewContainer we fall back to building up a list.
@@ -587,7 +569,7 @@ abstract class AppView<T> {
       var projectable = projectables[i];
       if (projectable is ViewContainer) {
         if (projectable.nestedViews == null) {
-          parentElement.append(projectable.nativeElement as Node);
+          parentElement.append(projectable.nativeElement);
         } else {
           _appendNestedViewRenderNodes(parentElement, projectable);
         }
@@ -675,7 +657,7 @@ Node _findLastRenderNode(dynamic node) {
       }
     }
   } else {
-    lastNode = node;
+    lastNode = unsafeCast(node);
   }
   return lastNode;
 }
@@ -683,8 +665,7 @@ Node _findLastRenderNode(dynamic node) {
 /// Recursively appends app element and nested view nodes to target element.
 void _appendNestedViewRenderNodes(
     Element targetElement, ViewContainer appElement) {
-  // TODO: strongly type nativeElement.
-  targetElement.append(appElement.nativeElement as Node);
+  targetElement.append(appElement.nativeElement);
   var nestedViews = appElement.nestedViews;
   // Components inside ngcontent may also have ngcontent to project,
   // recursively walk nestedViews.
@@ -725,7 +706,7 @@ List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
         }
       }
     } else {
-      renderNodes.add(node);
+      renderNodes.add(unsafeCast(node));
     }
   }
   return renderNodes;
@@ -750,6 +731,8 @@ void moveNodesAfterSibling(Node sibling, List<Node> nodes) {
 
 /// Helper function called by AppView.build to reduce code size.
 Element createAndAppend(Document doc, String tagName, Element parent) {
+  // Allow implicit cast here to avoid messing with inlining heuristics.
+  // ignore: return_of_invalid_type
   return parent.append(doc.createElement(tagName));
   // Workaround since package expect/@NoInline not available outside sdk.
   return null; // ignore: dead_code
@@ -759,6 +742,8 @@ Element createAndAppend(Document doc, String tagName, Element parent) {
 
 /// Helper function called by AppView.build to reduce code size.
 DivElement createDivAndAppend(Document doc, Element parent) {
+  // Allow implicit cast here to avoid messing with inlining heuristics.
+  // ignore: return_of_invalid_type
   return parent.append(doc.createElement('div'));
   // Workaround since package expect/@NoInline not available outside sdk.
   return null; // ignore: dead_code
@@ -768,6 +753,8 @@ DivElement createDivAndAppend(Document doc, Element parent) {
 
 /// Helper function called by AppView.build to reduce code size.
 SpanElement createSpanAndAppend(Document doc, Element parent) {
+  // Allow implicit cast here to avoid messing with inlining heuristics.
+  // ignore: return_of_invalid_type
   return parent.append(doc.createElement('span'));
   // Workaround since package expect/@NoInline not available outside sdk.
   return null; // ignore: dead_code
