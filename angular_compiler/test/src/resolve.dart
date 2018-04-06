@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
-// This import exists only to indicate that AngularDart's metadata is used.
-// ignore: unused_import
-import 'package:angular/di.dart';
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
 
