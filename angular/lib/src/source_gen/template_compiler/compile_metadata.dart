@@ -24,10 +24,6 @@ import 'dart_object_utils.dart' as dart_objects;
 /// Returns whether the string is `null` _or_ an empty string.
 bool _isEmptyString(String s) => s == null || s.isEmpty;
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
   final LibraryReader _library;
@@ -111,7 +107,7 @@ class CompileTypeMetadataVisitor
       final genericType = typeArguments.first;
       if (!genericType.isDynamic) {
         providerTypeArgument = _getCompileTypeMetadata(
-          genericType.element,
+          genericType.element as ClassElement,
           genericTypes: genericType is ParameterizedType
               ? genericType.typeArguments
               : const [],
@@ -134,12 +130,14 @@ class CompileTypeMetadataVisitor
       // as Provider<T>:
       // (Again, see https://github.com/dart-lang/angular/issues/917)
       final opaqueTokenGeneric = token.type.typeArguments.first;
-      providerTypeArgument = _getCompileTypeMetadata(
-        opaqueTokenGeneric.element,
-        genericTypes: opaqueTokenGeneric is ParameterizedType
-            ? opaqueTokenGeneric.typeArguments
-            : const [],
-      );
+      if (!opaqueTokenGeneric.isDynamic) {
+        providerTypeArgument = _getCompileTypeMetadata(
+          opaqueTokenGeneric.element as ClassElement,
+          genericTypes: opaqueTokenGeneric is ParameterizedType
+              ? opaqueTokenGeneric.typeArguments
+              : const [],
+        );
+      }
     }
     return new CompileProviderMetadata(
       token: _token(token),
@@ -175,7 +173,7 @@ class CompileTypeMetadataVisitor
       final typeValue = token.toTypeValue();
       if (typeValue != null && !typeValue.isDartCoreNull) {
         return _getCompileTypeMetadata(
-          typeValue.element,
+          typeValue.element as ClassElement,
           enforceClassCanBeCreated: true,
         );
       }
@@ -201,7 +199,7 @@ class CompileTypeMetadataVisitor
     if (!dart_objects.isNull(maybeUseFactory)) {
       if (maybeUseFactory.type.element is FunctionTypedElement) {
         return _factoryForFunction(
-          maybeUseFactory.type.element,
+          maybeUseFactory.type.element as FunctionTypedElement,
           dart_objects.coerceList(provider, 'deps', defaultTo: null),
         );
       } else {
@@ -388,7 +386,8 @@ class CompileTypeMetadataVisitor
       return _tokenForType(token.type, isInstance: invocation != null);
     } else if (token.type.element is FunctionTypedElement) {
       return new CompileTokenMetadata(
-          identifier: _identifierForFunction(token.type.element));
+          identifier: _identifierForFunction(
+              token.type.element as FunctionTypedElement));
     }
     throw new ArgumentError('@Inject is not yet supported for $token.');
   }
@@ -418,7 +417,7 @@ class CompileTypeMetadataVisitor
         identifier: _idFor(type), identifierIsInstance: isInstance);
   }
 
-  CompileIdentifierMetadata _idFor(ParameterizedType type) =>
+  CompileIdentifierMetadata _idFor(DartType type) =>
       new CompileIdentifierMetadata(
           name: getTypeName(type), moduleUrl: moduleUrl(type.element));
 
@@ -449,7 +448,8 @@ class CompileTypeMetadataVisitor
     } else if (token.type is InterfaceType) {
       return _expressionForType(token);
     } else if (token.type.element is FunctionTypedElement) {
-      return o.importExpr(_identifierForFunction(token.type.element));
+      return o.importExpr(
+          _identifierForFunction(token.type.element as FunctionTypedElement));
     } else {
       throw new ArgumentError(
           'Could not create useValue expression for $token');

@@ -19,13 +19,6 @@ import 'template_optimize.dart';
 import 'template_parser.dart';
 import 'template_parser/recursive_template_visitor.dart';
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
 const NG_CONTENT_SELECT_ATTR = 'select';
 const NG_CONTENT_ELEMENT = 'ng-content';
 const LINK_ELEMENT = 'link';
@@ -103,7 +96,7 @@ class AstTemplateParser implements TemplateParser {
           exceptionHandler: exceptionHandler);
 
   List<ast.TemplateAst> _processRawTemplateNodes(
-      Iterable<ast.TemplateAst> parsedAst,
+      List<ast.TemplateAst> parsedAst,
       {String template,
       String name,
       _AstExceptionHandler exceptionHandler,
@@ -295,7 +288,8 @@ class _BindDirectivesVisitor
       List<ast.PropertyAst> properties,
       List<ast.AttributeAst> attributes,
       _ParseContext elementContext) {
-    var visitedProperties = _visitAll(properties, elementContext);
+    var visitedProperties =
+        _visitAll<ng.BoundElementPropertyAst>(properties, elementContext);
     for (var attribute in attributes) {
       if (attribute.mustaches?.isNotEmpty ?? false) {
         var boundElementPropertyAst =
@@ -362,7 +356,8 @@ class _BindDirectivesVisitor
     if (_isInlineTemplate(astNode)) {
       return _findNgContentIndexForElement(
           astNode.childNodes
-              .firstWhere((childNode) => childNode is ast.ElementAst),
+                  .firstWhere((childNode) => childNode is ast.ElementAst)
+              as ast.ElementAst,
           context);
     }
     return context.findNgContentIndex(_templateSelector(astNode));
@@ -372,7 +367,7 @@ class _BindDirectivesVisitor
     if (astNode is! ast.SyntheticTemplateAst) return false;
     final syntheticNode = astNode as ast.SyntheticTemplateAst;
     if (syntheticNode.origin is ast.EmbeddedTemplateAst) {
-      return _isInlineTemplate(syntheticNode.origin);
+      return _isInlineTemplate(syntheticNode.origin as ast.EmbeddedTemplateAst);
     }
     if (syntheticNode.origin is ast.StarAst ||
         syntheticNode.origin is ast.AttributeAst) return true;
@@ -661,9 +656,9 @@ class _ParseContext {
 
   int findNgContentIndex(CssSelector selector) {
     if (_ngContentIndexMatcher == null) return _wildcardNgContentIndex;
-    var ngContentIndices = [];
+    var ngContentIndices = <int>[];
     _ngContentIndexMatcher.match(selector, (selector, ngContentIndex) {
-      ngContentIndices.add(ngContentIndex);
+      ngContentIndices.add(ngContentIndex as int);
     });
     ngContentIndices.sort();
     return ngContentIndices.isNotEmpty
@@ -726,7 +721,7 @@ class _ParseContext {
       String elementName,
       String location,
       _TemplateContext templateContext) {
-    var result = [];
+    var result = <ng.BoundElementPropertyAst>[];
     for (var propName in directive.hostProperties.keys) {
       try {
         var expression = directive.hostProperties[propName];
@@ -753,7 +748,7 @@ class _ParseContext {
       String elementName,
       String location,
       _TemplateContext templateContext) {
-    var result = [];
+    var result = <ng.BoundEventAst>[];
     for (var eventName in directive.hostListeners.keys) {
       try {
         var expression = directive.hostListeners[eventName];
@@ -806,7 +801,7 @@ CssSelector _templateSelector(ast.EmbeddedTemplateAst astNode) => _selector(
 
 CssSelector _selector(String elementName, List<ast.AttributeAst> attributes,
     List<ast.PropertyAst> properties, List<ast.EventAst> events) {
-  final matchableAttributes = [];
+  final matchableAttributes = <List<String>>[];
   for (var attr in attributes) {
     matchableAttributes.add([attr.name, attr.value]);
   }
@@ -838,11 +833,11 @@ String _getEventName(ast.EventAst event) =>
 /// Visitor which filters elements that are not supported in angular templates.
 class _ElementFilter extends ast.RecursiveTemplateAstVisitor<Null> {
   @override
-  ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
+  ast.ElementAst visitElement(ast.ElementAst astNode, [_]) {
     if (_filterElement(astNode)) {
       return null;
     }
-    return super.visitElement(astNode);
+    return super.visitElement(astNode) as ast.ElementAst;
   }
 
   static bool _filterElement(ast.ElementAst astNode) =>
@@ -945,7 +940,7 @@ class _InlineTemplateDesugar extends ast.RecursiveTemplateAstVisitor<Null> {
 
   @override
   ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
-    astNode = super.visitElement(astNode);
+    astNode = super.visitElement(astNode) as ast.ElementAst;
     var templateAttribute = _findTemplateAttribute(astNode);
     if (templateAttribute == null) {
       return astNode;
@@ -1018,8 +1013,8 @@ class _InlineTemplateDesugar extends ast.RecursiveTemplateAstVisitor<Null> {
   int _expressionOffset(ast.AttributeAst templateAttribute) {
     if (templateAttribute == null) return null;
     if (templateAttribute is ast.SyntheticTemplateAst) {
-      return _expressionOffset(
-          (templateAttribute as ast.SyntheticTemplateAst).origin);
+      return _expressionOffset((templateAttribute as ast.SyntheticTemplateAst)
+          .origin as ast.AttributeAst);
     }
     return (templateAttribute as ast.ParsedAttributeAst)
         .valueToken
@@ -1055,7 +1050,7 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
 
   @override
   visitAttribute(ast.AttributeAst astNode, [String parentPrefix]) {
-    astNode = super.visitAttribute(astNode, parentPrefix);
+    astNode = super.visitAttribute(astNode, parentPrefix) as ast.AttributeAst;
     if (_getNsPrefix(astNode.name) == null) return astNode;
     var names = astNode.name.split(':');
     return new ast.AttributeAst.from(astNode,
@@ -1302,7 +1297,7 @@ class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
       final visited = node is ast.TextAst
           ? _stripWhitespace(i, node, astNodes, preserveWhitespace)
           : node.accept(this, preserveWhitespace);
-      if (visited != null) result.add(visited);
+      if (visited != null) result.add(visited as T);
     }
     return result;
   }
@@ -1374,7 +1369,7 @@ class _SortInputsVisitor extends RecursiveTemplateVisitor<Null> {
   @override
   ng.DirectiveAst visitDirective(ng.DirectiveAst ast, _) {
     ast.inputs.sort(_orderingOf(ast.directive.inputs));
-    return super.visitDirective(ast, null);
+    return super.visitDirective(ast, null) as ng.DirectiveAst;
   }
 
   Comparator<ng.BoundDirectivePropertyAst> _orderingOf(

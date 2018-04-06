@@ -1,18 +1,13 @@
 import 'dart:async';
 
+import 'package:angular/src/runtime.dart';
+
 import '../di.dart';
 import 'component_factory.dart' show ComponentRef;
 import 'component_loader.dart' show ComponentLoader;
 // ignore: deprecated_member_use
 import 'component_resolver.dart' show typeToFactory;
 import 'view_container_ref.dart' show ViewContainerRef;
-
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
 
 /// Supports imperatively loading and binding new components at runtime.
 ///
@@ -33,11 +28,11 @@ class SlowComponentLoader {
     // Purposefully don't use async/await to retain timing.
     final factoryFuture = new Future.value(typeToFactory(type));
     return factoryFuture.then((component) {
-      final reference = _loader.loadDetached<T>(component, injector: injector);
+      final reference = _loader.loadDetached(component, injector: injector);
       reference.onDestroy(() {
         reference.location.remove();
       });
-      return reference;
+      return unsafeCast(reference);
     });
   }
 
@@ -53,7 +48,7 @@ class SlowComponentLoader {
     final factoryFuture = new Future.value(typeToFactory(type));
     return factoryFuture.then((component) {
       return _loader.loadNextToLocation(
-        component,
+        unsafeCast(component),
         location,
         injector: injector,
       );
