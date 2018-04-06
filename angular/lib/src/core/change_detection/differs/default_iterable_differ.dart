@@ -1,12 +1,5 @@
 import 'package:angular/src/runtime.dart';
 
-// TODO: Remove the following lines (for --no-implicit-casts).
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
-// ignore_for_file: list_element_type_not_assignable
-// ignore_for_file: non_bool_operand
-// ignore_for_file: return_of_invalid_type
-
 typedef void DefaultIterableCallback(
   CollectionChangeRecord item,
   int previousIndex,
@@ -116,7 +109,7 @@ class DefaultIterableDiffer {
           : nextRemove;
 
       int adjPreviousIndex =
-          _getPreviousIndex(record, addRemoveOffset, moveOffsets);
+          _getPreviousIndex(unsafeCast(record), addRemoveOffset, moveOffsets);
 
       int currentIndex = record.currentIndex;
 
@@ -175,7 +168,7 @@ class DefaultIterableDiffer {
       }
 
       if (adjPreviousIndex != currentIndex) {
-        fn(record, adjPreviousIndex, currentIndex);
+        fn(unsafeCast(record), adjPreviousIndex, currentIndex);
       }
     }
   }
@@ -751,11 +744,10 @@ class _DuplicateItemRecordList {
 }
 
 class _DuplicateMap {
-  Map _map;
-  _DuplicateMap()
-      : _map = new Map<dynamic, _DuplicateItemRecordList>.identity();
-  _DuplicateMap.withHashcode()
-      : _map = new Map<dynamic, _DuplicateItemRecordList>();
+  final Map<dynamic, _DuplicateItemRecordList> _map;
+  _DuplicateMap() : _map = new Map.identity();
+  _DuplicateMap.withHashcode() : _map = new Map();
+
   void put(CollectionChangeRecord record) {
     // todo(vicb) handle corner cases
     var key = record.trackById;
