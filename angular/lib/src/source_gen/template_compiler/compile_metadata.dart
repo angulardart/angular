@@ -17,10 +17,12 @@ import 'package:angular/src/source_gen/common/annotation_matcher.dart'
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/cli.dart';
 import 'package:angular_compiler/angular_compiler.dart';
-import 'package:quiver/strings.dart' as strings;
 import 'package:source_gen/source_gen.dart';
 
 import 'dart_object_utils.dart' as dart_objects;
+
+/// Returns whether the string is `null` _or_ an empty string.
+bool _isEmptyString(String s) => s == null || s.isEmpty;
 
 // TODO: Remove the following lines (for --no-implicit-casts).
 // ignore_for_file: argument_type_not_assignable
@@ -61,7 +63,7 @@ class CompileTypeMetadataVisitor
     }
 
     constructor = constructors.firstWhere(
-        (constructor) => strings.isEmpty(constructor.name),
+        (constructor) => _isEmptyString(constructor.name),
         orElse: () => constructors.first);
 
     if (constructor.isPrivate) {
@@ -74,8 +76,7 @@ class CompileTypeMetadataVisitor
           'not a "factory", and cannot be invoked');
       return null;
     }
-    if (element.constructors.length > 1 &&
-        strings.isNotEmpty(constructor.name)) {
+    if (element.constructors.length > 1 && _isEmptyString(constructor.name)) {
       // No use in being a warning, as it's not something they need to fix
       // until we add a way to be able to "pick" the constructor to use.
       logNotice('Found ${element.constructors.length} constructors for class '

@@ -1,4 +1,4 @@
-import 'package:quiver/collection.dart';
+import 'package:collection/collection.dart';
 
 import '../core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
@@ -9,6 +9,8 @@ import 'analyzed_class.dart';
 import 'compiler_utils.dart';
 import 'output/output_ast.dart' as o;
 import 'selector.dart' show CssSelector;
+
+final _listsEqual = const ListEquality<Object>().equals;
 
 // group 1: 'property' from '[property]'
 // group 2: 'event' from '(event)'
@@ -109,7 +111,7 @@ class CompileProviderMetadata {
         useValue == _other.useValue &&
         useExisting == _other.useExisting &&
         useFactory == _other.useFactory &&
-        listsEqual(deps, _other.deps) &&
+        _listsEqual(deps, _other.deps) &&
         multi == _other.multi;
   }
 
@@ -316,7 +318,7 @@ class CompileTypeMetadata
         moduleUrl == _other.moduleUrl &&
         isHost == _other.isHost &&
         value == _other.value &&
-        listsEqual(diDeps, _other.diDeps);
+        _listsEqual(diDeps, _other.diDeps);
   }
 
   @override

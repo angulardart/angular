@@ -4,9 +4,9 @@
 
 import 'package:collection/collection.dart';
 import 'package:source_span/source_span.dart';
-import 'package:quiver/core.dart';
 
 import '../ast.dart';
+import '../hash.dart';
 import '../token/tokens.dart';
 import '../visitor.dart';
 

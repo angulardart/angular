@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:quiver/core.dart';
+import '../../hash.dart';
 
 /// Represents a section of parsed text from an Angular micro expression.
 ///

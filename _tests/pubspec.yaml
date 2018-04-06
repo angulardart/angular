@@ -12,7 +12,6 @@ dependencies:
   # Actual valid dependencies required.
   collection: ^1.14.5
   meta: ^1.1.2
-  quiver: ^0.29.0+1
   test: ^0.12.32
 
 dev_dependencies:
