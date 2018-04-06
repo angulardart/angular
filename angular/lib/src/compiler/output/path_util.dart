@@ -1,7 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
-
 // TODO: Remove the following lines (for --no-implicit-casts).
 // ignore_for_file: argument_type_not_assignable
 // ignore_for_file: invalid_assignment
@@ -31,7 +29,7 @@ String getImportModulePath(String moduleUrlStr, String importedUrlStr) {
     return "$absolutePathPrefix${importedUrl.packageName}"
         "/${importedUrl.modulePath}";
   }
-  throw new BaseException(
+  throw new StateError(
       "Can't import url $importedUrlStr from $moduleUrlStr");
 }
 
@@ -46,7 +44,7 @@ class _AssetUrl {
       return new _AssetUrl(match[1], match[2], match[3]);
     }
     if (allowNonMatching) return null;
-    throw new BaseException("Url $url is not a valid asset: url");
+    throw new StateError("Url $url is not a valid asset: url");
   }
 
   _AssetUrl(this.packageName, this.firstLevelDir, this.modulePath);

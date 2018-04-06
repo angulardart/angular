@@ -5,14 +5,10 @@ import 'dart:js_util' as js_util;
 
 import 'package:js/js.dart' as js;
 import 'package:meta/meta.dart';
-import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectorState;
 import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'package:angular/src/core/linker/component_factory.dart';
-import 'package:angular/src/core/linker/exceptions.dart'
-    show ExpressionChangedAfterItHasBeenCheckedException, ViewWrappedException;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/linker/view_type.dart';
@@ -44,7 +40,6 @@ final RegExp _templateBindingsExp = new RegExp(r'^template bindings=(.*)$');
 final RegExp _matchNewLine = new RegExp(r'\n');
 const _templateCommentText = 'template bindings={}';
 const INSPECT_GLOBAL_NAME = "ng.probe";
-DebugContext _currentDebugContext;
 
 class DebugAppView<T> extends AppView<T> {
   static bool _ngProbeInitialized = false;
@@ -77,8 +72,7 @@ class DebugAppView<T> extends AppView<T> {
     _resetDebug();
     try {
       return super.create(context, projectableNodes);
-    } catch (e, s) {
-      _rethrowWithContext(e, s);
+    } catch (e) {
       rethrow;
     }
   }
@@ -92,8 +86,7 @@ class DebugAppView<T> extends AppView<T> {
     _resetDebug();
     try {
       return super.createHostView(hostInjector, projectableNodes);
-    } catch (e, s) {
-      this._rethrowWithContext(e, s);
+    } catch (e) {
       rethrow;
     }
   }
@@ -104,8 +97,7 @@ class DebugAppView<T> extends AppView<T> {
     _resetDebug();
     try {
       return super.injectorGet(token, nodeIndex, notFoundResult);
-    } catch (e, s) {
-      _rethrowWithContext(e, s, stopChangeDetection: false);
+    } catch (e) {
       rethrow;
     }
   }
@@ -144,8 +136,7 @@ class DebugAppView<T> extends AppView<T> {
         if (debugNode == null) continue;
         removeDebugNodeFromIndex(debugNode);
       }
-    } catch (e, s) {
-      _rethrowWithContext(e, s);
+    } catch (e) {
       rethrow;
     }
   }
@@ -156,9 +147,7 @@ class DebugAppView<T> extends AppView<T> {
     super.detectChanges();
   }
 
-  void _resetDebug() {
-    _currentDebugContext = null;
-  }
+  void _resetDebug() {}
 
   @override
   Future<Null> loadDeferred(
@@ -198,8 +187,7 @@ class DebugAppView<T> extends AppView<T> {
 
   /// Sets up current debug context to node so that failures can be associated
   /// with template source location and DebugElement.
-  DebugContext dbg(int nodeIndex, int rowNum, int colNum) =>
-      _currentDebugContext = new DebugContext(this, nodeIndex, rowNum, colNum);
+  DebugContext dbg(int nodeIndex, int rowNum, int colNum) => null;
 
   /// Creates DebugElement for root element of a component.
   void dbgIdx(element, int nodeIndex) {
@@ -216,7 +204,6 @@ class DebugAppView<T> extends AppView<T> {
           debugInfo);
 
       debugEl.name = element is Text ? 'text' : element.tagName.toLowerCase();
-      _currentDebugContext = debugInfo;
     }
     indexDebugNode(debugEl);
   }
@@ -304,19 +291,6 @@ class DebugAppView<T> extends AppView<T> {
     }
     super.attachViewAfter(node, viewRootNodes);
   }
-
-  void _rethrowWithContext(dynamic e, dynamic stack,
-      {bool stopChangeDetection: true}) {
-    if (!(e is ViewWrappedException)) {
-      if (stopChangeDetection &&
-          !(e is ExpressionChangedAfterItHasBeenCheckedException)) {
-        cdState = ChangeDetectorState.Errored;
-      }
-      if (_currentDebugContext != null) {
-        throw new ViewWrappedException(e, stack, _currentDebugContext);
-      }
-    }
-  }
 }
 
 /// Recursively appends app element and nested view nodes to target element.
@@ -374,8 +348,6 @@ void dbgElm(DebugAppView view, element, int nodeIndex, int rowNum, int colNum) {
         debugInfo);
 
     debugEl.name = element is Text ? 'text' : element.tagName.toLowerCase();
-
-    _currentDebugContext = debugInfo;
   }
   indexDebugNode(debugEl);
 }

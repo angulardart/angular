@@ -1,5 +1,3 @@
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
-
 import 'output_ast.dart' as o;
 
 // TODO: Remove the following lines (for --no-implicit-casts).
@@ -388,7 +386,7 @@ abstract class AbstractEmitterVisitor
           varName = 'null';
           break;
         default:
-          throw new BaseException('Unknown builtin variable ${ast.builtin}');
+          throw new StateError('Unknown builtin variable ${ast.builtin}');
       }
     }
     ctx.print(varName);
@@ -532,7 +530,7 @@ abstract class AbstractEmitterVisitor
         opStr = '>=';
         break;
       default:
-        throw new BaseException('Unknown operator ${ast.operator}');
+        throw new StateError('Unknown operator ${ast.operator}');
     }
     ctx.print('(');
     ast.lhs.visitExpression(this, ctx);

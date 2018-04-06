@@ -1,7 +1,5 @@
 import 'package:logging/logging.dart';
 
-import 'exceptions.dart' show WrappedException;
-
 /// Provides a hook for centralized exception handling.
 ///
 /// The default implementation of `ExceptionHandler` when use AngularDart is
@@ -27,35 +25,7 @@ import 'exceptions.dart' show WrappedException;
 /// }
 /// ```
 class ExceptionHandler {
-  static String _extractMessage(exception) => exception is WrappedException
-      ? exception.wrapperMessage
-      : exception.toString();
-
-  static _findContext(exception) {
-    try {
-      return exception is WrappedException
-          ? exception.context ?? _findContext(exception.originalException)
-          : null;
-    } catch (_) {
-      return null;
-    }
-  }
-
-  static _findOriginalException(exception) {
-    while (exception is WrappedException) {
-      exception = exception.originalException;
-    }
-    return exception;
-  }
-
-  static _findOriginalStackTrace(exception) {
-    var stackTrace;
-    while (exception is WrappedException) {
-      stackTrace = exception.originalStack;
-      exception = exception.originalException;
-    }
-    return stackTrace;
-  }
+  static String _extractMessage(exception) => '$exception';
 
   static String _longStackTrace(stackTrace) => stackTrace is Iterable
       ? stackTrace.join('\n\n-----async gap-----\n')
@@ -67,9 +37,6 @@ class ExceptionHandler {
     stackTrace,
     String reason,
   ]) {
-    final originalStackTrace = _findOriginalStackTrace(exception);
-    final originalException = _findOriginalException(exception);
-    final context = _findContext(exception);
     final buffer = new StringBuffer();
     buffer.writeln('EXCEPTION: ${_extractMessage(exception)}');
     if (stackTrace != null) {
@@ -78,19 +45,6 @@ class ExceptionHandler {
     }
     if (reason != null) {
       buffer.writeln('REASON: $reason');
-    }
-    if (originalException != null) {
-      buffer.writeln(
-        'ORIGINAL EXCEPTION: ${_extractMessage(originalException)}',
-      );
-    }
-    if (originalStackTrace != null) {
-      buffer.writeln('ORIGINAL STACKTRACE:');
-      buffer.writeln(_longStackTrace(originalStackTrace));
-    }
-    if (context != null) {
-      buffer.writeln('ERROR CONTEXT:');
-      buffer.writeln(context);
     }
     return buffer.toString();
   }

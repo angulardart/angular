@@ -1,5 +1,4 @@
 import 'package:angular_compiler/cli.dart';
-import 'package:angular/src/facade/exceptions.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
 import 'package:angular_ast/src/expression/micro.dart';
 import 'package:source_span/source_span.dart';
@@ -252,7 +251,7 @@ class _AstExceptionHandler extends ast.RecoveringExceptionHandler {
             .span(exception.offset, exception.offset + exception.length)
             .message(exception.errorCode.message))
         .join('\n');
-    throw new BaseException('Template parse errors:\n$errorString');
+    throw new BuildError('Template parse errors:\n$errorString');
   }
 }
 
@@ -327,8 +326,7 @@ class _BindDirectivesVisitor
           elementContext.templateContext.schemaRegistry,
           elementContext.templateContext.reportError);
     } on ParseException catch (e) {
-      elementContext.templateContext
-          .reportError(e.message, attribute.sourceSpan);
+      elementContext.templateContext.reportError('$e', attribute.sourceSpan);
       return null;
     }
   }

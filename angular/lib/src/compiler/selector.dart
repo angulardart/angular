@@ -1,4 +1,3 @@
-import 'package:angular/src/facade/exceptions.dart' show BaseException;
 import 'package:tuple/tuple.dart';
 
 import 'attribute_matcher.dart';
@@ -42,7 +41,7 @@ class CssSelector {
       if (match == null) break;
       if (match[1] != null) {
         if (inNot) {
-          throw new BaseException("Nesting :not is not allowed in a selector");
+          throw new StateError("Nesting :not is not allowed in a selector");
         }
         inNot = true;
         current = new CssSelector();
@@ -63,7 +62,7 @@ class CssSelector {
       }
       if (match[9] != null) {
         if (inNot) {
-          throw new BaseException(
+          throw new StateError(
               "Multiple selectors in :not are not supported");
         }
         _addResult(results, cssSelector);
