@@ -1,3 +1,12 @@
+## Breaking Changes
+
+*   Remove `include` and `exclude` methods from `ControlGroup`. These can be
+    replaced with calls to `markAsEnabled` and `markAsDisabled` instead.
+
+    **Before:** `controlGroup.include('foo');`
+
+    **After:** `controlGroup.controls['foo'].markAsEnabled();`
+
 ## 2.0.0-alpha+1
 
 ## New Features
