@@ -4,9 +4,9 @@
 
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
-import 'package:quiver/core.dart';
 
 import '../../ast.dart';
+import '../../hash.dart';
 
 final _listEquals = const ListEquality<dynamic>();
 

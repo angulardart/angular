@@ -24,7 +24,6 @@ dependencies:
   code_builder: '^3.0.1'
   csslib: ^0.14.1
   path: ^1.5.1
-  quiver: ^0.29.0+1
   source_gen: ^0.8.0
   source_span: ^1.4.0
   tuple: ^1.0.1

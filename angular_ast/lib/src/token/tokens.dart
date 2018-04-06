@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 library angular_ast.src.token.tokens;
 
-import 'package:quiver/core.dart';
+import '../hash.dart';
 
 part 'lexeme.dart';
 part 'token_types.dart';
