@@ -29,7 +29,8 @@ final _viewContainerAnchor = new Comment();
 ///
 /// The comment is necessary to anchor the location of the view container since
 /// the `<template>` itself isn't rendered.
-Comment createViewContainerAnchor() => _viewContainerAnchor.clone(false);
+Comment createViewContainerAnchor() =>
+    unsafeCast(_viewContainerAnchor.clone(false));
 
 /// Set to `true` when Angular modified the DOM.
 ///
