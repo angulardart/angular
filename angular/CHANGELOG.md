@@ -1,5 +1,7 @@
 ### Breaking changes
 
+*   We now require `quiver: ^0.29.0+1' in order to support the latest Dart2 SDK.
+
 *   The process for starting your AngularDart application changed significantly:
 
     *   For most applications, we recommend now strongly recommend using the new
