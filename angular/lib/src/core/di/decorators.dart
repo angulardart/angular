@@ -104,6 +104,9 @@ class Injectable {
   const Injectable();
 }
 
+/// Shorthand of [Injectable].
+const Injectable injectable = const Injectable();
+
 /// A parameter metadata that marks a dependency as optional.
 ///
 /// [Injector] provides `null` if the dependency is not found.
@@ -125,6 +128,9 @@ class Injectable {
 class Optional {
   const Optional();
 }
+
+/// Shorthand for [Optional].
+const Optional optional = const Optional();
 
 /// Specifies that an [Injector] should retrieve a dependency only from itself.
 ///
@@ -152,6 +158,9 @@ class Self {
   const Self();
 }
 
+/// Shorthand for [Self].
+const Self self = const Self();
+
 /// Specifies that the dependency resolution should start from the parent
 /// injector.
 ///
@@ -177,6 +186,9 @@ class Self {
 class SkipSelf {
   const SkipSelf();
 }
+
+/// Shorthand for [SkipSelf].
+const SkipSelf skipSelf = const SkipSelf();
 
 /// Specifies that an injector should retrieve a dependency from any injector
 /// until reaching the closest host.
@@ -234,3 +246,6 @@ class SkipSelf {
 class Host {
   const Host();
 }
+
+/// Shorthand for [Host].
+const Host host = const Host();

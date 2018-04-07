@@ -5,7 +5,7 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 /// A default implementation of the GitHub API using `dart:html`.
-@Injectable()
+@injectable
 class GithubService {
   static const String _apiEndpoint = 'https://api.github.com';
   static const String _repoEndpoint = '$_apiEndpoint/repos/dart-lang/angular';
