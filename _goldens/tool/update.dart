@@ -6,7 +6,7 @@ import 'package:path/path.dart' as p;
 ///
 /// Before running, execute the following:
 /// ```
-/// pub run build_runner -o build
+/// pub run build_runner build -o build
 /// ```
 ///
 /// Then:
