@@ -134,8 +134,12 @@
 ### New features
 
 *   The compiler now warns when a `@Component.styles` seems to reference a file
-    on disk, such as `styles: const ['a.css']` (this is usually an accident).
-    We already warned for `template: 'a.html'`.
+    on disk, such as `styles: const ['a.css']` (this is usually an accident). We
+    already warned for `template: 'a.html'`.
+
+*   Running within an angular zone will no longer cause addtional turns to occur
+    within it's parent's zone. ngZone's run() will now run inside the parent
+    zone's run() function as opposed to the other way around.
 
 ## 5.0.0-alpha+9
 

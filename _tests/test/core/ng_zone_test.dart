@@ -8,7 +8,6 @@ import 'package:angular/angular.dart';
 import 'ng_zone_test.template.dart' as ng_generated;
 
 void main() {
-  onEnterAndonLeaveInsideParentRun = true;
   ng_generated.initReflector();
 
   group('$NgZone', () {
