@@ -1,4 +1,4 @@
-enum HtmlTagContentType { RAW_TEXT, ESCAPABLE_RAW_TEXT, PARSABLE_DATA }
+enum HtmlTagContentType { rawText, escapableRawText, parsableData }
 
 class HtmlTagDefinition {
   Map<String, bool> closedByChildren = {};
@@ -29,7 +29,7 @@ class HtmlTagDefinition {
           .forEach((tagName) => this.requiredParents[tagName] = true);
     }
     this.implicitNamespacePrefix = implicitNamespacePrefix;
-    this.contentType = contentType ?? HtmlTagContentType.PARSABLE_DATA;
+    this.contentType = contentType ?? HtmlTagContentType.parsableData;
   }
   bool requireExtraParent(String currentParent) {
     if (this.requiredParents == null) {
@@ -123,12 +123,12 @@ final Map<String, HtmlTagDefinition> TAG_DEFINITIONS = {
       closedByChildren: ["optgroup"], closedByParent: true),
   "option": new HtmlTagDefinition(
       closedByChildren: ["option", "optgroup"], closedByParent: true),
-  "style": new HtmlTagDefinition(contentType: HtmlTagContentType.RAW_TEXT),
-  "script": new HtmlTagDefinition(contentType: HtmlTagContentType.RAW_TEXT),
+  "style": new HtmlTagDefinition(contentType: HtmlTagContentType.rawText),
+  "script": new HtmlTagDefinition(contentType: HtmlTagContentType.rawText),
   "title":
-      new HtmlTagDefinition(contentType: HtmlTagContentType.ESCAPABLE_RAW_TEXT),
+      new HtmlTagDefinition(contentType: HtmlTagContentType.escapableRawText),
   "textarea":
-      new HtmlTagDefinition(contentType: HtmlTagContentType.ESCAPABLE_RAW_TEXT)
+      new HtmlTagDefinition(contentType: HtmlTagContentType.escapableRawText)
 };
 final HtmlTagDefinition DEFAULT_TAG_DEFINITION = new HtmlTagDefinition();
 HtmlTagDefinition getHtmlTagDefinition(String tagName) {

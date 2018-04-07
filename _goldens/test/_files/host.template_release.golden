@@ -23,7 +23,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   var _expr_0;
   bool _expr_1;
   static RenderComponentType _renderType;
-  ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('host');
     createAttr(rootEl, 'aria-title', 'title');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$HostComponent);
@@ -63,7 +63,7 @@ const List<dynamic> styles$HostComponentHost = const [];
 class _ViewHostComponentHost0 extends AppView<dynamic> {
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_5;
-  _ViewHostComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewHostComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHostComponent0(this, 0);

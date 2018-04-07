@@ -24,7 +24,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_Dependent0 = [];
 
 class ViewDependent0 extends DebugAppView<import2.Dependent> {
   static RenderComponentType _renderType;
-  ViewDependent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_Dependent0) {
+  ViewDependent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_Dependent0) {
     rootEl = import7.document.createElement('dependent');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class Dependent - inline template', ViewEncapsulation.None, styles$Dependent);
     setupComponentType(_renderType);
@@ -50,7 +50,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependentHost0 = [
 class _ViewDependentHost0 extends DebugAppView<dynamic> {
   ViewDependent0 _compView_0;
   import2.Dependent _Dependent_0_5;
-  _ViewDependentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependentHost0);
+  _ViewDependentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependent0(this, 0);
@@ -88,7 +88,7 @@ class ViewDependencyWithDependentInView0 extends DebugAppView<import2.Dependency
   ViewDependent0 _compView_0;
   import2.Dependent _Dependent_0_5;
   static RenderComponentType _renderType;
-  ViewDependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithDependentInView0) {
+  ViewDependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithDependentInView0) {
     rootEl = import7.document.createElement('dependency-with-dependent-in-view');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class DependencyWithDependentInView - inline template', ViewEncapsulation.None, styles$DependencyWithDependentInView);
     setupComponentType(_renderType);
@@ -130,7 +130,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithDependentInViewHost0 = [
 class _ViewDependencyWithDependentInViewHost0 extends DebugAppView<dynamic> {
   ViewDependencyWithDependentInView0 _compView_0;
   import2.DependencyWithDependentInView _DependencyWithDependentInView_0_5;
-  _ViewDependencyWithDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithDependentInViewHost0);
+  _ViewDependencyWithDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithDependentInViewHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithDependentInView0(this, 0);
@@ -171,7 +171,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithContent0 = [];
 
 class ViewDependencyWithContent0 extends DebugAppView<import2.DependencyWithContent> {
   static RenderComponentType _renderType;
-  ViewDependencyWithContent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithContent0) {
+  ViewDependencyWithContent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithContent0) {
     rootEl = import7.document.createElement('dependency-with-content');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class DependencyWithContent - inline template', ViewEncapsulation.None, styles$DependencyWithContent);
     setupComponentType(_renderType);
@@ -199,7 +199,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithContentHost0 = [
 class _ViewDependencyWithContentHost0 extends DebugAppView<dynamic> {
   ViewDependencyWithContent0 _compView_0;
   import2.DependencyWithContent _DependencyWithContent_0_5;
-  _ViewDependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithContentHost0);
+  _ViewDependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithContentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithContent0(this, 0);
@@ -247,7 +247,7 @@ class ViewDependencyAndDependentInView0 extends DebugAppView<import2.DependencyA
   ViewDependent0 _compView_1;
   import2.Dependent _Dependent_1_5;
   static RenderComponentType _renderType;
-  ViewDependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyAndDependentInView0) {
+  ViewDependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyAndDependentInView0) {
     rootEl = import7.document.createElement('dependency-and-dependent-in-view');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class DependencyAndDependentInView - inline template', ViewEncapsulation.None, styles$DependencyAndDependentInView);
     setupComponentType(_renderType);
@@ -291,7 +291,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DependencyAndDependentInViewHost0 = [
 class _ViewDependencyAndDependentInViewHost0 extends DebugAppView<dynamic> {
   ViewDependencyAndDependentInView0 _compView_0;
   import2.DependencyAndDependentInView _DependencyAndDependentInView_0_5;
-  _ViewDependencyAndDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyAndDependentInViewHost0);
+  _ViewDependencyAndDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyAndDependentInViewHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyAndDependentInView0(this, 0);
