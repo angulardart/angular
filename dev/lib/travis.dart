@@ -5,7 +5,10 @@ import 'repository.dart';
 /// Generates `./.travis.yml` and `tool/presubmit.sh` for the repository.
 class TravisGenerator {
   /// Analyzes and returns output files as part of scanning [repository].
-  static TravisGenerator generate(Repository repository) {
+  static TravisGenerator generate(
+    Repository repository, {
+    int shardThreshold: 25,
+  }) {
     final writer = new OutputWriter(
       repository.readTravisPrefix(),
       repository.readTravisPostfix(),
@@ -19,13 +22,19 @@ class TravisGenerator {
           release: package.hasReleaseMode,
         );
       }
-      if (package.hasTests) {
+      final testCount = package.testCount;
+      if (testCount > 0) {
+        final isBuildable = package.isBuildable;
+        final isBrowser = package.hasBrowserTests;
         writer.writeTestStep(
           path: package.path,
-          browser: package.hasBrowserTests,
-          buildable: package.isBuildable,
+          browser: isBrowser,
+          buildable: isBuildable,
           release: package.hasReleaseMode,
           custom: package.hasCustomTestScript,
+          shards: testCount > shardThreshold && isBuildable && isBrowser
+              ? testCount ~/ shardThreshold
+              : 0,
         );
       }
     }
@@ -127,6 +136,7 @@ set -e\n
     @required bool buildable,
     @required bool release,
     @required bool custom,
+    @required int shards,
   }) {
     // TODO: Support testing in release mode.
     release = false;
@@ -174,17 +184,32 @@ set -e\n
         browser: browser,
         release: false,
         custom: false,
+        shards: 0,
       );
     }
-    _stages.addAll([
-      '    - stage: testing',
-      '      script: ./tool/travis.sh test${release ? ':release' : ''}',
-      '      env: PKG="$path"',
-      '      cache:',
-      '        directories:',
-      '          - $path/.dart_tool',
-      '',
-    ]);
+    if (shards == 0 || release) {
+      _stages.addAll([
+        '    - stage: testing',
+        '      script: ./tool/travis.sh test${release ? ':release' : ''}',
+        '      env: PKG="$path"',
+        '      cache:',
+        '        directories:',
+        '          - $path/.dart_tool',
+        '',
+      ]);
+    } else {
+      for (var i = 0; i < shards; i++) {
+        _stages.addAll([
+          '    - stage: testing',
+          '      script: ./tool/travis.sh test${release ? ':release' : ''} $i $shards',
+          '      env: PKG="$path"',
+          '      cache:',
+          '        directories:',
+          '          - $path/.dart_tool',
+          '',
+        ]);
+      }
+    }
     _presubmit.addAll([
       'echo "Running tests in $path in ${release ? 'release' : 'debug'} mode"',
       'PKG=$path tool/travis.sh test${release ? ':release': ''}',

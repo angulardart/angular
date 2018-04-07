@@ -60,6 +60,9 @@ For every package that has a `build.release.yaml`:
 For every package that has a `test/` folder:
 
 * the package is tested using `build_runner test`
+* if the package has more than 25 `*_test.dart` tests, and uses the browser for
+  testing, then the suite is automatically sharded (on travis, this will spin up
+  additional jobs).
 
 For every package that has a `test/` folder and `build.release.yaml`:
 
