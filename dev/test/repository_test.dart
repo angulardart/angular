@@ -132,7 +132,7 @@ void main() {
 
       expect(package.hasCustomTestScript, isFalse);
       expect(package.hasBrowserTests, isFalse);
-      expect(package.hasTests, isFalse);
+      expect(package.testCount, 0);
       expect(package.hasReleaseMode, isFalse);
       expect(package.isBuildable, isFalse);
     });
@@ -176,7 +176,7 @@ void main() {
         p.join(rootPath, 'package_1'),
       );
 
-      expect(package.hasTests, isTrue);
+      expect(package.testCount, 1);
       expect(package.hasBrowserTests, isFalse);
     });
 

@@ -70,6 +70,7 @@ void main() {
         buildable: true,
         release: false,
         custom: false,
+        shards: 0,
       );
       expect(
         writer.toPresubmitScript(),
@@ -93,6 +94,7 @@ void main() {
         buildable: true,
         release: false,
         custom: false,
+        shards: 0,
       );
       expect(
         writer.toPresubmitScript(),
@@ -110,6 +112,24 @@ void main() {
       );
     });
 
+    test('writeTestStep should be able to shard web tests', () {
+      writer.writeTestStep(
+        path: 'package_1',
+        browser: true,
+        buildable: true,
+        release: false,
+        custom: false,
+        shards: 200,
+      );
+      expect(
+        writer.toTravisDotYaml(),
+        allOf(
+          contains('script: ./tool/travis.sh test 0 2'),
+          contains('script: ./tool/travis.sh test 1 2'),
+        ),
+      );
+    });
+
     test('writeTestStep should not use build_runner if not buildable', () {
       writer.writeTestStep(
         path: 'package_1',
@@ -117,6 +137,7 @@ void main() {
         buildable: false,
         release: false,
         custom: false,
+        shards: 0,
       );
       expect(
         writer.toPresubmitScript(),

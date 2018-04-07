@@ -129,6 +129,7 @@ class Package {
   static const _pubspecYaml = 'pubspec.yaml';
   static const _releaseYaml = 'build.release.yaml';
   static const _testFolder = 'test';
+  static final _testGlob = new Glob('**_test.dart');
   static final _testScript = p.join('tool', 'test.sh');
 
   /// Returns a raw YAML map as a `Map<String, VersionConstraint>`.
@@ -218,10 +219,11 @@ class Package {
     return new File(p.join(root, path, _testScript)).existsSync();
   }
 
-  /// Whether a `test/` directory exists for this package.
-  bool get hasTests {
-    return new Directory(p.join(root, path, _testFolder)).existsSync();
-  }
+  /// Number of tests for this package.
+  int get testCount =>
+      new Directory(p.join(root, path, _testFolder)).existsSync()
+          ? _testGlob.listSync(root: p.join(root, path, _testFolder)).length
+          : 0;
 
   /// Whether a `build.release.yaml` exists in this package.
   ///

@@ -9,6 +9,8 @@ set -e
 
 # Check arguments.
 TASK=$1
+SHARD_INDEX=$2
+SHARD_TOTAL=$3
 
 if [ -z "$PKG" ]; then
   echo -e '\033[31mPKG variable must be set!\033[0m'
@@ -48,9 +50,15 @@ case $TASK in
     ;;
 
   test)
-    echo -e '\033[1mTASK: Testing [test]\033[22m'
-    echo -e 'pub run build_runner test --fail-on-severe -- -P travis'
-    pub run build_runner test --fail-on-severe -- -P travis
+    if [ -z "$SHARD_INDEX" ]; then
+      echo -e '\033[1mTASK: Testing [test]\033[22m'
+      echo -e 'pub run build_runner test --fail-on-severe -- -P travis'
+      pub run build_runner test --fail-on-severe -- -P travis
+    else
+      echo -e "\033[1mTASK: Testing [test] (Sharded: ${SHARD_INDEX} of ${SHARD_TOTAL})\033[22m"
+      echo -e "pub run build_runner test --fail-on-severe -- -P travis --total-shards ${SHARD_TOTAL} --shard-index ${SHARD_INDEX}"
+      pub run build_runner test --fail-on-severe -- -P travis --total-shards ${SHARD_TOTAL} --shard-index ${SHARD_INDEX}
+    fi
     ;;
 
   test:nobuild)

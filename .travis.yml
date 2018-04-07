@@ -121,7 +121,21 @@ jobs:
           - _tests/.dart_tool
 
     - stage: testing
-      script: ./tool/travis.sh test
+      script: ./tool/travis.sh test 0 3
+      env: PKG="_tests"
+      cache:
+        directories:
+          - _tests/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test 1 3
+      env: PKG="_tests"
+      cache:
+        directories:
+          - _tests/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test 2 3
       env: PKG="_tests"
       cache:
         directories:
