@@ -28,7 +28,7 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   import3.NgFor _NgFor_0_9;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewNestedNgForComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewNestedNgForComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import7.document.createElement('nested-ng-for');
     _renderType ??= import8.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$NestedNgForComponent);
     setupComponentType(_renderType);
@@ -73,7 +73,7 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
   ViewContainer _appEl_1;
   import3.NgFor _NgFor_1_9;
   var _expr_0;
-  _ViewNestedNgForComponent1(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.EMBEDDED, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewNestedNgForComponent1(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedNgForComponent0._renderType;
   }
   @override
@@ -115,7 +115,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   import7.DivElement _el_0;
   import7.Text _text_1;
   var _expr_0;
-  _ViewNestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.EMBEDDED, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewNestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedNgForComponent0._renderType;
   }
   @override
@@ -148,7 +148,7 @@ const List<dynamic> styles$NestedNgForComponentHost = const [];
 class _ViewNestedNgForComponentHost0 extends AppView<dynamic> {
   ViewNestedNgForComponent0 _compView_0;
   import1.NestedNgForComponent _NestedNgForComponent_0_5;
-  _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewNestedNgForComponent0(this, 0);

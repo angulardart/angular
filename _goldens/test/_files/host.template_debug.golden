@@ -26,7 +26,7 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   var _expr_0;
   bool _expr_1;
   static RenderComponentType _renderType;
-  ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HostComponent0) {
+  ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HostComponent0) {
     rootEl = import7.document.createElement('host');
     createAttr(rootEl, 'aria-title', 'title');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/host.dart class HostComponent - inline template', ViewEncapsulation.None, styles$HostComponent);
@@ -69,7 +69,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentHost0 = [
 class _ViewHostComponentHost0 extends DebugAppView<dynamic> {
   ViewHostComponent0 _compView_0;
   import2.HostComponent _HostComponent_0_5;
-  _ViewHostComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HostComponentHost0);
+  _ViewHostComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HostComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHostComponent0(this, 0);

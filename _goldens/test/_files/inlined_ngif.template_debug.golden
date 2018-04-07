@@ -31,7 +31,7 @@ class ViewInlinedNgIfComponent0 extends DebugAppView<import3.InlinedNgIfComponen
   import4.Text _text_0_1;
   bool _expr_0 = false;
   static RenderComponentType _renderType;
-  ViewInlinedNgIfComponent0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InlinedNgIfComponent0) {
+  ViewInlinedNgIfComponent0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InlinedNgIfComponent0) {
     rootEl = import4.document.createElement('inlined-ngif');
     _renderType ??= import9.appViewUtils.createRenderType('asset:_goldens/test/_files/inlined_ngif.dart class InlinedNgIfComponent - inline template', ViewEncapsulation.None, styles$InlinedNgIfComponent);
     setupComponentType(_renderType);
@@ -81,7 +81,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InlinedNgIfComponentHost0 = [
 class _ViewInlinedNgIfComponentHost0 extends DebugAppView<dynamic> {
   ViewInlinedNgIfComponent0 _compView_0;
   import3.InlinedNgIfComponent _InlinedNgIfComponent_0_5;
-  _ViewInlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InlinedNgIfComponentHost0);
+  _ViewInlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InlinedNgIfComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInlinedNgIfComponent0(this, 0);
@@ -119,7 +119,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends DebugAppView<impor
   import4.DivElement _el_0_0;
   import4.Text _text_0_1;
   static RenderComponentType _renderType;
-  ViewInlinedNgIfWithImmutableConditionComponent0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InlinedNgIfWithImmutableConditionComponent0) {
+  ViewInlinedNgIfWithImmutableConditionComponent0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InlinedNgIfWithImmutableConditionComponent0) {
     rootEl = import4.document.createElement('inlined-ngif-with-immutable-condition');
     _renderType ??= import9.appViewUtils.createRenderType('asset:_goldens/test/_files/inlined_ngif.dart class InlinedNgIfWithImmutableConditionComponent - inline template', ViewEncapsulation.None, styles$InlinedNgIfWithImmutableConditionComponent);
     setupComponentType(_renderType);
@@ -167,7 +167,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InlinedNgIfWithImmutableConditionCompon
 class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends DebugAppView<dynamic> {
   ViewInlinedNgIfWithImmutableConditionComponent0 _compView_0;
   import3.InlinedNgIfWithImmutableConditionComponent _InlinedNgIfWithImmutableConditionComponent_0_5;
-  _ViewInlinedNgIfWithImmutableConditionComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InlinedNgIfWithImmutableConditionComponentHost0);
+  _ViewInlinedNgIfWithImmutableConditionComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InlinedNgIfWithImmutableConditionComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);

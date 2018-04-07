@@ -21,7 +21,7 @@ const List<dynamic> styles$Dependent = const [];
 
 class ViewDependent0 extends AppView<import1.Dependent> {
   static RenderComponentType _renderType;
-  ViewDependent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDependent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependent');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$Dependent);
     setupComponentType(_renderType);
@@ -44,7 +44,7 @@ const List<dynamic> styles$DependentHost = const [];
 class _ViewDependentHost0 extends AppView<dynamic> {
   ViewDependent0 _compView_0;
   import1.Dependent _Dependent_0_5;
-  _ViewDependentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDependentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependent0(this, 0);
@@ -78,7 +78,7 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
   ViewDependent0 _compView_0;
   import1.Dependent _Dependent_0_5;
   static RenderComponentType _renderType;
-  ViewDependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependency-with-dependent-in-view');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$DependencyWithDependentInView);
     setupComponentType(_renderType);
@@ -116,7 +116,7 @@ const List<dynamic> styles$DependencyWithDependentInViewHost = const [];
 class _ViewDependencyWithDependentInViewHost0 extends AppView<dynamic> {
   ViewDependencyWithDependentInView0 _compView_0;
   import1.DependencyWithDependentInView _DependencyWithDependentInView_0_5;
-  _ViewDependencyWithDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDependencyWithDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithDependentInView0(this, 0);
@@ -155,7 +155,7 @@ const List<dynamic> styles$DependencyWithContent = const [];
 
 class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> {
   static RenderComponentType _renderType;
-  ViewDependencyWithContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDependencyWithContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependency-with-content');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$DependencyWithContent);
     setupComponentType(_renderType);
@@ -179,7 +179,7 @@ const List<dynamic> styles$DependencyWithContentHost = const [];
 class _ViewDependencyWithContentHost0 extends AppView<dynamic> {
   ViewDependencyWithContent0 _compView_0;
   import1.DependencyWithContent _DependencyWithContent_0_5;
-  _ViewDependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithContent0(this, 0);
@@ -222,7 +222,7 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
   ViewDependent0 _compView_1;
   import1.Dependent _Dependent_1_5;
   static RenderComponentType _renderType;
-  ViewDependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependency-and-dependent-in-view');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$DependencyAndDependentInView);
     setupComponentType(_renderType);
@@ -262,7 +262,7 @@ const List<dynamic> styles$DependencyAndDependentInViewHost = const [];
 class _ViewDependencyAndDependentInViewHost0 extends AppView<dynamic> {
   ViewDependencyAndDependentInView0 _compView_0;
   import1.DependencyAndDependentInView _DependencyAndDependentInView_0_5;
-  _ViewDependencyAndDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDependencyAndDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyAndDependentInView0(this, 0);
