@@ -177,7 +177,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
 
     int previousIndex = views.indexOf(view);
 
-    if (view.viewData.type == ViewType.COMPONENT) {
+    if (view.viewData.type == ViewType.component) {
       throw new Exception("Component views can't be moved!");
     }
 
@@ -205,7 +205,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   void attachView(AppView view, int viewIndex) {
-    if (identical(view.viewData.type, ViewType.COMPONENT)) {
+    if (identical(view.viewData.type, ViewType.component)) {
       throw new StateError("Component views can't be moved!");
     }
     var _nestedViews = nestedViews ?? <AppView>[];
@@ -226,7 +226,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
 
   AppView detachView(int viewIndex) {
     var view = nestedViews.removeAt(viewIndex);
-    if (view.viewData.type == ViewType.COMPONENT) {
+    if (view.viewData.type == ViewType.component) {
       throw new StateError("Component views can't be moved!");
     }
     view.detachViewNodes(view.flatRootNodes);

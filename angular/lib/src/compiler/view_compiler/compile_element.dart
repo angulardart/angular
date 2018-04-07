@@ -98,7 +98,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       this.isDeferredComponent: false})
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
     _providers = new ProvidersNode(this, parent?._providers,
-        view == null || view.viewType == ViewType.HOST);
+        view == null || view.viewType == ViewType.host);
     if (references.isNotEmpty) {
       referenceTokens = <String, CompileTokenMetadata>{};
       int referenceCount = references.length;

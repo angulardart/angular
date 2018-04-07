@@ -248,7 +248,7 @@ abstract class AppView<T> {
   /// Specialized init when component has a single root node.
   void init0(dynamic e) {
     viewData.rootNodesOrViewContainers = <dynamic>[e];
-    if (viewData.type == ViewType.COMPONENT) {
+    if (viewData.type == ViewType.component) {
       dirtyParentQueriesInternal();
     }
     // Workaround since package expect/@NoInline not available outside sdk.
@@ -271,7 +271,7 @@ abstract class AppView<T> {
   void init(List rootNodesOrViewContainers, List subscriptions) {
     viewData.rootNodesOrViewContainers = rootNodesOrViewContainers;
     viewData.subscriptions = subscriptions;
-    if (viewData.type == ViewType.COMPONENT) {
+    if (viewData.type == ViewType.component) {
       dirtyParentQueriesInternal();
     }
     // Workaround since package expect/@NoInline not available outside sdk.
@@ -471,7 +471,7 @@ abstract class AppView<T> {
       if (cdMode == ChangeDetectionStrategy.Checked) {
         view.cdMode = ChangeDetectionStrategy.CheckOnce;
       }
-      view = view.viewData.type == ViewType.COMPONENT
+      view = view.viewData.type == ViewType.component
           ? view.parentView
           : view.viewData._viewContainerElement?.parentView;
     }
