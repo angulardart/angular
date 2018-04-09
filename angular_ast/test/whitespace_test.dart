@@ -151,6 +151,13 @@ void main() {
       'Hello <template></template>!',
     );
   });
+
+  test('should leave a space between potentially inline elements', () {
+    expect(
+      _parseAndMinifiy(r'<span>Hello</span> <span>World</span>!'),
+      '<span>Hello</span> <span>World</span>!',
+    );
+  }, solo: true);
 }
 
 String _parseAndMinifiy(String template) {
