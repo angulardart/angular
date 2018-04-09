@@ -17,6 +17,7 @@
 *   Removed support for parsing arbitrary objects or literal values as a
     provider token from `TokenReader`. In a future version of the compiler
     these arguments will be completely removed.
+*   Removed `$QueryList`.
 
 ### Bug Fixes
 

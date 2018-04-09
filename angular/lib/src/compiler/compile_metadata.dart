@@ -352,9 +352,6 @@ class CompileQueryMetadata {
   /// Whether this is typed `dart:html`'s `Element` (or a sub-type).
   final bool isElementType;
 
-  /// Whether this is typed specifically `QueryList`.
-  final bool isQueryListType;
-
   /// Optional type to read for given match.
   ///
   /// When we match an element in the template, it typically returns the
@@ -368,7 +365,6 @@ class CompileQueryMetadata {
     this.first: false,
     this.propertyName,
     this.isElementType: false,
-    this.isQueryListType: false,
     this.read,
   });
 }

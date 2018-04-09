@@ -14,39 +14,6 @@ void main() {
   ng_generated.initReflector();
   tearDown(disposeAnyRunningTest);
 
-  group('QueryList', () {
-    testViewChildren(
-      directViewChildren: new TestCase(
-        new NgTestBed<TestDirectViewChildren>(),
-        [1, 2, 3],
-      ),
-      directViewChild: new TestCase(
-        new NgTestBed<TestDirectViewChild>(),
-        [1],
-      ),
-      viewChildrenAndEmbedded: new TestCase(
-        new NgTestBed<TestViewChildrenAndEmbedded>(),
-        [1, 3],
-      ),
-      viewChildEmbedded: new TestCase(
-        new NgTestBed<TestDirectViewChildEmbedded>(),
-        [1],
-      ),
-      viewChildNestedOffOn: new TestCase(
-        new NgTestBed<TestViewChildNestedOnOff>(),
-        [],
-      ),
-      viewChildNestedNgIfOffOn: new TestCase(
-        new NgTestBed<TestViewChildNestedNgIfOffOn>(),
-        [],
-      ),
-      viewChildNestedNgIfOffOnAsync: new TestCase(
-        new NgTestBed<TestViewChildNestedNgIfOffOnAsync>(),
-        [],
-      ),
-    );
-  });
-
   group('List', () {
     testViewChildren(
       directViewChildren: new TestCase(
