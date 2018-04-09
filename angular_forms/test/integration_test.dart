@@ -781,19 +781,25 @@ class WrappedAccessor implements ControlValueAccessor {
   var value;
   Function onChange;
 
+  @override
   void writeValue(value) {
     this.value = '!$value!';
   }
 
+  @override
   void registerOnChange(fn) {
     this.onChange = fn;
   }
 
+  @override
   void registerOnTouched(fn) {}
 
   void handleOnInput(value) {
     this.onChange(value.substring(1, value.length - 1));
   }
+
+  @override
+  void onDisabledChanged(bool isDisabled) {}
 }
 
 @Component(selector: 'my-input', template: '', providers: [
@@ -807,19 +813,25 @@ class MyInput implements ControlValueAccessor {
   StreamController onInput = new StreamController.broadcast();
   String value;
 
+  @override
   void writeValue(value) {
     this.value = '!$value!';
   }
 
+  @override
   void registerOnChange(fn) {
     this.onInput.stream.listen(fn);
   }
 
+  @override
   void registerOnTouched(fn) {}
 
   void dispatchChangeEvent() {
     this.onInput.add(this.value.substring(1, this.value.length - 1));
   }
+
+  @override
+  void onDisabledChanged(bool isDisabled) {}
 }
 
 Map loginIsEmptyGroupValidator(ControlGroup c) {

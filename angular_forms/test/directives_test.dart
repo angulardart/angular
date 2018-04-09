@@ -8,11 +8,18 @@ import 'package:angular_forms/src/directives/shared.dart';
 
 class DummyControlValueAccessor implements ControlValueAccessor {
   var writtenValue;
-  void registerOnChange(fn) {}
-  void registerOnTouched(fn) {}
+
+  @override
   void writeValue(dynamic obj) {
     this.writtenValue = obj;
   }
+
+  @override
+  void registerOnChange(fn) {}
+  @override
+  void registerOnTouched(fn) {}
+  @override
+  void onDisabledChanged(bool isDisabled) {}
 }
 
 class CustomValidatorDirective implements Validator {

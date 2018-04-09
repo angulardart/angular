@@ -97,9 +97,16 @@ class NgFormTest {
 ])
 class DummyControlValueAccessor implements ControlValueAccessor {
   var writtenValue;
-  void registerOnChange(fn) {}
-  void registerOnTouched(fn) {}
+
+  @override
   void writeValue(dynamic obj) {
     this.writtenValue = obj;
   }
+
+  @override
+  void registerOnChange(fn) {}
+  @override
+  void registerOnTouched(fn) {}
+  @override
+  void onDisabledChanged(bool isDisabled) {}
 }

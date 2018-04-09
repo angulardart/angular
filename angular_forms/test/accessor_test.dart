@@ -121,4 +121,7 @@ class IntValueAccessor implements ControlValueAccessor, Validator {
     }
     return null;
   }
+
+  @override
+  void onDisabledChanged(bool isDisabled) {}
 }
