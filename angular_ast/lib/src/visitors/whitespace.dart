@@ -129,8 +129,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
           // 2. Depending on siblings, *also* trimLeft or trimRight.
           currentNode = _collapseWhitespace(
             currentNode,
-            trimLeft: prevNode is! InterpolationAst && prevNode is! ElementAst,
-            trimRight: nextNode is! InterpolationAst && nextNode is! ElementAst,
+            trimLeft: prevNode is! StandaloneTemplateAst,
+            trimRight: nextNode is! StandaloneTemplateAst,
           );
         }
 

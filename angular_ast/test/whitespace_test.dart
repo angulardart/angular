@@ -133,6 +133,24 @@ void main() {
           '</section>',
     );
   });
+
+  test('should treat <ng-content> as a potential source of inline text', () {
+    expect(
+      _parseAndMinifiy(r'''
+        Hello <ng-content></ng-content>!
+      '''),
+      'Hello <ng-content select="*"></ng-content>!',
+    );
+  });
+
+  test('should treat <template> as a potential source of inline text', () {
+    expect(
+      _parseAndMinifiy(r'''
+        Hello <template></template>!
+      '''),
+      'Hello <template></template>!',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {
