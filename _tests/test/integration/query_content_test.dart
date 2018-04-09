@@ -11,19 +11,6 @@ void main() {
   ng_generated.initReflector();
   tearDown(disposeAnyRunningTest);
 
-  group('QueryList', () {
-    testContentChildren(
-      contentChildren: new TestCase(
-        new NgTestBed<TestContentChildren>(),
-        [1, 2, 3],
-      ),
-      contentChild: new TestCase(
-        new NgTestBed<TestContentChild>(),
-        [1],
-      ),
-    );
-  });
-
   group('List', () {
     testContentChildren(
       contentChildren: new TestCase(

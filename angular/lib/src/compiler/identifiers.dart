@@ -55,9 +55,6 @@ class Identifiers {
       moduleUrl: "asset:angular/lib/src/core/render/api.dart");
   static final ComponentRef = new CompileIdentifierMetadata<dynamic>(
       name: "ComponentRef", moduleUrl: ANGULAR_ROOT_URL);
-  static final QueryList = new CompileIdentifierMetadata<dynamic>(
-      name: "QueryList",
-      moduleUrl: "asset:angular/lib/src/core/linker/query_list.dart");
   static final TemplateRef = new CompileIdentifierMetadata<dynamic>(
       name: "TemplateRef",
       moduleUrl: "asset:angular/lib/src/core/linker/template_ref.dart");

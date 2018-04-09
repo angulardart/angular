@@ -238,7 +238,7 @@ abstract class TextDirectivesRenderer {
 )
 class ContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren(TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -282,7 +282,7 @@ class TestsContentChildComponent {}
 )
 class ViewChildrenComponent extends TextDirectivesRenderer {
   @ViewChildren(TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -369,7 +369,7 @@ class TestsEmbeddedViewChildrenComponent extends TextDirectivesRenderer {
   bool showView = false;
 
   @ViewChildren(TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -414,7 +414,7 @@ class MovesDirectiveComponent {
 )
 class TranscludedContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren(TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -453,7 +453,7 @@ class UnrelatedChangesComponent extends TextDirectivesRenderer {
   bool showInertDirective = true;
 
   @ViewChildren(TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -471,7 +471,7 @@ class LongNgForCycleComponent extends TextDirectivesRenderer {
   List<String> list = <String>[];
 
   @ViewChildren(TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -512,10 +512,10 @@ class TemplateRefComponent implements AfterViewInit {
   final ViewContainerRef viewContainerRef;
 
   @ContentChildren(TemplateRef)
-  QueryList<dynamic> contentTemplateRefs;
+  List<dynamic> contentTemplateRefs;
 
   @ViewChildren(TemplateRef)
-  QueryList<dynamic> viewTemplateRefs;
+  List<dynamic> viewTemplateRefs;
 
   TemplateRefComponent(this.viewContainerRef);
 
@@ -595,7 +595,7 @@ class TestsNamedTemplateRefComponent {}
 )
 class ReadsContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren('hasText', read: TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -649,7 +649,7 @@ class TestsReadsContentChildComponent {}
 )
 class ReadsViewChildrenComponent extends TextDirectivesRenderer {
   @ViewChildren('hasText', read: TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -716,7 +716,7 @@ class ChangesViewChildrenComponent extends TextDirectivesRenderer {
   String z = '3';
 
   @ViewChildren(TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -734,7 +734,7 @@ class DestroysViewChildrenComponent {
   bool showView = true;
 
   @ViewChildren(TextDirective)
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -755,7 +755,7 @@ class LabeledViewChildrenComponent extends TextDirectivesRenderer {
   List<String> list = <String>['1', '2', '4', '8'];
 
   @ViewChildren('textLabel')
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -771,7 +771,7 @@ class LabeledViewChildrenComponent extends TextDirectivesRenderer {
 )
 class MultipleLabeledViewChildrenComponent extends TextDirectivesRenderer {
   @ViewChildren('textLabel1,textLabel2')
-  QueryList<dynamic> textDirectives;
+  List<dynamic> textDirectives;
 }
 
 @Component(
@@ -788,5 +788,5 @@ class LabeledElementViewChildrenComponent {
   List<String> list = <String>['3', '1', '4'];
 
   @ViewChildren('divLabel')
-  QueryList<dynamic> elementRefs;
+  List<dynamic> elementRefs;
 }

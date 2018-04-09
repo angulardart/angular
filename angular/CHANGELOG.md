@@ -201,6 +201,8 @@
 
 *   Removed deprecated `ComponentResolver` class.
 
+*   Removed the deprecated `QueryList` class, `List` is used instead, only.
+
 *   Removed deprecated `componentFactories` and `componentTypes` getters from
     the `ApplicationRef` class. These were used internally by the legacy router
     and were not intended to be parts of the public API.

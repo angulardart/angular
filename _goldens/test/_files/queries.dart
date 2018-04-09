@@ -19,13 +19,13 @@ class QueriesComponent {
   bool someValue = false;
 
   @ContentChildren(AnotherDirective)
-  QueryList<AnotherDirective> contentChildrenFromField;
+  List<AnotherDirective> contentChildrenFromField;
 
   @ContentChild(AnotherDirective)
   AnotherDirective contentChildFromField;
 
   @ViewChildren('q2')
-  QueryList<AnotherDirective> viewChildrenFromField;
+  List<AnotherDirective> viewChildrenFromField;
 
   @ViewChild('q2')
   AnotherDirective viewChildFromField;
@@ -40,7 +40,7 @@ class QueriesComponent {
   HtmlElement readDIFromHtmlElement;
 
   @ViewChildren(AnotherDirective)
-  QueryList<AnotherDirective> usingTypeFromField;
+  List<AnotherDirective> usingTypeFromField;
 }
 
 @Component(
@@ -60,7 +60,7 @@ class QueriesComponent {
 )
 class EmbeddedQueries {
   @ViewChildren(AnotherDirective)
-  QueryList viewChildren;
+  List viewChildren;
 }
 
 @Component(
