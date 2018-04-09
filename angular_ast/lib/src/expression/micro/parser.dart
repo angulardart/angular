@@ -56,15 +56,20 @@ class _RecursiveMicroAstParser {
   );
 
   NgMicroAst parse() {
+    // Only the first token can be bound to the left-hand side property.
+    var first = true;
     while (_tokens.moveNext()) {
       var token = _tokens.current;
       if (token.type == NgMicroTokenType.letKeyword) {
         _parseLet();
       } else if (token.type == NgMicroTokenType.bindIdentifier) {
         _parseBind();
+      } else if (token.type == NgMicroTokenType.bindExpression && first) {
+        _parseImplicitBind();
       } else if (token.type != NgMicroTokenType.endExpression) {
         throw _unexpected(token);
       }
+      first = false;
     }
     return new NgMicroAst(letBindings: letBindings, properties: properties);
   }
@@ -82,6 +87,17 @@ class _RecursiveMicroAstParser {
       _origin,
       '$_directive${name[0].toUpperCase()}${name.substring(1)}',
       value,
+    ));
+  }
+
+  // An implicit binding has no accompanying identifier. Instead, it is bound
+  // to the property on the left-hand side to which the micro-syntax expression
+  // was assigned.
+  void _parseImplicitBind() {
+    properties.add(new PropertyAst.from(
+      _origin,
+      _directive,
+      _tokens.current.lexeme,
     ));
   }
 

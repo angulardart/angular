@@ -92,4 +92,23 @@ void main() {
       ),
     );
   });
+
+  test('should parse multiple binds', () {
+    expect(
+      parse('ngTemplateOutlet', 'templateRef; context: templateContext', 0),
+      new NgMicroAst(
+        letBindings: [],
+        properties: [
+          new PropertyAst(
+            'ngTemplateOutlet',
+            'templateRef',
+          ),
+          new PropertyAst(
+            'ngTemplateOutletContext',
+            'templateContext',
+          ),
+        ],
+      ),
+    );
+  });
 }

@@ -425,7 +425,9 @@ void main() {
     expect(element.stars.length, 1);
 
     checkException(NgParserWarningCode.INVALID_MICRO_EXPRESSION, 13, 4);
-  });
+  },
+      skip: "Regular expressions can't determine this isn't a value being "
+          "bound to the 'ngFor' property.");
 
   test('Should resolve event name with too many fixes', () {
     var asts = parse('<div (event.postfix.illegal)="blah"></div>');

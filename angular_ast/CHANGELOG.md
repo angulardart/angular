@@ -1,13 +1,33 @@
 *   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
 
+*   The `*` micro-syntax now supports binding to the primary input when followed
+    by additional input or `let` bindings. Previously the micro-syntax supported
+    binding to the primary input only in isolation.
+
+    Example usage enabled by this change.
+
+    **Before:**
+
+    ```html
+    <template [foo]="expr1" [fooContext]="expr2">
+      <div></div>
+    </template>
+    ```
+
+    **After:**
+
+    ```html
+    <div *foo="expr1; context: expr2"></div>
+    ```
+
 ## 0.5.0
 
-*  **BREAKING CHANGE**: We no longer support parsing Dart expressions as part
-   of parsing the template AST. We hope to re-add some support for this by
-   migrating the existing parser in `package:angular`, but we are likely not to
-   have a stable API for some time.
+*   **BREAKING CHANGE**: We no longer support parsing Dart expressions as part
+    of parsing the template AST. We hope to re-add some support for this by
+    migrating the existing parser in `package:angular`, but we are likely not to
+    have a stable API for some time.
 
-*  **BREAKING CHANGE**: Deleted `ExpressionParserVisitor` (related to above).
+*   **BREAKING CHANGE**: Deleted `ExpressionParserVisitor` (related to above).
 
 ## 0.4.4
 
