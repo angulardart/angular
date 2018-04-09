@@ -72,7 +72,10 @@ class OutputWriter {
 # #################################################################### #
 
 # Fast fail the script on failures.
-set -e\n
+set -e
+
+# Remove previous output directories.
+rm -rf **/build/\n
 ''';
 
   String toPresubmitScript() {

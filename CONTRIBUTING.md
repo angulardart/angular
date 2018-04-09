@@ -154,3 +154,13 @@ To regenerate the `.travis.yml` script, see [dev/README.md#travis](dev/README.md
 **NOTE**: We recommend running with `dartfmt` before sending pull-requests, but
 do not validate on Travis as our source of truth is internal at Google, with a
 possible version skew on `dartfmt` output.
+
+### Custom SDK
+
+To use a custom version of the SDK while testing (for example, when testing edge
+releases of the SDK), pass an `SDK=` environment variable that points to the
+`bin` directory of your SDK. For example:
+
+```bash
+SDK=/tmp/some/edge/sdk/bin PKG=_tests tool/travis.sh build
+```
