@@ -141,6 +141,12 @@
     within it's parent's zone. ngZone's run() will now run inside the parent
     zone's run() function as opposed to the other way around.
 
+### Internal cleanup
+
+*   Add explicit error for when angular codegen is not invoked, the previous
+    error was "Could not find a factory for X" but this is not the real issue
+    since none of the factories had been loaded due to lack of angular codegen.
+
 ## 5.0.0-alpha+9
 
 ### New features
