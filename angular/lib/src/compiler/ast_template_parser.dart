@@ -19,14 +19,14 @@ import 'template_optimize.dart';
 import 'template_parser.dart';
 import 'template_parser/recursive_template_visitor.dart';
 
-const NG_CONTENT_SELECT_ATTR = 'select';
-const NG_CONTENT_ELEMENT = 'ng-content';
-const LINK_ELEMENT = 'link';
-const LINK_STYLE_REL_ATTR = 'rel';
-const LINK_STYLE_HREF_ATTR = 'href';
-const LINK_STYLE_REL_VALUE = 'stylesheet';
-const STYLE_ELEMENT = 'style';
-const SCRIPT_ELEMENT = 'script';
+const ngContentSelectAttr = 'select';
+const ngContentElement = 'ng-content';
+const linkElement = 'link';
+const linkStyleRelAttr = 'rel';
+const linkStyleHrefAttr = 'href';
+const linkStyleRelValue = 'stylesheet';
+const styleElement = 'style';
+const scriptElement = 'script';
 const _templateElement = 'template';
 final CssSelector _textCssSelector = CssSelector.parse('*')[0];
 
@@ -391,8 +391,8 @@ class _BindDirectivesVisitor
   CssSelector _embeddedContentSelector(ast.EmbeddedContentAst astNode) =>
       astNode.ngProjectAs != null
           ? CssSelector.parse(astNode.ngProjectAs)[0]
-          : createElementCssSelector(NG_CONTENT_ELEMENT, [
-              [NG_CONTENT_SELECT_ATTR, astNode.selector]
+          : createElementCssSelector(ngContentElement, [
+              [ngContentSelectAttr, astNode.selector]
             ]);
 
   @override
@@ -848,20 +848,20 @@ class _ElementFilter extends ast.RecursiveTemplateAstVisitor<Null> {
       _filterStyleSheets(astNode);
 
   static bool _filterStyles(ast.ElementAst astNode) =>
-      astNode.name.toLowerCase() == STYLE_ELEMENT;
+      astNode.name.toLowerCase() == styleElement;
 
   static bool _filterScripts(ast.ElementAst astNode) =>
-      astNode.name.toLowerCase() == SCRIPT_ELEMENT;
+      astNode.name.toLowerCase() == scriptElement;
 
   static bool _filterStyleSheets(ast.ElementAst astNode) {
-    if (astNode.name != LINK_ELEMENT) return false;
+    if (astNode.name != linkElement) return false;
     var href = _findHref(astNode.attributes);
     return isStyleUrlResolvable(href?.value);
   }
 
   static ast.AttributeAst _findHref(List<ast.AttributeAst> attributes) {
     for (var attr in attributes) {
-      if (attr.name.toLowerCase() == LINK_STYLE_HREF_ATTR) return attr;
+      if (attr.name.toLowerCase() == linkStyleHrefAttr) return attr;
     }
     return null;
   }

@@ -110,7 +110,7 @@ class DebugAppView<T> extends AppView<T> {
   void init0Dbg(dynamic e, [List allNodesForDebug = const []]) {
     viewData.rootNodesOrViewContainers = <dynamic>[e];
     allNodes = allNodesForDebug;
-    if (viewData.type == ViewType.COMPONENT) {
+    if (viewData.type == ViewType.component) {
       dirtyParentQueriesInternal();
     }
     // Workaround since package expect/@NoInline not available outside sdk.

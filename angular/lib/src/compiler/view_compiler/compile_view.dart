@@ -341,13 +341,13 @@ class CompileView implements AppViewBuilder {
       storage = new CompileViewStorage();
     }
     viewType = getViewType(component, viewIndex);
-    className = '${viewIndex == 0 && viewType != ViewType.HOST ? '' : '_'}'
+    className = '${viewIndex == 0 && viewType != ViewType.host ? '' : '_'}'
         'View${component.type.name}$viewIndex';
     classType = o.importType(new CompileIdentifierMetadata(name: className));
     viewFactory = o.variable(getViewFactoryName(component, viewIndex));
     switch (viewType) {
-      case ViewType.HOST:
-      case ViewType.COMPONENT:
+      case ViewType.host:
+      case ViewType.component:
         componentView = this;
         break;
       default:
@@ -356,7 +356,7 @@ class CompileView implements AppViewBuilder {
         break;
     }
     viewQueries = new CompileTokenMap<List<CompileQuery>>();
-    if (viewType == ViewType.COMPONENT) {
+    if (viewType == ViewType.component) {
       var directiveInstance = new BuiltInSource(
           identifierToken(this.component.type),
           new o.ReadClassMemberExpr('ctx'));
@@ -634,7 +634,7 @@ class CompileView implements AppViewBuilder {
             name: 'View${childComponent.type.name}0',
             moduleUrl: templateModuleUrl(childComponent.type));
 
-    bool isHostRootView = nodeIndex == 0 && viewType == ViewType.HOST;
+    bool isHostRootView = nodeIndex == 0 && viewType == ViewType.host;
     var elementType = isHostRootView
         ? Identifiers.HTML_HTML_ELEMENT
         : identifierFromTagName(ast.name);
@@ -806,7 +806,7 @@ class CompileView implements AppViewBuilder {
   }
 
   bool _isRootNodeOfHost(int nodeIndex) =>
-      nodeIndex == 0 && viewType == ViewType.HOST;
+      nodeIndex == 0 && viewType == ViewType.host;
 
   @override
   void projectNodesIntoElement(
@@ -826,7 +826,7 @@ class CompileView implements AppViewBuilder {
       _createMethod.addStmt(new o.InvokeMemberMethodExpr(
           'project', [parentRenderNode, o.literal(ast.index)]).toStmt());
     } else if (isRootNode) {
-      if (!identical(viewType, ViewType.COMPONENT)) {
+      if (!identical(viewType, ViewType.component)) {
         // store root nodes only for embedded/host views
         rootNodesOrViewContainers.add(nodesExpression);
       }
@@ -1204,7 +1204,7 @@ class CompileView implements AppViewBuilder {
       // Cache [ctx] class field member as typed [_ctx] local for change
       // detection code to consume.
       var contextType =
-          viewType != ViewType.HOST ? o.importType(component.type) : null;
+          viewType != ViewType.host ? o.importType(component.type) : null;
       varStmts.add(o
           .variable(DetectChangesVars.cachedCtx.name)
           .set(new o.ReadClassMemberExpr('ctx'))
@@ -1282,7 +1282,7 @@ class CompileView implements AppViewBuilder {
   o.Expression _getParentRenderNode(CompileElement parentElement) {
     bool isRootNode = !identical(parentElement.view, this);
     if (isRootNode) {
-      if (viewType == ViewType.COMPONENT) {
+      if (viewType == ViewType.component) {
         return parentRenderNodeVar;
       } else {
         // root node of an embedded/host view
@@ -1302,11 +1302,11 @@ class CompileView implements AppViewBuilder {
 ViewType getViewType(
     CompileDirectiveMetadata component, int embeddedTemplateIndex) {
   if (embeddedTemplateIndex > 0) {
-    return ViewType.EMBEDDED;
+    return ViewType.embedded;
   } else if (component.type.isHost) {
-    return ViewType.HOST;
+    return ViewType.host;
   } else {
-    return ViewType.COMPONENT;
+    return ViewType.component;
   }
 }
 

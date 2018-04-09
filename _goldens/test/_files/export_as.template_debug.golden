@@ -25,7 +25,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [null, null];
 class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponent0) {
+  ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponent0) {
     rootEl = import3.document.createElement('test-foo');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/export_as.dart class TestFooComponent - inline template', ViewEncapsulation.None, styles$TestFooComponent);
     setupComponentType(_renderType);
@@ -56,7 +56,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
 class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
   import2.TestFooComponent _TestFooComponent_0_5;
-  _ViewTestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponentHost0);
+  _ViewTestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);

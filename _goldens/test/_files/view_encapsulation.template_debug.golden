@@ -25,7 +25,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponent0 = [null, null];
 class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewEmulatedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmulatedComponent0) {
+  ViewEmulatedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmulatedComponent0) {
     rootEl = import3.document.createElement('Emulated');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/view_encapsulation.dart class EmulatedComponent - inline template', ViewEncapsulation.None, styles$EmulatedComponent);
     setupComponentType(_renderType);
@@ -56,7 +56,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmulatedComponentHost0 = [
 class _ViewEmulatedComponentHost0 extends DebugAppView<dynamic> {
   ViewEmulatedComponent0 _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_5;
-  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmulatedComponentHost0);
+  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmulatedComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmulatedComponent0(this, 0);
@@ -90,7 +90,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponent0 = [null, null];
 class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewNoneComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NoneComponent0) {
+  ViewNoneComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NoneComponent0) {
     rootEl = import3.document.createElement('None');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/view_encapsulation.dart class NoneComponent - inline template', ViewEncapsulation.None, styles$NoneComponent);
     setupComponentType(_renderType);
@@ -121,7 +121,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_NoneComponentHost0 = [
 class _ViewNoneComponentHost0 extends DebugAppView<dynamic> {
   ViewNoneComponent0 _compView_0;
   import2.NoneComponent _NoneComponent_0_5;
-  _ViewNoneComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NoneComponentHost0);
+  _ViewNoneComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_NoneComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewNoneComponent0(this, 0);

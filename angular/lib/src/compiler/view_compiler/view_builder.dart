@@ -95,7 +95,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         : null;
     if (_isRootNode(parent)) {
       // store appElement as root node only for ViewContainers
-      if (view.viewType != ViewType.COMPONENT) {
+      if (view.viewType != ViewType.component) {
         view.rootNodesOrViewContainers
             .add(vcAppEl ?? node.renderNode.toReadExpr());
       }
@@ -129,7 +129,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   void visitElement(ElementAst ast, CompileElement parent) {
     int nodeIndex = view.nodes.length;
 
-    bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
+    bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.host;
     NodeReference elementRef;
     if (isHostRootView) {
       elementRef = new NodeReference.appViewRoot();
@@ -169,7 +169,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         component, parent, elementRef, nodeIndex, ast,
         isDeferred: isDeferred);
 
-    if (view.viewType != ViewType.HOST) {
+    if (view.viewType != ViewType.host) {
       view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
     }
 
@@ -242,7 +242,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
 
-    bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.HOST;
+    bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.host;
     // Set ng_content class for CSS shim.
     var elementType = isHostRootView
         ? Identifiers.HTML_HTML_ELEMENT
@@ -404,7 +404,7 @@ o.ClassStmt createViewClass(
           Identifiers.ComponentRef,
           // The 'HOST' view is a <dynamic> view that "hosts" the actual
           // component view, therefore it is not typed.
-          view.viewType != ViewType.HOST
+          view.viewType != ViewType.host
               ? [o.importType(view.component.type)]
               : const [],
         ),
@@ -436,7 +436,7 @@ o.ClassStmt createViewClass(
       viewMethods
           .where((method) => method.body != null && method.body.isNotEmpty)
           .toList());
-  if (view.viewType != ViewType.HOST) {
+  if (view.viewType != ViewType.host) {
     _addRenderTypeCtorInitialization(view, viewClass);
   }
   return viewClass;
@@ -464,7 +464,7 @@ o.ClassMethod _createViewClassConstructor(
   }
   o.ClassMethod ctor = new o.ClassMethod(null, viewConstructorArgs,
       [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()]);
-  if (view.viewType == ViewType.COMPONENT && view.viewIndex == 0) {
+  if (view.viewType == ViewType.component && view.viewIndex == 0) {
     // No namespace just call [document.createElement].
     String tagName = _tagNameFromComponentSelector(view.component.selector);
     if (tagName.isEmpty) {
@@ -589,7 +589,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
   ];
   var initRenderCompTypeStmts = [];
   o.OutputType factoryReturnType;
-  if (view.viewType == ViewType.HOST) {
+  if (view.viewType == ViewType.host) {
     factoryReturnType = o.importType(Identifiers.AppView);
   } else {
     factoryReturnType =
@@ -613,7 +613,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   // Hoist the `rootEl` class field as `_rootEl` locally for Dart2JS.
   o.ReadVarExpr cachedRootEl;
   final parentRenderNodeStmts = <o.Statement>[];
-  final isComponent = view.viewType == ViewType.COMPONENT;
+  final isComponent = view.viewType == ViewType.component;
   if (isComponent) {
     cachedRootEl = o.variable('_rootEl');
     parentRenderNodeStmts.add(cachedRootEl
@@ -641,7 +641,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
           view.component.hostListeners.isNotEmpty)) {
     // Cache [ctx] class field member as typed [_ctx] local for change detection
     // code to consume.
-    var contextType = view.viewType != ViewType.HOST
+    var contextType = view.viewType != ViewType.host
         ? o.importType(view.component.type)
         : null;
     statements.add(DetectChangesVars.cachedCtx
@@ -726,7 +726,7 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
   }
 
   o.Expression resultExpr;
-  if (identical(view.viewType, ViewType.HOST)) {
+  if (identical(view.viewType, ViewType.host)) {
     if (view.nodes.isEmpty) {
       throwFailure('Template parser has crashed for ${view.className}');
     }
@@ -832,7 +832,7 @@ o.OutputType getContextType(CompileView view) {
 
 int getChangeDetectionMode(CompileView view) {
   int mode;
-  if (identical(view.viewType, ViewType.COMPONENT)) {
+  if (identical(view.viewType, ViewType.component)) {
     mode = isDefaultChangeDetectionStrategy(view.component.changeDetection)
         ? ChangeDetectionStrategy.CheckAlways
         : ChangeDetectionStrategy.CheckOnce;

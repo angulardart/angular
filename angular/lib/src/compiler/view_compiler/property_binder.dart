@@ -419,8 +419,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   dynamicInputsMethod.resetDebugInfo(
       compileElement.nodeIndex, compileElement.sourceAst);
   var lifecycleHooks = directive.lifecycleHooks;
-  bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.OnChanges);
-  bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.AfterChanges);
+  bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.onChanges);
+  bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.afterChanges);
   var isOnPushComp = directive.isComponent &&
       !isDefaultChangeDetectionStrategy(directive.changeDetection);
   var isStatefulComp = directive.isComponent &&
@@ -445,7 +445,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   // At the beginning of change detecting inputs we reset this flag to false,
   // and then set it to true if any of it's inputs change.
   if (((!isStatefulComp && isOnPushComp) || calcChangedState) &&
-      view.viewType != ViewType.HOST) {
+      view.viewType != ViewType.host) {
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changed.set(o.literal(false)).toStmt());
   }

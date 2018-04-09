@@ -30,7 +30,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = [null];
 class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
   import3.Text _text_0;
   static RenderComponentType _renderType;
-  ViewHasOpaqueTokens0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasOpaqueTokens0) {
+  ViewHasOpaqueTokens0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasOpaqueTokens0) {
     rootEl = import3.document.createElement('has-opaque-tokens');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/opaque_token.dart class HasOpaqueTokens - inline template', ViewEncapsulation.None, styles$HasOpaqueTokens);
     setupComponentType(_renderType);
@@ -60,7 +60,7 @@ class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   ViewHasOpaqueTokens0 _compView_0;
   String _baseUrlDescription_0_5;
   import2.HasOpaqueTokens _HasOpaqueTokens_0_6;
-  _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasOpaqueTokensHost0);
+  _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasOpaqueTokensHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
@@ -106,7 +106,7 @@ class ViewContainsChildComponent0 extends DebugAppView<import2.ContainsChildComp
   ViewContainer _appEl_0;
   NgIf _NgIf_0_9;
   static RenderComponentType _renderType;
-  ViewContainsChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponent0) {
+  ViewContainsChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponent0) {
     rootEl = import3.document.createElement('contains-child-component');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/opaque_token.dart class ContainsChildComponent - inline template', ViewEncapsulation.None, styles$ContainsChildComponent);
     setupComponentType(_renderType);
@@ -152,7 +152,7 @@ class _ViewContainsChildComponent1 extends DebugAppView<import2.ContainsChildCom
   import3.DivElement _el_0;
   ViewContainer _appEl_1;
   NgIf _NgIf_1_9;
-  _ViewContainsChildComponent1(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponent1) {
+  _ViewContainsChildComponent1(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponent1) {
     componentType = ViewContainsChildComponent0._renderType;
   }
   @override
@@ -198,7 +198,7 @@ class _ViewContainsChildComponent2 extends DebugAppView<import2.ContainsChildCom
   import3.Element _el_1;
   ViewInjectsTypedTokenFromSomeParent0 _compView_1;
   import2.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_1_5;
-  _ViewContainsChildComponent2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.EMBEDDED, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponent2) {
+  _ViewContainsChildComponent2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponent2) {
     componentType = ViewContainsChildComponent0._renderType;
   }
   @override
@@ -239,7 +239,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ContainsChildComponentHost0 = [
 class _ViewContainsChildComponentHost0 extends DebugAppView<dynamic> {
   ViewContainsChildComponent0 _compView_0;
   import2.ContainsChildComponent _ContainsChildComponent_0_5;
-  _ViewContainsChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponentHost0);
+  _ViewContainsChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ContainsChildComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewContainsChildComponent0(this, 0);
@@ -272,7 +272,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InjectsTypedTokenFromSomeParent0 = [];
 
 class ViewInjectsTypedTokenFromSomeParent0 extends DebugAppView<import2.InjectsTypedTokenFromSomeParent> {
   static RenderComponentType _renderType;
-  ViewInjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InjectsTypedTokenFromSomeParent0) {
+  ViewInjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InjectsTypedTokenFromSomeParent0) {
     rootEl = import3.document.createElement('injects-typed-token-from-parent');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/opaque_token.dart class InjectsTypedTokenFromSomeParent - inline template', ViewEncapsulation.None, styles$InjectsTypedTokenFromSomeParent);
     setupComponentType(_renderType);
@@ -298,7 +298,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_InjectsTypedTokenFromSomeParentHost0 = 
 class _ViewInjectsTypedTokenFromSomeParentHost0 extends DebugAppView<dynamic> {
   ViewInjectsTypedTokenFromSomeParent0 _compView_0;
   import2.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_0_5;
-  _ViewInjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InjectsTypedTokenFromSomeParentHost0);
+  _ViewInjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InjectsTypedTokenFromSomeParentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInjectsTypedTokenFromSomeParent0(this, 0);

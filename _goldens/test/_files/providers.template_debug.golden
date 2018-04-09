@@ -27,7 +27,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_ProvidersComponent0 = [null];
 
 class ViewProvidersComponent0 extends DebugAppView<import2.ProvidersComponent> {
   static RenderComponentType _renderType;
-  ViewProvidersComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ProvidersComponent0) {
+  ViewProvidersComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ProvidersComponent0) {
     rootEl = import7.document.createElement('providers');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/providers.dart class ProvidersComponent - inline template', ViewEncapsulation.None, styles$ProvidersComponent);
     setupComponentType(_renderType);
@@ -66,7 +66,7 @@ class _ViewProvidersComponentHost0 extends DebugAppView<dynamic> {
   Map<String, dynamic> __useValueMap_0_15;
   dynamic __useEnums_0_16;
   String __XsrfToken_0_17;
-  _ViewProvidersComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ProvidersComponentHost0);
+  _ViewProvidersComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_ProvidersComponentHost0);
   import2.MyTypeAnnotation get _MyTypeAnnotation_0_6 {
     dbg(0, 0, 0);
     if ((this.__MyTypeAnnotation_0_6 == null)) {

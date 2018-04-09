@@ -43,9 +43,9 @@ class DirectiveCompiler {
   DirectiveCompiler(
       this.directive, this._parser, this._schemaRegistry, this.genDebugInfo)
       : hasOnChangesLifecycle =
-            directive.lifecycleHooks.contains(LifecycleHooks.OnChanges),
+            directive.lifecycleHooks.contains(LifecycleHooks.onChanges),
         hasAfterChangesLifecycle =
-            directive.lifecycleHooks.contains(LifecycleHooks.AfterChanges) {
+            directive.lifecycleHooks.contains(LifecycleHooks.afterChanges) {
     _implementsComponentState =
         directive.changeDetection == ChangeDetectionStrategy.Stateful;
   }

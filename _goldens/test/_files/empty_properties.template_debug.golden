@@ -41,7 +41,7 @@ class ViewEmptyPropertiesComponent0 extends DebugAppView<import1.EmptyProperties
   ViewFancyButtonComponent0 _compView_3;
   import1.FancyButtonComponent _FancyButtonComponent_3_5;
   static RenderComponentType _renderType;
-  ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmptyPropertiesComponent0) {
+  ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmptyPropertiesComponent0) {
     rootEl = import3.document.createElement('empty-properties');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/empty_properties.dart class EmptyPropertiesComponent - inline template', ViewEncapsulation.None, styles$EmptyPropertiesComponent);
     setupComponentType(_renderType);
@@ -121,7 +121,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_EmptyPropertiesComponentHost0 = [
 class _ViewEmptyPropertiesComponentHost0 extends DebugAppView<dynamic> {
   ViewEmptyPropertiesComponent0 _compView_0;
   import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_5;
-  _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmptyPropertiesComponentHost0);
+  _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_EmptyPropertiesComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewEmptyPropertiesComponent0(this, 0);
@@ -154,7 +154,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_FancyButtonComponent0 = [];
 
 class ViewFancyButtonComponent0 extends DebugAppView<import1.FancyButtonComponent> {
   static RenderComponentType _renderType;
-  ViewFancyButtonComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_FancyButtonComponent0) {
+  ViewFancyButtonComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_FancyButtonComponent0) {
     rootEl = import3.document.createElement('fancy-button');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/empty_properties.dart class FancyButtonComponent - inline template', ViewEncapsulation.None, styles$FancyButtonComponent);
     setupComponentType(_renderType);
@@ -180,7 +180,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_FancyButtonComponentHost0 = [
 class _ViewFancyButtonComponentHost0 extends DebugAppView<dynamic> {
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_5;
-  _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_FancyButtonComponentHost0);
+  _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_FancyButtonComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewFancyButtonComponent0(this, 0);
