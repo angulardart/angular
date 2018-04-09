@@ -1,5 +1,7 @@
 ### Breaking changes
 
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
+
 *   The process for starting your AngularDart application changed significantly:
 
     *   For most applications, we recommend now strongly recommend using the new

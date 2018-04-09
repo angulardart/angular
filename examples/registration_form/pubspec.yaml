@@ -1,7 +1,7 @@
 name: examples.registration_form
 
 environment:
-  sdk: ">=2.0.0-dev.32.0 <2.0.0"
+  sdk: ">=2.0.0-dev.46.0 <2.0.0"
 
 dependencies:
   angular: ^5.0.0-alpha

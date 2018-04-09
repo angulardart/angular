@@ -1,3 +1,5 @@
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
+
 *   **DEPRECATED**: `throwsInAngular` is now a no-op, and can be removed.
 
 ## 2.0.0-alpha+7
