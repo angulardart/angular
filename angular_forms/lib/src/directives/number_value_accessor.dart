@@ -3,7 +3,7 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart'
-    show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchFunction;
+    show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
 
 const NUMBER_VALUE_ACCESSOR = const ExistingProvider.forToken(
   NG_VALUE_ACCESSOR,
@@ -25,21 +25,19 @@ typedef dynamic _SimpleChangeFn(value);
   host: const {
     '(change)': 'onChange(\$event.target.value)',
     '(input)': 'onChange(\$event.target.value)',
-    '(blur)': 'touchHandler()'
   },
   providers: const [NUMBER_VALUE_ACCESSOR],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
-class NumberValueAccessor implements ControlValueAccessor {
+class NumberValueAccessor extends Object
+    with TouchHandler
+    implements ControlValueAccessor {
   final HtmlElement _element;
   _SimpleChangeFn onChange = (_) {};
-  void touchHandler() {
-    onTouched();
-  }
 
-  TouchFunction onTouched = () {};
   NumberValueAccessor(this._element);
+
   @override
   void writeValue(value) {
     InputElement elm = _element;
@@ -52,11 +50,6 @@ class NumberValueAccessor implements ControlValueAccessor {
       // TODO(het): also provide rawValue to fn?
       fn(value == '' ? null : double.parse(value));
     };
-  }
-
-  @override
-  void registerOnTouched(TouchFunction fn) {
-    onTouched = fn;
   }
 
   void onDisabledChanged(bool isDisabled) {}
