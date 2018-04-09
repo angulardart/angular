@@ -7,6 +7,9 @@
 # Fast fail the script on failures.
 set -e
 
+# Remove previous output directories.
+rm -rf **/build/
+
 echo "Analyzing _benchmarks..."
 PKG=_benchmarks tool/travis.sh analyze
 echo "Building _benchmarks in debug mode..."

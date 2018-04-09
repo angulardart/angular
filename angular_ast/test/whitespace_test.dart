@@ -64,7 +64,7 @@ void main() {
           <another></another>
         </template>
       '''),
-      '<another></another><template><another></another></template>',
+      '<another></another> <template><another></another></template>',
     );
   });
 
@@ -157,7 +157,14 @@ void main() {
       _parseAndMinifiy(r'<span>Hello</span> <span>World</span>!'),
       '<span>Hello</span> <span>World</span>!',
     );
-  }, solo: true);
+  });
+
+  test('should not leave a space between potentially block elements', () {
+    expect(
+      _parseAndMinifiy(r'<div>Hello</div> <div>World</div>!'),
+      '<div>Hello</div><div>World</div>!',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {
