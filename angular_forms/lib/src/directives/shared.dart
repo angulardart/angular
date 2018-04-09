@@ -58,12 +58,6 @@ ValidatorFn composeValidators(List<dynamic> validators) {
       : null;
 }
 
-bool isPropertyUpdated(Map<String, dynamic> changes, dynamic viewModel) {
-  if (!changes.containsKey('model')) return false;
-  var change = changes['model'];
-  return !identical(viewModel, change.currentValue);
-}
-
 ControlValueAccessor selectValueAccessor(
     List<ControlValueAccessor> valueAccessors) {
   if (valueAccessors == null) return null;
