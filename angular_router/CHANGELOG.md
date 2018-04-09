@@ -1,3 +1,7 @@
+### Breaking changes
+
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
+
 ### Bug fixes
 
 *   Router navigation requests are now queued to ensure they'll run sequentially

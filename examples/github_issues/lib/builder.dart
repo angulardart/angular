@@ -3,7 +3,11 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:build/build.dart';
-import 'package:sass_builder/sass_builder.dart';
+import 'package:sass_builder/sass_builder.dart' as sass;
 
 Builder scssBuilder(BuilderOptions options) =>
-    new SassBuilder(outputExtension: '.scss.css');
+    // Internally, we do not use this file, so it causes a lint.
+    // ... just ignore it, we won't change this file often.
+    //
+    // ignore: strong_mode_invalid_cast_new_expr, new_with_non_type
+    new sass.SassBuilder(outputExtension: '.scss.css');
