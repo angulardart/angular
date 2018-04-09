@@ -25,7 +25,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DeferredChildComponent0 = [null, null];
 class ViewDeferredChildComponent0 extends DebugAppView<import2.DeferredChildComponent> {
   import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DeferredChildComponent0) {
+  ViewDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DeferredChildComponent0) {
     rootEl = import3.document.createElement('deferred-component');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/deferred/deferred_component.dart class DeferredChildComponent - inline template', ViewEncapsulation.None, styles$DeferredChildComponent);
     setupComponentType(_renderType);
@@ -56,7 +56,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DeferredChildComponentHost0 = [
 class _ViewDeferredChildComponentHost0 extends DebugAppView<dynamic> {
   ViewDeferredChildComponent0 _compView_0;
   import2.DeferredChildComponent _DeferredChildComponent_0_5;
-  _ViewDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DeferredChildComponentHost0);
+  _ViewDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DeferredChildComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDeferredChildComponent0(this, 0);

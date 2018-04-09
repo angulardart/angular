@@ -27,7 +27,7 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
   var _expr_0;
   var _expr_1;
   static RenderComponentType _renderType;
-  ViewCompWithoutFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewCompWithoutFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-without-final');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithoutFinal);
     setupComponentType(_renderType);
@@ -72,7 +72,7 @@ const List<dynamic> styles$CompWithoutFinalHost = const [];
 class _ViewCompWithoutFinalHost0 extends AppView<dynamic> {
   ViewCompWithoutFinal0 _compView_0;
   import1.CompWithoutFinal _CompWithoutFinal_0_5;
-  _ViewCompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewCompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCompWithoutFinal0(this, 0);
@@ -107,7 +107,7 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
   import2.ButtonElement _el_2;
   import2.Text _text_3;
   static RenderComponentType _renderType;
-  ViewCompWithFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewCompWithFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-with-final');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithFinal);
     setupComponentType(_renderType);
@@ -137,7 +137,7 @@ const List<dynamic> styles$CompWithFinalHost = const [];
 class _ViewCompWithFinalHost0 extends AppView<dynamic> {
   ViewCompWithFinal0 _compView_0;
   import1.CompWithFinal _CompWithFinal_0_5;
-  _ViewCompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewCompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCompWithFinal0(this, 0);
@@ -172,7 +172,7 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
   import2.ButtonElement _el_2;
   import2.Text _text_3;
   static RenderComponentType _renderType;
-  ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-with-final-static');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithFinalStatic);
     setupComponentType(_renderType);
@@ -202,7 +202,7 @@ const List<dynamic> styles$CompWithFinalStaticHost = const [];
 class _ViewCompWithFinalStaticHost0 extends AppView<dynamic> {
   ViewCompWithFinalStatic0 _compView_0;
   import1.CompWithFinalStatic _CompWithFinalStatic_0_5;
-  _ViewCompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewCompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCompWithFinalStatic0(this, 0);
@@ -237,7 +237,7 @@ class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> 
   import2.ButtonElement _el_2;
   import2.Text _text_3;
   static RenderComponentType _renderType;
-  ViewCompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewCompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-with-external-final');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithExternalFinal);
     setupComponentType(_renderType);
@@ -267,7 +267,7 @@ const List<dynamic> styles$CompWithExternalFinalHost = const [];
 class _ViewCompWithExternalFinalHost0 extends AppView<dynamic> {
   ViewCompWithExternalFinal0 _compView_0;
   import1.CompWithExternalFinal _CompWithExternalFinal_0_5;
-  _ViewCompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewCompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewCompWithExternalFinal0(this, 0);

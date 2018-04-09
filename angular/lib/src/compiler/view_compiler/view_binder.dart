@@ -111,7 +111,7 @@ class ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
       var directiveInstance = s.build();
       if (directiveInstance == null) continue;
       bindDirectiveInputs(directiveAst, directiveInstance, compileElement,
-          isHostComponent: compileElement.view.viewType == ViewType.HOST);
+          isHostComponent: compileElement.view.viewType == ViewType.host);
       bindDirectiveDetectChangesLifecycleCallbacks(
           directiveAst, directiveInstance, compileElement);
       bindDirectiveHostProps(directiveAst, directiveInstance, compileElement);
@@ -200,7 +200,7 @@ class ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
 
 void bindViewHostProperties(CompileView view, Parser parser,
     ElementSchemaRegistry schemaRegistry, ErrorCallback errorCallback) {
-  if (view.viewIndex != 0 || view.viewType != ViewType.COMPONENT) return;
+  if (view.viewIndex != 0 || view.viewType != ViewType.component) return;
   var hostProps = view.component.hostProperties;
   if (hostProps == null) return;
 

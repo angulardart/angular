@@ -698,18 +698,18 @@ class ComponentVisitor
 
 List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
   const hooks = const <TypeChecker, LifecycleHooks>{
-    const TypeChecker.fromRuntime(OnInit): LifecycleHooks.OnInit,
-    const TypeChecker.fromRuntime(OnDestroy): LifecycleHooks.OnDestroy,
-    const TypeChecker.fromRuntime(DoCheck): LifecycleHooks.DoCheck,
-    const TypeChecker.fromRuntime(OnChanges): LifecycleHooks.OnChanges,
-    const TypeChecker.fromRuntime(AfterChanges): LifecycleHooks.AfterChanges,
+    const TypeChecker.fromRuntime(OnInit): LifecycleHooks.onInit,
+    const TypeChecker.fromRuntime(OnDestroy): LifecycleHooks.onDestroy,
+    const TypeChecker.fromRuntime(DoCheck): LifecycleHooks.doCheck,
+    const TypeChecker.fromRuntime(OnChanges): LifecycleHooks.onChanges,
+    const TypeChecker.fromRuntime(AfterChanges): LifecycleHooks.afterChanges,
     const TypeChecker.fromRuntime(AfterContentInit):
-        LifecycleHooks.AfterContentInit,
+        LifecycleHooks.afterContentInit,
     const TypeChecker.fromRuntime(AfterContentChecked):
-        LifecycleHooks.AfterContentChecked,
-    const TypeChecker.fromRuntime(AfterViewInit): LifecycleHooks.AfterViewInit,
+        LifecycleHooks.afterContentChecked,
+    const TypeChecker.fromRuntime(AfterViewInit): LifecycleHooks.afterViewInit,
     const TypeChecker.fromRuntime(AfterViewChecked):
-        LifecycleHooks.AfterViewChecked,
+        LifecycleHooks.afterViewChecked,
   };
   return hooks.keys
       .where((hook) => hook.isAssignableFrom(clazz))

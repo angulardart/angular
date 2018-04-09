@@ -24,7 +24,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponent0 = [];
 
 class ViewLifecycleHooksComponent0 extends DebugAppView<import2.LifecycleHooksComponent> {
   static RenderComponentType _renderType;
-  ViewLifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_LifecycleHooksComponent0) {
+  ViewLifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_LifecycleHooksComponent0) {
     rootEl = import7.document.createElement('lifecycle-hooks');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/lifecycle_hooks.dart class LifecycleHooksComponent - inline template', ViewEncapsulation.None, styles$LifecycleHooksComponent);
     setupComponentType(_renderType);
@@ -50,7 +50,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_LifecycleHooksComponentHost0 = [
 class _ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   ViewLifecycleHooksComponent0 _compView_0;
   import2.LifecycleHooksComponent _LifecycleHooksComponent_0_5;
-  _ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_LifecycleHooksComponentHost0);
+  _ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_LifecycleHooksComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewLifecycleHooksComponent0(this, 0);

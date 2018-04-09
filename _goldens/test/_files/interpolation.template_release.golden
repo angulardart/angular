@@ -24,7 +24,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   import2.Text _text_1;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$InterpolationComponent);
     setupComponentType(_renderType);
@@ -61,7 +61,7 @@ const List<dynamic> styles$InterpolationComponentHost = const [];
 class _ViewInterpolationComponentHost0 extends AppView<dynamic> {
   ViewInterpolationComponent0 _compView_0;
   import1.InterpolationComponent _InterpolationComponent_0_5;
-  _ViewInterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewInterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponent0(this, 0);
@@ -95,7 +95,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
   import2.Text _text_1;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
     _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$InterpolationComponentNoWhitespace);
     setupComponentType(_renderType);
@@ -132,7 +132,7 @@ const List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
   import1.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
-  _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);

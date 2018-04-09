@@ -35,7 +35,7 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
   import1.DirectiveWithOutput _DirectiveWithOutput_0_6;
   String _expr_0;
   static RenderComponentType _renderType;
-  ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponent0) {
+  ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponent0) {
     rootEl = import3.document.createElement('test-foo');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/directives/directive_wrapper.dart class TestFooComponent - inline template', ViewEncapsulation.Emulated, styles$TestFooComponent);
     setupComponentType(_renderType);
@@ -93,7 +93,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
 class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   ViewTestFooComponent0 _compView_0;
   import1.TestFooComponent _TestFooComponent_0_5;
-  _ViewTestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponentHost0);
+  _ViewTestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_TestFooComponentHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
@@ -133,7 +133,7 @@ class ViewDirectiveContainerTest0 extends DebugAppView<import1.DirectiveContaine
   import3.DivElement _el_1;
   FastDirectiveNgCd _FastDirective_1_5;
   static RenderComponentType _renderType;
-  ViewDirectiveContainerTest0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.COMPONENT, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DirectiveContainerTest0) {
+  ViewDirectiveContainerTest0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DirectiveContainerTest0) {
     rootEl = import3.document.createElement('directive-container');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/directives/directive_wrapper.dart class DirectiveContainerTest - inline template', ViewEncapsulation.None, styles$DirectiveContainerTest);
     setupComponentType(_renderType);
@@ -179,7 +179,7 @@ List<StaticNodeDebugInfo> nodeDebugInfos_DirectiveContainerTestHost0 = [
 class _ViewDirectiveContainerTestHost0 extends DebugAppView<dynamic> {
   ViewDirectiveContainerTest0 _compView_0;
   import1.DirectiveContainerTest _DirectiveContainerTest_0_5;
-  _ViewDirectiveContainerTestHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.HOST, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DirectiveContainerTestHost0);
+  _ViewDirectiveContainerTestHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DirectiveContainerTestHost0);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDirectiveContainerTest0(this, 0);
