@@ -28,8 +28,6 @@ void main() {
     });
   });
 
-  // TODO: Add tests/support for &ngsp; and friends.
-
   test('should remove inside interpolation on the LHS', () {
     expect(
       _parseAndMinifiy('\n    \n    {{value1}}'),
@@ -55,6 +53,84 @@ void main() {
     expect(
       _parseAndMinifiy('<span>\n prefix {{value1}} postfix \n</span>\n      '),
       '<span>prefix {{value1}} postfix</span>',
+    );
+  });
+
+  test('should remove all whitespace in <template> tags', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <another></another>
+        <template>
+          <another></another>
+        </template>
+      '''),
+      '<another></another><template><another></another></template>',
+    );
+  });
+
+  test('should remove only whitespace before/after interpolations', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <div>
+          {{foo}}
+        </div>
+      '''),
+      '<div>{{foo}}</div>',
+    );
+  });
+
+  test('should retain manual &ngsp; inserts', () {
+    expect(
+      _parseAndMinifiy(r'<div>&ngsp;</div>'),
+      '<div> </div>',
+    );
+  });
+
+  test('should retain manual &#32; inserts', () {
+    expect(
+      _parseAndMinifiy(r'<div>&#32;</div>'),
+      '<div> </div>',
+    );
+  }, skip: 'Not yet supported');
+
+  test('should retain single whitespaces around tags', () {
+    expect(
+      _parseAndMinifiy('Foo <strong>Bar</strong> Baz'),
+      'Foo <strong>Bar</strong> Baz',
+    );
+  });
+
+  // https://github.com/dart-lang/angular/issues/804#issuecomment-363217553
+  test('should retain whitespace for inline text formatting', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <div class="foo">
+          html space
+        </div>
+        <br><br>
+        <div class="foo">no space</div>
+      '''),
+      '<div class="foo">html space</div><br/><br/><div class="foo">no space</div>',
+    );
+  });
+
+  test('should retain whitespace [regression test for Material]', () {
+    expect(
+      _parseAndMinifiy(r'''
+      <section>
+        <h2>Align with Text</h2>
+        <div>
+          Aligned with
+          <material-input></material-input>
+          text
+        </div>
+      </section>
+      '''),
+      ''
+          '<section>'
+          '<h2>Align with Text</h2>'
+          '<div>Aligned with <material-input></material-input> text</div>'
+          '</section>',
     );
   });
 }
