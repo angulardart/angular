@@ -4,7 +4,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/facade/lang.dart' show isPrimitive;
 
 import 'control_value_accessor.dart'
-    show NG_VALUE_ACCESSOR, ControlValueAccessor;
+    show ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
 
 const SELECT_VALUE_ACCESSOR = const ExistingProvider.forToken(
   NG_VALUE_ACCESSOR,
@@ -35,13 +35,14 @@ String _extractId(String valueString) => valueString.split(':')[0];
   selector: 'select[ngControl],select[ngFormControl],select[ngModel]',
   host: const {
     '(change)': 'onChange(\$event.target.value)',
-    '(blur)': 'touchHandler()'
   },
   providers: const [SELECT_VALUE_ACCESSOR],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
-class SelectControlValueAccessor implements ControlValueAccessor {
+class SelectControlValueAccessor extends Object
+    with TouchHandler
+    implements ControlValueAccessor {
   final ElementRef _elementRef;
   dynamic value;
   final Map<String, dynamic> _optionMap = new Map<String, dynamic>();
@@ -49,11 +50,6 @@ class SelectControlValueAccessor implements ControlValueAccessor {
 
   void Function(String value) onChange = (_) {};
 
-  void touchHandler() {
-    onTouched();
-  }
-
-  void Function() onTouched = () {};
   SelectControlValueAccessor(this._elementRef);
 
   @override
@@ -69,11 +65,6 @@ class SelectControlValueAccessor implements ControlValueAccessor {
     onChange = (String valueString) {
       fn(_getOptionValue(valueString));
     };
-  }
-
-  @override
-  void registerOnTouched(dynamic fn()) {
-    onTouched = fn;
   }
 
   void onDisabledChanged(bool isDisabled) {}

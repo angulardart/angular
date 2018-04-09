@@ -36,3 +36,21 @@ typedef dynamic ChangeFunction<T>(T value, {String rawValue});
 
 /// Type of the function to be called when the control receives a touch event.
 typedef dynamic TouchFunction();
+
+/// A mixin to add touch support to a [ControlValueAccessor].
+///
+/// **NOTE**: This will add a [HostListener] on the `blur` event.
+class TouchHandler {
+  // TODO(alorenzen): Make this private.
+  TouchFunction onTouched = () {};
+
+  @HostListener('blur')
+  void touchHandler() {
+    onTouched();
+  }
+
+  /// Set the function to be called when the control receives a touch event.
+  void registerOnTouched(TouchFunction fn) {
+    onTouched = fn;
+  }
+}
