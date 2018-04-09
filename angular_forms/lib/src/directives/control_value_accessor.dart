@@ -15,6 +15,13 @@ abstract class ControlValueAccessor<T> {
 
   /// Set the function to be called when the control receives a touch event.
   void registerOnTouched(TouchFunction f);
+
+  /// This function is called when the control status changes to or
+  /// from "DISABLED".
+  ///
+  /// Depending on the value, it will enable or disable the
+  /// appropriate DOM element.
+  void onDisabledChanged(bool isDisabled);
 }
 
 /// Used to provide a [ControlValueAccessor] for form controls.
