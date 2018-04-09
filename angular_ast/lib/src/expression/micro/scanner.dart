@@ -14,7 +14,7 @@ class NgMicroScanner {
   static final _findImplicitBind = new RegExp(r'[^ ]+');
   static final _findLetAssignmentBefore = new RegExp(r'\s*=\s*');
   static final _findLetIdentifier = new RegExp(r'[^\s=;]+');
-  static final _findStartExpression = new RegExp(r'[^\s:]+');
+  static final _findStartExpression = new RegExp(r'[^\s:;]+');
   static final _findWhitespace = new RegExp(r'\s+');
 
   final StringScanner _scanner;
@@ -148,8 +148,13 @@ class NgMicroScanner {
         _state = _NgMicroScannerState.scanAfterLetKeyword;
         return new NgMicroToken.letKeyword(offset, lexeme);
       }
-      _state = _NgMicroScannerState.scanAfterBindIdentifier;
-      return new NgMicroToken.bindIdentifier(offset, lexeme);
+      if (_scanner.matches(_findBeforeAssignment)) {
+        _state = _NgMicroScannerState.scanAfterBindIdentifier;
+        return new NgMicroToken.bindIdentifier(offset, lexeme);
+      } else {
+        _state = _NgMicroScannerState.scanEndExpression;
+        return new NgMicroToken.bindExpression(offset, lexeme);
+      }
     }
     throw _unexpected();
   }

@@ -117,4 +117,14 @@ void main() {
     var expression = 'let item of items; trackBy: byId; let i = index';
     expect(untokenize(tokenize(expression)), expression);
   });
+
+  test('should tokenize multiple bindings', () {
+    expect(tokenize('templateRef; context: templateContext'), [
+      new NgMicroToken.bindExpression(0, 'templateRef'),
+      new NgMicroToken.endExpression(11, '; '),
+      new NgMicroToken.bindIdentifier(13, 'context'),
+      new NgMicroToken.bindExpressionBefore(20, ': '),
+      new NgMicroToken.bindExpression(22, 'templateContext'),
+    ]);
+  });
 }

@@ -105,6 +105,12 @@ void main() {
       });
       expect(testFixture.text, 'Goodbye world!');
     });
+
+    test('should support *-syntax', () async {
+      final testBed = new NgTestBed<TestStarSyntax>();
+      final testFixture = await testBed.create();
+      expect(testFixture.text, 'Hello world!');
+    });
   });
 }
 
@@ -208,7 +214,7 @@ class TestContextProxyChangeComponent {
 }
 
 @Component(
-  selector: 'text-context-template-ref-change',
+  selector: 'test-context-template-ref-change',
   template: '''
     <template #greet let-text>Hello {{text}}!</template>
     <template #farewell let-text>Goodbye {{text}}!</template>
@@ -221,4 +227,16 @@ class TestContextProxyChangeComponent {
 )
 class TestContextTemplateRefChangeComponent {
   bool isGreeting = true;
+}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <template #templateRef let-msg="message">{{msg}}</template>
+    <div *ngTemplateOutlet="templateRef; context: templateContext"></div>
+  ''',
+  directives: const [NgTemplateOutlet],
+)
+class TestStarSyntax {
+  Map<String, dynamic> templateContext = {'message': 'Hello world!'};
 }

@@ -8,7 +8,7 @@ import 'micro/parser.dart';
 
 export 'micro/ast.dart' show NgMicroAst;
 
-final _isBind = new RegExp(r'\S+:');
+final _isBind = new RegExp(r'\S+[:;]');
 
 /// Returns whether [expression] is a special Angular *-star expression.
 ///
