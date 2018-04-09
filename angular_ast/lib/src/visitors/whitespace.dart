@@ -119,8 +119,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
         // Node i, where i - 1 and i + 1 are not interpolations, we can
         // completely remove the (text) node. For example, this would take
         // `<span>\n</span>` and return `<span></span>`.
-        if (prevNode is! InterpolationAst &&
-            nextNode is! InterpolationAst &&
+        if (prevNode is! StandaloneTemplateAst &&
+            nextNode is! StandaloneTemplateAst &&
             currentNodeCasted.value.trim().isEmpty) {
           currentNode = null;
         } else {
