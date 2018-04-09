@@ -119,8 +119,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
         // Node i, where i - 1 and i + 1 are not interpolations, we can
         // completely remove the (text) node. For example, this would take
         // `<span>\n</span>` and return `<span></span>`.
-        if (prevNode is! StandaloneTemplateAst &&
-            nextNode is! StandaloneTemplateAst &&
+        if (_shouldCollapseAdjacentTo(prevNode) &&
+            _shouldCollapseAdjacentTo(nextNode) &&
             currentNodeCasted.value.trim().isEmpty) {
           currentNode = null;
         } else {
@@ -129,8 +129,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
           // 2. Depending on siblings, *also* trimLeft or trimRight.
           currentNode = _collapseWhitespace(
             currentNode,
-            trimLeft: prevNode is! StandaloneTemplateAst,
-            trimRight: nextNode is! StandaloneTemplateAst,
+            trimLeft: _shouldCollapseAdjacentTo(prevNode),
+            trimRight: _shouldCollapseAdjacentTo(nextNode),
           );
         }
 
@@ -144,4 +144,55 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     // Remove any nodes that were removed by processing.
     return childNodes.where((a) => a != null).toList();
   }
+
+  // https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements
+  static final _commonBlockElements = new Set<String>.from([
+    'address',
+    'article',
+    'aside',
+    'blockquote',
+    'canvas',
+    'dd',
+    'div',
+    'dl',
+    'dt',
+    'fieldset',
+    'figcaption',
+    'figure',
+    'footer',
+    'form',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'header',
+    'hgroup',
+    'hr',
+    'li',
+    'main',
+    'nav',
+    'noscript',
+    'ol',
+    'output',
+    'p',
+    'pre',
+    'section',
+    'table',
+    'tfoot',
+    'ul',
+    'video',
+  ]);
+
+  /// Returns whether [tagName] is normally an `display: inline` element.
+  ///
+  /// This helps to make the right (default) decision around whitespace.
+  static bool _isPotentiallyInline(ElementAst astNode) =>
+      !_commonBlockElements.contains(astNode.name.toLowerCase());
+
+  /// Whether [astNode] should be treated as insignficant to nearby whitespace.
+  static bool _shouldCollapseAdjacentTo(TemplateAst astNode) =>
+      astNode is! StandaloneTemplateAst ||
+      astNode is ElementAst && !_isPotentiallyInline(astNode);
 }
