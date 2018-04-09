@@ -27,6 +27,8 @@ practices** from the developers of the AngularDart framework.
 *   [Components](#components)
     *   [CONSIDER avoiding using injection to configure individual
         components](#consider-avoiding-using-injection-to-configure-individual-components)
+    *   [AVOID specifying providers to give every component a new instance]
+        (#avoid-specifying-providers-to-give-every-component-a-new-instance)
 *   [Annotations](#annotations)
     *   [PREFER omitting `@Injectable()` where
         possible](#prefer-omitting-injectable-where-possible)
@@ -377,7 +379,7 @@ requires a model object (`HeroData`) in order to render. You could use
 `@Input()` _or_ could use dependency injection.
 
 ```dart
-Class HeroData {
+class HeroData {
   final bool hasPowerOfFlight;
   final bool vulnerableToGreenGlowingRocks;
 
@@ -498,7 +500,9 @@ class NumberInputComponent {
   selector: '[currencyFormat]',
   providers: const [
     const FactoryProvider<NumberFormat>(
-        NumberFormat, CurrencyFormatDirective.currencyFormat)
+      NumberFormat,
+      CurrencyFormatDirective.currencyFormat,
+    ),
   ],
 )
 class CurrencyFormatDirective {
@@ -510,6 +514,54 @@ In client template:
 
 ```html
 <number-input currencyFormat [value]="cost"></number-input>
+```
+
+### AVOID specifying providers to give every component a new instance
+
+Unlike the previous practice, where `currentFormat` is specified for _some_
+components, it is considered a bad practice to supply the same `providers` to
+many components just to avoid using `new`. For example, imagine needing an
+instance of the `Cache` class for a component:
+
+**BAD**:
+
+```dart
+@Component(
+  selector: 'user-list',
+  providers: const [
+    const ClassProvider(Cache),
+  ],
+  template: '...'
+)
+class UserListComponent {
+  UserListComponent(Cache cache) {
+    // Use a new cache instance per component.
+  }
+}
+```
+
+**GOOD**: Provide a _factory_ class higher up in the application hierarchy:
+
+```dart
+@Component(
+  selector: 'root',
+  providers: const [
+    const ClassProvider(CacheFactory),
+  ],
+  template: '...',
+)
+class RootComponent {}
+
+@Component(
+  selector: 'user-list',
+  template: '...',
+)
+class UserListComponent {
+  UserListComponent(CacheFactory cacheFactory) {
+    var cache = cacheFactory.createCache();
+    // Use a new cache instance per component.
+  }
+}
 ```
 
 ## Annotations
