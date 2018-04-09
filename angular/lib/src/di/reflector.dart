@@ -67,6 +67,16 @@ void registerFactory(Object typeOrFunc, Function factory) {
 Function getFactory(Type type) {
   final factory = _factories[type];
   if (isDevMode && factory == null) {
+    if (_factories.isEmpty) {
+      throw new StateError(
+          'Could not find a factory for $type, there were no factories of any '
+          'type found. The likely causes is that you are using the newer '
+          'runApp() semantics, which does not support runtime lookups of '
+          'factories (and does not support ReflectiveInjector) *or* '
+          'AngularDart code generation was never invoked (either due to a '
+          'mis-configuration of Bazel or Build Runner or a missing invocation '
+          'of `initReflector()` in your `main.dart`).');
+    }
     throw new StateError('Could not find a factory for $type.');
   }
   return factory;
