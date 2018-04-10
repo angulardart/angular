@@ -19,10 +19,6 @@ NgZone createNgZone() => new NgZone(enableLongStackTrace: isDevMode);
 ///
 /// For more about Angular applications, see the documentation for [bootstrap].
 abstract class ApplicationRef implements ChangeDetectionHost {
-  /// Register a listener to be called each time `bootstrap()` is called to bootstrap
-  /// a new root component.
-  void registerBootstrapListener(void listener(ComponentRef<Null> ref));
-
   /// Register a listener to be called when the application is disposed.
   void registerDisposeListener(void dispose());
 
@@ -60,7 +56,6 @@ abstract class ApplicationRef implements ChangeDetectionHost {
 class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
   final NgZone _zone;
   final Injector _injector;
-  final List<Function> _bootstrapListeners = [];
   final List<Function> _disposeListeners = [];
   final List<ComponentRef> _rootComponents = [];
   final List<StreamSubscription> _streamSubscriptions = [];
@@ -83,10 +78,6 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
       });
     }));
   }
-  void registerBootstrapListener(void listener(ComponentRef<Null> ref)) {
-    _bootstrapListeners.add(listener);
-  }
-
   void registerDisposeListener(void dispose()) {
     _disposeListeners.add(dispose);
   }
@@ -134,9 +125,6 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
     registerChangeDetector(componentRef.changeDetectorRef);
     tick();
     _rootComponents.add(componentRef);
-    for (var listener in _bootstrapListeners) {
-      listener(componentRef);
-    }
   }
 
   void _unloadComponent(ComponentRef<dynamic> componentRef) {
