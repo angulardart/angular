@@ -124,9 +124,10 @@ Valid packages (`<pkg>`) include:
 * `angular_forms`
 * `angular_router`
 * `angular_test`
+* `examples/github_issues`
 * `examples/hacker_news_pwa`
 * `examples/hello_world`
-* `examples/hello_world_no_reflector`
+* `examples/registration_form`
 
 Valid tasks (`<task>`) include:
 
