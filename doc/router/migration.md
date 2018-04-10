@@ -2,13 +2,16 @@
 
 ## Major changes
 
-*   Routes are not defined in annotations. They are defined as a router-outlet Input().
+*   Routes are not defined in annotations. They are defined as a router-outlet
+    Input().
 *   The router navigates only with paths, not instructions or named routes.
     *   Instructions no longer exist.
     *   Routes no longer have names.
-*   A navigation results in a RouterState, which contains the page's URL parameters, query parameters, and fragment.
+*   A navigation results in a RouterState, which contains the page's URL
+    parameters, query parameters, and fragment.
     *   No more nested routers.
-    *   No injected RouteParams. Query parameters are extracted from the RouterState (router.current).
+    *   No injected RouteParams. Query parameters are extracted from the
+        RouterState arguments passed to lifecycle callbacks.
 
 
 ## Migration steps
@@ -173,6 +176,31 @@
       PlanningHomeComponent(this.router);
       void handleClick() {
         print(router.current.parameters[root_routes.planTypeParameter]);
+      }
+    }
+    ```
+
+    Note, in lifecycle methods, prefer the RouterState arguments to the
+    Router.current property. This is important to ensure you're accessing the
+    correct state do the asynchronous nature of routing.
+
+    **Old code:**
+
+    ```dart
+    class UserComponent {
+      final String _name;
+      UserComponent(RouteParams params) : _name = params.get('name');
+    }
+    ```
+
+    **New code:**
+
+    ```dart
+    class UserComponent implements OnActivate {
+      String _name;
+      @override
+      void onActivate(_, RouterState current) {
+        name = current.parameters['name'];
       }
     }
     ```
