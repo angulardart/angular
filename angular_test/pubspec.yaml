@@ -30,4 +30,6 @@ dependency_overrides:
     path: ../angular_ast
   angular_compiler:
     path: ../angular_compiler
+  test:
+    git: https://github.com/dart-lang/test
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===

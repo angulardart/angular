@@ -35,4 +35,6 @@ dependency_overrides:
     path: ../angular
   angular_ast:
     path: ../angular_ast
+  test:
+    git: https://github.com/dart-lang/test
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
