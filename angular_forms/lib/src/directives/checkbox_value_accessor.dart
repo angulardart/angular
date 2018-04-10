@@ -3,7 +3,7 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart'
-    show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
+    show ChangeHandler, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
 
 const CHECKBOX_VALUE_ACCESSOR = const ExistingProvider.forToken(
   NG_VALUE_ACCESSOR,
@@ -21,30 +21,26 @@ const CHECKBOX_VALUE_ACCESSOR = const ExistingProvider.forToken(
   selector: 'input[type=checkbox][ngControl],'
       'input[type=checkbox][ngFormControl],'
       'input[type=checkbox][ngModel]',
-  host: const {
-    '(change)': 'onChange(\$event.target.checked)',
-  },
   providers: const [CHECKBOX_VALUE_ACCESSOR],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class CheckboxControlValueAccessor extends Object
-    with TouchHandler
-    implements ControlValueAccessor {
-  final HtmlElement _elementRef;
-  ChangeFunction onChange = (_, {String rawValue}) {};
+    with TouchHandler, ChangeHandler<bool>
+    implements ControlValueAccessor<bool> {
+  final InputElement _element;
 
-  CheckboxControlValueAccessor(this._elementRef);
+  CheckboxControlValueAccessor(HtmlElement element)
+      : _element = element as InputElement;
 
-  @override
-  void writeValue(dynamic value) {
-    InputElement elm = _elementRef;
-    elm.checked = value;
+  @HostListener('change', ['\$event.target.checked'])
+  void handleChange(bool checked) {
+    onChange(checked, rawValue: '$checked');
   }
 
   @override
-  void registerOnChange(ChangeFunction fn) {
-    onChange = fn;
+  void writeValue(bool value) {
+    _element.checked = value;
   }
 
   @override

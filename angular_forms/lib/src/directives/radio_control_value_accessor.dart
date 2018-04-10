@@ -4,7 +4,7 @@ import 'dart:js_util' as js_util;
 import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart'
-    show ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
+    show ChangeHandler, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
 import 'ng_control.dart' show NgControl;
 
 const RADIO_VALUE_ACCESSOR = const ExistingProvider.forToken(
@@ -43,8 +43,9 @@ class RadioControlRegistry {
 
 /// The value provided by the forms API for radio buttons.
 class RadioButtonState {
-  bool checked;
-  String value;
+  final bool checked;
+  final String value;
+
   RadioButtonState(this.checked, this.value);
 }
 
@@ -69,29 +70,29 @@ class RadioButtonState {
   selector: 'input[type=radio][ngControl],'
       'input[type=radio][ngFormControl],'
       'input[type=radio][ngModel]',
-  host: const {'(change)': 'changeHandler()'},
   providers: const [RADIO_VALUE_ACCESSOR],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class RadioControlValueAccessor extends Object
-    with TouchHandler
-    implements ControlValueAccessor, OnDestroy, OnInit {
-  HtmlElement _element;
-  RadioControlRegistry _registry;
-  Injector _injector;
+    with TouchHandler, ChangeHandler<RadioButtonState>
+    implements ControlValueAccessor<RadioButtonState>, OnDestroy, OnInit {
+  final HtmlElement _element;
+  final RadioControlRegistry _registry;
+  final Injector _injector;
   RadioButtonState _state;
   NgControl _control;
+
   @Input()
   String name;
-  Function _fn;
-  void changeHandler() {
-    onChange();
-  }
-
-  void Function() onChange = () {};
 
   RadioControlValueAccessor(this._element, this._registry, this._injector);
+
+  @HostListener('change')
+  void changeHandler() {
+    onChange(new RadioButtonState(true, _state.value), rawValue: _state.value);
+    _registry.select(this);
+  }
 
   @override
   void ngOnInit() {
@@ -105,24 +106,15 @@ class RadioControlValueAccessor extends Object
   }
 
   @override
-  void writeValue(dynamic value) {
+  void writeValue(RadioButtonState value) {
     _state = value;
     if (value?.checked ?? false) {
       js_util.setProperty(_element, 'checked', true);
     }
   }
 
-  @override
-  void registerOnChange(dynamic fn(dynamic _)) {
-    _fn = fn;
-    onChange = () {
-      fn(new RadioButtonState(true, _state.value));
-      _registry.select(this);
-    };
-  }
-
   void fireUncheck() {
-    _fn(new RadioButtonState(false, _state.value));
+    onChange(new RadioButtonState(false, _state.value), rawValue: _state.value);
   }
 
   @override

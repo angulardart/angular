@@ -3,14 +3,12 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart'
-    show ChangeFunction, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
+    show ChangeHandler, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
 
 const NUMBER_VALUE_ACCESSOR = const ExistingProvider.forToken(
   NG_VALUE_ACCESSOR,
   NumberValueAccessor,
 );
-
-typedef dynamic _SimpleChangeFn(value);
 
 /// The accessor for writing a number value and listening to changes that is used by the
 /// [NgModel], [NgFormControl], and [NgControlName] directives.
@@ -22,34 +20,26 @@ typedef dynamic _SimpleChangeFn(value);
   selector: 'input[type=number][ngControl],'
       'input[type=number][ngFormControl],'
       'input[type=number][ngModel]',
-  host: const {
-    '(change)': 'onChange(\$event.target.value)',
-    '(input)': 'onChange(\$event.target.value)',
-  },
   providers: const [NUMBER_VALUE_ACCESSOR],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class NumberValueAccessor extends Object
-    with TouchHandler
+    with TouchHandler, ChangeHandler<double>
     implements ControlValueAccessor {
-  final HtmlElement _element;
-  _SimpleChangeFn onChange = (_) {};
+  final InputElement _element;
 
-  NumberValueAccessor(this._element);
+  NumberValueAccessor(HtmlElement element) : _element = element as InputElement;
 
-  @override
-  void writeValue(value) {
-    InputElement elm = _element;
-    elm.value = '$value';
+  @HostListener('change', ['\$event.target.value'])
+  @HostListener('input', ['\$event.target.value'])
+  void handleChange(String value) {
+    onChange((value == '' ? null : double.parse(value)), rawValue: value);
   }
 
   @override
-  void registerOnChange(ChangeFunction fn) {
-    onChange = (value) {
-      // TODO(het): also provide rawValue to fn?
-      fn(value == '' ? null : double.parse(value));
-    };
+  void writeValue(value) {
+    _element.value = '$value';
   }
 
   @override
