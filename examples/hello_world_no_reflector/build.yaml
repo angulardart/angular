@@ -1,0 +1,11 @@
+targets:
+  $default:
+    builders:
+      build_web_compilers|entrypoint:
+        options:
+          dart2js_args:
+          - --dump-info
+          - --fast-startup
+          - --minify
+          - --trust-type-annotations
+          - --trust-primitives
