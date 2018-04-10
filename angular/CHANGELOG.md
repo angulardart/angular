@@ -137,6 +137,8 @@
 
 *   Removed the deprecated `QueryList` class, `List` is used instead, only.
 
+*   Removed `ApplicationRef.registerBootstrapListener`, which was unused.
+
 ### New features
 
 *   The compiler now warns when a `@Component.styles` seems to reference a file
