@@ -2,10 +2,10 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:quiver/core.dart';
 import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
+import '../hash.dart';
 import '../token/tokens.dart';
 import '../visitor.dart';
 
