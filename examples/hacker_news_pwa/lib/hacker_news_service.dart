@@ -10,7 +10,7 @@ const baseUrl = const OpaqueToken<String>('baseUrl');
 /// Provided by https://github.com/cheeaun/node-hnapi/
 ///
 /// Used with appreciation!
-const defaultBaseUrl = 'https://api.hackernews.io';
+const defaultBaseUrl = 'https://api.hnpwa.com/v0';
 
 class HackerNewsService {
   final String _baseUrl;
@@ -22,7 +22,7 @@ class HackerNewsService {
   HackerNewsService(@baseUrl this._baseUrl);
 
   Future<List<Map>> getFeed(String name, int page) async {
-    final url = '$_baseUrl/$name?page=$page';
+    final url = '$_baseUrl/$name/$page.json';
     if (_cacheFeedKey == url) {
       return _cacheFeedResult;
     }
