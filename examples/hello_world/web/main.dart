@@ -1,10 +1,8 @@
 import 'package:angular/angular.dart';
 
-import 'main.template.dart' as ng_generated;
+import 'main.template.dart' as ng;
 
-void main() {
-  bootstrapStatic(HelloWorldComponent, [], ng_generated.initReflector);
-}
+void main() => runApp(ng.HelloWorldComponentNgFactory);
 
 @Component(
   selector: 'hello-world',

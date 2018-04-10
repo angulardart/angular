@@ -89,12 +89,6 @@ echo "Building examples/hello_world in debug mode..."
 PKG=examples/hello_world tool/travis.sh build
 echo "Building examples/hello_world in release mode..."
 PKG=examples/hello_world tool/travis.sh build:release
-echo "Analyzing examples/hello_world_no_reflector..."
-PKG=examples/hello_world_no_reflector tool/travis.sh analyze
-echo "Building examples/hello_world_no_reflector in debug mode..."
-PKG=examples/hello_world_no_reflector tool/travis.sh build
-echo "Building examples/hello_world_no_reflector in release mode..."
-PKG=examples/hello_world_no_reflector tool/travis.sh build:release
 echo "Analyzing examples/registration_form..."
 PKG=examples/registration_form tool/travis.sh analyze
 echo "Building examples/registration_form in debug mode..."
