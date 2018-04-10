@@ -67,6 +67,7 @@ class SelectControlValueAccessor extends Object
     };
   }
 
+  @override
   void onDisabledChanged(bool isDisabled) {}
 
   String _registerOption() => (_idCounter++).toString();

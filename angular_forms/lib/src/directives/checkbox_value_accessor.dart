@@ -47,5 +47,6 @@ class CheckboxControlValueAccessor extends Object
     onChange = fn;
   }
 
+  @override
   void onDisabledChanged(bool isDisabled) {}
 }
