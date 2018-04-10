@@ -1,4 +1,6 @@
-## Breaking Changes
+## 2.0.0-alpha+2
+
+### Breaking Changes
 
 *   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
 
@@ -14,7 +16,7 @@
 
 ## 2.0.0-alpha+1
 
-## New Features
+### New Features
 
 *   Add `MemorizedForm` directive. This is a form that will not remove controls
     if the control is taken out of the view, for example with a [NgIf].
@@ -22,7 +24,7 @@
 *   Add `disabled` state to `AbstractControl` models. Note: This is not yet
     supported in the template-driven directives.
 
-## Breaking Changes
+### Breaking Changes
 
 *   Remove `optionals` param from `ControlGroup` constructor. This will soon be
     replaced by `disabled` state for all `Controls`. See

@@ -1,8 +1,11 @@
+## 0.4.0-alpha+10
+
+*   Maintenance release.
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
+
 ## 0.4.0-alpha+9
 
 ### Breaking changes
-
-*   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
 
 *   `TokenReader` no longer supports arbitrary const objects or literals.
 

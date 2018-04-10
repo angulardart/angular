@@ -1,3 +1,5 @@
+## 5.0.0-alpha+10
+
 ### Breaking changes
 
 *   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
@@ -133,6 +135,8 @@
 *   The interface `PlatformRef` (and `PlatformRefImpl`) were removed. They were
     not used, and added an unnecessary code-size overhead to every application.
 
+*   Removed the deprecated `QueryList` class, `List` is used instead, only.
+
 ### New features
 
 *   The compiler now warns when a `@Component.styles` seems to reference a file
@@ -208,8 +212,6 @@
     ```
 
 *   Removed deprecated `ComponentResolver` class.
-
-*   Removed the deprecated `QueryList` class, `List` is used instead, only.
 
 *   Removed deprecated `componentFactories` and `componentTypes` getters from
     the `ApplicationRef` class. These were used internally by the legacy router
