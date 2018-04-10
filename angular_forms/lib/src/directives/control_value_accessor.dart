@@ -54,3 +54,16 @@ class TouchHandler {
     onTouched = fn;
   }
 }
+
+/// A mixin to add change handler registration to a [ControlValueAccessor].
+///
+/// **NOTE**: It is expected that all subclasses will implement their own
+/// [HostListener] to actually call the [onChange] callback..
+class ChangeHandler<T> {
+  ChangeFunction<T> onChange = (T _, {String rawValue}) {};
+
+  /// Set the function to be called when the control receives a change event.
+  void registerOnChange(ChangeFunction<T> fn) {
+    onChange = fn;
+  }
+}

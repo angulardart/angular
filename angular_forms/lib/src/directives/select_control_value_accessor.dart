@@ -4,7 +4,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/facade/lang.dart' show isPrimitive;
 
 import 'control_value_accessor.dart'
-    show ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
+    show ChangeHandler, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
 
 const SELECT_VALUE_ACCESSOR = const ExistingProvider.forToken(
   NG_VALUE_ACCESSOR,
@@ -33,38 +33,31 @@ String _extractId(String valueString) => valueString.split(':')[0];
 /// https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/4660045
 @Directive(
   selector: 'select[ngControl],select[ngFormControl],select[ngModel]',
-  host: const {
-    '(change)': 'onChange(\$event.target.value)',
-  },
   providers: const [SELECT_VALUE_ACCESSOR],
   // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
   visibility: Visibility.all,
 )
 class SelectControlValueAccessor extends Object
-    with TouchHandler
+    with TouchHandler, ChangeHandler
     implements ControlValueAccessor {
-  final ElementRef _elementRef;
+  final SelectElement _element;
   dynamic value;
   final Map<String, dynamic> _optionMap = new Map<String, dynamic>();
   num _idCounter = 0;
 
-  void Function(String value) onChange = (_) {};
+  SelectControlValueAccessor(HtmlElement element)
+      : _element = element as SelectElement;
 
-  SelectControlValueAccessor(this._elementRef);
+  @HostListener('change', ['\$event.target.value'])
+  void handleChange(String value) {
+    onChange(_getOptionValue(value), rawValue: value);
+  }
 
   @override
   void writeValue(dynamic value) {
     this.value = value;
     var valueString = _buildValueString(_getOptionId(value), value);
-    SelectElement elm = _elementRef.nativeElement;
-    elm.value = valueString;
-  }
-
-  @override
-  void registerOnChange(dynamic fn(dynamic value)) {
-    onChange = (String valueString) {
-      fn(_getOptionValue(valueString));
-    };
+    _element.value = valueString;
   }
 
   @override

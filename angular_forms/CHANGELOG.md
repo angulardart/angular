@@ -14,6 +14,11 @@
 
     **After:** `controlGroup.controls['foo'].markAsEnabled();`
 
+*   `CheckboxControlValueAccessor` now implements `ControlValueAccessor<bool>`
+    and `RadioControlValueAccessor` now implements
+    `ControlValueAccessor<RadioButtonState>`. Previously, they were both
+    `ControlValueAccessor<dynamic>`.
+
 ## 2.0.0-alpha+1
 
 ### New Features
