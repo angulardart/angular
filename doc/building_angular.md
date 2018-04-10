@@ -1,4 +1,7 @@
-# Building Angular
+---
+layout: angular
+title: Building Angular
+---
 
 AngularDart uses `package:build` as a build system for compiling Angular
 components.
@@ -6,14 +9,14 @@ components.
 1.  Edit your package's **pubspec.yaml** file, adding dev dependencies on
     **build_runner** and **build_web_compilers**:
 
+    <?code-excerpt "hello_world/pubspec.yaml (env-dev-dep)"?>
     ```yaml
-    ...
     environment:
-      sdk: '>=2.0.0-dev <2.0.0'
-    ...
+      sdk: ">=2.0.0-dev.28.0 <2.0.0"
+
     dev_dependencies:
-      build_runner: ^0.7.0
-      build_web_compilers: ^0.2.0
+      build_runner: ^0.8.0
+      build_web_compilers: ^0.3.4+1
     ```
 
 2.  Get package dependencies:
