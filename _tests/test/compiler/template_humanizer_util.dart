@@ -5,67 +5,62 @@ import 'expression_parser/unparser.dart' show Unparser;
 
 var expressionUnparser = new Unparser();
 
-class TemplateHumanizer implements TemplateAstVisitor {
+class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   bool includeSourceSpan;
   List<dynamic> result = [];
   TemplateHumanizer(this.includeSourceSpan);
-  dynamic visitNgContent(NgContentAst ast, dynamic context) {
+
+  void visitNgContent(NgContentAst ast, _) {
     var res = [NgContentAst];
-    this.result.add(this._appendContext(ast, res));
-    return null;
+    result.add(_appendContext(ast, res));
   }
 
-  dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
+  void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     var res = [EmbeddedTemplateAst];
-    this.result.add(this._appendContext(ast, res));
+    result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.attrs);
     templateVisitAll(this, ast.outputs);
     templateVisitAll(this, ast.references);
     templateVisitAll(this, ast.variables);
     templateVisitAll(this, ast.directives);
     templateVisitAll(this, ast.children);
-    return null;
   }
 
-  dynamic visitElement(ElementAst ast, dynamic context) {
+  void visitElement(ElementAst ast, _) {
     var res = [ElementAst, ast.name];
-    this.result.add(this._appendContext(ast, res));
+    result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.attrs);
     templateVisitAll(this, ast.inputs);
     templateVisitAll(this, ast.outputs);
     templateVisitAll(this, ast.references);
     templateVisitAll(this, ast.directives);
     templateVisitAll(this, ast.children);
-    return null;
   }
 
-  dynamic visitReference(ReferenceAst ast, dynamic context) {
+  void visitReference(ReferenceAst ast, _) {
     var res = [ReferenceAst, ast.name, ast.value];
-    this.result.add(this._appendContext(ast, res));
-    return null;
+    result.add(_appendContext(ast, res));
   }
 
-  dynamic visitVariable(VariableAst ast, dynamic context) {
+  void visitVariable(VariableAst ast, _) {
     var res = [VariableAst, ast.name, ast.value];
     if (ast.type != null) {
       res.add(debugOutputAstAsDart(ast.type));
     }
-    this.result.add(this._appendContext(ast, res));
-    return null;
+    result.add(_appendContext(ast, res));
   }
 
-  dynamic visitEvent(BoundEventAst ast, dynamic context) {
+  void visitEvent(BoundEventAst ast, _) {
     var res = [
       BoundEventAst,
       ast.name,
       null, // TODO: remove
       expressionUnparser.unparse(ast.handler)
     ];
-    this.result.add(this._appendContext(ast, res));
-    return null;
+    result.add(_appendContext(ast, res));
   }
 
-  dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context) {
+  void visitElementProperty(BoundElementPropertyAst ast, _) {
     var res = [
       BoundElementPropertyAst,
       ast.type,
@@ -73,54 +68,45 @@ class TemplateHumanizer implements TemplateAstVisitor {
       expressionUnparser.unparse(ast.value),
       ast.unit
     ];
-    this.result.add(this._appendContext(ast, res));
-    return null;
+    result.add(_appendContext(ast, res));
   }
 
-  dynamic visitAttr(AttrAst ast, dynamic context) {
+  void visitAttr(AttrAst ast, _) {
     var res = [AttrAst, ast.name, ast.value];
-    this.result.add(this._appendContext(ast, res));
-    return null;
+    result.add(_appendContext(ast, res));
   }
 
-  dynamic visitBoundText(BoundTextAst ast, dynamic context) {
+  void visitBoundText(BoundTextAst ast, _) {
     var res = [BoundTextAst, expressionUnparser.unparse(ast.value)];
-    this.result.add(this._appendContext(ast, res));
-    return null;
+    result.add(_appendContext(ast, res));
   }
 
-  dynamic visitText(TextAst ast, dynamic context) {
+  void visitText(TextAst ast, _) {
     var res = [TextAst, ast.value];
-    this.result.add(this._appendContext(ast, res));
-    return null;
+    result.add(_appendContext(ast, res));
   }
 
-  dynamic visitDirective(DirectiveAst ast, dynamic context) {
+  void visitDirective(DirectiveAst ast, _) {
     var res = [DirectiveAst, ast.directive];
-    this.result.add(this._appendContext(ast, res));
+    result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.inputs);
     templateVisitAll(this, ast.hostProperties);
     templateVisitAll(this, ast.hostEvents);
-    return null;
   }
 
-  dynamic visitDirectiveProperty(
-      BoundDirectivePropertyAst ast, dynamic context) {
+  void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {
     var res = [
       BoundDirectivePropertyAst,
       ast.directiveName,
       expressionUnparser.unparse(ast.value)
     ];
-    this.result.add(this._appendContext(ast, res));
-    return null;
+    result.add(_appendContext(ast, res));
   }
 
-  dynamic visitProvider(ProviderAst ast, dynamic context) {
-    return null;
-  }
+  void visitProvider(ProviderAst ast, _) {}
 
   List<dynamic> _appendContext(TemplateAst ast, List<dynamic> input) {
-    if (!this.includeSourceSpan) return input;
+    if (!includeSourceSpan) return input;
     input.add(ast.sourceSpan.text);
     return input;
   }
@@ -136,127 +122,49 @@ List<dynamic> humanizeContentProjection(List<TemplateAst> templateAsts) {
   return humanizer.result;
 }
 
-class TemplateContentProjectionHumanizer implements TemplateAstVisitor {
+class TemplateContentProjectionHumanizer
+    implements TemplateAstVisitor<void, Null> {
   List<dynamic> result = [];
-  dynamic visitNgContent(NgContentAst ast, dynamic context) {
-    this.result.add(["ng-content", ast.ngContentIndex]);
-    return null;
+  void visitNgContent(NgContentAst ast, _) {
+    result.add(["ng-content", ast.ngContentIndex]);
   }
 
-  dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
-    this.result.add(["template", ast.ngContentIndex]);
+  void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
+    result.add(["template", ast.ngContentIndex]);
     templateVisitAll(this, ast.children);
-    return null;
   }
 
-  dynamic visitElement(ElementAst ast, dynamic context) {
-    this.result.add([ast.name, ast.ngContentIndex]);
+  void visitElement(ElementAst ast, _) {
+    result.add([ast.name, ast.ngContentIndex]);
     templateVisitAll(this, ast.children);
-    return null;
   }
 
-  dynamic visitReference(ReferenceAst ast, dynamic context) {
-    return null;
-  }
+  void visitReference(ReferenceAst ast, _) {}
 
-  dynamic visitVariable(VariableAst ast, dynamic context) {
-    return null;
-  }
+  void visitVariable(VariableAst ast, _) {}
 
-  dynamic visitEvent(BoundEventAst ast, dynamic context) {
-    return null;
-  }
+  void visitEvent(BoundEventAst ast, _) {}
 
-  dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context) {
-    return null;
-  }
+  void visitElementProperty(BoundElementPropertyAst ast, _) {}
 
-  dynamic visitAttr(AttrAst ast, dynamic context) {
-    return null;
-  }
+  void visitAttr(AttrAst ast, _) {}
 
-  dynamic visitBoundText(BoundTextAst ast, dynamic context) {
-    this.result.add([
+  void visitBoundText(BoundTextAst ast, _) {
+    result.add([
       '''#text(${ expressionUnparser . unparse ( ast . value )})''',
       ast.ngContentIndex
     ]);
-    return null;
   }
 
-  dynamic visitText(TextAst ast, dynamic context) {
-    this.result.add(['#text(${ast.value})', ast.ngContentIndex]);
-    return null;
+  void visitText(TextAst ast, _) {
+    result.add(['#text(${ast.value})', ast.ngContentIndex]);
   }
 
-  dynamic visitDirective(DirectiveAst ast, dynamic context) {
-    return null;
-  }
+  void visitDirective(DirectiveAst ast, _) {}
 
-  dynamic visitDirectiveProperty(
-      BoundDirectivePropertyAst ast, dynamic context) {
-    return null;
-  }
+  void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {}
 
-  dynamic visitProvider(ProviderAst ast, dynamic context) {
-    return null;
-  }
-}
-
-class FooAstTransformer implements TemplateAstVisitor {
-  dynamic visitNgContent(NgContentAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitElement(ElementAst ast, dynamic context) {
-    if (ast.name != "div") return ast;
-    return new ElementAst("foo", [], [], [], [], [], [], null, [],
-        ast.ngContentIndex, ast.sourceSpan);
-  }
-
-  dynamic visitReference(ReferenceAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitVariable(VariableAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitEvent(BoundEventAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitElementProperty(BoundElementPropertyAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitAttr(AttrAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitBoundText(BoundTextAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitText(TextAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitDirective(DirectiveAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitDirectiveProperty(
-      BoundDirectivePropertyAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
-
-  dynamic visitProvider(ProviderAst ast, dynamic context) {
-    throw new UnimplementedError();
-  }
+  void visitProvider(ProviderAst ast, _) {}
 }
 
 List<dynamic> humanizeTplAst(List<TemplateAst> templateAsts) {
