@@ -1,3 +1,14 @@
+### Breaking changes
+
+*   Removed `ApplicationRef.injector` from the public API. This was a sparingly
+    used API, and it was usually _incorrect_ to specifically use this injector
+    over the current injector in the component context _or_ the root component's
+    `Injector`.
+
+*   Removed the experimental `parent` argument to `ApplicationRef.bootstrap`.
+    It is no longer needed since all applications use the same bootstrap code
+    branch (either `runApp`, or code that eventually runs through `runApp`).
+
 ## 5.0.0-alpha+10
 
 ### Breaking changes

@@ -3,7 +3,6 @@ import 'dart:html';
 
 import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/runtime.dart';
-import 'package:meta/meta.dart';
 
 import '../facade/exception_handler.dart' show ExceptionHandler;
 import 'change_detection/host.dart';
@@ -20,7 +19,7 @@ NgZone createNgZone() => new NgZone(enableLongStackTrace: isDevMode);
 /// For more about Angular applications, see the documentation for [bootstrap].
 abstract class ApplicationRef implements ChangeDetectionHost {
   /// Register a listener to be called when the application is disposed.
-  void registerDisposeListener(void dispose());
+  void registerDisposeListener(void Function() listener);
 
   /// Bootstrap a new component at the root level of the application.
   ///
@@ -28,25 +27,7 @@ abstract class ApplicationRef implements ChangeDetectionHost {
   /// Angular mounts the specified application component onto DOM elements
   /// identified by the component's selector and kicks off automatic change
   /// detection to finish initializing the component.
-  ComponentRef<T> bootstrap<T>(
-    ComponentFactory<T> componentFactory, [
-    // TODO(matanl): Remove from the public API before 5.x.
-    //
-    // In a normal application (bootstrapStatic), we always use the same
-    // injector that contains ApplicationRef (root injector) to bootstrap the
-    // root component.
-    //
-    // In an experimental application (bootstrapFactory), we have tiers:
-    //   {empty} <-- platformInjector <-- bootstrapInjector <-- appInjector
-    //
-    // ... where appInjector is the user-defined set of modules that are
-    // expected to be used when you bootstrap the root component. The "parent"
-    // field may be set in that case.
-    @experimental Injector parent,
-  ]);
-
-  /// Retrieve the application [Injector].
-  Injector get injector;
+  ComponentRef<T> bootstrap<T>(ComponentFactory<T> componentFactory);
 
   /// Dispose of this application and all of its components.
   void dispose();
@@ -56,7 +37,7 @@ abstract class ApplicationRef implements ChangeDetectionHost {
 class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
   final NgZone _zone;
   final Injector _injector;
-  final List<Function> _disposeListeners = [];
+  final List<void Function()> _disposeListeners = [];
   final List<ComponentRef> _rootComponents = [];
   final List<StreamSubscription> _streamSubscriptions = [];
 
@@ -78,16 +59,13 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
       });
     }));
   }
-  void registerDisposeListener(void dispose()) {
-    _disposeListeners.add(dispose);
+  void registerDisposeListener(void Function() listener) {
+    _disposeListeners.add(listener);
   }
 
-  ComponentRef<T> bootstrap<T>(
-    ComponentFactory<T> componentFactory, [
-    Injector parent,
-  ]) {
+  ComponentRef<T> bootstrap<T>(ComponentFactory<T> componentFactory) {
     return unsafeCast(run(() {
-      var compRef = componentFactory.create(parent ?? _injector, const []);
+      var compRef = componentFactory.create(_injector, const []);
       Element existingElement =
           document.querySelector(componentFactory.selector);
       Element replacement;
@@ -134,9 +112,6 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
     unregisterChangeDetector(componentRef.changeDetectorRef);
     _rootComponents.remove(componentRef);
   }
-
-  @override
-  Injector get injector => _injector;
 
   @override
   void dispose() {
