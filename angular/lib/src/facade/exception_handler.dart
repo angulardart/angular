@@ -25,8 +25,6 @@ import 'package:logging/logging.dart';
 /// }
 /// ```
 class ExceptionHandler {
-  static String _extractMessage(exception) => '$exception';
-
   static String _longStackTrace(stackTrace) => stackTrace is Iterable
       ? stackTrace.join('\n\n-----async gap-----\n')
       : stackTrace.toString();
@@ -38,7 +36,7 @@ class ExceptionHandler {
     String reason,
   ]) {
     final buffer = new StringBuffer();
-    buffer.writeln('EXCEPTION: ${_extractMessage(exception)}');
+    buffer.writeln('EXCEPTION: $exception');
     if (stackTrace != null) {
       buffer.writeln('STACKTRACE: ');
       buffer.writeln(_longStackTrace(stackTrace));
