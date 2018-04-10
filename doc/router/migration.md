@@ -182,7 +182,7 @@
 
     Note, in lifecycle methods, prefer the RouterState arguments to the
     Router.current property. This is important to ensure you're accessing the
-    correct state do the asynchronous nature of routing.
+    correct state due to the asynchronous nature of routing.
 
     **Old code:**
 
