@@ -727,7 +727,7 @@ bool isPrimitiveTypeName(String typeName) {
     case 'bool':
     case 'int':
     case 'num':
-    case 'bool':
+    case 'double':
     case 'String':
       return true;
   }
