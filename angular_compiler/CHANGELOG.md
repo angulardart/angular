@@ -1,4 +1,5 @@
 *   Added `ModuleReader.extractProviderObjects` to use in the view compiler.
+*   Added `logFine` as a new top-level API.
 
 ## 0.4.0-alpha+10
 
