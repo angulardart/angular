@@ -44,6 +44,10 @@ class ModuleReader {
   ///
   /// Returns a lazy iterable of only `Type` or `Provider` objects.
   Iterable<DartObject> extractProviderObjects(DartObject value) {
+    // Guard against being passed a null field.
+    if (value == null || value.isNull) {
+      return const [];
+    }
     if (isList(value)) {
       return _extractProvidersFromList(value);
     }

@@ -212,6 +212,13 @@ void main() {
     final InjectsXsrfToken service = fixture.assertOnlyInstance;
     expect(service.token, 'ABC123');
   });
+
+  test('should support modules in providers: const [ ... ]', () async {
+    final fixture = await new NgTestBed<SupportsModules>().create();
+    final injector = fixture.assertOnlyInstance.injector;
+    expect(injector.get(ExampleService), const isInstanceOf<ExampleService>());
+    expect(injector.get(C), const C('Hello World'));
+  });
 }
 
 @Component(
@@ -612,4 +619,28 @@ class InjectsXsrfToken {
   final String token;
 
   InjectsXsrfToken(@XsrfToken() this.token);
+}
+
+@Component(
+  selector: 'supports-modules',
+  template: '',
+  providers: const [
+    const Module(
+      include: const [
+        const Module(
+          provide: const [
+            const ValueProvider(C, const C('Hello World')),
+          ],
+        ),
+      ],
+      provide: const [
+        const ClassProvider(ExampleService),
+      ],
+    ),
+  ],
+)
+class SupportsModules {
+  final Injector injector;
+
+  SupportsModules(this.injector);
 }

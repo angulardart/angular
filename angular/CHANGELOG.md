@@ -9,6 +9,99 @@
     It is no longer needed since all applications use the same bootstrap code
     branch (either `runApp`, or code that eventually runs through `runApp`).
 
+### New features
+
+*   The new `Module` syntax for dependency injection is _shipped_! This is an
+    _optional_ feature instead of using nested `const` lists to represent sets
+    of shared providers. For example, instead of the following:
+
+    ```dart
+    const httpModule = const [ /* Other providers and/or modules. */ ];
+
+    const commonModule = const [
+      httpModule,
+      const ClassProvider(AuthService, useClass: OAuthService),
+      const FactoryProvider.forToken(xsrfToken, useFactory: readXsrfToken),
+    ];
+    ```
+
+    ... you can represent this with the new typed `Module` syntax:
+
+    ```dart
+    const httpModule = const Module( /* ... Configuration ... */);
+
+    const commonModule = const Module(
+      include: const [httpModule],
+      provide: const [
+        const ClassProvider(AuthService, useClass: OAuthService),
+        const FactoryProvider.forToken(xsrfToken, useFactory: readXsrfToken),
+      ],
+    );
+    ```
+
+    The advantages here are numerous:
+
+    * Less ambiguity around ordering of providers. Engineers would tend to try
+      and sort providers alphabetically, would of course, would lead to
+      problems. `Module` specifically outlines that _order_ is significant, and
+      that `include` is processed _before_ `provide`.
+
+    * `Module` rejects using a `Type` implicitly as a `ClassProvider`. This
+      removes additional ambiguity around supporting `List<dynamic>`, and while
+      more verbose, should lead to more correct use.
+
+    * `Module` tends to be more understandable by users of other dependency
+      injection systems such as Guice or Dagger, and reads better than a `const`
+      `List` (which is a very Dart-only idiom).
+
+    We're not yet updating the [style guide]
+    (https://github.com/dart-lang/angular/blob/master/doc/effective/di.md) in
+    this release, but we are looking for users to help validate that this is
+    the way to go for the future.
+
+    **NOTE**: It is also possible to use `Module` in `@GenerateInjector`:
+
+    ```dart
+    @GenerateInjector.fromModules(const [
+      const Module(
+        include: const [
+          const Module(
+            provide: const [
+              const ValueProvider(ExampleService, const ExampleService()),
+            ],
+          ),
+        ],
+        provide: const [
+          const ValueProvider(ExampleService2, const ExampleService2()),
+          const ExistingProvider(ExampleService, ExampleService2),
+        ],
+      ),
+    ])
+    final InjectorFactory exampleFromModule = ng.exampleFromModule$Injector;
+    ```
+
+    **NOTE**: It is also possible to use `Module` in `ReflectiveInjector`:
+
+    ```dart
+    // Using ReflectiveInjector is strongly not recommended for new code
+    // due to adverse effects on code-size and runtime performance.
+    final injector = ReflectiveInjector.resolveAndCreate([
+      const Module(
+        include: const [
+          const Module(
+            provide: const [
+              const ValueProvider(ExampleService, const ExampleService()),
+            ],
+          ),
+        ],
+        provide: const [
+          const ValueProvider(ExampleService2, const ExampleService2()),
+          const ExistingProvider(ExampleService, ExampleService2),
+        ],
+      ),
+    ]);
+    ```
+
 ## 5.0.0-alpha+10
 
 ### Breaking changes

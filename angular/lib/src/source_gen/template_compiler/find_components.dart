@@ -636,7 +636,9 @@ class ComponentVisitor
 
   List<CompileProviderMetadata> _extractProviders(
           DartObject component, String providerField) =>
-      visitAll(coerceList(component, providerField),
+      visitAll(
+          const ModuleReader()
+              .extractProviderObjects(getField(component, providerField)),
           new CompileTypeMetadataVisitor(_library).createProviderMetadata);
 
   List<CompileIdentifierMetadata> _extractExports(
