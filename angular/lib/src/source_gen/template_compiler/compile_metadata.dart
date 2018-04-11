@@ -75,7 +75,7 @@ class CompileTypeMetadataVisitor
     if (element.constructors.length > 1 && _isEmptyString(constructor.name)) {
       // No use in being a warning, as it's not something they need to fix
       // until we add a way to be able to "pick" the constructor to use.
-      logNotice('Found ${element.constructors.length} constructors for class '
+      logFine('Found ${element.constructors.length} constructors for class '
           '${element.name}; using constructor ${constructor.name}.');
     }
     return constructor;

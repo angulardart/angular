@@ -1,3 +1,5 @@
+*   Added `logFine` as a new top-level API.
+
 ## 0.4.0-alpha+10
 
 *   Maintenance release.
