@@ -1,5 +1,4 @@
 import 'package:angular/src/facade/lang.dart' show jsSplit;
-import 'package:angular_compiler/cli.dart';
 import 'package:source_span/source_span.dart';
 
 import '../core/security.dart';
@@ -42,25 +41,6 @@ abstract class TemplateParser {
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
       String name);
-}
-
-void handleParseErrors(List<ParseError> parseErrors) {
-  var warnings = <ParseError>[];
-  var errors = <ParseError>[];
-  for (ParseError error in parseErrors) {
-    if (error.level == ParseErrorLevel.WARNING) {
-      warnings.add(error);
-    } else if (error.level == ParseErrorLevel.FATAL) {
-      errors.add(error);
-    }
-  }
-  if (warnings.isNotEmpty) {
-    logWarning("Template parse warnings:\n${warnings.join('\n')}");
-  }
-  if (errors.isNotEmpty) {
-    var errorString = errors.join('\n');
-    throw new StateError('Template parse errors:\n$errorString');
-  }
 }
 
 typedef void ErrorCallback(String message, SourceSpan sourceSpan,

@@ -60,7 +60,7 @@ class AstTemplateParser implements TemplateParser {
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
       String name) {
-    final exceptionHandler = new _AstExceptionHandler(template, name);
+    final exceptionHandler = new AstExceptionHandler(template, name);
 
     final parsedAst = _parseTemplate(template, name, exceptionHandler);
     exceptionHandler.maybeReportExceptions();
@@ -86,8 +86,8 @@ class AstTemplateParser implements TemplateParser {
     return processedAsts;
   }
 
-  List<ast.TemplateAst> _parseTemplate(String template, String name,
-          _AstExceptionHandler exceptionHandler) =>
+  List<ast.TemplateAst> _parseTemplate(
+          String template, String name, AstExceptionHandler exceptionHandler) =>
       ast.parse(template,
           sourceUrl: name,
           desugar: true,
@@ -99,7 +99,7 @@ class AstTemplateParser implements TemplateParser {
       List<ast.TemplateAst> parsedAst,
       {String template,
       String name,
-      _AstExceptionHandler exceptionHandler,
+      AstExceptionHandler exceptionHandler,
       bool preserveWhitespace: false}) {
     final implicNamespace = _applyImplicitNamespace(parsedAst);
     final desugaredAst = _inlineTemplates(implicNamespace, exceptionHandler);
@@ -112,7 +112,7 @@ class AstTemplateParser implements TemplateParser {
       List<CompileDirectiveMetadata> directives,
       CompileDirectiveMetadata compMeta,
       List<ast.TemplateAst> filteredAst,
-      _AstExceptionHandler exceptionHandler,
+      AstExceptionHandler exceptionHandler,
       SourceSpan span) {
     final boundAsts =
         _bindDirectives(directives, compMeta, filteredAst, exceptionHandler);
@@ -123,7 +123,7 @@ class AstTemplateParser implements TemplateParser {
       CompileDirectiveMetadata compMeta,
       List<ng.TemplateAst> providedAsts,
       List<CompilePipeMetadata> pipes,
-      _AstExceptionHandler exceptionHandler) {
+      AstExceptionHandler exceptionHandler) {
     final optimizedAsts = _optimize(compMeta, providedAsts);
     final sortedAsts = _sortInputs(optimizedAsts);
     _validatePipeNames(sortedAsts, pipes, exceptionHandler);
@@ -156,7 +156,7 @@ class AstTemplateParser implements TemplateParser {
       List<CompileDirectiveMetadata> directives,
       CompileDirectiveMetadata compMeta,
       List<ast.TemplateAst> filteredAst,
-      _AstExceptionHandler exceptionHandler) {
+      AstExceptionHandler exceptionHandler) {
     final visitor = new _BindDirectivesVisitor();
     final context = new _ParseContext.forRoot(new _TemplateContext(
         parser: parser,
@@ -171,7 +171,7 @@ class AstTemplateParser implements TemplateParser {
       CompileDirectiveMetadata compMeta,
       List<ng.TemplateAst> visitedAsts,
       SourceSpan sourceSpan,
-      _AstExceptionHandler exceptionHandler) {
+      AstExceptionHandler exceptionHandler) {
     var providerViewContext = new ProviderViewContext(compMeta, sourceSpan);
     final providerVisitor = new _ProviderVisitor(providerViewContext);
     final ProviderElementContext providerContext = new ProviderElementContext(
@@ -195,7 +195,7 @@ class AstTemplateParser implements TemplateParser {
           .toList();
 
   void _validatePipeNames(List<ng.TemplateAst> parsedAsts,
-      List<CompilePipeMetadata> pipes, _AstExceptionHandler exceptionHandler) {
+      List<CompilePipeMetadata> pipes, AstExceptionHandler exceptionHandler) {
     var pipeValidator =
         new _PipeValidator(removeDuplicates(pipes), exceptionHandler);
     for (final ast in parsedAsts) {
@@ -204,52 +204,10 @@ class AstTemplateParser implements TemplateParser {
   }
 
   void _validateTemplate(
-      List<ast.TemplateAst> parsedAst, _AstExceptionHandler exceptionHandler) {
+      List<ast.TemplateAst> parsedAst, AstExceptionHandler exceptionHandler) {
     for (final ast in parsedAst) {
       ast.accept(new _TemplateValidator(exceptionHandler));
     }
-  }
-}
-
-class _AstExceptionHandler extends ast.RecoveringExceptionHandler {
-  final String template;
-  final String sourceUrl;
-
-  final parseErrors = <ParseError>[];
-
-  _AstExceptionHandler(this.template, this.sourceUrl);
-
-  void handleParseError(ParseError error) {
-    parseErrors.add(error);
-  }
-
-  void handleAll(Iterable<ParseError> errors) {
-    parseErrors.addAll(errors);
-  }
-
-  void maybeReportExceptions() {
-    if (exceptions.isNotEmpty) {
-      // We always throw here, so no need to clear the list.
-      _reportExceptions();
-    }
-    if (parseErrors.isNotEmpty) {
-      // TODO(alorenzen): Once this is no longer used for the legacy parser,
-      // rename to reportParseErrors.
-      handleParseErrors(parseErrors);
-      // handleParseErrors() may only log warnings and not throw, so we need to
-      // clear the list before the next phase.
-      parseErrors.clear();
-    }
-  }
-
-  void _reportExceptions() {
-    final sourceFile = new SourceFile.fromString(template, url: sourceUrl);
-    final errorString = exceptions
-        .map((exception) => sourceFile
-            .span(exception.offset, exception.offset + exception.length)
-            .message(exception.errorCode.message))
-        .join('\n');
-    throw new StateError('Template parse errors:\n$errorString');
   }
 }
 
@@ -528,7 +486,7 @@ class _TemplateContext {
   final ElementSchemaRegistry schemaRegistry;
   final List<CompileDirectiveMetadata> directives;
   final List<CompileIdentifierMetadata> exports;
-  final _AstExceptionHandler exceptionHandler;
+  final AstExceptionHandler exceptionHandler;
 
   _TemplateContext(
       {this.parser,
@@ -1076,7 +1034,7 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
 }
 
 class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
-  final _AstExceptionHandler exceptionHandler;
+  final AstExceptionHandler exceptionHandler;
 
   _TemplateValidator(this.exceptionHandler);
 
@@ -1210,11 +1168,11 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
 /// arguments.
 class _PipeValidator extends RecursiveTemplateVisitor<Null> {
   final Map<String, CompilePipeMetadata> _pipesByName;
-  final _AstExceptionHandler _exceptionHandler;
+  final AstExceptionHandler _exceptionHandler;
 
   factory _PipeValidator(
     List<CompilePipeMetadata> pipes,
-    _AstExceptionHandler exceptionHandler,
+    AstExceptionHandler exceptionHandler,
   ) {
     final pipesByName = <String, CompilePipeMetadata>{};
     for (var pipe in pipes) {

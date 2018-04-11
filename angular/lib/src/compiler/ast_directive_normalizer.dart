@@ -7,6 +7,7 @@ import 'package:angular_compiler/cli.dart';
 
 import 'compile_metadata.dart';
 import 'expression_parser/visitor.dart';
+import 'parse_util.dart';
 import 'style_url_resolver.dart' show extractStyleUrls, isStyleUrlResolvable;
 
 /// Loads the content of `templateUrl` and `styleUrls` to normalize directives.
@@ -161,12 +162,16 @@ class AstDirectiveNormalizer {
   }) {
     // Parse the template, and visit to find <style>/<link> and <ng-content>.
     final visitor = new _TemplateNormalizerVisitor();
+    final exceptionHandler =
+        new AstExceptionHandler(template, directiveType.name);
     final parsedNodes = ast.parse(
       template,
       // TODO: Use the full-file path when possible.
       // Otherwise, the analyzer crashes today seeing an 'asset:...' URL.
       sourceUrl: Uri.parse(templateAbsUrl).replace(scheme: 'file').toFilePath(),
+      exceptionHandler: exceptionHandler,
     );
+    exceptionHandler.maybeReportExceptions();
 
     for (final node in parsedNodes) {
       node.accept(visitor);
