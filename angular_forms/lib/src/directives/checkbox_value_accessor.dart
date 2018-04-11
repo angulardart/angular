@@ -22,8 +22,6 @@ const CHECKBOX_VALUE_ACCESSOR = const ExistingProvider.forToken(
       'input[type=checkbox][ngFormControl],'
       'input[type=checkbox][ngModel]',
   providers: const [CHECKBOX_VALUE_ACCESSOR],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class CheckboxControlValueAccessor extends Object
     with TouchHandler, ChangeHandler<bool>
