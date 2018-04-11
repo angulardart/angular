@@ -1,3 +1,5 @@
+import 'package:angular_compiler/cli.dart';
+
 import '../../compiler/compile_metadata.dart';
 import '../../facade/lang.dart' show jsSplit;
 import 'ast.dart'
@@ -48,23 +50,13 @@ import 'lexer.dart'
 final _implicitReceiver = new ImplicitReceiver();
 final INTERPOLATION_REGEXP = new RegExp(r'{{([\s\S]*?)}}');
 
-// TODO(matanl): Remove once we can refactor test expectations.
-class _BaseException extends Error {
-  final String _message;
-
-  _BaseException([this._message]);
-
-  String get message => _message;
-
-  String toString() {
-    return this.message;
-  }
-}
-
-class ParseException extends _BaseException {
-  ParseException(String message, String input, String errLocation,
-      [dynamic ctxLocation])
-      : super('Parser Error: $message $errLocation [$input] in $ctxLocation');
+class ParseException extends BuildError {
+  ParseException(
+    String message,
+    String input,
+    String errLocation, [
+    dynamic ctxLocation,
+  ]) : super('Parser Error: $message $errLocation [$input] in $ctxLocation');
 }
 
 class SplitInterpolation {
