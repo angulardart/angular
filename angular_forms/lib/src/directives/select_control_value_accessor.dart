@@ -91,10 +91,11 @@ class SelectControlValueAccessor extends Object
   visibility: Visibility.all,
 )
 class NgSelectOption implements OnDestroy {
-  final ElementRef _element;
+  final OptionElement _element;
   SelectControlValueAccessor _select;
   String id;
-  NgSelectOption(this._element, @Optional() @Host() this._select) {
+  NgSelectOption(HtmlElement element, @Optional() @Host() this._select)
+      : _element = element as OptionElement {
     if (_select != null) id = _select._registerOption();
   }
 
@@ -113,8 +114,7 @@ class NgSelectOption implements OnDestroy {
   }
 
   void _setElementValue(String value) {
-    OptionElement elm = _element.nativeElement;
-    elm.value = value;
+    _element.value = value;
   }
 
   @override
