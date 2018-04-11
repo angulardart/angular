@@ -30,6 +30,47 @@ class ModuleReader {
   @protected
   bool isModule(DartObject o) => isList(o) || $Module.isExactlyType(o.type);
 
+  /// Helper method that can recursively extract [DartObject]s for `Provider`.
+  ///
+  /// A [value] can be one of four (4) things:
+  /// * A constant instance of `Type` (implicit `Provider`)
+  /// * A constant instance of `Provider`
+  /// * A constant `List` of any of the above types, including other lists.
+  /// * A constant `Module`, which has its own way of collecting these objects.
+  ///
+  /// **NOTE**: That the implicit conversion of `Type` to `Provider` is expected
+  /// to happen elsewhere, this function is just a convenience for dealing with
+  /// `Module` versus `List` in the view compiler.
+  ///
+  /// Returns a lazy iterable of only `Type` or `Provider` objects.
+  Iterable<DartObject> extractProviderObjects(DartObject value) {
+    if (isList(value)) {
+      return _extractProvidersFromList(value);
+    }
+    if (isModule((value))) {
+      return _extractProvidersFromModule(value);
+    }
+    return [value];
+  }
+
+  Iterable<DartObject> _extractProvidersFromList(DartObject value) {
+    return value.toListValue().map(extractProviderObjects).expand((e) => e);
+  }
+
+  Iterable<DartObject> _extractProvidersFromModule(DartObject value) sync* {
+    final providersField = value.getField('provide');
+    final modulesField = value.getField('include');
+    if (!modulesField.isNull) {
+      yield* modulesField
+          .toListValue()
+          .map(_extractProvidersFromModule)
+          .expand((e) => e);
+    }
+    if (!providersField.isNull) {
+      yield* providersField.toListValue();
+    }
+  }
+
   /// Returns a unique ordered-set based off of [providers].
   ///
   /// [ProviderElement.token] is used to determine uniqueness.

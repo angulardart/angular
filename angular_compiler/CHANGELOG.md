@@ -1,3 +1,5 @@
+*   Added `ModuleReader.extractProviderObjects` to use in the view compiler.
+
 ## 0.4.0-alpha+10
 
 *   Maintenance release.
