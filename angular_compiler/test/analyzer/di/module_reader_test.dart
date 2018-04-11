@@ -170,4 +170,93 @@ void main() {
       });
     });
   });
+
+  group('ModuleReader.extractProviderObjects', () {
+    // These are tests for functionality used by the view compiler.
+    final _extractProviderObjects = const ModuleReader().extractProviderObjects;
+    String extractProviderStrings(DartObject value) {
+      final result = _extractProviderObjects(value);
+      return result.map((o) {
+        if (o.toTypeValue() != null) {
+          return o.toTypeValue().name;
+        }
+        return o.getField('token').toTypeValue().name;
+      }).join(', ');
+    }
+
+    DartObject aListOfProviders;
+    DartObject aModuleOfProviders;
+    DartObject nestedListsAndModules;
+
+    setUpAll(() async {
+      final testLib = await resolveLibrary(r'''
+        @aListOfProviders
+        @aModuleOfProviders
+        @nestedListsAndModules
+        class Example {}
+
+        const aListOfProviders = const [
+          A,
+          const Provider(B),
+          const Provider(C, useClass: C),
+        ];
+
+        const aModuleOfProviders = const Module(
+          include: const [_aSubModule],
+          provide: const [
+            const Provider(A),
+            const Provider(B),
+          ],
+        );
+
+        const _aSubModule = const Module(
+          provide: const [
+            const Provider(C),
+          ],
+        );
+
+        const nestedListsAndModules = const [
+          const [
+            aListOfProviders,
+            const [
+              aModuleOfProviders,
+            ],
+          ],
+        ];
+
+        class A {}
+        class B {}
+        class C {}
+      ''');
+      final testObjects = testLib
+          .getType('Example')
+          .metadata
+          .map((e) => e.computeConstantValue())
+          .toList();
+      aListOfProviders = testObjects[0];
+      aModuleOfProviders = testObjects[1];
+      nestedListsAndModules = testObjects[2];
+    });
+
+    test('should read a list of providers', () {
+      expect(
+        extractProviderStrings(aListOfProviders),
+        'A, B, C',
+      );
+    });
+
+    test('should read a module of providers', () {
+      expect(
+        extractProviderStrings(aModuleOfProviders),
+        'C, A, B',
+      );
+    });
+
+    test('should read a combination of lists and modules', () {
+      expect(
+        extractProviderStrings(nestedListsAndModules),
+        'A, B, C, C, A, B',
+      );
+    });
+  });
 }
