@@ -143,6 +143,9 @@ class AstTemplateParser implements TemplateParser {
         .visitAll<ast.StandaloneTemplateAst>(
             parsedAst.cast<ast.StandaloneTemplateAst>());
     if (flags.useNewPreserveWhitespace) {
+      if (!preserveWhitespace) {
+        return filteredElements;
+      }
       return new ast.MinimizeWhitespaceVisitor().visitAllRoot(filteredElements);
     }
     return new _PreserveWhitespaceVisitor()
