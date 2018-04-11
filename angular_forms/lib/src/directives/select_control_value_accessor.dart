@@ -34,7 +34,7 @@ String _extractId(String valueString) => valueString.split(':')[0];
 @Directive(
   selector: 'select[ngControl],select[ngFormControl],select[ngModel]',
   providers: const [SELECT_VALUE_ACCESSOR],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
+  // SelectControlValueAccessor must be visible to NgSelectOption.
   visibility: Visibility.all,
 )
 class SelectControlValueAccessor extends Object
@@ -87,8 +87,6 @@ class SelectControlValueAccessor extends Object
 ///     </select>
 @Directive(
   selector: 'option',
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class NgSelectOption implements OnDestroy {
   final OptionElement _element;

@@ -23,8 +23,6 @@ const DEFAULT_VALUE_ACCESSOR = const ExistingProvider.forToken(
       'input:not([type=checkbox])[ngModel],'
       'textarea[ngModel],[ngDefaultControl]',
   providers: const [DEFAULT_VALUE_ACCESSOR],
-  // TODO(b/71710685): Change to `Visibility.local` to reduce code size.
-  visibility: Visibility.all,
 )
 class DefaultValueAccessor extends Object
     with TouchHandler, ChangeHandler<String>

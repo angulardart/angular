@@ -1,3 +1,9 @@
+### Breaking Changes
+
+*   `CheckboxControlValueAccessor`, `DefaultValueAccessor`,
+    `NumberValueAccessor`, `RadioControlValueAccessor`, and `NgSelectOption` can
+    no longer be injected directly.
+
 ## 2.0.0-alpha+2
 
 ### Breaking Changes
