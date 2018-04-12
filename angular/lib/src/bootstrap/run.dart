@@ -31,7 +31,7 @@ Injector platformInjector() {
   if (_platformInjectorCache == null) {
     final testabilityRegistry = new TestabilityRegistry();
     sharedStylesHost ??= new DomSharedStylesHost(document);
-    createInitDomAdapter(testabilityRegistry)();
+    initTestability(testabilityRegistry);
     _platformInjectorCache = new Injector.map({
       TestabilityRegistry: testabilityRegistry,
     });
