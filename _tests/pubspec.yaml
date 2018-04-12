@@ -12,9 +12,7 @@ dependencies:
   # Actual valid dependencies required.
   collection: ^1.14.5
   meta: ^1.1.2
-
-  # https://github.com/dart-lang/angular/issues/1225
-  test: '>=0.12.32 <0.12.34'
+  test: ^0.12.32
 
 dev_dependencies:
   # No strict dependencies, we always use dependency_overrides.
@@ -23,7 +21,7 @@ dev_dependencies:
   # Actual valid dependencies required.
   analyzer: ^0.31.0+1
   build_runner: ^0.8.0
-  build_test: ^0.10.1+1
+  build_test: ^0.10.2
   build_web_compilers: ^0.3.4+1
   mockito: '>=0.11.0 <3.0.0'
   source_span: ^1.4.0
