@@ -23,6 +23,7 @@ export 'src/core/linker/component_resolver.dart' show typeToFactory;
 
 /// Create a root (legacy, with `SlowComponentLoader`) application injector.
 ///
+/// Requires [userInjector] to provide app-level services or overrides:
 /// ```dart
 /// main() {
 ///   var injector = rootLegacyInjector((parent) {
@@ -34,15 +35,16 @@ export 'src/core/linker/component_resolver.dart' show typeToFactory;
 /// **WARNING**: This API is not considered part of the stable API.
 @experimental
 Injector rootLegacyInjector(InjectorFactory userInjector) {
-  return userInjector(
-    appInjector(([parent]) {
-      return new Injector.map({
-        SlowComponentLoader: const SlowComponentLoader(
-          const ComponentLoader(),
-        ),
-      }, unsafeCast(parent));
-    }),
-  );
+  // Create a new appInjector, using wrappedUserInjector for provided services.
+  // This includes services that will need to overwrite default services, such
+  // as ExceptionHandler.
+  return appInjector(([parent]) {
+    return new Injector.map({
+      SlowComponentLoader: const SlowComponentLoader(
+        const ComponentLoader(),
+      ),
+    }, unsafeCast(userInjector(parent)));
+  });
 }
 
 /// Create a root minimal application (no runtime providers) injector.
