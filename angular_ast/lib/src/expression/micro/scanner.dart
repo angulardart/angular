@@ -11,7 +11,7 @@ class NgMicroScanner {
   static final _findBeforeAssignment = new RegExp(r':(\s*)');
   static final _findEndExpression = new RegExp(r';\s*');
   static final _findExpression = new RegExp(r'[^;]+');
-  static final _findImplicitBind = new RegExp(r'[^ ]+');
+  static final _findImplicitBind = new RegExp(r'[^\s]+');
   static final _findLetAssignmentBefore = new RegExp(r'\s*=\s*');
   static final _findLetIdentifier = new RegExp(r'[^\s=;]+');
   static final _findStartExpression = new RegExp(r'[^\s:;]+');
