@@ -7,10 +7,6 @@ version: 2.0.0-alpha+8
 environment:
   sdk: ">=2.0.0-dev.46.0 <2.0.0"
 
-# **DEPRECATED**. Will be removed in a future release.
-executables:
-  angular_test:
-
 dependencies:
   angular: '^5.0.0-alpha+10'
   matcher: ^0.12.0+2
