@@ -27,7 +27,9 @@ dev_dependencies:
   angular:
   build_runner: ^0.8.0
   build_test: ^0.10.1+1
-  test: ^0.12.32
+
+  # https://github.com/dart-lang/angular/issues/1225
+  test: '>=0.12.32 <0.12.34'
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
