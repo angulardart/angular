@@ -33,7 +33,7 @@ class HackerNewsService {
   }
 
   Future<Map> getItem(String id) async {
-    final url = '$_baseUrl/item/$id';
+    final url = '$_baseUrl/item/$id.json';
     final response = await HttpRequest.getString(url);
     return JSON.decode(response);
   }
