@@ -5,7 +5,6 @@ targets:
         generate_for:
         - web/**.dart
         options:
-          compiler: dart2js
           dart2js_args:
           - --dump-info
           - --fast-startup

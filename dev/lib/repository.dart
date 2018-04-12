@@ -127,7 +127,6 @@ class Repository {
 /// Various metadata are extracted for tooling to use.
 class Package {
   static const _pubspecYaml = 'pubspec.yaml';
-  static const _releaseYaml = 'build.release.yaml';
   static const _testFolder = 'test';
   static final _testScript = p.join('tool', 'test.sh');
 
@@ -223,12 +222,10 @@ class Package {
     return new Directory(p.join(root, path, _testFolder)).existsSync();
   }
 
-  /// Whether a `build.release.yaml` exists in this package.
+  /// Whether Dart2JS should be used, as well as DDC.
   ///
-  /// This is an indication that Dart2JS should be used, as well as DDC.
-  bool get hasReleaseMode {
-    return new File(p.join(root, path, _releaseYaml)).existsSync();
-  }
+  /// **NOTE**: This is currently *always* `false`.
+  bool get hasReleaseMode => false;
 
   /// Whether `build_runner` is a dependency of this package.
   bool get isBuildable => devDependencies.containsKey('build_runner');
