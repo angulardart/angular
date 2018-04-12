@@ -102,6 +102,10 @@
     ]);
     ```
 
+### Bug fixes
+
+*   The `*` micro-syntax now supports newlines after an identifier.
+
 ## 5.0.0-alpha+10
 
 ### Breaking changes

@@ -128,19 +128,15 @@ void main() {
     ]);
   });
 
-  test('should handle newline', () {
-    expect(
-      tokenize('let item of\n items'),
-      [
-        new NgMicroToken.letKeyword(0, 'let'),
-        new NgMicroToken.letKeywordAfter(3, ' '),
-        new NgMicroToken.letIdentifier(4, 'item'),
-        new NgMicroToken.endExpression(8, ' '),
-        new NgMicroToken.bindIdentifier(9, 'of'),
-        new NgMicroToken.letKeywordAfter(11, '\n '),
-        new NgMicroToken.bindExpression(13, 'items'),
-      ],
-      skip: 'The "\\n" character is included in the previous lexeme',
-    );
+  test('should handle newline after identifier', () {
+    expect(tokenize('let item of\n items'), [
+      new NgMicroToken.letKeyword(0, 'let'),
+      new NgMicroToken.letKeywordAfter(3, ' '),
+      new NgMicroToken.letIdentifier(4, 'item'),
+      new NgMicroToken.endExpression(8, ' '),
+      new NgMicroToken.bindIdentifier(9, 'of'),
+      new NgMicroToken.bindExpressionBefore(11, '\n '),
+      new NgMicroToken.bindExpression(13, 'items'),
+    ]);
   });
 }

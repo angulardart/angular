@@ -1,3 +1,5 @@
+*   The `*` micro-syntax now supports newlines after an identifier.
+
 ## 0.5.1
 
 *   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
