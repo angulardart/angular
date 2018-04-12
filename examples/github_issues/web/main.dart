@@ -14,11 +14,9 @@ import 'main.template.dart' as ng;
 class NgAppComponent {}
 
 void main() {
-  bootstrapStatic(
-    NgAppComponent,
-    const [
-      const ClassProvider(GithubService),
-    ],
-    ng.initReflector,
-  );
+  runApp(ng.NgAppComponentNgFactory, createInjector: ([parent]) {
+    return new Injector.map({
+      GithubService: new GithubService(),
+    }, parent);
+  });
 }
