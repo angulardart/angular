@@ -14,7 +14,6 @@ import 'package:meta/meta.dart';
 
 import 'src/bootstrap/run.dart' show appInjector;
 import 'src/core/linker/app_view.dart' as app_view;
-import 'src/core/linker/app_view_utils.dart';
 import 'src/di/injector/injector.dart';
 import 'src/runtime.dart';
 
@@ -45,26 +44,6 @@ Injector rootLegacyInjector(InjectorFactory userInjector) {
       ),
     }, unsafeCast(userInjector(parent)));
   });
-}
-
-/// Create a root minimal application (no runtime providers) injector.
-///
-/// Unlike [rootInjector], this method does not rely on `initReflector`.
-///
-/// **WARNING**: This API is not considered part of the stable API.
-@experimental
-Injector rootMinimalInjector() => appInjector(([i]) => i);
-
-/// Initializes the global application state from an application [injector].
-///
-/// May be used in places that do not go through `bootstrap` to create an
-/// application, but do not want to import parts of Angular's internal API to
-/// get to a valid state.
-///
-/// **WARNING**: This API is not considered part of the stable API.
-@experimental
-void initAngular(Injector injector) {
-  appViewUtils = unsafeCast(injector.get(AppViewUtils));
 }
 
 /// Returns `true` when AngularDart has modified the DOM.
