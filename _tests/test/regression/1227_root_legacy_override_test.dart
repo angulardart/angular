@@ -25,6 +25,18 @@ void main() {
       const isInstanceOf<_IntentionalError>(),
     );
   });
+
+  test('rootLegacyInjector should provide a working SlowComponentLoader', () {
+    final appInjector = rootLegacyInjector(([parent]) {
+      return new Injector.empty(parent);
+    });
+
+    // Easiest way to tell is make sure its the same const instance.
+    expect(
+      appInjector.get(SlowComponentLoader),
+      const SlowComponentLoader(const ComponentLoader()),
+    );
+  });
 }
 
 class _IntentionalError extends Error {}
