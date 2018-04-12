@@ -14,9 +14,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
 import 'package:meta/meta.dart';
 
-export 'src/bootstrap.dart' show bootstrapForTest;
 export 'src/frontend/bed.dart' show createDynamicFixture, createDynamicTestBed;
-export 'src/frontend/fixture.dart' show injectFromFixture;
 
 /// Creates an [Injector] similar to creating an application with [providers].
 @experimental
