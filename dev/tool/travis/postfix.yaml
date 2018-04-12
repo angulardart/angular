@@ -9,7 +9,7 @@
       before_deploy:
         - pushd examples/hacker_news_pwa
         - pub upgrade
-        - pub run build_runner build -o build --fail-on-severe --config release
+        - pub run build_runner build -o build --fail-on-severe --release
         - popd
       deploy:
         skip_cleanup: true

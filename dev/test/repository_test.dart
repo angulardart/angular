@@ -197,7 +197,7 @@ void main() {
       );
 
       expect(package.hasReleaseMode, isTrue);
-    });
+    }, skip: 'Not currently supported');
 
     test('should set isBuildable if build_runner is a dependency', () async {
       await d.dir('angular', [

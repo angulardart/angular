@@ -8,12 +8,19 @@ targets:
         enabled: False
       examples.github_issues|scss_builder:
         enabled: True
+      build_web_compilers|entrypoint:
+        options:
+          dart2js_args:
+          - --dump-info
+          - --fast-startup
+          - --minify
+          - --trust-type-annotations
+          - --trust-primitives
   scss_builder:
     sources: ["lib/builder.dart"]
     dependencies:
       - build
       - sass_builder
-
 
 builders:
   scss_builder:
