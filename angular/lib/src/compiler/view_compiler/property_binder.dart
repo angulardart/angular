@@ -475,7 +475,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
       continue;
     }
     if (isStatefulDirective) {
-      var fieldType = o.importType(directiveAst.directive.inputTypes[input]);
+      var fieldType = o.importType(directive.inputTypes[input.directiveName]);
       var checkExpression = convertCdExpressionToIr(view.nameResolver,
           DetectChangesVars.cachedCtx, input.value, view.component, fieldType);
       if (isImmutable(input.value, view.component.analyzedClass)) {
