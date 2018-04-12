@@ -26,7 +26,7 @@ dev_dependencies:
   # It is overrode in `dependency_overrides`.
   angular:
   build_runner: ^0.8.0
-  build_test: ^0.10.2
+  build_test: ^0.10.2+1
   test: ^0.12.32
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
