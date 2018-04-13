@@ -134,6 +134,16 @@
     ]);
     ```
 
+*   `@HostListener()` can now automatically infer the `const ['$event']`
+    parameter when it is omitted but the bound method has a single argument:
+
+    ```dart
+    class Comp {
+      @HostListener('click')
+      void onClick(MouseEvent e) {}
+    }
+    ```
+
 ### Bug fixes
 
 *   The `*` micro-syntax now supports newlines after an identifier.

@@ -11,11 +11,11 @@ import 'host_events_test.template.dart' as ng_generated;
 void main() {
   ng_generated.initReflector();
 
+  tearDown(disposeAnyRunningTest);
+
   group('Events defined', () {
     Element activeElement;
     NgTestFixture testFixture;
-
-    tearDown(disposeAnyRunningTest);
 
     /// Runs a comment test based on a populated [activeElement].
     Future<Null> _commonFocusTest({Element checkElement}) async {
@@ -100,6 +100,16 @@ void main() {
       testFixture.rootElement.dispatchEvent(new Event('blur'));
     });
     expect(testFixture.assertOnlyInstance.capturedEvent, 'blur');
+  });
+
+  test('should infer [\$event] for @HostListener with one argument', () async {
+    final testBed = new NgTestBed<ComponentWithImplicitArgs>();
+    final testFixture = await testBed.create();
+    expect(testFixture.assertOnlyInstance.timesClicked, 0);
+    await testFixture.update((_) {
+      testFixture.rootElement.click();
+    });
+    expect(testFixture.assertOnlyInstance.timesClicked, 1);
   });
 }
 
@@ -226,5 +236,21 @@ class ComponentWithTwoAnnotations {
   @HostListener('focus', const [r'$event'])
   void onFocusOrBlur(Event event) {
     capturedEvent = event.type;
+  }
+}
+
+@Component(
+  selector: 'component-with-implicit-args',
+  template: 'CLICK ME',
+)
+class ComponentWithImplicitArgs {
+  int timesClicked = 0;
+
+  @HostListener('click')
+  void onClick(MouseEvent e) {
+    if (e == null) {
+      throw new ArgumentError.notNull();
+    }
+    timesClicked++;
   }
 }
