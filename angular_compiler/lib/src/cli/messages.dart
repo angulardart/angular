@@ -19,7 +19,13 @@ abstract class Messages {
     Iterable<SourceSpan> sourceSpans, {
     String message: 'Was not resolved',
     @required String reason,
-  });
+  }) {
+    final buffer = new StringBuffer(reason)..writeln()..writeln();
+    for (final sourceSpans in sourceSpans) {
+      buffer.writeln(sourceSpans.message(message));
+    }
+    return buffer.toString();
+  }
 
   /// What URL should be used for filing bugs when the compiler fails.
   String get urlFileBugs;
