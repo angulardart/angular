@@ -241,12 +241,12 @@ class ViewHasManyNativeHostEvents0 extends DebugAppView<import2.HasManyNativeHos
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null, []);
-    _rootEl.addEventListener('mousedown', eventHandler0(_ctx.onMouseDown));
-    _rootEl.addEventListener('mouseup', eventHandler0(_ctx.onMouseUp));
-    _rootEl.addEventListener('click', eventHandler0(_ctx.onClick));
-    _rootEl.addEventListener('keypress', eventHandler0(_ctx.onKeyPress));
-    _rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
-    _rootEl.addEventListener('blur', eventHandler0(_ctx.onBlur));
+    _rootEl.addEventListener('mousedown', eventHandler1(_ctx.onMouseDown));
+    _rootEl.addEventListener('mouseup', eventHandler1(_ctx.onMouseUp));
+    _rootEl.addEventListener('click', eventHandler1(_ctx.onClick));
+    _rootEl.addEventListener('keypress', eventHandler1(_ctx.onKeyPress));
+    _rootEl.addEventListener('focus', eventHandler1(_ctx.onFocus));
+    _rootEl.addEventListener('blur', eventHandler1(_ctx.onBlur));
     return null;
   }
 }
