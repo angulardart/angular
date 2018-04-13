@@ -50,16 +50,6 @@ class SwitchView {
 /// </div>
 /// ```
 ///
-/// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngswitch-template-attr)"?>
-/// ```html
-/// <div [ngSwitch]="hero?.emotion">
-///   <happy-hero    template="ngSwitchCase 'happy'"    [hero]="hero"></happy-hero>
-///   <sad-hero      template="ngSwitchCase 'sad'"      [hero]="hero"></sad-hero>
-///   <confused-hero template="ngSwitchCase 'confused'" [hero]="hero"></confused-hero>
-///   <unknown-hero  template="ngSwitchDefault"         [hero]="hero"></unknown-hero>
-/// </div>
-/// ```
-///
 /// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngswitch-template)"?>
 /// ```html
 /// <div [ngSwitch]="hero?.emotion">

@@ -42,15 +42,6 @@ void main() {
     expect(childNodes.first, new isInstanceOf<Comment>());
   });
 
-  test('should support template directives via template property', () async {
-    final testBed = new NgTestBed<TemplatePropertyComponent>();
-    final testFixture = await testBed.create();
-    // 1 template + 2 copies.
-    expect(testFixture.rootElement.childNodes, hasLength(3));
-    expect(testFixture.rootElement.childNodes[1].text, 'hello');
-    expect(testFixture.rootElement.childNodes[2].text, 'again');
-  });
-
   test('should transplant TemplateRef into another ViewContainer', () async {
     final testBed = new NgTestBed<TemplateRefTransplantComponent>();
     final testFixture = await testBed.create();
@@ -103,15 +94,6 @@ class DestroyParentViewComponent {
   template: '<template></template>',
 )
 class EmptyTemplateComponent {}
-
-@Component(
-  selector: 'template-property',
-  template: '<div template="some-viewport: let x=some-tmpl">{{x}}</div>',
-  directives: const [
-    SomeViewport,
-  ],
-)
-class TemplatePropertyComponent {}
 
 @Directive(
   selector: '[toolbarpart]',

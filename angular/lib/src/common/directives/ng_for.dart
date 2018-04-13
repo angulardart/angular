@@ -74,11 +74,6 @@ import '../../core/linker.dart'
 ///   ({{i}}) {{hero.name}}
 /// </div>
 ///
-/// <div template="ngFor let hero of heroes; let i=index; let odd=odd; trackBy: trackById"
-///      [class.odd]="odd">
-///   ({{i}}) {{hero.name}}
-/// </div>
-///
 /// <template ngFor let-hero [ngForOf]="heroes" let-i="index" let-odd="odd"
 ///           [ngForTrackBy]="trackById">
 ///   <div [class.odd]="odd">({{i}}) {{hero.name}}</div>

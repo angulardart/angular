@@ -21,11 +21,6 @@ import 'package:angular/src/runtime.dart';
 /// <div *ngIf="hero != null" >{{hero.name}}</div>
 /// ```
 ///
-/// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngif-template-attr)"?>
-/// ```html
-/// <div template="ngIf hero != null">{{hero.name}}</div>
-/// ```
-///
 /// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngif-template)"?>
 /// ```html
 /// <template [ngIf]="hero != null">

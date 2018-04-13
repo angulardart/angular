@@ -1184,24 +1184,6 @@ void main() {
       });
 
       group('inline templates', () {
-        test('should wrap the element into an EmbeddedTemplateAST', () {
-          expect(humanizeTplAst(parse('<div template></div>', [])), [
-            [EmbeddedTemplateAst],
-            [ElementAst, 'div']
-          ]);
-        });
-
-        test('should parse bound properties', () {
-          expect(
-              humanizeTplAst(parse('<div template="ngIf test"></div>', [ngIf])),
-              [
-                [EmbeddedTemplateAst],
-                [DirectiveAst, ngIf],
-                [BoundDirectivePropertyAst, 'ngIf', 'test'],
-                [ElementAst, 'div']
-              ]);
-        });
-
         test('should parse variables via #... and report them as deprecated',
             () {
           expect(
@@ -1243,16 +1225,14 @@ void main() {
                 type: new CompileTypeMetadata(
                     moduleUrl: someModuleUrl, name: 'DirB'));
             expect(
-                humanizeTplAst(
-                    parse('<div template="a b" b></div>', [dirA, dirB])),
-                [
-                  [EmbeddedTemplateAst],
-                  [DirectiveAst, dirA],
-                  [BoundDirectivePropertyAst, 'a', 'b'],
-                  [ElementAst, 'div'],
-                  [AttrAst, 'b', ''],
-                  [DirectiveAst, dirB]
-                ]);
+                humanizeTplAst(parse('<div *a="b" b></div>', [dirA, dirB])), [
+              [EmbeddedTemplateAst],
+              [DirectiveAst, dirA],
+              [BoundDirectivePropertyAst, 'a', 'b'],
+              [ElementAst, 'div'],
+              [AttrAst, 'b', ''],
+              [DirectiveAst, dirB]
+            ]);
           });
 
           test('should not locate directives in variables', () {
@@ -1261,12 +1241,12 @@ void main() {
                 type: new CompileTypeMetadata(
                     moduleUrl: someModuleUrl, name: 'DirA'));
             expect(
-                humanizeTplAst(parse('<div template="let a=b"></div>', [dirA])),
-                [
-                  [EmbeddedTemplateAst],
-                  [VariableAst, 'a', 'b'],
-                  [ElementAst, 'div']
-                ]);
+                humanizeTplAst(parse('<div *foo="let a=b"></div>', [dirA])), [
+              [EmbeddedTemplateAst],
+              [AttrAst, 'foo', ''],
+              [VariableAst, 'a', 'b'],
+              [ElementAst, 'div']
+            ]);
           });
         });
 

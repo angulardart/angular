@@ -477,7 +477,7 @@ class BaseTestComponent {
 
 @Component(
   selector: 'ngfor-items-test',
-  template: '<div><copy-me template="ngFor let item of items">'
+  template: '<div><copy-me *ngFor="let item of items">'
       '{{item.toString()}};</copy-me></div>',
   directives: const [NgFor],
 )
@@ -488,7 +488,7 @@ class NgForItemsTest extends BaseTestComponent {
 
 @Component(
   selector: 'ngfor-options-test',
-  template: '<ul><li template="ngFor let item of items">{{item["name"]}};'
+  template: '<ul><li *ngFor="let item of items">{{item["name"]}};'
       '</li></ul>',
   directives: const [NgFor],
 )
@@ -511,14 +511,14 @@ class NgForOptionsTest {
 
 @Component(
   selector: 'ngfor-null-test',
-  template: '<ul><li template="ngFor let item of null">{{item}};</li></ul>',
+  template: '<ul><li *ngFor="let item of null">{{item}};</li></ul>',
   directives: const [NgFor],
 )
 class NgForNullTest extends NgForOptionsTest {}
 
 @Component(
   selector: 'ngfor-object-test',
-  template: '<div><copy-me template="ngFor let item of items">'
+  template: '<div><copy-me *ngFor="let item of items">'
       '{{item.toString()}};</copy-me></div>',
   directives: const [NgFor],
 )
@@ -536,8 +536,8 @@ class NgForObjectItemInstanceTest {
 @Component(
   selector: 'ng-for-nested',
   template: '<div>'
-      '<div template="ngFor let item of items">'
-      '<div template="ngFor let subitem of item">'
+      '<div *ngFor="let item of items">'
+      '<div *ngFor="let subitem of item">'
       '{{subitem}}-{{item.length}};'
       '</div>|'
       '</div>'
@@ -552,7 +552,7 @@ class NgForNestedTest {
   selector: 'ng-for-nested-template',
   template: '<div>'
       '<template ngFor let-item [ngForOf]="items">'
-      '<div template="ngFor let subitem of item">'
+      '<div *ngFor="let subitem of item">'
       '{{subitem}}-{{item.length}};'
       '</div>|</template></div>',
   directives: const [NgFor],
@@ -574,7 +574,7 @@ class NgForNestedLastIfTest {
 
 @Component(
   selector: 'ng-for-index-test',
-  template: '<div><copy-me template="ngFor: let item of items; let i=index">'
+  template: '<div><copy-me *ngFor="let item of items; let i=index">'
       '{{i.toString()}}</copy-me></div>',
   directives: const [NgFor],
 )
@@ -584,7 +584,7 @@ class NgForIndexTest {
 
 @Component(
   selector: 'ng-for-first-test',
-  template: '<div><copy-me template="ngFor: let item of items; '
+  template: '<div><copy-me *ngFor="let item of items; '
       'let isFirst=first">{{isFirst.toString()}}</copy-me></div>',
   directives: const [NgFor],
 )
@@ -594,7 +594,7 @@ class NgForFirstTest {
 
 @Component(
   selector: 'ng-for-last-test',
-  template: '<div><copy-me template="ngFor: let item of items; '
+  template: '<div><copy-me *ngFor="let item of items; '
       'let isLast=last\">{{isLast.toString()}}</copy-me></div>',
   directives: const [NgFor],
 )
@@ -604,7 +604,7 @@ class NgForLastTest {
 
 @Component(
   selector: 'ng-for-even-test',
-  template: '<div><copy-me template="ngFor: let item of items; '
+  template: '<div><copy-me *ngFor="let item of items; '
       'let isEven=even\">{{isEven.toString()}}</copy-me></div>',
   directives: const [NgFor],
 )
@@ -614,8 +614,8 @@ class NgForEvenTest {
 
 @Component(
   selector: 'ng-for-odd-test',
-  template: '<div><copy-me template=\"ngFor: let item of items; '
-      'let isOdd=odd\">{{isOdd.toString()}}</copy-me></div>',
+  template: '<div><copy-me *ngFor="let item of items; '
+      'let isOdd=odd">{{isOdd.toString()}}</copy-me></div>',
   directives: const [NgFor],
 )
 class NgForOddTest {
@@ -624,8 +624,13 @@ class NgForOddTest {
 
 @Component(
   selector: 'ng-for-custom-template-container',
-  template: '<test-cmp><li template="let item; let i=index">'
-      '{{i}}: {{item}};</li></test-cmp>',
+  template: '''
+    <test-cmp>
+      <template let-item let-i="index">
+        <li>{{i}}: {{item}};</li>
+      </template>
+    </test-cmp>
+  ''',
   directives: const [NgFor, NgForCustomTemplateComponent],
 )
 class NgForCustomTemplateTest {
@@ -672,8 +677,13 @@ class NgForCustomTemplateNullComponent {
 
 @Component(
   selector: 'ng-for-custom-template-precedence',
-  template: '<test-cmp><li template="let item; let i=index">'
-      '{{i}}: {{item}};</li></test-cmp>',
+  template: '''
+    <test-cmp>
+      <template let-item let-i="index">
+        <li>{{i}}: {{item}};</li>
+      </template>
+    </test-cmp>
+  ''',
   directives: const [NgFor, NgForCustomTemplatePrecedenceComponent],
 )
 class NgForCustomTemplatePrecedenceTest {
@@ -771,7 +781,7 @@ class ObjectToEdit {
 
 @Component(
   selector: 'ngfor-hashcode-test',
-  template: '<div><span template="ngFor let item of items">'
+  template: '<div><span *ngFor="let item of items">'
       '{{item.toString()}};</span></div>',
   directives: const [NgFor],
 )
