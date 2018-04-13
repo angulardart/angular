@@ -18,6 +18,7 @@ import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:source_span/source_span.dart';
 
 import '../../compiler/view_compiler/property_binder.dart'
     show isPrimitiveTypeName;
@@ -95,7 +96,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   ) {
     return element.metadata
         .where(safeMatcher(hasDirectives))
-        .expand((annotation) => _visitTypeObjects(
+        .expand((annotation) => _visitTypesForComponent(
               coerceList(annotation.computeConstantValue(), field),
               safeMatcher(annotationMatcher),
               visitor,
@@ -110,29 +111,36 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         .toList();
   }
 
-  void _failFastOnUnresolvedTypes(
-    NodeList<Expression> expressions,
+  void _failFastOnUnresolvedDirectives(
+    Iterable<Expression> expressions,
     ClassElement componentType,
   ) {
-    // TODO: Throw an exception type that is specifically handled by the builder
-    // and doesn't print a stack trace.
-    throw new StateError(''
-        'Failed to parse @Component annotation for ${componentType.name}:\n'
-        'One or more of the following arguments were unresolvable: \n'
-        '* ${expressions.join('\n* ')}'
-        '\n'
-        'The root cause could be a misspelling, or an import statement that \n'
-        'looks valid but is not resolvable at build time. Bazel users should \n'
-        'check their BUILD file to ensure all dependencies are listed.\n\n');
+    final sourceUrl = componentType.source.uri;
+    throw new BuildError(
+      messages.unresolvedSource(
+        expressions.map((e) {
+          return new SourceSpan(
+            new SourceLocation(e.offset, sourceUrl: sourceUrl),
+            new SourceLocation(e.offset + e.length, sourceUrl: sourceUrl),
+            e.toSource(),
+          );
+        }),
+        message: 'This argument *may* have not been resolved',
+        reason: ''
+            'Compiling @Component-annotated class "${componentType.name}" '
+            'failed.\n\n${messages.analysisFailureReasons}',
+      ),
+    );
   }
 
-  List<T> _visitTypeObjects<T>(
+  List<T> _visitTypesForComponent<T>(
     Iterable<DartObject> directives,
     AnnotationMatcher annotationMatcher,
     ElementVisitor<T> visitor(), {
     ElementAnnotationImpl annotation,
     ClassElement element,
   }) {
+    // TODO(matanl): Extract this code somewhere common, likely useful.
     if (directives.isEmpty && annotation != null) {
       // Two reasons we got to this point:
       // 1. The directives: const [ ... ] list was empty or omitted.
@@ -152,7 +160,9 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
               // check anyway at this point.
               values.elements.every((e) => e.staticType?.isDynamic != false)) {
             // We didn't resolve something.
-            _failFastOnUnresolvedTypes(values.elements, element);
+            _failFastOnUnresolvedDirectives(
+                values.elements.where((e) => e.staticType?.isDynamic != false),
+                element);
           }
         }
       }
