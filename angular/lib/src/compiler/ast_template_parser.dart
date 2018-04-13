@@ -387,12 +387,27 @@ class _BindDirectivesVisitor
           astNode.value ?? '',
           _location(astNode),
           context.templateContext.exports);
-      // If we bind the property to a directive input, or the element is a
-      // template element, then we don't want to bind the property to the element.
-      if (context.bindPropertyToDirective(astNode, value) ||
-          context.isTemplate) {
+
+      // Attempt binding to a directive input.
+      if (context.bindPropertyToDirective(astNode, value)) return null;
+
+      // Properties on a <template> must be bound to directive inputs since
+      // <template> is not an HTML element.
+      if (context.isTemplate) {
+        final name = astNode.name;
+        var message = "Can't bind to '$name' since it isn't an input of any "
+            "bound directive. Please check that the spelling is correct, and "
+            "that the intended directive is included in the host component's "
+            "list of directives.";
+        if (name == 'ngForIn') {
+          message = "$message\n\nThis is a common mistake when using *ngFor; "
+              "did you mean to write 'of' instead of 'in'?";
+        }
+        context.templateContext.reportError(message, astNode.sourceSpan);
         return null;
       }
+
+      // Attempt binding to an HTML element property.
       return createElementPropertyAst(
           context.elementName,
           _getPropertyName(astNode),
@@ -918,6 +933,7 @@ class _InlineTemplateDesugar extends ast.RecursiveTemplateAstVisitor<Null> {
 
     var name = _getName(templateAttribute.value);
     var expression = _getExpression(templateAttribute.value);
+    final attributes = <ast.AttributeAst>[];
     final properties = <ast.PropertyAst>[];
     final letBindings = <ast.LetBindingAst>[];
     if (isMicroExpression(expression)) {
@@ -947,11 +963,24 @@ class _InlineTemplateDesugar extends ast.RecursiveTemplateAstVisitor<Null> {
         return null;
       }
     } else {
-      return new ast.EmbeddedTemplateAst.from(templateAttribute, properties: [
-        new ast.PropertyAst.from(templateAttribute, name, expression)
-      ], childNodes: [
-        astNode
-      ]);
+      if (expression == null) {
+        // If the template binding has no expression, add it as an attribute
+        // rather than a property. This allows matching a directive with an
+        // attribute selector, but no input of the same name.
+        attributes.add(new ast.AttributeAst.from(templateAttribute, name));
+      } else {
+        properties.add(new ast.PropertyAst.from(
+          templateAttribute,
+          name,
+          expression,
+        ));
+      }
+      return new ast.EmbeddedTemplateAst.from(
+        templateAttribute,
+        attributes: attributes,
+        properties: properties,
+        childNodes: [astNode],
+      );
     }
   }
 

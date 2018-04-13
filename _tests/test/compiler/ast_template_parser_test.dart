@@ -1284,6 +1284,7 @@ void main() {
         test('should work with *... and empty value', () {
           expect(humanizeTplAst(parse('<div *ngIf></div>', [ngIf])), [
             [EmbeddedTemplateAst],
+            [AttrAst, 'ngIf', ''],
             [DirectiveAst, ngIf],
             [BoundDirectivePropertyAst, 'ngIf', ''],
             [ElementAst, 'div']
@@ -1723,6 +1724,22 @@ void main() {
                 'line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Found multiple events with the same name: aChange. You should merge the handlers into a single statement.\n'
                 '<div [(a)]="b" (aChange)="c()"></div>\n'
                 '     ^^^^^^^^^'));
+      });
+
+      test('should report error and suggested fix for [ngForIn]', () {
+        expect(
+            () => parse('<div *ngFor="let item in items"></div>', []),
+            throwsWith("Template parse errors:\n"
+                "line 1, column 6 of TestComp: ParseErrorLevel.FATAL: Can't "
+                "bind to 'ngForIn' since it isn't an input of any bound "
+                "directive. Please check that the spelling is correct, and "
+                "that the intended directive is included in the host "
+                "component's list of directives.\n"
+                "\n"
+                "This is a common mistake when using *ngFor; did you mean to "
+                "write 'of' instead of 'in'?\n"
+                '<div *ngFor="let item in items"></div>\n'
+                '     ^^^^^^^^^^^^^^^^^^^^^^^^^^'));
       });
     });
 

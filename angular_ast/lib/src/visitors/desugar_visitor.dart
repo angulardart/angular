@@ -119,16 +119,25 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
           letBindings: letBindingsToAdd,
         );
       } else {
-        propertiesToAdd.add(new PropertyAst.from(
-          origin,
-          directiveName,
-          starExpression,
-        ));
+        if (starExpression == null) {
+          // In the rare case the *-binding has no RHS expression, add the LHS
+          // as an attribute rather than a property. This allows matching a
+          // directive with an attribute selector, but no input of the same
+          // name.
+          attributesToAdd.add(new AttributeAst.from(origin, directiveName));
+        } else {
+          propertiesToAdd.add(new PropertyAst.from(
+            origin,
+            directiveName,
+            starExpression,
+          ));
+        }
         newAst = new EmbeddedTemplateAst.from(
           origin,
           childNodes: [
             astNode,
           ],
+          attributes: attributesToAdd,
           properties: propertiesToAdd,
         );
       }
