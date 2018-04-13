@@ -106,6 +106,9 @@
 
 *   The `*` micro-syntax now supports newlines after an identifier.
 
+*   The compiler is now reporting errors again for invalid property bindings on
+    `<template>` elements.
+
 ## 5.0.0-alpha+10
 
 ### Breaking changes
