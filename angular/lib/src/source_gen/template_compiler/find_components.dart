@@ -470,11 +470,15 @@ class ComponentVisitor
     _hostProperties[property] = bindTo;
   }
 
-  void _addHostListener(ElementAnnotation annotation, Element element) {
+  void _addHostListener(ElementAnnotation annotation, MethodElement element) {
     var value = annotation.computeConstantValue();
     var eventName = coerceString(value, 'eventName');
     var methodName = element.name;
     var methodArgs = coerceStringList(value, 'args');
+    if (methodArgs.isEmpty && element.parameters.length == 1) {
+      // Infer $event.
+      methodArgs = const [r'$event'];
+    }
     _hostListeners[eventName] = '$methodName(${methodArgs.join(', ')})';
   }
 

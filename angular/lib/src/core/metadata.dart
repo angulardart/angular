@@ -836,35 +836,36 @@ class HostBinding {
   const HostBinding([this.hostPropertyName]);
 }
 
-/// Declares a host listener.
+/// Declares listening to [eventName] on the host element of the directive.
 ///
-/// The decorated method is invoked when the host element emits the specified
-/// event.
-///
-/// If the decorated method returns [false], then [preventDefault] is applied
-/// on the DOM event.
-///
-/// ### Example
-///
-/// The following example declares a directive that attaches a click listener to
-/// the button and counts clicks.
+/// This annotation is valid on _instance_ methods of a class annotated with
+/// either `@Directive` or `@Component`, and is inherited when a class
+/// implements, extends, or mixes-in a class with this annotation.
 ///
 /// ```dart
-/// @Directive(selector: 'button[counting]'')
-/// class CountClicks {
-///   int numberOfClicks = 0;
-///
-///   @HostListener('click', const [r'$event.target'])
-///   void onClick(btn) {
-///     print("Button $btn, number of clicks: ${numberOfClicks++}.");
-///   }
-/// }
-///
 /// @Component(
-///   selector: 'app',
-///   template: '<button counting>Increment</button>',
-///   directives: const [CountClicks])
-/// class App {}
+///   selector: 'button-like',
+///   template: 'CLICK ME',
+/// )
+/// class ButtonLikeComponent {
+///   @HostListener('click')
+///   void onClick() {}
+/// }
+/// ```
+///
+/// An optional second argument, [args], can define arguments to invoke the
+/// method with, including a magic argument `'\$event'`, which is replaced with
+/// the value of the event stream. In most cases [args] can be inferred when
+/// bound to a method with a single argument:
+/// ```dart
+/// @Component(
+///   selector: 'button-like',
+///   template: 'CLICK ME',
+/// )
+/// class ButtonLikeComponent {
+///   @HostListener('click') // == @HostListener('click', const ['\$event'])
+///   void onClick(MouseEvent e) {}
+/// }
 /// ```
 class HostListener {
   final String eventName;
