@@ -14,14 +14,6 @@ void main() {
   group('ngIf', () {
     tearDown(() => disposeAnyRunningTest());
 
-    test("should work in a template attribute", () async {
-      var testBed = new NgTestBed<NgIfInTemplateAttributeComponent>();
-      var testFixture = await testBed.create();
-      Element element = testFixture.rootElement;
-      expect(element.querySelectorAll("copy-me"), hasLength(1));
-      expect(element.innerHtml, contains('hello'));
-    });
-
     test("should work in a template element", () async {
       var testBed = new NgTestBed<NgIfInTemplateComponent>();
       var testFixture = await testBed.create();
@@ -89,7 +81,7 @@ void main() {
       expect(element.innerHtml.contains('hello'), false);
     });
 
-    test("should work in a template attribute", () async {
+    test("should update multiple bindings", () async {
       var testBed = new NgTestBed<NgIfMultiUpdateTestComponent>();
       NgTestFixture<NgIfMultiUpdateTestComponent> testFixture =
           await testBed.create();
@@ -130,16 +122,6 @@ const isExpressionChanged =
     const isInstanceOf<ExpressionChangedAfterItHasBeenCheckedException>();
 
 @Component(
-  selector: 'ngif-intemplate-attr-test',
-  template: '<div><copy-me template="ngIf booleanCondition">'
-      'hello</copy-me></div>',
-  directives: const [NgIf],
-)
-class NgIfInTemplateAttributeComponent {
-  bool booleanCondition = true;
-}
-
-@Component(
   selector: 'ngif-intemplate-test',
   template: '<div><template [ngIf]="booleanCondition">'
       '<copy-me>hello2</copy-me></template></div>',
@@ -151,7 +133,7 @@ class NgIfInTemplateComponent {
 
 @Component(
   selector: 'ngif-toggle-test',
-  template: '<div><copy-me template="ngIf booleanCondition">hello</copy-me>'
+  template: '<div><copy-me *ngIf="booleanCondition">hello</copy-me>'
       '</div>',
   directives: const [NgIf],
 )
@@ -174,9 +156,9 @@ class NgIfNestedTestComponent {
 @Component(
   selector: 'ngif-multiupdate-test',
   template: '<div>'
-      '<copy-me template="ngIf numberCondition + 1 >= 2">helloNumber</copy-me>'
-      '<copy-me template="ngIf stringCondition == \'foo\'">helloString</copy-me>'
-      '<copy-me template="ngIf functionCondition(stringCondition, numberCondition)">helloFunction</copy-me>'
+      '<copy-me *ngIf="numberCondition + 1 >= 2">helloNumber</copy-me>'
+      '<copy-me *ngIf="stringCondition == \'foo\'">helloString</copy-me>'
+      '<copy-me *ngIf="functionCondition(stringCondition, numberCondition)">helloFunction</copy-me>'
       '</div>',
   directives: const [NgIf],
 )

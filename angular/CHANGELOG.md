@@ -9,6 +9,38 @@
     It is no longer needed since all applications use the same bootstrap code
     branch (either `runApp`, or code that eventually runs through `runApp`).
 
+*   Removed the rarely used `template` attribute syntax. Uses can be replaced
+    with either the `*` micro-syntax, or a `<template>` element.
+
+    **Before**
+
+    ```html
+      <div template="ngFor let item of items; trackBy: trackById; let i=index">
+        {{i}}: {{item}}
+      </div>
+    ```
+
+    **After**
+
+    ```html
+    <!-- * micro-syntax -->
+    <div *ngFor="let item of items; trackBy: trackById; let i=index">
+      {{i}}: {{item}}
+    </div>
+
+    <!-- <template> element -->
+    <template
+        ngFor
+        let-item
+        [ngForOf]="items"
+        [ngForTrackBy]="trackById"
+        let-i="index">
+      <div>
+        {{i}}: {{item}}
+      </div>
+    </template>
+    ```
+
 ### New features
 
 *   The new `Module` syntax for dependency injection is _shipped_! This is an

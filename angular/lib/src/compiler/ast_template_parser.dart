@@ -1,6 +1,5 @@
 import 'package:angular_compiler/cli.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
-import 'package:angular_ast/src/expression/micro.dart';
 import 'package:source_span/source_span.dart';
 
 import 'chars.dart';
@@ -102,8 +101,7 @@ class AstTemplateParser implements TemplateParser {
       AstExceptionHandler exceptionHandler,
       bool preserveWhitespace: false}) {
     final implicNamespace = _applyImplicitNamespace(parsedAst);
-    final desugaredAst = _inlineTemplates(implicNamespace, exceptionHandler);
-    var filterElements = _filterElements(desugaredAst, preserveWhitespace);
+    var filterElements = _filterElements(implicNamespace, preserveWhitespace);
     _validateTemplate(filterElements, exceptionHandler);
     return filterElements;
   }
@@ -129,13 +127,6 @@ class AstTemplateParser implements TemplateParser {
     _validatePipeNames(sortedAsts, pipes, exceptionHandler);
     return sortedAsts;
   }
-
-  List<ast.TemplateAst> _inlineTemplates(List<ast.TemplateAst> parsedAst,
-          ast.ExceptionHandler exceptionHandler) =>
-      parsedAst
-          .map((asNode) =>
-              asNode.accept(new _InlineTemplateDesugar(exceptionHandler)))
-          .toList();
 
   List<ast.TemplateAst> _filterElements(
       List<ast.TemplateAst> parsedAst, bool preserveWhitespace) {
@@ -906,112 +897,6 @@ class _ProviderVisitor
         ast.ngContentIndex,
         ast.sourceSpan,
         hasDeferredComponent: ast.hasDeferredComponent);
-  }
-}
-
-/// Visitor which extracts inline templates.
-// TODO(alorenzen): Refactor this into pkg:angular_ast.
-class _InlineTemplateDesugar extends ast.RecursiveTemplateAstVisitor<Null> {
-  final ast.ExceptionHandler exceptionHandler;
-
-  _InlineTemplateDesugar(this.exceptionHandler);
-
-  @override
-  ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
-    astNode = super.visitElement(astNode) as ast.ElementAst;
-    var templateAttribute = _findTemplateAttribute(astNode);
-    if (templateAttribute == null) {
-      return astNode;
-    }
-
-    astNode.attributes.remove(templateAttribute);
-
-    if (templateAttribute.value == null) {
-      return new ast.EmbeddedTemplateAst.from(templateAttribute,
-          childNodes: [astNode]);
-    }
-
-    var name = _getName(templateAttribute.value);
-    var expression = _getExpression(templateAttribute.value);
-    final attributes = <ast.AttributeAst>[];
-    final properties = <ast.PropertyAst>[];
-    final letBindings = <ast.LetBindingAst>[];
-    if (isMicroExpression(expression)) {
-      NgMicroAst micro;
-      var expressionOffset = _expressionOffset(templateAttribute);
-      try {
-        micro = parseMicroExpression(
-          name,
-          expression,
-          expressionOffset,
-          sourceUrl: astNode.sourceUrl,
-          origin: templateAttribute,
-        );
-        if (micro != null) {
-          properties.addAll(micro.properties);
-          letBindings.addAll(micro.letBindings);
-        }
-        return new ast.EmbeddedTemplateAst.from(templateAttribute,
-            properties: properties,
-            letBindings: letBindings,
-            attributes: name != null
-                ? [new ast.AttributeAst.from(templateAttribute, name)]
-                : [],
-            childNodes: [astNode]);
-      } on ast.AngularParserException catch (e) {
-        exceptionHandler.handle(e);
-        return null;
-      }
-    } else {
-      if (expression == null) {
-        // If the template binding has no expression, add it as an attribute
-        // rather than a property. This allows matching a directive with an
-        // attribute selector, but no input of the same name.
-        attributes.add(new ast.AttributeAst.from(templateAttribute, name));
-      } else {
-        properties.add(new ast.PropertyAst.from(
-          templateAttribute,
-          name,
-          expression,
-        ));
-      }
-      return new ast.EmbeddedTemplateAst.from(
-        templateAttribute,
-        attributes: attributes,
-        properties: properties,
-        childNodes: [astNode],
-      );
-    }
-  }
-
-  ast.AttributeAst _findTemplateAttribute(ast.ElementAst astNode) =>
-      astNode.attributes
-          .firstWhere((attr) => attr.name == 'template', orElse: () => null);
-
-  String _getName(String value) {
-    var spaceIndex = value.indexOf(' ');
-    var name = spaceIndex == -1 ? value : value.substring(0, spaceIndex);
-    if (name == 'let') return null;
-    return name.replaceAll(':', '');
-  }
-
-  String _getExpression(String value) {
-    var spaceIndex = value.indexOf(' ');
-    if (spaceIndex == -1) return null;
-    if (value.substring(0, spaceIndex) == 'let') return value;
-    return value.substring(spaceIndex + 1);
-  }
-
-  int _expressionOffset(ast.AttributeAst templateAttribute) {
-    if (templateAttribute == null) return null;
-    if (templateAttribute is ast.SyntheticTemplateAst) {
-      return _expressionOffset((templateAttribute as ast.SyntheticTemplateAst)
-          .origin as ast.AttributeAst);
-    }
-    return (templateAttribute as ast.ParsedAttributeAst)
-        .valueToken
-        ?.innerValue
-        ?.offset;
   }
 }
 

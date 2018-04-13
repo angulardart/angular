@@ -777,7 +777,7 @@ class MultipleLabeledViewChildrenComponent extends TextDirectivesRenderer {
 @Component(
   selector: 'labeled-element-view-children',
   template: '''
-<div template="ngFor: let item of list">
+<div *ngFor="let item of list">
   <div #divLabel>{{item}}</div>
 </div>''',
   directives: const [

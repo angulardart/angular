@@ -116,8 +116,8 @@ class SwitchWhenTest {
   directives: const [NgSwitch, NgSwitchWhen, NgSwitchDefault],
   template: '''<div>
   <ul [ngSwitch]="switchValue">
-    <li template="ngSwitchCase 'a'">when a</li>
-    <li template="ngSwitchDefault">when default</li>
+    <li *ngSwitchCase="'a'">when a</li>
+    <li *ngSwitchDefault>when default</li>
   </ul></div>''',
 )
 class SwitchDefaultTest {
