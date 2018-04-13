@@ -26,7 +26,7 @@ see logged metrics for any dependencies of the target you're compiling. To
 prevent filtering and see metrics for the entire build, use
 [`--auto_output_filter=none`][auto_output_filter].
 
-```
+```bash
 $ bazel clean
 $ bazel build --auto_output_filter=none //<path>:<target>
 ```
@@ -35,3 +35,11 @@ $ bazel build --auto_output_filter=none //<path>:<target>
 
 [auto_output_filter]: https://github.com/bazelbuild/bazel/issues/3330
 [cli]: https://github.com/dart-lang/angular/blob/master/angular_compiler/lib/cli.dart
+
+## Building Dart2JS with minification disabled
+
+Simply add `--define=DART2JS_MINIFY=False` to any build:
+
+```bash
+$ bazel build --define=DART2JS_MINIFY=False //some/target
+```
