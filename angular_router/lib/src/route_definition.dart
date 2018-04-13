@@ -95,7 +95,7 @@ abstract class RouteDefinition {
   /// ```
   /// import 'contact_view.template.dart' deferred as contact_view;
   ///
-  /// Type loadContentView() async {
+  /// Future<ComponentFactory> loadContentView() async {
   ///   await contact_view.loadLibrary();
   ///   return contact_view.ContactViewComponentNgFactory;
   /// }
