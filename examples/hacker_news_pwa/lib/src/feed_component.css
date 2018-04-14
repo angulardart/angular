@@ -1,0 +1,28 @@
+footer {
+  background: #212121;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 8px;
+  height: 37px;
+  display: flex;
+}
+
+footer div {
+  flex: 1;
+}
+
+footer a {
+  color: white;
+  display: inline;
+}
+
+div.next {
+  text-align: right;
+}
+
+article:last-of-type {
+  margin-bottom: 37px;
+}
