@@ -15,16 +15,24 @@
     * {
       box-sizing: border-box;
     }
-    html {
+    html, body {
       font-family: Roboto, sans-serif;
       font-size: 18px;
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
     }
     body {
-      background: #f2f2f2;
+      background: #212121;
       margin: 0;
       overflow-wrap: break-word;
       -webkit-font-smoothing: antialiased;
       overflow-y:scroll;
+    }
+    app {
+      flex: 1;
+      background: #eee;
     }
     header {
       background: #212121;
@@ -63,6 +71,10 @@
     main {
       margin: 56px auto 0 auto;
       max-width: 800px;
+    }
+    feed {
+      display: block;
+      background: white;
     }
     article {
       align-items: center;

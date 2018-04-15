@@ -10,6 +10,13 @@ footer {
   display: flex;
 }
 
+.loading {
+  height: 100vh;
+  padding: 50px;
+  text-align: center;
+  color: #212121;
+}
+
 footer div {
   flex: 1;
 }

@@ -1,6 +1,6 @@
 <!-- Loading view -->
 <template [ngIf]="items == null">
-  <div>Loading...</div>
+  <div class="loading">Loading...</div>
 </template>
 
 <!-- Loaded empty view -->
@@ -14,6 +14,8 @@
   <span class="rank">{{i + startingRank}}</span>
   <item [item]="item"></item>
 </article>
+</template>
+
 <footer>
   <nav>
   <div *ngIf="previousPageUrl != null"  >
@@ -24,4 +26,3 @@
   </div>
   </nav>
 </footer>
-</template>
