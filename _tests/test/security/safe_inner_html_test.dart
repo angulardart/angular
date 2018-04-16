@@ -21,6 +21,12 @@ void main() {
     });
 
     test('"safeInnerHtml" should be trusted', () async {
+      var testBed = new NgTestBed<TrustedSafeInnerHtmlTest>();
+      var testRoot = await testBed.create();
+      expect(testRoot.text, contains('Unsafe'));
+    });
+
+    test('"innerHtml" should be trusted', () async {
       var testBed = new NgTestBed<TrustedInnerHtmlTest>();
       var testRoot = await testBed.create();
       expect(testRoot.text, contains('Unsafe'));
@@ -54,6 +60,25 @@ class NormalInnerHtmlTest {
   template: r'''
        <span class="other-element">Secure</span>
        <div [safeInnerHtml]="trustedHtml"></div>
+    ''',
+)
+class TrustedSafeInnerHtmlTest {
+  /// Value will be bound directly to the DOM.
+  final SafeHtml trustedHtml;
+
+  TrustedSafeInnerHtmlTest(DomSanitizationService domSecurityService)
+      : trustedHtml = domSecurityService.bypassSecurityTrustHtml(r'''
+        <script>
+          document.querySelector('.other-element').innerText = 'Unsafe';
+        </script>
+      ''');
+}
+
+@Component(
+  selector: 'test',
+  template: r'''
+       <span class="other-element">Secure</span>
+       <div [innerHtml]="trustedHtml"></div>
     ''',
 )
 class TrustedInnerHtmlTest {
