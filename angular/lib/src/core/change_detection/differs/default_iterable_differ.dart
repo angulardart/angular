@@ -60,9 +60,6 @@ class DefaultIterableDiffer {
   CollectionChangeRecord _identityChangesHead;
   CollectionChangeRecord _identityChangesTail;
 
-  // Detect DartVM to special case string identical.
-  static const bool _useIdentity = identical(1.0, 1);
-
   DefaultIterableDiffer([TrackByFn trackByFn])
       : _trackByFn = trackByFn ?? _trackByIdentity;
 
@@ -509,8 +506,7 @@ class DefaultIterableDiffer {
     } else {
       prevRecord._next = record;
     }
-    _linkedRecords ??=
-        _useIdentity ? new _DuplicateMap() : new _DuplicateMap.withHashcode();
+    _linkedRecords ??= new _DuplicateMap();
     _linkedRecords.put(record);
     record.currentIndex = index;
     return record;
@@ -565,8 +561,7 @@ class DefaultIterableDiffer {
   }
 
   CollectionChangeRecord _addToRemovals(CollectionChangeRecord record) {
-    _unlinkedRecords ??=
-        _useIdentity ? new _DuplicateMap() : new _DuplicateMap.withHashcode();
+    _unlinkedRecords ??= new _DuplicateMap();
     _unlinkedRecords.put(record);
     record.currentIndex = null;
     record._nextRemoved = null;
@@ -746,7 +741,6 @@ class _DuplicateItemRecordList {
 class _DuplicateMap {
   final Map<dynamic, _DuplicateItemRecordList> _map;
   _DuplicateMap() : _map = new Map.identity();
-  _DuplicateMap.withHashcode() : _map = new Map();
 
   void put(CollectionChangeRecord record) {
     // todo(vicb) handle corner cases
