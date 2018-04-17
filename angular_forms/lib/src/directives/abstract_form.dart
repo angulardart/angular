@@ -28,7 +28,7 @@ abstract class AbstractForm extends ControlContainer implements Form {
   @Output()
   Stream<ControlGroup> get ngBeforeSubmit => _ngBeforeSubmit.stream;
 
-  @HostListener('submit', const [r'$event'])
+  @HostListener('submit')
   void onSubmit(Event event) {
     _ngBeforeSubmit.add(form);
     _ngSubmit.add(form);

@@ -70,7 +70,7 @@ class RouterLink implements OnDestroy {
     _keyPressSubscription?.cancel();
   }
 
-  @HostListener('click', const [r'$event'])
+  @HostListener('click')
   void onClick(MouseEvent event) {
     // Control-click (or Command-click) opens link in new tab.
     if (event.ctrlKey || event.metaKey) return;
