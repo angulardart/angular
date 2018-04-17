@@ -1,4 +1,7 @@
-![AngularDart](https://raw.githubusercontent.com/dart-lang/logos/master/logos_and_wordmarks/angulardart-logo.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dart-lang/logos/master/logos_and_wordmarks/angulardart-logo.png" alt="AngularDart Logo">
+  <h1>AngularDart</h1>
+</p>
 
 <!-- Badges -->
 
@@ -11,6 +14,15 @@ powers some of Google's most critical applications.
 It's built on [Dart][dart_web] and used extensively by Google
 [AdWords][ad_words], [AdSense][ad_sense], [Fiber][fiber],
 and many more projects.
+
+> **NOTE**: The current _stable_ release of AngularDart is 4.0.0, while the
+> currently in development release is 5.0.0-alpha. We consider the 5.0.0-alpha
+> branch to be _production ready_, but the API and features may not yet be
+> final.
+>
+> You can view the documentation for the [upcoming 5.0.0 release][new_docs].
+
+[new_docs]: https://webdev-dartlang-org-dev.firebaseapp.com/
 
 <a href="http://news.dartlang.org/2016/03/the-new-adwords-ui-uses-dart-we-asked.html">
 <img src="https://2.bp.blogspot.com/-T50YZP5hlW4/Vv07k1PPVmI/AAAAAAAAM_Q/kVo8eImMOFUWLYqXg_xGzaWPvvlO7lhng/s0/adwords-dart.png" width="800" alt="Built with AngularDart">
@@ -40,18 +52,6 @@ a set of [community contributed tutorials][comm].
 [codelabs]: https://webdev.dartlang.org/codelabs
 [comm]: https://dart.academy/tag/angular/
 [webdev_components]: https://webdev.dartlang.org/components
-
-
-## Getting AngularDart
-
-AngularDart is available as the [`angular` package on pub][pub_angular].
-
-> For historical reasons, this package was once called `angular2`. We have since
-> dropped the 2 and are now just `angular`. If you're looking for
-> version 2.x or 3.x, see the [`angular2` package][angular2].
-
-[angular2]: https://pub.dartlang.org/packages/angular2
-
 
 ## Resources
 
