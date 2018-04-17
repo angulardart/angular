@@ -6,37 +6,10 @@ import 'dart:html';
 import 'package:js/js.dart';
 import 'package:js/js_util.dart' as js_util;
 import 'package:angular/src/core/testability/testability.dart';
+import 'package:angular/src/testability/js_api.dart';
 
 @JS('self')
 external get _self;
-
-class PublicTestability {
-  Testability _testability;
-  PublicTestability(Testability testability) {
-    this._testability = testability;
-  }
-
-  bool isStable() {
-    return this._testability.isStable();
-  }
-
-  void whenStable(Function callback) {
-    this._testability.whenStable(callback);
-  }
-
-  List findBindings(Element elem, [String binding, bool exactMatch]) {
-    return this._testability.findBindings(elem, binding, exactMatch);
-  }
-
-  _toJsObject() {
-    return js_util.jsify({
-      'findBindings': allowInterop(findBindings),
-      'isStable': allowInterop(isStable),
-      'whenStable': allowInterop(whenStable),
-      '_dart_': this
-    });
-  }
-}
 
 class BrowserGetTestability implements GetTestability {
   const BrowserGetTestability();
@@ -49,8 +22,8 @@ class BrowserGetTestability implements GetTestability {
           allowInterop((Element elem, [bool findInAncestors = true]) {
         List registry = js_util.getProperty(_self, 'ngTestabilityRegistries');
         for (int i = 0; i < registry.length; i++) {
-          var result = js_util.callMethod(
-              registry[i], 'getAngularTestability', [elem, findInAncestors]);
+          var result =
+              js_util.callMethod(registry[i], 'getAngularTestability', [elem]);
           if (result != null) return result;
         }
         throw new StateError('Could not find testability for element.');
@@ -103,36 +76,31 @@ class BrowserGetTestability implements GetTestability {
   }
 
   Testability findTestabilityInTree(
-      TestabilityRegistry registry, dynamic elem, bool findInAncestors) {
-    if (elem == null) {
+      TestabilityRegistry registry, Element element) {
+    if (element == null) {
       return null;
     }
-    var t = registry.getTestability(elem);
-    if (t != null) {
-      return t;
-    } else if (!findInAncestors) {
-      return null;
-    }
-    if (elem is ShadowRoot) {
-      return this.findTestabilityInTree(registry, elem.host, true);
-    }
-    return this
-        .findTestabilityInTree(registry, (elem as Node).parentNode, true);
+    return registry.getTestability(element) ??
+        findTestabilityInTree(registry, element.parent);
   }
 
   dynamic _createRegistry(TestabilityRegistry registry) {
     var object = js_util.newObject();
     js_util.setProperty(object, 'getAngularTestability',
-        allowInterop((Element elem, bool findInAncestors) {
-      var testability = registry.findTestabilityInTree(elem, findInAncestors);
+        allowInterop((Element element) {
+      var testability = registry.findTestabilityInTree(element);
       return testability == null
           ? null
-          : new PublicTestability(testability)._toJsObject();
+          : new JsTestability(
+              isStable: allowInterop(testability.isStable),
+              whenStable: allowInterop(testability.whenStable));
     }));
     js_util.setProperty(object, 'getAllAngularTestabilities', allowInterop(() {
       var publicTestabilities = registry
           .getAllTestabilities()
-          .map((t) => new PublicTestability(t)._toJsObject())
+          .map((t) => new JsTestability(
+              isStable: allowInterop(t.isStable),
+              whenStable: allowInterop(t.whenStable)))
           .toList();
       return publicTestabilities;
     }));
