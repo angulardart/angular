@@ -1,13 +1,11 @@
 import 'dart:async';
-
-import 'package:angular/src/core/di.dart' show Injectable;
+import 'dart:html' show Element;
 
 import '../zone/ng_zone.dart';
 
 /// The Testability service provides testing hooks that can be accessed from
 /// the browser and by services such as Protractor. Each bootstrapped Angular
 /// application on the page will have an instance of Testability.
-@Injectable()
 class Testability {
   NgZone _ngZone;
   num _pendingCount = 0;
@@ -80,20 +78,9 @@ class Testability {
   num getPendingRequestCount() {
     return _pendingCount;
   }
-
-  List<dynamic> findBindings(dynamic using, String provider, bool exactMatch) {
-    // TODO(juliemr): implement.
-    return [];
-  }
-
-  List<dynamic> findProviders(dynamic using, String provider, bool exactMatch) {
-    // TODO(juliemr): implement.
-    return [];
-  }
 }
 
 /// A global registry of [Testability] instances for specific elements.
-@Injectable()
 class TestabilityRegistry {
   final _applications = new Map<dynamic, Testability>();
   GetTestability _testabilityGetter = new _NoopGetTestability();
@@ -105,22 +92,20 @@ class TestabilityRegistry {
     getter.addToWindow(this);
   }
 
-  void registerApplication(dynamic token, Testability testability) {
+  void registerApplication(Element token, Testability testability) {
     _applications[token] = testability;
   }
 
-  Testability getTestability(dynamic elem) {
-    return _applications[elem];
+  Testability getTestability(Element element) {
+    return _applications[element];
   }
 
   List<Testability> getAllTestabilities() => _applications.values.toList();
 
   List<dynamic> getAllRootElements() => _applications.keys.toList();
 
-  Testability findTestabilityInTree(dynamic elem,
-      [bool findInAncestors = true]) {
-    return _testabilityGetter.findTestabilityInTree(
-        this, elem, findInAncestors);
+  Testability findTestabilityInTree(Element element) {
+    return _testabilityGetter.findTestabilityInTree(this, element);
   }
 }
 
@@ -129,13 +114,13 @@ class TestabilityRegistry {
 abstract class GetTestability {
   void addToWindow(TestabilityRegistry registry);
   Testability findTestabilityInTree(
-      TestabilityRegistry registry, dynamic elem, bool findInAncestors);
+      TestabilityRegistry registry, Element element);
 }
 
 class _NoopGetTestability implements GetTestability {
   void addToWindow(TestabilityRegistry registry) {}
   Testability findTestabilityInTree(
-      TestabilityRegistry registry, dynamic elem, bool findInAncestors) {
+      TestabilityRegistry registry, Element elem) {
     return null;
   }
 

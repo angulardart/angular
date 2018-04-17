@@ -37,7 +37,6 @@ void main() {
     expect(component.injector.get(Testability), isNotNull);
     JsTestability jsTestability = getAngularTestability(
       rootDomContainer.children.first,
-      false,
     );
     expect(getAllAngularTestabilities(), isNot(hasLength(0)));
     expect(jsTestability.isStable(), isTrue);
@@ -164,7 +163,7 @@ class StubExceptionHandler implements ExceptionHandler {
 // TODO(matanl): Refactor testability, and re-use a JS interface.
 
 @JS()
-external JsTestability getAngularTestability(Element e, bool findInAncestors);
+external JsTestability getAngularTestability(Element e);
 
 @JS()
 external List<JsTestability> getAllAngularTestabilities();
