@@ -57,6 +57,10 @@ abstract class Router {
 
   /// Attempts to navigate to a route that matches [path].
   ///
+  /// Query parameters and a fragment identifier can be specified in
+  /// [navigationParams]. If you wish to navigate to a URL that already encodes
+  /// these values, see [navigateByUrl] instead.
+  ///
   /// Returns a future which completes after navigation indicating whether
   /// navigation completed successfully, failed because no route matched [path],
   /// or was blocked by a router lifecycle implementor.
@@ -64,6 +68,19 @@ abstract class Router {
     String path, [
     NavigationParams navigationParams,
   ]);
+
+  /// Attempts to navigate to a route that matches [url].
+  ///
+  /// This method is the same as [navigate], except that query parameters and
+  /// the fragment identifier are de-serialized from [url].
+  ///
+  /// See [NavigationParams] for documentation on [reload] and [replace] which
+  /// serve the same purpose.
+  Future<NavigationResult> navigateByUrl(
+    String url, {
+    bool reload: false,
+    bool replace: false,
+  });
 
   /// Registers the root [routerOutlet] and navigates to the current route.
   ///

@@ -109,6 +109,23 @@ class RouterImpl extends Router {
     return _enqueueNavigation(absolutePath, navigationParams);
   }
 
+  @override
+  Future<NavigationResult> navigateByUrl(
+    String url, {
+    bool reload: false,
+    bool replace: false,
+  }) {
+    final parsed = Url.parse(url);
+    return navigate(
+        parsed.path,
+        new NavigationParams(
+          fragment: parsed.fragment,
+          queryParameters: parsed.queryParameters,
+          reload: reload,
+          replace: replace,
+        ));
+  }
+
   /// Enqueues the navigation request to begin after all pending ones complete.
   Future<NavigationResult> _enqueueNavigation(
     String path,
