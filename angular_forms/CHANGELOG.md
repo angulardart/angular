@@ -1,5 +1,8 @@
 ### Breaking Changes
 
+*   `NgControlGroup` can no longer be injected directly. It can still be
+    injected as a `ControlContainer`.
+
 *   `CheckboxControlValueAccessor`, `DefaultValueAccessor`,
     `NumberValueAccessor`, `RadioControlValueAccessor`, and `NgSelectOption` can
     no longer be injected directly.
