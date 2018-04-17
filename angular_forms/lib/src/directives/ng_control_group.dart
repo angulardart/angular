@@ -57,7 +57,6 @@ import 'validators.dart' show ValidatorFn;
     const ExistingProvider(ControlContainer, NgControlGroup),
   ],
   exportAs: 'ngForm',
-  visibility: Visibility.all,
 )
 class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
   final ValidatorFn validator;
