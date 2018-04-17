@@ -61,7 +61,6 @@ import 'shared.dart' show setUpControl;
     const ExistingProvider(NgControl, NgFormControl),
   ],
   exportAs: 'ngForm',
-  visibility: Visibility.all,
 )
 class NgFormControl extends NgControl implements AfterChanges {
   bool _formChanged = false;

@@ -70,7 +70,6 @@ import 'shared.dart' show controlPath;
     const ExistingProvider(NgControl, NgControlName),
   ],
   exportAs: 'ngForm',
-  visibility: Visibility.all,
 )
 class NgControlName extends NgControl implements AfterChanges, OnDestroy {
   final ControlContainer _parent;
