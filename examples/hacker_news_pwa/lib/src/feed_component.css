@@ -10,15 +10,6 @@ footer {
   display: flex;
 }
 
-.notice {
-  text-align: center;
-  color: #212121;
-  position: fixed;
-  top: 100px;
-  width: 100%;
-  max-width: 800px;
-}
-
 footer div {
   flex: 1;
 }
