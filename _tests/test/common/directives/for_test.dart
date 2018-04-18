@@ -144,11 +144,8 @@ void main() {
       await testFixture.update((NgForOptionsTest component) {
         component.items = "this is not iterable";
       }).catchError((e) {
-        expect(
-            e.toString(),
-            contains('Cannot diff `this is not iterable`. NgFor only '
-                'supports binding to something that implements the `Iterable` '
-                'interface, such as `List`.'));
+        expect(e.toString(),
+            contains("Type 'String' is not a subtype of type 'Iterable'"));
         didThrowException = true;
       });
       expect(didThrowException, true);
@@ -448,13 +445,10 @@ void main() {
           });
           await completer.future;
         });
-        if (identical(1.0, 1)) {
-          // Skip for Dartium tests.
-          await testFixture.update((NgForHashcodeTest component) {
-            testItems.removeAt(2);
-          });
-          expect(testFixture.rootElement, hasTextContent('1;2;4;5;'));
-        }
+        await testFixture.update((NgForHashcodeTest component) {
+          testItems.removeAt(2);
+        });
+        expect(testFixture.rootElement, hasTextContent('1;2;4;5;'));
       });
     });
   });
