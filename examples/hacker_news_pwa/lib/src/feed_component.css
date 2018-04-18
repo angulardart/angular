@@ -10,11 +10,13 @@ footer {
   display: flex;
 }
 
-.loading {
-  height: 100vh;
-  padding: 50px;
+.notice {
   text-align: center;
   color: #212121;
+  position: fixed;
+  top: 100px;
+  width: 100%;
+  max-width: 800px;
 }
 
 footer div {
