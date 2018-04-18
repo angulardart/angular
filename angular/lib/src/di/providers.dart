@@ -81,7 +81,7 @@ class Provider<T> {
   ///
   /// It is recommended to use [useValue] with an [OpaqueToken] as [token]:
   /// ```dart
-  /// const animationDelay = const OpaqueToken('animationDelay');
+  /// const animationDelay = const OpaqueToken<Duration>('animationDelay');
   ///
   /// const Provider(animationDelay, useValue: const Duration(seconds: 1));
   /// ```
@@ -116,7 +116,7 @@ class Provider<T> {
   /// A multi-provider collects all tokens, and returns a [List<T>] instead of
   /// just a value [T] for given injection of [token]:
   /// ```dart
-  /// const usPresidents = const OpaqueToken('usPresidents');
+  /// const usPresidents = const OpaqueToken<String>('usPresidents');
   ///
   /// const presidentialProviders = const [
   ///   const MultiProvider.ofTokenToValue(usPresidents, 'George Washington'),
@@ -306,7 +306,7 @@ class FactoryProvider<T> extends Provider<T> {
 ///
 /// It is recommended to use [useValue] with an [OpaqueToken] as [token]:
 /// ```dart
-/// const animationDelay = const OpaqueToken('animationDelay');
+/// const animationDelay = const OpaqueToken<Duration>('animationDelay');
 ///
 /// const Provider(animationDelay, useValue: const Duration(seconds: 1));
 /// ```
