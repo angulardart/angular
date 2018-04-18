@@ -71,6 +71,17 @@
       margin: 56px auto 0 auto;
       max-width: 800px;
     }
+    footer {
+      background: #212121;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      padding: 8px;
+      height: 37px;
+      display: flex;
+    }
     article {
       align-items: center;
       background: #fff;
@@ -78,6 +89,9 @@
       display: flex;
       min-height: 56px;
       padding: 12px 0;
+    }
+    article:last-of-type {
+      margin-bottom: 37px;
     }
     item {
       padding-right: 16px;
@@ -183,6 +197,7 @@
         <span class="rank">19</span>
         <item></item>
       </article>
+      <footer></footer>
     </main>
   </app>
 </body>
