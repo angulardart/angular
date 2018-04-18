@@ -1,10 +1,9 @@
 import 'package:angular/core.dart' show DoCheck, Directive, Input;
-import 'package:angular/src/runtime.dart';
 
 import '../../core/change_detection/differs/default_iterable_differ.dart'
     show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
 import '../../core/linker.dart'
-    show ViewContainerRef, ViewRef, TemplateRef, EmbeddedViewRef;
+    show ViewContainerRef, TemplateRef, EmbeddedViewRef;
 
 /// The `NgFor` directive instantiates a template once per item from an
 /// iterable. The context for each instantiated template inherits from the outer
@@ -98,12 +97,8 @@ class NgFor implements DoCheck {
   NgFor(this._viewContainer, this._templateRef);
 
   @Input()
-  set ngForOf(value) {
-    assert(
-        value == null || value is Iterable,
-        'Cannot diff `$value`. $NgFor only supports binding to something that '
-        'implements the `Iterable` interface, such as `List`.');
-    _ngForOf = value as Iterable;
+  set ngForOf(Iterable value) {
+    _ngForOf = value;
     if (_differ == null && value != null) {
       _differ = new DefaultIterableDiffer(_ngForTrackBy);
     }
@@ -154,15 +149,15 @@ class NgFor implements DoCheck {
       } else if (currentIndex == null) {
         _viewContainer.remove(adjustedPreviousIndex);
       } else {
-        ViewRef view = _viewContainer.get(adjustedPreviousIndex);
+        var view = _viewContainer.get(adjustedPreviousIndex);
         _viewContainer.move(view, currentIndex);
-        RecordViewTuple tuple = new RecordViewTuple(item, unsafeCast(view));
+        var tuple = new RecordViewTuple(item, view);
         insertTuples.add(tuple);
       }
     });
 
     for (var i = 0; i < insertTuples.length; i++) {
-      _perViewChange(insertTuples[i].view, unsafeCast(insertTuples[i].record));
+      _perViewChange(insertTuples[i].view, insertTuples[i].record);
     }
     for (var i = 0, len = _viewContainer.length; i < len; i++) {
       var viewRef = _viewContainer.get(i);
@@ -186,6 +181,6 @@ class NgFor implements DoCheck {
 
 class RecordViewTuple {
   final EmbeddedViewRef view;
-  final dynamic record;
+  final CollectionChangeRecord record;
   RecordViewTuple(this.record, this.view);
 }
