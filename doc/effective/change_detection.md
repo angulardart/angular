@@ -427,6 +427,11 @@ component to be checked in the next change detection cycle. If you opt for this
 approach, you must make sure that `markForCheck()` is called inside the
 Angular zone.
 
+**IMPORTANT NOTE**: It is a misconception that one should use
+`ChangeDetectorRef#detectChanges()` to do manual change detection. Please note
+that `detectChanges()` **will not work** with `OnPush` components. The correct
+way is to call `markForCheck()`.
+
 **GOOD**:
 
 ```dart
