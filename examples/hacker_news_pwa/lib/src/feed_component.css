@@ -1,0 +1,11 @@
+footer div {
+  flex: 1;
+}
+
+footer a {
+  display: inline;
+}
+
+div.next {
+  text-align: right;
+}
