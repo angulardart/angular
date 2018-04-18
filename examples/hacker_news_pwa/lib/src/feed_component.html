@@ -1,11 +1,11 @@
 <!-- Loading view -->
 <template [ngIf]="items == null">
-  <div>Loading...</div>
+  <div class="notice">Loading...</div>
 </template>
 
 <!-- Loaded empty view -->
 <template [ngIf]="items != null && items.isEmpty">
-  <div>There are no more items.</div>
+  <div class="notice">There are no more items.</div>
 </template>
 
 <!-- Loaded items view -->
@@ -14,7 +14,15 @@
   <span class="rank">{{i + startingRank}}</span>
   <item [item]="item"></item>
 </article>
-<div>
-  <a [routerLink]="nextPageUrl">Next page</a>
-</div>
 </template>
+
+<footer>
+  <nav>
+    <div *ngIf="previousPageUrl != null"  >
+      <a [routerLink]="previousPageUrl">Previous</a>
+    </div>
+    <div class="next" *ngIf="nextPageUrl != null">
+      <a [routerLink]="nextPageUrl">Next</a>
+    </div>
+  </nav>
+</footer>

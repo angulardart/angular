@@ -12,6 +12,7 @@ import 'src/routes.dart';
   selector: 'app',
   templateUrl: 'app_component.html',
   directives: const [routerDirectives],
+  styleUrls: const ['app_component.css'],
   // Disabled. We use global styles that are used before the JavaScript loads.
   //
   // See web/index.html's <style> tag.
