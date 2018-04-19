@@ -2,8 +2,6 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'dart:collection';
-
 import 'package:source_span/source_span.dart';
 import 'package:string_scanner/string_scanner.dart';
 
@@ -270,7 +268,7 @@ class RecursiveAstParser {
   ///
   /// It's possible the element will end up not being an [ElementAst].
   StandaloneTemplateAst parseElement(
-      NgToken beginToken, Queue<String> tagStack) {
+      NgToken beginToken, List<String> tagStack) {
     var isTemplateElement = false;
 
     // Parse the element identifier.
@@ -383,7 +381,7 @@ class RecursiveAstParser {
 
     // If not a void element, look for closing tag OR child nodes.
     if (!isVoidElement && nextToken.type != NgTokenType.openElementEndVoid) {
-      tagStack.addFirst(nameToken.lexeme);
+      tagStack.add(nameToken.lexeme);
       var closingTagFound = false;
 
       while (!closingTagFound) {
@@ -446,7 +444,7 @@ class RecursiveAstParser {
           childNodes.add(childAst);
         }
       }
-      tagStack.removeFirst();
+      tagStack.removeLast();
     }
 
     if (isTemplateElement) {
@@ -763,9 +761,9 @@ class RecursiveAstParser {
   /// Returns and parses a top-level AST structure.
   StandaloneTemplateAst parseStandalone(
     NgToken token, [
-    Queue<String> tagStack,
+    List<String> tagStack,
   ]) {
-    tagStack = tagStack ?? new Queue();
+    tagStack ??= [];
     switch (token.type) {
       case NgTokenType.commentStart:
         return parseComment(token);
