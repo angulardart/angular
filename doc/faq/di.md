@@ -186,8 +186,8 @@ being written over". You _could_, but definitely not statically, which means
 that users would run into a runtime error in some cases (but not others).
 
 Part of the issue with this request is it fundamentally conflicts with the goal
-of dependency injection, which is being able to override providers. Lets look
-at an example of dependency injection _without_ a framework:
+of dependency injection in Angular, which is being able to override providers.
+Lets look at an example of dependency injection _without_ a framework:
 
 ```dart
 class CoffeeMachine {
