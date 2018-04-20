@@ -8,7 +8,7 @@ Below are some of the most common questions received from users of AngularDart
 regarding dependency injection, and the canonical answers for those questions.
 
 In general, most everything can be explained by giving a simple technical
-overview of how dependendy injection is implemented, and why it is implemented
+overview of how dependency injection is implemented, and why it is implemented
 that way. You can think of dependency injection as a `HashMap<K, V>`, where:
 
 * `K` is the token used for injection (a class `Type` or `OpaqueToken`).
@@ -83,7 +83,7 @@ createInjector({
 ```
 
 ... and ultimately, injectors (and the backing `HashMap`s) form a tree. As you
-can see, dependnecy injection is implemented fairly simply today - this is
+can see, dependency injection is implemented fairly simply today - this is
 intentional in order to make understanding it (and developing it) simpler. It's
 possible to make a more complex implementation with more features, but then it
 will deviate sharply from a simple set of linked hash maps.
@@ -118,7 +118,7 @@ including function bodies, to use for code generation (the only tools that are
 tell what `Injector` is being used to create `RootComponent`'s template, so
 we don't know what `providers` will or will not be missing.
 
-So, **(1)**, we'd need a way of _completely_ static app initialization; that is,
+So, we'd need a way of _completely_ static app initialization; that is,
 you would need to statically declare your root component _and_ your root
 services. For example:
 
@@ -133,9 +133,9 @@ Assuming this feature was implemented and teams used it (for example, this would
 prohibit any runtime configuration of dependency injection, at all), then the
 next issue is that not all components are created (or known) statically.
 
-Anytime you use `ComponentLoader` (or related APIs), again, there is imperative
-user-defined function bodies that change the dependency injection tree in ways
-that we can't statically inspect:
+Anytime you use `ComponentLoader` (or related APIs), again, there are
+imperative user-defined function bodies that change the dependency injection
+tree in ways that we can't statically inspect:
 
 ```dart
 class ContainerComponent {
@@ -202,7 +202,7 @@ void main() {
 ```
 
 Imagine you wanted to make `Electricity` _not_ be overridable. Well, in that
-case you would simply remove it as a parameter to `CofeeMachine` and use `new`
+case you would simply remove it as a parameter to `CoffeeMachine` and use `new`
 (or another pattern, like a static singleton):
 
 ```dart
