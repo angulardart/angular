@@ -232,9 +232,9 @@ void printName(Person person) => print(person.name);
 ```dart
 void printName(Object personOrPlace) {
   if (personOrPlace is Person) {
-    print(person.name);
+    print(personOrPlace.name);
   } else {
-    print((person as Place).name);
+    print((personOrPlace as Place).name);
   }
 }
 ```
@@ -259,7 +259,7 @@ _all_ reified types to need to be retained to implement Dart semantics. In
 Dart2JS's production mode all symbols are minified, so this information is not
 too useful anyway.
 
-**NOTE**: It is also should **not** be used in `assertionsEnabled()`. As of
+**NOTE**: It also should **not** be used in `assertionsEnabled()`. As of
 2017/10/12, Dart2JS determines what types are "active" in the program before
 stripping out assertions.
 
