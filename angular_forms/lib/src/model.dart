@@ -39,6 +39,7 @@ abstract class AbstractControl<T> {
   T _value;
   final _valueChanges = new StreamController<T>.broadcast();
   final _statusChanges = new StreamController<String>.broadcast();
+  final _disabledChanges = new StreamController<bool>.broadcast();
   String _status;
   Map<String, dynamic> _errors;
   bool _pristine = true;
@@ -76,6 +77,8 @@ abstract class AbstractControl<T> {
   Stream<T> get valueChanges => _valueChanges.stream;
 
   Stream<String> get statusChanges => _statusChanges.stream;
+
+  Stream<bool> get disabledChanges => _disabledChanges.stream;
 
   bool get pending => _status == PENDING;
 
@@ -126,6 +129,7 @@ abstract class AbstractControl<T> {
     if (emitEvent) _emitEvent();
 
     _updateAncestors(updateParent: updateParent, emitEvent: emitEvent);
+    _disabledChanges.add(true);
   }
 
   /// Enables the control. This means the control will be included in
@@ -143,6 +147,7 @@ abstract class AbstractControl<T> {
         (c) => c.markAsEnabled(updateParent: false, emitEvent: emitEvent));
     updateValueAndValidity(onlySelf: true, emitEvent: emitEvent);
     _updateAncestors(updateParent: updateParent, emitEvent: emitEvent);
+    _disabledChanges.add(false);
   }
 
   void _updateAncestors({bool updateParent, bool emitEvent}) {

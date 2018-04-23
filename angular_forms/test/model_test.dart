@@ -379,6 +379,15 @@ void main() {
           expect(control.disabled, false);
         });
 
+        test('should update nested children', () {
+          var childControl = new Control();
+          group.addControl('nested', new ControlGroup({'child': childControl}));
+          group.markAsDisabled();
+          expect(childControl.disabled, true);
+          group.markAsEnabled();
+          expect(childControl.disabled, false);
+        });
+
         test('should handle empty ControlGroup', () {
           var emptyGroup = new ControlGroup({});
           expect(emptyGroup.disabled, false);

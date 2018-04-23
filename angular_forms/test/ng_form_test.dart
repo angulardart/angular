@@ -1,3 +1,5 @@
+import 'dart:html';
+
 @TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
@@ -59,6 +61,18 @@ void main() {
       var f = new NgForm([formValidator]);
       expect(f.form.errors, {'custom': true});
     });
+
+    test('should disable child elements', () async {
+      var readonlyComponent = fixture.assertOnlyInstance;
+      expect(readonlyComponent.inputElement.disabled, false);
+      expect(readonlyComponent.loginControlDir.disabled, false);
+      await fixture.update((cmp) => cmp.disabled = true);
+      expect(readonlyComponent.inputElement.disabled, true);
+      expect(readonlyComponent.loginControlDir.disabled, true);
+      await fixture.update((cmp) => cmp.disabled = false);
+      expect(readonlyComponent.inputElement.disabled, false);
+      expect(readonlyComponent.loginControlDir.disabled, false);
+    });
   });
 }
 
@@ -70,9 +84,10 @@ void main() {
     NgIf,
   ],
   template: '''
-<div ngForm #form="ngForm">
+<div ngForm #form="ngForm" [ngDisabled]="disabled">
   <div [ngControlGroup]="'person'" *ngIf="needsLogin">
     <input [ngControl]="'login'" #login="ngForm" required dummy />
+    <input [ngControl]="'input'" #input />
   </div>
 </div>
 ''',
@@ -84,6 +99,10 @@ class NgFormTest {
   @ViewChild('login')
   NgControlName loginControlDir;
 
+  @ViewChild('input')
+  InputElement inputElement;
+
+  bool disabled = false;
   bool needsLogin = true;
 
   ControlGroup get formModel => form.form;

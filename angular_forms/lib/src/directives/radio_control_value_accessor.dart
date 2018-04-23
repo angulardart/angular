@@ -2,6 +2,8 @@ import 'dart:html';
 import 'dart:js_util' as js_util;
 
 import 'package:angular/angular.dart';
+import 'package:angular_forms/src/directives/shared.dart'
+    show setElementDisabled;
 
 import 'control_value_accessor.dart'
     show ChangeHandler, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
@@ -116,5 +118,7 @@ class RadioControlValueAccessor extends Object
   }
 
   @override
-  void onDisabledChanged(bool isDisabled) {}
+  void onDisabledChanged(bool isDisabled) {
+    setElementDisabled(_element, isDisabled);
+  }
 }

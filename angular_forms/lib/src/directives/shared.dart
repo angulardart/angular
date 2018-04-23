@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'dart:js_util' as js_util;
+
 import '../model.dart' show Control, ControlGroup;
 import '../validators.dart' show Validators;
 import 'abstract_control_directive.dart' show AbstractControlDirective;
@@ -35,6 +38,7 @@ void setUpControl(Control control, NgControl dir) {
   // model -> view
   control.registerOnChange(
       (dynamic newValue) => dir.valueAccessor?.writeValue(newValue));
+  control.disabledChanges.listen(dir.valueAccessor?.onDisabledChanged);
   // touched
   dir.valueAccessor.registerOnTouched(() => control.markAsTouched());
 }
@@ -85,4 +89,8 @@ ControlValueAccessor selectValueAccessor(
   if (defaultAccessor != null) return defaultAccessor;
   _throwError(null, 'No valid value accessor for');
   return null;
+}
+
+void setElementDisabled(HtmlElement element, bool isDisabled) {
+  js_util.setProperty(element, 'disabled', isDisabled);
 }

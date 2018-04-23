@@ -81,6 +81,11 @@ class NgForm extends AbstractForm {
     form = new ControlGroup({}, composeValidators(validators));
   }
 
+  @Input('ngDisabled')
+  set disabled(bool isDisabled) {
+    toggleDisabled(isDisabled);
+  }
+
   Map<String, AbstractControl> get controls => form.controls;
 
   @override

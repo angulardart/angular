@@ -91,6 +91,13 @@ class NgModel extends NgControl
     _init(valueAccessors);
   }
 
+  @Input('ngDisabled')
+  set disabled(bool isDisabled) {
+    setState(() {
+      toggleDisabled(isDisabled);
+    });
+  }
+
   // This function prevents constructor inlining for smaller code size since
   // NgModel is constructed for majority of form components.
   void _init(List<ControlValueAccessor> valueAccessors) {
