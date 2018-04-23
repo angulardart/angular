@@ -323,9 +323,7 @@ class _BindDirectivesVisitor
     if (syntheticNode.origin is ast.EmbeddedTemplateAst) {
       return _isInlineTemplate(syntheticNode.origin as ast.EmbeddedTemplateAst);
     }
-    if (syntheticNode.origin is ast.StarAst ||
-        syntheticNode.origin is ast.AttributeAst) return true;
-    return false;
+    return syntheticNode.origin is ast.StarAst;
   }
 
   @override
