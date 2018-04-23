@@ -57,7 +57,7 @@ List<EventManagerPlugin> createEventPlugins() {
 /// won't actually use it in apps that called `bootstrapFactory`.
 class ThrowingSlowComponentLoader implements SlowComponentLoader {
   static const _slowComponentLoaderWarning =
-      'You are using runApp or runAppAsync, which does not supports loading a '
+      'You are using runApp or runAppAsync, which does not support loading a '
       'component with SlowComponentLoader. Please migrate this code to use '
       'ComponentLoader instead.';
 
