@@ -1,3 +1,5 @@
+## 2.0.0-alpha+11
+
 ### New features
 
 *   Added the method `navigateByUrl` to `Router`.
