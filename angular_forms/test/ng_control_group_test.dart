@@ -1,3 +1,5 @@
+import 'dart:html';
+
 @TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
@@ -31,6 +33,17 @@ void main() {
         expect(cmp.controlGroup.untouched, cmp.groupModel.untouched);
       });
     });
+
+    test('should disable child controls', () async {
+      await fixture.update((cmp) {
+        cmp.disabled = true;
+      });
+      expect(fixture.assertOnlyInstance.inputElement.disabled, true);
+      await fixture.update((cmp) {
+        cmp.disabled = false;
+      });
+      expect(fixture.assertOnlyInstance.inputElement.disabled, false);
+    });
   });
 }
 
@@ -42,8 +55,8 @@ void main() {
   ],
   template: '''
 <div [ngFormModel]="formModel">
-  <div [ngControlGroup]="'group'" #controlGroup="ngForm">
-    <input [ngControl]="'login'" />
+  <div [ngControlGroup]="'group'" #controlGroup="ngForm" [ngDisabled]="disabled">
+    <input [ngControl]="'login'" #input />
   </div>
 </div>
 ''',
@@ -51,6 +64,11 @@ void main() {
 class NgControlGroupTest {
   @ViewChild('controlGroup')
   NgControlGroup controlGroup;
+
+  @ViewChild('input')
+  InputElement inputElement;
+
+  bool disabled = false;
 
   ControlGroup formModel = FormBuilder.controlGroup({
     'group': FormBuilder.controlGroup({'login': new Control(null)})

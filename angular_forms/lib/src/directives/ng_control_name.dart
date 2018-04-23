@@ -74,6 +74,7 @@ import 'shared.dart' show controlPath;
 class NgControlName extends NgControl implements AfterChanges, OnDestroy {
   final ControlContainer _parent;
   final _update = new StreamController.broadcast();
+
   bool _modelChanged = false;
   dynamic _model;
   @Input('ngModel')
@@ -85,6 +86,9 @@ class NgControlName extends NgControl implements AfterChanges, OnDestroy {
   dynamic get model => _model;
   dynamic viewModel;
   var _added = false;
+
+  bool _isDisabled = false;
+  bool _disabledChanged = false;
 
   NgControlName(
       @SkipSelf()
@@ -105,6 +109,12 @@ class NgControlName extends NgControl implements AfterChanges, OnDestroy {
     super.name = value;
   }
 
+  @Input('ngDisabled')
+  set disabled(bool isDisabled) {
+    _isDisabled = isDisabled;
+    _disabledChanged = true;
+  }
+
   @Output('ngModelChange')
   Stream get update => _update.stream;
 
@@ -120,6 +130,12 @@ class NgControlName extends NgControl implements AfterChanges, OnDestroy {
         viewModel = _model;
         formDirective.updateModel(this, _model);
       }
+    }
+    if (_disabledChanged) {
+      scheduleMicrotask(() {
+        _disabledChanged = false;
+        toggleDisabled(_isDisabled);
+      });
     }
   }
 

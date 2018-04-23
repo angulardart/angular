@@ -1,5 +1,9 @@
 ## 2.0.0-alpha+3
 
+### New Features
+
+*   Add `ngDisabled` input to all Control directives.
+
 ### Breaking Changes
 
 *   `NgControlGroup` can no longer be injected directly. It can still be

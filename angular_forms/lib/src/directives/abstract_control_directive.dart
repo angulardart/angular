@@ -12,6 +12,10 @@ abstract class AbstractControlDirective<T extends AbstractControl> {
 
   bool get valid => control?.valid;
 
+  bool get disabled => control?.disabled;
+
+  bool get enabled => control?.enabled;
+
   Map<String, dynamic> get errors => control?.errors;
 
   bool get pristine => control?.pristine;
@@ -23,4 +27,9 @@ abstract class AbstractControlDirective<T extends AbstractControl> {
   bool get untouched => control?.untouched;
 
   List<String> get path => null;
+
+  void toggleDisabled(bool isDisabled) {
+    if (isDisabled && !control.disabled) control.markAsDisabled();
+    if (!isDisabled && !control.enabled) control.markAsEnabled();
+  }
 }

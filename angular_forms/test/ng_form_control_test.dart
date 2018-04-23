@@ -1,3 +1,5 @@
+import 'dart:html';
+
 @TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
@@ -52,6 +54,14 @@ void main() {
         expect(cmp.loginControl.valid, false);
       });
     });
+
+    test('should disable element', () async {
+      expect(fixture.assertOnlyInstance.inputElement.disabled, false);
+      await fixture.update((cmp) => cmp.loginControl.markAsDisabled());
+      expect(fixture.assertOnlyInstance.inputElement.disabled, true);
+      await fixture.update((cmp) => cmp.loginControl.markAsEnabled());
+      expect(fixture.assertOnlyInstance.inputElement.disabled, false);
+    });
   });
 }
 
@@ -62,13 +72,16 @@ void main() {
   ],
   template: '''
 <div ngForm>
-  <input [ngFormControl]="loginControl" #login="ngForm" required />
+  <input [ngFormControl]="loginControl" #login="ngForm" #input required />
 </div>
 ''',
 )
 class NgFormControlTest {
   @ViewChild('login')
   NgFormControl formControl;
+
+  @ViewChild('input')
+  InputElement inputElement;
 
   Control loginControl = new Control(null);
 }

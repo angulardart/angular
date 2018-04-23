@@ -1,3 +1,5 @@
+import 'dart:html';
+
 @TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
@@ -31,6 +33,14 @@ void main() {
         expect(cmp.controlName.untouched, cmp.controlModel.untouched);
       });
     });
+
+    test('should disabled element', () async {
+      expect(fixture.assertOnlyInstance.inputElement.disabled, false);
+      await fixture.update((cmp) => cmp.disabled = true);
+      expect(fixture.assertOnlyInstance.inputElement.disabled, true);
+      await fixture.update((cmp) => cmp.disabled = false);
+      expect(fixture.assertOnlyInstance.inputElement.disabled, false);
+    });
   });
 }
 
@@ -41,7 +51,12 @@ void main() {
   ],
   template: '''
 <div [ngFormModel]="formModel">
-  <input [ngControl]="'login'" [(ngModel)]="loginValue" #login="ngForm" required />
+  <input [ngControl]="'login'"
+      [(ngModel)]="loginValue"
+      #login="ngForm"
+      #input
+      required
+      [ngDisabled]="disabled" />
 </div>
 ''',
 )
@@ -49,9 +64,14 @@ class NgControlNameTest {
   @ViewChild('login')
   NgControlName controlName;
 
+  @ViewChild('input')
+  InputElement inputElement;
+
   String loginValue;
 
   ControlGroup formModel = new ControlGroup({'login': new Control('login')});
+
+  bool disabled = false;
 
   Control get controlModel => formModel.controls['login'];
 }
