@@ -1,3 +1,5 @@
+## 5.0.0-alpha+11
+
 ### Breaking changes
 
 *   Removed `ApplicationRef.injector` from the public API. This was a sparingly
