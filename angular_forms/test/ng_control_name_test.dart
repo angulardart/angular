@@ -42,6 +42,25 @@ void main() {
       expect(fixture.assertOnlyInstance.inputElement.disabled, false);
     });
   });
+
+  group('NgControl initialization test', () {
+    NgTestFixture<NgControlNameInitTest> fixture;
+
+    tearDown(() => disposeAnyRunningTest());
+
+    setUp(() async {
+      var testBed = NgTestBed.forComponent(ng.NgControlNameInitTestNgFactory);
+      fixture = await testBed.create();
+    });
+
+    test('should initialize with value and not null', () async {
+      // Should not throw on initialization with a null value.
+      await fixture.update((cmp) {
+        expect(cmp.controlName.value, 'Test');
+        expect(cmp.accessor.value, 'Test');
+      });
+    });
+  });
 }
 
 @Component(
@@ -74,4 +93,53 @@ class NgControlNameTest {
   bool disabled = false;
 
   Control get controlModel => formModel.controls['login'];
+}
+
+@Component(
+  selector: 'ng-control-name-accessor-test',
+  directives: [
+    formDirectives,
+    TestAccessor,
+  ],
+  template: '''
+<form>
+  <input [ngControl]="'login'" [ngModel]="'Test'" test-accessor />
+</form>
+''',
+)
+class NgControlNameInitTest {
+  @ViewChild(NgControlName)
+  NgControlName controlName;
+
+  @ViewChild(TestAccessor)
+  TestAccessor accessor;
+}
+
+@Directive(
+  selector: '[test-accessor]',
+  providers: const [
+    const ExistingProvider.forToken(
+      NG_VALUE_ACCESSOR,
+      TestAccessor,
+    )
+  ],
+)
+class TestAccessor implements ControlValueAccessor {
+  dynamic value;
+  @override
+  void writeValue(value) {
+    if (value == null) {
+      fail('Should not initialize value as null. When model has a value.');
+    }
+    this.value = value;
+  }
+
+  @override
+  void onDisabledChanged(bool isDisabled) {}
+
+  @override
+  void registerOnChange(ChangeFunction<dynamic> f) {}
+
+  @override
+  void registerOnTouched(TouchFunction f) {}
 }

@@ -120,16 +120,18 @@ class NgControlName extends NgControl implements AfterChanges, OnDestroy {
 
   @override
   ngAfterChanges() {
-    if (!_added) {
-      formDirective.addControl(this);
-      _added = true;
-    }
+    // Call model changed before added so that the control already has the
+    // correct value at initialization.
     if (_modelChanged) {
       _modelChanged = false;
       if (!identical(_model, viewModel)) {
         viewModel = _model;
         formDirective.updateModel(this, _model);
       }
+    }
+    if (!_added) {
+      formDirective.addControl(this);
+      _added = true;
     }
     if (_disabledChanged) {
       scheduleMicrotask(() {
