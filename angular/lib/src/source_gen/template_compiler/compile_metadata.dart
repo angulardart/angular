@@ -145,7 +145,7 @@ class CompileTypeMetadataVisitor
       useExisting: _getUseExisting(provider),
       useFactory: _getUseFactory(provider),
       useValue: _getUseValue(provider),
-      multi: $MultiToken.isAssignableFromType(token?.type) ||
+      multi: token != null && $MultiToken.isAssignableFromType(token.type) ||
           dart_objects.coerceBool(
             provider,
             'multi',
