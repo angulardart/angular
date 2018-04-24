@@ -1,3 +1,8 @@
+### Breaking Changes
+
+*   `NgControlName` will no longer initialize with `null` if a value is
+    specified by 'ngModel'.
+
 ## 2.0.0-alpha+3
 
 ### New Features
