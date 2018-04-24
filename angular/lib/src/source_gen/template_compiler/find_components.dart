@@ -456,6 +456,11 @@ class ComponentVisitor
     var bindTo = element.name;
     if (element is PropertyAccessorElement && element.isStatic ||
         element is FieldElement && element.isStatic) {
+      if (element.enclosingElement != _directiveClassElement) {
+        // We do not want to inherit static members.
+        // https://github.com/dart-lang/angular/issues/1272
+        return;
+      }
       bindTo = '${_directiveClassElement.name}.$bindTo';
     }
     _hostProperties[property] = bindTo;

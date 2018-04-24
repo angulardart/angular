@@ -772,65 +772,41 @@ class Output {
   const Output([this.bindingPropertyName]);
 }
 
-/// Declares a host property binding.
+/// Declares a host property on the host component or element.
 ///
-/// Host property bindings are automatically checked during change detection. If
-/// a binding changes, the host element of the directive is updated.
+/// This annotation is valid on:
+/// * Public class members
+/// * The class members may either be fields or getters
+/// * The class members may either be static or instance
 ///
-/// The [HostBinding] annotation takes an optional parameter that
-/// specifies the property name of the host element that will be updated. When
-/// not provided, the property name is used.
+/// This annotation is _inherited_ if declared on an instance member.
 ///
-/// ### Example
-///
-/// With class bindings:
-///
-/// The following example creates a directive that sets the `valid` and
-/// `invalid` classes on the DOM element that has ngModel directive on it.
-///
-/// ```dart
-/// @Directive(selector: '[ngModel]')
-/// class NgModelStatus {
-///   NgModel control;
-///
-///   NgModelStatus(this.control);
-///
-///   @HostBinding('class.valid')
-///   bool get valid => return control.valid;
-///
-///   @HostBinding('class.invalid')
-///   bool get invalid => control.invalid;
+/// If [hostPropertyName] is not specified, it defaults to the property or
+/// getter name. For example in the following, `'title'` is implicitly used:
+/// ```
+/// @Directive(...)
+/// class ImplicitName {
+///   // Same as @HostBinding('title')
+///   @HostBinding()
+///   final title = 'Hello World';
 /// }
-///
-/// @Component(
-///   selector: 'app',
-///   template: '<input [(ngModel)]="prop">',
-///   directives: const [formDirectives, NgModelStatus])
-/// class App {
-///   var prop;
-///  }
 /// ```
 ///
-/// With attribute bindings:
+/// These bindings are nearly identical to using the template syntax to set
+/// properties or attributes, and are automatically updated if the referenced
+/// class member, instance or static, changes:
+/// ```
+/// @Directive(...)
+/// class HostBindingExample {
+///   // Similar to <example [value]="hostValue"> in a template.
+///   @HostBinding('value')
+///   String hostValue;
 ///
-/// The following example creates a checkbox component which reflects its state
-/// as attributes on the host element.  When the checkbox is disabled, it sets
-/// the tabindex to -1 to move it out of tab order. When the checkbox is checked
-/// the host element will add a "checked" boolean attribute.
-///
-/// ```dart
-/// @Component(selector: 'ng-checkbox', template: '...')
-/// class NgCheckboxComponent {
-///    bool disabled;
-///    bool isChecked;
-///
-///   @HostBinding('attr.tabindex')
-///   String get tabIndex => disabled ? '-1' : '1';
-///
-///   @HostBinding('attr.checked')
-///   String get checked => isChecked ? '' : null;
+///   // Similar to <example [attr.debug-id]="debugId"> in a template.
+///   @HostBinding('attr.debug-id')
+///   String debugId;
 /// }
-///```
+/// ```
 class HostBinding {
   final String hostPropertyName;
   const HostBinding([this.hostPropertyName]);
