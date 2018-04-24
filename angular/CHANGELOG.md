@@ -16,6 +16,32 @@
     ... as part of this refactor, error messages in general around use of
     these annotations have been greatly improved.
 
+### Bug fixes
+
+*   Inheriting from a class that defines a `@HostBinding()` on a static member
+    no longer causes the web compiler (Dartdevc or Dart2JS) to fail. We
+    previously inherited these bindings and generated invalid Dart code. Given
+    that static members are not inherited in the Dart language, it made sense
+    to give a similar treatment to these annotations. Instance-level members are
+    still inherited:
+
+    ```dart
+    class Base {
+      @HostBinding('title')
+      static const hostTitle = 'Hello';
+
+      @HostBinding('class')
+      final hostClass = 'fancy';
+    }
+
+    // Will have DOM of <fancy-button class="fancny"> but *not* title="Hello".
+    @Component(
+      selector: 'fancy-button',
+      template: '...',
+    )
+    class FancyButton extends Base {}
+    ```
+
 ## 5.0.0-alpha+11
 
 ### Breaking changes
