@@ -32,12 +32,6 @@ void main() {
 
           @Output()
           get output => null;
-
-          @HostBinding()
-          get hostBinding => 'hostBinding';
-
-          @HostListener('event')
-          void hostListener() {}
         }
 
         @Pipe('aPipe')
@@ -120,8 +114,6 @@ void main() {
         'viewChild': $ViewChild,
         'input': $Input,
         'output': $Output,
-        'hostBinding': $HostBinding,
-        'hostListener': $HostListener,
       }.forEach((name, type) {
         test('should find $type', () {
           final parameter = getInstanceFrom(name);

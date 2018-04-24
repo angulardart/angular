@@ -1,3 +1,6 @@
+*   Removes unused APIs of `ComponentReader`.
+*   Added `DirectiveVisitor`, and removed `$HostBinding` and `$HostListener`.
+
 ## 0.4.0-alpha+11
 
 *   Added `ModuleReader.extractProviderObjects` to use in the view compiler.

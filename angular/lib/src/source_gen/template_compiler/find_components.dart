@@ -287,17 +287,6 @@ class ComponentVisitor
     return null;
   }
 
-  @override
-  CompileDirectiveMetadata visitMethodElement(MethodElement element) {
-    super.visitMethodElement(element);
-    for (ElementAnnotation annotation in element.metadata) {
-      if (safeMatcherType(HostListener)(annotation)) {
-        _addHostListener(annotation, element);
-      }
-    }
-    return null;
-  }
-
   void _visitClassMember(
     Element element, {
     bool isGetter: false,
@@ -345,13 +334,6 @@ class ComponentVisitor
         } else {
           log.severe('@Output can only be used on a public getter or field, '
               'but was found on $element.');
-        }
-      } else if (safeMatcherType(HostBinding)(annotation)) {
-        if (isGetter && element.isPublic) {
-          _addHostBinding(annotation, element);
-        } else {
-          log.severe('@HostBinding can only be used on a public getter or '
-              'field, but was found on $element.');
         }
       } else if (safeMatcherTypes(const [
         ContentChildren,
@@ -459,8 +441,7 @@ class ComponentVisitor
     );
   }
 
-  void _addHostBinding(ElementAnnotation annotation, Element element) {
-    final value = annotation.computeConstantValue();
+  void _addHostBinding(Element element, DartObject value) {
     final property = coerceString(
       value,
       'hostPropertyName',
@@ -480,8 +461,7 @@ class ComponentVisitor
     _hostProperties[property] = bindTo;
   }
 
-  void _addHostListener(ElementAnnotation annotation, MethodElement element) {
-    var value = annotation.computeConstantValue();
+  void _addHostListener(MethodElement element, DartObject value) {
     var eventName = coerceString(value, 'eventName');
     var methodName = element.name;
     var methodArgs = coerceStringList(value, 'args');
@@ -558,6 +538,10 @@ class ComponentVisitor
     ClassElement element,
   ) {
     _directiveClassElement = element;
+    new DirectiveVisitor(
+      onHostBinding: _addHostBinding,
+      onHostListener: _addHostListener,
+    ).visitDirective(element);
     _collectInheritableMetadata(element);
     final isComp = safeMatcher(isComponent)(annotation);
     final annotationValue = annotation.computeConstantValue();
