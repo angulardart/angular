@@ -77,7 +77,9 @@ typedef dynamic ChangeFunctionSimple(value);
 class IntValueAccessor implements ControlValueAccessor, Validator {
   HtmlElement _elementRef;
 
-  @HostListener('input', const ['\$event.target.value'])
+  @HostListener('input')
+  void onChangeBinding() => onChange(null);
+
   ChangeFunctionSimple onChange = (_) {};
 
   @HostListener('blur')

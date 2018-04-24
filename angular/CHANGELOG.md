@@ -1,3 +1,21 @@
+### Breaking changes
+
+*   It is now a compile-time error to place a `@HostBinding` or `@HostListener`
+    annotation on a class member that does not accept the respective annotation.
+    For example, the following snippet will break at compile-time:
+
+    ```dart
+    class Comp {
+      // Deceptively, this did not do *anything* before, but the user was never
+      // told that the annotation was effectively a no-op. It will fail now!
+      @HostListener('click')
+      Function onClick;
+    }
+    ```
+
+    ... as part of this refactor, error messages in general around use of
+    these annotations have been greatly improved.
+
 ## 5.0.0-alpha+11
 
 ### Breaking changes
