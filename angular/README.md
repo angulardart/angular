@@ -58,8 +58,9 @@ a set of [community contributed tutorials][comm].
  * Pub packages:
    [angular][pub_angular],
    [angular_components][pub_angular_components],
+   [angular_forms][pub_angular_forms],
    [angular_router][pub_angular_router],
-   [angular_test][pub_angular_test]
+   [angular_test][pub_angular_test],
  * GitHub repo (dart-lang/angular):
    [source code](https://github.com/dart-lang/angular),
    [issues](https://github.com/dart-lang/angular/issues),
@@ -77,6 +78,7 @@ a set of [community contributed tutorials][comm].
 [dart_web]: https://webdev.dartlang.org/
 [pub_angular]: https://pub.dartlang.org/packages/angular
 [pub_angular_components]: https://pub.dartlang.org/packages/angular_components
+[pub_angular_forms]: https://pub.dartlang.org/packages/angular_forms
 [pub_angular_router]: https://pub.dartlang.org/packages/angular_router
 [pub_angular_test]: https://pub.dartlang.org/packages/angular_test
 [contribute]: https://github.com/dart-lang/angular/blob/master/CONTRIBUTING.md
