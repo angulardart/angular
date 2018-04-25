@@ -134,6 +134,12 @@ void main() {
     );
   });
 
+  test('should treat <ng-container> as a potential source of inline text', () {
+    expect(_parseAndMinifiy(r'''
+        Hello <ng-container>world!</ng-container>
+      '''), 'Hello <ng-container>world!</ng-container>');
+  });
+
   test('should treat <ng-content> as a potential source of inline text', () {
     expect(
       _parseAndMinifiy(r'''

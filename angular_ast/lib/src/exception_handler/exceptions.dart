@@ -28,6 +28,7 @@ const List<NgParserWarningCode> angularAstWarningCodes = const [
   NgParserWarningCode.EXPECTED_WHITESPACE_BEFORE_NEW_DECORATOR,
   NgParserWarningCode.EMPTY_INTERPOLATION,
   NgParserWarningCode.EVENT_NAME_TOO_MANY_FIXES,
+  NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTAINER,
   NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTENT,
   NgParserWarningCode.INVALID_DECORATOR_IN_TEMPLATE,
   NgParserWarningCode.INVALID_LET_BINDING_IN_NONTEMPLATE,
@@ -165,6 +166,12 @@ class NgParserWarningCode extends ErrorCode {
       const NgParserWarningCode(
     'EVENT_NAME_TOO_MANY_FIXES',
     "Event name can only be in format: 'name[.postfix]",
+  );
+
+  static const NgParserWarningCode INVALID_DECORATOR_IN_NGCONTAINER =
+      const NgParserWarningCode(
+    'INVALID_DECORATOR_IN_NGCONTAINER',
+    "Only '*' bindings are supported on <ng-container>",
   );
 
   static const NgParserWarningCode INVALID_DECORATOR_IN_NGCONTENT =

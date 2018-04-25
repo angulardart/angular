@@ -33,6 +33,9 @@ abstract class TemplateAstVisitor<R, C> {
   /// Visits all comment ASTs.
   R visitComment(CommentAst astNode, [C context]);
 
+  /// Visits all container ASTs.
+  R visitContainer(ContainerAst astNode, [C context]);
+
   /// Visits all embedded content ASTs.
   R visitEmbeddedContent(EmbeddedContentAst astNode, [C context]);
 
