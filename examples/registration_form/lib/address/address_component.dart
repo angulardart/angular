@@ -6,39 +6,17 @@ import 'package:angular_forms/angular_forms.dart';
 @Component(
   selector: 'address-cmp',
   templateUrl: 'address_component.html',
-  exports: [states],
+  exports: [states, isPristine],
   directives: [
     formDirectives,
     materialInputDirectives,
     MaterialAutoSuggestInputComponent,
-    RequiredFirstValidator,
     RequiredState
   ],
 )
 class AddressComponent {}
 
-/// Validator that ensures that [requiredFirst] control has a value before this
-/// control.
-///
-/// For example an address input where given two address lines the second line
-/// shouldn't be the only one with a value.
-// TODO(alorenzen): Improve the interop between the two Controls. Errors should
-// clear when requiredFirst value is set.
-@Directive(selector: '[requiredFirst]', providers: const [
-  const ExistingProvider.forToken(NG_VALIDATORS, RequiredFirstValidator)
-])
-class RequiredFirstValidator implements Validator {
-  @Input()
-  NgControl requiredFirst;
-
-  @override
-  Map<String, dynamic> validate(AbstractControl control) {
-    if (control.value == null || control.value == '') return null;
-    if (requiredFirst.control.value != null &&
-        requiredFirst.control.value != '') return null;
-    return {'requiredFirst': 'Enter a value for Address 1'};
-  }
-}
+bool isPristine(NgControl control) => control.pristine;
 
 @Directive(
     selector: 'material-auto-suggest-input[ngControl="state"]',
