@@ -7,6 +7,7 @@ const _argDebugMode = 'debug';
 const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
 const _argFastBoot = 'fast_boot';
+const _argLegacyWhitespace = 'use_legacy_preserve_whitespace';
 
 /// Compiler-wide configuration (flags) to allow opting in/out.
 ///
@@ -40,9 +41,18 @@ class CompilerFlags {
           'Whether to emit additional code that may be used by tooling '
           'in order to profile performance or other runtime information.',
     )
-    ..addFlag(_argFastBoot,
-        defaultsTo: null,
-        help: 'Whether to support AngularDart v5\'s "fastBoot" functionality.');
+    ..addFlag(
+      _argFastBoot,
+      defaultsTo: null,
+      help: 'Whether to support AngularDart v5\'s "fastBoot" functionality.',
+    )
+    ..addFlag(
+      _argLegacyWhitespace,
+      defaultsTo: null,
+      help: 'Whether to opt-in/out of the new preserveWhitespace: false',
+      // It's not clear we will keep this flag through the 5.x final release.
+      hide: true,
+    );
 
   /// Whether to emit extra code suitable for testing and local development.
   final bool genDebugInfo;
@@ -131,6 +141,7 @@ class CompilerFlags {
         _argProfileFor,
         _argLegacyStyle,
         _argFastBoot,
+        _argLegacyWhitespace
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
@@ -163,12 +174,20 @@ class CompilerFlags {
       log('Invalid value for "$_argFastBoot": $useFastBoot');
       useFastBoot = null;
     }
+    var useLegacyWhitespace = options[_argLegacyWhitespace];
+    if (useLegacyStyle != null && useLegacyStyle is! bool) {
+      log('Invalid value for "$_argLegacyWhitespace": $_argLegacyWhitespace');
+      useLegacyWhitespace = null;
+    }
     return new CompilerFlags(
       genDebugInfo: debugMode ?? defaultTo.genDebugInfo,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
       useFastBoot: useFastBoot ?? defaultTo.useFastBoot,
+      useNewPreserveWhitespace: useLegacyWhitespace != null
+          ? !useLegacyWhitespace
+          : defaultTo.useNewPreserveWhitespace,
     );
   }
 }
