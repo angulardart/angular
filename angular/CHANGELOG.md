@@ -42,6 +42,10 @@
     class FancyButton extends Base {}
     ```
 
+*   Styles from an `@import` statement are now included _before_ the styles
+    declared within the file, instead of _after_. This allows a style declared
+    within a file to override an imported one of equivalent specificity.
+
 ## 5.0.0-alpha+11
 
 ### Breaking changes
