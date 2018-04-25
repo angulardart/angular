@@ -66,6 +66,13 @@ class LegacyExpressionVisitor implements TemplateAstVisitor<Null, Null> {
   }
 
   @override
+  visitContainer(ContainerAst astNode, [_]) {
+    for (final child in astNode.childNodes) {
+      child.accept(this);
+    }
+  }
+
+  @override
   visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [_]) {
     astNode.events.forEach((event) {
       event.accept(this);

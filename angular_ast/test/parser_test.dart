@@ -132,6 +132,10 @@ void main() {
     );
   });
 
+  test('should parse a container', () {
+    expect(parse('<ng-container></ng-container>'), [new ContainerAst()]);
+  });
+
   test('should parse an embedded content directive', () {
     expect(
       parse('<ng-content></ng-content>'),
@@ -231,6 +235,14 @@ void main() {
       parse(
           '<div><template [ngIf]="someValue"><div>Hello World</div></template></div>'),
     );
+  });
+
+  test('should parse a structural directive on a container', () {
+    expect(
+        parse('<ng-container *ngIf="someValue">Hello world</ng-container>'),
+        parse('<template [ngIf]="someValue">'
+            '<ng-container>Hello world</ng-container>'
+            '</template>'));
   });
 
   test('should parse a void element (implicit)', () {

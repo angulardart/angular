@@ -23,7 +23,19 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
       visitAll(_visitRemovingWhitespace(rootNodes));
 
   @override
-  ElementAst visitElement(ElementAst astNode, [_]) {
+  TemplateAst visitContainer(ContainerAst astNode, [_]) {
+    if (astNode.childNodes.isNotEmpty) {
+      astNode = new ContainerAst.from(
+        astNode,
+        childNodes: _visitRemovingWhitespace(astNode.childNodes),
+        stars: astNode.stars,
+      );
+    }
+    return super.visitContainer(astNode, true);
+  }
+
+  @override
+  TemplateAst visitElement(ElementAst astNode, [_]) {
     if (astNode.childNodes.isNotEmpty) {
       astNode = new ElementAst.from(
         astNode,

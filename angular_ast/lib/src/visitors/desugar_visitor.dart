@@ -59,6 +59,17 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
   TemplateAst visitComment(CommentAst astNode, [_]) => astNode;
 
   @override
+  TemplateAst visitContainer(ContainerAst astNode, [_]) {
+    _visitChildren(astNode);
+
+    if (astNode.stars.isNotEmpty) {
+      return _desugarStar(astNode, astNode.stars);
+    }
+
+    return astNode;
+  }
+
+  @override
   TemplateAst visitElement(ElementAst astNode, [_]) {
     _visitChildren(astNode);
 
@@ -74,76 +85,7 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
     }
 
     if (astNode.stars.isNotEmpty) {
-      var starAst = astNode.stars[0];
-      var origin = _toolFriendlyAstOrigin ? starAst : null;
-      var starExpression = starAst.value;
-      var expressionOffset =
-          (starAst as ParsedStarAst).valueToken?.innerValue?.offset;
-      var directiveName = starAst.name;
-      EmbeddedTemplateAst newAst;
-      var attributesToAdd = <AttributeAst>[];
-      var propertiesToAdd = <PropertyAst>[];
-      var letBindingsToAdd = <LetBindingAst>[];
-
-      if (isMicroExpression(starExpression)) {
-        NgMicroAst micro;
-        try {
-          micro = parseMicroExpression(
-            directiveName,
-            starExpression,
-            expressionOffset,
-            sourceUrl: astNode.sourceUrl,
-            origin: origin,
-          );
-        } catch (e) {
-          exceptionHandler.handle(e);
-          return astNode;
-        }
-        if (micro != null) {
-          propertiesToAdd.addAll(micro.properties);
-          letBindingsToAdd.addAll(micro.letBindings);
-        }
-        // If the micro-syntax did not produce a binding to the left-hand side
-        // property, add it as an attribute in case a directive selector
-        // depends on it.
-        if (!propertiesToAdd.any((p) => p.name == directiveName)) {
-          attributesToAdd.add(new AttributeAst.from(origin, directiveName));
-        }
-        newAst = new EmbeddedTemplateAst.from(
-          origin,
-          childNodes: [
-            astNode,
-          ],
-          attributes: attributesToAdd,
-          properties: propertiesToAdd,
-          letBindings: letBindingsToAdd,
-        );
-      } else {
-        if (starExpression == null) {
-          // In the rare case the *-binding has no RHS expression, add the LHS
-          // as an attribute rather than a property. This allows matching a
-          // directive with an attribute selector, but no input of the same
-          // name.
-          attributesToAdd.add(new AttributeAst.from(origin, directiveName));
-        } else {
-          propertiesToAdd.add(new PropertyAst.from(
-            origin,
-            directiveName,
-            starExpression,
-          ));
-        }
-        newAst = new EmbeddedTemplateAst.from(
-          origin,
-          childNodes: [
-            astNode,
-          ],
-          attributes: attributesToAdd,
-          properties: propertiesToAdd,
-        );
-      }
-
-      astNode.stars.clear();
-      return newAst;
+      return _desugarStar(astNode, astNode.stars);
     }
 
     if (astNode.annotations.isNotEmpty) {
@@ -202,4 +144,80 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
 
   @override
   TemplateAst visitText(TextAst astNode, [_]) => astNode;
+
+  EmbeddedTemplateAst _desugarStar(
+    StandaloneTemplateAst astNode,
+    List<StarAst> stars,
+  ) {
+    var starAst = stars[0];
+    var origin = _toolFriendlyAstOrigin ? starAst : null;
+    var starExpression = starAst.value;
+    var expressionOffset =
+        (starAst as ParsedStarAst).valueToken?.innerValue?.offset;
+    var directiveName = starAst.name;
+    EmbeddedTemplateAst newAst;
+    var attributesToAdd = <AttributeAst>[];
+    var propertiesToAdd = <PropertyAst>[];
+    var letBindingsToAdd = <LetBindingAst>[];
+
+    if (isMicroExpression(starExpression)) {
+      NgMicroAst micro;
+      try {
+        micro = parseMicroExpression(
+          directiveName,
+          starExpression,
+          expressionOffset,
+          sourceUrl: astNode.sourceUrl,
+          origin: origin,
+        );
+      } catch (e) {
+        exceptionHandler.handle(e);
+        return astNode;
+      }
+      if (micro != null) {
+        propertiesToAdd.addAll(micro.properties);
+        letBindingsToAdd.addAll(micro.letBindings);
+      }
+      // If the micro-syntax did not produce a binding to the left-hand side
+      // property, add it as an attribute in case a directive selector
+      // depends on it.
+      if (!propertiesToAdd.any((p) => p.name == directiveName)) {
+        attributesToAdd.add(new AttributeAst.from(origin, directiveName));
+      }
+      newAst = new EmbeddedTemplateAst.from(
+        origin,
+        childNodes: [
+          astNode,
+        ],
+        attributes: attributesToAdd,
+        properties: propertiesToAdd,
+        letBindings: letBindingsToAdd,
+      );
+    } else {
+      if (starExpression == null) {
+        // In the rare case the *-binding has no RHS expression, add the LHS
+        // as an attribute rather than a property. This allows matching a
+        // directive with an attribute selector, but no input of the same
+        // name.
+        attributesToAdd.add(new AttributeAst.from(origin, directiveName));
+      } else {
+        propertiesToAdd.add(new PropertyAst.from(
+          origin,
+          directiveName,
+          starExpression,
+        ));
+      }
+      newAst = new EmbeddedTemplateAst.from(
+        origin,
+        childNodes: [
+          astNode,
+        ],
+        attributes: attributesToAdd,
+        properties: propertiesToAdd,
+      );
+    }
+
+    stars.clear();
+    return newAst;
+  }
 }

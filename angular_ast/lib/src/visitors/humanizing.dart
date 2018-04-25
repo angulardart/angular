@@ -45,6 +45,23 @@ class HumanizingTemplateAstVisitor
   }
 
   @override
+  String visitContainer(ContainerAst astNode, [StringBuffer context]) {
+    context ??= new StringBuffer();
+    context.write('<ng-container');
+    if (astNode.stars.isNotEmpty) {
+      context
+        ..write(' ')
+        ..writeAll(astNode.stars.map(visitStar), ' ');
+    }
+    context.write('>');
+    if (astNode.childNodes.isNotEmpty) {
+      context.writeAll(astNode.childNodes.map((c) => c.accept(this)));
+    }
+    context.write('</ng-container>');
+    return context.toString();
+  }
+
+  @override
   String visitElement(ElementAst astNode, [StringBuffer context]) {
     context ??= new StringBuffer();
     context..write('<')..write(astNode.name);

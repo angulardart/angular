@@ -16,7 +16,7 @@ class RecursiveAstParser {
   final SourceFile _source;
   final List<String> _voidElements;
   final List<String> _svgElements;
-  final exceptionHandler;
+  final ExceptionHandler exceptionHandler;
 
   RecursiveAstParser(
     SourceFile sourceFile,
@@ -82,6 +82,41 @@ class RecursiveAstParser {
       beginToken,
       valueToken,
       endToken,
+    );
+  }
+
+  /// Parses and returns an `<ng-container>` AST.
+  ContainerAst parseContainer(
+    NgToken beginToken,
+    NgToken nameToken,
+    List<String> tagStack,
+  ) {
+    final childNodes = <StandaloneTemplateAst>[];
+    final stars = <StarAst>[];
+
+    while (_reader.peekType() == NgTokenType.beforeElementDecorator) {
+      final nextToken = _reader.next();
+      final decorator = parseDecorator(nextToken);
+      if (decorator is StarAst) {
+        _addStarAst(decorator, stars);
+      } else {
+        exceptionHandler.handle(new AngularParserException(
+          NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTAINER,
+          decorator.beginToken.offset,
+          decorator.endToken.end - decorator.beginToken.offset,
+        ));
+      }
+    }
+
+    final endToken = _parseOpenElementEnd();
+    _parseCloseElement(beginToken, nameToken, endToken, childNodes, tagStack);
+
+    return new ContainerAst.parsed(
+      _source,
+      beginToken,
+      endToken,
+      childNodes: childNodes,
+      stars: stars,
     );
   }
 
@@ -273,7 +308,9 @@ class RecursiveAstParser {
 
     // Parse the element identifier.
     var nameToken = _reader.next();
-    if (nameToken.lexeme == 'ng-content') {
+    if (nameToken.lexeme == 'ng-container') {
+      return parseContainer(beginToken, nameToken, tagStack);
+    } else if (nameToken.lexeme == 'ng-content') {
       return parseEmbeddedContent(beginToken, nameToken);
     } else if (nameToken.lexeme.toLowerCase() == 'template') {
       isTemplateElement = true;
@@ -381,70 +418,13 @@ class RecursiveAstParser {
 
     // If not a void element, look for closing tag OR child nodes.
     if (!isVoidElement && nextToken.type != NgTokenType.openElementEndVoid) {
-      tagStack.add(nameToken.lexeme);
-      var closingTagFound = false;
-
-      while (!closingTagFound) {
-        nextToken = _reader.next();
-        if (nextToken == null) {
-          exceptionHandler.handle(new AngularParserException(
-            NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE,
-            beginToken.offset,
-            endToken.end - beginToken.offset,
-          ));
-          closeElementAst = new CloseElementAst(nameToken.lexeme);
-          closingTagFound = true;
-        } else if (nextToken.type == NgTokenType.closeElementStart) {
-          var closeNameToken = _reader.peek();
-          var closeIdentifier = closeNameToken.lexeme;
-          if (closeIdentifier != nameToken.lexeme) {
-            // Found a closing tag, but not matching current [ElementAst].
-            // Generate initial error code; could be dangling or unmatching.
-            if (tagStack.contains(closeIdentifier)) {
-              // If the closing tag is in the seen [ElementAst] stack,
-              // leave it alone. Instead create a synthetic close.
-              _reader.putBack(nextToken);
-              closeElementAst = new CloseElementAst(nameToken.lexeme);
-              closingTagFound = true;
-              exceptionHandler.handle(new AngularParserException(
-                NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE,
-                beginToken.offset,
-                endToken.end - beginToken.offset,
-              ));
-            } else {
-              // If the closing tag is not in the stack, create a synthetic
-              // [ElementAst] to pair the dangling close and add as child.
-              var closeComplement = parseCloseElement(nextToken);
-              exceptionHandler.handle(new AngularParserException(
-                NgParserWarningCode.DANGLING_CLOSE_ELEMENT,
-                closeComplement.beginToken.offset,
-                closeComplement.endToken.end -
-                    closeComplement.beginToken.offset,
-              ));
-              if (closeIdentifier == 'ng-content') {
-                var synthContent = new EmbeddedContentAst();
-                synthContent.closeComplement = closeComplement;
-                childNodes.add(synthContent);
-              } else if (closeIdentifier == 'template') {
-                var synthTemplate = new EmbeddedTemplateAst();
-                synthTemplate.closeComplement = closeComplement;
-                childNodes.add(synthTemplate);
-              } else {
-                var synthOpenElement =
-                    new ElementAst(closeNameToken.lexeme, closeComplement);
-                childNodes.add(synthOpenElement);
-              }
-            }
-          } else {
-            closeElementAst = parseCloseElement(nextToken);
-            closingTagFound = true;
-          }
-        } else {
-          var childAst = parseStandalone(nextToken, tagStack);
-          childNodes.add(childAst);
-        }
-      }
-      tagStack.removeLast();
+      closeElementAst = _parseCloseElement(
+        beginToken,
+        nameToken,
+        endToken,
+        childNodes,
+        tagStack,
+      );
     }
 
     if (isTemplateElement) {
@@ -557,22 +537,7 @@ class RecursiveAstParser {
       }
     }
 
-    _consumeWhitespaces();
-
-    // Ensure closed by '>' and not '/>'.
-    endToken = _reader.next();
-    if (endToken.type == NgTokenType.openElementEndVoid) {
-      var e = new AngularParserException(
-        NgParserWarningCode.NONVOID_ELEMENT_USING_VOID_END,
-        endToken.offset,
-        endToken.length,
-      );
-      exceptionHandler.handle(e);
-      endToken = new NgToken.generateErrorSynthetic(
-        endToken.offset,
-        NgTokenType.openElementEnd,
-      );
-    }
+    endToken = _parseOpenElementEnd();
 
     // Ensure closing </ng-content> exists.
     if (_reader.peekType() != NgTokenType.closeElementStart) {
@@ -808,6 +773,116 @@ class RecursiveAstParser {
         ));
         return null;
     }
+  }
+
+  /// Adds [starAst] to [starAsts] if empty, otherwise produces an error.
+  void _addStarAst(StarAst starAst, List<StarAst> starAsts) {
+    if (starAsts.isEmpty) {
+      starAsts.add(starAst);
+    } else {
+      exceptionHandler.handle(new AngularParserException(
+        NgParserWarningCode.DUPLICATE_STAR_DIRECTIVE,
+        starAst.beginToken.offset,
+        starAst.beginToken.end - starAst.beginToken.offset,
+      ));
+    }
+  }
+
+  /// Parses child nodes until the closing tag, which is then returned.
+  ///
+  /// Child nodes are appended to [childNodes].
+  CloseElementAst _parseCloseElement(
+    NgToken beginToken,
+    NgToken nameToken,
+    NgToken endToken,
+    List<StandaloneTemplateAst> childNodes,
+    List<String> tagStack,
+  ) {
+    tagStack.add(nameToken.lexeme);
+    var closingTagFound = false;
+    CloseElementAst closeElementAst;
+    while (!closingTagFound) {
+      final nextToken = _reader.next();
+      if (nextToken == null) {
+        exceptionHandler.handle(new AngularParserException(
+          NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE,
+          beginToken.offset,
+          endToken.end - beginToken.offset,
+        ));
+        closeElementAst = new CloseElementAst(nameToken.lexeme);
+        closingTagFound = true;
+      } else if (nextToken.type == NgTokenType.closeElementStart) {
+        var closeNameToken = _reader.peek();
+        var closeIdentifier = closeNameToken.lexeme;
+        if (closeIdentifier != nameToken.lexeme) {
+          // Found a closing tag, but not matching current [ElementAst].
+          // Generate initial error code; could be dangling or unmatching.
+          if (tagStack.contains(closeIdentifier)) {
+            // If the closing tag is in the seen [ElementAst] stack,
+            // leave it alone. Instead create a synthetic close.
+            _reader.putBack(nextToken);
+            closeElementAst = new CloseElementAst(nameToken.lexeme);
+            closingTagFound = true;
+            exceptionHandler.handle(new AngularParserException(
+              NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE,
+              beginToken.offset,
+              endToken.end - beginToken.offset,
+            ));
+          } else {
+            // If the closing tag is not in the stack, create a synthetic
+            // [ElementAst] to pair the dangling close and add as child.
+            var closeComplement = parseCloseElement(nextToken);
+            exceptionHandler.handle(new AngularParserException(
+              NgParserWarningCode.DANGLING_CLOSE_ELEMENT,
+              closeComplement.beginToken.offset,
+              closeComplement.endToken.end - closeComplement.beginToken.offset,
+            ));
+            if (closeIdentifier == 'ng-container') {
+              var synthContainer = new ContainerAst();
+              childNodes.add(synthContainer);
+            } else if (closeIdentifier == 'ng-content') {
+              var synthContent = new EmbeddedContentAst();
+              synthContent.closeComplement = closeComplement;
+              childNodes.add(synthContent);
+            } else if (closeIdentifier == 'template') {
+              var synthTemplate = new EmbeddedTemplateAst();
+              synthTemplate.closeComplement = closeComplement;
+              childNodes.add(synthTemplate);
+            } else {
+              var synthOpenElement =
+                  new ElementAst(closeNameToken.lexeme, closeComplement);
+              childNodes.add(synthOpenElement);
+            }
+          }
+        } else {
+          closeElementAst = parseCloseElement(nextToken);
+          closingTagFound = true;
+        }
+      } else {
+        var childAst = parseStandalone(nextToken, tagStack);
+        childNodes.add(childAst);
+      }
+    }
+    tagStack.removeLast();
+    return closeElementAst;
+  }
+
+  /// Ensures open element ends with `>` and not `/>`.
+  NgToken _parseOpenElementEnd() {
+    _consumeWhitespaces();
+    final endToken = _reader.next();
+    if (endToken.type == NgTokenType.openElementEndVoid) {
+      exceptionHandler.handle(new AngularParserException(
+        NgParserWarningCode.NONVOID_ELEMENT_USING_VOID_END,
+        endToken.offset,
+        endToken.length,
+      ));
+      return new NgToken.generateErrorSynthetic(
+        endToken.offset,
+        NgTokenType.openElementEnd,
+      );
+    }
+    return endToken;
   }
 
   void _consumeWhitespaces() {

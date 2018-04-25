@@ -65,8 +65,9 @@ class AstTemplateParser implements TemplateParser {
     exceptionHandler.maybeReportExceptions();
     if (parsedAst.isEmpty) return const [];
 
+    final convertedAst = _convertContainersToElements(parsedAst);
     final filteredAst = _processRawTemplateNodes(
-      parsedAst,
+      convertedAst,
       template: template,
       name: name,
       exceptionHandler: exceptionHandler,
@@ -93,6 +94,12 @@ class AstTemplateParser implements TemplateParser {
           toolFriendlyAst: true,
           parseExpressions: false,
           exceptionHandler: exceptionHandler);
+
+  List<ast.TemplateAst> _convertContainersToElements(
+      List<ast.TemplateAst> parsedAst) {
+    final visitor = new _ContainerConverter();
+    return parsedAst.map((ast) => ast.accept(visitor)).toList();
+  }
 
   List<ast.TemplateAst> _processRawTemplateNodes(
       List<ast.TemplateAst> parsedAst,
@@ -283,6 +290,13 @@ class _BindDirectivesVisitor
   int _findNgContentIndexForElement(
       ast.ElementAst astNode, _ParseContext context) {
     return context.findNgContentIndex(_elementSelector(astNode));
+  }
+
+  @override
+  ng.TemplateAst visitContainer(ast.ContainerAst astNode,
+      [_ParseContext context]) {
+    throwFailure(
+        astNode.sourceSpan.message('<ng-container> is not implemented yet'));
   }
 
   @override
@@ -895,6 +909,24 @@ class _ProviderVisitor
         ast.ngContentIndex,
         ast.sourceSpan,
         hasDeferredComponent: ast.hasDeferredComponent);
+  }
+}
+
+/// Converts each <ng-container> to an element of the same name.
+///
+/// This is a tempory conversion while package:angular_ast emits a proper
+/// <ng-container> AST, but package:angular doesn't yet support the feature.
+class _ContainerConverter extends ast.RecursiveTemplateAstVisitor<Null> {
+  @override
+  ast.TemplateAst visitContainer(ast.ContainerAst astNode, [_]) {
+    final ast.ContainerAst newAstNode = super.visitContainer(astNode);
+    return new ast.ElementAst.from(
+      newAstNode,
+      'ng-container',
+      new ast.CloseElementAst('ng-container'),
+      childNodes: newAstNode.childNodes,
+      stars: newAstNode.stars,
+    );
   }
 }
 

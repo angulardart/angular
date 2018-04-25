@@ -15,6 +15,7 @@ export 'src/ast.dart'
         BananaAst,
         CloseElementAst,
         CommentAst,
+        ContainerAst,
         ElementAst,
         EmbeddedContentAst,
         EmbeddedTemplateAst,
