@@ -56,18 +56,27 @@ class StyleCompiler {
         styleWithImports.styleUrls, isShimmed);
   }
 
-  StylesCompileResult _compileStyles(String stylesVar, List<String> plainStyles,
-      List<String> absUrls, bool shim) {
-    List<o.Expression> styleExpressions = <o.Expression>[];
-    int styleCount = plainStyles.length;
-    for (int s = 0; s < styleCount; s++) {
-      styleExpressions.add(o.literal(this._shimIfNeeded(plainStyles[s], shim)));
-    }
-    for (var i = 0; i < absUrls.length; i++) {
-      var identifier = new CompileIdentifierMetadata(
-          name: getStylesVarName(),
-          moduleUrl: stylesModuleUrl(absUrls[i], shim));
+  StylesCompileResult _compileStyles(
+    String stylesVar,
+    List<String> styles,
+    List<String> styleUrls,
+    bool shim,
+  ) {
+    final styleExpressions = <o.Expression>[];
+
+    /// Add URLs from @import statements first.
+    for (final url in styleUrls) {
+      final identifier = new CompileIdentifierMetadata(
+        name: getStylesVarName(),
+        moduleUrl: stylesModuleUrl(url, shim),
+      );
       styleExpressions.add(new o.ExternalExpr(identifier));
+    }
+
+    /// Add contents of style sheet after @import statements. This allows an
+    /// imported style to be overriden after its @import statement.
+    for (final style in styles) {
+      styleExpressions.add(o.literal(_shimIfNeeded(style, shim)));
     }
 
     // Styles variable contains plain strings and arrays of other styles arrays
