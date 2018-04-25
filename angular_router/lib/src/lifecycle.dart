@@ -115,13 +115,11 @@ abstract class CanNavigate {
 /// A lifecycle interface that allows re-using an existing component instance.
 ///
 /// Component classes should `implement` this if they will be navigated to as
-/// part of a route definition and would like to determine whether a minor
-/// change to the route (such as a route parameter changing) should invalidate
-/// the component entirely or not.
+/// part of a route definition and would like to determine whether an instance
+/// should be cached for reuse between activations.
 abstract class CanReuse {
-  /// Called by the router if the new route still uses this component, and the
-  /// component class can notify the router if re-using the existing instance is
-  /// possible.
+  /// Called by the router before the route is deactivated, so that the
+  /// component instance can notify the router if it should be cached for reuse.
   ///
   /// If this interface is _not_ implemented, the component is always destroyed
   /// and re-created; otherwise the client should return a future that completes
