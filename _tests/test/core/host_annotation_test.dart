@@ -25,6 +25,13 @@ void main() {
       expect(element.title, 'Hello World');
     });
 
+    test('should assign "title" based on an instance member', () async {
+      final element = await rootElementOf(
+        ng.HostBindingInstanceTitleNgFactory,
+      );
+      expect(element.title, 'Hello World');
+    });
+
     test('should *not* assign "title" based on an inherited static', () async {
       // The language does not inherit static members, so AngularDart inheriting
       // them would (a) seem out of place and (b) make the compilation process
@@ -40,7 +47,70 @@ void main() {
       expect(element.title, isEmpty);
     });
 
-    // TODO: Add additional tests for @HostBinding.
+    test('should assign "title" based on an inherited instance', () async {
+      final element = await rootElementOf(
+        ng.HostBindingInstanceTitleInheritedNgFactory,
+      );
+      expect(element.title, 'Hello World');
+    });
+
+    test('should support tabIndex of 0', () async {
+      final element = await rootElementOf(
+        ng.HostBindingTabIndex0NgFactory,
+      );
+      expect(element.tabIndex, 0);
+    });
+
+    test('should support tabIndex of 0', () async {
+      final element = await rootElementOf(
+        ng.HostBindingTabIndexNegative1NgFactory,
+      );
+      expect(element.tabIndex, -1);
+    });
+
+    test('should support class [static]', () async {
+      final element = await rootElementOf(
+        ng.HostBindingStaticClassNgFactory,
+      );
+      expect(element.className, 'themeable');
+    });
+
+    test('should support class [instance]', () async {
+      final element = await rootElementOf(
+        ng.HostBindingInstanceClassNgFactory,
+      );
+      expect(element.className, 'themeable');
+    });
+
+    test('should support conditional attributes', () async {
+      final testBed = NgTestBed.forComponent<HostBindingConditionalAttribute>(
+        ng.HostBindingConditionalAttributeNgFactory,
+      );
+      final fixture = await testBed.create();
+      final element = fixture.rootElement;
+      expect(element.attributes.containsKey('disabled'), isFalse);
+
+      await fixture.update((c) => c.disabledBackingValue = true);
+      expect(element.attributes.containsKey('disabled'), isTrue);
+
+      await fixture.update((c) => c.disabledBackingValue = false);
+      expect(element.attributes.containsKey('disabled'), isFalse);
+    });
+
+    test('should support conditional classes', () async {
+      final testBed = NgTestBed.forComponent<HostBindingConditionalClass>(
+        ng.HostBindingConditionalClassNgFactory,
+      );
+      final fixture = await testBed.create();
+      final element = fixture.rootElement;
+      expect(element.classes, isNot(contains('fancy')));
+
+      await fixture.update((c) => c.fancy = true);
+      expect(element.classes, contains('fancy'));
+
+      await fixture.update((c) => c.fancy = false);
+      expect(element.classes, isNot(contains('fancy')));
+    });
   });
 
   group('@HostListener', () {
@@ -58,7 +128,78 @@ class HostBindingStaticTitle {
 }
 
 @Component(
-  selector: 'host-binding-static-inherited',
+  selector: 'host-binding-instance',
+  template: '',
+)
+class HostBindingInstanceTitle {
+  @HostBinding('title')
+  final hostTitle = 'Hello World';
+}
+
+@Component(
+  selector: 'host-binding-static-not-inherited',
   template: '',
 )
 class HostBindingStaticTitleNotInherited extends HostBindingStaticTitle {}
+
+@Component(
+  selector: 'host-binding-instance-inherited',
+  template: '',
+)
+class HostBindingInstanceTitleInherited extends HostBindingInstanceTitle {}
+
+@Component(
+  selector: 'host-binding-tab-index',
+  template: '',
+)
+class HostBindingTabIndex0 {
+  @HostBinding('tabIndex')
+  static const hostTabIndex = 0;
+}
+
+@Component(
+  selector: 'host-binding-tab-index',
+  template: '',
+)
+class HostBindingTabIndexNegative1 {
+  @HostBinding('tabIndex')
+  static const hostTabIndex = -1;
+}
+
+@Component(
+  selector: 'host-binding-static-class',
+  template: '',
+)
+class HostBindingStaticClass {
+  @HostBinding('class')
+  static const hostClass = 'themeable';
+}
+
+@Component(
+  selector: 'host-binding-static-class',
+  template: '',
+)
+class HostBindingInstanceClass {
+  @HostBinding('class')
+  var hostClass = 'themeable';
+}
+
+@Component(
+  selector: 'host-binding-conditional-attribute',
+  template: '',
+)
+class HostBindingConditionalAttribute {
+  @HostBinding('attr.disabled')
+  String get disabled => disabledBackingValue ? 'disabled' : null;
+
+  bool disabledBackingValue = false;
+}
+
+@Component(
+  selector: 'host-binding-conditional-attribute',
+  template: '',
+)
+class HostBindingConditionalClass {
+  @HostBinding('class.fancy')
+  var fancy = false;
+}
