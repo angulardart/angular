@@ -242,11 +242,17 @@
     class MyComponent implements CanReuse {
       @override
       Future<bool> canReuse(RouterState current, RouterState next) async {
-        // Always re-use this instance.
-        return true;
+        // Reuse this instance only when navigating between the same route.
+        return current.path == next.path;
       }
     }
     ```
+
+    **Note:** `CanReuse` is now called before deactivation regardless of whether
+    the router is navigating to the same route or not. Unlike the previous
+    version of the router which only checked for reuse between identical routes,
+    the new router always checks if an implementation of `CanReuse` should be
+    cached for reuse upon the next activation.
 
 ## Resources
 
