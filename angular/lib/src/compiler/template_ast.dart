@@ -163,6 +163,18 @@ class ElementAst implements TemplateAst {
       visitor.visitElement(this, context);
 }
 
+/// A <ng-container> element which serves as a logical container for grouping.
+class NgContainerAst implements TemplateAst {
+  final List<TemplateAst> children;
+  final SourceSpan sourceSpan;
+
+  NgContainerAst(this.children, this.sourceSpan);
+
+  @override
+  R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
+      visitor.visitNgContainer(this, context);
+}
+
 /// A <template> element included in an Angular template.
 class EmbeddedTemplateAst implements TemplateAst {
   final List<AttrAst> attrs;
@@ -341,6 +353,7 @@ enum PropertyBindingType {
 
 /// A visitor for [TemplateAst] trees that will process each node.
 abstract class TemplateAstVisitor<R, C> {
+  R visitNgContainer(NgContainerAst ast, C context);
   R visitNgContent(NgContentAst ast, C context);
   R visitEmbeddedTemplate(EmbeddedTemplateAst ast, C context);
   R visitElement(ElementAst ast, C context);

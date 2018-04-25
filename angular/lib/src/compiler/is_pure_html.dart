@@ -43,6 +43,10 @@ class IsPureHtmlVisitor extends TemplateAstVisitor<bool, Null> {
   bool visitEvent(BoundEventAst ast, dynamic context) => false;
 
   @override
+  bool visitNgContainer(NgContainerAst ast, dynamic context) =>
+      ast.children.every((child) => child.visit(this, null));
+
+  @override
   bool visitNgContent(NgContentAst ast, dynamic context) => false;
 
   @override

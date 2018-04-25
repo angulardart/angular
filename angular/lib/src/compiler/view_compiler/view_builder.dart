@@ -15,23 +15,7 @@ import '../is_pure_html.dart';
 import '../output/output_ast.dart' as o;
 import '../provider_parser.dart' show ngIfTokenMetadata, ngForTokenMetadata;
 import '../style_compiler.dart' show StylesCompileResult;
-import '../template_ast.dart'
-    show
-        AttrAst,
-        BoundDirectivePropertyAst,
-        BoundElementPropertyAst,
-        BoundEventAst,
-        BoundTextAst,
-        DirectiveAst,
-        ElementAst,
-        EmbeddedTemplateAst,
-        NgContentAst,
-        ProviderAst,
-        ReferenceAst,
-        TemplateAstVisitor,
-        TextAst,
-        VariableAst,
-        templateVisitAll;
+import '../template_ast.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_view.dart';
 import 'constants.dart'
@@ -120,6 +104,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     var compileNode = new CompileNode(parent, view, nodeIndex, renderNode, ast);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+  }
+
+  @override
+  void visitNgContainer(NgContainerAst ast, CompileElement parent) {
+    templateVisitAll(this, ast.children, parent);
   }
 
   void visitNgContent(NgContentAst ast, CompileElement parent) {

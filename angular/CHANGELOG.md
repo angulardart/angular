@@ -190,6 +190,30 @@
     }
     ```
 
+*   Added `<ng-container>`, an element for logical grouping that has no effect
+    on layout. This enables use of the *-syntax for structural directives,
+    without requiring the cost an HTML element.
+
+    **Before**
+
+    ```html
+    <ul>
+      <template ngFor let-user [ngForOf]="users">
+        <li *ngIf="user.visible">{{user.name}}</li>
+      </template>
+    </ul>
+    ```
+
+    **After**
+
+    ```html
+    <ul>
+      <ng-container *ngFor="let user of users">
+        <li *ngIf="user.visible">{{user.name}}</li>
+      </ng-container>
+    </ul>
+    ```
+
 ### Bug fixes
 
 *   The `*` micro-syntax now supports newlines after an identifier.
