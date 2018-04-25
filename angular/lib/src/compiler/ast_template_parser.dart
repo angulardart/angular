@@ -65,9 +65,8 @@ class AstTemplateParser implements TemplateParser {
     exceptionHandler.maybeReportExceptions();
     if (parsedAst.isEmpty) return const [];
 
-    final convertedAst = _convertContainersToElements(parsedAst);
     final filteredAst = _processRawTemplateNodes(
-      convertedAst,
+      parsedAst,
       template: template,
       name: name,
       exceptionHandler: exceptionHandler,
@@ -94,12 +93,6 @@ class AstTemplateParser implements TemplateParser {
           toolFriendlyAst: true,
           parseExpressions: false,
           exceptionHandler: exceptionHandler);
-
-  List<ast.TemplateAst> _convertContainersToElements(
-      List<ast.TemplateAst> parsedAst) {
-    final visitor = new _ContainerConverter();
-    return parsedAst.map((ast) => ast.accept(visitor)).toList();
-  }
 
   List<ast.TemplateAst> _processRawTemplateNodes(
       List<ast.TemplateAst> parsedAst,
@@ -294,10 +287,9 @@ class _BindDirectivesVisitor
 
   @override
   ng.TemplateAst visitContainer(ast.ContainerAst astNode,
-      [_ParseContext context]) {
-    throwFailure(
-        astNode.sourceSpan.message('<ng-container> is not implemented yet'));
-  }
+          [_ParseContext context]) =>
+      new ng.NgContainerAst(
+          _visitAll(astNode.childNodes, context), astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
@@ -322,11 +314,12 @@ class _BindDirectivesVisitor
   int _findNgContentIndexForTemplate(
       ast.EmbeddedTemplateAst astNode, _ParseContext context) {
     if (_isInlineTemplate(astNode)) {
-      return _findNgContentIndexForElement(
-          astNode.childNodes
-                  .firstWhere((childNode) => childNode is ast.ElementAst)
-              as ast.ElementAst,
-          context);
+      // An inline template originates from a *-binding, and thus only has a
+      // single child.
+      final childNode = astNode.childNodes.single;
+      if (childNode is ast.ElementAst) {
+        return _findNgContentIndexForElement(childNode, context);
+      }
     }
     return context.findNgContentIndex(_templateSelector(astNode));
   }
@@ -912,24 +905,6 @@ class _ProviderVisitor
   }
 }
 
-/// Converts each <ng-container> to an element of the same name.
-///
-/// This is a tempory conversion while package:angular_ast emits a proper
-/// <ng-container> AST, but package:angular doesn't yet support the feature.
-class _ContainerConverter extends ast.RecursiveTemplateAstVisitor<Null> {
-  @override
-  ast.TemplateAst visitContainer(ast.ContainerAst astNode, [_]) {
-    final ast.ContainerAst newAstNode = super.visitContainer(astNode);
-    return new ast.ElementAst.from(
-      newAstNode,
-      'ng-container',
-      new ast.CloseElementAst('ng-container'),
-      childNodes: newAstNode.childNodes,
-      stars: newAstNode.stars,
-    );
-  }
-}
-
 /// Visitor that applies default namespaces to elements.
 // TODO(alorenzen): Refactor this into pkg:angular_ast.
 class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
@@ -1207,6 +1182,14 @@ class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
       if (visited != null) result.add(visited as T);
     }
     return result;
+  }
+
+  @override
+  visitContainer(ast.ContainerAst astNode, [bool preserveWhitespace]) {
+    var children = visitAll(astNode.childNodes, preserveWhitespace);
+    astNode.childNodes.clear();
+    astNode.childNodes.addAll(children);
+    return astNode;
   }
 
   @override

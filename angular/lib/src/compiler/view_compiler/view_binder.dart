@@ -4,24 +4,7 @@ import '../../core/linker/view_type.dart';
 import '../expression_parser/parser.dart';
 import '../output/output_ast.dart' as o;
 import '../schema/element_schema_registry.dart';
-import "../template_ast.dart"
-    show
-        TemplateAst,
-        TemplateAstVisitor,
-        NgContentAst,
-        EmbeddedTemplateAst,
-        ElementAst,
-        ReferenceAst,
-        VariableAst,
-        BoundEventAst,
-        BoundElementPropertyAst,
-        AttrAst,
-        BoundTextAst,
-        TextAst,
-        DirectiveAst,
-        BoundDirectivePropertyAst,
-        ProviderAst,
-        templateVisitAll;
+import '../template_ast.dart';
 import '../template_parser.dart';
 import "compile_element.dart" show CompileElement;
 import "compile_method.dart" show CompileMethod;
@@ -73,6 +56,11 @@ class ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
 
   void visitText(TextAst ast, dynamic context) {
     _nodeIndex++;
+  }
+
+  @override
+  void visitNgContainer(NgContainerAst ast, dynamic context) {
+    templateVisitAll(this, ast.children);
   }
 
   void visitNgContent(NgContentAst ast, dynamic context) {}
