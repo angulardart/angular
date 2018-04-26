@@ -30,8 +30,10 @@ void main() {
 
 @Component(
   selector: 'test-container',
-  template: '<child-component class="mytarget" someDirective>'
-      '</child-component>',
+  template: r'''
+    <child-component class="mytarget" someDirective>
+    </child-component>
+  ''',
   directives: const [ChildComponent, SomeDirective],
 )
 class TestContainer {}
@@ -45,17 +47,20 @@ class ChildComponent extends SomeDirective {}
 
 @Directive(
   selector: '[someDirective]',
-  host: const {
-    '(click)': r'handleClick($event)',
-    '(keypress)': r'handleKeyPress($event)',
-    'role': 'button',
-    '[attr.data-xyz]': 'dataXyz',
-    '[class.is-disabled]': 'disabled'
-  },
 )
 class SomeDirective {
+  @HostBinding('role')
+  static const hostRole = 'button';
+
+  @HostBinding('attr.data-xyz')
   String dataXyz = 'abc';
+
+  @HostBinding('class.is-disabled')
   bool disabled = true;
+
+  @HostListener('click')
   void handleClick(Event e) {}
+
+  @HostListener('keypress')
   void handleKeyPress(KeyEvent e) {}
 }
