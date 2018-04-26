@@ -10,6 +10,12 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   List<dynamic> result = [];
   TemplateHumanizer(this.includeSourceSpan);
 
+  void visitNgContainer(NgContainerAst ast, _) {
+    var res = [NgContainerAst];
+    result.add(_appendContext(ast, res));
+    templateVisitAll(this, ast.children);
+  }
+
   void visitNgContent(NgContentAst ast, _) {
     var res = [NgContentAst];
     result.add(_appendContext(ast, res));
@@ -125,6 +131,11 @@ List<dynamic> humanizeContentProjection(List<TemplateAst> templateAsts) {
 class TemplateContentProjectionHumanizer
     implements TemplateAstVisitor<void, Null> {
   List<dynamic> result = [];
+
+  void visitNgContainer(NgContainerAst ast, _) {
+    templateVisitAll(this, ast.children);
+  }
+
   void visitNgContent(NgContentAst ast, _) {
     result.add(["ng-content", ast.ngContentIndex]);
   }

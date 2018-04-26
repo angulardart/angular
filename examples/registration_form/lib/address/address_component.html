@@ -14,7 +14,7 @@
             floatingLabel
             label="Address 2"
             ngControl="address2"
-            [requiredFirst]="address1Control">
+            [ngDisabled]="isPristine(address1Control)">
       <!-- Binds the value of address1Control local variable, in this case
            the NgControl bound to that input, to requiredFirst directive input.
          -->

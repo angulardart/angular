@@ -42,6 +42,10 @@
     class FancyButton extends Base {}
     ```
 
+*   Styles from an `@import` statement are now included _before_ the styles
+    declared within the file, instead of _after_. This allows a style declared
+    within a file to override an imported one of equivalent specificity.
+
 ## 5.0.0-alpha+11
 
 ### Breaking changes
@@ -188,6 +192,30 @@
       @HostListener('click')
       void onClick(MouseEvent e) {}
     }
+    ```
+
+*   Added `<ng-container>`, an element for logical grouping that has no effect
+    on layout. This enables use of the *-syntax for structural directives,
+    without requiring the cost an HTML element.
+
+    **Before**
+
+    ```html
+    <ul>
+      <template ngFor let-user [ngForOf]="users">
+        <li *ngIf="user.visible">{{user.name}}</li>
+      </template>
+    </ul>
+    ```
+
+    **After**
+
+    ```html
+    <ul>
+      <ng-container *ngFor="let user of users">
+        <li *ngIf="user.visible">{{user.name}}</li>
+      </ng-container>
+    </ul>
     ```
 
 ### Bug fixes

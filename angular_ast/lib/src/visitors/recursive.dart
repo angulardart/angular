@@ -58,6 +58,15 @@ class RecursiveTemplateAstVisitor<C>
   TemplateAst visitComment(CommentAst astNode, [_]) => astNode;
 
   @override
+  @mustCallSuper
+  TemplateAst visitContainer(ContainerAst astNode, [C context]) =>
+      new ContainerAst.from(
+        astNode,
+        childNodes: visitAll(astNode.childNodes, context),
+        stars: visitAll(astNode.stars, context),
+      );
+
+  @override
   TemplateAst visitEmbeddedContent(EmbeddedContentAst astNode, [_]) => astNode;
 
   @override

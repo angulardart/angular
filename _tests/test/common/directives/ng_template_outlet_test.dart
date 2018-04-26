@@ -109,7 +109,10 @@ void main() {
     test('should support *-syntax', () async {
       final testBed = new NgTestBed<TestStarSyntax>();
       final testFixture = await testBed.create();
-      expect(testFixture.text, 'Hello world!');
+      expect(
+        testFixture.text,
+        testFixture.assertOnlyInstance.templateContext['message'],
+      );
     });
   });
 }
@@ -233,7 +236,8 @@ class TestContextTemplateRefChangeComponent {
   selector: 'test',
   template: '''
     <template #templateRef let-msg="message">{{msg}}</template>
-    <div *ngTemplateOutlet="templateRef; context: templateContext"></div>
+    <ng-container *ngTemplateOutlet="templateRef; context: templateContext">
+    </ng-container>
   ''',
   directives: const [NgTemplateOutlet],
 )

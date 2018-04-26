@@ -5,6 +5,7 @@
 export 'ast/attribute.dart' show AttributeAst, ParsedAttributeAst;
 export 'ast/close_element.dart' show CloseElementAst, ParsedCloseElementAst;
 export 'ast/comment.dart' show CommentAst;
+export 'ast/container.dart' show ContainerAst;
 export 'ast/content.dart' show EmbeddedContentAst, ParsedEmbeddedContentAst;
 export 'ast/element.dart' show ElementAst, ParsedElementAst;
 export 'ast/event.dart' show EventAst, ParsedEventAst;

@@ -153,6 +153,96 @@ void main() {
     expect(e3.length, 4);
   });
 
+  test('Should resolve dangling open ng-container', () {
+    final asts = parse('<div><ng-container></div>');
+    expect(asts, hasLength(1));
+
+    final div = asts[0];
+    expect(div.childNodes, hasLength(1));
+
+    final ngContainer = div.childNodes[0];
+    expect(ngContainer, const isInstanceOf<ContainerAst>());
+    expect(ngContainer.isSynthetic, false);
+    expect(astsToString(asts), '<div><ng-container></ng-container></div>');
+
+    checkException(NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE, 5, 14);
+  });
+
+  test('Should resolve dangling close ng-container', () {
+    final asts = parse('<div></ng-container></div>');
+    expect(asts, hasLength(1));
+
+    final div = asts[0];
+    expect(div.childNodes, hasLength(1));
+
+    final ngContainer = div.childNodes[0];
+    expect(ngContainer, const isInstanceOf<ContainerAst>());
+    expect(ngContainer.isSynthetic, isTrue);
+    expect(astsToString(asts), '<div><ng-container></ng-container></div>');
+
+    checkException(NgParserWarningCode.DANGLING_CLOSE_ELEMENT, 5, 15);
+  });
+
+  test('Should handle ng-container used with void end', () {
+    final asts = parse('<ng-container/></ng-container>');
+    expect(asts, hasLength(1));
+
+    final ngContainer = asts[0];
+    expect(ngContainer, const isInstanceOf<ContainerAst>());
+    expect(astsToString(asts), '<ng-container></ng-container>');
+
+    checkException(NgParserWarningCode.NONVOID_ELEMENT_USING_VOID_END, 13, 2);
+  });
+
+  test('Should drop invalid decorators on ng-container', () {
+    final asts = parse('<ng-container '
+        '*star="expr" '
+        'attr="value" '
+        '[prop]="expr" '
+        '(event)="expr" '
+        'let-var="expr" '
+        '#ref>'
+        '</ng-container>');
+    expect(asts, hasLength(1));
+
+    final ngContainer = asts[0];
+    expect(ngContainer, const isInstanceOf<ContainerAst>());
+    expect(astsToString(asts), '<ng-container *star="expr"></ng-container>');
+
+    final exceptions = recoveringExceptionHandler.exceptions;
+    expect(exceptions, hasLength(5));
+
+    final attrException = exceptions[0];
+    expect(attrException.errorCode,
+        NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTAINER);
+    expect(attrException.offset, 27);
+    expect(attrException.length, 12);
+
+    final propException = exceptions[1];
+    expect(propException.errorCode,
+        NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTAINER);
+    expect(propException.offset, 40);
+    expect(propException.length, 13);
+
+    final eventException = exceptions[2];
+    expect(eventException.errorCode,
+        NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTAINER);
+    expect(eventException.offset, 54);
+    expect(eventException.length, 14);
+
+    final letException = exceptions[3];
+    expect(letException.errorCode,
+        NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTAINER);
+    expect(letException.offset, 69);
+    expect(letException.length, 14);
+
+    final refException = exceptions[4];
+    expect(refException.errorCode,
+        NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTAINER);
+    expect(refException.offset, 84);
+    expect(refException.length, 4);
+  });
+
   test('Should resolve dangling open ng-content', () {
     var asts = parse('<div><ng-content></div>');
     expect(asts.length, 1);

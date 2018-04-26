@@ -286,6 +286,12 @@ class _BindDirectivesVisitor
   }
 
   @override
+  ng.TemplateAst visitContainer(ast.ContainerAst astNode,
+          [_ParseContext context]) =>
+      new ng.NgContainerAst(
+          _visitAll(astNode.childNodes, context), astNode.sourceSpan);
+
+  @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
       [_ParseContext parentContext]) {
     final embeddedContext =
@@ -308,11 +314,12 @@ class _BindDirectivesVisitor
   int _findNgContentIndexForTemplate(
       ast.EmbeddedTemplateAst astNode, _ParseContext context) {
     if (_isInlineTemplate(astNode)) {
-      return _findNgContentIndexForElement(
-          astNode.childNodes
-                  .firstWhere((childNode) => childNode is ast.ElementAst)
-              as ast.ElementAst,
-          context);
+      // An inline template originates from a *-binding, and thus only has a
+      // single child.
+      final childNode = astNode.childNodes.single;
+      if (childNode is ast.ElementAst) {
+        return _findNgContentIndexForElement(childNode, context);
+      }
     }
     return context.findNgContentIndex(_templateSelector(astNode));
   }
@@ -1175,6 +1182,14 @@ class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
       if (visited != null) result.add(visited as T);
     }
     return result;
+  }
+
+  @override
+  visitContainer(ast.ContainerAst astNode, [bool preserveWhitespace]) {
+    var children = visitAll(astNode.childNodes, preserveWhitespace);
+    astNode.childNodes.clear();
+    astNode.childNodes.addAll(children);
+    return astNode;
   }
 
   @override
