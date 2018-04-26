@@ -114,7 +114,23 @@ void main() {
   });
 
   group('@HostListener', () {
-    // TODO: Add tests for @HostListener.
+    test('should support click', () async {
+      final testBed = NgTestBed.forComponent<HostListenerClick>(
+        ng.HostListenerClickNgFactory,
+      );
+      final fixture = await testBed.create();
+      fixture.assertOnlyInstance.clickHandler = expectAsync0(() {});
+      await fixture.update((_) => fixture.rootElement.click());
+    });
+
+    test('should support click through inheritance', () async {
+      final testBed = NgTestBed.forComponent<HostListenerInheritedClick>(
+        ng.HostListenerInheritedClickNgFactory,
+      );
+      final fixture = await testBed.create();
+      fixture.assertOnlyInstance.clickHandler = expectAsync0(() {});
+      await fixture.update((_) => fixture.rootElement.click());
+    });
   });
 }
 
@@ -203,3 +219,21 @@ class HostBindingConditionalClass {
   @HostBinding('class.fancy')
   var fancy = false;
 }
+
+@Component(
+  selector: 'host-listener-click',
+  template: '',
+)
+class HostListenerClick {
+  @HostListener('click')
+  void onClick() => clickHandler();
+
+  /// To be provided in test cases.
+  void Function() clickHandler = () => throw new UnimplementedError();
+}
+
+@Component(
+  selector: 'host-listener-inherited-click',
+  template: '',
+)
+class HostListenerInheritedClick extends HostListenerClick {}
