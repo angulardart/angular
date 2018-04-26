@@ -164,11 +164,12 @@ class DynamicallyLoaded2 {}
 
 @Component(
   selector: 'dummy',
-  host: const {'[id]': 'id'},
   template: 'DynamicallyLoadedWithHostProps;',
 )
 class DynamicallyLoadedWithHostProps {
+  @HostBinding('id')
   String id;
+
   DynamicallyLoadedWithHostProps() {
     this.id = 'default';
   }

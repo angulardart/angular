@@ -220,9 +220,9 @@ class OverriddenPropertyComponent {
 
 @Directive(
   selector: '[title]',
-  host: const {'[title]': 'title'},
 )
 class DirectiveWithTitleAndHostProperty {
+  @HostBinding()
   @Input()
   String title;
 }
