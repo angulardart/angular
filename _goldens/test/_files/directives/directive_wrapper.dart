@@ -4,15 +4,6 @@ import 'package:angular/angular.dart';
 
 @Directive(
   selector: '[some-child-directive]',
-  host: const {
-    '(click)': r'handleClick($event)',
-    '(keypress)': r'handleKeyPress($event)',
-    '(eventXyz)': r'handleXyzEventFromOtherDirective($event)',
-    '[tabindex]': 'tabIndex',
-    'role': 'button',
-    '[attr.aria-disabled]': 'disabledStr',
-    '[class.is-disabled]': 'disabled',
-  },
 )
 class ChildDirective {
   Element element;
@@ -38,11 +29,25 @@ class ChildDirective {
     return _triggerController.stream;
   }
 
+  @HostListener('click')
   void handleClick(e) {}
+
+  @HostListener('keypress')
   void handleKeyPress(e) {}
+
+  @HostListener('eventXyz')
   void handleXyzEventFromOtherDirective(e) {}
+
+  @HostBinding('tabindex')
   int get tabIndex => -1;
+
+  @HostBinding('attr.role')
+  static const hostRole = 'button';
+
+  @HostBinding('attr.aria-disabled')
   String get disabledStr => '';
+
+  @HostBinding('class.is-disabled')
   bool get disabled => false;
 }
 

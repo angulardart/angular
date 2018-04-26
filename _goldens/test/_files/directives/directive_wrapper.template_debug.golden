@@ -47,7 +47,6 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     var doc = import3.document;
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 4);
     createAttr(_el_0, 'directive-with-output', '');
-    createAttr(_el_0, 'role', 'button');
     createAttr(_el_0, 'some-child-directive', '');
     addShimC(_el_0);
     _ChildDirective_0_5 = new ChildDirectiveNgCd(new import1.ChildDirective(_el_0, new ElementRef(_el_0)));
@@ -215,6 +214,12 @@ class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
   bool _expr_2;
   ChildDirectiveNgCd(this.instance);
   void detectHostChanges(AppView<dynamic> view, import3.Element el) {
+    bool firstCheck = (view.cdState == 0);
+    if (firstCheck) {
+      if (!identical(import1.ChildDirective.hostRole, null)) {
+        setAttr(el, 'role', import1.ChildDirective.hostRole?.toString());
+      }
+    }
     final currVal_0 = instance.tabIndex;
     if (import8.checkBinding(_expr_0, currVal_0)) {
       setProp(el, 'tabIndex', currVal_0);
