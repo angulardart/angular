@@ -46,6 +46,10 @@
     declared within the file, instead of _after_. This allows a style declared
     within a file to override an imported one of equivalent specificity.
 
+*   URLs from `@import` statements with the `package` scheme are no longer
+    resolved to the `packages/` directory. The `package` scheme is now preserved
+    which the build ecosystem understands.
+
 ## 5.0.0-alpha+11
 
 ### Breaking changes

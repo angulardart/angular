@@ -66,7 +66,7 @@ void main() {
       var css = '''@import url(\'package:a/b/some.css\');''';
       var styleWithImports = extractStyleUrls("http://ng.io", css);
       expect(styleWithImports.style.trim(), '''''');
-      expect(styleWithImports.styleUrls, ["packages/a/b/some.css"]);
+      expect(styleWithImports.styleUrls, ["package:a/b/some.css"]);
     });
   });
   group("isStyleUrlResolvable", () {
