@@ -354,7 +354,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
 
   dynamic visitMethodCall(compiler_ast.MethodCall ast, _Mode mode) {
     _visitingRoot = false;
-    var args = visitAll(ast.args, _Mode.Expression) as List<o.Expression>;
+    var args = visitAll(ast.args, _Mode.Expression).cast<o.Expression>();
     o.Expression result;
     o.Expression receiver =
         ast.receiver.visit<dynamic, _Mode>(this, _Mode.Expression);
@@ -433,7 +433,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
         mode, o.importExpr(ast.id.identifier, isConst: true));
   }
 
-  dynamic visitAll(List<compiler_ast.AST> asts, _Mode mode) {
+  List<dynamic> visitAll(List<compiler_ast.AST> asts, _Mode mode) {
     return asts.map((ast) => ast.visit<dynamic, _Mode>(this, mode)).toList();
   }
 
