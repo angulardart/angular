@@ -19,15 +19,11 @@ class Url {
   }
 
   /// Normalizes paths so they are standardized when handled around the router.
-  static String normalizePath(String path, [bool hashStrategy = false]) {
+  static String normalizePath(String path) {
     if (path == null) return null;
-    hashStrategy = isHashStrategy || hashStrategy;
 
-    if (!hashStrategy && !path.startsWith('/')) {
+    if (!path.startsWith('/')) {
       path = '/$path';
-    }
-    if (hashStrategy && path.startsWith('/')) {
-      path = path.substring(1);
     }
 
     if (path.endsWith('/')) {
