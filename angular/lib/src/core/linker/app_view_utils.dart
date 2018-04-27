@@ -4,7 +4,6 @@ import 'package:angular/src/core/change_detection/change_detection.dart'
     show devModeEqual;
 import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular/src/core/render/api.dart' show RenderComponentType;
-import 'package:angular/src/core/security.dart' show SafeValue;
 import 'package:angular/src/core/security.dart';
 import 'package:angular/src/platform/dom/events/event_manager.dart'
     show EventManager;
