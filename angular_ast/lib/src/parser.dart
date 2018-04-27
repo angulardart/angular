@@ -179,7 +179,10 @@ class NgParser {
         toolFriendlyAstOrigin: _toolFriendlyAstOrigin,
         exceptionHandler: exceptionHandler,
       );
-      asts = asts.map((t) => t.accept(desugarVisitor)).toList();
+      asts = asts
+          .map((t) => t.accept(desugarVisitor))
+          .cast<StandaloneTemplateAst>()
+          .toList();
     }
     return asts;
   }
