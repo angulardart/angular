@@ -62,16 +62,9 @@ typedef dynamic ChangeFunctionSimple(value);
 @Directive(
   selector: "input[integer]",
   providers: const [
-    const Provider(
-      NG_VALUE_ACCESSOR,
-      useExisting: IntValueAccessor,
-      multi: true,
-    ),
-    const Provider(
-      NG_VALIDATORS,
-      useExisting: IntValueAccessor,
-      multi: true,
-    ),
+    const ExistingProvider<ControlValueAccessor>.forToken(
+        NG_VALUE_ACCESSOR, IntValueAccessor),
+    const ExistingProvider.forToken(NG_VALIDATORS, IntValueAccessor),
   ],
 )
 class IntValueAccessor implements ControlValueAccessor, Validator {
