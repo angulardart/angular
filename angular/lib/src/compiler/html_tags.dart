@@ -1,36 +1,37 @@
 enum HtmlTagContentType { rawText, escapableRawText, parsableData }
 
 class HtmlTagDefinition {
-  Map<String, bool> closedByChildren = {};
-  bool closedByParent = false;
-  Map<String, bool> requiredParents;
+  final closedByChildren = <String, bool>{};
+  final requiredParents = <String, bool>{};
+  final String implicitNamespacePrefix;
+  final HtmlTagContentType contentType;
+  final bool isVoid;
+
   String parentToAdd;
-  String implicitNamespacePrefix;
-  HtmlTagContentType contentType;
-  bool isVoid;
+  bool closedByParent = false;
+
   HtmlTagDefinition(
       {List<String> closedByChildren,
       List<String> requiredParents,
-      String implicitNamespacePrefix,
+      this.implicitNamespacePrefix,
       HtmlTagContentType contentType,
       bool closedByParent,
-      bool isVoid}) {
+      bool isVoid})
+      : this.contentType = contentType ?? HtmlTagContentType.parsableData,
+        this.isVoid = isVoid == true {
     if (closedByChildren != null && closedByChildren.isNotEmpty) {
       for (var tagName in closedByChildren) {
         this.closedByChildren[tagName] = true;
       }
     }
-    this.isVoid = isVoid == true;
     this.closedByParent = closedByParent == true || this.isVoid;
     if (requiredParents != null && requiredParents.length > 0) {
-      this.requiredParents = {};
       this.parentToAdd = requiredParents[0];
       requiredParents
           .forEach((tagName) => this.requiredParents[tagName] = true);
     }
-    this.implicitNamespacePrefix = implicitNamespacePrefix;
-    this.contentType = contentType ?? HtmlTagContentType.parsableData;
   }
+
   bool requireExtraParent(String currentParent) {
     if (this.requiredParents == null) {
       return false;
@@ -49,7 +50,7 @@ class HtmlTagDefinition {
 // see http://www.w3.org/TR/html51/syntax.html#optional-tags
 
 // This implementation does not fully conform to the HTML5 spec.
-final Map<String, HtmlTagDefinition> TAG_DEFINITIONS = {
+final _tagDefinitions = <String, HtmlTagDefinition>{
   "base": new HtmlTagDefinition(isVoid: true),
   "meta": new HtmlTagDefinition(isVoid: true),
   "area": new HtmlTagDefinition(isVoid: true),
@@ -130,23 +131,19 @@ final Map<String, HtmlTagDefinition> TAG_DEFINITIONS = {
   "textarea":
       new HtmlTagDefinition(contentType: HtmlTagContentType.escapableRawText)
 };
-final HtmlTagDefinition DEFAULT_TAG_DEFINITION = new HtmlTagDefinition();
+final HtmlTagDefinition _defaultTagDefinition = new HtmlTagDefinition();
 HtmlTagDefinition getHtmlTagDefinition(String tagName) {
-  var result = TAG_DEFINITIONS[tagName.toLowerCase()];
-  return result ?? DEFAULT_TAG_DEFINITION;
+  var result = _tagDefinitions[tagName.toLowerCase()];
+  return result ?? _defaultTagDefinition;
 }
 
-final RegExp NS_PREFIX_RE = new RegExp(r'^@([^:]+):(.+)');
+final _nsPrefixRegExp = new RegExp(r'^@([^:]+):(.+)');
 List<String> splitNsName(String elementName) {
   if (elementName[0] != "@") {
     return [null, elementName];
   }
-  var match = NS_PREFIX_RE.firstMatch(elementName);
+  var match = _nsPrefixRegExp.firstMatch(elementName);
   return [match[1], match[2]];
-}
-
-String getNsPrefix(String elementName) {
-  return splitNsName(elementName)[0];
 }
 
 String mergeNsAndName(String prefix, String localName) {
