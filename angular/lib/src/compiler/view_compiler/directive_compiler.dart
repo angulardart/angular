@@ -91,7 +91,7 @@ class DirectiveCompiler {
         o.StmtModifier.Final,
       ],
     );
-    var statements = [];
+    var statements = <o.Statement>[];
     if (hasOnChangesLifecycle || usesSetState) {
       statements.add(new o.WriteClassMemberExpr(
               'directive', _storage.buildReadExpr(instance))
