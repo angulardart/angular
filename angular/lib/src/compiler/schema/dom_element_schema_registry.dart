@@ -194,7 +194,7 @@ const List<String> SCHEMA = const [
   "@svg:use^@svg:graphics|",
   "@svg:view^@svg:|#zoomAndPan"
 ];
-const Map<String, String> attrToPropMap = const {
+const Map<String, String> _attrToPropMap = const {
   "class": "className",
   "innerHtml": "innerHTML",
   "readonly": "readOnly",
@@ -324,7 +324,7 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
 
   @override
   String getMappedPropName(String propName) {
-    var mappedPropName = attrToPropMap[propName];
+    var mappedPropName = _attrToPropMap[propName];
     return mappedPropName ?? propName;
   }
 }

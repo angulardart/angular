@@ -221,8 +221,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     this._visitParams(stmt.constructorMethod.params, ctx);
     ctx.print(')');
     var ctorStmts = stmt.constructorMethod.body;
-    var superCtorExpr =
-        ctorStmts.length > 0 ? getSuperConstructorCallExpr(ctorStmts[0]) : null;
+    var superCtorExpr = ctorStmts.isNotEmpty
+        ? _getSuperConstructorCallExpr(ctorStmts[0])
+        : null;
     if (superCtorExpr != null) {
       ctx.print(': ');
       ctx.enterSuperCall();
@@ -406,7 +407,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    if (isConstType(ast.type)) {
+    if (_isConstType(ast.type)) {
       ctx.print('const ');
     }
     if (ast.type == o.DYNAMIC_TYPE) {
@@ -418,7 +419,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    if (isConstType(ast.type)) {
+    if (_isConstType(ast.type)) {
       ctx.print('const ');
     }
     if (ast.valueType != null) {
@@ -432,7 +433,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
     EmitterVisitorContext ctx = context;
-    ctx.print(isConstType(ast.type) ? 'const' : 'new');
+    ctx.print(_isConstType(ast.type) ? 'const' : 'new');
     ctx.print(" ");
     ast.classExpr.visitExpression(this, ctx);
     var types = ast.types;
@@ -592,7 +593,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   }
 }
 
-o.Expression getSuperConstructorCallExpr(o.Statement stmt) {
+o.Expression _getSuperConstructorCallExpr(o.Statement stmt) {
   if (stmt is o.ExpressionStatement) {
     var expr = stmt.expr;
     if (expr is o.InvokeFunctionExpr) {
@@ -607,6 +608,6 @@ o.Expression getSuperConstructorCallExpr(o.Statement stmt) {
   return null;
 }
 
-bool isConstType(o.OutputType type) {
+bool _isConstType(o.OutputType type) {
   return type != null && type.hasModifier(o.TypeModifier.Const);
 }

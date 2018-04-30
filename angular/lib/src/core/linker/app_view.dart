@@ -282,7 +282,7 @@ abstract class AppView<T> {
 
   void addInlinedNodes(Node anchor, List<Node> inlinedNodes,
       [bool isRoot = false]) {
-    moveNodesAfterSibling(anchor, inlinedNodes);
+    _moveNodesAfterSibling(anchor, inlinedNodes);
     if (isRoot) {
       viewData.rootNodesOrViewContainers.addAll(inlinedNodes);
     } else {
@@ -291,7 +291,7 @@ abstract class AppView<T> {
   }
 
   void removeInlinedNodes(List<Node> inlinedNodes, [bool isRoot = false]) {
-    detachAll(inlinedNodes);
+    _detachAll(inlinedNodes);
     var nodeList =
         isRoot ? viewData.rootNodesOrViewContainers : viewData.inlinedNodes;
     for (int i = nodeList.length - 1; i >= 0; i--) {
@@ -303,7 +303,7 @@ abstract class AppView<T> {
   }
 
   void attachViewAfter(Node node, List<Node> viewRootNodes) {
-    moveNodesAfterSibling(node, viewRootNodes);
+    _moveNodesAfterSibling(node, viewRootNodes);
     domRootRendererIsDirty = true;
   }
 
@@ -344,7 +344,7 @@ abstract class AppView<T> {
   }
 
   void detachViewNodes(List<Node> viewRootNodes) {
-    detachAll(viewRootNodes);
+    _detachAll(viewRootNodes);
   }
 
   void destroy() {
@@ -721,7 +721,7 @@ List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
   return renderNodes;
 }
 
-void moveNodesAfterSibling(Node sibling, List<Node> nodes) {
+void _moveNodesAfterSibling(Node sibling, List<Node> nodes) {
   Node parent = sibling.parentNode;
   if (nodes.isNotEmpty && parent != null) {
     var nextSibling = sibling.nextNode;
@@ -771,7 +771,7 @@ SpanElement createSpanAndAppend(Document doc, Element parent) {
   return null; // ignore: dead_code
 }
 
-void detachAll(List<Node> viewRootNodes) {
+void _detachAll(List<Node> viewRootNodes) {
   int len = viewRootNodes.length;
   for (var i = 0; i < len; i++) {
     Node node = viewRootNodes[i];

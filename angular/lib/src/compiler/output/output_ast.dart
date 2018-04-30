@@ -1364,12 +1364,6 @@ class _ReplaceReadClassMemberTransformer extends ExpressionTransformer {
       new ReadPropExpr(_newValue, ast.name);
 }
 
-Expression replaceVarInExpression(
-    String varName, Expression newValue, Expression expression) {
-  var transformer = new _ReplaceVariableTransformer(varName, newValue);
-  return expression.visitExpression(transformer, null) as Expression;
-}
-
 Statement replaceVarInStatement(
     String varName, Expression newValue, Statement statement) {
   var transformer = new _ReplaceVariableTransformer(varName, newValue);

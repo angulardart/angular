@@ -1,5 +1,4 @@
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 
 import '../compile_metadata.dart'
     show
@@ -11,6 +10,13 @@ import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show AttrAst, TemplateAst;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart';
+
+// List of supported namespaces.
+const namespaceUris = const {
+  'xlink': 'http://www.w3.org/1999/xlink',
+  'svg': 'http://www.w3.org/2000/svg',
+  'xhtml': 'http://www.w3.org/1999/xhtml'
+};
 
 /// Creating outlines for faster builds is preventing auto input change
 /// detection for now. The following flag should be removed to reenable in the
@@ -234,7 +240,7 @@ Map<String, String> astAttribListToMap(List<AttrAst> attrs) {
   return htmlAttrs;
 }
 
-String mergeAttributeValue(
+String _mergeAttributeValue(
     String attrName, String attrValue1, String attrValue2) {
   if (attrName == classAttrName || attrName == styleAttrName) {
     return '$attrValue1 $attrValue2';
@@ -286,7 +292,7 @@ o.Statement createSetAttributeStatement(String astNodeName,
       .toStmt();
 }
 
-List<List<String>> mapToKeyValueArray(Map<String, String> data) {
+List<List<String>> _mapToKeyValueArray(Map<String, String> data) {
   var entryArray = <List<String>>[];
   data.forEach((String name, String value) {
     entryArray.add([name, value]);
@@ -338,11 +344,11 @@ List<List<String>> mergeHtmlAndDirectiveAttrs(
       }
       var prevValue = result[name];
       result[name] = prevValue != null
-          ? mergeAttributeValue(name, prevValue, value)
+          ? _mergeAttributeValue(name, prevValue, value)
           : value;
     }
   }
-  return mapToKeyValueArray(result);
+  return _mapToKeyValueArray(result);
 }
 
 o.Statement createDbgElementCall(
@@ -357,11 +363,11 @@ o.Statement createDbgElementCall(
   ]).toStmt();
 }
 
-Map<String, CompileIdentifierMetadata> tagNameToIdentifier;
+Map<String, CompileIdentifierMetadata> _tagNameToIdentifier;
 
 /// Returns strongly typed html elements to improve code generation.
 CompileIdentifierMetadata identifierFromTagName(String name) {
-  tagNameToIdentifier ??= {
+  _tagNameToIdentifier ??= {
     'a': Identifiers.HTML_ANCHOR_ELEMENT,
     'area': Identifiers.HTML_AREA_ELEMENT,
     'audio': Identifiers.HTML_AUDIO_ELEMENT,
@@ -386,7 +392,7 @@ CompileIdentifierMetadata identifierFromTagName(String name) {
     'svg': Identifiers.SVG_SVG_ELEMENT,
   };
   String tagName = name.toLowerCase();
-  var elementType = tagNameToIdentifier[tagName];
+  var elementType = _tagNameToIdentifier[tagName];
   elementType ??= Identifiers.HTML_ELEMENT;
   // TODO: classify as HtmlElement or SvgElement to improve further.
   return elementType;
