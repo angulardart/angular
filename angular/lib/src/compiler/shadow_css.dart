@@ -102,8 +102,8 @@ String shimShadowCss(String css, String contentClass, String hostClass,
   }
 
   var shadowTransformer = useLegacyEncapsulation
-      ? new LegacyShadowTransformer(contentClass, hostClass)
-      : new ShadowTransformer(contentClass, hostClass);
+      ? new _LegacyShadowTransformer(contentClass, hostClass)
+      : new _ShadowTransformer(contentClass, hostClass);
   shadowTransformer.visitTree(styleSheet);
   var printer = new CssPrinter();
   printer.visitTree(styleSheet);
@@ -117,7 +117,7 @@ final RegExp _consecutiveShadowPiercingCombinatorsRe =
 /// Returns the declaration for property [name] in [group].
 ///
 /// Returns [null] if not found.
-Declaration getDeclaration(DeclarationGroup group, String name) {
+Declaration _getDeclaration(DeclarationGroup group, String name) {
   for (var declaration in group.declarations) {
     if (declaration is Declaration && declaration.property == name) {
       return declaration;
@@ -127,7 +127,7 @@ Declaration getDeclaration(DeclarationGroup group, String name) {
 }
 
 /// Removes all enclosing pairs of single and double quotes from a string.
-String unquote(String value) {
+String _unquote(String value) {
   var start = 0, end = value.length - 1;
   while (start < end &&
       ((value[start] == '"' && value[end] == '"') ||
@@ -142,11 +142,11 @@ String unquote(String value) {
 ///
 /// The declaration expression must be a literal term. Returns [null] if
 /// unsuccessful.
-SelectorGroup parseSelectorGroupFrom(Declaration declaration) {
+SelectorGroup _parseSelectorGroupFrom(Declaration declaration) {
   var expressions = (declaration.expression as Expressions).expressions;
   if (expressions.isEmpty || expressions.first is! LiteralTerm) return null;
   var selectorLiteral = expressions.first as LiteralTerm;
-  var selectorText = unquote(selectorLiteral.text);
+  var selectorText = _unquote(selectorLiteral.text);
   return parseSelectorGroup(selectorText);
 }
 
@@ -154,10 +154,10 @@ SelectorGroup parseSelectorGroupFrom(Declaration declaration) {
 /// [declarationGroup].
 ///
 /// If [remove] is [true], the declaration is removed from [declarationGroup].
-SelectorGroup selectorGroupForProperty(
+SelectorGroup _selectorGroupForProperty(
     DeclarationGroup declarationGroup, String propertyName,
     {bool remove: false}) {
-  var declaration = getDeclaration(declarationGroup, propertyName);
+  var declaration = _getDeclaration(declarationGroup, propertyName);
   if (declaration == null) {
     logWarning(
         declarationGroup.span.message("Expected property '$propertyName'"));
@@ -168,7 +168,7 @@ SelectorGroup selectorGroupForProperty(
     declarationGroup.declarations.remove(declaration);
   }
 
-  var selectorGroup = parseSelectorGroupFrom(declaration);
+  var selectorGroup = _parseSelectorGroupFrom(declaration);
   if (selectorGroup == null) {
     logWarning(declaration.expression.span.message('Not a valid selector'));
     return null;
@@ -178,19 +178,19 @@ SelectorGroup selectorGroupForProperty(
 }
 
 /// Returns [true] if the selector is ':host'.
-bool isHost(SimpleSelector selector) =>
+bool _isHost(SimpleSelector selector) =>
     selector is PseudoClassSelector && selector.name == 'host';
 
 /// Returns [true] if the selector is ':host()'.
-bool isHostFunction(SimpleSelector selector) =>
+bool _isHostFunction(SimpleSelector selector) =>
     selector is PseudoClassFunctionSelector && selector.name == 'host';
 
 /// Returns [true] if the selector is ':host-context()'.
-bool isHostContextFunction(SimpleSelector selector) =>
+bool _isHostContextFunction(SimpleSelector selector) =>
     selector is PseudoClassFunctionSelector && selector.name == 'host-context';
 
 /// Returns [true] if [selectorGroup] matches an element named [name].
-bool matchesElement(SelectorGroup selectorGroup, String name) {
+bool _matchesElement(SelectorGroup selectorGroup, String name) {
   if (selectorGroup.selectors.length != 1) return false;
   var selector = selectorGroup.selectors.first;
   if (selector.simpleSelectorSequences.length != 1) return false;
@@ -199,24 +199,24 @@ bool matchesElement(SelectorGroup selectorGroup, String name) {
 }
 
 /// Deep copies a sequence of selectors.
-Iterable<SimpleSelectorSequence> clone(Iterable<SimpleSelectorSequence> it) =>
+Iterable<SimpleSelectorSequence> _clone(Iterable<SimpleSelectorSequence> it) =>
     it.map((selector) => selector.clone());
 
-SimpleSelectorSequence createElementSelectorSequence(String name) {
+SimpleSelectorSequence _createElementSelectorSequence(String name) {
   var identifier = new Identifier(name, null);
   var selector = new ElementSelector(identifier, null);
   return new SimpleSelectorSequence(selector, null);
 }
 
 /// Convenience function for terse construction of a class sequence.
-SimpleSelectorSequence createClassSelectorSequence(String name) {
+SimpleSelectorSequence _createClassSelectorSequence(String name) {
   var identifier = new Identifier(name, null);
   var selector = new ClassSelector(identifier, null);
   return new SimpleSelectorSequence(selector, null);
 }
 
 /// Convenience function for terse construction of a pseudo-class sequence.
-SimpleSelectorSequence createPseudoClassSelectorSequence(String name) {
+SimpleSelectorSequence _createPseudoClassSelectorSequence(String name) {
   var identifier = new Identifier(name, null);
   var selector = new PseudoClassSelector(identifier, null);
   return new SimpleSelectorSequence(selector, null);
@@ -229,12 +229,12 @@ SimpleSelectorSequence createPseudoClassSelectorSequence(String name) {
 /// Grammar:
 ///   <complex-selector> =
 ///     <compound-selector> [ <combinator>? <compound-selector> ]*
-class ComplexSelector {
-  List<CompoundSelector> compoundSelectors = [];
+class _ComplexSelector {
+  List<_CompoundSelector> compoundSelectors = [];
 
-  ComplexSelector();
+  _ComplexSelector();
 
-  ComplexSelector.from(Selector selector) {
+  _ComplexSelector.from(Selector selector) {
     if (selector.simpleSelectorSequences.isEmpty) return;
     var sequences = selector.simpleSelectorSequences;
     var start = 0;
@@ -242,7 +242,7 @@ class ComplexSelector {
     for (var i = 1, len = sequences.length; i <= len; i++) {
       if (i == len || !sequences[i].isCombinatorNone) {
         var selectorSequence = sequences.getRange(start, i);
-        compoundSelectors.add(new CompoundSelector.from(selectorSequence));
+        compoundSelectors.add(new _CompoundSelector.from(selectorSequence));
         start = i;
       }
     }
@@ -279,13 +279,13 @@ class ComplexSelector {
 /// must be the first selector in the sequence. This behavior is used to detect
 /// invalid selectors that are impossible to shim (i.e. :host(div):host(p), a
 /// valid but meaningless selector which can't be shimmed).
-class CompoundSelector {
+class _CompoundSelector {
   int combinator;
   List<SimpleSelectorSequence> _sequences = [];
 
-  CompoundSelector() : combinator = TokenKind.COMBINATOR_NONE;
+  _CompoundSelector() : combinator = TokenKind.COMBINATOR_NONE;
 
-  CompoundSelector.from(Iterable<SimpleSelectorSequence> sequences) {
+  _CompoundSelector.from(Iterable<SimpleSelectorSequence> sequences) {
     combinator = sequences.isEmpty
         ? TokenKind.COMBINATOR_NONE
         : sequences.first.combinator;
@@ -294,14 +294,14 @@ class CompoundSelector {
 
   bool get containsHost {
     for (var sequence in _sequences) {
-      if (isHost(sequence.simpleSelector)) return true;
+      if (_isHost(sequence.simpleSelector)) return true;
     }
     return false;
   }
 
   bool get containsHostContext {
     for (var sequence in _sequences) {
-      if (isHostContextFunction(sequence.simpleSelector)) return true;
+      if (_isHostContextFunction(sequence.simpleSelector)) return true;
     }
     return false;
   }
@@ -316,7 +316,9 @@ class CompoundSelector {
     if (_sequences.isEmpty) return false;
     final selector = _sequences.first.simpleSelector;
     if (selector is PseudoElementSelector && selector.name == 'ng-deep') {
-      _sequences = [createElementSelectorSequence('')..combinator = combinator];
+      _sequences = [
+        _createElementSelectorSequence('')..combinator = combinator
+      ];
       return true;
     }
     return false;
@@ -400,8 +402,8 @@ class CompoundSelector {
     _sequences = newSequences;
   }
 
-  CompoundSelector clone() {
-    var compoundSelector = new CompoundSelector()..combinator = combinator;
+  _CompoundSelector clone() {
+    var compoundSelector = new _CompoundSelector()..combinator = combinator;
     for (var sequence in _sequences) {
       compoundSelector._sequences.add(sequence.clone());
     }
@@ -419,22 +421,22 @@ class CompoundSelector {
   }
 }
 
-class Indices {
+class _Indices {
   /// Index of first compound selector following a shadow piercing combinator.
   int deepIndex;
 
   /// Index of last compound selector containing a shadow host selector.
   int hostIndex;
 
-  Indices(this.deepIndex, this.hostIndex);
+  _Indices(this.deepIndex, this.hostIndex);
 }
 
 /// Shims selectors to emulate Shadow DOM CSS style encapsulation.
-class ShadowTransformer extends Visitor {
+class _ShadowTransformer extends Visitor {
   final String contentClass;
   final String hostClass;
 
-  ShadowTransformer(this.contentClass, this.hostClass);
+  _ShadowTransformer(this.contentClass, this.hostClass);
 
   void visitTree(StyleSheet tree) {
     tree.visit(this);
@@ -448,21 +450,21 @@ class ShadowTransformer extends Visitor {
   ///
   /// Example:
   ///   :host-context(.x) > .y  =>  .x :host > .y
-  ComplexSelector _createDescendantHostSelectorFor(ComplexSelector selector) {
-    var newSelector = new ComplexSelector();
+  _ComplexSelector _createDescendantHostSelectorFor(_ComplexSelector selector) {
+    var newSelector = new _ComplexSelector();
 
     for (var compoundSelector in selector.compoundSelectors) {
       if (compoundSelector.containsHostContext) {
-        var ancestor = new CompoundSelector()
+        var ancestor = new _CompoundSelector()
           ..combinator = compoundSelector.combinator;
-        var descendant = new CompoundSelector()
+        var descendant = new _CompoundSelector()
           ..combinator = TokenKind.COMBINATOR_DESCENDANT;
-        var sequences = clone(compoundSelector.toSequences());
+        var sequences = _clone(compoundSelector.toSequences());
 
         for (var sequence in sequences) {
           var simpleSelector = sequence.simpleSelector;
 
-          if (isHostContextFunction(simpleSelector)) {
+          if (_isHostContextFunction(simpleSelector)) {
             var hostContext = simpleSelector as PseudoClassFunctionSelector;
             ancestor.addAll(hostContext.selector.simpleSelectorSequences);
           } else {
@@ -470,7 +472,7 @@ class ShadowTransformer extends Visitor {
           }
         }
 
-        descendant.add(createPseudoClassSelectorSequence('host'));
+        descendant.add(_createPseudoClassSelectorSequence('host'));
         newSelector.compoundSelectors.add(ancestor);
         newSelector.compoundSelectors.add(descendant);
       } else {
@@ -483,7 +485,7 @@ class ShadowTransformer extends Visitor {
 
   /// Replaces shadow piercing combinators with descendant combinators and
   /// records [indices].
-  void shimDeepCombinators(ComplexSelector selector, Indices indices) {
+  void shimDeepCombinators(_ComplexSelector selector, _Indices indices) {
     for (var i = selector.compoundSelectors.length - 1; i >= 0; i--) {
       var compoundSelector = selector.compoundSelectors[i];
 
@@ -505,8 +507,8 @@ class ShadowTransformer extends Visitor {
   ///
   /// Example:
   ///   :host(.x) > .y >>> .z  =>  .x.host > .y.content .z
-  void shimSelectors(ComplexSelector selector) {
-    var indices = new Indices(selector.compoundSelectors.length, -1);
+  void shimSelectors(_ComplexSelector selector) {
+    var indices = new _Indices(selector.compoundSelectors.length, -1);
     shimDeepCombinators(selector, indices);
 
     // Scope all selectors between the last host selector and the first shadow
@@ -520,7 +522,7 @@ class ShadowTransformer extends Visitor {
           compoundSelector.containsHostContext) {
         indices.hostIndex = i;
       } else {
-        compoundSelector.add(createClassSelectorSequence(contentClass));
+        compoundSelector.add(_createClassSelectorSequence(contentClass));
       }
     }
 
@@ -530,30 +532,30 @@ class ShadowTransformer extends Visitor {
 
       for (var j = 0; j < compoundSelector._sequences.length; j++) {
         var selector = compoundSelector._sequences[j].simpleSelector;
-        if (isHostFunction(selector) || isHostContextFunction(selector)) {
+        if (_isHostFunction(selector) || _isHostContextFunction(selector)) {
           // Replace :host() or :host-context() with host class.
           compoundSelector._sequences[j] =
-              createClassSelectorSequence(hostClass);
+              _createClassSelectorSequence(hostClass);
 
           // Add :host() or :host-context() argument to constituent selector.
           var hostFn = selector as PseudoClassFunctionSelector;
-          var hostArg = clone(hostFn.selector.simpleSelectorSequences);
+          var hostArg = _clone(hostFn.selector.simpleSelectorSequences);
           compoundSelector.addAll(hostArg);
-        } else if (isHost(selector)) {
+        } else if (_isHost(selector)) {
           // Replace :host with host class.
           compoundSelector._sequences[j] =
-              createClassSelectorSequence(hostClass);
+              _createClassSelectorSequence(hostClass);
         }
       }
     }
   }
 
   void visitSelectorGroup(SelectorGroup node) {
-    var complexSelectors = <ComplexSelector>[];
+    var complexSelectors = <_ComplexSelector>[];
     for (var selector in node.selectors) {
       // Convert [Selector] to [ComplexSelector] to facilitate shimming
       // transformations.
-      var complexSelector = new ComplexSelector.from(selector);
+      var complexSelector = new _ComplexSelector.from(selector);
       complexSelectors.add(complexSelector);
 
       if (complexSelector.containsHostContext) {
@@ -573,8 +575,8 @@ class ShadowTransformer extends Visitor {
   }
 }
 
-class LegacyShadowTransformer extends ShadowTransformer {
-  LegacyShadowTransformer(String contentClass, String hostClass)
+class _LegacyShadowTransformer extends _ShadowTransformer {
+  _LegacyShadowTransformer(String contentClass, String hostClass)
       : super(contentClass, hostClass);
 
   final Set<SelectorGroup> _unscopedSelectorGroups = new Set<SelectorGroup>();
@@ -592,23 +594,23 @@ class LegacyShadowTransformer extends ShadowTransformer {
             ..addAll(nextSelectorGroup.selectors);
           // Consume selector so subsequent selectors aren't overwritten.
           nextSelectorGroup = null;
-        } else if (matchesElement(
+        } else if (_matchesElement(
             node.selectorGroup, 'polyfill-next-selector')) {
           nextSelectorGroup =
-              selectorGroupForProperty(node.declarationGroup, 'content');
+              _selectorGroupForProperty(node.declarationGroup, 'content');
         }
       }
     }
 
     // Remove 'polyfill-next-selector' rule sets.
     list.removeWhere((node) => node is RuleSet
-        ? matchesElement(node.selectorGroup, 'polyfill-next-selector')
+        ? _matchesElement(node.selectorGroup, 'polyfill-next-selector')
         : false);
   }
 
   void shimPolyfillUnscopedRule(RuleSet ruleSet) {
-    if (matchesElement(ruleSet.selectorGroup, 'polyfill-unscoped-rule')) {
-      var contentSelectorGroup = selectorGroupForProperty(
+    if (_matchesElement(ruleSet.selectorGroup, 'polyfill-unscoped-rule')) {
+      var contentSelectorGroup = _selectorGroupForProperty(
           ruleSet.declarationGroup, 'content',
           remove: true);
       if (contentSelectorGroup != null) {
@@ -620,7 +622,7 @@ class LegacyShadowTransformer extends ShadowTransformer {
     }
   }
 
-  void shimDeepCombinators(ComplexSelector selector, Indices indices) {
+  void shimDeepCombinators(_ComplexSelector selector, _Indices indices) {
     for (var i = selector.compoundSelectors.length - 1; i >= 0; i--) {
       var compoundSelector = selector.compoundSelectors[i];
       if (compoundSelector.containsHost ||
@@ -640,7 +642,7 @@ class LegacyShadowTransformer extends ShadowTransformer {
     }
   }
 
-  void shimSelectors(ComplexSelector selector) {
+  void shimSelectors(_ComplexSelector selector) {
     // Remove all ::content and ::shadow selectors. This does not correctly
     // emulate the behavior of these selectors, however, the shim never has
     // and we're just maintaining backwards compatibility until these are

@@ -37,17 +37,17 @@ import "property_binder.dart"
 /// Called by ViewCompiler for each top level CompileView and the
 /// ViewBinderVisitor recursively for each embedded template.
 void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
-  var visitor = new ViewBinderVisitor(view);
+  var visitor = new _ViewBinderVisitor(view);
   templateVisitAll(visitor, parsedTemplate);
   for (var pipe in view.pipes) {
     bindPipeDestroyLifecycleCallbacks(pipe.meta, pipe.instance, pipe.view);
   }
 }
 
-class ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
+class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
   final CompileView view;
   int _nodeIndex = 0;
-  ViewBinderVisitor(this.view);
+  _ViewBinderVisitor(this.view);
 
   void visitBoundText(BoundTextAst ast, dynamic context) {
     var node = this.view.nodes[_nodeIndex++];

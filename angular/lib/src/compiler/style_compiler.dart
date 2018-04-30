@@ -45,14 +45,14 @@ class StyleCompiler {
     usesHostAttribute = false;
     var requiresShim =
         comp.template.encapsulation == ViewEncapsulation.Emulated;
-    return this._compileStyles(getStylesVarName(comp), comp.template.styles,
+    return this._compileStyles(_getStylesVarName(comp), comp.template.styles,
         comp.template.styleUrls, requiresShim);
   }
 
   StylesCompileResult compileStylesheet(
       String stylesheetUrl, String cssText, bool isShimmed) {
     var styleWithImports = extractStyleUrls(stylesheetUrl, cssText);
-    return this._compileStyles(getStylesVarName(), [styleWithImports.style],
+    return this._compileStyles(_getStylesVarName(), [styleWithImports.style],
         styleWithImports.styleUrls, isShimmed);
   }
 
@@ -67,7 +67,7 @@ class StyleCompiler {
     /// Add URLs from @import statements first.
     for (final url in styleUrls) {
       final identifier = new CompileIdentifierMetadata(
-        name: getStylesVarName(),
+        name: _getStylesVarName(),
         moduleUrl: stylesModuleUrl(url, shim),
       );
       styleExpressions.add(new o.ExternalExpr(identifier));
@@ -110,5 +110,5 @@ class StyleCompiler {
 ///
 /// Styles are assigned to style_componentTypeName variables and
 /// passed onto ViewUtils.createRenderComponentType for creating the prototype.
-String getStylesVarName([CompileDirectiveMetadata component]) =>
+String _getStylesVarName([CompileDirectiveMetadata component]) =>
     component != null ? 'styles\$${component.type.name}' : 'styles';
