@@ -4,14 +4,11 @@ import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
-import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show DirectiveAst;
 import 'compile_element.dart' show CompileElement;
-import 'compile_view.dart' show CompileView;
+import 'compile_view.dart' show CompileView, notThrowOnChanges;
 import 'constants.dart' show DetectChangesVars;
-
-var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
 
 void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement) {
@@ -42,7 +39,7 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
   if (lifecycleHooks.contains(LifecycleHooks.onInit)) {
     if (view.genConfig.genDebugInfo) {
       detectChangesInInputsMethod.addStmt(new o.IfStmt(
-          DetectChangesVars.firstCheck.and(NOT_THROW_ON_CHANGES),
+          DetectChangesVars.firstCheck.and(notThrowOnChanges),
           [directiveInstance.callMethod('ngOnInit', []).toStmt()]));
     } else {
       detectChangesInInputsMethod.addStmt(new o.IfStmt(
@@ -52,7 +49,7 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
   }
   if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
     if (view.genConfig.genDebugInfo) {
-      detectChangesInInputsMethod.addStmt(new o.IfStmt(NOT_THROW_ON_CHANGES,
+      detectChangesInInputsMethod.addStmt(new o.IfStmt(notThrowOnChanges,
           [directiveInstance.callMethod('ngDoCheck', []).toStmt()]));
     } else {
       detectChangesInInputsMethod
