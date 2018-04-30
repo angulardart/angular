@@ -42,10 +42,3 @@ String internalSanitizeUrl(String url) {
       ? url
       : 'unsafe:$url';
 }
-
-String internalSanitizeSrcset(String srcset) {
-  return srcset
-      .split(',')
-      .map((String s) => internalSanitizeUrl(s.trim()))
-      .join(', ');
-}

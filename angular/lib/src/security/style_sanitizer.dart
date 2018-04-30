@@ -56,7 +56,7 @@ final RegExp URL_RE = new RegExp(r'^url\([^)]+\)$');
 ///
 /// This code was taken from the Closure sanitization library.
 
-bool hasBalancedQuotes(String value) {
+bool _hasBalancedQuotes(String value) {
   final quoteCodeUnit = "'".codeUnitAt(0);
   final doubleQuoteCodeUnit = '"'.codeUnitAt(0);
   bool outsideSingle = true;
@@ -83,7 +83,7 @@ String internalSanitizeStyle(String value) {
     if (internalSanitizeUrl(input) == input) {
       return value; // Safe style values.
     }
-  } else if (SAFE_STYLE_VALUE.hasMatch(value) && hasBalancedQuotes(value)) {
+  } else if (SAFE_STYLE_VALUE.hasMatch(value) && _hasBalancedQuotes(value)) {
     return value;
   }
   if (value.contains(';')) {
@@ -98,7 +98,7 @@ String internalSanitizeStyle(String value) {
           break;
         }
       } else if (!(SAFE_STYLE_VALUE.hasMatch(part) == true &&
-          hasBalancedQuotes(part))) {
+          _hasBalancedQuotes(part))) {
         failed = true;
         break;
       }
