@@ -438,7 +438,7 @@ class _ProviderResolver {
           useClass: directive.type,
           visibility: directive.visibility);
       final providerAstType =
-          providerAstTypeFromMetadataType(directive.metadataType);
+          _providerAstTypeFromMetadataType(directive.metadataType);
       _resolveProviders(directive, [dirProvider], providerAstType, eager: true);
     }
     // Note: We need an ordered list where components preceded directives so
@@ -559,7 +559,7 @@ void _addQueryToTokenMap(CompileTokenMap<List<CompileQueryMetadata>> map,
   }
 }
 
-ProviderAstType providerAstTypeFromMetadataType(
+ProviderAstType _providerAstTypeFromMetadataType(
   CompileDirectiveMetadataType type,
 ) {
   switch (type) {

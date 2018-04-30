@@ -235,7 +235,7 @@ class NgZone {
 
   Timer _createTimer(
       Zone self, ZoneDelegate parent, Zone zone, Duration duration, fn()) {
-    WrappedTimer wrappedTimer;
+    _WrappedTimer wrappedTimer;
     var cb = () {
       try {
         fn();
@@ -245,7 +245,7 @@ class NgZone {
       }
     };
     Timer timer = parent.createTimer(zone, duration, cb);
-    wrappedTimer = new WrappedTimer(timer);
+    wrappedTimer = new _WrappedTimer(timer);
     wrappedTimer.addOnCancelCb(() {
       _pendingTimers.remove(wrappedTimer);
       _setMacrotask(_pendingTimers.isNotEmpty);
@@ -381,13 +381,11 @@ class NgZone {
 
 /// A `Timer` wrapper that lets you specify additional functions to call when it
 /// is cancelled.
-class WrappedTimer implements Timer {
-  Timer _timer;
+class _WrappedTimer implements Timer {
+  final Timer _timer;
   void Function() _onCancelCb;
 
-  WrappedTimer(Timer timer) {
-    _timer = timer;
-  }
+  _WrappedTimer(this._timer);
 
   void addOnCancelCb(void Function() onCancelCb) {
     if (this._onCancelCb != null) {

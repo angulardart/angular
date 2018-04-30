@@ -2,7 +2,6 @@ import 'package:angular/src/compiler/output/output_ast.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 import 'package:angular_compiler/cli.dart';
 import 'package:meta/meta.dart';
 
@@ -40,9 +39,8 @@ import 'view_compiler_utils.dart'
         createSetAttributeStatement,
         detectHtmlElementFromTagName,
         componentFromDirectives,
-        identifierFromTagName;
-
-var rootSelectorVar = o.variable("rootSelector");
+        identifierFromTagName,
+        namespaceUris;
 
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   final CompileView view;
@@ -388,7 +386,7 @@ o.ClassStmt createViewClass(
     new o.ClassMethod(
         "build",
         [],
-        generateBuildMethod(view, parser),
+        _generateBuildMethod(view, parser),
         o.importType(
           Identifiers.ComponentRef,
           // The 'HOST' view is a <dynamic> view that "hosts" the actual
@@ -404,7 +402,7 @@ o.ClassStmt createViewClass(
         view.writeChangeDetectionStatements(), null, null, ['override']),
     new o.ClassMethod("dirtyParentQueriesInternal", [],
         view.dirtyParentQueriesMethod.finish(), null, null, ['override']),
-    new o.ClassMethod("destroyInternal", [], generateDestroyMethod(view), null,
+    new o.ClassMethod("destroyInternal", [], _generateDestroyMethod(view), null,
         null, ['override'])
   ]..addAll(view.eventHandlerMethods);
   if (view.detectHostChangesMethod != null) {
@@ -418,7 +416,7 @@ o.ClassStmt createViewClass(
       : Identifiers.AppView;
   var viewClass = new o.ClassStmt(
       view.className,
-      o.importExpr(superClass, typeParams: [getContextType(view)]),
+      o.importExpr(superClass, typeParams: [_getContextType(view)]),
       view.storage.fields,
       view.getters,
       viewConstructor,
@@ -446,7 +444,7 @@ o.ClassMethod _createViewClassConstructor(
     o.literalMap(emptyTemplateVariableBindings),
     ViewConstructorVars.parentView,
     ViewConstructorVars.parentIndex,
-    changeDetectionStrategyToConst(getChangeDetectionMode(view))
+    changeDetectionStrategyToConst(_getChangeDetectionMode(view))
   ];
   if (view.genConfig.genDebugInfo) {
     superConstructorArgs.add(nodeDebugInfosVar);
@@ -552,7 +550,7 @@ o.Expression _constructRenderType(
   return renderCompTypeVar;
 }
 
-List<o.Statement> generateDestroyMethod(CompileView view) {
+List<o.Statement> _generateDestroyMethod(CompileView view) {
   var statements = <o.Statement>[];
   for (o.Expression child in view.viewContainers) {
     statements.add(
@@ -563,11 +561,6 @@ List<o.Statement> generateDestroyMethod(CompileView view) {
   }
   statements.addAll(view.destroyMethod.finish());
   return statements;
-}
-
-o.Statement createInputUpdateFunction(
-    CompileView view, o.ClassStmt viewClass, o.ReadVarExpr renderCompTypeVar) {
-  return null;
 }
 
 o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
@@ -598,7 +591,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
       .toDeclStmt(view.viewFactory.name, [o.StmtModifier.Final]);
 }
 
-List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
+List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   // Hoist the `rootEl` class field as `_rootEl` locally for Dart2JS.
   o.ReadVarExpr cachedRootEl;
   final parentRenderNodeStmts = <o.Statement>[];
@@ -814,12 +807,12 @@ void _writeComponentHostEventListeners(
   }
 }
 
-o.OutputType getContextType(CompileView view) {
+o.OutputType _getContextType(CompileView view) {
   var typeMeta = view.component.type;
   return typeMeta.isHost ? o.DYNAMIC_TYPE : o.importType(typeMeta);
 }
 
-int getChangeDetectionMode(CompileView view) {
+int _getChangeDetectionMode(CompileView view) {
   int mode;
   if (identical(view.viewType, ViewType.component)) {
     mode = isDefaultChangeDetectionStrategy(view.component.changeDetection)
@@ -838,13 +831,13 @@ void writeInputUpdaters(CompileView view, List<o.Statement> targetStatements) {
     for (String input in view.component.inputs.keys) {
       if (!writtenInputs.contains(input)) {
         writtenInputs.add(input);
-        writeInputUpdater(view, input, targetStatements);
+        _writeInputUpdater(view, input, targetStatements);
       }
     }
   }
 }
 
-void writeInputUpdater(
+void _writeInputUpdater(
     CompileView view, String inputName, List<o.Statement> targetStatements) {
   var prevValueVarName = 'prev$inputName';
   CompileTypeMetadata inputTypeMeta = view.component.inputTypes != null
@@ -852,7 +845,7 @@ void writeInputUpdater(
       : null;
   var inputType = inputTypeMeta != null ? o.importType(inputTypeMeta) : null;
   var arguments = [
-    new o.FnParam('component', getContextType(view)),
+    new o.FnParam('component', _getContextType(view)),
     new o.FnParam(prevValueVarName, inputType),
     new o.FnParam(inputName, inputType)
   ];
