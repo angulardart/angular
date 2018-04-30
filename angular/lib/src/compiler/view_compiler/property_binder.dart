@@ -1,8 +1,7 @@
 import 'package:angular/src/compiler/analyzed_class.dart';
-import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 import 'package:angular/src/core/change_detection/constants.dart'
     show isDefaultChangeDetectionStrategy, ChangeDetectionStrategy;
-import 'package:angular/src/core/linker/view_type.dart' show ViewType;
+import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';
@@ -30,15 +29,16 @@ import 'view_compiler_utils.dart'
     show
         createFlatArray,
         createSetAttributeParams,
+        namespaceUris,
         outlinerDeprecated,
         unwrapDirective,
         unwrapDirectiveInstance;
 import 'view_name_resolver.dart';
 
-o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
+o.ReadClassMemberExpr _createBindFieldExpr(num exprIndex) =>
     new o.ReadClassMemberExpr('_expr_$exprIndex');
 
-o.ReadVarExpr createCurrValueExpr(num exprIndex) =>
+o.ReadVarExpr _createCurrValueExpr(num exprIndex) =>
     o.variable('currVal_$exprIndex');
 
 /// Generates code to bind template expression.
@@ -56,7 +56,7 @@ o.ReadVarExpr createCurrValueExpr(num exprIndex) =>
 /// once when component is created.
 /// Otherwise statements are added to method to be executed on
 /// each change detection cycle.
-void bind(
+void _bind(
     CompileDirectiveMetadata viewDirective,
     ViewNameResolver nameResolver,
     ViewStorage storage,
@@ -93,7 +93,7 @@ void bind(
     // e.g. an empty expression was given
     return;
   }
-  bool isPrimitive = isPrimitiveFieldType(fieldType);
+  bool isPrimitive = _isPrimitiveFieldType(fieldType);
   ViewStorageItem previousValueField = storage.allocate(fieldExpr.name,
       modifiers: const [o.StmtModifier.Private],
       initializer: fieldExprInitializer,
@@ -117,7 +117,7 @@ void bind(
         ])));
 }
 
-/// The same as [bind], but we know that [checkExpression] is a literal.
+/// The same as [_bind], but we know that [checkExpression] is a literal.
 ///
 /// This means we don't need to create a change detection field or check if it
 /// has changed. We know for sure that there will only be one transition from
@@ -159,13 +159,13 @@ void bindRenderText(
   }
   int bindingIndex = view.nameResolver.createUniqueBindIndex();
   // Expression for current value of expression when value is re-read.
-  var currValExpr = createCurrValueExpr(bindingIndex);
+  var currValExpr = _createCurrValueExpr(bindingIndex);
   // Expression that points to _expr_## stored value.
-  var valueField = createBindFieldExpr(bindingIndex);
+  var valueField = _createBindFieldExpr(bindingIndex);
   var dynamicRenderMethod = new CompileMethod(view.genDebugInfo);
   dynamicRenderMethod.resetDebugInfo(compileNode.nodeIndex, boundText);
   var constantRenderMethod = new CompileMethod(view.genDebugInfo);
-  bind(
+  _bind(
       view.component,
       view.nameResolver,
       view.storage,
@@ -222,15 +222,15 @@ void bindAndWriteToRenderer(
     int bindingIndex = nameResolver.createUniqueBindIndex();
 
     // Expression that points to _expr_## stored value.
-    var fieldExpr = createBindFieldExpr(bindingIndex);
+    var fieldExpr = _createBindFieldExpr(bindingIndex);
 
     // Expression for current value of expression when value is re-read.
-    var currValExpr = createCurrValueExpr(bindingIndex);
+    var currValExpr = _createCurrValueExpr(bindingIndex);
 
     String renderMethod;
     o.OutputType fieldType;
     // Wraps current value with sanitization call if necessary.
-    o.Expression renderValue = sanitizedValue(boundProp, currValExpr);
+    o.Expression renderValue = _sanitizedValue(boundProp, currValExpr);
 
     var updateStmts = <o.Statement>[];
     switch (boundProp.type) {
@@ -299,7 +299,7 @@ void bindAndWriteToRenderer(
         break;
     }
 
-    bind(
+    _bind(
         directiveMeta,
         nameResolver,
         storage,
@@ -323,7 +323,7 @@ void bindAndWriteToRenderer(
   }
 }
 
-o.Expression sanitizedValue(
+o.Expression _sanitizedValue(
     BoundElementPropertyAst boundProp, o.Expression renderValue) {
   String methodName;
   switch (boundProp.securityContext) {
@@ -454,8 +454,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   for (var input in directiveAst.inputs) {
     var bindingIndex = view.nameResolver.createUniqueBindIndex();
     dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
-    var fieldExpr = createBindFieldExpr(bindingIndex);
-    var currValExpr = createCurrValueExpr(bindingIndex);
+    var fieldExpr = _createBindFieldExpr(bindingIndex);
+    var currValExpr = _createCurrValueExpr(bindingIndex);
     var statements = <o.Statement>[];
 
     // Optimization specifically for NgIf. Since the directive already performs
@@ -534,11 +534,11 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
         ? o.importType(inputTypeMeta, inputTypeMeta.genericTypes)
         : null;
     if (isStatefulComp) {
-      bindToUpdateMethod(view, currValExpr, fieldExpr, input.value,
+      _bindToUpdateMethod(view, currValExpr, fieldExpr, input.value,
           DetectChangesVars.cachedCtx, statements, dynamicInputsMethod,
           fieldType: inputType);
     } else {
-      bind(
+      _bind(
           view.component,
           view.nameResolver,
           view.storage,
@@ -569,7 +569,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   }
 }
 
-void bindToUpdateMethod(
+void _bindToUpdateMethod(
     CompileView view,
     o.ReadVarExpr currValExpr,
     o.ReadClassMemberExpr fieldExpr,
@@ -585,7 +585,7 @@ void bindToUpdateMethod(
     return;
   }
   // Add class field to store previous value.
-  bool isPrimitive = isPrimitiveFieldType(fieldType);
+  bool isPrimitive = _isPrimitiveFieldType(fieldType);
   ViewStorageItem previousValueField = view.storage.allocate(fieldExpr.name,
       outputType: isPrimitive ? fieldType : null,
       modifiers: const [o.StmtModifier.Private]);
@@ -633,8 +633,8 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
   var input = directiveAst.inputs.single;
   var bindingIndex = view.nameResolver.createUniqueBindIndex();
   dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
-  var fieldExpr = createBindFieldExpr(bindingIndex);
-  var currValExpr = createCurrValueExpr(bindingIndex);
+  var fieldExpr = _createBindFieldExpr(bindingIndex);
+  var currValExpr = _createCurrValueExpr(bindingIndex);
 
   var embeddedView = compileElement.embeddedView;
 
@@ -675,7 +675,7 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
         new ast.Binary('==', input.value, new ast.LiteralPrimitive(true));
   }
 
-  bind(
+  _bind(
       view.component,
       view.nameResolver,
       view.storage,
@@ -700,16 +700,7 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
   }
 }
 
-o.Statement logBindingUpdateStmt(
-    o.Expression renderNode, String propName, o.Expression value) {
-  return new o.InvokeMemberMethodExpr('setBindingDebugInfo', [
-    renderNode,
-    o.literal('ng-reflect-$propName'),
-    value.isBlank().conditional(o.NULL_EXPR, value.callMethod('toString', []))
-  ]).toStmt();
-}
-
-bool isPrimitiveFieldType(o.OutputType type) {
+bool _isPrimitiveFieldType(o.OutputType type) {
   if (type == o.BOOL_TYPE ||
       type == o.INT_TYPE ||
       type == o.DOUBLE_TYPE ||

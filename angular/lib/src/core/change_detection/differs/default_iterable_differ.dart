@@ -1,11 +1,5 @@
 import 'package:angular/src/runtime.dart';
 
-typedef void DefaultIterableCallback(
-  CollectionChangeRecord item,
-  int previousIndex,
-  int currentIndex,
-);
-
 /// A function that can be used to return a unique key for [item] at [index].
 ///
 /// By default, [item] itself is used as the key to track to instantiate a new
@@ -87,7 +81,12 @@ class DefaultIterableDiffer {
 
   int get length => _length;
 
-  void forEachOperation(DefaultIterableCallback fn) {
+  void forEachOperation(
+      void fn(
+    CollectionChangeRecord item,
+    int previousIndex,
+    int currentIndex,
+  )) {
     var nextIt = _itHead;
     var nextRemove = _removalsHead;
     int addRemoveOffset = 0;
