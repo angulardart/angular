@@ -53,7 +53,7 @@ class CompileTypeMetadataVisitor
   /// Otherwise, use the first encountered.
   ConstructorElement unnamedConstructor(ClassElement element) {
     ConstructorElement constructor;
-    final constructors = element.constructors;
+    final constructors = element.constructors.retype<ConstructorElement>();
     if (constructors.isEmpty) {
       BuildError.throwForElement(element, 'No constructors found');
     }
