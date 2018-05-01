@@ -19,24 +19,23 @@ class EmitterVisitorContext {
   final Map<String, String> deferredModules;
   final List<String> _exportedVars;
   int _indent;
-  int _outputPos;
+  int _outputPos = 0;
   // Current method being emitted. Allows expressions access to method
   // parameter names.
   o.ClassMethod _activeMethod;
-  bool _inSuperCall;
+  bool _inSuperCall = false;
+
+  final List<_EmittedLine> _lines;
+  final List<o.ClassStmt> _classes = [];
 
   static EmitterVisitorContext createRoot(
       List<String> exportedVars, Map<String, String> deferredModules) {
     return new EmitterVisitorContext(exportedVars, 0, deferredModules);
   }
 
-  List<_EmittedLine> _lines;
-  final List<o.ClassStmt> _classes = [];
-  EmitterVisitorContext(
-      this._exportedVars, this._indent, this.deferredModules) {
-    _outputPos = 0;
-    this._lines = [new _EmittedLine(_indent)];
-  }
+  EmitterVisitorContext(this._exportedVars, this._indent, this.deferredModules)
+      : this._lines = [new _EmittedLine(_indent)];
+
   _EmittedLine get _currentLine {
     return this._lines[this._lines.length - 1];
   }
