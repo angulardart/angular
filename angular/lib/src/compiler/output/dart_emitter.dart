@@ -57,7 +57,7 @@ class DartEmitter implements OutputEmitter {
 }
 
 class _DartEmitterVisitor extends AbstractEmitterVisitor
-    implements o.TypeVisitor {
+    implements o.TypeVisitor<void, EmitterVisitorContext> {
   // List of packages that are public api and can be imported without prefix.
   static const List<String> whiteListedImports = const [
     'package:angular/angular.dart',
@@ -98,364 +98,332 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   _DartEmitterVisitor(this._moduleUrl) : super(true);
 
   @override
-  dynamic visitNamedExpr(o.NamedExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('${ast.name}: ');
-    ast.expr.visitExpression(this, ctx);
-    return null;
+  void visitNamedExpr(o.NamedExpr ast, EmitterVisitorContext context) {
+    context.print('${ast.name}: ');
+    ast.expr.visitExpression(this, context);
   }
 
   @override
-  dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    this._visitIdentifier(ast.value, ast.typeParams, ctx);
-    return null;
+  void visitExternalExpr(o.ExternalExpr ast, EmitterVisitorContext context) {
+    _visitIdentifier(ast.value, ast.typeParams, context);
   }
 
   @override
-  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitDeclareVarStmt(
+      o.DeclareVarStmt stmt, EmitterVisitorContext context) {
     if (stmt.hasModifier(o.StmtModifier.Static)) {
-      ctx.print('static ');
+      context.print('static ');
     }
     if (stmt.hasModifier(o.StmtModifier.Final)) {
-      ctx.print('final ');
+      context.print('final ');
     } else if (stmt.hasModifier(o.StmtModifier.Const)) {
-      ctx.print('const ');
+      context.print('const ');
     } else if (stmt.type == null) {
-      ctx.print('var ');
+      context.print('var ');
     }
     if (stmt.type != null) {
-      stmt.type.visitType(this, ctx);
-      ctx.print(' ');
+      stmt.type.visitType(this, context);
+      context.print(' ');
     }
     if (stmt.value == null) {
       // No initializer.
-      ctx.println('${stmt.name};');
+      context.println('${stmt.name};');
     } else {
-      ctx.print('${stmt.name} = ');
-      stmt.value.visitExpression(this, ctx);
-      ctx.println(';');
+      context.print('${stmt.name} = ');
+      stmt.value.visitExpression(this, context);
+      context.println(';');
     }
-    return null;
   }
 
   @override
-  dynamic visitCastExpr(o.CastExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('(');
-    ast.value.visitExpression(this, ctx);
-    ctx.print(' as ');
-    ast.type.visitType(this, ctx);
-    ctx.print(')');
-    return null;
+  void visitCastExpr(o.CastExpr ast, EmitterVisitorContext context) {
+    context.print('(');
+    ast.value.visitExpression(this, context);
+    context.print(' as ');
+    ast.type.visitType(this, context);
+    context.print(')');
   }
 
   @override
-  dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.pushClass(stmt);
-    ctx.print('class ${stmt.name}');
+  void visitDeclareClassStmt(o.ClassStmt stmt, EmitterVisitorContext context) {
+    context.pushClass(stmt);
+    context.print('class ${stmt.name}');
     if (stmt.parent != null) {
-      ctx.print(' extends ');
-      stmt.parent.visitExpression(this, ctx);
+      context.print(' extends ');
+      stmt.parent.visitExpression(this, context);
     }
-    ctx.println(' {');
-    ctx.incIndent();
+    context.println(' {');
+    context.incIndent();
     for (var field in stmt.fields) {
-      _visitClassField(field, ctx);
+      _visitClassField(field, context);
     }
     if (stmt.constructorMethod != null) {
-      this._visitClassConstructor(stmt, ctx);
+      _visitClassConstructor(stmt, context);
     }
     for (var getter in stmt.getters) {
-      _visitClassGetter(getter, ctx);
+      _visitClassGetter(getter, context);
     }
     for (var method in stmt.methods) {
-      _visitClassMethod(method, ctx);
+      _visitClassMethod(method, context);
     }
-    ctx.decIndent();
-    ctx.println('}');
-    ctx.popClass();
-    return null;
+    context.decIndent();
+    context.println('}');
+    context.popClass();
   }
 
-  void _visitClassField(o.ClassField field, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void _visitClassField(o.ClassField field, EmitterVisitorContext context) {
     if (field.hasModifier(o.StmtModifier.Static)) {
-      ctx.print('static ');
+      context.print('static ');
     }
     if (field.hasModifier(o.StmtModifier.Final)) {
-      ctx.print('final ');
+      context.print('final ');
     } else if (field.type == null) {
-      ctx.print('var ');
+      context.print('var ');
     }
     if (field.type != null) {
-      field.type.visitType(this, ctx);
-      ctx.print(' ');
+      field.type.visitType(this, context);
+      context.print(' ');
     }
-    ctx.print('${field.name}');
+    context.print('${field.name}');
     if (field.initializer != null) {
-      ctx.print(' = ');
+      context.print(' = ');
       field.initializer.visitExpression(this, context);
     }
-    ctx.println(';');
+    context.println(';');
   }
 
-  void _visitClassGetter(o.ClassGetter getter, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void _visitClassGetter(o.ClassGetter getter, EmitterVisitorContext context) {
     if (getter.type != null) {
-      getter.type.visitType(this, ctx);
-      ctx.print(' ');
+      getter.type.visitType(this, context);
+      context.print(' ');
     }
-    ctx.println('get ${getter.name} {');
-    ctx.incIndent();
-    this.visitAllStatements(getter.body, ctx);
-    ctx.decIndent();
-    ctx.println('}');
+    context.println('get ${getter.name} {');
+    context.incIndent();
+    visitAllStatements(getter.body, context);
+    context.decIndent();
+    context.println('}');
   }
 
-  void _visitClassConstructor(o.ClassStmt stmt, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('${stmt.name}(');
-    this._visitParams(stmt.constructorMethod.params, ctx);
-    ctx.print(')');
+  void _visitClassConstructor(o.ClassStmt stmt, EmitterVisitorContext context) {
+    context.print('${stmt.name}(');
+    _visitParams(stmt.constructorMethod.params, context);
+    context.print(')');
     var ctorStmts = stmt.constructorMethod.body;
     var superCtorExpr = ctorStmts.isNotEmpty
         ? _getSuperConstructorCallExpr(ctorStmts[0])
         : null;
     if (superCtorExpr != null) {
-      ctx.print(': ');
-      ctx.enterSuperCall();
-      superCtorExpr.visitExpression(this, ctx);
-      ctx.exitSuperCall();
+      context.print(': ');
+      context.enterSuperCall();
+      superCtorExpr.visitExpression(this, context);
+      context.exitSuperCall();
       ctorStmts = ctorStmts.sublist(1);
     }
     if (ctorStmts.isEmpty) {
       // Empty constructor body.
-      ctx.println(';');
+      context.println(';');
     } else {
-      ctx.println(' {');
-      ctx.incIndent();
-      this.visitAllStatements(ctorStmts, ctx);
-      ctx.decIndent();
-      ctx.println('}');
+      context.println(' {');
+      context.incIndent();
+      visitAllStatements(ctorStmts, context);
+      context.decIndent();
+      context.println('}');
     }
   }
 
-  void _visitClassMethod(o.ClassMethod method, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.enterMethod(method);
+  void _visitClassMethod(o.ClassMethod method, EmitterVisitorContext context) {
+    context.enterMethod(method);
     for (var annotation in method.annotations) {
-      ctx.print('@$annotation ');
+      context.print('@$annotation ');
     }
     if (method.type != null) {
-      method.type.visitType(this, ctx);
+      method.type.visitType(this, context);
     } else {
-      ctx.print('void');
+      context.print('void');
     }
-    ctx.print(' ${method.name}(');
-    this._visitParams(method.params, ctx);
-    ctx.println(') {');
-    ctx.incIndent();
-    this.visitAllStatements(method.body, ctx);
-    ctx.decIndent();
-    ctx.println('}');
-    ctx.exitMethod();
+    context.print(' ${method.name}(');
+    _visitParams(method.params, context);
+    context.println(') {');
+    context.incIndent();
+    visitAllStatements(method.body, context);
+    context.decIndent();
+    context.println('}');
+    context.exitMethod();
   }
 
   @override
-  dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('(');
-    this._visitParams(ast.params, ctx);
-    ctx.println(') {');
-    ctx.incIndent();
-    this.visitAllStatements(ast.statements, ctx);
-    ctx.decIndent();
-    ctx.print('}');
-    return null;
+  void visitFunctionExpr(o.FunctionExpr ast, EmitterVisitorContext context) {
+    context.print('(');
+    _visitParams(ast.params, context);
+    context.println(') {');
+    context.incIndent();
+    visitAllStatements(ast.statements, context);
+    context.decIndent();
+    context.print('}');
   }
 
   @override
-  dynamic visitDeclareFunctionStmt(
-      o.DeclareFunctionStmt stmt, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitDeclareFunctionStmt(
+      o.DeclareFunctionStmt stmt, EmitterVisitorContext context) {
     if (stmt.type != null) {
-      stmt.type.visitType(this, ctx);
+      stmt.type.visitType(this, context);
     } else {
-      ctx.print('void');
+      context.print('void');
     }
-    ctx.print(' ${stmt.name}(');
-    this._visitParams(stmt.params, ctx);
-    ctx.println(') {');
-    ctx.incIndent();
-    this.visitAllStatements(stmt.statements, ctx);
-    ctx.decIndent();
-    ctx.println('}');
-    return null;
+    context.print(' ${stmt.name}(');
+    _visitParams(stmt.params, context);
+    context.println(') {');
+    context.incIndent();
+    visitAllStatements(stmt.statements, context);
+    context.decIndent();
+    context.println('}');
   }
 
   @override
   String getBuiltinMethodName(o.BuiltinMethod method) {
-    String name;
     switch (method) {
       case o.BuiltinMethod.ConcatArray:
-        name = ".addAll";
-        break;
+        return ".addAll";
       case o.BuiltinMethod.SubscribeObservable:
-        name = "listen";
-        break;
+        return "listen";
       default:
         throw new StateError('Unknown builtin method: $method');
     }
-    return name;
   }
 
   @override
-  dynamic visitReadVarExpr(o.ReadVarExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitReadVarExpr(o.ReadVarExpr ast, EmitterVisitorContext context) {
     if (identical(ast.builtin, o.BuiltinVar.MetadataMap)) {
-      ctx.print(_METADATA_MAP_VAR);
+      context.print(_METADATA_MAP_VAR);
     } else {
-      super.visitReadVarExpr(ast, ctx);
+      super.visitReadVarExpr(ast, context);
     }
-    return null;
   }
 
   @override
-  dynamic visitReadClassMemberExpr(o.ReadClassMemberExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    if (ctx.activeMethod != null &&
-        !ctx.activeMethod.containsParameterName(ast.name) &&
-        !ctx.inSuperCall) {
-      ctx.print('${ast.name}');
+  void visitReadClassMemberExpr(
+      o.ReadClassMemberExpr ast, EmitterVisitorContext context) {
+    if (context.activeMethod != null &&
+        !context.activeMethod.containsParameterName(ast.name) &&
+        !context.inSuperCall) {
+      context.print('${ast.name}');
     } else {
-      ctx.print('this.${ast.name}');
+      context.print('this.${ast.name}');
     }
-    return null;
   }
 
   @override
-  dynamic visitWriteClassMemberExpr(
-      o.WriteClassMemberExpr expr, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    var lineWasEmpty = ctx.lineIsEmpty();
+  void visitWriteClassMemberExpr(
+      o.WriteClassMemberExpr expr, EmitterVisitorContext context) {
+    var lineWasEmpty = context.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print('(');
+      context.print('(');
     }
-    ctx.print('${expr.name} = ');
-    expr.value.visitExpression(this, ctx);
+    context.print('${expr.name} = ');
+    expr.value.visitExpression(this, context);
     if (!lineWasEmpty) {
-      ctx.print(')');
+      context.print(')');
     }
-    return null;
   }
 
   @override
-  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.println('try {');
-    ctx.incIndent();
-    this.visitAllStatements(stmt.bodyStmts, ctx);
-    ctx.decIndent();
-    ctx.println('} catch (${catchErrorVar.name}, ${catchStackVar.name}) {');
-    ctx.incIndent();
-    this.visitAllStatements(stmt.catchStmts, ctx);
-    ctx.decIndent();
-    ctx.println('}');
-    return null;
+  void visitTryCatchStmt(o.TryCatchStmt stmt, EmitterVisitorContext context) {
+    context.println('try {');
+    context.incIndent();
+    visitAllStatements(stmt.bodyStmts, context);
+    context.decIndent();
+    context.println('} catch (${catchErrorVar.name}, ${catchStackVar.name}) {');
+    context.incIndent();
+    visitAllStatements(stmt.catchStmts, context);
+    context.decIndent();
+    context.println('}');
   }
 
   @override
-  dynamic visitBinaryOperatorExpr(o.BinaryOperatorExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitBinaryOperatorExpr(
+      o.BinaryOperatorExpr ast, EmitterVisitorContext context) {
     switch (ast.operator) {
       case o.BinaryOperator.Identical:
-        ctx.print('identical(');
-        ast.lhs.visitExpression(this, ctx);
-        ctx.print(', ');
-        ast.rhs.visitExpression(this, ctx);
-        ctx.print(')');
+        context.print('identical(');
+        ast.lhs.visitExpression(this, context);
+        context.print(', ');
+        ast.rhs.visitExpression(this, context);
+        context.print(')');
         break;
       case o.BinaryOperator.NotIdentical:
-        ctx.print('!identical(');
-        ast.lhs.visitExpression(this, ctx);
-        ctx.print(', ');
-        ast.rhs.visitExpression(this, ctx);
-        ctx.print(')');
+        context.print('!identical(');
+        ast.lhs.visitExpression(this, context);
+        context.print(', ');
+        ast.rhs.visitExpression(this, context);
+        context.print(')');
         break;
       default:
-        super.visitBinaryOperatorExpr(ast, ctx);
+        super.visitBinaryOperatorExpr(ast, context);
     }
-    return null;
   }
 
   @override
-  dynamic visitLiteralVargsExpr(o.LiteralVargsExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    this.visitAllExpressions(
+  void visitLiteralVargsExpr(
+      o.LiteralVargsExpr ast, EmitterVisitorContext context) {
+    visitAllExpressions(
       ast.entries,
-      ctx,
+      context,
       ',',
       newLine: ast.entries.isNotEmpty,
       keepOnSameLine: true,
     );
-    return ast;
   }
 
   @override
-  dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitLiteralArrayExpr(
+      o.LiteralArrayExpr ast, EmitterVisitorContext context) {
     if (_isConstType(ast.type)) {
-      ctx.print('const ');
+      context.print('const ');
     }
     if (ast.type == o.DYNAMIC_TYPE) {
-      ctx.print('<dynamic>');
+      context.print('<dynamic>');
     }
-    return super.visitLiteralArrayExpr(ast, ctx);
+    return super.visitLiteralArrayExpr(ast, context);
   }
 
   @override
-  dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitLiteralMapExpr(
+      o.LiteralMapExpr ast, EmitterVisitorContext context) {
     if (_isConstType(ast.type)) {
-      ctx.print('const ');
+      context.print('const ');
     }
     if (ast.valueType != null) {
-      ctx.print('<String, ');
-      ast.valueType.visitType(this, ctx);
-      ctx.print('>');
+      context.print('<String, ');
+      ast.valueType.visitType(this, context);
+      context.print('>');
     }
-    return super.visitLiteralMapExpr(ast, ctx);
+    return super.visitLiteralMapExpr(ast, context);
   }
 
   @override
-  dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print(_isConstType(ast.type) ? 'const' : 'new');
-    ctx.print(" ");
-    ast.classExpr.visitExpression(this, ctx);
+  void visitInstantiateExpr(
+      o.InstantiateExpr ast, EmitterVisitorContext context) {
+    context.print(_isConstType(ast.type) ? 'const' : 'new');
+    context.print(" ");
+    ast.classExpr.visitExpression(this, context);
     var types = ast.types;
     if (types != null) {
-      ctx.print('<');
+      context.print('<');
       for (var i = 0; i < types.length; i++) {
-        types[i].visitType(this, ctx);
+        types[i].visitType(this, context);
         if (i < types.length - 1) {
-          ctx.print(', ');
+          context.print(', ');
         }
       }
-      ctx.print('>');
+      context.print('>');
     }
-    ctx.print('(');
-    this.visitAllExpressions(ast.args, ctx, ',');
-    ctx.print(')');
-    return null;
+    context.print('(');
+    visitAllExpressions(ast.args, context, ',');
+    context.print(')');
   }
 
   @override
-  dynamic visitBuiltinType(o.BuiltinType type, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitBuiltinType(o.BuiltinType type, EmitterVisitorContext context) {
     String typeStr;
     switch (type.name) {
       case o.BuiltinTypeName.Bool:
@@ -482,76 +450,62 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       default:
         throw new StateError('Unsupported builtin type ${type.name}');
     }
-    ctx.print(typeStr);
-    return null;
+    context.print(typeStr);
   }
 
   @override
-  dynamic visitExternalType(o.ExternalType ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    this._visitIdentifier(ast.value, ast.typeParams, ctx);
-    return null;
+  void visitExternalType(o.ExternalType ast, EmitterVisitorContext context) {
+    _visitIdentifier(ast.value, ast.typeParams, context);
   }
 
   @override
-  dynamic visitFunctionType(o.FunctionType type, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitFunctionType(o.FunctionType type, EmitterVisitorContext context) {
     if (type.returnType != null) {
-      type.returnType.visitType(this, ctx);
+      type.returnType.visitType(this, context);
     } else {
-      ctx.print('void');
+      context.print('void');
     }
-    ctx.print(' Function(');
+    context.print(' Function(');
     visitAllObjects((o.OutputType param) {
-      param.visitType(this, ctx);
-    }, type.paramTypes, ctx, ',');
-    ctx.print(')');
-    return null;
+      param.visitType(this, context);
+    }, type.paramTypes, context, ',');
+    context.print(')');
   }
 
   @override
-  dynamic visitArrayType(o.ArrayType type, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('List<');
+  void visitArrayType(o.ArrayType type, EmitterVisitorContext context) {
+    context.print('List<');
     if (type.of != null) {
-      type.of.visitType(this, ctx);
+      type.of.visitType(this, context);
     } else {
-      ctx.print('dynamic');
+      context.print('dynamic');
     }
-    ctx.print('>');
-    return null;
+    context.print('>');
   }
 
   @override
-  dynamic visitMapType(o.MapType type, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('Map<String, ');
+  void visitMapType(o.MapType type, EmitterVisitorContext context) {
+    context.print('Map<String, ');
     if (type.valueType != null) {
-      type.valueType.visitType(this, ctx);
+      type.valueType.visitType(this, context);
     } else {
-      ctx.print('dynamic');
+      context.print('dynamic');
     }
-    ctx.print('>');
-    return null;
+    context.print('>');
   }
 
-  void _visitParams(List<o.FnParam> params, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    this.visitAllObjects((param) {
+  void _visitParams(List<o.FnParam> params, EmitterVisitorContext context) {
+    visitAllObjects((param) {
       if (param.type != null) {
-        param.type.visitType(this, ctx);
-        ctx.print(" ");
+        param.type.visitType(this, context);
+        context.print(" ");
       }
-      ctx.print(param.name as String);
-    }, params, ctx, ",");
+      context.print(param.name as String);
+    }, params, context, ",");
   }
 
-  void _visitIdentifier(
-    CompileIdentifierMetadata value,
-    List<o.OutputType> typeParams,
-    dynamic context,
-  ) {
-    EmitterVisitorContext ctx = context;
+  void _visitIdentifier(CompileIdentifierMetadata value,
+      List<o.OutputType> typeParams, EmitterVisitorContext context) {
     String prefix = '';
     bool isDeferred = false;
     if (value.moduleUrl != null && value.moduleUrl != _moduleUrl) {
@@ -561,9 +515,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
           prefix = '';
         } else {
           prefix = 'import${importsWithPrefixes.length}';
-          if (ctx.deferredModules.containsKey(value.moduleUrl)) {
+          if (context.deferredModules.containsKey(value.moduleUrl)) {
             isDeferred = true;
-            prefix = ctx.deferredModules[value.moduleUrl];
+            prefix = context.deferredModules[value.moduleUrl];
           }
         }
         importsWithPrefixes[value.moduleUrl] = prefix;
@@ -573,22 +527,22 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }
     if (isDeferred) {
       if (prefix.isNotEmpty) {
-        ctx.print(value.name.isEmpty ? prefix : '$prefix.');
+        context.print(value.name.isEmpty ? prefix : '$prefix.');
       }
     } else {
       if (value.moduleUrl != null && value.moduleUrl != _moduleUrl) {
-        ctx.print(prefix.isEmpty ? '' : '$prefix.');
+        context.print(prefix.isEmpty ? '' : '$prefix.');
       }
       if (value.emitPrefix && value.prefix != null && value.prefix.isNotEmpty) {
-        ctx.print('${value.prefix}.');
+        context.print('${value.prefix}.');
       }
     }
-    ctx.print(value.name);
+    context.print(value.name);
     if (typeParams != null && typeParams.length > 0) {
-      ctx.print('<');
-      visitAllObjects(
-          (type) => type.visitType(this, ctx), typeParams, ctx, ',');
-      ctx.print('>');
+      context.print('<');
+      visitAllObjects<o.OutputType>(
+          (type) => type.visitType(this, context), typeParams, context, ',');
+      context.print('>');
     }
   }
 }
