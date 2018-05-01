@@ -192,7 +192,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
   dynamic visitPipe(compiler_ast.BindingPipe ast, _Mode mode) {
     _visitingRoot = false;
     var input = ast.exp.visit<dynamic, _Mode>(this, _Mode.Expression);
-    var args = _visitAll(ast.args, _Mode.Expression) as List<o.Expression>;
+    var args = _visitAll(ast.args, _Mode.Expression).retype<o.Expression>();
     var value = _nameResolver.callPipe(ast.name, input, args);
     return _convertToStatementIfNeeded(mode, value);
   }
@@ -201,9 +201,8 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
     _visitingRoot = false;
     return _convertToStatementIfNeeded(
         mode,
-        ast.target
-            .visit<dynamic, _Mode>(this, _Mode.Expression)
-            .callFn(_visitAll(ast.args, _Mode.Expression)));
+        ast.target.visit<dynamic, _Mode>(this, _Mode.Expression).callFn(
+            _visitAll(ast.args, _Mode.Expression).retype<o.Expression>()));
   }
 
   dynamic visitIfNull(compiler_ast.IfNull ast, _Mode mode) {
@@ -305,7 +304,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
     return _convertToStatementIfNeeded(
       mode,
       _nameResolver.createLiteralList(
-          _visitAll(ast.expressions, mode) as List<o.Expression>,
+          _visitAll(ast.expressions, mode).retype<o.Expression>(),
           type: isRootExpression ? _boundType : null),
     );
   }
@@ -333,7 +332,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
 
   dynamic visitMethodCall(compiler_ast.MethodCall ast, _Mode mode) {
     _visitingRoot = false;
-    var args = _visitAll(ast.args, _Mode.Expression).cast<o.Expression>();
+    var args = _visitAll(ast.args, _Mode.Expression).retype<o.Expression>();
     o.Expression result;
     o.Expression receiver =
         ast.receiver.visit<dynamic, _Mode>(this, _Mode.Expression);
