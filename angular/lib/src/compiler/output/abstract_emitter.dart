@@ -37,30 +37,30 @@ class EmitterVisitorContext {
       : this._lines = [new _EmittedLine(_indent)];
 
   _EmittedLine get _currentLine {
-    return this._lines[this._lines.length - 1];
+    return _lines[_lines.length - 1];
   }
 
   int get currentLineLength => _currentLine.indent + _outputPos;
 
   bool isExportedVar(String varName) {
-    return !identical(this._exportedVars.indexOf(varName), -1);
+    return !identical(_exportedVars.indexOf(varName), -1);
   }
 
   void println([String lastPart = '']) {
-    this.print(lastPart, true);
+    print(lastPart, true);
     _outputPos += lastPart.length;
   }
 
   bool lineIsEmpty() {
-    return identical(this._currentLine.parts.length, 0);
+    return identical(_currentLine.parts.length, 0);
   }
 
   void print(String part, [bool newLine = false]) {
     if (part.length > 0) {
-      this._currentLine.parts.add(part);
+      _currentLine.parts.add(part);
     }
     if (newLine) {
-      this._lines.add(new _EmittedLine(this._indent));
+      _lines.add(new _EmittedLine(_indent));
       _outputPos = 0;
     } else {
       _outputPos += part.length;
@@ -68,37 +68,35 @@ class EmitterVisitorContext {
   }
 
   void removeEmptyLastLine() {
-    if (this.lineIsEmpty()) {
-      this._lines.removeLast();
+    if (lineIsEmpty()) {
+      _lines.removeLast();
     }
   }
 
   void incIndent() {
-    this._indent++;
-    this._currentLine.indent = this._indent;
+    _indent++;
+    _currentLine.indent = _indent;
   }
 
   void decIndent() {
-    this._indent--;
-    this._currentLine.indent = this._indent;
+    _indent--;
+    _currentLine.indent = _indent;
   }
 
   void pushClass(o.ClassStmt clazz) {
-    this._classes.add(clazz);
+    _classes.add(clazz);
   }
 
   o.ClassStmt popClass() {
-    return this._classes.removeLast();
+    return _classes.removeLast();
   }
 
   o.ClassStmt get currentClass {
-    return this._classes.length > 0
-        ? this._classes[this._classes.length - 1]
-        : null;
+    return _classes.length > 0 ? _classes[_classes.length - 1] : null;
   }
 
   String toSource() {
-    var lines = this._lines;
+    var lines = _lines;
     if (identical(lines[lines.length - 1].parts.length, 0)) {
       lines = lines.sublist(0, lines.length - 1);
     }
@@ -139,226 +137,210 @@ class EmitterVisitorContext {
 }
 
 abstract class AbstractEmitterVisitor
-    implements o.StatementVisitor, o.ExpressionVisitor {
+    implements
+        o.StatementVisitor<void, EmitterVisitorContext>,
+        o.ExpressionVisitor<void, EmitterVisitorContext> {
   final bool _escapeDollarInStrings;
+
   AbstractEmitterVisitor(this._escapeDollarInStrings);
+
   @override
-  dynamic visitExpressionStmt(o.ExpressionStatement stmt, context) {
-    EmitterVisitorContext ctx = context;
-    stmt.expr.visitExpression(this, ctx);
-    ctx.println(';');
-    return null;
+  void visitExpressionStmt(
+      o.ExpressionStatement stmt, EmitterVisitorContext context) {
+    stmt.expr.visitExpression(this, context);
+    context.println(';');
   }
 
   @override
-  dynamic visitReturnStmt(o.ReturnStatement stmt, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitReturnStmt(o.ReturnStatement stmt, EmitterVisitorContext context) {
     if (stmt.value == null) {
-      ctx.println('return;${stmt.inlineComment}');
+      context.println('return;${stmt.inlineComment}');
     } else {
-      ctx.print('return ');
-      stmt.value.visitExpression(this, ctx);
-      ctx.println(';${stmt.inlineComment}');
+      context.print('return ');
+      stmt.value.visitExpression(this, context);
+      context.println(';${stmt.inlineComment}');
     }
-    return null;
   }
 
   @override
-  dynamic visitCastExpr(o.CastExpr ast, dynamic context);
+  void visitCastExpr(o.CastExpr ast, EmitterVisitorContext context);
+
   @override
-  dynamic visitDeclareClassStmt(o.ClassStmt stmt, dynamic context);
+  void visitDeclareClassStmt(o.ClassStmt stmt, EmitterVisitorContext context);
+
   @override
-  dynamic visitIfStmt(o.IfStmt stmt, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('if (');
-    stmt.condition.visitExpression(this, ctx);
-    ctx.print(') {');
+  void visitIfStmt(o.IfStmt stmt, EmitterVisitorContext context) {
+    context.print('if (');
+    stmt.condition.visitExpression(this, context);
+    context.print(') {');
     var hasElseCase = stmt.falseCase != null && stmt.falseCase.length > 0;
     if (stmt.trueCase.length <= 1 && !hasElseCase) {
-      ctx.print(' ');
-      this.visitAllStatements(stmt.trueCase, ctx);
-      ctx.removeEmptyLastLine();
-      ctx.print(' ');
+      context.print(' ');
+      visitAllStatements(stmt.trueCase, context);
+      context.removeEmptyLastLine();
+      context.print(' ');
     } else {
-      ctx.println();
-      ctx.incIndent();
-      this.visitAllStatements(stmt.trueCase, ctx);
-      ctx.decIndent();
+      context.println();
+      context.incIndent();
+      visitAllStatements(stmt.trueCase, context);
+      context.decIndent();
       if (hasElseCase) {
-        ctx.println('} else {');
-        ctx.incIndent();
-        this.visitAllStatements(stmt.falseCase, ctx);
-        ctx.decIndent();
+        context.println('} else {');
+        context.incIndent();
+        visitAllStatements(stmt.falseCase, context);
+        context.decIndent();
       }
     }
-    ctx.println('}');
-    return null;
+    context.println('}');
   }
 
   @override
-  dynamic visitTryCatchStmt(o.TryCatchStmt stmt, dynamic context);
+  void visitTryCatchStmt(o.TryCatchStmt stmt, EmitterVisitorContext context);
+
   @override
-  dynamic visitThrowStmt(o.ThrowStmt stmt, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('throw ');
-    stmt.error.visitExpression(this, ctx);
-    ctx.println(';');
-    return null;
+  void visitThrowStmt(o.ThrowStmt stmt, EmitterVisitorContext context) {
+    context.print('throw ');
+    stmt.error.visitExpression(this, context);
+    context.println(';');
   }
 
   @override
-  dynamic visitCommentStmt(o.CommentStmt stmt, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitCommentStmt(o.CommentStmt stmt, EmitterVisitorContext context) {
     var lines = stmt.comment.split('\n');
     for (var line in lines) {
-      ctx.print('// ');
-      ctx.println(line);
+      context.print('// ');
+      context.println(line);
     }
-    return null;
   }
 
   @override
-  dynamic visitDeclareVarStmt(o.DeclareVarStmt stmt, dynamic context);
+  void visitDeclareVarStmt(
+      o.DeclareVarStmt stmt, EmitterVisitorContext context);
 
   @override
-  dynamic visitWriteVarExpr(o.WriteVarExpr expr, dynamic context,
+  void visitWriteVarExpr(o.WriteVarExpr expr, EmitterVisitorContext context,
       {bool checkForNull: false}) {
-    EmitterVisitorContext ctx = context;
-    var lineWasEmpty = ctx.lineIsEmpty();
+    var lineWasEmpty = context.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print('(');
+      context.print('(');
     }
     if (checkForNull) {
-      ctx.print('${expr.name} ??= ');
+      context.print('${expr.name} ??= ');
     } else {
-      ctx.print('${expr.name} = ');
+      context.print('${expr.name} = ');
     }
-    expr.value.visitExpression(this, ctx);
+    expr.value.visitExpression(this, context);
     if (!lineWasEmpty) {
-      ctx.print(')');
+      context.print(')');
     }
-    return null;
   }
 
   @override
-  dynamic visitWriteStaticMemberExpr(
-      o.WriteStaticMemberExpr expr, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    var lineWasEmpty = ctx.lineIsEmpty();
+  void visitWriteStaticMemberExpr(
+      o.WriteStaticMemberExpr expr, EmitterVisitorContext context) {
+    var lineWasEmpty = context.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print('(');
+      context.print('(');
     }
     if (expr.checkIfNull) {
-      ctx.print('${expr.name} ??= ');
+      context.print('${expr.name} ??= ');
     } else {
-      ctx.print('${expr.name} = ');
+      context.print('${expr.name} = ');
     }
-    expr.value.visitExpression(this, ctx);
+    expr.value.visitExpression(this, context);
     if (!lineWasEmpty) {
-      ctx.print(')');
+      context.print(')');
     }
-    return null;
   }
 
   @override
-  dynamic visitWriteKeyExpr(o.WriteKeyExpr expr, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    var lineWasEmpty = ctx.lineIsEmpty();
+  void visitWriteKeyExpr(o.WriteKeyExpr expr, EmitterVisitorContext context) {
+    var lineWasEmpty = context.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print('(');
+      context.print('(');
     }
-    expr.receiver.visitExpression(this, ctx);
-    ctx.print('[');
-    expr.index.visitExpression(this, ctx);
-    ctx.print('] = ');
-    expr.value.visitExpression(this, ctx);
+    expr.receiver.visitExpression(this, context);
+    context.print('[');
+    expr.index.visitExpression(this, context);
+    context.print('] = ');
+    expr.value.visitExpression(this, context);
     if (!lineWasEmpty) {
-      ctx.print(')');
+      context.print(')');
     }
-    return null;
   }
 
   @override
-  dynamic visitWritePropExpr(o.WritePropExpr expr, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    var lineWasEmpty = ctx.lineIsEmpty();
+  void visitWritePropExpr(o.WritePropExpr expr, EmitterVisitorContext context) {
+    var lineWasEmpty = context.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print('(');
+      context.print('(');
     }
-    expr.receiver.visitExpression(this, ctx);
-    ctx.print('.${expr.name} = ');
-    expr.value.visitExpression(this, ctx);
+    expr.receiver.visitExpression(this, context);
+    context.print('.${expr.name} = ');
+    expr.value.visitExpression(this, context);
     if (!lineWasEmpty) {
-      ctx.print(')');
+      context.print(')');
     }
-    return null;
   }
 
   @override
-  dynamic visitWriteClassMemberExpr(
-      o.WriteClassMemberExpr expr, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    var lineWasEmpty = ctx.lineIsEmpty();
+  void visitWriteClassMemberExpr(
+      o.WriteClassMemberExpr expr, EmitterVisitorContext context) {
+    var lineWasEmpty = context.lineIsEmpty();
     if (!lineWasEmpty) {
-      ctx.print('(');
+      context.print('(');
     }
-    o.THIS_EXPR.visitExpression(this, ctx);
-    ctx.print('.${expr.name} = ');
-    expr.value.visitExpression(this, ctx);
+    o.THIS_EXPR.visitExpression(this, context);
+    context.print('.${expr.name} = ');
+    expr.value.visitExpression(this, context);
     if (!lineWasEmpty) {
-      ctx.print(')');
+      context.print(')');
     }
-    return null;
   }
 
   @override
-  dynamic visitInvokeMethodExpr(o.InvokeMethodExpr expr, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    expr.receiver.visitExpression(this, ctx);
+  void visitInvokeMethodExpr(
+      o.InvokeMethodExpr expr, EmitterVisitorContext context) {
+    expr.receiver.visitExpression(this, context);
     var name = expr.name;
     if (expr.builtin != null) {
-      name = this.getBuiltinMethodName(expr.builtin);
+      name = getBuiltinMethodName(expr.builtin);
       if (name == null) {
         // some builtins just mean to skip the call.
 
         // e.g. `bind` in Dart.
-        return null;
+        return;
       }
     }
     if (expr.checked) {
-      ctx.print('?');
+      context.print('?');
     }
-    ctx.print('.$name(');
-    this.visitAllExpressions(expr.args, ctx, ',');
-    ctx.print(')');
-    return null;
+    context.print('.$name(');
+    visitAllExpressions(expr.args, context, ',');
+    context.print(')');
   }
 
   @override
-  dynamic visitInvokeMemberMethodExpr(
-      o.InvokeMemberMethodExpr expr, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('${expr.methodName}(');
-    this.visitAllExpressions(expr.args, ctx, ',');
-    ctx.print(')');
-    return null;
+  void visitInvokeMemberMethodExpr(
+      o.InvokeMemberMethodExpr expr, EmitterVisitorContext context) {
+    context.print('${expr.methodName}(');
+    visitAllExpressions(expr.args, context, ',');
+    context.print(')');
   }
 
   String getBuiltinMethodName(o.BuiltinMethod method);
 
   @override
-  dynamic visitInvokeFunctionExpr(o.InvokeFunctionExpr expr, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    expr.fn.visitExpression(this, ctx);
-    ctx.print('(');
-    this.visitAllExpressions(expr.args, ctx, ',');
-    ctx.print(')');
-    return null;
+  void visitInvokeFunctionExpr(
+      o.InvokeFunctionExpr expr, EmitterVisitorContext context) {
+    expr.fn.visitExpression(this, context);
+    context.print('(');
+    visitAllExpressions(expr.args, context, ',');
+    context.print(')');
   }
 
   @override
-  dynamic visitReadVarExpr(o.ReadVarExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitReadVarExpr(o.ReadVarExpr ast, EmitterVisitorContext context) {
     var varName = ast.name;
     if (ast.builtin != null) {
       switch (ast.builtin) {
@@ -381,99 +363,88 @@ abstract class AbstractEmitterVisitor
           throw new StateError('Unknown builtin variable ${ast.builtin}');
       }
     }
-    ctx.print(varName);
-    return null;
+    context.print(varName);
   }
 
   @override
-  dynamic visitReadStaticMemberExpr(
-      o.ReadStaticMemberExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitReadStaticMemberExpr(
+      o.ReadStaticMemberExpr ast, EmitterVisitorContext context) {
     var varName = ast.name;
     o.ExternalType t = ast.sourceClass;
     if (t != null) {
-      ctx.print('${t.value.name}.');
+      context.print('${t.value.name}.');
     }
-    ctx.print(varName);
-    return null;
+    context.print(varName);
   }
 
   @override
-  dynamic visitReadClassMemberExpr(o.ReadClassMemberExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('this.${ast.name}');
-    return null;
+  void visitReadClassMemberExpr(
+      o.ReadClassMemberExpr ast, EmitterVisitorContext context) {
+    context.print('this.${ast.name}');
   }
 
   @override
-  dynamic visitInstantiateExpr(o.InstantiateExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('new ');
-    ast.classExpr.visitExpression(this, ctx);
-    ctx.print('(');
-    this.visitAllExpressions(ast.args, ctx, ',');
-    ctx.print(')');
-    return null;
+  void visitInstantiateExpr(
+      o.InstantiateExpr ast, EmitterVisitorContext context) {
+    context.print('new ');
+    ast.classExpr.visitExpression(this, context);
+    context.print('(');
+    visitAllExpressions(ast.args, context, ',');
+    context.print(')');
   }
 
   @override
-  dynamic visitLiteralExpr(o.LiteralExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitLiteralExpr(o.LiteralExpr ast, EmitterVisitorContext context) {
     var value = ast.value;
     if (value is String) {
-      ctx.print(escapeSingleQuoteString(value, this._escapeDollarInStrings));
+      context.print(escapeSingleQuoteString(value, _escapeDollarInStrings));
     } else if (value == null) {
-      ctx.print('null');
+      context.print('null');
     } else {
-      ctx.print('$value');
+      context.print('$value');
     }
-    return null;
   }
 
   @override
-  dynamic visitExternalExpr(o.ExternalExpr ast, dynamic context);
+  void visitExternalExpr(o.ExternalExpr ast, EmitterVisitorContext context);
 
   @override
-  dynamic visitConditionalExpr(o.ConditionalExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('(');
-    ast.condition.visitExpression(this, ctx);
-    ctx.print('? ');
-    ast.trueCase.visitExpression(this, ctx);
-    ctx.print(': ');
-    ast.falseCase.visitExpression(this, ctx);
-    ctx.print(')');
-    return null;
+  void visitConditionalExpr(
+      o.ConditionalExpr ast, EmitterVisitorContext context) {
+    context.print('(');
+    ast.condition.visitExpression(this, context);
+    context.print('? ');
+    ast.trueCase.visitExpression(this, context);
+    context.print(': ');
+    ast.falseCase.visitExpression(this, context);
+    context.print(')');
   }
 
   @override
-  dynamic visitIfNullExpr(o.IfNullExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('(');
-    ast.condition.visitExpression(this, ctx);
-    ctx.print('?? ');
-    ast.nullCase.visitExpression(this, ctx);
-    ctx.print(')');
-    return null;
+  void visitIfNullExpr(o.IfNullExpr ast, EmitterVisitorContext context) {
+    context.print('(');
+    ast.condition.visitExpression(this, context);
+    context.print('?? ');
+    ast.nullCase.visitExpression(this, context);
+    context.print(')');
   }
 
   @override
-  dynamic visitNotExpr(o.NotExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ctx.print('!');
-    ast.condition.visitExpression(this, ctx);
-    return null;
+  void visitNotExpr(o.NotExpr ast, EmitterVisitorContext context) {
+    context.print('!');
+    ast.condition.visitExpression(this, context);
   }
 
   @override
-  dynamic visitFunctionExpr(o.FunctionExpr ast, dynamic context);
+  void visitFunctionExpr(o.FunctionExpr ast, EmitterVisitorContext context);
 
   @override
-  dynamic visitDeclareFunctionStmt(o.DeclareFunctionStmt stmt, dynamic context);
+  void visitDeclareFunctionStmt(
+      o.DeclareFunctionStmt stmt, EmitterVisitorContext context);
 
   @override
-  dynamic visitBinaryOperatorExpr(o.BinaryOperatorExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitBinaryOperatorExpr(
+      o.BinaryOperatorExpr ast, EmitterVisitorContext context) {
     var opStr;
     switch (ast.operator) {
       case o.BinaryOperator.Equals:
@@ -524,78 +495,71 @@ abstract class AbstractEmitterVisitor
       default:
         throw new StateError('Unknown operator ${ast.operator}');
     }
-    ctx.print('(');
-    ast.lhs.visitExpression(this, ctx);
-    ctx.print(' $opStr ');
-    ast.rhs.visitExpression(this, ctx);
-    ctx.print(')');
-    return null;
+    context.print('(');
+    ast.lhs.visitExpression(this, context);
+    context.print(' $opStr ');
+    ast.rhs.visitExpression(this, context);
+    context.print(')');
   }
 
   @override
-  dynamic visitReadPropExpr(o.ReadPropExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ast.receiver.visitExpression(this, ctx);
-    ctx.print('.');
-    ctx.print(ast.name);
-    return null;
+  void visitReadPropExpr(o.ReadPropExpr ast, EmitterVisitorContext context) {
+    ast.receiver.visitExpression(this, context);
+    context.print('.');
+    context.print(ast.name);
   }
 
   @override
-  dynamic visitReadKeyExpr(o.ReadKeyExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
-    ast.receiver.visitExpression(this, ctx);
-    ctx.print('[');
-    ast.index.visitExpression(this, ctx);
-    ctx.print(']');
-    return null;
+  void visitReadKeyExpr(o.ReadKeyExpr ast, EmitterVisitorContext context) {
+    ast.receiver.visitExpression(this, context);
+    context.print('[');
+    ast.index.visitExpression(this, context);
+    context.print(']');
   }
 
   @override
-  dynamic visitLiteralArrayExpr(o.LiteralArrayExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitLiteralArrayExpr(
+      o.LiteralArrayExpr ast, EmitterVisitorContext context) {
     var useNewLine = ast.entries.length > 1;
-    ctx.print('[', useNewLine);
-    ctx.incIndent();
-    this.visitAllExpressions(ast.entries, ctx, ',',
+    context.print('[', useNewLine);
+    context.incIndent();
+    visitAllExpressions(ast.entries, context, ',',
         newLine: useNewLine, keepOnSameLine: true);
-    ctx.decIndent();
-    ctx.print(']', useNewLine);
-    return null;
+    context.decIndent();
+    context.print(']', useNewLine);
   }
 
   @override
-  dynamic visitLiteralMapExpr(o.LiteralMapExpr ast, dynamic context) {
-    EmitterVisitorContext ctx = context;
+  void visitLiteralMapExpr(
+      o.LiteralMapExpr ast, EmitterVisitorContext context) {
     var useNewLine = ast.entries.length > 1;
-    ctx.print('{', useNewLine);
-    ctx.incIndent();
-    this.visitAllObjects((entry) {
+    context.print('{', useNewLine);
+    context.incIndent();
+    visitAllObjects((entry) {
       final firstEntry = entry[0];
       if (firstEntry is o.Expression) {
-        firstEntry.visitExpression(this, ctx);
+        firstEntry.visitExpression(this, context);
       } else {
         final firstEntryCasted = firstEntry as String;
-        ctx.print(
+        context.print(
             escapeSingleQuoteString(firstEntryCasted, _escapeDollarInStrings));
       }
-      ctx.print(': ');
-      entry[1].visitExpression(this, ctx);
-    }, ast.entries, ctx, ',', newLine: useNewLine, keepOnSameLine: false);
-    ctx.decIndent();
-    ctx.print('}', useNewLine);
-    return null;
+      context.print(': ');
+      entry[1].visitExpression(this, context);
+    }, ast.entries, context, ',', newLine: useNewLine, keepOnSameLine: false);
+    context.decIndent();
+    context.print('}', useNewLine);
   }
 
   void visitAllExpressions(List<o.Expression> expressions,
       EmitterVisitorContext ctx, String separator,
       {bool newLine: false, bool keepOnSameLine: false}) {
-    visitAllObjects(
+    visitAllObjects<o.Expression>(
         (expr) => expr.visitExpression(this, ctx), expressions, ctx, separator,
         newLine: newLine, keepOnSameLine: keepOnSameLine);
   }
 
-  void visitAllObjects(Function handler, dynamic expressions,
+  void visitAllObjects<T>(void Function(T) handler, List<T> expressions,
       EmitterVisitorContext ctx, String separator,
       {bool newLine: false, bool keepOnSameLine: false}) {
     const int _MAX_OUTPUT_LENGTH = 80;
