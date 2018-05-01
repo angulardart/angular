@@ -1,10 +1,3 @@
-### Bug fixes
-
-*   The browser location navigated to by clicking on a `RouterLinkDirective` is
-    now consistent with the displayed href when using `routerProvidersHash`.
-    Previously the browser location lacked the leading `/`, while the href did
-    not. This resulted in the links never appearing visited.
-
 ## 2.0.0-alpha+11
 
 ### New features
