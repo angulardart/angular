@@ -91,13 +91,16 @@ class RecursiveAstParser {
     NgToken nameToken,
     List<String> tagStack,
   ) {
+    final annotations = <AnnotationAst>[];
     final childNodes = <StandaloneTemplateAst>[];
     final stars = <StarAst>[];
 
     while (_reader.peekType() == NgTokenType.beforeElementDecorator) {
       final nextToken = _reader.next();
       final decorator = parseDecorator(nextToken);
-      if (decorator is StarAst) {
+      if (decorator is AnnotationAst) {
+        annotations.add(decorator);
+      } else if (decorator is StarAst) {
         _addStarAst(decorator, stars);
       } else {
         exceptionHandler.handle(new AngularParserException(
@@ -115,6 +118,7 @@ class RecursiveAstParser {
       _source,
       beginToken,
       endToken,
+      annotations: annotations,
       childNodes: childNodes,
       stars: stars,
     );

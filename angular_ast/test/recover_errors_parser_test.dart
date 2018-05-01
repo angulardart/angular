@@ -201,13 +201,15 @@ void main() {
         '[prop]="expr" '
         '(event)="expr" '
         'let-var="expr" '
-        '#ref>'
+        '#ref '
+        '@annotation>'
         '</ng-container>');
     expect(asts, hasLength(1));
 
     final ngContainer = asts[0];
     expect(ngContainer, const isInstanceOf<ContainerAst>());
-    expect(astsToString(asts), '<ng-container *star="expr"></ng-container>');
+    expect(astsToString(asts),
+        '<ng-container @annotation *star="expr"></ng-container>');
 
     final exceptions = recoveringExceptionHandler.exceptions;
     expect(exceptions, hasLength(5));
