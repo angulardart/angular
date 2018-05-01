@@ -115,6 +115,9 @@ abstract class AbstractControl<T> {
     }
   }
 
+  /// Mark the control as `dirty`.
+  ///
+  /// This will also mark all direct ancestors as `dirty` to maintain the model.
   void markAsDirty({bool onlySelf, bool emitEvent}) {
     onlySelf = onlySelf == true;
     emitEvent = emitEvent ?? true;
@@ -122,6 +125,25 @@ abstract class AbstractControl<T> {
     if (emitEvent) _statusChanges.add(_status);
     if (_parent != null && !onlySelf) {
       _parent.markAsDirty(onlySelf: onlySelf);
+    }
+  }
+
+  /// Marks the control as `pristine`.
+  ///
+  /// If the control has any children, it will also mark all children as
+  /// `pristine` to maintain the model, and re-calculate the `pristine` status
+  /// of all parent controls.
+  void markAsPristine({bool updateParent}) {
+    updateParent = updateParent ?? true;
+    _pristine = true;
+
+    _forEachChild(
+        // Only set self, so that children don't try to update their parent,
+        // and thus create a loop of updates.
+        (c) => c.markAsPristine(updateParent: false));
+
+    if (_parent != null && updateParent) {
+      _parent._updatePristine(updateParent: updateParent);
     }
   }
 
@@ -301,6 +323,14 @@ abstract class AbstractControl<T> {
     }
   }
 
+  void _updatePristine({bool updateParent}) {
+    _pristine = !_anyControlsDirty();
+
+    if (_parent != null && updateParent) {
+      _parent._updatePristine(updateParent: updateParent);
+    }
+  }
+
   /// Callback when control is asked to update it's value.
   ///
   /// Allows controls to calculate their value. For example control groups
@@ -312,6 +342,7 @@ abstract class AbstractControl<T> {
       _anyControls((c) => c.status == status);
   bool _allControlsHaveStatus(String status);
   bool _anyControlsTouched() => _anyControls((c) => c.touched);
+  bool _anyControlsDirty() => _anyControls((c) => c.dirty);
 
   void _forEachChild(void callback(AbstractControl c));
 
