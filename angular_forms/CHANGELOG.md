@@ -3,6 +3,9 @@
 *   `NgControlName` will no longer initialize with `null` if a value is
     specified by 'ngModel'.
 
+*   The `touched` property of `Control`s is now propagated to parents /
+    children.
+
 ## 2.0.0-alpha+3
 
 ### New Features

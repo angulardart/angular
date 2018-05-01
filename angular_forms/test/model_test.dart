@@ -45,18 +45,30 @@ void main() {
           var c = new Control('value');
           expect(c.touched, false);
         });
+
         test('should be true after touching the control', () {
           var c = new Control('value');
           c.markAsTouched();
           expect(c.touched, true);
         });
+
         test('should be false after marking the control as untouched', () {
           var c = new Control('value');
           c.markAsTouched();
           c.markAsUntouched();
           expect(c.touched, false);
         });
+
+        test('should update parent', () {
+          var control = new Control('value');
+          var group = new ControlGroup({'control': control});
+          control.markAsTouched();
+          expect(group.touched, true);
+          control.markAsUntouched();
+          expect(group.touched, false);
+        });
       });
+
       group('updateValue', () {
         Control c;
         ControlGroup g;
@@ -271,6 +283,50 @@ void main() {
         });
       });
 
+      group('touched', () {
+        Control control;
+        ControlGroup group;
+
+        setUp(() {
+          control = new Control('value');
+
+          group = new ControlGroup({'one': control});
+        });
+
+        test('should be false after creating a control', () {
+          expect(group.touched, false);
+        });
+
+        test('should be true after changing the value of the control', () {
+          control.markAsTouched();
+          expect(group.touched, true);
+        });
+
+        test('setting untouched should update control', () {
+          control.markAsTouched();
+          group.markAsUntouched();
+          expect(control.touched, false);
+        });
+
+        test('should derive value from children', () {
+          var otherControl = new Control('new value');
+          group.addControl('two', otherControl);
+
+          // Make only one control touched.
+          control.markAsTouched();
+          expect(group.touched, true);
+
+          // Make *both* controls touched, then untouch only one.
+          otherControl.markAsTouched();
+          otherControl.markAsUntouched();
+          expect(group.touched, true);
+
+          // Now, untouch the second one.
+          control.markAsUntouched();
+          expect(group.touched, false);
+        });
+      });
+
       group('valueChanges', () {
         Control c1, c2;
         ControlGroup g;
@@ -467,6 +523,50 @@ void main() {
           expect(a.dirty, true);
         });
       });
+
+      group('touched', () {
+        Control control;
+        ControlArray array;
+
+        setUp(() {
+          control = new Control('value');
+          array = new ControlArray([control]);
+        });
+
+        test('should be false after creating a control', () {
+          expect(array.touched, false);
+        });
+
+        test('should be true after changing the value of the control', () {
+          control.markAsTouched();
+          expect(array.touched, true);
+        });
+
+        test('setting untouced should update control', () {
+          control.markAsTouched();
+          array.markAsUntouched();
+          expect(control.touched, false);
+        });
+
+        test('should derive value from children', () {
+          var otherControl = new Control('new value');
+          array.push(otherControl);
+
+          // Make only one control touched.
+          control.markAsTouched();
+          expect(array.touched, true);
+
+          // Make *both* controls touched, then untouch only one.
+          otherControl.markAsTouched();
+          otherControl.markAsUntouched();
+          expect(array.touched, true);
+
+          // Now, untouch the second one.
+          control.markAsUntouched();
+          expect(array.touched, false);
+        });
+      });
+
       group('pending', () {
         Control c;
         ControlArray a;
