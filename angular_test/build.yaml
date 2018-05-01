@@ -4,3 +4,8 @@ targets:
       angular:
         options:
           debug: True
+      build_web_compilers|entrypoint:
+        options:
+          compiler: dart2js
+          dart2js_args:
+          - --preview-dart-2
