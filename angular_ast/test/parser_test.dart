@@ -290,4 +290,12 @@ void main() {
       ]),
     ]);
   });
+
+  test('should parse an annotation on a container', () {
+    expect(parse('<ng-container @annotation></ng-container>'), [
+      new ContainerAst(annotations: [
+        new AnnotationAst('annotation'),
+      ])
+    ]);
+  });
 }
