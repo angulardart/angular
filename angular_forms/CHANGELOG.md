@@ -1,3 +1,7 @@
+### New Features
+
+*   `Control.markAsPristine` added. This will clear the `dirty` property.
+
 ### Breaking Changes
 
 *   `NgControlName` will no longer initialize with `null` if a value is
