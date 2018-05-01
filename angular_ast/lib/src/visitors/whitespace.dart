@@ -27,6 +27,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     if (astNode.childNodes.isNotEmpty) {
       astNode = new ContainerAst.from(
         astNode,
+        annotations: astNode.annotations,
         childNodes: _visitRemovingWhitespace(astNode.childNodes),
         stars: astNode.stars,
       );
