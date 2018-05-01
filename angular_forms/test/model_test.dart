@@ -31,13 +31,31 @@ void main() {
       });
       group('dirty', () {
         test('should be false after creating a control', () {
-          var c = new Control('value');
-          expect(c.dirty, false);
+          var control = new Control('value');
+          expect(control.dirty, false);
         });
+
         test('should be true after changing the value of the control', () {
-          var c = new Control('value');
-          c.markAsDirty();
-          expect(c.dirty, true);
+          var control = new Control('value');
+          control.markAsDirty();
+          expect(control.dirty, true);
+        });
+
+        test('should reset to pristine', () {
+          var control = new Control('value');
+          control.markAsDirty();
+          expect(control.dirty, true);
+          control.markAsPristine();
+          expect(control.dirty, false);
+        });
+
+        test('should update parent', () {
+          var control = new Control('value');
+          var group = new ControlGroup({'control': control});
+          control.markAsDirty(onlySelf: false);
+          expect(group.dirty, true);
+          control.markAsPristine(updateParent: true);
+          expect(group.dirty, false);
         });
       });
       group('touched', () {
@@ -45,18 +63,30 @@ void main() {
           var c = new Control('value');
           expect(c.touched, false);
         });
+
         test('should be true after touching the control', () {
           var c = new Control('value');
           c.markAsTouched();
           expect(c.touched, true);
         });
+
         test('should be false after marking the control as untouched', () {
           var c = new Control('value');
           c.markAsTouched();
           c.markAsUntouched();
           expect(c.touched, false);
         });
+
+        test('should update parent', () {
+          var control = new Control('value');
+          var group = new ControlGroup({'control': control});
+          control.markAsTouched();
+          expect(group.touched, true);
+          control.markAsUntouched();
+          expect(group.touched, false);
+        });
       });
+
       group('updateValue', () {
         Control c;
         ControlGroup g;
@@ -253,21 +283,89 @@ void main() {
       });
 
       group('dirty', () {
-        Control c;
-        ControlGroup g;
+        Control control;
+        ControlGroup group;
 
         setUp(() {
-          c = new Control('value');
-          g = new ControlGroup({'one': c});
+          control = new Control('value');
+          group = new ControlGroup({'one': control});
         });
 
         test('should be false after creating a control', () {
-          expect(g.dirty, false);
+          expect(group.dirty, false);
         });
 
         test('should be false after changing the value of the control', () {
-          c.markAsDirty();
-          expect(g.dirty, true);
+          control.markAsDirty();
+          expect(group.dirty, true);
+        });
+
+        test('setting pristine should update control', () {
+          control.markAsDirty();
+          group.markAsPristine();
+          expect(control.dirty, false);
+        });
+
+        test('should derive value from children', () {
+          var otherControl = new Control('new value');
+          group.addControl('two', otherControl);
+
+          //Make only one control dirty.
+          control.markAsDirty();
+          expect(group.dirty, true);
+
+          // Make *both* controls dirty, then pristine only one.
+          otherControl.markAsDirty();
+          otherControl.markAsPristine();
+          expect(group.dirty, true);
+
+          // Now, make *both* controls pristine.
+          control.markAsPristine();
+          expect(group.dirty, false);
+        });
+      });
+
+      group('touched', () {
+        Control control;
+        ControlGroup group;
+
+        setUp(() {
+          control = new Control('value');
+
+          group = new ControlGroup({'one': control});
+        });
+
+        test('should be false after creating a control', () {
+          expect(group.touched, false);
+        });
+
+        test('should be true after changing the value of the control', () {
+          control.markAsTouched();
+          expect(group.touched, true);
+        });
+
+        test('setting untouched should update control', () {
+          control.markAsTouched();
+          group.markAsUntouched();
+          expect(control.touched, false);
+        });
+
+        test('should derive value from children', () {
+          var otherControl = new Control('new value');
+          group.addControl('two', otherControl);
+
+          // Make only one control touched.
+          control.markAsTouched();
+          expect(group.touched, true);
+
+          // Make *both* controls touched, then untouch only one.
+          otherControl.markAsTouched();
+          otherControl.markAsUntouched();
+          expect(group.touched, true);
+
+          // Now, untouch the second one.
+          control.markAsUntouched();
+          expect(group.touched, false);
         });
       });
 
@@ -453,20 +551,88 @@ void main() {
         });
       });
       group('dirty', () {
-        Control c;
-        ControlArray a;
+        Control control;
+        ControlArray array;
         setUp(() {
-          c = new Control('value');
-          a = new ControlArray([c]);
+          control = new Control('value');
+          array = new ControlArray([control]);
         });
         test('should be false after creating a control', () {
-          expect(a.dirty, false);
+          expect(array.dirty, false);
         });
         test('should be false after changing the value of the control', () {
-          c.markAsDirty();
-          expect(a.dirty, true);
+          control.markAsDirty();
+          expect(array.dirty, true);
+        });
+
+        test('setting pristine should update control', () {
+          control.markAsDirty();
+          array.markAsPristine();
+          expect(control.dirty, false);
+        });
+
+        test('should derive value from children', () {
+          var otherControl = new Control('new value');
+          array.push(otherControl);
+
+          //Make only one control dirty.
+          control.markAsDirty();
+          expect(array.dirty, true);
+
+          // Make *both* controls dirty, then pristine only one.
+          otherControl.markAsDirty();
+          otherControl.markAsPristine();
+          expect(array.dirty, true);
+
+          // Now, make *both* controls pristine.
+          control.markAsPristine();
+          expect(array.dirty, false);
         });
       });
+
+      group('touched', () {
+        Control control;
+        ControlArray array;
+
+        setUp(() {
+          control = new Control('value');
+          array = new ControlArray([control]);
+        });
+
+        test('should be false after creating a control', () {
+          expect(array.touched, false);
+        });
+
+        test('should be true after changing the value of the control', () {
+          control.markAsTouched();
+          expect(array.touched, true);
+        });
+
+        test('setting untouced should update control', () {
+          control.markAsTouched();
+          array.markAsUntouched();
+          expect(control.touched, false);
+        });
+
+        test('should derive value from children', () {
+          var otherControl = new Control('new value');
+          array.push(otherControl);
+
+          // Make only one control touched.
+          control.markAsTouched();
+          expect(array.touched, true);
+
+          // Make *both* controls touched, then untouch only one.
+          otherControl.markAsTouched();
+          otherControl.markAsUntouched();
+          expect(array.touched, true);
+
+          // Now, untouch the second one.
+          control.markAsUntouched();
+          expect(array.touched, false);
+        });
+      });
+
       group('pending', () {
         Control c;
         ControlArray a;
