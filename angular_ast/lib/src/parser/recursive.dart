@@ -220,7 +220,13 @@ class RecursiveAstParser {
           equalSignToken,
         );
       } else if (prefixType == NgTokenType.annotationPrefix) {
-        return new AnnotationAst.parsed(_source, prefixToken, decoratorToken);
+        return new AnnotationAst.parsed(
+          _source,
+          prefixToken,
+          decoratorToken,
+          valueToken,
+          equalSignToken,
+        );
       }
     }
 
