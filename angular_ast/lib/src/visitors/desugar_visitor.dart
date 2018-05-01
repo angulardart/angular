@@ -89,13 +89,15 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
     }
 
     if (astNode.annotations.isNotEmpty) {
-      var annotationAst = astNode.annotations[0];
-      var origin = _toolFriendlyAstOrigin ? annotationAst : null;
-      var directiveName = annotationAst.name;
-      if (directiveName == 'deferred') {
-        astNode.annotations.clear();
-        return new EmbeddedTemplateAst.from(origin,
-            childNodes: [astNode], hasDeferredComponent: true);
+      final i = astNode.annotations.indexWhere((ast) => ast.name == 'deferred');
+      if (i != -1) {
+        final deferredAst = astNode.annotations.removeAt(i);
+        final origin = _toolFriendlyAstOrigin ? deferredAst : null;
+        return new EmbeddedTemplateAst.from(
+          origin,
+          childNodes: [astNode],
+          hasDeferredComponent: true,
+        );
       }
     }
 

@@ -265,11 +265,29 @@ void main() {
     );
   });
 
-  test('should parse an annotation', () {
+  test('should parse and desugar @deferred', () {
     expect(parse('<div @deferred></div>'), [
       new EmbeddedTemplateAst(
           hasDeferredComponent: true,
           childNodes: [new ElementAst('div', new CloseElementAst('div'))])
+    ]);
+  });
+
+  test('should parse multiple annotations and desugar @deferred', () {
+    expect(parse('<div @foo="bar" @deferred></div>'), [
+      new EmbeddedTemplateAst(hasDeferredComponent: true, childNodes: [
+        new ElementAst('div', new CloseElementAst('div'), annotations: [
+          new AnnotationAst('foo', 'bar'),
+        ])
+      ]),
+    ]);
+  });
+
+  test('should parse an annotation with a value', () {
+    expect(parse('<div @foo="bar"></div>'), [
+      new ElementAst('div', new CloseElementAst('div'), annotations: [
+        new AnnotationAst('foo', 'bar'),
+      ]),
     ]);
   });
 }

@@ -1,5 +1,7 @@
 *   Added `ContainerAst`.
 
+*   Annotations may now be assigned values.
+
 ## 0.5.2
 
 *   The `*` micro-syntax now supports newlines after an identifier.
