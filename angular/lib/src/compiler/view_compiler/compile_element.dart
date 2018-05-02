@@ -362,14 +362,6 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       templateRefExpr,
     ];
 
-    // If "fastBoot" is not being used, we need to emit more information.
-    if (!view.genConfig.useFastBoot) {
-      final initReflectorExpr = new o.FunctionExpr(const [], <o.Statement>[
-        o.importDeferred(templateInitializer).callFn(const []).toStmt()
-      ], null);
-      args.add(initReflectorExpr);
-    }
-
     stmts.add(new o.InvokeMemberMethodExpr('loadDeferred', args).toStmt());
   }
 
