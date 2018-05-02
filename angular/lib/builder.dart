@@ -89,3 +89,17 @@ Builder stylesheetCompiler(BuilderOptions options) {
   final flags = new CompilerFlags.parseRaw(options.config, _defaultFlags);
   return new StylesheetCompiler(flags);
 }
+
+/// Removes the `.ng_placeholder` files which are only necessary during the
+/// build.
+PostProcessBuilder placeholderCleanup(_) =>
+    const FileDeletingBuilder(const ['.ng_placeholder']);
+
+/// Removes`.html` and `.css` files in `lib/` since they are likely sources for
+/// angular templates.
+///
+/// HTML or CSS files that are required at runtime can be exlcuded by glob.
+PostProcessBuilder componentSourceCleanup(BuilderOptions options) =>
+    new FileDeletingBuilder.withExcludes(const ['.html', '.css'],
+        (options.config['exclude'] as List)?.cast<String>() ?? const [],
+        isEnabled: (options.config['enabled'] as bool) ?? false);

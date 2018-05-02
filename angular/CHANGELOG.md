@@ -42,6 +42,30 @@
     </ul>
     ```
 
+*   `.ng_placeholder` files will be excluded from `--output` builds. `.css` and
+    `.html` files will be excluded by default from the `lib/` directory for
+    release builds. Disable entirely with:
+
+    ```yaml
+    targets:
+      $default:
+        angular|component_source_cleanup:
+          options:
+            enabled: false
+    ```
+
+    or exclude some sources by glob:
+
+    ```yaml
+    targets:
+      $default:
+        angular|component_source_cleanup:
+          options:
+            exclude:
+              - "lib/non_angular_style.css"
+              - "lib/something/**"
+    ```
+
 ### Bug fixes
 
 *   Inheriting from a class that defines a `@HostBinding()` on a static member
