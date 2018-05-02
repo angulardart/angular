@@ -64,7 +64,7 @@ void main() {
           <another></another>
         </template>
       '''),
-      '<another></another> <template><another></another></template>',
+      '<another></another><template><another></another></template>',
     );
   });
 
@@ -129,7 +129,7 @@ void main() {
       ''
           '<section>'
           '<h2>Align with Text</h2>'
-          '<div>Aligned with <material-input></material-input> text</div>'
+          '<div>Aligned with<material-input></material-input>text</div>'
           '</section>',
     );
   });
