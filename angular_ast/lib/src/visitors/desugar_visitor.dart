@@ -153,7 +153,7 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
   ) {
     var starAst = stars[0];
     var origin = _toolFriendlyAstOrigin ? starAst : null;
-    var starExpression = starAst.value;
+    var starExpression = starAst.value?.trim();
     var expressionOffset =
         (starAst as ParsedStarAst).valueToken?.innerValue?.offset;
     var directiveName = starAst.name;

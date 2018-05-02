@@ -229,6 +229,15 @@ void main() {
     );
   });
 
+  test('should handle a microsyntax expression with leading whitespace', () {
+    expect(
+      parse('<div *ngFor="\n  let item of items">{{item}}</div>'),
+      parse('<template ngFor let-item [ngForOf]="items">'
+          '<div>{{item}}</div>'
+          '</template>'),
+    );
+  });
+
   test('should parse a structural directive in child position', () {
     expect(
       parse('<div><div *ngIf="someValue">Hello World</div></div>'),
