@@ -4,6 +4,8 @@
 
 *   Added support for annotations on `ContainerAst`.
 
+*   The `*` micro-syntax now supports leading whitespace.
+
 ## 0.5.2
 
 *   The `*` micro-syntax now supports newlines after an identifier.
