@@ -141,7 +141,9 @@ class CompilerFlags {
         _argProfileFor,
         _argLegacyStyle,
         _argFastBoot,
-        _argLegacyWhitespace
+        _argLegacyWhitespace,
+        // TODO(matanl): A better strategy for negatable options.
+        'no-$_argLegacyWhitespace',
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
@@ -175,8 +177,8 @@ class CompilerFlags {
       useFastBoot = null;
     }
     var useLegacyWhitespace = options[_argLegacyWhitespace];
-    if (useLegacyStyle != null && useLegacyStyle is! bool) {
-      log('Invalid value for "$_argLegacyWhitespace": $_argLegacyWhitespace');
+    if (useLegacyWhitespace != null && useLegacyWhitespace is! bool) {
+      log('Invalid value for "$_argLegacyWhitespace": $useLegacyWhitespace');
       useLegacyWhitespace = null;
     }
     return new CompilerFlags(
