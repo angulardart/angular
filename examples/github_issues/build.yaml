@@ -16,6 +16,7 @@ targets:
           - --minify
           - --trust-type-annotations
           - --trust-primitives
+          - --preview-dart-2
   scss_builder:
     sources: ["lib/builder.dart"]
     dependencies:

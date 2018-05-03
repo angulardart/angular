@@ -10,9 +10,11 @@ targets:
             - --fast-startup
             - --trust-type-annotations
             - --trust-primitives
+            - --preview-dart-2
         release_options:
           dart2js_args: # inherits `compiler` from default options, and overrides the args
             - --fast-startup
             - --minify
             - --trust-type-annotations
             - --trust-primitives
+            - --preview-dart-2

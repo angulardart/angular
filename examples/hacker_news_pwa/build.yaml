@@ -6,6 +6,7 @@ targets:
         - web/**.dart
         options:
           dart2js_args:
+          - --preview-dart-2
           - --dump-info
           - --fast-startup
           - --minify

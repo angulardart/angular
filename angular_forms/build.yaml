@@ -1,9 +1,6 @@
 targets:
   $default:
     builders:
-      angular:
-        options:
-          debug: True
       build_web_compilers|entrypoint:
         options:
           compiler: dart2js
