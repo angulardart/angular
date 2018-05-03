@@ -17,8 +17,9 @@ presets:
           # https://chromium.googlesource.com/chromium/src/+/master/docs/design/sandbox.md
           # https://docs.travis-ci.com/user/chrome#Sandboxing
           arguments: --no-sandbox
-          # TODO(https://github.com/dart-lang/test/issues/772)
-          headless: false
+
+          # This is the default, but making it explicit.
+          headless: true
 
     # Don't run any tests that are tagged ["fails-on-travis"].
     exclude_tags: "fails-on-travis"

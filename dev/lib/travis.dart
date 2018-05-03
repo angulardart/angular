@@ -52,6 +52,9 @@ class OutputWriter {
   /// Content that should be emitted at the bottom of the output file.
   final String _postfix;
 
+  /// Whether to add custom initialization code for using non-headless Chrome.
+  final bool _enableXfvbOverride;
+
   /// Stages that should be emitted in between the [_prefix] and [_postfix].
   ///
   /// Use `writeXStep` methods to write in a correctly formatted manner.
@@ -61,7 +64,11 @@ class OutputWriter {
   final List<String> _presubmit = [];
 
   @visibleForTesting
-  OutputWriter(this._prefix, this._postfix);
+  OutputWriter(
+    this._prefix,
+    this._postfix, [
+    this._enableXfvbOverride = false,
+  ]);
 
   // Used when generating tool/presubmit.sh.
   static const _presubmitPreamble = '''
@@ -196,12 +203,16 @@ rm -rf **/build/\n
       _stages.addAll(const [
         r'      addons:',
         r'        chrome: stable',
-        r'      before_install:',
-        r'        - export DISPLAY=:99.0',
-        r'        - sh -e /etc/init.d/xvfb start',
-        r'        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"',
-        '',
       ]);
+      if (_enableXfvbOverride) {
+        _stages.addAll(const [
+          r'      before_install:',
+          r'        - export DISPLAY=:99.0',
+          r'        - sh -e /etc/init.d/xvfb start',
+          r'        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"',
+          '',
+        ]);
+      }
     }
   }
 }
