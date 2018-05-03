@@ -1,28 +1,30 @@
 # Hacker News PWA in AngularDart
 
+The application is deployed at [hnpwa.dartlang.org](https://hnpwa.dartlang.org).
+
+It was built as an example for [hnpwa.com](https://hnpwa.com/).
+
 <img width="834" src="https://user-images.githubusercontent.com/168174/36634757-57637b9a-195e-11e8-82f9-07c882f0471c.png">
 
 ## Running locally
 
 To run and debug locally using `dartdevc`:
 
-```bash
-$ pub upgrade
+```console
 $ pub run build_runner serve
 ```
 
-... and then navigate to `http://localhost:8080`.
+Then navigate to `http://localhost:8080`.
 
-## Production build
+## Running locally with release configuration
 
-To build and run locally using `dart2js`:
+To run locally using `dart2js`, add the `--release` flag.
 
-```bash
-$ pub upgrade
-$ pub run build_runner serve --config=release
+```console
+$ pub run build_runner serve --release
 ```
 
-## Run on Firebase
+## Deploy to Firebase
 
 1. Install and setup [Firebase CLI](https://github.com/firebase/firebase-tools/).
 
@@ -30,17 +32,26 @@ $ pub run build_runner serve --config=release
 
 3. Build a release version of hacker_news_pwa:
 
-```shell
-$ pub run build_runner build --config=release --fail-on-severe --output build
-```
 4. Select your new Firebase project:
-```shell
-$ firebase use --add
-```
-5. Deploy:
-```shell
-$ firebase deploy
-```
+
+  ```console
+  $ firebase use --add
+  ```
+
+  This will create a `.firebaserc` file to store your project configuration.
+
+5. Build and deploy:
+
+  The `firebase.json` file has the build command configured via the `predeploy`
+  setting, so you just have to run `deploy`.
+
+  ```console
+  $ firebase deploy
+  ```
+
+<!--
+Add back details about updating the cached assets once
+https://github.com/isoos/pwa/issues/21 is fixed
 
 ## Updating service worker cached assets
 
@@ -51,3 +62,4 @@ cache to be accessible offline.
 $ pub run build_runner build --config=release --output build
 $ pub run pwa --exclude "packages/**,.packages,*.dart,*.js.deps,*.js.info.json,*.js.map,*.js.tar.gz,*.module"
 ```
+-->
