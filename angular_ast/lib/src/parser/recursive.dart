@@ -549,6 +549,15 @@ class RecursiveAstParser {
 
     endToken = _parseOpenElementEnd();
 
+    // Skip whitespace after <ng-content>.
+    if (_reader.peekType() == NgTokenType.text) {
+      final textToken = _reader.next();
+      final text = parseText(textToken);
+      if (text.value.trim().isNotEmpty) {
+        _reader.putBack(textToken);
+      }
+    }
+
     // Ensure closing </ng-content> exists.
     if (_reader.peekType() != NgTokenType.closeElementStart) {
       var e = new AngularParserException(

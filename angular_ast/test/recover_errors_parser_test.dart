@@ -333,6 +333,15 @@ void main() {
     checkException(NgParserWarningCode.NONVOID_ELEMENT_USING_VOID_END, 11, 2);
   });
 
+  test('Should allow (and drop) whitespace inside ng-content', () {
+    var asts = parse('<ng-content>\n </ng-content>');
+    expect(asts, hasLength(1));
+
+    var ngContent = asts[0];
+    expect(ngContent, const isInstanceOf<EmbeddedContentAst>());
+    expect(astsToString(asts), '<ng-content select="*"></ng-content>');
+  });
+
   test('Should resolve dangling open template', () {
     var asts = parse('<div><template ngFor let-item [ngForOf]="items" '
         'let-i="index"></div>');
