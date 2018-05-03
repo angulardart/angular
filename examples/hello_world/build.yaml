@@ -4,14 +4,8 @@ targets:
       build_web_compilers|entrypoint:
         generate_for:
            - web/main.dart
-        options:
-          compiler: dart2js
-          dart2js_args:
-            - --fast-startup
-            - --trust-type-annotations
-            - --trust-primitives
         release_options:
-          dart2js_args: # inherits `compiler` from default options, and overrides the args
+          dart2js_args:
             - --fast-startup
             - --minify
             - --trust-type-annotations
