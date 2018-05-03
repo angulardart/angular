@@ -36,6 +36,6 @@
         ]
       }
     ],
-    "predeploy": "pub upgrade && rm -rf build; pub run build_runner build -o web:build --fail-on-severe --release"
+    "predeploy": "rm -rf build; pub run build_runner build -o web:build --fail-on-severe --release"
   }
 }
