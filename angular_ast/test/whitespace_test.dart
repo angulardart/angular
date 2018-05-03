@@ -171,6 +171,98 @@ void main() {
       '<div>Hello</div><div>World</div>!',
     );
   });
+
+  test('should collapse whitespace in a nested structure', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <div>
+          <label>Last saved on</label>
+          <div>
+            {{someInterpolation}}
+            <span> by {{anotherInterpolation}}</span>
+          </div>
+        </div>
+      '''),
+      '<div><label>Last saved on</label><div>{{someInterpolation}} <span>by {{anotherInterpolation}}</span></div></div>',
+    );
+  });
+
+  test('should collapse whitespace in a nested structure with *ngIfs', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <div *ngIf="someCondition">
+          <label>Last saved on</label>
+          <div *ngIf="anotherCondition">
+            {{someInterpolation}}
+            <span *ngIf="yetAnotherCondition"> by {{anotherInterpolation}}</span>
+          </div>
+        </div>
+      '''),
+      ''
+          '<template [ngIf]="someCondition">'
+          '<div><label>Last saved on</label>'
+          '<template [ngIf]="anotherCondition"><div>{{someInterpolation}} '
+          '<template [ngIf]="yetAnotherCondition">'
+          '<span>by {{anotherInterpolation}}</span>'
+          '</template></div></template></div></template>',
+    );
+  });
+
+  test('should collapse whitespace with <ng-container> wrapping a div', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <label>Foo</label>
+        <ng-container *ngIf="someCondition">
+          <div>{{someInterpolation}}</div>
+        </ng-container>
+      '''),
+      ''
+          '<label>Foo</label><template [ngIf]="someCondition"><ng-container>'
+          '<div>{{someInterpolation}}</div>'
+          '</ng-container></template>',
+    );
+  });
+
+  test('should preserve whitespace with a leading <span>', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <div>
+          Pre-Block
+          <template [ngIf]="someCondition">
+            <div>Block</div>
+            <span>Inline</span>
+          </template>
+          Post-Inline
+        </div>
+      '''),
+      ''
+          // NOTE: There is no space here, because the next element is a <div>
+          '<div>Pre-Block'
+          '<template [ngIf]="someCondition"><div>Block</div>'
+          '<span>Inline</span></template>'
+          // NOTE: There *is* a space here, previous element is a <span>
+          ' Post-Inline'
+          '</div>',
+    );
+  });
+
+  test('should assume that empty templates are sources of inline text', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <template [ngIf]="someCondition">
+          <div>
+            Hello,
+            <template>
+            </template>
+          </div>
+        </template>
+      '''),
+      ''
+          '<template [ngIf]="someCondition">'
+          '<div>Hello, <template></template></div>'
+          '</template>',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {
