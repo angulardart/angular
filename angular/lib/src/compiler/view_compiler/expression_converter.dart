@@ -397,7 +397,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
   dynamic visitSafeMethodCall(compiler_ast.SafeMethodCall ast, _Mode mode) {
     _visitingRoot = false;
     var receiver = ast.receiver.visit<dynamic, _Mode>(this, _Mode.Expression);
-    var args = _visitAll(ast.args, _Mode.Expression);
+    var args = _visitAll(ast.args, _Mode.Expression).retype<o.Expression>();
     return _convertToStatementIfNeeded(
         mode,
         receiver
