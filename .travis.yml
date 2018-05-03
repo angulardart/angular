@@ -318,6 +318,7 @@ jobs:
           - examples/hacker_news_pwa/.dart_tool
       before_deploy:
         - pushd examples/hacker_news_pwa
+        - pub upgrade
       deploy:
         skip_cleanup: true
         on:
