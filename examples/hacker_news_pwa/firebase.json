@@ -1,10 +1,10 @@
 {
   "hosting": {
-    "public": "build/web",
+    "public": "build",
     "ignore": [
       "*.module",
       "*.ng_placeholder",
-      "packages/"
+      "packages/**"
     ],
     "rewrites": [
       {
@@ -36,6 +36,6 @@
         ]
       }
     ],
-    "predeploy": "pub upgrade && pub run build_runner build -o build --fail-on-severe --release"
+    "predeploy": "pub upgrade && rm -rf build; pub run build_runner build -o web:build --fail-on-severe --release"
   }
 }
