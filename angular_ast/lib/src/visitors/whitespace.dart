@@ -129,8 +129,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
         // Node i, where i - 1 and i + 1 are not interpolations, we can
         // completely remove the (text) node. For example, this would take
         // `<span>\n</span>` and return `<span></span>`.
-        if (_shouldCollapseAdjacentTo(prevNode) &&
-            _shouldCollapseAdjacentTo(nextNode) &&
+        if (_shouldCollapseAdjacentTo(prevNode, lastNode: true) &&
+            _shouldCollapseAdjacentTo(nextNode, lastNode: false) &&
             currentNodeCasted.value.trim().isEmpty) {
           currentNode = null;
         } else {
@@ -139,8 +139,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
           // 2. Depending on siblings, *also* trimLeft or trimRight.
           currentNode = _collapseWhitespace(
             currentNode,
-            trimLeft: _shouldCollapseAdjacentTo(prevNode),
-            trimRight: _shouldCollapseAdjacentTo(nextNode),
+            trimLeft: _shouldCollapseAdjacentTo(prevNode, lastNode: true),
+            trimRight: _shouldCollapseAdjacentTo(nextNode, lastNode: false),
           );
         }
 
@@ -198,7 +198,65 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
       _commonInlineElements.contains(astNode.name.toLowerCase());
 
   /// Whether [astNode] should be treated as insignficant to nearby whitespace.
-  static bool _shouldCollapseAdjacentTo(TemplateAst astNode) =>
+  static bool _shouldCollapseAdjacentTo(
+    TemplateAst astNode, {
+    bool lastNode: false,
+  }) =>
+      // Always collpase adjacent to a non-element-like node.
       astNode is! StandaloneTemplateAst ||
-      astNode is ElementAst && !_isPotentiallyInline(astNode);
+      // Sometimes collapse adjacent to another element if not inline.
+      astNode is ElementAst && !_isPotentiallyInline(astNode) ||
+      // Sometimes collapse adjacent to a template or container node.
+      _shouldCollapseWrapperNode(astNode, lastNode: lastNode);
+
+  // Determining how to collapse next to a template/container is more complex.
+  //
+  // If the <template> wraps HTML DOM, i.e. <div *ngIf>, we should just use the
+  // immediate wrapped DOM node as the indicator of collapsing. <div *ngIf>
+  // should be treated just like a <div>.
+  //
+  // Otherwise, return `false` and assume it could be a source of inline nodes.
+  static bool _shouldCollapseWrapperNode(
+    StandaloneTemplateAst astNode, {
+    bool lastNode: false,
+  }) {
+    if (astNode is! ContainerAst && astNode is! EmbeddedTemplateAst) {
+      return false;
+    }
+    final nodes = astNode.childNodes;
+    if (nodes.isNotEmpty) {
+      var checkChild = lastNode ? nodes.last : nodes.first;
+      // Cover the corner case of:
+      // <template [ngIf]>
+      //   <span>Hello</span>
+      // </template>
+      //
+      // The immediate child of <template> (in either direction) is a TextAst,
+      // but it is just whitespace, so we want to consider the next relevant
+      // node.
+      //
+      // TODO(matanl): Refactor this entire function after feature submitted.
+      if (checkChild is TextAst && checkChild.value.trim().isEmpty) {
+        if (nodes.length == 1) {
+          // Another corner-corner case:
+          //
+          // <template [ngIf]>
+          //   <div>
+          //     Dynamic Content:
+          //     <template>
+          //     </template>
+          //   </div>
+          // </template>
+          //
+          // We want to assume the inner-template will be modified dynamically
+          // at runtime (content inserted), so we assume inline instead of
+          // assuming block, hence returning false.
+          return false;
+        }
+        checkChild = lastNode ? nodes[nodes.length - 2] : nodes[1];
+      }
+      return _shouldCollapseAdjacentTo(checkChild);
+    }
+    return false;
+  }
 }
