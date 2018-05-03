@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "examples/hacker_news_pwa/build/web",
+    "public": "build/web",
     "ignore": [
       "*.module",
       "*.ng_placeholder",
@@ -35,6 +35,7 @@
           }
         ]
       }
-    ]
+    ],
+    "predeploy": "pub upgrade && pub run build_runner build -o build --fail-on-severe --release"
   }
 }
