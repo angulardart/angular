@@ -22,7 +22,6 @@ import 'view_compiler_utils.dart'
         createDiTokenExpression,
         injectFromViewParentInjector,
         getPropertyInView,
-        getViewFactoryName,
         toTemplateExtension;
 
 /// Compiled node in the view (such as text node) that is not an element.
@@ -340,18 +339,8 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
 
     CompileIdentifierMetadata prefixedId = new CompileIdentifierMetadata(
         name: 'loadLibrary', prefix: prefix, emitPrefix: true);
-    CompileIdentifierMetadata nestedComponentId = new CompileIdentifierMetadata(
-        name: getViewFactoryName(deferredElement.component, 0));
     CompileIdentifierMetadata templatePrefixId = new CompileIdentifierMetadata(
         name: 'loadLibrary', prefix: templatePrefix, emitPrefix: true);
-
-    CompileIdentifierMetadata templateInitializer =
-        new CompileIdentifierMetadata(
-            name: 'initReflector',
-            moduleUrl: nestedComponentId.moduleUrl,
-            prefix: templatePrefix,
-            emitPrefix: true,
-            value: nestedComponentId.value);
 
     var templateRefExpr = _providers.get(Identifiers.TemplateRefToken).build();
 
@@ -361,14 +350,6 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       viewContainerExpr,
       templateRefExpr,
     ];
-
-    // If "fastBoot" is not being used, we need to emit more information.
-    if (!view.genConfig.useFastBoot) {
-      final initReflectorExpr = new o.FunctionExpr(const [], <o.Statement>[
-        o.importDeferred(templateInitializer).callFn(const []).toStmt()
-      ], null);
-      args.add(initReflectorExpr);
-    }
 
     stmts.add(new o.InvokeMemberMethodExpr('loadDeferred', args).toStmt());
   }

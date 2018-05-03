@@ -1,10 +1,10 @@
 {
   "hosting": {
-    "public": "examples/hacker_news_pwa/build/web",
+    "public": "build",
     "ignore": [
       "*.module",
       "*.ng_placeholder",
-      "packages/"
+      "packages/**"
     ],
     "rewrites": [
       {
@@ -18,7 +18,7 @@
         "headers": [
           {
             "key": "Link",
-            "value": "</main.dart.js>;rel=preload;as=script"
+            "value": "</main.dart.js>;rel=preload;as=script,<https://api.hnpwa.com/v0/news/1.json>;rel=preload;as=fetch;crossorigin"
           },
           {
             "key": "Cache-Control",
@@ -35,6 +35,7 @@
           }
         ]
       }
-    ]
+    ],
+    "predeploy": "rm -rf build; pub run build_runner build -o web:build --fail-on-severe --release"
   }
 }

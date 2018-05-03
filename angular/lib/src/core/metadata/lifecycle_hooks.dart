@@ -2,7 +2,7 @@ import 'package:angular/src/core/change_detection/change_detection_util.dart'
     show SimpleChange;
 
 /// Lifecycle hooks are guaranteed to be called in the following order:
-/// - `onChanges` (if any bindings have changed),
+/// - `onChanges` (if any bindings have been changed by the Angular framework),
 /// - `onInit` (after the first check only),
 /// - `doCheck`,
 /// - `afterContentInit`,
@@ -23,7 +23,7 @@ enum LifecycleHooks {
 }
 
 /// Implement this interface to get notified when any data-bound property of
-/// your directive changes.
+/// your directive is changed by the Angular framework.
 ///
 /// [ngOnChanges] is called right after the data-bound properties have been
 /// checked and before view and content children are checked if at least one of
@@ -57,7 +57,7 @@ abstract class OnChanges {
 }
 
 /// Implement this interface to get notified when any data-bound property of
-/// your directive changes.
+/// your directive is changed by the Angular framework.
 ///
 /// [ngAfterChanges] is called right after the data-bound properties have been
 /// checked and before view and content children are checked if at least one of

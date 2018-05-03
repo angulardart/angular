@@ -1,5 +1,14 @@
 *   Added `ContainerAst`.
 
+*   Annotations may now be assigned values.
+
+*   Added support for annotations on `ContainerAst`.
+
+*   The `*` micro-syntax now supports leading whitespace.
+
+*   Whitespace between `<ng-content>` and `</ng-content>` will no longer yield a
+    parsing error.
+
 ## 0.5.2
 
 *   The `*` micro-syntax now supports newlines after an identifier.

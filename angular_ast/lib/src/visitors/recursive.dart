@@ -62,6 +62,7 @@ class RecursiveTemplateAstVisitor<C>
   TemplateAst visitContainer(ContainerAst astNode, [C context]) =>
       new ContainerAst.from(
         astNode,
+        annotations: visitAll(astNode.annotations, context),
         childNodes: visitAll(astNode.childNodes, context),
         stars: visitAll(astNode.stars, context),
       );

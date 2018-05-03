@@ -46,7 +46,7 @@ void mXSSProtection(Element containerElement, String unsafeHtml) {
     }
     if (mXSSAttempts == 1) {
       // For IE<=11 strip custom-namespaced attributes on IE<=11.
-      stripCustomNsAttrs(containerElement);
+      _stripCustomNsAttrs(containerElement);
     }
     mXSSAttempts--;
     unsafeHtml = parsedHtml;
@@ -61,13 +61,13 @@ void mXSSProtection(Element containerElement, String unsafeHtml) {
 ///
 /// This is undesirable since we don't want to allow any of these custom
 /// attributes. This method strips them all.
-void stripCustomNsAttrs(Element element) {
+void _stripCustomNsAttrs(Element element) {
   for (var attrName in element.attributes.keys) {
     if (attrName == 'xmlns:ns1' || attrName.startsWith('ns1:')) {
       element.attributes.remove(attrName);
     }
   }
   for (var n in element.childNodes) {
-    if (n is Element) stripCustomNsAttrs(n);
+    if (n is Element) _stripCustomNsAttrs(n);
   }
 }

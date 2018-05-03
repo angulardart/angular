@@ -27,6 +27,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     if (astNode.childNodes.isNotEmpty) {
       astNode = new ContainerAst.from(
         astNode,
+        annotations: astNode.annotations,
         childNodes: _visitRemovingWhitespace(astNode.childNodes),
         stars: astNode.stars,
       );
@@ -75,7 +76,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   TemplateAst visitText(TextAst astNode, [_]) {
     return new TextAst.from(
       astNode,
-      astNode.value.replaceAll(_manualWhitespace, ' '),
+      astNode.value.replaceAll(_ngsp, ' '),
     );
   }
 
@@ -101,9 +102,6 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
 
   static final _allWhitespace = new RegExp(r'\s\s+', multiLine: true);
   static const _ngsp = '\uE500';
-
-  // TODO: Add &#32;
-  static final _manualWhitespace = new RegExp('$_ngsp', multiLine: true);
 
   List<StandaloneTemplateAst> _visitRemovingWhitespace(
     List<StandaloneTemplateAst> childNodes,
@@ -157,51 +155,47 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     return childNodes.where((a) => a != null).toList();
   }
 
-  // https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements
-  static final _commonBlockElements = new Set<String>.from([
-    'address',
-    'article',
-    'aside',
-    'blockquote',
-    'canvas',
-    'dd',
-    'div',
-    'dl',
-    'dt',
-    'fieldset',
-    'figcaption',
-    'figure',
-    'footer',
-    'form',
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-    'header',
-    'hgroup',
-    'hr',
-    'li',
-    'main',
-    'nav',
-    'noscript',
-    'ol',
-    'output',
-    'p',
-    'pre',
-    'section',
-    'table',
-    'tfoot',
-    'ul',
-    'video',
+  // https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements
+  static final _commonInlineElements = new Set<String>.from([
+    'a',
+    'abbr',
+    'acronym',
+    'b',
+    'bdo',
+    'big',
+    'br',
+    'button',
+    'cite',
+    'code',
+    'dfn',
+    'em',
+    'i',
+    'img',
+    'input',
+    'kbd',
+    'label',
+    'map',
+    'object',
+    'q',
+    'samp',
+    'script',
+    'select',
+    'small',
+    'span',
+    'strong',
+    'sub',
+    'sup',
+    'textarea',
+    'time',
+    'tt',
+    'var'
   ]);
 
   /// Returns whether [tagName] is normally an `display: inline` element.
   ///
   /// This helps to make the right (default) decision around whitespace.
   static bool _isPotentiallyInline(ElementAst astNode) =>
-      !_commonBlockElements.contains(astNode.name.toLowerCase());
+      _commonInlineElements.contains(astNode.name.toLowerCase());
 
   /// Whether [astNode] should be treated as insignficant to nearby whitespace.
   static bool _shouldCollapseAdjacentTo(TemplateAst astNode) =>

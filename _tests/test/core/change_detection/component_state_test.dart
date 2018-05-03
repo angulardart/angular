@@ -69,12 +69,14 @@ class SingleBindingTest extends Object with ComponentState {
 }
 
 @Directive(
-  host: const {'[attr.data-msg]': 'msg'},
   selector: '[fastDirective]',
 )
 class FastDirective extends ComponentState {
   Element element;
+
+  @HostBinding('attr.data-msg')
   String msg;
+
   String _prevValue;
 
   FastDirective(this.element);

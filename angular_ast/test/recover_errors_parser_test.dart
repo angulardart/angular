@@ -201,13 +201,15 @@ void main() {
         '[prop]="expr" '
         '(event)="expr" '
         'let-var="expr" '
-        '#ref>'
+        '#ref '
+        '@annotation>'
         '</ng-container>');
     expect(asts, hasLength(1));
 
     final ngContainer = asts[0];
     expect(ngContainer, const isInstanceOf<ContainerAst>());
-    expect(astsToString(asts), '<ng-container *star="expr"></ng-container>');
+    expect(astsToString(asts),
+        '<ng-container @annotation *star="expr"></ng-container>');
 
     final exceptions = recoveringExceptionHandler.exceptions;
     expect(exceptions, hasLength(5));
@@ -329,6 +331,15 @@ void main() {
     expect(astsToString(asts), '<ng-content select="*"></ng-content>');
 
     checkException(NgParserWarningCode.NONVOID_ELEMENT_USING_VOID_END, 11, 2);
+  });
+
+  test('Should allow (and drop) whitespace inside ng-content', () {
+    var asts = parse('<ng-content>\n </ng-content>');
+    expect(asts, hasLength(1));
+
+    var ngContent = asts[0];
+    expect(ngContent, const isInstanceOf<EmbeddedContentAst>());
+    expect(astsToString(asts), '<ng-content select="*"></ng-content>');
   });
 
   test('Should resolve dangling open template', () {

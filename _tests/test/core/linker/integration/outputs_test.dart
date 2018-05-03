@@ -88,11 +88,11 @@ class EventEmitterDirective {
 
 @Directive(
   selector: '[listener]',
-  host: const {'(event)': 'onEvent(\$event)'},
 )
 class EventListenerDirective {
   String msg;
 
+  @HostListener('event')
   onEvent(String msg) {
     this.msg = msg;
   }
@@ -157,13 +157,11 @@ class TwoWayBindingComponent {
 
 @Directive(
   selector: '[listener]',
-  host: const {
-    '(domEvent)': 'onEvent(\$event.type)',
-  },
 )
 class DomEventListenerDirective {
   List<String> eventTypes = [];
 
+  @HostListener('domEvent', const [r'$event.type'])
   onEvent(String eventType) {
     eventTypes.add(eventType);
   }
@@ -181,9 +179,9 @@ class ElementWithDomEventComponent {
 
 @Directive(
   selector: '[listenerprevent]',
-  host: const {'(click)': 'onEvent(\$event)'},
 )
 class DirectiveListeningDomEventPrevent {
+  @HostListener('click')
   onEvent(Event event) {
     event.preventDefault();
   }
@@ -191,9 +189,9 @@ class DirectiveListeningDomEventPrevent {
 
 @Directive(
   selector: '[listenernoprevent]',
-  host: const {'(click)': 'onEvent(\$event)'},
 )
 class DirectiveListeningDomEventNoPrevent {
+  @HostListener('click')
   onEvent(Event event) {}
 }
 

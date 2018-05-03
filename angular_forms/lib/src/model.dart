@@ -82,14 +82,42 @@ abstract class AbstractControl<T> {
 
   bool get pending => _status == PENDING;
 
-  void markAsTouched() {
+  /// Marks the control as `touched`.
+  ///
+  /// This will also mark all direct ancestors as `touched` to maintain the
+  /// model.
+  void markAsTouched({bool updateParent}) {
+    updateParent = updateParent ?? true;
+
     _touched = true;
+
+    if (_parent != null && updateParent) {
+      _parent.markAsTouched(updateParent: updateParent);
+    }
   }
 
-  void markAsUntouched() {
+  /// Marks the control as `untouched`.
+  ///
+  /// If the control has any children, it will also mark all children as
+  /// `untouched` to maintain the model, and re-calculate the `touched` status
+  /// of all parent controls.
+  void markAsUntouched({bool updateParent}) {
+    updateParent = updateParent ?? true;
     _touched = false;
+
+    _forEachChild(
+        // Only set self, so that children don't try to update their parent,
+        // and thus create a loop of updates.
+        (c) => c.markAsUntouched(updateParent: false));
+
+    if (_parent != null && updateParent) {
+      _parent._updateTouched(updateParent: updateParent);
+    }
   }
 
+  /// Mark the control as `dirty`.
+  ///
+  /// This will also mark all direct ancestors as `dirty` to maintain the model.
   void markAsDirty({bool onlySelf, bool emitEvent}) {
     onlySelf = onlySelf == true;
     emitEvent = emitEvent ?? true;
@@ -97,6 +125,25 @@ abstract class AbstractControl<T> {
     if (emitEvent) _statusChanges.add(_status);
     if (_parent != null && !onlySelf) {
       _parent.markAsDirty(onlySelf: onlySelf);
+    }
+  }
+
+  /// Marks the control as `pristine`.
+  ///
+  /// If the control has any children, it will also mark all children as
+  /// `pristine` to maintain the model, and re-calculate the `pristine` status
+  /// of all parent controls.
+  void markAsPristine({bool updateParent}) {
+    updateParent = updateParent ?? true;
+    _pristine = true;
+
+    _forEachChild(
+        // Only set self, so that children don't try to update their parent,
+        // and thus create a loop of updates.
+        (c) => c.markAsPristine(updateParent: false));
+
+    if (_parent != null && updateParent) {
+      _parent._updatePristine(updateParent: updateParent);
     }
   }
 
@@ -268,6 +315,22 @@ abstract class AbstractControl<T> {
     return VALID;
   }
 
+  void _updateTouched({bool updateParent}) {
+    _touched = _anyControlsTouched();
+
+    if (_parent != null && updateParent) {
+      _parent._updateTouched(updateParent: updateParent);
+    }
+  }
+
+  void _updatePristine({bool updateParent}) {
+    _pristine = !_anyControlsDirty();
+
+    if (_parent != null && updateParent) {
+      _parent._updatePristine(updateParent: updateParent);
+    }
+  }
+
   /// Callback when control is asked to update it's value.
   ///
   /// Allows controls to calculate their value. For example control groups
@@ -275,10 +338,15 @@ abstract class AbstractControl<T> {
   @protected
   void onUpdate();
 
-  bool _anyControlsHaveStatus(String status);
+  bool _anyControlsHaveStatus(String status) =>
+      _anyControls((c) => c.status == status);
   bool _allControlsHaveStatus(String status);
+  bool _anyControlsTouched() => _anyControls((c) => c.touched);
+  bool _anyControlsDirty() => _anyControls((c) => c.dirty);
 
   void _forEachChild(void callback(AbstractControl c));
+
+  bool _anyControls(bool condition(AbstractControl c));
 }
 
 /// Defines a part of a form that cannot be divided into other controls.
@@ -335,7 +403,7 @@ class Control<T> extends AbstractControl<T> {
   void onUpdate() {}
 
   @override
-  bool _anyControlsHaveStatus(String status) => false;
+  bool _anyControls(_) => false;
 
   @override
   bool _allControlsHaveStatus(String status) => this.status == status;
@@ -392,9 +460,9 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
   }
 
   @override
-  bool _anyControlsHaveStatus(String status) {
+  bool _anyControls(bool condition(AbstractControl c)) {
     for (var name in controls.keys) {
-      if (contains(name) && controls[name].status == status) return true;
+      if (contains(name) && condition(controls[name])) return true;
     }
     return false;
   }
@@ -493,9 +561,9 @@ class ControlArray extends AbstractControl<List> {
   }
 
   @override
-  bool _anyControlsHaveStatus(String status) {
+  bool _anyControls(bool condition(AbstractControl c)) {
     for (var control in controls) {
-      if (control.status == status) return true;
+      if (condition(control)) return true;
     }
     return false;
   }

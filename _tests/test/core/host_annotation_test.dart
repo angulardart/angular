@@ -111,10 +111,49 @@ void main() {
       await fixture.update((c) => c.fancy = false);
       expect(element.classes, isNot(contains('fancy')));
     });
+
+    test('should support multiple annotations on a single field', () async {
+      final element = await rootElementOf(ng.HostBindingMultiNgFactory);
+      expect(element.className, 'hello');
+      expect(element.title, 'hello');
+    });
   });
 
   group('@HostListener', () {
-    // TODO: Add tests for @HostListener.
+    test('should support click', () async {
+      final testBed = NgTestBed.forComponent<HostListenerClick>(
+        ng.HostListenerClickNgFactory,
+      );
+      final fixture = await testBed.create();
+      fixture.assertOnlyInstance.clickHandler = expectAsync0(() {});
+      await fixture.update((_) => fixture.rootElement.click());
+    });
+
+    test('should support click through inheritance', () async {
+      final testBed = NgTestBed.forComponent<HostListenerInheritedClick>(
+        ng.HostListenerInheritedClickNgFactory,
+      );
+      final fixture = await testBed.create();
+      fixture.assertOnlyInstance.clickHandler = expectAsync0(() {});
+      await fixture.update((_) => fixture.rootElement.click());
+    });
+
+    test('should support multiple annotations on a single field', () async {
+      final testBed = NgTestBed.forComponent<HostListenerMulti>(
+        ng.HostListenerMultiNgFactory,
+      );
+      final fixture = await testBed.create();
+      fixture.assertOnlyInstance.blurOrFocusHandler = expectAsync0(
+        () {},
+        count: 2,
+      );
+      await fixture.update((_) {
+        fixture.rootElement.dispatchEvent(new FocusEvent('focus'));
+      });
+      await fixture.update((_) {
+        fixture.rootElement.dispatchEvent(new FocusEvent('blur'));
+      });
+    });
   });
 }
 
@@ -202,4 +241,45 @@ class HostBindingConditionalAttribute {
 class HostBindingConditionalClass {
   @HostBinding('class.fancy')
   var fancy = false;
+}
+
+@Component(
+  selector: 'host-binding-multi',
+  template: '',
+)
+class HostBindingMulti {
+  @HostBinding('class')
+  @HostBinding('title')
+  static const hostClassAndTitle = 'hello';
+}
+
+@Component(
+  selector: 'host-listener-click',
+  template: '',
+)
+class HostListenerClick {
+  @HostListener('click')
+  void onClick() => clickHandler();
+
+  /// To be provided in test cases.
+  void Function() clickHandler = () => throw new UnimplementedError();
+}
+
+@Component(
+  selector: 'host-listener-inherited-click',
+  template: '',
+)
+class HostListenerInheritedClick extends HostListenerClick {}
+
+@Component(
+  selector: 'host-listener-multi',
+  template: '',
+)
+class HostListenerMulti {
+  @HostListener('blur')
+  @HostListener('focus')
+  void onBlurOrFocus() => blurOrFocusHandler();
+
+  /// To be provided in test cases.
+  void Function() blurOrFocusHandler = () => throw new UnimplementedError();
 }

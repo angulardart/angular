@@ -209,9 +209,11 @@ class ContentSelectorChildComponent {}
   selector: 'class-on-host',
   template: '<div id="item1">Test1</div>',
   styles: const [':host { color: rgb(64, 255, 127); }'],
-  host: const {'class': 'customhostclass'},
 )
-class ClassOnHostTestComponent {}
+class ClassOnHostTestComponent {
+  @HostBinding('class')
+  static const hostClass = 'customhostclass';
+}
 
 @Component(
   selector: 'class-attrib-binding',
@@ -226,9 +228,11 @@ class ClassAttribBindingComponent {
   selector: 'class-interpolate-test',
   template: '<div id="item1" class="prefix {{someClass}} postfix">Test1</div>',
   styles: const [':host { color: rgb(64, 255, 127); }'],
-  host: const {'class': 'customhostclass'},
 )
 class ClassInterpolateComponent {
+  @HostBinding('class')
+  static const hostClass = 'customhostclass';
+
   String get someClass => 'xyz';
 }
 
@@ -316,11 +320,11 @@ String colorToHex(String value) {
 
 @Component(
   selector: 'feature-promo',
-  host: const {'[attr.class]': 'positionClass'},
   styles: const [':host {position: absolute;}'],
   template: '<div>Hello</div>',
 )
 class FeaturePromoComponent {
+  @HostBinding('attr.class')
   @Input()
   String positionClass;
 }

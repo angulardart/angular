@@ -143,9 +143,7 @@ void main() {
         'package:a/3.css',
         'package:a/1.css',
         'package:a/2.css',
-
-        // @import URLs are not resolved at build-time.
-        'packages/a/4.css',
+        'package:a/4.css',
       ]),
     );
   });

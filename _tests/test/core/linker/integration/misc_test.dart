@@ -76,9 +76,11 @@ class VarInLoopComponent {}
 
 @Directive(
   selector: '[update-host-attributes]',
-  host: const {'role': 'button'},
 )
-class DirectiveUpdatingHostAttributes {}
+class DirectiveUpdatingHostAttributes {
+  @HostBinding('attr.role')
+  static const hostRole = 'button';
+}
 
 @Component(
   selector: 'directive-host-attributes',
@@ -89,9 +91,9 @@ class HostAttributeFromDirectiveComponent {}
 
 @Directive(
   selector: '[update-host-properties]',
-  host: const {'[id]': 'id'},
 )
 class DirectiveUpdatingHostProperties {
+  @HostBinding('id')
   String id = 'one';
 }
 

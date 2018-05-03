@@ -18,14 +18,12 @@ import 'template_optimize.dart';
 import 'template_parser.dart';
 import 'template_parser/recursive_template_visitor.dart';
 
-const ngContentSelectAttr = 'select';
-const ngContentElement = 'ng-content';
-const linkElement = 'link';
-const linkStyleRelAttr = 'rel';
-const linkStyleHrefAttr = 'href';
-const linkStyleRelValue = 'stylesheet';
-const styleElement = 'style';
-const scriptElement = 'script';
+const _ngContentSelectAttr = 'select';
+const _ngContentElement = 'ng-content';
+const _linkElement = 'link';
+const _linkStyleHrefAttr = 'href';
+const _styleElement = 'style';
+const _scriptElement = 'script';
 const _templateElement = 'template';
 final CssSelector _textCssSelector = CssSelector.parse('*')[0];
 
@@ -133,10 +131,8 @@ class AstTemplateParser implements TemplateParser {
     var filteredElements = new _ElementFilter()
         .visitAll<ast.StandaloneTemplateAst>(
             parsedAst.cast<ast.StandaloneTemplateAst>());
-    if (flags.useNewPreserveWhitespace) {
-      if (!preserveWhitespace) {
-        return filteredElements;
-      }
+    // New preserveWhitespace: false semantics (and preserveWhitespace: false).
+    if (flags.useNewPreserveWhitespace && !preserveWhitespace) {
       return new ast.MinimizeWhitespaceVisitor().visitAllRoot(filteredElements);
     }
     return new _PreserveWhitespaceVisitor()
@@ -348,8 +344,8 @@ class _BindDirectivesVisitor
   CssSelector _embeddedContentSelector(ast.EmbeddedContentAst astNode) =>
       astNode.ngProjectAs != null
           ? CssSelector.parse(astNode.ngProjectAs)[0]
-          : createElementCssSelector(ngContentElement, [
-              [ngContentSelectAttr, astNode.selector]
+          : createElementCssSelector(_ngContentElement, [
+              [_ngContentSelectAttr, astNode.selector]
             ]);
 
   @override
@@ -820,20 +816,20 @@ class _ElementFilter extends ast.RecursiveTemplateAstVisitor<Null> {
       _filterStyleSheets(astNode);
 
   static bool _filterStyles(ast.ElementAst astNode) =>
-      astNode.name.toLowerCase() == styleElement;
+      astNode.name.toLowerCase() == _styleElement;
 
   static bool _filterScripts(ast.ElementAst astNode) =>
-      astNode.name.toLowerCase() == scriptElement;
+      astNode.name.toLowerCase() == _scriptElement;
 
   static bool _filterStyleSheets(ast.ElementAst astNode) {
-    if (astNode.name != linkElement) return false;
+    if (astNode.name != _linkElement) return false;
     var href = _findHref(astNode.attributes);
     return isStyleUrlResolvable(href?.value);
   }
 
   static ast.AttributeAst _findHref(List<ast.AttributeAst> attributes) {
     for (var attr in attributes) {
-      if (attr.name.toLowerCase() == linkStyleHrefAttr) return attr;
+      if (attr.name.toLowerCase() == _linkStyleHrefAttr) return attr;
     }
     return null;
   }

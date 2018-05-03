@@ -48,6 +48,11 @@ class HumanizingTemplateAstVisitor
   String visitContainer(ContainerAst astNode, [StringBuffer context]) {
     context ??= new StringBuffer();
     context.write('<ng-container');
+    if (astNode.annotations.isNotEmpty) {
+      context
+        ..write(' ')
+        ..writeAll(astNode.annotations.map(visitAnnotation), ' ');
+    }
     if (astNode.stars.isNotEmpty) {
       context
         ..write(' ')

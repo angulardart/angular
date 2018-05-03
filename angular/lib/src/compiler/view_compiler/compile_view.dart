@@ -63,7 +63,7 @@ enum NodeReferenceVisibility {
   build, // Only visible inside DOM build process.
 }
 
-var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
+final notThrowOnChanges = o.not(o.importExpr(Identifiers.throwOnChanges));
 
 /// Reference to html node created during AppView build.
 class NodeReference {
@@ -340,7 +340,7 @@ class CompileView implements AppViewBuilder {
       nameResolver = new ViewNameResolver(this);
       storage = new CompileViewStorage();
     }
-    viewType = getViewType(component, viewIndex);
+    viewType = _getViewType(component, viewIndex);
     className = '${viewIndex == 0 && viewType != ViewType.host ? '' : '_'}'
         'View${component.type.name}$viewIndex';
     classType = o.importType(new CompileIdentifierMetadata(name: className));
@@ -1169,7 +1169,7 @@ class CompileView implements AppViewBuilder {
       if (genConfig.genDebugInfo) {
         // Prevent query list updates when we run change detection for
         // second time to check if values are stabilized.
-        statements.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterContentStmts));
+        statements.add(new o.IfStmt(notThrowOnChanges, afterContentStmts));
       } else {
         statements.addAll(afterContentStmts);
       }
@@ -1188,7 +1188,7 @@ class CompileView implements AppViewBuilder {
           ..addAll(afterViewLifecycleCallbacksMethod.finish());
     if (afterViewStmts.isNotEmpty) {
       if (genConfig.genDebugInfo) {
-        statements.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterViewStmts));
+        statements.add(new o.IfStmt(notThrowOnChanges, afterViewStmts));
       } else {
         statements.addAll(afterViewStmts);
       }
@@ -1299,7 +1299,7 @@ class CompileView implements AppViewBuilder {
   }
 }
 
-ViewType getViewType(
+ViewType _getViewType(
     CompileDirectiveMetadata component, int embeddedTemplateIndex) {
   if (embeddedTemplateIndex > 0) {
     return ViewType.embedded;

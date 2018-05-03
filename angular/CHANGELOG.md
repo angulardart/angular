@@ -16,6 +16,56 @@
     ... as part of this refactor, error messages in general around use of
     these annotations have been greatly improved.
 
+### New features
+
+*   Added `<ng-container>`, an element for logical grouping that has no effect
+    on layout. This enables use of the *-syntax for structural directives,
+    without requiring the cost an HTML element.
+
+    **Before**
+
+    ```html
+    <ul>
+      <template ngFor let-user [ngForOf]="users">
+        <li *ngIf="user.visible">{{user.name}}</li>
+      </template>
+    </ul>
+    ```
+
+    **After**
+
+    ```html
+    <ul>
+      <ng-container *ngFor="let user of users">
+        <li *ngIf="user.visible">{{user.name}}</li>
+      </ng-container>
+    </ul>
+    ```
+
+*   `.ng_placeholder` files will be excluded from `--output` builds. `.css` and
+    `.html` files will be excluded by default from the `lib/` directory for
+    release builds. Disable entirely with:
+
+    ```yaml
+    targets:
+      $default:
+        angular|component_source_cleanup:
+          options:
+            enabled: false
+    ```
+
+    or exclude some sources by glob:
+
+    ```yaml
+    targets:
+      $default:
+        angular|component_source_cleanup:
+          options:
+            exclude:
+              - "lib/non_angular_style.css"
+              - "lib/something/**"
+    ```
+
 ### Bug fixes
 
 *   Inheriting from a class that defines a `@HostBinding()` on a static member
@@ -45,6 +95,10 @@
 *   Styles from an `@import` statement are now included _before_ the styles
     declared within the file, instead of _after_. This allows a style declared
     within a file to override an imported one of equivalent specificity.
+
+*   URLs from `@import` statements with the `package` scheme are no longer
+    resolved to the `packages/` directory. The `package` scheme is now preserved
+    which the build ecosystem understands.
 
 ## 5.0.0-alpha+11
 
@@ -192,30 +246,6 @@
       @HostListener('click')
       void onClick(MouseEvent e) {}
     }
-    ```
-
-*   Added `<ng-container>`, an element for logical grouping that has no effect
-    on layout. This enables use of the *-syntax for structural directives,
-    without requiring the cost an HTML element.
-
-    **Before**
-
-    ```html
-    <ul>
-      <template ngFor let-user [ngForOf]="users">
-        <li *ngIf="user.visible">{{user.name}}</li>
-      </template>
-    </ul>
-    ```
-
-    **After**
-
-    ```html
-    <ul>
-      <ng-container *ngFor="let user of users">
-        <li *ngIf="user.visible">{{user.name}}</li>
-      </ng-container>
-    </ul>
     ```
 
 ### Bug fixes
