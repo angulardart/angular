@@ -18,7 +18,7 @@
         "headers": [
           {
             "key": "Link",
-            "value": "</main.dart.js>;rel=preload;as=script"
+            "value": "</main.dart.js>;rel=preload;as=script,<//api.hnpwa.com/v0/news/1.json>;rel=preload;as=fetch;crossorigin"
           },
           {
             "key": "Cache-Control",
