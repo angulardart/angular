@@ -1,4 +1,4 @@
-# Hacker News PWA in AngularDart
+# Dart Hacker News PWA
 
 <img width="834" src="https://user-images.githubusercontent.com/168174/36634757-57637b9a-195e-11e8-82f9-07c882f0471c.png">
 
