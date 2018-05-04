@@ -46,7 +46,7 @@ void main() async {
   // Install service worker.
   new pwa.Client();
 
-  // Start AngularDart after fetched.
+  // Start app after fetched.
   await future;
   runApp(
     app.AppComponentNgFactory,
