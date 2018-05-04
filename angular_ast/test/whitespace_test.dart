@@ -263,6 +263,18 @@ void main() {
           '</template>',
     );
   });
+
+  test('preserve &nbsp; (do not collapse, replace with plain space)', () {
+    expect(
+      _parseAndMinifiy(r'''
+        <div>
+          &nbsp;
+        </div>
+      '''),
+      // The browser will render as a space, but it isn't a ' ' character.
+      '<div>${'\u00A0'}</div>',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {

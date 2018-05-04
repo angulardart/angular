@@ -87,13 +87,16 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     @required bool trimRight,
   }) {
     // Collapses all adjacent whitespace into a single space.
-    var value = text.value.replaceAll(_allWhitespace, ' ');
+    const preserveNbsp = '\uE501';
+    var value = text.value.replaceAll(_nbsp, preserveNbsp);
+    value = value.replaceAll(_allWhitespace, ' ');
     if (trimLeft) {
       value = value.trimLeft();
     }
     if (trimRight) {
       value = value.trimRight();
     }
+    value = value.replaceAll(preserveNbsp, _nbsp);
     if (value.isEmpty) {
       return null;
     }
@@ -101,6 +104,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   }
 
   static final _allWhitespace = new RegExp(r'\s\s+', multiLine: true);
+  static const _nbsp = '\u00A0';
   static const _ngsp = '\uE500';
 
   List<StandaloneTemplateAst> _visitRemovingWhitespace(
@@ -131,7 +135,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
         // `<span>\n</span>` and return `<span></span>`.
         if (_shouldCollapseAdjacentTo(prevNode, lastNode: true) &&
             _shouldCollapseAdjacentTo(nextNode, lastNode: false) &&
-            currentNodeCasted.value.trim().isEmpty) {
+            currentNodeCasted.value.trim().isEmpty &&
+            !currentNodeCasted.value.contains(_nbsp)) {
           currentNode = null;
         } else {
           // Otherwise, we collapse whitespace:
