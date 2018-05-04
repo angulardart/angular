@@ -1,3 +1,8 @@
+HtmlTagDefinition getHtmlTagDefinition(String tagName) {
+  var result = _tagDefinitions[tagName.toLowerCase()];
+  return result ?? const HtmlTagDefinition();
+}
+
 class HtmlTagDefinition {
   final String implicitNamespacePrefix;
   final bool isVoid;
@@ -26,20 +31,3 @@ const _tagDefinitions = const <String, HtmlTagDefinition>{
   "svg": const HtmlTagDefinition(implicitNamespacePrefix: "svg"),
   "math": const HtmlTagDefinition(implicitNamespacePrefix: "math"),
 };
-HtmlTagDefinition getHtmlTagDefinition(String tagName) {
-  var result = _tagDefinitions[tagName.toLowerCase()];
-  return result ?? const HtmlTagDefinition();
-}
-
-final _nsPrefixRegExp = new RegExp(r'^@([^:]+):(.+)');
-List<String> splitNsName(String elementName) {
-  if (elementName[0] != "@") {
-    return [null, elementName];
-  }
-  var match = _nsPrefixRegExp.firstMatch(elementName);
-  return [match[1], match[2]];
-}
-
-String mergeNsAndName(String prefix, String localName) {
-  return prefix != null ? '@$prefix:$localName' : localName;
-}
