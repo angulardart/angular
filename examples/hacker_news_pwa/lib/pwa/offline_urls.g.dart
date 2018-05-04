@@ -5,6 +5,7 @@ final List<String> offlineUrls = [
   './images/icons/android-icon-192x192.png',
   './images/icons/android-icon-36x36.png',
   './images/icons/android-icon-48x48.png',
+  './images/icons/android-icon-512x512.png',
   './images/icons/android-icon-72x72.png',
   './images/icons/android-icon-96x96.png',
   './images/icons/favicon-16x16.png',
