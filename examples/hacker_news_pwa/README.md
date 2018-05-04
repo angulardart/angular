@@ -1,4 +1,4 @@
-# Hacker News PWA in AngularDart
+# Dart Hacker News PWA
 
 The application is deployed at [hnpwa.dartlang.org](https://hnpwa.dartlang.org).
 
