@@ -1,6 +1,6 @@
 {
-  "name": "Hacker News",
-  "short_name": "Hacker News",
+  "name": "Hacker News - Dart PWA",
+  "short_name": "HN Dart",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#212121",
