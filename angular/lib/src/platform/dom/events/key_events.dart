@@ -7,7 +7,6 @@ import "event_manager.dart" show EventManagerPlugin;
 
 typedef _KeyboardEventPredicate = bool Function(KeyboardEvent);
 
-final _modifierKeys = const ["alt", "control", "meta", "shift"];
 final _modifierKeyGetters = <String, _KeyboardEventPredicate>{
   "alt": (KeyboardEvent event) => event.altKey,
   "control": (KeyboardEvent event) => event.ctrlKey,
@@ -125,7 +124,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
     }
     var key = KeyEventsPlugin._normalizeKey(parts.removeLast());
     var fullKey = "";
-    for (var modifierName in _modifierKeys) {
+    for (var modifierName in _modifierKeyGetters.keys) {
       if (parts.remove(modifierName)) {
         fullKey += modifierName + ".";
       }
@@ -147,7 +146,7 @@ class KeyEventsPlugin extends EventManagerPlugin {
     } else if (key == ".") {
       key = "dot";
     }
-    for (var modifierName in _modifierKeys) {
+    for (var modifierName in _modifierKeyGetters.keys) {
       if (modifierName != key) {
         var modifierGetter = _modifierKeyGetters[modifierName];
         if (modifierGetter(event) == true) {
