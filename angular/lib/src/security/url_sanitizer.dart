@@ -22,15 +22,11 @@
 /// e.g. "javascript&#58;...".
 ///
 /// RegExp Source: Closure sanitization library.
-final RegExp SAFE_URL_PATTERN = new RegExp(
+final RegExp _safeUrlPattern = new RegExp(
     '^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|\$))',
     caseSensitive: false);
 
-final RegExp SAFE_SRCSET_PATTERN = new RegExp(
-    '^(?:(?:https?|file):|[^&:/?#]*(?:[/?#]|\$))',
-    caseSensitive: false);
-
-final RegExp DATA_URL_PATTERN = new RegExp(
+final RegExp _dataUrlPattern = new RegExp(
     '^data:(?:image\/(?:bmp|gif|'
     'jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm));'
     'base64,[a-z0-9+\/]+=*\$',
@@ -38,7 +34,7 @@ final RegExp DATA_URL_PATTERN = new RegExp(
 
 String internalSanitizeUrl(String url) {
   if (url.isEmpty) return url;
-  return (SAFE_URL_PATTERN.hasMatch(url) || DATA_URL_PATTERN.hasMatch(url))
+  return (_safeUrlPattern.hasMatch(url) || _dataUrlPattern.hasMatch(url))
       ? url
       : 'unsafe:$url';
 }

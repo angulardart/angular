@@ -25,7 +25,7 @@ Node _getInertElement() {
 String sanitizeHtmlInternal(String value) {
   Element element = _getInertElement();
   element.innerHtml = value;
-  mXSSProtection(element, value);
+  _mXSSProtection(element, value);
   String safeHtml = element.innerHtml;
   element.children?.clear();
   return safeHtml;
@@ -36,7 +36,7 @@ String sanitizeHtmlInternal(String value) {
 /// Repeatedly parse the document to make sure it stabilizes, so that a browser
 /// trying to auto-correct incorrect HTML cannot cause formerly inert HTML to
 /// become dangerous.
-void mXSSProtection(Element containerElement, String unsafeHtml) {
+void _mXSSProtection(Element containerElement, String unsafeHtml) {
   int mXSSAttempts = 5;
   String parsedHtml = unsafeHtml;
   do {

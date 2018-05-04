@@ -1,23 +1,23 @@
 const CSS_EXTENSION = '.css';
 const SHIMMED_STYLESHEET_EXTENSION = '.css.shim.dart';
 const NON_SHIMMED_STYLESHEET_EXTENSION = '.css.dart';
-const TEMPLATE_EXTENSION = '.template.dart';
-const _DEFERRED_EXTENSION = '.dart.deferredCount';
+const _templateExtension = '.template.dart';
+const _deferredExtension = '.dart.deferredCount';
 
 /// Note that due to the implementation of `_toExtension`, ordering is
 /// important. For example, putting '.dart' first in this list will cause
 /// incorrect behavior because it will (incompletely) match '.template.dart'
 /// files.
-const ALL_EXTENSIONS = const [
-  _DEFERRED_EXTENSION,
-  TEMPLATE_EXTENSION,
+const _allExtensions = const [
+  _deferredExtension,
+  _templateExtension,
   '.ng_placeholder',
   '.dart'
 ];
 
 /// Returns `uri` with its extension updated to [TEMPLATES_EXTENSION].
 String toTemplateExtension(String uri) =>
-    _toExtension(uri, ALL_EXTENSIONS, TEMPLATE_EXTENSION);
+    _toExtension(uri, _allExtensions, _templateExtension);
 
 /// Returns `uri` with its extension updated to `toExtension` if its
 /// extension is currently in `fromExtension`.

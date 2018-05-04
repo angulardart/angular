@@ -1,10 +1,7 @@
-enum HtmlTagContentType { rawText, escapableRawText, parsableData }
-
 class HtmlTagDefinition {
   final closedByChildren = <String, bool>{};
   final requiredParents = <String, bool>{};
   final String implicitNamespacePrefix;
-  final HtmlTagContentType contentType;
   final bool isVoid;
 
   String parentToAdd;
@@ -14,11 +11,9 @@ class HtmlTagDefinition {
       {List<String> closedByChildren,
       List<String> requiredParents,
       this.implicitNamespacePrefix,
-      HtmlTagContentType contentType,
       bool closedByParent,
       bool isVoid})
-      : this.contentType = contentType ?? HtmlTagContentType.parsableData,
-        this.isVoid = isVoid == true {
+      : this.isVoid = isVoid == true {
     if (closedByChildren != null && closedByChildren.isNotEmpty) {
       for (var tagName in closedByChildren) {
         this.closedByChildren[tagName] = true;
@@ -124,12 +119,10 @@ final _tagDefinitions = <String, HtmlTagDefinition>{
       closedByChildren: ["optgroup"], closedByParent: true),
   "option": new HtmlTagDefinition(
       closedByChildren: ["option", "optgroup"], closedByParent: true),
-  "style": new HtmlTagDefinition(contentType: HtmlTagContentType.rawText),
-  "script": new HtmlTagDefinition(contentType: HtmlTagContentType.rawText),
-  "title":
-      new HtmlTagDefinition(contentType: HtmlTagContentType.escapableRawText),
-  "textarea":
-      new HtmlTagDefinition(contentType: HtmlTagContentType.escapableRawText)
+  "style": new HtmlTagDefinition(),
+  "script": new HtmlTagDefinition(),
+  "title": new HtmlTagDefinition(),
+  "textarea": new HtmlTagDefinition()
 };
 final HtmlTagDefinition _defaultTagDefinition = new HtmlTagDefinition();
 HtmlTagDefinition getHtmlTagDefinition(String tagName) {

@@ -24,7 +24,7 @@ const _COLOR_FNS = '(?:rgb|hsl)a?';
 const _FN_ARGS = '\\([-0-9.%, a-zA-Z]+\\)';
 const _KEY = '([a-zA-Z-]+[ ]?\\:)';
 
-final RegExp SAFE_STYLE_VALUE =
+final RegExp _safeStyleValue =
     new RegExp('^($_VALUES|($_KEY$_VALUES[ ;]?)|((?:$_TRANSFORMATION_FNS|'
         '$_COLOR_FNS)$_FN_ARGS)[ ;]?)+\$');
 
@@ -47,7 +47,7 @@ final RegExp SAFE_STYLE_VALUE =
 /// Given the common use case, low likelihood of attack vector, and low impact
 /// of an attack, this code is permissive and allows URLs that sanitize
 /// otherwise.
-final RegExp URL_RE = new RegExp(r'^url\([^)]+\)$');
+final RegExp _urlRe = new RegExp(r'^url\([^)]+\)$');
 
 /// Checks that quotes (" and ') are properly balanced inside a string. Assumes
 /// that neither escape (\) nor any other character that could result in
@@ -77,27 +77,27 @@ String internalSanitizeStyle(String value) {
   if (value.isEmpty) return '';
   // Single url(...) values are supported, but only for URLs that sanitize
   // cleanly. See above for reasoning behind this.
-  Match urlMatch = URL_RE.firstMatch(value);
+  Match urlMatch = _urlRe.firstMatch(value);
   if (urlMatch != null) {
     String input = urlMatch.group(0);
     if (internalSanitizeUrl(input) == input) {
       return value; // Safe style values.
     }
-  } else if (SAFE_STYLE_VALUE.hasMatch(value) && _hasBalancedQuotes(value)) {
+  } else if (_safeStyleValue.hasMatch(value) && _hasBalancedQuotes(value)) {
     return value;
   }
   if (value.contains(';')) {
     List<String> parts = value.split(';');
     bool failed = false;
     for (String part in parts) {
-      Match urlMatch = URL_RE.firstMatch(part);
+      Match urlMatch = _urlRe.firstMatch(part);
       if (urlMatch != null) {
         String input = urlMatch.group(0);
         if (internalSanitizeUrl(input) != input) {
           failed = true;
           break;
         }
-      } else if (!(SAFE_STYLE_VALUE.hasMatch(part) == true &&
+      } else if (!(_safeStyleValue.hasMatch(part) == true &&
           _hasBalancedQuotes(part))) {
         failed = true;
         break;

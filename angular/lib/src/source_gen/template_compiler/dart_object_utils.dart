@@ -52,19 +52,6 @@ List<String> coerceStringList(
       : defaultTo;
 }
 
-/// Reads and returns [field] on [value] as a map.
-///
-/// Unlike `DartObject#getField`, this also traverses `super` if available.
-///
-/// If the value is missing or not a map, returns [defaultTo].
-Map<DartObject, DartObject> coerceMap(
-  DartObject value,
-  String field, {
-  Map<DartObject, DartObject> defaultTo: const {},
-}) {
-  return getField(value, field)?.toMapValue() ?? defaultTo;
-}
-
 /// Reads and returns [field] on value as a map of string -> string.
 ///
 /// Unlike `DartObject#getField`, this also traverses `super` if available.
@@ -141,13 +128,11 @@ DartObject getField(DartObject object, String field) {
   return getField(object.getField('(super)'), field);
 }
 
-typedef T RecurseFn<T>(DartObject obj);
-
-/// Visits all of the [DartObject]s, accumulating the results of [RecurseFn].
+/// Visits all of the [DartObject]s, accumulating the results of [recuseFn].
 ///
 /// If the DartObject is a list, then it will recursively visitAll
-/// on that list. Otherwise, then it will call [RecurseFn] on the object.
-List<T> visitAll<T>(Iterable<DartObject> objs, RecurseFn<T> recurseFn) {
+/// on that list. Otherwise, then it will call [recuseFn] on the object.
+List<T> visitAll<T>(Iterable<DartObject> objs, T recurseFn(DartObject o)) {
   var metadata = <T>[];
   for (DartObject obj in objs) {
     var maybeList = obj.toListValue();

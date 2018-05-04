@@ -34,7 +34,7 @@ const _statefulDirectiveFields = const [
 ];
 
 AngularArtifacts findComponentsAndDirectives(LibraryReader library) {
-  var componentVisitor = new NormalizedComponentVisitor(library);
+  var componentVisitor = new _NormalizedComponentVisitor(library);
   library.element.accept(componentVisitor);
   return new AngularArtifacts(
     componentVisitor.components,
@@ -42,16 +42,16 @@ AngularArtifacts findComponentsAndDirectives(LibraryReader library) {
   );
 }
 
-class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
+class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   final List<NormalizedComponentWithViewDirectives> components = [];
   final List<CompileDirectiveMetadata> directives = [];
   final LibraryReader _library;
 
-  NormalizedComponentVisitor(this._library);
+  _NormalizedComponentVisitor(this._library);
 
   @override
   Null visitClassElement(ClassElement element) {
-    final directive = element.accept(new ComponentVisitor(_library));
+    final directive = element.accept(new _ComponentVisitor(_library));
     if (directive != null) {
       if (directive.isComponent) {
         var pipes = _visitPipes(element);
@@ -66,7 +66,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   @override
   Null visitFunctionElement(FunctionElement element) {
-    final directive = element.accept(new ComponentVisitor(_library));
+    final directive = element.accept(new _ComponentVisitor(_library));
     if (directive != null) {
       directives.add(directive);
     }
@@ -85,7 +85,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         element,
         _directivesProperty,
         safeMatcher(isDirective),
-        () => new ComponentVisitor(_library),
+        () => new _ComponentVisitor(_library),
       );
 
   List<T> _visitTypes<T>(
@@ -175,7 +175,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   }
 }
 
-class ComponentVisitor
+class _ComponentVisitor
     extends RecursiveElementVisitor<CompileDirectiveMetadata> {
   final _fieldInputs = <String, String>{};
   final _setterInputs = <String, String>{};
@@ -198,7 +198,7 @@ class ComponentVisitor
   /// This is used to look up resolved type information.
   ClassElement _directiveClassElement;
 
-  ComponentVisitor(this._library);
+  _ComponentVisitor(this._library);
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {

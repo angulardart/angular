@@ -2,11 +2,10 @@ import "package:angular/src/core/security.dart";
 
 import "element_schema_registry.dart" show ElementSchemaRegistry;
 
-const EVENT = "event";
-const BOOLEAN = "boolean";
-const NUMBER = "number";
-const STRING = "string";
-const OBJECT = "object";
+const _boolean = "boolean";
+const _number = "number";
+const _string = "string";
+const _object = "object";
 
 /// This array represents the DOM schema. It encodes inheritance, properties, and events.
 ///
@@ -47,7 +46,7 @@ const OBJECT = "object";
 ///
 /// NOTE: We don't yet support querying for types or events.
 /// NOTE: This schema is auto extracted from `schema_extractor.ts` located in the test folder.
-const List<String> SCHEMA = const [
+const List<String> _schema = const [
   "*|%classList,className,id,innerHTML,*beforecopy,*beforecut,*beforepaste,*copy,*cut,*paste,*search,*selectstart,*webkitfullscreenchange,*webkitfullscreenerror,*wheel,outerHTML,#scrollLeft,#scrollTop",
   "^*|accessKey,contentEditable,dir,!draggable,!hidden,innerText,lang,*abort,*autocomplete,*autocompleteerror,*beforecopy,*beforecut,*beforepaste,*blur,*cancel,*canplay,*canplaythrough,*change,*click,*close,*contextmenu,*copy,*cuechange,*cut,*dblclick,*drag,*dragend,*dragenter,*dragleave,*dragover,*dragstart,*drop,*durationchange,*emptied,*ended,*error,*focus,*input,*invalid,*keydown,*keypress,*keyup,*load,*loadeddata,*loadedmetadata,*loadstart,*message,*mousedown,*mouseenter,*mouseleave,*mousemove,*mouseout,*mouseover,*mouseup,*mousewheel,*mozfullscreenchange,*mozfullscreenerror,*mozpointerlockchange,*mozpointerlockerror,*paste,*pause,*play,*playing,*progress,*ratechange,*reset,*resize,*scroll,*search,*seeked,*seeking,*select,*selectstart,*show,*stalled,*submit,*suspend,*timeupdate,*toggle,*volumechange,*waiting,*webglcontextcreationerror,*webglcontextlost,*webglcontextrestored,*webkitfullscreenchange,*webkitfullscreenerror,*wheel,outerText,!spellcheck,%style,#tabIndex,title,!translate",
   "media|!autoplay,!controls,%crossOrigin,#currentTime,!defaultMuted,#defaultPlaybackRate,!disableRemotePlayback,!loop,!muted,*encrypted,#playbackRate,preload,src,#volume",
@@ -204,7 +203,7 @@ const Map<String, String> _attrToPropMap = const {
 class DomElementSchemaRegistry extends ElementSchemaRegistry {
   var schema = <String, Map<String, String>>{};
   DomElementSchemaRegistry() {
-    for (var encodedType in SCHEMA) {
+    for (var encodedType in _schema) {
       var parts = encodedType.split("|");
       var properties = parts[1].split(",");
       var typeParts = (parts[0] + "^").split("^");
@@ -220,13 +219,13 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
         if (property.isEmpty) continue;
         if (property.startsWith("*")) continue;
         if (property.startsWith("!")) {
-          type[property.substring(1)] = BOOLEAN;
+          type[property.substring(1)] = _boolean;
         } else if (property.startsWith("#")) {
-          type[property.substring(1)] = NUMBER;
+          type[property.substring(1)] = _number;
         } else if (property.startsWith("%")) {
-          type[property.substring(1)] = OBJECT;
+          type[property.substring(1)] = _object;
         } else {
-          type[property] = STRING;
+          type[property] = _string;
         }
       }
     }
