@@ -6,7 +6,6 @@ import 'compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import 'expression_parser/ast.dart' show AST;
 import 'expression_parser/ast.dart';
-import 'html_tags.dart' show splitNsName, mergeNsAndName;
 import 'parse_util.dart' show ParseError, ParseErrorLevel;
 import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import 'selector.dart' show CssSelector;
@@ -123,11 +122,11 @@ List<String> _splitClasses(String classAttrValue) {
 CssSelector createElementCssSelector(
     String elementName, List<List<String>> matchableAttrs) {
   var cssSelector = new CssSelector();
-  var elNameNoNs = splitNsName(elementName)[1];
+  var elNameNoNs = _splitNsName(elementName)[1];
   cssSelector.setElement(elNameNoNs);
   for (var i = 0; i < matchableAttrs.length; i++) {
     var attrName = matchableAttrs[i][0];
-    var attrNameNoNs = splitNsName(attrName)[1];
+    var attrNameNoNs = _splitNsName(attrName)[1];
     var attrValue = matchableAttrs[i][1];
     // [CssSelector] is used both to define selectors, and to describe an
     // element. This is unfortunate as certain attribute selectors don't make
@@ -167,4 +166,17 @@ List<T> removeDuplicates<T>(List<T> items) {
     }
   }
   return res;
+}
+
+String mergeNsAndName(String prefix, String localName) {
+  return prefix != null ? '@$prefix:$localName' : localName;
+}
+
+final _nsPrefixRegExp = new RegExp(r'^@([^:]+):(.+)');
+List<String> _splitNsName(String elementName) {
+  if (elementName[0] != "@") {
+    return [null, elementName];
+  }
+  var match = _nsPrefixRegExp.firstMatch(elementName);
+  return [match[1], match[2]];
 }

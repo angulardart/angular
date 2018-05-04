@@ -859,7 +859,7 @@ abstract class StatementVisitor<R, C> {
   R visitCommentStmt(CommentStmt stmt, C context);
 }
 
-class ExpressionTransformer<C>
+class _ExpressionTransformer<C>
     implements
         StatementVisitor<Statement, C>,
         ExpressionVisitor<Expression, C> {
@@ -1096,7 +1096,7 @@ class ExpressionTransformer<C>
   }
 }
 
-class RecursiveExpressionVisitor<C>
+class _RecursiveExpressionVisitor<C>
     implements
         StatementVisitor<Statement, C>,
         ExpressionVisitor<Expression, C> {
@@ -1341,7 +1341,7 @@ Expression replaceReadClassMemberInExpression(
   return expression.visitExpression(transformer, null);
 }
 
-class _ReplaceReadClassMemberTransformer extends ExpressionTransformer<Null> {
+class _ReplaceReadClassMemberTransformer extends _ExpressionTransformer<Null> {
   final Expression _newValue;
   _ReplaceReadClassMemberTransformer(this._newValue);
 
@@ -1356,7 +1356,7 @@ Statement replaceVarInStatement(
   return statement.visitStatement(transformer, null);
 }
 
-class _ReplaceVariableTransformer extends ExpressionTransformer<Null> {
+class _ReplaceVariableTransformer extends _ExpressionTransformer<Null> {
   final String _varName;
   final Expression _newValue;
   _ReplaceVariableTransformer(this._varName, this._newValue);
@@ -1382,7 +1382,7 @@ Set<String> findWriteVarNames(List<Statement> stmts) {
   return finder.varNames;
 }
 
-class _VariableReadFinder extends RecursiveExpressionVisitor<Null> {
+class _VariableReadFinder extends _RecursiveExpressionVisitor<Null> {
   final varNames = new Set<String>();
 
   @override
@@ -1392,7 +1392,7 @@ class _VariableReadFinder extends RecursiveExpressionVisitor<Null> {
   }
 }
 
-class _VariableWriteFinder extends RecursiveExpressionVisitor<Null> {
+class _VariableWriteFinder extends _RecursiveExpressionVisitor<Null> {
   final varNames = new Set<String>();
 
   @override
