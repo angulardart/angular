@@ -291,13 +291,13 @@ by the compiler (it's not generated yet!), which means code like this will not
 work:
 
 ```dart
-const provider = const Provider(someToken, useValue: FooComponentNgFactory);
+const provider = const ValueProvider.forToken(someToken, FooComponentNgFactory);
 ```
 
 You can work around this by using `useFactory`:
 
 ```dart
-const provider = const Provider(someToken, useFactory: getNgFactory);
+const provider = const FactoryProvider.forToken(someToken, getNgFactory);
 
 @Injectable()
 ComponentFactory getNgFactory() => FooComponentNgFactory;
