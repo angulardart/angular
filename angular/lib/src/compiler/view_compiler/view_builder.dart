@@ -337,6 +337,18 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       BoundElementPropertyAst ast, CompileElement parent) {}
 
   void visitProvider(ProviderAst ast, CompileElement parent) {}
+
+  @override
+  void visitI18nAttr(I18nAttrAst ast, CompileElement parent) {
+    // TODO(leonsenft): render i18n message binding to attribute.
+    throw new UnimplementedError();
+  }
+
+  @override
+  void visitI18nText(I18nTextAst ast, CompileElement parent) {
+    // TODO(leonsenft): render i18n message binding to text.
+    throw new UnimplementedError();
+  }
 }
 
 o.Expression createStaticNodeDebugInfo(CompileNode node) {

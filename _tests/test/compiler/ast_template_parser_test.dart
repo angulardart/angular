@@ -71,7 +71,7 @@ void main() {
   ParseTemplate _parse;
 
   // TODO(matanl): Add common log testing functionality to lib/.
-  parse(template, directive, [pipes]) {
+  parse(template, [directive, pipes]) {
     return runZoned(() => _parse(template, directive, pipes), zoneValues: {
       #buildLog: Logger.root,
     });
@@ -81,9 +81,12 @@ void main() {
     elementSchemaRegistry ??= new MockSchemaRegistry(
         {'invalidProp': false}, {'mappedAttr': 'mappedProp'});
     final parser = new AstTemplateParser(
-        elementSchemaRegistry, new Parser(new Lexer()), new CompilerFlags());
-    _parse = (template, directives, [pipes]) =>
-        parser.parse(component, template, directives, pipes ?? [], 'TestComp');
+      elementSchemaRegistry,
+      new Parser(new Lexer()),
+      new CompilerFlags(i18nEnabled: true),
+    );
+    _parse = (template, [directives, pipes]) => parser.parse(
+        component, template, directives ?? [], pipes ?? [], 'TestComp');
   }
 
   group('TemplateParser', () {
@@ -1268,6 +1271,27 @@ void main() {
             [DirectiveAst, ngIf],
             [BoundDirectivePropertyAst, 'ngIf', ''],
             [ElementAst, 'div']
+          ]);
+        });
+      });
+
+      group('@i18n', () {
+        test('should internationalize text of an element', () {
+          final ast = parse('<div @i18n="description">message</div>');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'div'],
+            [I18nTextAst, 'message', 'description'],
+          ]);
+        });
+
+        test('should internationalize text within a container', () {
+          final ast =
+              parse('<ng-container @i18n="description">message</ng-container>');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [NgContainerAst],
+            [I18nTextAst, 'message', 'description'],
           ]);
         });
       });
