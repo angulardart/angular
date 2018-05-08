@@ -46,7 +46,7 @@ void main() {
     final testFixture = await testBed.create();
     expect(
         testFixture.rootElement.innerHtml,
-        '$anchorHtml' // <template #ref> anchor
+        '$anchorHtml ' // <template #ref> anchor
         '$anchorHtml' // <template> and ViewContainerRef anchor for *-directive
         '${testFixture.assertOnlyInstance.context['message']}');
   });

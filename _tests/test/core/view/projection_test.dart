@@ -53,18 +53,18 @@ void main() {
       var testBed = new NgTestBed<ContainerABCWithConditionalComponent>();
       var testFixture = await testBed.create();
       Element element = testFixture.rootElement;
-      expect(element, hasTextContent("(,BC)"));
+      expect(element, hasTextContent("(, BC)"));
 
       final viewportDirective =
           testFixture.assertOnlyInstance.child.manualViewportDirective;
       await testFixture.update((ContainerABCWithConditionalComponent comp) {
         viewportDirective.show();
       });
-      expect(element, hasTextContent('(A,BC)'));
+      expect(element, hasTextContent('(A, BC)'));
       await testFixture.update((ContainerABCWithConditionalComponent comp) {
         viewportDirective.hide();
       });
-      expect(element, hasTextContent('(,BC)'));
+      expect(element, hasTextContent('(, BC)'));
     });
 
     test("should support non emulated styles", () async {
