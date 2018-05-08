@@ -4,6 +4,24 @@ import 'package:angular/angular.dart';
   selector: 'host',
   template: '',
   host: const {
+    'class': 'themeable',
+  },
+)
+class HostComponentDeprecatedSyntax {}
+
+@Component(
+  selector: 'host',
+  template: '',
+)
+class HostComponentNewSyntax {
+  @HostBinding('class')
+  static const hostClass = 'themeable';
+}
+
+@Component(
+  selector: 'host',
+  template: '',
+  host: const {
     'aria-title': 'title',
     '(keydown)': 'onKeyDown()',
   },
