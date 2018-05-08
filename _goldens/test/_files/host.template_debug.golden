@@ -44,6 +44,14 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   }
 
   void detectHostChanges(bool firstCheck) {
+    if (firstCheck) {
+      if (!identical(import2.HostComponent.hostClassFoo, null)) {
+        updateElemClass(rootEl, 'foo', import2.HostComponent.hostClassFoo);
+      }
+      if (!identical(import2.HostComponent.hostStyleColor, null)) {
+        rootEl.style.setProperty('color', import2.HostComponent.hostStyleColor?.toString());
+      }
+    }
     final currVal_0 = ctx.title;
     if (import8.checkBinding(_expr_0, currVal_0)) {
       setProp(rootEl, 'title', currVal_0);

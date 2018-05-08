@@ -66,6 +66,9 @@
               - "lib/something/**"
     ```
 
+*   `@HostBinding()` for `static` `const` or `final` fields are set at build
+    time rather than being change-detected.
+
 ### Bug fixes
 
 *   Inheriting from a class that defines a `@HostBinding()` on a static member

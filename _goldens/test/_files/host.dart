@@ -15,6 +15,12 @@ class HostComponent {
   @HostBinding('class.is-disabled')
   bool get isDisabled => true;
 
+  @HostBinding('class.foo')
+  static const bool hostClassFoo = true;
+
+  @HostBinding('style.color')
+  static const String hostStyleColor = 'red';
+
   @HostListener('click', const [r'$event'])
   void onClick(event) {}
 

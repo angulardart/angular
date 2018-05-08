@@ -1103,16 +1103,14 @@ class CompileView implements AppViewBuilder {
     var htmlAttrs = astAttribListToMap(attrs);
     // Create statements to initialize literal attribute values.
     // For example, a directive may have hostAttributes setting class name.
-    var attrNameAndValues = mergeHtmlAndDirectiveAttrs(htmlAttrs, directives,
-        excludeComponent: true);
-    for (int i = 0, len = attrNameAndValues.length; i < len; i++) {
+    var attrNameAndValues = mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);
+    attrNameAndValues.forEach((name, value) {
+      var expression = convertCdExpressionToIr(
+          nameResolver, o.THIS_EXPR, value, component, o.STRING_TYPE);
       o.Statement stmt = createSetAttributeStatement(
-          elementAst.name,
-          nodeReference.toReadExpr(),
-          attrNameAndValues[i][0],
-          attrNameAndValues[i][1]);
+          elementAst.name, nodeReference.toReadExpr(), name, expression);
       _createMethod.addStmt(stmt);
-    }
+    });
   }
 
   @override

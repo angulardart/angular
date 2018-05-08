@@ -1,11 +1,11 @@
+import 'package:source_span/source_span.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular_compiler/cli.dart';
-import 'package:source_span/source_span.dart';
 
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
-import '../expression_parser/parser.dart' show Parser;
+import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
@@ -31,7 +31,6 @@ class DirectiveCompiler {
   final bool genDebugInfo;
   final bool hasOnChangesLifecycle;
   final bool hasAfterChangesLifecycle;
-  final Parser _parser;
   final ElementSchemaRegistry _schemaRegistry;
   final viewMethods = <o.ClassMethod>[];
   final CompileViewStorage _storage = new CompileViewStorage();
@@ -40,8 +39,7 @@ class DirectiveCompiler {
   bool _implementsComponentState;
   ViewNameResolver _nameResolver;
 
-  DirectiveCompiler(
-      this.directive, this._parser, this._schemaRegistry, this.genDebugInfo)
+  DirectiveCompiler(this.directive, this._schemaRegistry, this.genDebugInfo)
       : hasOnChangesLifecycle =
             directive.lifecycleHooks.contains(LifecycleHooks.onChanges),
         hasAfterChangesLifecycle =
@@ -135,11 +133,10 @@ class DirectiveCompiler {
     };
 
     var span = new SourceSpan(new SourceLocation(0), new SourceLocation(0), '');
-    hostProps.forEach((String propName, String expression) {
-      var exprAst = _parser.parseBinding(expression, null, directive.exports);
+    hostProps.forEach((String propName, ast.AST expression) {
       const securityContextElementName = 'div';
       hostProperties.add(createElementPropertyAst(securityContextElementName,
-          propName, exprAst, span, _schemaRegistry, errorHandler));
+          propName, expression, span, _schemaRegistry, errorHandler));
     });
 
     _hasChangeDetector = true;

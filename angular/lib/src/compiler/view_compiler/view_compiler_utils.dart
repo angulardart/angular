@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:angular/src/core/linker/view_type.dart';
 
 import '../compile_metadata.dart'
@@ -5,6 +7,7 @@ import '../compile_metadata.dart'
         CompileTokenMetadata,
         CompileDirectiveMetadata,
         CompileIdentifierMetadata;
+import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show AttrAst, TemplateAst;
@@ -240,17 +243,38 @@ Map<String, String> astAttribListToMap(List<AttrAst> attrs) {
   return htmlAttrs;
 }
 
-String _mergeAttributeValue(
-    String attrName, String attrValue1, String attrValue2) {
+ast.AST _mergeAttributeValue(
+    String attrName, ast.AST attrValue1, ast.AST attrValue2) {
   if (attrName == classAttrName || attrName == styleAttrName) {
-    return '$attrValue1 $attrValue2';
+    // attrValue1 can be a literal string, an expression, or an interpolation
+    // attrValue2 can be a literal string or an expression, it CANNOT be an
+    // interpolate because attrValue2 represents the "new" attribute value
+    // we need to merge in, which must always be a literal or property access.
+    // Only the "previous" attrValue can be an interpolation because we are
+    // constructing the interpolation here.
+    if (attrValue1 is ast.LiteralPrimitive &&
+        attrValue2 is ast.LiteralPrimitive) {
+      return new ast.LiteralPrimitive(
+          '${attrValue1.value} ${attrValue2.value}');
+    } else if (attrValue1 is ast.Interpolation) {
+      if (attrValue2 is ast.LiteralPrimitive) {
+        attrValue1.strings.last += ' ${attrValue2.value}';
+        return attrValue1;
+      } else {
+        attrValue1.expressions.add(attrValue2);
+        attrValue1.strings.add(' ');
+        return attrValue1;
+      }
+    } else {
+      return new ast.Interpolation(['', ' ', ''], [attrValue1, attrValue2]);
+    }
   } else {
     return attrValue2;
   }
 }
 
 o.Statement createSetAttributeStatement(String astNodeName,
-    o.Expression renderNode, String attrName, String attrValue) {
+    o.Expression renderNode, String attrName, o.Expression attrValue) {
   String attrNs;
   if (attrName.startsWith('@') && attrName.contains(':')) {
     var nameParts = attrName.substring(1).split(':');
@@ -267,16 +291,25 @@ o.Statement createSetAttributeStatement(String astNodeName,
         bool hasNamespace =
             astNodeName.startsWith('@') || astNodeName.contains(':');
         if (!hasNamespace) {
-          return renderNode
-              .prop('className')
-              .set(o.literal(attrValue))
-              .toStmt();
+          return renderNode.prop('className').set(attrValue).toStmt();
         }
         break;
       case 'tabindex':
+      case 'tabIndex':
         try {
-          int tabValue = int.parse(attrValue);
-          return renderNode.prop('tabIndex').set(o.literal(tabValue)).toStmt();
+          if (attrValue is o.LiteralExpr) {
+            final value = attrValue.value;
+            if (value is String) {
+              final tabValue = int.parse(value);
+              return renderNode
+                  .prop('tabIndex')
+                  .set(o.literal(tabValue))
+                  .toStmt();
+            }
+          } else {
+            // Assume it's an int field
+            return renderNode.prop('tabIndex').set(attrValue).toStmt();
+          }
         } catch (_) {
           // fallthrough to default handler since index is not int.
         }
@@ -285,38 +318,27 @@ o.Statement createSetAttributeStatement(String astNodeName,
         break;
     }
   }
-  var params = createSetAttributeParams(
-      renderNode, attrNs, attrName, o.literal(attrValue));
+  var params =
+      createSetAttributeParams(renderNode, attrNs, attrName, attrValue);
   return new o.InvokeMemberMethodExpr(
           attrNs == null ? "createAttr" : "setAttrNS", params)
       .toStmt();
 }
 
-List<List<String>> _mapToKeyValueArray(Map<String, String> data) {
-  var entryArray = <List<String>>[];
-  data.forEach((String name, String value) {
-    entryArray.add([name, value]);
-  });
-  // We need to sort to get a defined output order
-  // for tests and for caching generated artifacts...
-  entryArray.sort((entry1, entry2) => entry1[0].compareTo(entry2[0]));
-  var keyValueArray = <List<String>>[];
-  for (var entry in entryArray) {
-    keyValueArray.add([entry[0], entry[1]]);
-  }
-  return keyValueArray;
+Map<String, ast.AST> _toSortedMap(Map<String, ast.AST> data) {
+  var result = new SplayTreeMap<String, ast.AST>();
+  return result..addAll(data);
 }
 
 // Reads hostAttributes from each directive and merges with declaredHtmlAttrs
 // to return a single map from name to value(expression).
-List<List<String>> mergeHtmlAndDirectiveAttrs(
+Map<String, ast.AST> mergeHtmlAndDirectiveAttrs(
     Map<String, String> declaredHtmlAttrs,
-    List<CompileDirectiveMetadata> directives,
-    {bool excludeComponent: false}) {
-  Map<String, String> result = {};
+    List<CompileDirectiveMetadata> directives) {
+  var result = <String, ast.AST>{};
   var mergeCount = <String, int>{};
   declaredHtmlAttrs.forEach((name, value) {
-    result[name] = value;
+    result[name] = new ast.LiteralPrimitive(value);
     if (mergeCount.containsKey(name)) {
       mergeCount[name]++;
     } else {
@@ -336,8 +358,7 @@ List<List<String>> mergeHtmlAndDirectiveAttrs(
     bool isComponent = directiveMeta.isComponent;
     for (String name in directiveMeta.hostAttributes.keys) {
       var value = directiveMeta.hostAttributes[name];
-      if (excludeComponent &&
-          isComponent &&
+      if (isComponent &&
           !((name == classAttrName || name == styleAttrName) &&
               mergeCount[name] > 1)) {
         continue;
@@ -348,7 +369,7 @@ List<List<String>> mergeHtmlAndDirectiveAttrs(
           : value;
     }
   }
-  return _mapToKeyValueArray(result);
+  return _toSortedMap(result);
 }
 
 o.Statement createDbgElementCall(

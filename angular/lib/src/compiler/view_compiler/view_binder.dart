@@ -1,6 +1,7 @@
 import 'package:source_span/source_span.dart';
 
 import '../../core/linker/view_type.dart';
+import '../expression_parser/ast.dart' as ast;
 import '../expression_parser/parser.dart';
 import '../output/output_ast.dart' as o;
 import '../schema/element_schema_registry.dart';
@@ -195,11 +196,10 @@ void bindViewHostProperties(CompileView view, Parser parser,
   List<BoundElementPropertyAst> hostProperties = <BoundElementPropertyAst>[];
 
   var span = new SourceSpan(new SourceLocation(0), new SourceLocation(0), '');
-  hostProps.forEach((String propName, String expression) {
-    var exprAst = parser.parseBinding(expression, null, view.component.exports);
+  hostProps.forEach((String propName, ast.AST expression) {
     var elementName = view.component.selector;
-    hostProperties.add(createElementPropertyAst(
-        elementName, propName, exprAst, span, schemaRegistry, errorCallback));
+    hostProperties.add(createElementPropertyAst(elementName, propName,
+        expression, span, schemaRegistry, errorCallback));
   });
 
   final CompileMethod method = new CompileMethod(view.genDebugInfo);

@@ -695,12 +695,10 @@ class _ParseContext {
     for (var propName in directive.hostProperties.keys) {
       try {
         var expression = directive.hostProperties[propName];
-        var exprAst = templateContext.parser
-            .parseBinding(expression, location, templateContext.exports);
         result.add(createElementPropertyAst(
             elementName,
             propName,
-            exprAst,
+            expression,
             sourceSpan,
             templateContext.schemaRegistry,
             templateContext.reportError));
