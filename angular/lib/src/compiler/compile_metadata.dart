@@ -7,6 +7,7 @@ import '../core/metadata/view.dart';
 import '../core/metadata/visibility.dart';
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';
+import 'expression_parser/ast.dart' as ast;
 import 'output/output_ast.dart' as o;
 import 'selector.dart' show CssSelector;
 
@@ -426,20 +427,19 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   /// * [outProperties] if <key> is a <property-key>.
   static void deserializeHost(
     Map<String, String> host,
-    Map<String, String> outAttributes,
+    Map<String, ast.AST> outBindings,
     Map<String, String> outListeners,
-    Map<String, String> outProperties,
   ) {
-    assert(outAttributes != null);
+    assert(outBindings != null);
     assert(outListeners != null);
-    assert(outProperties != null);
 
     host?.forEach((key, value) {
       final matches = _hostRegExp.firstMatch(key);
       if (matches == null) {
-        outAttributes[key] = value;
+        outBindings[key] = new ast.LiteralPrimitive(value);
       } else if (matches[1] != null) {
-        outProperties[matches[1]] = value;
+        outBindings[matches[1]] =
+            new ast.PropertyRead(new ast.ImplicitReceiver(), value);
       } else if (matches[2] != null) {
         outListeners[matches[2]] = value;
       }
@@ -459,9 +459,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   final Map<String, String> inputs;
   final Map<String, CompileTypeMetadata> inputTypes;
   final Map<String, String> outputs;
+  final Map<String, ast.AST> hostBindings;
   final Map<String, String> hostListeners;
-  final Map<String, String> hostProperties;
-  final Map<String, String> hostAttributes;
   final List<LifecycleHooks> lifecycleHooks;
   final List<CompileProviderMetadata> providers;
   final List<CompileProviderMetadata> viewProviders;
@@ -485,9 +484,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.inputs,
     this.inputTypes,
     this.outputs,
+    this.hostBindings,
     this.hostListeners,
-    this.hostProperties,
-    this.hostAttributes,
     this.analyzedClass,
     this.template,
     this.visibility: Visibility.all,
@@ -519,6 +517,64 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     }
     return _requiresDirectiveChangeDetector;
   }
+
+  Map<String, ast.AST> _cachedHostAttributes;
+  Map<String, ast.AST> _cachedHostProperties;
+
+  /// The subset of `hostBindings` that are immutable bindings.
+  ///
+  /// It's useful to separate these out because we can set them at
+  /// build time and avoid change detecting them.
+  Map<String, ast.AST> get hostAttributes {
+    if (_cachedHostAttributes == null) {
+      _computeHostBindingImmutability();
+    }
+    assert(_cachedHostAttributes != null);
+    return _cachedHostAttributes;
+  }
+
+  Map<String, ast.AST> get hostProperties {
+    if (_cachedHostProperties == null) {
+      _computeHostBindingImmutability();
+    }
+    assert(_cachedHostProperties != null);
+    return _cachedHostProperties;
+  }
+
+  void _computeHostBindingImmutability() {
+    assert(_cachedHostAttributes == null);
+    assert(_cachedHostProperties == null);
+    _cachedHostAttributes = <String, ast.AST>{};
+    _cachedHostProperties = <String, ast.AST>{};
+
+    // Host bindings are either literal strings or a property access. We have
+    // to filter out non-static property accesses because the directive instance
+    // is not available at build time.
+    bool _isStatic(ast.AST value) {
+      if (value is ast.LiteralPrimitive) return true;
+      if (value is ast.PropertyRead) {
+        return value.receiver is ast.StaticRead;
+      }
+      // Unrecognized binding type, just assume it's not static.
+      return false;
+    }
+
+    hostBindings.forEach((name, value) {
+      // TODO(het): We should also inline style and class bindings
+      var isStyleOrClassBinding =
+          name.startsWith('style.') || name.startsWith('class.');
+      if (isImmutable(value, analyzedClass) &&
+          _isStatic(value) &&
+          !isStyleOrClassBinding) {
+        if (name.startsWith('attr.')) {
+          name = name.substring('attr.'.length);
+        }
+        _cachedHostAttributes[name] = value;
+      } else {
+        _cachedHostProperties[name] = value;
+      }
+    });
+  }
 }
 
 /// Construct [CompileDirectiveMetadata] from [ComponentTypeMetadata] and a
@@ -546,9 +602,8 @@ CompileDirectiveMetadata createHostComponentMeta(
     inputs: const {},
     inputTypes: const {},
     outputs: const {},
-    hostAttributes: const {},
+    hostBindings: const {},
     hostListeners: const {},
-    hostProperties: const {},
     metadataType: CompileDirectiveMetadataType.Component,
     selector: '*',
   );

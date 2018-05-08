@@ -5,6 +5,7 @@ import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/ast_template_parser.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/compiler_utils.dart';
+import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
 import 'package:angular/src/compiler/expression_parser/lexer.dart';
 import 'package:angular/src/compiler/expression_parser/parser.dart';
 import 'package:angular/src/compiler/identifiers.dart'
@@ -2002,10 +2003,8 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   CompileTemplateMetadata template,
 }) {
   final hostListeners = <String, String>{};
-  final hostProperties = <String, String>{};
-  final hostAttributes = <String, String>{};
-  CompileDirectiveMetadata.deserializeHost(
-      host, hostAttributes, hostListeners, hostProperties);
+  final hostBindings = <String, ast.AST>{};
+  CompileDirectiveMetadata.deserializeHost(host, hostBindings, hostListeners);
 
   final inputsMap = <String, String>{};
   final inputTypeMap = <String, CompileTypeMetadata>{};
@@ -2035,8 +2034,7 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
     inputTypes: inputTypeMap,
     outputs: outputsMap,
     hostListeners: hostListeners,
-    hostProperties: hostProperties,
-    hostAttributes: hostAttributes,
+    hostBindings: hostBindings,
     lifecycleHooks: [],
     providers: providers,
     viewProviders: viewProviders,

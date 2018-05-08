@@ -4,21 +4,23 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
-import 'package:angular/src/compiler/output/output_ast.dart' as o;
-import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
+import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
+import 'package:angular/src/compiler/expression_parser/lexer.dart';
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/compiler/output/convert.dart';
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/angular_compiler.dart';
-import 'package:source_span/source_span.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../../compiler/view_compiler/property_binder.dart'
     show isPrimitiveTypeName;
@@ -182,9 +184,8 @@ class _ComponentVisitor
   final _inputs = <String, String>{};
   final _inputTypes = <String, CompileTypeMetadata>{};
   final _outputs = <String, String>{};
-  final _hostAttributes = <String, String>{};
+  final _hostBindings = <String, ast.AST>{};
   final _hostListeners = <String, String>{};
-  final _hostProperties = <String, String>{};
   final _queries = <CompileQueryMetadata>[];
   final _viewQueries = <CompileQueryMetadata>[];
 
@@ -256,9 +257,8 @@ class _ComponentVisitor
       inputs: const {},
       inputTypes: const {},
       outputs: const {},
+      hostBindings: const {},
       hostListeners: const {},
-      hostProperties: const {},
-      hostAttributes: const {},
       providers: _extractProviders(annotationValue, 'providers'),
     );
   }
@@ -453,7 +453,7 @@ class _ComponentVisitor
     //   @HostBinding('title')
     //   static const title = 'Hello';
     // }
-    var bindTo = element.name;
+    var bindTo = new ast.PropertyRead(new ast.ImplicitReceiver(), element.name);
     if (element is PropertyAccessorElement && element.isStatic ||
         element is FieldElement && element.isStatic) {
       if (element.enclosingElement != _directiveClassElement) {
@@ -461,9 +461,13 @@ class _ComponentVisitor
         // https://github.com/dart-lang/angular/issues/1272
         return;
       }
-      bindTo = '${_directiveClassElement.name}.$bindTo';
+      var classId = new CompileIdentifierMetadata(
+          name: _directiveClassElement.name,
+          moduleUrl: moduleUrl(_directiveClassElement.library),
+          analyzedClass: new AnalyzedClass(_directiveClassElement));
+      bindTo = new ast.PropertyRead(new ast.StaticRead(classId), element.name);
     }
-    _hostProperties[property] = bindTo;
+    _hostBindings[property] = bindTo;
   }
 
   void _addHostListener(MethodElement element, DartObject value) {
@@ -517,7 +521,19 @@ class _ComponentVisitor
       final annotationValue = annotation.computeConstantValue();
       final host = coerceStringMap(annotationValue, 'host');
       CompileDirectiveMetadata.deserializeHost(
-          host, _hostAttributes, _hostListeners, _hostProperties);
+          host, _hostBindings, _hostListeners);
+      // Check that all of the host bindings are valid (i.e that they are valid
+      // property read expressions).
+      // TODO(het): Remove this when we no longer support `host` in annotations
+      for (var hostBinding in _hostBindings.values) {
+        if (hostBinding is ast.LiteralPrimitive) continue;
+        var binding = hostBinding as ast.PropertyRead;
+        if (!isIdentifier(binding.name)) {
+          throw new BuildError(
+              'Host bindings may only be getters or fields, not complex '
+              'expressions. Instead got "${binding.name}"');
+        }
+      }
     }
     // Collect metadata from field and property accessor annotations.
     super.visitClassElement(element);
@@ -572,9 +588,8 @@ class _ComponentVisitor
       inputs: _inputs,
       inputTypes: _inputTypes,
       outputs: _outputs,
+      hostBindings: _hostBindings,
       hostListeners: _hostListeners,
-      hostProperties: _hostProperties,
-      hostAttributes: _hostAttributes,
       analyzedClass: analyzedClass,
       lifecycleHooks: extractLifecycleHooks(element),
       providers: _extractProviders(annotationValue, 'providers'),

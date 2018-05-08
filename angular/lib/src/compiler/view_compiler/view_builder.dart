@@ -7,6 +7,7 @@ import 'package:meta/meta.dart';
 
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompileTypeMetadata;
+import '../expression_parser/ast.dart' as ast;
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
@@ -469,9 +470,11 @@ o.ClassMethod _createViewClassConstructor(
 
     // Write literal attribute values on element.
     CompileDirectiveMetadata componentMeta = view.component;
-    componentMeta.hostAttributes.forEach((String name, String value) {
+    componentMeta.hostAttributes.forEach((String name, ast.AST value) {
+      var expression = convertCdExpressionToIr(
+          view.nameResolver, o.THIS_EXPR, value, view.component, o.STRING_TYPE);
       o.Statement stmt = createSetAttributeStatement(
-          tagName, o.variable(appViewRootElementName), name, value);
+          tagName, o.variable(appViewRootElementName), name, expression);
       ctor.body.add(stmt);
     });
     if (view.genConfig.profileFor != Profile.none) {
