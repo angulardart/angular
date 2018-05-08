@@ -67,43 +67,43 @@ void main() {
     test('should update on changes', () async {
       final testBed = new NgTestBed<TestContextChangeComponent>();
       final testFixture = await testBed.create();
-      expect(testFixture.text, 'foo');
+      expect(testFixture.text, contains('foo'));
       await testFixture.update((component) {
         component.context['\$implicit'] = 'bar';
       });
-      expect(testFixture.text, 'bar');
+      expect(testFixture.text, contains('bar'));
     });
 
     test('should update when identity changes', () async {
       final testBed = new NgTestBed<TestContextChangeComponent>();
       final testFixture = await testBed.create();
-      expect(testFixture.text, 'foo');
+      expect(testFixture.text, contains('foo'));
       await testFixture.update((component) {
         component.context = {
           '\$implicit': 'bar',
         };
       });
-      expect(testFixture.text, 'bar');
+      expect(testFixture.text, contains('bar'));
     });
 
     test('should update when map proxy changes', () async {
       final testBed = new NgTestBed<TestContextProxyChangeComponent>();
       final testFixture = await testBed.create();
-      expect(testFixture.text, 'foo');
+      expect(testFixture.text, contains('foo'));
       await testFixture.update((component) {
         component.contextValue = 'bar';
       });
-      expect(testFixture.text, 'bar');
+      expect(testFixture.text, contains('bar'));
     });
 
     test('should reapply when [ngTemplateOutlet] changes', () async {
       final testBed = new NgTestBed<TestContextTemplateRefChangeComponent>();
       final testFixture = await testBed.create();
-      expect(testFixture.text, 'Hello world!');
+      expect(testFixture.text, contains('Hello world!'));
       await testFixture.update((component) {
         component.isGreeting = false;
       });
-      expect(testFixture.text, 'Goodbye world!');
+      expect(testFixture.text, contains('Goodbye world!'));
     });
 
     test('should support *-syntax', () async {
@@ -111,7 +111,7 @@ void main() {
       final testFixture = await testBed.create();
       expect(
         testFixture.text,
-        testFixture.assertOnlyInstance.templateContext['message'],
+        contains(testFixture.assertOnlyInstance.templateContext['message']),
       );
     });
   });

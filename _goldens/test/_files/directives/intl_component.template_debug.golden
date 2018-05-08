@@ -20,13 +20,13 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
 const List<dynamic> styles$CompWithoutFinal = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_CompWithoutFinal0 = [null, null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_CompWithoutFinal0 = [null, null, null, null, null];
 
 class ViewCompWithoutFinal0 extends DebugAppView<import2.CompWithoutFinal> {
   import3.ButtonElement _el_0;
   import3.Text _text_1;
-  import3.ButtonElement _el_2;
-  import3.Text _text_3;
+  import3.ButtonElement _el_3;
+  import3.Text _text_4;
   var _expr_0;
   var _expr_1;
   static RenderComponentType _renderType;
@@ -44,11 +44,14 @@ class ViewCompWithoutFinal0 extends DebugAppView<import2.CompWithoutFinal> {
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 12);
-    _el_2 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 2, 1, 4);
-    _text_3 = new import3.Text('');
-    _el_2.append(_text_3);
-    dbgElm(this, _text_3, 3, 1, 12);
-    init(const [], null, [_el_0, _text_1, _el_2, _text_3]);
+    import3.Text _text_2 = new import3.Text(' ');
+    parentRenderNode.append(_text_2);
+    dbgElm(this, _text_2, 2, 0, 34);
+    _el_3 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 3, 1, 4);
+    _text_4 = new import3.Text('');
+    _el_3.append(_text_4);
+    dbgElm(this, _text_4, 4, 1, 12);
+    init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4]);
     return null;
   }
 
@@ -61,10 +64,10 @@ class ViewCompWithoutFinal0 extends DebugAppView<import2.CompWithoutFinal> {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
-    dbg(3, 1, 12);
+    dbg(4, 1, 12);
     final currVal_1 = (_ctx.cancelMessage ?? '');
     if (import8.checkBinding(_expr_1, currVal_1)) {
-      _text_3.text = currVal_1;
+      _text_4.text = currVal_1;
       _expr_1 = currVal_1;
     }
   }
@@ -111,13 +114,13 @@ AppView viewFactory_CompWithoutFinalHost0(AppView<dynamic> parentView, int paren
 
 const ComponentFactory<import2.CompWithoutFinal> CompWithoutFinalNgFactory = const ComponentFactory<import2.CompWithoutFinal>('comp-without-final', viewFactory_CompWithoutFinalHost0, _CompWithoutFinalMetadata);
 const List<dynamic> styles$CompWithFinal = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_CompWithFinal0 = [null, null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_CompWithFinal0 = [null, null, null, null, null];
 
 class ViewCompWithFinal0 extends DebugAppView<import2.CompWithFinal> {
   import3.ButtonElement _el_0;
   import3.Text _text_1;
-  import3.ButtonElement _el_2;
-  import3.Text _text_3;
+  import3.ButtonElement _el_3;
+  import3.Text _text_4;
   static RenderComponentType _renderType;
   ViewCompWithFinal0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompWithFinal0) {
     rootEl = import3.document.createElement('comp-with-final');
@@ -133,11 +136,14 @@ class ViewCompWithFinal0 extends DebugAppView<import2.CompWithFinal> {
     _text_1 = new import3.Text((ctx.okMessage ?? ''));
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 12);
-    _el_2 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 2, 1, 4);
-    _text_3 = new import3.Text((ctx.cancelMessage ?? ''));
-    _el_2.append(_text_3);
-    dbgElm(this, _text_3, 3, 1, 12);
-    init(const [], null, [_el_0, _text_1, _el_2, _text_3]);
+    import3.Text _text_2 = new import3.Text(' ');
+    parentRenderNode.append(_text_2);
+    dbgElm(this, _text_2, 2, 0, 34);
+    _el_3 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 3, 1, 4);
+    _text_4 = new import3.Text((ctx.cancelMessage ?? ''));
+    _el_3.append(_text_4);
+    dbgElm(this, _text_4, 4, 1, 12);
+    init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4]);
     return null;
   }
 }
@@ -183,13 +189,13 @@ AppView viewFactory_CompWithFinalHost0(AppView<dynamic> parentView, int parentIn
 
 const ComponentFactory<import2.CompWithFinal> CompWithFinalNgFactory = const ComponentFactory<import2.CompWithFinal>('comp-with-final', viewFactory_CompWithFinalHost0, _CompWithFinalMetadata);
 const List<dynamic> styles$CompWithFinalStatic = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_CompWithFinalStatic0 = [null, null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_CompWithFinalStatic0 = [null, null, null, null, null];
 
 class ViewCompWithFinalStatic0 extends DebugAppView<import2.CompWithFinalStatic> {
   import3.ButtonElement _el_0;
   import3.Text _text_1;
-  import3.ButtonElement _el_2;
-  import3.Text _text_3;
+  import3.ButtonElement _el_3;
+  import3.Text _text_4;
   static RenderComponentType _renderType;
   ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompWithFinalStatic0) {
     rootEl = import3.document.createElement('comp-with-final-static');
@@ -205,11 +211,14 @@ class ViewCompWithFinalStatic0 extends DebugAppView<import2.CompWithFinalStatic>
     _text_1 = new import3.Text((import2.CompWithFinalStatic.okMessage ?? ''));
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 12);
-    _el_2 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 2, 1, 4);
-    _text_3 = new import3.Text((import2.CompWithFinalStatic.cancelMessage ?? ''));
-    _el_2.append(_text_3);
-    dbgElm(this, _text_3, 3, 1, 12);
-    init(const [], null, [_el_0, _text_1, _el_2, _text_3]);
+    import3.Text _text_2 = new import3.Text(' ');
+    parentRenderNode.append(_text_2);
+    dbgElm(this, _text_2, 2, 0, 54);
+    _el_3 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 3, 1, 4);
+    _text_4 = new import3.Text((import2.CompWithFinalStatic.cancelMessage ?? ''));
+    _el_3.append(_text_4);
+    dbgElm(this, _text_4, 4, 1, 12);
+    init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4]);
     return null;
   }
 }
@@ -255,13 +264,13 @@ AppView viewFactory_CompWithFinalStaticHost0(AppView<dynamic> parentView, int pa
 
 const ComponentFactory<import2.CompWithFinalStatic> CompWithFinalStaticNgFactory = const ComponentFactory<import2.CompWithFinalStatic>('comp-with-final-static', viewFactory_CompWithFinalStaticHost0, _CompWithFinalStaticMetadata);
 const List<dynamic> styles$CompWithExternalFinal = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_CompWithExternalFinal0 = [null, null, null, null];
+List<StaticNodeDebugInfo> nodeDebugInfos_CompWithExternalFinal0 = [null, null, null, null, null];
 
 class ViewCompWithExternalFinal0 extends DebugAppView<import2.CompWithExternalFinal> {
   import3.ButtonElement _el_0;
   import3.Text _text_1;
-  import3.ButtonElement _el_2;
-  import3.Text _text_3;
+  import3.ButtonElement _el_3;
+  import3.Text _text_4;
   static RenderComponentType _renderType;
   ViewCompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompWithExternalFinal0) {
     rootEl = import3.document.createElement('comp-with-external-final');
@@ -277,11 +286,14 @@ class ViewCompWithExternalFinal0 extends DebugAppView<import2.CompWithExternalFi
     _text_1 = new import3.Text((import2.Messages.okMessage ?? ''));
     _el_0.append(_text_1);
     dbgElm(this, _text_1, 1, 0, 12);
-    _el_2 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 2, 1, 4);
-    _text_3 = new import3.Text((import2.Messages.cancelMessage ?? ''));
-    _el_2.append(_text_3);
-    dbgElm(this, _text_3, 3, 1, 12);
-    init(const [], null, [_el_0, _text_1, _el_2, _text_3]);
+    import3.Text _text_2 = new import3.Text(' ');
+    parentRenderNode.append(_text_2);
+    dbgElm(this, _text_2, 2, 0, 43);
+    _el_3 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 3, 1, 4);
+    _text_4 = new import3.Text((import2.Messages.cancelMessage ?? ''));
+    _el_3.append(_text_4);
+    dbgElm(this, _text_4, 4, 1, 12);
+    init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4]);
     return null;
   }
 }
