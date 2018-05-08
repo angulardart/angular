@@ -6,20 +6,19 @@ import 'template_ast.dart';
 /// rendered in a browser as normal HTML.
 class IsPureHtmlVisitor extends TemplateAstVisitor<bool, Null> {
   @override
-  bool visitAttr(AttrAst ast, dynamic context) => true;
+  bool visitAttr(AttrAst ast, _) => true;
 
   @override
-  bool visitBoundText(BoundTextAst ast, dynamic context) => false;
+  bool visitBoundText(BoundTextAst ast, _) => false;
 
   @override
-  bool visitDirective(DirectiveAst ast, dynamic context) => false;
+  bool visitDirective(DirectiveAst ast, _) => false;
 
   @override
-  bool visitDirectiveProperty(BoundDirectivePropertyAst ast, dynamic context) =>
-      false;
+  bool visitDirectiveProperty(BoundDirectivePropertyAst ast, _) => false;
 
   @override
-  bool visitElement(ElementAst ast, dynamic context) {
+  bool visitElement(ElementAst ast, _) {
     var isComponent = ast.directives.any((d) => d.directive.isComponent);
 
     if (isComponent ||
@@ -33,31 +32,30 @@ class IsPureHtmlVisitor extends TemplateAstVisitor<bool, Null> {
   }
 
   @override
-  bool visitElementProperty(BoundElementPropertyAst ast, dynamic context) =>
-      false;
+  bool visitElementProperty(BoundElementPropertyAst ast, _) => false;
 
   @override
-  bool visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) => false;
+  bool visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) => false;
 
   @override
-  bool visitEvent(BoundEventAst ast, dynamic context) => false;
+  bool visitEvent(BoundEventAst ast, _) => false;
 
   @override
-  bool visitNgContainer(NgContainerAst ast, dynamic context) =>
+  bool visitNgContainer(NgContainerAst ast, _) =>
       ast.children.every((child) => child.visit(this, null));
 
   @override
-  bool visitNgContent(NgContentAst ast, dynamic context) => false;
+  bool visitNgContent(NgContentAst ast, _) => false;
 
   @override
-  bool visitProvider(ProviderAst providerAst, dynamic context) => false;
+  bool visitProvider(ProviderAst providerAst, _) => false;
 
   @override
-  bool visitReference(ReferenceAst ast, dynamic context) => false;
+  bool visitReference(ReferenceAst ast, _) => false;
 
   @override
-  bool visitText(TextAst ast, dynamic context) => true;
+  bool visitText(TextAst ast, _) => true;
 
   @override
-  bool visitVariable(VariableAst ast, dynamic context) => false;
+  bool visitVariable(VariableAst ast, _) => false;
 }
