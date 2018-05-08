@@ -82,7 +82,7 @@ class CompilerFlags {
     this.ignoreNgPlaceholderForGoldens: false,
     this.profileFor: Profile.none,
     this.useLegacyStyleEncapsulation: false,
-    this.useNewPreserveWhitespace: false,
+    this.useNewPreserveWhitespace: true,
   });
 
   /// Creates flags by parsing command-line arguments.
