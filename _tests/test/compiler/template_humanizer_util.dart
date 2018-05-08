@@ -111,6 +111,16 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
 
   void visitProvider(ProviderAst ast, _) {}
 
+  void visitI18nAttr(I18nAttrAst ast, _) {}
+
+  void visitI18nText(I18nTextAst ast, _) {
+    var res = [I18nTextAst, ast.value.text, ast.value.description];
+    if (ast.value.meaning != null) {
+      res.add(ast.value.meaning);
+    }
+    result.add(_appendContext(ast, res));
+  }
+
   List<dynamic> _appendContext(TemplateAst ast, List<dynamic> input) {
     if (!includeSourceSpan) return input;
     input.add(ast.sourceSpan.text);
@@ -176,6 +186,10 @@ class TemplateContentProjectionHumanizer
   void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {}
 
   void visitProvider(ProviderAst ast, _) {}
+
+  void visitI18nAttr(I18nAttrAst ast, _) {}
+
+  void visitI18nText(I18nTextAst ast, _) {}
 }
 
 List<dynamic> humanizeTplAst(List<TemplateAst> templateAsts) {
