@@ -44,6 +44,7 @@ abstract class RecursiveTemplateVisitor<C>
   TemplateAst visitElement(ElementAst ast, C context) => new ElementAst(
       ast.name,
       visitAll(ast.attrs, context),
+      visitAll(ast.i18nAttrs, context),
       visitAll(ast.inputs, context),
       visitAll(ast.outputs, context),
       visitAll(ast.references, context),

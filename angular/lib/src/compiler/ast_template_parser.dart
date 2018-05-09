@@ -221,15 +221,30 @@ class _BindDirectivesVisitor
       [_ParseContext parentContext]) {
     final elementContext =
         new _ParseContext.forElement(astNode, parentContext.templateContext);
-
+    final attributes = <ast.AttributeAst>[];
+    final i18nAttributes = <ng.I18nAttrAst>[];
+    final i18nAttributeMetadata = getI18nAttributeMetadata(astNode.annotations);
+    for (final attribute in astNode.attributes) {
+      if (i18nAttributeMetadata.containsKey(attribute.name)) {
+        final metadata = i18nAttributeMetadata[attribute.name];
+        final message = new I18nMessage(attribute.value, metadata);
+        i18nAttributes.add(new ng.I18nAttrAst(
+          attribute.name,
+          message,
+          attribute.sourceSpan,
+        ));
+      } else {
+        attributes.add(attribute);
+      }
+    }
     // Note: We rely on the fact that attributes are visited before properties
     // in order to ensure that properties take precedence over attributes with
     // the same name.
     return new ng.ElementAst(
         astNode.name,
-        _visitAll(astNode.attributes, elementContext),
-        _visitProperties(
-            astNode.properties, astNode.attributes, elementContext),
+        _visitAll(attributes, elementContext),
+        i18nAttributes,
+        _visitProperties(astNode.properties, attributes, elementContext),
         _visitAll(astNode.events, elementContext),
         _visitAll(astNode.references, elementContext),
         elementContext.boundDirectives,
@@ -885,6 +900,7 @@ class _ProviderVisitor
     return new ng.ElementAst(
         ast.name,
         ast.attrs,
+        ast.i18nAttrs,
         ast.inputs,
         ast.outputs,
         ast.references,
