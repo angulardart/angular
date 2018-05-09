@@ -185,6 +185,10 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
   void visitElementProperty(BoundElementPropertyAst ast, dynamic context) {}
 
   void visitProvider(ProviderAst ast, dynamic context) {}
+
+  void visitI18nAttr(I18nAttrAst ast, dynamic context) {}
+
+  void visitI18nText(I18nTextAst ast, dynamic context) {}
 }
 
 void bindViewHostProperties(CompileView view, Parser parser,
