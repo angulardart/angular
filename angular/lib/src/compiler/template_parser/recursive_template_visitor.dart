@@ -97,4 +97,10 @@ abstract class RecursiveTemplateVisitor<C>
 
   @override
   TemplateAst visitProvider(ProviderAst ast, _) => ast;
+
+  @override
+  TemplateAst visitI18nAttr(I18nAttrAst ast, _) => ast;
+
+  @override
+  TemplateAst visitI18nText(I18nTextAst ast, _) => ast;
 }

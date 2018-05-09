@@ -7,6 +7,7 @@ import 'compile_metadata.dart';
 import 'expression_parser/ast.dart';
 import 'expression_parser/parser.dart';
 import 'html_tags.dart';
+import 'i18n.dart';
 import 'identifiers.dart';
 import 'parse_util.dart';
 import 'provider_parser.dart';
@@ -144,7 +145,7 @@ class AstTemplateParser implements TemplateParser {
       CompileDirectiveMetadata compMeta,
       List<ast.TemplateAst> filteredAst,
       AstExceptionHandler exceptionHandler) {
-    final visitor = new _BindDirectivesVisitor();
+    final visitor = new _BindDirectivesVisitor(flags.i18nEnabled);
     final context = new _ParseContext.forRoot(new _TemplateContext(
         parser: parser,
         schemaRegistry: schemaRegistry,
@@ -201,14 +202,19 @@ class AstTemplateParser implements TemplateParser {
 /// A visitor which binds directives to element nodes.
 ///
 /// This visitor also converts from the pkg:angular_ast types to the angular
-/// compiler types.
+/// compiler types, which includes transformation of internationalized nodes.
 class _BindDirectivesVisitor
     implements ast.TemplateAstVisitor<ng.TemplateAst, _ParseContext> {
+  /// Whether internationalization of `@i18n`-annotated nodes is supported.
+  final bool i18nEnabled;
+
   /// A count of how many <ng-content> elements have been seen so far.
   ///
   /// This is necessary so that we can assign a unique index to each one as we
   /// visit it.
   int ngContentCount = 0;
+
+  _BindDirectivesVisitor(this.i18nEnabled);
 
   @override
   ng.TemplateAst visitElement(ast.ElementAst astNode,
@@ -229,7 +235,7 @@ class _BindDirectivesVisitor
         elementContext.boundDirectives,
         [] /* providers */,
         null /* elementProviderUsage */,
-        _visitAll(astNode.childNodes, elementContext),
+        _visitChildren(astNode.childNodes, astNode.annotations, elementContext),
         _findNgContentIndexForElement(astNode, parentContext),
         astNode.sourceSpan);
   }
@@ -285,7 +291,8 @@ class _BindDirectivesVisitor
   ng.TemplateAst visitContainer(ast.ContainerAst astNode,
           [_ParseContext context]) =>
       new ng.NgContainerAst(
-          _visitAll(astNode.childNodes, context), astNode.sourceSpan);
+          _visitChildren(astNode.childNodes, astNode.annotations, context),
+          astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
@@ -485,6 +492,25 @@ class _BindDirectivesVisitor
       }
     }
     return results;
+  }
+
+  /// Visits [children], converting them for internationalization if necessary.
+  ///
+  /// The [children] are internationalized if their parent's [annotations]
+  /// contain a valid `@i18n` annotation.
+  List<ng.TemplateAst> _visitChildren(
+    List<ast.StandaloneTemplateAst> children,
+    List<ast.AnnotationAst> annotations,
+    _ParseContext context,
+  ) {
+    if (i18nEnabled) {
+      final i18nMetadata = getI18nMetadata(annotations);
+      if (i18nMetadata != null) {
+        final ngContentIndex = context.findNgContentIndex(_textCssSelector);
+        return internationalize(children, i18nMetadata, ngContentIndex);
+      }
+    }
+    return _visitAll(children, context);
   }
 }
 
@@ -910,6 +936,7 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
         visitedElement,
         mergeNsAndName(prefix, _getName(visitedElement.name)),
         visitedElement.closeComplement,
+        annotations: visitedElement.annotations,
         attributes: visitedElement.attributes,
         childNodes: visitedElement.childNodes,
         events: visitedElement.events,
