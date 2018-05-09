@@ -36,6 +36,7 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     var res = [ElementAst, ast.name];
     result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.attrs);
+    templateVisitAll(this, ast.i18nAttrs);
     templateVisitAll(this, ast.inputs);
     templateVisitAll(this, ast.outputs);
     templateVisitAll(this, ast.references);
@@ -111,7 +112,18 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
 
   void visitProvider(ProviderAst ast, _) {}
 
-  void visitI18nAttr(I18nAttrAst ast, _) {}
+  void visitI18nAttr(I18nAttrAst ast, _) {
+    var res = [
+      I18nAttrAst,
+      ast.name,
+      ast.value.text,
+      ast.value.metadata.description,
+    ];
+    if (ast.value.metadata.meaning != null) {
+      res.add(ast.value.metadata.meaning);
+    }
+    result.add(_appendContext(ast, res));
+  }
 
   void visitI18nText(I18nTextAst ast, _) {
     var res = [I18nTextAst, ast.value.text, ast.value.metadata.description];

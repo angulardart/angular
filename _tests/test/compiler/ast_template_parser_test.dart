@@ -1305,6 +1305,46 @@ void main() {
           ]);
         });
       });
+
+      group('@i18n-<attr>', () {
+        test('should internationalize attribute', () {
+          final ast = parse('''
+            <img
+                src="puppy.gif"
+                alt="message"
+                @i18n-alt="meaning | description" />
+          ''');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'img'],
+            [AttrAst, 'src', 'puppy.gif'],
+            [I18nAttrAst, 'alt', 'message', 'description', 'meaning'],
+          ]);
+        });
+
+        test('should internationalize multiple attributes', () {
+          final ast = parse('''
+            <div
+                foo="foo message"
+                @i18n-foo="foo meaning|foo description"
+                bar="bar message"
+                @i18n-bar="bar description">
+            </div>
+          ''');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'div'],
+            [
+              I18nAttrAst,
+              'foo',
+              'foo message',
+              'foo description',
+              'foo meaning'
+            ],
+            [I18nAttrAst, 'bar', 'bar message', 'bar description'],
+          ]);
+        });
+      });
     });
 
     group('content projection', () {

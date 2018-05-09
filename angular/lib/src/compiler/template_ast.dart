@@ -160,6 +160,7 @@ class VariableAst implements TemplateAst {
 class ElementAst implements TemplateAst {
   final String name;
   final List<AttrAst> attrs;
+  final List<I18nAttrAst> i18nAttrs;
   final List<BoundElementPropertyAst> inputs;
   final List<BoundEventAst> outputs;
   final List<ReferenceAst> references;
@@ -173,6 +174,7 @@ class ElementAst implements TemplateAst {
   ElementAst(
       this.name,
       this.attrs,
+      this.i18nAttrs,
       this.inputs,
       this.outputs,
       this.references,
