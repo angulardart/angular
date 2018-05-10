@@ -10,6 +10,12 @@
 *   The `touched` property of `Control`s is now propagated to parents /
     children.
 
+### Bug fixes
+
+*   Add a not selector to ngForm for memorizedForm since memorized_form is now
+    in angular_forms. This fixes the DIRECTIVE_EXPORTED_BY_AMBIGIOUS error when
+    using: <form #form="ngForm" memorizedForm>
+
 ## 2.0.0-alpha+3
 
 ### New Features
