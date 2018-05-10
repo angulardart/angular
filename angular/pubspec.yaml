@@ -23,7 +23,7 @@ dependencies:
   build: ^0.12.5
   build_config: ^0.2.6 # Runtime dependency with no import
   code_builder: '^3.0.1'
-  csslib: ^0.14.1
+  csslib: ^0.14.3
   path: ^1.5.1
   source_gen: ^0.8.0
   source_span: ^1.4.0
