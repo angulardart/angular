@@ -9,7 +9,7 @@ import "shadow_css.dart";
 import "style_url_resolver.dart" show extractStyleUrls;
 
 /// This placeholder is replaced by the component ID at run-time.
-const _componentIdPlaceholder = '%COMP%';
+const _componentIdPlaceholder = '%ID%';
 
 /// This CSS class is used to apply styles to a component's host element.
 const _hostClass = '_nghost-$_componentIdPlaceholder';
