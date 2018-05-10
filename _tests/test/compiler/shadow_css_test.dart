@@ -44,15 +44,15 @@ String normalizeCSS(String css) {
   _normalizerExp1 ??= new RegExp(r'\s+');
   _normalizerExp2 ??= new RegExp(r':\s');
   _normalizerExp3 ??= new RegExp('' + "'" + r'');
-  _normalizerExp4 ??= new RegExp('{ ');
-  _normalizerExp5 ??= new RegExp(' }');
+  _normalizerExp4 ??= new RegExp(r'\s*{');
+  _normalizerExp5 ??= new RegExp(r'}(?!}|$)');
   _normalizerExp6 ??= new RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)');
   _normalizerExp7 ??= new RegExp(r'\[(.+)=([^"\]]+)\]');
   css = css.replaceAll(_normalizerExp1, ' ');
   css = css.replaceAll(_normalizerExp2, ':');
   css = css.replaceAll(_normalizerExp3, '"');
-  css = css.replaceAll(_normalizerExp4, '{');
-  css = css.replaceAll(_normalizerExp5, '}');
+  css = css.replaceAll(_normalizerExp4, ' {');
+  css = css.replaceAll(_normalizerExp5, '} ');
   css = css.replaceAllMapped(_normalizerExp6, (match) => 'url("${match[2]}")');
   css = css.replaceAllMapped(
       _normalizerExp7, (match) => '[${match[1]}="${match[2]}"]');
@@ -107,7 +107,7 @@ void main() {
   test('should handle media rules', () {
     var css = '@media screen and (max-width:800px) {div {font-size:50px;}}';
     var expected =
-        '@media screen AND (max-width:800px){div.$content {font-size:50px;}}';
+        '@media screen AND (max-width:800px) {div.$content {font-size:50px;}}';
     shimAndExpect(css, expected);
   });
 
@@ -117,22 +117,22 @@ void main() {
   });
 
   test('should handle media rules with simple rules', () {
-    var css = '@media screen and (max-width: 800px)'
+    var css = '@media screen and (max-width: 800px) '
         '{div {font-size: 50px;}} div {}';
-    var expected = '@media screen AND (max-width:800px)'
+    var expected = '@media screen AND (max-width:800px) '
         '{div.$content {font-size:50px;}} div.$content {}';
     shimAndExpect(css, expected);
   });
 
   // Check that the browser supports unprefixed CSS animation
   test('should handle keyframes rules', () {
-    var css = '@keyframes foo{0%{transform:translate(-50%) scaleX(0);}}';
+    var css = '@keyframes foo {0% {transform:translate(-50%) scaleX(0);}}';
     shimAndExpect(css, css);
   });
 
   test('should handle -webkit-keyframes rules', () {
-    var css = '@-webkit-keyframes foo'
-        '{0%{-webkit-transform:translate(-50%) scaleX(0);}}';
+    var css = '@-webkit-keyframes foo '
+        '{0% {-webkit-transform:translate(-50%) scaleX(0);}}';
     shimAndExpect(css, css);
   });
 
@@ -384,7 +384,7 @@ void main() {
 
   test('should shim rules after @import', () {
     var css = '@import url("a"); div {}';
-    shimAndExpect(css, '@import url("a"); div.$content {}');
+    shimAndExpect(css, '@import url("a");div.$content {}');
   });
 
   test('should leave calc() unchanged', () {
