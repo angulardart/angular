@@ -31,7 +31,7 @@
     **Old code:** \
     **root/lib/root.dart**
 
-    ```
+    ```dart
     @Component(
         selector: 'my-app',
         directives: const [routerDirectives],
@@ -57,7 +57,7 @@
     **New code:** \
     **routes/lib/root_routes.dart**
 
-    ```
+    ```dart
     static const planTypeParameter = 'planType';
 
     static final overviewRoute = new RoutePath(
@@ -74,7 +74,7 @@
 
     **root/lib/root.dart**
 
-    ```
+    ```dart
     import 'root_routes.dart' as root_routes;
     import 'overview_component.template.dart' as overview_component;
     import 'planning_component.template.dart' as planning_component;
@@ -113,7 +113,7 @@
     **New code:** \
     **routes/lib/planning_routes.dart**
 
-    ```
+    ```dart
     import 'root_routes.dart' as root_routes;
 
     static final homeRoute = new RoutePath(
@@ -129,7 +129,7 @@
 
     **planning/lib/planning.dart**
 
-    ```
+    ```dart
     import 'planning_routes.dart' as planning_routes;
     import 'home_component.template.dart' as home_component;
     import 'details_component.template.dart' as details_component;
@@ -157,7 +157,7 @@
 
     **Old code:**
 
-    ```
+    ```dart
     class PlanningHomeComponent {
       final RouteParams params;
       PlanningHomeComponent(this.params);
@@ -169,7 +169,7 @@
 
     **New code:**
 
-    ```
+    ```dart
     import 'root_routes.dart' as root_routes;
     class PlanningHomeComponent {
       final Router router;
@@ -209,7 +209,7 @@
 
     **Old code:**
 
-    ```
+    ```dart
     class PlanningHomeComponent implements OnInit {
       @override
       Future ngOnInit() async {
@@ -220,7 +220,7 @@
 
     **New code:**
 
-    ```
+    ```dart
     class PlanningHomeComponent implements OnActivate {
       @override
       Future onActivate(_, __) async {
@@ -238,7 +238,7 @@
 
     **Example:**
 
-    ```
+    ```dart
     class MyComponent implements CanReuse {
       @override
       Future<bool> canReuse(RouterState current, RouterState next) async {
