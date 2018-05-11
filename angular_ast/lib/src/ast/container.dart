@@ -71,6 +71,12 @@ abstract class ContainerAst implements StandaloneTemplateAst {
         ..writeAll(stars, ', ')
         ..write(' ');
     }
+    if (annotations.isNotEmpty) {
+      buffer
+        ..write('annotations=')
+        ..writeAll(annotations, ', ')
+        ..write(' ');
+    }
     if (childNodes.isNotEmpty) {
       buffer
         ..write('childNodes=')
