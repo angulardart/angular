@@ -2,7 +2,7 @@ name: _benchmarks
 author: Dart Team <web@dartlang.org>
 description: Benchmarks for AngularDart.
 environment:
-  sdk: ">=2.0.0-dev.46.0 <2.0.0"
+  sdk: ">=2.0.0-dev.52.0 <2.0.0"
 
 dependencies:
   # No strict dependencies, we always use dependency_overrides.
