@@ -1,7 +1,7 @@
 import 'package:angular_ast/angular_ast.dart';
 
-const _i18nAnnotationName = 'i18n';
-const _i18nAnnotationPrefix = '$_i18nAnnotationName-';
+const i18nAnnotationName = 'i18n';
+const i18nAnnotationPrefix = '$i18nAnnotationName-';
 
 /// Metadata used to internationalize a message.
 class I18nMetadata {
@@ -31,7 +31,7 @@ class I18nMetadata {
 /// Returns null if no valid `@i18n` annotation exists.
 I18nMetadata getI18nMetadata(List<AnnotationAst> annotations) {
   for (final annotation in annotations) {
-    if (annotation.name == _i18nAnnotationName) {
+    if (annotation.name == i18nAnnotationName) {
       final metadata = _parseI18nMetadata(annotation.value);
       if (metadata != null) {
         return metadata;
@@ -49,8 +49,8 @@ Map<String, I18nMetadata> getI18nAttributeMetadata(
     List<AnnotationAst> annotations) {
   final results = <String, I18nMetadata>{};
   for (final annotation in annotations) {
-    if (annotation.name.startsWith(_i18nAnnotationPrefix)) {
-      final name = annotation.name.substring(_i18nAnnotationPrefix.length);
+    if (annotation.name.startsWith(i18nAnnotationPrefix)) {
+      final name = annotation.name.substring(i18nAnnotationPrefix.length);
       if (name.isEmpty) {
         // TODO(leonsenft): warn about missing attribute name.
         continue;
@@ -70,10 +70,6 @@ Map<String, I18nMetadata> getI18nAttributeMetadata(
 ///
 /// Expects a description, with an optional meaning delimited by a `|`.
 I18nMetadata _parseI18nMetadata(String value) {
-  if (value == null) {
-    // TODO(leonsenft): warn about missing annotation value.
-    return null;
-  }
   final index = value.indexOf('|');
   final description = value.substring(index + 1).trim();
   if (description.isEmpty) {

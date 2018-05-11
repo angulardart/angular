@@ -1011,6 +1011,17 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   }
 
   @override
+  ast.TemplateAst visitAnnotation(ast.AnnotationAst astNode, [_]) {
+    if ((astNode.name == i18nAnnotationName ||
+            astNode.name.startsWith(i18nAnnotationPrefix)) &&
+        astNode.value == null) {
+      _reportError(astNode,
+          'Requires a value describing the message to help translators');
+    }
+    return super.visitAnnotation(astNode);
+  }
+
+  @override
   ast.TemplateAst visitAttribute(ast.AttributeAst astNode, [_]) {
     // warnings
     if (astNode.name.startsWith('bindon-')) {
