@@ -88,7 +88,11 @@ class ParsedAnnotationAst extends TemplateAst
     this.nameToken, [
     this.valueToken,
     this.equalSignToken,
-  ]) : super.parsed(prefixToken, nameToken, sourceFile);
+  ]) : super.parsed(
+          prefixToken,
+          valueToken != null ? valueToken.rightQuote : nameToken,
+          sourceFile,
+        );
 
   @override
   String get name => nameToken.lexeme;
