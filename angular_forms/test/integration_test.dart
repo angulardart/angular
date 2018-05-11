@@ -834,8 +834,9 @@ class MyInput implements ControlValueAccessor {
   void onDisabledChanged(bool isDisabled) {}
 }
 
-Map loginIsEmptyGroupValidator(ControlGroup c) {
-  return c.controls['login'].value == '' ? {'loginIsEmpty': true} : null;
+Map<String, dynamic> loginIsEmptyGroupValidator(AbstractControl c) {
+  ControlGroup group = c;
+  return group.controls['login'].value == '' ? {'loginIsEmpty': true} : null;
 }
 
 @Directive(selector: '[login-is-empty-validator]', providers: const [

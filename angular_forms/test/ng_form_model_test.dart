@@ -217,7 +217,8 @@ class DummyControlValueAccessor implements ControlValueAccessor {
       NG_VALIDATORS, MatchingPasswordsValidator.matchingPasswordsValidator),
 ])
 class MatchingPasswordsValidator {
-  static matchingPasswordsValidator(AbstractControl control) {
+  static Map<String, dynamic> matchingPasswordsValidator(
+      AbstractControl control) {
     if (control is! ControlGroup) throw new StateError('Must be ControlGroup');
     var group = control as ControlGroup;
     if (group.controls['password'].value !=
