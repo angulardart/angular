@@ -16,6 +16,20 @@
     ... as part of this refactor, error messages in general around use of
     these annotations have been greatly improved.
 
+*   The semantics of `@Component(preserveWhitespace: false)` (the default flag)
+    have changed somewhat in this release due to user feedback both internally
+    and externally (see https://github.com/dart-lang/angular/issues/804). The
+    easiest way to explain the changes are with this example:
+
+    ```html
+    Foo <strong>Bar</strong> Baz
+    ```
+
+    ... used to display "Foo**Bar**Baz" in the _old_ semantics, and now displays
+    "Foo **Bar** Baz" in the _new_ semantics. There are some cases where
+    generated code is slightly larger, and other cases where it is smaller (we
+    have some smarter heuristics around safe places to collapse whitespace).
+
 ### New features
 
 *   Added `<ng-container>`, an element for logical grouping that has no effect
