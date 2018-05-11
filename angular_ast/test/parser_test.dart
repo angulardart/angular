@@ -307,4 +307,12 @@ void main() {
       ])
     ]);
   });
+
+  test('should include annotation value in source span', () {
+    final source = '@foo="bar"';
+    final template = '<p $source></p>';
+    final ast = parse(template).single as ElementAst;
+    final annotation = ast.annotations.single;
+    expect(annotation.sourceSpan.text, source);
+  });
 }
