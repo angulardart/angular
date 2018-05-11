@@ -47,7 +47,7 @@ class NgIf {
     newCondition = newCondition == true;
     // In dev-mode, use `checkBinding`. In prod-mode, use `looseIdentical`.
     if (isDevMode) {
-      if (!checkBinding(newCondition, _prevCondition)) return;
+      if (!checkBinding(_prevCondition, newCondition)) return;
     } else {
       if (identical(newCondition, _prevCondition)) return;
     }
