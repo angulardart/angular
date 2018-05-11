@@ -1795,6 +1795,16 @@ void main() {
                 '<div *ngFor="let item in items"></div>\n'
                 '     ^^^^^^^^^^^^^^^^^^^^^^^^^^'));
       });
+
+      test('should prevent @i18n without a description', () {
+        expect(
+            () => parse('<p @i18n></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: '
+                'Requires a value describing the message to help translators\n'
+                '<p @i18n></p>\n'
+                '   ^^^^^'));
+      });
     });
 
     group('ignore elements', () {
