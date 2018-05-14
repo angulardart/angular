@@ -1,3 +1,5 @@
+*   Exported `ParsedAnnotationAst`.
+
 *   Added `ContainerAst`.
 
 *   Annotations may now be assigned values.

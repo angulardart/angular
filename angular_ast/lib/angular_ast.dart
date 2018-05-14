@@ -23,6 +23,7 @@ export 'src/ast.dart'
         ExpressionAst,
         InterpolationAst,
         LetBindingAst,
+        ParsedAnnotationAst,
         ParsedAttributeAst,
         ParsedBananaAst,
         ParsedCloseElementAst,
