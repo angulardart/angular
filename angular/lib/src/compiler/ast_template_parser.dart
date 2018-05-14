@@ -251,7 +251,7 @@ class _BindDirectivesVisitor
         elementContext.boundDirectives,
         [] /* providers */,
         null /* elementProviderUsage */,
-        _visitChildren(astNode.childNodes, astNode.annotations, elementContext),
+        _visitChildren(astNode, astNode.annotations, elementContext),
         _findNgContentIndexForElement(astNode, parentContext),
         astNode.sourceSpan);
   }
@@ -307,7 +307,7 @@ class _BindDirectivesVisitor
   ng.TemplateAst visitContainer(ast.ContainerAst astNode,
           [_ParseContext context]) =>
       new ng.NgContainerAst(
-          _visitChildren(astNode.childNodes, astNode.annotations, context),
+          _visitChildren(astNode, astNode.annotations, context),
           astNode.sourceSpan);
 
   @override
@@ -515,7 +515,7 @@ class _BindDirectivesVisitor
   /// The [children] are internationalized if their parent's [annotations]
   /// contain a valid `@i18n` annotation.
   List<ng.TemplateAst> _visitChildren(
-    List<ast.StandaloneTemplateAst> children,
+    ast.StandaloneTemplateAst parent,
     List<ast.AnnotationAst> annotations,
     _ParseContext context,
   ) {
@@ -525,12 +525,16 @@ class _BindDirectivesVisitor
         final i18nMetadata =
             parseI18nMetadata(i18nAnnotation, context.templateContext);
         if (i18nMetadata != null) {
-          final ngContentIndex = context.findNgContentIndex(_textCssSelector);
-          return internationalize(children, i18nMetadata, ngContentIndex);
+          return internationalize(
+            parent,
+            i18nMetadata,
+            context.findNgContentIndex(_textCssSelector),
+            context.templateContext,
+          );
         }
       }
     }
-    return _visitAll(children, context);
+    return _visitAll(parent.childNodes, context);
   }
 }
 

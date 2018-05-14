@@ -1831,6 +1831,27 @@ void main() {
               '   ^^^^^^^^^^^^^^^^^^^^^^'
         ]);
       });
+
+      test('should prevent an empty @i18n message', () {
+        expect(
+            () => parse('<p @i18n="description"></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: '
+                'Expected a single, non-empty text node child in an "@i18n" '
+                'context\n'
+                '<p @i18n="description"></p>\n'
+                '^^^^^^^^^^^^^^^^^^^^^^^'));
+      });
+
+      test('should report error for a non-text node in a @i18n context', () {
+        expect(
+            () => parse('<p @i18n="description"><span>Hello</span></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 24 of TestComp: ParseErrorLevel.FATAL: '
+                'Only text is supported in an "@i18n" context\n'
+                '<p @i18n="description"><span>Hello</span></p>\n'
+                '                       ^^^^^^'));
+      });
     });
 
     group('ignore elements', () {
