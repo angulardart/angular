@@ -27,6 +27,9 @@ abstract class ControlValueAccessor<T> {
 /// Used to provide a [ControlValueAccessor] for form controls.
 ///
 /// See [DefaultValueAccessor] for how to implement one.
+const ngValueAccessor = NG_VALUE_ACCESSOR;
+
+@Deprecated('Please use ngValueAccessor')
 const NG_VALUE_ACCESSOR = const MultiToken<ControlValueAccessor>(
   'NgValueAccessor',
 );
