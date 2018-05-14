@@ -1,5 +1,8 @@
 import 'package:angular_ast/angular_ast.dart';
 
+import '../parse_util.dart' show ParseErrorLevel;
+import '../template_parser.dart' show TemplateContext;
+
 const i18nAnnotationName = 'i18n';
 const i18nAnnotationPrefix = '$i18nAnnotationName-';
 
@@ -26,16 +29,11 @@ class I18nMetadata {
   });
 }
 
-/// Extracts metadata from an `@i18n` annotation in [annotations].
-///
-/// Returns null if no valid `@i18n` annotation exists.
-I18nMetadata getI18nMetadata(List<AnnotationAst> annotations) {
+/// Returns the first `@i18n` annotation in [annotations], or null.
+AnnotationAst getI18nAnnotation(List<AnnotationAst> annotations) {
   for (final annotation in annotations) {
     if (annotation.name == i18nAnnotationName) {
-      final metadata = _parseI18nMetadata(annotation.value);
-      if (metadata != null) {
-        return metadata;
-      }
+      return annotation;
     }
   }
   return null;
@@ -46,17 +44,15 @@ I18nMetadata getI18nMetadata(List<AnnotationAst> annotations) {
 /// Returns a map from attribute name to corresponding internationalization
 /// metadata.
 Map<String, I18nMetadata> getI18nAttributeMetadata(
-    List<AnnotationAst> annotations) {
+  List<AnnotationAst> annotations,
+  TemplateContext context,
+) {
   final results = <String, I18nMetadata>{};
   for (final annotation in annotations) {
     if (annotation.name.startsWith(i18nAnnotationPrefix)) {
-      final name = annotation.name.substring(i18nAnnotationPrefix.length);
-      if (name.isEmpty) {
-        // TODO(leonsenft): warn about missing attribute name.
-        continue;
-      }
-      final metadata = _parseI18nMetadata(annotation.value);
+      final metadata = parseI18nMetadata(annotation, context);
       if (metadata != null) {
+        final name = annotation.name.substring(i18nAnnotationPrefix.length);
         results[name] = metadata;
       }
     }
@@ -64,16 +60,23 @@ Map<String, I18nMetadata> getI18nAttributeMetadata(
   return results;
 }
 
-/// Parses internationalization metadata from an annotation [value].
+/// Parses internationalization metadata from an [annotation].
 ///
 /// Grammar: [ <meaning> '|' ] <description>
 ///
 /// Expects a description, with an optional meaning delimited by a `|`.
-I18nMetadata _parseI18nMetadata(String value) {
+I18nMetadata parseI18nMetadata(
+  AnnotationAst annotation,
+  TemplateContext context,
+) {
+  final value = annotation.value;
   final index = value.indexOf('|');
   final description = value.substring(index + 1).trim();
   if (description.isEmpty) {
-    // TODO(leonsenft): warn about empty description.
+    context.reportError(
+      'Requires a non-empty message description to help translators',
+      annotation.sourceSpan,
+    );
     return null;
   }
   if (index == -1) {
@@ -81,7 +84,11 @@ I18nMetadata _parseI18nMetadata(String value) {
   }
   final meaning = value.substring(0, index).trim();
   if (meaning.isEmpty) {
-    // TODO(leonsenft): warn about missing meaning with presence of '|'.
+    context.reportError(
+      'Expected a non-empty message meaning before "|"',
+      annotation.sourceSpan,
+      ParseErrorLevel.WARNING,
+    );
     return new I18nMetadata(description);
   }
   return new I18nMetadata(description, meaning: meaning);
