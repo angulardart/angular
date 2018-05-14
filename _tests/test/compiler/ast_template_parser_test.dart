@@ -1805,6 +1805,32 @@ void main() {
                 '<p @i18n></p>\n'
                 '   ^^^^^'));
       });
+
+      test('should report error for empty description', () {
+        expect(
+            () => parse(
+                '<p @i18n="">message</p>\n<p @i18n="meaning | ">message</p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: '
+                'Requires a non-empty message description to help translators\n'
+                '<p @i18n="">message</p>\n'
+                '   ^^^^^^^^\n'
+                'line 2, column 4 of TestComp: ParseErrorLevel.FATAL: '
+                'Requires a non-empty message description to help translators\n'
+                '<p @i18n="meaning | ">message</p>\n'
+                '   ^^^^^^^^^^^^^^^^^^'));
+      });
+
+      test('should report warning for empty meaning before "|"', () {
+        parse('<p @i18n=" | description">message</p>');
+        expect(console.warnings, [
+          'Template parse warnings:\n'
+              'line 1, column 4 of TestComp: ParseErrorLevel.WARNING: '
+              'Expected a non-empty message meaning before "|"\n'
+              '<p @i18n=" | description">message</p>\n'
+              '   ^^^^^^^^^^^^^^^^^^^^^^'
+        ]);
+      });
     });
 
     group('ignore elements', () {

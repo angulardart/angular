@@ -3,10 +3,13 @@ import 'package:source_span/source_span.dart';
 
 import '../core/security.dart';
 import 'compile_metadata.dart'
-    show CompileDirectiveMetadata, CompilePipeMetadata;
-import 'expression_parser/ast.dart' show AST;
+    show
+        CompileDirectiveMetadata,
+        CompileIdentifierMetadata,
+        CompilePipeMetadata;
 import 'expression_parser/ast.dart';
-import 'parse_util.dart' show ParseError, ParseErrorLevel;
+import 'expression_parser/parser.dart' show Parser;
+import 'parse_util.dart';
 import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import 'selector.dart' show CssSelector;
 import 'template_ast.dart'
@@ -21,6 +24,32 @@ const _stylePrefix = 'style';
 class TemplateParseError extends ParseError {
   TemplateParseError(String message, SourceSpan span, ParseErrorLevel level)
       : super(span, message, level);
+}
+
+class TemplateContext {
+  final Parser parser;
+  final ElementSchemaRegistry schemaRegistry;
+  final List<CompileDirectiveMetadata> directives;
+  final List<CompileIdentifierMetadata> exports;
+  final AstExceptionHandler exceptionHandler;
+
+  TemplateContext({
+    this.parser,
+    this.schemaRegistry,
+    this.directives,
+    this.exports,
+    this.exceptionHandler,
+  });
+
+  void reportError(
+    String message,
+    SourceSpan sourceSpan, [
+    ParseErrorLevel level,
+  ]) {
+    level ??= ParseErrorLevel.FATAL;
+    exceptionHandler
+        .handleParseError(new TemplateParseError(message, sourceSpan, level));
+  }
 }
 
 class TemplateParseResult {

@@ -146,7 +146,7 @@ class AstTemplateParser implements TemplateParser {
       List<ast.TemplateAst> filteredAst,
       AstExceptionHandler exceptionHandler) {
     final visitor = new _BindDirectivesVisitor(flags.i18nEnabled);
-    final context = new _ParseContext.forRoot(new _TemplateContext(
+    final context = new _ParseContext.forRoot(new TemplateContext(
         parser: parser,
         schemaRegistry: schemaRegistry,
         directives: removeDuplicates(directives),
@@ -223,7 +223,8 @@ class _BindDirectivesVisitor
         new _ParseContext.forElement(astNode, parentContext.templateContext);
     final attributes = <ast.AttributeAst>[];
     final i18nAttributes = <ng.I18nAttrAst>[];
-    final i18nAttributeMetadata = getI18nAttributeMetadata(astNode.annotations);
+    final i18nAttributeMetadata = getI18nAttributeMetadata(
+        astNode.annotations, elementContext.templateContext);
     for (final attribute in astNode.attributes) {
       if (i18nAttributeMetadata.containsKey(attribute.name)) {
         final metadata = i18nAttributeMetadata[attribute.name];
@@ -519,40 +520,22 @@ class _BindDirectivesVisitor
     _ParseContext context,
   ) {
     if (i18nEnabled) {
-      final i18nMetadata = getI18nMetadata(annotations);
-      if (i18nMetadata != null) {
-        final ngContentIndex = context.findNgContentIndex(_textCssSelector);
-        return internationalize(children, i18nMetadata, ngContentIndex);
+      final i18nAnnotation = getI18nAnnotation(annotations);
+      if (i18nAnnotation != null) {
+        final i18nMetadata =
+            parseI18nMetadata(i18nAnnotation, context.templateContext);
+        if (i18nMetadata != null) {
+          final ngContentIndex = context.findNgContentIndex(_textCssSelector);
+          return internationalize(children, i18nMetadata, ngContentIndex);
+        }
       }
     }
     return _visitAll(children, context);
   }
 }
 
-class _TemplateContext {
-  final Parser parser;
-  final ElementSchemaRegistry schemaRegistry;
-  final List<CompileDirectiveMetadata> directives;
-  final List<CompileIdentifierMetadata> exports;
-  final AstExceptionHandler exceptionHandler;
-
-  _TemplateContext(
-      {this.parser,
-      this.schemaRegistry,
-      this.directives,
-      this.exports,
-      this.exceptionHandler});
-
-  void reportError(String message, SourceSpan sourceSpan,
-      [ParseErrorLevel level]) {
-    level ??= ParseErrorLevel.FATAL;
-    exceptionHandler
-        .handleParseError(new TemplateParseError(message, sourceSpan, level));
-  }
-}
-
 class _ParseContext {
-  final _TemplateContext templateContext;
+  final TemplateContext templateContext;
   final String elementName;
   final List<ng.DirectiveAst> boundDirectives;
   final bool isTemplate;
@@ -575,7 +558,7 @@ class _ParseContext {
         _wildcardNgContentIndex = null;
 
   factory _ParseContext.forElement(
-      ast.ElementAst element, _TemplateContext templateContext) {
+      ast.ElementAst element, TemplateContext templateContext) {
     var boundDirectives = _toAst(
         _matchElementDirectives(templateContext.directives, element),
         element.sourceSpan,
@@ -593,7 +576,7 @@ class _ParseContext {
   }
 
   factory _ParseContext.forTemplate(
-      ast.EmbeddedTemplateAst template, _TemplateContext templateContext) {
+      ast.EmbeddedTemplateAst template, TemplateContext templateContext) {
     var boundDirectives = _toAst(
         _matchTemplateDirectives(templateContext.directives, template),
         template.sourceSpan,
@@ -682,7 +665,7 @@ class _ParseContext {
           SourceSpan sourceSpan,
           String elementName,
           String location,
-          _TemplateContext templateContext) =>
+          TemplateContext templateContext) =>
       directiveMetas
           .map((directive) => new ng.DirectiveAst(
               directive,
@@ -731,7 +714,7 @@ class _ParseContext {
       SourceSpan sourceSpan,
       String elementName,
       String location,
-      _TemplateContext templateContext) {
+      TemplateContext templateContext) {
     var result = <ng.BoundElementPropertyAst>[];
     for (var propName in directive.hostProperties.keys) {
       try {
@@ -756,7 +739,7 @@ class _ParseContext {
       SourceSpan sourceSpan,
       String elementName,
       String location,
-      _TemplateContext templateContext) {
+      TemplateContext templateContext) {
     var result = <ng.BoundEventAst>[];
     for (var eventName in directive.hostListeners.keys) {
       try {
