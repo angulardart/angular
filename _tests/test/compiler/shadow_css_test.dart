@@ -44,7 +44,7 @@ String normalizeCSS(String css) {
   _normalizerExp1 ??= new RegExp(r'\s+');
   _normalizerExp2 ??= new RegExp(r':\s');
   _normalizerExp3 ??= new RegExp('' + "'" + r'');
-  _normalizerExp4 ??= new RegExp(r'\s*{');
+  _normalizerExp4 ??= new RegExp(r'{');
   _normalizerExp5 ??= new RegExp(r'}(?!}|$)');
   _normalizerExp6 ??= new RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)');
   _normalizerExp7 ??= new RegExp(r'\[(.+)=([^"\]]+)\]');
