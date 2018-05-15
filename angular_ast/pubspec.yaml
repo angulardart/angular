@@ -8,7 +8,7 @@ environment:
   sdk: ">=2.0.0-dev.46.0 <2.0.0"
 
 dependencies:
-  analyzer: ^0.31.0+1
+  analyzer: '>=0.31.0+1 <0.33.0'
   charcode: ^1.1.0
   collection: ^1.14.5
   string_scanner: ^1.0.1
