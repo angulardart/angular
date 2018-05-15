@@ -37,6 +37,7 @@ export 'src/directives.dart'
         NgModel,
         NgSelectOption,
         NG_VALUE_ACCESSOR,
+        ngValueAccessor,
         NumberValueAccessor,
         PatternValidator,
         RadioControlValueAccessor,
