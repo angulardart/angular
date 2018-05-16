@@ -117,6 +117,9 @@
     resolved to the `packages/` directory. The `package` scheme is now preserved
     which the build ecosystem understands.
 
+*   In `ReflectiveInjector`, `.injectFromSelfOptional` now checks if it is truly
+    a instance cache misses before creating a new instance.
+
 ## 5.0.0-alpha+11
 
 ### Breaking changes
