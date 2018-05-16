@@ -99,7 +99,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   void visitText(TextAst ast, CompileElement parent) {
     int nodeIndex = view.nodes.length;
     NodeReference renderNode =
-        view.createTextNode(parent, nodeIndex, ast.value, ast);
+        view.createTextNode(parent, nodeIndex, o.literal(ast.value), ast);
     var compileNode = new CompileNode(parent, view, nodeIndex, renderNode, ast);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
@@ -347,8 +347,13 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
   @override
   void visitI18nText(I18nTextAst ast, CompileElement parent) {
-    // TODO(leonsenft): render i18n message binding to text.
-    throw new UnimplementedError();
+    final nodeIndex = view.nodes.length;
+    final text = view.createI18nMessage(ast.value);
+    final renderNode = view.createTextNode(parent, nodeIndex, text, ast);
+    final compileNode =
+        new CompileNode(parent, view, nodeIndex, renderNode, ast);
+    view.nodes.add(compileNode);
+    _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
   }
 }
 

@@ -18,6 +18,7 @@ import '../compile_metadata.dart'
         CompileQueryMetadata,
         CompileTokenMap;
 import '../compiler_utils.dart';
+import '../i18n/message.dart';
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
@@ -133,7 +134,7 @@ class AppViewReference {
 abstract class AppViewBuilder {
   /// Creates an unbound literal text node.
   NodeReference createTextNode(
-      CompileElement parent, int nodeIndex, String text, TemplateAst ast);
+      CompileElement parent, int nodeIndex, o.Expression text, TemplateAst ast);
 
   NodeReference createBoundTextNode(
       CompileElement parent, int nodeIndex, BoundTextAst ast);
@@ -313,6 +314,9 @@ class CompileView implements AppViewBuilder {
   /// Local variable name used to refer to document. null if not created yet.
   String docVarName;
 
+  /// The number of internationalized messages in this view.
+  var _i18nMessageCount = 0;
+
   CompileView(
       this.component,
       this.genConfig,
@@ -411,9 +415,35 @@ class CompileView implements AppViewBuilder {
     }
   }
 
+  /// Generates code to internationalize [message].
+  ///
+  /// Returns an expression that evaluates to the internationalized message.
+  o.Expression createI18nMessage(I18nMessage message) {
+    final name = '_message_${_i18nMessageCount++}';
+    final args = [
+      o.literal(message.text),
+      new o.NamedExpr('desc', o.literal(message.metadata.description)),
+    ];
+    if (message.metadata.meaning != null) {
+      args.add(new o.NamedExpr('meaning', o.literal(message.metadata.meaning)));
+    }
+    final value = o.importExpr(Identifiers.Intl).callMethod('message', args);
+    final item = storage.allocate(
+      name,
+      outputType: o.STRING_TYPE,
+      initializer: value,
+      modifiers: const [
+        o.StmtModifier.Static,
+        o.StmtModifier.Final,
+        o.StmtModifier.Private,
+      ],
+    );
+    return storage.buildReadExpr(item);
+  }
+
   @override
-  NodeReference createTextNode(
-      CompileElement parent, int nodeIndex, String text, TemplateAst ast) {
+  NodeReference createTextNode(CompileElement parent, int nodeIndex,
+      o.Expression text, TemplateAst ast) {
     NodeReference renderNode;
     if (isInlined) {
       renderNode = new NodeReference.inlinedTextNode(
@@ -422,18 +452,15 @@ class CompileView implements AppViewBuilder {
           outputType: o.importType(Identifiers.HTML_TEXT_NODE),
           modifiers: const [o.StmtModifier.Private]);
       _createMethod.addStmt(renderNode
-          .toWriteExpr(o
-              .importExpr(Identifiers.HTML_TEXT_NODE)
-              .instantiate([o.literal(text)]))
+          .toWriteExpr(
+              o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text]))
           .toStmt());
     } else {
       renderNode = new NodeReference.textNode(parent, nodeIndex);
       renderNode.lockVisibility(NodeReferenceVisibility.build);
       _createMethod.addStmt(new o.DeclareVarStmt(
           renderNode._name,
-          o
-              .importExpr(Identifiers.HTML_TEXT_NODE)
-              .instantiate([o.literal(text)]),
+          o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text]),
           o.importType(Identifiers.HTML_TEXT_NODE)));
     }
     var parentRenderNodeExpr = _getParentRenderNode(parent);
