@@ -133,11 +133,10 @@ class AstTemplateParser implements TemplateParser {
         .visitAll<ast.StandaloneTemplateAst>(
             parsedAst.cast<ast.StandaloneTemplateAst>());
     // New preserveWhitespace: false semantics (and preserveWhitespace: false).
-    if (flags.useNewPreserveWhitespace && !preserveWhitespace) {
+    if (!preserveWhitespace) {
       return new ast.MinimizeWhitespaceVisitor().visitAllRoot(filteredElements);
     }
-    return new _PreserveWhitespaceVisitor()
-        .visitAll(filteredElements, preserveWhitespace);
+    return new _PreserveWhitespaceVisitor().visitAll(filteredElements);
   }
 
   List<ng.TemplateAst> _bindDirectives(
@@ -1205,88 +1204,50 @@ class _PipeCollector extends RecursiveAstVisitor {
   }
 }
 
-class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
-  List<T> visitAll<T extends ast.TemplateAst>(
-      List<T> astNodes, bool preserveWhitespace) {
+class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<void> {
+  List<T> visitAll<T extends ast.TemplateAst>(List<T> astNodes) {
     final result = <T>[];
     for (int i = 0; i < astNodes.length; i++) {
       var node = astNodes[i];
       final visited = node is ast.TextAst
-          ? _stripWhitespace(i, node, astNodes, preserveWhitespace)
-          : node.accept(this, preserveWhitespace);
+          ? _stripWhitespace(i, node, astNodes)
+          : node.accept(this);
       if (visited != null) result.add(visited as T);
     }
     return result;
   }
 
   @override
-  visitContainer(ast.ContainerAst astNode, [bool preserveWhitespace]) {
-    var children = visitAll(astNode.childNodes, preserveWhitespace);
+  visitContainer(ast.ContainerAst astNode, [_]) {
+    var children = visitAll(astNode.childNodes);
     astNode.childNodes.clear();
     astNode.childNodes.addAll(children);
     return astNode;
   }
 
   @override
-  visitElement(ast.ElementAst astNode, [bool preserveWhitespace]) {
-    var children = visitAll(astNode.childNodes, preserveWhitespace);
+  visitElement(ast.ElementAst astNode, [_]) {
+    var children = visitAll(astNode.childNodes);
     astNode.childNodes.clear();
     astNode.childNodes.addAll(children);
     return astNode;
   }
 
   @override
-  visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
-      [bool preserveWhitespace]) {
-    var children = visitAll(astNode.childNodes, preserveWhitespace);
+  visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode, [_]) {
+    var children = visitAll(astNode.childNodes);
     astNode.childNodes.clear();
     astNode.childNodes.addAll(children);
     return astNode;
   }
 
-  ast.TextAst _stripWhitespace(int i, ast.TextAst node,
-      List<ast.TemplateAst> astNodes, bool preserveWhitespace) {
-    var text = node.value;
-
-    if (preserveWhitespace ||
-        text.contains('\u00A0') ||
-        text.contains(ngSpace) ||
-        _betweenInterpolation(astNodes, i)) {
-      return new ast.TextAst.from(node, replaceNgSpace(text));
-    }
-
-    if (_hasInterpolation(astNodes, i)) {
-      if (text.contains('\n')) {
-        if (!_hasInterpolationBefore(astNodes, i)) text = text.trimLeft();
-        if (!_hasInterpolationAfter(astNodes, i)) text = text.trimRight();
-      }
-    } else {
-      text = text.trim();
-    }
-
-    if (text.isEmpty) return null;
-
-    // Convert &ngsp to actual space.
-    text = replaceNgSpace(text);
-    return new ast.TextAst.from(node, text);
-  }
-
-  bool _hasInterpolation(List<ast.TemplateAst> astNodes, int i) =>
-      _hasInterpolationBefore(astNodes, i) ||
-      _hasInterpolationAfter(astNodes, i);
-
-  bool _betweenInterpolation(List<ast.TemplateAst> astNodes, int i) =>
-      _hasInterpolationBefore(astNodes, i) &&
-      _hasInterpolationAfter(astNodes, i);
-
-  bool _hasInterpolationBefore(List<ast.TemplateAst> astNodes, int i) {
-    if (i == 0) return false;
-    return astNodes[i - 1] is ast.InterpolationAst;
-  }
-
-  bool _hasInterpolationAfter(List<ast.TemplateAst> astNodes, int i) {
-    if (i == (astNodes.length - 1)) return false;
-    return astNodes[i + 1] is ast.InterpolationAst;
+  ast.TextAst _stripWhitespace(
+    int i,
+    ast.TextAst node,
+    List<ast.TemplateAst> astNodes,
+  ) {
+    // TODO(matanl): Consider removing this case entirely.
+    return new ast.TextAst.from(node, replaceNgSpace(node.value));
   }
 }
 

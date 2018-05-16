@@ -6,7 +6,6 @@ import 'package:meta/meta.dart';
 const _argDebugMode = 'debug';
 const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
-const _argLegacyWhitespace = 'use_legacy_preserve_whitespace';
 
 /// Compiler-wide configuration (flags) to allow opting in/out.
 ///
@@ -39,13 +38,6 @@ class CompilerFlags {
       help: ''
           'Whether to emit additional code that may be used by tooling '
           'in order to profile performance or other runtime information.',
-    )
-    ..addFlag(
-      _argLegacyWhitespace,
-      defaultsTo: null,
-      help: 'Whether to opt-in/out of the new preserveWhitespace: false',
-      // It's not clear we will keep this flag through the 5.x final release.
-      hide: true,
     );
 
   /// Whether to emit extra code suitable for testing and local development.
@@ -80,17 +72,12 @@ class CompilerFlags {
   @experimental
   final bool ignoreNgPlaceholderForGoldens;
 
-  /// Whether to use a new implementation of `preserveWhitespace: false`.
-  @experimental
-  final bool useNewPreserveWhitespace;
-
   const CompilerFlags({
     this.genDebugInfo: false,
     this.i18nEnabled: false,
     this.ignoreNgPlaceholderForGoldens: false,
     this.profileFor: Profile.none,
     this.useLegacyStyleEncapsulation: false,
-    this.useNewPreserveWhitespace: true,
   });
 
   /// Creates flags by parsing command-line arguments.
@@ -134,9 +121,6 @@ class CompilerFlags {
         _argDebugMode,
         _argProfileFor,
         _argLegacyStyle,
-        _argLegacyWhitespace,
-        // TODO(matanl): A better strategy for negatable options.
-        'no-$_argLegacyWhitespace',
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
@@ -164,19 +148,11 @@ class CompilerFlags {
       log('Invalid value for "$_argLegacyStyle": $useLegacyStyle');
       useLegacyStyle = null;
     }
-    var useLegacyWhitespace = options[_argLegacyWhitespace];
-    if (useLegacyWhitespace != null && useLegacyWhitespace is! bool) {
-      log('Invalid value for "$_argLegacyWhitespace": $useLegacyWhitespace');
-      useLegacyWhitespace = null;
-    }
     return new CompilerFlags(
       genDebugInfo: debugMode ?? defaultTo.genDebugInfo,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
-      useNewPreserveWhitespace: useLegacyWhitespace != null
-          ? !useLegacyWhitespace
-          : defaultTo.useNewPreserveWhitespace,
     );
   }
 }
