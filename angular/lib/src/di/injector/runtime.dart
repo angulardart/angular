@@ -76,7 +76,7 @@ class _RuntimeInjector extends HierarchicalInjector
     // Look for a previously instantiated instance.
     var instance = _instances[token];
     // If not found (and was truly a cache miss) resolve and create one.
-    if (instance == null && !_instances.containsKey(instance)) {
+    if (instance == null && !_instances.containsKey(token)) {
       final provider = _providers[token];
       // Provider not found, default to "orElse".
       if (provider == null) {
