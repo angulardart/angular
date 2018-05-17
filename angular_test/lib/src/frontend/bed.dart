@@ -287,7 +287,8 @@ class NgTestBed<T> {
       var rootInjector = _rootInjector;
       if (_providers.isNotEmpty) {
         rootInjector = ([parent]) {
-          return ReflectiveInjector.resolveAndCreate(_providers, parent);
+          return ReflectiveInjector.resolveAndCreate(
+              _providers, _rootInjector(parent));
         };
       }
       return bootstrapForTest<T>(
