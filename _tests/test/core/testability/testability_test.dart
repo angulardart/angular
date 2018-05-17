@@ -1,11 +1,9 @@
 @TestOn('browser')
 import 'dart:async';
 
+import 'package:angular/angular.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:angular/src/core/di.dart' show Injectable;
-import 'package:angular/src/core/testability/testability.dart' show Testability;
-import 'package:angular/src/core/zone/ng_zone.dart' show NgZone;
 
 // Schedules a microtasks (using a resolved promise .then())
 void microTask(void fn()) {
@@ -24,14 +22,14 @@ class MockCallback extends Mock implements TestabilityCallback {}
 
 @Injectable()
 class TestZone extends NgZone {
-  StreamController<dynamic> _onUnstableStream;
+  StreamController<Null> _onUnstableStream;
 
   @override
   Stream<Null> get onTurnStart {
     return _onUnstableStream.stream;
   }
 
-  StreamController<dynamic> _onStableStream;
+  StreamController<Null> _onStableStream;
 
   @override
   Stream<Null> get onTurnDone {
