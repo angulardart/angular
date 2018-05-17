@@ -1,3 +1,7 @@
+## 5.0.0-alpha+13
+
+* Pins `angular_ast` and `angular_compiler` to avoid future versioning issues.
+
 ## 5.0.0-alpha+12
 
 ### Breaking changes
