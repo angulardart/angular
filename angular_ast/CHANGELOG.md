@@ -1,3 +1,5 @@
+## 0.5.3
+
 *   Exported `ParsedAnnotationAst`.
 
 *   Added `ContainerAst`.

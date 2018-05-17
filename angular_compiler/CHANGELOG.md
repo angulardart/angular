@@ -1,3 +1,5 @@
+## 0.4.0-alpha+12
+
 *   Removes unused APIs of `ComponentReader`.
 *   Added `DirectiveVisitor`, and removed `$HostBinding` and `$HostListener`.
 
