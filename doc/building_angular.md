@@ -12,7 +12,7 @@ components.
       sdk: '>=2.0.0-dev <2.0.0'
     ...
     dev_dependencies:
-      build_runner: ^0.7.0
+      build_runner: ^0.8.0
       build_web_compilers: ^0.2.0
     ```
 
