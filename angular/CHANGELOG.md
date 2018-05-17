@@ -1,3 +1,5 @@
+## 5.0.0-alpha+12
+
 ### Breaking changes
 
 *   It is now a compile-time error to place a `@HostBinding` or `@HostListener`
