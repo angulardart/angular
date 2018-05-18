@@ -237,6 +237,12 @@ class Identifiers {
       name: "Event", moduleUrl: "dart:html");
   static final HTML_NODE = new CompileIdentifierMetadata<dynamic>(
       name: "Node", moduleUrl: "dart:html");
+
+  /// A class used for message internationalization.
+  static final Intl = new CompileIdentifierMetadata(
+    name: 'Intl',
+    moduleUrl: 'package:intl/intl.dart',
+  );
 }
 
 CompileTokenMetadata identifierToken(CompileIdentifierMetadata identifier) {
