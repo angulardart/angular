@@ -1,3 +1,8 @@
+### Breaking changes
+
+*   A directive with `Visibility.local` may now be injected by another directive
+    on the same host element, or by a descendant within the same view.
+
 ## 5.0.0-alpha+12
 
 ### Breaking changes
