@@ -4,4 +4,4 @@ import 'package:angular/angular.dart';
   selector: 'message',
   template: '<p @i18n="description">message</p>',
 )
-class MessageComponent {}
+class I18nTextComponent {}
