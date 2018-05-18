@@ -1138,6 +1138,16 @@ class CompileView implements AppViewBuilder {
           elementAst.name, nodeReference.toReadExpr(), name, expression);
       _createMethod.addStmt(stmt);
     });
+    for (final i18nAttr in elementAst.i18nAttrs) {
+      // Don't set any internationalized attributes that were overriden by a
+      // directive host binding.
+      if (!attrNameAndValues.containsKey(i18nAttr.name)) {
+        final message = createI18nMessage(i18nAttr.value);
+        final stmt = createSetAttributeStatement(elementAst.name,
+            nodeReference.toReadExpr(), i18nAttr.name, message);
+        _createMethod.addStmt(stmt);
+      }
+    }
   }
 
   @override
