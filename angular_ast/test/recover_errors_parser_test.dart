@@ -706,4 +706,36 @@ void main() {
     expect(e2.offset, 38);
     expect(e2.length, 2);
   });
+
+  test('Should handle unclosed quote on attribute value', () {
+    final asts = parse('<p foo="bar></p>');
+    expect(asts, hasLength(1));
+
+    final p = asts.first as ElementAst;
+    expect(p.attributes, hasLength(1));
+    expect(p.isSynthetic, isFalse);
+    expect(p.closeComplement.isSynthetic, isTrue);
+
+    final foo = p.attributes.first;
+    // The recovered text used to span an invalid range and cause a crash.
+    expect(foo.sourceSpan.text, 'foo="bar></p>');
+
+    final exceptions = recoveringExceptionHandler.exceptions;
+    expect(exceptions, hasLength(3));
+
+    final e1 = exceptions[0];
+    expect(e1.errorCode, NgParserWarningCode.UNCLOSED_QUOTE);
+    expect(e1.offset, 7);
+    expect(e1.length, 9);
+
+    final e2 = exceptions[1];
+    expect(e2.errorCode, NgParserWarningCode.EXPECTED_TAG_CLOSE);
+    expect(e2.offset, 7);
+    expect(e2.length, 9);
+
+    final e3 = exceptions[2];
+    expect(e3.errorCode, NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE);
+    expect(e3.offset, 0);
+    expect(e3.length, 16);
+  });
 }

@@ -594,7 +594,11 @@ class NgScanner {
       if (current.quoteEndOffset == null) {
         if (_recoverErrors) {
           // Manual insertion to handler since there is no recovery step.
-          rightQuoteOffset = current.end;
+          // Normally the quote offset comes after the decorator value, but when
+          // the quote itself is absent, it must point to the last character of
+          // the decorator value. Otherwise, the token's source span would
+          // extend beyond the decorator itself, past EOF, and crash.
+          rightQuoteOffset = current.end - 1;
           exceptionHandler.handle(_generateException(
             NgParserWarningCode.UNCLOSED_QUOTE,
             current.offset,
