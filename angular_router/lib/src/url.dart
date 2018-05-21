@@ -12,7 +12,7 @@ class Url {
   static Url parse(String url) {
     final uri = Uri.parse(url);
     return new Url(
-      normalizePath(uri.path),
+      uri.path,
       fragment: uri.fragment,
       queryParameters: uri.queryParameters,
     );

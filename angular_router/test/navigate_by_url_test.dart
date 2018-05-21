@@ -33,7 +33,7 @@ void main() {
     });
 
     test('invokes navigate with query parameters', () {
-      router.navigateByUrl('to/path?q=hello%20world');
+      router.navigateByUrl('/to/path?q=hello%20world');
       expect(
         verify(mockRouter.navigate(
           typed(captureAny),
