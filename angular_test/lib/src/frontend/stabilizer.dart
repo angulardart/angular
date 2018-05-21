@@ -83,7 +83,12 @@ abstract class NgTestStabilizer {
     }
     var count = 0;
     bool thresholdExceeded() => count++ > threshold;
-    while (!await update(run)) {
+
+    // We only want to actually execute the 'run' function ONCE.
+    await update(run);
+
+    // ... and once update says there is no more work to do, we will bail out.
+    while (!await update()) {
       if (thresholdExceeded()) {
         throw new WillNeverStabilizeError(threshold);
       }

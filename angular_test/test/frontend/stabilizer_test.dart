@@ -103,17 +103,34 @@ void main() {
 
     test('should throw if stabilization never occurs', () async {
       expect(
-          ngZoneStabilizer.stabilize(
-              run: () {
-                // Just enough asynchronous events to exceed the threshold; not 1:1.
-                Timer.run(() {
-                  Timer.run(() {
-                    Timer.run(() {});
-                  });
-                });
-              },
-              threshold: 5),
-          throwsA(const isInstanceOf<WillNeverStabilizeError>()));
+        ngZoneStabilizer.stabilize(
+          run: () {
+            // Just enough asynchronous events to exceed the threshold; not 1:1.
+            var timersRemaining = 10;
+
+            void runTimer() {
+              if (--timersRemaining > 0) {
+                scheduleMicrotask(() => Timer.run(runTimer));
+              }
+            }
+
+            runTimer();
+          },
+          threshold: 5,
+        ),
+        throwsA(const isInstanceOf<WillNeverStabilizeError>()),
+      );
+    });
+
+    test('should stabilize if animation timers are used', () async {
+      expect(
+        ngZoneStabilizer.stabilize(
+          run: () async {
+            new Timer(const Duration(milliseconds: 100), () {});
+          },
+        ),
+        completion(isNull),
+      );
     });
   });
 }

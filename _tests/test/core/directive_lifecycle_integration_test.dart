@@ -36,9 +36,11 @@ void main() {
       log.clear();
       await fixture.update((MyComp _) {});
       expect(
-          log.toString(),
-          'ngDoCheck; ngAfterContentChecked; child_ngDoCheck; '
-          'ngAfterViewChecked');
+        log.toString(),
+        // We run more than one cycle, but this is what we really care about.
+        startsWith('ngDoCheck; ngAfterContentChecked; child_ngDoCheck; '
+            'ngAfterViewChecked'),
+      );
     });
   });
 }
