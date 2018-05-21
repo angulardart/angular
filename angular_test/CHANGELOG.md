@@ -1,3 +1,8 @@
+*   Fixed a bug where a `WillNeverStabilizeError` was thrown whenever there was
+    a non-zero length `Timer` being executed. This was due to a bug in how the
+    `NgStabilizer` was executing - constantly calling the `update` function
+    instead of calling it _once_ and waiting for stabilization.
+
 ## 2.0.0-alpha+10
 
 *   Fixed a bug where `_createDynamic` does not preserve `rootInjector`.
