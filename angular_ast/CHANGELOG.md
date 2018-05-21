@@ -1,3 +1,6 @@
+*   Fixed source span range of `AttributeAst` which would extend past EOF when
+    recovering from a value with an unclosed quote.
+
 ## 0.5.3
 
 *   Exported `ParsedAnnotationAst`.
