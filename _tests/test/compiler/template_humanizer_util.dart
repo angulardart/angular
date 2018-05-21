@@ -11,18 +11,18 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   TemplateHumanizer(this.includeSourceSpan);
 
   void visitNgContainer(NgContainerAst ast, _) {
-    var res = [NgContainerAst];
+    var res = <dynamic>[NgContainerAst];
     result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.children);
   }
 
   void visitNgContent(NgContentAst ast, _) {
-    var res = [NgContentAst];
+    var res = <dynamic>[NgContentAst];
     result.add(_appendContext(ast, res));
   }
 
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
-    var res = [EmbeddedTemplateAst];
+    var res = <dynamic>[EmbeddedTemplateAst];
     result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.attrs);
     templateVisitAll(this, ast.outputs);
