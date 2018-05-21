@@ -110,17 +110,21 @@ void main() {
 
 @Component(
   selector: 'keydown-listener',
-  host: const {
-    '(keydown)': 'receivedKeydown = true',
-    '(keydown.a)': 'receivedKeydownA = true',
-    '(keydown.shift.a)': 'receivedKeydownShiftA = true',
-  },
   template: '<div></div>',
 )
 class KeydownListenerComponent {
   bool receivedKeydown = false;
   bool receivedKeydownA = false;
   bool receivedKeydownShiftA = false;
+
+  @HostListener('keydown')
+  void onKeyDown() => receivedKeydown = true;
+
+  @HostListener('keydown.a')
+  void onKeyDownA() => receivedKeydownA = true;
+
+  @HostListener('keydown.shift.a')
+  void onKeyDownShiftA() => receivedKeydownShiftA = true;
 }
 
 @Component(
