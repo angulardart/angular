@@ -119,7 +119,7 @@ class NgControlNameInitTest {
   selector: '[test-accessor]',
   providers: const [
     const ExistingProvider.forToken(
-      NG_VALUE_ACCESSOR,
+      ngValueAccessor,
       TestAccessor,
     )
   ],

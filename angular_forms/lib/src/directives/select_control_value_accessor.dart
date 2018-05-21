@@ -4,10 +4,10 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/facade/lang.dart' show isPrimitive;
 
 import 'control_value_accessor.dart'
-    show ChangeHandler, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
+    show ChangeHandler, ControlValueAccessor, ngValueAccessor, TouchHandler;
 
 const SELECT_VALUE_ACCESSOR = const ExistingProvider.forToken(
-  NG_VALUE_ACCESSOR,
+  ngValueAccessor,
   SelectControlValueAccessor,
 );
 

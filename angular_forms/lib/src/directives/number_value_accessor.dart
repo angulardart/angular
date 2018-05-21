@@ -3,10 +3,10 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 import 'control_value_accessor.dart'
-    show ChangeHandler, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
+    show ChangeHandler, ControlValueAccessor, ngValueAccessor, TouchHandler;
 
 const NUMBER_VALUE_ACCESSOR = const ExistingProvider.forToken(
-  NG_VALUE_ACCESSOR,
+  ngValueAccessor,
   NumberValueAccessor,
 );
 

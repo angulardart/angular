@@ -63,7 +63,7 @@ typedef dynamic ChangeFunctionSimple(value);
   selector: "input[integer]",
   providers: const [
     const ExistingProvider<ControlValueAccessor>.forToken(
-        NG_VALUE_ACCESSOR, IntValueAccessor),
+        ngValueAccessor, IntValueAccessor),
     const ExistingProvider.forToken(NG_VALIDATORS, IntValueAccessor),
   ],
 )
