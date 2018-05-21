@@ -22,24 +22,30 @@ void main() {
       test('directive should be accessible via a query', () async {
         final testBed = new NgTestBed<ShouldQueryDirective>();
         final testFixture = await testBed.create();
-        await testFixture.update((component) {
-          expect(component.directive, isNotNull);
-        });
+        expect(testFixture.assertOnlyInstance.directive, isNotNull);
       });
 
-      test('directive should not be injectable on same element', () async {
-        final testBed = new NgTestBed<ShouldFailToInjectFromElement>();
-        expect(testBed.create(), throwsNoProviderError);
+      test('directive should be injectable on same element', () async {
+        final testBed = new NgTestBed<ShouldInjectFromElement>();
+        final testFixture = await testBed.create();
+        expect(testFixture.assertOnlyInstance.child.directive, isNotNull);
       });
 
-      test('directive should not be injectable in same view', () async {
-        final testBed = new NgTestBed<ShouldFailToInjectFromView>();
-        expect(testBed.create(), throwsNoProviderError);
+      test('directive should be injectable in same view', () async {
+        final testBed = new NgTestBed<ShouldInjectFromView>();
+        final testFixture = await testBed.create();
+        expect(testFixture.assertOnlyInstance.child.directive, isNotNull);
       });
 
       test('directive should not be injectable in child view', () async {
         final testBed = new NgTestBed<ShouldFailToInjectFromParentView>();
         expect(testBed.create(), throwsNoProviderError);
+      });
+
+      test('directive should inject host component', () async {
+        final testBed = new NgTestBed<ShouldInjectHost>();
+        final testFixture = await testBed.create();
+        expect(testFixture.assertOnlyInstance.directive.host, isNotNull);
       });
 
       test('service on Visibility.none component is injectable', () async {
@@ -122,7 +128,10 @@ class InjectsDirectiveComponent {
   template: '<injects-directive visibility-none></injects-directive>',
   directives: const [InjectsDirectiveComponent, VisibilityNoneDirective],
 )
-class ShouldFailToInjectFromElement {}
+class ShouldInjectFromElement {
+  @ViewChild(InjectsDirectiveComponent)
+  InjectsDirectiveComponent child;
+}
 
 @Component(
   selector: 'should-fail-to-inject-from-view',
@@ -133,7 +142,10 @@ class ShouldFailToInjectFromElement {}
   ''',
   directives: const [InjectsDirectiveComponent, VisibilityNoneDirective],
 )
-class ShouldFailToInjectFromView {}
+class ShouldInjectFromView {
+  @ViewChild(InjectsDirectiveComponent)
+  InjectsDirectiveComponent child;
+}
 
 @Component(
   selector: 'injects-directive-host',
@@ -155,6 +167,29 @@ class InjectsDirectiveHostComponent {}
   ],
 )
 class ShouldFailToInjectFromParentView {}
+
+@Component(
+  selector: 'visibility-local',
+  template: '',
+)
+class VisibilityLocalComponent {}
+
+@Directive(selector: '[injects-visibility-local]')
+class InjectsVisibilityLocal {
+  final VisibilityLocalComponent host;
+
+  InjectsVisibilityLocal(this.host);
+}
+
+@Component(
+  selector: 'test',
+  template: '<visibility-local injects-visibility-local></visibility-local>',
+  directives: const [InjectsVisibilityLocal, VisibilityLocalComponent],
+)
+class ShouldInjectHost {
+  @ViewChild(InjectsVisibilityLocal)
+  InjectsVisibilityLocal directive;
+}
 
 /// This service is exposed through a component that is marked Visibility.none.
 /// The test verifies that injectorGet calls in compiler use the service not

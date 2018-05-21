@@ -82,12 +82,8 @@ class ProvidersNode {
           }
           // Given the token and visibility defined by providerType,
           // get value based on existing expression mapped to token.
-          providerSource = _getDependency(resolvedProvider.providerType,
-              new CompileDiDependencyMetadata(token: provider.useExisting),
-              requestOrigin:
-                  resolvedProvider.implementedByDirectiveWithNoVisibility
-                      ? provider.token
-                      : null);
+          providerSource = _getDependency(
+              new CompileDiDependencyMetadata(token: provider.useExisting));
           directiveMetadata = null;
         } else if (provider.useFactory != null) {
           providerSource =
@@ -140,7 +136,7 @@ class ProvidersNode {
       CompileProviderMetadata provider, ProviderAstType providerType) {
     var parameters = <ProviderSource>[];
     for (var paramDep in provider.deps ?? provider.useFactory.diDeps) {
-      parameters.add(_getDependency(providerType, paramDep));
+      parameters.add(_getDependency(paramDep));
     }
     return new FactoryProviderSource(
         provider.token, provider.useFactory, parameters);
@@ -152,78 +148,34 @@ class ProvidersNode {
     // Resolve constructor parameters for class.
     var parameters = <ProviderSource>[];
     for (var paramDep in paramDeps) {
-      parameters.add(_getDependency(providerType, paramDep));
+      parameters.add(_getDependency(paramDep));
     }
     return new ClassProviderSource(
         provider.token, provider.useClass, parameters);
   }
 
-  ProviderSource _getLocalDependency(
-      ProviderAstType requestingProviderType, CompileTokenMetadata token) {
-    if (token == null) return null;
-
-    // Access regular providers on the element. For provider instances with an
-    // associated provider AST, ensure the provider is visible for injection.
-    final providerAst = _resolvedProviders.get(token);
-    if (providerAst == null || providerAst.visibleForInjection) {
-      return _instances.get(token);
-    }
-    return null;
+  ProviderSource _getLocalDependency(CompileTokenMetadata token) {
+    return token != null ? _instances.get(token) : null;
   }
 
-  ProviderSource _getDependency(
-      ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep,
-      {CompileTokenMetadata requestOrigin}) {
+  ProviderSource _getDependency(CompileDiDependencyMetadata dep) {
     ProvidersNode currProviders = this;
     ProviderSource result;
     if (dep.isValue) {
       result = new LiteralValueSource(dep.token, o.literal(dep.value));
     }
     if (result == null && !dep.isSkipSelf) {
-      result = _getLocalDependency(requestingProviderType, dep.token);
+      result = _getLocalDependency(dep.token);
     }
-
     // check parent elements
     while (result == null && currProviders._parent._parent != null) {
       currProviders = currProviders._parent;
-      result = currProviders._getLocalDependency(
-          ProviderAstType.PublicService, dep.token);
-    }
-
-    // If component has a service with useExisting: provider pointing to itself,
-    // we need to search for providerAst using the service interface but
-    // query _instances with the component type to get correct instance.
-    // [requestOrigin] below points to the service whereas dep.token will
-    // reference the component type.
-    if (result == null && requestOrigin != null) {
-      currProviders = this;
-      if (!dep.isSkipSelf) {
-        final providerAst = _resolvedProviders.get(requestOrigin);
-        if (providerAst == null ||
-            providerAst.visibleForInjection ||
-            // This condition is only reached when a component implements a
-            // directive that's applied to its host element, and provides itself
-            // in place of the directive. In this case we don't care if the
-            // request origin (the directive itself) is visible, since this
-            // wouldn't prevent you from applying the directive in the absence
-            // of the component.
-            requestingProviderType == ProviderAstType.Directive) {
-          result = _instances.get(dep.token);
-        }
-      }
-      // See if we have local dependency to origin service.
-      while (result == null && currProviders._parent._parent != null) {
-        currProviders = currProviders._parent;
-        final providerAst = currProviders._resolvedProviders.get(requestOrigin);
-        if (providerAst == null || providerAst.visibleForInjection) {
-          result = currProviders._instances.get(dep.token);
-        }
-      }
+      result = currProviders._getLocalDependency(dep.token);
     }
     // Ask host to build a ProviderSource that injects the instance
     // dynamically through injectorGet call.
     return _host.createDynamicInjectionSource(
-        currProviders, result, requestOrigin ?? dep.token, dep.isOptional);
+        currProviders, result, dep.token, dep.isOptional);
   }
 
   /// Creates an expression that calls a functional directive.
@@ -233,7 +185,7 @@ class ProvidersNode {
     final parameters = <ProviderSource>[];
     final mainProvider = provider.providers.first;
     for (var dep in mainProvider.deps) {
-      parameters.add(_getDependency(provider.providerType, dep));
+      parameters.add(_getDependency(dep));
     }
     return new FunctionalDirectiveSource(
         mainProvider.token, mainProvider.useClass, parameters);
