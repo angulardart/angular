@@ -5,8 +5,7 @@ import 'package:angular/angular.dart';
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
 import 'control_container.dart' show ControlContainer;
-import 'control_value_accessor.dart'
-    show ControlValueAccessor, NG_VALUE_ACCESSOR;
+import 'control_value_accessor.dart' show ControlValueAccessor, ngValueAccessor;
 import 'form_interface.dart' show Form;
 import 'ng_control.dart' show NgControl;
 import 'shared.dart' show controlPath;
@@ -99,7 +98,7 @@ class NgControlName extends NgControl implements AfterChanges, OnDestroy {
           List validators,
       @Optional()
       @Self()
-      @Inject(NG_VALUE_ACCESSOR)
+      @Inject(ngValueAccessor)
           List<ControlValueAccessor> valueAccessors)
       : super(valueAccessors, validators);
 

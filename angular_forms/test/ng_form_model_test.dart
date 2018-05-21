@@ -192,7 +192,7 @@ class NgFormModelTest {
 
 @Directive(selector: '[dummy]', providers: [
   const ExistingProvider.forToken(
-    NG_VALUE_ACCESSOR,
+    ngValueAccessor,
     DummyControlValueAccessor,
   )
 ])

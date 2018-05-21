@@ -6,11 +6,11 @@ import 'package:angular_forms/src/directives/shared.dart'
     show setElementDisabled;
 
 import 'control_value_accessor.dart'
-    show ChangeHandler, ControlValueAccessor, NG_VALUE_ACCESSOR, TouchHandler;
+    show ChangeHandler, ControlValueAccessor, ngValueAccessor, TouchHandler;
 import 'ng_control.dart' show NgControl;
 
 const RADIO_VALUE_ACCESSOR = const ExistingProvider.forToken(
-  NG_VALUE_ACCESSOR,
+  ngValueAccessor,
   RadioControlValueAccessor,
 );
 

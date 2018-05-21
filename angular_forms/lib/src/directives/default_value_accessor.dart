@@ -8,7 +8,7 @@ import 'package:angular_forms/src/directives/shared.dart'
 import 'control_value_accessor.dart';
 
 const DEFAULT_VALUE_ACCESSOR = const ExistingProvider.forToken(
-  NG_VALUE_ACCESSOR,
+  ngValueAccessor,
   DefaultValueAccessor,
 );
 

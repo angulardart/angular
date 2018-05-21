@@ -773,7 +773,7 @@ void main() {
   '[value]': 'value'
 }, providers: [
   const ExistingProvider.forToken(
-    NG_VALUE_ACCESSOR,
+    ngValueAccessor,
     WrappedAccessor,
   )
 ])
@@ -804,7 +804,7 @@ class WrappedAccessor implements ControlValueAccessor {
 
 @Component(selector: 'my-input', template: '', providers: [
   const ExistingProvider.forToken(
-    NG_VALUE_ACCESSOR,
+    ngValueAccessor,
     MyInput,
   )
 ])
