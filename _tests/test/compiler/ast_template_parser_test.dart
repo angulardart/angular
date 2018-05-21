@@ -72,7 +72,11 @@ void main() {
   ParseTemplate _parse;
 
   // TODO(matanl): Add common log testing functionality to lib/.
-  parse(template, [directive, pipes]) {
+  parse(
+    String template, [
+    List<CompileDirectiveMetadata> directive,
+    List<CompilePipeMetadata> pipes,
+  ]) {
     return runZoned(() => _parse(template, directive, pipes), zoneValues: {
       #buildLog: Logger.root,
     });
