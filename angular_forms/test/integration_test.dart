@@ -768,17 +768,19 @@ void main() {
   });
 }
 
-@Directive(selector: '[wrapped-value]', host: const {
-  '(input)': 'handleOnInput(\$event.target.value)',
-  '[value]': 'value'
-}, providers: [
-  const ExistingProvider.forToken(
-    ngValueAccessor,
-    WrappedAccessor,
-  )
-])
+@Directive(
+  selector: '[wrapped-value]',
+  providers: [
+    const ExistingProvider.forToken(
+      ngValueAccessor,
+      WrappedAccessor,
+    )
+  ],
+)
 class WrappedAccessor implements ControlValueAccessor {
+  @HostBinding('value')
   var value;
+
   Function onChange;
 
   @override
@@ -794,6 +796,7 @@ class WrappedAccessor implements ControlValueAccessor {
   @override
   void registerOnTouched(fn) {}
 
+  @HostListener('input', const [r'$event.target.value'])
   void handleOnInput(value) {
     this.onChange(value.substring(1, value.length - 1));
   }
