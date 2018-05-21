@@ -297,12 +297,6 @@ class ProviderAst implements TemplateAst {
   /// dependencies.
   final bool visibleForInjection;
 
-  /// Whether the provider is an alias for a directive with local visibility.
-  ///
-  /// This is non-final as it could be changed by another provider overriding
-  /// the original [providers].
-  bool implementedByDirectiveWithNoVisibility;
-
   final List<CompileProviderMetadata> providers;
   final ProviderAstType providerType;
   final SourceSpan sourceSpan;
@@ -317,7 +311,6 @@ class ProviderAst implements TemplateAst {
     this.dynamicallyReachable: true,
     this.typeArgument,
     this.visibleForInjection: true,
-    this.implementedByDirectiveWithNoVisibility: false,
   });
 
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>

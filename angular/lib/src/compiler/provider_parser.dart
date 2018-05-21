@@ -377,8 +377,6 @@ ProviderAst _transformProviderAst(ProviderAst provider,
     dynamicallyReachable: provider.dynamicallyReachable,
     visibleForInjection: provider.visibleForInjection,
     typeArgument: provider.typeArgument,
-    implementedByDirectiveWithNoVisibility:
-        provider.implementedByDirectiveWithNoVisibility,
   );
 }
 
@@ -439,7 +437,7 @@ class _ProviderResolver {
           visibility: directive.visibility);
       final providerAstType =
           _providerAstTypeFromMetadataType(directive.metadataType);
-      _resolveProviders(directive, [dirProvider], providerAstType, eager: true);
+      _resolveProviders([dirProvider], providerAstType, eager: true);
     }
     // Note: We need an ordered list where components preceded directives so
     // directives are able to overwrite providers of a component!
@@ -452,12 +450,10 @@ class _ProviderResolver {
     }
     for (var directive in orderedList) {
       _resolveProviders(
-          directive,
           _normalizeProviders(directive.providers, sourceSpan, errors),
           ProviderAstType.PublicService,
           eager: false);
       _resolveProviders(
-          directive,
           _normalizeProviders(directive.viewProviders, sourceSpan, errors),
           ProviderAstType.PrivateService,
           eager: false);
@@ -468,7 +464,6 @@ class _ProviderResolver {
   // Updates tokenMap by creating new ProviderAst or by adding/replacing new entry
   // for existing ProviderAst.
   void _resolveProviders(
-    CompileDirectiveMetadata directiveContext,
     List<CompileProviderMetadata> providers,
     ProviderAstType providerType, {
     bool eager,
@@ -482,8 +477,6 @@ class _ProviderResolver {
             '${resolvedProvider.token.name}',
             sourceSpan));
       }
-      final hasLocalImplementation =
-          _hasLocalImplementation(directiveContext, provider);
       if (resolvedProvider == null) {
         resolvedProvider = new ProviderAst(
           provider.token,
@@ -492,7 +485,6 @@ class _ProviderResolver {
           providerType,
           sourceSpan,
           eager: eager,
-          implementedByDirectiveWithNoVisibility: hasLocalImplementation,
           typeArgument: provider.typeArgument,
           visibleForInjection: provider.visibility == Visibility.all,
         );
@@ -500,29 +492,12 @@ class _ProviderResolver {
       } else {
         if (!provider.multi) {
           // Overwrite existing provider.
-          resolvedProvider
-            ..providers.clear()
-            ..implementedByDirectiveWithNoVisibility = hasLocalImplementation;
-        } else if (!resolvedProvider.implementedByDirectiveWithNoVisibility) {
-          // True if any provider for a multi-token has a local implementation.
-          resolvedProvider.implementedByDirectiveWithNoVisibility =
-              hasLocalImplementation;
+          resolvedProvider.providers.clear();
         }
         resolvedProvider.providers.add(provider);
       }
     }
   }
-}
-
-/// Whether the provider uses the existing [directive] with `Visibility.local`.
-bool _hasLocalImplementation(
-  CompileDirectiveMetadata directive,
-  CompileProviderMetadata provider,
-) {
-  return provider.useExisting != null &&
-      directive.visibility == Visibility.local &&
-      directive.type.name == provider.useExisting.identifier.name &&
-      directive.type.moduleUrl == provider.useExisting.identifier.moduleUrl;
 }
 
 CompileTokenMap<List<CompileQueryMetadata>> _getViewQueries(
