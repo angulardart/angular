@@ -137,7 +137,7 @@ Future<Null> compilesExpecting(
   include ??= const {};
 
   // Complete list of input sources.
-  final sources = <String, dynamic>{
+  final sources = <String, String>{
     inputSource: input,
   }..addAll(include);
 
