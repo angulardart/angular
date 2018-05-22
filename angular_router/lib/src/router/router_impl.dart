@@ -40,7 +40,7 @@ class RouterImpl extends Router {
   Future<NavigationResult> _lastNavigation = new Future.value();
 
   RouterImpl(this._location, @Optional() this._routerHook) {
-    Url.isHashStrategy = _location.platformStrategy is HashLocationStrategy;
+    Url.isHashStrategy = _location.locationStrategy is HashLocationStrategy;
 
     _location.subscribe((_) {
       final url = Url.parse(_location.path());
