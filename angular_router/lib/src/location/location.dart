@@ -49,13 +49,13 @@ import 'location_strategy.dart' show LocationStrategy;
 /// ```
 @Injectable()
 class Location {
-  final LocationStrategy platformStrategy;
+  final LocationStrategy locationStrategy;
   final _subject = new StreamController<dynamic>();
   final String _baseHref;
 
-  Location(this.platformStrategy)
-      : _baseHref = _sanitizeBaseHref(platformStrategy) {
-    platformStrategy.onPopState((ev) {
+  Location(this.locationStrategy)
+      : _baseHref = _sanitizeBaseHref(locationStrategy) {
+    locationStrategy.onPopState((ev) {
       _subject.add({'url': path(), 'pop': true, 'type': ev.type});
     });
   }
@@ -66,9 +66,9 @@ class Location {
   }
 
   /// Returns the normalized URL path.
-  String path() => normalize(platformStrategy.path());
+  String path() => normalize(locationStrategy.path());
 
-  String hash() => normalize(platformStrategy.hash());
+  String hash() => normalize(locationStrategy.hash());
 
   /// Given a string representing a URL, returns the normalized URL path without
   /// leading or trailing slashes
@@ -84,30 +84,30 @@ class Location {
     if (url.isNotEmpty && !url.startsWith('/')) {
       url = '/$url';
     }
-    return platformStrategy.prepareExternalUrl(url);
+    return locationStrategy.prepareExternalUrl(url);
   }
 
   // TODO: rename this method to pushState
   /// Changes the browsers URL to the normalized version of the given URL, and
   /// pushes a new item onto the platform's history.
   void go(String path, [String query = '']) {
-    platformStrategy.pushState(null, '', path, query);
+    locationStrategy.pushState(null, '', path, query);
   }
 
   /// Changes the browsers URL to the normalized version of the given URL, and
   /// replaces the top item on the platform's history stack.
   void replaceState(String path, [String query = '']) {
-    platformStrategy.replaceState(null, '', path, query);
+    locationStrategy.replaceState(null, '', path, query);
   }
 
   /// Navigates forward in the platform's history.
   void forward() {
-    platformStrategy.forward();
+    locationStrategy.forward();
   }
 
   /// Navigates back in the platform's history.
   void back() {
-    platformStrategy.back();
+    locationStrategy.back();
   }
 
   /// Subscribe to the platform's `popState` events.
