@@ -144,11 +144,11 @@ List<StaticNodeDebugInfo> nodeDebugInfos_HostComponent0 = [];
 
 class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
   var _expr_0;
-  bool _expr_1;
+  var _expr_1;
+  bool _expr_2;
   static RenderComponentType _renderType;
   ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HostComponent0) {
     rootEl = import7.document.createElement('host');
-    createAttr(rootEl, 'aria-title', 'title');
     _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/host.dart class HostComponent - inline template', ViewEncapsulation.None, styles$HostComponent);
     setupComponentType(_renderType);
   }
@@ -177,10 +177,15 @@ class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
       setProp(rootEl, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
-    final currVal_1 = ctx.isDisabled;
+    final currVal_1 = ctx.title;
     if (import8.checkBinding(_expr_1, currVal_1)) {
-      updateElemClass(rootEl, 'is-disabled', currVal_1);
+      setAttr(rootEl, 'aria-title', currVal_1?.toString());
       _expr_1 = currVal_1;
+    }
+    final currVal_2 = ctx.isDisabled;
+    if (import8.checkBinding(_expr_2, currVal_2)) {
+      updateElemClass(rootEl, 'is-disabled', currVal_2);
+      _expr_2 = currVal_2;
     }
   }
 }

@@ -21,13 +21,10 @@ class HostComponentNewSyntax {
 @Component(
   selector: 'host',
   template: '',
-  host: const {
-    'aria-title': 'title',
-    '(keydown)': 'onKeyDown()',
-  },
 )
 class HostComponent {
   @HostBinding()
+  @HostBinding('attr.aria-title')
   String get title => 'Hello';
 
   @HostBinding('class.is-disabled')
@@ -42,5 +39,6 @@ class HostComponent {
   @HostListener('click', const [r'$event'])
   void onClick(event) {}
 
+  @HostListener('keydown')
   void onKeyDown() {}
 }
