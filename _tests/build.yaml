@@ -1,6 +1,16 @@
 targets:
   $default:
     builders:
+      build_web_compilers|entrypoint:
+        generate_for:
+          exclude:
+          - test/compiler/**
+          - test/compiler_integration/**
+          - test/source_gen/**
+          - test/core/di/provider_test.dart*
+          - test/regression/906_incorrect_injectable_warning_test.dart*
+          - test/regression/519_missing_query_selector_test.dart*
+
       angular:
         options:
           debug: True
