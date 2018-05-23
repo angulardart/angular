@@ -108,7 +108,7 @@ class _DelegatingNgTestStabilizer extends NgTestStabilizer {
       return false;
     }
     final results = await Future.wait(_delegates.map((s) => s.update(fn)));
-    return results.any((r) => r);
+    return results.every((r) => r);
   }
 }
 
