@@ -46,27 +46,6 @@ class ReflectableReader {
   /// By default this is `.template.dart`.
   final String outputExtension;
 
-  /// Whether to treat an `@Component`-annotated `class` as an `@Component`.
-  ///
-  /// This means that a factory to create the component at runtime needs to be
-  /// registered. This also disables tree-shaking classes annotated with
-  /// `@Component`.
-  final bool recordComponentsAsInjectables;
-
-  /// Whether to treat an `@Directive`-annotated `class` as an `@Injectable`.
-  ///
-  /// This means that a factory to create the directive at runtime needs to be
-  /// registered. This also disables tree-shaking classes annotated with
-  /// `@Directive`.
-  final bool recordDirectivesAsInjectables;
-
-  /// Whether to treat a `@Pipe`-annotated `class` as an `@Injectable`.
-  ///
-  /// This means that a factory to create the pipe at runtime needs to be
-  /// registered. This also disables tree-shaking classes annotated with
-  /// `@Pipe`.
-  final bool recordPipesAsInjectables;
-
   /// Whether to record `@RouteConfig`s for `@Component`-annotated classes.
   ///
   /// This is only required in order to support the legacy router, which looks
@@ -78,9 +57,6 @@ class ReflectableReader {
     @required this.hasInput,
     @required this.isLibrary,
     this.outputExtension: _defaultOutputExtension,
-    this.recordComponentsAsInjectables: false,
-    this.recordDirectivesAsInjectables: false,
-    this.recordPipesAsInjectables: false,
     this.recordRouterAnnotationsForComponents: true,
   });
 
@@ -91,9 +67,6 @@ class ReflectableReader {
   const ReflectableReader.noLinking({
     this.dependencyReader: const DependencyReader(),
     this.outputExtension: _defaultOutputExtension,
-    this.recordComponentsAsInjectables: true,
-    this.recordDirectivesAsInjectables: true,
-    this.recordPipesAsInjectables: true,
     this.recordRouterAnnotationsForComponents: true,
   })  : hasInput = _nullHasInput,
         isLibrary = _nullIsLibrary;
@@ -224,12 +197,7 @@ class ReflectableReader {
   }
 
   bool _shouldRecordFactory(ClassElement element) =>
-      $Injectable.firstAnnotationOfExact(element) != null ||
-      recordComponentsAsInjectables &&
-          $Component.firstAnnotationOfExact(element) != null ||
-      recordDirectivesAsInjectables &&
-          $Directive.firstAnnotationOfExact(element) != null ||
-      recordPipesAsInjectables && $Pipe.firstAnnotationOfExact(element) != null;
+      $Injectable.hasAnnotationOfExact(element);
 }
 
 class ReflectableOutput {

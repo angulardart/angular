@@ -95,9 +95,7 @@ void main() {
   });
 
   test('should emit no metadata for an empty injectable class', () async {
-    final reflector = new ReflectableReader.noLinking(
-      recordComponentsAsInjectables: false,
-    );
+    final reflector = new ReflectableReader.noLinking();
     final output = await reflector.resolve(await resolveLibrary(r'''
       @Component(selector: 'example')
       class Example {}
@@ -125,9 +123,7 @@ void main() {
   });
 
   test('should emit metadata for annotations named RouteConfig', () async {
-    final reflector = new ReflectableReader.noLinking(
-      recordComponentsAsInjectables: false,
-    );
+    final reflector = new ReflectableReader.noLinking();
     final output = await reflector.resolve(await resolveLibrary(r'''
       // Inlined a minimal version here to simplify the test setup.
       class RouteConfig {
