@@ -73,97 +73,6 @@ void main() {
     );
   });
 
-  test('should record a directive (treated as an @Injectable)', () async {
-    final testLib = await resolveLibrary(r'''
-      @Directive(selector: 'example')
-      class Example {
-        Example(Duration duration);
-      }
-    ''');
-    final output = await new ReflectableReader.noLinking().resolve(testLib);
-    final clazz = testLib.definingCompilationUnit.types.first;
-    expect(
-      output,
-      new ReflectableOutput(registerClasses: [
-        new ReflectableClass(
-          element: clazz,
-          name: 'Example',
-          factory: new DependencyInvocation(
-            clazz.unnamedConstructor,
-            [
-              new DependencyElement(
-                new TypeTokenElement(
-                  const TypeLink('Duration', 'dart:core'),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ]),
-    );
-  });
-
-  test('should record a pipe (treated as an @Injectable)', () async {
-    final testLib = await resolveLibrary(r'''
-      @Pipe('example')
-      class Example {
-        Example(Duration duration);
-      }
-    ''');
-    final output = await new ReflectableReader.noLinking().resolve(testLib);
-    final clazz = testLib.definingCompilationUnit.types.first;
-    expect(
-      output,
-      new ReflectableOutput(registerClasses: [
-        new ReflectableClass(
-          element: clazz,
-          name: 'Example',
-          factory: new DependencyInvocation(
-            clazz.unnamedConstructor,
-            [
-              new DependencyElement(
-                new TypeTokenElement(
-                  const TypeLink('Duration', 'dart:core'),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ]),
-    );
-  });
-
-  test('should record a component (treated as an @Injectable too)', () async {
-    final testLib = await resolveLibrary(r'''
-      @Component(selector: 'example')
-      class Example {
-        Example(Duration duration);
-      }
-    ''');
-    final output = await new ReflectableReader.noLinking().resolve(testLib);
-    final clazz = testLib.definingCompilationUnit.types.first;
-    expect(
-      output,
-      new ReflectableOutput(registerClasses: [
-        new ReflectableClass(
-          element: clazz,
-          name: 'Example',
-          factory: new DependencyInvocation(
-            clazz.unnamedConstructor,
-            [
-              new DependencyElement(
-                new TypeTokenElement(
-                  const TypeLink('Duration', 'dart:core'),
-                ),
-              ),
-            ],
-          ),
-          registerComponentFactory: true,
-        ),
-      ]),
-    );
-  });
-
   test('should record a component with an @RouteConfig annotation', () async {
     final testLib = await resolveLibrary(r'''
       // Inlined a minimal version here to simplify the test setup.
@@ -203,16 +112,7 @@ void main() {
         new ReflectableClass(
           element: clazz,
           name: 'Example',
-          factory: new DependencyInvocation(
-            clazz.unnamedConstructor,
-            [
-              new DependencyElement(
-                new TypeTokenElement(
-                  const TypeLink('Duration', 'dart:core'),
-                ),
-              ),
-            ],
-          ),
+          factory: null,
           registerAnnotation: new _StubRevivable(
             Uri.parse('asset:test_lib/lib/test_lib.dart#RouteConfig'),
           ),
