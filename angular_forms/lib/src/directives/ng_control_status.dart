@@ -1,4 +1,4 @@
-import 'package:angular/angular.dart' show Directive, Self;
+import 'package:angular/angular.dart';
 
 import 'ng_control.dart' show NgControl;
 
@@ -6,14 +6,6 @@ import 'ng_control.dart' show NgControl;
 /// based on control status (valid/invalid/dirty/etc).
 @Directive(
   selector: '[ngControl],[ngModel],[ngFormControl]',
-  host: const {
-    '[class.ng-untouched]': 'ngClassUntouched',
-    '[class.ng-touched]': 'ngClassTouched',
-    '[class.ng-pristine]': 'ngClassPristine',
-    '[class.ng-dirty]': 'ngClassDirty',
-    '[class.ng-valid]': 'ngClassValid',
-    '[class.ng-invalid]': 'ngClassInvalid'
-  },
 )
 @Deprecated('Use listeners or variable binding on the control itself instead. '
     'This adds overhead for every form control whether the class is '
@@ -22,17 +14,23 @@ class NgControlStatus {
   final NgControl _cd;
   NgControlStatus(@Self() this._cd);
 
+  @HostBinding('class.ng-untouched')
   bool get ngClassUntouched =>
       _cd.control != null ? _cd.control.untouched : false;
 
+  @HostBinding('class.ng-touched')
   bool get ngClassTouched => _cd.control != null ? _cd.control.touched : false;
 
+  @HostBinding('class.ng-pristine')
   bool get ngClassPristine =>
       _cd.control != null ? _cd.control.pristine : false;
 
+  @HostBinding('class.ng-dirty')
   bool get ngClassDirty => _cd.control != null ? _cd.control.dirty : false;
 
+  @HostBinding('class.ng-valid')
   bool get ngClassValid => _cd.control != null ? _cd.control.valid : false;
 
+  @HostBinding('class.ng-invalid')
   bool get ngClassInvalid => _cd.control != null ? !_cd.control.valid : false;
 }
