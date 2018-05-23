@@ -94,11 +94,16 @@ class AstTemplateParser implements TemplateParser {
           exceptionHandler: exceptionHandler);
 
   List<ast.TemplateAst> _processRawTemplateNodes(
-      List<ast.TemplateAst> parsedAst,
-      {String template,
-      String name,
-      AstExceptionHandler exceptionHandler,
-      bool preserveWhitespace: false}) {
+    List<ast.TemplateAst> parsedAst, {
+    String template,
+    String name,
+    AstExceptionHandler exceptionHandler,
+    bool preserveWhitespace: false,
+  }) {
+    if (flags.forceMinifyWhitespace) {
+      logWarning('FORCING MINIFICATION');
+      preserveWhitespace = false;
+    }
     final implicNamespace = _applyImplicitNamespace(parsedAst);
     var filterElements = _filterElements(implicNamespace, preserveWhitespace);
     _validateTemplate(filterElements, exceptionHandler);
