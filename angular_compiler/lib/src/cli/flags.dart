@@ -9,8 +9,8 @@ const _argLegacyStyle = 'use_legacy_style_encapsulation';
 
 // Experimental flags (not published).
 const _argForceMinifyWhitespace = 'force-minify-whitespace';
-const _argEmitComponentFactories = 'emit-component-factories';
-const _argEmitInjectableFactories = 'emit-injectable-factories';
+const _argNoEmitComponentFactories = 'no-emit-component-factories';
+const _argNoEmitInjectableFactories = 'no-emit-injectable-factories';
 
 /// Compiler-wide configuration (flags) to allow opting in/out.
 ///
@@ -50,13 +50,11 @@ class CompilerFlags {
       hide: true,
     )
     ..addFlag(
-      _argEmitComponentFactories,
-      defaultsTo: null,
+      _argNoEmitComponentFactories,
       hide: true,
     )
     ..addFlag(
-      _argEmitInjectableFactories,
-      defaultsTo: null,
+      _argNoEmitInjectableFactories,
       hide: true,
     );
 
@@ -157,8 +155,8 @@ class CompilerFlags {
         _argProfileFor,
         _argLegacyStyle,
         _argForceMinifyWhitespace,
-        'no-$_argEmitComponentFactories',
-        'no-$_argEmitInjectableFactories',
+        _argNoEmitComponentFactories,
+        _argNoEmitInjectableFactories,
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
@@ -175,8 +173,8 @@ class CompilerFlags {
     final profileFor = options[_argProfileFor];
     final useLegacyStyle = options[_argLegacyStyle];
     final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
-    final emitComponentFactories = options[_argEmitComponentFactories];
-    final emitInjectableFactories = options[_argEmitInjectableFactories];
+    final noEmitComponentFactories = options[_argNoEmitComponentFactories];
+    final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
 
     return new CompilerFlags(
       genDebugInfo: debugMode ?? defaultTo.genDebugInfo,
@@ -186,10 +184,8 @@ class CompilerFlags {
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
       forceMinifyWhitespace:
           forceMinifyWhitespace ?? defaultTo.forceMinifyWhitespace,
-      emitComponentFactories:
-          emitComponentFactories ?? defaultTo.emitComponentFactories,
-      emitInjectableFactories:
-          emitInjectableFactories ?? defaultTo.emitInjectableFactories,
+      emitComponentFactories: !(noEmitComponentFactories == true),
+      emitInjectableFactories: !(noEmitInjectableFactories == true),
     );
   }
 }
