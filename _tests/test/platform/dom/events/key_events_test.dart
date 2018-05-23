@@ -129,25 +129,29 @@ class KeydownListenerComponent {
 
 @Component(
   selector: 'keypress-listener',
-  host: const {
-    '(keypress)': 'receivedKeypress = true',
-  },
   template: '<div></div>',
 )
 class KeypressListenerComponent {
+  @HostListener('keypress')
+  void onKeyPress() => receivedKeypress = true;
+
   bool receivedKeypress = false;
 }
 
 @Component(
   selector: 'keyup-listener',
-  host: const {
-    '(keyup)': 'receivedKeyup = true',
-    '(keyup.enter)': 'receivedKeyupEnter = true',
-    '(keyup.control.enter)': 'receivedKeyupCtrlEnter = true',
-  },
   template: '<div></div>',
 )
 class KeyupListenerComponent {
+  @HostListener('keyup')
+  void onKeyUp() => receivedKeyup = true;
+
+  @HostListener('keyup.enter')
+  void onKeyUpEnter() => receivedKeyupEnter = true;
+
+  @HostListener('keyup.control.enter')
+  void onKeyUpControlEnter() => receivedKeyupCtrlEnter = true;
+
   bool receivedKeyup = false;
   bool receivedKeyupEnter = false;
   bool receivedKeyupCtrlEnter = false;
@@ -155,12 +159,12 @@ class KeyupListenerComponent {
 
 @Component(
   selector: 'modifiers-listener',
-  host: const {
-    '(keyup.alt.meta.0)': 'receivedModifiers = true',
-  },
   template: '<div></div>',
 )
 class ModifiersListener {
+  @HostListener('keyup.alt.meta.0')
+  void onKeyUpAltMeta0() => receivedModifiers = true;
+
   bool receivedModifiers = false;
 }
 
