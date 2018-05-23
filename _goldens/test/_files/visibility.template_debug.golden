@@ -319,10 +319,138 @@ AppView viewFactory_DependencyAndDependentInViewHost0(AppView<dynamic> parentVie
 }
 
 const ComponentFactory<import2.DependencyAndDependentInView> DependencyAndDependentInViewNgFactory = const ComponentFactory<import2.DependencyAndDependentInView>('dependency-and-dependent-in-view', viewFactory_DependencyAndDependentInViewHost0, _DependencyAndDependentInViewMetadata);
+const List<dynamic> styles$HasVisibilityAll = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityAll0 = [];
+
+class ViewHasVisibilityAll0 extends DebugAppView<import2.HasVisibilityAll> {
+  static RenderComponentType _renderType;
+  ViewHasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasVisibilityAll0) {
+    rootEl = import7.document.createElement('has-visibility-all');
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class HasVisibilityAll - inline template', ViewEncapsulation.None, styles$HasVisibilityAll);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import2.HasVisibilityAll> build() {
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null, []);
+    return null;
+  }
+}
+
+AppView<import2.HasVisibilityAll> viewFactory_HasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewHasVisibilityAll0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$HasVisibilityAllHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityAllHost0 = [
+  new StaticNodeDebugInfo([import2.HasVisibilityAll], import2.HasVisibilityAll, <String, dynamic>{})
+];
+
+class _ViewHasVisibilityAllHost0 extends DebugAppView<dynamic> {
+  ViewHasVisibilityAll0 _compView_0;
+  import2.HasVisibilityAll _HasVisibilityAll_0_5;
+  _ViewHasVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasVisibilityAllHost0);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewHasVisibilityAll0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _HasVisibilityAll_0_5 = new import2.HasVisibilityAll();
+    _compView_0.create(_HasVisibilityAll_0_5, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import2.HasVisibilityAll>(0, this, rootEl, _HasVisibilityAll_0_5);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import2.HasVisibilityAll) && (0 == nodeIndex))) {
+      return _HasVisibilityAll_0_5;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_HasVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewHasVisibilityAllHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import2.HasVisibilityAll> HasVisibilityAllNgFactory = const ComponentFactory<import2.HasVisibilityAll>('has-visibility-all', viewFactory_HasVisibilityAllHost0, _HasVisibilityAllMetadata);
+const List<dynamic> styles$HasVisibilityLocal = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityLocal0 = [];
+
+class ViewHasVisibilityLocal0 extends DebugAppView<import2.HasVisibilityLocal> {
+  static RenderComponentType _renderType;
+  ViewHasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasVisibilityLocal0) {
+    rootEl = import7.document.createElement('has-visibility-local');
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class HasVisibilityLocal - inline template', ViewEncapsulation.None, styles$HasVisibilityLocal);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import2.HasVisibilityLocal> build() {
+    final _rootEl = rootEl;
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null, []);
+    return null;
+  }
+}
+
+AppView<import2.HasVisibilityLocal> viewFactory_HasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewHasVisibilityLocal0(parentView, parentIndex);
+}
+
+const List<dynamic> styles$HasVisibilityLocalHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityLocalHost0 = [
+  new StaticNodeDebugInfo([import2.HasVisibilityLocal], import2.HasVisibilityLocal, <String, dynamic>{})
+];
+
+class _ViewHasVisibilityLocalHost0 extends DebugAppView<dynamic> {
+  ViewHasVisibilityLocal0 _compView_0;
+  import2.HasVisibilityLocal _HasVisibilityLocal_0_5;
+  _ViewHasVisibilityLocalHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasVisibilityLocalHost0);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewHasVisibilityLocal0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _HasVisibilityLocal_0_5 = new import2.HasVisibilityLocal();
+    _compView_0.create(_HasVisibilityLocal_0_5, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import2.HasVisibilityLocal>(0, this, rootEl, _HasVisibilityLocal_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_HasVisibilityLocalHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewHasVisibilityLocalHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import2.HasVisibilityLocal> HasVisibilityLocalNgFactory = const ComponentFactory<import2.HasVisibilityLocal>('has-visibility-local', viewFactory_HasVisibilityLocalHost0, _HasVisibilityLocalMetadata);
 const _DependentMetadata = const [];
 const _DependencyWithDependentInViewMetadata = const [];
 const _DependencyWithContentMetadata = const [];
 const _DependencyAndDependentInViewMetadata = const [];
+const _HasVisibilityAllMetadata = const [];
+const _HasVisibilityLocalMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -334,5 +462,7 @@ void initReflector() {
   _ngRef.registerComponent(DependencyWithDependentInView, DependencyWithDependentInViewNgFactory);
   _ngRef.registerComponent(DependencyWithContent, DependencyWithContentNgFactory);
   _ngRef.registerComponent(DependencyAndDependentInView, DependencyAndDependentInViewNgFactory);
+  _ngRef.registerComponent(HasVisibilityAll, HasVisibilityAllNgFactory);
+  _ngRef.registerComponent(HasVisibilityLocal, HasVisibilityLocalNgFactory);
   _ref0.initReflector();
 }

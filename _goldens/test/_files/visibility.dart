@@ -39,3 +39,16 @@ class DependencyWithContent implements Dependency {}
   directives: const [Dependency, Dependent],
 )
 class DependencyAndDependentInView {}
+
+@Component(
+  selector: 'has-visibility-all',
+  template: '',
+  visibility: Visibility.all,
+)
+class HasVisibilityAll {}
+
+@Component(
+  selector: 'has-visibility-local',
+  template: '',
+)
+class HasVisibilityLocal {}

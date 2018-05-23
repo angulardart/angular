@@ -42,5 +42,19 @@ external AppView<_user.DependencyAndDependentInView> viewFactory_DependencyAndDe
 class ViewDependencyAndDependentInView0 extends AppView<_user.DependencyAndDependentInView> {
   external ViewDependencyAndDependentInView0(AppView<dynamic> parentView, num parentIndex);
 }
+// For @Component class HasVisibilityAll.
+const List<dynamic> styles$HasVisibilityAll = const [];
+external ComponentFactory get HasVisibilityAllNgFactory;
+external AppView<_user.HasVisibilityAll> viewFactory_HasVisibilityAll0(AppView<dynamic> parentView, num parentIndex);
+class ViewHasVisibilityAll0 extends AppView<_user.HasVisibilityAll> {
+  external ViewHasVisibilityAll0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class HasVisibilityLocal.
+const List<dynamic> styles$HasVisibilityLocal = const [];
+external ComponentFactory get HasVisibilityLocalNgFactory;
+external AppView<_user.HasVisibilityLocal> viewFactory_HasVisibilityLocal0(AppView<dynamic> parentView, num parentIndex);
+class ViewHasVisibilityLocal0 extends AppView<_user.HasVisibilityLocal> {
+  external ViewHasVisibilityLocal0(AppView<dynamic> parentView, num parentIndex);
+}
 
 external void initReflector();
