@@ -10,7 +10,6 @@ import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
-import 'package:angular/src/compiler/expression_parser/lexer.dart';
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/compiler/output/convert.dart';
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
@@ -32,7 +31,6 @@ const String _directivesProperty = 'directives';
 const String _visibilityProperty = 'visibility';
 const _statefulDirectiveFields = const [
   'exportAs',
-  'host',
 ];
 
 AngularArtifacts findComponentsAndDirectives(LibraryReader library) {
@@ -513,27 +511,6 @@ class _ComponentVisitor
     if (element.type.isObject) return;
     if (element.getMethod('noSuchMethod') != null) {
       _implementsNoSuchMethod = true;
-    }
-    final annotation = element.metadata
-        .firstWhere(safeMatcher(isDirective), orElse: () => null);
-    if (annotation != null) {
-      // Collect metadata from class annotation.
-      final annotationValue = annotation.computeConstantValue();
-      final host = coerceStringMap(annotationValue, 'host');
-      CompileDirectiveMetadata.deserializeHost(
-          host, _hostBindings, _hostListeners);
-      // Check that all of the host bindings are valid (i.e that they are valid
-      // property read expressions).
-      // TODO(het): Remove this when we no longer support `host` in annotations
-      for (var hostBinding in _hostBindings.values) {
-        if (hostBinding is ast.LiteralPrimitive) continue;
-        var binding = hostBinding as ast.PropertyRead;
-        if (!isIdentifier(binding.name)) {
-          throw new BuildError(
-              'Host bindings may only be getters or fields, not complex '
-              'expressions. Instead got "${binding.name}"');
-        }
-      }
     }
     // Collect metadata from field and property accessor annotations.
     super.visitClassElement(element);

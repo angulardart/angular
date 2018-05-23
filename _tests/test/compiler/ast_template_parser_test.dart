@@ -5,7 +5,6 @@ import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/ast_template_parser.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/compiler_utils.dart';
-import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
 import 'package:angular/src/compiler/expression_parser/lexer.dart';
 import 'package:angular/src/compiler/expression_parser/parser.dart';
 import 'package:angular/src/compiler/identifiers.dart'
@@ -489,38 +488,6 @@ void main() {
             [ElementAst, 'div'],
             [BoundEventAst, 'a', null, 'b'],
             [DirectiveAst, dirA]
-          ]);
-        });
-
-        test('should parse directive host properties', () {
-          var dirA = createCompileDirectiveMetadata(
-              selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
-              host: {'[a]': 'expr'});
-          expect(humanizeTplAst(parse('<div></div>', [dirA])), [
-            [ElementAst, 'div'],
-            [DirectiveAst, dirA],
-            [
-              BoundElementPropertyAst,
-              PropertyBindingType.Property,
-              'a',
-              'expr',
-              null
-            ]
-          ]);
-        });
-
-        test('should parse directive host listeners', () {
-          var dirA = createCompileDirectiveMetadata(
-              selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
-              host: {'(a)': 'expr'});
-          expect(humanizeTplAst(parse('<div></div>', [dirA])), [
-            [ElementAst, 'div'],
-            [DirectiveAst, dirA],
-            [BoundEventAst, 'a', null, 'expr']
           ]);
         });
 
@@ -2126,7 +2093,6 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   String exportAs,
   List<String> inputs,
   List<String> outputs,
-  Map<String, String> host,
   // CompileProviderMetadata | CompileTypeMetadata |
   // CompileIdentifierMetadata | List
   List providers,
@@ -2136,10 +2102,6 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   List<CompileQueryMetadata> queries,
   CompileTemplateMetadata template,
 }) {
-  final hostListeners = <String, String>{};
-  final hostBindings = <String, ast.AST>{};
-  CompileDirectiveMetadata.deserializeHost(host, hostBindings, hostListeners);
-
   final inputsMap = <String, String>{};
   final inputTypeMap = <String, CompileTypeMetadata>{};
   inputs?.forEach((input) {
@@ -2167,8 +2129,8 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
     inputs: inputsMap,
     inputTypes: inputTypeMap,
     outputs: outputsMap,
-    hostListeners: hostListeners,
-    hostBindings: hostBindings,
+    hostListeners: {},
+    hostBindings: {},
     lifecycleHooks: [],
     providers: providers,
     viewProviders: viewProviders,

@@ -14,13 +14,6 @@ import 'host.dart' as _user;
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
-// For @Component class HostComponentDeprecatedSyntax.
-const List<dynamic> styles$HostComponentDeprecatedSyntax = const [];
-external ComponentFactory get HostComponentDeprecatedSyntaxNgFactory;
-external AppView<_user.HostComponentDeprecatedSyntax> viewFactory_HostComponentDeprecatedSyntax0(AppView<dynamic> parentView, num parentIndex);
-class ViewHostComponentDeprecatedSyntax0 extends AppView<_user.HostComponentDeprecatedSyntax> {
-  external ViewHostComponentDeprecatedSyntax0(AppView<dynamic> parentView, num parentIndex);
-}
 // For @Component class HostComponentNewSyntax.
 const List<dynamic> styles$HostComponentNewSyntax = const [];
 external ComponentFactory get HostComponentNewSyntaxNgFactory;
