@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/dart-lang/logos/master/logos_and_wordmarks/angulardart-logo.png" alt="AngularDart Logo">
+  <img src="https://raw.githubusercontent.com/dart-lang/logos/master/angular/logo/default.svg" height='150' width='140' alt="AngularDart Logo">
   <h1>AngularDart</h1>
 </p>
 
