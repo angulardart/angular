@@ -52,12 +52,24 @@ class ReflectableReader {
   /// up metadata information at runtime in order to configure itself.
   final bool recordRouterAnnotationsForComponents;
 
+  /// Whether to record `ComponentFactory` for `@Component`-annotated classes.
+  ///
+  /// This is used to support `SlowComponentLoader`.
+  final bool recordComponentFactories;
+
+  /// Whether to record factory functions for `@Injectable`-annotated elements.
+  ///
+  /// This is used to support `ReflectiveInjector`.
+  final bool recordInjectableFactories;
+
   const ReflectableReader({
     this.dependencyReader: const DependencyReader(),
     @required this.hasInput,
     @required this.isLibrary,
     this.outputExtension: _defaultOutputExtension,
     this.recordRouterAnnotationsForComponents: true,
+    this.recordComponentFactories: true,
+    this.recordInjectableFactories: true,
   });
 
   /// Always emits an empty [ReflectableOutput.urlsNeedingInitReflector].
@@ -68,6 +80,8 @@ class ReflectableReader {
     this.dependencyReader: const DependencyReader(),
     this.outputExtension: _defaultOutputExtension,
     this.recordRouterAnnotationsForComponents: true,
+    this.recordComponentFactories: true,
+    this.recordInjectableFactories: true,
   })  : hasInput = _nullHasInput,
         isLibrary = _nullIsLibrary;
 
@@ -83,19 +97,28 @@ class ReflectableReader {
   Future<ReflectableOutput> resolve(LibraryElement library) async {
     final registerClasses = <ReflectableClass>[];
     final registerFunctions = <DependencyInvocation<FunctionElement>>[];
-    for (final unit in _allUnits(library)) {
-      for (final type in unit.types) {
-        final reflectable = _resolveClass(type);
-        if (reflectable != null) {
-          registerClasses.add(reflectable);
+    if (recordInjectableFactories) {
+      for (final unit in _allUnits(library)) {
+        for (final type in unit.types) {
+          final reflectable = _resolveClass(type);
+          if (reflectable != null) {
+            registerClasses.add(reflectable);
+          }
         }
+        registerFunctions.addAll(unit.functions
+            .where((e) => $Injectable.firstAnnotationOfExact(e) != null)
+            .map(dependencyReader.parseDependencies));
       }
-      registerFunctions.addAll(unit.functions
-          .where((e) => $Injectable.firstAnnotationOfExact(e) != null)
-          .map(dependencyReader.parseDependencies));
     }
+    List<String> urlsNeedingInitReflector = const [];
+
+    // Only link to other ".initReflector" calls if either flag is enabled.
+    if (recordInjectableFactories || recordComponentFactories) {
+      urlsNeedingInitReflector = await _resolveNeedsReflector(library);
+    }
+
     return new ReflectableOutput(
-      urlsNeedingInitReflector: await _resolveNeedsReflector(library),
+      urlsNeedingInitReflector: urlsNeedingInitReflector,
       registerClasses: registerClasses,
       registerFunctions: registerFunctions,
     );
@@ -103,7 +126,7 @@ class ReflectableReader {
 
   ReflectableClass _resolveClass(ClassElement element) {
     DependencyInvocation<ConstructorElement> factory;
-    if (_shouldRecordFactory(element)) {
+    if (_shouldRecordFactory(element) && recordInjectableFactories) {
       if (element.isPrivate) {
         // TODO(matanl): Make this a better error message.
         throw new BuildError('Cannot access private class ${element.name}');
@@ -121,7 +144,7 @@ class ReflectableReader {
       registerAnnotation: recordRouterAnnotationsForComponents && isComponent
           ? _findRouteConfig(element)?.revive()
           : null,
-      registerComponentFactory: isComponent,
+      registerComponentFactory: isComponent && recordComponentFactories,
     );
   }
 
