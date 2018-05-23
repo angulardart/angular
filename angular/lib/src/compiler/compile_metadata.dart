@@ -402,50 +402,6 @@ enum CompileDirectiveMetadataType {
 
 /// Metadata regarding compilation of a directive.
 class CompileDirectiveMetadata implements CompileMetadataWithType {
-  /// Maps host attributes, listeners, and properties from a serialized map.
-  ///
-  /// Serialized host key grammar:
-  ///
-  ///     <key> :=
-  ///         <attribute-key> |
-  ///         <listener-key> |
-  ///         <property-key>
-  ///
-  ///     <attribute-key> :=
-  ///         <identifier>
-  ///
-  ///     <listener-key> :=
-  ///         '(' <identifier> ')'
-  ///
-  ///     <property-key> :=
-  ///         '[' <identifier> ']'
-  ///
-  /// For each (<key>, <value>) in [host], (<identifier>, <value>) is added to
-  ///
-  /// * [outAttributes] if <key> is an <attribute-key>,
-  /// * [outListeners] if <key> is a <listener-key>, or
-  /// * [outProperties] if <key> is a <property-key>.
-  static void deserializeHost(
-    Map<String, String> host,
-    Map<String, ast.AST> outBindings,
-    Map<String, String> outListeners,
-  ) {
-    assert(outBindings != null);
-    assert(outListeners != null);
-
-    host?.forEach((key, value) {
-      final matches = _hostRegExp.firstMatch(key);
-      if (matches == null) {
-        outBindings[key] = new ast.LiteralPrimitive(value);
-      } else if (matches[1] != null) {
-        outBindings[matches[1]] =
-            new ast.PropertyRead(new ast.ImplicitReceiver(), value);
-      } else if (matches[2] != null) {
-        outListeners[matches[2]] = value;
-      }
-    });
-  }
-
   @override
   final CompileTypeMetadata type;
 

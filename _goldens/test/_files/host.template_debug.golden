@@ -19,66 +19,6 @@ import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$HostComponentDeprecatedSyntax = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentDeprecatedSyntax0 = [];
-
-class ViewHostComponentDeprecatedSyntax0 extends DebugAppView<import2.HostComponentDeprecatedSyntax> {
-  static RenderComponentType _renderType;
-  ViewHostComponentDeprecatedSyntax0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HostComponentDeprecatedSyntax0) {
-    rootEl = import7.document.createElement('host');
-    rootEl.className = 'themeable';
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/host.dart class HostComponentDeprecatedSyntax - inline template', ViewEncapsulation.None, styles$HostComponentDeprecatedSyntax);
-    setupComponentType(_renderType);
-  }
-  @override
-  ComponentRef<import2.HostComponentDeprecatedSyntax> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null, []);
-    return null;
-  }
-}
-
-AppView<import2.HostComponentDeprecatedSyntax> viewFactory_HostComponentDeprecatedSyntax0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewHostComponentDeprecatedSyntax0(parentView, parentIndex);
-}
-
-const List<dynamic> styles$HostComponentDeprecatedSyntaxHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentDeprecatedSyntaxHost0 = [
-  new StaticNodeDebugInfo([import2.HostComponentDeprecatedSyntax], import2.HostComponentDeprecatedSyntax, <String, dynamic>{})
-];
-
-class _ViewHostComponentDeprecatedSyntaxHost0 extends DebugAppView<dynamic> {
-  ViewHostComponentDeprecatedSyntax0 _compView_0;
-  import2.HostComponentDeprecatedSyntax _HostComponentDeprecatedSyntax_0_5;
-  _ViewHostComponentDeprecatedSyntaxHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HostComponentDeprecatedSyntaxHost0);
-  @override
-  ComponentRef build() {
-    _compView_0 = new ViewHostComponentDeprecatedSyntax0(this, 0);
-    rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
-    _HostComponentDeprecatedSyntax_0_5 = new import2.HostComponentDeprecatedSyntax();
-    _compView_0.create(_HostComponentDeprecatedSyntax_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.HostComponentDeprecatedSyntax>(0, this, rootEl, _HostComponentDeprecatedSyntax_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    _compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    _compView_0?.destroy();
-  }
-}
-
-AppView viewFactory_HostComponentDeprecatedSyntaxHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewHostComponentDeprecatedSyntaxHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import2.HostComponentDeprecatedSyntax> HostComponentDeprecatedSyntaxNgFactory = const ComponentFactory<import2.HostComponentDeprecatedSyntax>('host', viewFactory_HostComponentDeprecatedSyntaxHost0, _HostComponentDeprecatedSyntaxMetadata);
 const List<dynamic> styles$HostComponentNewSyntax = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentNewSyntax0 = [];
 
@@ -232,7 +172,6 @@ AppView viewFactory_HostComponentHost0(AppView<dynamic> parentView, int parentIn
 }
 
 const ComponentFactory<import2.HostComponent> HostComponentNgFactory = const ComponentFactory<import2.HostComponent>('host', viewFactory_HostComponentHost0, _HostComponentMetadata);
-const _HostComponentDeprecatedSyntaxMetadata = const [];
 const _HostComponentNewSyntaxMetadata = const [];
 const _HostComponentMetadata = const [];
 var _visited = false;
@@ -242,7 +181,6 @@ void initReflector() {
   }
   _visited = true;
 
-  _ngRef.registerComponent(HostComponentDeprecatedSyntax, HostComponentDeprecatedSyntaxNgFactory);
   _ngRef.registerComponent(HostComponentNewSyntax, HostComponentNewSyntaxNgFactory);
   _ngRef.registerComponent(HostComponent, HostComponentNgFactory);
   _ref0.initReflector();

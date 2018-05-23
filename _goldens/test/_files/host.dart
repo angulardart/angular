@@ -3,15 +3,6 @@ import 'package:angular/angular.dart';
 @Component(
   selector: 'host',
   template: '',
-  host: const {
-    'class': 'themeable',
-  },
-)
-class HostComponentDeprecatedSyntax {}
-
-@Component(
-  selector: 'host',
-  template: '',
 )
 class HostComponentNewSyntax {
   @HostBinding('class')
