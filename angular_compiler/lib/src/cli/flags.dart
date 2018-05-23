@@ -7,6 +7,11 @@ const _argDebugMode = 'debug';
 const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
 
+// Experimental flags (not published).
+const _argForceMinifyWhitespace = 'force-minify-whitespace';
+const _argEmitComponentFactories = 'emit-component-factories';
+const _argEmitInjectableFactories = 'emit-injectable-factories';
+
 /// Compiler-wide configuration (flags) to allow opting in/out.
 ///
 /// In some build environments flags are only configurable at the application
@@ -38,6 +43,21 @@ class CompilerFlags {
       help: ''
           'Whether to emit additional code that may be used by tooling '
           'in order to profile performance or other runtime information.',
+    )
+    ..addFlag(
+      _argForceMinifyWhitespace,
+      defaultsTo: null,
+      hide: true,
+    )
+    ..addFlag(
+      _argEmitComponentFactories,
+      defaultsTo: null,
+      hide: true,
+    )
+    ..addFlag(
+      _argEmitInjectableFactories,
+      defaultsTo: null,
+      hide: true,
     );
 
   /// Whether to emit extra code suitable for testing and local development.
@@ -72,12 +92,27 @@ class CompilerFlags {
   @experimental
   final bool ignoreNgPlaceholderForGoldens;
 
+  /// Whether to operate as if `preserveWhitespace: false` is always set.
+  @experimental
+  final bool forceMinifyWhitespace;
+
+  /// Whether to emit code supporting `SlowComponentLoader`.
+  @experimental
+  final bool emitComponentFactories;
+
+  /// Whether to emit code supporting `ReflectiveInjector`.
+  @experimental
+  final bool emitInjectableFactories;
+
   const CompilerFlags({
     this.genDebugInfo: false,
     this.i18nEnabled: false,
     this.ignoreNgPlaceholderForGoldens: false,
     this.profileFor: Profile.none,
     this.useLegacyStyleEncapsulation: false,
+    this.forceMinifyWhitespace: false,
+    this.emitComponentFactories: true,
+    this.emitInjectableFactories: true,
   });
 
   /// Creates flags by parsing command-line arguments.
@@ -121,6 +156,9 @@ class CompilerFlags {
         _argDebugMode,
         _argProfileFor,
         _argLegacyStyle,
+        _argForceMinifyWhitespace,
+        'no-$_argEmitComponentFactories',
+        'no-$_argEmitInjectableFactories',
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
@@ -133,27 +171,25 @@ class CompilerFlags {
       }
     }
 
-    var debugMode = options[_argDebugMode];
-    if (debugMode != null && debugMode is! bool) {
-      log('Invalid value "$_argDebugMode": $debugMode');
-      debugMode = null;
-    }
-    var profileFor = options[_argProfileFor];
-    if (profileFor != null && profileFor is! String) {
-      log('Invalid value "$_argProfileFor": $profileFor');
-      profileFor = null;
-    }
-    var useLegacyStyle = options[_argLegacyStyle];
-    if (useLegacyStyle != null && useLegacyStyle is! bool) {
-      log('Invalid value for "$_argLegacyStyle": $useLegacyStyle');
-      useLegacyStyle = null;
-    }
+    final debugMode = options[_argDebugMode];
+    final profileFor = options[_argProfileFor];
+    final useLegacyStyle = options[_argLegacyStyle];
+    final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
+    final emitComponentFactories = options[_argEmitComponentFactories];
+    final emitInjectableFactories = options[_argEmitInjectableFactories];
+
     return new CompilerFlags(
       genDebugInfo: debugMode ?? defaultTo.genDebugInfo,
       i18nEnabled: defaultTo.i18nEnabled,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
+      forceMinifyWhitespace:
+          forceMinifyWhitespace ?? defaultTo.forceMinifyWhitespace,
+      emitComponentFactories:
+          emitComponentFactories ?? defaultTo.emitComponentFactories,
+      emitInjectableFactories:
+          emitInjectableFactories ?? defaultTo.emitInjectableFactories,
     );
   }
 }
