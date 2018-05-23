@@ -3,6 +3,9 @@
     `NgStabilizer` was executing - constantly calling the `update` function
     instead of calling it _once_ and waiting for stabilization.
 
+*   Fixed a bug where stabilizers are considered stable even when some of them
+    are not.
+
 ## 2.0.0-alpha+10
 
 *   Fixed a bug where `_createDynamic` does not preserve `rootInjector`.
