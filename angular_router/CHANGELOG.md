@@ -1,3 +1,5 @@
+## 2.0.0-alpha+12
+
 ### Breaking changes
 
 *   Renamed the `platformStrategy` field of `Location` to `locationStrategy`,

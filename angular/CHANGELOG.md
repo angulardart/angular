@@ -1,3 +1,5 @@
+## 5.0.0-alpha+13
+
 ### Breaking changes
 
 *   A directive with `Visibility.local` may now be injected by another directive
@@ -6,8 +8,6 @@
 *   Removed support for (deprecated) `host: const { ... }` syntax in a
     `@Directive` or `@Component` annotation. This can be easily migrated to use
     `@HostBinding` or `@HostListener`.
-
-## 5.0.0-alpha+13
 
 * Pins `angular_ast` and `angular_compiler` to avoid future versioning issues.
 

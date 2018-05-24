@@ -1,3 +1,8 @@
+## 0.4.0-alpha+13
+
+*   Maintenance release.
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.55.0 <2.0.0"`.
+
 ## 0.4.0-alpha+12
 
 *   Removes unused APIs of `ComponentReader`.
