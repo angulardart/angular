@@ -11,7 +11,7 @@ It was built as an example for [hnpwa.com](https://hnpwa.com/).
 To run and debug locally using `dartdevc`:
 
 ```console
-$ pub run build_runner serve
+$ webdev serve
 ```
 
 Then navigate to `http://localhost:8080`.
