@@ -5,7 +5,7 @@ description: Fast and productive web framework
 homepage: https://webdev.dartlang.org/angular
 documentation: https://webdev.dartlang.org/angular/api
 environment:
-  sdk: ">=2.0.0-dev.52.0 <2.0.0"
+  sdk: ">=2.0.0-dev.55.0 <2.0.0"
 
 dependencies:
   # Runtime (or runtime *and* the compiler).
@@ -20,8 +20,8 @@ dependencies:
   analyzer: '>=0.31.0+1 <0.33.0'
 
   # It is extremely important these two dependencies stay pinned to current.
-  angular_ast: 0.5.3
-  angular_compiler: 0.4.0-alpha+12
+  angular_ast: 0.5.3+1
+  angular_compiler: 0.4.0-alpha+13
   ##########################################################################
 
   build: ^0.12.5

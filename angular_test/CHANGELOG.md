@@ -1,3 +1,5 @@
+## 2.0.0-alpha+11
+
 *   Fixed a bug where a `WillNeverStabilizeError` was thrown whenever there was
     a non-zero length `Timer` being executed. This was due to a bug in how the
     `NgStabilizer` was executing - constantly calling the `update` function
