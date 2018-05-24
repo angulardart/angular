@@ -97,14 +97,14 @@ class ReflectableReader {
   Future<ReflectableOutput> resolve(LibraryElement library) async {
     final registerClasses = <ReflectableClass>[];
     final registerFunctions = <DependencyInvocation<FunctionElement>>[];
-    if (recordInjectableFactories) {
-      for (final unit in _allUnits(library)) {
-        for (final type in unit.types) {
-          final reflectable = _resolveClass(type);
-          if (reflectable != null) {
-            registerClasses.add(reflectable);
-          }
+    for (final unit in _allUnits(library)) {
+      for (final type in unit.types) {
+        final reflectable = _resolveClass(type);
+        if (reflectable != null) {
+          registerClasses.add(reflectable);
         }
+      }
+      if (recordInjectableFactories) {
         registerFunctions.addAll(unit.functions
             .where((e) => $Injectable.firstAnnotationOfExact(e) != null)
             .map(dependencyReader.parseDependencies));
