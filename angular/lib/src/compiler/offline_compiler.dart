@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:angular_compiler/cli.dart';
+
 import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata, createHostComponentMeta;
@@ -50,18 +52,21 @@ class OfflineCompiler {
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;
   final OutputEmitter _outputEmitter;
+  final CompilerFlags _compilerFlags;
 
   /// Maps a moduleUrl to a library prefix. Deferred modules have defer###
   /// prefixes. The moduleUrl has asset: scheme or is a relative url.
   final Map<String, String> _deferredModules;
 
   const OfflineCompiler(
-      this._directiveNormalizer,
-      this._templateParser,
-      this._styleCompiler,
-      this._viewCompiler,
-      this._outputEmitter,
-      this._deferredModules);
+    this._directiveNormalizer,
+    this._templateParser,
+    this._styleCompiler,
+    this._viewCompiler,
+    this._outputEmitter,
+    this._deferredModules,
+    this._compilerFlags,
+  );
 
   Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
       CompileDirectiveMetadata directive) {
@@ -117,7 +122,15 @@ class OfflineCompiler {
               <o.Expression>[
                 o.literal(compMeta.selector),
                 o.variable(hostViewFactoryVar),
-                new o.ReadVarExpr('_${compMeta.type.name}Metadata'),
+                // If we aren't emitting component factories, we don't have
+                // any metadata to collect. This is a stop-gap until we no
+                // longer support the metadata field (for the old router).
+                _compilerFlags.emitComponentFactories
+                    ? new o.ReadVarExpr('_${compMeta.type.name}Metadata')
+                    : o.literalArr(
+                        [],
+                        new o.ArrayType(null, [o.TypeModifier.Const]),
+                      ),
               ],
               o.importType(
                 Identifiers.ComponentFactory,

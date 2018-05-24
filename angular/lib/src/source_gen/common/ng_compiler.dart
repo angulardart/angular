@@ -26,5 +26,6 @@ OfflineCompiler createTemplateCompiler(
     new ViewCompiler(flags, parser, schemaRegistry),
     new DartEmitter(),
     {},
+    flags,
   );
 }
