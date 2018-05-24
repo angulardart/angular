@@ -13,10 +13,6 @@ import 'selector.dart' show CssSelector;
 
 final _listsEqual = const ListEquality<Object>().equals;
 
-// group 1: 'property' from '[property]'
-// group 2: 'event' from '(event)'
-final _hostRegExp = new RegExp(r'^(?:(?:\[([^\]]+)\])|(?:\(([^\)]+)\)))$');
-
 abstract class CompileMetadataWithIdentifier<T> {
   CompileIdentifierMetadata<T> get identifier;
 }
