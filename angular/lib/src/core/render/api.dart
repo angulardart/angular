@@ -5,6 +5,10 @@ import 'package:angular/src/runtime.dart';
 /// Styles host that adds encapsulated styles to global style sheet for use
 /// by [RenderComponentType].
 abstract class SharedStylesHost {
+  /// Adds [styles] to this style host.
+  ///
+  /// In dev mode the first style will be a identifier that may be used to
+  /// attribute the [styles] to their component of origin.
   void addStyles(List<String> styles);
 }
 
@@ -45,7 +49,14 @@ class RenderComponentType {
       this.id, this.templateUrl, this.encapsulation, this.templateStyles);
 
   void shimStyles(SharedStylesHost stylesHost) {
-    final styles = _flattenStyles(id, templateStyles, []);
+    final styles = <String>[];
+    if (isDevMode) {
+      // In dev mode, pass the `templateUrl` as the first style. This is used by
+      // the `SharedStyleHost` to attribute the resulting <style> tag to the
+      // component from which it originates.
+      styles.add(templateUrl);
+    }
+    _flattenStyles(id, templateStyles, styles);
     stylesHost.addStyles(styles);
     if (encapsulation == ViewEncapsulation.Emulated) {
       _hostAttr = '$_hostClassPrefix$id';

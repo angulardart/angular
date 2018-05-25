@@ -1,3 +1,9 @@
+### New features
+
+*   In dev mode only, an attribute named `from` is now added to each `<style>`
+    tag whose value identifies the source file URL and name of the component
+    from which the styles originate.
+
 ## 5.0.0-alpha+13
 
 ### Breaking changes
@@ -9,7 +15,7 @@
     `@Directive` or `@Component` annotation. This can be easily migrated to use
     `@HostBinding` or `@HostListener`.
 
-* Pins `angular_ast` and `angular_compiler` to avoid future versioning issues.
+*   Pins `angular_ast` and `angular_compiler` to avoid future versioning issues.
 
 ## 5.0.0-alpha+12
 
