@@ -146,8 +146,14 @@ abstract class ChangeDetectionHost {
       _runningTick = true;
       _runTick();
     } catch (e, s) {
+      // A crash (uncaught exception) was found. That means at least one
+      // directive in the application tree is throwing. We need to re-run
+      // change detection to disable offending directives.
       if (!_runTickGuarded()) {
-        handleUncaughtException(e, s);
+        // Propagate the original exception/stack upwards, with 'DigestTick'
+        // keyword. Then application can join tick exception with original
+        // exception, which usually named "AppView.detectCrash".
+        handleUncaughtException(e, s, 'DigestTick');
       }
       rethrow;
     } finally {
@@ -233,7 +239,7 @@ abstract class ChangeDetectionHost {
   /// This is expected to be provided by the current application.
   @protected
   @visibleForOverriding
-  void handleUncaughtException(Object error, [StackTrace trace]);
+  void handleUncaughtException(Object error, [StackTrace trace, String reason]);
 
   /// Runs the given [callback] in the zone and returns the result of that call.
   ///
