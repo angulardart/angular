@@ -129,8 +129,9 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
   }
 
   @override
-  void handleUncaughtException(Object error, [StackTrace trace]) {
-    _exceptionHandler.call(error, trace);
+  void handleUncaughtException(Object error,
+      [StackTrace trace, String reason]) {
+    _exceptionHandler.call(error, trace, reason);
   }
 
   @override
