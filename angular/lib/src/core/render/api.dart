@@ -39,15 +39,14 @@ class RenderComponentType {
   // Host attribute name of elements in the template for this component type.
   String _hostAttr;
 
-  List<String> _styles;
   bool stylesShimmed = false;
 
   RenderComponentType(
       this.id, this.templateUrl, this.encapsulation, this.templateStyles);
 
   void shimStyles(SharedStylesHost stylesHost) {
-    _styles = _flattenStyles(id, templateStyles, []);
-    stylesHost.addStyles(this._styles);
+    final styles = _flattenStyles(id, templateStyles, []);
+    stylesHost.addStyles(styles);
     if (encapsulation == ViewEncapsulation.Emulated) {
       _hostAttr = '$_hostClassPrefix$id';
       _viewAttr = '$_viewClassPrefix$id';
@@ -57,8 +56,6 @@ class RenderComponentType {
   String get contentAttr => _viewAttr;
 
   String get hostAttr => _hostAttr;
-
-  List<String> get styles => _styles;
 
   List<String> _flattenStyles(
       String compId,
