@@ -154,7 +154,7 @@ class RouterImpl extends Router {
 
     navigationParams?.assertValid();
     path = await _routerHook?.navigationPath(path, navigationParams) ?? path;
-    path = Url.normalizePath(path);
+    path = _location.normalizePath(path);
     navigationParams =
         await _routerHook?.navigationParams(path, navigationParams) ??
             navigationParams;
