@@ -486,7 +486,15 @@ o.ClassMethod _createViewClassConstructor(
     CompileDirectiveMetadata componentMeta = view.component;
     componentMeta.hostAttributes.forEach((String name, ast.AST value) {
       var expression = convertCdExpressionToIr(
-          view.nameResolver, o.THIS_EXPR, value, view.component, o.STRING_TYPE);
+        view.nameResolver,
+        o.THIS_EXPR,
+        value,
+        // We neither have a source span to provide, nor should it be possible
+        // for a host binding to fail expression conversion and need it.
+        null,
+        view.component,
+        o.STRING_TYPE,
+      );
       o.Statement stmt = createSetAttributeStatement(
           tagName, o.variable(appViewRootElementName), name, expression);
       ctor.body.add(stmt);
@@ -776,7 +784,15 @@ void _writeComponentHostEventListeners(
     if (handlerType == HandlerType.notSimple) {
       var context = new o.ReadClassMemberExpr('ctx');
       var actionStmts = convertCdStatementToIr(
-          view.nameResolver, context, handlerAst, component);
+        view.nameResolver,
+        context,
+        handlerAst,
+        // The only way a host listener could fail expression conversion is if
+        // the arguments specified in the `HostListener` annotation are invalid,
+        // but we don't have its source span to provide here.
+        null,
+        component,
+      );
       var actionExpr = convertStmtIntoExpression(actionStmts.last);
       List<o.Statement> stmts = <o.Statement>[
         new o.ReturnStatement(actionExpr)
@@ -793,7 +809,15 @@ void _writeComponentHostEventListeners(
     } else {
       var context = DetectChangesVars.cachedCtx;
       var actionStmts = convertCdStatementToIr(
-          view.nameResolver, context, handlerAst, component);
+        view.nameResolver,
+        context,
+        handlerAst,
+        // The only way a host listener could fail expression conversion is if
+        // the arguments specified in the `HostListener` annotation are invalid,
+        // but we don't have its source span to provide here.
+        null,
+        component,
+      );
       var actionExpr = convertStmtIntoExpression(actionStmts.last);
       assert(actionExpr is o.InvokeMethodExpr);
       var callExpr = actionExpr as o.InvokeMethodExpr;

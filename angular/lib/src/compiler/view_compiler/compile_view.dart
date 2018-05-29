@@ -495,6 +495,7 @@ class CompileView implements AppViewBuilder {
         nameResolver,
         new o.ReadClassMemberExpr('ctx'),
         newValue,
+        ast.sourceSpan,
         component,
         o.STRING_TYPE,
       );
@@ -1133,7 +1134,17 @@ class CompileView implements AppViewBuilder {
     var attrNameAndValues = mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);
     attrNameAndValues.forEach((name, value) {
       var expression = convertCdExpressionToIr(
-          nameResolver, o.THIS_EXPR, value, component, o.STRING_TYPE);
+        nameResolver,
+        o.THIS_EXPR,
+        value,
+        // While the expression being converted may be the merged result of
+        // several bindings (a template binding and/or any number of host
+        // bindings), the only kind that could fail conversion is a template
+        // binding, so we pass its source span if present.
+        htmlAttrs[name]?.sourceSpan,
+        component,
+        o.STRING_TYPE,
+      );
       o.Statement stmt = createSetAttributeStatement(
           elementAst.name, nodeReference.toReadExpr(), name, expression);
       _createMethod.addStmt(stmt);

@@ -235,10 +235,10 @@ String toTemplateExtension(String moduleUrl) {
   return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
 }
 
-Map<String, String> astAttribListToMap(List<AttrAst> attrs) {
-  Map<String, String> htmlAttrs = {};
+Map<String, AttrAst> astAttribListToMap(List<AttrAst> attrs) {
+  Map<String, AttrAst> htmlAttrs = {};
   for (AttrAst attr in attrs) {
-    htmlAttrs[attr.name] = attr.value;
+    htmlAttrs[attr.name] = attr;
   }
   return htmlAttrs;
 }
@@ -333,12 +333,12 @@ Map<String, ast.AST> _toSortedMap(Map<String, ast.AST> data) {
 // Reads hostAttributes from each directive and merges with declaredHtmlAttrs
 // to return a single map from name to value(expression).
 Map<String, ast.AST> mergeHtmlAndDirectiveAttrs(
-    Map<String, String> declaredHtmlAttrs,
+    Map<String, AttrAst> declaredHtmlAttrs,
     List<CompileDirectiveMetadata> directives) {
   var result = <String, ast.AST>{};
   var mergeCount = <String, int>{};
-  declaredHtmlAttrs.forEach((name, value) {
-    result[name] = new ast.LiteralPrimitive(value);
+  declaredHtmlAttrs.forEach((name, attrAst) {
+    result[name] = new ast.LiteralPrimitive(attrAst.value);
     if (mergeCount.containsKey(name)) {
       mergeCount[name]++;
     } else {
