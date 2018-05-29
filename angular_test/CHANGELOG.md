@@ -1,3 +1,5 @@
+*   Made `NgTestStabilizerFactory` public.
+
 ## 2.0.0-alpha+11
 
 *   Fixed a bug where a `WillNeverStabilizeError` was thrown whenever there was
