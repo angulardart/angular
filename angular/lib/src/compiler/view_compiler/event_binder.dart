@@ -74,7 +74,7 @@ class CompileEventListener {
     var context =
         directiveInstance?.build() ?? new o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(_nameResolver, context,
-        hostEvent.handler, compileElement.view.component);
+        hostEvent.handler, hostEvent.sourceSpan, compileElement.view.component);
     _method.addStmts(actionStmts);
   }
 

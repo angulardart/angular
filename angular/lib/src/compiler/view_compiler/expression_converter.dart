@@ -1,3 +1,6 @@
+import 'package:angular_compiler/cli.dart';
+import 'package:source_span/source_span.dart' show SourceSpan;
+
 import '../analyzed_class.dart';
 import '../chars.dart';
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
@@ -51,28 +54,48 @@ o.Expression convertCdExpressionToIr(
   NameResolver nameResolver,
   o.Expression implicitReceiver,
   compiler_ast.AST expression,
+  SourceSpan expressionSourceSpan,
   CompileDirectiveMetadata metadata,
   o.OutputType boundType,
 ) {
   assert(nameResolver != null);
-  var visitor =
+  final visitor =
       new _AstToIrVisitor(nameResolver, implicitReceiver, metadata, boundType);
-  return expression.visit<dynamic, _Mode>(visitor, _Mode.Expression);
+  return _visit(expression, visitor, _Mode.Expression, expressionSourceSpan);
 }
 
 List<o.Statement> convertCdStatementToIr(
   NameResolver nameResolver,
   o.Expression implicitReceiver,
   compiler_ast.AST stmt,
+  SourceSpan stmtSourceSpan,
   CompileDirectiveMetadata metadata,
 ) {
   assert(nameResolver != null);
-  compiler_ast.AstVisitor<dynamic, _Mode> visitor =
+  final visitor =
       new _AstToIrVisitor(nameResolver, implicitReceiver, metadata, null);
-  var statements = <o.Statement>[];
-  _flattenStatements(
-      stmt.visit<dynamic, _Mode>(visitor, _Mode.Statement), statements);
+  final result = _visit(stmt, visitor, _Mode.Statement, stmtSourceSpan);
+  final statements = <o.Statement>[];
+  _flattenStatements(result, statements);
   return statements;
+}
+
+/// Visits [ast] with [context] using [visitor].
+///
+/// If [span] is non-null, it will be used to provide context to any
+/// [BuildError] thrown by [visitor].
+R _visit<R, C>(
+  compiler_ast.AST ast,
+  compiler_ast.AstVisitor<R, C> visitor,
+  C context,
+  SourceSpan span,
+) {
+  try {
+    return ast.visit(visitor, context);
+  } on BuildError catch (e) {
+    if (span == null) rethrow;
+    throwFailure(span.message(e.message));
+  }
 }
 
 enum _Mode { Statement, Expression }
@@ -153,7 +176,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
         op = o.BinaryOperator.BiggerEquals;
         break;
       default:
-        throw new StateError('Unsupported operation ${ast.operation}');
+        throwFailure('Unsupported operation "${ast.operation}"');
     }
     return _convertToStatementIfNeeded(
         mode,
@@ -376,7 +399,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
     if (identical(receiver, _implicitReceiverVal)) {
       var varExpr = _nameResolver.getLocal(ast.name);
       if (varExpr != null) {
-        throw new StateError("Cannot assign to a reference or variable!");
+        throwFailure('Cannot assign to a reference or variable "${ast.name}"');
       }
       receiver = _getImplicitOrStaticReceiver(ast.name, isStaticSetter);
     }
@@ -441,13 +464,13 @@ dynamic /* o.Expression | o.Statement */ _convertToStatementIfNeeded(
 
 void _ensureStatementMode(_Mode mode, compiler_ast.AST ast) {
   if (!identical(mode, _Mode.Statement)) {
-    throw new StateError('Expected a statement, but saw $ast');
+    throwFailure('Expected a statement, but saw "$ast"');
   }
 }
 
 void _ensureExpressionMode(_Mode mode, compiler_ast.AST ast) {
   if (!identical(mode, _Mode.Expression)) {
-    throw new StateError('Expected an expression, but saw $ast');
+    throwFailure('Expected an expression, but saw "$ast"');
   }
 }
 

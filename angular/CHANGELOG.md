@@ -4,6 +4,11 @@
     tag whose value identifies the source file URL and name of the component
     from which the styles originate.
 
+### Bug fixes
+
+*   Expression conversion failures are now reported as build failures, with
+    source context if availabe, rather than as bugs in the compiler.
+
 ## 5.0.0-alpha+13
 
 ### Breaking changes

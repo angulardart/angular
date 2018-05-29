@@ -7,6 +7,7 @@ import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
 import 'package:angular/src/core/security.dart';
 import 'package:angular/src/source_gen/common/names.dart'
     show toTemplateExtension;
+import 'package:source_span/source_span.dart';
 
 import "../compile_metadata.dart";
 import '../expression_parser/ast.dart' as ast;
@@ -63,6 +64,7 @@ void _bind(
     o.ReadVarExpr currValExpr,
     o.ReadClassMemberExpr fieldExpr,
     ast.AST parsedExpression,
+    SourceSpan parsedExpressionSourceSpan,
     o.Expression context,
     List<o.Statement> actions,
     CompileMethod method,
@@ -77,6 +79,7 @@ void _bind(
     nameResolver,
     context,
     parsedExpression,
+    parsedExpressionSourceSpan,
     viewDirective,
     fieldType,
   );
@@ -172,6 +175,7 @@ void bindRenderText(
       currValExpr,
       valueField,
       boundText.value,
+      boundText.sourceSpan,
       DetectChangesVars.cachedCtx,
       [
         compileNode.renderNode
@@ -306,6 +310,7 @@ void bindAndWriteToRenderer(
         currValExpr,
         fieldExpr,
         boundProp.value,
+        boundProp.sourceSpan,
         context,
         updateStmts,
         dynamicPropertiesMethod,
@@ -466,6 +471,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           view.nameResolver,
           DetectChangesVars.cachedCtx,
           input.value,
+          input.sourceSpan,
           view.component,
           o.BOOL_TYPE);
       dynamicInputsMethod.addStmt(directiveInstance
@@ -476,8 +482,13 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     }
     if (isStatefulDirective) {
       var fieldType = o.importType(directive.inputTypes[input.directiveName]);
-      var checkExpression = convertCdExpressionToIr(view.nameResolver,
-          DetectChangesVars.cachedCtx, input.value, view.component, fieldType);
+      var checkExpression = convertCdExpressionToIr(
+          view.nameResolver,
+          DetectChangesVars.cachedCtx,
+          input.value,
+          input.sourceSpan,
+          view.component,
+          fieldType);
       if (isImmutable(input.value, view.component.analyzedClass)) {
         constantInputsMethod.addStmt(directiveInstance
             .prop(input.directiveName)
@@ -534,8 +545,15 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
         ? o.importType(inputTypeMeta, inputTypeMeta.genericTypes)
         : null;
     if (isStatefulComp) {
-      _bindToUpdateMethod(view, currValExpr, fieldExpr, input.value,
-          DetectChangesVars.cachedCtx, statements, dynamicInputsMethod,
+      _bindToUpdateMethod(
+          view,
+          currValExpr,
+          fieldExpr,
+          input.value,
+          input.sourceSpan,
+          DetectChangesVars.cachedCtx,
+          statements,
+          dynamicInputsMethod,
           fieldType: inputType);
     } else {
       _bind(
@@ -545,6 +563,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           currValExpr,
           fieldExpr,
           input.value,
+          input.sourceSpan,
           DetectChangesVars.cachedCtx,
           statements,
           dynamicInputsMethod,
@@ -574,12 +593,13 @@ void _bindToUpdateMethod(
     o.ReadVarExpr currValExpr,
     o.ReadClassMemberExpr fieldExpr,
     ast.AST parsedExpression,
+    SourceSpan parseExpressionSourceSpan,
     o.Expression context,
     List<o.Statement> actions,
     CompileMethod method,
     {o.OutputType fieldType}) {
-  var checkExpression = convertCdExpressionToIr(
-      view.nameResolver, context, parsedExpression, view.component, fieldType);
+  var checkExpression = convertCdExpressionToIr(view.nameResolver, context,
+      parsedExpression, parseExpressionSourceSpan, view.component, fieldType);
   if (checkExpression == null) {
     // e.g. an empty expression was given
     return;
@@ -682,6 +702,7 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       currValExpr,
       fieldExpr,
       condition,
+      input.sourceSpan,
       DetectChangesVars.cachedCtx,
       statements,
       dynamicInputsMethod,
