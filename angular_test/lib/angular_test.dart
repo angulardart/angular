@@ -9,6 +9,7 @@ export 'src/frontend.dart'
         disposeAnyRunningTest,
         NgTestBed,
         NgTestFixture,
+        NgTestStabilizerFactory,
         NgTestStabilizer,
         NgZoneStabilizer;
 export 'src/matchers.dart' show throwsInAngular;
