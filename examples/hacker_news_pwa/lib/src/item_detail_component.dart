@@ -12,9 +12,9 @@ import 'item_component.dart';
 /// The number of replies to a comment, including the comment itself, are stored
 /// in 'comments_count' for each comment.
 int countComments(Map comment) {
-  final replies = (comment['comments'] as List).cast<Map>();
+  final List replies = comment['comments'];
   var numComments = 1;
-  for (final reply in replies) {
+  for (final Map reply in replies) {
     numComments += countComments(reply);
   }
   return comment['comments_count'] = numComments;
@@ -34,12 +34,13 @@ class ItemDetailComponent implements OnActivate {
   ItemDetailComponent(this._hackerNewsService);
 
   @override
-  Future onActivate(_, RouterState current) async {
+  Future<void> onActivate(_, RouterState current) {
     final id = current.parameters['id'];
-    item = await _hackerNewsService.getItem(id);
-    final comments = (item['comments'] as List).cast<Map>();
-    for (final comment in comments) {
-      countComments(comment);
-    }
+    return _hackerNewsService.getItem(id).then((item) {
+      final List comments = item['comments'];
+      for (final Map comment in comments) {
+        countComments(comment);
+      }
+    });
   }
 }

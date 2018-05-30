@@ -26,7 +26,7 @@ final InjectorFactory hackerNewsApp = ng.hackerNewsApp$Injector;
 HackerNewsService _service;
 HackerNewsService getNewsService() => _service;
 
-void main() async {
+void main() {
   // Start fetching the articles if we are a first time viewer.
   //
   // This will make the perceived first load faster, and allow us to avoid
@@ -47,9 +47,10 @@ void main() async {
   new pwa.Client();
 
   // Start app after fetched.
-  await future;
-  runApp(
-    app.AppComponentNgFactory,
-    createInjector: hackerNewsApp,
-  );
+  future.then((_) {
+    runApp(
+      app.AppComponentNgFactory,
+      createInjector: hackerNewsApp,
+    );
+  });
 }
