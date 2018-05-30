@@ -48,9 +48,10 @@ class AppComponent {
     ),
     new RouteDefinition.defer(
       routePath: itemRoutePath,
-      loader: () async {
-        await item_detail.loadLibrary();
-        return item_detail.ItemDetailComponentNgFactory;
+      loader: () {
+        return item_detail.loadLibrary().then((_) {
+          return item_detail.ItemDetailComponentNgFactory;
+        });
       },
     ),
   ];

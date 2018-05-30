@@ -26,7 +26,7 @@ class FeedComponent implements OnActivate {
   FeedComponent(this._hackerNewsService);
 
   @override
-  Future onActivate(_, RouterState current) async {
+  Future<void> onActivate(_, RouterState current) {
     final routePath = current.routePath;
     final String feed = routePath.additionalData['feed'];
     final page = current.queryParameters['p'];
@@ -43,6 +43,8 @@ class FeedComponent implements OnActivate {
     }
 
     startingRank = itemsPerPage * (pageNumber - 1) + 1;
-    items = await _hackerNewsService.getFeed(feed, pageNumber);
+    return _hackerNewsService.getFeed(feed, pageNumber).then((result) {
+      items = result;
+    });
   }
 }
