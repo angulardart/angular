@@ -9,6 +9,9 @@
 *   Expression conversion failures are now reported as build failures, with
     source context if availabe, rather than as bugs in the compiler.
 
+*   Unresolved `exports` arguments in `@Component` annotations will no longer
+    crash the compiler and are now reported as build failures.
+
 ## 5.0.0-alpha+13
 
 ### Breaking changes
