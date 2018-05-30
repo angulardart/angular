@@ -55,7 +55,15 @@ class RouterLink implements OnDestroy {
   }
 
   Url get url {
-    return _cachedUrl ??= Url.parse(_routerLink);
+    if (_cachedUrl == null) {
+      final parsedUrl = Url.parse(_routerLink);
+      _cachedUrl = new Url(
+        _location.normalizePath(parsedUrl.path),
+        fragment: parsedUrl.fragment,
+        queryParameters: parsedUrl.queryParameters,
+      );
+    }
+    return _cachedUrl;
   }
 
   /// Indicates the URL when the hovering on the link.

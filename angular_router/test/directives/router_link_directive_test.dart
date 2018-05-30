@@ -10,6 +10,7 @@ import 'dart:js';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:angular_router/testing.dart';
 import 'package:angular_test/angular_test.dart';
 
 import 'router_link_directive_test.template.dart' as ng_generated;
@@ -27,14 +28,13 @@ void main() {
 
   test('should attempt to navigate to the provided link', () async {
     final fixture = await new NgTestBed<TestRouterLink>().addProviders([
-      provide(Location, useValue: const FakeLocation()),
-      provide(Router, useValue: fakeRouter),
-    ]).create();
-    final anchor = fixture.rootElement.querySelector('a') as AnchorElement;
-    expect(anchor.pathname, isEmpty);
-    await fixture.update((comp) {
+      ClassProvider(Location),
+      ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
+      ValueProvider(Router, fakeRouter),
+    ]).create(beforeChangeDetection: (comp) {
       comp.routerLink = '/users/bob';
     });
+    final anchor = fixture.rootElement.querySelector('a') as AnchorElement;
     expect(anchor.pathname, '/users/bob');
     expect(fakeRouter.lastNavigatedPath, isNull);
     await fixture.update((_) => anchor.click());
@@ -43,8 +43,9 @@ void main() {
 
   test('should attempt to navigate on Enter key press', () async {
     final testBed = new NgTestBed<TestRouterLinkKeyPress>().addProviders([
-      provide(Location, useValue: const FakeLocation()),
-      provide(Router, useValue: fakeRouter),
+      ClassProvider(Location),
+      ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
+      ValueProvider(Router, fakeRouter),
     ]);
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
@@ -56,8 +57,9 @@ void main() {
 
   test('should parse out query params and fragment', () async {
     final fixture = await new NgTestBed<TestRouterLink>().addProviders([
-      provide(Location, useValue: const FakeLocation()),
-      provide(Router, useValue: fakeRouter),
+      ClassProvider(Location),
+      ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
+      ValueProvider(Router, fakeRouter),
     ]).create(beforeChangeDetection: (comp) {
       comp.routerLink = '/users/bob?param1=one&param2=2#frag';
     });
@@ -75,8 +77,9 @@ void main() {
   test('should not use the router when the target is not _self', () async {
     final fixture =
         await new NgTestBed<TestRouterLinkWithTarget>().addProviders([
-      provide(Location, useValue: const FakeLocation()),
-      provide(Router, useValue: fakeRouter),
+      ClassProvider(Location),
+      ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
+      ValueProvider(Router, fakeRouter),
     ]).create(beforeChangeDetection: (comp) {
       comp.routerLink = '/users/bob';
     });
@@ -144,16 +147,6 @@ class FakeRouter implements Router {
 
   @override
   noSuchMethod(i) => super.noSuchMethod(i);
-}
-
-class FakeLocation implements Location {
-  const FakeLocation();
-
-  @override
-  String prepareExternalUrl(String url) => url;
-
-  @override
-  noSuchMethod(i) => null;
 }
 
 const _createKeyboardEventName = '__dart_createKeyboardEvent';

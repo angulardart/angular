@@ -3,6 +3,11 @@
 *   Moved `normalizePath()` from an internal type to `Location` to give
     fine-grained control over path normalization.
 
+### Bug fixes
+
+*   Fixed a regression where the `RouterLinkActive` directive would not activate
+    for empty paths (including `'/'`).
+
 ## 2.0.0-alpha+12
 
 ### Breaking changes
