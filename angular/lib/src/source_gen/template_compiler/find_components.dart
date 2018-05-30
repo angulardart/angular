@@ -111,28 +111,6 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         .toList();
   }
 
-  void _failFastOnUnresolvedDirectives(
-    Iterable<Expression> expressions,
-    ClassElement componentType,
-  ) {
-    final sourceUrl = componentType.source.uri;
-    throw new BuildError(
-      messages.unresolvedSource(
-        expressions.map((e) {
-          return new SourceSpan(
-            new SourceLocation(e.offset, sourceUrl: sourceUrl),
-            new SourceLocation(e.offset + e.length, sourceUrl: sourceUrl),
-            e.toSource(),
-          );
-        }),
-        message: 'This argument *may* have not been resolved',
-        reason: ''
-            'Compiling @Component-annotated class "${componentType.name}" '
-            'failed.\n\n${messages.analysisFailureReasons}',
-      ),
-    );
-  }
-
   List<T> _visitTypesForComponent<T>(
     Iterable<DartObject> directives,
     AnnotationMatcher annotationMatcher,
@@ -160,7 +138,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
               // check anyway at this point.
               values.elements.every((e) => e.staticType?.isDynamic != false)) {
             // We didn't resolve something.
-            _failFastOnUnresolvedDirectives(
+            _failFastOnUnresolvedExpressions(
                 values.elements.where((e) => e.staticType?.isDynamic != false),
                 element);
           }
@@ -660,6 +638,7 @@ class _ComponentVisitor
       return exports;
     }
 
+    final unresolvedExports = <Identifier>[];
     for (Identifier id in staticNames) {
       String name;
       String prefix;
@@ -677,17 +656,25 @@ class _ComponentVisitor
         name = id.name;
       }
 
-      if (id.staticElement is ClassElement) {
-        analyzedClass = new AnalyzedClass(id.staticElement as ClassElement);
+      final staticElement = id.staticElement;
+      if (staticElement is ClassElement) {
+        analyzedClass = new AnalyzedClass(staticElement);
+      } else if (staticElement == null) {
+        unresolvedExports.add(id);
+        continue;
       }
 
       // TODO(het): Also store the `DartType` since we know it statically.
       exports.add(new CompileIdentifierMetadata(
         name: name,
         prefix: prefix,
-        moduleUrl: moduleUrl(id.staticElement.library),
+        moduleUrl: moduleUrl(staticElement.library),
         analyzedClass: analyzedClass,
       ));
+    }
+    if (unresolvedExports.isNotEmpty) {
+      _failFastOnUnresolvedExpressions(
+          unresolvedExports, _directiveClassElement);
     }
     return exports;
   }
@@ -712,6 +699,28 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
       .where((hook) => hook.isAssignableFrom(clazz))
       .map((t) => hooks[t])
       .toList();
+}
+
+void _failFastOnUnresolvedExpressions(
+  Iterable<Expression> expressions,
+  ClassElement componentType,
+) {
+  final sourceUrl = componentType.source.uri;
+  throw new BuildError(
+    messages.unresolvedSource(
+      expressions.map((e) {
+        return new SourceSpan(
+          new SourceLocation(e.offset, sourceUrl: sourceUrl),
+          new SourceLocation(e.offset + e.length, sourceUrl: sourceUrl),
+          e.toSource(),
+        );
+      }),
+      message: 'This argument *may* have not been resolved',
+      reason: ''
+          'Compiling @Component-annotated class "${componentType.name}" '
+          'failed.\n\n${messages.analysisFailureReasons}',
+    ),
+  );
 }
 
 void _prohibitBindingChange(
