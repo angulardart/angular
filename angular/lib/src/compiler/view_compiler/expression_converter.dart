@@ -80,18 +80,18 @@ List<o.Statement> convertCdStatementToIr(
   return statements;
 }
 
-/// Visits [ast] with [context] using [visitor].
+/// Visits [ast] in [mode] using [visitor].
 ///
 /// If [span] is non-null, it will be used to provide context to any
 /// [BuildError] thrown by [visitor].
-R _visit<R, C>(
+dynamic _visit(
   compiler_ast.AST ast,
-  compiler_ast.AstVisitor<R, C> visitor,
-  C context,
+  _AstToIrVisitor visitor,
+  _Mode mode,
   SourceSpan span,
 ) {
   try {
-    return ast.visit(visitor, context);
+    return ast.visit(visitor, mode);
   } on BuildError catch (e) {
     if (span == null) rethrow;
     throwFailure(span.message(e.message));
