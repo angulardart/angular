@@ -315,3 +315,16 @@ development mode.
 
 It adds extra overhead on top of constant strings or integers that don't help
 much for framework-internal code (nobody will use `switch`, for example).
+
+## Do not use `async`, `async*`, `sync*`, or `await`
+
+... unless absolutely necessary (i.e. there is no way to write similar code
+using Futures/Streams/Iterables, or the code is extremely verbose and error
+prone). All of these keywords generate complex state machines with entire
+branches going unused in production code.
+
+## Do not use `.cast`
+
+The code behind `.cast` creates a forwarding wrapper (based on `sync*` and
+`async*` in many cases) that adds a lot of overhead. It is preferrable to either
+fix the typing _or_ use an alternative pattern to get the typing required.
