@@ -227,11 +227,19 @@ class _BindDirectivesVisitor
         new _ParseContext.forElement(astNode, parentContext.templateContext);
     final attributes = <ast.AttributeAst>[];
     final i18nAttributes = <ng.I18nAttrAst>[];
-    final i18nAttributeMetadata = getI18nAttributeMetadata(
-        astNode.annotations, elementContext.templateContext);
+    final i18nAttributeAnnotations =
+        i18nAttributeAnnotationsFrom(astNode.annotations);
     for (final attribute in astNode.attributes) {
-      if (i18nAttributeMetadata.containsKey(attribute.name)) {
-        final metadata = i18nAttributeMetadata[attribute.name];
+      if (i18nAttributeAnnotations.containsKey(attribute.name)) {
+        final annotation = i18nAttributeAnnotations[attribute.name];
+        final metadata =
+            parseI18nMetadata(annotation, elementContext.templateContext);
+        if (metadata == null) {
+          // Drop any attributes with invalid i18n metadata. We can't
+          // internationalize them with invalid metadata, nor do we want to
+          // treat them as non-internationalized attributes.
+          continue;
+        }
         final message = new I18nMessage(attribute.value, metadata);
         i18nAttributes.add(new ng.I18nAttrAst(
           attribute.name,
@@ -524,18 +532,22 @@ class _BindDirectivesVisitor
     _ParseContext context,
   ) {
     if (i18nEnabled) {
-      final i18nAnnotation = getI18nAnnotation(annotations);
+      final i18nAnnotation = i18nAnnotationFrom(annotations);
       if (i18nAnnotation != null) {
         final i18nMetadata =
             parseI18nMetadata(i18nAnnotation, context.templateContext);
-        if (i18nMetadata != null) {
-          return internationalize(
-            parent,
-            i18nMetadata,
-            context.findNgContentIndex(_textCssSelector),
-            context.templateContext,
-          );
+        if (i18nMetadata == null) {
+          // Drop the child nodes of an AST with invalid i18n metadata. We can't
+          // internationalize them with invalid metadata, nor do we want to
+          // treat them as non-internationalized nodes.
+          return [];
         }
+        return internationalize(
+          parent,
+          i18nMetadata,
+          context.findNgContentIndex(_textCssSelector),
+          context.templateContext,
+        );
       }
     }
     return _visitAll(parent.childNodes, context);

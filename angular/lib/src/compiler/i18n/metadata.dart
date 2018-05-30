@@ -30,7 +30,7 @@ class I18nMetadata {
 }
 
 /// Returns the first `@i18n` annotation in [annotations], or null.
-AnnotationAst getI18nAnnotation(List<AnnotationAst> annotations) {
+AnnotationAst i18nAnnotationFrom(List<AnnotationAst> annotations) {
   for (final annotation in annotations) {
     if (annotation.name == i18nAnnotationName) {
       return annotation;
@@ -39,22 +39,15 @@ AnnotationAst getI18nAnnotation(List<AnnotationAst> annotations) {
   return null;
 }
 
-/// Extracts metadata from `@i18n-<attr>` annotations in [annotations].
-///
-/// Returns a map from attribute name to corresponding internationalization
-/// metadata.
-Map<String, I18nMetadata> getI18nAttributeMetadata(
+/// Returns all `@i18n-<attr>` annotations in [annotations] by attribute name.
+Map<String, AnnotationAst> i18nAttributeAnnotationsFrom(
   List<AnnotationAst> annotations,
-  TemplateContext context,
 ) {
-  final results = <String, I18nMetadata>{};
+  final results = <String, AnnotationAst>{};
   for (final annotation in annotations) {
     if (annotation.name.startsWith(i18nAnnotationPrefix)) {
-      final metadata = parseI18nMetadata(annotation, context);
-      if (metadata != null) {
-        final name = annotation.name.substring(i18nAnnotationPrefix.length);
-        results[name] = metadata;
-      }
+      final name = annotation.name.substring(i18nAnnotationPrefix.length);
+      results[name] = annotation;
     }
   }
   return results;
