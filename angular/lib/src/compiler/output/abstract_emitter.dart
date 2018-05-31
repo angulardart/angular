@@ -398,6 +398,8 @@ abstract class AbstractEmitterVisitor
     var value = ast.value;
     if (value is String) {
       context.print(escapeSingleQuoteString(value, _escapeDollarInStrings));
+    } else if (value is o.EscapedString) {
+      context.print("'${value.value}'");
     } else if (value == null) {
       context.print('null');
     } else {

@@ -421,7 +421,7 @@ class CompileView implements AppViewBuilder {
   o.Expression createI18nMessage(I18nMessage message) {
     final name = '_message_${_i18nMessageCount++}';
     final args = [
-      o.literal(message.text),
+      o.escapedString(message.text),
       new o.NamedExpr('desc', o.literal(message.metadata.description)),
     ];
     if (message.metadata.meaning != null) {
