@@ -30,6 +30,7 @@ abstract class ChangeDetectionHost {
   /// **INTERNAL ONLY**: Register a crash during [view.detectCrash].
   static void handleCrash(AppView<void> view, Object error, StackTrace trace) {
     final current = _current;
+    assert(current != null);
     current
       .._lastGuardedView = view
       .._lastCaughtException = error

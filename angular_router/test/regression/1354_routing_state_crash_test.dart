@@ -41,10 +41,10 @@ void main() {
     // "Navigate" to /throws.
     await appComponent.instance.updateUrl('/throws');
     expect(_logs, [contains('$IntentionalException')]);
-    expect(routeContainer.text, contains('Another Page'));
-    _logs.clear();
+    expect(routeContainer.text, isEmpty);
 
     // "Navigate" back to /home.
+    _logs.clear();
     await appComponent.instance.updateUrl('/home');
     expect(_logs, isEmpty);
     expect(routeContainer.text, contains('Home Page'));
@@ -68,8 +68,13 @@ class LoggingExceptionHandler implements ExceptionHandler {
 
   @override
   void call(exception, [stack, __]) {
-    _logs.add('$exception');
-    window.console.error('$exception\n$stack');
+    _logs.add('$exception: $stack');
+
+    if (exception is! IntentionalException) {
+      window.console.error('$exception\n$stack');
+    } else {
+      window.console.info('ExceptionHandler caught the intentional exception');
+    }
   }
 }
 
@@ -83,7 +88,9 @@ class LoggingExceptionHandler implements ExceptionHandler {
     </form>
     
     Navigation:
-    <a routerLink="/home">Home</a> | <a routerLink="/throws">Throws</a>
+    <a routerLink="/home">Home</a> | 
+    <a routerLink="/throws">Throws</a> |
+    <a routerLink="/another">Another</a>
 
     Page:
     <div class="route-container">
@@ -170,7 +177,7 @@ class AnotherComponent {}
   directives: const [
     NgIf,
   ],
-  template: r'''a
+  template: r'''
     <ng-container *ngIf="service.getterThatThrows">
       Should not be shown.
     </ng-container>
