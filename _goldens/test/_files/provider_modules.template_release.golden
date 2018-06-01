@@ -19,7 +19,7 @@ import 'package:angular/angular.dart';
 import 'dart:core';
 import 'package:angular/src/core/di/opaque_token.dart' as import9;
 
-const List<dynamic> styles$ProviderModulesComponent = const [];
+final List<dynamic> styles$ProviderModulesComponent = const [];
 
 class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesComponent> {
   static RenderComponentType _renderType;
@@ -41,7 +41,7 @@ AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(
   return new ViewProviderModulesComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$ProviderModulesComponentHost = const [];
+final List<dynamic> styles$ProviderModulesComponentHost = const [];
 
 class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   ViewProviderModulesComponent0 _compView_0;

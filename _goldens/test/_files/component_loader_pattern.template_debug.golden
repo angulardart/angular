@@ -23,7 +23,7 @@ import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$TestComponent = const [];
+final List<dynamic> styles$TestComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestComponent0 = [];
 
 class ViewTestComponent0 extends DebugAppView<import2.TestComponent> {
@@ -46,7 +46,7 @@ AppView<import2.TestComponent> viewFactory_TestComponent0(AppView<dynamic> paren
   return new ViewTestComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$TestComponentHost = const [];
+final List<dynamic> styles$TestComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestComponentHost0 = [
   new StaticNodeDebugInfo([import2.TestComponent], import2.TestComponent, <String, dynamic>{})
 ];

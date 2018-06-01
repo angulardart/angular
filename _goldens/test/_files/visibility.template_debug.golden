@@ -19,7 +19,7 @@ import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$Dependent = const [];
+final List<dynamic> styles$Dependent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_Dependent0 = [];
 
 class ViewDependent0 extends DebugAppView<import2.Dependent> {
@@ -42,7 +42,7 @@ AppView<import2.Dependent> viewFactory_Dependent0(AppView<dynamic> parentView, i
   return new ViewDependent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$DependentHost = const [];
+final List<dynamic> styles$DependentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DependentHost0 = [
   new StaticNodeDebugInfo([import2.Dependent], import2.Dependent, <String, dynamic>{})
 ];
@@ -78,7 +78,7 @@ AppView viewFactory_DependentHost0(AppView<dynamic> parentView, int parentIndex)
 }
 
 const ComponentFactory<import2.Dependent> DependentNgFactory = const ComponentFactory<import2.Dependent>('dependent', viewFactory_DependentHost0, _DependentMetadata);
-const List<dynamic> styles$DependencyWithDependentInView = const [];
+final List<dynamic> styles$DependencyWithDependentInView = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithDependentInView0 = [
   new StaticNodeDebugInfo([import2.Dependent], import2.Dependent, <String, dynamic>{})
 ];
@@ -122,7 +122,7 @@ AppView<import2.DependencyWithDependentInView> viewFactory_DependencyWithDepende
   return new ViewDependencyWithDependentInView0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$DependencyWithDependentInViewHost = const [];
+final List<dynamic> styles$DependencyWithDependentInViewHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithDependentInViewHost0 = [
   new StaticNodeDebugInfo([import2.DependencyWithDependentInView, import2.Dependency], import2.DependencyWithDependentInView, <String, dynamic>{})
 ];
@@ -166,7 +166,7 @@ AppView viewFactory_DependencyWithDependentInViewHost0(AppView<dynamic> parentVi
 }
 
 const ComponentFactory<import2.DependencyWithDependentInView> DependencyWithDependentInViewNgFactory = const ComponentFactory<import2.DependencyWithDependentInView>('dependency-with-dependent-in-view', viewFactory_DependencyWithDependentInViewHost0, _DependencyWithDependentInViewMetadata);
-const List<dynamic> styles$DependencyWithContent = const [];
+final List<dynamic> styles$DependencyWithContent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithContent0 = [];
 
 class ViewDependencyWithContent0 extends DebugAppView<import2.DependencyWithContent> {
@@ -191,7 +191,7 @@ AppView<import2.DependencyWithContent> viewFactory_DependencyWithContent0(AppVie
   return new ViewDependencyWithContent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$DependencyWithContentHost = const [];
+final List<dynamic> styles$DependencyWithContentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithContentHost0 = [
   new StaticNodeDebugInfo([import2.DependencyWithContent, import2.Dependency], import2.DependencyWithContent, <String, dynamic>{})
 ];
@@ -235,7 +235,7 @@ AppView viewFactory_DependencyWithContentHost0(AppView<dynamic> parentView, int 
 }
 
 const ComponentFactory<import2.DependencyWithContent> DependencyWithContentNgFactory = const ComponentFactory<import2.DependencyWithContent>('dependency-with-content', viewFactory_DependencyWithContentHost0, _DependencyWithContentMetadata);
-const List<dynamic> styles$DependencyAndDependentInView = const [];
+final List<dynamic> styles$DependencyAndDependentInView = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DependencyAndDependentInView0 = [
   null,
   new StaticNodeDebugInfo([import2.Dependent], import2.Dependent, <String, dynamic>{})
@@ -283,7 +283,7 @@ AppView<import2.DependencyAndDependentInView> viewFactory_DependencyAndDependent
   return new ViewDependencyAndDependentInView0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$DependencyAndDependentInViewHost = const [];
+final List<dynamic> styles$DependencyAndDependentInViewHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DependencyAndDependentInViewHost0 = [
   new StaticNodeDebugInfo([import2.DependencyAndDependentInView], import2.DependencyAndDependentInView, <String, dynamic>{})
 ];
@@ -319,7 +319,7 @@ AppView viewFactory_DependencyAndDependentInViewHost0(AppView<dynamic> parentVie
 }
 
 const ComponentFactory<import2.DependencyAndDependentInView> DependencyAndDependentInViewNgFactory = const ComponentFactory<import2.DependencyAndDependentInView>('dependency-and-dependent-in-view', viewFactory_DependencyAndDependentInViewHost0, _DependencyAndDependentInViewMetadata);
-const List<dynamic> styles$HasVisibilityAll = const [];
+final List<dynamic> styles$HasVisibilityAll = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityAll0 = [];
 
 class ViewHasVisibilityAll0 extends DebugAppView<import2.HasVisibilityAll> {
@@ -342,7 +342,7 @@ AppView<import2.HasVisibilityAll> viewFactory_HasVisibilityAll0(AppView<dynamic>
   return new ViewHasVisibilityAll0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$HasVisibilityAllHost = const [];
+final List<dynamic> styles$HasVisibilityAllHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityAllHost0 = [
   new StaticNodeDebugInfo([import2.HasVisibilityAll], import2.HasVisibilityAll, <String, dynamic>{})
 ];
@@ -386,7 +386,7 @@ AppView viewFactory_HasVisibilityAllHost0(AppView<dynamic> parentView, int paren
 }
 
 const ComponentFactory<import2.HasVisibilityAll> HasVisibilityAllNgFactory = const ComponentFactory<import2.HasVisibilityAll>('has-visibility-all', viewFactory_HasVisibilityAllHost0, _HasVisibilityAllMetadata);
-const List<dynamic> styles$HasVisibilityLocal = const [];
+final List<dynamic> styles$HasVisibilityLocal = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityLocal0 = [];
 
 class ViewHasVisibilityLocal0 extends DebugAppView<import2.HasVisibilityLocal> {
@@ -409,7 +409,7 @@ AppView<import2.HasVisibilityLocal> viewFactory_HasVisibilityLocal0(AppView<dyna
   return new ViewHasVisibilityLocal0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$HasVisibilityLocalHost = const [];
+final List<dynamic> styles$HasVisibilityLocalHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityLocalHost0 = [
   new StaticNodeDebugInfo([import2.HasVisibilityLocal], import2.HasVisibilityLocal, <String, dynamic>{})
 ];

@@ -4,10 +4,15 @@
     tag whose value identifies the source file URL and name of the component
     from which the styles originate.
 
+*   Styles that are inlined into generated `.dart` code (either in
+    `.template.dart` or `.css.dart`) now are `final` rather than `const` when
+    specified. This allows incremental compilers (such as DDC) to avoid
+    cascading rebuilds when only CSS styles are changed (not HTML or Dart).
+
 ### Bug fixes
 
 *   Expression conversion failures are now reported as build failures, with
-    source context if availabe, rather than as bugs in the compiler.
+    source context if available, rather than as bugs in the compiler.
 
 *   Unresolved `exports` arguments in `@Component` annotations will no longer
     crash the compiler and are now reported as build failures.

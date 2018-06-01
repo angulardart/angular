@@ -17,7 +17,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$EmptyPropertiesComponent = const [];
+final List<dynamic> styles$EmptyPropertiesComponent = const [];
 
 class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesComponent> {
   import2.Element _el_0;
@@ -101,7 +101,7 @@ AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(
   return new ViewEmptyPropertiesComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$EmptyPropertiesComponentHost = const [];
+final List<dynamic> styles$EmptyPropertiesComponentHost = const [];
 
 class _ViewEmptyPropertiesComponentHost0 extends AppView<dynamic> {
   ViewEmptyPropertiesComponent0 _compView_0;
@@ -133,7 +133,7 @@ AppView viewFactory_EmptyPropertiesComponentHost0(AppView<dynamic> parentView, i
 }
 
 const ComponentFactory<import1.EmptyPropertiesComponent> EmptyPropertiesComponentNgFactory = const ComponentFactory<import1.EmptyPropertiesComponent>('empty-properties', viewFactory_EmptyPropertiesComponentHost0, _EmptyPropertiesComponentMetadata);
-const List<dynamic> styles$FancyButtonComponent = const [];
+final List<dynamic> styles$FancyButtonComponent = const [];
 
 class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
   static RenderComponentType _renderType;
@@ -155,7 +155,7 @@ AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponent0(AppView<
   return new ViewFancyButtonComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$FancyButtonComponentHost = const [];
+final List<dynamic> styles$FancyButtonComponentHost = const [];
 
 class _ViewFancyButtonComponentHost0 extends AppView<dynamic> {
   ViewFancyButtonComponent0 _compView_0;

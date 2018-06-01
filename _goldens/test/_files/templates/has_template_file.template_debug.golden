@@ -20,7 +20,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$HasTemplateFileComponent = const [import0.styles];
+final List<dynamic> styles$HasTemplateFileComponent = [import0.styles];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponent0 = [null, null];
 
 class ViewHasTemplateFileComponent0 extends DebugAppView<import3.HasTemplateFileComponent> {
@@ -50,7 +50,7 @@ AppView<import3.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(
   return new ViewHasTemplateFileComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$HasTemplateFileComponentHost = const [];
+final List<dynamic> styles$HasTemplateFileComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasTemplateFileComponentHost0 = [
   new StaticNodeDebugInfo([import3.HasTemplateFileComponent], import3.HasTemplateFileComponent, <String, dynamic>{})
 ];

@@ -20,7 +20,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$InlinedNgIfComponent = const [];
+final List<dynamic> styles$InlinedNgIfComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InlinedNgIfComponent0 = [
   new StaticNodeDebugInfo([NgIf], null, <String, dynamic>{})
 ];
@@ -73,7 +73,7 @@ AppView<import3.InlinedNgIfComponent> viewFactory_InlinedNgIfComponent0(AppView<
   return new ViewInlinedNgIfComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InlinedNgIfComponentHost = const [];
+final List<dynamic> styles$InlinedNgIfComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InlinedNgIfComponentHost0 = [
   new StaticNodeDebugInfo([import3.InlinedNgIfComponent], import3.InlinedNgIfComponent, <String, dynamic>{})
 ];
@@ -109,7 +109,7 @@ AppView viewFactory_InlinedNgIfComponentHost0(AppView<dynamic> parentView, int p
 }
 
 const ComponentFactory<import3.InlinedNgIfComponent> InlinedNgIfComponentNgFactory = const ComponentFactory<import3.InlinedNgIfComponent>('inlined-ngif', viewFactory_InlinedNgIfComponentHost0, _InlinedNgIfComponentMetadata);
-const List<dynamic> styles$InlinedNgIfWithImmutableConditionComponent = const [];
+final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InlinedNgIfWithImmutableConditionComponent0 = [
   new StaticNodeDebugInfo([NgIf], null, <String, dynamic>{})
 ];
@@ -159,7 +159,7 @@ AppView<import3.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedN
   return new ViewInlinedNgIfWithImmutableConditionComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InlinedNgIfWithImmutableConditionComponentHost = const [];
+final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InlinedNgIfWithImmutableConditionComponentHost0 = [
   new StaticNodeDebugInfo([import3.InlinedNgIfWithImmutableConditionComponent], import3.InlinedNgIfWithImmutableConditionComponent, <String, dynamic>{})
 ];

@@ -17,7 +17,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$InlinedNgIfComponent = const [];
+final List<dynamic> styles$InlinedNgIfComponent = const [];
 
 class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
   import2.Comment _anchor_0;
@@ -63,7 +63,7 @@ AppView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponent0(AppView<
   return new ViewInlinedNgIfComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InlinedNgIfComponentHost = const [];
+final List<dynamic> styles$InlinedNgIfComponentHost = const [];
 
 class _ViewInlinedNgIfComponentHost0 extends AppView<dynamic> {
   ViewInlinedNgIfComponent0 _compView_0;
@@ -95,7 +95,7 @@ AppView viewFactory_InlinedNgIfComponentHost0(AppView<dynamic> parentView, int p
 }
 
 const ComponentFactory<import1.InlinedNgIfComponent> InlinedNgIfComponentNgFactory = const ComponentFactory<import1.InlinedNgIfComponent>('inlined-ngif', viewFactory_InlinedNgIfComponentHost0, _InlinedNgIfComponentMetadata);
-const List<dynamic> styles$InlinedNgIfWithImmutableConditionComponent = const [];
+final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponent = const [];
 
 class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.InlinedNgIfWithImmutableConditionComponent> {
   import2.Comment _anchor_0;
@@ -139,7 +139,7 @@ AppView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedN
   return new ViewInlinedNgIfWithImmutableConditionComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InlinedNgIfWithImmutableConditionComponentHost = const [];
+final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponentHost = const [];
 
 class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<dynamic> {
   ViewInlinedNgIfWithImmutableConditionComponent0 _compView_0;

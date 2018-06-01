@@ -23,7 +23,7 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import11;
 import 'package:angular/angular.dart';
 import 'dart:core';
 
-const List<dynamic> styles$NestedNgForComponent = const [];
+final List<dynamic> styles$NestedNgForComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForComponent0 = [
   new StaticNodeDebugInfo([TemplateRef, import2.NgFor], null, <String, dynamic>{})
 ];
@@ -167,7 +167,7 @@ AppView<import4.NestedNgForComponent> viewFactory_NestedNgForComponent2(AppView<
   return new _ViewNestedNgForComponent2(parentView, parentIndex);
 }
 
-const List<dynamic> styles$NestedNgForComponentHost = const [];
+final List<dynamic> styles$NestedNgForComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_NestedNgForComponentHost0 = [
   new StaticNodeDebugInfo([import4.NestedNgForComponent], import4.NestedNgForComponent, <String, dynamic>{})
 ];

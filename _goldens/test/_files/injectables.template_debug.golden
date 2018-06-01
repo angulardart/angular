@@ -24,7 +24,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/di/opaque_token.dart' as import10;
 import 'dart:core';
 
-const List<dynamic> styles$InjectableComponent = const [];
+final List<dynamic> styles$InjectableComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponent0 = [null, null];
 
 class ViewInjectableComponent0 extends DebugAppView<import2.InjectableComponent> {
@@ -53,7 +53,7 @@ AppView<import2.InjectableComponent> viewFactory_InjectableComponent0(AppView<dy
   return new ViewInjectableComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InjectableComponentHost = const [];
+final List<dynamic> styles$InjectableComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InjectableComponentHost0 = [
   new StaticNodeDebugInfo([const import10.OpaqueToken('test'), import2.InjectableComponent, import2.SomeDep, import2.BaseService], import2.InjectableComponent, <String, dynamic>{})
 ];

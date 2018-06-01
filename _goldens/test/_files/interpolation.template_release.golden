@@ -17,7 +17,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$InterpolationComponent = const [];
+final List<dynamic> styles$InterpolationComponent = const [];
 
 class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent> {
   import2.DivElement _el_0;
@@ -56,7 +56,7 @@ AppView<import1.InterpolationComponent> viewFactory_InterpolationComponent0(AppV
   return new ViewInterpolationComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InterpolationComponentHost = const [];
+final List<dynamic> styles$InterpolationComponentHost = const [];
 
 class _ViewInterpolationComponentHost0 extends AppView<dynamic> {
   ViewInterpolationComponent0 _compView_0;
@@ -88,7 +88,7 @@ AppView viewFactory_InterpolationComponentHost0(AppView<dynamic> parentView, int
 }
 
 const ComponentFactory<import1.InterpolationComponent> InterpolationComponentNgFactory = const ComponentFactory<import1.InterpolationComponent>('interpolation', viewFactory_InterpolationComponentHost0, _InterpolationComponentMetadata);
-const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
+final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
 class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.InterpolationComponentNoWhitespace> {
   import2.DivElement _el_0;
@@ -127,7 +127,7 @@ AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationCom
   return new ViewInterpolationComponentNoWhitespace0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
+final List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 
 class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;

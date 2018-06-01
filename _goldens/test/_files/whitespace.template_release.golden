@@ -17,7 +17,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$PreserveWhitespace = const [];
+final List<dynamic> styles$PreserveWhitespace = const [];
 
 class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
   import2.DivElement _el_1;
@@ -54,7 +54,7 @@ AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespace0(AppView<dyna
   return new ViewPreserveWhitespace0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$PreserveWhitespaceHost = const [];
+final List<dynamic> styles$PreserveWhitespaceHost = const [];
 
 class _ViewPreserveWhitespaceHost0 extends AppView<dynamic> {
   ViewPreserveWhitespace0 _compView_0;
@@ -86,7 +86,7 @@ AppView viewFactory_PreserveWhitespaceHost0(AppView<dynamic> parentView, int par
 }
 
 const ComponentFactory<import1.PreserveWhitespace> PreserveWhitespaceNgFactory = const ComponentFactory<import1.PreserveWhitespace>('preserve-whitespace', viewFactory_PreserveWhitespaceHost0, _PreserveWhitespaceMetadata);
-const List<dynamic> styles$MinifyWhitespace = const [];
+final List<dynamic> styles$MinifyWhitespace = const [];
 
 class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
   import2.DivElement _el_0;
@@ -119,7 +119,7 @@ AppView<import1.MinifyWhitespace> viewFactory_MinifyWhitespace0(AppView<dynamic>
   return new ViewMinifyWhitespace0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$MinifyWhitespaceHost = const [];
+final List<dynamic> styles$MinifyWhitespaceHost = const [];
 
 class _ViewMinifyWhitespaceHost0 extends AppView<dynamic> {
   ViewMinifyWhitespace0 _compView_0;

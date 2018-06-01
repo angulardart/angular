@@ -17,7 +17,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$DeferredChildComponent = const [];
+final List<dynamic> styles$DeferredChildComponent = const [];
 
 class ViewDeferredChildComponent0 extends AppView<import1.DeferredChildComponent> {
   import2.DivElement _el_0;
@@ -44,7 +44,7 @@ AppView<import1.DeferredChildComponent> viewFactory_DeferredChildComponent0(AppV
   return new ViewDeferredChildComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$DeferredChildComponentHost = const [];
+final List<dynamic> styles$DeferredChildComponentHost = const [];
 
 class _ViewDeferredChildComponentHost0 extends AppView<dynamic> {
   ViewDeferredChildComponent0 _compView_0;

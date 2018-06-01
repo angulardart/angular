@@ -27,7 +27,7 @@ import 'deferred_component.template.dart' deferred as deflib1;
 import 'package:_goldens/component.dart' deferred as deflib2;
 import 'package:_goldens/component.template.dart' deferred as deflib3;
 
-const List<dynamic> styles$TestContainerComponent = const [];
+final List<dynamic> styles$TestContainerComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponent0 = [
   null,
   new StaticNodeDebugInfo([TemplateRef], null, <String, dynamic>{}),
@@ -154,7 +154,7 @@ AppView<import3.TestContainerComponent> viewFactory_TestContainerComponent2(AppV
   return new _ViewTestContainerComponent2(parentView, parentIndex);
 }
 
-const List<dynamic> styles$TestContainerComponentHost = const [];
+final List<dynamic> styles$TestContainerComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestContainerComponentHost0 = [
   new StaticNodeDebugInfo([import3.TestContainerComponent], import3.TestContainerComponent, <String, dynamic>{})
 ];

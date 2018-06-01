@@ -22,7 +22,7 @@ import 'package:angular/angular.dart';
 import 'dart:core';
 import 'package:angular/src/core/di/opaque_token.dart' as import9;
 
-const List<dynamic> styles$InjectableComponent = const [];
+final List<dynamic> styles$InjectableComponent = const [];
 
 class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   import2.DivElement _el_0;
@@ -49,7 +49,7 @@ AppView<import1.InjectableComponent> viewFactory_InjectableComponent0(AppView<dy
   return new ViewInjectableComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InjectableComponentHost = const [];
+final List<dynamic> styles$InjectableComponentHost = const [];
 
 class _ViewInjectableComponentHost0 extends AppView<dynamic> {
   ViewInjectableComponent0 _compView_0;
