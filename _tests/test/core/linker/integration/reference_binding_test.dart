@@ -2,10 +2,9 @@
 
 import 'dart:html';
 
+import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
-import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
 
 import 'reference_binding_test.template.dart' as ng_generated;
 
@@ -31,8 +30,10 @@ void main() {
   test('should assign an element to a reference', () async {
     final testBed = new NgTestBed<ElementReferenceBindingComponent>();
     final testFixture = await testBed.create();
-    final div = getDebugNode(testFixture.rootElement.children.first);
-    expect(div.getLocal('alice'), new isInstanceOf<DivElement>());
+    expect(
+      testFixture.assertOnlyInstance.captured.reference,
+      const isInstanceOf<DivElement>(),
+    );
   });
 
   test('should be accessible in bindings before declaration', () async {
@@ -109,9 +110,27 @@ class DirectiveReferenceBindingComponent {
 
 @Component(
   selector: 'element-reference-binding',
-  template: '<div><div #alice><i>Hello</i></div></div>',
+  template: r'''
+    <div #alice>
+      <i capture [reference]="alice">
+        Hello
+      </i>
+    </div>
+  ''',
+  directives: const [CaptureReferenceDirective],
 )
-class ElementReferenceBindingComponent {}
+class ElementReferenceBindingComponent {
+  @ViewChild(CaptureReferenceDirective)
+  CaptureReferenceDirective captured;
+}
+
+@Directive(
+  selector: '[capture]',
+)
+class CaptureReferenceDirective {
+  @Input()
+  dynamic reference;
+}
 
 @Component(
   selector: 'use-ref-before-declaration',

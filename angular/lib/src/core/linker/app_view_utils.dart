@@ -7,6 +7,7 @@ import 'package:angular/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular/src/core/security.dart';
 import 'package:angular/src/platform/dom/events/event_manager.dart'
     show EventManager;
+import 'package:angular/src/runtime.dart';
 
 import 'exceptions.dart' show ExpressionChangedAfterItHasBeenCheckedException;
 
@@ -306,7 +307,7 @@ bool checkBinding(oldValue, newValue) {
   // This is only ever possibly true when assertions are enabled.
   //
   // It's set during the second "make-sure-nothing-changed" pass of tick().
-  if (AppViewUtils.throwOnChanges) {
+  if (isDevMode && AppViewUtils.throwOnChanges) {
     if (!devModeEqual(oldValue, newValue)) {
       throw new ExpressionChangedAfterItHasBeenCheckedException(
         oldValue,

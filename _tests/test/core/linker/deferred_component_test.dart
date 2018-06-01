@@ -5,10 +5,8 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/view_ref.dart';
-import 'package:angular/src/debug/debug_app_view.dart';
+import 'package:test/test.dart';
 
 import 'deferred_component_test.template.dart' as ng;
 import 'deferred_view.dart';
@@ -86,10 +84,12 @@ class SimpleContainerTest {
   SimpleContainerTest(this.cdRef);
 
   Future waitForDeferred() async {
+    // TODO(matanl): Add proper support to this instead of using a timer.
+    await new Future.delayed(Duration.zero);
     // TODO(het): remove this once angular_test supports waiting for deferred
     // components
-    var view = (cdRef as ViewRefImpl).appView as DebugAppView;
-    return Future.wait(view.deferredLoads);
+    // var view = (cdRef as ViewRefImpl).appView as AppView;
+    // return Future.wait(view.deferredLoads);
   }
 }
 

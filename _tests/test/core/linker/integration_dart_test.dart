@@ -1,12 +1,9 @@
 @TestOn('browser')
-import 'dart:html';
 
+import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
-import 'package:_tests/matchers.dart';
-import 'package:angular/angular.dart';
-import 'package:angular/src/debug/debug_node.dart';
-import 'package:angular_test/angular_test.dart';
 
 import 'integration_dart_test.template.dart' as ng_generated;
 
@@ -16,15 +13,6 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   group('Property access', () {
-    test('should distinguish between map and property access', () async {
-      var testBed = new NgTestBed<ContainerWithPropertyAccess>();
-      var testFixture = await testBed.create();
-      Element element = testFixture.rootElement;
-      DebugElement debugElement = getDebugNode(element);
-      expect(debugElement.children.map((DebugElement e) => e.nativeElement),
-          hasTextContent('prop:foo-prop;map:foo-map'));
-    });
-
     test('should not fallback on map access if property missing', () async {
       var testBed = new NgTestBed<ContainerWithNoPropertyAccess>();
       await testBed.create().catchError((e, stack) {
@@ -80,15 +68,6 @@ class MockException implements Error {
 
 class NonError {
   var message;
-}
-
-@Component(
-  selector: 'container-with-propertyaccess',
-  template: '<property-access></property-access>',
-  directives: const [PropertyAccess],
-)
-class ContainerWithPropertyAccess {
-  dynamic value;
 }
 
 @Component(
