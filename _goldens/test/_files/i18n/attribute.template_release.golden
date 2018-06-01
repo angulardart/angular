@@ -18,7 +18,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$I18nAttributeComponent = const [];
+final List<dynamic> styles$I18nAttributeComponent = const [];
 
 class ViewI18nAttributeComponent0 extends AppView<import1.I18nAttributeComponent> {
   import2.Element _el_0;
@@ -45,7 +45,7 @@ AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponent0(AppV
   return new ViewI18nAttributeComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$I18nAttributeComponentHost = const [];
+final List<dynamic> styles$I18nAttributeComponentHost = const [];
 
 class _ViewI18nAttributeComponentHost0 extends AppView<dynamic> {
   ViewI18nAttributeComponent0 _compView_0;

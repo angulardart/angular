@@ -19,7 +19,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$TestFooComponent = const [];
+final List<dynamic> styles$TestFooComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [null, null];
 
 class ViewTestFooComponent0 extends DebugAppView<import2.TestFooComponent> {
@@ -48,7 +48,7 @@ AppView<import2.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic>
   return new ViewTestFooComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$TestFooComponentHost = const [];
+final List<dynamic> styles$TestFooComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
   new StaticNodeDebugInfo([import2.TestFooComponent], import2.TestFooComponent, <String, dynamic>{})
 ];

@@ -17,7 +17,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$EmulatedComponent = const [];
+final List<dynamic> styles$EmulatedComponent = const [];
 
 class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
   import2.DivElement _el_0;
@@ -44,7 +44,7 @@ AppView<import1.EmulatedComponent> viewFactory_EmulatedComponent0(AppView<dynami
   return new ViewEmulatedComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$EmulatedComponentHost = const [];
+final List<dynamic> styles$EmulatedComponentHost = const [];
 
 class _ViewEmulatedComponentHost0 extends AppView<dynamic> {
   ViewEmulatedComponent0 _compView_0;
@@ -76,7 +76,7 @@ AppView viewFactory_EmulatedComponentHost0(AppView<dynamic> parentView, int pare
 }
 
 const ComponentFactory<import1.EmulatedComponent> EmulatedComponentNgFactory = const ComponentFactory<import1.EmulatedComponent>('Emulated', viewFactory_EmulatedComponentHost0, _EmulatedComponentMetadata);
-const List<dynamic> styles$NoneComponent = const [];
+final List<dynamic> styles$NoneComponent = const [];
 
 class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
   import2.DivElement _el_0;
@@ -103,7 +103,7 @@ AppView<import1.NoneComponent> viewFactory_NoneComponent0(AppView<dynamic> paren
   return new ViewNoneComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$NoneComponentHost = const [];
+final List<dynamic> styles$NoneComponentHost = const [];
 
 class _ViewNoneComponentHost0 extends AppView<dynamic> {
   ViewNoneComponent0 _compView_0;

@@ -19,7 +19,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$TestFooComponent = const [];
+final List<dynamic> styles$TestFooComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
   null,
   null,
@@ -84,7 +84,7 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic>
   return new ViewTestFooComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$TestFooComponentHost = const [];
+final List<dynamic> styles$TestFooComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
   new StaticNodeDebugInfo([import1.TestFooComponent], import1.TestFooComponent, <String, dynamic>{})
 ];
@@ -120,7 +120,7 @@ AppView viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, int paren
 }
 
 const ComponentFactory<import1.TestFooComponent> TestFooComponentNgFactory = const ComponentFactory<import1.TestFooComponent>('test-foo', viewFactory_TestFooComponentHost0, _TestFooComponentMetadata);
-const List<dynamic> styles$TestSubComponent = const [];
+final List<dynamic> styles$TestSubComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponent0 = [null, null];
 
 class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
@@ -149,7 +149,7 @@ AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(AppView<dynamic>
   return new ViewTestSubComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$TestSubComponentHost = const [];
+final List<dynamic> styles$TestSubComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestSubComponentHost0 = [
   new StaticNodeDebugInfo([import1.TestSubComponent], import1.TestSubComponent, <String, dynamic>{})
 ];

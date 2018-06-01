@@ -19,7 +19,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$CheckOnceComponent = const [];
+final List<dynamic> styles$CheckOnceComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponent0 = [null, null];
 
 class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
@@ -57,7 +57,7 @@ AppView<import2.CheckOnceComponent> viewFactory_CheckOnceComponent0(AppView<dyna
   return new ViewCheckOnceComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$CheckOnceComponentHost = const [];
+final List<dynamic> styles$CheckOnceComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckOnceComponentHost0 = [
   new StaticNodeDebugInfo([import2.CheckOnceComponent], import2.CheckOnceComponent, <String, dynamic>{})
 ];
@@ -95,7 +95,7 @@ AppView viewFactory_CheckOnceComponentHost0(AppView<dynamic> parentView, int par
 }
 
 const ComponentFactory<import2.CheckOnceComponent> CheckOnceComponentNgFactory = const ComponentFactory<import2.CheckOnceComponent>('CheckOnce', viewFactory_CheckOnceComponentHost0, _CheckOnceComponentMetadata);
-const List<dynamic> styles$CheckedComponent = const [];
+final List<dynamic> styles$CheckedComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponent0 = [null, null];
 
 class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
@@ -124,7 +124,7 @@ AppView<import2.CheckedComponent> viewFactory_CheckedComponent0(AppView<dynamic>
   return new ViewCheckedComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$CheckedComponentHost = const [];
+final List<dynamic> styles$CheckedComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckedComponentHost0 = [
   new StaticNodeDebugInfo([import2.CheckedComponent], import2.CheckedComponent, <String, dynamic>{})
 ];
@@ -160,7 +160,7 @@ AppView viewFactory_CheckedComponentHost0(AppView<dynamic> parentView, int paren
 }
 
 const ComponentFactory<import2.CheckedComponent> CheckedComponentNgFactory = const ComponentFactory<import2.CheckedComponent>('Checked', viewFactory_CheckedComponentHost0, _CheckedComponentMetadata);
-const List<dynamic> styles$CheckAlwaysComponent = const [];
+final List<dynamic> styles$CheckAlwaysComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponent0 = [null, null];
 
 class ViewCheckAlwaysComponent0 extends DebugAppView<import2.CheckAlwaysComponent> {
@@ -189,7 +189,7 @@ AppView<import2.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(AppView<
   return new ViewCheckAlwaysComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$CheckAlwaysComponentHost = const [];
+final List<dynamic> styles$CheckAlwaysComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CheckAlwaysComponentHost0 = [
   new StaticNodeDebugInfo([import2.CheckAlwaysComponent], import2.CheckAlwaysComponent, <String, dynamic>{})
 ];
@@ -225,7 +225,7 @@ AppView viewFactory_CheckAlwaysComponentHost0(AppView<dynamic> parentView, int p
 }
 
 const ComponentFactory<import2.CheckAlwaysComponent> CheckAlwaysComponentNgFactory = const ComponentFactory<import2.CheckAlwaysComponent>('CheckAlways', viewFactory_CheckAlwaysComponentHost0, _CheckAlwaysComponentMetadata);
-const List<dynamic> styles$DetachedComponent = const [];
+final List<dynamic> styles$DetachedComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponent0 = [null, null];
 
 class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
@@ -254,7 +254,7 @@ AppView<import2.DetachedComponent> viewFactory_DetachedComponent0(AppView<dynami
   return new ViewDetachedComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$DetachedComponentHost = const [];
+final List<dynamic> styles$DetachedComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DetachedComponentHost0 = [
   new StaticNodeDebugInfo([import2.DetachedComponent], import2.DetachedComponent, <String, dynamic>{})
 ];
@@ -290,7 +290,7 @@ AppView viewFactory_DetachedComponentHost0(AppView<dynamic> parentView, int pare
 }
 
 const ComponentFactory<import2.DetachedComponent> DetachedComponentNgFactory = const ComponentFactory<import2.DetachedComponent>('Detached', viewFactory_DetachedComponentHost0, _DetachedComponentMetadata);
-const List<dynamic> styles$OnPushComponent = const [];
+final List<dynamic> styles$OnPushComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponent0 = [null, null];
 
 class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
@@ -319,7 +319,7 @@ AppView<import2.OnPushComponent> viewFactory_OnPushComponent0(AppView<dynamic> p
   return new ViewOnPushComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$OnPushComponentHost = const [];
+final List<dynamic> styles$OnPushComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_OnPushComponentHost0 = [
   new StaticNodeDebugInfo([import2.OnPushComponent], import2.OnPushComponent, <String, dynamic>{})
 ];
@@ -355,7 +355,7 @@ AppView viewFactory_OnPushComponentHost0(AppView<dynamic> parentView, int parent
 }
 
 const ComponentFactory<import2.OnPushComponent> OnPushComponentNgFactory = const ComponentFactory<import2.OnPushComponent>('OnPush', viewFactory_OnPushComponentHost0, _OnPushComponentMetadata);
-const List<dynamic> styles$StatefulComponent = const [];
+final List<dynamic> styles$StatefulComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponent0 = [null, null];
 
 class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
@@ -386,7 +386,7 @@ AppView<import2.StatefulComponent> viewFactory_StatefulComponent0(AppView<dynami
   return new ViewStatefulComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$StatefulComponentHost = const [];
+final List<dynamic> styles$StatefulComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_StatefulComponentHost0 = [
   new StaticNodeDebugInfo([import2.StatefulComponent], import2.StatefulComponent, <String, dynamic>{})
 ];
@@ -422,7 +422,7 @@ AppView viewFactory_StatefulComponentHost0(AppView<dynamic> parentView, int pare
 }
 
 const ComponentFactory<import2.StatefulComponent> StatefulComponentNgFactory = const ComponentFactory<import2.StatefulComponent>('Stateful', viewFactory_StatefulComponentHost0, _StatefulComponentMetadata);
-const List<dynamic> styles$DefaultComponent = const [];
+final List<dynamic> styles$DefaultComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponent0 = [null, null];
 
 class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
@@ -451,7 +451,7 @@ AppView<import2.DefaultComponent> viewFactory_DefaultComponent0(AppView<dynamic>
   return new ViewDefaultComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$DefaultComponentHost = const [];
+final List<dynamic> styles$DefaultComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_DefaultComponentHost0 = [
   new StaticNodeDebugInfo([import2.DefaultComponent], import2.DefaultComponent, <String, dynamic>{})
 ];

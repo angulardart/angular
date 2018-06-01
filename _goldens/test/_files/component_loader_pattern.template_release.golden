@@ -21,7 +21,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$TestComponent = const [];
+final List<dynamic> styles$TestComponent = const [];
 
 class ViewTestComponent0 extends AppView<import1.TestComponent> {
   static RenderComponentType _renderType;
@@ -43,7 +43,7 @@ AppView<import1.TestComponent> viewFactory_TestComponent0(AppView<dynamic> paren
   return new ViewTestComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$TestComponentHost = const [];
+final List<dynamic> styles$TestComponentHost = const [];
 
 class _ViewTestComponentHost0 extends AppView<dynamic> {
   ViewTestComponent0 _compView_0;

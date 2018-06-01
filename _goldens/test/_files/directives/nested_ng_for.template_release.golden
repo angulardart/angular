@@ -21,7 +21,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'dart:core';
 
-const List<dynamic> styles$NestedNgForComponent = const [];
+final List<dynamic> styles$NestedNgForComponent = const [];
 
 class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   ViewContainer _appEl_0;
@@ -143,7 +143,7 @@ AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent2(AppView<
   return new _ViewNestedNgForComponent2(parentView, parentIndex);
 }
 
-const List<dynamic> styles$NestedNgForComponentHost = const [];
+final List<dynamic> styles$NestedNgForComponentHost = const [];
 
 class _ViewNestedNgForComponentHost0 extends AppView<dynamic> {
   ViewNestedNgForComponent0 _compView_0;

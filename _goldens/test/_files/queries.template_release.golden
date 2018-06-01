@@ -23,7 +23,7 @@ import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/element_ref.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import12;
 
-const List<dynamic> styles$QueriesComponent = const [];
+final List<dynamic> styles$QueriesComponent = const [];
 
 class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   bool _query_q2_1_0_isDirty = true;
@@ -120,7 +120,7 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponent1(AppView<dynamic>
   return new _ViewQueriesComponent1(parentView, parentIndex);
 }
 
-const List<dynamic> styles$QueriesComponentHost = const [];
+final List<dynamic> styles$QueriesComponentHost = const [];
 
 class _ViewQueriesComponentHost0 extends AppView<dynamic> {
   ViewQueriesComponent0 _compView_0;
@@ -155,7 +155,7 @@ AppView viewFactory_QueriesComponentHost0(AppView<dynamic> parentView, int paren
 }
 
 const ComponentFactory<import1.QueriesComponent> QueriesComponentNgFactory = const ComponentFactory<import1.QueriesComponent>('queries', viewFactory_QueriesComponentHost0, _QueriesComponentMetadata);
-const List<dynamic> styles$EmbeddedQueries = const [];
+final List<dynamic> styles$EmbeddedQueries = const [];
 
 class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
   bool _query_AnotherDirective_1_0_isDirty = true;
@@ -259,7 +259,7 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries2(AppView<dynamic> p
   return new _ViewEmbeddedQueries2(parentView, parentIndex);
 }
 
-const List<dynamic> styles$EmbeddedQueriesHost = const [];
+final List<dynamic> styles$EmbeddedQueriesHost = const [];
 
 class _ViewEmbeddedQueriesHost0 extends AppView<dynamic> {
   ViewEmbeddedQueries0 _compView_0;
@@ -291,7 +291,7 @@ AppView viewFactory_EmbeddedQueriesHost0(AppView<dynamic> parentView, int parent
 }
 
 const ComponentFactory<import1.EmbeddedQueries> EmbeddedQueriesNgFactory = const ComponentFactory<import1.EmbeddedQueries>('test', viewFactory_EmbeddedQueriesHost0, _EmbeddedQueriesMetadata);
-const List<dynamic> styles$EmbeddedQueriesList = const [];
+final List<dynamic> styles$EmbeddedQueriesList = const [];
 
 class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
   bool _query_AnotherDirective_1_0_isDirty = true;
@@ -395,7 +395,7 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList2(AppView<dy
   return new _ViewEmbeddedQueriesList2(parentView, parentIndex);
 }
 
-const List<dynamic> styles$EmbeddedQueriesListHost = const [];
+final List<dynamic> styles$EmbeddedQueriesListHost = const [];
 
 class _ViewEmbeddedQueriesListHost0 extends AppView<dynamic> {
   ViewEmbeddedQueriesList0 _compView_0;
@@ -427,7 +427,7 @@ AppView viewFactory_EmbeddedQueriesListHost0(AppView<dynamic> parentView, int pa
 }
 
 const ComponentFactory<import1.EmbeddedQueriesList> EmbeddedQueriesListNgFactory = const ComponentFactory<import1.EmbeddedQueriesList>('test', viewFactory_EmbeddedQueriesListHost0, _EmbeddedQueriesListMetadata);
-const List<dynamic> styles$NestedNgForQueriesList = const [];
+final List<dynamic> styles$NestedNgForQueriesList = const [];
 
 class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList> {
   bool _query_taggedItem_1_0_isDirty = true;
@@ -586,7 +586,7 @@ AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList3(AppV
   return new _ViewNestedNgForQueriesList3(parentView, parentIndex);
 }
 
-const List<dynamic> styles$NestedNgForQueriesListHost = const [];
+final List<dynamic> styles$NestedNgForQueriesListHost = const [];
 
 class _ViewNestedNgForQueriesListHost0 extends AppView<dynamic> {
   ViewNestedNgForQueriesList0 _compView_0;

@@ -19,7 +19,7 @@ import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$HostComponentNewSyntax = const [];
+final List<dynamic> styles$HostComponentNewSyntax = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentNewSyntax0 = [];
 
 class ViewHostComponentNewSyntax0 extends DebugAppView<import2.HostComponentNewSyntax> {
@@ -43,7 +43,7 @@ AppView<import2.HostComponentNewSyntax> viewFactory_HostComponentNewSyntax0(AppV
   return new ViewHostComponentNewSyntax0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$HostComponentNewSyntaxHost = const [];
+final List<dynamic> styles$HostComponentNewSyntaxHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentNewSyntaxHost0 = [
   new StaticNodeDebugInfo([import2.HostComponentNewSyntax], import2.HostComponentNewSyntax, <String, dynamic>{})
 ];
@@ -79,7 +79,7 @@ AppView viewFactory_HostComponentNewSyntaxHost0(AppView<dynamic> parentView, int
 }
 
 const ComponentFactory<import2.HostComponentNewSyntax> HostComponentNewSyntaxNgFactory = const ComponentFactory<import2.HostComponentNewSyntax>('host', viewFactory_HostComponentNewSyntaxHost0, _HostComponentNewSyntaxMetadata);
-const List<dynamic> styles$HostComponent = const [];
+final List<dynamic> styles$HostComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HostComponent0 = [];
 
 class ViewHostComponent0 extends DebugAppView<import2.HostComponent> {
@@ -134,7 +134,7 @@ AppView<import2.HostComponent> viewFactory_HostComponent0(AppView<dynamic> paren
   return new ViewHostComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$HostComponentHost = const [];
+final List<dynamic> styles$HostComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HostComponentHost0 = [
   new StaticNodeDebugInfo([import2.HostComponent], import2.HostComponent, <String, dynamic>{})
 ];

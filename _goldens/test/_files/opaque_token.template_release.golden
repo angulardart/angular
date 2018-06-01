@@ -22,7 +22,7 @@ import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'dart:core';
 
-const List<dynamic> styles$HasOpaqueTokens = const [];
+final List<dynamic> styles$HasOpaqueTokens = const [];
 
 class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   import2.Text _text_0;
@@ -47,7 +47,7 @@ AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dynamic> p
   return new ViewHasOpaqueTokens0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$HasOpaqueTokensHost = const [];
+final List<dynamic> styles$HasOpaqueTokensHost = const [];
 
 class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   ViewHasOpaqueTokens0 _compView_0;
@@ -89,7 +89,7 @@ AppView viewFactory_HasOpaqueTokensHost0(AppView<dynamic> parentView, int parent
 }
 
 const ComponentFactory<import1.HasOpaqueTokens> HasOpaqueTokensNgFactory = const ComponentFactory<import1.HasOpaqueTokens>('has-opaque-tokens', viewFactory_HasOpaqueTokensHost0, _HasOpaqueTokensMetadata);
-const List<dynamic> styles$ContainsChildComponent = const [];
+final List<dynamic> styles$ContainsChildComponent = const [];
 
 class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent> {
   ViewContainer _appEl_0;
@@ -203,7 +203,7 @@ AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent2(AppV
   return new _ViewContainsChildComponent2(parentView, parentIndex);
 }
 
-const List<dynamic> styles$ContainsChildComponentHost = const [];
+final List<dynamic> styles$ContainsChildComponentHost = const [];
 
 class _ViewContainsChildComponentHost0 extends AppView<dynamic> {
   ViewContainsChildComponent0 _compView_0;
@@ -235,7 +235,7 @@ AppView viewFactory_ContainsChildComponentHost0(AppView<dynamic> parentView, int
 }
 
 const ComponentFactory<import1.ContainsChildComponent> ContainsChildComponentNgFactory = const ComponentFactory<import1.ContainsChildComponent>('contains-child-component', viewFactory_ContainsChildComponentHost0, _ContainsChildComponentMetadata);
-const List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
+final List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
 
 class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedTokenFromSomeParent> {
   static RenderComponentType _renderType;
@@ -257,7 +257,7 @@ AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFr
   return new ViewInjectsTypedTokenFromSomeParent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InjectsTypedTokenFromSomeParentHost = const [];
+final List<dynamic> styles$InjectsTypedTokenFromSomeParentHost = const [];
 
 class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<dynamic> {
   ViewInjectsTypedTokenFromSomeParent0 _compView_0;

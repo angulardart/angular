@@ -20,7 +20,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$AppComponent = const [];
+final List<dynamic> styles$AppComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_AppComponent0 = [
   new StaticNodeDebugInfo([import1.generateTextDirective], null, <String, dynamic>{}),
   null
@@ -53,7 +53,7 @@ AppView<import1.AppComponent> viewFactory_AppComponent0(AppView<dynamic> parentV
   return new ViewAppComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$AppComponentHost = const [];
+final List<dynamic> styles$AppComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_AppComponentHost0 = [
   new StaticNodeDebugInfo([import1.AppComponent, import1.TextService], import1.AppComponent, <String, dynamic>{})
 ];

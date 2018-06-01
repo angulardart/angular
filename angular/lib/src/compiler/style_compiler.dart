@@ -81,13 +81,25 @@ class StyleCompiler {
 
     // Styles variable contains plain strings and arrays of other styles arrays
     // (recursive), so we set its type to dynamic.
-    var stmt = o
+    final listShouldBeConst = styleExpressions.isEmpty;
+    final statement = o
         .variable(stylesVar)
-        .set(o.literalArr(styleExpressions,
-            new o.ArrayType(o.DYNAMIC_TYPE, [o.TypeModifier.Const])))
-        .toDeclStmt(null, [o.StmtModifier.Const]);
+        .set(o.literalArr(
+            styleExpressions,
+            new o.ArrayType(
+              o.DYNAMIC_TYPE,
+              listShouldBeConst ? [o.TypeModifier.Const] : const [],
+            )))
+        .toDeclStmt(
+      null,
+      [o.StmtModifier.Final],
+    );
     return new StylesCompileResult(
-        [stmt], stylesVar, usesHostAttribute, usesContentAttribute);
+      [statement],
+      stylesVar,
+      usesHostAttribute,
+      usesContentAttribute,
+    );
   }
 
   String _shimIfNeeded(String style, bool shim) {

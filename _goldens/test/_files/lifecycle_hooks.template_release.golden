@@ -17,7 +17,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$LifecycleHooksComponent = const [];
+final List<dynamic> styles$LifecycleHooksComponent = const [];
 
 class ViewLifecycleHooksComponent0 extends AppView<import1.LifecycleHooksComponent> {
   static RenderComponentType _renderType;
@@ -39,7 +39,7 @@ AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(Ap
   return new ViewLifecycleHooksComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$LifecycleHooksComponentHost = const [];
+final List<dynamic> styles$LifecycleHooksComponentHost = const [];
 
 class _ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
   ViewLifecycleHooksComponent0 _compView_0;

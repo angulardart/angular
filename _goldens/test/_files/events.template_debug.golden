@@ -20,7 +20,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$UsesNativeEvents = const [];
+final List<dynamic> styles$UsesNativeEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEvents0 = [null];
 
 class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
@@ -49,7 +49,7 @@ AppView<import2.UsesNativeEvents> viewFactory_UsesNativeEvents0(AppView<dynamic>
   return new ViewUsesNativeEvents0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$UsesNativeEventsHost = const [];
+final List<dynamic> styles$UsesNativeEventsHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_UsesNativeEventsHost0 = [
   new StaticNodeDebugInfo([import2.UsesNativeEvents], import2.UsesNativeEvents, <String, dynamic>{})
 ];
@@ -85,7 +85,7 @@ AppView viewFactory_UsesNativeEventsHost0(AppView<dynamic> parentView, int paren
 }
 
 const ComponentFactory<import2.UsesNativeEvents> UsesNativeEventsNgFactory = const ComponentFactory<import2.UsesNativeEvents>('uses-native-events', viewFactory_UsesNativeEventsHost0, _UsesNativeEventsMetadata);
-const List<dynamic> styles$UsesAngularEvents = const [];
+final List<dynamic> styles$UsesAngularEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEvents0 = [
   new StaticNodeDebugInfo([import2.HasAngularEvents], import2.HasAngularEvents, <String, dynamic>{})
 ];
@@ -130,7 +130,7 @@ AppView<import2.UsesAngularEvents> viewFactory_UsesAngularEvents0(AppView<dynami
   return new ViewUsesAngularEvents0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$UsesAngularEventsHost = const [];
+final List<dynamic> styles$UsesAngularEventsHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_UsesAngularEventsHost0 = [
   new StaticNodeDebugInfo([import2.UsesAngularEvents], import2.UsesAngularEvents, <String, dynamic>{})
 ];
@@ -166,7 +166,7 @@ AppView viewFactory_UsesAngularEventsHost0(AppView<dynamic> parentView, int pare
 }
 
 const ComponentFactory<import2.UsesAngularEvents> UsesAngularEventsNgFactory = const ComponentFactory<import2.UsesAngularEvents>('uses-angular-events', viewFactory_UsesAngularEventsHost0, _UsesAngularEventsMetadata);
-const List<dynamic> styles$HasAngularEvents = const [];
+final List<dynamic> styles$HasAngularEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEvents0 = [];
 
 class ViewHasAngularEvents0 extends DebugAppView<import2.HasAngularEvents> {
@@ -189,7 +189,7 @@ AppView<import2.HasAngularEvents> viewFactory_HasAngularEvents0(AppView<dynamic>
   return new ViewHasAngularEvents0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$HasAngularEventsHost = const [];
+final List<dynamic> styles$HasAngularEventsHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasAngularEventsHost0 = [
   new StaticNodeDebugInfo([import2.HasAngularEvents], import2.HasAngularEvents, <String, dynamic>{})
 ];
@@ -225,7 +225,7 @@ AppView viewFactory_HasAngularEventsHost0(AppView<dynamic> parentView, int paren
 }
 
 const ComponentFactory<import2.HasAngularEvents> HasAngularEventsNgFactory = const ComponentFactory<import2.HasAngularEvents>('has-angular-events', viewFactory_HasAngularEventsHost0, _HasAngularEventsMetadata);
-const List<dynamic> styles$HasManyNativeHostEvents = const [];
+final List<dynamic> styles$HasManyNativeHostEvents = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasManyNativeHostEvents0 = [];
 
 class ViewHasManyNativeHostEvents0 extends DebugAppView<import2.HasManyNativeHostEvents> {
@@ -255,7 +255,7 @@ AppView<import2.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEvents0(Ap
   return new ViewHasManyNativeHostEvents0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$HasManyNativeHostEventsHost = const [];
+final List<dynamic> styles$HasManyNativeHostEventsHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasManyNativeHostEventsHost0 = [
   new StaticNodeDebugInfo([import2.HasManyNativeHostEvents], import2.HasManyNativeHostEvents, <String, dynamic>{})
 ];

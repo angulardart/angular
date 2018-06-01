@@ -24,7 +24,7 @@ import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'dart:core';
 
-const List<dynamic> styles$HasOpaqueTokens = const [];
+final List<dynamic> styles$HasOpaqueTokens = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokens0 = [null];
 
 class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
@@ -51,7 +51,7 @@ AppView<import2.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dynamic> p
   return new ViewHasOpaqueTokens0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$HasOpaqueTokensHost = const [];
+final List<dynamic> styles$HasOpaqueTokensHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_HasOpaqueTokensHost0 = [
   new StaticNodeDebugInfo([const import10.OpaqueToken('baseUrlDescription'), import2.HasOpaqueTokens], import2.HasOpaqueTokens, <String, dynamic>{})
 ];
@@ -97,7 +97,7 @@ AppView viewFactory_HasOpaqueTokensHost0(AppView<dynamic> parentView, int parent
 }
 
 const ComponentFactory<import2.HasOpaqueTokens> HasOpaqueTokensNgFactory = const ComponentFactory<import2.HasOpaqueTokens>('has-opaque-tokens', viewFactory_HasOpaqueTokensHost0, _HasOpaqueTokensMetadata);
-const List<dynamic> styles$ContainsChildComponent = const [];
+final List<dynamic> styles$ContainsChildComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_ContainsChildComponent0 = [
   new StaticNodeDebugInfo([TemplateRef, NgIf], null, <String, dynamic>{})
 ];
@@ -231,7 +231,7 @@ AppView<import2.ContainsChildComponent> viewFactory_ContainsChildComponent2(AppV
   return new _ViewContainsChildComponent2(parentView, parentIndex);
 }
 
-const List<dynamic> styles$ContainsChildComponentHost = const [];
+final List<dynamic> styles$ContainsChildComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_ContainsChildComponentHost0 = [
   new StaticNodeDebugInfo([import2.ContainsChildComponent], import2.ContainsChildComponent, <String, dynamic>{})
 ];
@@ -267,7 +267,7 @@ AppView viewFactory_ContainsChildComponentHost0(AppView<dynamic> parentView, int
 }
 
 const ComponentFactory<import2.ContainsChildComponent> ContainsChildComponentNgFactory = const ComponentFactory<import2.ContainsChildComponent>('contains-child-component', viewFactory_ContainsChildComponentHost0, _ContainsChildComponentMetadata);
-const List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
+final List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InjectsTypedTokenFromSomeParent0 = [];
 
 class ViewInjectsTypedTokenFromSomeParent0 extends DebugAppView<import2.InjectsTypedTokenFromSomeParent> {
@@ -290,7 +290,7 @@ AppView<import2.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFr
   return new ViewInjectsTypedTokenFromSomeParent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InjectsTypedTokenFromSomeParentHost = const [];
+final List<dynamic> styles$InjectsTypedTokenFromSomeParentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InjectsTypedTokenFromSomeParentHost0 = [
   new StaticNodeDebugInfo([import2.InjectsTypedTokenFromSomeParent], import2.InjectsTypedTokenFromSomeParent, <String, dynamic>{})
 ];

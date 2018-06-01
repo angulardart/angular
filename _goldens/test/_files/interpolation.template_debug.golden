@@ -19,7 +19,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$InterpolationComponent = const [];
+final List<dynamic> styles$InterpolationComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponent0 = [null, null];
 
 class ViewInterpolationComponent0 extends DebugAppView<import2.InterpolationComponent> {
@@ -61,7 +61,7 @@ AppView<import2.InterpolationComponent> viewFactory_InterpolationComponent0(AppV
   return new ViewInterpolationComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InterpolationComponentHost = const [];
+final List<dynamic> styles$InterpolationComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentHost0 = [
   new StaticNodeDebugInfo([import2.InterpolationComponent], import2.InterpolationComponent, <String, dynamic>{})
 ];
@@ -97,7 +97,7 @@ AppView viewFactory_InterpolationComponentHost0(AppView<dynamic> parentView, int
 }
 
 const ComponentFactory<import2.InterpolationComponent> InterpolationComponentNgFactory = const ComponentFactory<import2.InterpolationComponent>('interpolation', viewFactory_InterpolationComponentHost0, _InterpolationComponentMetadata);
-const List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
+final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentNoWhitespace0 = [null, null];
 
 class ViewInterpolationComponentNoWhitespace0 extends DebugAppView<import2.InterpolationComponentNoWhitespace> {
@@ -139,7 +139,7 @@ AppView<import2.InterpolationComponentNoWhitespace> viewFactory_InterpolationCom
   return new ViewInterpolationComponentNoWhitespace0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
+final List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentNoWhitespaceHost0 = [
   new StaticNodeDebugInfo([import2.InterpolationComponentNoWhitespace], import2.InterpolationComponentNoWhitespace, <String, dynamic>{})
 ];

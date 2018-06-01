@@ -20,7 +20,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
 import 'package:angular/angular.dart';
 
-const List<dynamic> styles$Comp = const [];
+final List<dynamic> styles$Comp = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_Comp0 = [null, null, null, null, null, null, null];
 
 class ViewComp0 extends DebugAppView<import2.Comp> {
@@ -120,7 +120,7 @@ AppView<import2.Comp> viewFactory_Comp0(AppView<dynamic> parentView, int parentI
   return new ViewComp0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$CompHost = const [];
+final List<dynamic> styles$CompHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_CompHost0 = [
   new StaticNodeDebugInfo([import2.Comp], import2.Comp, <String, dynamic>{})
 ];

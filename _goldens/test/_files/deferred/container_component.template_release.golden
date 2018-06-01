@@ -25,7 +25,7 @@ import 'deferred_component.dart' deferred as deflib0;
 import 'package:_goldens/component.template.dart' deferred as deflib3;
 import 'package:_goldens/component.dart' deferred as deflib2;
 
-const List<dynamic> styles$TestContainerComponent = const [];
+final List<dynamic> styles$TestContainerComponent = const [];
 
 class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent> {
   ViewContainer _appEl_1;
@@ -132,7 +132,7 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(AppV
   return new _ViewTestContainerComponent2(parentView, parentIndex);
 }
 
-const List<dynamic> styles$TestContainerComponentHost = const [];
+final List<dynamic> styles$TestContainerComponentHost = const [];
 
 class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
   ViewTestContainerComponent0 _compView_0;

@@ -24,7 +24,7 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
 import 'package:angular/angular.dart';
 import 'dart:core';
 
-const List<dynamic> styles$TestFooComponent = const [];
+final List<dynamic> styles$TestFooComponent = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponent0 = [
   new StaticNodeDebugInfo([NgIf], null, <String, dynamic>{}),
   new StaticNodeDebugInfo([TemplateRef, import3.NgFor], null, <String, dynamic>{})
@@ -143,7 +143,7 @@ AppView<import5.TestFooComponent> viewFactory_TestFooComponent2(AppView<dynamic>
   return new _ViewTestFooComponent2(parentView, parentIndex);
 }
 
-const List<dynamic> styles$TestFooComponentHost = const [];
+final List<dynamic> styles$TestFooComponentHost = const [];
 List<StaticNodeDebugInfo> nodeDebugInfos_TestFooComponentHost0 = [
   new StaticNodeDebugInfo([import5.TestFooComponent], import5.TestFooComponent, <String, dynamic>{})
 ];
