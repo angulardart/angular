@@ -2,7 +2,6 @@ import 'package:angular/core.dart' show Directive, Input;
 import 'package:angular/src/core/linker.dart'
     show ViewContainerRef, TemplateRef;
 import 'package:angular/src/core/linker/app_view_utils.dart';
-import 'package:angular/src/runtime.dart';
 
 /// Causes an element and its contents to be conditionally added/removed from
 /// the DOM based on the value of the given boolean template expression.
@@ -45,11 +44,8 @@ class NgIf {
   set ngIf(bool newCondition) {
     // Legacy support for cases where `null` is still passed to NgIf.
     newCondition = newCondition == true;
-    // In dev-mode, use `checkBinding`. In prod-mode, use `looseIdentical`.
-    if (isDevMode) {
-      if (!checkBinding(_prevCondition, newCondition)) return;
-    } else {
-      if (identical(newCondition, _prevCondition)) return;
+    if (!checkBinding(_prevCondition, newCondition)) {
+      return;
     }
     if (newCondition) {
       _viewContainer.createEmbeddedView(_templateRef);
