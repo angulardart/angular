@@ -41,7 +41,8 @@ void main() {
     // "Navigate" to /throws.
     await appComponent.instance.updateUrl('/throws');
     expect(_logs, [contains('$IntentionalException')]);
-    expect(routeContainer.text, isEmpty);
+    // Since navigation fails, we should still be at the previous route.
+    expect(routeContainer.text, contains('Another Page'));
 
     // "Navigate" back to /home.
     _logs.clear();
@@ -82,13 +83,13 @@ class LoggingExceptionHandler implements ExceptionHandler {
   selector: 'app',
   template: r'''
     <form class="url-form" (submit)="updateUrl(urlBar.value)">
-      <label for="url-bar">Mock URL: </label> 
+      <label for="url-bar">Mock URL: </label>
       <input #urlBar id="url-bar" [value]="currentUrl" />
       <button type="submit">Update</button>
     </form>
-    
+
     Navigation:
-    <a routerLink="/home">Home</a> | 
+    <a routerLink="/home">Home</a> |
     <a routerLink="/throws">Throws</a> |
     <a routerLink="/another">Another</a>
 

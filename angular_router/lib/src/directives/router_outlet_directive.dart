@@ -7,7 +7,6 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime.dart';
 
-import '../detect_changes.dart';
 import '../lifecycle.dart';
 import '../route_definition.dart';
 import '../router/router.dart';
@@ -121,7 +120,7 @@ class RouterOutlet implements OnInit, OnDestroy {
       final componentRef = componentFactory.create(new Injector.map({
         RouterOutletToken: new RouterOutletToken(),
       }, _viewContainerRef.injector));
-      safeDetectChanges(componentRef);
+      componentRef.changeDetectorRef.detectChanges();
       return componentRef;
     });
   }
@@ -160,7 +159,7 @@ class RouterOutlet implements OnInit, OnDestroy {
     _activeComponentFactory = componentFactory;
     final component = prepare(componentFactory);
     _viewContainerRef.insert(component.hostView);
-    safeDetectChanges(component);
+    component.changeDetectorRef.detectChanges();
   }
 
   FutureOr<bool> _shouldReuse(
