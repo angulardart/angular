@@ -11,7 +11,7 @@ It was built as an example for [hnpwa.com](https://hnpwa.com/).
 To run and debug locally using `dartdevc`:
 
 ```console
-$ pub run build_runner serve
+$ webdev serve
 ```
 
 Then navigate to `http://localhost:8080`.
@@ -21,7 +21,7 @@ Then navigate to `http://localhost:8080`.
 To run locally using `dart2js`, add the `--release` flag.
 
 ```console
-$ pub run build_runner serve --release
+$ webdev serve --release
 ```
 
 ## Deploy to Firebase
@@ -59,7 +59,7 @@ Run the following commands to update the list of assets the service worker will
 cache to be accessible offline.
 
 ```shell
-$ pub run build_runner build --config=release --output build
+$ webdev build
 $ pub run pwa --exclude "packages/**,.packages,*.dart,*.js.deps,*.js.info.json,*.js.map,*.js.tar.gz,*.module"
 ```
 -->

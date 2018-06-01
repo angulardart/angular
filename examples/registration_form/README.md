@@ -8,7 +8,7 @@ To run and debug locally using `dartdevc`:
 
 ```bash
 $ pub upgrade
-$ pub run build_runner serve
+$ webdev serve
 ```
 
 ... and then navigate to `http://localhost:8080`.

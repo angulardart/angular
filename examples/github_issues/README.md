@@ -1,4 +1,4 @@
-# Github Issues Viewer
+# GitHub Issues Viewer
 
 The following is a canonical example of using the `angular_test` package to test
 your AngularDart applications and components, and otherwise is "just for fun".
@@ -10,13 +10,14 @@ You'll need to `git clone` and `pub get` to see this package in action:
 ```bash
 $ git clone https://github.com/dart-lang/angular.git
 $ cd angular/examples/github_issues
+$ pub global activate webdev
 $ pub get
 ```
 
 If you'd like to play around with the application yourself:
 
 ```bash
-$ pub run build_runner serve
+$ webdev serve
 ```
 
 ## Running the unit tests
@@ -34,7 +35,7 @@ $ pub run build_runner test
 You can view the tests locally. Simply start the development server:
 
 ```bash
-$ pub run build_runner serve
+$ webdev serve
 ```
 
 And navigate to `localhost:8081/<test_name>.debug.html`. For example:
