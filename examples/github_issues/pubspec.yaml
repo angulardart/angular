@@ -3,11 +3,11 @@ environment:
   sdk: ">=2.0.0-dev.55.0 <2.0.0"
 
 dependencies:
-  angular_components: ^0.9.0-alpha+8
+  angular_components: ^0.9.0-alpha+13
   angular: ^5.0.0-alpha
   angular_forms: ^1.0.1-alpha+7
   markdown: ^1.1.1
-  sass_builder: ^1.1.5
+  sass_builder: ^2.0.0
 
 dev_dependencies:
   angular_test: ^2.0.0-alpha
