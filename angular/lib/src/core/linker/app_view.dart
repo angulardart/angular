@@ -12,6 +12,7 @@ import 'package:angular/src/di/injector/injector.dart'
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 
 import 'app_view_utils.dart';
 import 'component_factory.dart';
@@ -94,11 +95,10 @@ class AppViewData<T> {
   AppViewData._(AppView<T> appView, this._cdMode, this.type, this.parentIndex)
       : ref = new ViewRefImpl(appView);
 
+  @dart2js.noInline
   factory AppViewData(
       AppView<T> appView, int cdMode, ViewType viewType, int parentIndex) {
     return new AppViewData._(appView, cdMode, viewType, parentIndex);
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
   }
 
   set cdMode(int value) {

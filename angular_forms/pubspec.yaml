@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   angular: 5.0.0-alpha+13
-  meta: ^1.1.2
+  meta: ^1.1.4
 
 dev_dependencies:
   angular_test: ^2.0.0-alpha+11

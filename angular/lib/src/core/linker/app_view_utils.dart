@@ -38,14 +38,13 @@ class AppViewUtils {
 
   /// Used by the generated code to initialize and share common rendering data
   /// such as css across instances.
+  @dart2js.noInline
   RenderComponentType createRenderType(
       String templateUrl,
       ViewEncapsulation encapsulation,
       List<dynamic /* String | List < dynamic > */ > styles) {
     return new RenderComponentType(
         '$_appId-${_nextCompTypeId++}', templateUrl, encapsulation, styles);
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
   }
 
   /// Enters execution mode that will throw exceptions if any binding
