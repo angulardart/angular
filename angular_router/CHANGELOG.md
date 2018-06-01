@@ -8,6 +8,10 @@
 *   Fixed a regression where the `RouterLinkActive` directive would not activate
     for empty paths (including `'/'`).
 
+*   Fixed a bug where if a component threw an exception during routing the
+    router would get in a perpetual bad state where it was impossible to route
+    away or otherwise use the application.
+
 ## 2.0.0-alpha+12
 
 ### Breaking changes

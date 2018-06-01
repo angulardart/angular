@@ -33,11 +33,11 @@ class RouterImpl extends Router {
   StreamController<String> _onNavigationStart;
   RouterOutlet _rootOutlet;
 
-  /// Tracks the latest navigation request.
+  /// Completes when the latest navigation request is complete.
   ///
   /// This is used to synchronize all navigation requests, so that they are run
   /// sequentially, rather than concurrently.
-  Future<NavigationResult> _lastNavigation = new Future.value();
+  var _lastNavigation = new Future<void>.value();
 
   RouterImpl(this._location, @Optional() this._routerHook) {
     Url.isHashStrategy = _location.locationStrategy is HashLocationStrategy;
@@ -131,8 +131,19 @@ class RouterImpl extends Router {
     String path,
     NavigationParams navigationParams,
   ) {
-    return _lastNavigation =
-        _lastNavigation.then((_) => _navigate(path, navigationParams));
+    // This is used to forward the navigation result or error to the caller.
+    final navigationCompleter = new Completer<NavigationResult>.sync();
+    // Note how this does not await the result of the last navigation, but
+    // rather the act of forwarding the result through a completer. This
+    // indirection is an important distinction that allows enqueued navigation
+    // requests to be run even if a preceding request throws, since the act of
+    // awaiting an errored future rethrows that error.
+    _lastNavigation = _lastNavigation.then((_) {
+      return _navigate(path, navigationParams)
+          .then(navigationCompleter.complete)
+          .catchError(navigationCompleter.completeError);
+    });
+    return navigationCompleter.future;
   }
 
   /// Navigate this router to the given url.
