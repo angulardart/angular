@@ -269,7 +269,7 @@ class ExistingProvider<T> extends Provider<T> {
 /// unless you have no arguments:
 /// ```dart
 /// ReflectiveInjector.resolveAndCreate([
-///   new Provider(Foo, useFactory: (Bar bar) => new Foo(bar), deps: [Bar]),
+///   new FactoryProvider(Foo, (Bar bar) => new Foo(bar), deps: [Bar]),
 /// ]);
 /// ```
 @optionalTypeArgs
@@ -308,7 +308,7 @@ class FactoryProvider<T> extends Provider<T> {
 /// ```dart
 /// const animationDelay = const OpaqueToken<Duration>('animationDelay');
 ///
-/// const Provider(animationDelay, useValue: const Duration(seconds: 1));
+/// const ValueProvider(animationDelay, const Duration(seconds: 1));
 /// ```
 ///
 /// **NOTE**: The AngularDart compiler has limited heuristics for supporting
