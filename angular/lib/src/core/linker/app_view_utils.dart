@@ -8,6 +8,7 @@ import 'package:angular/src/core/security.dart';
 import 'package:angular/src/platform/dom/events/event_manager.dart'
     show EventManager;
 import 'package:angular/src/runtime.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 
 import 'exceptions.dart' show ExpressionChangedAfterItHasBeenCheckedException;
 
@@ -303,6 +304,7 @@ String _toStringWithNull(dynamic v) => v == null ? '' : '$v';
 ///
 /// In _dev-mode_ it throws if a second-pass change-detection is being made to
 /// ensure that values are not changing during change detection (illegal).
+@dart2js.tryInline
 bool checkBinding(oldValue, newValue) {
   // This is only ever possibly true when assertions are enabled.
   //
