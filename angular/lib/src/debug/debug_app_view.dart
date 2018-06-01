@@ -6,6 +6,7 @@ import 'dart:js_util' as js_util;
 import 'package:angular/src/runtime.dart';
 import 'package:js/js.dart' as js;
 import 'package:meta/meta.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
 import 'package:angular/src/core/linker/app_view.dart';
@@ -27,8 +28,6 @@ import 'debug_node.dart'
 export 'package:angular/src/core/linker/app_view.dart';
 
 export 'debug_context.dart' show StaticNodeDebugInfo, DebugContext;
-
-// ignore_for_file: DEAD_CODE
 
 // RegExp to match anchor comment when logging bindings for debugging.
 final RegExp _templateBindingsExp = new RegExp(r'^template bindings=(.*)$');
@@ -107,16 +106,13 @@ class DebugAppView<T> extends AppView<T> {
     allNodes = allNodesForDebug;
   }
 
+  @dart2js.noInline
   void init0Dbg(dynamic e, [List allNodesForDebug = const []]) {
     viewData.rootNodesOrViewContainers = <dynamic>[e];
     allNodes = allNodesForDebug;
     if (viewData.type == ViewType.component) {
       dirtyParentQueriesInternal();
     }
-    // Workaround since package expect/@NoInline not available outside sdk.
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
   }
 
   @override
@@ -351,40 +347,31 @@ void dbgElm(
 }
 
 /// Helper function called by DebugAppView.build to reduce code size.
+@dart2js.noInline
 Element createAndAppendDbg(DebugAppView view, Document doc, String tagName,
     Element parent, int nodeIndex, int line, int column) {
   var elm = doc.createElement(tagName);
   parent.append(elm);
   dbgElm(view, elm, nodeIndex, line, column);
   return elm;
-  // Workaround since package expect/@NoInline not available outside sdk.
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
 }
 
 /// Helper function called by DebugAppView.build to reduce code size.
+@dart2js.noInline
 DivElement createDivAndAppendDbg(DebugAppView view, Document doc,
     Element parent, int nodeIndex, int line, int column) {
   var elm = new DivElement();
   parent.append(elm);
   dbgElm(view, elm, nodeIndex, line, column);
   return elm;
-  // Workaround since package expect/@NoInline not available outside sdk.
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
 }
 
 /// Helper function called by DebugAppView.build to reduce code size.
+@dart2js.noInline
 SpanElement createSpanAndAppendDbg(DebugAppView view, Document doc,
     Element parent, int nodeIndex, int line, int column) {
   var elm = new SpanElement();
   parent.append(elm);
   dbgElm(view, elm, nodeIndex, line, column);
   return elm;
-  // Workaround since package expect/@NoInline not available outside sdk.
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
 }

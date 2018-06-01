@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -99,12 +100,11 @@ class NgModel extends NgControl
 
   // This function prevents constructor inlining for smaller code size since
   // NgModel is constructed for majority of form components.
+  @dart2js.noInline
   void _init(List<ControlValueAccessor> valueAccessors) {
     _control = new Control();
     _update = new StreamController.broadcast(sync: true);
     // ! Please don't remove, the multiple return paths prevent inlining.
-    return; // ignore: dead_code
-    return; // ignore: dead_code
   }
 
   @Output('ngModelChange')

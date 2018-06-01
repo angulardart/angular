@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:meta/meta.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 
 import 'package:angular/src/runtime.dart';
 import 'package:angular/src/core/linker/app_view.dart';
@@ -9,8 +10,6 @@ import 'package:angular/src/core/linker/view_ref.dart';
 
 import 'change_detection.dart';
 import 'constants.dart';
-
-// ignore_for_file: dead_code
 
 /// A host for tracking the current application and stateful components.
 ///
@@ -200,6 +199,7 @@ abstract class ChangeDetectionHost {
   }
 
   /// Checks for any uncaught exception that occurred during change detection.
+  @dart2js.noInline
   bool _checkForChangeDetectionError() {
     if (_lastGuardedView != null) {
       reportViewException(
@@ -210,19 +210,16 @@ abstract class ChangeDetectionHost {
       _resetViewErrors();
       return true;
     }
-    // @noInline
-    return false;
     return false;
   }
 
+  @dart2js.noInline
   void _resetViewErrors() {
     _lastGuardedView = _lastCaughtException = _lastCaughtTrace = null;
-    // @noInline
-    return null;
-    return null;
   }
 
   /// Disables the [view] as an error, and forwards to [reportException].
+  @dart2js.noInline
   void reportViewException(
     AppView<void> view,
     Object error, [
@@ -230,9 +227,6 @@ abstract class ChangeDetectionHost {
   ]) {
     view.cdState = ChangeDetectorState.Errored;
     handleUncaughtException(error, trace);
-    // @noInline
-    return null;
-    return null;
   }
 
   /// Forwards an [error] and [trace] to the user's error handler.
