@@ -1,19 +1,19 @@
 analyzer:
- strong-mode: true
- errors:
-   unused_element: error
-   unused_import: error
-   unused_local_variable: error
-   dead_code: error
+  strong-mode: true
+  errors:
+    unused_element: error
+    unused_import: error
+    unused_local_variable: error
+    dead_code: error
 
-   # Allow importing .template.dart files without an analyzer error.
-   uri_has_not_been_generated: ignore
+    # Allow importing .template.dart files without an analyzer error.
+    uri_has_not_been_generated: ignore
 
-   # The noise of deprecations isn't worth the effort.
-   deprecated_member_use: ignore
- exclude:
-   - "**/.dart_tool/**"
-   - "**/build/**"
+    # The noise of deprecations isn't worth the effort.
+    deprecated_member_use: ignore
+  exclude:
+    - .dart_tool/**
+    - build/**
 
 linter:
   rules:
