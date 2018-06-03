@@ -11,22 +11,21 @@ import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'html.dart' as import1;
 import 'dart:html' as import2;
-import 'package:intl/intl.dart' as import3;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import5;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
+import 'package:intl/intl.dart' as import8;
 
 const List<dynamic> styles$I18nHtmlComponent = const [];
 
 class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
   import2.Element _el_0;
-  static final String _message_0 = import3.Intl.message('This is an ${startTag0}important${endTag0} message!', desc: 'description');
   static RenderComponentType _renderType;
-  ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('message');
-    _renderType ??= import7.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$I18nHtmlComponent);
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$I18nHtmlComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -35,10 +34,14 @@ class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'p', parentRenderNode);
-    import2.Text _text_1 = new import2.Text(_message_0);
+    import2.Text _text_1 = new import2.Text(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_text_1);
     init(const [], null);
     return null;
+  }
+
+  static String _message_0(String startTag0, String startTag1, String endTag1, String endTag0) {
+    return import8.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0_message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
   }
 }
 
@@ -51,7 +54,7 @@ const List<dynamic> styles$I18nHtmlComponentHost = const [];
 class _ViewI18nHtmlComponentHost0 extends AppView<dynamic> {
   ViewI18nHtmlComponent0 _compView_0;
   import1.I18nHtmlComponent _I18nHtmlComponent_0_5;
-  _ViewI18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewI18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewI18nHtmlComponent0(this, 0);
