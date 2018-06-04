@@ -1,6 +1,6 @@
 name: examples.hacker_news_pwa
 environment:
-  sdk: ">=2.0.0-dev.55.0 <2.0.0"
+  sdk: ">=2.0.0-dev.56.0 <2.0.0"
 
 dependencies:
   angular: ^5.0.0-alpha
