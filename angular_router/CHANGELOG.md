@@ -1,3 +1,5 @@
+## 2.0.0-alpha+13
+
 ### New features
 
 *   Moved `normalizePath()` from an internal type to `Location` to give
