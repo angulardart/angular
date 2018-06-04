@@ -1,3 +1,8 @@
+## 2.0.0-alpha+6
+
+*   Maintenence release.
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.56.0 <2.0.0"`.
+
 ## 2.0.0-alpha+5
 
 *   Maintenence release.

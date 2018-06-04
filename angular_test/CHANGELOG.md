@@ -1,3 +1,5 @@
+## 2.0.0-alpha+12
+
 *   Made `NgTestStabilizerFactory` public.
 
 ## 2.0.0-alpha+11

@@ -1,3 +1,7 @@
+## 0.5.3+2
+
+*   Maintenance release for `-dev.56`.
+
 ## 0.5.3+1
 
 *   Fixed source span range of `AttributeAst` which would extend past EOF when
