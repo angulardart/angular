@@ -1,21 +1,21 @@
 # This is a copy of ../analysis_options.yaml, with implicit-casts: false, and an "exclude: ...".
 
 analyzer:
- strong-mode:
-   implicit-casts: false
- exclude:
+  strong-mode:
+    implicit-casts: false
+  exclude:
     - "tools/analyzer_plugin/bin/plugin.dart"
- errors:
-   unused_element: error
-   unused_import: error
-   unused_local_variable: error
-   dead_code: error
+  errors:
+    unused_element: error
+    unused_import: error
+    unused_local_variable: error
+    dead_code: error
 
-   # Allow importing .template.dart files without an analyzer error.
-   uri_has_not_been_generated: ignore
+    # Allow importing .template.dart files without an analyzer error.
+    uri_has_not_been_generated: ignore
 
-   # The noise of deprecations isn't worth the effort.
-   deprecated_member_use: ignore
+    # The noise of deprecations isn't worth the effort.
+    deprecated_member_use: ignore
 linter:
   rules:
     - avoid_empty_else
