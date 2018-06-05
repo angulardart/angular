@@ -16,6 +16,7 @@ templates that maximize the performance of your app.
     *   [PREFER 0- or 1-argument event handlers](#prefer-0--or-1-argument-event-handlers)
 *   [Components](#components)
     *   [AVOID order-dependent input setters](#avoid-order-dependent-input-setters)
+    *   [AVOID any asynchronous actions in `ngDoCheck`](#avoid-any-asynchronous-actions-in-ngdocheck)
     *   [PREFER `ngAfterChanges` to `ngOnChanges`](#prefer-implementing-afterchanges-to-onchanges)
     *   [PREFER `bool` setters to using `getBool`](#prefer-bool-setters-to-using-getbool)
     *   [PREFER using `OnPush` where possible](#prefer-using-onpush-where-possible)
@@ -216,6 +217,81 @@ class MyComponent {
 Unfortunately our "good" example adds a substantial amount of boilerplate in
 order to make the inputs order-agnostic. However, this is required because the
 inputs are interdependent and either can change at any time.
+
+### AVOID any asynchronous actions in `ngDoCheck`
+
+The `DoCheck` interface and `ngDoCheck` lifecycle event may be used to disable
+generated change detectors, and instead allow the component to determine state.
+For example, `NgFor` uses the `DoCheck` interface to trigger updates when the
+_contents_ of the passed `Iterable` or `List` changes, not just the identity.
+
+However, `ngDoCheck` is _not_ meant to _process_ the changes, only determine
+them. Adding asynchronous events (including implicitly, by making the method
+`async`) may cause an infinite loop in your application.
+
+**BAD**:
+
+```dart
+@Component()
+class MyComponent implements DoCheck {
+  @override
+  void ngDoCheck() async {
+    // This may crash your app.
+  }
+}
+```
+
+**BAD**:
+
+```dart
+@Component()
+class MyComponent implements DoCheck {
+  @override
+  void ngDoCheck() {
+    // Any of these may still cause async side-effects, crashing your app.
+    scheduleMicrotask(() { ... });
+    Timer.run(() { ... });
+    someFunctionThatUsesAsync();
+  }
+}
+```
+
+To be safe, strictly make synchronous side-effect free checks in `ngDoCheck`:
+
+**GOOD**:
+
+```dart
+@Component()
+class MyComponent implements DoCheck {
+  @Input()
+  List<String> names;
+  String _firstName;
+  bool _firstNameUpdated = false; 
+  
+  @override
+  void ngDoCheck() {
+    _firstNameUpdated = _firstName == names.first;
+  }
+}
+```
+
+You can always use the `AfterChanges` event to process changes/do async things:
+
+**GOOD**:
+
+```dart
+@Component()
+class MyComponent implements AfterChanges {
+  @Input()
+  String name;
+
+  void ngAfterChanges() async {
+    await fetchUserDetails(name);
+  }
+}
+```
+
+Remember, `DoCheck` is _meant_ to be verbose, It is for the rare(r) cases where the default change detection strategy (identity-based) is not appropriate for a component, and you'd like to implement change detection _yourself_.
 
 ### PREFER implementing `AfterChanges` to `OnChanges`
 
