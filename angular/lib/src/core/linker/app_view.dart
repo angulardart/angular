@@ -246,38 +246,29 @@ abstract class AppView<T> {
   ComponentRef<T> build() => null;
 
   /// Specialized init when component has a single root node.
+  @dart2js.noInline
   void init0(dynamic e) {
     viewData.rootNodesOrViewContainers = <dynamic>[e];
     if (viewData.type == ViewType.component) {
       dirtyParentQueriesInternal();
     }
-    // Workaround since package expect/@NoInline not available outside sdk.
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
   }
 
   /// Specialized init when component has a single root node.
+  @dart2js.noInline
   void init0WithSub(dynamic e, List subscriptions) {
     viewData.subscriptions = subscriptions;
     init0(e);
-    // Workaround since package expect/@NoInline not available outside sdk.
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
   }
 
   /// Called by build once all dom nodes are available.
+  @dart2js.noInline
   void init(List rootNodesOrViewContainers, List subscriptions) {
     viewData.rootNodesOrViewContainers = rootNodesOrViewContainers;
     viewData.subscriptions = subscriptions;
     if (viewData.type == ViewType.component) {
       dirtyParentQueriesInternal();
     }
-    // Workaround since package expect/@NoInline not available outside sdk.
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
   }
 
   void addInlinedNodes(Node anchor, List<Node> inlinedNodes,
@@ -739,36 +730,27 @@ void _moveNodesAfterSibling(Node sibling, List<Node> nodes) {
 }
 
 /// Helper function called by AppView.build to reduce code size.
+@dart2js.noInline
 Element createAndAppend(Document doc, String tagName, Element parent) {
   // Allow implicit cast here to avoid messing with inlining heuristics.
   // ignore: return_of_invalid_type
   return parent.append(doc.createElement(tagName));
-  // Workaround since package expect/@NoInline not available outside sdk.
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
 }
 
 /// Helper function called by AppView.build to reduce code size.
+@dart2js.noInline
 DivElement createDivAndAppend(Document doc, Element parent) {
   // Allow implicit cast here to avoid messing with inlining heuristics.
   // ignore: return_of_invalid_type
   return parent.append(doc.createElement('div'));
-  // Workaround since package expect/@NoInline not available outside sdk.
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
 }
 
 /// Helper function called by AppView.build to reduce code size.
+@dart2js.noInline
 SpanElement createSpanAndAppend(Document doc, Element parent) {
   // Allow implicit cast here to avoid messing with inlining heuristics.
   // ignore: return_of_invalid_type
   return parent.append(doc.createElement('span'));
-  // Workaround since package expect/@NoInline not available outside sdk.
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
 }
 
 void _detachAll(List<Node> viewRootNodes) {
