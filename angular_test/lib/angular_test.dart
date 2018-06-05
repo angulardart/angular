@@ -12,4 +12,3 @@ export 'src/frontend.dart'
         NgTestStabilizerFactory,
         NgTestStabilizer,
         NgZoneStabilizer;
-export 'src/matchers.dart' show throwsInAngular;

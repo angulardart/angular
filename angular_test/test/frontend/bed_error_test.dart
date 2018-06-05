@@ -53,7 +53,7 @@ class CatchSynchronousErrors {
     final fixture = await new NgTestBed<CatchSynchronousErrors>().create();
     expect(
       fixture.update((_) => throw new StateError('Test')),
-      throwsInAngular(isStateError),
+      throwsA(isStateError),
     );
   }
 }
@@ -67,7 +67,7 @@ class CatchAsynchronousErrors {
     final fixture = await new NgTestBed<CatchAsynchronousErrors>().create();
     expect(
       fixture.update((_) => new Future.error(new StateError('Test'))),
-      throwsInAngular(isStateError),
+      throwsA(isStateError),
     );
   }
 }
@@ -81,7 +81,7 @@ class CatchConstructorErrors {
     final testBed = new NgTestBed<CatchConstructorErrors>();
     expect(
       testBed.create(),
-      throwsInAngular(isStateError),
+      throwsA(isStateError),
     );
   }
 
@@ -99,7 +99,7 @@ class CatchConstructorAsyncErrors {
     final testBed = new NgTestBed<CatchConstructorAsyncErrors>();
     expect(
       testBed.create(),
-      throwsInAngular(isStateError),
+      throwsA(isStateError),
     );
   }
 
@@ -119,7 +119,7 @@ class CatchOnInitErrors implements OnInit {
     final testBed = new NgTestBed<CatchOnInitErrors>();
     expect(
       testBed.create(),
-      throwsInAngular(isStateError),
+      throwsA(isStateError),
     );
   }
 
@@ -139,7 +139,7 @@ class CatchInChangeDetection {
     final fixture = await new NgTestBed<CatchInChangeDetection>().create();
     expect(
       fixture.update((c) => c.value = true),
-      throwsInAngular(isStateError),
+      throwsA(isStateError),
     );
   }
 

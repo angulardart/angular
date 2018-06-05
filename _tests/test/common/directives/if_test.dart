@@ -112,7 +112,7 @@ void main() {
       var fixture = await testBed.create();
       expect(
         fixture.update((c) => c.startFailing = true),
-        throwsInAngular(isExpressionChanged),
+        throwsA(isExpressionChanged),
       );
     });
   });
