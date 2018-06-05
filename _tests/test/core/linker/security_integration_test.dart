@@ -34,7 +34,7 @@ void main() {
 
   test('should throw error when using the wrong trusted value', () async {
     final testBed = new NgTestBed<WrongTrustedValueComponent>();
-    expect(testBed.create(), throwsInAngular(isUnsupportedError));
+    expect(testBed.create(), throwsA(isUnsupportedError));
   });
 
   test('should escape unsafe styles', () async {

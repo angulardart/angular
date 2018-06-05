@@ -1,3 +1,5 @@
+*   Removed `throwsInAngular` (was a no-op since `alpha+8`). Use `throwsA`.
+
 ## 2.0.0-alpha+12
 
 *   Made `NgTestStabilizerFactory` public.
