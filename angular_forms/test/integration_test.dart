@@ -39,10 +39,10 @@ void main() {
       });
       expect(
           update,
-          throwsInAngular(allOf(
+          allOf(
               new isInstanceOf<Error>(),
               predicate((e) => e.message.contains(
-                  'ngFormModel expects a form. Please pass one in.')))));
+                  'ngFormModel expects a form. Please pass one in.'))));
     });
     test('should update the control group values on DOM change', () async {
       var testBed = new NgTestBed<InputFormTest>();
