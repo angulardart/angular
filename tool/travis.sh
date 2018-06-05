@@ -34,6 +34,7 @@ fi
 # Navigate to the correct sub-directory, and run "pub upgrade".
 pushd $PKG
 PUB_ALLOW_PRERELEASE_SDK=quiet ${SDK}pub upgrade
+export DART_VM_OPTIONS=--preview-dart-2
 EXIT_CODE=1
 
 # Run the correct task type.
