@@ -257,7 +257,16 @@ class CompileView implements AppViewBuilder {
   final List<CompilePipeMetadata> pipeMetas;
   final o.Expression styles;
   final Map<String, String> deferredModules;
+
+  /// Whether this is rendered by another view, rather than by its own class.
+  ///
+  /// Normally a unique class is generated to handle construction and change
+  /// detection of each component and embedded view. To avoid this overhead for
+  /// simple embedded views created by `NgIf`, this work is instead inlined into
+  /// the parent view.
   final bool isInlined;
+
+  /// Whether this inlines any of its child views.
   bool hasInlinedView = false;
 
   int viewIndex;
