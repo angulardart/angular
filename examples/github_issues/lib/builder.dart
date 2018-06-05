@@ -3,11 +3,15 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:build/build.dart';
+
+// This file lives in environments where we don't use sass_builder.
+// This builder is used with the external build process (build_runner), but
+// there are environments (Bazel) where it is not available (or used).
+//
+// ignore: uri_does_not_exist
 import 'package:sass_builder/sass_builder.dart' as sass;
 
 Builder scssBuilder(BuilderOptions options) =>
-    // Internally, we do not use this file, so it causes a lint.
-    // ... just ignore it, we won't change this file often.
-    //
+    // See ignore above.
     // ignore: strong_mode_invalid_cast_new_expr, new_with_non_type
     new sass.SassBuilder(outputExtension: '.scss.css');
