@@ -18,7 +18,7 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:intl/intl.dart' as import8;
 
-const List<dynamic> styles$I18nHtmlComponent = const [];
+final List<dynamic> styles$I18nHtmlComponent = const [];
 
 class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
   import2.Element _el_0;
@@ -49,7 +49,7 @@ AppView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponent0(AppView<dynami
   return new ViewI18nHtmlComponent0(parentView, parentIndex);
 }
 
-const List<dynamic> styles$I18nHtmlComponentHost = const [];
+final List<dynamic> styles$I18nHtmlComponentHost = const [];
 
 class _ViewI18nHtmlComponentHost0 extends AppView<dynamic> {
   ViewI18nHtmlComponent0 _compView_0;
