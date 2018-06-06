@@ -173,7 +173,7 @@ class NgClass implements DoCheck, OnDestroy {
     if (className.isEmpty) return;
     Element el = _ngEl;
     var classList = el.classes;
-    if (className.indexOf(' ') > -1) {
+    if (className.contains(' ')) {
       _separator ??= new RegExp(r'\s+');
       var classes = className.split(_separator);
       for (var i = 0, len = classes.length; i < len; i++) {
