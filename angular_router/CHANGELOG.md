@@ -1,3 +1,7 @@
+### Bug fixes
+
+*   Preserves `NavigationParams` on redirection.
+
 ## 2.0.0-alpha+13
 
 ### New features
