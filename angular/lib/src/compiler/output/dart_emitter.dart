@@ -236,6 +236,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     for (var annotation in method.annotations) {
       context.print('@$annotation ');
     }
+    if (method.hasModifier(o.StmtModifier.Static)) {
+      context.print('static ');
+    }
     if (method.type != null) {
       method.type.visitType(this, context);
     } else {
