@@ -1,6 +1,7 @@
 import 'package:angular_ast/angular_ast.dart' as ast;
+import 'package:source_span/source_span.dart';
 
-import 'i18n/message.dart';
+import 'i18n/builder.dart';
 import 'i18n/metadata.dart';
 import 'template_ast.dart' as ng;
 import 'template_parser.dart' show TemplateContext;
@@ -21,23 +22,30 @@ List<ng.TemplateAst> internationalize(
   int ngContentIndex,
   TemplateContext context,
 ) {
-  if (parent.childNodes.length != 1) {
+  final i18nBuilder = new I18nBuilder(context)..visitAll(parent.childNodes);
+  final i18nMessage = i18nBuilder.build(metadata);
+  if (i18nMessage == null) {
     context.reportError(
-      'Expected a single, non-empty text node child in an "@i18n" context',
+      'Internationalized messages must contain text',
       parent.sourceSpan,
     );
     return [];
   }
-  final result = <ng.TemplateAst>[];
-  final node = parent.childNodes.first;
-  if (node is ast.TextAst) {
-    final message = new I18nMessage(node.value, metadata);
-    result.add(new ng.I18nTextAst(message, ngContentIndex, node.sourceSpan));
-  } else {
-    context.reportError(
-      'Only text is supported in an "@i18n" context',
-      node.sourceSpan,
-    );
+  return [
+    new ng.I18nTextAst(
+      i18nMessage,
+      ngContentIndex,
+      _spanWithin(parent),
+    )
+  ];
+}
+
+// TODO(leonsenft): verify if we can rely on file spans.
+SourceSpan _spanWithin(ast.StandaloneTemplateAst parent) {
+  var firstSpan = parent.childNodes.first.sourceSpan;
+  var lastSpan = parent.childNodes.last.sourceSpan;
+  if (firstSpan is FileSpan && lastSpan is FileSpan) {
+    return firstSpan.expand(lastSpan);
   }
-  return result;
+  throw new UnimplementedError();
 }

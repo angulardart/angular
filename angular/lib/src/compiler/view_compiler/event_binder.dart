@@ -87,7 +87,7 @@ class CompileEventListener {
     } else {
       // Declare variables for locals used in this event listener.
       stmts.insertAll(0, _nameResolver.getLocalDeclarations());
-      compileElement.view.eventHandlerMethods.add(new o.ClassMethod(
+      compileElement.view.methods.add(new o.ClassMethod(
           _methodName, [_eventParam], stmts, null, [o.StmtModifier.Private]));
     }
   }

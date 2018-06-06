@@ -1,0 +1,102 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'html.dart';
+export 'html.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/debug/debug_context.dart';
+import 'package:angular/src/debug/debug_app_view.dart';
+import 'html.dart' as import2;
+import 'dart:html' as import3;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import6;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular/angular.dart';
+import 'package:intl/intl.dart' as import10;
+
+final List<dynamic> styles$I18nHtmlComponent = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_I18nHtmlComponent0 = [null, null];
+
+class ViewI18nHtmlComponent0 extends DebugAppView<import2.I18nHtmlComponent> {
+  import3.Element _el_0;
+  static RenderComponentType _renderType;
+  ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_I18nHtmlComponent0) {
+    rootEl = import3.document.createElement('message');
+    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/i18n/html.dart class I18nHtmlComponent - inline template', ViewEncapsulation.None, styles$I18nHtmlComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import2.I18nHtmlComponent> build() {
+    final _rootEl = rootEl;
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import3.document;
+    _el_0 = createAndAppendDbg(this, doc, 'p', parentRenderNode, 0, 0, 4);
+    import3.Text _text_1 = new import3.Text(_message_0('<i>', '<b>', '</b>', '</i>'));
+    _el_0.append(_text_1);
+    dbgElm(this, _text_1, 1, 0, 27);
+    init(const [], null, [_el_0, _text_1]);
+    return null;
+  }
+
+  static String _message_0(String startTag0, String startTag1, String endTag1, String endTag0) {
+    return import10.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0_message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
+  }
+}
+
+AppView<import2.I18nHtmlComponent> viewFactory_I18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewI18nHtmlComponent0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$I18nHtmlComponentHost = const [];
+List<StaticNodeDebugInfo> nodeDebugInfos_I18nHtmlComponentHost0 = [
+  new StaticNodeDebugInfo([import2.I18nHtmlComponent], import2.I18nHtmlComponent, <String, dynamic>{})
+];
+
+class _ViewI18nHtmlComponentHost0 extends DebugAppView<dynamic> {
+  ViewI18nHtmlComponent0 _compView_0;
+  import2.I18nHtmlComponent _I18nHtmlComponent_0_5;
+  _ViewI18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_I18nHtmlComponentHost0);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewI18nHtmlComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    dbgIdx(rootEl, 0);
+    _I18nHtmlComponent_0_5 = new import2.I18nHtmlComponent();
+    _compView_0.create(_I18nHtmlComponent_0_5, projectableNodes);
+    init0Dbg(rootEl, [rootEl]);
+    return new ComponentRef<import2.I18nHtmlComponent>(0, this, rootEl, _I18nHtmlComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_I18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewI18nHtmlComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import2.I18nHtmlComponent> I18nHtmlComponentNgFactory = const ComponentFactory<import2.I18nHtmlComponent>('message', viewFactory_I18nHtmlComponentHost0, _I18nHtmlComponentMetadata);
+const _I18nHtmlComponentMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(I18nHtmlComponent, I18nHtmlComponentNgFactory);
+  _ref0.initReflector();
+}

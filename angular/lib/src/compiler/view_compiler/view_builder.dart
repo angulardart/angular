@@ -419,7 +419,7 @@ o.ClassStmt createViewClass(
         view.dirtyParentQueriesMethod.finish(), null, null, ['override']),
     new o.ClassMethod("destroyInternal", [], _generateDestroyMethod(view), null,
         null, ['override'])
-  ]..addAll(view.eventHandlerMethods);
+  ]..addAll(view.methods);
   if (view.detectHostChangesMethod != null) {
     viewMethods.add(new o.ClassMethod(
         'detectHostChanges',
@@ -798,7 +798,7 @@ void _writeComponentHostEventListeners(
         new o.ReturnStatement(actionExpr)
       ];
       String methodName = '_handle_${sanitizeEventName(eventName)}__';
-      view.eventHandlerMethods.add(new o.ClassMethod(
+      view.methods.add(new o.ClassMethod(
           methodName,
           [new o.FnParam(EventHandlerVars.event.name, o.importType(null))],
           stmts,
