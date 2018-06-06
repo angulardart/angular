@@ -4,8 +4,8 @@ In order to route, prioritize, and act on this as soon as possible please includ
 
 * [ ] Dart SDK Version (`dart --version`)
 * [ ] AngularDart Version (i.e. `4.0.0`, `5.0.0-alpha+5`, `MASTER`)
-* [ ] Whether you are using Windows, MacOSX, or Linux (if applicable)
-* [ ] Whether you are using Chrome, Safari, Firefox, Edge (if appplicable)
+* [ ] Whether you are using Windows, macOS, or Linux (if applicable)
+* [ ] Whether you are using Chrome, Safari, Firefox, Edge (if applicable)
 * [ ] Any other packages or constraints we should know about
 
 Missing some or all of the above might make the issue take longer or be impossible to act on.
