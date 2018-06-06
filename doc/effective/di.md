@@ -89,7 +89,7 @@ Provider bindUser(Flags flags) {
 **GOOD**:
 
 ```dart
-const FactoryProvider(User, useFactory: createUserFromFlags);
+const FactoryProvider(User, createUserFromFlags);
 
 User createUserFromFlags(Flags flags) {
   return flags.isAdminUser ? new AdminUser() : new RegularUser();
