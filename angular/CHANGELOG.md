@@ -1,3 +1,8 @@
+### Bug fixes
+
+*   Prevented a crash in `NgTemplateOutlet` caused by a specific sequence of
+    inputs to `[ngTemplateOutlet]`.
+
 ## 5.0.0-alpha+14
 
 ### New features
