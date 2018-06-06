@@ -62,6 +62,8 @@ class NgTemplateOutlet implements DoCheck {
     }
     if (templateRef != null) {
       _insertedViewRef = _viewContainerRef.createEmbeddedView(templateRef);
+    } else {
+      _insertedViewRef = null;
     }
   }
 
