@@ -1421,6 +1421,20 @@ ExternalType importType(CompileIdentifierMetadata id,
   return id != null ? new ExternalType(id, typeParams, typeModifiers) : null;
 }
 
+/// A literal string whose [value] has been manually escaped.
+///
+/// Use this when intentionally emitting special characters that would
+/// normally be escaped
+class EscapedString {
+  final String value;
+
+  EscapedString(this.value);
+}
+
+LiteralExpr escapedString(String value) {
+  return literal(new EscapedString(value), STRING_TYPE);
+}
+
 LiteralExpr literal(dynamic value, [OutputType type]) {
   return new LiteralExpr(value, type);
 }

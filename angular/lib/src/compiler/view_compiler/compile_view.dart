@@ -302,9 +302,11 @@ class CompileView implements AppViewBuilder {
   CompileMethod afterViewLifecycleCallbacksMethod;
   CompileMethod destroyMethod;
 
-  /// List of methods used to handle events with non standard parameters in
-  /// handlers or events with multiple actions.
-  List<o.ClassMethod> eventHandlerMethods = [];
+  /// Methods generated during view compilation.
+  ///
+  /// These include event handlers with non-standard parameters or multiple
+  /// actions, and internationalized messages with arguments.
+  List<o.ClassMethod> methods = [];
   List<o.ClassGetter> getters = [];
   List<o.Expression> subscriptions = [];
   bool subscribesToMockLike = false;
@@ -430,24 +432,67 @@ class CompileView implements AppViewBuilder {
   o.Expression createI18nMessage(I18nMessage message) {
     final name = '_message_${_i18nMessageCount++}';
     final args = [
-      o.literal(message.text),
+      o.escapedString(message.text),
       new o.NamedExpr('desc', o.literal(message.metadata.description)),
     ];
     if (message.metadata.meaning != null) {
       args.add(new o.NamedExpr('meaning', o.literal(message.metadata.meaning)));
     }
-    final value = o.importExpr(Identifiers.Intl).callMethod('message', args);
-    final item = storage.allocate(
-      name,
-      outputType: o.STRING_TYPE,
-      initializer: value,
-      modifiers: const [
-        o.StmtModifier.Static,
-        o.StmtModifier.Final,
-        o.StmtModifier.Private,
-      ],
-    );
-    return storage.buildReadExpr(item);
+    final i18n = o.importExpr(Identifiers.Intl);
+    if (message.args.isEmpty) {
+      // A message with no arguments is generated as a static final field.
+      final value = i18n.callMethod('message', args);
+      final item = storage.allocate(
+        name,
+        outputType: o.STRING_TYPE,
+        initializer: value,
+        modifiers: const [
+          o.StmtModifier.Static,
+          o.StmtModifier.Final,
+          o.StmtModifier.Private,
+        ],
+      );
+      return storage.buildReadExpr(item);
+    } else {
+      // A message with arguments is generated as a static method.
+      // These are passed to `args` in `Intl.message()`.
+      final messageArgs = <o.ReadVarExpr>[];
+      // These are passed to `examples` in `Intl.message()`.
+      final messageExamples = <List<dynamic>>[];
+      final messageExamplesType = new o.MapType(null, [o.TypeModifier.Const]);
+      // These are the arguments used to invoke the generated method.
+      final methodArgs = <o.LiteralExpr>[];
+      // These are the parameters of the generated method.
+      final methodParameters = <o.FnParam>[];
+      for (final parameter in message.args.keys) {
+        final argument = o.literal(message.args[parameter]);
+        messageArgs.add(o.variable(parameter));
+        messageExamples.add([parameter, argument]);
+        methodArgs.add(argument);
+        methodParameters.add(new o.FnParam(parameter, o.STRING_TYPE));
+      }
+      args
+        ..add(new o.NamedExpr('name', o.literal('$className$name')))
+        ..add(new o.NamedExpr('args', o.literalArr(messageArgs)))
+        ..add(new o.NamedExpr(
+          'examples',
+          o.literalMap(messageExamples, messageExamplesType),
+        ));
+      final value = i18n.callMethod('message', args);
+      final method = new o.ClassMethod(
+        name,
+        methodParameters,
+        [new o.ReturnStatement(value)],
+        o.STRING_TYPE,
+        [o.StmtModifier.Static, o.StmtModifier.Private],
+      );
+      methods.add(method);
+      return new o.InvokeMemberMethodExpr(
+        name,
+        methodArgs,
+        outputType: o.STRING_TYPE,
+      );
+    }
   }
 
   @override
