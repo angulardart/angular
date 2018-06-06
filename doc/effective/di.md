@@ -82,7 +82,7 @@ Provider bindUser(Flags flags) {
   if (flags.isAdminUser) {
     return new ClassProvider(User, useClass: AdminUser);
   }
-  return new ClassProvider(Use, useClass: RegularUser);
+  return new ClassProvider(User, useClass: RegularUser);
 }
 ```
 
@@ -95,6 +95,9 @@ User createUserFromFlags(Flags flags) {
   return flags.isAdminUser ? new AdminUser() : new RegularUser();
 }
 ```
+
+The value provided is still dynamically determined, but the key (`User`) can be
+determined at compile time.
 
 ### DO Use `const` providers
 
