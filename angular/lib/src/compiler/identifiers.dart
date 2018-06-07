@@ -180,6 +180,10 @@ class Identifiers {
       name: "Text", moduleUrl: "dart:html");
   static var HTML_DOCUMENT = new CompileIdentifierMetadata<dynamic>(
       name: "document", moduleUrl: "dart:html");
+  static final HTML_DOCUMENT_FRAGMENT = new CompileIdentifierMetadata(
+      name: 'DocumentFragment', moduleUrl: 'dart:html');
+  static final HTML_DOCUMENT_FRAGMENT_HTML = new CompileIdentifierMetadata(
+      name: 'DocumentFragment.html', moduleUrl: 'dart:html');
   static final HTML_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "Element", moduleUrl: "dart:html");
   static final ElementToken = identifierToken(HTML_ELEMENT);

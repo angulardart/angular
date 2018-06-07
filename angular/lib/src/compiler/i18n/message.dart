@@ -22,4 +22,7 @@ class I18nMessage {
     this.metadata, {
     this.args: const {},
   });
+
+  /// Whether this message contains nested HTML.
+  bool get containsHtml => args.isNotEmpty;
 }
