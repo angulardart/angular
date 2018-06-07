@@ -345,8 +345,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   @override
   void visitI18nText(I18nTextAst ast, CompileElement parent) {
     final nodeIndex = view.nodes.length;
-    final text = view.createI18nMessage(ast.value);
-    final renderNode = view.createTextNode(parent, nodeIndex, text, ast);
+    final message = view.createI18nMessage(ast.value);
+    final renderNode = ast.value.containsHtml
+        ? view.createHtml(parent, nodeIndex, message)
+        : view.createTextNode(parent, nodeIndex, message, ast);
     final compileNode =
         new CompileNode(parent, view, nodeIndex, renderNode, ast);
     view.nodes.add(compileNode);

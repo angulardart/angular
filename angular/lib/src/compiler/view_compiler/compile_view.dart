@@ -75,6 +75,7 @@ class NodeReference {
   NodeReferenceVisibility _visibility = NodeReferenceVisibility.classPublic;
 
   NodeReference(this.parent, this.nodeIndex) : _name = '_el_$nodeIndex';
+  NodeReference.html(this.parent, this.nodeIndex) : _name = '_html_$nodeIndex';
   NodeReference.inlinedNode(this.parent, this.nodeIndex, int inlinedNodeIndex)
       : _name = '_el_${nodeIndex}_$inlinedNodeIndex';
   NodeReference.textNode(this.parent, this.nodeIndex)
@@ -132,6 +133,16 @@ class AppViewReference {
 
 /// Interface to generate a build function for an AppView.
 abstract class AppViewBuilder {
+  /// Creates an HTML document fragment.
+  ///
+  /// The [html] argument may be any expression that evaluates to a string
+  /// containing **trusted** HTML.
+  NodeReference createHtml(
+    CompileElement parent,
+    int nodeIndex,
+    o.Expression html,
+  );
+
   /// Creates an unbound literal text node.
   NodeReference createTextNode(
       CompileElement parent, int nodeIndex, o.Expression text, TemplateAst ast);
@@ -493,6 +504,26 @@ class CompileView implements AppViewBuilder {
         outputType: o.STRING_TYPE,
       );
     }
+  }
+
+  @override
+  NodeReference createHtml(
+    CompileElement parent,
+    int nodeIndex,
+    o.Expression html,
+  ) {
+    final renderNode = new NodeReference.html(parent, nodeIndex);
+    _createMethod.addStmt(new o.DeclareVarStmt(
+      renderNode._name,
+      o.importExpr(Identifiers.HTML_DOCUMENT_FRAGMENT_HTML).instantiate([html]),
+      o.importType(Identifiers.HTML_DOCUMENT_FRAGMENT),
+    ));
+    final parentRenderNodeExpr = _getParentRenderNode(parent);
+    if (parentRenderNodeExpr != o.NULL_EXPR) {
+      _createMethod.addStmt(parentRenderNodeExpr
+          .callMethod('append', [renderNode.toReadExpr()]).toStmt());
+    }
+    return renderNode;
   }
 
   @override
