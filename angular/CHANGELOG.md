@@ -3,6 +3,22 @@
 *   Prevented a crash in `NgTemplateOutlet` caused by a specific sequence of
     inputs to `[ngTemplateOutlet]`.
 
+*   Relaxed type checks for events bound with a single parameter. In practice
+    this started failing in Dart2JS with `--preview-dart-2`, potentially where
+    synthetic events were being passed instead of the real DOM event:
+
+```html
+<some-comp (focus)="handleFocus($event)"></some-comp>
+```
+
+```dart
+import 'dart:html';
+
+void handleFocus(FocusEvent e) {
+  // Failed when 'e' is was a CustomEvent or not strictly a FocusEvent.  
+}
+```
+
 ## 5.0.0-alpha+14
 
 ### New features

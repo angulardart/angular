@@ -614,7 +614,9 @@ abstract class AppView<T> {
   void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
     return (E event) {
       markPathToRootAsCheckOnce();
-      appViewUtils.eventManager.getZone().runGuarded(() => handler(event as F));
+      appViewUtils.eventManager
+          .getZone()
+          .runGuarded(() => handler(unsafeCast<F>(event)));
     };
   }
 
