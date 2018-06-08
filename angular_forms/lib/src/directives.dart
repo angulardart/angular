@@ -26,12 +26,7 @@ export 'directives/checkbox_value_accessor.dart'
     show CheckboxControlValueAccessor;
 export 'directives/control_container.dart' show ControlContainer;
 export 'directives/control_value_accessor.dart'
-    show
-        ControlValueAccessor,
-        TouchFunction,
-        ChangeFunction,
-        NG_VALUE_ACCESSOR,
-        ngValueAccessor;
+    show ControlValueAccessor, TouchFunction, ChangeFunction, ngValueAccessor;
 export 'directives/default_value_accessor.dart' show DefaultValueAccessor;
 export 'directives/form_interface.dart' show Form;
 export 'directives/memorized_form.dart' show MemorizedForm;
