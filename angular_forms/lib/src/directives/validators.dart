@@ -51,10 +51,7 @@ abstract class Validator {
 /// invalid string is and the max string length for the input to display.
 typedef Map<String, dynamic> ValidatorFn(AbstractControl c);
 
-/// Validator that requires controls to have a non-empty value.
-const ValidatorFn REQUIRED = Validators.required;
-
-/// A [Directive] adding a [REQUIRED] validator to controls with `required`:
+/// A [Directive] adding a required validator to controls with `required`:
 ///
 /// ```html
 /// <input ngControl="fullName" required />
@@ -67,10 +64,17 @@ const ValidatorFn REQUIRED = Validators.required;
       '[required][ngFormControl],'
       '[required][ngModel]',
   providers: const [
-    const ValueProvider.forToken(NG_VALIDATORS, REQUIRED),
+    const ExistingProvider.forToken(NG_VALIDATORS, RequiredValidator),
   ],
 )
-class RequiredValidator {}
+class RequiredValidator implements Validator {
+  @Input()
+  bool required = true;
+
+  @override
+  Map<String, dynamic> validate(AbstractControl c) =>
+      required ? Validators.required(c) : null;
+}
 
 /// A [Directive] adding minimum-length validator to controls with `minlength`.
 ///
