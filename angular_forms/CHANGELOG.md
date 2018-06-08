@@ -1,3 +1,9 @@
+### New Features
+
+*   `RequiredValidator` now has a `required` input. This allows the `required`
+    property to be toggled at runtime. Previously, this could only be set
+    statically at compile time.
+
 *   `Control.invalid` getter added.
 
 ## 2.0.0-alpha+6
