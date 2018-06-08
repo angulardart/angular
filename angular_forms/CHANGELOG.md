@@ -6,6 +6,10 @@
 
 *   `Control.invalid` getter added.
 
+### Breaking Changes
+
+*   Remove deprecated `NG_VALUE_ACCESSOR` token. Use `ngValueAccessor` instead.
+
 ## 2.0.0-alpha+6
 
 *   Maintenence release.

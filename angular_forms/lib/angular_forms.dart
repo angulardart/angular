@@ -36,7 +36,6 @@ export 'src/directives.dart'
         NgFormModel,
         NgModel,
         NgSelectOption,
-        NG_VALUE_ACCESSOR,
         ngValueAccessor,
         NumberValueAccessor,
         PatternValidator,
