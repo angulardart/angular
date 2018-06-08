@@ -1,3 +1,5 @@
+*   `Control.invalid` getter added.
+
 ## 2.0.0-alpha+6
 
 *   Maintenence release.

@@ -53,11 +53,11 @@ abstract class AbstractControl<T> {
   T get value => _value;
 
   /// The validation status of the control.
-  ///
-  /// One of [VALID], or [INVALID].
   String get status => _status;
 
   bool get valid => _status == VALID;
+
+  bool get invalid => _status == INVALID;
 
   bool get disabled => _status == DISABLED;
 
