@@ -133,4 +133,112 @@ void main() {
       );
     });
   });
+
+  group('$DelegatingNgTestStabilizer', () {
+    NgZoneStabilizerForTesting ngZoneStabilizer;
+    FakeNgTestStabilizer fakeNgTestStabilizer;
+    AlwaysStableNgTestStabilizer alwaysStableNgTestStabilizer;
+    DelegatingNgTestStabilizer delegatingNgTestStabilizer;
+
+    setUp(() {
+      final ngZone = new NgZone();
+      ngZoneStabilizer = new NgZoneStabilizerForTesting(ngZone);
+      fakeNgTestStabilizer = new FakeNgTestStabilizer(ngZone);
+      alwaysStableNgTestStabilizer = new AlwaysStableNgTestStabilizer();
+      delegatingNgTestStabilizer = new DelegatingNgTestStabilizer([
+        ngZoneStabilizer,
+        fakeNgTestStabilizer,
+        alwaysStableNgTestStabilizer
+      ]);
+    });
+
+    test('should stabilize if there is no function to run', () async {
+      await delegatingNgTestStabilizer.stabilize();
+      expect(ngZoneStabilizer.updateCount, 1);
+      expect(fakeNgTestStabilizer.updateCount, 1);
+      expect(alwaysStableNgTestStabilizer.updateCount, 1);
+    });
+
+    test('should stabilize if there is a function to run', () async {
+      await delegatingNgTestStabilizer.stabilize(run: () {
+        scheduleMicrotask(() {});
+      });
+      expect(ngZoneStabilizer.updateCount, 2);
+      expect(fakeNgTestStabilizer.updateCount, 2);
+      expect(alwaysStableNgTestStabilizer.updateCount, 1);
+    });
+
+    test('should only run update at least once and when needed', () async {
+      fakeNgTestStabilizer.minUpdateCountToStabilize = 5;
+
+      await delegatingNgTestStabilizer.stabilize();
+      expect(ngZoneStabilizer.updateCount, 1);
+      expect(fakeNgTestStabilizer.updateCount, 5);
+      expect(alwaysStableNgTestStabilizer.updateCount, 1);
+    });
+  });
+}
+
+abstract class _HasUpdateCount {
+  int updateCount = 0;
+}
+
+/// [NgZoneStabilizerForTesting] increments [updateCount] when a `update` is
+/// called.
+class NgZoneStabilizerForTesting extends NgZoneStabilizer with _HasUpdateCount {
+  int updateCount = 0;
+
+  NgZoneStabilizerForTesting(NgZone ngZone) : super(ngZone);
+
+  @override
+  Future<bool> update([void Function() fn]) async {
+    final result = await super.update(fn);
+    updateCount++;
+    return result;
+  }
+}
+
+class AlwaysStableNgTestStabilizer extends NgTestStabilizer
+    with _HasUpdateCount {
+  @override
+  bool get isStable => true;
+
+  @override
+  Future<bool> update([void Function() fn]) async {
+    // [fn] is not supported.
+    if (fn != null) return false;
+
+    updateCount++;
+    return isStable;
+  }
+}
+
+/// [FakeNgTestStabilizer] adds every [NgZone] onEventDone to its task list.
+class FakeNgTestStabilizer extends NgTestStabilizer with _HasUpdateCount {
+  final _tasks = <int>[];
+  int _nextTaskId = 0;
+
+  int minUpdateCountToStabilize = 0;
+
+  FakeNgTestStabilizer(NgZone ngZone) {
+    ngZone.onEventDone.listen((_) {
+      _tasks.add(_nextTaskId++);
+    });
+  }
+
+  @override
+  bool get isStable =>
+      _tasks.isEmpty && updateCount >= minUpdateCountToStabilize;
+
+  @override
+  Future<bool> update([void Function() fn]) async {
+    // [fn] is not supported.
+    if (fn != null) return false;
+
+    if (_tasks.isNotEmpty) {
+      _tasks.removeAt(0);
+    }
+    updateCount++;
+    return isStable;
+  }
 }
