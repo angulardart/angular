@@ -25,8 +25,8 @@ void main() {
       router.navigateByUrl('/to/path');
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         ['/to/path', navigationParams()],
       );
@@ -36,8 +36,8 @@ void main() {
       router.navigateByUrl('/to/path?q=hello%20world');
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         [
           '/to/path',
@@ -50,8 +50,8 @@ void main() {
       router.navigateByUrl('/to/path#with-fragment');
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         [
           '/to/path',
@@ -64,8 +64,8 @@ void main() {
       router.navigateByUrl('/to/path', reload: true);
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         [
           '/to/path',
@@ -78,8 +78,8 @@ void main() {
       router.navigateByUrl('/to/path', replace: true);
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         [
           '/to/path',
