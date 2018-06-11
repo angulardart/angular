@@ -1275,6 +1275,24 @@ void main() {
             [I18nTextAst, 'message', 'description', 'meaning'],
           ]);
         });
+
+        test('should support nested HTML', () {
+          final ast = parse('''
+            <ng-container @i18n="description">
+              This contains <b>HTML</b>!
+            </ng-container>
+          ''');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [NgContainerAst],
+            [
+              I18nTextAst,
+              r'This contains ${startTag0}HTML${endTag0}!',
+              'description',
+              {'startTag0': '<b>', 'endTag0': '</b>'},
+            ],
+          ]);
+        });
       });
 
       group('@i18n-<attr>', () {

@@ -130,6 +130,9 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     if (ast.value.metadata.meaning != null) {
       res.add(ast.value.metadata.meaning);
     }
+    if (ast.value.containsHtml) {
+      res.add(ast.value.args);
+    }
     result.add(_appendContext(ast, res));
   }
 
