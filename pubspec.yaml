@@ -5,5 +5,24 @@
 name: repository
 
 dev_dependencies:
+  build_runner: any
+  code_excerpter:
+    git: https://github.com/chalin/code_excerpter.git
+  code_excerpt_updater:
+    git: https://github.com/chalin/code_excerpt_updater.git
   dev:
     path: dev
+
+  # Source of some of the code examples
+  structural_directives:
+    git:
+      url: https://github.com/dart-lang/site-webdev.git
+      path: examples/ng/doc/structural-directives
+  template_syntax:
+    git:
+      url: https://github.com/dart-lang/site-webdev.git
+      path: examples/ng/doc/template-syntax
+  pipes:
+    git:
+      url: https://github.com/dart-lang/site-webdev.git
+      path: examples/ng/api/common/pipes

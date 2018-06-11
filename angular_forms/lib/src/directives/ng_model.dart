@@ -30,14 +30,14 @@ import 'shared.dart' show setUpControl;
 ///
 /// ### Examples
 ///
-/// <?code-excerpt "docs/template-syntax/lib/app_component.html (NgModel-1)"?>
+/// <?code-excerpt "packages/template_syntax/app_component.html (NgModel-1)"?>
 /// ```html
 /// <input [(ngModel)]="currentHero.name">
 /// ```
 ///
 /// This is equivalent to having separate bindings:
 ///
-/// <?code-excerpt "docs/template-syntax/lib/app_component.html (NgModel-3)"?>
+/// <?code-excerpt "packages/template_syntax/app_component.html (NgModel-3)"?>
 /// ```html
 /// <input
 ///   [ngModel]="currentHero.name"

@@ -10,17 +10,33 @@ import 'package:angular/src/core/linker/app_view_utils.dart';
 ///
 /// ### Examples
 ///
-/// <?code-excerpt "docs/template-syntax/lib/app_component.html (NgIf-1)"?>
+/// <?code-excerpt "examples/hacker_news_pwa/lib/src/item_detail_component.html"?>
 /// ```html
-/// <hero-detail *ngIf="isActive"></hero-detail>
+/// <!-- Loading view -->
+/// <div *ngIf="item == null" class="notice">Loading...</div>
+///
+/// <!-- Loaded view -->
+/// <template [ngIf]="item != null">
+///   <item [item]="item"></item>
+///   <div *ngIf="item['comments'].isEmpty">There are no comments yet.</div>
+///   <comment
+///       *ngFor="let comment of item['comments']"
+///       [comment]="comment">
+///   </comment>
+/// </template>
 /// ```
 ///
-/// <?code-excerpt "docs/structural-directives/lib/app_component.html (asterisk)"?>
+/// <?code-excerpt "packages/template_syntax/app_component.html (NgIf-1)"?>
+/// ```html
+/// <my-hero *ngIf="isActive"></my-hero>
+/// ```
+///
+/// <?code-excerpt "packages/structural_directives/app_component.html (asterisk)"?>
 /// ```html
 /// <div *ngIf="hero != null" >{{hero.name}}</div>
 /// ```
 ///
-/// <?code-excerpt "docs/structural-directives/lib/app_component.html (ngif-template)"?>
+/// <?code-excerpt "packages/structural_directives/app_component.html (ngif-template)"?>
 /// ```html
 /// <template [ngIf]="hero != null">
 ///   <div>{{hero.name}}</div>
