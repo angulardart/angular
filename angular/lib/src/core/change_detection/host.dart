@@ -55,9 +55,6 @@ abstract class ChangeDetectionHost {
     current._scheduleViewUpdate(callback, view, host);
   }
 
-  /// Whether a second pass of change detection should be executed.
-  static final _enforceNoNewChanges = isDevMode;
-
   /// If a crash is detected during zone-based change detection, then this view
   /// is set (non-null). Change detection is re-run (synchronously) in a
   /// slow-mode that individually checks component, and disables change
@@ -170,7 +167,7 @@ abstract class ChangeDetectionHost {
     for (var i = 0; i < length; i++) {
       detectors[i].detectChanges();
     }
-    if (_enforceNoNewChanges) {
+    if (isDevMode) {
       for (var i = 0; i < length; i++) {
         detectors[i].checkNoChanges();
       }
