@@ -530,6 +530,27 @@ class _ComponentVisitor
         : new CompileTemplateMetadata();
     final analyzedClass =
         new AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
+    final lifecycleHooks = extractLifecycleHooks(element);
+    if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
+      final ngDoCheck = element.getMethod('ngDoCheck') ??
+          element.lookUpInheritedMethod('ngDoCheck', element.library);
+      if (ngDoCheck != null && ngDoCheck.isAsynchronous) {
+        BuildError.throwForElement(
+            ngDoCheck,
+            'ngDoCheck should not be "async". The "ngDoCheck" lifecycle event '
+            'must be strictly synchronous, and should not invoke any methods '
+            '(or getters/setters) that directly run asynchronous code (such as '
+            'microtasks, timers).');
+      }
+      if (lifecycleHooks.contains(LifecycleHooks.onChanges)) {
+        BuildError.throwForElement(
+            element,
+            'Cannot implement both the DoCheck and OnChanges lifecycle '
+            'events. By implementing "DoCheck", default change detection of '
+            'inputs is disabled, meaning that "ngOnChanges" will never be '
+            'invoked with values. Consider "AfterChanges" instead.');
+      }
+    }
     return new CompileDirectiveMetadata(
       type: componentType,
       metadataType: isComp
@@ -546,7 +567,7 @@ class _ComponentVisitor
       hostBindings: _hostBindings,
       hostListeners: _hostListeners,
       analyzedClass: analyzedClass,
-      lifecycleHooks: extractLifecycleHooks(element),
+      lifecycleHooks: lifecycleHooks,
       providers: _extractProviders(annotationValue, 'providers'),
       viewProviders: _extractProviders(annotationValue, 'viewProviders'),
       exports: _extractExports(annotation as ElementAnnotationImpl, element),

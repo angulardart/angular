@@ -9,7 +9,6 @@ class LifecycleHooksComponent extends LifecycleHooksSuperclass {}
 class LifecycleHooksSuperclass
     implements
         OnDestroy,
-        OnChanges,
         OnInit,
         AfterContentChecked,
         AfterContentInit,
@@ -31,8 +30,8 @@ class LifecycleHooksSuperclass
   @override
   ngDoCheck() {}
 
-  @override
-  ngOnChanges(_) {}
+  // Intentionally omitted. Not valid to have this + DoCheck.
+  // ngOnChanges(_) {}
 
   @override
   ngOnDestroy() {}

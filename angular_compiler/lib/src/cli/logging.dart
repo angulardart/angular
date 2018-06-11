@@ -113,7 +113,7 @@ class BuildError extends Error {
     // TODO(matanl): Once AnalysisDriver is available, revisit:
     // https://github.com/dart-lang/angular/issues/902#issuecomment-366330965
     final source = element.source;
-    if (source == null) {
+    if (source == null || source.contents.data.isEmpty) {
       logWarning('Could not find source $element: the next error may be terse');
       throw new BuildError(message, trace);
     }
