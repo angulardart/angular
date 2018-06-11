@@ -98,7 +98,7 @@ class AstTemplateParser implements TemplateParser {
     String template,
     String name,
     AstExceptionHandler exceptionHandler,
-    bool preserveWhitespace: false,
+    bool preserveWhitespace = false,
   }) {
     if (flags.forceMinifyWhitespace) {
       logWarning('FORCING MINIFICATION');

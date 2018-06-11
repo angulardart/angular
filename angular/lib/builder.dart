@@ -45,9 +45,9 @@ Builder templatePlaceholder(_) => const Placeholder();
 /// * [outlineExtension]: Outline extension to use when `--outline-only` used.
 Builder templateCompiler(
   BuilderOptions options, {
-  CompilerFlags defaultFlags: _defaultFlags,
-  String templateExtension: _templateExtension,
-  String outlineExtension: _outlineExtension,
+  CompilerFlags defaultFlags = _defaultFlags,
+  String templateExtension = _templateExtension,
+  String outlineExtension = _outlineExtension,
 }) {
   final config = <String, dynamic>{}..addAll(options.config);
   // We may just run in outliner mode.
@@ -73,8 +73,8 @@ Builder templateCompiler(
 /// * [extension]: Extension to use when compiling.
 Builder outlineCompiler(
   BuilderOptions options, {
-  CompilerFlags defaultFlags: _defaultFlags,
-  String extension: _outlineExtension,
+  CompilerFlags defaultFlags = _defaultFlags,
+  String extension = _outlineExtension,
 }) {
   final flags = new CompilerFlags.parseRaw(
     options.config,

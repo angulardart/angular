@@ -20,7 +20,7 @@ class AnalyzedClass {
 
   AnalyzedClass(
     this._classElement, {
-    this.isMockLike: false,
+    this.isMockLike = false,
   });
 }
 
