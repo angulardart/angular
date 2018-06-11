@@ -44,7 +44,6 @@ class ViewNestedNgForComponent0 extends DebugAppView<import4.NestedNgForComponen
     final import10.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    dbgElm(this, _anchor_0, 0, 0, 10);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
     _NgFor_0_9 = new import2.NgFor(_appEl_0, _TemplateRef_0_8);
@@ -97,7 +96,6 @@ class _ViewNestedNgForComponent1 extends DebugAppView<import4.NestedNgForCompone
     dbgElm(this, _el_0, 0, 0, 4);
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 1, 11);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
     _NgFor_1_9 = new import2.NgFor(_appEl_1, _TemplateRef_1_8);
@@ -146,7 +144,6 @@ class _ViewNestedNgForComponent2 extends DebugAppView<import4.NestedNgForCompone
     dbgElm(this, _el_0, 0, 1, 6);
     _text_1 = new import10.Text('');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 1, 37);
     init0Dbg(_el_0, [_el_0, _text_1]);
     return null;
   }

@@ -40,7 +40,6 @@ class ViewHasTemplateFileComponent0 extends DebugAppView<import3.HasTemplateFile
     addShimC(_el_0);
     import4.Text _text_1 = new import4.Text('Has Template File!');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }

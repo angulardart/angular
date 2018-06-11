@@ -38,7 +38,6 @@ class ViewEmulatedComponent0 extends DebugAppView<import2.EmulatedComponent> {
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Emulated');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }
@@ -103,7 +102,6 @@ class ViewNoneComponent0 extends DebugAppView<import2.NoneComponent> {
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('None');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }

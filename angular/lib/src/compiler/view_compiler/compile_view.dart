@@ -48,7 +48,6 @@ import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'
     show
         astAttribListToMap,
-        createDbgElementCall,
         createDiTokenExpression,
         createSetAttributeStatement,
         cachedParentIndexVarName,
@@ -554,10 +553,6 @@ class CompileView implements AppViewBuilder {
       _createMethod.addStmt(parentRenderNodeExpr
           .callMethod('append', [renderNode.toReadExpr()]).toStmt());
     }
-    if (genConfig.genDebugInfo) {
-      _createMethod.addStmt(
-          createDbgElementCall(renderNode.toReadExpr(), nodeIndex, ast));
-    }
     return renderNode;
   }
 
@@ -593,10 +588,6 @@ class CompileView implements AppViewBuilder {
       // Write append code.
       _createMethod.addStmt(parentRenderNodeExpr
           .callMethod('append', [renderNode.toReadExpr()]).toStmt());
-    }
-    if (genConfig.genDebugInfo) {
-      _createMethod.addStmt(
-          createDbgElementCall(renderNode.toReadExpr(), nodeIndex, ast));
     }
     return renderNode;
   }
@@ -706,7 +697,6 @@ class CompileView implements AppViewBuilder {
   void createElementNs(CompileElement parent, NodeReference elementRef,
       int nodeIndex, String ns, String tagName, TemplateAst ast) {
     var parentRenderNodeExpr = _getParentRenderNode(parent);
-    final generateDebugInfo = genConfig.genDebugInfo;
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());
     }
@@ -726,10 +716,6 @@ class CompileView implements AppViewBuilder {
       // Write code to append to parent node.
       _createMethod.addStmt(parentRenderNodeExpr
           .callMethod('append', [elementRef.toReadExpr()]).toStmt());
-    }
-    if (generateDebugInfo) {
-      _createMethod.addStmt(
-          createDbgElementCall(elementRef.toReadExpr(), nodeIndex, ast));
     }
   }
 
@@ -826,11 +812,6 @@ class CompileView implements AppViewBuilder {
           parentNode.callMethod('append', [renderNode.toReadExpr()]).toStmt();
       _createMethod.addStmt(addCommentStmt);
     }
-
-    if (genConfig.genDebugInfo) {
-      _createMethod.addStmt(
-          createDbgElementCall(renderNode.toReadExpr(), nodeIndex, ast));
-    }
     return renderNode;
   }
 
@@ -887,7 +868,6 @@ class CompileView implements AppViewBuilder {
       }
     } else {
       var parentRenderNodeExpr = _getParentRenderNode(parent);
-      final generateDebugInfo = genConfig.genDebugInfo;
       _createMethod.addStmt(elementRef
           .toWriteExpr(
               compAppViewExpr.toReadExpr().prop(appViewRootElementName))
@@ -896,10 +876,6 @@ class CompileView implements AppViewBuilder {
         // Write code to append to parent node.
         _createMethod.addStmt(parentRenderNodeExpr
             .callMethod('append', [elementRef.toReadExpr()]).toStmt());
-      }
-      if (generateDebugInfo) {
-        _createMethod.addStmt(
-            createDbgElementCall(elementRef.toReadExpr(), nodes.length, ast));
       }
     }
     return compAppViewExpr;

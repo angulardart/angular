@@ -40,7 +40,6 @@ class ViewInterpolationComponent0 extends DebugAppView<import2.InterpolationComp
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 1, 2);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }
@@ -118,7 +117,6 @@ class ViewInterpolationComponentNoWhitespace0 extends DebugAppView<import2.Inter
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 1, 2);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }

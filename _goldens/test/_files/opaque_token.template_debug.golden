@@ -41,7 +41,6 @@ class ViewHasOpaqueTokens0 extends DebugAppView<import2.HasOpaqueTokens> {
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _text_0 = new import3.Text((ctx.baseUrl ?? ''));
     parentRenderNode.append(_text_0);
-    dbgElm(this, _text_0, 0, 0, 0);
     init(const [], null, [_text_0]);
     return null;
   }
@@ -117,7 +116,6 @@ class ViewContainsChildComponent0 extends DebugAppView<import2.ContainsChildComp
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    dbgElm(this, _anchor_0, 0, 0, 9);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
     _NgIf_0_9 = new NgIf(_appEl_0, _TemplateRef_0_8);
@@ -162,7 +160,6 @@ class _ViewContainsChildComponent1 extends DebugAppView<import2.ContainsChildCom
     dbgElm(this, _el_0, 0, 0, 4);
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 1, 11);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_ContainsChildComponent2);
     _NgIf_1_9 = new NgIf(_appEl_1, _TemplateRef_1_8);
@@ -209,7 +206,6 @@ class _ViewContainsChildComponent2 extends DebugAppView<import2.ContainsChildCom
     _compView_1 = new ViewInjectsTypedTokenFromSomeParent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
-    dbgElm(this, _el_1, 1, 2, 8);
     _InjectsTypedTokenFromSomeParent_1_5 = new import2.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
     _compView_1.create(_InjectsTypedTokenFromSomeParent_1_5, []);
     init0Dbg(_el_0, [_el_0, _el_1]);
