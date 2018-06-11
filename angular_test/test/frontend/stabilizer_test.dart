@@ -186,8 +186,6 @@ abstract class _HasUpdateCount {
 /// [NgZoneStabilizerForTesting] increments [updateCount] when a `update` is
 /// called.
 class NgZoneStabilizerForTesting extends NgZoneStabilizer with _HasUpdateCount {
-  int updateCount = 0;
-
   NgZoneStabilizerForTesting(NgZone ngZone) : super(ngZone);
 
   @override
