@@ -23,15 +23,14 @@ void main() {
     });
 
     test(
-        'should invoke lifecycle methods ngOnChanges > '
+        'should invoke lifecycle methods '
         'ngOnInit > ngDoCheck > ngAfterContentChecked', () async {
       String startUp = log.toString();
       expect(
-          startUp
-              .startsWith('ngOnChanges; ngAfterChanges; ngOnInit; ngDoCheck; '
-                  'ngAfterContentInit; '
-                  'ngAfterContentChecked; child_ngDoCheck; '
-                  'ngAfterViewInit; ngAfterViewChecked'),
+          startUp.startsWith('ngAfterChanges; ngOnInit; ngDoCheck; '
+              'ngAfterContentInit; '
+              'ngAfterContentChecked; child_ngDoCheck; '
+              'ngAfterViewInit; ngAfterViewChecked'),
           isTrue);
       log.clear();
       await fixture.update((MyComp _) {});
@@ -79,7 +78,6 @@ class LifecycleDir implements DoCheck {
 )
 class LifecycleCmp
     implements
-        OnChanges,
         OnInit,
         DoCheck,
         AfterChanges,
@@ -92,10 +90,6 @@ class LifecycleCmp
   var field;
 
   LifecycleCmp(this._log);
-
-  ngOnChanges(_) {
-    _log.add("ngOnChanges");
-  }
 
   ngOnInit() {
     _log.add("ngOnInit");
