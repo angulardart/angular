@@ -14,3 +14,4 @@ targets:
       angular:
         options:
           debug: True
+          i18n: True
