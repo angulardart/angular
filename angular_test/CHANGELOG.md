@@ -1,5 +1,11 @@
 *   Removed `throwsInAngular` (was a no-op since `alpha+8`). Use `throwsA`.
 
+*   Added `isStable` API to `NgTestStabilizer`.
+
+*   Run `DelegatingNgTestStabilizer` stabilizers one by one instead of run all
+    at once. `update()` for each stabilizers will be run at least once. After
+    that, it will only be run if the current stabilizer is not stable.
+
 ## 2.0.0-alpha+12
 
 *   Made `NgTestStabilizerFactory` public.

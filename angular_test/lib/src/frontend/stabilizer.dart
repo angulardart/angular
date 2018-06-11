@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:meta/meta.dart';
 import 'package:angular/di.dart';
 
 import '../errors.dart';
@@ -43,10 +44,13 @@ abstract class NgTestStabilizer {
   /// The [NgTestStabilizer.update] completes when _every_ stabilizer completes.
   factory NgTestStabilizer.all(
     Iterable<NgTestStabilizer> stabilizers,
-  ) = _DelegatingNgTestStabilizer;
+  ) = DelegatingNgTestStabilizer;
 
   // Allow inheritance.
   const NgTestStabilizer();
+
+  /// Whether this stabilizer is currently stable.
+  bool get isStable => false;
 
   /// Returns a future that completes after processing DOM update events.
   ///
@@ -81,11 +85,22 @@ abstract class NgTestStabilizer {
     if (threshold == null) {
       throw new ArgumentError.notNull('threshold');
     }
+    // We only want to actually execute the 'run' function ONCE.
+    if (run != null) {
+      await update(run);
+    }
+
+    await keepUpdating(threshold);
+  }
+
+  /// Keeps running `update()` function until the stabilizer is stable or
+  /// threshold exceeds.
+  ///
+  /// **NOTE:** `update()` is guaranteed to run at least once.
+  @protected
+  Future<Null> keepUpdating(int threshold) async {
     var count = 0;
     bool thresholdExceeded() => count++ > threshold;
-
-    // We only want to actually execute the 'run' function ONCE.
-    await update(run);
 
     // ... and once update says there is no more work to do, we will bail out.
     while (!await update()) {
@@ -96,19 +111,65 @@ abstract class NgTestStabilizer {
   }
 }
 
-class _DelegatingNgTestStabilizer extends NgTestStabilizer {
+@visibleForTesting
+class DelegatingNgTestStabilizer extends NgTestStabilizer {
   final List<NgTestStabilizer> _delegates;
 
-  _DelegatingNgTestStabilizer(Iterable<NgTestStabilizer> stabilizers)
+  bool _updatedAtLeastOnce = false;
+
+  DelegatingNgTestStabilizer(Iterable<NgTestStabilizer> stabilizers)
       : _delegates = stabilizers.toList(growable: false);
+
+  @override
+  bool get isStable => _delegates.every((delegate) => delegate.isStable);
 
   @override
   Future<bool> update([void Function() fn]) async {
     if (_delegates.isEmpty) {
       return false;
     }
-    final results = await Future.wait(_delegates.map((s) => s.update(fn)));
-    return results.every((r) => r);
+
+    if (fn != null) {
+      // When [fn] is not null, run `update` function for all [_delegates].
+      await _updateAllDelegates(_delegates, fn);
+    } else if (!_updatedAtLeastOnce) {
+      // When [_updatedAtLeastOnce] is false, run `update` function for all
+      // [_delegates].
+      await _updateAllDelegates(_delegates, fn);
+    } else {
+      // Only run `update` on a delegate if it is not stable.
+      //
+      // When a delegate is stable, calling its `update()` function may cause
+      // other delegates never stabilize. For example, calling `update()` on
+      // NgZoneStabilizer will trigger an NgZone's `onEventDone` event. Another
+      // service that listens on this event may trigger other events that makes
+      // the DOM never stabilizes.
+      await _updateAllDelegates(_delegates, fn,
+          test: (delegate) => !delegate.isStable);
+    }
+    _updatedAtLeastOnce = true;
+    return isStable;
+  }
+
+  /// Runs `update(fn)` for those [delegates] that satisfy the [test] function.
+  Future<void> _updateAllDelegates(
+      Iterable<NgTestStabilizer> delegates, void Function() fn,
+      {bool Function(NgTestStabilizer) test}) async {
+    for (final delegate in delegates) {
+      if (test == null || test(delegate)) {
+        await delegate.update(fn);
+      }
+    }
+  }
+
+  @override
+  Future<Null> keepUpdating(int threshold) async {
+    try {
+      _updatedAtLeastOnce = false;
+      await super.keepUpdating(threshold);
+    } finally {
+      _updatedAtLeastOnce = false;
+    }
   }
 }
 
@@ -119,6 +180,7 @@ class NgZoneStabilizer extends NgTestStabilizer {
   const NgZoneStabilizer(this._ngZone);
 
   /// Zone is considered stable when there are no more micro-tasks or timers.
+  @override
   bool get isStable {
     return !(_ngZone.hasPendingMacrotasks || _ngZone.hasPendingMicrotasks);
   }
