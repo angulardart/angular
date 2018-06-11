@@ -42,7 +42,6 @@ class ViewInlinedNgIfComponent0 extends DebugAppView<import3.InlinedNgIfComponen
     final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    dbgElm(this, _anchor_0, 0, 0, 5);
     init([], null, [_anchor_0]);
     return null;
   }
@@ -59,7 +58,6 @@ class ViewInlinedNgIfComponent0 extends DebugAppView<import3.InlinedNgIfComponen
         dbgElm(this, _el_0_0, 0, 0, 0);
         _text_0_1 = new import4.Text('Hello World!');
         _el_0_0.append(_text_0_1);
-        dbgElm(this, _text_0_1, 1, 0, 17);
         addInlinedNodes(_anchor_0, [_el_0_0], true);
       } else {
         removeInlinedNodes([_el_0_0], true);
@@ -130,7 +128,6 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends DebugAppView<impor
     final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    dbgElm(this, _anchor_0, 0, 0, 5);
     init([], null, [_anchor_0]);
     return null;
   }
@@ -147,7 +144,6 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends DebugAppView<impor
           dbgElm(this, _el_0_0, 0, 0, 0);
           _text_0_1 = new import4.Text('Hello World!');
           _el_0_0.append(_text_0_1);
-          dbgElm(this, _text_0_1, 1, 0, 17);
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }
       }

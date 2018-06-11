@@ -39,7 +39,6 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('CheckOnce');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }
@@ -114,7 +113,6 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Checked');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }
@@ -179,7 +177,6 @@ class ViewCheckAlwaysComponent0 extends DebugAppView<import2.CheckAlwaysComponen
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('CheckAlways');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }
@@ -244,7 +241,6 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Detached');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }
@@ -309,7 +305,6 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('OnPush');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }
@@ -375,7 +370,6 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Stateful');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     _ctx.stateChangeCallback = markStateChanged;
     return null;
@@ -441,7 +435,6 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text('Default');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }

@@ -49,16 +49,13 @@ class ViewTestContainerComponent0 extends DebugAppView<import3.TestContainerComp
     final import9.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     import9.Text _text_0 = new import9.Text('\'');
     parentRenderNode.append(_text_0);
-    dbgElm(this, _text_0, 0, 0, 0);
     final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 1, 26);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_7 = new TemplateRef(_appEl_1, viewFactory_TestContainerComponent1);
     loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_7);
     final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
-    dbgElm(this, _anchor_2, 2, 2, 24);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_7 = new TemplateRef(_appEl_2, viewFactory_TestContainerComponent2);
     loadDeferred(deflib2.loadLibrary, deflib3.loadLibrary, _appEl_2, _TemplateRef_2_7);
@@ -93,10 +90,8 @@ class _ViewTestContainerComponent1 extends DebugAppView<import3.TestContainerCom
   ComponentRef<import3.TestContainerComponent> build() {
     _compView_0 = deflib1.viewFactory_DeferredChildComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    dbgElm(this, _el_0, 0, 1, 6);
     _DeferredChildComponent_0_5 = new deflib0.DeferredChildComponent();
     import9.Text _text_1 = new import9.Text('Foo');
-    dbgElm(this, _text_1, 1, 1, 36);
     _compView_0.create(_DeferredChildComponent_0_5, []);
     init0Dbg(_el_0, [_el_0, _text_1]);
     return null;
@@ -132,7 +127,6 @@ class _ViewTestContainerComponent2 extends DebugAppView<import3.TestContainerCom
   ComponentRef<import3.TestContainerComponent> build() {
     _compView_0 = deflib3.viewFactory_SampleComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    dbgElm(this, _el_0, 0, 2, 6);
     _SampleComponent_0_5 = new deflib2.SampleComponent();
     _compView_0.create(_SampleComponent_0_5, []);
     init0Dbg(_el_0, [_el_0]);

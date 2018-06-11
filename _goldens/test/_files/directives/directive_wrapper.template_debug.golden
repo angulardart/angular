@@ -54,7 +54,6 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     _DirectiveWithOutput_0_6 = new import1.DirectiveWithOutput();
     import3.Text _text_1 = new import3.Text('Foo');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 91);
     _el_0.addEventListener('click', eventHandler1(_ChildDirective_0_5.instance.handleClick));
     _el_0.addEventListener('keypress', eventHandler1(_ChildDirective_0_5.instance.handleKeyPress));
     final subscription_0 = _ChildDirective_0_5.instance.trigger.listen(eventHandler1(_handle_trigger_0_0));

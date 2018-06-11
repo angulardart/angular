@@ -107,7 +107,6 @@ class ViewUsesAngularEvents0 extends DebugAppView<import2.UsesAngularEvents> {
     _compView_0 = new ViewHasAngularEvents0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    dbgElm(this, _el_0, 0, 0, 4);
     _HasAngularEvents_0_5 = new import2.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_5, []);
     final subscription_0 = _HasAngularEvents_0_5.foo.listen(eventHandler0(ctx.onFoo));

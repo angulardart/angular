@@ -64,7 +64,6 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     _AnotherDirective_1_5 = new import1.AnotherDirective();
     final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
-    dbgElm(this, _anchor_2, 2, 3, 17);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_8 = new TemplateRef(_appEl_2, viewFactory_QueriesComponent1);
     _NgIf_2_9 = new NgIf(_appEl_2, _TemplateRef_2_8);
@@ -204,12 +203,10 @@ class ViewEmbeddedQueries0 extends DebugAppView<import1.EmbeddedQueries> {
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 1, 4);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_7 = new TemplateRef(_appEl_1, viewFactory_EmbeddedQueries1);
     final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
-    dbgElm(this, _anchor_2, 2, 4, 4);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_7 = new TemplateRef(_appEl_2, viewFactory_EmbeddedQueries2);
     init(const [], null, [_el_0, _anchor_1, _anchor_2]);
@@ -363,12 +360,10 @@ class ViewEmbeddedQueriesList0 extends DebugAppView<import1.EmbeddedQueriesList>
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 1, 4);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_7 = new TemplateRef(_appEl_1, viewFactory_EmbeddedQueriesList1);
     final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
-    dbgElm(this, _anchor_2, 2, 4, 4);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_7 = new TemplateRef(_appEl_2, viewFactory_EmbeddedQueriesList2);
     init(const [], null, [_el_0, _anchor_1, _anchor_2]);
@@ -515,7 +510,6 @@ class ViewNestedNgForQueriesList0 extends DebugAppView<import1.NestedNgForQuerie
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    dbgElm(this, _anchor_0, 0, 0, 9);
     _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_NestedNgForQueriesList1);
     _NgIf_0_9 = new NgIf(_appEl_0, _TemplateRef_0_8);
@@ -572,7 +566,6 @@ class _ViewNestedNgForQueriesList1 extends DebugAppView<import1.NestedNgForQueri
     dbgElm(this, _el_0, 0, 0, 4);
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 1, 11);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList2);
     _NgIf_1_9 = new NgIf(_appEl_1, _TemplateRef_1_8);
@@ -617,7 +610,6 @@ class _ViewNestedNgForQueriesList2 extends DebugAppView<import1.NestedNgForQueri
     dbgElm(this, _el_0, 0, 1, 6);
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 2, 13);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList3);
     _NgFor_1_9 = new import14.NgFor(_appEl_1, _TemplateRef_1_8);

@@ -48,10 +48,8 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    dbgElm(this, _anchor_0, 0, 0, 9);
     final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
-    dbgElm(this, _anchor_1, 1, 1, 9);
     _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
     _NgFor_1_9 = new import3.NgFor(_appEl_1, _TemplateRef_1_8);
@@ -71,7 +69,6 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
           dbgElm(this, _el_0_0, 0, 0, 4);
           _text_0_1 = new import6.Text('Foo');
           _el_0_0.append(_text_0_1);
-          dbgElm(this, _text_0_1, 1, 0, 21);
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }
       }
@@ -115,7 +112,6 @@ class _ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
     _el_1 = createSpanAndAppendDbg(this, doc, _el_0, 1, 2, 6);
     _text_2 = new import6.Text('');
     _el_1.append(_text_2);
-    dbgElm(this, _text_2, 2, 2, 35);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
     init0Dbg(_el_0, [_el_0, _el_1, _text_2]);
     return null;

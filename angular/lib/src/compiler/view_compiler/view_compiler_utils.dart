@@ -10,7 +10,7 @@ import '../compile_metadata.dart'
 import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
-import '../template_ast.dart' show AttrAst, TemplateAst;
+import '../template_ast.dart' show AttrAst;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart';
 
@@ -370,18 +370,6 @@ Map<String, ast.AST> mergeHtmlAndDirectiveAttrs(
     }
   }
   return _toSortedMap(result);
-}
-
-o.Statement createDbgElementCall(
-    o.Expression nodeExpr, int nodeIndex, TemplateAst ast) {
-  var sourceLocation = ast?.sourceSpan?.start;
-  return o.importExpr(Identifiers.dbgElm).callFn([
-    o.THIS_EXPR,
-    nodeExpr,
-    o.literal(nodeIndex),
-    sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.line),
-    sourceLocation == null ? o.NULL_EXPR : o.literal(sourceLocation.column)
-  ]).toStmt();
 }
 
 Map<String, CompileIdentifierMetadata> _tagNameToIdentifier;

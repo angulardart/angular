@@ -40,7 +40,6 @@ class ViewI18nTextComponent0 extends DebugAppView<import2.I18nTextComponent> {
     _el_0 = createAndAppendDbg(this, doc, 'p', parentRenderNode, 0, 0, 0);
     import3.Text _text_1 = new import3.Text(_message_0);
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 23);
     init(const [], null, [_el_0, _text_1]);
     return null;
   }

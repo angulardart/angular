@@ -49,11 +49,9 @@ class ViewTestFooComponent0 extends DebugAppView<import3.TestFooComponent> {
     _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
     import4.Text _text_1 = new import4.Text('Foo');
     _el_0.append(_text_1);
-    dbgElm(this, _text_1, 1, 0, 5);
     _compView_2 = new import5.ViewTestSubComponent0(this, 2);
     _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
-    dbgElm(this, _el_2, 2, 0, 14);
     _TestSubComponent_2_5 = new import1.TestSubComponent();
     _compView_2.create(_TestSubComponent_2_5, []);
     init(const [], null, [_el_0, _text_1, _el_2]);

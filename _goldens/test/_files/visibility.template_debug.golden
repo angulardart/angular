@@ -100,7 +100,6 @@ class ViewDependencyWithDependentInView0 extends DebugAppView<import2.Dependency
     _compView_0 = new ViewDependent0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    dbgElm(this, _el_0, 0, 0, 0);
     _Dependent_0_5 = new import2.Dependent(parentView.injectorGet(import2.Dependency, viewData.parentIndex));
     _compView_0.create(_Dependent_0_5, []);
     init(const [], null, [_el_0]);
@@ -261,7 +260,6 @@ class ViewDependencyAndDependentInView0 extends DebugAppView<import2.DependencyA
     _compView_1 = new ViewDependent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
-    dbgElm(this, _el_1, 1, 1, 6);
     _Dependent_1_5 = new import2.Dependent(parentView.injectorGet(import2.Dependency, viewData.parentIndex));
     _compView_1.create(_Dependent_1_5, []);
     init(const [], null, [_el_0, _el_1]);
