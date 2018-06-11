@@ -132,7 +132,7 @@ class Directive {
     @required this.selector,
     this.providers,
     this.exportAs,
-    this.visibility: Visibility.local,
+    this.visibility = Visibility.local,
   });
 }
 
@@ -238,13 +238,13 @@ class Component extends Directive {
     String selector,
     String exportAs,
     List providers,
-    Visibility visibility: Visibility.local,
+    Visibility visibility = Visibility.local,
     this.viewProviders,
     this.exports,
-    this.changeDetection: ChangeDetectionStrategy.Default,
+    this.changeDetection = ChangeDetectionStrategy.Default,
     this.templateUrl,
     this.template,
-    this.preserveWhitespace: false,
+    this.preserveWhitespace = false,
     this.styleUrls,
     this.styles,
     this.directives,
@@ -267,7 +267,7 @@ class Pipe {
   final String name;
   final bool pure;
 
-  const Pipe(this.name, {this.pure: true});
+  const Pipe(this.name, {this.pure = true});
 }
 
 /// An annotation to specify that a constant attribute value should be injected.
@@ -314,8 +314,8 @@ abstract class _Query {
 
   const _Query(
     this.selector, {
-    this.descendants: false,
-    this.first: false,
+    this.descendants = false,
+    this.first = false,
     this.read,
   });
 }
@@ -341,7 +341,7 @@ abstract class _Query {
 class ContentChildren extends _Query {
   const ContentChildren(
     Object selector, {
-    bool descendants: true,
+    bool descendants = true,
     Object read,
   }) : super(
           selector,
@@ -383,8 +383,8 @@ class ContentChild extends _Query {
 abstract class _ViewQuery extends _Query {
   const _ViewQuery(
     Object selector, {
-    bool descendants: false,
-    bool first: false,
+    bool descendants = false,
+    bool first = false,
     Object read,
   }) : super(
           selector,

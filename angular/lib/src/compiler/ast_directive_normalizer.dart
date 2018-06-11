@@ -157,7 +157,7 @@ class AstDirectiveNormalizer {
     String template,
     String templateAbsUrl,
     bool preserveWhitespace, {
-    List<CompileIdentifierMetadata> exports: const [],
+    List<CompileIdentifierMetadata> exports = const [],
   }) {
     // Parse the template, and visit to find <style>/<link> and <ng-content>.
     final visitor = new _TemplateNormalizerVisitor();

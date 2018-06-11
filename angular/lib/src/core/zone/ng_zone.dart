@@ -116,7 +116,7 @@ class NgZone {
   final List<Timer> _pendingTimers = <Timer>[];
 
   /// enabled in development mode as they significantly impact perf.
-  NgZone({bool enableLongStackTrace: false}) {
+  NgZone({bool enableLongStackTrace = false}) {
     _outerZone = Zone.current;
 
     if (enableLongStackTrace) {

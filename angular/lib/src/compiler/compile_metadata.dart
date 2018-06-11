@@ -41,8 +41,8 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
       {this.name,
       this.moduleUrl,
       this.prefix,
-      this.emitPrefix: false,
-      this.genericTypes: const [],
+      this.emitPrefix = false,
+      this.genericTypes = const [],
       this.value,
       this.analyzedClass});
 
@@ -60,12 +60,12 @@ class CompileDiDependencyMetadata {
   CompileTokenMetadata token;
   dynamic value;
   CompileDiDependencyMetadata(
-      {this.isAttribute: false,
-      this.isSelf: false,
-      this.isHost: false,
-      this.isSkipSelf: false,
-      this.isOptional: false,
-      this.isValue: false,
+      {this.isAttribute = false,
+      this.isSelf = false,
+      this.isHost = false,
+      this.isSkipSelf = false,
+      this.isOptional = false,
+      this.isValue = false,
       this.token,
       this.value});
 }
@@ -93,8 +93,8 @@ class CompileProviderMetadata {
     this.useExisting,
     this.useFactory,
     this.deps,
-    this.visibility: Visibility.all,
-    this.multi: false,
+    this.visibility = Visibility.all,
+    this.multi = false,
     this.typeArgument,
   });
 
@@ -149,8 +149,8 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata<Function> {
       {this.name,
       this.moduleUrl,
       this.prefix,
-      this.emitPrefix: false,
-      this.diDeps: const [],
+      this.emitPrefix = false,
+      this.diDeps = const [],
       this.value});
 
   @override
@@ -167,7 +167,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   bool identifierIsInstance;
 
   CompileTokenMetadata(
-      {this.value, this.identifier, this.identifierIsInstance: false});
+      {this.value, this.identifier, this.identifierIsInstance = false});
 
   // Used to determine unique-ness of CompileTokenMetadata.
   //
@@ -290,10 +290,10 @@ class CompileTypeMetadata
       {this.name,
       this.moduleUrl,
       this.prefix,
-      this.isHost: false,
+      this.isHost = false,
       this.value,
-      this.genericTypes: const [],
-      this.diDeps: const []});
+      this.genericTypes = const [],
+      this.diDeps = const []});
 
   @override
   CompileIdentifierMetadata<Type> get identifier => this;
@@ -358,10 +358,10 @@ class CompileQueryMetadata {
 
   const CompileQueryMetadata({
     this.selectors,
-    this.descendants: false,
-    this.first: false,
+    this.descendants = false,
+    this.first = false,
     this.propertyName,
-    this.isElementType: false,
+    this.isElementType = false,
     this.read,
   });
 }
@@ -376,13 +376,13 @@ class CompileTemplateMetadata {
   final List<String> styleUrls;
   final List<String> ngContentSelectors;
   CompileTemplateMetadata(
-      {this.encapsulation: ViewEncapsulation.Emulated,
+      {this.encapsulation = ViewEncapsulation.Emulated,
       this.template,
       this.templateUrl,
-      this.preserveWhitespace: false,
-      this.styles: const [],
-      this.styleUrls: const [],
-      this.ngContentSelectors: const []});
+      this.preserveWhitespace = false,
+      this.styles = const [],
+      this.styleUrls = const [],
+      this.ngContentSelectors = const []});
 }
 
 enum CompileDirectiveMetadataType {
@@ -440,13 +440,13 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.hostListeners,
     this.analyzedClass,
     this.template,
-    this.visibility: Visibility.all,
-    this.lifecycleHooks: const [],
-    this.providers: const [],
-    this.viewProviders: const [],
-    this.exports: const [],
-    this.queries: const [],
-    this.viewQueries: const [],
+    this.visibility = Visibility.all,
+    this.lifecycleHooks = const [],
+    this.providers = const [],
+    this.viewProviders = const [],
+    this.exports = const [],
+    this.queries = const [],
+    this.viewQueries = const [],
   });
 
   @override
@@ -573,8 +573,8 @@ class CompilePipeMetadata implements CompileMetadataWithType {
     this.type,
     this.transformType,
     this.name,
-    this.pure: true,
-    this.lifecycleHooks: const [],
+    this.pure = true,
+    this.lifecycleHooks = const [],
   });
 
   @override

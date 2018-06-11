@@ -37,7 +37,7 @@ abstract class RuntimeInjectorBuilder {
 Provider<T> provide<T>(
   Object token, {
   Type useClass,
-  Object useValue: noValueProvided,
+  Object useValue = noValueProvided,
   Object useExisting,
   Function useFactory,
   List<Object> deps,
@@ -154,11 +154,11 @@ class Provider<T> {
   const Provider._(
     this.token, {
     this.useClass,
-    this.useValue: noValueProvided,
+    this.useValue = noValueProvided,
     this.useExisting,
     this.useFactory,
     this.deps,
-    this.multi: false,
+    this.multi = false,
   });
 
   /// Configures the provided [builder] using this provider object.
@@ -222,7 +222,7 @@ class ClassProvider<T> extends Provider<T> {
   const ClassProvider._(
     Object token, {
     Type useClass,
-    bool multi: false,
+    bool multi = false,
   }) : super._(
           token,
           // ignore: argument_type_not_assignable
