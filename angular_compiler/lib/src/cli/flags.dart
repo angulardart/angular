@@ -9,6 +9,7 @@ const _argLegacyStyle = 'use_legacy_style_encapsulation';
 
 // Experimental flags (not published).
 const _argForceMinifyWhitespace = 'force-minify-whitespace';
+const _argI18nEnabled = 'i18n';
 const _argNoEmitComponentFactories = 'no-emit-component-factories';
 const _argNoEmitInjectableFactories = 'no-emit-injectable-factories';
 
@@ -46,6 +47,11 @@ class CompilerFlags {
     )
     ..addFlag(
       _argForceMinifyWhitespace,
+      defaultsTo: null,
+      hide: true,
+    )
+    ..addFlag(
+      _argI18nEnabled,
       defaultsTo: null,
       hide: true,
     )
@@ -152,6 +158,7 @@ class CompilerFlags {
     if (options is Map) {
       final knownArgs = const [
         _argDebugMode,
+        _argI18nEnabled,
         _argProfileFor,
         _argLegacyStyle,
         _argForceMinifyWhitespace,
@@ -170,6 +177,7 @@ class CompilerFlags {
     }
 
     final debugMode = options[_argDebugMode];
+    final i18nEnabled = options[_argI18nEnabled];
     final profileFor = options[_argProfileFor];
     final useLegacyStyle = options[_argLegacyStyle];
     final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
@@ -178,7 +186,7 @@ class CompilerFlags {
 
     return new CompilerFlags(
       genDebugInfo: debugMode ?? defaultTo.genDebugInfo,
-      i18nEnabled: defaultTo.i18nEnabled,
+      i18nEnabled: i18nEnabled ?? defaultTo.i18nEnabled,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
