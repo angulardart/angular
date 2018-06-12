@@ -1,0 +1,1241 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'generics.dart';
+export 'generics.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'generics.dart' as import1;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/common/directives/ng_for.dart' as import9;
+import 'package:angular/src/core/linker/template_ref.dart';
+
+final List<dynamic> styles$UntypedComp = const [];
+
+class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
+  static RenderComponentType _renderType;
+  ViewUntypedComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UntypedComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UntypedComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.UntypedComp> viewFactory_UntypedComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUntypedComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UntypedCompHost = const [];
+
+class _ViewUntypedCompHost0 extends AppView<dynamic> {
+  ViewUntypedComp0 _compView_0;
+  import1.UntypedComp _UntypedComp_0_5;
+  _ViewUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewUntypedComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UntypedComp_0_5 = new import1.UntypedComp();
+    _compView_0.create(_UntypedComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.UntypedComp>(0, this, rootEl, _UntypedComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_UntypedCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUntypedCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UntypedComp> UntypedCompNgFactory = const ComponentFactory<import1.UntypedComp>('comp', viewFactory_UntypedCompHost0, _UntypedCompMetadata);
+final List<dynamic> styles$UsesUntypedComp = const [];
+
+class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
+  import5.Element _el_0;
+  ViewUntypedComp0 _compView_0;
+  import1.UntypedComp _UntypedComp_0_5;
+  var _expr_0;
+  static RenderComponentType _renderType;
+  ViewUsesUntypedComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesUntypedComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesUntypedComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewUntypedComp0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _UntypedComp_0_5 = new import1.UntypedComp();
+    _compView_0.create(_UntypedComp_0_5, []);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesUntypedComp _ctx = ctx;
+    final currVal_0 = _ctx.binding;
+    if (!identical(_expr_0, currVal_0)) {
+      _UntypedComp_0_5.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesUntypedComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesUntypedCompHost = const [];
+
+class _ViewUsesUntypedCompHost0 extends AppView<dynamic> {
+  ViewUsesUntypedComp0 _compView_0;
+  import1.UsesUntypedComp _UsesUntypedComp_0_5;
+  _ViewUsesUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewUsesUntypedComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesUntypedComp_0_5 = new import1.UsesUntypedComp();
+    _compView_0.create(_UsesUntypedComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.UsesUntypedComp>(0, this, rootEl, _UsesUntypedComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_UsesUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesUntypedCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesUntypedComp> UsesUntypedCompNgFactory = const ComponentFactory<import1.UsesUntypedComp>('comp', viewFactory_UsesUntypedCompHost0, _UsesUntypedCompMetadata);
+final List<dynamic> styles$GenericComp = const [];
+
+class ViewGenericComp0 extends AppView<import1.GenericComp> {
+  static RenderComponentType _renderType;
+  ViewGenericComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$GenericComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.GenericComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.GenericComp> viewFactory_GenericComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewGenericComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$GenericCompHost = const [];
+
+class _ViewGenericCompHost0 extends AppView<dynamic> {
+  ViewGenericComp0 _compView_0;
+  import1.GenericComp _GenericComp_0_5;
+  _ViewGenericCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewGenericComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _GenericComp_0_5 = new import1.GenericComp();
+    _compView_0.create(_GenericComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.GenericComp>(0, this, rootEl, _GenericComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_GenericCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewGenericCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.GenericComp> GenericCompNgFactory = const ComponentFactory<import1.GenericComp>('comp', viewFactory_GenericCompHost0, _GenericCompMetadata);
+final List<dynamic> styles$UsesGenericComp = const [];
+
+class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
+  import5.Element _el_0;
+  ViewGenericComp0 _compView_0;
+  import1.GenericComp _GenericComp_0_5;
+  var _expr_0;
+  static RenderComponentType _renderType;
+  ViewUsesGenericComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesGenericComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesGenericComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewGenericComp0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _GenericComp_0_5 = new import1.GenericComp();
+    _compView_0.create(_GenericComp_0_5, []);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesGenericComp _ctx = ctx;
+    final currVal_0 = _ctx.binding;
+    if (!identical(_expr_0, currVal_0)) {
+      _GenericComp_0_5.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesGenericComp> viewFactory_UsesGenericComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesGenericComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesGenericCompHost = const [];
+
+class _ViewUsesGenericCompHost0 extends AppView<dynamic> {
+  ViewUsesGenericComp0 _compView_0;
+  import1.UsesGenericComp _UsesGenericComp_0_5;
+  _ViewUsesGenericCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewUsesGenericComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesGenericComp_0_5 = new import1.UsesGenericComp();
+    _compView_0.create(_UsesGenericComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.UsesGenericComp>(0, this, rootEl, _UsesGenericComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_UsesGenericCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesGenericCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesGenericComp> UsesGenericCompNgFactory = const ComponentFactory<import1.UsesGenericComp>('comp', viewFactory_UsesGenericCompHost0, _UsesGenericCompMetadata);
+final List<dynamic> styles$MappingComp1 = const [];
+
+class ViewMappingComp10 extends AppView<import1.MappingComp1> {
+  static RenderComponentType _renderType;
+  ViewMappingComp10(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$MappingComp1);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.MappingComp1> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.MappingComp1> viewFactory_MappingComp10(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewMappingComp10(parentView, parentIndex);
+}
+
+final List<dynamic> styles$MappingComp1Host = const [];
+
+class _ViewMappingComp1Host0 extends AppView<dynamic> {
+  ViewMappingComp10 _compView_0;
+  import1.MappingComp1 _MappingComp1_0_5;
+  _ViewMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewMappingComp10(this, 0);
+    rootEl = _compView_0.rootEl;
+    _MappingComp1_0_5 = new import1.MappingComp1();
+    _compView_0.create(_MappingComp1_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.MappingComp1>(0, this, rootEl, _MappingComp1_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_MappingComp1Host0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewMappingComp1Host0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.MappingComp1> MappingComp1NgFactory = const ComponentFactory<import1.MappingComp1>('comp', viewFactory_MappingComp1Host0, _MappingComp1Metadata);
+final List<dynamic> styles$UsesMappingComp1 = const [];
+
+class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
+  import5.Element _el_0;
+  ViewMappingComp10 _compView_0;
+  import1.MappingComp1 _MappingComp1_0_5;
+  var _expr_0;
+  var _expr_1;
+  static RenderComponentType _renderType;
+  ViewUsesMappingComp10(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesMappingComp1);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesMappingComp1> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewMappingComp10(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _MappingComp1_0_5 = new import1.MappingComp1();
+    _compView_0.create(_MappingComp1_0_5, []);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesMappingComp1 _ctx = ctx;
+    final currVal_0 = _ctx.bindKey;
+    if (!identical(_expr_0, currVal_0)) {
+      _MappingComp1_0_5.key = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.bindValue;
+    if (!identical(_expr_1, currVal_1)) {
+      _MappingComp1_0_5.value = currVal_1;
+      _expr_1 = currVal_1;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp10(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesMappingComp10(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesMappingComp1Host = const [];
+
+class _ViewUsesMappingComp1Host0 extends AppView<dynamic> {
+  ViewUsesMappingComp10 _compView_0;
+  import1.UsesMappingComp1 _UsesMappingComp1_0_5;
+  _ViewUsesMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewUsesMappingComp10(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesMappingComp1_0_5 = new import1.UsesMappingComp1();
+    _compView_0.create(_UsesMappingComp1_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.UsesMappingComp1>(0, this, rootEl, _UsesMappingComp1_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_UsesMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesMappingComp1Host0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesMappingComp1> UsesMappingComp1NgFactory = const ComponentFactory<import1.UsesMappingComp1>('comp', viewFactory_UsesMappingComp1Host0, _UsesMappingComp1Metadata);
+final List<dynamic> styles$MappingComp2 = const [];
+
+class ViewMappingComp20 extends AppView<import1.MappingComp2> {
+  static RenderComponentType _renderType;
+  ViewMappingComp20(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$MappingComp2);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.MappingComp2> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.MappingComp2> viewFactory_MappingComp20(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewMappingComp20(parentView, parentIndex);
+}
+
+final List<dynamic> styles$MappingComp2Host = const [];
+
+class _ViewMappingComp2Host0 extends AppView<dynamic> {
+  ViewMappingComp20 _compView_0;
+  import1.MappingComp2 _MappingComp2_0_5;
+  _ViewMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewMappingComp20(this, 0);
+    rootEl = _compView_0.rootEl;
+    _MappingComp2_0_5 = new import1.MappingComp2();
+    _compView_0.create(_MappingComp2_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.MappingComp2>(0, this, rootEl, _MappingComp2_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_MappingComp2Host0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewMappingComp2Host0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.MappingComp2> MappingComp2NgFactory = const ComponentFactory<import1.MappingComp2>('comp', viewFactory_MappingComp2Host0, _MappingComp2Metadata);
+final List<dynamic> styles$UsesMappingComp2 = const [];
+
+class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
+  import5.Element _el_0;
+  ViewMappingComp20 _compView_0;
+  import1.MappingComp2 _MappingComp2_0_5;
+  var _expr_0;
+  static RenderComponentType _renderType;
+  ViewUsesMappingComp20(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesMappingComp2);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesMappingComp2> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewMappingComp20(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _MappingComp2_0_5 = new import1.MappingComp2();
+    _compView_0.create(_MappingComp2_0_5, []);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesMappingComp2 _ctx = ctx;
+    final currVal_0 = _ctx.binding;
+    if (!identical(_expr_0, currVal_0)) {
+      _MappingComp2_0_5.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp20(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesMappingComp20(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesMappingComp2Host = const [];
+
+class _ViewUsesMappingComp2Host0 extends AppView<dynamic> {
+  ViewUsesMappingComp20 _compView_0;
+  import1.UsesMappingComp2 _UsesMappingComp2_0_5;
+  _ViewUsesMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewUsesMappingComp20(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesMappingComp2_0_5 = new import1.UsesMappingComp2();
+    _compView_0.create(_UsesMappingComp2_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.UsesMappingComp2>(0, this, rootEl, _UsesMappingComp2_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_UsesMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesMappingComp2Host0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesMappingComp2> UsesMappingComp2NgFactory = const ComponentFactory<import1.UsesMappingComp2>('comp', viewFactory_UsesMappingComp2Host0, _UsesMappingComp2Metadata);
+final List<dynamic> styles$BoundComp = const [];
+
+class ViewBoundComp0 extends AppView<import1.BoundComp> {
+  static RenderComponentType _renderType;
+  ViewBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$BoundComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.BoundComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.BoundComp> viewFactory_BoundComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewBoundComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$BoundCompHost = const [];
+
+class _ViewBoundCompHost0 extends AppView<dynamic> {
+  ViewBoundComp0 _compView_0;
+  import1.BoundComp _BoundComp_0_5;
+  _ViewBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewBoundComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _BoundComp_0_5 = new import1.BoundComp();
+    _compView_0.create(_BoundComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.BoundComp>(0, this, rootEl, _BoundComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_BoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewBoundCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.BoundComp> BoundCompNgFactory = const ComponentFactory<import1.BoundComp>('comp', viewFactory_BoundCompHost0, _BoundCompMetadata);
+final List<dynamic> styles$UsesBoundCompWithBounds = const [];
+
+class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBounds> {
+  import5.Element _el_0;
+  ViewBoundComp0 _compView_0;
+  import1.BoundComp _BoundComp_0_5;
+  num _expr_0;
+  static RenderComponentType _renderType;
+  ViewUsesBoundCompWithBounds0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesBoundCompWithBounds);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesBoundCompWithBounds> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewBoundComp0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _BoundComp_0_5 = new import1.BoundComp();
+    _compView_0.create(_BoundComp_0_5, []);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesBoundCompWithBounds _ctx = ctx;
+    final currVal_0 = _ctx.binding;
+    if (!identical(_expr_0, currVal_0)) {
+      _BoundComp_0_5.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBounds0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesBoundCompWithBounds0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesBoundCompWithBoundsHost = const [];
+
+class _ViewUsesBoundCompWithBoundsHost0 extends AppView<dynamic> {
+  ViewUsesBoundCompWithBounds0 _compView_0;
+  import1.UsesBoundCompWithBounds _UsesBoundCompWithBounds_0_5;
+  _ViewUsesBoundCompWithBoundsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewUsesBoundCompWithBounds0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesBoundCompWithBounds_0_5 = new import1.UsesBoundCompWithBounds();
+    _compView_0.create(_UsesBoundCompWithBounds_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.UsesBoundCompWithBounds>(0, this, rootEl, _UsesBoundCompWithBounds_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_UsesBoundCompWithBoundsHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesBoundCompWithBoundsHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesBoundCompWithBounds> UsesBoundCompWithBoundsNgFactory = const ComponentFactory<import1.UsesBoundCompWithBounds>('comp', viewFactory_UsesBoundCompWithBoundsHost0, _UsesBoundCompWithBoundsMetadata);
+final List<dynamic> styles$UsesBoundComp = const [];
+
+class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
+  import5.Element _el_0;
+  ViewBoundComp0 _compView_0;
+  import1.BoundComp _BoundComp_0_5;
+  num _expr_0;
+  static RenderComponentType _renderType;
+  ViewUsesBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesBoundComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesBoundComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewBoundComp0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _BoundComp_0_5 = new import1.BoundComp();
+    _compView_0.create(_BoundComp_0_5, []);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesBoundComp _ctx = ctx;
+    final currVal_0 = _ctx.binding;
+    if (!identical(_expr_0, currVal_0)) {
+      _BoundComp_0_5.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesBoundComp> viewFactory_UsesBoundComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesBoundComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesBoundCompHost = const [];
+
+class _ViewUsesBoundCompHost0 extends AppView<dynamic> {
+  ViewUsesBoundComp0 _compView_0;
+  import1.UsesBoundComp _UsesBoundComp_0_5;
+  _ViewUsesBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewUsesBoundComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesBoundComp_0_5 = new import1.UsesBoundComp();
+    _compView_0.create(_UsesBoundComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.UsesBoundComp>(0, this, rootEl, _UsesBoundComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_UsesBoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesBoundCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesBoundComp> UsesBoundCompNgFactory = const ComponentFactory<import1.UsesBoundComp>('comp', viewFactory_UsesBoundCompHost0, _UsesBoundCompMetadata);
+final List<dynamic> styles$FunctionTypeComp = const [];
+
+class ViewFunctionTypeComp0 extends AppView<import1.FunctionTypeComp> {
+  static RenderComponentType _renderType;
+  ViewFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$FunctionTypeComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.FunctionTypeComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.FunctionTypeComp> viewFactory_FunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewFunctionTypeComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$FunctionTypeCompHost = const [];
+
+class _ViewFunctionTypeCompHost0 extends AppView<dynamic> {
+  ViewFunctionTypeComp0 _compView_0;
+  import1.FunctionTypeComp _FunctionTypeComp_0_5;
+  _ViewFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewFunctionTypeComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _FunctionTypeComp_0_5 = new import1.FunctionTypeComp();
+    _compView_0.create(_FunctionTypeComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.FunctionTypeComp>(0, this, rootEl, _FunctionTypeComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_FunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewFunctionTypeCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.FunctionTypeComp> FunctionTypeCompNgFactory = const ComponentFactory<import1.FunctionTypeComp>('comp', viewFactory_FunctionTypeCompHost0, _FunctionTypeCompMetadata);
+final List<dynamic> styles$UsesFunctionTypeComp = const [];
+
+class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
+  import5.Element _el_0;
+  ViewFunctionTypeComp0 _compView_0;
+  import1.FunctionTypeComp _FunctionTypeComp_0_5;
+  var _expr_0;
+  static RenderComponentType _renderType;
+  ViewUsesFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesFunctionTypeComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesFunctionTypeComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewFunctionTypeComp0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _FunctionTypeComp_0_5 = new import1.FunctionTypeComp();
+    _compView_0.create(_FunctionTypeComp_0_5, []);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesFunctionTypeComp _ctx = ctx;
+    final currVal_0 = _ctx.binding;
+    if (!identical(_expr_0, currVal_0)) {
+      _FunctionTypeComp_0_5.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesFunctionTypeComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesFunctionTypeCompHost = const [];
+
+class _ViewUsesFunctionTypeCompHost0 extends AppView<dynamic> {
+  ViewUsesFunctionTypeComp0 _compView_0;
+  import1.UsesFunctionTypeComp _UsesFunctionTypeComp_0_5;
+  _ViewUsesFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewUsesFunctionTypeComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesFunctionTypeComp_0_5 = new import1.UsesFunctionTypeComp();
+    _compView_0.create(_UsesFunctionTypeComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.UsesFunctionTypeComp>(0, this, rootEl, _UsesFunctionTypeComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_UsesFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesFunctionTypeCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesFunctionTypeComp> UsesFunctionTypeCompNgFactory = const ComponentFactory<import1.UsesFunctionTypeComp>('comp', viewFactory_UsesFunctionTypeCompHost0, _UsesFunctionTypeCompMetadata);
+final List<dynamic> styles$NestedParentComp = const [];
+
+class ViewNestedParentComp0 extends AppView<import1.NestedParentComp> {
+  import5.Element _el_0;
+  ViewNestedChildComp0 _compView_0;
+  import1.NestedChildComp _NestedChildComp_0_5;
+  import5.Element _el_1;
+  ViewNestedChildComp0 _compView_1;
+  import1.NestedChildComp _NestedChildComp_1_5;
+  ViewContainer _appEl_2;
+  import9.NgFor _NgFor_2_9;
+  var _expr_0;
+  var _expr_1;
+  var _expr_2;
+  static RenderComponentType _renderType;
+  ViewNestedParentComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('parent');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$NestedParentComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.NestedParentComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewNestedChildComp0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _NestedChildComp_0_5 = new import1.NestedChildComp();
+    _compView_0.create(_NestedChildComp_0_5, []);
+    _compView_1 = new ViewNestedChildComp0(this, 1);
+    _el_1 = _compView_1.rootEl;
+    parentRenderNode.append(_el_1);
+    _NestedChildComp_1_5 = new import1.NestedChildComp();
+    _compView_1.create(_NestedChildComp_1_5, []);
+    final _anchor_2 = createViewContainerAnchor();
+    parentRenderNode.append(_anchor_2);
+    _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
+    TemplateRef _TemplateRef_2_8 = new TemplateRef(_appEl_2, viewFactory_NestedParentComp1);
+    _NgFor_2_9 = new import9.NgFor(_appEl_2, _TemplateRef_2_8);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.NestedParentComp _ctx = ctx;
+    final currVal_0 = _ctx.input1;
+    if (!identical(_expr_0, currVal_0)) {
+      _NestedChildComp_0_5.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.input2;
+    if (!identical(_expr_1, currVal_1)) {
+      _NestedChildComp_1_5.input = currVal_1;
+      _expr_1 = currVal_1;
+    }
+    final currVal_2 = _ctx.moreInputs;
+    if (!identical(_expr_2, currVal_2)) {
+      _NgFor_2_9.ngForOf = currVal_2;
+      _expr_2 = currVal_2;
+    }
+    _NgFor_2_9.ngDoCheck();
+    _appEl_2.detectChangesInNestedViews();
+    _compView_0.detectChanges();
+    _compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_2?.destroyNestedViews();
+    _compView_0?.destroy();
+    _compView_1?.destroy();
+  }
+}
+
+AppView<import1.NestedParentComp> viewFactory_NestedParentComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewNestedParentComp0(parentView, parentIndex);
+}
+
+class _ViewNestedParentComp1 extends AppView<import1.NestedParentComp> {
+  import5.Element _el_0;
+  ViewNestedChildComp0 _compView_0;
+  import1.NestedChildComp _NestedChildComp_0_5;
+  var _expr_0;
+  _ViewNestedParentComp1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    componentType = ViewNestedParentComp0._renderType;
+  }
+  @override
+  ComponentRef<import1.NestedParentComp> build() {
+    _compView_0 = new ViewNestedChildComp0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    _NestedChildComp_0_5 = new import1.NestedChildComp();
+    _compView_0.create(_NestedChildComp_0_5, []);
+    init0(_el_0);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final dynamic local_input = locals['\$implicit'];
+    final currVal_0 = local_input;
+    if (!identical(_expr_0, currVal_0)) {
+      _NestedChildComp_0_5.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.NestedParentComp> viewFactory_NestedParentComp1(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewNestedParentComp1(parentView, parentIndex);
+}
+
+final List<dynamic> styles$NestedParentCompHost = const [];
+
+class _ViewNestedParentCompHost0 extends AppView<dynamic> {
+  ViewNestedParentComp0 _compView_0;
+  import1.NestedParentComp _NestedParentComp_0_5;
+  _ViewNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewNestedParentComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _NestedParentComp_0_5 = new import1.NestedParentComp();
+    _compView_0.create(_NestedParentComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.NestedParentComp>(0, this, rootEl, _NestedParentComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_NestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewNestedParentCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.NestedParentComp> NestedParentCompNgFactory = const ComponentFactory<import1.NestedParentComp>('parent', viewFactory_NestedParentCompHost0, _NestedParentCompMetadata);
+final List<dynamic> styles$NestedChildComp = const [];
+
+class ViewNestedChildComp0 extends AppView<import1.NestedChildComp> {
+  static RenderComponentType _renderType;
+  ViewNestedChildComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('child');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$NestedChildComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.NestedChildComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.NestedChildComp> viewFactory_NestedChildComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewNestedChildComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$NestedChildCompHost = const [];
+
+class _ViewNestedChildCompHost0 extends AppView<dynamic> {
+  ViewNestedChildComp0 _compView_0;
+  import1.NestedChildComp _NestedChildComp_0_5;
+  _ViewNestedChildCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewNestedChildComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _NestedChildComp_0_5 = new import1.NestedChildComp();
+    _compView_0.create(_NestedChildComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.NestedChildComp>(0, this, rootEl, _NestedChildComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_NestedChildCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewNestedChildCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.NestedChildComp> NestedChildCompNgFactory = const ComponentFactory<import1.NestedChildComp>('child', viewFactory_NestedChildCompHost0, _NestedChildCompMetadata);
+final List<dynamic> styles$UsesNestedParentComp = const [];
+
+class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
+  import5.Element _el_0;
+  ViewNestedParentComp0 _compView_0;
+  import1.NestedParentComp _NestedParentComp_0_5;
+  var _expr_0;
+  var _expr_1;
+  var _expr_2;
+  static RenderComponentType _renderType;
+  ViewUsesNestedParentComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesNestedParentComp);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesNestedParentComp> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewNestedParentComp0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _NestedParentComp_0_5 = new import1.NestedParentComp();
+    _compView_0.create(_NestedParentComp_0_5, []);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesNestedParentComp _ctx = ctx;
+    final currVal_0 = _ctx.binding1;
+    if (!identical(_expr_0, currVal_0)) {
+      _NestedParentComp_0_5.input1 = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.binding2;
+    if (!identical(_expr_1, currVal_1)) {
+      _NestedParentComp_0_5.input2 = currVal_1;
+      _expr_1 = currVal_1;
+    }
+    final currVal_2 = _ctx.moreBindings;
+    if (!identical(_expr_2, currVal_2)) {
+      _NestedParentComp_0_5.moreInputs = currVal_2;
+      _expr_2 = currVal_2;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentComp0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesNestedParentComp0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesNestedParentCompHost = const [];
+
+class _ViewUsesNestedParentCompHost0 extends AppView<dynamic> {
+  ViewUsesNestedParentComp0 _compView_0;
+  import1.UsesNestedParentComp _UsesNestedParentComp_0_5;
+  _ViewUsesNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewUsesNestedParentComp0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesNestedParentComp_0_5 = new import1.UsesNestedParentComp();
+    _compView_0.create(_UsesNestedParentComp_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.UsesNestedParentComp>(0, this, rootEl, _UsesNestedParentComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_UsesNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesNestedParentCompHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesNestedParentComp> UsesNestedParentCompNgFactory = const ComponentFactory<import1.UsesNestedParentComp>('comp', viewFactory_UsesNestedParentCompHost0, _UsesNestedParentCompMetadata);
+const _UntypedCompMetadata = const [];
+const _UsesUntypedCompMetadata = const [];
+const _GenericCompMetadata = const [];
+const _UsesGenericCompMetadata = const [];
+const _MappingComp1Metadata = const [];
+const _UsesMappingComp1Metadata = const [];
+const _MappingComp2Metadata = const [];
+const _UsesMappingComp2Metadata = const [];
+const _BoundCompMetadata = const [];
+const _UsesBoundCompWithBoundsMetadata = const [];
+const _UsesBoundCompMetadata = const [];
+const _FunctionTypeCompMetadata = const [];
+const _UsesFunctionTypeCompMetadata = const [];
+const _NestedParentCompMetadata = const [];
+const _NestedChildCompMetadata = const [];
+const _UsesNestedParentCompMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(UntypedComp, UntypedCompNgFactory);
+  _ngRef.registerComponent(UsesUntypedComp, UsesUntypedCompNgFactory);
+  _ngRef.registerComponent(GenericComp, GenericCompNgFactory);
+  _ngRef.registerComponent(UsesGenericComp, UsesGenericCompNgFactory);
+  _ngRef.registerComponent(MappingComp1, MappingComp1NgFactory);
+  _ngRef.registerComponent(UsesMappingComp1, UsesMappingComp1NgFactory);
+  _ngRef.registerComponent(MappingComp2, MappingComp2NgFactory);
+  _ngRef.registerComponent(UsesMappingComp2, UsesMappingComp2NgFactory);
+  _ngRef.registerComponent(BoundComp, BoundCompNgFactory);
+  _ngRef.registerComponent(UsesBoundCompWithBounds, UsesBoundCompWithBoundsNgFactory);
+  _ngRef.registerComponent(UsesBoundComp, UsesBoundCompNgFactory);
+  _ngRef.registerComponent(FunctionTypeComp, FunctionTypeCompNgFactory);
+  _ngRef.registerComponent(UsesFunctionTypeComp, UsesFunctionTypeCompNgFactory);
+  _ngRef.registerComponent(NestedParentComp, NestedParentCompNgFactory);
+  _ngRef.registerComponent(NestedChildComp, NestedChildCompNgFactory);
+  _ngRef.registerComponent(UsesNestedParentComp, UsesNestedParentCompNgFactory);
+  _ref0.initReflector();
+}
