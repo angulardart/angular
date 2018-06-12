@@ -127,55 +127,53 @@ class UsesBoundComp {
   var binding = 5;
 }
 
-// TODO(https://github.com/dart-lang/angular/issues/1397):
+/// A component with a type parameter that is bound by another one.
+@Component(
+  selector: 'comp',
+  template: '',
+)
+class SelfBoundComp<A, B extends A> {
+  @Input()
+  A a;
 
-// A component with a type parameter that is bound by another one.
-// @Component(
-//   selector: 'comp',
-//   template: '',
-// )
-// class SelfBoundComp<A, B extends A> {
-//   @Input()
-//   A a;
-//
-//   @Input()
-//   B b;
-// }
+  @Input()
+  B b;
+}
 
-// A component that uses [SelfBoundComp].
-// @Component(
-// selector: 'comp',
-// directives: const [
-//     SelfBoundComp,
-// ],
-// template: '<comp [a]="bindA" [b]="bindB"></comp>',
-// )
-// class UsesSelfBoundComp {
-// num bindA = 5;
-// int bindB = 10;
-// }
+/// A component that uses [SelfBoundComp].
+@Component(
+  selector: 'comp',
+  directives: const [
+    SelfBoundComp,
+  ],
+  template: '<comp [a]="bindA" [b]="bindB"></comp>',
+)
+class UsesSelfBoundComp {
+  num bindA = 5;
+  int bindB = 10;
+}
 
-// A component with a type parameter that is recursive.
-// @Component(
-//   selector: 'comp',
-//   template: '',
-// )
-// class RecursiveComp<T extends Comparable<T>> {
-//  @Input()
-//  T input;
-// }
+/// A component with a type parameter that is recursive.
+@Component(
+  selector: 'comp',
+  template: '',
+)
+class RecursiveComp<T extends Comparable<T>> {
+  @Input()
+  T input;
+}
 
-// A component that uses [RecursiveComp].
-// @Component(
-//  selector: 'comp',
-//  directives: const [
-//    RecursiveComp,
-//  ],
-//  template: '<comp [input]="binding"></comp>',
-// )
-// class UsesRecursiveComp {
-//   var input = 5;
-// }
+/// A component that uses [RecursiveComp].
+@Component(
+  selector: 'comp',
+  directives: const [
+    RecursiveComp,
+  ],
+  template: '<comp [input]="binding"></comp>',
+)
+class UsesRecursiveComp {
+  var input = 5;
+}
 
 /// A component that uses function type signatures.
 @Component(
