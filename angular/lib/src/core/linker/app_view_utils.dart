@@ -1,3 +1,5 @@
+import 'dart:html' show DocumentFragment, NodeTreeSanitizer;
+
 import 'package:angular/di.dart' show Injectable, Inject;
 import 'package:angular/src/core/application_tokens.dart' show APP_ID;
 import 'package:angular/src/core/change_detection/change_detection.dart'
@@ -71,6 +73,14 @@ class AppViewUtils {
     _throwOnChangesCounter = 0;
     throwOnChanges = false;
   }
+}
+
+/// Creates a document fragment from [trustedHtml].
+DocumentFragment createTrustedHtml(String trustedHtml) {
+  return new DocumentFragment.html(
+    trustedHtml,
+    treeSanitizer: NodeTreeSanitizer.trusted,
+  );
 }
 
 /// Flattens a `List<List<?>>` into a `List<?>`.

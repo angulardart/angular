@@ -38,8 +38,7 @@ void main() {
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Click here to file an issue.');
     final anchorElement = testFixture.rootElement.querySelector('a');
-    expect(anchorElement.getAttribute('href'), issuesLink,
-        skip: 'HTML in @i18n messages is sanitized by dart:html');
+    expect(anchorElement.getAttribute('href'), issuesLink);
   });
 }
 

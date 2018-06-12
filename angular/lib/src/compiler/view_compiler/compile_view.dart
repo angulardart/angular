@@ -132,7 +132,7 @@ class AppViewReference {
 
 /// Interface to generate a build function for an AppView.
 abstract class AppViewBuilder {
-  /// Creates an HTML document fragment.
+  /// Creates an HTML document fragment from trusted [html].
   ///
   /// The [html] argument may be any expression that evaluates to a string
   /// containing **trusted** HTML.
@@ -514,7 +514,7 @@ class CompileView implements AppViewBuilder {
     final renderNode = new NodeReference.html(parent, nodeIndex);
     _createMethod.addStmt(new o.DeclareVarStmt(
       renderNode._name,
-      o.importExpr(Identifiers.HTML_DOCUMENT_FRAGMENT_HTML).instantiate([html]),
+      o.importExpr(Identifiers.createTrustedHtml).callFn([html]),
       o.importType(Identifiers.HTML_DOCUMENT_FRAGMENT),
     ));
     final parentRenderNodeExpr = _getParentRenderNode(parent);

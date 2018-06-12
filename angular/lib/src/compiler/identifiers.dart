@@ -139,6 +139,8 @@ class Identifiers {
     new CompileIdentifierMetadata<dynamic>(
         name: "interpolate9", moduleUrl: appViewUtilsModuleUrl),
   ];
+  static final createTrustedHtml = new CompileIdentifierMetadata(
+      name: 'createTrustedHtml', moduleUrl: appViewUtilsModuleUrl);
   static final flattenNodes = new CompileIdentifierMetadata<dynamic>(
       name: "flattenNodes", moduleUrl: appViewUtilsModuleUrl);
   static final EMPTY_ARRAY = new CompileIdentifierMetadata<dynamic>(
@@ -182,8 +184,6 @@ class Identifiers {
       name: "document", moduleUrl: "dart:html");
   static final HTML_DOCUMENT_FRAGMENT = new CompileIdentifierMetadata(
       name: 'DocumentFragment', moduleUrl: 'dart:html');
-  static final HTML_DOCUMENT_FRAGMENT_HTML = new CompileIdentifierMetadata(
-      name: 'DocumentFragment.html', moduleUrl: 'dart:html');
   static final HTML_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "Element", moduleUrl: "dart:html");
   static final ElementToken = identifierToken(HTML_ELEMENT);
@@ -220,6 +220,8 @@ class Identifiers {
       name: "MediaElement", moduleUrl: "dart:html");
   static final HTML_MENU_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "MenuElement", moduleUrl: "dart:html");
+  static final HTML_NODE_TREE_SANITIZER = new CompileIdentifierMetadata(
+      name: 'NodeTreeSanitizer', moduleUrl: 'dart:html');
   static final HTML_OPTION_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "OptionElement", moduleUrl: "dart:html");
   static final HTML_OLIST_ELEMENT = new CompileIdentifierMetadata<dynamic>(
