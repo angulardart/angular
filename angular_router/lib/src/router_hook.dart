@@ -10,7 +10,7 @@ import 'router/router_state.dart';
 /// An interface that can be extended in order to hook into a route navigation.
 ///
 /// A class should extend this class and be injected along with the router to
-/// hook into route navigations.
+/// hook into route navigation.
 ///
 /// ```
 /// @Injectable
