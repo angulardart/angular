@@ -37,7 +37,7 @@ class ViewI18nHtmlComponent0 extends DebugAppView<import2.I18nHtmlComponent> {
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
     _el_0 = createAndAppendDbg(this, doc, 'p', parentRenderNode, 0, 0, 4);
-    import3.DocumentFragment _html_1 = new import3.DocumentFragment.html(_message_0('<i>', '<b>', '</b>', '</i>'));
+    import3.DocumentFragment _html_1 = import8.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_html_1);
     init(const [], null, [_el_0, _html_1]);
     return null;
