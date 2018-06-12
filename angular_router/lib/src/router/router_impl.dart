@@ -394,6 +394,9 @@ class RouterImpl extends Router {
       if (component is CanNavigate && !await component.canNavigate()) {
         return false;
       }
+      if (_routerHook != null && !(await _routerHook.canNavigate(component))) {
+        return false;
+      }
     }
     return true;
   }
