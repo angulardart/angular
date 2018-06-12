@@ -44,14 +44,14 @@ void main() {
       expect(navigationResult, NavigationResult.BLOCKED_BY_GUARD);
     });
 
-//    test('canNavigate should block navigation', () async {
-//      testRouterHook.canNavigateFn = (_) async {
-//        // Block navigation.
-//        return false;
-//      };
-//      final navigationResult = await router.navigate(TestAppComponent.fooPath);
-//      expect(navigationResult, NavigationResult.BLOCKED_BY_GUARD);
-//    });
+    test('canNavigate should block navigation', () async {
+      testRouterHook.canNavigateFn = (_) async {
+        // Block navigation.
+        return false;
+      };
+      final navigationResult = await router.navigate(TestAppComponent.fooPath);
+      expect(navigationResult, NavigationResult.BLOCKED_BY_GUARD);
+    });
 
     test('canReuse should allow reuse', () async {
       testRouterHook.canReuseFn = (_, oldState, ___) async {
@@ -121,7 +121,7 @@ typedef NavigationGuard = Future<bool> Function(
 class TestRouterHook extends RouterHook {
   NavigationGuard canActivateFn;
   NavigationGuard canDeactivateFn;
-//  Future<bool> Function(Object) canNavigateFn;
+  Future<bool> Function(Object) canNavigateFn;
   NavigationGuard canReuseFn;
 
   @override
@@ -146,12 +146,12 @@ class TestRouterHook extends RouterHook {
         : super.canDeactivate(componentInstance, oldState, newState);
   }
 
-//  @override
-//  Future<bool> canNavigate(Object componentInstance) {
-//    return canNavigateFn != null
-//        ? canNavigateFn(componentInstance)
-//        : super.canNavigate(componentInstance);
-//  }
+  @override
+  Future<bool> canNavigate(Object componentInstance) {
+    return canNavigateFn != null
+        ? canNavigateFn(componentInstance)
+        : super.canNavigate(componentInstance);
+  }
 
   @override
   Future<bool> canReuse(
@@ -167,7 +167,7 @@ class TestRouterHook extends RouterHook {
   void reset() {
     canActivateFn = null;
     canDeactivateFn = null;
-//    canNavigateFn = null;
+    canNavigateFn = null;
     canReuseFn = null;
   }
 }

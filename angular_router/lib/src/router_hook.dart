@@ -131,6 +131,31 @@ abstract class RouterHook {
     return true;
   }
 
+  /// Called by the router to indicate if a component canNavigate.
+  ///
+  /// The client should return a future that completes with the whether the
+  /// navigation can happen. If the component extends the [CanNavigate]
+  /// lifecycle, that will override this behavior.
+  ///
+  /// You can use `async` in order to simplify when returning synchronously:
+  ///
+  /// ```
+  /// @Injectable
+  /// class MyHook implements RouterHook {
+  ///   final Window _window;
+  ///
+  ///   @override
+  ///   Future<bool> canNavigate(Object component) async {
+  ///     // Always ask if the user wants to navigate away from the page.
+  ///     return _window.confirm('Discard changes?');
+  ///   }
+  /// }
+  /// ```
+  Future<bool> canNavigate(Object componentInstance) async {
+    // Provided as a default if someone extends or mixes-in this interface.
+    return true;
+  }
+
   /// Called by the router to indicate if a component canReuse.
   ///
   /// The client should return a future that completes with the whether the

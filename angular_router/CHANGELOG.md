@@ -2,6 +2,8 @@
 
 *   Preserves `NavigationParams` on redirection.
 
+*   Added `canNavigate` to `RouterHook`.
+
 ## 2.0.0-alpha+13
 
 ### New features
