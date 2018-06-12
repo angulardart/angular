@@ -1,0 +1,130 @@
+// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import,unused_shown_name
+// The .template.dart files also export the user code.
+export 'generics.dart';
+
+// Required for referencing runtime code.
+import 'dart:html';
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/change_detection/directive_change_detector.dart';
+import 'package:angular/src/core/linker/app_view.dart';
+
+// Required for specifically referencing user code.
+import 'generics.dart' as _user;
+
+// Required for "type inference" (scoping).
+import 'package:angular/angular.dart';
+
+// For @Component class UntypedComp.
+const List<dynamic> styles$UntypedComp = const [];
+external ComponentFactory get UntypedCompNgFactory;
+external AppView<_user.UntypedComp> viewFactory_UntypedComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewUntypedComp0 extends AppView<_user.UntypedComp> {
+  external ViewUntypedComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesUntypedComp.
+const List<dynamic> styles$UsesUntypedComp = const [];
+external ComponentFactory get UsesUntypedCompNgFactory;
+external AppView<_user.UsesUntypedComp> viewFactory_UsesUntypedComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesUntypedComp0 extends AppView<_user.UsesUntypedComp> {
+  external ViewUsesUntypedComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class GenericComp.
+const List<dynamic> styles$GenericComp = const [];
+external ComponentFactory get GenericCompNgFactory;
+external AppView<_user.GenericComp> viewFactory_GenericComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewGenericComp0 extends AppView<_user.GenericComp> {
+  external ViewGenericComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesGenericComp.
+const List<dynamic> styles$UsesGenericComp = const [];
+external ComponentFactory get UsesGenericCompNgFactory;
+external AppView<_user.UsesGenericComp> viewFactory_UsesGenericComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesGenericComp0 extends AppView<_user.UsesGenericComp> {
+  external ViewUsesGenericComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class MappingComp1.
+const List<dynamic> styles$MappingComp1 = const [];
+external ComponentFactory get MappingComp1NgFactory;
+external AppView<_user.MappingComp1> viewFactory_MappingComp10(AppView<dynamic> parentView, num parentIndex);
+class ViewMappingComp10 extends AppView<_user.MappingComp1> {
+  external ViewMappingComp10(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesMappingComp1.
+const List<dynamic> styles$UsesMappingComp1 = const [];
+external ComponentFactory get UsesMappingComp1NgFactory;
+external AppView<_user.UsesMappingComp1> viewFactory_UsesMappingComp10(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesMappingComp10 extends AppView<_user.UsesMappingComp1> {
+  external ViewUsesMappingComp10(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class MappingComp2.
+const List<dynamic> styles$MappingComp2 = const [];
+external ComponentFactory get MappingComp2NgFactory;
+external AppView<_user.MappingComp2> viewFactory_MappingComp20(AppView<dynamic> parentView, num parentIndex);
+class ViewMappingComp20 extends AppView<_user.MappingComp2> {
+  external ViewMappingComp20(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesMappingComp2.
+const List<dynamic> styles$UsesMappingComp2 = const [];
+external ComponentFactory get UsesMappingComp2NgFactory;
+external AppView<_user.UsesMappingComp2> viewFactory_UsesMappingComp20(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesMappingComp20 extends AppView<_user.UsesMappingComp2> {
+  external ViewUsesMappingComp20(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class BoundComp.
+const List<dynamic> styles$BoundComp = const [];
+external ComponentFactory get BoundCompNgFactory;
+external AppView<_user.BoundComp> viewFactory_BoundComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewBoundComp0 extends AppView<_user.BoundComp> {
+  external ViewBoundComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesBoundCompWithBounds.
+const List<dynamic> styles$UsesBoundCompWithBounds = const [];
+external ComponentFactory get UsesBoundCompWithBoundsNgFactory;
+external AppView<_user.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBounds0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesBoundCompWithBounds0 extends AppView<_user.UsesBoundCompWithBounds> {
+  external ViewUsesBoundCompWithBounds0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesBoundComp.
+const List<dynamic> styles$UsesBoundComp = const [];
+external ComponentFactory get UsesBoundCompNgFactory;
+external AppView<_user.UsesBoundComp> viewFactory_UsesBoundComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesBoundComp0 extends AppView<_user.UsesBoundComp> {
+  external ViewUsesBoundComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class FunctionTypeComp.
+const List<dynamic> styles$FunctionTypeComp = const [];
+external ComponentFactory get FunctionTypeCompNgFactory;
+external AppView<_user.FunctionTypeComp> viewFactory_FunctionTypeComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewFunctionTypeComp0 extends AppView<_user.FunctionTypeComp> {
+  external ViewFunctionTypeComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesFunctionTypeComp.
+const List<dynamic> styles$UsesFunctionTypeComp = const [];
+external ComponentFactory get UsesFunctionTypeCompNgFactory;
+external AppView<_user.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesFunctionTypeComp0 extends AppView<_user.UsesFunctionTypeComp> {
+  external ViewUsesFunctionTypeComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class NestedParentComp.
+const List<dynamic> styles$NestedParentComp = const [];
+external ComponentFactory get NestedParentCompNgFactory;
+external AppView<_user.NestedParentComp> viewFactory_NestedParentComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewNestedParentComp0 extends AppView<_user.NestedParentComp> {
+  external ViewNestedParentComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class NestedChildComp.
+const List<dynamic> styles$NestedChildComp = const [];
+external ComponentFactory get NestedChildCompNgFactory;
+external AppView<_user.NestedChildComp> viewFactory_NestedChildComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewNestedChildComp0 extends AppView<_user.NestedChildComp> {
+  external ViewNestedChildComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesNestedParentComp.
+const List<dynamic> styles$UsesNestedParentComp = const [];
+external ComponentFactory get UsesNestedParentCompNgFactory;
+external AppView<_user.UsesNestedParentComp> viewFactory_UsesNestedParentComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesNestedParentComp0 extends AppView<_user.UsesNestedParentComp> {
+  external ViewUsesNestedParentComp0(AppView<dynamic> parentView, num parentIndex);
+}
+
+external void initReflector();
