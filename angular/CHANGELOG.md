@@ -19,6 +19,10 @@ void handleFocus(FocusEvent e) {
 }
 ```
 
+*   Fixed a bug where a recursive type signature on a component or directive
+    would cause a stack overflow. We don't support generic type arguments yet
+    (the reified type is always `dynamic`), but the compiler no longer crashes.
+
 ## 5.0.0-alpha+14
 
 ### New features

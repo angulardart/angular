@@ -91,6 +91,34 @@ external AppView<_user.UsesBoundComp> viewFactory_UsesBoundComp0(AppView<dynamic
 class ViewUsesBoundComp0 extends AppView<_user.UsesBoundComp> {
   external ViewUsesBoundComp0(AppView<dynamic> parentView, num parentIndex);
 }
+// For @Component class SelfBoundComp.
+const List<dynamic> styles$SelfBoundComp = const [];
+external ComponentFactory get SelfBoundCompNgFactory;
+external AppView<_user.SelfBoundComp> viewFactory_SelfBoundComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewSelfBoundComp0 extends AppView<_user.SelfBoundComp> {
+  external ViewSelfBoundComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesSelfBoundComp.
+const List<dynamic> styles$UsesSelfBoundComp = const [];
+external ComponentFactory get UsesSelfBoundCompNgFactory;
+external AppView<_user.UsesSelfBoundComp> viewFactory_UsesSelfBoundComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesSelfBoundComp0 extends AppView<_user.UsesSelfBoundComp> {
+  external ViewUsesSelfBoundComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class RecursiveComp.
+const List<dynamic> styles$RecursiveComp = const [];
+external ComponentFactory get RecursiveCompNgFactory;
+external AppView<_user.RecursiveComp> viewFactory_RecursiveComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewRecursiveComp0 extends AppView<_user.RecursiveComp> {
+  external ViewRecursiveComp0(AppView<dynamic> parentView, num parentIndex);
+}
+// For @Component class UsesRecursiveComp.
+const List<dynamic> styles$UsesRecursiveComp = const [];
+external ComponentFactory get UsesRecursiveCompNgFactory;
+external AppView<_user.UsesRecursiveComp> viewFactory_UsesRecursiveComp0(AppView<dynamic> parentView, num parentIndex);
+class ViewUsesRecursiveComp0 extends AppView<_user.UsesRecursiveComp> {
+  external ViewUsesRecursiveComp0(AppView<dynamic> parentView, num parentIndex);
+}
 // For @Component class FunctionTypeComp.
 const List<dynamic> styles$FunctionTypeComp = const [];
 external ComponentFactory get FunctionTypeCompNgFactory;

@@ -10,18 +10,37 @@ import 'output_ast.dart' as o;
 ///
 /// Note that private types aren't visible to generated code and will be
 /// replaced with dynamic.
-o.OutputType fromDartType(DartType dartType) {
-  if (dartType.isVoid) return null;
-  if (dartType is FunctionType) return fromFunctionType(dartType);
+o.OutputType fromDartType(
+  DartType dartType,
+) {
+  if (dartType.isVoid) {
+    return null;
+  }
+  if (dartType.element.isPrivate) {
+    return o.DYNAMIC_TYPE;
+  }
+  if (dartType is FunctionType) {
+    return fromFunctionType(dartType);
+  }
   if (dartType is TypeParameterType) {
     // Resolve generic type to its bound or dynamic if it has none.
     final dynamicType = dartType.element.context.typeProvider.dynamicType;
     dartType = dartType.resolveToBound(dynamicType);
   }
-  if (dartType.element.isPrivate) return o.DYNAMIC_TYPE;
-  final typeArguments = dartType is ParameterizedType
-      ? dartType.typeArguments.map(fromDartType).toList()
-      : null;
+  List<o.OutputType> typeArguments;
+  if (dartType is ParameterizedType) {
+    typeArguments = [];
+    for (final typeArgument in dartType.typeArguments) {
+      // Temporary hack to avoid a stack overflow for <T extends List<T>>.
+      //
+      // See https://github.com/dart-lang/angular/issues/1397.
+      if (typeArgument is TypeParameterType) {
+        typeArguments.add(o.DYNAMIC_TYPE);
+      } else {
+        typeArguments.add(fromDartType(typeArgument));
+      }
+    }
+  }
   return new o.ExternalType(
     new CompileIdentifierMetadata(
       name: dartType.name,
