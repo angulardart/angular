@@ -26,7 +26,7 @@ void main() {
     });
 
     test('should forward a synchronous error while stabilizng', () async {
-      expect(ngZoneStabilizer.stabilize(run: () {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         throw new StateError('Test');
       }), throwsStateError);
     });
@@ -40,7 +40,7 @@ void main() {
     });
 
     test('should forward an asynchronous error while stabilizing', () async {
-      expect(ngZoneStabilizer.stabilize(run: () {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         scheduleMicrotask(() {
           throw new StateError('Test');
         });
@@ -56,7 +56,7 @@ void main() {
     });
 
     test('should forward an asynchronus error via timer stabilizing', () async {
-      expect(ngZoneStabilizer.stabilize(run: () {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         Timer.run(() {
           throw new StateError('Test');
         });
@@ -64,7 +64,7 @@ void main() {
     });
 
     test('should forward an asynchronous error via late stabilizing', () async {
-      expect(ngZoneStabilizer.stabilize(run: () {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         Timer.run(() {
           scheduleMicrotask(() {
             Timer.run(() {
@@ -78,7 +78,7 @@ void main() {
     });
 
     test('should forward an asynchrnous error in the far future', () async {
-      expect(ngZoneStabilizer.stabilize(run: () async {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () async {
         for (var i = 0; i < 20; i++) {
           await new Future(() {});
           await new Future.value();
@@ -104,7 +104,7 @@ void main() {
     test('should throw if stabilization never occurs', () async {
       expect(
         ngZoneStabilizer.stabilize(
-          run: () {
+          runAndTrackSideEffects: () {
             // Just enough asynchronous events to exceed the threshold; not 1:1.
             var timersRemaining = 10;
 
@@ -125,7 +125,7 @@ void main() {
     test('should stabilize if animation timers are used', () async {
       expect(
         ngZoneStabilizer.stabilize(
-          run: () async {
+          runAndTrackSideEffects: () async {
             new Timer(const Duration(milliseconds: 100), () {});
           },
         ),
@@ -160,7 +160,7 @@ void main() {
     });
 
     test('should stabilize if there is a function to run', () async {
-      await delegatingNgTestStabilizer.stabilize(run: () {
+      await delegatingNgTestStabilizer.stabilize(runAndTrackSideEffects: () {
         scheduleMicrotask(() {});
       });
       expect(ngZoneStabilizer.updateCount, 2);

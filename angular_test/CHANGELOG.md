@@ -1,5 +1,7 @@
 *   Removed `throwsInAngular` (was a no-op since `alpha+8`). Use `throwsA`.
 
+*   Removed `NgTestFixture#query/queryAll`, as debug-mode is being turned down.
+
 *   Added `isStable` API to `NgTestStabilizer`.
 
 *   Run `DelegatingNgTestStabilizer` stabilizers one by one instead of run all

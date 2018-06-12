@@ -31,7 +31,7 @@ List<E> _concat<E>(Iterable<E> a, Iterable<E> b) {
 /// ```dart
 /// tearDown(() => disposeAnyRunningTest());
 /// ```
-Future<Null> disposeAnyRunningTest() async => activeTest?.dispose();
+Future<void> disposeAnyRunningTest() async => activeTest?.dispose();
 
 /// An alternative method for [NgTestBed.create] that allows a dynamic [type].
 ///
