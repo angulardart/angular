@@ -56,4 +56,15 @@ void main() {
       }
     });
   }
+
+  if (_isBazel) {
+    test('Dart2JS', () {
+      compareCheckFileToGolden(
+        p.join(path, 'test', '_files', 'dart2js', 'dart2js_golden.dart'),
+        formatDart: false,
+        checkExtension: '.check',
+        goldenExtension: '.golden',
+      );
+    });
+  }
 }
