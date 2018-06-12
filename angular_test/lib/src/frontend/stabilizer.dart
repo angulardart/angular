@@ -57,7 +57,7 @@ abstract class NgTestStabilizer {
   /// If `true` is returned, calling [update] again may be required to get to
   /// a completely stable state. See [NgTestStabilizer.stabilize].
   ///
-  /// [fn] may be supported to be aware of any side-effects, for example:
+  /// [runAndTrackSideEffects] may optionally be specified:
   /// ```
   /// @override
   /// Future<bool> update([void fn()]) async {
@@ -69,10 +69,10 @@ abstract class NgTestStabilizer {
   ///   return true;
   /// }
   /// ```
-  Future<bool> update([void Function() fn]) {
+  Future<bool> update([void Function() runAndTrackSideEffects]) {
     return new Future<bool>.sync(() {
-      if (fn != null) {
-        fn();
+      if (runAndTrackSideEffects != null) {
+        runAndTrackSideEffects();
       }
       return false;
     });
@@ -81,24 +81,28 @@ abstract class NgTestStabilizer {
   /// Runs [update] until it completes with `false`, reporting stabilized.
   ///
   /// If more then [threshold] attempts occur, throws [WillNeverStabilizeError].
-  Future<Null> stabilize({void Function() run, int threshold: 100}) async {
+  Future<void> stabilize({
+    void Function() runAndTrackSideEffects,
+    int threshold: 100,
+  }) async {
     if (threshold == null) {
       throw new ArgumentError.notNull('threshold');
     }
-    // We only want to actually execute the 'run' function ONCE.
-    if (run != null) {
-      await update(run);
+    if (runAndTrackSideEffects != null) {
+      await update(runAndTrackSideEffects);
     }
-
-    await keepUpdating(threshold);
+    return stabilizeWithThreshold(threshold);
   }
 
-  /// Keeps running `update()` function until the stabilizer is stable or
-  /// threshold exceeds.
+  /// Run [update] until the stabilizer is stable or threshold exceeds.
   ///
-  /// **NOTE:** `update()` is guaranteed to run at least once.
+  /// **NOTE:** `[update] is guaranteed to run at least once.
   @protected
-  Future<Null> keepUpdating(int threshold) async {
+  Future<void> stabilizeWithThreshold(int threshold) async {
+    if (threshold < 1) {
+      throw new ArgumentError.value(threshold, 'threshold', 'Must be >= 1');
+    }
+
     var count = 0;
     bool thresholdExceeded() => count++ > threshold;
 
@@ -124,49 +128,44 @@ class DelegatingNgTestStabilizer extends NgTestStabilizer {
   bool get isStable => _delegates.every((delegate) => delegate.isStable);
 
   @override
-  Future<bool> update([void Function() fn]) async {
+  Future<bool> update([void Function() runAndTrackSideEffects]) async {
     if (_delegates.isEmpty) {
       return false;
     }
 
-    if (fn != null) {
-      // When [fn] is not null, run `update` function for all [_delegates].
-      await _updateAllDelegates(_delegates, fn);
-    } else if (!_updatedAtLeastOnce) {
-      // When [_updatedAtLeastOnce] is false, run `update` function for all
-      // [_delegates].
-      await _updateAllDelegates(_delegates, fn);
-    } else {
-      // Only run `update` on a delegate if it is not stable.
+    if (runAndTrackSideEffects == null && _updatedAtLeastOnce) {
+      // Only run the "update" function if the delegate is not stable.
       //
-      // When a delegate is stable, calling its `update()` function may cause
-      // other delegates never stabilize. For example, calling `update()` on
-      // NgZoneStabilizer will trigger an NgZone's `onEventDone` event. Another
-      // service that listens on this event may trigger other events that makes
-      // the DOM never stabilizes.
-      await _updateAllDelegates(_delegates, fn,
-          test: (delegate) => !delegate.isStable);
+      // When a delegate is stable, call the "update" function may cause other
+      // delegates to never stabilize. For example, calling "update" on the
+      // NgZoneStabilizer will trigger an NgZone's "onEventDone" event. Another
+      // service that listens on this event may trigger other events.
+      await _updateAll(runAndTrackSideEffects, (d) => !d.isStable);
+    } else {
+      await _updateAll(runAndTrackSideEffects);
     }
+
     _updatedAtLeastOnce = true;
     return isStable;
   }
 
-  /// Runs `update(fn)` for those [delegates] that satisfy the [test] function.
-  Future<void> _updateAllDelegates(
-      Iterable<NgTestStabilizer> delegates, void Function() fn,
-      {bool Function(NgTestStabilizer) test}) async {
-    for (final delegate in delegates) {
+  /// Runs [update] where [test] is satisfied.
+  Future<void> _updateAll(
+    void Function() runAndTrackSideEffects, [
+    bool Function(NgTestStabilizer) test,
+  ]) async {
+    for (final delegate in _delegates) {
       if (test == null || test(delegate)) {
-        await delegate.update(fn);
+        await delegate.update(runAndTrackSideEffects);
       }
     }
   }
 
   @override
-  Future<Null> keepUpdating(int threshold) async {
+  Future<void> stabilizeWithThreshold(int threshold) async {
     try {
       _updatedAtLeastOnce = false;
-      await super.keepUpdating(threshold);
+      return super.stabilizeWithThreshold(threshold);
     } finally {
       _updatedAtLeastOnce = false;
     }
@@ -187,10 +186,10 @@ class NgZoneStabilizer extends NgTestStabilizer {
 
   @override
   Future<bool> update([void Function() fn]) {
-    return new Future<Null>.sync(() => _waitForZone(fn)).then((_) => isStable);
+    return new Future.sync(() => _waitForZone(fn)).then((_) => isStable);
   }
 
-  Future<Null> _waitForZone([void fn()]) async {
+  Future<void> _waitForZone([void fn()]) async {
     // If we haven't supplied anything, at least run a simple function w/ task.
     // This gives enough "work" to do where we can catch an error or stability.
     scheduleMicrotask(() {
