@@ -13,12 +13,17 @@ final _dartfmt = new DartFormatter();
 /// by a build system) and compares it to the source-file of [goldenExtension].
 void compareCheckFileToGolden(
   String dartFile, {
+  bool formatDart: true,
   @required String checkExtension,
   @required String goldenExtension,
 }) {
   final checkPath = p.setExtension(dartFile, checkExtension);
   final goldenPath = p.setExtension(dartFile, goldenExtension);
-  final check = _dartfmt.format(new File(checkPath).readAsStringSync());
-  final golden = _dartfmt.format(new File(goldenPath).readAsStringSync());
+  var check = new File(checkPath).readAsStringSync();
+  var golden = new File(goldenPath).readAsStringSync();
+  if (formatDart) {
+    check = _dartfmt.format(check);
+    golden = _dartfmt.format(golden);
+  }
   expect(check, golden, reason: '$goldenPath is out of date. See $checkPath.');
 }
