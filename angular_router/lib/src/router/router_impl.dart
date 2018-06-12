@@ -85,7 +85,7 @@ class RouterImpl extends Router {
               fragment: Url.isHashStrategy
                   ? url.fragment
                   : Url.normalizeHash(_location.hash()),
-              updateUrl: false));
+              replace: true));
     }
   }
 
@@ -186,19 +186,12 @@ class RouterImpl extends Router {
       return NavigationResult.INVALID_ROUTE;
     }
 
-    if (nextState.routes.isNotEmpty &&
-        nextState.routes.last is RedirectRouteDefinition) {
-      var redirectUrl =
-          (nextState.routes.last as RedirectRouteDefinition).redirectTo;
-      return _navigate(
-        _getAbsolutePath(redirectUrl, nextState.build()),
-        navigationParams == null
-            ? null
-            : new NavigationParams(
-                fragment: navigationParams.fragment,
-                queryParameters: navigationParams.queryParameters),
-        isRedirect: true,
-      );
+    if (nextState.routes.isNotEmpty) {
+      final leaf = nextState.routes.last;
+      if (leaf is RedirectRouteDefinition) {
+        final newPath = _getAbsolutePath(leaf.redirectTo, nextState.build());
+        return _navigate(newPath, navigationParams, isRedirect: true);
+      }
     }
 
     if (!await _canDeactivate(nextState)) {

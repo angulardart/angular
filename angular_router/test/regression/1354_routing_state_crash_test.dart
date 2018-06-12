@@ -30,7 +30,7 @@ void main() {
 
     await onStable();
     expect(_logs, isEmpty);
-    expect(locationStrategy.path(), '/');
+    expect(locationStrategy.path(), isEmpty);
     expect(routeContainer.text, contains('Home Page'));
 
     // "Navigate" to /another
