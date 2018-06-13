@@ -15,8 +15,8 @@ class ProviderReader {
   final TokenReader _tokenReader;
 
   const ProviderReader(
-      {DependencyReader dependencyReader: const DependencyReader(),
-      TokenReader tokenReader: const TokenReader()})
+      {DependencyReader dependencyReader = const DependencyReader(),
+      TokenReader tokenReader = const TokenReader()})
       : _dependencyReader = dependencyReader,
         _tokenReader = tokenReader;
 
@@ -204,7 +204,7 @@ class UseClassProviderElement extends ProviderElement {
     TypeLink providerType,
     this.useClass, {
     @required this.dependencies,
-    bool multi: false,
+    bool multi = false,
   }) : super._(e, providerType, multi);
 
   @override
@@ -236,7 +236,7 @@ class UseExistingProviderElement extends ProviderElement {
     TokenElement e,
     TypeLink providerType,
     this.redirect, {
-    bool multi: false,
+    bool multi = false,
   }) : super._(e, providerType, multi);
 
   @override
@@ -269,7 +269,7 @@ class UseFactoryProviderElement extends ProviderElement {
     TypeLink providerType,
     this.useFactory, {
     @required this.dependencies,
-    bool multi: false,
+    bool multi = false,
   }) : super._(e, providerType, multi);
 
   @override
@@ -303,6 +303,6 @@ class UseValueProviderElement extends ProviderElement {
     TokenElement e,
     TypeLink providerType,
     this.useValue, {
-    bool multi: false,
+    bool multi = false,
   }) : super._(e, providerType, multi);
 }

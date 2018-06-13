@@ -20,7 +20,7 @@ import 'tokens.dart';
 class DependencyReader {
   final TokenReader _tokenReader;
 
-  const DependencyReader({TokenReader tokenReader: const TokenReader()})
+  const DependencyReader({TokenReader tokenReader = const TokenReader()})
       : _tokenReader = tokenReader;
 
   /// Returns the constructor on a given `class` [element] to use for injection.
@@ -204,10 +204,10 @@ class DependencyElement {
   const DependencyElement(
     this.token, {
     this.type,
-    this.host: false,
-    this.optional: false,
-    this.self: false,
-    this.skipSelf: false,
+    this.host = false,
+    this.optional = false,
+    this.self = false,
+    this.skipSelf = false,
   });
 
   @override

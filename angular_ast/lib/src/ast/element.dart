@@ -205,14 +205,14 @@ class ParsedElementAst extends TemplateAst with ElementAst {
     this.identifierToken,
     NgToken openElementEnd, {
     this.closeComplement,
-    this.attributes: const [],
-    this.childNodes: const [],
-    this.events: const [],
-    this.properties: const [],
-    this.references: const [],
-    this.bananas: const [],
-    this.stars: const [],
-    this.annotations: const [],
+    this.attributes = const [],
+    this.childNodes = const [],
+    this.events = const [],
+    this.properties = const [],
+    this.references = const [],
+    this.bananas = const [],
+    this.stars = const [],
+    this.annotations = const [],
   }) : super.parsed(openElementStart, openElementEnd, sourceFile);
 
   /// Name (tag) of the element.
@@ -263,28 +263,28 @@ class _SyntheticElementAst extends SyntheticTemplateAst with ElementAst {
   _SyntheticElementAst(
     this.name,
     this.closeComplement, {
-    this.attributes: const [],
-    this.childNodes: const [],
-    this.events: const [],
-    this.properties: const [],
-    this.references: const [],
-    this.bananas: const [],
-    this.stars: const [],
-    this.annotations: const [],
+    this.attributes = const [],
+    this.childNodes = const [],
+    this.events = const [],
+    this.properties = const [],
+    this.references = const [],
+    this.bananas = const [],
+    this.stars = const [],
+    this.annotations = const [],
   });
 
   _SyntheticElementAst.from(
     TemplateAst origin,
     this.name,
     this.closeComplement, {
-    this.attributes: const [],
-    this.childNodes: const [],
-    this.events: const [],
-    this.properties: const [],
-    this.references: const [],
-    this.bananas: const [],
-    this.stars: const [],
-    this.annotations: const [],
+    this.attributes = const [],
+    this.childNodes = const [],
+    this.events = const [],
+    this.properties = const [],
+    this.references = const [],
+    this.bananas = const [],
+    this.stars = const [],
+    this.annotations = const [],
   }) : super.from(origin);
 
   @override

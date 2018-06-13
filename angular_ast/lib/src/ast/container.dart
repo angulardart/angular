@@ -93,9 +93,9 @@ class _ParsedContainerAst extends TemplateAst with ContainerAst {
     SourceFile sourceFile,
     NgToken beginToken,
     NgToken endToken, {
-    this.annotations: const [],
-    this.childNodes: const [],
-    this.stars: const [],
+    this.annotations = const [],
+    this.childNodes = const [],
+    this.stars = const [],
   }) : super.parsed(beginToken, endToken, sourceFile);
 
   @override
@@ -110,16 +110,16 @@ class _ParsedContainerAst extends TemplateAst with ContainerAst {
 
 class _SyntheticContainerAst extends SyntheticTemplateAst with ContainerAst {
   _SyntheticContainerAst({
-    this.annotations: const [],
-    this.childNodes: const [],
-    this.stars: const [],
+    this.annotations = const [],
+    this.childNodes = const [],
+    this.stars = const [],
   });
 
   _SyntheticContainerAst.from(
     TemplateAst origin, {
-    this.annotations: const [],
-    this.childNodes: const [],
-    this.stars: const [],
+    this.annotations = const [],
+    this.childNodes = const [],
+    this.stars = const [],
   }) : super.from(origin);
 
   @override

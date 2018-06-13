@@ -71,7 +71,7 @@ void _bind(
     CompileMethod literalMethod,
     bool genDebugInfo,
     {o.OutputType fieldType,
-    bool isHostComponent: false,
+    bool isHostComponent = false,
     o.Expression fieldExprInitializer}) {
   parsedExpression =
       rewriteInterpolate(parsedExpression, viewDirective.analyzedClass);
@@ -217,8 +217,8 @@ void bindAndWriteToRenderer(
     ViewStorage storage,
     CompileMethod targetMethod,
     bool genDebugInfo,
-    {bool updatingHostAttribute: false,
-    bool isHostComponent: false}) {
+    {bool updatingHostAttribute = false,
+    bool isHostComponent = false}) {
   final dynamicPropertiesMethod = new CompileMethod(genDebugInfo);
   final constantPropertiesMethod = new CompileMethod(genDebugInfo);
   for (var boundProp in boundProps) {
@@ -411,7 +411,7 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
 
 void bindDirectiveInputs(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement,
-    {bool isHostComponent: false}) {
+    {bool isHostComponent = false}) {
   var directive = directiveAst.directive;
   if (directive.inputs.isEmpty) {
     return;
