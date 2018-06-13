@@ -42,7 +42,7 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
 
   void detectHostChanges(bool firstCheck) {
     final currVal_0 = ctx.id;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       setProp(rootEl, 'id', currVal_0);
       _expr_0 = currVal_0;
     }

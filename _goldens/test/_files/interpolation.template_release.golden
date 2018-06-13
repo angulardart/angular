@@ -45,7 +45,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   void detectChangesInternal() {
     final import1.InterpolationComponent _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -116,7 +116,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
   void detectChangesInternal() {
     final import1.InterpolationComponentNoWhitespace _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }

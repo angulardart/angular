@@ -104,7 +104,7 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
   void detectChangesInternal() {
     final import1.UsesUntypedComp _ctx = ctx;
     final currVal_0 = _ctx.binding;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _UntypedComp_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -237,7 +237,7 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
   void detectChangesInternal() {
     final import1.UsesGenericComp _ctx = ctx;
     final currVal_0 = _ctx.binding;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _GenericComp_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -371,12 +371,12 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
   void detectChangesInternal() {
     final import1.UsesMappingComp1 _ctx = ctx;
     final currVal_0 = _ctx.bindKey;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _MappingComp1_0_5.key = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindValue;
-    if (!identical(_expr_1, currVal_1)) {
+    if (import6.checkBinding(_expr_1, currVal_1)) {
       _MappingComp1_0_5.value = currVal_1;
       _expr_1 = currVal_1;
     }
@@ -509,7 +509,7 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
   void detectChangesInternal() {
     final import1.UsesMappingComp2 _ctx = ctx;
     final currVal_0 = _ctx.binding;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _MappingComp2_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -642,7 +642,7 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
   void detectChangesInternal() {
     final import1.UsesBoundCompWithBounds _ctx = ctx;
     final currVal_0 = _ctx.binding;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _BoundComp_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -721,7 +721,7 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
   void detectChangesInternal() {
     final import1.UsesBoundComp _ctx = ctx;
     final currVal_0 = _ctx.binding;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _BoundComp_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -855,12 +855,12 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
   void detectChangesInternal() {
     final import1.UsesSelfBoundComp _ctx = ctx;
     final currVal_0 = _ctx.bindA;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _SelfBoundComp_0_5.a = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindB;
-    if (!identical(_expr_1, currVal_1)) {
+    if (import6.checkBinding(_expr_1, currVal_1)) {
       _SelfBoundComp_0_5.b = currVal_1;
       _expr_1 = currVal_1;
     }
@@ -993,7 +993,7 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
   void detectChangesInternal() {
     final import1.UsesRecursiveComp _ctx = ctx;
     final currVal_0 = _ctx.binding;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _RecursiveComp_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -1126,7 +1126,7 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
   void detectChangesInternal() {
     final import1.UsesFunctionTypeComp _ctx = ctx;
     final currVal_0 = _ctx.binding;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _FunctionTypeComp_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -1222,17 +1222,17 @@ class ViewNestedParentComp0 extends AppView<import1.NestedParentComp> {
   void detectChangesInternal() {
     final import1.NestedParentComp _ctx = ctx;
     final currVal_0 = _ctx.input1;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _NestedChildComp_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.input2;
-    if (!identical(_expr_1, currVal_1)) {
+    if (import6.checkBinding(_expr_1, currVal_1)) {
       _NestedChildComp_1_5.input = currVal_1;
       _expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreInputs;
-    if (!identical(_expr_2, currVal_2)) {
+    if (import6.checkBinding(_expr_2, currVal_2)) {
       _NgFor_2_9.ngForOf = currVal_2;
       _expr_2 = currVal_2;
     }
@@ -1278,7 +1278,7 @@ class _ViewNestedParentComp1 extends AppView<import1.NestedParentComp> {
   void detectChangesInternal() {
     final dynamic local_input = locals['\$implicit'];
     final currVal_0 = local_input;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _NestedChildComp_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -1413,17 +1413,17 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
   void detectChangesInternal() {
     final import1.UsesNestedParentComp _ctx = ctx;
     final currVal_0 = _ctx.binding1;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _NestedParentComp_0_5.input1 = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.binding2;
-    if (!identical(_expr_1, currVal_1)) {
+    if (import6.checkBinding(_expr_1, currVal_1)) {
       _NestedParentComp_0_5.input2 = currVal_1;
       _expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreBindings;
-    if (!identical(_expr_2, currVal_2)) {
+    if (import6.checkBinding(_expr_2, currVal_2)) {
       _NestedParentComp_0_5.moreInputs = currVal_2;
       _expr_2 = currVal_2;
     }

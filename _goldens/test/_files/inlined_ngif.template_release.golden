@@ -44,7 +44,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
   void detectChangesInternal() {
     final import1.InlinedNgIfComponent _ctx = ctx;
     final currVal_0 = (_ctx.foo == true);
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       if (currVal_0) {
         var doc = import2.document;
         _el_0_0 = doc.createElement('div');
