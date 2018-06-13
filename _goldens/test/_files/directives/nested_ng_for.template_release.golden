@@ -54,7 +54,9 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    _NgFor_0_9.ngDoCheck();
+    if (!import8.AppViewUtils.throwOnChanges) {
+      _NgFor_0_9.ngDoCheck();
+    }
     _appEl_0.detectChangesInNestedViews();
   }
 
@@ -97,7 +99,9 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
       _NgFor_1_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    _NgFor_1_9.ngDoCheck();
+    if (!import8.AppViewUtils.throwOnChanges) {
+      _NgFor_1_9.ngDoCheck();
+    }
     _appEl_1.detectChangesInNestedViews();
   }
 

@@ -12,6 +12,7 @@ final ngIfUrl = "asset:angular/lib/src/common/directives/ng_if.dart";
 final ngForUrl = "asset:angular/lib/src/common/directives/ng_for.dart";
 final profileRuntimeModuleUrl =
     "asset:angular/lib/src/debug/profile_runtime.dart";
+final runtimeUtilsModuleUrl = "asset:angular/lib/src/runtime.dart";
 
 class Identifiers {
   static final appViewUtils = new CompileIdentifierMetadata<dynamic>(
@@ -101,6 +102,8 @@ class Identifiers {
   /// (most common case).
   static final throwOnChanges = new CompileIdentifierMetadata<dynamic>(
       name: "AppViewUtils.throwOnChanges", moduleUrl: appViewUtilsModuleUrl);
+  static final isDevMode = new CompileIdentifierMetadata<dynamic>(
+      name: "isDevMode", moduleUrl: runtimeUtilsModuleUrl);
   static final interpolate = <CompileIdentifierMetadata>[
     new CompileIdentifierMetadata<dynamic>(
         name: "interpolate0", moduleUrl: appViewUtilsModuleUrl),

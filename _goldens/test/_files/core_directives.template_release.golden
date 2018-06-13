@@ -70,7 +70,9 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
         (_NgFor_1_9.ngForOf = _ctx.bars);
       }
     }
-    _NgFor_1_9.ngDoCheck();
+    if (!import8.AppViewUtils.throwOnChanges) {
+      _NgFor_1_9.ngDoCheck();
+    }
     _appEl_1.detectChangesInNestedViews();
   }
 
