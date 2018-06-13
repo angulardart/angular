@@ -71,10 +71,10 @@ export 'src/visitor.dart'
 List<TemplateAst> parse(
   String template, {
   @required String sourceUrl,
-  bool toolFriendlyAst: false, // Only needed if desugar = true
-  bool desugar: true,
-  bool parseExpressions: true,
-  ExceptionHandler exceptionHandler: const ThrowingExceptionHandler(),
+  bool toolFriendlyAst = false, // Only needed if desugar = true
+  bool desugar = true,
+  bool parseExpressions = true,
+  ExceptionHandler exceptionHandler = const ThrowingExceptionHandler(),
 }) {
   var parser = toolFriendlyAst
       ? const NgParser(toolFriendlyAstOrigin: true)

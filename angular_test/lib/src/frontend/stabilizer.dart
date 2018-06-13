@@ -83,7 +83,7 @@ abstract class NgTestStabilizer {
   /// If more then [threshold] attempts occur, throws [WillNeverStabilizeError].
   Future<void> stabilize({
     void Function() runAndTrackSideEffects,
-    int threshold: 100,
+    int threshold = 100,
   }) async {
     if (threshold == null) {
       throw new ArgumentError.notNull('threshold');

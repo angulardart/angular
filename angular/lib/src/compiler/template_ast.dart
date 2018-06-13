@@ -229,7 +229,7 @@ class EmbeddedTemplateAst implements TemplateAst {
       this.children,
       this.ngContentIndex,
       this.sourceSpan,
-      {this.hasDeferredComponent: false});
+      {this.hasDeferredComponent = false});
 
   bool get hasViewContainer => elementProviderUsage.requiresViewContainer;
 
@@ -308,9 +308,9 @@ class ProviderAst implements TemplateAst {
     this.providerType,
     this.sourceSpan, {
     this.eager,
-    this.dynamicallyReachable: true,
+    this.dynamicallyReachable = true,
     this.typeArgument,
-    this.visibleForInjection: true,
+    this.visibleForInjection = true,
   });
 
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>

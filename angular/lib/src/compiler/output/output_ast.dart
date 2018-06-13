@@ -121,7 +121,7 @@ abstract class Expression {
   /// calling using '?' operator.
   InvokeMethodExpr callMethod(
       dynamic /* String | BuiltinMethod */ name, List<Expression> params,
-      {bool checked: false}) {
+      {bool checked = false}) {
     return new InvokeMethodExpr(this, name, params, checked: checked);
   }
 
@@ -327,7 +327,7 @@ class WriteStaticMemberExpr extends Expression {
   final bool checkIfNull;
 
   WriteStaticMemberExpr(this.name, Expression value,
-      {OutputType type, this.checkIfNull: false})
+      {OutputType type, this.checkIfNull = false})
       : this.value = value,
         super(type ?? value.type);
 
@@ -633,7 +633,8 @@ abstract class ExpressionVisitor<R, C> {
   R visitReadVarExpr(ReadVarExpr ast, C context);
   R visitReadClassMemberExpr(ReadClassMemberExpr ast, C context);
   R visitWriteClassMemberExpr(WriteClassMemberExpr ast, C context);
-  R visitWriteVarExpr(WriteVarExpr expr, C context, {bool checkForNull: false});
+  R visitWriteVarExpr(WriteVarExpr expr, C context,
+      {bool checkForNull = false});
   R visitReadStaticMemberExpr(ReadStaticMemberExpr ast, C context);
   R visitWriteStaticMemberExpr(WriteStaticMemberExpr expr, C context);
   R visitWriteKeyExpr(WriteKeyExpr expr, C context);
@@ -720,7 +721,7 @@ class ExpressionStatement extends Statement {
 class ReturnStatement extends Statement {
   final Expression value;
   final String inlineComment;
-  ReturnStatement(this.value, {this.inlineComment: ''});
+  ReturnStatement(this.value, {this.inlineComment = ''});
 
   @override
   R visitStatement<R, C>(StatementVisitor<R, C> visitor, C context) {
@@ -880,7 +881,7 @@ class _ExpressionTransformer<C>
 
   @override
   Expression visitWriteVarExpr(WriteVarExpr expr, C context,
-      {bool checkForNull: false}) {
+      {bool checkForNull = false}) {
     if (checkForNull) {
       return new WriteIfNullExpr(
           expr.name, expr.value.visitExpression(this, context));
@@ -1118,7 +1119,7 @@ class _RecursiveExpressionVisitor<C>
 
   @override
   Expression visitWriteVarExpr(WriteVarExpr expr, C context,
-      {bool checkForNull: false}) {
+      {bool checkForNull = false}) {
     expr.value.visitExpression(this, context);
     return expr;
   }
@@ -1407,7 +1408,7 @@ ReadVarExpr variable(String name, [OutputType type]) {
 }
 
 ExternalExpr importExpr(CompileIdentifierMetadata id,
-    {List<OutputType> typeParams, bool isConst: false}) {
+    {List<OutputType> typeParams, bool isConst = false}) {
   return new ExternalExpr(id, typeParams: typeParams);
 }
 

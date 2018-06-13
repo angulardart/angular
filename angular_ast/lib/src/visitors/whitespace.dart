@@ -205,7 +205,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   /// Whether [astNode] should be treated as insignficant to nearby whitespace.
   static bool _shouldCollapseAdjacentTo(
     TemplateAst astNode, {
-    bool lastNode: false,
+    bool lastNode = false,
   }) =>
       // Always collpase adjacent to a non-element-like node.
       astNode is! StandaloneTemplateAst ||
@@ -223,7 +223,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   // Otherwise, return `false` and assume it could be a source of inline nodes.
   static bool _shouldCollapseWrapperNode(
     StandaloneTemplateAst astNode, {
-    bool lastNode: false,
+    bool lastNode = false,
   }) {
     if (astNode is! ContainerAst && astNode is! EmbeddedTemplateAst) {
       return false;

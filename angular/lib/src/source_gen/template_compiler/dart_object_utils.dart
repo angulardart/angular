@@ -32,7 +32,7 @@ String coerceString(DartObject value, String field, {String defaultTo}) =>
 List<DartObject> coerceList(
   DartObject value,
   String field, {
-  List<DartObject> defaultTo: const [],
+  List<DartObject> defaultTo = const [],
 }) =>
     getField(value, field)?.toListValue() ?? defaultTo;
 
@@ -44,7 +44,7 @@ List<DartObject> coerceList(
 List<String> coerceStringList(
   DartObject value,
   String field, {
-  List<String> defaultTo: const [],
+  List<String> defaultTo = const [],
 }) {
   final list = getField(value, field)?.toListValue();
   return list != null
@@ -60,7 +60,7 @@ List<String> coerceStringList(
 Map<String, String> coerceStringMap(
   DartObject value,
   String field, {
-  Map<String, String> defaultTo: const {},
+  Map<String, String> defaultTo = const {},
 }) {
   final map = getField(value, field)?.toMapValue();
   if (map == null) {

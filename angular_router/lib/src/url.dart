@@ -44,7 +44,7 @@ class Url {
   /// Query parameters.
   final Map<String, String> queryParameters;
 
-  Url(String path, {String fragment: '', Map<String, String> queryParameters})
+  Url(String path, {String fragment = '', Map<String, String> queryParameters})
       : this.path = path ?? '',
         this.fragment = fragment ?? '',
         this.queryParameters = new Map.unmodifiable(queryParameters ?? {});

@@ -50,7 +50,7 @@ Future<NgTestFixture<T>> createDynamicFixture<T>(
 NgTestBed<T> createDynamicTestBed<T>({
   Element host,
   InjectorFactory rootInjector,
-  bool watchAngularLifecycle: true,
+  bool watchAngularLifecycle = true,
 }) {
   return new NgTestBed<T>._allowDynamicType(
     host: host,
@@ -147,8 +147,8 @@ class NgTestBed<T> {
   static NgTestBed<T> forComponent<T>(
     ComponentFactory<T> component, {
     Element host,
-    InjectorFactory rootInjector: _defaultRootInjector,
-    bool watchAngularLifecycle: true,
+    InjectorFactory rootInjector = _defaultRootInjector,
+    bool watchAngularLifecycle = true,
   }) {
     if (T == dynamic) {
       throw new GenericTypeMissingError();
@@ -174,7 +174,7 @@ class NgTestBed<T> {
   factory NgTestBed({
     Element host,
     InjectorFactory rootInjector,
-    bool watchAngularLifecycle: true,
+    bool watchAngularLifecycle = true,
   }) {
     if (T == dynamic) {
       throw new GenericTypeMissingError();
@@ -190,7 +190,7 @@ class NgTestBed<T> {
   factory NgTestBed._allowDynamicType({
     Element host,
     InjectorFactory rootInjector,
-    bool watchAngularLifecycle: true,
+    bool watchAngularLifecycle = true,
   }) {
     return new NgTestBed<T>._(
       host: host,

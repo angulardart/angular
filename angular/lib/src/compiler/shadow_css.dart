@@ -77,7 +77,7 @@ import 'package:csslib/visitor.dart';
 ///   }
 ///   ```
 String shimShadowCss(String css, String contentClass, String hostClass,
-    {bool useLegacyEncapsulation: false}) {
+    {bool useLegacyEncapsulation = false}) {
   // Hack to replace all sequential >>> (and alias /deep/) combinators with a
   // single >>> combinator. These sequences occur commonly in CSS generated from
   // SASS like the example shown:
@@ -156,7 +156,7 @@ SelectorGroup _parseSelectorGroupFrom(Declaration declaration) {
 /// If [remove] is [true], the declaration is removed from [declarationGroup].
 SelectorGroup _selectorGroupForProperty(
     DeclarationGroup declarationGroup, String propertyName,
-    {bool remove: false}) {
+    {bool remove = false}) {
   var declaration = _getDeclaration(declarationGroup, propertyName);
   if (declaration == null) {
     logWarning(
