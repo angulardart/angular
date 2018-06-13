@@ -32,8 +32,11 @@ class AppViewUtils {
   /// detected.
   ///
   /// Latency sensitive! Used by checkBinding during change detection.
-  static bool throwOnChanges = false;
+  static bool get throwOnChanges => isDevMode && _throwOnChanges;
+  static set throwOnChanges(bool value) => _throwOnChanges = value;
+  static bool _throwOnChanges = false;
   static int _throwOnChangesCounter = 0;
+
   SanitizationService sanitizer;
 
   AppViewUtils(@Inject(APP_ID) this._appId, this.sanitizer, this.eventManager);

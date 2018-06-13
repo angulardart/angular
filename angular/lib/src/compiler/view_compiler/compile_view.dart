@@ -1224,13 +1224,7 @@ class CompileView implements AppViewBuilder {
         new List.from(_updateContentQueriesMethod.finish())
           ..addAll(afterContentLifecycleCallbacksMethod.finish());
     if (afterContentStmts.isNotEmpty) {
-      if (genConfig.genDebugInfo) {
-        // Prevent query list updates when we run change detection for
-        // second time to check if values are stabilized.
-        statements.add(new o.IfStmt(notThrowOnChanges, afterContentStmts));
-      } else {
-        statements.addAll(afterContentStmts);
-      }
+      statements.add(new o.IfStmt(notThrowOnChanges, afterContentStmts));
     }
 
     // Add render properties change detectors.
@@ -1245,11 +1239,7 @@ class CompileView implements AppViewBuilder {
         new List.from(_updateViewQueriesMethod.finish())
           ..addAll(afterViewLifecycleCallbacksMethod.finish());
     if (afterViewStmts.isNotEmpty) {
-      if (genConfig.genDebugInfo) {
-        statements.add(new o.IfStmt(notThrowOnChanges, afterViewStmts));
-      } else {
-        statements.addAll(afterViewStmts);
-      }
+      statements.add(new o.IfStmt(notThrowOnChanges, afterViewStmts));
     }
     var varStmts = [];
     var readVars = o.findReadVarNames(statements);

@@ -58,19 +58,25 @@ class _ViewLifecycleHooksComponentHost0 extends AppView<dynamic> {
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
-    if (firstCheck) {
+    if ((!import6.AppViewUtils.throwOnChanges && firstCheck)) {
       _LifecycleHooksComponent_0_5.ngOnInit();
     }
-    _LifecycleHooksComponent_0_5.ngDoCheck();
-    if (firstCheck) {
-      _LifecycleHooksComponent_0_5.ngAfterContentInit();
+    if (!import6.AppViewUtils.throwOnChanges) {
+      _LifecycleHooksComponent_0_5.ngDoCheck();
     }
-    _LifecycleHooksComponent_0_5.ngAfterContentChecked();
+    if (!import6.AppViewUtils.throwOnChanges) {
+      if (firstCheck) {
+        _LifecycleHooksComponent_0_5.ngAfterContentInit();
+      }
+      _LifecycleHooksComponent_0_5.ngAfterContentChecked();
+    }
     _compView_0.detectChanges();
-    if (firstCheck) {
-      _LifecycleHooksComponent_0_5.ngAfterViewInit();
+    if (!import6.AppViewUtils.throwOnChanges) {
+      if (firstCheck) {
+        _LifecycleHooksComponent_0_5.ngAfterViewInit();
+      }
+      _LifecycleHooksComponent_0_5.ngAfterViewChecked();
     }
-    _LifecycleHooksComponent_0_5.ngAfterViewChecked();
   }
 
   @override

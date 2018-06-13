@@ -73,15 +73,17 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     final import1.QueriesComponent _ctx = ctx;
     _NgIf_2_9.ngIf = _ctx.someValue;
     _appEl_2.detectChangesInNestedViews();
-    if (_query_AnotherDirective_1_5_isDirty) {
-      ctx.usingTypeFromField = import8.flattenNodes([
-        [_AnotherDirective_0_5],
-        [_AnotherDirective_1_5],
-        _appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
-          return [nestedView._AnotherDirective_0_5];
-        })
-      ]);
-      _query_AnotherDirective_1_5_isDirty = false;
+    if (!import8.AppViewUtils.throwOnChanges) {
+      if (_query_AnotherDirective_1_5_isDirty) {
+        ctx.usingTypeFromField = import8.flattenNodes([
+          [_AnotherDirective_0_5],
+          [_AnotherDirective_1_5],
+          _appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
+            return [nestedView._AnotherDirective_0_5];
+          })
+        ]);
+        _query_AnotherDirective_1_5_isDirty = false;
+      }
     }
   }
 
@@ -190,17 +192,19 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
 
   @override
   void detectChangesInternal() {
-    if (_query_AnotherDirective_1_0_isDirty) {
-      ctx.viewChildren = import8.flattenNodes([
-        [_AnotherDirective_0_5],
-        _appEl_1.mapNestedViews((_ViewEmbeddedQueries1 nestedView) {
-          return [nestedView._AnotherDirective_0_5];
-        }),
-        _appEl_2.mapNestedViews((_ViewEmbeddedQueries2 nestedView) {
-          return [nestedView._AnotherDirective_0_5];
-        })
-      ]);
-      _query_AnotherDirective_1_0_isDirty = false;
+    if (!import8.AppViewUtils.throwOnChanges) {
+      if (_query_AnotherDirective_1_0_isDirty) {
+        ctx.viewChildren = import8.flattenNodes([
+          [_AnotherDirective_0_5],
+          _appEl_1.mapNestedViews((_ViewEmbeddedQueries1 nestedView) {
+            return [nestedView._AnotherDirective_0_5];
+          }),
+          _appEl_2.mapNestedViews((_ViewEmbeddedQueries2 nestedView) {
+            return [nestedView._AnotherDirective_0_5];
+          })
+        ]);
+        _query_AnotherDirective_1_0_isDirty = false;
+      }
     }
   }
 }
@@ -326,17 +330,19 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
 
   @override
   void detectChangesInternal() {
-    if (_query_AnotherDirective_1_0_isDirty) {
-      ctx.viewChildren = import8.flattenNodes([
-        [_AnotherDirective_0_5],
-        _appEl_1.mapNestedViews((_ViewEmbeddedQueriesList1 nestedView) {
-          return [nestedView._AnotherDirective_0_5];
-        }),
-        _appEl_2.mapNestedViews((_ViewEmbeddedQueriesList2 nestedView) {
-          return [nestedView._AnotherDirective_0_5];
-        })
-      ]);
-      _query_AnotherDirective_1_0_isDirty = false;
+    if (!import8.AppViewUtils.throwOnChanges) {
+      if (_query_AnotherDirective_1_0_isDirty) {
+        ctx.viewChildren = import8.flattenNodes([
+          [_AnotherDirective_0_5],
+          _appEl_1.mapNestedViews((_ViewEmbeddedQueriesList1 nestedView) {
+            return [nestedView._AnotherDirective_0_5];
+          }),
+          _appEl_2.mapNestedViews((_ViewEmbeddedQueriesList2 nestedView) {
+            return [nestedView._AnotherDirective_0_5];
+          })
+        ]);
+        _query_AnotherDirective_1_0_isDirty = false;
+      }
     }
   }
 }
@@ -457,15 +463,17 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
     final import1.NestedNgForQueriesList _ctx = ctx;
     _NgIf_0_9.ngIf = _ctx.conditionA;
     _appEl_0.detectChangesInNestedViews();
-    if (_query_taggedItem_1_0_isDirty) {
-      ctx.taggedItems = _appEl_0.mapNestedViews((_ViewNestedNgForQueriesList1 nestedView) {
-        return nestedView._appEl_1.mapNestedViews((_ViewNestedNgForQueriesList2 nestedView) {
-          return nestedView._appEl_1.mapNestedViews((_ViewNestedNgForQueriesList3 nestedView) {
-            return [new ElementRef(nestedView._el_0)];
+    if (!import8.AppViewUtils.throwOnChanges) {
+      if (_query_taggedItem_1_0_isDirty) {
+        ctx.taggedItems = _appEl_0.mapNestedViews((_ViewNestedNgForQueriesList1 nestedView) {
+          return nestedView._appEl_1.mapNestedViews((_ViewNestedNgForQueriesList2 nestedView) {
+            return nestedView._appEl_1.mapNestedViews((_ViewNestedNgForQueriesList3 nestedView) {
+              return [new ElementRef(nestedView._el_0)];
+            });
           });
         });
-      });
-      _query_taggedItem_1_0_isDirty = false;
+        _query_taggedItem_1_0_isDirty = false;
+      }
     }
   }
 
@@ -545,7 +553,9 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
         (_NgFor_1_9.ngForOf = _ctx.items);
       }
     }
-    _NgFor_1_9.ngDoCheck();
+    if (!import8.AppViewUtils.throwOnChanges) {
+      _NgFor_1_9.ngDoCheck();
+    }
     _appEl_1.detectChangesInNestedViews();
   }
 

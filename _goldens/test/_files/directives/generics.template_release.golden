@@ -1236,7 +1236,9 @@ class ViewNestedParentComp0 extends AppView<import1.NestedParentComp> {
       _NgFor_2_9.ngForOf = currVal_2;
       _expr_2 = currVal_2;
     }
-    _NgFor_2_9.ngDoCheck();
+    if (!import6.AppViewUtils.throwOnChanges) {
+      _NgFor_2_9.ngDoCheck();
+    }
     _appEl_2.detectChangesInNestedViews();
     _compView_0.detectChanges();
     _compView_1.detectChanges();

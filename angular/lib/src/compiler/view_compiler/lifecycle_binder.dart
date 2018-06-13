@@ -37,24 +37,13 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
     }
   }
   if (lifecycleHooks.contains(LifecycleHooks.onInit)) {
-    if (view.genConfig.genDebugInfo) {
-      detectChangesInInputsMethod.addStmt(new o.IfStmt(
-          DetectChangesVars.firstCheck.and(notThrowOnChanges),
-          [directiveInstance.callMethod('ngOnInit', []).toStmt()]));
-    } else {
-      detectChangesInInputsMethod.addStmt(new o.IfStmt(
-          DetectChangesVars.firstCheck,
-          [directiveInstance.callMethod('ngOnInit', []).toStmt()]));
-    }
+    detectChangesInInputsMethod.addStmt(new o.IfStmt(
+        notThrowOnChanges.and(DetectChangesVars.firstCheck),
+        [directiveInstance.callMethod('ngOnInit', []).toStmt()]));
   }
   if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
-    if (view.genConfig.genDebugInfo) {
-      detectChangesInInputsMethod.addStmt(new o.IfStmt(notThrowOnChanges,
-          [directiveInstance.callMethod('ngDoCheck', []).toStmt()]));
-    } else {
-      detectChangesInInputsMethod
-          .addStmt(directiveInstance.callMethod('ngDoCheck', []).toStmt());
-    }
+    detectChangesInInputsMethod.addStmt(new o.IfStmt(notThrowOnChanges,
+        [directiveInstance.callMethod('ngDoCheck', []).toStmt()]));
   }
 }
 
