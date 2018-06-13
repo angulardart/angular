@@ -37,7 +37,7 @@ class ViewI18nTextComponent0 extends DebugAppView<import2.I18nTextComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'p', parentRenderNode, 0, 0, 0);
+    _el_0 = createAndAppend(doc, 'p', parentRenderNode);
     import3.Text _text_1 = new import3.Text(_message_0);
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -62,7 +62,6 @@ class _ViewI18nTextComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewI18nTextComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _I18nTextComponent_0_5 = new import2.I18nTextComponent();
     _compView_0.create(_I18nTextComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

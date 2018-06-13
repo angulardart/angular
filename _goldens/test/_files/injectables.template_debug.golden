@@ -40,7 +40,7 @@ class ViewInjectableComponent0 extends DebugAppView<import2.InjectableComponent>
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('Inject!');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -84,7 +84,6 @@ class _ViewInjectableComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _test_0_5 = import2.injectableFactory(this.injectorGet(import3.Window, viewData.parentIndex));
     _InjectableComponent_0_6 = new import2.InjectableComponent(null, this.injectorGet(import2.InjectableService, viewData.parentIndex, null), _test_0_5, this.injectorGet(String, viewData.parentIndex, null));
     _compView_0.create(_InjectableComponent_0_6, projectableNodes);

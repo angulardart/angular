@@ -40,9 +40,9 @@ class ViewAppComponent0 extends DebugAppView<import1.AppComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     createAttr(_el_0, 'generateText', '');
-    _el_1 = createDivAndAppendDbg(this, doc, _el_0, 1, 0, 18);
+    _el_1 = createDivAndAppend(doc, _el_0);
     import1.generateTextDirective(_el_0, parentView.injectorGet(import1.TextService, viewData.parentIndex));
     init(const [], null, [_el_0, _el_1]);
     return null;
@@ -75,7 +75,6 @@ class _ViewAppComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewAppComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _AppComponent_0_5 = new import1.AppComponent();
     _compView_0.create(_AppComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

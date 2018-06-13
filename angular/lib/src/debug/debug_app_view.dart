@@ -345,33 +345,3 @@ void dbgElm(
   }
   indexDebugNode(debugNode);
 }
-
-/// Helper function called by DebugAppView.build to reduce code size.
-@dart2js.noInline
-Element createAndAppendDbg(DebugAppView view, Document doc, String tagName,
-    Element parent, int nodeIndex, int line, int column) {
-  var elm = doc.createElement(tagName);
-  parent.append(elm);
-  dbgElm(view, elm, nodeIndex, line, column);
-  return elm;
-}
-
-/// Helper function called by DebugAppView.build to reduce code size.
-@dart2js.noInline
-DivElement createDivAndAppendDbg(DebugAppView view, Document doc,
-    Element parent, int nodeIndex, int line, int column) {
-  var elm = new DivElement();
-  parent.append(elm);
-  dbgElm(view, elm, nodeIndex, line, column);
-  return elm;
-}
-
-/// Helper function called by DebugAppView.build to reduce code size.
-@dart2js.noInline
-SpanElement createSpanAndAppendDbg(DebugAppView view, Document doc,
-    Element parent, int nodeIndex, int line, int column) {
-  var elm = new SpanElement();
-  parent.append(elm);
-  dbgElm(view, elm, nodeIndex, line, column);
-  return elm;
-}

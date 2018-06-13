@@ -64,7 +64,6 @@ class _ViewHasOpaqueTokensHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _baseUrlDescription_0_5 = 'https://localhost';
     _HasOpaqueTokens_0_6 = new import2.HasOpaqueTokens(_baseUrlDescription_0_5);
     _compView_0.create(_HasOpaqueTokens_0_6, projectableNodes);
@@ -157,7 +156,6 @@ class _ViewContainsChildComponent1 extends DebugAppView<import2.ContainsChildCom
   ComponentRef<import2.ContainsChildComponent> build() {
     var doc = import3.document;
     _el_0 = doc.createElement('div');
-    dbgElm(this, _el_0, 0, 0, 4);
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
@@ -202,7 +200,6 @@ class _ViewContainsChildComponent2 extends DebugAppView<import2.ContainsChildCom
   ComponentRef<import2.ContainsChildComponent> build() {
     var doc = import3.document;
     _el_0 = doc.createElement('div');
-    dbgElm(this, _el_0, 0, 1, 6);
     _compView_1 = new ViewInjectsTypedTokenFromSomeParent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
@@ -240,7 +237,6 @@ class _ViewContainsChildComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewContainsChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _ContainsChildComponent_0_5 = new import2.ContainsChildComponent();
     _compView_0.create(_ContainsChildComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -299,7 +295,6 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewInjectsTypedTokenFromSomeParent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _InjectsTypedTokenFromSomeParent_0_5 = new import2.InjectsTypedTokenFromSomeParent(this.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
     _compView_0.create(_InjectsTypedTokenFromSomeParent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

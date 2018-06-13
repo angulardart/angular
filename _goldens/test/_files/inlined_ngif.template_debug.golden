@@ -55,7 +55,6 @@ class ViewInlinedNgIfComponent0 extends DebugAppView<import3.InlinedNgIfComponen
       if (currVal_0) {
         var doc = import4.document;
         _el_0_0 = doc.createElement('div');
-        dbgElm(this, _el_0_0, 0, 0, 0);
         _text_0_1 = new import4.Text('Hello World!');
         _el_0_0.append(_text_0_1);
         addInlinedNodes(_anchor_0, [_el_0_0], true);
@@ -84,7 +83,6 @@ class _ViewInlinedNgIfComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewInlinedNgIfComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _InlinedNgIfComponent_0_5 = new import3.InlinedNgIfComponent();
     _compView_0.create(_InlinedNgIfComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -141,7 +139,6 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends DebugAppView<impor
         if (_ctx.foo) {
           var doc = import4.document;
           _el_0_0 = doc.createElement('div');
-          dbgElm(this, _el_0_0, 0, 0, 0);
           _text_0_1 = new import4.Text('Hello World!');
           _el_0_0.append(_text_0_1);
           addInlinedNodes(_anchor_0, [_el_0_0], true);
@@ -168,7 +165,6 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends DebugAppView<
   ComponentRef build() {
     _compView_0 = new ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _InlinedNgIfWithImmutableConditionComponent_0_5 = new import3.InlinedNgIfWithImmutableConditionComponent();
     _compView_0.create(_InlinedNgIfWithImmutableConditionComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

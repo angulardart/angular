@@ -58,7 +58,6 @@ class _ViewUntypedCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUntypedComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UntypedComp_0_5 = new import2.UntypedComp();
     _compView_0.create(_UntypedComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -145,7 +144,6 @@ class _ViewUsesUntypedCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesUntypedComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesUntypedComp_0_5 = new import2.UsesUntypedComp();
     _compView_0.create(_UsesUntypedComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -204,7 +202,6 @@ class _ViewGenericCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewGenericComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _GenericComp_0_5 = new import2.GenericComp();
     _compView_0.create(_GenericComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -291,7 +288,6 @@ class _ViewUsesGenericCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesGenericComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesGenericComp_0_5 = new import2.UsesGenericComp();
     _compView_0.create(_UsesGenericComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -350,7 +346,6 @@ class _ViewMappingComp1Host0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewMappingComp10(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _MappingComp1_0_5 = new import2.MappingComp1();
     _compView_0.create(_MappingComp1_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -444,7 +439,6 @@ class _ViewUsesMappingComp1Host0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesMappingComp10(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesMappingComp1_0_5 = new import2.UsesMappingComp1();
     _compView_0.create(_UsesMappingComp1_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -503,7 +497,6 @@ class _ViewMappingComp2Host0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewMappingComp20(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _MappingComp2_0_5 = new import2.MappingComp2();
     _compView_0.create(_MappingComp2_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -590,7 +583,6 @@ class _ViewUsesMappingComp2Host0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesMappingComp20(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesMappingComp2_0_5 = new import2.UsesMappingComp2();
     _compView_0.create(_UsesMappingComp2_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -649,7 +641,6 @@ class _ViewBoundCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _BoundComp_0_5 = new import2.BoundComp();
     _compView_0.create(_BoundComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -736,7 +727,6 @@ class _ViewUsesBoundCompWithBoundsHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesBoundCompWithBounds0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesBoundCompWithBounds_0_5 = new import2.UsesBoundCompWithBounds();
     _compView_0.create(_UsesBoundCompWithBounds_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -823,7 +813,6 @@ class _ViewUsesBoundCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesBoundComp_0_5 = new import2.UsesBoundComp();
     _compView_0.create(_UsesBoundComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -882,7 +871,6 @@ class _ViewSelfBoundCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewSelfBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _SelfBoundComp_0_5 = new import2.SelfBoundComp();
     _compView_0.create(_SelfBoundComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -976,7 +964,6 @@ class _ViewUsesSelfBoundCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesSelfBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesSelfBoundComp_0_5 = new import2.UsesSelfBoundComp();
     _compView_0.create(_UsesSelfBoundComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -1035,7 +1022,6 @@ class _ViewRecursiveCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewRecursiveComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _RecursiveComp_0_5 = new import2.RecursiveComp();
     _compView_0.create(_RecursiveComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -1122,7 +1108,6 @@ class _ViewUsesRecursiveCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesRecursiveComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesRecursiveComp_0_5 = new import2.UsesRecursiveComp();
     _compView_0.create(_UsesRecursiveComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -1181,7 +1166,6 @@ class _ViewFunctionTypeCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewFunctionTypeComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _FunctionTypeComp_0_5 = new import2.FunctionTypeComp();
     _compView_0.create(_FunctionTypeComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -1268,7 +1252,6 @@ class _ViewUsesFunctionTypeCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesFunctionTypeComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesFunctionTypeComp_0_5 = new import2.UsesFunctionTypeComp();
     _compView_0.create(_UsesFunctionTypeComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -1437,7 +1420,6 @@ class _ViewNestedParentCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewNestedParentComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _NestedParentComp_0_5 = new import2.NestedParentComp();
     _compView_0.create(_NestedParentComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -1496,7 +1478,6 @@ class _ViewNestedChildCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewNestedChildComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _NestedChildComp_0_5 = new import2.NestedChildComp();
     _compView_0.create(_NestedChildComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -1597,7 +1578,6 @@ class _ViewUsesNestedParentCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesNestedParentComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesNestedParentComp_0_5 = new import2.UsesNestedParentComp();
     _compView_0.create(_UsesNestedParentComp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

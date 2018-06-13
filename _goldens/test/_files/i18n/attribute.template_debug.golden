@@ -37,7 +37,7 @@ class ViewI18nAttributeComponent0 extends DebugAppView<import2.I18nAttributeComp
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'img', parentRenderNode, 0, 0, 0);
+    _el_0 = createAndAppend(doc, 'img', parentRenderNode);
     createAttr(_el_0, 'alt', _message_0);
     init(const [], null, [_el_0]);
     return null;
@@ -61,7 +61,6 @@ class _ViewI18nAttributeComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewI18nAttributeComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _I18nAttributeComponent_0_5 = new import2.I18nAttributeComponent();
     _compView_0.create(_I18nAttributeComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

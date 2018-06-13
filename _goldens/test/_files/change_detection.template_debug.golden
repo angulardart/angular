@@ -36,7 +36,7 @@ class ViewCheckOnceComponent0 extends DebugAppView<import2.CheckOnceComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('CheckOnce');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -69,7 +69,6 @@ class _ViewCheckOnceComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _CheckOnceComponent_0_5 = new import2.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -110,7 +109,7 @@ class ViewCheckedComponent0 extends DebugAppView<import2.CheckedComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('Checked');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -135,7 +134,6 @@ class _ViewCheckedComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _CheckedComponent_0_5 = new import2.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -174,7 +172,7 @@ class ViewCheckAlwaysComponent0 extends DebugAppView<import2.CheckAlwaysComponen
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('CheckAlways');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -199,7 +197,6 @@ class _ViewCheckAlwaysComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _CheckAlwaysComponent_0_5 = new import2.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -238,7 +235,7 @@ class ViewDetachedComponent0 extends DebugAppView<import2.DetachedComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('Detached');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -263,7 +260,6 @@ class _ViewDetachedComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewDetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _DetachedComponent_0_5 = new import2.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -302,7 +298,7 @@ class ViewOnPushComponent0 extends DebugAppView<import2.OnPushComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('OnPush');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -327,7 +323,6 @@ class _ViewOnPushComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _OnPushComponent_0_5 = new import2.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -367,7 +362,7 @@ class ViewStatefulComponent0 extends DebugAppView<import2.StatefulComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('Stateful');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -393,7 +388,6 @@ class _ViewStatefulComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewStatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _StatefulComponent_0_5 = new import2.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -432,7 +426,7 @@ class ViewDefaultComponent0 extends DebugAppView<import2.DefaultComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('Default');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -457,7 +451,6 @@ class _ViewDefaultComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewDefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _DefaultComponent_0_5 = new import2.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

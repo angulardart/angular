@@ -58,9 +58,9 @@ class ViewQueriesComponent0 extends DebugAppView<import1.QueriesComponent> {
     dbg(null, 0, 4);
     project(parentRenderNode, 0);
     var doc = import5.document;
-    _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 1, 4);
+    _el_0 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
-    _el_1 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 1, 2, 4);
+    _el_1 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_1_5 = new import1.AnotherDirective();
     final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
@@ -120,7 +120,6 @@ class _ViewQueriesComponent1 extends DebugAppView<import1.QueriesComponent> {
   ComponentRef<import1.QueriesComponent> build() {
     var doc = import5.document;
     _el_0 = doc.createElement('another');
-    dbgElm(this, _el_0, 0, 3, 4);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0Dbg(_el_0, [_el_0]);
     return null;
@@ -151,7 +150,6 @@ class _ViewQueriesComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewQueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _QueriesComponent_0_5 = new import1.QueriesComponent();
     _QueriesComponent_0_5.contentChildrenFromField = [];
     _compView_0.create(_QueriesComponent_0_5, projectableNodes);
@@ -199,7 +197,7 @@ class ViewEmbeddedQueries0 extends DebugAppView<import1.EmbeddedQueries> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
-    _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 0, 4);
+    _el_0 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
@@ -250,7 +248,6 @@ class _ViewEmbeddedQueries1 extends DebugAppView<import1.EmbeddedQueries> {
   ComponentRef<import1.EmbeddedQueries> build() {
     var doc = import5.document;
     _el_0 = doc.createElement('another');
-    dbgElm(this, _el_0, 0, 2, 6);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0Dbg(_el_0, [_el_0]);
     return null;
@@ -280,7 +277,6 @@ class _ViewEmbeddedQueries2 extends DebugAppView<import1.EmbeddedQueries> {
   ComponentRef<import1.EmbeddedQueries> build() {
     var doc = import5.document;
     _el_0 = doc.createElement('another');
-    dbgElm(this, _el_0, 0, 5, 6);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0Dbg(_el_0, [_el_0]);
     return null;
@@ -309,7 +305,6 @@ class _ViewEmbeddedQueriesHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewEmbeddedQueries0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _EmbeddedQueries_0_5 = new import1.EmbeddedQueries();
     _compView_0.create(_EmbeddedQueries_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -356,7 +351,7 @@ class ViewEmbeddedQueriesList0 extends DebugAppView<import1.EmbeddedQueriesList>
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
-    _el_0 = createAndAppendDbg(this, doc, 'another', parentRenderNode, 0, 0, 4);
+    _el_0 = createAndAppend(doc, 'another', parentRenderNode);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
@@ -407,7 +402,6 @@ class _ViewEmbeddedQueriesList1 extends DebugAppView<import1.EmbeddedQueriesList
   ComponentRef<import1.EmbeddedQueriesList> build() {
     var doc = import5.document;
     _el_0 = doc.createElement('another');
-    dbgElm(this, _el_0, 0, 2, 6);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0Dbg(_el_0, [_el_0]);
     return null;
@@ -437,7 +431,6 @@ class _ViewEmbeddedQueriesList2 extends DebugAppView<import1.EmbeddedQueriesList
   ComponentRef<import1.EmbeddedQueriesList> build() {
     var doc = import5.document;
     _el_0 = doc.createElement('another');
-    dbgElm(this, _el_0, 0, 5, 6);
     _AnotherDirective_0_5 = new import1.AnotherDirective();
     init0Dbg(_el_0, [_el_0]);
     return null;
@@ -466,7 +459,6 @@ class _ViewEmbeddedQueriesListHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewEmbeddedQueriesList0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _EmbeddedQueriesList_0_5 = new import1.EmbeddedQueriesList();
     _compView_0.create(_EmbeddedQueriesList_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -563,7 +555,6 @@ class _ViewNestedNgForQueriesList1 extends DebugAppView<import1.NestedNgForQueri
   ComponentRef<import1.NestedNgForQueriesList> build() {
     var doc = import5.document;
     _el_0 = doc.createElement('div');
-    dbgElm(this, _el_0, 0, 0, 4);
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
@@ -607,7 +598,6 @@ class _ViewNestedNgForQueriesList2 extends DebugAppView<import1.NestedNgForQueri
   ComponentRef<import1.NestedNgForQueriesList> build() {
     var doc = import5.document;
     _el_0 = doc.createElement('div');
-    dbgElm(this, _el_0, 0, 1, 6);
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
@@ -658,8 +648,7 @@ class _ViewNestedNgForQueriesList3 extends DebugAppView<import1.NestedNgForQueri
   ComponentRef<import1.NestedNgForQueriesList> build() {
     var doc = import5.document;
     _el_0 = doc.createElement('div');
-    dbgElm(this, _el_0, 0, 2, 8);
-    _el_1 = createAndAppendDbg(this, doc, 'another', _el_0, 1, 3, 10);
+    _el_1 = createAndAppend(doc, 'another', _el_0);
     _AnotherDirective_1_5 = new import1.AnotherDirective();
     init0Dbg(_el_0, [_el_0, _el_1]);
     return null;
@@ -688,7 +677,6 @@ class _ViewNestedNgForQueriesListHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewNestedNgForQueriesList0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _NestedNgForQueriesList_0_5 = new import1.NestedNgForQueriesList();
     _compView_0.create(_NestedNgForQueriesList_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

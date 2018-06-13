@@ -126,7 +126,6 @@ class _ViewCompHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _Comp_0_5 = new import2.Comp();
     _compView_0.create(_Comp_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
