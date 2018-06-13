@@ -110,7 +110,7 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   void detectChangesInternal() {
     final String local_bar = locals['\$implicit'];
     final currVal_0 = import8.interpolate0(local_bar);
-    if (!identical(_expr_0, currVal_0)) {
+    if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_2.text = currVal_0;
       _expr_0 = currVal_0;
     }

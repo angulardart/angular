@@ -53,12 +53,12 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
   void detectChangesInternal() {
     final import1.CompWithoutFinal _ctx = ctx;
     final currVal_0 = (_ctx.okMessage ?? '');
-    if (!identical(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = (_ctx.cancelMessage ?? '');
-    if (!identical(_expr_1, currVal_1)) {
+    if (import6.checkBinding(_expr_1, currVal_1)) {
       _text_4.text = currVal_1;
       _expr_1 = currVal_1;
     }

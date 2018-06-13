@@ -321,7 +321,7 @@ bool checkBinding(oldValue, newValue) {
   // This is only ever possibly true when assertions are enabled.
   //
   // It's set during the second "make-sure-nothing-changed" pass of tick().
-  if (isDevMode && AppViewUtils.throwOnChanges) {
+  if (AppViewUtils.throwOnChanges) {
     if (!devModeEqual(oldValue, newValue)) {
       throw new ExpressionChangedAfterItHasBeenCheckedException(
         oldValue,

@@ -104,16 +104,8 @@ void _bind(
   method.addStmt(currValExpr
       .set(checkExpression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
-  o.Expression condition;
-  if (genDebugInfo) {
-    condition =
-        o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
-  } else {
-    condition = new o.NotExpr(
-        o.importExpr(Identifiers.identical).callFn([fieldExpr, currValExpr]));
-  }
   method.addStmt(new o.IfStmt(
-      condition,
+      o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]),
       new List.from(actions)
         ..addAll([
           storage.buildWriteExpr(previousValueField, currValExpr).toStmt()
@@ -617,18 +609,8 @@ void _bindToUpdateMethod(
     method.addStmt(
         view.storage.buildWriteExpr(previousValueField, currValExpr).toStmt());
   } else {
-    // Otherwise use traditional checkBinding call.
-    o.Expression condition;
-    if (view.genConfig.genDebugInfo) {
-      condition = o
-          .importExpr(Identifiers.checkBinding)
-          .callFn([fieldExpr, currValExpr]);
-    } else {
-      condition = new o.NotExpr(
-          o.importExpr(Identifiers.identical).callFn([fieldExpr, currValExpr]));
-    }
     method.addStmt(new o.IfStmt(
-        condition,
+        o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]),
         new List.from(actions)
           ..addAll([
             new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()

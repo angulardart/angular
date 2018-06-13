@@ -50,7 +50,7 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   void detectChangesInternal() {
     final import1.NestedNgForComponent _ctx = ctx;
     final currVal_0 = _ctx.matrix;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import8.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -95,7 +95,7 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
   void detectChangesInternal() {
     final List<int> local_row = locals['\$implicit'];
     final currVal_0 = local_row;
-    if (!identical(_expr_0, currVal_0)) {
+    if (import8.checkBinding(_expr_0, currVal_0)) {
       _NgFor_1_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -136,7 +136,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   void detectChangesInternal() {
     final local_value = locals['\$implicit'];
     final currVal_0 = import8.interpolate0(local_value);
-    if (!identical(_expr_0, currVal_0)) {
+    if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
