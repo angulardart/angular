@@ -10,6 +10,9 @@
 
 *   Remove deprecated `NG_VALUE_ACCESSOR` token. Use `ngValueAccessor` instead.
 
+*   Abstract `updateValue` method added to `AbstractControl`. All subclasses of
+    `AbstractControl` will need to implement this method.
+
 ## 2.0.0-alpha+6
 
 *   Maintenence release.
