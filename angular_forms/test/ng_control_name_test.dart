@@ -41,6 +41,13 @@ void main() {
       await fixture.update((cmp) => cmp.disabled = false);
       expect(fixture.assertOnlyInstance.inputElement.disabled, false);
     });
+
+    test('should reset element', () async {
+      await fixture.update((cmp) => cmp.loginValue = 'new value');
+      expect(fixture.assertOnlyInstance.inputElement.value, 'new value');
+      await fixture.update((cmp) => cmp.controlName.reset());
+      expect(fixture.assertOnlyInstance.inputElement.value, '');
+    });
   });
 
   group('NgControl initialization test', () {

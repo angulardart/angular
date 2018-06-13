@@ -1,5 +1,7 @@
 ### New Features
 
+*   `reset` method added to `AbstractControl` and `AbstractControlDirective`.
+
 *   `RequiredValidator` now has a `required` input. This allows the `required`
     property to be toggled at runtime. Previously, this could only be set
     statically at compile time.

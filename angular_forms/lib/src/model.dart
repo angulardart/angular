@@ -197,6 +197,31 @@ abstract class AbstractControl<T> {
     _disabledChanges.add(false);
   }
 
+  /// Resets the form control.
+  ///
+  /// This means by default:
+  /// * it is marked as `pristine`
+  /// * it is marked as `untouched`
+  /// * value is set to null
+  ///
+  /// You can also reset to a specific form state by passing through a
+  /// standalone value or a disabled state. We allow setting value and
+  /// disabled here because these are the only two properties that
+  /// cannot be calculated.
+  void reset({T value, bool isDisabled, bool updateParent, bool emitEvent}) {
+    updateParent ??= true;
+    emitEvent ??= true;
+
+    updateValue(value, onlySelf: !updateParent, emitEvent: emitEvent);
+    if (isDisabled != null) {
+      isDisabled
+          ? markAsDisabled(updateParent: updateParent, emitEvent: emitEvent)
+          : markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
+    }
+    markAsPristine(updateParent: updateParent);
+    markAsUntouched(updateParent: updateParent);
+  }
+
   void _updateAncestors({bool updateParent, bool emitEvent}) {
     if (_parent != null && updateParent) {
       _parent.updateValueAndValidity(

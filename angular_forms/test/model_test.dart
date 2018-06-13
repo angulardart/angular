@@ -235,6 +235,71 @@ void main() {
           expect(group.disabled, false);
         });
       });
+
+      group('reset', () {
+        Control control;
+
+        setUp(() {
+          control = new Control();
+        });
+
+        test('should reset value', () {
+          control.updateValue('some value');
+          expect(control.value, 'some value');
+          control.reset();
+          expect(control.value, null);
+        });
+
+        test('should reset pristine', () {
+          control.markAsDirty();
+          expect(control.dirty, true);
+          control.reset();
+          expect(control.dirty, false);
+        });
+
+        test('should reset touched', () {
+          control.markAsTouched();
+          expect(control.touched, true);
+          control.reset();
+          expect(control.touched, false);
+        });
+
+        test('should not reset disabled state', () {
+          control.markAsDisabled();
+          expect(control.disabled, true);
+          control.reset();
+          expect(control.disabled, true);
+        });
+
+        test('should not reset enabled state', () {
+          control.markAsEnabled();
+          expect(control.enabled, true);
+          control.reset();
+          expect(control.enabled, true);
+        });
+
+        test('should allow setting value', () {
+          control.reset(value: 'some value');
+          expect(control.value, 'some value');
+        });
+
+        test('should allow setting disabled state', () {
+          control.reset(isDisabled: true);
+          expect(control.disabled, true);
+        });
+
+        test('should allow setting disabled state when disabled', () {
+          control.markAsDisabled();
+          control.reset(isDisabled: true);
+          expect(control.disabled, true);
+        });
+
+        test('should allow setting enabled state when disabled', () {
+          control.markAsDisabled();
+          control.reset(isDisabled: false);
+          expect(control.disabled, false);
+        });
+      });
     });
 
     group('ControlGroup', () {
@@ -536,6 +601,71 @@ void main() {
           expect(emptyGroup.disabled, true);
           emptyGroup.markAsEnabled();
           expect(emptyGroup.disabled, false);
+        });
+      });
+
+      group('reset', () {
+        Control control;
+
+        setUp(() {
+          control = new Control();
+        });
+
+        test('should reset value', () {
+          control.updateValue('some value');
+          expect(control.value, 'some value');
+          control.reset();
+          expect(control.value, null);
+        });
+
+        test('should reset pristine', () {
+          control.markAsDirty();
+          expect(control.dirty, true);
+          control.reset();
+          expect(control.dirty, false);
+        });
+
+        test('should reset touched', () {
+          control.markAsTouched();
+          expect(control.touched, true);
+          control.reset();
+          expect(control.touched, false);
+        });
+
+        test('should not reset disabled state', () {
+          control.markAsDisabled();
+          expect(control.disabled, true);
+          control.reset();
+          expect(control.disabled, true);
+        });
+
+        test('should not reset enabled state', () {
+          control.markAsEnabled();
+          expect(control.enabled, true);
+          control.reset();
+          expect(control.enabled, true);
+        });
+
+        test('should allow setting value', () {
+          control.reset(value: 'some value');
+          expect(control.value, 'some value');
+        });
+
+        test('should allow setting disabled state', () {
+          control.reset(isDisabled: true);
+          expect(control.disabled, true);
+        });
+
+        test('should allow setting disabled state when disabled', () {
+          control.markAsDisabled();
+          control.reset(isDisabled: true);
+          expect(control.disabled, true);
+        });
+
+        test('should allow setting enabled state when disabled', () {
+          control.markAsDisabled();
+          control.reset(isDisabled: false);
+          expect(control.disabled, false);
         });
       });
     });
@@ -859,6 +989,71 @@ void main() {
           expect(emptyArray.disabled, true);
           emptyArray.markAsEnabled();
           expect(emptyArray.disabled, false);
+        });
+      });
+
+      group('reset', () {
+        Control control;
+
+        setUp(() {
+          control = new Control();
+        });
+
+        test('should reset value', () {
+          control.updateValue('some value');
+          expect(control.value, 'some value');
+          control.reset();
+          expect(control.value, null);
+        });
+
+        test('should reset pristine', () {
+          control.markAsDirty();
+          expect(control.dirty, true);
+          control.reset();
+          expect(control.dirty, false);
+        });
+
+        test('should reset touched', () {
+          control.markAsTouched();
+          expect(control.touched, true);
+          control.reset();
+          expect(control.touched, false);
+        });
+
+        test('should not reset disabled state', () {
+          control.markAsDisabled();
+          expect(control.disabled, true);
+          control.reset();
+          expect(control.disabled, true);
+        });
+
+        test('should not reset enabled state', () {
+          control.markAsEnabled();
+          expect(control.enabled, true);
+          control.reset();
+          expect(control.enabled, true);
+        });
+
+        test('should allow setting value', () {
+          control.reset(value: 'some value');
+          expect(control.value, 'some value');
+        });
+
+        test('should allow setting disabled state', () {
+          control.reset(isDisabled: true);
+          expect(control.disabled, true);
+        });
+
+        test('should allow setting disabled state when disabled', () {
+          control.markAsDisabled();
+          control.reset(isDisabled: true);
+          expect(control.disabled, true);
+        });
+
+        test('should allow setting enabled state when disabled', () {
+          control.markAsDisabled();
+          control.reset(isDisabled: false);
+          expect(control.disabled, false);
         });
       });
     });
