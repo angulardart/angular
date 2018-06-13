@@ -66,7 +66,6 @@ class ViewTestFooComponent0 extends DebugAppView<import5.TestFooComponent> {
         if (_ctx.foo) {
           var doc = import6.document;
           _el_0_0 = doc.createElement('div');
-          dbgElm(this, _el_0_0, 0, 0, 4);
           _text_0_1 = new import6.Text('Foo');
           _el_0_0.append(_text_0_1);
           addInlinedNodes(_anchor_0, [_el_0_0], true);
@@ -108,8 +107,7 @@ class _ViewTestFooComponent2 extends DebugAppView<import5.TestFooComponent> {
   ComponentRef<import5.TestFooComponent> build() {
     var doc = import6.document;
     _el_0 = doc.createElement('div');
-    dbgElm(this, _el_0, 0, 1, 4);
-    _el_1 = createSpanAndAppendDbg(this, doc, _el_0, 1, 2, 6);
+    _el_1 = createSpanAndAppend(doc, _el_0);
     _text_2 = new import6.Text('');
     _el_1.append(_text_2);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
@@ -152,7 +150,6 @@ class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _TestFooComponent_0_5 = new import5.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

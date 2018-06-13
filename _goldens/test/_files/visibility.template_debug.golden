@@ -55,7 +55,6 @@ class _ViewDependentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewDependent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _Dependent_0_5 = new import2.Dependent(this.injectorGet(import2.Dependency, viewData.parentIndex));
     _compView_0.create(_Dependent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -134,7 +133,6 @@ class _ViewDependencyWithDependentInViewHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _DependencyWithDependentInView_0_5 = new import2.DependencyWithDependentInView();
     _compView_0.create(_DependencyWithDependentInView_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -203,7 +201,6 @@ class _ViewDependencyWithContentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithContent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _DependencyWithContent_0_5 = new import2.DependencyWithContent();
     _compView_0.create(_DependencyWithContent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -256,7 +253,7 @@ class ViewDependencyAndDependentInView0 extends DebugAppView<import2.DependencyA
     final _rootEl = rootEl;
     final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import7.document;
-    _el_0 = createAndAppendDbg(this, doc, 'dependency', parentRenderNode, 0, 0, 4);
+    _el_0 = createAndAppend(doc, 'dependency', parentRenderNode);
     _compView_1 = new ViewDependent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
@@ -294,7 +291,6 @@ class _ViewDependencyAndDependentInViewHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewDependencyAndDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _DependencyAndDependentInView_0_5 = new import2.DependencyAndDependentInView();
     _compView_0.create(_DependencyAndDependentInView_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -353,7 +349,6 @@ class _ViewHasVisibilityAllHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHasVisibilityAll0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _HasVisibilityAll_0_5 = new import2.HasVisibilityAll();
     _compView_0.create(_HasVisibilityAll_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -420,7 +415,6 @@ class _ViewHasVisibilityLocalHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHasVisibilityLocal0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _HasVisibilityLocal_0_5 = new import2.HasVisibilityLocal();
     _compView_0.create(_HasVisibilityLocal_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

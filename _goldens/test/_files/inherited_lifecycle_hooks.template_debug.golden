@@ -55,7 +55,6 @@ class _ViewLifecycleHooksComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewLifecycleHooksComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _LifecycleHooksComponent_0_5 = new import2.LifecycleHooksComponent();
     _compView_0.create(_LifecycleHooksComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

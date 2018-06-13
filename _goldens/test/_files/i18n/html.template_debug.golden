@@ -36,7 +36,7 @@ class ViewI18nHtmlComponent0 extends DebugAppView<import2.I18nHtmlComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'p', parentRenderNode, 0, 0, 4);
+    _el_0 = createAndAppend(doc, 'p', parentRenderNode);
     import3.DocumentFragment _html_1 = import8.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_html_1);
     init(const [], null, [_el_0, _html_1]);
@@ -65,7 +65,6 @@ class _ViewI18nHtmlComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewI18nHtmlComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _I18nHtmlComponent_0_5 = new import2.I18nHtmlComponent();
     _compView_0.create(_I18nHtmlComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

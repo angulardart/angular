@@ -59,7 +59,6 @@ class _ViewTestComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewTestComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _TestComponent_0_5 = new import2.TestComponent();
     _compView_0.create(_TestComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

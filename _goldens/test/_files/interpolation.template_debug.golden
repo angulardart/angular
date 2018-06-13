@@ -37,7 +37,7 @@ class ViewInterpolationComponent0 extends DebugAppView<import2.InterpolationComp
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -73,7 +73,6 @@ class _ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _InterpolationComponent_0_5 = new import2.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -114,7 +113,7 @@ class ViewInterpolationComponentNoWhitespace0 extends DebugAppView<import2.Inter
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -150,7 +149,6 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends DebugAppView<dynamic>
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _InterpolationComponentNoWhitespace_0_5 = new import2.InterpolationComponentNoWhitespace();
     _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

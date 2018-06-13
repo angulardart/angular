@@ -621,54 +621,24 @@ class CompileView implements AppViewBuilder {
       _createMethod.addStmt(_createLocalDocumentVar());
     }
 
-    List<o.Expression> debugParams;
-    if (generateDebugInfo) {
-      debugParams = [
-        o.literal(debugNodeIndex),
-        debugSpan?.start == null
-            ? o.NULL_EXPR
-            : o.literal(debugSpan.start.line),
-        debugSpan?.start == null
-            ? o.NULL_EXPR
-            : o.literal(debugSpan.start.column)
-      ];
-    }
-
     if (parent != null && parent != o.NULL_EXPR) {
       o.Expression createExpr;
-      List<o.Expression> createParams;
-      if (generateDebugInfo) {
-        createParams = <o.Expression>[
-          o.THIS_EXPR,
-          new o.ReadVarExpr(docVarName)
-        ];
-      } else {
-        createParams = <o.Expression>[new o.ReadVarExpr(docVarName)];
-      }
+      final createParams = <o.Expression>[new o.ReadVarExpr(docVarName)];
 
       CompileIdentifierMetadata createAndAppendMethod;
       switch (tagName) {
         case 'div':
-          createAndAppendMethod = generateDebugInfo
-              ? Identifiers.createDivAndAppendDbg
-              : Identifiers.createDivAndAppend;
+          createAndAppendMethod = Identifiers.createDivAndAppend;
           break;
         case 'span':
-          createAndAppendMethod = generateDebugInfo
-              ? Identifiers.createSpanAndAppendDbg
-              : Identifiers.createSpanAndAppend;
+          createAndAppendMethod = Identifiers.createSpanAndAppend;
           break;
         default:
-          createAndAppendMethod = generateDebugInfo
-              ? Identifiers.createAndAppendDbg
-              : Identifiers.createAndAppend;
+          createAndAppendMethod = Identifiers.createAndAppend;
           createParams.add(o.literal(tagName));
           break;
       }
       createParams.add(parent);
-      if (generateDebugInfo) {
-        createParams.addAll(debugParams);
-      }
       createExpr = o.importExpr(createAndAppendMethod).callFn(createParams);
       _createMethod.addStmt(elementRef.toWriteExpr(createExpr).toStmt());
     } else {
@@ -677,13 +647,6 @@ class CompileView implements AppViewBuilder {
           .callMethod('createElement', [o.literal(tagName)]);
       _createMethod
           .addStmt(elementRef.toWriteExpr(createRenderNodeExpr).toStmt());
-      if (generateDebugInfo) {
-        _createMethod.addStmt(o
-            .importExpr(Identifiers.dbgElm)
-            .callFn(<o.Expression>[o.THIS_EXPR, elementRef.toReadExpr()]
-              ..addAll(debugParams))
-            .toStmt());
-      }
     }
   }
 
@@ -862,10 +825,6 @@ class CompileView implements AppViewBuilder {
           .toWriteExpr(
               compAppViewExpr.toReadExpr().prop(appViewRootElementName))
           .toStmt());
-      if (genConfig.genDebugInfo) {
-        _createMethod
-            .addStmt(_createDbgIndexElementCall(elementRef, nodes.length));
-      }
     } else {
       var parentRenderNodeExpr = _getParentRenderNode(parent);
       _createMethod.addStmt(elementRef

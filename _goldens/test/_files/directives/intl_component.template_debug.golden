@@ -40,12 +40,12 @@ class ViewCompWithoutFinal0 extends DebugAppView<import2.CompWithoutFinal> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
     _text_1 = new import3.Text('');
     _el_0.append(_text_1);
     import3.Text _text_2 = new import3.Text(' ');
     parentRenderNode.append(_text_2);
-    _el_3 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 3, 1, 4);
+    _el_3 = createAndAppend(doc, 'button', parentRenderNode);
     _text_4 = new import3.Text('');
     _el_3.append(_text_4);
     init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4]);
@@ -87,7 +87,6 @@ class _ViewCompWithoutFinalHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCompWithoutFinal0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _CompWithoutFinal_0_5 = new import2.CompWithoutFinal();
     _compView_0.create(_CompWithoutFinal_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -129,12 +128,12 @@ class ViewCompWithFinal0 extends DebugAppView<import2.CompWithFinal> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
     _text_1 = new import3.Text((ctx.okMessage ?? ''));
     _el_0.append(_text_1);
     import3.Text _text_2 = new import3.Text(' ');
     parentRenderNode.append(_text_2);
-    _el_3 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 3, 1, 4);
+    _el_3 = createAndAppend(doc, 'button', parentRenderNode);
     _text_4 = new import3.Text((ctx.cancelMessage ?? ''));
     _el_3.append(_text_4);
     init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4]);
@@ -159,7 +158,6 @@ class _ViewCompWithFinalHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCompWithFinal0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _CompWithFinal_0_5 = new import2.CompWithFinal();
     _compView_0.create(_CompWithFinal_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -201,12 +199,12 @@ class ViewCompWithFinalStatic0 extends DebugAppView<import2.CompWithFinalStatic>
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
     _text_1 = new import3.Text((import2.CompWithFinalStatic.okMessage ?? ''));
     _el_0.append(_text_1);
     import3.Text _text_2 = new import3.Text(' ');
     parentRenderNode.append(_text_2);
-    _el_3 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 3, 1, 4);
+    _el_3 = createAndAppend(doc, 'button', parentRenderNode);
     _text_4 = new import3.Text((import2.CompWithFinalStatic.cancelMessage ?? ''));
     _el_3.append(_text_4);
     init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4]);
@@ -231,7 +229,6 @@ class _ViewCompWithFinalStaticHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCompWithFinalStatic0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _CompWithFinalStatic_0_5 = new import2.CompWithFinalStatic();
     _compView_0.create(_CompWithFinalStatic_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -273,12 +270,12 @@ class ViewCompWithExternalFinal0 extends DebugAppView<import2.CompWithExternalFi
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
     _text_1 = new import3.Text((import2.Messages.okMessage ?? ''));
     _el_0.append(_text_1);
     import3.Text _text_2 = new import3.Text(' ');
     parentRenderNode.append(_text_2);
-    _el_3 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 3, 1, 4);
+    _el_3 = createAndAppend(doc, 'button', parentRenderNode);
     _text_4 = new import3.Text((import2.Messages.cancelMessage ?? ''));
     _el_3.append(_text_4);
     init(const [], null, [_el_0, _text_1, _text_2, _el_3, _text_4]);
@@ -303,7 +300,6 @@ class _ViewCompWithExternalFinalHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewCompWithExternalFinal0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _CompWithExternalFinal_0_5 = new import2.CompWithExternalFinal();
     _compView_0.create(_CompWithExternalFinal_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

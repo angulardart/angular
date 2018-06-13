@@ -88,16 +88,10 @@ class Identifiers {
       name: "checkBinding", moduleUrl: appViewUtilsModuleUrl);
   static final createAndAppend = new CompileIdentifierMetadata<dynamic>(
       name: "createAndAppend", moduleUrl: appViewModuleUrl);
-  static final createAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
-      name: "createAndAppendDbg", moduleUrl: debugAppViewModuleUrl);
   static final createDivAndAppend = new CompileIdentifierMetadata<dynamic>(
       name: "createDivAndAppend", moduleUrl: appViewModuleUrl);
-  static final createDivAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
-      name: "createDivAndAppendDbg", moduleUrl: debugAppViewModuleUrl);
   static final createSpanAndAppend = new CompileIdentifierMetadata<dynamic>(
       name: "createSpanAndAppend", moduleUrl: appViewModuleUrl);
-  static final createSpanAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
-      name: "createSpanAndAppendDbg", moduleUrl: debugAppViewModuleUrl);
   static final createViewContainerAnchor = new CompileIdentifierMetadata(
       name: 'createViewContainerAnchor', moduleUrl: appViewModuleUrl);
   static final dbgElm = new CompileIdentifierMetadata<dynamic>(

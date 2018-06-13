@@ -47,12 +47,12 @@ class ViewTestFooComponent0 extends DebugAppView<import1.TestFooComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 4);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('My own template');
     _el_0.append(_text_1);
     import3.Text _text_2 = new import3.Text('A directive:');
     parentRenderNode.append(_text_2);
-    _el_3 = createAndAppendDbg(this, doc, 'directive', parentRenderNode, 3, 1, 17);
+    _el_3 = createAndAppend(doc, 'directive', parentRenderNode);
     _TestDirective_3_5 = new import1.TestDirective();
     import3.Text _text_4 = new import3.Text('A component:');
     parentRenderNode.append(_text_4);
@@ -93,7 +93,6 @@ class _ViewTestFooComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _TestFooComponent_0_5 = new import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -132,7 +131,7 @@ class ViewTestSubComponent0 extends DebugAppView<import1.TestSubComponent> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 0);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('Bar');
     _el_0.append(_text_1);
     init(const [], null, [_el_0, _text_1]);
@@ -157,7 +156,6 @@ class _ViewTestSubComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewTestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _TestSubComponent_0_5 = new import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

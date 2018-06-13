@@ -56,7 +56,6 @@ class _ViewHostComponentNewSyntaxHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHostComponentNewSyntax0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _HostComponentNewSyntax_0_5 = new import2.HostComponentNewSyntax();
     _compView_0.create(_HostComponentNewSyntax_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -147,7 +146,6 @@ class _ViewHostComponentHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHostComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _HostComponent_0_5 = new import2.HostComponent();
     _compView_0.create(_HostComponent_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

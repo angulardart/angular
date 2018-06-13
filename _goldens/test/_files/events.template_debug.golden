@@ -37,7 +37,7 @@ class ViewUsesNativeEvents0 extends DebugAppView<import2.UsesNativeEvents> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createAndAppendDbg(this, doc, 'button', parentRenderNode, 0, 0, 4);
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
     _el_0.addEventListener('click', eventHandler0(ctx.onClick));
     init(const [], null, [_el_0]);
     _rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
@@ -62,7 +62,6 @@ class _ViewUsesNativeEventsHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesNativeEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesNativeEvents_0_5 = new import2.UsesNativeEvents();
     _compView_0.create(_UsesNativeEvents_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -142,7 +141,6 @@ class _ViewUsesAngularEventsHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewUsesAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _UsesAngularEvents_0_5 = new import2.UsesAngularEvents();
     _compView_0.create(_UsesAngularEvents_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -201,7 +199,6 @@ class _ViewHasAngularEventsHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHasAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _HasAngularEvents_0_5 = new import2.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -267,7 +264,6 @@ class _ViewHasManyNativeHostEventsHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewHasManyNativeHostEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _HasManyNativeHostEvents_0_5 = new import2.HasManyNativeHostEvents();
     _compView_0.create(_HasManyNativeHostEvents_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);

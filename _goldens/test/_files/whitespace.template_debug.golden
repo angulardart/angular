@@ -38,10 +38,10 @@ class ViewPreserveWhitespace0 extends DebugAppView<import2.PreserveWhitespace> {
     import3.Text _text_0 = new import3.Text('    ');
     parentRenderNode.append(_text_0);
     var doc = import3.document;
-    _el_1 = createDivAndAppendDbg(this, doc, parentRenderNode, 1, 0, 4);
+    _el_1 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_2 = new import3.Text('\n      Welcome...\n      To...\n      ');
     _el_1.append(_text_2);
-    _el_3 = createAndAppendDbg(this, doc, 'strong', _el_1, 3, 3, 6);
+    _el_3 = createAndAppend(doc, 'strong', _el_1);
     import3.Text _text_4 = new import3.Text('Jurassic...');
     _el_3.append(_text_4);
     import3.Text _text_5 = new import3.Text('\n      Park!\n    ');
@@ -70,7 +70,6 @@ class _ViewPreserveWhitespaceHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewPreserveWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _PreserveWhitespace_0_5 = new import2.PreserveWhitespace();
     _compView_0.create(_PreserveWhitespace_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
@@ -110,10 +109,10 @@ class ViewMinifyWhitespace0 extends DebugAppView<import2.MinifyWhitespace> {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppendDbg(this, doc, parentRenderNode, 0, 0, 4);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     import3.Text _text_1 = new import3.Text('Welcome... To... ');
     _el_0.append(_text_1);
-    _el_2 = createAndAppendDbg(this, doc, 'strong', _el_0, 2, 3, 6);
+    _el_2 = createAndAppend(doc, 'strong', _el_0);
     import3.Text _text_3 = new import3.Text('Jurassic...');
     _el_2.append(_text_3);
     import3.Text _text_4 = new import3.Text(' Park!');
@@ -140,7 +139,6 @@ class _ViewMinifyWhitespaceHost0 extends DebugAppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewMinifyWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    dbgIdx(rootEl, 0);
     _MinifyWhitespace_0_5 = new import2.MinifyWhitespace();
     _compView_0.create(_MinifyWhitespace_0_5, projectableNodes);
     init0Dbg(rootEl, [rootEl]);
