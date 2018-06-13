@@ -267,6 +267,49 @@ void main() {
         });
       });
 
+      group('updateValue', () {
+        Control control;
+        ControlGroup group;
+
+        setUp(() {
+          control = new Control('oldValue');
+          group = new ControlGroup({'one': control});
+        });
+
+        test('should update the value of the group', () {
+          group.updateValue({'one': 'newValue'});
+          expect(group.value, {'one': 'newValue'});
+        });
+
+        test('should update the value of the child control', () {
+          group.updateValue({'one': 'newValue'});
+          expect(control.value, 'newValue');
+        });
+
+        test('should "reset" the values with an empty map', () {
+          group.updateValue({});
+          expect(group.value, {'one': null});
+          expect(control.value, null);
+        });
+
+        test('should "reset" the values with a null map', () {
+          group.updateValue(null);
+          expect(group.value, {'one': null});
+          expect(control.value, null);
+        });
+
+        test('should throw if keys don\'t match', () {
+          expect(() => group.updateValue({'two': 'newValue'}),
+              throwsArgumentError);
+        });
+
+        test('should throw if missing control', () {
+          group.addControl('two', new Control());
+          expect(() => group.updateValue({'one': 'newValue'}),
+              throwsArgumentError);
+        });
+      });
+
       group('errors', () {
         test('should run the validator when the value changes', () {
           Map<String, bool> simpleValidator(c) =>
@@ -536,6 +579,45 @@ void main() {
           expect(a.value, []);
         });
       });
+
+      group('updateValue', () {
+        Control control;
+        ControlArray array;
+
+        setUp(() {
+          control = new Control('oldValue');
+          array = new ControlArray([control]);
+        });
+
+        test('should update the value of the group', () {
+          array.updateValue(['newValue']);
+          expect(array.value, ['newValue']);
+        });
+
+        test('should update the value of the child control', () {
+          array.updateValue(['newValue']);
+          expect(control.value, 'newValue');
+        });
+
+        test('should "reset" the values with an empty list', () {
+          array.updateValue([]);
+          expect(array.value, [null]);
+          expect(control.value, null);
+        });
+
+        test('should "reset" the values with a null list', () {
+          array.updateValue(null);
+          expect(array.value, [null]);
+          expect(control.value, null);
+        });
+
+        test('should throw if wrong length', () {
+          expect(() => array.updateValue(['one', 'two']), throwsArgumentError);
+          array.push(new Control('two'));
+          expect(() => array.updateValue(['one']), throwsArgumentError);
+        });
+      });
+
       group('errors', () {
         test('should run the validator when the value changes', () {
           Map<String, dynamic> simpleValidator(c) =>

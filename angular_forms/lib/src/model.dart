@@ -331,6 +331,22 @@ abstract class AbstractControl<T> {
     }
   }
 
+  /// Set the value of the AbstractControl to `value`.
+  ///
+  /// If `onlySelf` is `true`, this change will only affect the validation of
+  /// this `Control` and not its parent component. If `emitEvent` is `true`,
+  /// this change will cause a `valueChanges` event on the `Control` to be
+  /// emitted. Both of these options default to `false`.
+  ///
+  /// If `emitModelToViewChange` is `true`, the view will be notified about the
+  /// new value via an `onChange` event. This is the default behavior if
+  /// `emitModelToViewChange` is not specified.
+  void updateValue(T value,
+      {bool onlySelf,
+      bool emitEvent,
+      bool emitModelToViewChange,
+      String rawValue});
+
   /// Callback when control is asked to update it's value.
   ///
   /// Allows controls to calculate their value. For example control groups
@@ -380,6 +396,7 @@ class Control<T> extends AbstractControl<T> {
   /// If `emitModelToViewChange` is `true`, the view will be notified about the
   /// new value via an `onChange` event. This is the default behavior if
   /// `emitModelToViewChange` is not specified.
+  @override
   void updateValue(T value,
       {bool onlySelf,
       bool emitEvent,
@@ -455,6 +472,24 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
       controls.containsKey(controlName) && controls[controlName].enabled;
 
   @override
+  void updateValue(Map<String, dynamic> value,
+      {bool onlySelf,
+      bool emitEvent,
+      bool emitModelToViewChange,
+      String rawValue}) {
+    // Treat null and empty as the same thing.
+    if (value?.isEmpty ?? false) value = null;
+    _checkAllValuesPresent(value);
+    for (var name in controls.keys) {
+      controls[name].updateValue(value == null ? null : value[name],
+          onlySelf: true,
+          emitEvent: emitEvent,
+          emitModelToViewChange: emitModelToViewChange);
+    }
+    updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
+  }
+
+  @override
   void onUpdate() {
     _value = _reduceValue();
   }
@@ -495,6 +530,26 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
   }
 
   bool _included(String controlName) => controls[controlName]?.enabled ?? false;
+
+  void _checkAllValuesPresent(Map<String, dynamic> value) {
+    if (value == null) return;
+
+    assert(() {
+      for (var name in controls.keys) {
+        if (!value.containsKey(name)) {
+          throw new ArgumentError.value(
+              value, 'Must supply a value for form control with name: $name.');
+        }
+      }
+      for (var name in value.keys) {
+        if (!controls.containsKey(name)) {
+          throw new ArgumentError.value(
+              value, 'No form control found with name: $name.');
+        }
+      }
+      return true;
+    }());
+  }
 }
 
 /// Defines a part of a form, of variable length, that can contain other
@@ -551,6 +606,24 @@ class ControlArray extends AbstractControl<List> {
   num get length => controls.length;
 
   @override
+  void updateValue(List value,
+      {bool onlySelf,
+      bool emitEvent,
+      bool emitModelToViewChange,
+      String rawValue}) {
+    // Treat empty and null as the same.
+    if (value?.isEmpty ?? false) value = null;
+    _checkAllValuesPresent(value);
+    for (int i = 0; i < controls.length; i++) {
+      controls[i].updateValue(value == null ? null : value[i],
+          onlySelf: true,
+          emitEvent: emitEvent,
+          emitModelToViewChange: emitModelToViewChange);
+    }
+    updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
+  }
+
+  @override
   void onUpdate() {
     _value = [];
     for (var control in controls) {
@@ -583,6 +656,20 @@ class ControlArray extends AbstractControl<List> {
     for (var control in controls) {
       callback(control);
     }
+  }
+
+  void _checkAllValuesPresent(List value) {
+    if (value == null) return;
+
+    assert(() {
+      if (value.length != controls.length) {
+        throw new ArgumentError.value(
+            value,
+            'ControlArray has ${controls.length} controls, but received a list '
+            'of ${value.length} values.');
+      }
+      return true;
+    }());
   }
 }
 
