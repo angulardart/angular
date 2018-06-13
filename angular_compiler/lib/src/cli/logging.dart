@@ -17,7 +17,7 @@ import 'messages.dart';
 /// * [showInternalTraces]: If `true`, [BuildError.stackTrace] is printed.
 Future<T> runBuildZoned<T>(
   Future<T> Function() fn, {
-  bool showInternalTraces: false,
+  bool showInternalTraces = false,
 }) {
   final completer = new Completer<T>.sync();
   runZoned(

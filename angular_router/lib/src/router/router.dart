@@ -78,8 +78,8 @@ abstract class Router {
   /// serve the same purpose.
   Future<NavigationResult> navigateByUrl(
     String url, {
-    bool reload: false,
-    bool replace: false,
+    bool reload = false,
+    bool replace = false,
   });
 
   /// Registers the root [routerOutlet] and navigates to the current route.

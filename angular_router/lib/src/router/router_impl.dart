@@ -112,8 +112,8 @@ class RouterImpl extends Router {
   @override
   Future<NavigationResult> navigateByUrl(
     String url, {
-    bool reload: false,
-    bool replace: false,
+    bool reload = false,
+    bool replace = false,
   }) {
     final parsed = Url.parse(url);
     return navigate(
@@ -152,7 +152,7 @@ class RouterImpl extends Router {
   Future<NavigationResult> _navigate(
     String path,
     NavigationParams navigationParams, {
-    bool isRedirect: false,
+    bool isRedirect = false,
   }) async {
     if (!isRedirect) {
       // Don't check `CanNavigate` or trigger `onNavigationStart` on redirect.

@@ -91,10 +91,10 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       this.hasViewContainer,
       this.hasEmbeddedView,
       List<ReferenceAst> references,
-      {this.isHtmlElement: false,
-      this.hasTemplateRefQuery: false,
-      this.isInlined: false,
-      this.isDeferredComponent: false})
+      {this.isHtmlElement = false,
+      this.hasTemplateRefQuery = false,
+      this.isInlined = false,
+      this.isDeferredComponent = false})
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
     _providers = new ProvidersNode(this, parent?._providers,
         view == null || view.viewType == ViewType.host);

@@ -192,7 +192,7 @@ abstract class AppViewBuilder {
 
   /// Creates a field to store a stream subscription to be destroyed.
   void createSubscription(o.Expression streamReference, o.Expression handler,
-      {bool isMockLike: false});
+      {bool isMockLike = false});
 
   /// Add DOM event listener.
   void addDomEventListener(
@@ -218,7 +218,7 @@ abstract class AppViewBuilder {
       bool isMulti,
       bool isEager,
       CompileElement compileElement,
-      {bool forceDynamic: false});
+      {bool forceDynamic = false});
 
   /// Calls function directive on view startup.
   void callFunctionalDirective(o.Expression invokeExpr);
@@ -347,7 +347,7 @@ class CompileView implements AppViewBuilder {
       this.declarationElement,
       this.templateVariables,
       this.deferredModules,
-      {this.isInlined: false}) {
+      {this.isInlined = false}) {
     _createMethod = new CompileMethod(genDebugInfo);
     _injectorGetMethod = new CompileMethod(genDebugInfo);
     _updateContentQueriesMethod = new CompileMethod(genDebugInfo);
@@ -901,7 +901,7 @@ class CompileView implements AppViewBuilder {
 
   @override
   void createSubscription(o.Expression streamReference, o.Expression handler,
-      {bool isMockLike: false}) {
+      {bool isMockLike = false}) {
     final subscription = o.variable('subscription_${subscriptions.length}');
     subscriptions.add(subscription);
     _createMethod.addStmt(subscription
@@ -962,7 +962,7 @@ class CompileView implements AppViewBuilder {
       bool isMulti,
       bool isEager,
       CompileElement compileElement,
-      {bool forceDynamic: false}) {
+      {bool forceDynamic = false}) {
     o.Expression resolvedProviderValueExpr;
     o.OutputType type;
     if (isMulti) {

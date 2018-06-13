@@ -64,7 +64,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   ViewBuilderVisitor(
     this.view,
     this.stylesCompileResult, {
-    this.isInlinedView: false,
+    this.isInlinedView = false,
   });
 
   bool _isRootNode(CompileElement parent) {
@@ -152,7 +152,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       NodeReference elementRef,
       List<CompileDirectiveMetadata> directives,
       ElementAst ast,
-      {bool isDeferred: false}) {
+      {bool isDeferred = false}) {
     AppViewReference compAppViewExpr = view.createComponentNodeAndAppend(
         component, parent, elementRef, nodeIndex, ast,
         isDeferred: isDeferred);

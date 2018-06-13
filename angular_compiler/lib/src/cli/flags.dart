@@ -109,14 +109,14 @@ class CompilerFlags {
   final bool emitInjectableFactories;
 
   const CompilerFlags({
-    this.genDebugInfo: false,
-    this.i18nEnabled: false,
-    this.ignoreNgPlaceholderForGoldens: false,
-    this.profileFor: Profile.none,
-    this.useLegacyStyleEncapsulation: false,
-    this.forceMinifyWhitespace: false,
-    this.emitComponentFactories: true,
-    this.emitInjectableFactories: true,
+    this.genDebugInfo = false,
+    this.i18nEnabled = false,
+    this.ignoreNgPlaceholderForGoldens = false,
+    this.profileFor = Profile.none,
+    this.useLegacyStyleEncapsulation = false,
+    this.forceMinifyWhitespace = false,
+    this.emitComponentFactories = true,
+    this.emitInjectableFactories = true,
   });
 
   /// Creates flags by parsing command-line arguments.
@@ -124,9 +124,9 @@ class CompilerFlags {
   /// Failures are reported to [logger].
   factory CompilerFlags.parseArgs(
     List<String> args, {
-    CompilerFlags defaultTo: const CompilerFlags(genDebugInfo: false),
+    CompilerFlags defaultTo = const CompilerFlags(genDebugInfo: false),
     Logger logger,
-    Level severity: Level.WARNING,
+    Level severity = Level.WARNING,
   }) {
     final results = _argParser.parse(args);
     return new CompilerFlags.parseRaw(
@@ -145,7 +145,7 @@ class CompilerFlags {
     dynamic options,
     CompilerFlags defaultTo, {
     Logger logger,
-    Level severity: Level.WARNING,
+    Level severity = Level.WARNING,
   }) {
     // Use the default package:build logger if not specified, otherwise throw.
     logger ??= build.log;

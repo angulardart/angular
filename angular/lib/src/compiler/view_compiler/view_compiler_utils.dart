@@ -41,7 +41,7 @@ List<o.Expression> createSetAttributeParams(o.Expression renderNode,
 
 o.Expression getPropertyInView(
     o.Expression property, CompileView callingView, CompileView definedView,
-    {bool forceCast: false}) {
+    {bool forceCast = false}) {
   if (identical(callingView, definedView)) {
     return property;
   } else {
@@ -132,7 +132,7 @@ o.Expression createDebugInfoTokenExpression(CompileTokenMetadata token) {
 }
 
 o.Expression createFlatArray(List<o.Expression> expressions,
-    {bool constForEmpty: true}) {
+    {bool constForEmpty = true}) {
   // Simplify: No items.
   if (expressions.isEmpty) {
     return o.literalArr(

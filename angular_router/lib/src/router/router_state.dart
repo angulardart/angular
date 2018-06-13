@@ -29,7 +29,7 @@ class RouterState extends Url {
     String path,
     List<RouteDefinition> routes, {
     Map<String, String> parameters,
-    String fragment: '',
+    String fragment = '',
     Map<String, String> queryParameters,
   })  : this.parameters = new Map.unmodifiable(parameters ?? {}),
         this.routes = new List.unmodifiable(routes ?? []),
