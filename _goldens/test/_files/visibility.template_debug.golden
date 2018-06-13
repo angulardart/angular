@@ -8,57 +8,51 @@ export 'visibility.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/debug/debug_context.dart';
-import 'package:angular/src/debug/debug_app_view.dart';
-import 'visibility.dart' as import2;
-import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import5;
+import 'visibility.dart' as import1;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import7;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
+import 'dart:html' as import5;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$Dependent = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_Dependent0 = [];
 
-class ViewDependent0 extends DebugAppView<import2.Dependent> {
+class ViewDependent0 extends AppView<import1.Dependent> {
   static RenderComponentType _renderType;
-  ViewDependent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_Dependent0) {
-    rootEl = import7.document.createElement('dependent');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class Dependent - inline template', ViewEncapsulation.None, styles$Dependent);
+  ViewDependent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('dependent');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class Dependent - inline template', ViewEncapsulation.None, styles$Dependent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.Dependent> build() {
+  ComponentRef<import1.Dependent> build() {
     final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null, []);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
     return null;
   }
 }
 
-AppView<import2.Dependent> viewFactory_Dependent0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.Dependent> viewFactory_Dependent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewDependent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DependentHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_DependentHost0 = [
-  new StaticNodeDebugInfo([import2.Dependent], import2.Dependent, <String, dynamic>{})
-];
 
-class _ViewDependentHost0 extends DebugAppView<dynamic> {
+class _ViewDependentHost0 extends AppView<dynamic> {
   ViewDependent0 _compView_0;
-  import2.Dependent _Dependent_0_5;
-  _ViewDependentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependentHost0);
+  import1.Dependent _Dependent_0_5;
+  _ViewDependentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _Dependent_0_5 = new import2.Dependent(this.injectorGet(import2.Dependency, viewData.parentIndex));
+    _Dependent_0_5 = new import1.Dependent(this.injectorGet(import1.Dependency, viewData.parentIndex));
     _compView_0.create(_Dependent_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.Dependent>(0, this, rootEl, _Dependent_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.Dependent>(0, this, rootEl, _Dependent_0_5);
   }
 
   @override
@@ -76,32 +70,29 @@ AppView viewFactory_DependentHost0(AppView<dynamic> parentView, int parentIndex)
   return new _ViewDependentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.Dependent> DependentNgFactory = const ComponentFactory<import2.Dependent>('dependent', viewFactory_DependentHost0, _DependentMetadata);
+const ComponentFactory<import1.Dependent> DependentNgFactory = const ComponentFactory<import1.Dependent>('dependent', viewFactory_DependentHost0, _DependentMetadata);
 final List<dynamic> styles$DependencyWithDependentInView = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithDependentInView0 = [
-  new StaticNodeDebugInfo([import2.Dependent], import2.Dependent, <String, dynamic>{})
-];
 
-class ViewDependencyWithDependentInView0 extends DebugAppView<import2.DependencyWithDependentInView> {
-  import7.Element _el_0;
+class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithDependentInView> {
+  import5.Element _el_0;
   ViewDependent0 _compView_0;
-  import2.Dependent _Dependent_0_5;
+  import1.Dependent _Dependent_0_5;
   static RenderComponentType _renderType;
-  ViewDependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithDependentInView0) {
-    rootEl = import7.document.createElement('dependency-with-dependent-in-view');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class DependencyWithDependentInView - inline template', ViewEncapsulation.None, styles$DependencyWithDependentInView);
+  ViewDependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('dependency-with-dependent-in-view');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class DependencyWithDependentInView - inline template', ViewEncapsulation.None, styles$DependencyWithDependentInView);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.DependencyWithDependentInView> build() {
+  ComponentRef<import1.DependencyWithDependentInView> build() {
     final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = new ViewDependent0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _Dependent_0_5 = new import2.Dependent(parentView.injectorGet(import2.Dependency, viewData.parentIndex));
+    _Dependent_0_5 = new import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
     _compView_0.create(_Dependent_0_5, []);
-    init(const [], null, [_el_0]);
+    init(const [], null);
     return null;
   }
 
@@ -116,32 +107,29 @@ class ViewDependencyWithDependentInView0 extends DebugAppView<import2.Dependency
   }
 }
 
-AppView<import2.DependencyWithDependentInView> viewFactory_DependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewDependencyWithDependentInView0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DependencyWithDependentInViewHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithDependentInViewHost0 = [
-  new StaticNodeDebugInfo([import2.DependencyWithDependentInView, import2.Dependency], import2.DependencyWithDependentInView, <String, dynamic>{})
-];
 
-class _ViewDependencyWithDependentInViewHost0 extends DebugAppView<dynamic> {
+class _ViewDependencyWithDependentInViewHost0 extends AppView<dynamic> {
   ViewDependencyWithDependentInView0 _compView_0;
-  import2.DependencyWithDependentInView _DependencyWithDependentInView_0_5;
-  _ViewDependencyWithDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithDependentInViewHost0);
+  import1.DependencyWithDependentInView _DependencyWithDependentInView_0_5;
+  _ViewDependencyWithDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DependencyWithDependentInView_0_5 = new import2.DependencyWithDependentInView();
+    _DependencyWithDependentInView_0_5 = new import1.DependencyWithDependentInView();
     _compView_0.create(_DependencyWithDependentInView_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DependencyWithDependentInView>(0, this, rootEl, _DependencyWithDependentInView_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.DependencyWithDependentInView>(0, this, rootEl, _DependencyWithDependentInView_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.Dependency) && (0 == nodeIndex))) {
+    if ((identical(token, import1.Dependency) && (0 == nodeIndex))) {
       return _DependencyWithDependentInView_0_5;
     }
     return notFoundResult;
@@ -162,54 +150,49 @@ AppView viewFactory_DependencyWithDependentInViewHost0(AppView<dynamic> parentVi
   return new _ViewDependencyWithDependentInViewHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.DependencyWithDependentInView> DependencyWithDependentInViewNgFactory = const ComponentFactory<import2.DependencyWithDependentInView>('dependency-with-dependent-in-view', viewFactory_DependencyWithDependentInViewHost0, _DependencyWithDependentInViewMetadata);
+const ComponentFactory<import1.DependencyWithDependentInView> DependencyWithDependentInViewNgFactory = const ComponentFactory<import1.DependencyWithDependentInView>('dependency-with-dependent-in-view', viewFactory_DependencyWithDependentInViewHost0, _DependencyWithDependentInViewMetadata);
 final List<dynamic> styles$DependencyWithContent = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithContent0 = [];
 
-class ViewDependencyWithContent0 extends DebugAppView<import2.DependencyWithContent> {
+class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> {
   static RenderComponentType _renderType;
-  ViewDependencyWithContent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithContent0) {
-    rootEl = import7.document.createElement('dependency-with-content');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class DependencyWithContent - inline template', ViewEncapsulation.None, styles$DependencyWithContent);
+  ViewDependencyWithContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('dependency-with-content');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class DependencyWithContent - inline template', ViewEncapsulation.None, styles$DependencyWithContent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.DependencyWithContent> build() {
+  ComponentRef<import1.DependencyWithContent> build() {
     final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    dbg(null, 0, 0);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     project(parentRenderNode, 0);
-    init(const [], null, []);
+    init(const [], null);
     return null;
   }
 }
 
-AppView<import2.DependencyWithContent> viewFactory_DependencyWithContent0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.DependencyWithContent> viewFactory_DependencyWithContent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewDependencyWithContent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DependencyWithContentHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_DependencyWithContentHost0 = [
-  new StaticNodeDebugInfo([import2.DependencyWithContent, import2.Dependency], import2.DependencyWithContent, <String, dynamic>{})
-];
 
-class _ViewDependencyWithContentHost0 extends DebugAppView<dynamic> {
+class _ViewDependencyWithContentHost0 extends AppView<dynamic> {
   ViewDependencyWithContent0 _compView_0;
-  import2.DependencyWithContent _DependencyWithContent_0_5;
-  _ViewDependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyWithContentHost0);
+  import1.DependencyWithContent _DependencyWithContent_0_5;
+  _ViewDependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyWithContent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DependencyWithContent_0_5 = new import2.DependencyWithContent();
+    _DependencyWithContent_0_5 = new import1.DependencyWithContent();
     _compView_0.create(_DependencyWithContent_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DependencyWithContent>(0, this, rootEl, _DependencyWithContent_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.DependencyWithContent>(0, this, rootEl, _DependencyWithContent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.Dependency) && (0 == nodeIndex))) {
+    if ((identical(token, import1.Dependency) && (0 == nodeIndex))) {
       return _DependencyWithContent_0_5;
     }
     return notFoundResult;
@@ -230,36 +213,32 @@ AppView viewFactory_DependencyWithContentHost0(AppView<dynamic> parentView, int 
   return new _ViewDependencyWithContentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.DependencyWithContent> DependencyWithContentNgFactory = const ComponentFactory<import2.DependencyWithContent>('dependency-with-content', viewFactory_DependencyWithContentHost0, _DependencyWithContentMetadata);
+const ComponentFactory<import1.DependencyWithContent> DependencyWithContentNgFactory = const ComponentFactory<import1.DependencyWithContent>('dependency-with-content', viewFactory_DependencyWithContentHost0, _DependencyWithContentMetadata);
 final List<dynamic> styles$DependencyAndDependentInView = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_DependencyAndDependentInView0 = [
-  null,
-  new StaticNodeDebugInfo([import2.Dependent], import2.Dependent, <String, dynamic>{})
-];
 
-class ViewDependencyAndDependentInView0 extends DebugAppView<import2.DependencyAndDependentInView> {
-  import7.Element _el_0;
-  import7.Element _el_1;
+class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDependentInView> {
+  import5.Element _el_0;
+  import5.Element _el_1;
   ViewDependent0 _compView_1;
-  import2.Dependent _Dependent_1_5;
+  import1.Dependent _Dependent_1_5;
   static RenderComponentType _renderType;
-  ViewDependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyAndDependentInView0) {
-    rootEl = import7.document.createElement('dependency-and-dependent-in-view');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class DependencyAndDependentInView - inline template', ViewEncapsulation.None, styles$DependencyAndDependentInView);
+  ViewDependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('dependency-and-dependent-in-view');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class DependencyAndDependentInView - inline template', ViewEncapsulation.None, styles$DependencyAndDependentInView);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.DependencyAndDependentInView> build() {
+  ComponentRef<import1.DependencyAndDependentInView> build() {
     final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import7.document;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import5.document;
     _el_0 = createAndAppend(doc, 'dependency', parentRenderNode);
     _compView_1 = new ViewDependent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
-    _Dependent_1_5 = new import2.Dependent(parentView.injectorGet(import2.Dependency, viewData.parentIndex));
+    _Dependent_1_5 = new import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
     _compView_1.create(_Dependent_1_5, []);
-    init(const [], null, [_el_0, _el_1]);
+    init(const [], null);
     return null;
   }
 
@@ -274,27 +253,24 @@ class ViewDependencyAndDependentInView0 extends DebugAppView<import2.DependencyA
   }
 }
 
-AppView<import2.DependencyAndDependentInView> viewFactory_DependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewDependencyAndDependentInView0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DependencyAndDependentInViewHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_DependencyAndDependentInViewHost0 = [
-  new StaticNodeDebugInfo([import2.DependencyAndDependentInView], import2.DependencyAndDependentInView, <String, dynamic>{})
-];
 
-class _ViewDependencyAndDependentInViewHost0 extends DebugAppView<dynamic> {
+class _ViewDependencyAndDependentInViewHost0 extends AppView<dynamic> {
   ViewDependencyAndDependentInView0 _compView_0;
-  import2.DependencyAndDependentInView _DependencyAndDependentInView_0_5;
-  _ViewDependencyAndDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_DependencyAndDependentInViewHost0);
+  import1.DependencyAndDependentInView _DependencyAndDependentInView_0_5;
+  _ViewDependencyAndDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewDependencyAndDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DependencyAndDependentInView_0_5 = new import2.DependencyAndDependentInView();
+    _DependencyAndDependentInView_0_5 = new import1.DependencyAndDependentInView();
     _compView_0.create(_DependencyAndDependentInView_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.DependencyAndDependentInView>(0, this, rootEl, _DependencyAndDependentInView_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.DependencyAndDependentInView>(0, this, rootEl, _DependencyAndDependentInView_0_5);
   }
 
   @override
@@ -312,52 +288,48 @@ AppView viewFactory_DependencyAndDependentInViewHost0(AppView<dynamic> parentVie
   return new _ViewDependencyAndDependentInViewHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.DependencyAndDependentInView> DependencyAndDependentInViewNgFactory = const ComponentFactory<import2.DependencyAndDependentInView>('dependency-and-dependent-in-view', viewFactory_DependencyAndDependentInViewHost0, _DependencyAndDependentInViewMetadata);
+const ComponentFactory<import1.DependencyAndDependentInView> DependencyAndDependentInViewNgFactory = const ComponentFactory<import1.DependencyAndDependentInView>('dependency-and-dependent-in-view', viewFactory_DependencyAndDependentInViewHost0, _DependencyAndDependentInViewMetadata);
 final List<dynamic> styles$HasVisibilityAll = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityAll0 = [];
 
-class ViewHasVisibilityAll0 extends DebugAppView<import2.HasVisibilityAll> {
+class ViewHasVisibilityAll0 extends AppView<import1.HasVisibilityAll> {
   static RenderComponentType _renderType;
-  ViewHasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasVisibilityAll0) {
-    rootEl = import7.document.createElement('has-visibility-all');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class HasVisibilityAll - inline template', ViewEncapsulation.None, styles$HasVisibilityAll);
+  ViewHasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('has-visibility-all');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class HasVisibilityAll - inline template', ViewEncapsulation.None, styles$HasVisibilityAll);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.HasVisibilityAll> build() {
+  ComponentRef<import1.HasVisibilityAll> build() {
     final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null, []);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
     return null;
   }
 }
 
-AppView<import2.HasVisibilityAll> viewFactory_HasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.HasVisibilityAll> viewFactory_HasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewHasVisibilityAll0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HasVisibilityAllHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityAllHost0 = [
-  new StaticNodeDebugInfo([import2.HasVisibilityAll], import2.HasVisibilityAll, <String, dynamic>{})
-];
 
-class _ViewHasVisibilityAllHost0 extends DebugAppView<dynamic> {
+class _ViewHasVisibilityAllHost0 extends AppView<dynamic> {
   ViewHasVisibilityAll0 _compView_0;
-  import2.HasVisibilityAll _HasVisibilityAll_0_5;
-  _ViewHasVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasVisibilityAllHost0);
+  import1.HasVisibilityAll _HasVisibilityAll_0_5;
+  _ViewHasVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasVisibilityAll0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasVisibilityAll_0_5 = new import2.HasVisibilityAll();
+    _HasVisibilityAll_0_5 = new import1.HasVisibilityAll();
     _compView_0.create(_HasVisibilityAll_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.HasVisibilityAll>(0, this, rootEl, _HasVisibilityAll_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.HasVisibilityAll>(0, this, rootEl, _HasVisibilityAll_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import2.HasVisibilityAll) && (0 == nodeIndex))) {
+    if ((identical(token, import1.HasVisibilityAll) && (0 == nodeIndex))) {
       return _HasVisibilityAll_0_5;
     }
     return notFoundResult;
@@ -378,47 +350,43 @@ AppView viewFactory_HasVisibilityAllHost0(AppView<dynamic> parentView, int paren
   return new _ViewHasVisibilityAllHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.HasVisibilityAll> HasVisibilityAllNgFactory = const ComponentFactory<import2.HasVisibilityAll>('has-visibility-all', viewFactory_HasVisibilityAllHost0, _HasVisibilityAllMetadata);
+const ComponentFactory<import1.HasVisibilityAll> HasVisibilityAllNgFactory = const ComponentFactory<import1.HasVisibilityAll>('has-visibility-all', viewFactory_HasVisibilityAllHost0, _HasVisibilityAllMetadata);
 final List<dynamic> styles$HasVisibilityLocal = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityLocal0 = [];
 
-class ViewHasVisibilityLocal0 extends DebugAppView<import2.HasVisibilityLocal> {
+class ViewHasVisibilityLocal0 extends AppView<import1.HasVisibilityLocal> {
   static RenderComponentType _renderType;
-  ViewHasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasVisibilityLocal0) {
-    rootEl = import7.document.createElement('has-visibility-local');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class HasVisibilityLocal - inline template', ViewEncapsulation.None, styles$HasVisibilityLocal);
+  ViewHasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('has-visibility-local');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/visibility.dart class HasVisibilityLocal - inline template', ViewEncapsulation.None, styles$HasVisibilityLocal);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.HasVisibilityLocal> build() {
+  ComponentRef<import1.HasVisibilityLocal> build() {
     final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null, []);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
     return null;
   }
 }
 
-AppView<import2.HasVisibilityLocal> viewFactory_HasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewHasVisibilityLocal0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HasVisibilityLocalHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_HasVisibilityLocalHost0 = [
-  new StaticNodeDebugInfo([import2.HasVisibilityLocal], import2.HasVisibilityLocal, <String, dynamic>{})
-];
 
-class _ViewHasVisibilityLocalHost0 extends DebugAppView<dynamic> {
+class _ViewHasVisibilityLocalHost0 extends AppView<dynamic> {
   ViewHasVisibilityLocal0 _compView_0;
-  import2.HasVisibilityLocal _HasVisibilityLocal_0_5;
-  _ViewHasVisibilityLocalHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_HasVisibilityLocalHost0);
+  import1.HasVisibilityLocal _HasVisibilityLocal_0_5;
+  _ViewHasVisibilityLocalHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewHasVisibilityLocal0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasVisibilityLocal_0_5 = new import2.HasVisibilityLocal();
+    _HasVisibilityLocal_0_5 = new import1.HasVisibilityLocal();
     _compView_0.create(_HasVisibilityLocal_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.HasVisibilityLocal>(0, this, rootEl, _HasVisibilityLocal_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.HasVisibilityLocal>(0, this, rootEl, _HasVisibilityLocal_0_5);
   }
 
   @override
@@ -436,7 +404,7 @@ AppView viewFactory_HasVisibilityLocalHost0(AppView<dynamic> parentView, int par
   return new _ViewHasVisibilityLocalHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.HasVisibilityLocal> HasVisibilityLocalNgFactory = const ComponentFactory<import2.HasVisibilityLocal>('has-visibility-local', viewFactory_HasVisibilityLocalHost0, _HasVisibilityLocalMetadata);
+const ComponentFactory<import1.HasVisibilityLocal> HasVisibilityLocalNgFactory = const ComponentFactory<import1.HasVisibilityLocal>('has-visibility-local', viewFactory_HasVisibilityLocalHost0, _HasVisibilityLocalMetadata);
 const _DependentMetadata = const [];
 const _DependencyWithDependentInViewMetadata = const [];
 const _DependencyWithContentMetadata = const [];

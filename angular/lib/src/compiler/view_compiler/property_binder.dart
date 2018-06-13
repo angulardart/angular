@@ -166,7 +166,6 @@ void bindRenderText(
   // Expression that points to _expr_## stored value.
   var valueField = _createBindFieldExpr(bindingIndex);
   var dynamicRenderMethod = new CompileMethod(view.genDebugInfo);
-  dynamicRenderMethod.resetDebugInfo(compileNode.nodeIndex, boundText);
   var constantRenderMethod = new CompileMethod(view.genDebugInfo);
   _bind(
       view.component,
@@ -421,8 +420,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var dynamicInputsMethod = new CompileMethod(view.genDebugInfo);
   var constantInputsMethod = new CompileMethod(view.genDebugInfo);
-  dynamicInputsMethod.resetDebugInfo(
-      compileElement.nodeIndex, compileElement.sourceAst);
   var lifecycleHooks = directive.lifecycleHooks;
   bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.onChanges);
   bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.afterChanges);
@@ -458,7 +455,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   // input is a BoundPropertyAst that contains binding metadata.
   for (var input in directiveAst.inputs) {
     var bindingIndex = view.nameResolver.createUniqueBindIndex();
-    dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
     var fieldExpr = _createBindFieldExpr(bindingIndex);
     var currValExpr = _createCurrValueExpr(bindingIndex);
     var statements = <o.Statement>[];
@@ -647,12 +643,9 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var dynamicInputsMethod = new CompileMethod(view.genDebugInfo);
   var constantInputsMethod = new CompileMethod(view.genDebugInfo);
-  dynamicInputsMethod.resetDebugInfo(
-      compileElement.nodeIndex, compileElement.sourceAst);
 
   var input = directiveAst.inputs.single;
   var bindingIndex = view.nameResolver.createUniqueBindIndex();
-  dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
   var fieldExpr = _createBindFieldExpr(bindingIndex);
   var currValExpr = _createCurrValueExpr(bindingIndex);
 

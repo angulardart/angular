@@ -18,8 +18,6 @@ class Identifiers {
       name: "appViewUtils", moduleUrl: appViewUtilsModuleUrl);
   static final AppView = new CompileIdentifierMetadata<dynamic>(
       name: "AppView", moduleUrl: appViewModuleUrl);
-  static final DebugAppView = new CompileIdentifierMetadata<dynamic>(
-      name: "DebugAppView", moduleUrl: debugAppViewModuleUrl);
   static final ViewContainer = new CompileIdentifierMetadata<dynamic>(
       name: "ViewContainer",
       moduleUrl: "asset:angular/lib/src/core/linker/view_container.dart");
@@ -71,12 +69,6 @@ class Identifiers {
       moduleUrl: 'asset:angular/lib/src/core/linker/view_type.dart');
   static final ChangeDetectionStrategy = new CompileIdentifierMetadata<dynamic>(
       name: "ChangeDetectionStrategy", moduleUrl: cdModuleUrl);
-  static final StaticNodeDebugInfo = new CompileIdentifierMetadata<dynamic>(
-      name: "StaticNodeDebugInfo",
-      moduleUrl: 'asset:angular/lib/src/debug/debug_context.dart');
-  static final DebugContext = new CompileIdentifierMetadata<dynamic>(
-      name: "DebugContext",
-      moduleUrl: 'asset:angular/lib/src/debug/debug_context.dart');
   static final TemplateSecurityContext = new CompileIdentifierMetadata<dynamic>(
       name: 'TemplateSecurityContext',
       moduleUrl: 'asset:angular/lib/src/core/security.dart');
@@ -94,8 +86,6 @@ class Identifiers {
       name: "createSpanAndAppend", moduleUrl: appViewModuleUrl);
   static final createViewContainerAnchor = new CompileIdentifierMetadata(
       name: 'createViewContainerAnchor', moduleUrl: appViewModuleUrl);
-  static final dbgElm = new CompileIdentifierMetadata<dynamic>(
-      name: "dbgElm", moduleUrl: debugAppViewModuleUrl);
   static final devModeEqual = new CompileIdentifierMetadata<dynamic>(
       name: "devModeEqual", moduleUrl: cdModuleUrl);
   static final identical =

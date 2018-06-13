@@ -8,75 +8,68 @@ export 'interpolation.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/debug/debug_context.dart';
-import 'package:angular/src/debug/debug_app_view.dart';
-import 'interpolation.dart' as import2;
-import 'dart:html' as import3;
-import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import6;
+import 'interpolation.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$InterpolationComponent = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponent0 = [null, null];
 
-class ViewInterpolationComponent0 extends DebugAppView<import2.InterpolationComponent> {
-  import3.DivElement _el_0;
-  import3.Text _text_1;
+class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent> {
+  import2.DivElement _el_0;
+  import2.Text _text_1;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InterpolationComponent0) {
-    rootEl = import3.document.createElement('interpolation');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/interpolation.dart class InterpolationComponent - inline template', ViewEncapsulation.None, styles$InterpolationComponent);
+  ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('interpolation');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/interpolation.dart class InterpolationComponent - inline template', ViewEncapsulation.None, styles$InterpolationComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.InterpolationComponent> build() {
+  ComponentRef<import1.InterpolationComponent> build() {
     final _rootEl = rootEl;
-    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import3.document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _text_1 = new import3.Text('');
+    _text_1 = new import2.Text('');
     _el_0.append(_text_1);
-    init(const [], null, [_el_0, _text_1]);
+    init(const [], null);
     return null;
   }
 
   @override
   void detectChangesInternal() {
-    final import2.InterpolationComponent _ctx = ctx;
-    dbg(1, 1, 2);
+    final import1.InterpolationComponent _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
-    if (import8.checkBinding(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }
 }
 
-AppView<import2.InterpolationComponent> viewFactory_InterpolationComponent0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.InterpolationComponent> viewFactory_InterpolationComponent0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewInterpolationComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationComponentHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentHost0 = [
-  new StaticNodeDebugInfo([import2.InterpolationComponent], import2.InterpolationComponent, <String, dynamic>{})
-];
 
-class _ViewInterpolationComponentHost0 extends DebugAppView<dynamic> {
+class _ViewInterpolationComponentHost0 extends AppView<dynamic> {
   ViewInterpolationComponent0 _compView_0;
-  import2.InterpolationComponent _InterpolationComponent_0_5;
-  _ViewInterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InterpolationComponentHost0);
+  import1.InterpolationComponent _InterpolationComponent_0_5;
+  _ViewInterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponent_0_5 = new import2.InterpolationComponent();
+    _InterpolationComponent_0_5 = new import1.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.InterpolationComponent>(0, this, rootEl, _InterpolationComponent_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.InterpolationComponent>(0, this, rootEl, _InterpolationComponent_0_5);
   }
 
   @override
@@ -94,65 +87,60 @@ AppView viewFactory_InterpolationComponentHost0(AppView<dynamic> parentView, int
   return new _ViewInterpolationComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.InterpolationComponent> InterpolationComponentNgFactory = const ComponentFactory<import2.InterpolationComponent>('interpolation', viewFactory_InterpolationComponentHost0, _InterpolationComponentMetadata);
+const ComponentFactory<import1.InterpolationComponent> InterpolationComponentNgFactory = const ComponentFactory<import1.InterpolationComponent>('interpolation', viewFactory_InterpolationComponentHost0, _InterpolationComponentMetadata);
 final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentNoWhitespace0 = [null, null];
 
-class ViewInterpolationComponentNoWhitespace0 extends DebugAppView<import2.InterpolationComponentNoWhitespace> {
-  import3.DivElement _el_0;
-  import3.Text _text_1;
+class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.InterpolationComponentNoWhitespace> {
+  import2.DivElement _el_0;
+  import2.Text _text_1;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InterpolationComponentNoWhitespace0) {
-    rootEl = import3.document.createElement('interpolation');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/interpolation.dart class InterpolationComponentNoWhitespace - inline template', ViewEncapsulation.None, styles$InterpolationComponentNoWhitespace);
+  ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('interpolation');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/interpolation.dart class InterpolationComponentNoWhitespace - inline template', ViewEncapsulation.None, styles$InterpolationComponentNoWhitespace);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.InterpolationComponentNoWhitespace> build() {
+  ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
     final _rootEl = rootEl;
-    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import3.document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _text_1 = new import3.Text('');
+    _text_1 = new import2.Text('');
     _el_0.append(_text_1);
-    init(const [], null, [_el_0, _text_1]);
+    init(const [], null);
     return null;
   }
 
   @override
   void detectChangesInternal() {
-    final import2.InterpolationComponentNoWhitespace _ctx = ctx;
-    dbg(1, 1, 2);
+    final import1.InterpolationComponentNoWhitespace _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
-    if (import8.checkBinding(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }
 }
 
-AppView<import2.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewInterpolationComponentNoWhitespace0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_InterpolationComponentNoWhitespaceHost0 = [
-  new StaticNodeDebugInfo([import2.InterpolationComponentNoWhitespace], import2.InterpolationComponentNoWhitespace, <String, dynamic>{})
-];
 
-class _ViewInterpolationComponentNoWhitespaceHost0 extends DebugAppView<dynamic> {
+class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
-  import2.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
-  _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_InterpolationComponentNoWhitespaceHost0);
+  import1.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
+  _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponentNoWhitespace_0_5 = new import2.InterpolationComponentNoWhitespace();
+    _InterpolationComponentNoWhitespace_0_5 = new import1.InterpolationComponentNoWhitespace();
     _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.InterpolationComponentNoWhitespace>(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.InterpolationComponentNoWhitespace>(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
   }
 
   @override
@@ -170,7 +158,7 @@ AppView viewFactory_InterpolationComponentNoWhitespaceHost0(AppView<dynamic> par
   return new _ViewInterpolationComponentNoWhitespaceHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.InterpolationComponentNoWhitespace> InterpolationComponentNoWhitespaceNgFactory = const ComponentFactory<import2.InterpolationComponentNoWhitespace>('interpolation', viewFactory_InterpolationComponentNoWhitespaceHost0, _InterpolationComponentNoWhitespaceMetadata);
+const ComponentFactory<import1.InterpolationComponentNoWhitespace> InterpolationComponentNoWhitespaceNgFactory = const ComponentFactory<import1.InterpolationComponentNoWhitespace>('interpolation', viewFactory_InterpolationComponentNoWhitespaceHost0, _InterpolationComponentNoWhitespaceMetadata);
 const _InterpolationComponentMetadata = const [];
 const _InterpolationComponentNoWhitespaceMetadata = const [];
 var _visited = false;

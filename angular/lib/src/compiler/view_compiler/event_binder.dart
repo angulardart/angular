@@ -70,7 +70,6 @@ class CompileEventListener {
     if (directive != null && directive.isComponent) {
       _hasComponentHostListener = true;
     }
-    _method.resetDebugInfo(compileElement.nodeIndex, hostEvent);
     var context =
         directiveInstance?.build() ?? new o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(_nameResolver, context,

@@ -62,10 +62,6 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   static const List<String> whiteListedImports = const [
     'package:angular/angular.dart',
     'dart:core',
-    // 'dart:html',
-    // StaticNodeDebugInfo, DebugContext.
-    'asset:angular/lib/src/debug/debug_context.dart',
-    'package:angular/src/debug/debug_context.dart',
     // ElementRef.
     'asset:angular/lib/src/core/linker/element_ref.dart',
     'package:angular/src/core/linker/element_ref.dart',
@@ -81,11 +77,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     // NgIf.
     'asset:angular/lib/src/common/directives/ng_if.dart',
     'package:angular/src/common/directives/ng_if.dart',
-    // AppView, DebugAppView.
+    // AppView.
     'asset:angular/lib/src/core/linker/app_view.dart',
     'package:angular/src/core/linker/app_view.dart',
-    'asset:angular/lib/src/debug/debug_app_view.dart',
-    'package:angular/src/debug/debug_app_view.dart',
     // RenderComponentType.
     'asset:angular/lib/src/core/render/api.dart',
     'package:angular/src/core/render/api.dart',
