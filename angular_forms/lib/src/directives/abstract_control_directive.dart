@@ -32,4 +32,16 @@ abstract class AbstractControlDirective<T extends AbstractControl> {
     if (isDisabled && !control.disabled) control.markAsDisabled();
     if (!isDisabled && !control.enabled) control.markAsEnabled();
   }
+
+  /// Resets the form control.
+  ///
+  /// This means by default:
+  /// * it is marked as `pristine`
+  /// * it is marked as `untouched`
+  /// * value is set to null
+  ///
+  /// For more information, see `AbstractControl`.
+  void reset({value}) {
+    control?.reset(value: value);
+  }
 }

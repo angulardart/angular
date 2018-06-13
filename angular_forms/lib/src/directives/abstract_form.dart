@@ -35,6 +35,12 @@ abstract class AbstractForm extends ControlContainer implements Form {
     event?.preventDefault();
   }
 
+  @HostListener('reset')
+  void onReset(Event event) {
+    reset();
+    event?.preventDefault();
+  }
+
   @override
   Form get formDirective => this;
 

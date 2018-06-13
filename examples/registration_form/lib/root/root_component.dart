@@ -28,8 +28,9 @@ class RootComponent {
   }
 
   // TODO(alorenzen): Reset form inputs.
-  void onClear() {
+  void onClear(NgForm form) {
     person = null;
+    form.control.reset();
   }
 
   Person _createPerson(Map<String, dynamic> values) {
