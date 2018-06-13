@@ -10,10 +10,9 @@ import '../compile_metadata.dart'
 import '../expression_parser/ast.dart' as ast;
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
-import '../identifiers.dart' show Identifiers, identifierToken;
+import '../identifiers.dart' show Identifiers;
 import '../is_pure_html.dart';
 import '../output/output_ast.dart' as o;
-import '../provider_parser.dart' show ngIfTokenMetadata, ngForTokenMetadata;
 import '../style_compiler.dart' show StylesCompileResult;
 import '../template_ast.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
@@ -36,7 +35,6 @@ import 'view_compiler_utils.dart'
     show
         cachedParentIndexVarName,
         createFlatArray,
-        createDebugInfoTokenExpression,
         createSetAttributeStatement,
         detectHtmlElementFromTagName,
         componentFromDirectives,
@@ -356,49 +354,13 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   }
 }
 
-o.Expression createStaticNodeDebugInfo(CompileNode node) {
-  var compileElement = node is CompileElement ? node : null;
-  List<o.Expression> providerTokens = [];
-  o.Expression componentToken = o.NULL_EXPR;
-  var varTokenEntries = <List>[];
-  if (compileElement != null) {
-    providerTokens = compileElement.getProviderTokens();
-    if (compileElement.component != null) {
-      componentToken = createDebugInfoTokenExpression(
-          identifierToken(compileElement.component.type));
-    }
-    compileElement.referenceTokens?.forEach((String varName, token) {
-      // Skip generating debug info for NgIf/NgFor since they are not
-      // reachable through injection anymore.
-      if (token == null ||
-          !(token.equalsTo(ngIfTokenMetadata) ||
-              token.equalsTo(ngForTokenMetadata))) {
-        varTokenEntries.add([
-          varName,
-          token != null ? createDebugInfoTokenExpression(token) : o.NULL_EXPR
-        ]);
-      }
-    });
-  }
-  // Optimize StaticNodeDebugInfo(const [],null,const <String, dynamic>{}), case
-  // by writing out null.
-  if (providerTokens.isEmpty &&
-      componentToken == o.NULL_EXPR &&
-      varTokenEntries.isEmpty) {
-    return o.NULL_EXPR;
-  }
-  return o.importExpr(Identifiers.StaticNodeDebugInfo).instantiate([
-    o.literalArr(providerTokens, new o.ArrayType(o.DYNAMIC_TYPE)),
-    componentToken,
-    o.literalMap(varTokenEntries, new o.MapType(o.DYNAMIC_TYPE))
-  ], o.importType(Identifiers.StaticNodeDebugInfo, null));
-}
-
 /// Generates output ast for a CompileView and returns a [ClassStmt] for the
 /// view of embedded template.
 o.ClassStmt createViewClass(
-    CompileView view, o.Expression nodeDebugInfosVar, Parser parser) {
-  var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
+  CompileView view,
+  Parser parser,
+) {
+  var viewConstructor = _createViewClassConstructor(view);
   var viewMethods = <o.ClassMethod>[
     new o.ClassMethod(
         "build",
@@ -428,12 +390,9 @@ o.ClassStmt createViewClass(
         [new o.FnParam(DetectChangesVars.firstCheck.name, o.BOOL_TYPE)],
         view.detectHostChangesMethod.finish()));
   }
-  var superClass = view.genConfig.genDebugInfo
-      ? Identifiers.DebugAppView
-      : Identifiers.AppView;
   var viewClass = new o.ClassStmt(
       view.className,
-      o.importExpr(superClass, typeParams: [_getContextType(view)]),
+      o.importExpr(Identifiers.AppView, typeParams: [_getContextType(view)]),
       view.storage.fields,
       view.getters,
       viewConstructor,
@@ -446,8 +405,7 @@ o.ClassStmt createViewClass(
   return viewClass;
 }
 
-o.ClassMethod _createViewClassConstructor(
-    CompileView view, o.Expression nodeDebugInfosVar) {
+o.ClassMethod _createViewClassConstructor(CompileView view) {
   var emptyTemplateVariableBindings = view.templateVariables
       .map((variable) => [variable.value, o.NULL_EXPR])
       .toList();
@@ -463,9 +421,6 @@ o.ClassMethod _createViewClassConstructor(
     ViewConstructorVars.parentIndex,
     changeDetectionStrategyToConst(_getChangeDetectionMode(view))
   ];
-  if (view.genConfig.genDebugInfo) {
-    superConstructorArgs.add(nodeDebugInfosVar);
-  }
   o.ClassMethod ctor = new o.ClassMethod(null, viewConstructorArgs,
       [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()]);
   if (view.viewType == ViewType.component && view.viewIndex == 0) {
@@ -684,34 +639,16 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     initParams.add(subscriptions);
   }
 
-  // In DEBUG mode we call:
-  //
-  // init(rootNodes, subscriptions, renderNodes);
-  //
   // In RELEASE mode we call:
   //
   // init(rootNodes, subscriptions);
   // or init0 if we have a single root node with no subscriptions.
-  o.Expression renderNodesArrayExpr;
-  if (view.genConfig.genDebugInfo) {
-    final renderNodes =
-        view.nodes.map((node) => node.renderNode.toReadExpr()).toList();
-    renderNodesArrayExpr = o.literalArr(renderNodes);
-    initParams.add(renderNodesArrayExpr);
-  }
-
   if (rootElements is o.LiteralArrayExpr &&
       rootElements.entries.length == 1 &&
       subscriptions == o.NULL_EXPR) {
-    if (view.genConfig.genDebugInfo) {
-      statements.add(new o.InvokeMemberMethodExpr(
-              'init0Dbg', [rootElements.entries[0], renderNodesArrayExpr])
-          .toStmt());
-    } else {
-      statements.add(
-          new o.InvokeMemberMethodExpr('init0', [rootElements.entries[0]])
-              .toStmt());
-    }
+    statements.add(
+        new o.InvokeMemberMethodExpr('init0', [rootElements.entries[0]])
+            .toStmt());
   } else {
     statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
   }

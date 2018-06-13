@@ -8,72 +8,66 @@ export 'whitespace.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/debug/debug_context.dart';
-import 'package:angular/src/debug/debug_app_view.dart';
-import 'whitespace.dart' as import2;
-import 'dart:html' as import3;
-import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/app_view.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import6;
+import 'whitespace.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$PreserveWhitespace = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_PreserveWhitespace0 = [null, null, null, null, null, null, null];
 
-class ViewPreserveWhitespace0 extends DebugAppView<import2.PreserveWhitespace> {
-  import3.DivElement _el_1;
-  import3.Element _el_3;
+class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
+  import2.DivElement _el_1;
+  import2.Element _el_3;
   static RenderComponentType _renderType;
-  ViewPreserveWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_PreserveWhitespace0) {
-    rootEl = import3.document.createElement('preserve-whitespace');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/whitespace.dart class PreserveWhitespace - inline template', ViewEncapsulation.None, styles$PreserveWhitespace);
+  ViewPreserveWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('preserve-whitespace');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/whitespace.dart class PreserveWhitespace - inline template', ViewEncapsulation.None, styles$PreserveWhitespace);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.PreserveWhitespace> build() {
+  ComponentRef<import1.PreserveWhitespace> build() {
     final _rootEl = rootEl;
-    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import3.Text _text_0 = new import3.Text('    ');
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    import2.Text _text_0 = new import2.Text('    ');
     parentRenderNode.append(_text_0);
-    var doc = import3.document;
+    var doc = import2.document;
     _el_1 = createDivAndAppend(doc, parentRenderNode);
-    import3.Text _text_2 = new import3.Text('\n      Welcome...\n      To...\n      ');
+    import2.Text _text_2 = new import2.Text('\n      Welcome...\n      To...\n      ');
     _el_1.append(_text_2);
     _el_3 = createAndAppend(doc, 'strong', _el_1);
-    import3.Text _text_4 = new import3.Text('Jurassic...');
+    import2.Text _text_4 = new import2.Text('Jurassic...');
     _el_3.append(_text_4);
-    import3.Text _text_5 = new import3.Text('\n      Park!\n    ');
+    import2.Text _text_5 = new import2.Text('\n      Park!\n    ');
     _el_1.append(_text_5);
-    import3.Text _text_6 = new import3.Text('\n  ');
+    import2.Text _text_6 = new import2.Text('\n  ');
     parentRenderNode.append(_text_6);
-    init(const [], null, [_text_0, _el_1, _text_2, _el_3, _text_4, _text_5, _text_6]);
+    init(const [], null);
     return null;
   }
 }
 
-AppView<import2.PreserveWhitespace> viewFactory_PreserveWhitespace0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespace0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewPreserveWhitespace0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$PreserveWhitespaceHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_PreserveWhitespaceHost0 = [
-  new StaticNodeDebugInfo([import2.PreserveWhitespace], import2.PreserveWhitespace, <String, dynamic>{})
-];
 
-class _ViewPreserveWhitespaceHost0 extends DebugAppView<dynamic> {
+class _ViewPreserveWhitespaceHost0 extends AppView<dynamic> {
   ViewPreserveWhitespace0 _compView_0;
-  import2.PreserveWhitespace _PreserveWhitespace_0_5;
-  _ViewPreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_PreserveWhitespaceHost0);
+  import1.PreserveWhitespace _PreserveWhitespace_0_5;
+  _ViewPreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewPreserveWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    _PreserveWhitespace_0_5 = new import2.PreserveWhitespace();
+    _PreserveWhitespace_0_5 = new import1.PreserveWhitespace();
     _compView_0.create(_PreserveWhitespace_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.PreserveWhitespace>(0, this, rootEl, _PreserveWhitespace_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.PreserveWhitespace>(0, this, rootEl, _PreserveWhitespace_0_5);
   }
 
   @override
@@ -91,58 +85,54 @@ AppView viewFactory_PreserveWhitespaceHost0(AppView<dynamic> parentView, int par
   return new _ViewPreserveWhitespaceHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.PreserveWhitespace> PreserveWhitespaceNgFactory = const ComponentFactory<import2.PreserveWhitespace>('preserve-whitespace', viewFactory_PreserveWhitespaceHost0, _PreserveWhitespaceMetadata);
+const ComponentFactory<import1.PreserveWhitespace> PreserveWhitespaceNgFactory = const ComponentFactory<import1.PreserveWhitespace>('preserve-whitespace', viewFactory_PreserveWhitespaceHost0, _PreserveWhitespaceMetadata);
 final List<dynamic> styles$MinifyWhitespace = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_MinifyWhitespace0 = [null, null, null, null, null];
 
-class ViewMinifyWhitespace0 extends DebugAppView<import2.MinifyWhitespace> {
-  import3.DivElement _el_0;
-  import3.Element _el_2;
+class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
+  import2.DivElement _el_0;
+  import2.Element _el_2;
   static RenderComponentType _renderType;
-  ViewMinifyWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_MinifyWhitespace0) {
-    rootEl = import3.document.createElement('preserve-whitespace');
-    _renderType ??= import8.appViewUtils.createRenderType('asset:_goldens/test/_files/whitespace.dart class MinifyWhitespace - inline template', ViewEncapsulation.None, styles$MinifyWhitespace);
+  ViewMinifyWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('preserve-whitespace');
+    _renderType ??= import6.appViewUtils.createRenderType('asset:_goldens/test/_files/whitespace.dart class MinifyWhitespace - inline template', ViewEncapsulation.None, styles$MinifyWhitespace);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.MinifyWhitespace> build() {
+  ComponentRef<import1.MinifyWhitespace> build() {
     final _rootEl = rootEl;
-    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import3.document;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import3.Text _text_1 = new import3.Text('Welcome... To... ');
+    import2.Text _text_1 = new import2.Text('Welcome... To... ');
     _el_0.append(_text_1);
     _el_2 = createAndAppend(doc, 'strong', _el_0);
-    import3.Text _text_3 = new import3.Text('Jurassic...');
+    import2.Text _text_3 = new import2.Text('Jurassic...');
     _el_2.append(_text_3);
-    import3.Text _text_4 = new import3.Text(' Park!');
+    import2.Text _text_4 = new import2.Text(' Park!');
     _el_0.append(_text_4);
-    init(const [], null, [_el_0, _text_1, _el_2, _text_3, _text_4]);
+    init(const [], null);
     return null;
   }
 }
 
-AppView<import2.MinifyWhitespace> viewFactory_MinifyWhitespace0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.MinifyWhitespace> viewFactory_MinifyWhitespace0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewMinifyWhitespace0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$MinifyWhitespaceHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_MinifyWhitespaceHost0 = [
-  new StaticNodeDebugInfo([import2.MinifyWhitespace], import2.MinifyWhitespace, <String, dynamic>{})
-];
 
-class _ViewMinifyWhitespaceHost0 extends DebugAppView<dynamic> {
+class _ViewMinifyWhitespaceHost0 extends AppView<dynamic> {
   ViewMinifyWhitespace0 _compView_0;
-  import2.MinifyWhitespace _MinifyWhitespace_0_5;
-  _ViewMinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_MinifyWhitespaceHost0);
+  import1.MinifyWhitespace _MinifyWhitespace_0_5;
+  _ViewMinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewMinifyWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    _MinifyWhitespace_0_5 = new import2.MinifyWhitespace();
+    _MinifyWhitespace_0_5 = new import1.MinifyWhitespace();
     _compView_0.create(_MinifyWhitespace_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.MinifyWhitespace>(0, this, rootEl, _MinifyWhitespace_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.MinifyWhitespace>(0, this, rootEl, _MinifyWhitespace_0_5);
   }
 
   @override
@@ -160,7 +150,7 @@ AppView viewFactory_MinifyWhitespaceHost0(AppView<dynamic> parentView, int paren
   return new _ViewMinifyWhitespaceHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.MinifyWhitespace> MinifyWhitespaceNgFactory = const ComponentFactory<import2.MinifyWhitespace>('preserve-whitespace', viewFactory_MinifyWhitespaceHost0, _MinifyWhitespaceMetadata);
+const ComponentFactory<import1.MinifyWhitespace> MinifyWhitespaceNgFactory = const ComponentFactory<import1.MinifyWhitespace>('preserve-whitespace', viewFactory_MinifyWhitespaceHost0, _MinifyWhitespaceMetadata);
 const _PreserveWhitespaceMetadata = const [];
 const _MinifyWhitespaceMetadata = const [];
 var _visited = false;

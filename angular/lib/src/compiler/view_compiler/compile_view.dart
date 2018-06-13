@@ -848,11 +848,6 @@ class CompileView implements AppViewBuilder {
         .callMethod('create', [componentInstance, contentNodesArray]).toStmt());
   }
 
-  o.Statement _createDbgIndexElementCall(NodeReference nodeRef, int nodeIndex) {
-    return new o.InvokeMemberMethodExpr(
-        'dbgIdx', [nodeRef.toReadExpr(), o.literal(nodeIndex)]).toStmt();
-  }
-
   bool _isRootNodeOfHost(int nodeIndex) =>
       nodeIndex == 0 && viewType == ViewType.host;
 
@@ -861,7 +856,6 @@ class CompileView implements AppViewBuilder {
       CompileElement target, int sourceAstIndex, NgContentAst ast) {
     // The projected nodes originate from a different view, so we don't
     // have debug information for them.
-    _createMethod.resetDebugInfo(null, ast);
     var parentRenderNode = _getParentRenderNode(target);
     // AppView.projectableNodes property contains the list of nodes
     // to project for each NgContent.
@@ -1060,7 +1054,6 @@ class CompileView implements AppViewBuilder {
               : (providerHasChangeDetector ? changeDetectorType : type),
           modifiers: const [o.StmtModifier.Private]);
       var getter = new CompileMethod(genDebugInfo);
-      getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
 
       if (providerHasChangeDetector) {
         resolvedProviderValueExpr =
@@ -1110,7 +1103,6 @@ class CompileView implements AppViewBuilder {
     ViewStorageItem pipeInstance = storage.allocate(name,
         outputType: o.importType(pipeMeta.type),
         modifiers: [o.StmtModifier.Private]);
-    _createMethod.resetDebugInfo(null, null);
     _createMethod.addStmt(storage
         .buildWriteExpr(
             pipeInstance, o.importExpr(pipeMeta.type).instantiate(deps))

@@ -13,8 +13,6 @@ const _htmlImport = "import 'dart:html';";
 const _angularImport = "import 'package:angular/angular.dart';";
 const _appViewImport =
     "import 'package:angular/src/core/linker/app_view.dart';";
-const _debugAppViewImport =
-    "import 'package:angular/src/debug/debug_app_view.dart';";
 const _directiveChangeImport =
     "import 'package:angular/src/core/change_detection/directive_change_detector.dart';";
 
@@ -28,19 +26,14 @@ const _analyzerIgnores =
 /// off the critical path).
 class TemplateOutliner implements Builder {
   final String _extension;
-  final CompilerFlags _compilerFlags;
 
   String get _angularImports {
-    var appViewImport =
-        _compilerFlags.genDebugInfo ? _debugAppViewImport : _appViewImport;
-    return '$_htmlImport\n$_angularImport\n$_directiveChangeImport\n$appViewImport';
+    return '$_htmlImport\n$_angularImport\n$_directiveChangeImport\n$_appViewImport';
   }
 
-  String get _appViewClass =>
-      _compilerFlags.genDebugInfo ? 'DebugAppView' : 'AppView';
+  String get _appViewClass => 'AppView';
 
-  TemplateOutliner(
-    this._compilerFlags, {
+  TemplateOutliner({
     @required String extension,
   })  : _extension = extension,
         buildExtensions = {

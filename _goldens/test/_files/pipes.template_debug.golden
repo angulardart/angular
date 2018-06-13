@@ -8,96 +8,89 @@ export 'pipes.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/debug/debug_context.dart';
-import 'package:angular/src/debug/debug_app_view.dart';
-import 'pipes.dart' as import2;
-import 'dart:html' as import3;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'pipes.dart' as import1;
+import 'dart:html' as import2;
 import 'dart:core';
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/app_view.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import7;
+import 'package:angular/src/core/linker/view_type.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$Comp = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_Comp0 = [null, null, null, null, null, null, null];
 
-class ViewComp0 extends DebugAppView<import2.Comp> {
-  import3.Text _text_0;
-  import3.Text _text_2;
-  import3.Text _text_4;
-  import3.Text _text_6;
+class ViewComp0 extends AppView<import1.Comp> {
+  import2.Text _text_0;
+  import2.Text _text_2;
+  import2.Text _text_4;
+  import2.Text _text_6;
   var _expr_0;
   var _expr_1;
   var _expr_2;
   var _expr_3;
-  import2.PurePipe _pipe_pure_0;
+  import1.PurePipe _pipe_pure_0;
   dynamic Function(dynamic) _pipe_pure_0_0;
-  import2.DirtyPipe _pipe_dirty_1;
-  import2.LifecyclePipe _pipe_lifecycle_2;
+  import1.DirtyPipe _pipe_dirty_1;
+  import1.LifecyclePipe _pipe_lifecycle_2;
   dynamic Function(dynamic) _pipe_lifecycle_2_0;
-  import2.TypesPipe _pipe_types_3;
-  String Function(String, int, dynamic, import2.C, void Function(String)) _pipe_types_3_0;
+  import1.TypesPipe _pipe_types_3;
+  String Function(String, int, dynamic, import1.C, void Function(String)) _pipe_types_3_0;
   static RenderComponentType _renderType;
-  ViewComp0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_Comp0) {
-    rootEl = import3.document.createElement('comp');
-    _renderType ??= import9.appViewUtils.createRenderType('asset:_goldens/test/_files/pipes.dart class Comp - inline template', ViewEncapsulation.None, styles$Comp);
+  ViewComp0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('comp');
+    _renderType ??= import7.appViewUtils.createRenderType('asset:_goldens/test/_files/pipes.dart class Comp - inline template', ViewEncapsulation.None, styles$Comp);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.Comp> build() {
+  ComponentRef<import1.Comp> build() {
     final _rootEl = rootEl;
-    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = new import3.Text('');
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _text_0 = new import2.Text('');
     parentRenderNode.append(_text_0);
-    import3.Text _text_1 = new import3.Text(' ');
+    import2.Text _text_1 = new import2.Text(' ');
     parentRenderNode.append(_text_1);
-    _text_2 = new import3.Text('');
+    _text_2 = new import2.Text('');
     parentRenderNode.append(_text_2);
-    import3.Text _text_3 = new import3.Text(' ');
+    import2.Text _text_3 = new import2.Text(' ');
     parentRenderNode.append(_text_3);
-    _text_4 = new import3.Text('');
+    _text_4 = new import2.Text('');
     parentRenderNode.append(_text_4);
-    import3.Text _text_5 = new import3.Text(' ');
+    import2.Text _text_5 = new import2.Text(' ');
     parentRenderNode.append(_text_5);
-    _text_6 = new import3.Text('');
+    _text_6 = new import2.Text('');
     parentRenderNode.append(_text_6);
-    _pipe_pure_0 = new import2.PurePipe();
-    _pipe_pure_0_0 = import9.pureProxy1(_pipe_pure_0.transform);
-    _pipe_dirty_1 = new import2.DirtyPipe();
-    _pipe_lifecycle_2 = new import2.LifecyclePipe();
-    _pipe_lifecycle_2_0 = import9.pureProxy1(_pipe_lifecycle_2.transform);
-    _pipe_types_3 = new import2.TypesPipe();
-    _pipe_types_3_0 = import9.pureProxy5(_pipe_types_3.transform);
-    init(const [], null, [_text_0, _text_1, _text_2, _text_3, _text_4, _text_5, _text_6]);
+    _pipe_pure_0 = new import1.PurePipe();
+    _pipe_pure_0_0 = import7.pureProxy1(_pipe_pure_0.transform);
+    _pipe_dirty_1 = new import1.DirtyPipe();
+    _pipe_lifecycle_2 = new import1.LifecyclePipe();
+    _pipe_lifecycle_2_0 = import7.pureProxy1(_pipe_lifecycle_2.transform);
+    _pipe_types_3 = new import1.TypesPipe();
+    _pipe_types_3_0 = import7.pureProxy5(_pipe_types_3.transform);
+    init(const [], null);
     return null;
   }
 
   @override
   void detectChangesInternal() {
-    final import2.Comp _ctx = ctx;
-    dbg(0, 0, 4);
-    final currVal_0 = import9.interpolate0(_pipe_pure_0_0('foo'));
-    if (import9.checkBinding(_expr_0, currVal_0)) {
+    final import1.Comp _ctx = ctx;
+    final currVal_0 = import7.interpolate0(_pipe_pure_0_0('foo'));
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
-    dbg(2, 1, 4);
-    final currVal_1 = import9.interpolate0(_pipe_dirty_1.transform('bar'));
-    if (import9.checkBinding(_expr_1, currVal_1)) {
+    final currVal_1 = import7.interpolate0(_pipe_dirty_1.transform('bar'));
+    if (import7.checkBinding(_expr_1, currVal_1)) {
       _text_2.text = currVal_1;
       _expr_1 = currVal_1;
     }
-    dbg(4, 2, 4);
-    final currVal_2 = import9.interpolate0(_pipe_lifecycle_2_0('lifecycle'));
-    if (import9.checkBinding(_expr_2, currVal_2)) {
+    final currVal_2 = import7.interpolate0(_pipe_lifecycle_2_0('lifecycle'));
+    if (import7.checkBinding(_expr_2, currVal_2)) {
       _text_4.text = currVal_2;
       _expr_2 = currVal_2;
     }
-    dbg(6, 3, 4);
-    final currVal_3 = import9.interpolate0(_pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d));
-    if (import9.checkBinding(_expr_3, currVal_3)) {
+    final currVal_3 = import7.interpolate0(_pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d));
+    if (import7.checkBinding(_expr_3, currVal_3)) {
       _text_6.text = currVal_3;
       _expr_3 = currVal_3;
     }
@@ -109,27 +102,24 @@ class ViewComp0 extends DebugAppView<import2.Comp> {
   }
 }
 
-AppView<import2.Comp> viewFactory_Comp0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.Comp> viewFactory_Comp0(AppView<dynamic> parentView, int parentIndex) {
   return new ViewComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CompHost = const [];
-List<StaticNodeDebugInfo> nodeDebugInfos_CompHost0 = [
-  new StaticNodeDebugInfo([import2.Comp], import2.Comp, <String, dynamic>{})
-];
 
-class _ViewCompHost0 extends DebugAppView<dynamic> {
+class _ViewCompHost0 extends AppView<dynamic> {
   ViewComp0 _compView_0;
-  import2.Comp _Comp_0_5;
-  _ViewCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways, nodeDebugInfos_CompHost0);
+  import1.Comp _Comp_0_5;
+  _ViewCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef build() {
     _compView_0 = new ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    _Comp_0_5 = new import2.Comp();
+    _Comp_0_5 = new import1.Comp();
     _compView_0.create(_Comp_0_5, projectableNodes);
-    init0Dbg(rootEl, [rootEl]);
-    return new ComponentRef<import2.Comp>(0, this, rootEl, _Comp_0_5);
+    init0(rootEl);
+    return new ComponentRef<import1.Comp>(0, this, rootEl, _Comp_0_5);
   }
 
   @override
@@ -147,7 +137,7 @@ AppView viewFactory_CompHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.Comp> CompNgFactory = const ComponentFactory<import2.Comp>('comp', viewFactory_CompHost0, _CompMetadata);
+const ComponentFactory<import1.Comp> CompNgFactory = const ComponentFactory<import1.Comp>('comp', viewFactory_CompHost0, _CompMetadata);
 const _CompMetadata = const [];
 var _visited = false;
 void initReflector() {

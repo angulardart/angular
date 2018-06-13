@@ -62,7 +62,7 @@ Builder templateCompiler(
     severity: Level.SEVERE,
   );
   if (outline) {
-    return new TemplateOutliner(flags, extension: outlineExtension);
+    return new TemplateOutliner(extension: outlineExtension);
   }
   return new Compiler(flags, generate).asBuilder(extension: templateExtension);
 }
@@ -76,12 +76,7 @@ Builder outlineCompiler(
   CompilerFlags defaultFlags = _defaultFlags,
   String extension = _outlineExtension,
 }) {
-  final flags = new CompilerFlags.parseRaw(
-    options.config,
-    defaultFlags,
-    severity: Level.SEVERE,
-  );
-  return new TemplateOutliner(flags, extension: extension);
+  return new TemplateOutliner(extension: extension);
 }
 
 /// Generates `.css.dart` files that are imported by the template compiler.

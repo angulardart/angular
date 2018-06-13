@@ -66,8 +66,6 @@ void bindDirectiveAfterContentLifecycleCallbacks(
   var lifecycleHooks = directiveMeta.lifecycleHooks;
   var afterContentLifecycleCallbacksMethod =
       view.afterContentLifecycleCallbacksMethod;
-  afterContentLifecycleCallbacksMethod.resetDebugInfo(
-      compileElement.nodeIndex, compileElement.sourceAst);
   if (!identical(lifecycleHooks.indexOf(LifecycleHooks.afterContentInit), -1)) {
     afterContentLifecycleCallbacksMethod.addStmt(new o.IfStmt(
         DetectChangesVars.firstCheck,
@@ -88,8 +86,6 @@ void bindDirectiveAfterViewLifecycleCallbacks(
   var lifecycleHooks = directiveMeta.lifecycleHooks;
   var afterViewLifecycleCallbacksMethod =
       view.afterViewLifecycleCallbacksMethod;
-  afterViewLifecycleCallbacksMethod.resetDebugInfo(
-      compileElement.nodeIndex, compileElement.sourceAst);
   if (!identical(lifecycleHooks.indexOf(LifecycleHooks.afterViewInit), -1)) {
     afterViewLifecycleCallbacksMethod.addStmt(new o.IfStmt(
         DetectChangesVars.firstCheck,
@@ -108,8 +104,6 @@ void bindDirectiveDestroyLifecycleCallbacks(
     o.Expression directiveInstance,
     CompileElement compileElement) {
   var onDestroyMethod = compileElement.view.destroyMethod;
-  onDestroyMethod.resetDebugInfo(
-      compileElement.nodeIndex, compileElement.sourceAst);
   if (!identical(
       directiveMeta.lifecycleHooks.indexOf(LifecycleHooks.onDestroy), -1)) {
     onDestroyMethod

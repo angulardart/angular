@@ -7,7 +7,6 @@ import 'package:source_span/source_span.dart';
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata;
 import '../expression_parser/parser.dart';
-import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart';
@@ -98,14 +97,11 @@ class ViewCompiler {
 
   void createViewTopLevelStmts(
       CompileView view, List<o.Statement> targetStatements) {
-    o.Expression nodeDebugInfosVar =
-        createStaticNodeDebugInfos(view, targetStatements);
-
     // If we are compiling root view, create a render type for the component.
     // Example: RenderComponentType renderType_MaterialButtonComponent;
     bool creatingMainView = view.viewIndex == 0;
 
-    o.ClassStmt viewClass = createViewClass(view, nodeDebugInfosVar, parser);
+    o.ClassStmt viewClass = createViewClass(view, parser);
     targetStatements.add(viewClass);
 
     targetStatements.add(createViewFactory(view, viewClass));
@@ -116,35 +112,6 @@ class ViewCompiler {
         outlinerDeprecated) {
       writeInputUpdaters(view, targetStatements);
     }
-  }
-
-  /// Create top level node debug info.
-  /// Example:
-  /// const List<StaticNodeDebugInfo> nodeDebugInfos_MyAppComponent0 = const [
-  ///     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
-  ///     const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
-  ///     const StaticNodeDebugInfo(const [
-  ///       import1.AcxDarkTheme,
-  ///       import2.MaterialButtonComponent,
-  ///       import3.ButtonDirective,
-  ///       import2.MaterialButtonComponent,
-  ///     ],
-  ///     const <String, dynamic>{}),
-  /// const StaticNodeDebugInfo(const [],null,const <String, dynamic>{}),
-  o.Expression createStaticNodeDebugInfos(
-      CompileView view, List<o.Statement> targetStatements) {
-    o.Expression nodeDebugInfosVar = o.NULL_EXPR;
-    if (view.genConfig.genDebugInfo) {
-      nodeDebugInfosVar = o.variable(
-          'nodeDebugInfos_${view.component.type.name}${view.viewIndex}');
-      targetStatements.add(((nodeDebugInfosVar as o.ReadVarExpr))
-          .set(o.literalArr(
-              view.nodes.map(createStaticNodeDebugInfo).toList(),
-              new o.ArrayType(
-                  new o.ExternalType(Identifiers.StaticNodeDebugInfo))))
-          .toDeclStmt());
-    }
-    return nodeDebugInfosVar;
   }
 
   bool get genDebugInfo => _genConfig.genDebugInfo;
