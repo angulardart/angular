@@ -30,7 +30,7 @@ class RoutePath {
   RoutePath({
     String path,
     this.parent,
-    this.useAsDefault: false,
+    this.useAsDefault = false,
     this.additionalData,
   }) : this.path = Url.trimSlashes(path);
 

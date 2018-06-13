@@ -8,7 +8,7 @@ import 'package:logging/logging.dart';
 ///
 /// Returns the result of executing `asyncOperation`.
 Future<T> logElapsedAsync<T>(Future<T> asyncOperation(),
-    {String operationName: 'unknown', AssetId assetId, Logger log}) async {
+    {String operationName = 'unknown', AssetId assetId, Logger log}) async {
   final timer = new Stopwatch()..start();
   final result = await asyncOperation();
   timer.stop();
@@ -21,7 +21,7 @@ Future<T> logElapsedAsync<T>(Future<T> asyncOperation(),
 ///
 /// Returns the result of executing `operation`.
 T logElapsedSync<T>(T operation(),
-    {String operationName: 'unknown', AssetId assetId, Logger log}) {
+    {String operationName = 'unknown', AssetId assetId, Logger log}) {
   final timer = new Stopwatch()..start();
   final result = operation();
   timer.stop();

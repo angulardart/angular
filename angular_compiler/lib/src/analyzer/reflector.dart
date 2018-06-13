@@ -63,13 +63,13 @@ class ReflectableReader {
   final bool recordInjectableFactories;
 
   const ReflectableReader({
-    this.dependencyReader: const DependencyReader(),
+    this.dependencyReader = const DependencyReader(),
     @required this.hasInput,
     @required this.isLibrary,
-    this.outputExtension: _defaultOutputExtension,
-    this.recordRouterAnnotationsForComponents: true,
-    this.recordComponentFactories: true,
-    this.recordInjectableFactories: true,
+    this.outputExtension = _defaultOutputExtension,
+    this.recordRouterAnnotationsForComponents = true,
+    this.recordComponentFactories = true,
+    this.recordInjectableFactories = true,
   });
 
   /// Always emits an empty [ReflectableOutput.urlsNeedingInitReflector].
@@ -77,11 +77,11 @@ class ReflectableReader {
   /// Useful for tests that do not want to try emulating a complete build.
   @visibleForTesting
   const ReflectableReader.noLinking({
-    this.dependencyReader: const DependencyReader(),
-    this.outputExtension: _defaultOutputExtension,
-    this.recordRouterAnnotationsForComponents: true,
-    this.recordComponentFactories: true,
-    this.recordInjectableFactories: true,
+    this.dependencyReader = const DependencyReader(),
+    this.outputExtension = _defaultOutputExtension,
+    this.recordRouterAnnotationsForComponents = true,
+    this.recordComponentFactories = true,
+    this.recordInjectableFactories = true,
   })  : hasInput = _nullHasInput,
         isLibrary = _nullIsLibrary;
 
@@ -235,9 +235,9 @@ class ReflectableOutput {
 
   @visibleForTesting
   const ReflectableOutput({
-    this.urlsNeedingInitReflector: const [],
-    this.registerClasses: const [],
-    this.registerFunctions: const [],
+    this.urlsNeedingInitReflector = const [],
+    this.registerClasses = const [],
+    this.registerFunctions = const [],
   });
 
   static const _list = const ListEquality<Object>();
@@ -287,7 +287,7 @@ class ReflectableClass {
     this.factory,
     @required this.name,
     this.registerAnnotation,
-    this.registerComponentFactory: false,
+    this.registerComponentFactory = false,
   });
 
   @override

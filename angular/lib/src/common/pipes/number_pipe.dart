@@ -133,11 +133,11 @@ String _formatNumber(
   num number,
   String locale,
   _NumberFormatStyle style, {
-  int minimumIntegerDigits: 1,
-  int minimumFractionDigits: 0,
-  int maximumFractionDigits: 3,
+  int minimumIntegerDigits = 1,
+  int minimumFractionDigits = 0,
+  int maximumFractionDigits = 3,
   String currency,
-  bool currencyAsSymbol: false,
+  bool currencyAsSymbol = false,
 }) {
   locale = _normalizeLocale(locale);
   NumberFormat formatter;

@@ -20,7 +20,7 @@ class I18nMessage {
   I18nMessage(
     this.text,
     this.metadata, {
-    this.args: const {},
+    this.args = const {},
   });
 
   /// Whether this message contains nested HTML.

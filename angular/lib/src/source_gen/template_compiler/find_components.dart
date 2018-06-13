@@ -265,8 +265,8 @@ class _ComponentVisitor
 
   void _visitClassMember(
     Element element, {
-    bool isGetter: false,
-    bool isSetter: false,
+    bool isGetter = false,
+    bool isSetter = false,
   }) {
     for (ElementAnnotation annotation in element.metadata) {
       if (safeMatcherType(Input)(annotation)) {

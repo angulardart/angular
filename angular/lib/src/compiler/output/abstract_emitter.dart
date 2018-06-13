@@ -219,7 +219,7 @@ abstract class AbstractEmitterVisitor
 
   @override
   void visitWriteVarExpr(o.WriteVarExpr expr, EmitterVisitorContext context,
-      {bool checkForNull: false}) {
+      {bool checkForNull = false}) {
     var lineWasEmpty = context.lineIsEmpty();
     if (!lineWasEmpty) {
       context.print('(');
@@ -555,7 +555,7 @@ abstract class AbstractEmitterVisitor
 
   void visitAllExpressions(List<o.Expression> expressions,
       EmitterVisitorContext ctx, String separator,
-      {bool newLine: false, bool keepOnSameLine: false}) {
+      {bool newLine = false, bool keepOnSameLine = false}) {
     visitAllObjects<o.Expression>(
         (expr) => expr.visitExpression(this, ctx), expressions, ctx, separator,
         newLine: newLine, keepOnSameLine: keepOnSameLine);
@@ -563,7 +563,7 @@ abstract class AbstractEmitterVisitor
 
   void visitAllObjects<T>(void Function(T) handler, List<T> expressions,
       EmitterVisitorContext ctx, String separator,
-      {bool newLine: false, bool keepOnSameLine: false}) {
+      {bool newLine = false, bool keepOnSameLine = false}) {
     const int _MAX_OUTPUT_LENGTH = 80;
     int length = expressions.length;
     for (var i = 0; i < length; i++) {

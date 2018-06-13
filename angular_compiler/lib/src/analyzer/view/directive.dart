@@ -27,8 +27,8 @@ class DirectiveVisitor {
   final void Function(MethodElement, DartObject) onHostListener;
 
   const DirectiveVisitor({
-    this.onHostBinding: _noopClassMember,
-    this.onHostListener: _noopClassMethod,
+    this.onHostBinding = _noopClassMember,
+    this.onHostListener = _noopClassMethod,
   });
 
   /// Throws a [BuildError] if [element] is not a getter or field.

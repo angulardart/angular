@@ -217,8 +217,8 @@ class CompileTypeMetadataVisitor
   /// See https://github.com/dart-lang/angular/issues/906 for details.
   CompileTypeMetadata _getCompileTypeMetadata(
     ClassElement element, {
-    bool enforceClassCanBeCreated: false,
-    List<DartType> genericTypes: const [],
+    bool enforceClassCanBeCreated = false,
+    List<DartType> genericTypes = const [],
   }) =>
       new CompileTypeMetadata(
         moduleUrl: moduleUrl(element),
@@ -412,7 +412,7 @@ class CompileTypeMetadataVisitor
     );
   }
 
-  CompileTokenMetadata _tokenForType(DartType type, {bool isInstance: false}) {
+  CompileTokenMetadata _tokenForType(DartType type, {bool isInstance = false}) {
     return new CompileTokenMetadata(
         identifier: _idFor(type), identifierIsInstance: isInstance);
   }

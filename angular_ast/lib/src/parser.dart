@@ -149,7 +149,7 @@ class NgParser {
 
   // Prevent inheritance.
   const NgParser._({
-    bool toolFriendlyAstOrigin: false,
+    bool toolFriendlyAstOrigin = false,
   }) : _toolFriendlyAstOrigin = toolFriendlyAstOrigin;
 
   /// Return a series of tokens by incrementally scanning [template].
@@ -158,9 +158,9 @@ class NgParser {
   List<StandaloneTemplateAst> parse(
     String template, {
     @required String sourceUrl,
-    bool desugar: true,
+    bool desugar = true,
     @deprecated bool parseExpressions,
-    ExceptionHandler exceptionHandler: const ThrowingExceptionHandler(),
+    ExceptionHandler exceptionHandler = const ThrowingExceptionHandler(),
   }) {
     var tokens = const NgLexer().tokenize(template, exceptionHandler);
     var parser = new RecursiveAstParser(
