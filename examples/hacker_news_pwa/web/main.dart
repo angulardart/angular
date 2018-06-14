@@ -14,9 +14,9 @@ import 'package:examples.hacker_news_pwa/hacker_news_service.dart';
 // ignore: uri_has_not_been_generated
 import 'main.template.dart' as ng;
 
-@GenerateInjector(const [
+@GenerateInjector([
   // HTTP and Services.
-  const FactoryProvider(HackerNewsService, getNewsService),
+  FactoryProvider(HackerNewsService, getNewsService),
 
   // SPA Router.
   routerProviders,
@@ -32,7 +32,7 @@ void main() {
   // This will make the perceived first load faster, and allow us to avoid
   // a flash-of-unstyled-content (Loading...) for the initial load, which hurts
   // PWA scores.
-  _service = new HackerNewsService(defaultBaseUrl);
+  _service = HackerNewsService(defaultBaseUrl);
   Future future;
   final path = window.location.pathname;
   if (window.location.search.isEmpty && !path.startsWith('/item')) {
@@ -44,7 +44,7 @@ void main() {
   }
 
   // Install service worker.
-  new pwa.Client();
+  pwa.Client();
 
   // Start app after fetched.
   future.then((_) {
