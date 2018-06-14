@@ -15,6 +15,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$CheckOnceComponent = const [];
@@ -25,7 +26,7 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
   static RenderComponentType _renderType;
   ViewCheckOnceComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('CheckOnce');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CheckOnceComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$CheckOnceComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -94,7 +95,7 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
   static RenderComponentType _renderType;
   ViewCheckedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('Checked');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CheckedComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$CheckedComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -153,7 +154,7 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
   static RenderComponentType _renderType;
   ViewCheckAlwaysComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('CheckAlways');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CheckAlwaysComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$CheckAlwaysComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -212,7 +213,7 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
   static RenderComponentType _renderType;
   ViewDetachedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('Detached');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$DetachedComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$DetachedComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -271,7 +272,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
   static RenderComponentType _renderType;
   ViewOnPushComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('OnPush');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$OnPushComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$OnPushComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -330,7 +331,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
   static RenderComponentType _renderType;
   ViewStatefulComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import2.document.createElement('Stateful');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$StatefulComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$StatefulComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -391,7 +392,7 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
   static RenderComponentType _renderType;
   ViewDefaultComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('Default');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$DefaultComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$DefaultComponent);
     setupComponentType(_renderType);
   }
   @override

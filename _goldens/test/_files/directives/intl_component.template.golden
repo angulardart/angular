@@ -15,6 +15,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$CompWithoutFinal = const [];
@@ -29,7 +30,7 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
   static RenderComponentType _renderType;
   ViewCompWithoutFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-without-final');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithoutFinal);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null), ViewEncapsulation.None, styles$CompWithoutFinal);
     setupComponentType(_renderType);
   }
   @override
@@ -111,7 +112,7 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
   static RenderComponentType _renderType;
   ViewCompWithFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-with-final');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithFinal);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null), ViewEncapsulation.None, styles$CompWithFinal);
     setupComponentType(_renderType);
   }
   @override
@@ -178,7 +179,7 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
   static RenderComponentType _renderType;
   ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-with-final-static');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithFinalStatic);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null), ViewEncapsulation.None, styles$CompWithFinalStatic);
     setupComponentType(_renderType);
   }
   @override
@@ -245,7 +246,7 @@ class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> 
   static RenderComponentType _renderType;
   ViewCompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-with-external-final');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$CompWithExternalFinal);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null), ViewEncapsulation.None, styles$CompWithExternalFinal);
     setupComponentType(_renderType);
   }
   @override

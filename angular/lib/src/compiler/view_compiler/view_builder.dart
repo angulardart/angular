@@ -497,14 +497,7 @@ void _addRenderTypeCtorInitialization(CompileView view, o.ClassStmt viewClass) {
 o.Expression _constructRenderType(
     CompileView view, o.ClassStmt viewClass, o.ClassMethod viewConstructor) {
   assert(view.viewIndex == 0);
-  var templateUrlInfo;
-  if (view.component.template.templateUrl == view.component.type.moduleUrl) {
-    templateUrlInfo = '${view.component.type.moduleUrl} '
-        'class ${view.component.type.name} - inline template';
-  } else {
-    templateUrlInfo = view.component.template.templateUrl;
-  }
-
+  final templateUrlInfo = view.component.type.moduleUrl;
   // renderType static to hold RenderComponentType instance.
   String renderTypeVarName = '_renderType';
   o.Expression renderCompTypeVar =
@@ -515,9 +508,15 @@ o.Expression _constructRenderType(
           o
               .importExpr(Identifiers.appViewUtils)
               .callMethod("createRenderType", [
-            o.literal(view.genConfig.genDebugInfo ? templateUrlInfo : ''),
-            createEnumExpression(Identifiers.ViewEncapsulation,
-                view.component.template.encapsulation),
+            new o.ConditionalExpr(
+              o.importExpr(Identifiers.isDevMode),
+              o.literal(templateUrlInfo),
+              o.NULL_EXPR,
+            ),
+            createEnumExpression(
+              Identifiers.ViewEncapsulation,
+              view.component.template.encapsulation,
+            ),
             view.styles
           ]),
           checkIfNull: true)

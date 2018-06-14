@@ -15,8 +15,9 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/di/opaque_token.dart' as import8;
+import 'package:angular/src/core/di/opaque_token.dart' as import9;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
@@ -29,7 +30,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   static RenderComponentType _renderType;
   ViewHasOpaqueTokens0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('has-opaque-tokens');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$HasOpaqueTokens);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/opaque_token.dart' : null), ViewEncapsulation.None, styles$HasOpaqueTokens);
     setupComponentType(_renderType);
   }
   @override
@@ -67,7 +68,7 @@ class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const import8.OpaqueToken('baseUrlDescription')) && (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken('baseUrlDescription')) && (0 == nodeIndex))) {
       return _baseUrlDescription_0_5;
     }
     return notFoundResult;
@@ -97,7 +98,7 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
   static RenderComponentType _renderType;
   ViewContainsChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('contains-child-component');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$ContainsChildComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/opaque_token.dart' : null), ViewEncapsulation.None, styles$ContainsChildComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -182,7 +183,7 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
     _compView_1 = new ViewInjectsTypedTokenFromSomeParent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
-    _InjectsTypedTokenFromSomeParent_1_5 = new import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import8.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
+    _InjectsTypedTokenFromSomeParent_1_5 = new import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
     _compView_1.create(_InjectsTypedTokenFromSomeParent_1_5, []);
     init0(_el_0);
     return null;
@@ -241,7 +242,7 @@ class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedT
   static RenderComponentType _renderType;
   ViewInjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('injects-typed-token-from-parent');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$InjectsTypedTokenFromSomeParent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/opaque_token.dart' : null), ViewEncapsulation.None, styles$InjectsTypedTokenFromSomeParent);
     setupComponentType(_renderType);
   }
   @override
@@ -267,7 +268,7 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<dynamic> {
   ComponentRef build() {
     _compView_0 = new ViewInjectsTypedTokenFromSomeParent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InjectsTypedTokenFromSomeParent_0_5 = new import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import8.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
+    _InjectsTypedTokenFromSomeParent_0_5 = new import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
     _compView_0.create(_InjectsTypedTokenFromSomeParent_0_5, projectableNodes);
     init0(rootEl);
     return new ComponentRef<import1.InjectsTypedTokenFromSomeParent>(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_5);

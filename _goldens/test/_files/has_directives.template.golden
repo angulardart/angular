@@ -15,6 +15,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$TestFooComponent = const [];
@@ -29,7 +30,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-foo');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$TestFooComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/has_directives.dart' : null), ViewEncapsulation.None, styles$TestFooComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -109,7 +110,7 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   static RenderComponentType _renderType;
   ViewTestSubComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-bar');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$TestSubComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/has_directives.dart' : null), ViewEncapsulation.None, styles$TestSubComponent);
     setupComponentType(_renderType);
   }
   @override

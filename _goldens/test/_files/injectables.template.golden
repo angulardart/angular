@@ -18,9 +18,10 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'dart:core';
-import 'package:angular/src/core/di/opaque_token.dart' as import9;
+import 'package:angular/src/core/di/opaque_token.dart' as import10;
 
 final List<dynamic> styles$InjectableComponent = const [];
 
@@ -29,7 +30,7 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   static RenderComponentType _renderType;
   ViewInjectableComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-injectables');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$InjectableComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/injectables.dart' : null), ViewEncapsulation.None, styles$InjectableComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -85,7 +86,7 @@ class _ViewInjectableComponentHost0 extends AppView<dynamic> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const import9.OpaqueToken('test')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken('test')) && (0 == nodeIndex))) {
       return _test_0_5;
     }
     if ((identical(token, import1.SomeDep) && (0 == nodeIndex))) {

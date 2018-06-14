@@ -15,6 +15,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$EmptyPropertiesComponent = const [];
@@ -35,7 +36,7 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
   static RenderComponentType _renderType;
   ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('empty-properties');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$EmptyPropertiesComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/empty_properties.dart' : null), ViewEncapsulation.None, styles$EmptyPropertiesComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -139,7 +140,7 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
   static RenderComponentType _renderType;
   ViewFancyButtonComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('fancy-button');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$FancyButtonComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/empty_properties.dart' : null), ViewEncapsulation.None, styles$FancyButtonComponent);
     setupComponentType(_renderType);
   }
   @override
