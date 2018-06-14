@@ -22,7 +22,7 @@ Builder releaseBuilder(BuilderOptions options) {
       i18nEnabled: true,
       ignoreNgPlaceholderForGoldens: true,
     ),
-    templateExtension: options.config['extensions']['release'],
+    templateExtension: options.config['extensions']['template'],
   );
 }
 

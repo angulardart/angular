@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 import 'src/compare_to_golden.dart';
 
-final _outputModes = ['release', 'outline'];
+final _outputModes = ['template', 'outline'];
 final _inputFiles = p.join('test', '_files', '**.dart');
 final _isBazel = Platform.environment['RUNFILES'] != null;
 
@@ -49,8 +49,8 @@ void main() {
         test(file.path, () {
           compareCheckFileToGolden(
             file.path,
-            checkExtension: '.template_$mode.check',
-            goldenExtension: '.template_$mode.golden',
+            checkExtension: '.$mode.check',
+            goldenExtension: '.$mode.golden',
           );
         });
       }
