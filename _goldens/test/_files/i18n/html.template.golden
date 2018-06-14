@@ -15,8 +15,9 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:intl/intl.dart' as import8;
+import 'package:intl/intl.dart' as import9;
 
 final List<dynamic> styles$I18nHtmlComponent = const [];
 
@@ -25,7 +26,7 @@ class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
   static RenderComponentType _renderType;
   ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('message');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$I18nHtmlComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null), ViewEncapsulation.None, styles$I18nHtmlComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -41,7 +42,7 @@ class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
   }
 
   static String _message_0(String startTag0, String startTag1, String endTag1, String endTag0) {
-    return import8.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0_message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
+    return import9.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0_message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
   }
 }
 

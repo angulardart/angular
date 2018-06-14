@@ -16,6 +16,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$UsesNativeEvents = const [];
@@ -25,7 +26,7 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
   static RenderComponentType _renderType;
   ViewUsesNativeEvents0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('uses-native-events');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesNativeEvents);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/events.dart' : null), ViewEncapsulation.None, styles$UsesNativeEvents);
     setupComponentType(_renderType);
   }
   @override
@@ -87,7 +88,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   static RenderComponentType _renderType;
   ViewUsesAngularEvents0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('uses-angular-events');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesAngularEvents);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/events.dart' : null), ViewEncapsulation.None, styles$UsesAngularEvents);
     setupComponentType(_renderType);
   }
   @override
@@ -157,7 +158,7 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
   static RenderComponentType _renderType;
   ViewHasAngularEvents0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('has-angular-events');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$HasAngularEvents);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/events.dart' : null), ViewEncapsulation.None, styles$HasAngularEvents);
     setupComponentType(_renderType);
   }
   @override
@@ -211,7 +212,7 @@ class ViewHasManyNativeHostEvents0 extends AppView<import1.HasManyNativeHostEven
   static RenderComponentType _renderType;
   ViewHasManyNativeHostEvents0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('material-button-like');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$HasManyNativeHostEvents);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/events.dart' : null), ViewEncapsulation.None, styles$HasManyNativeHostEvents);
     setupComponentType(_renderType);
   }
   @override

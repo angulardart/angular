@@ -15,9 +15,10 @@ import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import9;
+import 'package:angular/src/common/directives/ng_for.dart' as import10;
 import 'package:angular/src/core/linker/template_ref.dart';
 
 final List<dynamic> styles$UntypedComp = const [];
@@ -26,7 +27,7 @@ class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
   static RenderComponentType _renderType;
   ViewUntypedComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UntypedComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UntypedComp);
     setupComponentType(_renderType);
   }
   @override
@@ -84,7 +85,7 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
   static RenderComponentType _renderType;
   ViewUsesUntypedComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesUntypedComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesUntypedComp);
     setupComponentType(_renderType);
   }
   @override
@@ -159,7 +160,7 @@ class ViewGenericComp0 extends AppView<import1.GenericComp> {
   static RenderComponentType _renderType;
   ViewGenericComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$GenericComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$GenericComp);
     setupComponentType(_renderType);
   }
   @override
@@ -217,7 +218,7 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
   static RenderComponentType _renderType;
   ViewUsesGenericComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesGenericComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesGenericComp);
     setupComponentType(_renderType);
   }
   @override
@@ -292,7 +293,7 @@ class ViewMappingComp10 extends AppView<import1.MappingComp1> {
   static RenderComponentType _renderType;
   ViewMappingComp10(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$MappingComp1);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$MappingComp1);
     setupComponentType(_renderType);
   }
   @override
@@ -351,7 +352,7 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
   static RenderComponentType _renderType;
   ViewUsesMappingComp10(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesMappingComp1);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesMappingComp1);
     setupComponentType(_renderType);
   }
   @override
@@ -431,7 +432,7 @@ class ViewMappingComp20 extends AppView<import1.MappingComp2> {
   static RenderComponentType _renderType;
   ViewMappingComp20(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$MappingComp2);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$MappingComp2);
     setupComponentType(_renderType);
   }
   @override
@@ -489,7 +490,7 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
   static RenderComponentType _renderType;
   ViewUsesMappingComp20(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesMappingComp2);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesMappingComp2);
     setupComponentType(_renderType);
   }
   @override
@@ -564,7 +565,7 @@ class ViewBoundComp0 extends AppView<import1.BoundComp> {
   static RenderComponentType _renderType;
   ViewBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$BoundComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$BoundComp);
     setupComponentType(_renderType);
   }
   @override
@@ -622,7 +623,7 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
   static RenderComponentType _renderType;
   ViewUsesBoundCompWithBounds0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesBoundCompWithBounds);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesBoundCompWithBounds);
     setupComponentType(_renderType);
   }
   @override
@@ -701,7 +702,7 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
   static RenderComponentType _renderType;
   ViewUsesBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesBoundComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesBoundComp);
     setupComponentType(_renderType);
   }
   @override
@@ -776,7 +777,7 @@ class ViewSelfBoundComp0 extends AppView<import1.SelfBoundComp> {
   static RenderComponentType _renderType;
   ViewSelfBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$SelfBoundComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$SelfBoundComp);
     setupComponentType(_renderType);
   }
   @override
@@ -835,7 +836,7 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
   static RenderComponentType _renderType;
   ViewUsesSelfBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesSelfBoundComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesSelfBoundComp);
     setupComponentType(_renderType);
   }
   @override
@@ -915,7 +916,7 @@ class ViewRecursiveComp0 extends AppView<import1.RecursiveComp> {
   static RenderComponentType _renderType;
   ViewRecursiveComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$RecursiveComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$RecursiveComp);
     setupComponentType(_renderType);
   }
   @override
@@ -973,7 +974,7 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
   static RenderComponentType _renderType;
   ViewUsesRecursiveComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesRecursiveComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesRecursiveComp);
     setupComponentType(_renderType);
   }
   @override
@@ -1048,7 +1049,7 @@ class ViewFunctionTypeComp0 extends AppView<import1.FunctionTypeComp> {
   static RenderComponentType _renderType;
   ViewFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$FunctionTypeComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$FunctionTypeComp);
     setupComponentType(_renderType);
   }
   @override
@@ -1106,7 +1107,7 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
   static RenderComponentType _renderType;
   ViewUsesFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesFunctionTypeComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesFunctionTypeComp);
     setupComponentType(_renderType);
   }
   @override
@@ -1185,14 +1186,14 @@ class ViewNestedParentComp0 extends AppView<import1.NestedParentComp> {
   ViewNestedChildComp0 _compView_1;
   import1.NestedChildComp _NestedChildComp_1_5;
   ViewContainer _appEl_2;
-  import9.NgFor _NgFor_2_9;
+  import10.NgFor _NgFor_2_9;
   var _expr_0;
   var _expr_1;
   var _expr_2;
   static RenderComponentType _renderType;
   ViewNestedParentComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('parent');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$NestedParentComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$NestedParentComp);
     setupComponentType(_renderType);
   }
   @override
@@ -1213,7 +1214,7 @@ class ViewNestedParentComp0 extends AppView<import1.NestedParentComp> {
     parentRenderNode.append(_anchor_2);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_8 = new TemplateRef(_appEl_2, viewFactory_NestedParentComp1);
-    _NgFor_2_9 = new import9.NgFor(_appEl_2, _TemplateRef_2_8);
+    _NgFor_2_9 = new import10.NgFor(_appEl_2, _TemplateRef_2_8);
     init(const [], null);
     return null;
   }
@@ -1333,7 +1334,7 @@ class ViewNestedChildComp0 extends AppView<import1.NestedChildComp> {
   static RenderComponentType _renderType;
   ViewNestedChildComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('child');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$NestedChildComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$NestedChildComp);
     setupComponentType(_renderType);
   }
   @override
@@ -1393,7 +1394,7 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
   static RenderComponentType _renderType;
   ViewUsesNestedParentComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$UsesNestedParentComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesNestedParentComp);
     setupComponentType(_renderType);
   }
   @override

@@ -15,6 +15,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$EmulatedComponent = const [];
@@ -24,7 +25,7 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
   static RenderComponentType _renderType;
   ViewEmulatedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('Emulated');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$EmulatedComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/view_encapsulation.dart' : null), ViewEncapsulation.None, styles$EmulatedComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -83,7 +84,7 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
   static RenderComponentType _renderType;
   ViewNoneComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('None');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$NoneComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/view_encapsulation.dart' : null), ViewEncapsulation.None, styles$NoneComponent);
     setupComponentType(_renderType);
   }
   @override

@@ -18,10 +18,11 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import6;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular/src/runtime.dart' as import9;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import12;
+import 'package:angular/src/common/directives/ng_for.dart' as import13;
 
 final List<dynamic> styles$QueriesComponent = const [];
 
@@ -41,7 +42,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   static RenderComponentType _renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('queries');
-    _renderType ??= import8.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$QueriesComponent);
+    _renderType ??= import8.appViewUtils.createRenderType((import9.isDevMode ? 'asset:_goldens/test/_files/queries.dart' : null), ViewEncapsulation.None, styles$QueriesComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -168,7 +169,7 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
   static RenderComponentType _renderType;
   ViewEmbeddedQueries0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test');
-    _renderType ??= import8.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$EmbeddedQueries);
+    _renderType ??= import8.appViewUtils.createRenderType((import9.isDevMode ? 'asset:_goldens/test/_files/queries.dart' : null), ViewEncapsulation.None, styles$EmbeddedQueries);
     setupComponentType(_renderType);
   }
   @override
@@ -306,7 +307,7 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
   static RenderComponentType _renderType;
   ViewEmbeddedQueriesList0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test');
-    _renderType ??= import8.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$EmbeddedQueriesList);
+    _renderType ??= import8.appViewUtils.createRenderType((import9.isDevMode ? 'asset:_goldens/test/_files/queries.dart' : null), ViewEncapsulation.None, styles$EmbeddedQueriesList);
     setupComponentType(_renderType);
   }
   @override
@@ -442,7 +443,7 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
   static RenderComponentType _renderType;
   ViewNestedNgForQueriesList0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test');
-    _renderType ??= import8.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$NestedNgForQueriesList);
+    _renderType ??= import8.appViewUtils.createRenderType((import9.isDevMode ? 'asset:_goldens/test/_files/queries.dart' : null), ViewEncapsulation.None, styles$NestedNgForQueriesList);
     setupComponentType(_renderType);
   }
   @override
@@ -527,7 +528,7 @@ AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList1(AppV
 class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesList> {
   import2.DivElement _el_0;
   ViewContainer _appEl_1;
-  import12.NgFor _NgFor_1_9;
+  import13.NgFor _NgFor_1_9;
   _ViewNestedNgForQueriesList2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedNgForQueriesList0._renderType;
   }
@@ -539,7 +540,7 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
     _el_0.append(_anchor_1);
     _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList3);
-    _NgFor_1_9 = new import12.NgFor(_appEl_1, _TemplateRef_1_8);
+    _NgFor_1_9 = new import13.NgFor(_appEl_1, _TemplateRef_1_8);
     init0(_el_0);
     return null;
   }

@@ -16,6 +16,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
+import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$Comp = const [];
@@ -39,7 +40,7 @@ class ViewComp0 extends AppView<import1.Comp> {
   static RenderComponentType _renderType;
   ViewComp0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp');
-    _renderType ??= import7.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$Comp);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/pipes.dart' : null), ViewEncapsulation.None, styles$Comp);
     setupComponentType(_renderType);
   }
   @override

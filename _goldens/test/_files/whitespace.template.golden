@@ -15,6 +15,7 @@ import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$PreserveWhitespace = const [];
@@ -25,7 +26,7 @@ class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
   static RenderComponentType _renderType;
   ViewPreserveWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('preserve-whitespace');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$PreserveWhitespace);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/whitespace.dart' : null), ViewEncapsulation.None, styles$PreserveWhitespace);
     setupComponentType(_renderType);
   }
   @override
@@ -94,7 +95,7 @@ class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
   static RenderComponentType _renderType;
   ViewMinifyWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('preserve-whitespace');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$MinifyWhitespace);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/whitespace.dart' : null), ViewEncapsulation.None, styles$MinifyWhitespace);
     setupComponentType(_renderType);
   }
   @override

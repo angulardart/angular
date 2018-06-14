@@ -15,6 +15,7 @@ import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$LifecycleHooksComponent = const [];
@@ -23,7 +24,7 @@ class ViewLifecycleHooksComponent0 extends AppView<import1.LifecycleHooksCompone
   static RenderComponentType _renderType;
   ViewLifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('lifecycle-hooks');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$LifecycleHooksComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/inherited_lifecycle_hooks.dart' : null), ViewEncapsulation.None, styles$LifecycleHooksComponent);
     setupComponentType(_renderType);
   }
   @override

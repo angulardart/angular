@@ -19,6 +19,7 @@ import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$TestComponent = const [];
@@ -27,7 +28,7 @@ class ViewTestComponent0 extends AppView<import1.TestComponent> {
   static RenderComponentType _renderType;
   ViewTestComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('test');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$TestComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/component_loader_pattern.dart' : null), ViewEncapsulation.None, styles$TestComponent);
     setupComponentType(_renderType);
   }
   @override

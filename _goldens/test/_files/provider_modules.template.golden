@@ -15,9 +15,10 @@ import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'dart:core';
-import 'package:angular/src/core/di/opaque_token.dart' as import9;
+import 'package:angular/src/core/di/opaque_token.dart' as import10;
 
 final List<dynamic> styles$ProviderModulesComponent = const [];
 
@@ -25,7 +26,7 @@ class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesCompo
   static RenderComponentType _renderType;
   ViewProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('provider-modules');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$ProviderModulesComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/provider_modules.dart' : null), ViewEncapsulation.None, styles$ProviderModulesComponent);
     setupComponentType(_renderType);
   }
   @override
@@ -94,13 +95,13 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
     if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
       return _FooService_0_6;
     }
-    if ((identical(token, const import9.OpaqueToken('fooToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken('fooToken')) && (0 == nodeIndex))) {
       return _fooToken_0_7;
     }
-    if ((identical(token, const import9.OpaqueToken('barToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken('barToken')) && (0 == nodeIndex))) {
       return _barToken_0_8;
     }
-    if ((identical(token, const import9.OpaqueToken('bazToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken('bazToken')) && (0 == nodeIndex))) {
       return _bazToken_0_9;
     }
     return notFoundResult;

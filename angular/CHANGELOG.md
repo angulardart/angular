@@ -1,3 +1,8 @@
+### New features
+
+*   The `from` attribute added to `<style>` tags created for component styles
+    now refers to the component URL, rather than its template URL.
+
 ### Bug fixes
 
 *   Prevented a crash in `NgTemplateOutlet` caused by a specific sequence of

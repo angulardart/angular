@@ -15,6 +15,7 @@ import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$Dependent = const [];
@@ -23,7 +24,7 @@ class ViewDependent0 extends AppView<import1.Dependent> {
   static RenderComponentType _renderType;
   ViewDependent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependent');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$Dependent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null), ViewEncapsulation.None, styles$Dependent);
     setupComponentType(_renderType);
   }
   @override
@@ -80,7 +81,7 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
   static RenderComponentType _renderType;
   ViewDependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependency-with-dependent-in-view');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$DependencyWithDependentInView);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null), ViewEncapsulation.None, styles$DependencyWithDependentInView);
     setupComponentType(_renderType);
   }
   @override
@@ -157,7 +158,7 @@ class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> 
   static RenderComponentType _renderType;
   ViewDependencyWithContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependency-with-content');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$DependencyWithContent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null), ViewEncapsulation.None, styles$DependencyWithContent);
     setupComponentType(_renderType);
   }
   @override
@@ -224,7 +225,7 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
   static RenderComponentType _renderType;
   ViewDependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('dependency-and-dependent-in-view');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$DependencyAndDependentInView);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null), ViewEncapsulation.None, styles$DependencyAndDependentInView);
     setupComponentType(_renderType);
   }
   @override
@@ -295,7 +296,7 @@ class ViewHasVisibilityAll0 extends AppView<import1.HasVisibilityAll> {
   static RenderComponentType _renderType;
   ViewHasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('has-visibility-all');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$HasVisibilityAll);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null), ViewEncapsulation.None, styles$HasVisibilityAll);
     setupComponentType(_renderType);
   }
   @override
@@ -357,7 +358,7 @@ class ViewHasVisibilityLocal0 extends AppView<import1.HasVisibilityLocal> {
   static RenderComponentType _renderType;
   ViewHasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('has-visibility-local');
-    _renderType ??= import6.appViewUtils.createRenderType('', ViewEncapsulation.None, styles$HasVisibilityLocal);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null), ViewEncapsulation.None, styles$HasVisibilityLocal);
     setupComponentType(_renderType);
   }
   @override
