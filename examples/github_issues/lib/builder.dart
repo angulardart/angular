@@ -8,8 +8,10 @@ import 'package:build/build.dart';
 // This builder is used with the external build process (build_runner), but
 // there are environments (Bazel) where it is not available (or used).
 //
+// ignore: uri_does_not_exist
 import 'package:sass_builder/sass_builder.dart' as sass;
 
 Builder scssBuilder(BuilderOptions options) =>
     // See ignore above.
-    sass.SassBuilder(outputExtension: '.scss.css');
+    // ignore: strong_mode_invalid_cast_new_expr, new_with_non_type
+    new sass.SassBuilder(outputExtension: '.scss.css');
