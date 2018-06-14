@@ -1,3 +1,11 @@
+### Breaking changes
+
+*   The compilation mode `--debug` (sparingly used externally) is now no longer
+    supported. Some flags and code paths in the compiler still check/support it
+    but it will be removed entirely by the final release and should no longer
+    be used. We will rely on assertion-based tree-shaking (from `Dart2JS`)
+    going forward to emit debug-only conditional code.
+
 ### New features
 
 *   The `from` attribute added to `<style>` tags created for component styles
@@ -20,7 +28,7 @@
 import 'dart:html';
 
 void handleFocus(FocusEvent e) {
-  // Failed when 'e' is was a CustomEvent or not strictly a FocusEvent.  
+  // Failed when 'e' was a CustomEvent or not strictly a FocusEvent.
 }
 ```
 
