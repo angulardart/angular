@@ -48,13 +48,7 @@ Future<List<String>> redirect([NavigationParams params]) async {
       .forComponent<TestRedirectComponent>(ng.TestRedirectComponentNgFactory)
       .addInjector(injector);
   final testFixture = await testBed.create();
-  final urlChanges = testFixture.assertOnlyInstance.locationStrategy.urlChanges
-    // TODO(leonsenft): due to https://github.com/dart-lang/angular/issues/1389,
-    // the initial navigation to '/' succeeds despite there being no matching
-    // route. URL changes due to this navigation are cleared as they're of no
-    // interest to the tests calling this function. To be removed when the issue
-    // is fixed.
-    ..clear();
+  final urlChanges = testFixture.assertOnlyInstance.locationStrategy.urlChanges;
   final router = testFixture.assertOnlyInstance.router;
   final result = await router.navigate('/from', params);
   expect(result, NavigationResult.SUCCESS);
