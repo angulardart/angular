@@ -3,7 +3,6 @@ import 'package:build/build.dart' as build;
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
-const _argDebugMode = 'debug';
 const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
 
@@ -21,14 +20,6 @@ const _argNoEmitInjectableFactories = 'no-emit-injectable-factories';
 /// with an option to use defaults set by bazel or pub's build systems.
 class CompilerFlags {
   static final _argParser = new ArgParser()
-    ..addFlag(
-      _argDebugMode,
-      defaultsTo: null,
-      help: ''
-          'Whether to run the code generator in debug mode. This is '
-          'useful for local development but should be disabled for '
-          'production builds.',
-    )
     ..addFlag(
       _argLegacyStyle,
       defaultsTo: null,
@@ -65,6 +56,7 @@ class CompilerFlags {
     );
 
   /// Whether to emit extra code suitable for testing and local development.
+  @Deprecated('This value is always `false`')
   final bool genDebugInfo;
 
   /// May emit extra code suitable for profiling or tooling.
@@ -157,7 +149,6 @@ class CompilerFlags {
     // Check for invalid (unknown) arguments when possible.
     if (options is Map) {
       final knownArgs = const [
-        _argDebugMode,
         _argI18nEnabled,
         _argProfileFor,
         _argLegacyStyle,
@@ -176,7 +167,6 @@ class CompilerFlags {
       }
     }
 
-    final debugMode = options[_argDebugMode];
     final i18nEnabled = options[_argI18nEnabled];
     final profileFor = options[_argProfileFor];
     final useLegacyStyle = options[_argLegacyStyle];
@@ -185,7 +175,7 @@ class CompilerFlags {
     final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
 
     return new CompilerFlags(
-      genDebugInfo: debugMode ?? defaultTo.genDebugInfo,
+      genDebugInfo: false,
       i18nEnabled: i18nEnabled ?? defaultTo.i18nEnabled,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
