@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 import 'src/compare_to_golden.dart';
 
-final _outputModes = ['release', 'debug', 'outline'];
+final _outputModes = ['release', 'outline'];
 final _inputFiles = p.join('test', '_files', '**.dart');
 final _isBazel = Platform.environment['RUNFILES'] != null;
 
