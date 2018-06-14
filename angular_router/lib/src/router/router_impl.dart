@@ -182,7 +182,9 @@ class RouterImpl extends Router {
     }
 
     MutableRouterState nextState = await _resolveState(path, navigationParams);
-    if (nextState == null) {
+    // In the event that `path` is empty and doesn't match any routes,
+    // `_resolveState` will return a state with no routes, instead of null.
+    if (nextState == null || nextState.routes.isEmpty) {
       return NavigationResult.INVALID_ROUTE;
     }
 

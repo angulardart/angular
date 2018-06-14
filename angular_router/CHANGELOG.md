@@ -4,6 +4,9 @@
 
 *   Added `canNavigate` to `RouterHook`.
 
+*   Navigation will no longer succeed for an empty path if it doesn't match a
+    route.
+
 ## 2.0.0-alpha+13
 
 ### New features
