@@ -15,18 +15,18 @@ import 'whitespace.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class PreserveWhitespace.
-const List<dynamic> styles$PreserveWhitespace = const [];
-external ComponentFactory get PreserveWhitespaceNgFactory;
-external AppView<_user.PreserveWhitespace> viewFactory_PreserveWhitespace0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$PreserveWhitespace;
+external ComponentFactory<_user.PreserveWhitespace> get PreserveWhitespaceNgFactory;
+external AppView<_user.PreserveWhitespace> viewFactory_PreserveWhitespace0(AppView<dynamic> parentView, int parentIndex);
 class ViewPreserveWhitespace0 extends AppView<_user.PreserveWhitespace> {
-  external ViewPreserveWhitespace0(AppView<dynamic> parentView, num parentIndex);
+  external ViewPreserveWhitespace0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class MinifyWhitespace.
-const List<dynamic> styles$MinifyWhitespace = const [];
-external ComponentFactory get MinifyWhitespaceNgFactory;
-external AppView<_user.MinifyWhitespace> viewFactory_MinifyWhitespace0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$MinifyWhitespace;
+external ComponentFactory<_user.MinifyWhitespace> get MinifyWhitespaceNgFactory;
+external AppView<_user.MinifyWhitespace> viewFactory_MinifyWhitespace0(AppView<dynamic> parentView, int parentIndex);
 class ViewMinifyWhitespace0 extends AppView<_user.MinifyWhitespace> {
-  external ViewMinifyWhitespace0(AppView<dynamic> parentView, num parentIndex);
+  external ViewMinifyWhitespace0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

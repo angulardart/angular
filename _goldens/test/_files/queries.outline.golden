@@ -16,32 +16,32 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 // For @Component class QueriesComponent.
-const List<dynamic> styles$QueriesComponent = const [];
-external ComponentFactory get QueriesComponentNgFactory;
-external AppView<_user.QueriesComponent> viewFactory_QueriesComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$QueriesComponent;
+external ComponentFactory<_user.QueriesComponent> get QueriesComponentNgFactory;
+external AppView<_user.QueriesComponent> viewFactory_QueriesComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewQueriesComponent0 extends AppView<_user.QueriesComponent> {
-  external ViewQueriesComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewQueriesComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class EmbeddedQueries.
-const List<dynamic> styles$EmbeddedQueries = const [];
-external ComponentFactory get EmbeddedQueriesNgFactory;
-external AppView<_user.EmbeddedQueries> viewFactory_EmbeddedQueries0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$EmbeddedQueries;
+external ComponentFactory<_user.EmbeddedQueries> get EmbeddedQueriesNgFactory;
+external AppView<_user.EmbeddedQueries> viewFactory_EmbeddedQueries0(AppView<dynamic> parentView, int parentIndex);
 class ViewEmbeddedQueries0 extends AppView<_user.EmbeddedQueries> {
-  external ViewEmbeddedQueries0(AppView<dynamic> parentView, num parentIndex);
+  external ViewEmbeddedQueries0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class EmbeddedQueriesList.
-const List<dynamic> styles$EmbeddedQueriesList = const [];
-external ComponentFactory get EmbeddedQueriesListNgFactory;
-external AppView<_user.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$EmbeddedQueriesList;
+external ComponentFactory<_user.EmbeddedQueriesList> get EmbeddedQueriesListNgFactory;
+external AppView<_user.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList0(AppView<dynamic> parentView, int parentIndex);
 class ViewEmbeddedQueriesList0 extends AppView<_user.EmbeddedQueriesList> {
-  external ViewEmbeddedQueriesList0(AppView<dynamic> parentView, num parentIndex);
+  external ViewEmbeddedQueriesList0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class NestedNgForQueriesList.
-const List<dynamic> styles$NestedNgForQueriesList = const [];
-external ComponentFactory get NestedNgForQueriesListNgFactory;
-external AppView<_user.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$NestedNgForQueriesList;
+external ComponentFactory<_user.NestedNgForQueriesList> get NestedNgForQueriesListNgFactory;
+external AppView<_user.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList0(AppView<dynamic> parentView, int parentIndex);
 class ViewNestedNgForQueriesList0 extends AppView<_user.NestedNgForQueriesList> {
-  external ViewNestedNgForQueriesList0(AppView<dynamic> parentView, num parentIndex);
+  external ViewNestedNgForQueriesList0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Directive class AnotherDirective.
 class AnotherDirectiveNgCd extends DirectiveChangeDetector {

@@ -15,18 +15,18 @@ import 'view_encapsulation.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class EmulatedComponent.
-const List<dynamic> styles$EmulatedComponent = const [];
-external ComponentFactory get EmulatedComponentNgFactory;
-external AppView<_user.EmulatedComponent> viewFactory_EmulatedComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$EmulatedComponent;
+external ComponentFactory<_user.EmulatedComponent> get EmulatedComponentNgFactory;
+external AppView<_user.EmulatedComponent> viewFactory_EmulatedComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewEmulatedComponent0 extends AppView<_user.EmulatedComponent> {
-  external ViewEmulatedComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewEmulatedComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class NoneComponent.
-const List<dynamic> styles$NoneComponent = const [];
-external ComponentFactory get NoneComponentNgFactory;
-external AppView<_user.NoneComponent> viewFactory_NoneComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$NoneComponent;
+external ComponentFactory<_user.NoneComponent> get NoneComponentNgFactory;
+external AppView<_user.NoneComponent> viewFactory_NoneComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewNoneComponent0 extends AppView<_user.NoneComponent> {
-  external ViewNoneComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewNoneComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

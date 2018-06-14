@@ -16,32 +16,32 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 
 // For @Component class UsesNativeEvents.
-const List<dynamic> styles$UsesNativeEvents = const [];
-external ComponentFactory get UsesNativeEventsNgFactory;
-external AppView<_user.UsesNativeEvents> viewFactory_UsesNativeEvents0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$UsesNativeEvents;
+external ComponentFactory<_user.UsesNativeEvents> get UsesNativeEventsNgFactory;
+external AppView<_user.UsesNativeEvents> viewFactory_UsesNativeEvents0(AppView<dynamic> parentView, int parentIndex);
 class ViewUsesNativeEvents0 extends AppView<_user.UsesNativeEvents> {
-  external ViewUsesNativeEvents0(AppView<dynamic> parentView, num parentIndex);
+  external ViewUsesNativeEvents0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesAngularEvents.
-const List<dynamic> styles$UsesAngularEvents = const [];
-external ComponentFactory get UsesAngularEventsNgFactory;
-external AppView<_user.UsesAngularEvents> viewFactory_UsesAngularEvents0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$UsesAngularEvents;
+external ComponentFactory<_user.UsesAngularEvents> get UsesAngularEventsNgFactory;
+external AppView<_user.UsesAngularEvents> viewFactory_UsesAngularEvents0(AppView<dynamic> parentView, int parentIndex);
 class ViewUsesAngularEvents0 extends AppView<_user.UsesAngularEvents> {
-  external ViewUsesAngularEvents0(AppView<dynamic> parentView, num parentIndex);
+  external ViewUsesAngularEvents0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasAngularEvents.
-const List<dynamic> styles$HasAngularEvents = const [];
-external ComponentFactory get HasAngularEventsNgFactory;
-external AppView<_user.HasAngularEvents> viewFactory_HasAngularEvents0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$HasAngularEvents;
+external ComponentFactory<_user.HasAngularEvents> get HasAngularEventsNgFactory;
+external AppView<_user.HasAngularEvents> viewFactory_HasAngularEvents0(AppView<dynamic> parentView, int parentIndex);
 class ViewHasAngularEvents0 extends AppView<_user.HasAngularEvents> {
-  external ViewHasAngularEvents0(AppView<dynamic> parentView, num parentIndex);
+  external ViewHasAngularEvents0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasManyNativeHostEvents.
-const List<dynamic> styles$HasManyNativeHostEvents = const [];
-external ComponentFactory get HasManyNativeHostEventsNgFactory;
-external AppView<_user.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEvents0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$HasManyNativeHostEvents;
+external ComponentFactory<_user.HasManyNativeHostEvents> get HasManyNativeHostEventsNgFactory;
+external AppView<_user.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEvents0(AppView<dynamic> parentView, int parentIndex);
 class ViewHasManyNativeHostEvents0 extends AppView<_user.HasManyNativeHostEvents> {
-  external ViewHasManyNativeHostEvents0(AppView<dynamic> parentView, num parentIndex);
+  external ViewHasManyNativeHostEvents0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();
