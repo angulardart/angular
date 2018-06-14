@@ -15,46 +15,46 @@ import 'visibility.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class Dependent.
-const List<dynamic> styles$Dependent = const [];
-external ComponentFactory get DependentNgFactory;
-external AppView<_user.Dependent> viewFactory_Dependent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$Dependent;
+external ComponentFactory<_user.Dependent> get DependentNgFactory;
+external AppView<_user.Dependent> viewFactory_Dependent0(AppView<dynamic> parentView, int parentIndex);
 class ViewDependent0 extends AppView<_user.Dependent> {
-  external ViewDependent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewDependent0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class DependencyWithDependentInView.
-const List<dynamic> styles$DependencyWithDependentInView = const [];
-external ComponentFactory get DependencyWithDependentInViewNgFactory;
-external AppView<_user.DependencyWithDependentInView> viewFactory_DependencyWithDependentInView0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$DependencyWithDependentInView;
+external ComponentFactory<_user.DependencyWithDependentInView> get DependencyWithDependentInViewNgFactory;
+external AppView<_user.DependencyWithDependentInView> viewFactory_DependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex);
 class ViewDependencyWithDependentInView0 extends AppView<_user.DependencyWithDependentInView> {
-  external ViewDependencyWithDependentInView0(AppView<dynamic> parentView, num parentIndex);
+  external ViewDependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class DependencyWithContent.
-const List<dynamic> styles$DependencyWithContent = const [];
-external ComponentFactory get DependencyWithContentNgFactory;
-external AppView<_user.DependencyWithContent> viewFactory_DependencyWithContent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$DependencyWithContent;
+external ComponentFactory<_user.DependencyWithContent> get DependencyWithContentNgFactory;
+external AppView<_user.DependencyWithContent> viewFactory_DependencyWithContent0(AppView<dynamic> parentView, int parentIndex);
 class ViewDependencyWithContent0 extends AppView<_user.DependencyWithContent> {
-  external ViewDependencyWithContent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewDependencyWithContent0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class DependencyAndDependentInView.
-const List<dynamic> styles$DependencyAndDependentInView = const [];
-external ComponentFactory get DependencyAndDependentInViewNgFactory;
-external AppView<_user.DependencyAndDependentInView> viewFactory_DependencyAndDependentInView0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$DependencyAndDependentInView;
+external ComponentFactory<_user.DependencyAndDependentInView> get DependencyAndDependentInViewNgFactory;
+external AppView<_user.DependencyAndDependentInView> viewFactory_DependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex);
 class ViewDependencyAndDependentInView0 extends AppView<_user.DependencyAndDependentInView> {
-  external ViewDependencyAndDependentInView0(AppView<dynamic> parentView, num parentIndex);
+  external ViewDependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasVisibilityAll.
-const List<dynamic> styles$HasVisibilityAll = const [];
-external ComponentFactory get HasVisibilityAllNgFactory;
-external AppView<_user.HasVisibilityAll> viewFactory_HasVisibilityAll0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$HasVisibilityAll;
+external ComponentFactory<_user.HasVisibilityAll> get HasVisibilityAllNgFactory;
+external AppView<_user.HasVisibilityAll> viewFactory_HasVisibilityAll0(AppView<dynamic> parentView, int parentIndex);
 class ViewHasVisibilityAll0 extends AppView<_user.HasVisibilityAll> {
-  external ViewHasVisibilityAll0(AppView<dynamic> parentView, num parentIndex);
+  external ViewHasVisibilityAll0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasVisibilityLocal.
-const List<dynamic> styles$HasVisibilityLocal = const [];
-external ComponentFactory get HasVisibilityLocalNgFactory;
-external AppView<_user.HasVisibilityLocal> viewFactory_HasVisibilityLocal0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$HasVisibilityLocal;
+external ComponentFactory<_user.HasVisibilityLocal> get HasVisibilityLocalNgFactory;
+external AppView<_user.HasVisibilityLocal> viewFactory_HasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex);
 class ViewHasVisibilityLocal0 extends AppView<_user.HasVisibilityLocal> {
-  external ViewHasVisibilityLocal0(AppView<dynamic> parentView, num parentIndex);
+  external ViewHasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

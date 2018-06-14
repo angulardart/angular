@@ -15,11 +15,11 @@ import 'html.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class I18nHtmlComponent.
-const List<dynamic> styles$I18nHtmlComponent = const [];
-external ComponentFactory get I18nHtmlComponentNgFactory;
-external AppView<_user.I18nHtmlComponent> viewFactory_I18nHtmlComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$I18nHtmlComponent;
+external ComponentFactory<_user.I18nHtmlComponent> get I18nHtmlComponentNgFactory;
+external AppView<_user.I18nHtmlComponent> viewFactory_I18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewI18nHtmlComponent0 extends AppView<_user.I18nHtmlComponent> {
-  external ViewI18nHtmlComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

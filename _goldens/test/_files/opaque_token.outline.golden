@@ -15,25 +15,25 @@ import 'opaque_token.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class HasOpaqueTokens.
-const List<dynamic> styles$HasOpaqueTokens = const [];
-external ComponentFactory get HasOpaqueTokensNgFactory;
-external AppView<_user.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$HasOpaqueTokens;
+external ComponentFactory<_user.HasOpaqueTokens> get HasOpaqueTokensNgFactory;
+external AppView<_user.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dynamic> parentView, int parentIndex);
 class ViewHasOpaqueTokens0 extends AppView<_user.HasOpaqueTokens> {
-  external ViewHasOpaqueTokens0(AppView<dynamic> parentView, num parentIndex);
+  external ViewHasOpaqueTokens0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class ContainsChildComponent.
-const List<dynamic> styles$ContainsChildComponent = const [];
-external ComponentFactory get ContainsChildComponentNgFactory;
-external AppView<_user.ContainsChildComponent> viewFactory_ContainsChildComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$ContainsChildComponent;
+external ComponentFactory<_user.ContainsChildComponent> get ContainsChildComponentNgFactory;
+external AppView<_user.ContainsChildComponent> viewFactory_ContainsChildComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewContainsChildComponent0 extends AppView<_user.ContainsChildComponent> {
-  external ViewContainsChildComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewContainsChildComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InjectsTypedTokenFromSomeParent.
-const List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
-external ComponentFactory get InjectsTypedTokenFromSomeParentNgFactory;
-external AppView<_user.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$InjectsTypedTokenFromSomeParent;
+external ComponentFactory<_user.InjectsTypedTokenFromSomeParent> get InjectsTypedTokenFromSomeParentNgFactory;
+external AppView<_user.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, int parentIndex);
 class ViewInjectsTypedTokenFromSomeParent0 extends AppView<_user.InjectsTypedTokenFromSomeParent> {
-  external ViewInjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewInjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

@@ -15,18 +15,18 @@ import 'empty_properties.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class EmptyPropertiesComponent.
-const List<dynamic> styles$EmptyPropertiesComponent = const [];
-external ComponentFactory get EmptyPropertiesComponentNgFactory;
-external AppView<_user.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$EmptyPropertiesComponent;
+external ComponentFactory<_user.EmptyPropertiesComponent> get EmptyPropertiesComponentNgFactory;
+external AppView<_user.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewEmptyPropertiesComponent0 extends AppView<_user.EmptyPropertiesComponent> {
-  external ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class FancyButtonComponent.
-const List<dynamic> styles$FancyButtonComponent = const [];
-external ComponentFactory get FancyButtonComponentNgFactory;
-external AppView<_user.FancyButtonComponent> viewFactory_FancyButtonComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$FancyButtonComponent;
+external ComponentFactory<_user.FancyButtonComponent> get FancyButtonComponentNgFactory;
+external AppView<_user.FancyButtonComponent> viewFactory_FancyButtonComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewFancyButtonComponent0 extends AppView<_user.FancyButtonComponent> {
-  external ViewFancyButtonComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewFancyButtonComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

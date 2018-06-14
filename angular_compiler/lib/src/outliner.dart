@@ -111,14 +111,14 @@ class TemplateOutliner implements Builder {
         final name = '${component}NgFactory';
         output
           ..writeln('// For @Component class $component.')
-          ..writeln('const List<dynamic> styles\$$component = const [];')
-          ..writeln('external ComponentFactory get $name;')
+          ..writeln('external List<dynamic> get styles\$$component;')
+          ..writeln('external ComponentFactory<_user.$component> get $name;')
           ..writeln(
-              'external $_appViewClass<_user.$component> viewFactory_${component}0($_appViewClass<dynamic> parentView, num parentIndex);')
+              'external $_appViewClass<_user.$component> viewFactory_${component}0($_appViewClass<dynamic> parentView, int parentIndex);')
           ..writeln(
               'class View${component}0 extends $_appViewClass<_user.$component> {')
           ..writeln(
-              '  external View${component}0($_appViewClass<dynamic> parentView, num parentIndex);')
+              '  external View${component}0($_appViewClass<dynamic> parentView, int parentIndex);')
           ..writeln('}');
       }
     }

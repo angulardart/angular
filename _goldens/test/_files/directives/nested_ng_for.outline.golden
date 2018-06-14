@@ -15,11 +15,11 @@ import 'nested_ng_for.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class NestedNgForComponent.
-const List<dynamic> styles$NestedNgForComponent = const [];
-external ComponentFactory get NestedNgForComponentNgFactory;
-external AppView<_user.NestedNgForComponent> viewFactory_NestedNgForComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$NestedNgForComponent;
+external ComponentFactory<_user.NestedNgForComponent> get NestedNgForComponentNgFactory;
+external AppView<_user.NestedNgForComponent> viewFactory_NestedNgForComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewNestedNgForComponent0 extends AppView<_user.NestedNgForComponent> {
-  external ViewNestedNgForComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewNestedNgForComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

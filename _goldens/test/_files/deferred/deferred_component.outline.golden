@@ -15,11 +15,11 @@ import 'deferred_component.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class DeferredChildComponent.
-const List<dynamic> styles$DeferredChildComponent = const [];
-external ComponentFactory get DeferredChildComponentNgFactory;
-external AppView<_user.DeferredChildComponent> viewFactory_DeferredChildComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$DeferredChildComponent;
+external ComponentFactory<_user.DeferredChildComponent> get DeferredChildComponentNgFactory;
+external AppView<_user.DeferredChildComponent> viewFactory_DeferredChildComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewDeferredChildComponent0 extends AppView<_user.DeferredChildComponent> {
-  external ViewDeferredChildComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

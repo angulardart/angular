@@ -15,11 +15,11 @@ import 'core_directives.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class TestFooComponent.
-const List<dynamic> styles$TestFooComponent = const [];
-external ComponentFactory get TestFooComponentNgFactory;
-external AppView<_user.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$TestFooComponent;
+external ComponentFactory<_user.TestFooComponent> get TestFooComponentNgFactory;
+external AppView<_user.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewTestFooComponent0 extends AppView<_user.TestFooComponent> {
-  external ViewTestFooComponent0(AppView<dynamic> parentView, num parentIndex);
+  external ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

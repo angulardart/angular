@@ -15,32 +15,32 @@ import 'intl_component.dart' as _user;
 import 'package:angular/angular.dart';
 
 // For @Component class CompWithoutFinal.
-const List<dynamic> styles$CompWithoutFinal = const [];
-external ComponentFactory get CompWithoutFinalNgFactory;
-external AppView<_user.CompWithoutFinal> viewFactory_CompWithoutFinal0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$CompWithoutFinal;
+external ComponentFactory<_user.CompWithoutFinal> get CompWithoutFinalNgFactory;
+external AppView<_user.CompWithoutFinal> viewFactory_CompWithoutFinal0(AppView<dynamic> parentView, int parentIndex);
 class ViewCompWithoutFinal0 extends AppView<_user.CompWithoutFinal> {
-  external ViewCompWithoutFinal0(AppView<dynamic> parentView, num parentIndex);
+  external ViewCompWithoutFinal0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class CompWithFinal.
-const List<dynamic> styles$CompWithFinal = const [];
-external ComponentFactory get CompWithFinalNgFactory;
-external AppView<_user.CompWithFinal> viewFactory_CompWithFinal0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$CompWithFinal;
+external ComponentFactory<_user.CompWithFinal> get CompWithFinalNgFactory;
+external AppView<_user.CompWithFinal> viewFactory_CompWithFinal0(AppView<dynamic> parentView, int parentIndex);
 class ViewCompWithFinal0 extends AppView<_user.CompWithFinal> {
-  external ViewCompWithFinal0(AppView<dynamic> parentView, num parentIndex);
+  external ViewCompWithFinal0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class CompWithFinalStatic.
-const List<dynamic> styles$CompWithFinalStatic = const [];
-external ComponentFactory get CompWithFinalStaticNgFactory;
-external AppView<_user.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$CompWithFinalStatic;
+external ComponentFactory<_user.CompWithFinalStatic> get CompWithFinalStaticNgFactory;
+external AppView<_user.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex);
 class ViewCompWithFinalStatic0 extends AppView<_user.CompWithFinalStatic> {
-  external ViewCompWithFinalStatic0(AppView<dynamic> parentView, num parentIndex);
+  external ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class CompWithExternalFinal.
-const List<dynamic> styles$CompWithExternalFinal = const [];
-external ComponentFactory get CompWithExternalFinalNgFactory;
-external AppView<_user.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(AppView<dynamic> parentView, num parentIndex);
+external List<dynamic> get styles$CompWithExternalFinal;
+external ComponentFactory<_user.CompWithExternalFinal> get CompWithExternalFinalNgFactory;
+external AppView<_user.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex);
 class ViewCompWithExternalFinal0 extends AppView<_user.CompWithExternalFinal> {
-  external ViewCompWithExternalFinal0(AppView<dynamic> parentView, num parentIndex);
+  external ViewCompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();
