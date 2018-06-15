@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:meta/meta.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 // TODO: add/fix links to:
@@ -113,7 +114,7 @@ class NgZone {
 
   // Number of microtasks pending from _innerZone (& descendants)
   int _pendingMicrotasks = 0;
-  final List<Timer> _pendingTimers = <Timer>[];
+  final _pendingTimers = <_WrappedTimer>[];
 
   /// enabled in development mode as they significantly impact perf.
   NgZone({bool enableLongStackTrace = false}) {
@@ -234,26 +235,40 @@ class NgZone {
   }
 
   Timer _createTimer(
-      Zone self, ZoneDelegate parent, Zone zone, Duration duration, fn()) {
+    Zone self,
+    ZoneDelegate parent,
+    Zone zone,
+    Duration duration,
+    void Function() fn,
+  ) {
     _WrappedTimer wrappedTimer;
-    var cb = () {
+    final onDone = () {
+      _pendingTimers.remove(wrappedTimer);
+      _setMacrotask(_pendingTimers.isNotEmpty);
+    };
+    final callback = () {
       try {
         fn();
       } finally {
-        _pendingTimers.remove(wrappedTimer);
-        _setMacrotask(_pendingTimers.isNotEmpty);
+        onDone();
       }
     };
-    Timer timer = parent.createTimer(zone, duration, cb);
-    wrappedTimer = new _WrappedTimer(timer);
-    wrappedTimer.addOnCancelCb(() {
-      _pendingTimers.remove(wrappedTimer);
-      _setMacrotask(_pendingTimers.isNotEmpty);
-    });
-
+    Timer timer = parent.createTimer(zone, duration, callback);
+    wrappedTimer = new _WrappedTimer(timer, duration, onDone);
     _pendingTimers.add(wrappedTimer);
     _setMacrotask(true);
     return wrappedTimer;
+  }
+
+  /// **INTERNAL ONLY**: See [longestPendingTimer].
+  Duration get _longestPendingTimer {
+    var duration = Duration.zero;
+    for (final timer in _pendingTimers) {
+      if (timer._duration > duration) {
+        duration = timer._duration;
+      }
+    }
+    return duration;
   }
 
   void _setMicrotask(bool hasMicrotasks) {
@@ -379,37 +394,32 @@ class NgZone {
   }
 }
 
+/// For a [zone], returns the [Duration] of the longest pending timer.
+///
+/// If no timers are scheduled this will always return [Duration.zero].
+///
+/// **INTERNAL ONLY**: This is an experimental API subject to change.
+@experimental
+Duration longestPendingTimer(NgZone zone) => zone._longestPendingTimer;
+
 /// A `Timer` wrapper that lets you specify additional functions to call when it
 /// is cancelled.
 class _WrappedTimer implements Timer {
   final Timer _timer;
-  void Function() _onCancelCb;
+  final Duration _duration;
+  final void Function() _onCancel;
 
-  _WrappedTimer(this._timer);
-
-  void addOnCancelCb(void Function() onCancelCb) {
-    if (this._onCancelCb != null) {
-      throw new StateError("On cancel cb already registered");
-    }
-    this._onCancelCb = onCancelCb;
-  }
+  _WrappedTimer(this._timer, this._duration, this._onCancel);
 
   void cancel() {
-    if (this._onCancelCb != null) {
-      this._onCancelCb();
-    }
+    _onCancel();
     _timer.cancel();
   }
 
   bool get isActive => _timer.isActive;
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // See https://github.com/dart-lang/sdk/issues/31664
-  // ignore: override_on_non_overriding_getter
-  int get tick {
-    throw new UnimplementedError("tick");
-  }
+  int get tick => _timer.tick;
 }
 
 /// Stores error information; delivered via [NgZone.onError] stream.
