@@ -15,7 +15,7 @@ import 'issue_list_test.template.dart' as ng;
 
 @Component(
   selector: 'test',
-  directives: const [IssueListComponent],
+  directives: [IssueListComponent],
   template: r'<issue-list></issue-list>',
 )
 class ComplexTestComponent {}
@@ -26,26 +26,26 @@ void main() {
 
   group('$IssueListComponent', () {
     test('should properly render markdown', () async {
-      var stream = new StreamController<GithubIssue>();
-      var service = new MockGithubService();
+      var stream = StreamController<GithubIssue>();
+      var service = MockGithubService();
       when(service.getIssues()).thenReturn(stream.stream);
-      var testBed = new NgTestBed<ComplexTestComponent>().addProviders([
+      var testBed = NgTestBed<ComplexTestComponent>().addProviders([
         provide(GithubService, useValue: service),
       ]);
       var fixture = await testBed.create();
 
       // NOT REQUIRED: We just want to slow down the test to see it.
-      await new Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       // Get a handle to the list.
-      final list = new IssueListPO(fixture.rootElement);
+      final list = IssueListPO(fixture.rootElement);
       expect(await list.isLoading, isTrue);
       expect(await list.items, isEmpty);
 
       // Complete the RPC.
       await fixture.update((_) {
         stream.add(
-          new GithubIssue(
+          GithubIssue(
             id: 1,
             url: Uri.parse('http://github.com'),
             title: 'First issue',
@@ -54,7 +54,7 @@ void main() {
           ),
         );
         stream.add(
-          new GithubIssue(
+          GithubIssue(
             id: 2,
             url: Uri.parse('http://github.com'),
             title: 'Second issue',
@@ -66,7 +66,7 @@ void main() {
       });
 
       // NOT REQUIRED: We just want to slow down the test to see it.
-      await new Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       // Try toggling an item.
       var row = (await list.items)[0];
@@ -81,14 +81,14 @@ void main() {
       );
 
       // NOT REQUIRED: We just want to slow down the test to see it.
-      await new Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       // Toggle again.
       await row.toggle();
       expect(await row.isToggled, isFalse);
 
       // NOT REQUIRED: We just want to slow down the test to see it.
-      await new Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
 
       row = (await list.items)[1];
       await row.toggle();
@@ -111,7 +111,7 @@ class IssueListPO {
 
   Future<List<IssueItemPO>> _items() async => _root
       .querySelectorAll('.github-issue')
-      .map((e) => new IssueItemPO(e))
+      .map((e) => IssueItemPO(e))
       .toList();
 
   Element get _expansion => _root.querySelector('.expansion');

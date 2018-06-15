@@ -4,8 +4,8 @@ import 'package:angular/security.dart';
 @Component(
   selector: 'comment',
   templateUrl: 'comment_component.html',
-  styleUrls: const ['comment_component.css'],
-  directives: const [CommentComponent, NgFor, NgIf],
+  styleUrls: ['comment_component.css'],
+  directives: [CommentComponent, NgFor, NgIf],
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
 class CommentComponent {

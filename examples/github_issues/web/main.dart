@@ -6,7 +6,7 @@ import 'main.template.dart' as ng;
 
 @Component(
   selector: 'ng-app',
-  directives: const [
+  directives: [
     IssueListComponent,
   ],
   template: '<issue-list></issue-list>',
@@ -15,8 +15,8 @@ class NgAppComponent {}
 
 void main() {
   runApp(ng.NgAppComponentNgFactory, createInjector: ([parent]) {
-    return new Injector.map({
-      GithubService: new GithubService(),
+    return Injector.map({
+      GithubService: GithubService(),
     }, parent);
   });
 }
