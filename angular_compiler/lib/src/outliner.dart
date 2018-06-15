@@ -81,7 +81,7 @@ class TemplateOutliner implements Builder {
         injectors.add('${field.name}\$Injector');
       }
     }
-    final output = new StringBuffer('$_analyzerIgnores\n');
+    final output = StringBuffer('$_analyzerIgnores\n');
     output
       ..writeln('// The .template.dart files also export the user code.')
       ..writeln("export '${p.basename(buildStep.inputId.path)}';")

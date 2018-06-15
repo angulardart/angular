@@ -50,11 +50,11 @@ class Annotation {
   const Annotation(this.bindings);
 }
 
-@Annotation(const [
-  const Provider(Foo),
-  const Provider(Foo, useClass: Bar),
-  const Provider(Foo, useValue: 5),
-  const Provider(Foo, useExisting: Bar),
-  const Provider(Foo, useFactory: fn)
+@Annotation([
+  Provider(Foo),
+  Provider(Foo, useClass: Bar),
+  Provider(Foo, useValue: 5),
+  Provider(Foo, useExisting: Bar),
+  Provider(Foo, useFactory: fn)
 ])
 class Annotated {}

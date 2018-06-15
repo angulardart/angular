@@ -34,7 +34,7 @@ class HumanizingTemplateAstVisitor
 
   @override
   String visitCloseElement(CloseElementAst astNode, [StringBuffer context]) {
-    context ??= new StringBuffer();
+    context ??= StringBuffer();
     context..write('</')..write(astNode.name)..write('>');
     return context.toString();
   }
@@ -46,7 +46,7 @@ class HumanizingTemplateAstVisitor
 
   @override
   String visitContainer(ContainerAst astNode, [StringBuffer context]) {
-    context ??= new StringBuffer();
+    context ??= StringBuffer();
     context.write('<ng-container');
     if (astNode.annotations.isNotEmpty) {
       context
@@ -68,7 +68,7 @@ class HumanizingTemplateAstVisitor
 
   @override
   String visitElement(ElementAst astNode, [StringBuffer context]) {
-    context ??= new StringBuffer();
+    context ??= StringBuffer();
     context..write('<')..write(astNode.name);
 
     if (astNode.attributes.isNotEmpty) {
@@ -122,7 +122,7 @@ class HumanizingTemplateAstVisitor
     EmbeddedContentAst astNode, [
     StringBuffer context,
   ]) {
-    context ??= new StringBuffer();
+    context ??= StringBuffer();
     if (astNode.selector != null) {
       context.write('<ng-content select="${astNode.selector}">');
     } else {
@@ -137,7 +137,7 @@ class HumanizingTemplateAstVisitor
     EmbeddedTemplateAst astNode, [
     StringBuffer context,
   ]) {
-    context ??= new StringBuffer();
+    context ??= StringBuffer();
     context..write('<template');
     if (astNode.attributes.isNotEmpty) {
       context
@@ -169,7 +169,7 @@ class HumanizingTemplateAstVisitor
 
   @override
   String visitEvent(EventAst astNode, [StringBuffer context]) {
-    context ??= new StringBuffer();
+    context ??= StringBuffer();
     context.write('(${astNode.name}');
     if (astNode.reductions.isNotEmpty) {
       context.write('.${astNode.reductions.join(".")}');
@@ -202,7 +202,7 @@ class HumanizingTemplateAstVisitor
 
   @override
   String visitProperty(PropertyAst astNode, [StringBuffer context]) {
-    context ??= new StringBuffer();
+    context ??= StringBuffer();
     context.write('[${astNode.name}');
     if (astNode.postfix != null) {
       context.write('.${astNode.postfix}');

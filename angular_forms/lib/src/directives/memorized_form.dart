@@ -14,9 +14,9 @@ import 'shared.dart' show setUpControl, setUpControlGroup;
 /// view for example with a [NgIf].
 @Directive(
   selector: '[memorizedForm]',
-  providers: const [
-    const Provider(ControlContainer, useExisting: MemorizedForm),
-    const Provider(NgForm, useExisting: MemorizedForm)
+  providers: [
+    Provider(ControlContainer, useExisting: MemorizedForm),
+    Provider(NgForm, useExisting: MemorizedForm)
   ],
   exportAs: 'ngForm',
 )
@@ -31,7 +31,7 @@ class MemorizedForm extends NgForm {
     var container = findContainer(dir.path);
     var ctrl = container.find(dir.name);
     if (ctrl == null) {
-      ctrl = new Control();
+      ctrl = Control();
       container.addControl(dir.name, ctrl);
     }
 
@@ -49,7 +49,7 @@ class MemorizedForm extends NgForm {
     var container = findContainer(dir.path);
     var group = container.find(dir.name);
     if (group == null) {
-      group = new ControlGroup({});
+      group = ControlGroup({});
       container.addControl(dir.name, group);
     }
 

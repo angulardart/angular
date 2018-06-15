@@ -19,7 +19,7 @@ String lexerFixedFilename = 'lexer_fixed.html';
 String fullyFixedFilename = 'ast_fixed.html';
 
 String untokenize(Iterable<NgToken> tokens) => tokens
-    .fold(new StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+    .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
     .toString();
 
 enum State {
@@ -66,7 +66,7 @@ List<NgSimpleTokenType> textMap = <NgSimpleTokenType>[
 ];
 
 NgSimpleTokenType generateRandomSimple(State state) {
-  var rng = new Random();
+  var rng = Random();
   switch (state) {
     case State.comment:
       if (rng.nextInt(100) <= 20) {
@@ -91,7 +91,7 @@ NgSimpleTokenType generateRandomSimple(State state) {
 
 String generateHtmlString() {
   var state = State.text;
-  var sb = new StringBuffer();
+  var sb = StringBuffer();
   var identifierCount = 0;
   for (int i = 0; i < generationCount; i++) {
     var type = generateRandomSimple(state);
@@ -156,7 +156,7 @@ String generateHtmlString() {
 }
 
 main() async {
-  var exceptionHandler = new RecoveringExceptionHandler();
+  var exceptionHandler = RecoveringExceptionHandler();
 
   var totalIncorrectLength = 0;
   var totalLexerTime = 0;
@@ -164,11 +164,11 @@ main() async {
 
   for (int i = 0; i < iterationCount; i++) {
     print('Iteration $i of $iterationCount ...');
-    var stopwatch = new Stopwatch();
+    var stopwatch = Stopwatch();
 
     var incorrectHtml = generateHtmlString();
     totalIncorrectLength += incorrectHtml.length;
-    await new File(p.join(dir, incorrectFilename)).writeAsString(incorrectHtml);
+    await File(p.join(dir, incorrectFilename)).writeAsString(incorrectHtml);
 
     stopwatch.reset();
     stopwatch.start();
@@ -176,8 +176,7 @@ main() async {
     stopwatch.stop();
     totalLexerTime += stopwatch.elapsedMicroseconds;
     var lexerFixedString = untokenize(lexerTokens);
-    await new File(p.join(dir, lexerFixedFilename))
-        .writeAsString(lexerFixedString);
+    await File(p.join(dir, lexerFixedFilename)).writeAsString(lexerFixedString);
     exceptionHandler.exceptions.clear();
 
     stopwatch.reset();
@@ -193,7 +192,7 @@ main() async {
     totalParserTime += stopwatch.elapsedMilliseconds;
     var visitor = const HumanizingTemplateAstVisitor();
     var fixedString = ast.map((t) => t.accept(visitor)).join('');
-    await new File(p.join(dir, fullyFixedFilename)).writeAsString(fixedString);
+    await File(p.join(dir, fullyFixedFilename)).writeAsString(fixedString);
     exceptionHandler.exceptions.clear();
   }
 

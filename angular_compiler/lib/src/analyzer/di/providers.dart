@@ -31,7 +31,7 @@ class ProviderReader {
   /// Parses a static object representing a `Provider`.
   ProviderElement parseProvider(DartObject o) {
     if (o == null) {
-      throw new ArgumentError.notNull();
+      throw ArgumentError.notNull();
     }
     if (isType(o)) {
       // Represents "Foo", which is supported short-hand for "Provider(Foo)".
@@ -40,13 +40,13 @@ class ProviderReader {
     }
     if (!isProvider(o)) {
       final typeName = getTypeName(o.type);
-      throw new FormatException('Expected Provider, got "$typeName".');
+      throw FormatException('Expected Provider, got "$typeName".');
     }
     return _parseProvider(o);
   }
 
   ProviderElement _parseProvider(DartObject o) {
-    final reader = new ConstantReader(o);
+    final reader = ConstantReader(o);
     final token = _tokenReader.parseTokenObject(
       reader.read('token').objectValue,
     );
@@ -80,7 +80,7 @@ class ProviderReader {
     if (token is TypeTokenElement) {
       return _parseUseClass(token, o, reader.read('token').typeValue.element);
     }
-    throw new UnsupportedError('Could not parse provider: $o.');
+    throw UnsupportedError('Could not parse provider: $o.');
   }
 
   // const Provider(<token>, useClass: Foo)
@@ -90,7 +90,7 @@ class ProviderReader {
     ClassElement clazz,
   ) {
     // TODO(matanl): Validate that clazz has @Injectable() when flag is set.
-    return new UseClassProviderElement(
+    return UseClassProviderElement(
       token,
       linkTypeOf(typeArgumentOf(provider)),
       linkTypeOf(clazz.type),
@@ -104,7 +104,7 @@ class ProviderReader {
     DartObject provider,
     DartObject object,
   ) {
-    return new UseExistingProviderElement(
+    return UseExistingProviderElement(
       token,
       linkTypeOf(typeArgumentOf(provider)),
       _tokenReader.parseTokenObject(object),
@@ -119,7 +119,7 @@ class ProviderReader {
     final factoryElement = provider.read('useFactory').objectValue.type.element;
     final manualDeps = provider.read('deps');
     // TODO(matanl): Validate that Foo has @Injectable() when flag is set.
-    return new UseFactoryProviderElement(
+    return UseFactoryProviderElement(
       token,
       linkTypeOf(typeArgumentOf(provider.objectValue)),
       urlOf(factoryElement),
@@ -136,7 +136,7 @@ class ProviderReader {
     DartObject useValue,
   ) {
     // TODO(matanl): For corner-cases that can't be revived, display error.
-    return new UseValueProviderElement._(
+    return UseValueProviderElement._(
       token,
       linkTypeOf(typeArgumentOf(provider)),
       useValue,
@@ -145,11 +145,11 @@ class ProviderReader {
 
   /// Returns a provider element representing a single type.
   ProviderElement _parseType(DartObject o) {
-    final reader = new ConstantReader(o);
+    final reader = ConstantReader(o);
     final clazz = reader.typeValue.element as ClassElement;
     final token = linkTypeOf(clazz.type);
-    return new UseClassProviderElement(
-      new TypeTokenElement(token),
+    return UseClassProviderElement(
+      TypeTokenElement(token),
       linkTypeOf(typeArgumentOf(o)),
       token,
       dependencies: _dependencyReader.parseDependencies(clazz),

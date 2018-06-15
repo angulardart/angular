@@ -13,4 +13,4 @@ import 'di.dart' show OpaqueToken;
 ///     ],
 ///   )
 /// ```
-const APP_ID = const OpaqueToken<String>('APP_ID');
+const APP_ID = OpaqueToken<String>('APP_ID');

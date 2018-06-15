@@ -394,82 +394,81 @@ class AstTransformer implements AstVisitor<AST, Null> {
 
   @override
   AST visitInterpolation(Interpolation ast, _) =>
-      new Interpolation(ast.strings, this._visitAll(ast.expressions));
+      Interpolation(ast.strings, this._visitAll(ast.expressions));
 
   @override
   AST visitLiteralPrimitive(LiteralPrimitive ast, _) =>
-      new LiteralPrimitive(ast.value);
+      LiteralPrimitive(ast.value);
 
   @override
   AST visitPropertyRead(PropertyRead ast, _) =>
-      new PropertyRead(ast.receiver.visit(this), ast.name);
+      PropertyRead(ast.receiver.visit(this), ast.name);
 
   @override
   AST visitPropertyWrite(PropertyWrite ast, _) =>
-      new PropertyWrite(ast.receiver.visit(this), ast.name, ast.value);
+      PropertyWrite(ast.receiver.visit(this), ast.name, ast.value);
 
   @override
   AST visitSafePropertyRead(SafePropertyRead ast, _) =>
-      new SafePropertyRead(ast.receiver.visit(this), ast.name);
+      SafePropertyRead(ast.receiver.visit(this), ast.name);
 
   @override
-  AST visitMethodCall(MethodCall ast, _) => new MethodCall(
-      ast.receiver.visit(this), ast.name, this._visitAll(ast.args));
+  AST visitMethodCall(MethodCall ast, _) =>
+      MethodCall(ast.receiver.visit(this), ast.name, this._visitAll(ast.args));
 
   @override
-  AST visitSafeMethodCall(SafeMethodCall ast, _) => new SafeMethodCall(
+  AST visitSafeMethodCall(SafeMethodCall ast, _) => SafeMethodCall(
       ast.receiver.visit(this), ast.name, this._visitAll(ast.args));
 
   @override
   AST visitFunctionCall(FunctionCall ast, _) =>
-      new FunctionCall(ast.target.visit(this), this._visitAll(ast.args));
+      FunctionCall(ast.target.visit(this), this._visitAll(ast.args));
 
   @override
   AST visitLiteralArray(LiteralArray ast, _) =>
-      new LiteralArray(this._visitAll(ast.expressions));
+      LiteralArray(this._visitAll(ast.expressions));
 
   @override
   AST visitLiteralMap(LiteralMap ast, _) =>
-      new LiteralMap(ast.keys, this._visitAll(ast.values));
+      LiteralMap(ast.keys, this._visitAll(ast.values));
 
   @override
   AST visitBinary(Binary ast, _) =>
-      new Binary(ast.operation, ast.left.visit(this), ast.right.visit(this));
+      Binary(ast.operation, ast.left.visit(this), ast.right.visit(this));
 
   @override
-  AST visitPrefixNot(PrefixNot ast, _) =>
-      new PrefixNot(ast.expression.visit(this));
+  AST visitPrefixNot(PrefixNot ast, _) => PrefixNot(ast.expression.visit(this));
 
   @override
-  AST visitConditional(Conditional ast, _) => new Conditional(
+  AST visitConditional(Conditional ast, _) => Conditional(
       ast.condition.visit(this),
       ast.trueExp.visit(this),
       ast.falseExp.visit(this));
 
   @override
   AST visitIfNull(IfNull ast, _) =>
-      new IfNull(ast.condition.visit(this), ast.nullExp.visit(this));
+      IfNull(ast.condition.visit(this), ast.nullExp.visit(this));
 
   @override
   AST visitPipe(BindingPipe ast, _) =>
-      new BindingPipe(ast.exp.visit(this), ast.name, this._visitAll(ast.args));
+      BindingPipe(ast.exp.visit(this), ast.name, this._visitAll(ast.args));
 
   @override
   AST visitKeyedRead(KeyedRead ast, _) =>
-      new KeyedRead(ast.obj.visit(this), ast.key.visit(this));
+      KeyedRead(ast.obj.visit(this), ast.key.visit(this));
 
   @override
-  AST visitKeyedWrite(KeyedWrite ast, _) => new KeyedWrite(
+  AST visitKeyedWrite(KeyedWrite ast, _) => KeyedWrite(
       ast.obj.visit(this), ast.key.visit(this), ast.value.visit(this));
 
   @override
-  AST visitChain(Chain ast, _) => new Chain(this._visitAll(ast.expressions));
+  AST visitChain(Chain ast, _) => Chain(this._visitAll(ast.expressions));
 
   @override
-  AST visitEmptyExpr(EmptyExpr ast, _) => new EmptyExpr();
+  AST visitEmptyExpr(EmptyExpr ast, _) => EmptyExpr();
 
   List<AST> _visitAll(List<AST> asts) {
-    var res = new List<AST>(asts.length);
+    var res = List<AST>(asts.length);
     for (var i = 0; i < asts.length; ++i) {
       res[i] = asts[i].visit(this);
     }

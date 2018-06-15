@@ -14,14 +14,14 @@ void main() {
 
   group("insert", () {
     test("should do nothing if templateRef is null", () async {
-      var testBed = new NgTestBed<TestWithNullComponent>();
+      var testBed = NgTestBed<TestWithNullComponent>();
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       expect(element, hasTextContent(""));
     });
 
     test("should insert content specified by TemplateRef", () async {
-      var testBed = new NgTestBed<TestInsertContentComponent>();
+      var testBed = NgTestBed<TestInsertContentComponent>();
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       expect(element, hasTextContent(""));
@@ -32,7 +32,7 @@ void main() {
       expect(element, hasTextContent("foo"));
     });
     test("should clear content if TemplateRef becomes null", () async {
-      var testBed = new NgTestBed<TestClearContentComponent>();
+      var testBed = NgTestBed<TestClearContentComponent>();
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       CaptureTplRefs refs = testFixture.assertOnlyInstance.refs;
@@ -48,7 +48,7 @@ void main() {
     });
 
     test("should swap content if TemplateRef changes", () async {
-      var testBed = new NgTestBed<TestChangeContentComponent>();
+      var testBed = NgTestBed<TestChangeContentComponent>();
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       CaptureTplRefs refs = testFixture.assertOnlyInstance.refs;
@@ -65,7 +65,7 @@ void main() {
 
   group('[ngTemplateOutletContext]', () {
     test('should update on changes', () async {
-      final testBed = new NgTestBed<TestContextChangeComponent>();
+      final testBed = NgTestBed<TestContextChangeComponent>();
       final testFixture = await testBed.create();
       expect(testFixture.text, contains('foo'));
       await testFixture.update((component) {
@@ -75,7 +75,7 @@ void main() {
     });
 
     test('should update when identity changes', () async {
-      final testBed = new NgTestBed<TestContextChangeComponent>();
+      final testBed = NgTestBed<TestContextChangeComponent>();
       final testFixture = await testBed.create();
       expect(testFixture.text, contains('foo'));
       await testFixture.update((component) {
@@ -87,7 +87,7 @@ void main() {
     });
 
     test('should update when map proxy changes', () async {
-      final testBed = new NgTestBed<TestContextProxyChangeComponent>();
+      final testBed = NgTestBed<TestContextProxyChangeComponent>();
       final testFixture = await testBed.create();
       expect(testFixture.text, contains('foo'));
       await testFixture.update((component) {
@@ -97,7 +97,7 @@ void main() {
     });
 
     test('should reapply when [ngTemplateOutlet] changes', () async {
-      final testBed = new NgTestBed<TestContextTemplateRefChangeComponent>();
+      final testBed = NgTestBed<TestContextTemplateRefChangeComponent>();
       final testFixture = await testBed.create();
       expect(testFixture.text, contains('Hello world!'));
       await testFixture.update((component) {
@@ -107,7 +107,7 @@ void main() {
     });
 
     test('should support *-syntax', () async {
-      final testBed = new NgTestBed<TestStarSyntax>();
+      final testBed = NgTestBed<TestStarSyntax>();
       final testFixture = await testBed.create();
       expect(
         testFixture.text,
@@ -128,7 +128,7 @@ class CaptureTplRefs {
 
 @Component(
   selector: "test-cmp",
-  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  directives: [NgTemplateOutlet, CaptureTplRefs],
   template: "",
 )
 class TestComponent {
@@ -137,7 +137,7 @@ class TestComponent {
 
 @Component(
   selector: "test-cmp-null",
-  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  directives: [NgTemplateOutlet, CaptureTplRefs],
   template: '<template [ngTemplateOutlet]="null"></template>',
 )
 class TestWithNullComponent {
@@ -146,7 +146,7 @@ class TestWithNullComponent {
 
 @Component(
   selector: "test-cmp-insert-content",
-  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  directives: [NgTemplateOutlet, CaptureTplRefs],
   template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
       '<template [ngTemplateOutlet]="currentTplRef"></template>',
 )
@@ -159,7 +159,7 @@ class TestInsertContentComponent {
 
 @Component(
   selector: 'test-clear-content',
-  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  directives: [NgTemplateOutlet, CaptureTplRefs],
   template: '<tpl-refs #refs="tplRefs"><template>foo</template></tpl-refs>'
       '<template [ngTemplateOutlet]="currentTplRef"></template>',
 )
@@ -172,7 +172,7 @@ class TestClearContentComponent {
 
 @Component(
   selector: 'test-change-content',
-  directives: const [NgTemplateOutlet, CaptureTplRefs],
+  directives: [NgTemplateOutlet, CaptureTplRefs],
   template: '<tpl-refs #refs="tplRefs"><template>foo</template><template>'
       'bar</template></tpl-refs><template '
       '[ngTemplateOutlet]="currentTplRef"></template>',
@@ -193,7 +193,7 @@ class TestChangeContentComponent {
         [ngTemplateOutletContext]="context">
     </template>
   ''',
-  directives: const [NgTemplateOutlet],
+  directives: [NgTemplateOutlet],
 )
 class TestContextChangeComponent {
   Map<String, dynamic> context = {
@@ -210,7 +210,7 @@ class TestContextChangeComponent {
         [ngTemplateOutletContext]="{'\$implicit': contextValue}">
     </template>
   ''',
-  directives: const [NgTemplateOutlet],
+  directives: [NgTemplateOutlet],
 )
 class TestContextProxyChangeComponent {
   String contextValue = 'foo';
@@ -226,7 +226,7 @@ class TestContextProxyChangeComponent {
         [ngTemplateOutletContext]="{'\$implicit': 'world'}">
     </template>
   ''',
-  directives: const [NgTemplateOutlet],
+  directives: [NgTemplateOutlet],
 )
 class TestContextTemplateRefChangeComponent {
   bool isGreeting = true;
@@ -239,7 +239,7 @@ class TestContextTemplateRefChangeComponent {
     <ng-container *ngTemplateOutlet="templateRef; context: templateContext">
     </ng-container>
   ''',
-  directives: const [NgTemplateOutlet],
+  directives: [NgTemplateOutlet],
 )
 class TestStarSyntax {
   Map<String, dynamic> templateContext = {'message': 'Hello world!'};

@@ -6,8 +6,8 @@ import 'routes.dart';
 @Component(
   selector: 'item',
   templateUrl: 'item_component.html',
-  styleUrls: const ['item_component.css'],
-  directives: const [NgIf, RouterLink],
+  styleUrls: ['item_component.css'],
+  directives: [NgIf, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
 class ItemComponent {

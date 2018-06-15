@@ -11,9 +11,8 @@ import 'ng_control_group.dart' show NgControlGroup;
 
 /// A base implementation of [Form].
 abstract class AbstractForm extends ControlContainer implements Form {
-  final _ngSubmit = new StreamController<ControlGroup>.broadcast(sync: true);
-  final _ngBeforeSubmit =
-      new StreamController<ControlGroup>.broadcast(sync: true);
+  final _ngSubmit = StreamController<ControlGroup>.broadcast(sync: true);
+  final _ngBeforeSubmit = StreamController<ControlGroup>.broadcast(sync: true);
 
   ControlGroup get form;
 

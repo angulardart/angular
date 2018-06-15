@@ -16,7 +16,7 @@ void main() {
     tearDown(disposeAnyRunningTest);
 
     test('should apply host style', () async {
-      var testBed = new NgTestBed<HostStyleTestComponent>();
+      var testBed = NgTestBed<HostStyleTestComponent>();
       NgTestFixture<HostStyleTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement;
@@ -24,7 +24,7 @@ void main() {
     });
 
     test('should apply host style to nested components', () async {
-      var testBed = new NgTestBed<HostStyleContainerComponent>();
+      var testBed = NgTestBed<HostStyleContainerComponent>();
       NgTestFixture<HostStyleContainerComponent> testFixture =
           await testBed.create();
       Element host1 = testFixture.rootElement.querySelector('host-test');
@@ -34,7 +34,7 @@ void main() {
     });
 
     test('should apply style to element under host', () async {
-      var testBed = new NgTestBed<HostElementSelectorTestComponent>();
+      var testBed = NgTestBed<HostElementSelectorTestComponent>();
       NgTestFixture<HostElementSelectorTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('div');
@@ -45,7 +45,7 @@ void main() {
     });
 
     test('should apply style using element selector', () async {
-      var testBed = new NgTestBed<ElementSelectorTestComponent>();
+      var testBed = NgTestBed<ElementSelectorTestComponent>();
       NgTestFixture<ElementSelectorTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('div');
@@ -57,7 +57,7 @@ void main() {
 
     test("should apply style using element selector in nested components",
         () async {
-      var testBed = new NgTestBed<ContentSelectorTestComponent>();
+      var testBed = NgTestBed<ContentSelectorTestComponent>();
       NgTestFixture<ContentSelectorTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#section1');
@@ -71,7 +71,7 @@ void main() {
     });
 
     test('element selector style should not leak into children', () async {
-      var testBed = new NgTestBed<ContentSelectorTestComponent>();
+      var testBed = NgTestBed<ContentSelectorTestComponent>();
       NgTestFixture<ContentSelectorTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#sectionA');
@@ -79,7 +79,7 @@ void main() {
     });
 
     test('host selector should not override class binding on host', () async {
-      var testBed = new NgTestBed<ClassOnHostTestComponent>();
+      var testBed = NgTestBed<ClassOnHostTestComponent>();
       NgTestFixture<ClassOnHostTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement;
@@ -87,7 +87,7 @@ void main() {
     });
 
     test('should support [attr.class] bindings', () async {
-      var testBed = new NgTestBed<ClassAttribBindingComponent>();
+      var testBed = NgTestBed<ClassAttribBindingComponent>();
       NgTestFixture<ClassAttribBindingComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#item1');
@@ -95,7 +95,7 @@ void main() {
     });
 
     test('should support class interpolation', () async {
-      var testBed = new NgTestBed<ClassInterpolateComponent>();
+      var testBed = NgTestBed<ClassInterpolateComponent>();
       NgTestFixture<ClassInterpolateComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#item1');
@@ -105,7 +105,7 @@ void main() {
     test(
         'binding class on a component should add both content '
         'and host selector', () async {
-      var testBed = new NgTestBed<ComponentContainerTestComponent>();
+      var testBed = NgTestBed<ComponentContainerTestComponent>();
       NgTestFixture<ComponentContainerTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('child-component1');
@@ -115,19 +115,19 @@ void main() {
 
     test('Should apply shim class on top of host attr.class property',
         () async {
-      var testBed = new NgTestBed<NgHostAttribShimTest>();
+      var testBed = NgTestBed<NgHostAttribShimTest>();
       var testFixture = await testBed.create();
       Element elm = testFixture.rootElement.querySelector('feature-promo');
       expect(elm.className.startsWith('position-class _nghost-'), true);
     });
 
     test('Should shim svg elements with no compile type errors', () async {
-      var testBed = new NgTestBed<SvgComponentTest>();
+      var testBed = NgTestBed<SvgComponentTest>();
       await testBed.create();
     });
 
     test('Should support class binding to host component', () async {
-      var testBed = new NgTestBed<FeaturePromoComponent2>();
+      var testBed = NgTestBed<FeaturePromoComponent2>();
       var testFixture = await testBed.create();
       Element elm = testFixture.rootElement;
       expect(elm.tagName.toLowerCase(), 'feature-promo2');
@@ -141,14 +141,14 @@ void main() {
 @Component(
   selector: 'host-test',
   template: '<div id="item1">Test1</div><ng-content></ng-content>',
-  styles: const [':host { color: rgb(64, 255, 127); }'],
+  styles: [':host { color: rgb(64, 255, 127); }'],
 )
 class HostStyleTestComponent {}
 
 @Component(
   selector: 'host-test2',
   template: '<div id="item1">Test2</div>',
-  styles: const [':host { color: red; }'],
+  styles: [':host { color: red; }'],
 )
 class HostStyle2TestComponent {}
 
@@ -156,8 +156,8 @@ class HostStyle2TestComponent {}
 @Component(
   selector: 'host-container',
   template: '<host-test><host-test2></host-test2></host-test>',
-  styles: const [':host { color: rgb(0, 0, 0); }'],
-  directives: const [HostStyleTestComponent, HostStyle2TestComponent],
+  styles: [':host { color: rgb(0, 0, 0); }'],
+  directives: [HostStyleTestComponent, HostStyle2TestComponent],
 )
 class HostStyleContainerComponent {}
 
@@ -165,7 +165,7 @@ class HostStyleContainerComponent {}
   selector: 'host-element-selector-test',
   template: '<div id="item1">Hello</div>'
       '<section class="disabled" id="item2">Hello</section>',
-  styles: const [
+  styles: [
     ':host > div { color: red; }'
         ':host section { color: blue; }'
   ],
@@ -176,7 +176,7 @@ class HostElementSelectorTestComponent {}
   selector: 'element-selector-test',
   template: '<div id="item1">Hello</div>'
       '<section class="disabled" id="item2">Hello</section>',
-  styles: const [
+  styles: [
     'div { color: #A0B0C0; }'
         'section { color: #C0B0A0; }'
   ],
@@ -189,12 +189,12 @@ class ElementSelectorTestComponent {}
       '<section class="sec2 activated" id="section2">Section2</section>'
       '<section class="sec3" id="section3">Section3</section>'
       '<content-selector-test-child></content-selector-test-child>',
-  styles: const [
+  styles: [
     'section { color: green; }'
         'section.activated { color: red; }'
         'section.disabled { color: blue; }'
   ],
-  directives: const [ContentSelectorChildComponent],
+  directives: [ContentSelectorChildComponent],
 )
 class ContentSelectorTestComponent {}
 
@@ -208,7 +208,7 @@ class ContentSelectorChildComponent {}
 @Component(
   selector: 'class-on-host',
   template: '<div id="item1">Test1</div>',
-  styles: const [':host { color: rgb(64, 255, 127); }'],
+  styles: [':host { color: rgb(64, 255, 127); }'],
 )
 class ClassOnHostTestComponent {
   @HostBinding('class')
@@ -218,7 +218,7 @@ class ClassOnHostTestComponent {
 @Component(
   selector: 'class-attrib-binding',
   template: '<div id="item1" [attr.class]="someClass">Test1</div>',
-  styles: const [':host { color: rgb(64, 255, 127); }'],
+  styles: [':host { color: rgb(64, 255, 127); }'],
 )
 class ClassAttribBindingComponent {
   String get someClass => 'xyz';
@@ -227,7 +227,7 @@ class ClassAttribBindingComponent {
 @Component(
   selector: 'class-interpolate-test',
   template: '<div id="item1" class="prefix {{someClass}} postfix">Test1</div>',
-  styles: const [':host { color: rgb(64, 255, 127); }'],
+  styles: [':host { color: rgb(64, 255, 127); }'],
 )
 class ClassInterpolateComponent {
   @HostBinding('class')
@@ -241,8 +241,8 @@ class ClassInterpolateComponent {
   template: '<div><child-component1 class="{{activeClass}}">'
       '<div class="mobile"></div>'
       '</child-component1></div>',
-  styles: const [':host { color: rgb(0, 0, 0); }'],
-  directives: const [ChildComponent],
+  styles: [':host { color: rgb(0, 0, 0); }'],
+  directives: [ChildComponent],
 )
 class ComponentContainerTestComponent {
   String get activeClass => 'active';
@@ -251,7 +251,7 @@ class ComponentContainerTestComponent {
 @Component(
   selector: 'child-component1',
   template: '<div id="child-div1"><ng-content></ng-content></div>',
-  styles: const [':host { color: #FF0000; }'],
+  styles: [':host { color: #FF0000; }'],
 )
 class ChildComponent {}
 
@@ -270,7 +270,7 @@ class ChildComponent {}
           </g>
         </svg>
       </div>''',
-  styles: const [
+  styles: [
     'section { color: green; }'
         'section.activated { color: red; }'
         'section.disabled { color: blue; }'
@@ -299,7 +299,7 @@ String colorToHex(String value) {
     if (parenStartIndex != -1 && parenEndIndex != -1) {
       List<String> components =
           value.substring(parenStartIndex + 1, parenEndIndex).split(',');
-      StringBuffer sb = new StringBuffer();
+      StringBuffer sb = StringBuffer();
       for (int i = 0, len = components.length; i < len && i < 3; i++) {
         String hex = int.parse(components[i]).toRadixString(16);
         if (hex.length < 2) sb.write('0');
@@ -320,7 +320,7 @@ String colorToHex(String value) {
 
 @Component(
   selector: 'feature-promo',
-  styles: const [':host {position: absolute;}'],
+  styles: [':host {position: absolute;}'],
   template: '<div>Hello</div>',
 )
 class FeaturePromoComponent {
@@ -331,7 +331,7 @@ class FeaturePromoComponent {
 
 @Component(
   selector: 'feature-promo-test',
-  directives: const [FeaturePromoComponent],
+  directives: [FeaturePromoComponent],
   template: '''<div>
       <feature-promo [positionClass]="myposition"></feature-promo>
     </div>''',
@@ -345,7 +345,7 @@ class NgHostAttribShimTest {
 
 @Component(
   selector: 'feature-promo2',
-  styles: const [':host {position: absolute;}'],
+  styles: [':host {position: absolute;}'],
   template: '<div >Hello</div>',
 )
 class FeaturePromoComponent2 {

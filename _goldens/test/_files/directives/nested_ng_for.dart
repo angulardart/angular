@@ -7,7 +7,7 @@ import 'package:angular/angular.dart';
       <div *ngFor="let value of row">{{value}}</div>
     </span>
   ''',
-  directives: const [NgFor],
+  directives: [NgFor],
 )
 class NestedNgForComponent {
   List<List<int>> matrix;

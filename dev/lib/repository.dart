@@ -13,15 +13,15 @@ import 'package:yaml/yaml.dart' as yaml;
 /// A set of packages, i.e., a mono-repository.
 class Repository {
   /// Current repository, i.e. as determined by [p.current].
-  static Repository get current => new Repository.fromPath(p.current);
+  static Repository get current => Repository.fromPath(p.current);
 
   static final _defaultInclude = [
-    new Glob('**/pubspec.yaml'),
+    Glob('**/pubspec.yaml'),
   ];
 
   static final _defaultExclude = [
-    new Glob('angular/tools/**'),
-    new Glob('**/build/**'),
+    Glob('angular/tools/**'),
+    Glob('**/build/**'),
   ];
 
   static bool _isExcluded(String relativePath, List<Glob> exclude) {
@@ -71,9 +71,9 @@ class Repository {
     include ??= _defaultInclude;
     exclude ??= _defaultExclude;
     final packages = _findPubspecs(include, exclude, rootPath: path)
-        .map((f) => new Package.loadAndParse(path, p.dirname(f.path)))
+        .map((f) => Package.loadAndParse(path, p.dirname(f.path)))
         .toList();
-    return new Repository(packages, path);
+    return Repository(packages, path);
   }
 
   @visibleForTesting
@@ -90,7 +90,7 @@ class Repository {
 
   /// Reads `prefix.yaml`, used for generating `.travis.yml`.
   String readTravisPrefix() {
-    final file = new File(p.join(
+    final file = File(p.join(
       path,
       'dev',
       'tool',
@@ -102,7 +102,7 @@ class Repository {
 
   /// Reads `postfix.yaml`, used for generating `.travis.yml`.
   String readTravisPostfix() {
-    final file = new File(p.join(
+    final file = File(p.join(
       path,
       'dev',
       'tool',
@@ -114,7 +114,7 @@ class Repository {
 
   @override
   String toString() {
-    final buffer = new StringBuffer('\n  path: $path\n');
+    final buffer = StringBuffer('\n  path: $path\n');
     for (final package in packages) {
       buffer.writeln('    ${'$package'.split('\n').join('\n    ')}');
     }
@@ -138,14 +138,14 @@ class Package {
       return const {};
     }
     return (deps as Map).cast<String, dynamic>().map((k, v) {
-      return new MapEntry(k, _parseVersion(v));
+      return MapEntry(k, _parseVersion(v));
     });
   }
 
   static VersionConstraint _parseVersion(dynamic version) {
     if (version is String) {
       try {
-        return new VersionConstraint.parse(version);
+        return VersionConstraint.parse(version);
       } on FormatException catch (_) {
         return VersionConstraint.any;
       }
@@ -167,7 +167,7 @@ class Package {
 
   @visibleForTesting
   factory Package.loadAndParse(String repositoryRootPath, String packagePath) {
-    final pubspec = new File(p.join(
+    final pubspec = File(p.join(
       repositoryRootPath,
       packagePath,
       _pubspecYaml,
@@ -176,7 +176,7 @@ class Package {
       pubspec.readAsStringSync(),
       sourceUrl: pubspec.path,
     ) as yaml.YamlMap;
-    return new Package(
+    return Package(
       dependencies: _parseDependencies(yamlDoc['dependencies']),
       devDependencies: _parseDependencies(yamlDoc['dev_dependencies']),
       path: p.relative(packagePath, from: repositoryRootPath),
@@ -186,8 +186,8 @@ class Package {
 
   @visibleForTesting
   const Package({
-    this.dependencies: const {},
-    this.devDependencies: const {},
+    this.dependencies = const {},
+    this.devDependencies = const {},
     @required this.path,
     @required this.root,
   });
@@ -214,12 +214,12 @@ class Package {
   ///
   /// This is usually an indication of custom configuration.
   bool get hasCustomTestScript {
-    return new File(p.join(root, path, _testScript)).existsSync();
+    return File(p.join(root, path, _testScript)).existsSync();
   }
 
   /// Whether a `test/` directory exists for this package.
   bool get hasTests {
-    return new Directory(p.join(root, path, _testFolder)).existsSync();
+    return Directory(p.join(root, path, _testFolder)).existsSync();
   }
 
   /// Whether Dart2JS should be used, as well as DDC.
@@ -242,7 +242,7 @@ class Package {
 
   @override
   String toString() {
-    final buffer = new StringBuffer();
+    final buffer = StringBuffer();
     buffer.writeln('path: $path');
     buffer.writeln('dependencies:');
     dependencies.forEach((name, version) {

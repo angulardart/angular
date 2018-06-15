@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-final _dartfmt = new DartFormatter();
+final _dartfmt = DartFormatter();
 
 /// For the provided [dartFile], ensure the golden file checked-in is updated.
 ///
@@ -13,14 +13,14 @@ final _dartfmt = new DartFormatter();
 /// by a build system) and compares it to the source-file of [goldenExtension].
 void compareCheckFileToGolden(
   String dartFile, {
-  bool formatDart: true,
+  bool formatDart = true,
   @required String checkExtension,
   @required String goldenExtension,
 }) {
   final checkPath = p.setExtension(dartFile, checkExtension);
   final goldenPath = p.setExtension(dartFile, goldenExtension);
-  var check = new File(checkPath).readAsStringSync();
-  var golden = new File(goldenPath).readAsStringSync();
+  var check = File(checkPath).readAsStringSync();
+  var golden = File(goldenPath).readAsStringSync();
   if (formatDart) {
     check = _dartfmt.format(check);
     golden = _dartfmt.format(golden);

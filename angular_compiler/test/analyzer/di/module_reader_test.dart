@@ -7,7 +7,7 @@ import '../../src/resolve.dart';
 
 void main() {
   group('ModuleReader', () {
-    const reader = const ModuleReader();
+    const reader = ModuleReader();
 
     ClassElement $Example;
     ClassElement $Dependency;
@@ -72,24 +72,24 @@ void main() {
       test('from a list (implicit module)', () {
         expect(
           reader.parseModule($listModule),
-          new ModuleElement(provide: [
-            new UseClassProviderElement(
-              new TypeTokenElement(linkTypeOf($Example.type)),
+          ModuleElement(provide: [
+            UseClassProviderElement(
+              TypeTokenElement(linkTypeOf($Example.type)),
               null,
               linkTypeOf($Example.type),
-              dependencies: new DependencyInvocation(
+              dependencies: DependencyInvocation(
                 $Example.unnamedConstructor,
                 const [],
               ),
             )
           ], include: [
-            new ModuleElement(
+            ModuleElement(
               provide: [
-                new UseClassProviderElement(
-                  new TypeTokenElement(linkTypeOf($Dependency.type)),
+                UseClassProviderElement(
+                  TypeTokenElement(linkTypeOf($Dependency.type)),
                   null,
                   linkTypeOf($Dependency.type),
-                  dependencies: new DependencyInvocation(
+                  dependencies: DependencyInvocation(
                     $Dependency.unnamedConstructor,
                     const [],
                   ),
@@ -105,13 +105,13 @@ void main() {
         test('with just "provide"', () {
           expect(
             reader.parseModule($newModuleA),
-            new ModuleElement(
+            ModuleElement(
               provide: [
-                new UseClassProviderElement(
-                  new TypeTokenElement(linkTypeOf($Dependency.type)),
+                UseClassProviderElement(
+                  TypeTokenElement(linkTypeOf($Dependency.type)),
                   null,
                   linkTypeOf($Dependency.type),
-                  dependencies: new DependencyInvocation(
+                  dependencies: DependencyInvocation(
                     $Dependency.unnamedConstructor,
                     const [],
                   ),
@@ -128,26 +128,26 @@ void main() {
           // Purposefully not de-duplicated, tooling might want to know.
           expect(
             module,
-            new ModuleElement(
+            ModuleElement(
               provide: [
-                new UseClassProviderElement(
-                  new TypeTokenElement(linkTypeOf($Example.type)),
+                UseClassProviderElement(
+                  TypeTokenElement(linkTypeOf($Example.type)),
                   null,
                   linkTypeOf($Example.type),
-                  dependencies: new DependencyInvocation(
+                  dependencies: DependencyInvocation(
                     $Example.unnamedConstructor,
                     const [],
                   ),
                 )
               ],
               include: [
-                new ModuleElement(
+                ModuleElement(
                   provide: [
-                    new UseClassProviderElement(
-                      new TypeTokenElement(linkTypeOf($Dependency.type)),
+                    UseClassProviderElement(
+                      TypeTokenElement(linkTypeOf($Dependency.type)),
                       null,
                       linkTypeOf($Dependency.type),
-                      dependencies: new DependencyInvocation(
+                      dependencies: DependencyInvocation(
                         $Dependency.unnamedConstructor,
                         const [],
                       ),

@@ -14,8 +14,8 @@ void main() {
     final appComponent = runApp<AppComponent>(
       ng.AppComponentNgFactory,
       createInjector: ([parent]) {
-        return new Injector.map({
-          ExceptionHandler: new LoggingExceptionHandler(),
+        return Injector.map({
+          ExceptionHandler: LoggingExceptionHandler(),
         }, parent);
       },
     );
@@ -57,7 +57,7 @@ final _logs = <String>[];
 
 class ServiceThatThrows {
   bool get getterThatThrows {
-    throw new IntentionalException();
+    throw IntentionalException();
   }
 }
 
@@ -98,27 +98,27 @@ class LoggingExceptionHandler implements ExceptionHandler {
       <router-outlet [routes]="routes"></router-outlet>
     </div>
   ''',
-  directives: const [
+  directives: [
     RouterLink,
     RouterOutlet,
   ],
-  providers: const [
+  providers: [
     routerProvidersTest,
-    const ClassProvider(ServiceThatThrows),
+    ClassProvider(ServiceThatThrows),
   ],
 )
 class AppComponent {
   static final routes = [
-    new RouteDefinition(
+    RouteDefinition(
       path: 'home',
       useAsDefault: true,
       component: ng.HomeComponentNgFactory,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       path: 'another',
       component: ng.AnotherComponentNgFactory,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       path: 'throws',
       component: ng.ThrowingComponentNgFactory,
     ),
@@ -139,10 +139,10 @@ class AppComponent {
   /// Returns a future that completes when [Testability] reports stability.
   Future<void> get onStable async {
     // Await an artificial amount of extra time.
-    await new Future.delayed(Duration.zero);
+    await Future.delayed(Duration.zero);
 
     // Then wait for an async completion.
-    final completer = new Completer<void>();
+    final completer = Completer<void>();
     _testability.whenStable((_) => completer.complete());
     return completer.future;
   }
@@ -175,7 +175,7 @@ class AnotherComponent {}
 
 @Component(
   selector: 'throws',
-  directives: const [
+  directives: [
     NgIf,
   ],
   template: r'''

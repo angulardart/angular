@@ -52,7 +52,7 @@ NgTestBed<T> createDynamicTestBed<T>({
   InjectorFactory rootInjector,
   bool watchAngularLifecycle = true,
 }) {
-  return new NgTestBed<T>._allowDynamicType(
+  return NgTestBed<T>._allowDynamicType(
     host: host,
     rootInjector: rootInjector,
     watchAngularLifecycle: watchAngularLifecycle,
@@ -102,17 +102,17 @@ NgTestBed<T> createDynamicTestBed<T>({
 /// ```
 class NgTestBed<T> {
   static Element _defaultHost() {
-    final host = new Element.tag('ng-test-bed');
+    final host = Element.tag('ng-test-bed');
     document.body.append(host);
     return host;
   }
 
   static Injector _defaultRootInjector([Injector parent]) {
-    return new Injector.empty(parent);
+    return Injector.empty(parent);
   }
 
   static final List<NgTestStabilizerFactory> _lifecycleStabilizers = [
-    (i) => new NgZoneStabilizer(i.get(NgZone)),
+    (i) => NgZoneStabilizer(i.get(NgZone)),
   ];
 
   final Element _host;
@@ -151,12 +151,12 @@ class NgTestBed<T> {
     bool watchAngularLifecycle = true,
   }) {
     if (T == dynamic) {
-      throw new GenericTypeMissingError();
+      throw GenericTypeMissingError();
     }
     if (component == null) {
-      throw new ArgumentError.notNull('component');
+      throw ArgumentError.notNull('component');
     }
-    return new NgTestBed<T>._useComponentFactory(
+    return NgTestBed<T>._useComponentFactory(
       component: component,
       rootInjector: rootInjector,
       host: host,
@@ -177,9 +177,9 @@ class NgTestBed<T> {
     bool watchAngularLifecycle = true,
   }) {
     if (T == dynamic) {
-      throw new GenericTypeMissingError();
+      throw GenericTypeMissingError();
     }
-    return new NgTestBed<T>._allowDynamicType(
+    return NgTestBed<T>._allowDynamicType(
       host: host,
       rootInjector: rootInjector,
       watchAngularLifecycle: watchAngularLifecycle,
@@ -192,7 +192,7 @@ class NgTestBed<T> {
     InjectorFactory rootInjector,
     bool watchAngularLifecycle = true,
   }) {
-    return new NgTestBed<T>._(
+    return NgTestBed<T>._(
       host: host,
       // For uses of NgTestBed w/o `.forComponent`, we enable legacy APIs.
       providers: const [SlowComponentLoader],
@@ -230,7 +230,7 @@ class NgTestBed<T> {
   /// Returns a new instance of [NgTestBed] with [providers] added.
   NgTestBed<T> addProviders(Iterable<Object> providers) {
     if (_usesComponentFactory) {
-      throw new UnsupportedError('Use "addInjector" instead');
+      throw UnsupportedError('Use "addInjector" instead');
     }
     return fork(providers: _concat(_providers, providers));
   }
@@ -277,12 +277,12 @@ class NgTestBed<T> {
     // asynchronous event if another test is running.
     void _checkForActiveTest() {
       if (activeTest != null) {
-        throw new TestAlreadyRunningError();
+        throw TestAlreadyRunningError();
       }
     }
 
     _checkForActiveTest();
-    return new Future<NgTestFixture<T>>.sync(() {
+    return Future<NgTestFixture<T>>.sync(() {
       _checkForActiveTest();
       var rootInjector = _rootInjector;
       if (_providers.isNotEmpty) {
@@ -298,11 +298,11 @@ class NgTestBed<T> {
         beforeChangeDetection: beforeChangeDetection,
       ).then((componentRef) async {
         _checkForActiveTest();
-        final allStabilizers = new NgTestStabilizer.all(
+        final allStabilizers = NgTestStabilizer.all(
           _stabilizers.map((s) => s(componentRef.injector)),
         );
         await allStabilizers.stabilize();
-        final testFixture = new NgTestFixture<T>(
+        final testFixture = NgTestFixture<T>(
           componentRef.injector.get(ApplicationRef),
           componentRef,
           allStabilizers,
@@ -324,7 +324,7 @@ class NgTestBed<T> {
     InjectorFactory rootInjector,
     Iterable<NgTestStabilizerFactory> stabilizers,
   }) {
-    return new NgTestBed<E>._(
+    return NgTestBed<E>._(
       host: host ?? _host,
       providers: providers ?? _providers,
       stabilizers: stabilizers ?? _stabilizers,

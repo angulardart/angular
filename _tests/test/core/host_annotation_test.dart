@@ -148,10 +148,10 @@ void main() {
         count: 2,
       );
       await fixture.update((_) {
-        fixture.rootElement.dispatchEvent(new FocusEvent('focus'));
+        fixture.rootElement.dispatchEvent(FocusEvent('focus'));
       });
       await fixture.update((_) {
-        fixture.rootElement.dispatchEvent(new FocusEvent('blur'));
+        fixture.rootElement.dispatchEvent(FocusEvent('blur'));
       });
     });
   });
@@ -262,7 +262,7 @@ class HostListenerClick {
   void onClick() => clickHandler();
 
   /// To be provided in test cases.
-  void Function() clickHandler = () => throw new UnimplementedError();
+  void Function() clickHandler = () => throw UnimplementedError();
 }
 
 @Component(
@@ -281,5 +281,5 @@ class HostListenerMulti {
   void onBlurOrFocus() => blurOrFocusHandler();
 
   /// To be provided in test cases.
-  void Function() blurOrFocusHandler = () => throw new UnimplementedError();
+  void Function() blurOrFocusHandler = () => throw UnimplementedError();
 }

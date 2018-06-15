@@ -4,7 +4,7 @@ import 'package:angular/src/common/pipes/number_pipe.dart';
 void main() {
   group("Number pipes", () {
     group("DecimalPipe", () {
-      var pipe = new DecimalPipe();
+      var pipe = DecimalPipe();
 
       group("transform", () {
         test("should return correct value for numbers", () {
@@ -18,7 +18,7 @@ void main() {
       });
     });
     group("PercentPipe", () {
-      var pipe = new PercentPipe();
+      var pipe = PercentPipe();
 
       group("transform", () {
         test("should return correct value for numbers", () {
@@ -28,7 +28,7 @@ void main() {
       });
     });
     group("CurrencyPipe", () {
-      var pipe = new CurrencyPipe();
+      var pipe = CurrencyPipe();
       group("transform", () {
         test("should return correct value for numbers", () {
           expect(pipe.transform(123), "USD123");

@@ -12,7 +12,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should consume text binding', () async {
-    final testBed = new NgTestBed<BoundTextComponent>();
+    final testBed = NgTestBed<BoundTextComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Initial text');
     await testFixture.update((component) => component.text = 'New text');
@@ -20,7 +20,7 @@ void main() {
   });
 
   test('should interpolate null as blank string', () async {
-    final testBed = new NgTestBed<BoundTextComponent>();
+    final testBed = NgTestBed<BoundTextComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Initial text');
     await testFixture.update((component) => component.text = null);
@@ -28,7 +28,7 @@ void main() {
   });
 
   test('should consume property binding', () async {
-    final testBed = new NgTestBed<BoundPropertyComponent>();
+    final testBed = NgTestBed<BoundPropertyComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.id, 'Initial ID');
@@ -37,7 +37,7 @@ void main() {
   });
 
   test('should consume ARIA attribute binding', () async {
-    final testBed = new NgTestBed<BoundAriaAttributeComponent>();
+    final testBed = NgTestBed<BoundAriaAttributeComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.attributes, containsPair('aria-label', 'Initial label'));
@@ -46,7 +46,7 @@ void main() {
   });
 
   test('should remove attribute when bound expression is null', () async {
-    final testBed = new NgTestBed<BoundAttributeComponent>();
+    final testBed = NgTestBed<BoundAttributeComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.attributes, containsPair('foo', 'Initial value'));
@@ -55,7 +55,7 @@ void main() {
   });
 
   test('should remove style when bound expression is null', () async {
-    final testBed = new NgTestBed<BoundStyleComponent>();
+    final testBed = NgTestBed<BoundStyleComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.style.height, '10px');
@@ -64,7 +64,7 @@ void main() {
   });
 
   test('should consume property binding with mismatched value name', () async {
-    final testBed = new NgTestBed<BoundMismatchedPropertyComponent>();
+    final testBed = NgTestBed<BoundMismatchedPropertyComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.tabIndex, 0);
@@ -73,7 +73,7 @@ void main() {
   });
 
   test('should consume camel case property binding', () async {
-    final testBed = new NgTestBed<BoundCamelCasePropertyComponent>();
+    final testBed = NgTestBed<BoundCamelCasePropertyComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.tabIndex, 1);
@@ -82,7 +82,7 @@ void main() {
   });
 
   test('should consume innerHtml binding', () async {
-    final testBed = new NgTestBed<BoundInnerHtmlComponent>();
+    final testBed = NgTestBed<BoundInnerHtmlComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.innerHtml, 'Initial <span>HTML</span>');
@@ -92,7 +92,7 @@ void main() {
   });
 
   test('should consume className binding using class alias', () async {
-    final testBed = new NgTestBed<BoundClassNameAlias>();
+    final testBed = NgTestBed<BoundClassNameAlias>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.classes, contains('foo'));

@@ -7,7 +7,7 @@ class _DevModeEquality extends DefaultEquality<Object> {
   @override
   bool equals(Object a, Object b) {
     if (a is Iterable && b is Iterable) {
-      return const IterableEquality(const _DevModeEquality()).equals(a, b);
+      return const IterableEquality(_DevModeEquality()).equals(a, b);
     } else if (a is! Iterable &&
         !isPrimitive(a) &&
         b is! Iterable &&

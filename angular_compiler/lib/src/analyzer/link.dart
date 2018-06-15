@@ -6,7 +6,7 @@ import 'package:source_gen/src/utils.dart';
 
 import 'common.dart';
 
-final TypeReference _dynamic = new TypeReference((b) => b
+final TypeReference _dynamic = TypeReference((b) => b
   ..symbol = 'dynamic'
   ..url = 'dart:core');
 
@@ -15,7 +15,7 @@ TypeReference linkToReference(TypeLink link, LibraryReader library) {
   if (link.isDynamic || link.isPrivate) {
     return _dynamic;
   }
-  return new TypeReference((b) => b
+  return TypeReference((b) => b
     ..symbol = link.symbol
     ..url = library.pathToUrl(link.import).toString()
     ..types.addAll(link.generics.map((t) => linkToReference(t, library))));
@@ -36,7 +36,7 @@ TypeLink linkTypeOf(DartType type) {
   if (type.element.library == null) {
     return TypeLink.$dynamic;
   }
-  return new TypeLink(
+  return TypeLink(
     getTypeName(type),
     normalizeUrl(type.element.library.source.uri).toString(),
     type is ParameterizedType
@@ -54,7 +54,7 @@ TypeLink linkTypeOf(DartType type) {
 /// [TypeLink] is a way to represent this type so it may be used for codegen.
 class TypeLink {
   /// Represents the type of `dynamic` (i.e. omitted type).
-  static const $dynamic = const TypeLink('dynamic', null);
+  static const $dynamic = TypeLink('dynamic', null);
 
   /// Name of the symbol for the type, such as `String`.
   final String symbol;
@@ -71,7 +71,7 @@ class TypeLink {
     this.generics = const [],
   ]);
 
-  static const _list = const ListEquality();
+  static const _list = ListEquality();
 
   @override
   bool operator ==(Object o) {
@@ -101,5 +101,5 @@ class TypeLink {
   Uri toUrlWithoutGenerics() => Uri.parse('$import#$symbol');
 
   /// Returns as a [TypeLink] without generic type arguments.
-  TypeLink withoutGenerics() => new TypeLink(symbol, import);
+  TypeLink withoutGenerics() => TypeLink(symbol, import);
 }

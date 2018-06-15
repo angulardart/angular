@@ -81,7 +81,7 @@ class ModuleReader {
   List<ProviderElement> deduplicateProviders(
     Iterable<ProviderElement> providers,
   ) {
-    final soloProviders = new LinkedHashSet<ProviderElement>(
+    final soloProviders = LinkedHashSet<ProviderElement>(
       equals: (a, b) => a.token == b.token,
       hashCode: (e) => e.token.hashCode,
       isValidKey: (e) => e is ProviderElement,
@@ -97,7 +97,7 @@ class ModuleReader {
       return _parseModule(o);
     } else {
       final typeName = getTypeName(o.type);
-      throw new FormatException('Expected Module, got "$typeName".');
+      throw FormatException('Expected Module, got "$typeName".');
     }
   }
 
@@ -110,11 +110,11 @@ class ModuleReader {
         .map(_providerReader.parseProvider)
         .toList();
 
-    return new ModuleElement(provide: provide, include: include);
+    return ModuleElement(provide: provide, include: include);
   }
 
   ModuleElement _parseModule(DartObject o) {
-    final reader = new ConstantReader(o);
+    final reader = ConstantReader(o);
     final include = reader.read('include').listValue.map(parseModule).toList();
     final provide = reader
         .read('provide')
@@ -122,12 +122,12 @@ class ModuleReader {
         .map(_providerReader.parseProvider)
         .toList();
 
-    return new ModuleElement(provide: provide, include: include);
+    return ModuleElement(provide: provide, include: include);
   }
 }
 
 class ModuleElement {
-  static const iterableEquality = const IterableEquality();
+  static const iterableEquality = IterableEquality();
 
   /// A list of `Provider`s directly provided by the module.
   final List<ProviderElement> provide;

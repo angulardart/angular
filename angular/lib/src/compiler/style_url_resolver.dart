@@ -28,12 +28,12 @@ StyleWithImports extractStyleUrls(String baseUrl, String cssText) {
     foundUrls.add(baseUri.resolve(url).toString());
     return '';
   });
-  return new StyleWithImports(modifiedCssText, foundUrls);
+  return StyleWithImports(modifiedCssText, foundUrls);
 }
 
-final _cssImportRe = new RegExp(r'@import\s+(?:url\()?\s*(?:(?:[' +
+final _cssImportRe = RegExp(r'@import\s+(?:url\()?\s*(?:(?:[' +
     "'" +
     r'"]([^' +
     "'" +
     r'"]*))|([^;\)\s]*))[^;]*;?');
-final _urlWithSchemaRe = new RegExp('^([^:/?#]+):');
+final _urlWithSchemaRe = RegExp('^([^:/?#]+):');

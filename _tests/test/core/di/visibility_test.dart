@@ -15,53 +15,53 @@ void main() {
   group('Visibility', () {
     group('local', () {
       test('component should not be injectable by child component', () async {
-        final testBed = new NgTestBed<ShouldFailToInjectParentComponent>();
+        final testBed = NgTestBed<ShouldFailToInjectParentComponent>();
         expect(testBed.create(), throwsNoProviderError);
       });
 
       test('directive should be accessible via a query', () async {
-        final testBed = new NgTestBed<ShouldQueryDirective>();
+        final testBed = NgTestBed<ShouldQueryDirective>();
         final testFixture = await testBed.create();
         expect(testFixture.assertOnlyInstance.directive, isNotNull);
       });
 
       test('directive should be injectable on same element', () async {
-        final testBed = new NgTestBed<ShouldInjectFromElement>();
+        final testBed = NgTestBed<ShouldInjectFromElement>();
         final testFixture = await testBed.create();
         expect(testFixture.assertOnlyInstance.child.directive, isNotNull);
       });
 
       test('directive should be injectable in same view', () async {
-        final testBed = new NgTestBed<ShouldInjectFromView>();
+        final testBed = NgTestBed<ShouldInjectFromView>();
         final testFixture = await testBed.create();
         expect(testFixture.assertOnlyInstance.child.directive, isNotNull);
       });
 
       test('directive should not be injectable in child view', () async {
-        final testBed = new NgTestBed<ShouldFailToInjectFromParentView>();
+        final testBed = NgTestBed<ShouldFailToInjectFromParentView>();
         expect(testBed.create(), throwsNoProviderError);
       });
 
       test('directive should inject host component', () async {
-        final testBed = new NgTestBed<ShouldInjectHost>();
+        final testBed = NgTestBed<ShouldInjectHost>();
         final testFixture = await testBed.create();
         expect(testFixture.assertOnlyInstance.directive.host, isNotNull);
       });
 
       test('service on Visibility.none component is injectable', () async {
-        final testBed = new NgTestBed<MyComponentWithServiceTest>();
+        final testBed = NgTestBed<MyComponentWithServiceTest>();
         var testFixture = await testBed.create();
         expect(testFixture.rootElement, isNotNull);
       });
 
       test('component may provide itself via another token', () async {
-        final testBed = new NgTestBed<ShouldInjectAliasedLocal>();
+        final testBed = NgTestBed<ShouldInjectAliasedLocal>();
         final testFixture = await testBed.create();
         expect(testFixture.text, testFixture.assertOnlyInstance.text);
       });
 
       test('directive may provide itself for a multi-token', () async {
-        final testBed = new NgTestBed<ShouldInjectMultiToken>();
+        final testBed = NgTestBed<ShouldInjectMultiToken>();
         final testFixture = await testBed.create();
         expect(testFixture.assertOnlyInstance.child.dependencies, [
           const isInstanceOf<VisibilityLocalImplementation>(),
@@ -72,7 +72,7 @@ void main() {
 
     group('all', () {
       test('component should be injectable by child component', () async {
-        final testBed = new NgTestBed<ShouldInjectParentComponent>();
+        final testBed = NgTestBed<ShouldInjectParentComponent>();
         final testFixture = await testBed.create();
         final testComponent = testFixture.assertOnlyInstance;
         expect(testComponent.child.parent, testComponent);
@@ -94,7 +94,7 @@ class InjectsVisibilityLocalComponent {
 @Component(
   selector: 'should-fail-to-inject-parent-component',
   template: '<injects-visibility-local></injects-visibility-local>',
-  directives: const [InjectsVisibilityLocalComponent],
+  directives: [InjectsVisibilityLocalComponent],
 )
 class ShouldFailToInjectParentComponent {}
 
@@ -106,7 +106,7 @@ class VisibilityNoneDirective {}
 @Component(
   selector: 'should-query-directive',
   template: '<div visibility-none></div>',
-  directives: const [VisibilityNoneDirective],
+  directives: [VisibilityNoneDirective],
 )
 class ShouldQueryDirective {
   @ViewChild(VisibilityNoneDirective)
@@ -126,7 +126,7 @@ class InjectsDirectiveComponent {
 @Component(
   selector: 'should-fail-to-inject-from-element',
   template: '<injects-directive visibility-none></injects-directive>',
-  directives: const [InjectsDirectiveComponent, VisibilityNoneDirective],
+  directives: [InjectsDirectiveComponent, VisibilityNoneDirective],
 )
 class ShouldInjectFromElement {
   @ViewChild(InjectsDirectiveComponent)
@@ -140,7 +140,7 @@ class ShouldInjectFromElement {
     <injects-directive></injects-directive>
   </div>
   ''',
-  directives: const [InjectsDirectiveComponent, VisibilityNoneDirective],
+  directives: [InjectsDirectiveComponent, VisibilityNoneDirective],
 )
 class ShouldInjectFromView {
   @ViewChild(InjectsDirectiveComponent)
@@ -150,7 +150,7 @@ class ShouldInjectFromView {
 @Component(
   selector: 'injects-directive-host',
   template: '<injects-directive></injects-directive>',
-  directives: const [InjectsDirectiveComponent],
+  directives: [InjectsDirectiveComponent],
 )
 class InjectsDirectiveHostComponent {}
 
@@ -161,7 +161,7 @@ class InjectsDirectiveHostComponent {}
     <injects-directive-host></injects-directive-host>
   </div>
   ''',
-  directives: const [
+  directives: [
     InjectsDirectiveHostComponent,
     VisibilityNoneDirective,
   ],
@@ -184,7 +184,7 @@ class InjectsVisibilityLocal {
 @Component(
   selector: 'test',
   template: '<visibility-local injects-visibility-local></visibility-local>',
-  directives: const [InjectsVisibilityLocal, VisibilityLocalComponent],
+  directives: [InjectsVisibilityLocal, VisibilityLocalComponent],
 )
 class ShouldInjectHost {
   @ViewChild(InjectsVisibilityLocal)
@@ -203,14 +203,14 @@ abstract class SomeService {
   template: '<child-component-provides-service>'
       '<div *dirNeedsService></div>'
       '</child-component-provides-service>',
-  directives: const [MyChildComponentProvidesService, MyDirectiveNeedsService],
+  directives: [MyChildComponentProvidesService, MyDirectiveNeedsService],
 )
 class MyComponentWithServiceTest {}
 
 @Component(
   selector: 'child-component-provides-service',
-  providers: const [
-    const Provider(SomeService, useExisting: MyChildComponentProvidesService)
+  providers: [
+    Provider(SomeService, useExisting: MyChildComponentProvidesService)
   ],
   template: '<div></div>',
 )
@@ -236,9 +236,9 @@ abstract class Dependency {
 @Component(
   selector: 'should-inject-aliased-local',
   template: '<injects-aliased-local></injects-aliased-local>',
-  directives: const [InjectsAliasedLocal],
-  providers: const [
-    const Provider(Dependency, useExisting: ShouldInjectAliasedLocal),
+  directives: [InjectsAliasedLocal],
+  providers: [
+    Provider(Dependency, useExisting: ShouldInjectAliasedLocal),
   ],
 )
 class ShouldInjectAliasedLocal extends Dependency {
@@ -268,7 +268,7 @@ class InjectsVisibilityAllComponent {
 @Component(
   selector: 'should-inject-parent-component',
   template: '<injects-visibility-all></injects-visibility-all>',
-  directives: const [InjectsVisibilityAllComponent],
+  directives: [InjectsVisibilityAllComponent],
   visibility: Visibility.all,
 )
 class ShouldInjectParentComponent {
@@ -278,12 +278,12 @@ class ShouldInjectParentComponent {
 
 abstract class Interface {}
 
-const implementations = const MultiToken<Interface>();
+const implementations = MultiToken<Interface>();
 
 @Directive(
   selector: '[all]',
-  providers: const [
-    const ExistingProvider.forToken(
+  providers: [
+    ExistingProvider.forToken(
       implementations,
       VisibilityAllImplementation,
     ),
@@ -294,8 +294,8 @@ class VisibilityAllImplementation implements Interface {}
 
 @Directive(
   selector: '[local]',
-  providers: const [
-    const ExistingProvider.forToken(
+  providers: [
+    ExistingProvider.forToken(
       implementations,
       VisibilityLocalImplementation,
     ),
@@ -316,7 +316,7 @@ class InjectsMultiToken {
 @Component(
   selector: 'should-injects-multi-token',
   template: '<injects-multi-token local all></injects-multi-token>',
-  directives: const [
+  directives: [
     InjectsMultiToken,
     VisibilityLocalImplementation,
     VisibilityAllImplementation,

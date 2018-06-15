@@ -21,27 +21,27 @@ void main() {
     );
     if (path == null) {
       // Bazel specific: Use an environment variable to define the root path.
-      throw new ArgumentError('BAZEL_ROOT_PATH not defined (via -D)');
+      throw ArgumentError('BAZEL_ROOT_PATH not defined (via -D)');
     }
-    if (!new Directory(path).existsSync()) {
-      throw new StateError(
+    if (!Directory(path).existsSync()) {
+      throw StateError(
         'Directory not found: $path (in ${Directory.current})',
       );
     }
-    findFiles = new Glob(p.join(path, _inputFiles));
+    findFiles = Glob(p.join(path, _inputFiles));
   } else {
     // TODO(https://github.com/dart-lang/build/issues/1079):
     // Use a similar approach to Bazel to avoid special configuration for tests.
     path = 'build';
-    if (!new File(p.join(path, '.build.manifest')).existsSync()) {
+    if (!File(p.join(path, '.build.manifest')).existsSync()) {
       // Build runner specific: We require --precompiled=build.
-      throw new StateError('Test must be executed via --precompiled=build');
+      throw StateError('Test must be executed via --precompiled=build');
     }
-    findFiles = new Glob(p.join(path, _inputFiles));
+    findFiles = Glob(p.join(path, _inputFiles));
   }
   final inputDartFiles = findFiles.listSync();
   if (inputDartFiles.isEmpty) {
-    throw new StateError('Expected 1 or more tests, got 0 from $findFiles');
+    throw StateError('Expected 1 or more tests, got 0 from $findFiles');
   }
   for (final mode in _outputModes) {
     group('Goldens for "$mode" should be updated in', () {

@@ -6,7 +6,7 @@ import 'repository.dart';
 class TravisGenerator {
   /// Analyzes and returns output files as part of scanning [repository].
   static TravisGenerator generate(Repository repository) {
-    final writer = new OutputWriter(
+    final writer = OutputWriter(
       repository.readTravisPrefix(),
       repository.readTravisPostfix(),
     );
@@ -29,7 +29,7 @@ class TravisGenerator {
         );
       }
     }
-    return new TravisGenerator._(
+    return TravisGenerator._(
       writer.toPresubmitScript(),
       writer.toTravisDotYaml(),
     );

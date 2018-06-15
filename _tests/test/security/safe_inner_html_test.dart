@@ -15,25 +15,25 @@ void main() {
 
   group('$SafeInnerHtmlDirective', () {
     test('normally, "innerHtml" should be sanitized', () async {
-      var testBed = new NgTestBed<NormalInnerHtmlTest>();
+      var testBed = NgTestBed<NormalInnerHtmlTest>();
       var testRoot = await testBed.create();
       expect(testRoot.text, contains('Secure'));
     });
 
     test('"safeInnerHtml" should be trusted', () async {
-      var testBed = new NgTestBed<TrustedSafeInnerHtmlTest>();
+      var testBed = NgTestBed<TrustedSafeInnerHtmlTest>();
       var testRoot = await testBed.create();
       expect(testRoot.text, contains('Unsafe'));
     });
 
     test('"innerHtml" should be trusted', () async {
-      var testBed = new NgTestBed<TrustedInnerHtmlTest>();
+      var testBed = NgTestBed<TrustedInnerHtmlTest>();
       var testRoot = await testBed.create();
       expect(testRoot.text, contains('Unsafe'));
     });
 
     test('unsafe HTML should throw', () async {
-      var testBed = new NgTestBed<UntrustedInnerHtmlTest>();
+      var testBed = NgTestBed<UntrustedInnerHtmlTest>();
       expect(testBed.create(), throwsA(isUnsupportedError));
     });
   });
@@ -56,7 +56,7 @@ class NormalInnerHtmlTest {
 
 @Component(
   selector: 'test',
-  directives: const [SafeInnerHtmlDirective],
+  directives: [SafeInnerHtmlDirective],
   template: r'''
        <span class="other-element">Secure</span>
        <div [safeInnerHtml]="trustedHtml"></div>
@@ -95,7 +95,7 @@ class TrustedInnerHtmlTest {
 
 @Component(
   selector: 'test',
-  directives: const [SafeInnerHtmlDirective],
+  directives: [SafeInnerHtmlDirective],
   template: r'''
     <div [safeInnerHtml]="untrustedHtml"></div>
   ''',

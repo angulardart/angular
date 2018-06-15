@@ -14,16 +14,16 @@ void main() {
 
   // Returns the html parsed as a series of tokens, then back to html.
   String untokenize(Iterable<NgMicroToken> tokens) => tokens
-      .fold(new StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+      .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
       .toString();
 
   test('should tokenize a single let', () {
     expect(
       tokenize('let foo'),
       [
-        new NgMicroToken.letKeyword(0, 'let'),
-        new NgMicroToken.letKeywordAfter(3, ' '),
-        new NgMicroToken.letIdentifier(4, 'foo'),
+        NgMicroToken.letKeyword(0, 'let'),
+        NgMicroToken.letKeywordAfter(3, ' '),
+        NgMicroToken.letIdentifier(4, 'foo'),
       ],
     );
   });
@@ -32,17 +32,17 @@ void main() {
     expect(
       tokenize('let foo; let bar;let baz'),
       [
-        new NgMicroToken.letKeyword(0, 'let'),
-        new NgMicroToken.letKeywordAfter(3, ' '),
-        new NgMicroToken.letIdentifier(4, 'foo'),
-        new NgMicroToken.endExpression(7, '; '),
-        new NgMicroToken.letKeyword(9, 'let'),
-        new NgMicroToken.letKeywordAfter(12, ' '),
-        new NgMicroToken.letIdentifier(13, 'bar'),
-        new NgMicroToken.endExpression(16, ';'),
-        new NgMicroToken.letKeyword(17, 'let'),
-        new NgMicroToken.letKeywordAfter(20, ' '),
-        new NgMicroToken.letIdentifier(21, 'baz'),
+        NgMicroToken.letKeyword(0, 'let'),
+        NgMicroToken.letKeywordAfter(3, ' '),
+        NgMicroToken.letIdentifier(4, 'foo'),
+        NgMicroToken.endExpression(7, '; '),
+        NgMicroToken.letKeyword(9, 'let'),
+        NgMicroToken.letKeywordAfter(12, ' '),
+        NgMicroToken.letIdentifier(13, 'bar'),
+        NgMicroToken.endExpression(16, ';'),
+        NgMicroToken.letKeyword(17, 'let'),
+        NgMicroToken.letKeywordAfter(20, ' '),
+        NgMicroToken.letIdentifier(21, 'baz'),
       ],
     );
   });
@@ -51,11 +51,11 @@ void main() {
     expect(
       tokenize('let foo = bar'),
       [
-        new NgMicroToken.letKeyword(0, 'let'),
-        new NgMicroToken.letKeywordAfter(3, ' '),
-        new NgMicroToken.letIdentifier(4, 'foo'),
-        new NgMicroToken.letAssignmentBefore(7, ' = '),
-        new NgMicroToken.letAssignment(10, 'bar'),
+        NgMicroToken.letKeyword(0, 'let'),
+        NgMicroToken.letKeywordAfter(3, ' '),
+        NgMicroToken.letIdentifier(4, 'foo'),
+        NgMicroToken.letAssignmentBefore(7, ' = '),
+        NgMicroToken.letAssignment(10, 'bar'),
       ],
     );
   });
@@ -64,17 +64,17 @@ void main() {
     expect(
       tokenize('let aaa = bbb; let ccc = ddd'),
       [
-        new NgMicroToken.letKeyword(0, 'let'),
-        new NgMicroToken.letKeywordAfter(3, ' '),
-        new NgMicroToken.letIdentifier(4, 'aaa'),
-        new NgMicroToken.letAssignmentBefore(7, ' = '),
-        new NgMicroToken.letAssignment(10, 'bbb'),
-        new NgMicroToken.endExpression(13, '; '),
-        new NgMicroToken.letKeyword(15, 'let'),
-        new NgMicroToken.letKeywordAfter(18, ' '),
-        new NgMicroToken.letIdentifier(19, 'ccc'),
-        new NgMicroToken.letAssignmentBefore(22, ' = '),
-        new NgMicroToken.letAssignment(25, 'ddd'),
+        NgMicroToken.letKeyword(0, 'let'),
+        NgMicroToken.letKeywordAfter(3, ' '),
+        NgMicroToken.letIdentifier(4, 'aaa'),
+        NgMicroToken.letAssignmentBefore(7, ' = '),
+        NgMicroToken.letAssignment(10, 'bbb'),
+        NgMicroToken.endExpression(13, '; '),
+        NgMicroToken.letKeyword(15, 'let'),
+        NgMicroToken.letKeywordAfter(18, ' '),
+        NgMicroToken.letIdentifier(19, 'ccc'),
+        NgMicroToken.letAssignmentBefore(22, ' = '),
+        NgMicroToken.letAssignment(25, 'ddd'),
       ],
     );
   });
@@ -83,13 +83,13 @@ void main() {
     expect(
       tokenize('let item of items'),
       [
-        new NgMicroToken.letKeyword(0, 'let'),
-        new NgMicroToken.letKeywordAfter(3, ' '),
-        new NgMicroToken.letIdentifier(4, 'item'),
-        new NgMicroToken.endExpression(8, ' '),
-        new NgMicroToken.bindIdentifier(9, 'of'),
-        new NgMicroToken.bindExpressionBefore(11, ' '),
-        new NgMicroToken.bindExpression(12, 'items'),
+        NgMicroToken.letKeyword(0, 'let'),
+        NgMicroToken.letKeywordAfter(3, ' '),
+        NgMicroToken.letIdentifier(4, 'item'),
+        NgMicroToken.endExpression(8, ' '),
+        NgMicroToken.bindIdentifier(9, 'of'),
+        NgMicroToken.bindExpressionBefore(11, ' '),
+        NgMicroToken.bindExpression(12, 'items'),
       ],
     );
   });
@@ -98,17 +98,17 @@ void main() {
     expect(
       tokenize('let item of items; trackBy: byID'),
       [
-        new NgMicroToken.letKeyword(0, 'let'),
-        new NgMicroToken.letKeywordAfter(3, ' '),
-        new NgMicroToken.letIdentifier(4, 'item'),
-        new NgMicroToken.endExpression(8, ' '),
-        new NgMicroToken.bindIdentifier(9, 'of'),
-        new NgMicroToken.bindExpressionBefore(11, ' '),
-        new NgMicroToken.bindExpression(12, 'items'),
-        new NgMicroToken.endExpression(17, ' '),
-        new NgMicroToken.bindIdentifier(19, 'trackBy'),
-        new NgMicroToken.bindExpressionBefore(26, ': '),
-        new NgMicroToken.bindExpression(28, 'byID'),
+        NgMicroToken.letKeyword(0, 'let'),
+        NgMicroToken.letKeywordAfter(3, ' '),
+        NgMicroToken.letIdentifier(4, 'item'),
+        NgMicroToken.endExpression(8, ' '),
+        NgMicroToken.bindIdentifier(9, 'of'),
+        NgMicroToken.bindExpressionBefore(11, ' '),
+        NgMicroToken.bindExpression(12, 'items'),
+        NgMicroToken.endExpression(17, ' '),
+        NgMicroToken.bindIdentifier(19, 'trackBy'),
+        NgMicroToken.bindExpressionBefore(26, ': '),
+        NgMicroToken.bindExpression(28, 'byID'),
       ],
     );
   });
@@ -120,23 +120,23 @@ void main() {
 
   test('should tokenize multiple bindings', () {
     expect(tokenize('templateRef; context: templateContext'), [
-      new NgMicroToken.bindExpression(0, 'templateRef'),
-      new NgMicroToken.endExpression(11, '; '),
-      new NgMicroToken.bindIdentifier(13, 'context'),
-      new NgMicroToken.bindExpressionBefore(20, ': '),
-      new NgMicroToken.bindExpression(22, 'templateContext'),
+      NgMicroToken.bindExpression(0, 'templateRef'),
+      NgMicroToken.endExpression(11, '; '),
+      NgMicroToken.bindIdentifier(13, 'context'),
+      NgMicroToken.bindExpressionBefore(20, ': '),
+      NgMicroToken.bindExpression(22, 'templateContext'),
     ]);
   });
 
   test('should handle newline after identifier', () {
     expect(tokenize('let item of\n items'), [
-      new NgMicroToken.letKeyword(0, 'let'),
-      new NgMicroToken.letKeywordAfter(3, ' '),
-      new NgMicroToken.letIdentifier(4, 'item'),
-      new NgMicroToken.endExpression(8, ' '),
-      new NgMicroToken.bindIdentifier(9, 'of'),
-      new NgMicroToken.bindExpressionBefore(11, '\n '),
-      new NgMicroToken.bindExpression(13, 'items'),
+      NgMicroToken.letKeyword(0, 'let'),
+      NgMicroToken.letKeywordAfter(3, ' '),
+      NgMicroToken.letIdentifier(4, 'item'),
+      NgMicroToken.endExpression(8, ' '),
+      NgMicroToken.bindIdentifier(9, 'of'),
+      NgMicroToken.bindExpressionBefore(11, '\n '),
+      NgMicroToken.bindExpression(13, 'items'),
     ]);
   });
 }

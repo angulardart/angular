@@ -33,7 +33,7 @@ abstract class ReflectiveInjector implements HierarchicalInjector {
       _assertProviders(flatProviders.providers.values);
       _assertProviders(flatProviders.multiProviders);
     }
-    return new _RuntimeInjector(
+    return _RuntimeInjector(
       flatProviders.providers,
       flatProviders.multiProviders,
       parent,
@@ -52,7 +52,7 @@ bool _isMultiProvider(Provider p) => p.multi == true || p.token is MultiToken;
 class _RuntimeInjector extends HierarchicalInjector
     implements ReflectiveInjector, RuntimeInjectorBuilder {
   // Cached instances of resolving a provider by token -> instance.
-  final _instances = new Map.identity();
+  final _instances = Map.identity();
 
   // A pre-processed token -> `RuntimeProvider` mapping.
   final Map<Object, Provider<Object>> _providers;
@@ -100,7 +100,7 @@ class _RuntimeInjector extends HierarchicalInjector
   dynamic resolveAndInstantiate(dynamic providerOrType) {
     final provider = providerOrType is Provider
         ? providerOrType
-        : new Provider(
+        : Provider(
             providerOrType,
             useClass: unsafeCast<Type>(providerOrType),
           );
@@ -120,7 +120,7 @@ class _RuntimeInjector extends HierarchicalInjector
   /// If [deps] are provided, they are used, otherwise the reflector is checked.
   List<Object> _resolveArgs(Object token, [List<Object> deps]) {
     deps ??= reflector.getDependencies(token);
-    final resolved = new List(deps.length);
+    final resolved = List(deps.length);
     for (var i = 0, l = resolved.length; i < l; i++) {
       final dep = deps[i];
       Object result;
@@ -247,7 +247,7 @@ _FlatProviders _flattenProviders(
   Map<Object, Provider<Object>> allProviders,
   List<Provider<Object>> multiProviders,
 ]) {
-  allProviders ??= new Map<Object, Provider<Object>>.identity();
+  allProviders ??= Map<Object, Provider<Object>>.identity();
   multiProviders ??= <Provider<Object>>[];
   for (var i = 0, len = providersOrLists.length; i < len; i++) {
     final item = providersOrLists[i];
@@ -262,7 +262,7 @@ _FlatProviders _flattenProviders(
       // exists.
       allProviders[item.token] = item;
     } else if (item is Type) {
-      allProviders[item] = new Provider(item, useClass: item);
+      allProviders[item] = Provider(item, useClass: item);
     } else if (item is Module) {
       final providers = internalModuleToList(item);
       _flattenProviders(providers, allProviders, multiProviders);
@@ -270,5 +270,5 @@ _FlatProviders _flattenProviders(
       assert(false, 'Unsupported: $item');
     }
   }
-  return new _FlatProviders(allProviders, multiProviders);
+  return _FlatProviders(allProviders, multiProviders);
 }

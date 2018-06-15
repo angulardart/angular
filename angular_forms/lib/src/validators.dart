@@ -6,7 +6,7 @@ import 'model.dart' as model_module;
 ///  Providers for validators to be used for [Control]s in a form.
 ///
 ///  Provide this using `multi: true` to add validators.
-const NG_VALIDATORS = const MultiToken<dynamic>('NgValidators');
+const NG_VALIDATORS = MultiToken<dynamic>('NgValidators');
 
 ///  Provides a set of validators used by form controls.
 ///
@@ -66,7 +66,7 @@ class Validators {
     return /* Map < String , dynamic > */ (model_module.AbstractControl
         control) {
       if (Validators.required(control) != null) return null;
-      var regex = new RegExp('^$pattern\$');
+      var regex = RegExp('^$pattern\$');
       String v = control.value;
       return regex.hasMatch(v)
           ? null
@@ -94,7 +94,7 @@ class Validators {
   // TODO(tsander): Remove the need to filter the validation. The list of
   // validators should not contain null values.
   static List<T> _removeNullValidators<T>(List<T> validators) {
-    final result = new List<T>();
+    final result = List<T>();
     for (var i = 0, len = validators.length; i < len; i++) {
       var validator = validators[i];
       if (validator != null) result.add(validator);
@@ -105,7 +105,7 @@ class Validators {
 
 Map<String, dynamic> _executeValidators(
     model_module.AbstractControl control, List<ValidatorFn> validators) {
-  var result = new Map<String, dynamic>();
+  var result = Map<String, dynamic>();
   for (var i = 0, len = validators.length; i < len; i++) {
     final validator = validators[i];
     assert(validator != null, 'Validator should be non-null');

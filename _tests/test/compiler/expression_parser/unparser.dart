@@ -1,11 +1,11 @@
 import 'package:angular/src/compiler/expression_parser/ast.dart';
 
 class Unparser implements AstVisitor {
-  static final _quoteRegExp = new RegExp(r'"');
+  static final _quoteRegExp = RegExp(r'"');
   StringBuffer sb;
 
   String unparse(AST ast) {
-    sb = new StringBuffer();
+    sb = StringBuffer();
     _visit(ast);
     return sb.toString();
   }

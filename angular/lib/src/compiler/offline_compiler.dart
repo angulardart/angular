@@ -87,7 +87,7 @@ class OfflineCompiler {
     } else if (artifacts.directives.isNotEmpty) {
       moduleUrl = templateModuleUrl(artifacts.directives.first.type);
     } else {
-      throw new StateError('No components nor injectorModules given');
+      throw StateError('No components nor injectorModules given');
     }
     var statements = <o.Statement>[];
     var exportedVars = <String>[];
@@ -126,10 +126,10 @@ class OfflineCompiler {
                 // any metadata to collect. This is a stop-gap until we no
                 // longer support the metadata field (for the old router).
                 _compilerFlags.emitComponentFactories
-                    ? new o.ReadVarExpr('_${compMeta.type.name}Metadata')
+                    ? o.ReadVarExpr('_${compMeta.type.name}Metadata')
                     : o.literalArr(
                         [],
-                        new o.ArrayType(null, [o.TypeModifier.Const]),
+                        o.ArrayType(null, [o.TypeModifier.Const]),
                       ),
               ],
               o.importType(
@@ -145,7 +145,7 @@ class OfflineCompiler {
 
     for (CompileDirectiveMetadata directive in artifacts.directives) {
       if (!directive.requiresDirectiveChangeDetector) continue;
-      DirectiveCompiler comp = new DirectiveCompiler(directive,
+      DirectiveCompiler comp = DirectiveCompiler(directive,
           _templateParser.schemaRegistry, _viewCompiler.genDebugInfo);
       DirectiveCompileResult res = comp.compile();
       statements.addAll(res.statements);
@@ -192,13 +192,13 @@ class OfflineCompiler {
       Map<String, String> deferredModules) {
     String sourceCode = _outputEmitter.emitStatements(
         moduleUrl, statements, exportedVars, deferredModules);
-    return new SourceModule(moduleUrl, sourceCode, deferredModules);
+    return SourceModule(moduleUrl, sourceCode, deferredModules);
   }
 }
 
 void _assertComponent(CompileDirectiveMetadata meta) {
   if (!meta.isComponent) {
-    throw new StateError(
+    throw StateError(
         "Could not compile '${meta.type.name}' because it is not a component.");
   }
 }

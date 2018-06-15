@@ -11,8 +11,8 @@ void main() {
 
   setUp(() {
     parentInjector = ReflectiveInjector.resolveAndCreate([
-      new ClassProvider(Model),
-      new ValueProvider(Place, new Place('Parent')),
+      ClassProvider(Model),
+      ValueProvider(Place, Place('Parent')),
     ]);
   });
 
@@ -22,7 +22,7 @@ void main() {
 
   test('should have the expected bindings at the child level', () {
     final childInjector = parentInjector.resolveAndCreateChild([
-      new ValueProvider(Place, new Place('Child')),
+      ValueProvider(Place, Place('Child')),
     ]);
     expect(
       (childInjector.resolveAndInstantiate(Model) as Model).place.name,

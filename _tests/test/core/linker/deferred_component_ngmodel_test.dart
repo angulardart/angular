@@ -15,7 +15,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should load a @deferred component', () async {
-    final fixture = await new NgTestBed<TestContainerComponent>().create();
+    final fixture = await NgTestBed<TestContainerComponent>().create();
     await deflib0.loadLibrary();
     final view = fixture.rootElement.querySelector('my-deferred-input');
     expect(view.attributes['data-xyz'], 'testValue');
@@ -31,7 +31,7 @@ void main() {
 
 @Component(
   selector: 'test-container',
-  directives: const [DeferredInputComponent],
+  directives: [DeferredInputComponent],
   template: r'<my-deferred-input [attr.data-xyz]="testValue" @deferred>'
       '</my-deferred-input>',
 )

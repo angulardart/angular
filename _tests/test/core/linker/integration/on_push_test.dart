@@ -15,7 +15,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should use ChangeDetectorRef to manually request a check', () async {
-    final testBed = new NgTestBed<ManualCheckComponent>();
+    final testBed = NgTestBed<ManualCheckComponent>();
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.child;
     expect(cmp.numberOfChecks, 1);
@@ -26,7 +26,7 @@ void main() {
   });
 
   test('should check component when bindings update', () async {
-    final testBed = new NgTestBed<PushCmpHostComponent>();
+    final testBed = NgTestBed<PushCmpHostComponent>();
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.child;
     expect(cmp.numberOfChecks, 1);
@@ -35,30 +35,30 @@ void main() {
   });
 
   test('should check when an event is fired', () async {
-    final testBed = new NgTestBed<PushCmpHostComponent>();
+    final testBed = NgTestBed<PushCmpHostComponent>();
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.child;
     final cmpElement = testFixture.rootElement.children.first;
     expect(cmp.numberOfChecks, 1);
     // Regular element.
     await testFixture.update((_) {
-      cmpElement.children[0].dispatchEvent(new MouseEvent('click'));
+      cmpElement.children[0].dispatchEvent(MouseEvent('click'));
     });
     expect(cmp.numberOfChecks, 2);
     // Element inside an *ngIf.
     await testFixture.update((_) {
-      cmpElement.children[1].dispatchEvent(new MouseEvent('click'));
+      cmpElement.children[1].dispatchEvent(MouseEvent('click'));
     });
     expect(cmp.numberOfChecks, 3);
     // Element inside a child component.
     await testFixture.update((_) {
-      cmpElement.children[2].children[0].dispatchEvent(new MouseEvent('click'));
+      cmpElement.children[2].children[0].dispatchEvent(MouseEvent('click'));
     });
     expect(cmp.numberOfChecks, 4);
   });
 
   test('should not affect updating bindings', () async {
-    final testBed = new NgTestBed<PushCmpWithRefHostComponent>();
+    final testBed = NgTestBed<PushCmpWithRefHostComponent>();
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.child;
     expect(cmp.prop, 'one');
@@ -67,7 +67,7 @@ void main() {
   });
 
   test('should check when async pipe requests check', () async {
-    final testBed = new NgTestBed<PushCmpWithAsyncPipeHostCmp>();
+    final testBed = NgTestBed<PushCmpWithAsyncPipeHostCmp>();
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.child;
     expect(cmp.numberOfChecks, 1);
@@ -106,7 +106,7 @@ class PushCmpWithRef {
 @Component(
   selector: 'manual-check',
   template: '<push-cmp-with-ref #cmp></push-cmp-with-ref>',
-  directives: const [PushCmpWithRef],
+  directives: [PushCmpWithRef],
 )
 class ManualCheckComponent {
   @ViewChild('cmp')
@@ -126,7 +126,7 @@ class EventCmp {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '{{field}}<div (click)="noop()"></div><div *ngIf="true" '
       '(click)="noop()"></div><event-cmp></event-cmp>',
-  directives: const [EventCmp, NgIf],
+  directives: [EventCmp, NgIf],
 )
 class PushCmp {
   int numberOfChecks;
@@ -148,7 +148,7 @@ class PushCmp {
 @Component(
   selector: 'push-cmp-host',
   template: '<push-cmp [prop]="ctxProp" #cmp></push-cmp>',
-  directives: const [PushCmp],
+  directives: [PushCmp],
 )
 class PushCmpHostComponent {
   String ctxProp = 'one';
@@ -160,7 +160,7 @@ class PushCmpHostComponent {
 @Component(
   selector: 'push-cmp-with-ref-host',
   template: '<push-cmp-with-ref [prop]="ctxProp" #cmp></push-cmp-with-ref>',
-  directives: const [PushCmpWithRef],
+  directives: [PushCmpWithRef],
 )
 class PushCmpWithRefHostComponent {
   String ctxProp = 'one';
@@ -173,7 +173,7 @@ class PushCmpWithRefHostComponent {
   selector: 'push-cmp-with-async',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '{{field | async}}',
-  pipes: const [AsyncPipe],
+  pipes: [AsyncPipe],
 )
 class PushCmpWithAsyncPipe {
   int numberOfChecks = 0;
@@ -181,7 +181,7 @@ class PushCmpWithAsyncPipe {
   Completer<int> completer;
 
   PushCmpWithAsyncPipe() {
-    completer = new Completer();
+    completer = Completer();
     future = completer.future;
   }
 
@@ -198,7 +198,7 @@ class PushCmpWithAsyncPipe {
 @Component(
   selector: 'push-cmp-with-async-host',
   template: '<push-cmp-with-async #cmp></push-cmp-with-async>',
-  directives: const [PushCmpWithAsyncPipe],
+  directives: [PushCmpWithAsyncPipe],
 )
 class PushCmpWithAsyncPipeHostCmp {
   @ViewChild('cmp')

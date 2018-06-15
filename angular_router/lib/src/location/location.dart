@@ -51,7 +51,7 @@ import 'location_strategy.dart' show LocationStrategy;
 @Injectable()
 class Location {
   final LocationStrategy locationStrategy;
-  final _subject = new StreamController<dynamic>();
+  final _subject = StreamController<dynamic>();
   final String _baseHref;
 
   Location(this.locationStrategy)
@@ -73,8 +73,8 @@ class Location {
 
   /// Given a string representing a URL, returns the normalized URL path without
   /// leading or trailing slashes
-  String normalize(String url) => Location
-      .stripTrailingSlash(_stripBaseHref(_baseHref, _stripIndexHtml(url)));
+  String normalize(String url) => Location.stripTrailingSlash(
+      _stripBaseHref(_baseHref, _stripIndexHtml(url)));
 
   /// Normalizes [path] for navigation.
   ///

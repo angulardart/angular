@@ -20,7 +20,7 @@ void main() {
   tearDown(() => disposeAnyRunningTest());
 
   test('Should update bound properties when setState is called', () async {
-    var testBed = new NgTestBed<TestContainer>();
+    var testBed = NgTestBed<TestContainer>();
     var testRoot = await testBed.create();
     Element targetElement = testRoot.rootElement.querySelector('.mytarget');
     expect(targetElement.firstChild.text, 'ChildHello');
@@ -34,14 +34,14 @@ void main() {
     <child-component class="mytarget" someDirective>
     </child-component>
   ''',
-  directives: const [ChildComponent, SomeDirective],
+  directives: [ChildComponent, SomeDirective],
 )
 class TestContainer {}
 
 @Component(
   selector: 'child-component',
   template: '<div>ChildHello</div>',
-  providers: const [const Provider(SomeDirective, useExisting: ChildComponent)],
+  providers: [Provider(SomeDirective, useExisting: ChildComponent)],
 )
 class ChildComponent extends SomeDirective {}
 

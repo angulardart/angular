@@ -9,7 +9,7 @@ import '../../hash.dart';
 /// Clients should not extend, implement, or mix-in this class.
 class NgMicroToken {
   factory NgMicroToken.bindExpressionBefore(int offset, String lexeme) {
-    return new NgMicroToken._(
+    return NgMicroToken._(
       NgMicroTokenType.bindExpressionBefore,
       lexeme,
       offset,
@@ -17,23 +17,23 @@ class NgMicroToken {
   }
 
   factory NgMicroToken.bindExpression(int offset, String lexeme) {
-    return new NgMicroToken._(NgMicroTokenType.bindExpression, lexeme, offset);
+    return NgMicroToken._(NgMicroTokenType.bindExpression, lexeme, offset);
   }
 
   factory NgMicroToken.bindIdentifier(int offset, String lexeme) {
-    return new NgMicroToken._(NgMicroTokenType.bindIdentifier, lexeme, offset);
+    return NgMicroToken._(NgMicroTokenType.bindIdentifier, lexeme, offset);
   }
 
   factory NgMicroToken.endExpression(int offset, String lexeme) {
-    return new NgMicroToken._(NgMicroTokenType.endExpression, lexeme, offset);
+    return NgMicroToken._(NgMicroTokenType.endExpression, lexeme, offset);
   }
 
   factory NgMicroToken.letAssignment(int offset, String lexeme) {
-    return new NgMicroToken._(NgMicroTokenType.letAssignment, lexeme, offset);
+    return NgMicroToken._(NgMicroTokenType.letAssignment, lexeme, offset);
   }
 
   factory NgMicroToken.letAssignmentBefore(int offset, String lexeme) {
-    return new NgMicroToken._(
+    return NgMicroToken._(
       NgMicroTokenType.letAssignmentBefore,
       lexeme,
       offset,
@@ -41,7 +41,7 @@ class NgMicroToken {
   }
 
   factory NgMicroToken.letIdentifier(int offset, String lexeme) {
-    return new NgMicroToken._(
+    return NgMicroToken._(
       NgMicroTokenType.letIdentifier,
       lexeme,
       offset,
@@ -49,11 +49,11 @@ class NgMicroToken {
   }
 
   factory NgMicroToken.letKeyword(int offset, String lexeme) {
-    return new NgMicroToken._(NgMicroTokenType.letKeyword, lexeme, offset);
+    return NgMicroToken._(NgMicroTokenType.letKeyword, lexeme, offset);
   }
 
   factory NgMicroToken.letKeywordAfter(int offset, String lexeme) {
-    return new NgMicroToken._(NgMicroTokenType.letKeywordAfter, lexeme, offset);
+    return NgMicroToken._(NgMicroTokenType.letKeywordAfter, lexeme, offset);
   }
 
   const NgMicroToken._(this.type, this.lexeme, this.offset);
@@ -89,19 +89,19 @@ class NgMicroToken {
 }
 
 class NgMicroTokenType {
-  static const endExpression = const NgMicroTokenType._('endExpression');
-  static const bindExpression = const NgMicroTokenType._('bindExpression');
-  static const bindExpressionBefore = const NgMicroTokenType._(
+  static const endExpression = NgMicroTokenType._('endExpression');
+  static const bindExpression = NgMicroTokenType._('bindExpression');
+  static const bindExpressionBefore = NgMicroTokenType._(
     'bindExpressionBefore',
   );
-  static const bindIdentifier = const NgMicroTokenType._('bindIdentifier');
-  static const letAssignment = const NgMicroTokenType._('letAssignment');
-  static const letAssignmentBefore = const NgMicroTokenType._(
+  static const bindIdentifier = NgMicroTokenType._('bindIdentifier');
+  static const letAssignment = NgMicroTokenType._('letAssignment');
+  static const letAssignmentBefore = NgMicroTokenType._(
     'letAssignmentBefore',
   );
-  static const letIdentifier = const NgMicroTokenType._('letIdentifier');
-  static const letKeyword = const NgMicroTokenType._('letKeyword');
-  static const letKeywordAfter = const NgMicroTokenType._('letKeywordAfter');
+  static const letIdentifier = NgMicroTokenType._('letIdentifier');
+  static const letKeyword = NgMicroTokenType._('letKeyword');
+  static const letKeywordAfter = NgMicroTokenType._('letKeywordAfter');
 
   final String _name;
 

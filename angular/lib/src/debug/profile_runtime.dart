@@ -30,7 +30,7 @@ void profileSetup() {
 /// Aggregate collected data and write out CSV to browser console.
 void _inspectProfile() {
   int logCount = profileIds.length;
-  _PerfProfile profile = new _PerfProfile();
+  _PerfProfile profile = _PerfProfile();
   for (int i = 0, iData = 0; i < logCount; i++, iData += 2) {
     profile.add(profileIds[i], profileData[iData], profileData[iData + 1]);
   }
@@ -90,7 +90,7 @@ class _PerfProfile {
   /// Maps from profile name to aggregate duration.
   void add(String key, num type, num ts) {
     var keys = key.split(':');
-    log.add(new _ProfileData(
+    log.add(_ProfileData(
         key, keys[0], keys[1], keys.length > 2 ? keys[2] : '', type, ts));
   }
 
@@ -144,7 +144,7 @@ class _PerfProfile {
     for (_ProfileData data in log) {
       if (data.type != _ProfileData.typeMarkStart) continue;
       _ComponentMetrics metrics = componentMetrics[data.name] ??
-          (componentMetrics[data.name] = new _ComponentMetrics(data.name));
+          (componentMetrics[data.name] = _ComponentMetrics(data.name));
       switch (data.category) {
         case profileCategoryBuild:
           metrics.buildTime += data.duration;
@@ -160,7 +160,7 @@ class _PerfProfile {
     }
 
     if (activeComponents.isNotEmpty) {
-      throw new Exception('Corrupt data');
+      throw Exception('Corrupt data');
     }
 
     print(aggregatedMetricsAsCsv(componentMetrics));
@@ -168,7 +168,7 @@ class _PerfProfile {
 
   String aggregatedMetricsAsCsv(
       Map<String, _ComponentMetrics> componentMetrics) {
-    StringBuffer sb = new StringBuffer();
+    StringBuffer sb = StringBuffer();
     sb.writeln('Component,Total,Self,Count,Build,Change');
     for (_ComponentMetrics metrics in componentMetrics.values) {
       sb.writeln('${metrics.name},${metrics.totalTime.toStringAsPrecision(3)}'

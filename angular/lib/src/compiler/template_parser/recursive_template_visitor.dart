@@ -26,7 +26,7 @@ abstract class RecursiveTemplateVisitor<C>
   @override
   @mustCallSuper
   TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst ast, C context) =>
-      new EmbeddedTemplateAst(
+      EmbeddedTemplateAst(
           visitAll(ast.attrs, context),
           visitAll(ast.outputs, context),
           visitAll(ast.references, context),
@@ -41,7 +41,7 @@ abstract class RecursiveTemplateVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitElement(ElementAst ast, C context) => new ElementAst(
+  TemplateAst visitElement(ElementAst ast, C context) => ElementAst(
       ast.name,
       visitAll(ast.attrs, context),
       visitAll(ast.i18nAttrs, context),
@@ -57,7 +57,7 @@ abstract class RecursiveTemplateVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitDirective(DirectiveAst ast, C context) => new DirectiveAst(
+  TemplateAst visitDirective(DirectiveAst ast, C context) => DirectiveAst(
       ast.directive,
       visitAll(ast.inputs, context),
       visitAll(ast.hostProperties, context),
@@ -67,7 +67,7 @@ abstract class RecursiveTemplateVisitor<C>
   @override
   @mustCallSuper
   TemplateAst visitNgContainer(NgContainerAst ast, _) =>
-      new NgContainerAst(visitAll(ast.children), ast.sourceSpan);
+      NgContainerAst(visitAll(ast.children), ast.sourceSpan);
 
   @override
   TemplateAst visitNgContent(NgContentAst ast, _) => ast;

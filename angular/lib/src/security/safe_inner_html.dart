@@ -55,7 +55,7 @@ class SafeInnerHtmlDirective {
       // origin instead of passing a primitive string through layers
       // of code which could introduce mutations making security auditing
       // hard.
-      throw new UnsupportedError(
+      throw UnsupportedError(
         'SafeHtml required (got $safeInnerHtml)',
       );
     }

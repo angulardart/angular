@@ -14,21 +14,20 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should assign a component to a reference', () async {
-    final testBed = new NgTestBed<ComponentReferenceBindingComponent>();
+    final testBed = NgTestBed<ComponentReferenceBindingComponent>();
     final testFixture = await testBed.create();
-    expect(testFixture.assertOnlyInstance.child,
-        new isInstanceOf<ChildComponent>());
+    expect(
+        testFixture.assertOnlyInstance.child, isInstanceOf<ChildComponent>());
   });
 
   test('should assign a directive to a reference', () async {
-    final testBed = new NgTestBed<DirectiveReferenceBindingComponent>();
+    final testBed = NgTestBed<DirectiveReferenceBindingComponent>();
     final testFixture = await testBed.create();
-    expect(testFixture.assertOnlyInstance.directive,
-        new isInstanceOf<ExportDir>());
+    expect(testFixture.assertOnlyInstance.directive, isInstanceOf<ExportDir>());
   });
 
   test('should assign an element to a reference', () async {
-    final testBed = new NgTestBed<ElementReferenceBindingComponent>();
+    final testBed = NgTestBed<ElementReferenceBindingComponent>();
     final testFixture = await testBed.create();
     expect(
       testFixture.assertOnlyInstance.captured.reference,
@@ -37,27 +36,27 @@ void main() {
   });
 
   test('should be accessible in bindings before declaration', () async {
-    final testBed = new NgTestBed<UseRefBeforeDeclarationComponent>();
+    final testBed = NgTestBed<UseRefBeforeDeclarationComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'hello|hello|hello');
   });
 
   test('should assign two component instances each with a reference', () async {
-    final testBed = new NgTestBed<TwoComponentReferencesComponent>();
+    final testBed = NgTestBed<TwoComponentReferencesComponent>();
     final testFixture = await testBed.create();
     final alice = testFixture.assertOnlyInstance.alice;
     final bob = testFixture.assertOnlyInstance.bob;
-    expect(alice, new isInstanceOf<ChildComponent>());
-    expect(bob, new isInstanceOf<ChildComponent>());
+    expect(alice, isInstanceOf<ChildComponent>());
+    expect(bob, isInstanceOf<ChildComponent>());
     expect(alice, isNot(bob));
   });
 
   test('should be case sensitive', () async {
-    final testBed = new NgTestBed<CaseSensitiveRefComponent>();
+    final testBed = NgTestBed<CaseSensitiveRefComponent>();
     final testFixture = await testBed.create();
     final caseSensitive = testFixture.assertOnlyInstance.caseSensitive;
     final caseInsensitive = testFixture.assertOnlyInstance.caseInsensitive;
-    expect(caseSensitive, new isInstanceOf<ChildComponent>());
+    expect(caseSensitive, isInstanceOf<ChildComponent>());
     expect(caseInsensitive, isNull);
   });
 }
@@ -70,7 +69,7 @@ class MyService {
 @Component(
   selector: 'child',
   template: '{{value}}',
-  viewProviders: const [
+  viewProviders: [
     MyService,
   ],
 )
@@ -85,7 +84,7 @@ class ChildComponent {
 @Component(
   selector: 'component-reference-binding',
   template: '<p><child #alice></child></p>',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
 )
 class ComponentReferenceBindingComponent {
   @ViewChild('alice')
@@ -101,7 +100,7 @@ class ExportDir {}
 @Component(
   selector: 'directive-reference-binding',
   template: '<div><div export-dir #localdir="dir"></div></div>',
-  directives: const [ExportDir],
+  directives: [ExportDir],
 )
 class DirectiveReferenceBindingComponent {
   @ViewChild('localdir')
@@ -117,7 +116,7 @@ class DirectiveReferenceBindingComponent {
       </i>
     </div>
   ''',
-  directives: const [CaptureReferenceDirective],
+  directives: [CaptureReferenceDirective],
 )
 class ElementReferenceBindingComponent {
   @ViewChild(CaptureReferenceDirective)
@@ -136,7 +135,7 @@ class CaptureReferenceDirective {
   selector: 'use-ref-before-declaration',
   template: '<template [ngIf]="true">{{alice.value}}</template>'
       '|{{alice.value}}|<child #alice></child>',
-  directives: const [
+  directives: [
     ChildComponent,
     NgIf,
   ],
@@ -146,7 +145,7 @@ class UseRefBeforeDeclarationComponent {}
 @Component(
   selector: 'two-component-references',
   template: '<p><child #alice></child><child #bob></child></p>',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
 )
 class TwoComponentReferencesComponent {
   @ViewChild('alice')
@@ -159,7 +158,7 @@ class TwoComponentReferencesComponent {
 @Component(
   selector: 'case-sensitive-ref',
   template: '<child #superAlice></child>',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
 )
 class CaseSensitiveRefComponent {
   @ViewChild('superAlice')

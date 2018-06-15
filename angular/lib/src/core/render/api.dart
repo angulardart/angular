@@ -18,7 +18,7 @@ abstract class SharedStylesHost {
 SharedStylesHost sharedStylesHost;
 
 /// This matches the component ID placeholder in encapsulating CSS classes.
-final _componentIdPlaceholder = new RegExp(r'%ID%');
+final _componentIdPlaceholder = RegExp(r'%ID%');
 
 /// Component prototype and runtime style information that are shared
 /// across all instances of a component type.

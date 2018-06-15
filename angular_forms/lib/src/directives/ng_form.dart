@@ -69,8 +69,8 @@ import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
 @Directive(
   selector: 'form:not([ngNoForm]):not([ngFormModel]):not([memorizedForm]),'
       'ngForm,[ngForm]',
-  providers: const [
-    const ExistingProvider(ControlContainer, NgForm),
+  providers: [
+    ExistingProvider(ControlContainer, NgForm),
   ],
   exportAs: 'ngForm',
   visibility: Visibility.all,
@@ -79,7 +79,7 @@ class NgForm extends AbstractForm {
   ControlGroup form;
 
   NgForm(@Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic> validators) {
-    form = new ControlGroup({}, composeValidators(validators));
+    form = ControlGroup({}, composeValidators(validators));
   }
 
   @Input('ngDisabled')
@@ -92,7 +92,7 @@ class NgForm extends AbstractForm {
   @override
   void addControl(NgControl dir) {
     var container = findContainer(dir.path);
-    var ctrl = new Control();
+    var ctrl = Control();
     container.addControl(dir.name, ctrl);
     scheduleMicrotask(() {
       setUpControl(ctrl, dir);
@@ -114,7 +114,7 @@ class NgForm extends AbstractForm {
   @override
   void addControlGroup(NgControlGroup dir) {
     var container = findContainer(dir.path);
-    var group = new ControlGroup({});
+    var group = ControlGroup({});
     container.addControl(dir.name, group);
     scheduleMicrotask(() {
       setUpControlGroup(group, dir);

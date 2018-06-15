@@ -18,7 +18,7 @@ import 'tokens.dart';
 class InjectorReader {
   static const _package = 'package:angular';
   static const _runtime = '$_package/src/di/injector/injector.dart';
-  static const _$Injector = const Reference('Injector', _runtime);
+  static const _$Injector = Reference('Injector', _runtime);
 
   static bool _shouldGenerateInjector(TopLevelVariableElement element) {
     return $GenerateInjector.hasAnnotationOfExact(element);
@@ -28,13 +28,13 @@ class InjectorReader {
   static List<InjectorReader> findInjectors(LibraryElement element) {
     final source = element.source.uri;
     if (source == null) {
-      throw new StateError('Expected a source for $element.');
+      throw StateError('Expected a source for $element.');
     }
     return element.definingCompilationUnit.topLevelVariables
         .where(_shouldGenerateInjector)
-        .map((field) => new InjectorReader(
+        .map((field) => InjectorReader(
               field,
-              new LibraryReader(element),
+              LibraryReader(element),
               doNotScope: source,
             ))
         .toList();
@@ -67,7 +67,7 @@ class InjectorReader {
     this.libraryReader, {
     this.moduleReader = const ModuleReader(),
     this.doNotScope,
-  }) : this.annotation = new ConstantReader(
+  }) : this.annotation = ConstantReader(
           $GenerateInjector.firstAnnotationOfExact(field),
         );
 
@@ -279,7 +279,7 @@ class InjectorReader {
   }
 
   Expression _reviveAny(UseValueProviderElement provider, DartObject object) {
-    final reader = new ConstantReader(object);
+    final reader = ConstantReader(object);
     if (reader.isNull) {
       return literalNull;
     }
@@ -296,7 +296,7 @@ class InjectorReader {
     if (revive != null) {
       return _revive(provider, revive);
     }
-    throw new UnsupportedError('Unexpected: $object');
+    throw UnsupportedError('Unexpected: $object');
   }
 
   Expression _reviveList(

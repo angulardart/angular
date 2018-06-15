@@ -2,7 +2,7 @@ import 'package:args/args.dart';
 
 /// Returns whether executing in "dry run" mode (i.e. for testing).
 bool isDryRun(List<String> args) => _argParser.parse(args)['dry-run'] as bool;
-final _argParser = new ArgParser()
+final _argParser = ArgParser()
   ..addFlag(
     'dry-run',
     abbr: 'd',

@@ -12,7 +12,7 @@ import 'package:angular/angular.dart';
   ''',
 )
 class DeferredChildComponent extends SomeBaseClass {
-  final _onSelected = new StreamController<bool>.broadcast(sync: true);
+  final _onSelected = StreamController<bool>.broadcast(sync: true);
   bool isSelected = false;
 
   @Input()

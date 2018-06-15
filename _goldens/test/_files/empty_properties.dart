@@ -8,7 +8,7 @@ import 'package:angular/angular.dart';
 <fancy-button [raised]="true"></fancy-button>
 <fancy-button [raised]="false"></fancy-button>
 ''',
-  directives: const [FancyButtonComponent],
+  directives: [FancyButtonComponent],
 )
 class EmptyPropertiesComponent {}
 

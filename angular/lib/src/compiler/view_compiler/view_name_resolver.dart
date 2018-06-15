@@ -29,12 +29,11 @@ class _ViewNameResolverState {
 ///
 /// Provides unique names for literal arrays and maps for the view.
 class ViewNameResolver implements NameResolver {
-  final Set<String> _localsInScope = new Set<String>();
+  final Set<String> _localsInScope = Set<String>();
   final _ViewNameResolverState _state;
 
   /// Creates a name resolver for [view].
-  ViewNameResolver(CompileView view)
-      : _state = new _ViewNameResolverState(view);
+  ViewNameResolver(CompileView view) : _state = _ViewNameResolverState(view);
 
   /// Creates a scoped name resolver with shared [_state].
   ViewNameResolver._scope(this._state);
@@ -65,10 +64,10 @@ class ViewNameResolver implements NameResolver {
       // Since locals are view wide, the variable name is guaranteed to be
       // unique in any generated method.
       _state.localDeclarations[name] =
-          new o.DeclareVarStmt('local_$name', expression, type, modifiers);
+          o.DeclareVarStmt('local_$name', expression, type, modifiers);
     }
     _localsInScope.add(name); // Cache local in this method scope.
-    return new o.ReadVarExpr(_state.localDeclarations[name].name);
+    return o.ReadVarExpr(_state.localDeclarations[name].name);
   }
 
   @override
@@ -94,24 +93,21 @@ class ViewNameResolver implements NameResolver {
     if (values.isEmpty) {
       return o.importExpr(Identifiers.EMPTY_ARRAY);
     }
-    var proxyExpr =
-        new o.ReadClassMemberExpr('_arr_${_state.literalListCount++}');
+    var proxyExpr = o.ReadClassMemberExpr('_arr_${_state.literalListCount++}');
     List<o.FnParam> proxyParams = [];
     List<o.Expression> proxyReturnEntries = [];
     final numValues = values.length;
     for (var i = 0; i < numValues; i++) {
       var paramName = 'p$i';
-      proxyParams.add(new o.FnParam(paramName));
+      proxyParams.add(o.FnParam(paramName));
       proxyReturnEntries.add(o.variable(paramName));
     }
     final listType = _createListTypeFrom(type);
     final pureProxyType =
-        new o.FunctionType(listType, new List.filled(numValues, listType.of));
+        o.FunctionType(listType, List.filled(numValues, listType.of));
     _state.view.createPureProxy(
-        o.fn(
-            proxyParams,
-            [new o.ReturnStatement(o.literalArr(proxyReturnEntries))],
-            new o.ArrayType(o.DYNAMIC_TYPE)),
+        o.fn(proxyParams, [o.ReturnStatement(o.literalArr(proxyReturnEntries))],
+            o.ArrayType(o.DYNAMIC_TYPE)),
         numValues,
         proxyExpr,
         pureProxyType: pureProxyType);
@@ -126,26 +122,23 @@ class ViewNameResolver implements NameResolver {
     if (entries.isEmpty) {
       return o.importExpr(Identifiers.EMPTY_MAP);
     }
-    var proxyExpr =
-        new o.ReadClassMemberExpr('_map_${_state.literalMapCount++}');
+    var proxyExpr = o.ReadClassMemberExpr('_map_${_state.literalMapCount++}');
     List<o.FnParam> proxyParams = [];
     List<List<dynamic /* String | o.Expression */ >> proxyReturnEntries = [];
     List<o.Expression> values = [];
     final numEntries = entries.length;
     for (var i = 0; i < numEntries; i++) {
       var paramName = 'p$i';
-      proxyParams.add(new o.FnParam(paramName));
+      proxyParams.add(o.FnParam(paramName));
       proxyReturnEntries.add([entries[i][0], o.variable(paramName)]);
       values.add((entries[i][1] as o.Expression));
     }
     final mapType = _createMapTypeFrom(type);
-    final pureProxyType = new o.FunctionType(
-        mapType, new List.filled(numEntries, mapType.valueType));
+    final pureProxyType =
+        o.FunctionType(mapType, List.filled(numEntries, mapType.valueType));
     _state.view.createPureProxy(
-        o.fn(
-            proxyParams,
-            [new o.ReturnStatement(o.literalMap(proxyReturnEntries))],
-            new o.MapType(o.DYNAMIC_TYPE)),
+        o.fn(proxyParams, [o.ReturnStatement(o.literalMap(proxyReturnEntries))],
+            o.MapType(o.DYNAMIC_TYPE)),
         numEntries,
         proxyExpr,
         pureProxyType: pureProxyType);
@@ -156,7 +149,7 @@ class ViewNameResolver implements NameResolver {
   int createUniqueBindIndex() => _state.bindingCount++;
 
   @override
-  ViewNameResolver scope() => new ViewNameResolver._scope(_state);
+  ViewNameResolver scope() => ViewNameResolver._scope(_state);
 }
 
 /// Creates a List<T> type assignable to [type].
@@ -169,9 +162,9 @@ o.ArrayType _createListTypeFrom(o.OutputType type) {
       (type.value.name == 'List' ||
           type.value.name == 'Iterable' ||
           type.value.name == 'dynamic')) {
-    return new o.ArrayType(type.typeParams.first);
+    return o.ArrayType(type.typeParams.first);
   }
-  return new o.ArrayType(o.DYNAMIC_TYPE);
+  return o.ArrayType(o.DYNAMIC_TYPE);
 }
 
 /// Creates a Map<String, V> type assignable to [type].
@@ -182,7 +175,7 @@ o.MapType _createMapTypeFrom(o.OutputType type) {
   if (type is o.ExternalType &&
       type.typeParams.isNotEmpty &&
       (type.value.name == 'Map' || type.value.name == 'dynamic')) {
-    return new o.MapType(type.typeParams[1]);
+    return o.MapType(type.typeParams[1]);
   }
-  return new o.MapType(o.DYNAMIC_TYPE);
+  return o.MapType(o.DYNAMIC_TYPE);
 }

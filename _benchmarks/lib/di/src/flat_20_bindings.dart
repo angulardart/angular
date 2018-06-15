@@ -1,7 +1,7 @@
 import 'package:angular/angular.dart';
 
 /// Represents binding 20 services, once each, to an explicit class.
-const flat20Bindings = const [
+const flat20Bindings = [
   Service1,
   Service2,
   Service3,

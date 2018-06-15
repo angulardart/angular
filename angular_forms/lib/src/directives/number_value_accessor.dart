@@ -5,7 +5,7 @@ import 'package:angular/angular.dart';
 import 'control_value_accessor.dart'
     show ChangeHandler, ControlValueAccessor, ngValueAccessor, TouchHandler;
 
-const NUMBER_VALUE_ACCESSOR = const ExistingProvider.forToken(
+const NUMBER_VALUE_ACCESSOR = ExistingProvider.forToken(
   ngValueAccessor,
   NumberValueAccessor,
 );
@@ -20,7 +20,7 @@ const NUMBER_VALUE_ACCESSOR = const ExistingProvider.forToken(
   selector: 'input[type=number][ngControl],'
       'input[type=number][ngFormControl],'
       'input[type=number][ngModel]',
-  providers: const [NUMBER_VALUE_ACCESSOR],
+  providers: [NUMBER_VALUE_ACCESSOR],
 )
 class NumberValueAccessor extends Object
     with TouchHandler, ChangeHandler<double>

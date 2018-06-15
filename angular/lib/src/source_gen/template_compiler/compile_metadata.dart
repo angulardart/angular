@@ -96,8 +96,8 @@ class CompileTypeMetadataVisitor
         // Was skipped.
         return null;
       }
-      return new CompileProviderMetadata(
-        token: new CompileTokenMetadata(identifier: metadata),
+      return CompileProviderMetadata(
+        token: CompileTokenMetadata(identifier: metadata),
         useClass: metadata,
       );
     }
@@ -139,7 +139,7 @@ class CompileTypeMetadataVisitor
         );
       }
     }
-    return new CompileProviderMetadata(
+    return CompileProviderMetadata(
       token: _token(token),
       useClass: _getUseClass(provider, token),
       useExisting: _getUseExisting(provider),
@@ -220,7 +220,7 @@ class CompileTypeMetadataVisitor
     bool enforceClassCanBeCreated = false,
     List<DartType> genericTypes = const [],
   }) =>
-      new CompileTypeMetadata(
+      CompileTypeMetadata(
         moduleUrl: moduleUrl(element),
         name: element.name,
         diDeps: _getCompileDiDependencyMetadata(
@@ -234,7 +234,7 @@ class CompileTypeMetadataVisitor
 
   CompileTypeMetadata _getFunctionCompileTypeMetadata(
           FunctionElement element) =>
-      new CompileTypeMetadata(
+      CompileTypeMetadata(
           moduleUrl: moduleUrl(element),
           name: element.name,
           diDeps: _getCompileDiDependencyMetadata(element.parameters, element));
@@ -280,7 +280,7 @@ class CompileTypeMetadataVisitor
     ParameterElement p,
   ) {
     try {
-      return new CompileDiDependencyMetadata(
+      return CompileDiDependencyMetadata(
         token: _getToken(p),
         isAttribute: _hasAnnotation(p, Attribute),
         isSelf: _hasAnnotation(p, Self),
@@ -295,7 +295,7 @@ class CompileTypeMetadataVisitor
       logWarning(''
           'Could not resolve token for $p on ${p.enclosingElement} in '
           '${p.library.identifier}');
-      return new CompileDiDependencyMetadata();
+      return CompileDiDependencyMetadata();
     }
   }
 
@@ -310,7 +310,7 @@ class CompileTypeMetadataVisitor
                   : _tokenForType(p.type);
 
   CompileTokenMetadata _tokenForAttribute(ParameterElement p) =>
-      new CompileTokenMetadata(
+      CompileTokenMetadata(
           value: dart_objects.coerceString(
               _getAnnotation(p, Attribute).constantValue, 'attributeName'));
 
@@ -336,8 +336,8 @@ class CompileTypeMetadataVisitor
         name = id.name;
       }
     }
-    return new CompileTokenMetadata(
-      identifier: new CompileIdentifierMetadata(
+    return CompileTokenMetadata(
+      identifier: CompileIdentifierMetadata(
         name: name,
         moduleUrl: moduleUrl((id as Identifier).staticElement.library),
       ),
@@ -352,7 +352,7 @@ class CompileTypeMetadataVisitor
       // provide(someOpaqueToken, ...) where someOpaqueToken did not resolve.
       if (annotation == null) {
         logWarning('Could not resolve an OpaqueToken on a Provider!');
-        return new CompileTokenMetadata(value: 'OpaqueToken__NOT_RESOLVED');
+        return CompileTokenMetadata(value: 'OpaqueToken__NOT_RESOLVED');
       } else {
         logWarning(''
             'Could not resolve a token from $annotation: '
@@ -363,13 +363,13 @@ class CompileTypeMetadataVisitor
       // We actually resolved this an OpaqueToken.
       return _canonicalOpaqueToken(token);
     } else if (token.toStringValue() != null) {
-      return new CompileTokenMetadata(value: token.toStringValue());
+      return CompileTokenMetadata(value: token.toStringValue());
     } else if (token.toBoolValue() != null) {
-      return new CompileTokenMetadata(value: token.toBoolValue());
+      return CompileTokenMetadata(value: token.toBoolValue());
     } else if (token.toIntValue() != null) {
-      return new CompileTokenMetadata(value: token.toIntValue());
+      return CompileTokenMetadata(value: token.toIntValue());
     } else if (token.toDoubleValue() != null) {
-      return new CompileTokenMetadata(value: token.toDoubleValue());
+      return CompileTokenMetadata(value: token.toDoubleValue());
     } else if (token.toTypeValue() != null) {
       return _tokenForType(token.toTypeValue());
     } else if (token.type is InterfaceType) {
@@ -380,32 +380,32 @@ class CompileTypeMetadataVisitor
             invocation.namedArguments.isNotEmpty) {
           logWarning('Cannot use const objects with arguments as a '
               'provider token: $annotation');
-          return new CompileTokenMetadata(value: 'OpaqueToken__NOT_RESOLVED');
+          return CompileTokenMetadata(value: 'OpaqueToken__NOT_RESOLVED');
         }
       }
       return _tokenForType(token.type, isInstance: invocation != null);
     } else if (token.type.element is FunctionTypedElement) {
-      return new CompileTokenMetadata(
+      return CompileTokenMetadata(
           identifier: _identifierForFunction(
               token.type.element as FunctionTypedElement));
     }
-    throw new ArgumentError('@Inject is not yet supported for $token.');
+    throw ArgumentError('@Inject is not yet supported for $token.');
   }
 
   CompileTokenMetadata _canonicalOpaqueToken(DartObject object) {
     // Re-use code from angular_compiler :)
-    const reader = const TokenReader();
+    const reader = TokenReader();
     final token = reader.parseTokenObject(object) as OpaqueTokenElement;
 
     // Create an identifier referencing {Opaque|Multi}Token<T>.
     final typeArgument =
         token.typeUrl == null ? null : fromTypeLink(token.typeUrl, _library);
-    final tokenId = new CompileIdentifierMetadata(
+    final tokenId = CompileIdentifierMetadata(
       name: token.classUrl.symbol,
       moduleUrl: linkToReference(token.classUrl, _library).url,
       genericTypes: typeArgument != null ? [typeArgument] : const [],
     );
-    return new CompileTokenMetadata(
+    return CompileTokenMetadata(
       value: token.identifier.isNotEmpty ? token.identifier : null,
       identifier: tokenId,
       identifierIsInstance: true,
@@ -413,32 +413,31 @@ class CompileTypeMetadataVisitor
   }
 
   CompileTokenMetadata _tokenForType(DartType type, {bool isInstance = false}) {
-    return new CompileTokenMetadata(
+    return CompileTokenMetadata(
         identifier: _idFor(type), identifierIsInstance: isInstance);
   }
 
-  CompileIdentifierMetadata _idFor(DartType type) =>
-      new CompileIdentifierMetadata(
-          name: getTypeName(type), moduleUrl: moduleUrl(type.element));
+  CompileIdentifierMetadata _idFor(DartType type) => CompileIdentifierMetadata(
+      name: getTypeName(type), moduleUrl: moduleUrl(type.element));
 
   o.Expression _useValueExpression(DartObject token) {
     if (token == null || token.isNull) {
       return o.NULL_EXPR;
     } else if (token.toStringValue() != null) {
-      return new o.LiteralExpr(token.toStringValue(), o.STRING_TYPE);
+      return o.LiteralExpr(token.toStringValue(), o.STRING_TYPE);
     } else if (token.toBoolValue() != null) {
-      return new o.LiteralExpr(token.toBoolValue(), o.BOOL_TYPE);
+      return o.LiteralExpr(token.toBoolValue(), o.BOOL_TYPE);
     } else if (token.toIntValue() != null) {
-      return new o.LiteralExpr(token.toIntValue(), o.INT_TYPE);
+      return o.LiteralExpr(token.toIntValue(), o.INT_TYPE);
     } else if (token.toDoubleValue() != null) {
-      return new o.LiteralExpr(token.toDoubleValue(), o.DOUBLE_TYPE);
+      return o.LiteralExpr(token.toDoubleValue(), o.DOUBLE_TYPE);
     } else if (token.toListValue() != null) {
-      return new o.LiteralArrayExpr(
+      return o.LiteralArrayExpr(
           token.toListValue().map(_useValueExpression).toList(),
-          new o.ArrayType(null, [o.TypeModifier.Const]));
+          o.ArrayType(null, [o.TypeModifier.Const]));
     } else if (token.toMapValue() != null) {
-      return new o.LiteralMapExpr(_toMapEntities(token.toMapValue()),
-          new o.MapType(null, [o.TypeModifier.Const]));
+      return o.LiteralMapExpr(_toMapEntities(token.toMapValue()),
+          o.MapType(null, [o.TypeModifier.Const]));
     } else if (token.toTypeValue() != null) {
       return o.importExpr(_idFor(token.toTypeValue()));
     } else if (_isEnum(token.type)) {
@@ -451,8 +450,7 @@ class CompileTypeMetadataVisitor
       return o.importExpr(
           _identifierForFunction(token.type.element as FunctionTypedElement));
     } else {
-      throw new ArgumentError(
-          'Could not create useValue expression for $token');
+      throw ArgumentError('Could not create useValue expression for $token');
     }
   }
 
@@ -476,17 +474,17 @@ class CompileTypeMetadataVisitor
         invocation.positionalArguments.map(_useValueExpression).toList();
     var namedParams = <o.NamedExpr>[];
     invocation.namedArguments.forEach((name, expr) {
-      namedParams.add(new o.NamedExpr(name, _useValueExpression(expr)));
+      namedParams.add(o.NamedExpr(name, _useValueExpression(expr)));
     });
     params.addAll(namedParams);
     var importType = o.importType(id, null, [o.TypeModifier.Const]);
 
     if (invocation.constructor.name.isNotEmpty) {
       if (invocation.constructor.name.startsWith('_')) {
-        throw new _PrivateConstructorException(
+        throw _PrivateConstructorException(
             '${id.name}.${invocation.constructor.name}');
       }
-      return new o.InstantiateExpr(
+      return o.InstantiateExpr(
           type.prop(invocation.constructor.name), params, importType);
     }
     return type.instantiate(params, importType);
@@ -498,7 +496,7 @@ class CompileTypeMetadataVisitor
     if (function.enclosingElement is ClassElement) {
       prefix = function.enclosingElement.name;
     }
-    return new CompileIdentifierMetadata(
+    return CompileIdentifierMetadata(
         name: function.name,
         moduleUrl: moduleUrl(function),
         prefix: prefix,
@@ -513,7 +511,7 @@ class CompileTypeMetadataVisitor
     if (function.enclosingElement is ClassElement) {
       prefix = function.enclosingElement.name;
     }
-    return new CompileFactoryMetadata(
+    return CompileFactoryMetadata(
       name: function.name,
       moduleUrl: moduleUrl(function),
       prefix: prefix,
@@ -528,7 +526,7 @@ class CompileTypeMetadataVisitor
   CompileDiDependencyMetadata _factoryDiDep(DartObject object) {
     // Simple case: A dependency is a dart `Type` or an Angular `OpaqueToken`.
     if (object.toTypeValue() != null || _isOpaqueToken(object)) {
-      return new CompileDiDependencyMetadata(token: _token(object));
+      return CompileDiDependencyMetadata(token: _token(object));
     }
 
     // Complex case: A dependency is a List, which means it might have metadata.
@@ -554,7 +552,7 @@ class CompileTypeMetadataVisitor
           isOptional = true;
         }
       }
-      return new CompileDiDependencyMetadata(
+      return CompileDiDependencyMetadata(
         token: token,
         isSelf: isSelf,
         isHost: isHost,
@@ -565,7 +563,7 @@ class CompileTypeMetadataVisitor
 
     // TODO: Make this more severe/an error.
     logWarning('Could not resolve dependency $object');
-    return new CompileDiDependencyMetadata();
+    return CompileDiDependencyMetadata();
   }
 
   bool _isOpaqueToken(DartObject token) =>

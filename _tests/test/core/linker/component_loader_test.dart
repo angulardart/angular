@@ -14,7 +14,7 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     test('should be able to load next to a location', () async {
-      final fixture = await new NgTestBed<CompWithCustomLocation>().create();
+      final fixture = await NgTestBed<CompWithCustomLocation>().create();
       expect(fixture.text, 'BeforeAfter');
       await fixture.update((comp) {
         comp.loader.loadNextToLocation(
@@ -26,12 +26,12 @@ void main() {
     });
 
     test('should be able to load into a structural directive', () async {
-      final fixture = await new NgTestBed<CompWithDirective>().create();
+      final fixture = await NgTestBed<CompWithDirective>().create();
       expect(fixture.text, 'BeforeDynamicAfter');
     });
 
     test('should be able to load from a service', () async {
-      final fixture = await new NgTestBed<CompWithService>().create();
+      final fixture = await NgTestBed<CompWithService>().create();
       await fixture.update((comp) {
         final ref = comp.service.loader.loadDetached(ng.DynamicCompNgFactory);
         expect(ref.location.text, 'Dynamic');
@@ -55,7 +55,7 @@ class CompWithCustomLocation {
 
 @Component(
   selector: 'comp-with-directive',
-  directives: const [
+  directives: [
     DirectiveThatIsLocation,
   ],
   template: r'Before<template location></template>After',
@@ -73,7 +73,7 @@ class DirectiveThatIsLocation {
 
 @Component(
   selector: 'comp-with-service',
-  providers: const [Service],
+  providers: [Service],
   template: '',
 )
 class CompWithService {

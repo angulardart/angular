@@ -81,9 +81,9 @@ class NgClass implements DoCheck, OnDestroy {
     this._keyValueDiffer = null;
     if (v != null) {
       if (v is Iterable) {
-        _iterableDiffer = new DefaultIterableDiffer();
+        _iterableDiffer = DefaultIterableDiffer();
       } else {
-        _keyValueDiffer = new DefaultKeyValueDiffer();
+        _keyValueDiffer = DefaultKeyValueDiffer();
       }
     }
   }
@@ -174,7 +174,7 @@ class NgClass implements DoCheck, OnDestroy {
     Element el = _ngEl;
     var classList = el.classes;
     if (className.contains(' ')) {
-      _separator ??= new RegExp(r'\s+');
+      _separator ??= RegExp(r'\s+');
       var classes = className.split(_separator);
       for (var i = 0, len = classes.length; i < len; i++) {
         if (enabled) {

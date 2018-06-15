@@ -81,8 +81,8 @@ import 'validators.dart' show ValidatorFn;
 /// ```
 @Directive(
   selector: '[ngFormModel]',
-  providers: const [
-    const ExistingProvider(ControlContainer, NgFormModel),
+  providers: [
+    ExistingProvider(ControlContainer, NgFormModel),
   ],
   exportAs: 'ngForm',
   visibility: Visibility.all,
@@ -149,7 +149,7 @@ class NgFormModel extends AbstractForm implements AfterChanges {
 
   void _checkFormPresent() {
     if (form == null) {
-      throw new StateError(
+      throw StateError(
           'ngFormModel expects a form. Please pass one in. Example: '
           '<form [ngFormModel]="myCoolForm">');
     }

@@ -16,25 +16,25 @@ void main() {
 
   group('List', () {
     testViewChildren(
-      directViewChildren: new TestCase(
-        new NgTestBed<TestDirectViewChildrenList>(),
+      directViewChildren: TestCase(
+        NgTestBed<TestDirectViewChildrenList>(),
         [1, 2, 3],
       ),
-      viewChildrenAndEmbedded: new TestCase(
-        new NgTestBed<TestViewChildrenAndEmbeddedList>(),
+      viewChildrenAndEmbedded: TestCase(
+        NgTestBed<TestViewChildrenAndEmbeddedList>(),
         [1, 3],
       ),
     );
 
     test('should work even when the property is a setter', () async {
-      final testBed = new NgTestBed<TestDirectViewChildrenListSetter>();
+      final testBed = NgTestBed<TestDirectViewChildrenListSetter>();
       final fixture = await testBed.create();
       expect(fixture, hasChildValues([1, 2, 3]));
     });
 
     test('should work in a multiple nesting scenario', () async {
       // This is a regression case based on internal code.
-      final testBed = new NgTestBed<TestNestedNgForQueriesList>();
+      final testBed = NgTestBed<TestNestedNgForQueriesList>();
       final fixture = await testBed.create();
       expect(
         fixture.assertOnlyInstance.taggedDivs.map((e) => e.text),
@@ -44,7 +44,7 @@ void main() {
 
     test('should work in a multiple nesting+static scenario', () async {
       // This is a regression case based on internal code.
-      final testBed = new NgTestBed<TestNestedAndStaticNgForQueriesList>();
+      final testBed = NgTestBed<TestNestedAndStaticNgForQueriesList>();
       final fixture = await testBed.create();
       expect(
         fixture.assertOnlyInstance.taggedDivs.map((e) => e.text),
@@ -56,7 +56,7 @@ void main() {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     ValueDirective,
   ],
   template: r'''
@@ -73,7 +73,7 @@ class TestDirectViewChildren extends HasChildren<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     ValueDirective,
   ],
   template: r'''
@@ -88,7 +88,7 @@ class TestDirectViewChild extends HasChild<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     AlwaysShowDirective,
     ValueDirective,
   ],
@@ -110,7 +110,7 @@ class TestViewChildrenAndEmbedded extends HasChildren<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     AlwaysShowDirective,
     ValueDirective,
   ],
@@ -128,7 +128,7 @@ class TestDirectViewChildEmbedded extends HasChild<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     AlwaysShowDirective,
     NeverShowDirective,
     ValueDirective,
@@ -149,7 +149,7 @@ class TestViewChildNestedOnOff extends HasChild<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     NgIf,
     ValueDirective,
   ],
@@ -172,7 +172,7 @@ class TestViewChildNestedNgIfOffOn extends HasChild<ValueDirective> {
 
 @Component(
   selector: 'test-regression-embedded-ngif-false-true-async',
-  directives: const [
+  directives: [
     NgIf,
     ValueDirective,
   ],
@@ -203,7 +203,7 @@ class TestViewChildNestedNgIfOffOnAsync extends HasChild<ValueDirective>
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     ValueDirective,
   ],
   template: r'''
@@ -220,7 +220,7 @@ class TestDirectViewChildrenList extends HasChildren<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     ValueDirective,
   ],
   template: r'''
@@ -241,7 +241,7 @@ class TestDirectViewChildrenListSetter extends HasChildren<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     AlwaysShowDirective,
     ValueDirective,
   ],
@@ -263,7 +263,7 @@ class TestViewChildrenAndEmbeddedList extends HasChildren<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     AlwaysShowDirective,
     NgFor,
   ],
@@ -284,7 +284,7 @@ class TestNestedNgForQueriesList {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     AlwaysShowDirective,
     NgFor,
   ],

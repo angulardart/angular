@@ -5,13 +5,13 @@ Node _inertElement;
 Node _getInertElement() {
   if (_inertElement == null) {
     // Prefer using <template> element if supported.
-    TemplateElement templateEl = new TemplateElement();
+    TemplateElement templateEl = TemplateElement();
     if (templateEl != null) {
       // TODO: investigate template.children.clear and remove extra div.
       _inertElement = document.createElement('div');
       templateEl.append(_inertElement);
     } else {
-      _inertElement = new DocumentFragment();
+      _inertElement = DocumentFragment();
     }
   }
   return _inertElement;
@@ -41,8 +41,7 @@ void _mXSSProtection(Element containerElement, String unsafeHtml) {
   String parsedHtml = unsafeHtml;
   do {
     if (mXSSAttempts == 0) {
-      throw new Exception(
-          'Failed to sanitize html because the input is unstable');
+      throw Exception('Failed to sanitize html because the input is unstable');
     }
     if (mXSSAttempts == 1) {
       // For IE<=11 strip custom-namespaced attributes on IE<=11.

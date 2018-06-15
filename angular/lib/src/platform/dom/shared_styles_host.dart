@@ -6,7 +6,7 @@ import 'package:angular/src/runtime.dart';
 /// Implementation of DomSharedStyleHost for DOM.
 class DomSharedStylesHost implements SharedStylesHost {
   final HeadElement _rootHost;
-  final _stylesSet = new Set<String>.identity();
+  final _stylesSet = Set<String>.identity();
 
   DomSharedStylesHost(HtmlDocument doc) : _rootHost = doc.head;
 
@@ -15,7 +15,7 @@ class DomSharedStylesHost implements SharedStylesHost {
     for (var i = isDevMode ? 1 : 0, l = styles.length; i < l; i++) {
       final style = styles[i];
       if (_stylesSet.add(style)) {
-        final styleElement = new StyleElement()..text = style;
+        final styleElement = StyleElement()..text = style;
         if (isDevMode) {
           styleElement.setAttribute('from', styles[0]);
         }

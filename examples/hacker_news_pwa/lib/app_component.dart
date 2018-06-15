@@ -11,8 +11,8 @@ import 'src/routes.dart';
 @Component(
   selector: 'app',
   templateUrl: 'app_component.html',
-  directives: const [routerDirectives],
-  styleUrls: const ['app_component.css'],
+  directives: [routerDirectives],
+  styleUrls: ['app_component.css'],
   // Disabled. We use global styles that are used before the JavaScript loads.
   //
   // See web/index.html's <style> tag.
@@ -26,27 +26,27 @@ class AppComponent {
   static final jobsUrl = jobsRoutePath.toUrl();
 
   static final routes = [
-    new RouteDefinition(
+    RouteDefinition(
       routePath: newsRoutePath,
       component: feed.FeedComponentNgFactory,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       routePath: newRoutePath,
       component: feed.FeedComponentNgFactory,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       routePath: showRoutePath,
       component: feed.FeedComponentNgFactory,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       routePath: askRoutePath,
       component: feed.FeedComponentNgFactory,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       routePath: jobsRoutePath,
       component: feed.FeedComponentNgFactory,
     ),
-    new RouteDefinition.defer(
+    RouteDefinition.defer(
       routePath: itemRoutePath,
       loader: () {
         return item_detail.loadLibrary().then((_) {

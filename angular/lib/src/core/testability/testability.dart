@@ -82,8 +82,8 @@ class Testability {
 
 /// A global registry of [Testability] instances for specific elements.
 class TestabilityRegistry {
-  final _applications = new Map<dynamic, Testability>();
-  GetTestability _testabilityGetter = new _NoopGetTestability();
+  final _applications = Map<dynamic, Testability>();
+  GetTestability _testabilityGetter = _NoopGetTestability();
 
   /// Set the [GetTestability] implementation used by the Angular testing
   /// framework.

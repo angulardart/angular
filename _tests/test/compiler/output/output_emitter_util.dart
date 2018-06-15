@@ -14,14 +14,14 @@ class ExternalClass {
   }
 }
 
-var testDataIdentifier = new CompileIdentifierMetadata<dynamic>(
+var testDataIdentifier = CompileIdentifierMetadata<dynamic>(
     name: "ExternalClass",
     moduleUrl:
         'asset:_tests/test/compiler/output/output_emitter_util$moduleSuffix');
-var enumIdentifier = new CompileIdentifierMetadata<dynamic>(
+var enumIdentifier = CompileIdentifierMetadata<dynamic>(
     name: "ViewType.HOST",
     moduleUrl: 'asset:angular/lib/src/core/linker/view_type$moduleSuffix');
-var baseExceptionIdentifier = new CompileIdentifierMetadata<dynamic>(
+var baseExceptionIdentifier = CompileIdentifierMetadata<dynamic>(
     name: "BaseException",
     moduleUrl: 'asset:angular/lib/src/facade/exceptions$moduleSuffix');
 var codegenExportsVars = ["getExpressions"];
@@ -55,9 +55,9 @@ List<o.Statement> _getExpressionsStmts = [
   o
       .variable("fn")
       .set(o.fn([
-        new o.FnParam("param")
+        o.FnParam("param")
       ], [
-        new o.ReturnStatement(o.literalMap([
+        o.ReturnStatement(o.literalMap([
           ["param", o.variable("param")]
         ]))
       ], o.DYNAMIC_TYPE))
@@ -65,7 +65,7 @@ List<o.Statement> _getExpressionsStmts = [
   o
       .variable("throwError")
       .set(o.fn([], [
-        new o.ThrowStmt(o
+        o.ThrowStmt(o
             .importExpr(baseExceptionIdentifier)
             .instantiate([o.literal("someError")]))
       ]))
@@ -73,12 +73,12 @@ List<o.Statement> _getExpressionsStmts = [
   o
       .variable("catchError")
       .set(o.fn([
-        new o.FnParam("runCb")
+        o.FnParam("runCb")
       ], [
-        new o.TryCatchStmt([
+        o.TryCatchStmt([
           o.variable("runCb").callFn([]).toStmt()
         ], [
-          new o.ReturnStatement(
+          o.ReturnStatement(
               o.literalArr([o.CATCH_ERROR_VAR, o.CATCH_STACK_VAR]))
         ])
       ], o.DYNAMIC_TYPE))
@@ -94,7 +94,7 @@ List<o.Statement> _getExpressionsStmts = [
       .prop("dynamicChangeable")
       .set(o.literal("changedValue"))
       .toStmt(),
-  new o.ReturnStatement(o.literalMap([
+  o.ReturnStatement(o.literalMap([
     ["stringLiteral", o.literal("Hello World!")],
     ["intLiteral", o.literal(42)],
     ["boolLiteral", o.literal(true)],
@@ -213,29 +213,29 @@ List<o.Statement> _getExpressionsStmts = [
   ]))
 ];
 List<o.Statement> codegenStmts = [
-  new o.CommentStmt("This is a comment"),
-  new o.ClassStmt(
+  o.CommentStmt("This is a comment"),
+  o.ClassStmt(
       "DynamicClass",
       o.importExpr(testDataIdentifier),
       [
-        new o.ClassField("dynamicProp", outputType: o.DYNAMIC_TYPE),
-        new o.ClassField("dynamicChangeable", outputType: o.DYNAMIC_TYPE),
-        new o.ClassField("closure", outputType: o.FUNCTION_TYPE)
+        o.ClassField("dynamicProp", outputType: o.DYNAMIC_TYPE),
+        o.ClassField("dynamicChangeable", outputType: o.DYNAMIC_TYPE),
+        o.ClassField("closure", outputType: o.FUNCTION_TYPE)
       ],
       [
-        new o.ClassGetter(
+        o.ClassGetter(
             "dynamicGetter",
             [
-              new o.ReturnStatement(o.literalMap([
+              o.ReturnStatement(o.literalMap([
                 ["data", o.THIS_EXPR.prop("data")],
                 ["dynamicProp", o.THIS_EXPR.prop("dynamicProp")]
               ]))
             ],
-            new o.MapType(o.DYNAMIC_TYPE))
+            o.MapType(o.DYNAMIC_TYPE))
       ],
-      new o.ClassMethod(null, [
-        new o.FnParam("dataParam", o.DYNAMIC_TYPE),
-        new o.FnParam("dynamicPropParam", o.DYNAMIC_TYPE)
+      o.ClassMethod(null, [
+        o.FnParam("dataParam", o.DYNAMIC_TYPE),
+        o.FnParam("dynamicPropParam", o.DYNAMIC_TYPE)
       ], [
         o.SUPER_EXPR.callFn([o.variable("dataParam")]).toStmt(),
         o.THIS_EXPR
@@ -249,9 +249,9 @@ List<o.Statement> codegenStmts = [
         o.THIS_EXPR
             .prop("closure")
             .set(o.fn([
-              new o.FnParam("param", o.DYNAMIC_TYPE)
+              o.FnParam("param", o.DYNAMIC_TYPE)
             ], [
-              new o.ReturnStatement(o.literalMap([
+              o.ReturnStatement(o.literalMap([
                 ["param", o.variable("param")],
                 ["data", o.THIS_EXPR.prop("data")],
                 ["dynamicProp", o.THIS_EXPR.prop("dynamicProp")]
@@ -260,11 +260,11 @@ List<o.Statement> codegenStmts = [
             .toStmt()
       ]),
       [
-        new o.ClassMethod(
+        o.ClassMethod(
             "dynamicMethod",
-            [new o.FnParam("param", o.DYNAMIC_TYPE)],
+            [o.FnParam("param", o.DYNAMIC_TYPE)],
             [
-              new o.ReturnStatement(o.literalMap([
+              o.ReturnStatement(o.literalMap([
                 ["param", o.variable("param")],
                 ["data", o.THIS_EXPR.prop("data")],
                 ["dynamicProp", o.THIS_EXPR.prop("dynamicProp")]
@@ -276,10 +276,10 @@ List<o.Statement> codegenStmts = [
 ];
 createOperatorFn(o.BinaryOperator op) {
   return o.fn([
-    new o.FnParam("a"),
-    new o.FnParam("b")
+    o.FnParam("a"),
+    o.FnParam("b")
   ], [
-    new o.ReturnStatement(
-        new o.BinaryOperatorExpr(op, o.variable("a"), o.variable("b")))
+    o.ReturnStatement(
+        o.BinaryOperatorExpr(op, o.variable("a"), o.variable("b")))
   ], o.DYNAMIC_TYPE);
 }

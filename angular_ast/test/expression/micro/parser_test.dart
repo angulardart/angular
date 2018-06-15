@@ -20,9 +20,9 @@ void main() {
   test('should parse a simple let', () {
     expect(
       parse('ngThing', 'let foo', 0),
-      new NgMicroAst(
+      NgMicroAst(
         letBindings: [
-          new LetBindingAst('foo'),
+          LetBindingAst('foo'),
         ],
         properties: [],
       ),
@@ -32,10 +32,10 @@ void main() {
   test('should parse a let assignment', () {
     expect(
       parse('ngThing', 'let foo = bar; let baz', 0),
-      new NgMicroAst(
+      NgMicroAst(
         letBindings: [
-          new LetBindingAst('foo', 'bar'),
-          new LetBindingAst('baz'),
+          LetBindingAst('foo', 'bar'),
+          LetBindingAst('baz'),
         ],
         properties: [],
       ),
@@ -45,10 +45,10 @@ void main() {
   test('should parse a simple let and a let assignment', () {
     expect(
       parse('ngThing', 'let baz; let foo = bar', 0),
-      new NgMicroAst(
+      NgMicroAst(
         letBindings: [
-          new LetBindingAst('baz'),
-          new LetBindingAst('foo', 'bar'),
+          LetBindingAst('baz'),
+          LetBindingAst('foo', 'bar'),
         ],
         properties: [],
       ),
@@ -58,12 +58,12 @@ void main() {
   test('should parse a let with a full Dart expression', () {
     expect(
       parse('ngFor', 'let x of items.where(filter)', 0),
-      new NgMicroAst(
+      NgMicroAst(
         letBindings: [
-          new LetBindingAst('x'),
+          LetBindingAst('x'),
         ],
         properties: [
-          new PropertyAst(
+          PropertyAst(
             'ngForOf',
             'items.where(filter)',
           ),
@@ -75,16 +75,16 @@ void main() {
   test('should parse a let/bind pair', () {
     expect(
       parse('ngFor', 'let item of items; trackBy: byId', 0),
-      new NgMicroAst(
+      NgMicroAst(
         letBindings: [
-          new LetBindingAst('item'),
+          LetBindingAst('item'),
         ],
         properties: [
-          new PropertyAst(
+          PropertyAst(
             'ngForOf',
             'items',
           ),
-          new PropertyAst(
+          PropertyAst(
             'ngForTrackBy',
             'byId',
           ),
@@ -96,14 +96,14 @@ void main() {
   test('should parse multiple binds', () {
     expect(
       parse('ngTemplateOutlet', 'templateRef; context: templateContext', 0),
-      new NgMicroAst(
+      NgMicroAst(
         letBindings: [],
         properties: [
-          new PropertyAst(
+          PropertyAst(
             'ngTemplateOutlet',
             'templateRef',
           ),
-          new PropertyAst(
+          PropertyAst(
             'ngTemplateOutletContext',
             'templateContext',
           ),

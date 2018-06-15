@@ -13,13 +13,13 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     test('should add styles specified in an map literal', () async {
-      var testBed = new NgTestBed<MapLiteralTest>();
+      var testBed = NgTestBed<MapLiteralTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       expect(content.style.maxWidth, '40px');
     });
     test('should update styles specified in an map literal', () async {
-      var testBed = new NgTestBed<MapUpdateTest>();
+      var testBed = NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       await testFixture.update((MapUpdateTest component) {
@@ -32,7 +32,7 @@ void main() {
       expect(content.style.maxWidth, '30%');
     });
     test('should remove styles when deleting a key in a map literal', () async {
-      var testBed = new NgTestBed<MapUpdateTest>();
+      var testBed = NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       await testFixture.update((MapUpdateTest component) {
@@ -45,7 +45,7 @@ void main() {
       expect(content.style.maxWidth, '');
     });
     test('should cooperate with the style attribute', () async {
-      var testBed = new NgTestBed<MapUpdateWithDefaultTest>();
+      var testBed = NgTestBed<MapUpdateWithDefaultTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       await testFixture.update((MapUpdateWithDefaultTest component) {
@@ -61,7 +61,7 @@ void main() {
     });
     test('should cooperate with the style.[styleName]="expr" special-case',
         () async {
-      var testBed = new NgTestBed<MapUpdateWithStyleExprTest>();
+      var testBed = NgTestBed<MapUpdateWithStyleExprTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       await testFixture.update((MapUpdateWithStyleExprTest component) {
@@ -80,14 +80,14 @@ void main() {
 
 @Component(
   selector: 'map-literal-test',
-  directives: const [NgStyle],
+  directives: [NgStyle],
   template: '<div [ngStyle]="{\'max-width\': \'40px\'}"></div>',
 )
 class MapLiteralTest {}
 
 @Component(
   selector: 'map-update-test',
-  directives: const [NgStyle],
+  directives: [NgStyle],
   template: '<div [ngStyle]="map"></div>',
 )
 class MapUpdateTest {
@@ -96,7 +96,7 @@ class MapUpdateTest {
 
 @Component(
   selector: 'map-update-with-default-test',
-  directives: const [NgStyle],
+  directives: [NgStyle],
   template: '<div style="font-size: 12px" [ngStyle]="map"></div>',
 )
 class MapUpdateWithDefaultTest {
@@ -105,7 +105,7 @@ class MapUpdateWithDefaultTest {
 
 @Component(
   selector: 'map-update-with-style-expr-test',
-  directives: const [NgStyle],
+  directives: [NgStyle],
   template: '<div [style.font-size.px]="12" [ngStyle]="map"></div>',
 )
 class MapUpdateWithStyleExprTest {

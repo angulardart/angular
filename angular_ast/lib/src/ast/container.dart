@@ -6,7 +6,7 @@ import '../hash.dart';
 import '../token/tokens.dart';
 import '../visitor.dart';
 
-const _listEquals = const ListEquality();
+const _listEquals = ListEquality();
 
 /// Represents an `<ng-container>` element.
 ///
@@ -64,7 +64,7 @@ abstract class ContainerAst implements StandaloneTemplateAst {
 
   @override
   String toString() {
-    final buffer = new StringBuffer('$ContainerAst { ');
+    final buffer = StringBuffer('$ContainerAst { ');
     if (stars.isNotEmpty) {
       buffer
         ..write('stars=')
