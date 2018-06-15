@@ -1,29 +1,29 @@
 import 'package:angular_router/angular_router.dart';
 
-final newsRoutePath = new RoutePath(
+final newsRoutePath = RoutePath(
   path: '/',
   additionalData: const {'feed': 'news'},
   useAsDefault: true,
 );
 
-final newRoutePath = new RoutePath(
+final newRoutePath = RoutePath(
   path: '/newest',
   additionalData: const {'feed': 'newest'},
 );
 
-final showRoutePath = new RoutePath(
+final showRoutePath = RoutePath(
   path: '/show',
   additionalData: const {'feed': 'show'},
 );
 
-final askRoutePath = new RoutePath(
+final askRoutePath = RoutePath(
   path: '/ask',
   additionalData: const {'feed': 'ask'},
 );
 
-final jobsRoutePath = new RoutePath(
+final jobsRoutePath = RoutePath(
   path: '/jobs',
   additionalData: const {'feed': 'jobs'},
 );
 
-final itemRoutePath = new RoutePath(path: '/item/:id');
+final itemRoutePath = RoutePath(path: '/item/:id');
