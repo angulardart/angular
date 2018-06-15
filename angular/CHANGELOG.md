@@ -1,3 +1,5 @@
+## 5.0.0-alpha+15
+
 ### Breaking changes
 
 *   The compilation mode `--debug` (sparingly used externally) is now no longer
@@ -65,6 +67,9 @@
 *   Fixed a bug where a recursive type signature on a component or directive
     would cause a stack overflow. We don't support generic type arguments yet
     (the reified type is always `dynamic`), but the compiler no longer crashes.
+
+*   Fixed a bug where `Iterable.retype` being removed from the SDK caused the
+    compiler to crash on the newest Dart2 -dev SDKs. We now use `.cast` instead.
 
 ## 5.0.0-alpha+14
 
