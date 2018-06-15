@@ -11,6 +11,36 @@
 *   The `from` attribute added to `<style>` tags created for component styles
     now refers to the component URL, rather than its template URL.
 
+*   AngularDart now has official support of the
+    [optional new/const](https://github.com/dart-lang/sdk/issues/30921) feature
+    of Dart2. The most significant impact to the framework will be increased
+    terse-ness of the various metadata annotations. Please file issues if you
+    see any unexpected behavior. Here is one example:
+
+    ```dart
+    // Before
+    @Component(
+      selector: 'comp',
+      directives: const [
+        FooComponent,
+      ],
+      providers: const [
+        const ClassProvider(SomeService),
+      ],
+    )
+
+    // After
+    @Component(
+      selector: 'comp',
+      directives: [
+        FooComponent,
+      ],
+      providers: [
+        ClassProvider(SomeService),
+      ],
+    )
+    ```
+
 ### Bug fixes
 
 *   Prevented a crash in `NgTemplateOutlet` caused by a specific sequence of
@@ -20,17 +50,17 @@
     this started failing in Dart2JS with `--preview-dart-2`, potentially where
     synthetic events were being passed instead of the real DOM event:
 
-```html
-<some-comp (focus)="handleFocus($event)"></some-comp>
-```
+    ```html
+    <some-comp (focus)="handleFocus($event)"></some-comp>
+    ```
 
-```dart
-import 'dart:html';
+    ```dart
+    import 'dart:html';
 
-void handleFocus(FocusEvent e) {
-  // Failed when 'e' was a CustomEvent or not strictly a FocusEvent.
-}
-```
+    void handleFocus(FocusEvent e) {
+      // Failed when 'e' was a CustomEvent or not strictly a FocusEvent.
+    }
+    ```
 
 *   Fixed a bug where a recursive type signature on a component or directive
     would cause a stack overflow. We don't support generic type arguments yet
