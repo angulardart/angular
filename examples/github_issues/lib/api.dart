@@ -15,7 +15,7 @@ class GithubService {
     final payload = await HttpRequest.getString(_allIssuesEndpoint);
     final issues = (json.decode(payload) as List).cast<Map<String, dynamic>>();
     for (final issue in issues) {
-      yield new GithubIssue.parse(issue);
+      yield GithubIssue.parse(issue);
     }
   }
 }
@@ -48,7 +48,7 @@ class GithubIssue {
   });
 
   factory GithubIssue.parse(Map<String, dynamic> json) {
-    return new GithubIssue(
+    return GithubIssue(
       id: json['id'],
       url: Uri.parse(json['html_url']),
       title: json['title'],

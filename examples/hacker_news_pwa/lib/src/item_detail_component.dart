@@ -23,8 +23,8 @@ int countComments(Map comment) {
 @Component(
   selector: 'item-detail',
   templateUrl: 'item_detail_component.html',
-  styleUrls: const ['item_detail_component.css'],
-  directives: const [CommentComponent, ItemComponent, NgFor, NgIf],
+  styleUrls: ['item_detail_component.css'],
+  directives: [CommentComponent, ItemComponent, NgFor, NgIf],
 )
 class ItemDetailComponent implements OnActivate {
   final HackerNewsService _hackerNewsService;

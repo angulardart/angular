@@ -14,9 +14,9 @@ void main() {
 
   group('$IssueBodyComponent', () {
     test('should properly render markdown', () async {
-      var testBed = new NgTestBed<IssueBodyComponent>();
+      var testBed = NgTestBed<IssueBodyComponent>();
       var fixture = await testBed.create(beforeChangeDetection: (c) {
-        c.issue = new GithubIssue(
+        c.issue = GithubIssue(
           description: '**Hello World**',
         );
       });

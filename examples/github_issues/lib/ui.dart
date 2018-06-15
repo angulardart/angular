@@ -10,7 +10,7 @@ import 'api.dart';
 
 @Component(
   selector: 'issue-list',
-  directives: const [
+  directives: [
     NgFor,
     NgIf,
     IssueBodyComponent,
@@ -18,7 +18,7 @@ import 'api.dart';
     MaterialProgressComponent,
     MaterialToggleComponent,
   ],
-  styleUrls: const ['src/ui/issue_list.scss.css'],
+  styleUrls: ['src/ui/issue_list.scss.css'],
   templateUrl: 'src/ui/issue_list.html',
 )
 class IssueListComponent implements OnInit {
@@ -31,7 +31,7 @@ class IssueListComponent implements OnInit {
   Timer _loadingTimer;
 
   IssueListComponent(this._github) {
-    _loadingTimer = new Timer.periodic(const Duration(milliseconds: 50), (_) {
+    _loadingTimer = Timer.periodic(const Duration(milliseconds: 50), (_) {
       progress += 10;
       if (progress > 100) {
         progress = 0;
@@ -84,7 +84,7 @@ class IssueBodyComponent {
 /// Renders [GithubIssue.title].
 @Component(
   selector: 'issue-title',
-  styles: const [
+  styles: [
     r'''
     a {
       display: block;
