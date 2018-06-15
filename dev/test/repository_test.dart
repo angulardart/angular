@@ -22,17 +22,17 @@ void main() {
       ]).create();
 
       final rootPath = p.join(d.sandbox, 'angular');
-      final repository = new Repository.fromPath(rootPath);
+      final repository = Repository.fromPath(rootPath);
 
       expect(
         repository,
-        new Repository(
+        Repository(
           [
-            new Package(
+            Package(
               path: 'package_1',
               root: rootPath,
             ),
-            new Package(
+            Package(
               path: 'package_2',
               root: rootPath,
             )
@@ -61,13 +61,13 @@ void main() {
       ]).create();
 
       final rootPath = p.join(d.sandbox, 'angular');
-      final repository = new Repository.fromPath(rootPath);
+      final repository = Repository.fromPath(rootPath);
 
       expect(
         repository,
-        new Repository(
+        Repository(
           [
-            new Package(
+            Package(
               path: 'package_1',
               root: rootPath,
             ),
@@ -95,21 +95,21 @@ void main() {
       ]).create();
 
       final rootPath = p.join(d.sandbox, 'angular');
-      final package = new Package.loadAndParse(
+      final package = Package.loadAndParse(
         rootPath,
         p.join(rootPath, 'package_1'),
       );
 
       expect(
         package,
-        new Package(
+        Package(
           path: 'package_1',
           root: rootPath,
           dependencies: {
-            'a': new VersionConstraint.parse('^1.0.0'),
+            'a': VersionConstraint.parse('^1.0.0'),
           },
           devDependencies: {
-            'b': new VersionConstraint.parse('>=2.0.0 <4.0.0'),
+            'b': VersionConstraint.parse('>=2.0.0 <4.0.0'),
           },
         ),
       );
@@ -125,7 +125,7 @@ void main() {
       ]).create();
 
       final rootPath = p.join(d.sandbox, 'angular');
-      final package = new Package.loadAndParse(
+      final package = Package.loadAndParse(
         rootPath,
         p.join(rootPath, 'package_1'),
       );
@@ -150,7 +150,7 @@ void main() {
       ]).create();
 
       final rootPath = p.join(d.sandbox, 'angular');
-      final package = new Package.loadAndParse(
+      final package = Package.loadAndParse(
         rootPath,
         p.join(rootPath, 'package_1'),
       );
@@ -171,7 +171,7 @@ void main() {
       ]).create();
 
       final rootPath = p.join(d.sandbox, 'angular');
-      final package = new Package.loadAndParse(
+      final package = Package.loadAndParse(
         rootPath,
         p.join(rootPath, 'package_1'),
       );
@@ -191,7 +191,7 @@ void main() {
       ]).create();
 
       final rootPath = p.join(d.sandbox, 'angular');
-      final package = new Package.loadAndParse(
+      final package = Package.loadAndParse(
         rootPath,
         p.join(rootPath, 'package_1'),
       );
@@ -211,7 +211,7 @@ void main() {
       ]).create();
 
       final rootPath = p.join(d.sandbox, 'angular');
-      final package = new Package.loadAndParse(
+      final package = Package.loadAndParse(
         rootPath,
         p.join(rootPath, 'package_1'),
       );
@@ -232,7 +232,7 @@ void main() {
       ]).create();
 
       final rootPath = p.join(d.sandbox, 'angular');
-      final package = new Package.loadAndParse(
+      final package = Package.loadAndParse(
         rootPath,
         p.join(rootPath, 'package_1'),
       );

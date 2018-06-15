@@ -57,7 +57,7 @@ class PathLocationStrategy extends LocationStrategy {
       [@Optional() @Inject(appBaseHref) String href]) {
     href ??= _platformLocation.getBaseHrefFromDOM();
     if (href == null) {
-      throw new ArgumentError(
+      throw ArgumentError(
           'No base href set. Please provide a value for the appBaseHref token or add a base element to the document.');
     }
     _baseHref = href;

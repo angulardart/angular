@@ -102,17 +102,17 @@ String shimShadowCss(String css, String contentClass, String hostClass,
   }
 
   var shadowTransformer = useLegacyEncapsulation
-      ? new _LegacyShadowTransformer(contentClass, hostClass)
-      : new _ShadowTransformer(contentClass, hostClass);
+      ? _LegacyShadowTransformer(contentClass, hostClass)
+      : _ShadowTransformer(contentClass, hostClass);
   shadowTransformer.visitTree(styleSheet);
-  var printer = new CssPrinter();
+  var printer = CssPrinter();
   printer.visitTree(styleSheet);
   return printer.toString();
 }
 
 // Matches two or more consecutive '>>>' and '/deep/' combinators.
 final RegExp _consecutiveShadowPiercingCombinatorsRe =
-    new RegExp(r'(?:(?:/deep/|>>>)\s*){2,}');
+    RegExp(r'(?:(?:/deep/|>>>)\s*){2,}');
 
 /// Returns the declaration for property [name] in [group].
 ///
@@ -203,23 +203,23 @@ Iterable<SimpleSelectorSequence> _clone(Iterable<SimpleSelectorSequence> it) =>
     it.map((selector) => selector.clone());
 
 SimpleSelectorSequence _createElementSelectorSequence(String name) {
-  var identifier = new Identifier(name, null);
-  var selector = new ElementSelector(identifier, null);
-  return new SimpleSelectorSequence(selector, null);
+  var identifier = Identifier(name, null);
+  var selector = ElementSelector(identifier, null);
+  return SimpleSelectorSequence(selector, null);
 }
 
 /// Convenience function for terse construction of a class sequence.
 SimpleSelectorSequence _createClassSelectorSequence(String name) {
-  var identifier = new Identifier(name, null);
-  var selector = new ClassSelector(identifier, null);
-  return new SimpleSelectorSequence(selector, null);
+  var identifier = Identifier(name, null);
+  var selector = ClassSelector(identifier, null);
+  return SimpleSelectorSequence(selector, null);
 }
 
 /// Convenience function for terse construction of a pseudo-class sequence.
 SimpleSelectorSequence _createPseudoClassSelectorSequence(String name) {
-  var identifier = new Identifier(name, null);
-  var selector = new PseudoClassSelector(identifier, null);
-  return new SimpleSelectorSequence(selector, null);
+  var identifier = Identifier(name, null);
+  var selector = PseudoClassSelector(identifier, null);
+  return SimpleSelectorSequence(selector, null);
 }
 
 /// Represents a sequence of compound selectors separated by combinators.
@@ -242,7 +242,7 @@ class _ComplexSelector {
     for (var i = 1, len = sequences.length; i <= len; i++) {
       if (i == len || !sequences[i].isCombinatorNone) {
         var selectorSequence = sequences.getRange(start, i);
-        compoundSelectors.add(new _CompoundSelector.from(selectorSequence));
+        compoundSelectors.add(_CompoundSelector.from(selectorSequence));
         start = i;
       }
     }
@@ -260,7 +260,7 @@ class _ComplexSelector {
     for (var compoundSelector in compoundSelectors) {
       simpleSelectorSequences.addAll(compoundSelector.toSequences());
     }
-    return new Selector(simpleSelectorSequences, null);
+    return Selector(simpleSelectorSequences, null);
   }
 }
 
@@ -403,7 +403,7 @@ class _CompoundSelector {
   }
 
   _CompoundSelector clone() {
-    var compoundSelector = new _CompoundSelector()..combinator = combinator;
+    var compoundSelector = _CompoundSelector()..combinator = combinator;
     for (var sequence in _sequences) {
       compoundSelector._sequences.add(sequence.clone());
     }
@@ -451,13 +451,13 @@ class _ShadowTransformer extends Visitor {
   /// Example:
   ///   :host-context(.x) > .y  =>  .x :host > .y
   _ComplexSelector _createDescendantHostSelectorFor(_ComplexSelector selector) {
-    var newSelector = new _ComplexSelector();
+    var newSelector = _ComplexSelector();
 
     for (var compoundSelector in selector.compoundSelectors) {
       if (compoundSelector.containsHostContext) {
-        var ancestor = new _CompoundSelector()
+        var ancestor = _CompoundSelector()
           ..combinator = compoundSelector.combinator;
-        var descendant = new _CompoundSelector()
+        var descendant = _CompoundSelector()
           ..combinator = TokenKind.COMBINATOR_DESCENDANT;
         var sequences = _clone(compoundSelector.toSequences());
 
@@ -508,7 +508,7 @@ class _ShadowTransformer extends Visitor {
   /// Example:
   ///   :host(.x) > .y >>> .z  =>  .x.host > .y.content .z
   void shimSelectors(_ComplexSelector selector) {
-    var indices = new _Indices(selector.compoundSelectors.length, -1);
+    var indices = _Indices(selector.compoundSelectors.length, -1);
     shimDeepCombinators(selector, indices);
 
     // Scope all selectors between the last host selector and the first shadow
@@ -555,7 +555,7 @@ class _ShadowTransformer extends Visitor {
     for (var selector in node.selectors) {
       // Convert [Selector] to [ComplexSelector] to facilitate shimming
       // transformations.
-      var complexSelector = new _ComplexSelector.from(selector);
+      var complexSelector = _ComplexSelector.from(selector);
       complexSelectors.add(complexSelector);
 
       if (complexSelector.containsHostContext) {
@@ -579,7 +579,7 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
   _LegacyShadowTransformer(String contentClass, String hostClass)
       : super(contentClass, hostClass);
 
-  final Set<SelectorGroup> _unscopedSelectorGroups = new Set<SelectorGroup>();
+  final Set<SelectorGroup> _unscopedSelectorGroups = Set<SelectorGroup>();
 
   void shimPolyfillNextSelector(List<TreeNode> list) {
     SelectorGroup nextSelectorGroup;

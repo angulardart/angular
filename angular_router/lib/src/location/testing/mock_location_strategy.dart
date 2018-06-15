@@ -15,11 +15,11 @@ class MockLocationStrategy extends LocationStrategy {
   String internalHash = '';
   List<String> urlChanges = [];
 
-  final _subject = new StreamController<PopStateEvent>();
+  final _subject = StreamController<PopStateEvent>();
   MockLocationStrategy();
   void simulatePopState(String url) {
     internalPath = url;
-    _subject.add(new PopStateEvent('popstate'));
+    _subject.add(PopStateEvent('popstate'));
   }
 
   String hash() => internalHash;
@@ -65,6 +65,6 @@ class MockLocationStrategy extends LocationStrategy {
   }
 
   void forward() {
-    throw new UnimplementedError('not implemented');
+    throw UnimplementedError('not implemented');
   }
 }

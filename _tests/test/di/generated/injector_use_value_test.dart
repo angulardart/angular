@@ -68,41 +68,41 @@ void main() {
 }
 
 typedef IntIdentityFn = int Function(int);
-const intIdentityToken = const OpaqueToken<IntIdentityFn>();
+const intIdentityToken = OpaqueToken<IntIdentityFn>();
 
 typedef StringIdentityFn = String Function(String);
-const stringIdentityToken = const OpaqueToken<StringIdentityFn>();
+const stringIdentityToken = OpaqueToken<StringIdentityFn>();
 
-@GenerateInjector(const [
-  const ValueProvider(
+@GenerateInjector([
+  ValueProvider(
     ClassWithConstConstructor,
-    const ClassWithConstConstructor(),
+    ClassWithConstConstructor(),
   ),
-  const ValueProvider(
+  ValueProvider(
     ClassWithNamedConstConstructor,
-    const ClassWithNamedConstConstructor.someName(),
+    ClassWithNamedConstConstructor.someName(),
   ),
-  const ValueProvider(
+  ValueProvider(
     ClassWithMultipleConstructors,
-    const ClassWithMultipleConstructors.isConst(),
+    ClassWithMultipleConstructors.isConst(),
   ),
-  const ValueProvider(
+  ValueProvider(
     ClassWithPrivateConstructorAndStaticField,
     ClassWithPrivateConstructorAndStaticField.instance,
   ),
-  const ValueProvider(
+  ValueProvider(
     ClassWithPrivateConstructorAndTopLevelField,
     topLevelInstance,
   ),
-  const ValueProvider(
+  ValueProvider(
     ClassWithRedirectingConstructor,
-    const ClassWithRedirectingConstructor(),
+    ClassWithRedirectingConstructor(),
   ),
-  const ValueProvider.forToken(
+  ValueProvider.forToken(
     intIdentityToken,
     topLevelMethod,
   ),
-  const ValueProvider.forToken(
+  ValueProvider.forToken(
     stringIdentityToken,
     StaticClass.staticMethod,
   ),
@@ -128,13 +128,13 @@ class ClassWithMultipleConstructors {
 // An example of a class that can't be created in generated files, but has an
 // existing (public) instance that can be referenced as a static field.
 class ClassWithPrivateConstructorAndStaticField {
-  static const instance = const ClassWithPrivateConstructorAndStaticField._();
+  static const instance = ClassWithPrivateConstructorAndStaticField._();
   const ClassWithPrivateConstructorAndStaticField._();
 }
 
 // An example of a class that can't be created in generated files, but has an
 // existing (public) instance that can be referenced as a top-level field.
-const topLevelInstance = const ClassWithPrivateConstructorAndTopLevelField._();
+const topLevelInstance = ClassWithPrivateConstructorAndTopLevelField._();
 
 class ClassWithPrivateConstructorAndTopLevelField {
   const ClassWithPrivateConstructorAndTopLevelField._();

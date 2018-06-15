@@ -16,16 +16,16 @@ void main() {
   });
 
   test('should render message in attribute', () async {
-    final testBed = NgTestBed
-        .forComponent<TestI18nAttribute>(ng.TestI18nAttributeNgFactory);
+    final testBed = NgTestBed.forComponent<TestI18nAttribute>(
+        ng.TestI18nAttributeNgFactory);
     final testFixture = await testBed.create();
     final imgElement = testFixture.rootElement.querySelector('img');
     expect(imgElement.getAttribute('alt'), 'A puppy!');
   });
 
   test('should render message with HTML', () async {
-    final testBed = NgTestBed
-        .forComponent<TestI18nNodeWithHtml>(ng.TestI18nNodeWithHtmlNgFactory);
+    final testBed = NgTestBed.forComponent<TestI18nNodeWithHtml>(
+        ng.TestI18nNodeWithHtmlNgFactory);
     final testFixture = await testBed.create();
     expect(testFixture.text, 'A message with emphasis!');
     final strongElement = testFixture.rootElement.querySelector('strong');

@@ -9,7 +9,7 @@ import 'control_value_accessor.dart'
     show ChangeHandler, ControlValueAccessor, ngValueAccessor, TouchHandler;
 import 'ng_control.dart' show NgControl;
 
-const RADIO_VALUE_ACCESSOR = const ExistingProvider.forToken(
+const RADIO_VALUE_ACCESSOR = ExistingProvider.forToken(
   ngValueAccessor,
   RadioControlValueAccessor,
 );
@@ -72,7 +72,7 @@ class RadioButtonState {
   selector: 'input[type=radio][ngControl],'
       'input[type=radio][ngFormControl],'
       'input[type=radio][ngModel]',
-  providers: const [RADIO_VALUE_ACCESSOR],
+  providers: [RADIO_VALUE_ACCESSOR],
 )
 class RadioControlValueAccessor extends Object
     with TouchHandler, ChangeHandler<RadioButtonState>
@@ -90,7 +90,7 @@ class RadioControlValueAccessor extends Object
 
   @HostListener('change')
   void changeHandler() {
-    onChange(new RadioButtonState(true, _state.value), rawValue: _state.value);
+    onChange(RadioButtonState(true, _state.value), rawValue: _state.value);
     _registry.select(this);
   }
 
@@ -114,7 +114,7 @@ class RadioControlValueAccessor extends Object
   }
 
   void fireUncheck() {
-    onChange(new RadioButtonState(false, _state.value), rawValue: _state.value);
+    onChange(RadioButtonState(false, _state.value), rawValue: _state.value);
   }
 
   @override

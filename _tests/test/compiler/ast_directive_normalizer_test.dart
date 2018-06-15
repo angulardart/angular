@@ -16,8 +16,8 @@ void main() {
 
   test('should do nothing for an @Directive', () async {
     reader = const FakeAssetReader();
-    normalizer = new AstDirectiveNormalizer(reader);
-    metadata = new CompileDirectiveMetadata(
+    normalizer = AstDirectiveNormalizer(reader);
+    metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Directive,
     );
 
@@ -30,20 +30,20 @@ void main() {
 
   test('should warn when template: points to a file URL', () async {
     final logs = <String>[];
-    final logger = new Logger('test');
+    final logger = Logger('test');
     final sub = logger.onRecord.listen((r) => logs.add('$r'));
     addTearDown(sub.cancel);
-    reader = new FakeAssetReader({
+    reader = FakeAssetReader({
       'package:a/a.dart': '',
       'package:a/a.html': '',
     });
-    normalizer = new AstDirectiveNormalizer(reader);
-    metadata = new CompileDirectiveMetadata(
+    normalizer = AstDirectiveNormalizer(reader);
+    metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: new CompileTypeMetadata(
+      type: CompileTypeMetadata(
         moduleUrl: 'asset:a/lib/a.dart',
       ),
-      template: new CompileTemplateMetadata(
+      template: CompileTemplateMetadata(
         template: 'a.html',
       ),
     );
@@ -53,20 +53,20 @@ void main() {
 
   test('should warn when styles: points to a file URL', () async {
     final logs = <String>[];
-    final logger = new Logger('test');
+    final logger = Logger('test');
     final sub = logger.onRecord.listen((r) => logs.add('$r'));
     addTearDown(sub.cancel);
-    reader = new FakeAssetReader({
+    reader = FakeAssetReader({
       'package:a/a.dart': '',
       'package:a/a.css': '',
     });
-    normalizer = new AstDirectiveNormalizer(reader);
-    metadata = new CompileDirectiveMetadata(
+    normalizer = AstDirectiveNormalizer(reader);
+    metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: new CompileTypeMetadata(
+      type: CompileTypeMetadata(
         moduleUrl: 'asset:a/lib/a.dart',
       ),
-      template: new CompileTemplateMetadata(
+      template: CompileTemplateMetadata(
         styles: [
           'a.css',
         ],
@@ -78,25 +78,25 @@ void main() {
   });
 
   test('should throw when neither a template or templateUrl set', () async {
-    reader = new FakeAssetReader();
-    normalizer = new AstDirectiveNormalizer(reader);
-    metadata = new CompileDirectiveMetadata(
+    reader = FakeAssetReader();
+    normalizer = AstDirectiveNormalizer(reader);
+    metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: new CompileTypeMetadata(
+      type: CompileTypeMetadata(
         moduleUrl: 'asset:a/lib/a.dart',
       ),
-      template: new CompileTemplateMetadata(),
+      template: CompileTemplateMetadata(),
     );
     expect(normalizer.normalizeDirective(metadata), throwsBuildError);
   });
 
   test('should read all <ng-content> tags', () async {
-    reader = new FakeAssetReader();
-    normalizer = new AstDirectiveNormalizer(reader);
-    metadata = new CompileDirectiveMetadata(
+    reader = FakeAssetReader();
+    normalizer = AstDirectiveNormalizer(reader);
+    metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: new CompileTypeMetadata(moduleUrl: 'asset:a/lib/a.dart'),
-      template: new CompileTemplateMetadata(
+      type: CompileTypeMetadata(moduleUrl: 'asset:a/lib/a.dart'),
+      template: CompileTemplateMetadata(
         template: r'''
           <ng-content></ng-content>
           <ng-content select=".left"></ng-content>
@@ -113,17 +113,17 @@ void main() {
   });
 
   test('should read all external stylesheets', () async {
-    reader = new FakeAssetReader({
+    reader = FakeAssetReader({
       'package:a/1.css': '',
       'package:a/2.css': '',
       'package:a/3.css': '',
       'package:a/4.css': '',
     });
-    normalizer = new AstDirectiveNormalizer(reader);
-    metadata = new CompileDirectiveMetadata(
+    normalizer = AstDirectiveNormalizer(reader);
+    metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: new CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
-      template: new CompileTemplateMetadata(
+      type: CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
+      template: CompileTemplateMetadata(
         template: r'''
           <link href="3.css" rel="stylesheet" />
           <style>
@@ -149,12 +149,12 @@ void main() {
   });
 
   test('should turn off view encapsulation if there are no styles', () async {
-    reader = new FakeAssetReader();
-    normalizer = new AstDirectiveNormalizer(reader);
-    metadata = new CompileDirectiveMetadata(
+    reader = FakeAssetReader();
+    normalizer = AstDirectiveNormalizer(reader);
+    metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: new CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
-      template: new CompileTemplateMetadata(
+      type: CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
+      template: CompileTemplateMetadata(
         template: '',
         encapsulation: ViewEncapsulation.Emulated,
       ),
@@ -164,17 +164,17 @@ void main() {
   });
 
   test('should resolve inline stylesheets', () async {
-    reader = new FakeAssetReader({
+    reader = FakeAssetReader({
       'package:a/1.css': ':host { color: red }',
       'package:a/2.css': ':host { width: 10px; }',
       'package:a/3.css': ':host { height: 10px; }',
       'package:a/4.css': ':host { background: #FFF; }',
     });
-    normalizer = new AstDirectiveNormalizer(reader);
-    metadata = new CompileDirectiveMetadata(
+    normalizer = AstDirectiveNormalizer(reader);
+    metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: new CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
-      template: new CompileTemplateMetadata(
+      type: CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
+      template: CompileTemplateMetadata(
         template: r'''
           <link href="3.css" rel="stylesheet" />
           <style>
@@ -209,10 +209,10 @@ class FakeAssetReader extends NgAssetReader {
   const FakeAssetReader([this._cache = const {}]);
 
   @override
-  Future<bool> canRead(String url) => new Future.value(_cache.containsKey(url));
+  Future<bool> canRead(String url) => Future.value(_cache.containsKey(url));
 
   @override
-  Future<String> readText(String url) => new Future.value(_cache[url]);
+  Future<String> readText(String url) => Future.value(_cache[url]);
 }
 
 final throwsBuildError = throwsA(const isInstanceOf<BuildError>());

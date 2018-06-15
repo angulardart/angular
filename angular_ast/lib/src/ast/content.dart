@@ -155,7 +155,7 @@ class _SyntheticEmbeddedContentAst extends SyntheticTemplateAst
   CloseElementAst closeComplement;
 
   _SyntheticEmbeddedContentAst([this.selector = '*', this.ngProjectAs]) {
-    this.closeComplement = new CloseElementAst('ng-content');
+    this.closeComplement = CloseElementAst('ng-content');
   }
 
   _SyntheticEmbeddedContentAst.from(
@@ -163,6 +163,6 @@ class _SyntheticEmbeddedContentAst extends SyntheticTemplateAst
     this.selector = '*',
     this.ngProjectAs,
   ]) : super.from(origin) {
-    this.closeComplement = new CloseElementAst('ng-content');
+    this.closeComplement = CloseElementAst('ng-content');
   }
 }

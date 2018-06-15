@@ -12,7 +12,7 @@ import 'testability/testability.dart' show TestabilityRegistry, Testability;
 import 'zone/ng_zone.dart' show NgZone, NgZoneError;
 
 /// Create an Angular zone.
-NgZone createNgZone() => new NgZone(enableLongStackTrace: isDevMode);
+NgZone createNgZone() => NgZone(enableLongStackTrace: isDevMode);
 
 /// A reference to an Angular application running on a page.
 ///
@@ -50,7 +50,7 @@ class ApplicationRefImpl extends ApplicationRef with ChangeDetectionHost {
     _streamSubscriptions.add(_zone.onError.listen((NgZoneError error) {
       handleUncaughtException(
         error.error,
-        new StackTrace.fromString(error.stackTrace.join('\n')),
+        StackTrace.fromString(error.stackTrace.join('\n')),
       );
     }));
     _streamSubscriptions.add(_zone.onMicrotaskEmpty.listen((_) {

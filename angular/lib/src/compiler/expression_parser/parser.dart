@@ -47,8 +47,8 @@ import 'lexer.dart'
         $RPAREN,
         $SLASH;
 
-final _implicitReceiver = new ImplicitReceiver();
-final INTERPOLATION_REGEXP = new RegExp(r'{{([\s\S]*?)}}');
+final _implicitReceiver = ImplicitReceiver();
+final INTERPOLATION_REGEXP = RegExp(r'{{([\s\S]*?)}}');
 
 class ParseException extends BuildError {
   ParseException(
@@ -79,7 +79,7 @@ class Parser {
   ASTWithSource parseAction(
       String input, String location, List<CompileIdentifierMetadata> exports) {
     if (input == null) {
-      throw new ParseException(
+      throw ParseException(
         'Blank expressions are not allowed in event bindings.',
         input,
         location,
@@ -87,40 +87,39 @@ class Parser {
     }
     this._checkNoInterpolation(input, location);
     var tokens = _lexer.tokenize(this._stripComments(input));
-    var ast =
-        new _ParseAST(input, location, tokens, true, exports).parseChain();
-    return new ASTWithSource(ast, input, location);
+    var ast = _ParseAST(input, location, tokens, true, exports).parseChain();
+    return ASTWithSource(ast, input, location);
   }
 
   ASTWithSource parseBinding(
       String input, String location, List<CompileIdentifierMetadata> exports) {
     var ast = _parseBindingAst(input, location, exports);
-    return new ASTWithSource(ast, input, location);
+    return ASTWithSource(ast, input, location);
   }
 
   ASTWithSource parseSimpleBinding(
       String input, String location, List<CompileIdentifierMetadata> exports) {
     var ast = _parseBindingAst(input, location, exports);
     if (!SimpleExpressionChecker.check(ast)) {
-      throw new ParseException(
+      throw ParseException(
           'Host binding expression can only contain field access and constants',
           input,
           location);
     }
-    return new ASTWithSource(ast, input, location);
+    return ASTWithSource(ast, input, location);
   }
 
   AST _parseBindingAst(
       String input, String location, List<CompileIdentifierMetadata> exports) {
     this._checkNoInterpolation(input, location);
     var tokens = _lexer.tokenize(this._stripComments(input));
-    return new _ParseAST(input, location, tokens, false, exports).parseChain();
+    return _ParseAST(input, location, tokens, false, exports).parseChain();
   }
 
   TemplateBindingParseResult parseTemplateBindings(
       String input, String location, List<CompileIdentifierMetadata> exports) {
     var tokens = _lexer.tokenize(input);
-    return new _ParseAST(input, location, tokens, false, exports)
+    return _ParseAST(input, location, tokens, false, exports)
         .parseTemplateBindings();
   }
 
@@ -131,12 +130,11 @@ class Parser {
     var expressions = <AST>[];
     for (var i = 0; i < split.expressions.length; ++i) {
       var tokens = this._lexer.tokenize(_stripComments(split.expressions[i]));
-      var ast =
-          new _ParseAST(input, location, tokens, false, exports).parseChain();
+      var ast = _ParseAST(input, location, tokens, false, exports).parseChain();
       expressions.add(ast);
     }
-    return new ASTWithSource(
-        new Interpolation(split.strings, expressions), input, location);
+    return ASTWithSource(
+        Interpolation(split.strings, expressions), input, location);
   }
 
   SplitInterpolation splitInterpolation(String input, String location) {
@@ -154,18 +152,18 @@ class Parser {
       } else if (part.trim().length > 0) {
         expressions.add(part);
       } else {
-        throw new ParseException(
+        throw ParseException(
             'Blank expressions are not allowed in interpolated strings',
             input,
             'at column ${_findInterpolationErrorColumn(parts, i)} in',
             location);
       }
     }
-    return new SplitInterpolation(strings, expressions);
+    return SplitInterpolation(strings, expressions);
   }
 
   ASTWithSource wrapLiteralPrimitive(String input, String location) {
-    return new ASTWithSource(new LiteralPrimitive(input), input, location);
+    return ASTWithSource(LiteralPrimitive(input), input, location);
   }
 
   String _stripComments(String input) {
@@ -191,11 +189,11 @@ class Parser {
 
   void _checkNoInterpolation(String input, String location) {
     if (input == null) {
-      throw new ParseException('Expected non-null value', input, location);
+      throw ParseException('Expected non-null value', input, location);
     }
     var parts = jsSplit(input, INTERPOLATION_REGEXP);
     if (parts.length > 1) {
-      throw new ParseException(
+      throw ParseException(
           'Got interpolation ({{}}) where expression was expected',
           input,
           'at column ${_findInterpolationErrorColumn(parts, 1)} in',
@@ -313,9 +311,9 @@ class _ParseAST {
         error("Unexpected token '$next'");
       }
     }
-    if (exprs.length == 0) return new EmptyExpr();
+    if (exprs.length == 0) return EmptyExpr();
     if (exprs.length == 1) return exprs[0];
-    return new Chain(exprs);
+    return Chain(exprs);
   }
 
   AST parsePipe() {
@@ -330,7 +328,7 @@ class _ParseAST {
         while (optionalCharacter($COLON)) {
           args.add(parseExpression());
         }
-        result = new BindingPipe(result, name, args);
+        result = BindingPipe(result, name, args);
       } while (optionalOperator('|'));
     }
     return result;
@@ -343,7 +341,7 @@ class _ParseAST {
     var result = parseLogicalOr();
     if (optionalOperator('??')) {
       var nullExp = parsePipe();
-      return new IfNull(result, nullExp);
+      return IfNull(result, nullExp);
     } else if (optionalOperator('?')) {
       var yes = parsePipe();
       if (!optionalCharacter($COLON)) {
@@ -352,7 +350,7 @@ class _ParseAST {
         error('Conditional expression $expression requires all 3 expressions');
       }
       var no = parsePipe();
-      return new Conditional(result, yes, no);
+      return Conditional(result, yes, no);
     } else {
       return result;
     }
@@ -362,7 +360,7 @@ class _ParseAST {
     // '||'
     var result = parseLogicalAnd();
     while (optionalOperator('||')) {
-      result = new Binary('||', result, parseLogicalAnd());
+      result = Binary('||', result, parseLogicalAnd());
     }
     return result;
   }
@@ -371,7 +369,7 @@ class _ParseAST {
     // '&&'
     var result = parseEquality();
     while (optionalOperator('&&')) {
-      result = new Binary('&&', result, parseEquality());
+      result = Binary('&&', result, parseEquality());
     }
     return result;
   }
@@ -381,13 +379,13 @@ class _ParseAST {
     var result = parseRelational();
     while (true) {
       if (optionalOperator('==')) {
-        result = new Binary('==', result, parseRelational());
+        result = Binary('==', result, parseRelational());
       } else if (optionalOperator('===')) {
-        result = new Binary('===', result, parseRelational());
+        result = Binary('===', result, parseRelational());
       } else if (optionalOperator('!=')) {
-        result = new Binary('!=', result, parseRelational());
+        result = Binary('!=', result, parseRelational());
       } else if (optionalOperator('!==')) {
-        result = new Binary('!==', result, parseRelational());
+        result = Binary('!==', result, parseRelational());
       } else {
         return result;
       }
@@ -399,13 +397,13 @@ class _ParseAST {
     var result = parseAdditive();
     while (true) {
       if (optionalOperator('<')) {
-        result = new Binary('<', result, parseAdditive());
+        result = Binary('<', result, parseAdditive());
       } else if (optionalOperator('>')) {
-        result = new Binary('>', result, parseAdditive());
+        result = Binary('>', result, parseAdditive());
       } else if (optionalOperator('<=')) {
-        result = new Binary('<=', result, parseAdditive());
+        result = Binary('<=', result, parseAdditive());
       } else if (optionalOperator('>=')) {
-        result = new Binary('>=', result, parseAdditive());
+        result = Binary('>=', result, parseAdditive());
       } else {
         return result;
       }
@@ -417,9 +415,9 @@ class _ParseAST {
     var result = parseMultiplicative();
     while (true) {
       if (optionalOperator('+')) {
-        result = new Binary('+', result, parseMultiplicative());
+        result = Binary('+', result, parseMultiplicative());
       } else if (optionalOperator('-')) {
-        result = new Binary('-', result, parseMultiplicative());
+        result = Binary('-', result, parseMultiplicative());
       } else {
         return result;
       }
@@ -431,11 +429,11 @@ class _ParseAST {
     var result = parsePrefix();
     while (true) {
       if (optionalOperator('*')) {
-        result = new Binary('*', result, parsePrefix());
+        result = Binary('*', result, parsePrefix());
       } else if (optionalOperator('%')) {
-        result = new Binary('%', result, parsePrefix());
+        result = Binary('%', result, parsePrefix());
       } else if (optionalOperator('/')) {
-        result = new Binary('/', result, parsePrefix());
+        result = Binary('/', result, parsePrefix());
       } else {
         return result;
       }
@@ -446,9 +444,9 @@ class _ParseAST {
     if (optionalOperator('+')) {
       return parsePrefix();
     } else if (optionalOperator('-')) {
-      return new Binary('-', new LiteralPrimitive(0), parsePrefix());
+      return Binary('-', LiteralPrimitive(0), parsePrefix());
     } else if (optionalOperator('!')) {
-      return new PrefixNot(parsePrefix());
+      return PrefixNot(parsePrefix());
     } else {
       return parseCallChain();
     }
@@ -466,14 +464,14 @@ class _ParseAST {
         expectCharacter($RBRACKET);
         if (optionalOperator('=')) {
           var value = parseConditional();
-          result = new KeyedWrite(result, key, value);
+          result = KeyedWrite(result, key, value);
         } else {
-          result = new KeyedRead(result, key);
+          result = KeyedRead(result, key);
         }
       } else if (optionalCharacter($LPAREN)) {
         var args = parseCallArguments();
         expectCharacter($RPAREN);
-        result = new FunctionCall(result, args);
+        result = FunctionCall(result, args);
       } else {
         return result;
       }
@@ -487,17 +485,17 @@ class _ParseAST {
       return result;
     } else if (next.isKeywordNull || next.isKeywordUndefined) {
       advance();
-      return new LiteralPrimitive(null);
+      return LiteralPrimitive(null);
     } else if (next.isKeywordTrue) {
       advance();
-      return new LiteralPrimitive(true);
+      return LiteralPrimitive(true);
     } else if (next.isKeywordFalse) {
       advance();
-      return new LiteralPrimitive(false);
+      return LiteralPrimitive(false);
     } else if (optionalCharacter($LBRACKET)) {
       var elements = parseExpressionList($RBRACKET);
       expectCharacter($RBRACKET);
-      return new LiteralArray(elements);
+      return LiteralArray(elements);
     } else if (next.isCharacter($LBRACE)) {
       return parseLiteralMap();
     } else if (next.isIdentifier) {
@@ -506,7 +504,7 @@ class _ParseAST {
         var identifier = next.strValue;
         if (exports.containsKey(identifier)) {
           advance();
-          return new StaticRead(exports[identifier]);
+          return StaticRead(exports[identifier]);
         }
         if (prefixes.containsKey(identifier)) {
           if (peek(1).isCharacter($PERIOD)) {
@@ -517,7 +515,7 @@ class _ParseAST {
               advance();
               advance();
               advance();
-              return new StaticRead(prefixes[identifier][nextId.strValue]);
+              return StaticRead(prefixes[identifier][nextId.strValue]);
             }
           }
         }
@@ -526,18 +524,18 @@ class _ParseAST {
     } else if (next.isNumber) {
       var value = next.toNumber();
       advance();
-      return new LiteralPrimitive(value);
+      return LiteralPrimitive(value);
     } else if (next.isString) {
       var literalValue = next.toString();
       advance();
-      return new LiteralPrimitive(literalValue);
+      return LiteralPrimitive(literalValue);
     } else if (index >= tokens.length) {
       error('Unexpected end of expression: $input');
     } else {
       error('Unexpected token $next');
     }
     // error() throws, so we don't reach here.
-    throw new StateError('Fell through all cases in parsePrimary');
+    throw StateError('Fell through all cases in parsePrimary');
   }
 
   List<AST> parseExpressionList(int terminator) {
@@ -563,7 +561,7 @@ class _ParseAST {
       } while (optionalCharacter($COMMA));
       expectCharacter($RBRACE);
     }
-    return new LiteralMap(keys, values);
+    return LiteralMap(keys, values);
   }
 
   AST parseAccessMemberOrMethodCall(AST receiver, [bool isSafe = false]) {
@@ -572,14 +570,14 @@ class _ParseAST {
       var args = parseCallArguments();
       expectCharacter($RPAREN);
       return isSafe
-          ? new SafeMethodCall(receiver, id, args)
-          : new MethodCall(receiver, id, args);
+          ? SafeMethodCall(receiver, id, args)
+          : MethodCall(receiver, id, args);
     } else {
       if (isSafe) {
         if (optionalOperator('=')) {
           error("The '?.' operator cannot be used in the assignment");
         } else {
-          return new SafePropertyRead(receiver, id);
+          return SafePropertyRead(receiver, id);
         }
       } else {
         if (optionalOperator('=')) {
@@ -587,9 +585,9 @@ class _ParseAST {
             error('Bindings cannot contain assignments');
           }
           var value = parseConditional();
-          return new PropertyWrite(receiver, id, value);
+          return PropertyWrite(receiver, id, value);
         } else {
-          return new PropertyRead(receiver, id);
+          return PropertyRead(receiver, id);
         }
       }
     }
@@ -617,9 +615,9 @@ class _ParseAST {
         while (optionalCharacter($SEMICOLON)) {}
       }
     }
-    if (exprs.length == 0) return new EmptyExpr();
+    if (exprs.length == 0) return EmptyExpr();
     if (exprs.length == 1) return exprs[0];
-    return new Chain(exprs);
+    return Chain(exprs);
   }
 
   /// An identifier, a keyword, a string with an optional `-` inbetween.
@@ -677,14 +675,14 @@ class _ParseAST {
         var start = inputIndex;
         var ast = parsePipe();
         var source = input.substring(start, inputIndex);
-        expression = new ASTWithSource(ast, source, location);
+        expression = ASTWithSource(ast, source, location);
       }
-      bindings.add(new TemplateBinding(key, keyIsVar, name, expression));
+      bindings.add(TemplateBinding(key, keyIsVar, name, expression));
       if (!optionalCharacter($SEMICOLON)) {
         optionalCharacter($COMMA);
       }
     }
-    return new TemplateBindingParseResult(bindings, warnings);
+    return TemplateBindingParseResult(bindings, warnings);
   }
 
   void error(String message, [int index]) {
@@ -692,13 +690,13 @@ class _ParseAST {
     var location = (index < tokens.length)
         ? 'at column ${tokens[index].index + 1} in'
         : 'at the end of the expression';
-    throw new ParseException(message, input, location, this.location);
+    throw ParseException(message, input, location, this.location);
   }
 }
 
 class SimpleExpressionChecker implements AstVisitor {
   static bool check(AST ast) {
-    var s = new SimpleExpressionChecker();
+    var s = SimpleExpressionChecker();
     ast.visit(s);
     return s.simple;
   }
@@ -795,7 +793,7 @@ class SimpleExpressionChecker implements AstVisitor {
   }
 
   List<dynamic> _visitAll(List<dynamic> asts) {
-    var res = new List(asts.length);
+    var res = List(asts.length);
     for (var i = 0; i < asts.length; ++i) {
       res[i] = asts[i].visit(this);
     }

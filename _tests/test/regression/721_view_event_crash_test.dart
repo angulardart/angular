@@ -13,7 +13,7 @@ void main() {
   ng_generated.initReflector();
 
   test('should be able to catch a thrown event listener error', () async {
-    final testBed = new NgTestBed<ComponentWithHostEventThatThrows>();
+    final testBed = NgTestBed<ComponentWithHostEventThatThrows>();
     final fixture = await testBed.create();
     expect(
       fixture.update((_) => fixture.rootElement.click()),
@@ -28,7 +28,7 @@ void main() {
 )
 class ComponentWithHostEventThatThrows {
   @HostListener('click')
-  void onClick() => throw new IntentionalError();
+  void onClick() => throw IntentionalError();
 }
 
 class IntentionalError extends Error {}

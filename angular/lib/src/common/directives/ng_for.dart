@@ -100,7 +100,7 @@ class NgFor implements DoCheck {
   set ngForOf(Iterable value) {
     _ngForOf = value;
     if (_differ == null && value != null) {
-      _differ = new DefaultIterableDiffer(_ngForTrackBy);
+      _differ = DefaultIterableDiffer(_ngForTrackBy);
     }
   }
 
@@ -119,7 +119,7 @@ class NgFor implements DoCheck {
     _ngForTrackBy = value;
     if (_ngForOf != null) {
       if (_differ == null) {
-        _differ = new DefaultIterableDiffer(_ngForTrackBy);
+        _differ = DefaultIterableDiffer(_ngForTrackBy);
       } else {
         _differ = _differ.clone(_ngForTrackBy);
       }
@@ -144,14 +144,14 @@ class NgFor implements DoCheck {
       if (item.previousIndex == null) {
         var view =
             _viewContainer.insertEmbeddedView(_templateRef, currentIndex);
-        var tuple = new _RecordViewTuple(item, view);
+        var tuple = _RecordViewTuple(item, view);
         insertTuples.add(tuple);
       } else if (currentIndex == null) {
         _viewContainer.remove(adjustedPreviousIndex);
       } else {
         var view = _viewContainer.get(adjustedPreviousIndex);
         _viewContainer.move(view, currentIndex);
-        var tuple = new _RecordViewTuple(item, view);
+        var tuple = _RecordViewTuple(item, view);
         insertTuples.add(tuple);
       }
     });

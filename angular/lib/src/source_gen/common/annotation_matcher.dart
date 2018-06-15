@@ -62,7 +62,7 @@ bool _matchTypes(Iterable<Type> types, ElementAnnotation annotation) =>
 bool matchAnnotation(Type type, ElementAnnotation annotation) {
   annotation.computeConstantValue();
   try {
-    final checker = new TypeChecker.fromRuntime(type);
+    final checker = TypeChecker.fromRuntime(type);
     final objectType = annotation.constantValue.type;
     return checker.isExactlyType(objectType);
   } catch (_) {
@@ -76,7 +76,7 @@ bool matchAnnotation(Type type, ElementAnnotation annotation) {
           '${annotation.annotationAst.toSource()} in '
           '${annotation.librarySource.uri.toString()}';
     }
-    throw new ArgumentError.value(
+    throw ArgumentError.value(
       annotation,
       'annotation',
       message,

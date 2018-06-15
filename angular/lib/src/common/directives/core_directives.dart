@@ -6,7 +6,7 @@ import 'ng_switch.dart' show NgSwitch, NgSwitchWhen, NgSwitchDefault;
 import 'ng_template_outlet.dart' show NgTemplateOutlet;
 
 @Deprecated('Renamed to "coreDirectives"')
-const List<Type> CORE_DIRECTIVES = const [
+const List<Type> CORE_DIRECTIVES = [
   NgClass,
   NgFor,
   NgIf,

@@ -13,7 +13,7 @@ class UntypedComp {
 /// A component that uses [UntypedComp].
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     UntypedComp,
   ],
   template: '<comp [input]="binding"></comp>',
@@ -35,7 +35,7 @@ class GenericComp<T> {
 /// A component that uses [GenericComp].
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     GenericComp,
   ],
   template: '<comp [input]="binding"></comp>',
@@ -60,7 +60,7 @@ class MappingComp1<K, V> {
 /// A component that uses [MappingComp1].
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     MappingComp1,
   ],
   template: '<comp [key]="bindKey" [value]="bindValue"></comp>',
@@ -83,7 +83,7 @@ class MappingComp2<K, V> {
 /// A component that uses [MappingComp2].
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     MappingComp2,
   ],
   template: '<comp [input]="binding"></comp>',
@@ -105,7 +105,7 @@ class BoundComp<T extends num> {
 /// A component that uses [BoundComp].
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     BoundComp,
   ],
   template: '<comp [input]="binding"></comp>',
@@ -118,7 +118,7 @@ class UsesBoundCompWithBounds {
 /// A component that uses [BoundComp] with an explicit type.
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     BoundComp,
   ],
   template: '<comp [input]="binding"></comp>',
@@ -143,7 +143,7 @@ class SelfBoundComp<A, B extends A> {
 /// A component that uses [SelfBoundComp].
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     SelfBoundComp,
   ],
   template: '<comp [a]="bindA" [b]="bindB"></comp>',
@@ -166,7 +166,7 @@ class RecursiveComp<T extends Comparable<T>> {
 /// A component that uses [RecursiveComp].
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     RecursiveComp,
   ],
   template: '<comp [input]="binding"></comp>',
@@ -188,7 +188,7 @@ class FunctionTypeComp<F> {
 /// A component that uses [FunctionTypeComp].
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     FunctionTypeComp,
   ],
   template: '<comp [input]="binding"></comp>',
@@ -201,7 +201,7 @@ class UsesFunctionTypeComp {
 /// A component that has a child component that needs its generic type.
 @Component(
   selector: 'parent',
-  directives: const [
+  directives: [
     NestedChildComp,
     NgFor,
   ],
@@ -234,7 +234,7 @@ class NestedChildComp<T> {
 /// A component that uses [NestedParentComp].
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     NestedParentComp,
   ],
   template: r'''

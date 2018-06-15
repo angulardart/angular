@@ -12,19 +12,19 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('renders nothing', () async {
-    final testBed = new NgTestBed<RendersNothing>();
+    final testBed = NgTestBed<RendersNothing>();
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.childNodes, isEmpty);
   });
 
   test('renders children in place of self', () async {
-    final testBed = new NgTestBed<RendersChildren>();
+    final testBed = NgTestBed<RendersChildren>();
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml, html);
   });
 
   test('supports *ngFor', () async {
-    final testBed = new NgTestBed<SupportsNgFor>();
+    final testBed = NgTestBed<SupportsNgFor>();
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml, anchorHtml);
     final values = ['a', 'b', 'c'];
@@ -34,7 +34,7 @@ void main() {
   });
 
   test('supports *ngIf', () async {
-    final testBed = new NgTestBed<SupportsNgIf>();
+    final testBed = NgTestBed<SupportsNgIf>();
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml, anchorHtml);
     await testFixture.update((component) => component.visible = true);
@@ -42,7 +42,7 @@ void main() {
   });
 
   test('supports *ngTemplateOutlet', () async {
-    final testBed = new NgTestBed<SupportsNgTemplateOutlet>();
+    final testBed = NgTestBed<SupportsNgTemplateOutlet>();
     final testFixture = await testBed.create();
     expect(
         testFixture.rootElement.innerHtml,
@@ -52,7 +52,7 @@ void main() {
   });
 
   test('supports nested *-syntax', () async {
-    final testBed = new NgTestBed<SupportsNesting>();
+    final testBed = NgTestBed<SupportsNesting>();
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml, anchorHtml);
     await testFixture.update((component) => component.integers = [1, 2, 3]);
@@ -77,7 +77,7 @@ void main() {
   });
 
   test('can be projected', () async {
-    final testBed = new NgTestBed<CanBeProjected>();
+    final testBed = NgTestBed<CanBeProjected>();
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml,
         '<content-host>$anchorHtml$html</content-host>');
@@ -87,7 +87,7 @@ void main() {
   });
 
   test('can host projected content', () async {
-    final testBed = new NgTestBed<CanHostProjectedContent>();
+    final testBed = NgTestBed<CanHostProjectedContent>();
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml,
         '<contained-content-host>$html</contained-content-host>');
@@ -116,7 +116,7 @@ class RendersChildren {}
       {{value}}
     </ng-container>
   ''',
-  directives: const [NgFor],
+  directives: [NgFor],
 )
 class SupportsNgFor {
   List<String> values = [];
@@ -125,7 +125,7 @@ class SupportsNgFor {
 @Component(
   selector: 'test',
   template: '<ng-container *ngIf="visible">$html</ng-container>',
-  directives: const [NgIf],
+  directives: [NgIf],
 )
 class SupportsNgIf {
   bool visible = false;
@@ -137,7 +137,7 @@ class SupportsNgIf {
     <template #ref let-msg="message">{{msg}}</template>
     <ng-container *ngTemplateOutlet="ref; context: context"></ng-container>
   ''',
-  directives: const [NgTemplateOutlet],
+  directives: [NgTemplateOutlet],
 )
 class SupportsNgTemplateOutlet {
   Map<String, dynamic> context = {'message': 'Hello'};
@@ -152,7 +152,7 @@ class SupportsNgTemplateOutlet {
       </li>
     </ng-container>
   ''',
-  directives: const [NgFor, NgIf],
+  directives: [NgFor, NgIf],
 )
 class SupportsNesting {
   List<int> integers = [];
@@ -172,7 +172,7 @@ class ContentHost {}
       <ng-container *ngIf="visible">$html</ng-container>
     </content-host>
   ''',
-  directives: const [ContentHost, NgIf],
+  directives: [ContentHost, NgIf],
 )
 class CanBeProjected {
   bool visible = true;
@@ -187,6 +187,6 @@ class ContainedContentHost {}
 @Component(
   selector: 'test',
   template: '<contained-content-host>$html</contained-content-host>',
-  directives: const [ContainedContentHost],
+  directives: [ContainedContentHost],
 )
 class CanHostProjectedContent {}

@@ -8,7 +8,7 @@ void main() {
   NgSimpleToken token;
 
   test('bang', () {
-    token = new NgSimpleToken.bang(0);
+    token = NgSimpleToken.bang(0);
     expect(token.lexeme, '!');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -17,7 +17,7 @@ void main() {
   });
 
   test('closeBracket', () {
-    token = new NgSimpleToken.closeBracket(0);
+    token = NgSimpleToken.closeBracket(0);
     expect(token.lexeme, ']');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -26,7 +26,7 @@ void main() {
   });
 
   test('closeParen', () {
-    token = new NgSimpleToken.closeParen(0);
+    token = NgSimpleToken.closeParen(0);
     expect(token.lexeme, ')');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -35,7 +35,7 @@ void main() {
   });
 
   test('commentBegin', () {
-    token = new NgSimpleToken.commentBegin(0);
+    token = NgSimpleToken.commentBegin(0);
     expect(token.lexeme, '<!--');
     expect(token.end, 4);
     expect(token.length, 4);
@@ -44,7 +44,7 @@ void main() {
   });
 
   test('commentEnd', () {
-    token = new NgSimpleToken.commentEnd(0);
+    token = NgSimpleToken.commentEnd(0);
     expect(token.lexeme, '-->');
     expect(token.end, 3);
     expect(token.length, 3);
@@ -53,7 +53,7 @@ void main() {
   });
 
   test('dash', () {
-    token = new NgSimpleToken.dash(0);
+    token = NgSimpleToken.dash(0);
     expect(token.lexeme, '-');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -62,7 +62,7 @@ void main() {
   });
 
   test('dashedIdenifier', () {
-    token = new NgSimpleToken.identifier(0, 'some_dashed-identifier');
+    token = NgSimpleToken.identifier(0, 'some_dashed-identifier');
     expect(token.lexeme, 'some_dashed-identifier');
     expect(token.end, 22);
     expect(token.length, 22);
@@ -71,7 +71,7 @@ void main() {
   });
 
   test('tagStart', () {
-    token = new NgSimpleToken.openTagStart(0);
+    token = NgSimpleToken.openTagStart(0);
     expect(token.lexeme, '<');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -80,7 +80,7 @@ void main() {
   });
 
   test('tagEnd', () {
-    token = new NgSimpleToken.tagEnd(0);
+    token = NgSimpleToken.tagEnd(0);
     expect(token.lexeme, '>');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -89,7 +89,7 @@ void main() {
   });
 
   test('equalSign', () {
-    token = new NgSimpleToken.equalSign(0);
+    token = NgSimpleToken.equalSign(0);
     expect(token.lexeme, '=');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -98,7 +98,7 @@ void main() {
   });
 
   test('forwardSlash', () {
-    token = new NgSimpleToken.forwardSlash(0);
+    token = NgSimpleToken.forwardSlash(0);
     expect(token.lexeme, '/');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -107,7 +107,7 @@ void main() {
   });
 
   test('hash', () {
-    token = new NgSimpleToken.hash(0);
+    token = NgSimpleToken.hash(0);
     expect(token.lexeme, '#');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -116,7 +116,7 @@ void main() {
   });
 
   test('identifier', () {
-    token = new NgSimpleToken.identifier(0, 'some_tag_identifier');
+    token = NgSimpleToken.identifier(0, 'some_tag_identifier');
     expect(token.lexeme, 'some_tag_identifier');
     expect(token.end, 19);
     expect(token.length, 19);
@@ -125,7 +125,7 @@ void main() {
   });
 
   test('mustacheBegin', () {
-    token = new NgSimpleToken.mustacheBegin(0);
+    token = NgSimpleToken.mustacheBegin(0);
     expect(token.lexeme, '{{');
     expect(token.end, 2);
     expect(token.length, 2);
@@ -134,7 +134,7 @@ void main() {
   });
 
   test('mustacheEnd', () {
-    token = new NgSimpleToken.mustacheEnd(0);
+    token = NgSimpleToken.mustacheEnd(0);
     expect(token.lexeme, '}}');
     expect(token.end, 2);
     expect(token.length, 2);
@@ -143,7 +143,7 @@ void main() {
   });
 
   test('openBracket', () {
-    token = new NgSimpleToken.openBracket(0);
+    token = NgSimpleToken.openBracket(0);
     expect(token.lexeme, '[');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -152,7 +152,7 @@ void main() {
   });
 
   test('openParen', () {
-    token = new NgSimpleToken.openParen(0);
+    token = NgSimpleToken.openParen(0);
     expect(token.lexeme, '(');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -161,7 +161,7 @@ void main() {
   });
 
   test('period', () {
-    token = new NgSimpleToken.period(0);
+    token = NgSimpleToken.period(0);
     expect(token.lexeme, '.');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -170,7 +170,7 @@ void main() {
   });
 
   test('star', () {
-    token = new NgSimpleToken.star(0);
+    token = NgSimpleToken.star(0);
     expect(token.end, 1);
     expect(token.length, 1);
     expect(token.offset, 0);
@@ -178,7 +178,7 @@ void main() {
   });
 
   test('atSign', () {
-    token = new NgSimpleToken.atSign(0);
+    token = NgSimpleToken.atSign(0);
     expect(token.end, 1);
     expect(token.length, 1);
     expect(token.offset, 0);
@@ -186,7 +186,7 @@ void main() {
   });
 
   test('text', () {
-    token = new NgSimpleToken.text(0, 'some long text string');
+    token = NgSimpleToken.text(0, 'some long text string');
     expect(token.lexeme, 'some long text string');
     expect(token.end, 21);
     expect(token.length, 21);
@@ -195,7 +195,7 @@ void main() {
   });
 
   test('decoded text', () {
-    var token = new NgSimpleToken.decodedText(0, '∑', 7);
+    var token = NgSimpleToken.decodedText(0, '∑', 7);
     expect(token.lexeme, '∑');
     expect(token.end, 7);
     expect(token.length, 7);
@@ -204,7 +204,7 @@ void main() {
   });
 
   test('unexpectedChar', () {
-    token = new NgSimpleToken.unexpectedChar(0, '!@#\$');
+    token = NgSimpleToken.unexpectedChar(0, '!@#\$');
     expect(token.lexeme, '!@#\$');
     expect(token.end, 4);
     expect(token.length, 4);
@@ -213,7 +213,7 @@ void main() {
   });
 
   test('whitespace', () {
-    token = new NgSimpleToken.whitespace(0, '     \t\t\n');
+    token = NgSimpleToken.whitespace(0, '     \t\t\n');
     expect(token.lexeme, '     \t\t\n');
     expect(token.end, 8);
     expect(token.length, 8);
@@ -222,7 +222,7 @@ void main() {
   });
 
   test('doubleQuotedText - closed', () {
-    var quoteToken = new NgSimpleQuoteToken.doubleQuotedText(
+    var quoteToken = NgSimpleQuoteToken.doubleQuotedText(
         0, '"this is a \"quoted\" text"', true);
     expect(quoteToken.lexeme, '"this is a \"quoted\" text"');
     expect(quoteToken.contentLexeme, 'this is a \"quoted\" text');
@@ -238,7 +238,7 @@ void main() {
   });
 
   test('doubleQuotedText - open', () {
-    var quoteToken = new NgSimpleQuoteToken.doubleQuotedText(
+    var quoteToken = NgSimpleQuoteToken.doubleQuotedText(
         0, '"this is a \"quoted\" text', false);
     expect(quoteToken.contentLexeme, 'this is a \"quoted\" text');
     expect(quoteToken.contentEnd, 24);
@@ -252,7 +252,7 @@ void main() {
   });
 
   test('singleQuotedText - closed', () {
-    var quoteToken = new NgSimpleQuoteToken.singleQuotedText(
+    var quoteToken = NgSimpleQuoteToken.singleQuotedText(
         0, "'this is a \'quoted\' text'", true);
     expect(quoteToken.contentLexeme, "this is a \'quoted\' text");
     expect(quoteToken.contentEnd, 24);
@@ -267,7 +267,7 @@ void main() {
   });
 
   test('doubleQuotedText - open', () {
-    var quoteToken = new NgSimpleQuoteToken.singleQuotedText(
+    var quoteToken = NgSimpleQuoteToken.singleQuotedText(
         0, "'this is a \'quoted\' text", false);
     expect(quoteToken.contentLexeme, "this is a \'quoted\' text");
     expect(quoteToken.end, 24);

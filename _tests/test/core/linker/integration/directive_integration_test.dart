@@ -15,13 +15,13 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support nested components', () async {
-    final testBed = new NgTestBed<ParentComponent>();
+    final testBed = NgTestBed<ParentComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'hello');
   });
 
   test('should consume directive input binding', () async {
-    final testBed = new NgTestBed<BoundDirectiveInputComponent>();
+    final testBed = NgTestBed<BoundDirectiveInputComponent>();
     final testFixture = await testBed.create();
     final directives = testFixture.assertOnlyInstance.directives;
     await testFixture.update((component) => component.value = 'New property');
@@ -32,7 +32,7 @@ void main() {
   });
 
   test('should support multiple directives on a single node', () async {
-    final testBed = new NgTestBed<MultipleDirectivesComponent>();
+    final testBed = NgTestBed<MultipleDirectivesComponent>();
     final testFixture = await testBed.create();
     final directive = testFixture.assertOnlyInstance.directive;
     expect(directive.dirProp, 'Hello world!');
@@ -40,21 +40,21 @@ void main() {
   });
 
   test('should support directives missing input bindings', () async {
-    final testBed = new NgTestBed<UnboundDirectiveInputComponent>();
+    final testBed = NgTestBed<UnboundDirectiveInputComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, isEmpty);
   });
 
   test('should execute a directive once, even if specified multiple times',
       () async {
-    final testBed = new NgTestBed<DuplicateDirectivesComponent>();
+    final testBed = NgTestBed<DuplicateDirectivesComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'noduplicate');
   });
 
   test('should support directives whose selector matches native property',
       () async {
-    final testBed = new NgTestBed<OverrideNativePropertyComponent>();
+    final testBed = NgTestBed<OverrideNativePropertyComponent>();
     final testFixture = await testBed.create();
     final directive = testFixture.assertOnlyInstance.directive;
     expect(directive.id, 'some_id');
@@ -64,20 +64,20 @@ void main() {
 
   test('should support directives whose selector matches event binding',
       () async {
-    final testBed = new NgTestBed<EventDirectiveComponent>();
+    final testBed = NgTestBed<EventDirectiveComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.assertOnlyInstance.directive, isNotNull);
   });
 
   test('should read directives metadata from their binding token', () async {
-    final testBed = new NgTestBed<RetrievesDependencyFromHostComponent>();
+    final testBed = NgTestBed<RetrievesDependencyFromHostComponent>();
     final testFixture = await testBed.create();
     final needsPublicApi = testFixture.assertOnlyInstance.needsPublicApi;
     expect(needsPublicApi.api, const isInstanceOf<PrivateImpl>());
   });
 
   test('should consume pipe binding', () async {
-    final testBed = new NgTestBed<PipedDirectiveInputComponent>();
+    final testBed = NgTestBed<PipedDirectiveInputComponent>();
     final testFixture = await testBed.create();
     final directive = testFixture.assertOnlyInstance.directive;
     expect(directive.dirProp, 'aa');
@@ -86,13 +86,13 @@ void main() {
   test('should not bind attribute matcher when generating host view', () async {
     // This test will fail on DDC if [width] in host template generates
     // invalid code to initialize width.
-    final testBed = new NgTestBed<SimpleButton>();
+    final testBed = NgTestBed<SimpleButton>();
     await testBed.create();
   });
   test('should not bind attribute matcher when generating host view', () async {
     // This test will fail on DDC if [width] in host template generates
     // invalid code to initialize width.
-    final testBed = new NgTestBed<SimpleInput>();
+    final testBed = NgTestBed<SimpleInput>();
     await testBed.create();
   });
 }
@@ -130,7 +130,7 @@ class MyDir {
       '<div my-dir elProp="Hi there!"></div>'
       '<div my-dir elProp="Hi {{\'there!\'}}"></div>'
       '<div my-dir elProp="One more {{value}}"></div>',
-  directives: const [
+  directives: [
     MyDir,
   ],
 )
@@ -149,7 +149,7 @@ class MyService {
 @Component(
   selector: 'child',
   template: '{{value}}',
-  viewProviders: const [
+  viewProviders: [
     MyService,
   ],
 )
@@ -164,7 +164,7 @@ class ChildComponent {
 @Component(
   selector: 'parent',
   template: '<child></child>',
-  directives: const [
+  directives: [
     ChildComponent,
   ],
 )
@@ -173,7 +173,7 @@ class ParentComponent {}
 @Component(
   selector: 'multiple-directives',
   template: '<child my-dir [elProp]="value"></child>',
-  directives: const [
+  directives: [
     ChildComponent,
     MyDir,
   ],
@@ -188,7 +188,7 @@ class MultipleDirectivesComponent {
 @Component(
   selector: 'unbound-directive-input',
   template: '<div my-dir></div>',
-  directives: const [
+  directives: [
     MyDir,
   ],
 )
@@ -206,7 +206,7 @@ class DuplicateDir {
 @Component(
   selector: 'duplicate-directives',
   template: '<div no-duplicate></div>',
-  directives: const [
+  directives: [
     DuplicateDir,
     DuplicateDir,
   ],
@@ -224,7 +224,7 @@ class IdDir {
 @Component(
   selector: 'override-native-property',
   template: '<div [id]="value"></div>',
-  directives: const [
+  directives: [
     IdDir,
   ],
 )
@@ -239,7 +239,7 @@ class OverrideNativePropertyComponent {
   selector: '[customEvent]',
 )
 class EventDir {
-  final _streamController = new StreamController<String>();
+  final _streamController = StreamController<String>();
 
   @Output()
   Stream<String> get customEvent => _streamController.stream;
@@ -248,7 +248,7 @@ class EventDir {
 @Component(
   selector: 'event-directive',
   template: '<p (customEvent)="doNothing()"></p>',
-  directives: const [
+  directives: [
     EventDir,
   ],
 )
@@ -264,8 +264,8 @@ class PublicApi {}
 
 @Directive(
   selector: '[public-api]',
-  providers: const [
-    const Provider(PublicApi, useExisting: PrivateImpl),
+  providers: [
+    Provider(PublicApi, useExisting: PrivateImpl),
   ],
 )
 class PrivateImpl extends PublicApi {}
@@ -282,7 +282,7 @@ class NeedsPublicApi {
 @Component(
   selector: 'retrieves-dependency-from-host',
   template: '<div public-api><div needs-public-api></div></div>',
-  directives: const [
+  directives: [
     PrivateImpl,
     NeedsPublicApi,
   ],
@@ -300,10 +300,10 @@ class DoublePipe implements PipeTransform {
 @Component(
   selector: 'piped-directive-input',
   template: '<div my-dir #dir="myDir" [elProp]="value | double"></div>',
-  directives: const [
+  directives: [
     MyDir,
   ],
-  pipes: const [
+  pipes: [
     DoublePipe,
   ],
 )

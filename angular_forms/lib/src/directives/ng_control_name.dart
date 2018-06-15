@@ -65,14 +65,14 @@ import 'shared.dart' show controlPath;
 /// ```
 @Directive(
   selector: '[ngControl]',
-  providers: const [
-    const ExistingProvider(NgControl, NgControlName),
+  providers: [
+    ExistingProvider(NgControl, NgControlName),
   ],
   exportAs: 'ngForm',
 )
 class NgControlName extends NgControl implements AfterChanges, OnDestroy {
   final ControlContainer _parent;
-  final _update = new StreamController.broadcast();
+  final _update = StreamController.broadcast();
 
   bool _modelChanged = false;
   dynamic _model;

@@ -23,7 +23,7 @@ String _getBaseElementHref() {
 
 // based on urlUtils.js in AngularJS 1.
 String _relativePath(String url) {
-  _urlParsingNode ??= new AnchorElement();
+  _urlParsingNode ??= AnchorElement();
   _urlParsingNode.href = url;
   var pathname = _urlParsingNode.pathname;
   return (pathname.isEmpty || pathname[0] == '/') ? pathname : '/$pathname';

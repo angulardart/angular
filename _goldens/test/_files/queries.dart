@@ -4,7 +4,7 @@ import 'package:angular/angular.dart';
 
 @Component(
   selector: 'queries',
-  directives: const [
+  directives: [
     AnotherDirective,
     NgIf,
   ],
@@ -45,7 +45,7 @@ class QueriesComponent {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     AnotherDirective,
   ],
   template: r'''
@@ -65,7 +65,7 @@ class EmbeddedQueries {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     AnotherDirective,
   ],
   template: r'''
@@ -91,7 +91,7 @@ class AnotherDirective {}
 // This closely mimics a piece of internal code that previously crashed.
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     AnotherDirective,
     NgFor,
     NgIf,

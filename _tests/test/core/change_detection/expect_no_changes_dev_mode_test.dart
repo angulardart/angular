@@ -9,7 +9,7 @@ void main() {
   ng_generated.initReflector();
 
   test('should throw during change detection', () async {
-    final testBed = new NgTestBed<IllegalChangeDetectionComponent>();
+    final testBed = NgTestBed<IllegalChangeDetectionComponent>();
     expect(
       testBed.create(),
       throwsA(predicate(

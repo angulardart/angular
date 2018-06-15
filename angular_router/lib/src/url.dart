@@ -11,7 +11,7 @@ class Url {
   /// Parses a [url] string into an [Url] object.
   static Url parse(String url) {
     final uri = Uri.parse(url);
-    return new Url(
+    return Url(
       uri.path,
       fragment: uri.fragment,
       queryParameters: uri.queryParameters,
@@ -47,11 +47,11 @@ class Url {
   Url(String path, {String fragment = '', Map<String, String> queryParameters})
       : this.path = path ?? '',
         this.fragment = fragment ?? '',
-        this.queryParameters = new Map.unmodifiable(queryParameters ?? {});
+        this.queryParameters = Map.unmodifiable(queryParameters ?? {});
 
   /// Returns as a URL string that could be used for navigation/link sharing.
   String toUrl() {
-    final buffer = new StringBuffer();
+    final buffer = StringBuffer();
     buffer.write(path);
     if (queryParameters?.isNotEmpty == true) {
       buffer

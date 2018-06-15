@@ -19,7 +19,7 @@ void main() {
     test(
         'should support projecting text interpolation to a non bound '
         'element with other bound elements after it', () async {
-      var testBed = new NgTestBed<NonBoundInterpolationTest>();
+      var testBed = NgTestBed<NonBoundInterpolationTest>();
       var fixture = await testBed.create();
       await fixture.update((NonBoundInterpolationTest component) {
         component.text = 'A';
@@ -27,30 +27,30 @@ void main() {
       expect(fixture.text, 'SIMPLE(AEL)');
     });
     test('should project content components', () async {
-      var testBed = new NgTestBed<ProjectComponentTest>();
+      var testBed = NgTestBed<ProjectComponentTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'SIMPLE(0|1|2)');
     });
     test('should not show the light dom even if there is no content tag',
         () async {
-      var testBed = new NgTestBed<NoLightDomTest>();
+      var testBed = NgTestBed<NoLightDomTest>();
       var fixture = await testBed.create();
       expect(fixture.text, isEmpty);
     });
     test('should support multiple content tags', () async {
-      var testBed = new NgTestBed<MultipleContentTagsTest>();
+      var testBed = NgTestBed<MultipleContentTagsTest>();
       var fixture = await testBed.create();
       expect(fixture.text, '(A, BC)');
     });
     test('should redistribute only direct children', () async {
-      var testBed = new NgTestBed<OnlyDirectChildrenTest>();
+      var testBed = NgTestBed<OnlyDirectChildrenTest>();
       var fixture = await testBed.create();
       expect(fixture.text, '(, BAC)');
     });
     test(
         'should redistribute direct child viewcontainers '
         'when the light dom changes', () async {
-      var testBed = new NgTestBed<LightDomChangeTest>();
+      var testBed = NgTestBed<LightDomChangeTest>();
       var fixture = await testBed.create();
       expect(fixture.text, '(, B)');
       await fixture.update((LightDomChangeTest component) {
@@ -63,14 +63,14 @@ void main() {
       expect(fixture.text, '(, B)');
     });
     test('should support nested components', () async {
-      var testBed = new NgTestBed<NestedComponentTest>();
+      var testBed = NgTestBed<NestedComponentTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'OUTER(SIMPLE(AB))');
     });
     test(
         'should support nesting with content being '
         'direct child of a nested component', () async {
-      var testBed = new NgTestBed<NestedDirectChildTest>();
+      var testBed = NgTestBed<NestedDirectChildTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'OUTER(INNER(INNERINNER(,BC)))');
       await fixture.update((NestedDirectChildTest component) {
@@ -79,7 +79,7 @@ void main() {
       expect(fixture.text, 'OUTER(INNER(INNERINNER(A,BC)))');
     });
     test('should redistribute when the shadow dom changes', () async {
-      var testBed = new NgTestBed<ShadowDomChangeTest>();
+      var testBed = NgTestBed<ShadowDomChangeTest>();
       var fixture = await testBed.create();
       expect(fixture.text, '(, BC)');
       await fixture.update((ShadowDomChangeTest component) {
@@ -92,17 +92,17 @@ void main() {
       expect(fixture.text, '(, BC)');
     });
     test('should support text nodes after content tags', () async {
-      var testBed = new NgTestBed<TextNodeAfterContentTest>();
+      var testBed = NgTestBed<TextNodeAfterContentTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'P,text');
     });
     test('should support text nodes after style tags', () async {
-      var testBed = new NgTestBed<TextNodeAfterStyleTest>();
+      var testBed = NgTestBed<TextNodeAfterStyleTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'P,text');
     });
     test('should support moving non projected light dom around', () async {
-      var testBed = new NgTestBed<MoveLightDomTest>();
+      var testBed = NgTestBed<MoveLightDomTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'START()END');
       await fixture.update((MoveLightDomTest component) {
@@ -112,7 +112,7 @@ void main() {
       expect(fixture.text, 'START(A)END');
     });
     test('should support moving project light dom around', () async {
-      var testBed = new NgTestBed<MoveProjectedLightDomTest>();
+      var testBed = NgTestBed<MoveProjectedLightDomTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'SIMPLE()START()END');
       await fixture.update((MoveProjectedLightDomTest component) {
@@ -121,7 +121,7 @@ void main() {
       expect(fixture.text, 'SIMPLE()START(A)END');
     });
     test('should support moving ng-content around', () async {
-      var testBed = new NgTestBed<MoveNgContentTest>();
+      var testBed = NgTestBed<MoveNgContentTest>();
       var fixture = await testBed.create();
       expect(fixture.text, '(, B)START()END');
       await fixture.update((MoveNgContentTest component) {
@@ -141,7 +141,7 @@ void main() {
     // Note: This does not use a ng-content element, but is still important as
     // we are merging proto views independent of the presence of ng-content.
     test('should still allow to implement recursive trees', () async {
-      var testBed = new NgTestBed<RecursiveTreeTest>();
+      var testBed = NgTestBed<RecursiveTreeTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'TREE(0:)');
       await fixture.update((RecursiveTreeTest component) {
@@ -152,7 +152,7 @@ void main() {
     test(
         'should still allow to implement a recursive '
         'tree via multiple components', () async {
-      var testBed = new NgTestBed<RecursiveTreeMultipleComponentTest>();
+      var testBed = NgTestBed<RecursiveTreeMultipleComponentTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'TREE(0:)');
       await fixture.update((RecursiveTreeMultipleComponentTest component) {
@@ -166,7 +166,7 @@ void main() {
     });
     test('should support nested conditionals that contain ng-contents',
         () async {
-      var testBed = new NgTestBed<NestedConditionalTest>();
+      var testBed = NgTestBed<NestedConditionalTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'MAIN()');
       await fixture.update((NestedConditionalTest component) {
@@ -182,7 +182,7 @@ void main() {
     });
     test('should allow to switch the order of nested components via ng-content',
         () async {
-      var testBed = new NgTestBed<SwitchOrderTest>();
+      var testBed = NgTestBed<SwitchOrderTest>();
       var fixture = await testBed.create();
       expect(
           fixture.rootElement.innerHtml,
@@ -190,7 +190,7 @@ void main() {
           '<cmp-c><c>cmp-c</c></cmp-c></cmp-a>');
     });
     test('should create nested components in the right order', () async {
-      var testBed = new NgTestBed<CorrectOrderTest>();
+      var testBed = NgTestBed<CorrectOrderTest>();
       var fixture = await testBed.create();
       expect(
           fixture.rootElement.innerHtml,
@@ -199,7 +199,7 @@ void main() {
     });
     test('should project filled view containers into a view container',
         () async {
-      var testBed = new NgTestBed<NestedProjectionTest>();
+      var testBed = NgTestBed<NestedProjectionTest>();
       var fixture = await testBed.create();
       expect(fixture.text, '(, D)');
       await fixture.update((NestedProjectionTest component) {
@@ -221,7 +221,7 @@ void main() {
 @Component(
   selector: 'non-bound-interpolation-test',
   template: '<simple>{{text}}</simple>',
-  directives: const [NonBoundInterpolationChild],
+  directives: [NonBoundInterpolationChild],
 )
 class NonBoundInterpolationTest {
   String text = '';
@@ -240,7 +240,7 @@ class NonBoundInterpolationChild {
 @Component(
   selector: 'project-component-test',
   template: '<simple><other></other></simple>',
-  directives: const [ProjectComponentSimple, ProjectComponentOther],
+  directives: [ProjectComponentSimple, ProjectComponentOther],
 )
 class ProjectComponentTest {}
 
@@ -259,7 +259,7 @@ class ProjectComponentOther {}
 @Component(
   selector: 'no-light-dom-test',
   template: '<empty>A</empty>',
-  directives: const [Empty],
+  directives: [Empty],
 )
 class NoLightDomTest {}
 
@@ -270,7 +270,7 @@ class NoLightDomTest {}
       '<div>C</div>'
       '<div class="left">A</div>'
       '</multiple-content-tags>',
-  directives: const [MultipleContentTagsComponent],
+  directives: [MultipleContentTagsComponent],
 )
 class MultipleContentTagsTest {}
 
@@ -280,7 +280,7 @@ class MultipleContentTagsTest {}
       '<div>B<div class="left">A</div></div>'
       '<div>C</div>'
       '</multiple-content-tags>',
-  directives: const [MultipleContentTagsComponent],
+  directives: [MultipleContentTagsComponent],
 )
 class OnlyDirectChildrenTest {}
 
@@ -290,7 +290,7 @@ class OnlyDirectChildrenTest {}
       '<template manual class="left"><div>A1</div></template>'
       '<div>B</div>'
       '</multiple-content-tags>',
-  directives: const [ManualViewportDirective, MultipleContentTagsComponent],
+  directives: [ManualViewportDirective, MultipleContentTagsComponent],
 )
 class LightDomChangeTest {
   @ViewChildren(ManualViewportDirective)
@@ -303,7 +303,7 @@ class LightDomChangeTest {
       '<div>A</div>'
       '<div>B</div>'
       '</outer-with-indirect-nested>',
-  directives: const [OuterWithIndirectNestedComponent],
+  directives: [OuterWithIndirectNestedComponent],
 )
 class NestedComponentTest {}
 
@@ -314,7 +314,7 @@ class NestedComponentTest {}
       '<div>B</div>'
       '<div>C</div>'
       '</outer>',
-  directives: const [OuterComponent, ManualViewportDirective],
+  directives: [OuterComponent, ManualViewportDirective],
 )
 class NestedDirectChildTest {
   @ViewChild(ManualViewportDirective)
@@ -328,7 +328,7 @@ class NestedDirectChildTest {
       '<div>B</div>'
       '<div>C</div>'
       '</conditional-content>',
-  directives: const [ConditionalContentComponent],
+  directives: [ConditionalContentComponent],
 )
 class ShadowDomChangeTest {
   @ViewChild(ConditionalContentComponent)
@@ -338,7 +338,7 @@ class ShadowDomChangeTest {
 @Component(
   selector: 'text-node-after-content-test',
   template: '<simple stringProp="text"></simple>',
-  directives: const [TextNodeAfterContentComponent],
+  directives: [TextNodeAfterContentComponent],
 )
 class TextNodeAfterContentTest {}
 
@@ -354,7 +354,7 @@ class TextNodeAfterContentComponent {
 @Component(
   selector: 'text-node-after-style-test',
   template: '<simple stringProp="text"></simple>',
-  directives: const [TextNodeAfterStyleComponent],
+  directives: [TextNodeAfterStyleComponent],
 )
 class TextNodeAfterStyleTest {}
 
@@ -373,7 +373,7 @@ class TextNodeAfterStyleComponent {
       '  <template manual><div>A</div></template>'
       '</empty>'
       'START(<div project></div>)END',
-  directives: const [Empty, ProjectDirective, ManualViewportDirective],
+  directives: [Empty, ProjectDirective, ManualViewportDirective],
 )
 class MoveLightDomTest {
   @ViewChild(ManualViewportDirective)
@@ -387,7 +387,7 @@ class MoveLightDomTest {
   selector: 'move-projected-light-dom-test',
   template: '<simple><template manual><div>A</div></template></simple>'
       'START(<div project></div>)END',
-  directives: const [Simple, ManualViewportDirective, ProjectDirective],
+  directives: [Simple, ManualViewportDirective, ProjectDirective],
 )
 class MoveProjectedLightDomTest {
   @ViewChild(ManualViewportDirective)
@@ -404,7 +404,7 @@ class MoveProjectedLightDomTest {
       '<div>B</div>'
       '</conditional-content>'
       'START(<div project></div>)END',
-  directives: const [ConditionalContentComponent, ProjectDirective],
+  directives: [ConditionalContentComponent, ProjectDirective],
 )
 class MoveNgContentTest {
   @ViewChild(ProjectDirective)
@@ -417,7 +417,7 @@ class MoveNgContentTest {
 @Component(
   selector: 'recursive-tree-test',
   template: '<tree></tree>',
-  directives: const [Tree],
+  directives: [Tree],
 )
 class RecursiveTreeTest {
   @ViewChild(Tree)
@@ -427,7 +427,7 @@ class RecursiveTreeTest {
 @Component(
   selector: 'recursive-tree-multiple-component-test',
   template: '<tree></tree>',
-  directives: const [RecursiveTree],
+  directives: [RecursiveTree],
 )
 class RecursiveTreeMultipleComponentTest {
   @ViewChild(RecursiveTree)
@@ -437,7 +437,7 @@ class RecursiveTreeMultipleComponentTest {
 @Component(
   selector: 'nested-conditional-test',
   template: '<conditional-text>a</conditional-text>',
-  directives: const [ConditionalTextComponent],
+  directives: [ConditionalTextComponent],
 )
 class NestedConditionalTest {
   @ViewChild(ConditionalTextComponent)
@@ -447,14 +447,14 @@ class NestedConditionalTest {
 @Component(
   selector: 'switch-order-test',
   template: '<cmp-a><cmp-b></cmp-b></cmp-a>',
-  directives: const [CmpA, CmpB],
+  directives: [CmpA, CmpB],
 )
 class SwitchOrderTest {}
 
 @Component(
   selector: 'correct-order-test',
   template: '<cmp-a1></cmp-a1><cmp-a2></cmp-a2>',
-  directives: const [CmpA1, CmpA2],
+  directives: [CmpA1, CmpA2],
 )
 class CorrectOrderTest {}
 
@@ -466,7 +466,7 @@ class CorrectOrderTest {}
       '<div class="left">C</div>'
       '<div>D</div>'
       '</conditional-content>',
-  directives: const [ConditionalContentComponent, ManualViewportDirective],
+  directives: [ConditionalContentComponent, ManualViewportDirective],
 )
 class NestedProjectionTest {
   @ViewChild(ConditionalContentComponent)
@@ -479,7 +479,7 @@ class NestedProjectionTest {
 @Component(
   selector: 'simple',
   template: 'SIMPLE(<ng-content></ng-content>)',
-  directives: const [],
+  directives: [],
 )
 class Simple {
   @Input()
@@ -489,7 +489,7 @@ class Simple {
 @Component(
   selector: 'empty',
   template: '',
-  directives: const [],
+  directives: [],
 )
 class Empty {}
 
@@ -497,7 +497,7 @@ class Empty {}
   selector: 'multiple-content-tags',
   template:
       '(<ng-content select=".left"></ng-content>,&ngsp;<ng-content></ng-content>)',
-  directives: const [],
+  directives: [],
 )
 class MultipleContentTagsComponent {}
 
@@ -537,7 +537,7 @@ class ProjectDirective {
 @Component(
   selector: 'outer-with-indirect-nested',
   template: 'OUTER(<simple><div><ng-content></ng-content></div></simple>)',
-  directives: const [Simple],
+  directives: [Simple],
 )
 class OuterWithIndirectNestedComponent {}
 
@@ -547,7 +547,7 @@ class OuterWithIndirectNestedComponent {}
       '<ng-content select=".left" ngProjectAs=".left"></ng-content>'
       '<ng-content></ng-content>'
       '</inner>)',
-  directives: const [InnerComponent],
+  directives: [InnerComponent],
 )
 class OuterComponent {}
 
@@ -556,7 +556,7 @@ class OuterComponent {}
   template: 'INNER(<innerinner>'
       '<ng-content select=".left" ngProjectAs=".left"></ng-content>'
       '<ng-content></ng-content></innerinner>)',
-  directives: const [InnerInnerComponent],
+  directives: [InnerInnerComponent],
 )
 class InnerComponent {}
 
@@ -565,7 +565,7 @@ class InnerComponent {}
   template: 'INNERINNER('
       '<ng-content select=".left"></ng-content>,'
       '<ng-content></ng-content>)',
-  directives: const [],
+  directives: [],
 )
 class InnerInnerComponent {}
 
@@ -574,7 +574,7 @@ class InnerInnerComponent {}
   template: '<div>(<div *manual>'
       '<ng-content select=".left"></ng-content></div>,&ngsp;'
       '<ng-content></ng-content>)</div>',
-  directives: const [ManualViewportDirective],
+  directives: [ManualViewportDirective],
 )
 class ConditionalContentComponent {
   @ViewChild(ManualViewportDirective)
@@ -586,7 +586,7 @@ class ConditionalContentComponent {
   template: 'MAIN(<template manual>'
       'FIRST(<template manual>SECOND(<ng-content></ng-content>)</template>)'
       '</template>)',
-  directives: const [ManualViewportDirective],
+  directives: [ManualViewportDirective],
 )
 class ConditionalTextComponent {
   @ViewChildren(ManualViewportDirective)
@@ -596,7 +596,7 @@ class ConditionalTextComponent {
 @Component(
   selector: 'tree2',
   template: 'TREE2({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
-  directives: const [ManualViewportDirective, RecursiveTree],
+  directives: [ManualViewportDirective, RecursiveTree],
 )
 class Tree2 {
   @Input()
@@ -609,7 +609,7 @@ class Tree2 {
 @Component(
   selector: 'tree',
   template: 'TREE({{depth}}:<tree *manual [depth]="depth+1"></tree>)',
-  directives: const [ManualViewportDirective, Tree],
+  directives: [ManualViewportDirective, Tree],
 )
 class Tree {
   @Input()
@@ -622,7 +622,7 @@ class Tree {
 @Component(
   selector: 'tree',
   template: 'TREE({{depth}}:<tree2 *manual [depth]="depth+1"></tree2>)',
-  directives: const [ManualViewportDirective, Tree2],
+  directives: [ManualViewportDirective, Tree2],
 )
 class RecursiveTree {
   @Input()
@@ -656,55 +656,55 @@ class CmpC {
 @Component(
   selector: 'cmp-b',
   template: '<ng-content></ng-content><cmp-d></cmp-d>',
-  directives: const [CmpD],
+  directives: [CmpD],
 )
 class CmpB {}
 
 @Component(
   selector: 'cmp-a',
   template: '<ng-content></ng-content><cmp-c></cmp-c>',
-  directives: const [CmpC],
+  directives: [CmpC],
 )
 class CmpA {}
 
 @Component(
   selector: 'cmp-b11',
   template: '{{\'b11\'}}',
-  directives: const [],
+  directives: [],
 )
 class CmpB11 {}
 
 @Component(
   selector: 'cmp-b12',
   template: '{{\'b12\'}}',
-  directives: const [],
+  directives: [],
 )
 class CmpB12 {}
 
 @Component(
   selector: 'cmp-b21',
   template: '{{\'b21\'}}',
-  directives: const [],
+  directives: [],
 )
 class CmpB21 {}
 
 @Component(
   selector: 'cmp-b22',
   template: '{{\'b22\'}}',
-  directives: const [],
+  directives: [],
 )
 class CmpB22 {}
 
 @Component(
   selector: 'cmp-a1',
   template: '{{\'a1\'}}<cmp-b11></cmp-b11><cmp-b12></cmp-b12>',
-  directives: const [CmpB11, CmpB12],
+  directives: [CmpB11, CmpB12],
 )
 class CmpA1 {}
 
 @Component(
   selector: 'cmp-a2',
   template: '{{\'a2\'}}<cmp-b21></cmp-b21><cmp-b22></cmp-b22>',
-  directives: const [CmpB21, CmpB22],
+  directives: [CmpB21, CmpB22],
 )
 class CmpA2 {}

@@ -36,19 +36,19 @@ class ReplacePipe implements PipeTransform {
       return value;
     }
     if (!this._supportedInput(value)) {
-      throw new InvalidPipeArgumentException(ReplacePipe, value);
+      throw InvalidPipeArgumentException(ReplacePipe, value);
     }
     var input = value.toString();
     if (!this._supportedPattern(pattern)) {
-      throw new InvalidPipeArgumentException(ReplacePipe, pattern);
+      throw InvalidPipeArgumentException(ReplacePipe, pattern);
     }
     if (!this._supportedReplacement(replacement)) {
-      throw new InvalidPipeArgumentException(ReplacePipe, replacement);
+      throw InvalidPipeArgumentException(ReplacePipe, replacement);
     }
     // template fails with literal RegExp e.g /pattern/igm
     if (replacement is _Matcher) {
       var rgxPattern =
-          pattern is String ? new RegExp(pattern) : (pattern as RegExp);
+          pattern is String ? RegExp(pattern) : (pattern as RegExp);
       return input.replaceAllMapped(rgxPattern, replacement);
     }
     if (pattern is RegExp) {

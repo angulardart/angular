@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 const content = 'content';
 const host = 'host';
 
-const _RE_SPECIAL_CHARS = const [
+const _RE_SPECIAL_CHARS = [
   '-',
   '[',
   ']',
@@ -26,10 +26,9 @@ const _RE_SPECIAL_CHARS = const [
   '\$',
   '|'
 ];
-final _ESCAPE_RE = new RegExp('[\\${_RE_SPECIAL_CHARS.join('\\')}]');
+final _ESCAPE_RE = RegExp('[\\${_RE_SPECIAL_CHARS.join('\\')}]');
 RegExp containsRegexp(String input) {
-  return new RegExp(
-      input.replaceAllMapped(_ESCAPE_RE, (match) => '\\${match[0]}'));
+  return RegExp(input.replaceAllMapped(_ESCAPE_RE, (match) => '\\${match[0]}'));
 }
 
 RegExp _normalizerExp1,
@@ -41,13 +40,13 @@ RegExp _normalizerExp1,
     _normalizerExp7;
 
 String normalizeCSS(String css) {
-  _normalizerExp1 ??= new RegExp(r'\s+');
-  _normalizerExp2 ??= new RegExp(r':\s');
-  _normalizerExp3 ??= new RegExp('' + "'" + r'');
-  _normalizerExp4 ??= new RegExp(r'{');
-  _normalizerExp5 ??= new RegExp(r'}(?!}|$)');
-  _normalizerExp6 ??= new RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)');
-  _normalizerExp7 ??= new RegExp(r'\[(.+)=([^"\]]+)\]');
+  _normalizerExp1 ??= RegExp(r'\s+');
+  _normalizerExp2 ??= RegExp(r':\s');
+  _normalizerExp3 ??= RegExp('' + "'" + r'');
+  _normalizerExp4 ??= RegExp(r'{');
+  _normalizerExp5 ??= RegExp(r'}(?!}|$)');
+  _normalizerExp6 ??= RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)');
+  _normalizerExp7 ??= RegExp(r'\[(.+)=([^"\]]+)\]');
   css = css.replaceAll(_normalizerExp1, ' ');
   css = css.replaceAll(_normalizerExp2, ':');
   css = css.replaceAll(_normalizerExp3, '"');

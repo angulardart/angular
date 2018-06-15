@@ -85,7 +85,7 @@ class RouterOutlet implements OnInit, OnDestroy {
       for (final route in routes) {
         if (route.useAsDefault) {
           if (hasDefault) {
-            throw new StateError('Only one route can be used as default');
+            throw StateError('Only one route can be used as default');
           }
           hasDefault = true;
         }
@@ -117,8 +117,8 @@ class RouterOutlet implements OnInit, OnDestroy {
   /// be returned instead of creating a new one.
   ComponentRef prepare(ComponentFactory componentFactory) {
     return _loadedComponents.putIfAbsent(componentFactory, () {
-      final componentRef = componentFactory.create(new Injector.map({
-        RouterOutletToken: new RouterOutletToken(),
+      final componentRef = componentFactory.create(Injector.map({
+        RouterOutletToken: RouterOutletToken(),
       }, _viewContainerRef.injector));
       componentRef.changeDetectorRef.detectChanges();
       return componentRef;

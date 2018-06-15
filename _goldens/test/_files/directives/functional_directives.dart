@@ -15,7 +15,7 @@ void generateTextDirective(HtmlElement element, TextService textService) {
 @Component(
   selector: 'app',
   template: '<div generateText><div></div></div>',
-  directives: const [generateTextDirective],
-  providers: const [TextService],
+  directives: [generateTextDirective],
+  providers: [TextService],
 )
 class AppComponent {}

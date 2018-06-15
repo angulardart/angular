@@ -3,7 +3,7 @@ import 'package:angular/src/core/di/decorators.dart' show Host;
 import 'package:angular/src/core/linker.dart'
     show ViewContainerRef, TemplateRef;
 
-const _WHEN_DEFAULT = const Object();
+const _WHEN_DEFAULT = Object();
 
 class SwitchView {
   final ViewContainerRef _viewContainerRef;
@@ -81,7 +81,7 @@ class SwitchView {
 class NgSwitch {
   dynamic _switchValue;
   bool _useDefault = false;
-  final _valueViews = new Map<dynamic, List<SwitchView>>();
+  final _valueViews = Map<dynamic, List<SwitchView>>();
 
   List<SwitchView> _activeViews = [];
 
@@ -182,7 +182,7 @@ class NgSwitchWhen {
   NgSwitchWhen(ViewContainerRef viewContainer, TemplateRef templateRef,
       @Host() NgSwitch ngSwitch) {
     this._switch = ngSwitch;
-    this._view = new SwitchView(viewContainer, templateRef);
+    this._view = SwitchView(viewContainer, templateRef);
   }
 
   @Input()
@@ -210,6 +210,6 @@ class NgSwitchDefault {
   NgSwitchDefault(ViewContainerRef viewContainer, TemplateRef templateRef,
       @Host() NgSwitch switchDirective) {
     switchDirective._registerView(
-        _WHEN_DEFAULT, new SwitchView(viewContainer, templateRef));
+        _WHEN_DEFAULT, SwitchView(viewContainer, templateRef));
   }
 }

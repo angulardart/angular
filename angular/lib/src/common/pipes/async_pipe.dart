@@ -30,8 +30,8 @@ class _PromiseStrategy {
   void onDestroy(dynamic subscription) {}
 }
 
-final _promiseStrategy = new _PromiseStrategy();
-final _observableStrategy = new _ObservableStrategy();
+final _promiseStrategy = _PromiseStrategy();
+final _observableStrategy = _ObservableStrategy();
 
 /// An `async` pipe awaits for a value from a [Future] or [Stream]. When a value
 /// is received, the `async` pipe marks the component to be checked for changes.
@@ -120,7 +120,7 @@ class AsyncPipe implements OnDestroy, PipeTransform {
     } else if (obj is Stream) {
       return _observableStrategy;
     } else {
-      throw new InvalidPipeArgumentException(AsyncPipe, obj);
+      throw InvalidPipeArgumentException(AsyncPipe, obj);
     }
   }
 

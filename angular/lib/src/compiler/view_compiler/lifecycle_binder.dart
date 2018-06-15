@@ -18,8 +18,8 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
   var lifecycleHooks = directive.lifecycleHooks;
   if (lifecycleHooks.contains(LifecycleHooks.onChanges) &&
       directiveAst.inputs.isNotEmpty) {
-    detectChangesInInputsMethod.addStmt(
-        new o.IfStmt(DetectChangesVars.changes.notIdentical(o.NULL_EXPR), [
+    detectChangesInInputsMethod
+        .addStmt(o.IfStmt(DetectChangesVars.changes.notIdentical(o.NULL_EXPR), [
       directiveInstance
           .callMethod('ngOnChanges', [DetectChangesVars.changes]).toStmt()
     ]));
@@ -31,18 +31,17 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
       detectChangesInInputsMethod.addStmt(
           directiveInstance.callMethod('ngAfterChanges', const []).toStmt());
     } else {
-      detectChangesInInputsMethod.addStmt(new o.IfStmt(
-          DetectChangesVars.changed,
+      detectChangesInInputsMethod.addStmt(o.IfStmt(DetectChangesVars.changed,
           [directiveInstance.callMethod('ngAfterChanges', const []).toStmt()]));
     }
   }
   if (lifecycleHooks.contains(LifecycleHooks.onInit)) {
-    detectChangesInInputsMethod.addStmt(new o.IfStmt(
+    detectChangesInInputsMethod.addStmt(o.IfStmt(
         notThrowOnChanges.and(DetectChangesVars.firstCheck),
         [directiveInstance.callMethod('ngOnInit', []).toStmt()]));
   }
   if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
-    detectChangesInInputsMethod.addStmt(new o.IfStmt(notThrowOnChanges,
+    detectChangesInInputsMethod.addStmt(o.IfStmt(notThrowOnChanges,
         [directiveInstance.callMethod('ngDoCheck', []).toStmt()]));
   }
 }
@@ -56,7 +55,7 @@ void bindDirectiveAfterContentLifecycleCallbacks(
   var afterContentLifecycleCallbacksMethod =
       view.afterContentLifecycleCallbacksMethod;
   if (!identical(lifecycleHooks.indexOf(LifecycleHooks.afterContentInit), -1)) {
-    afterContentLifecycleCallbacksMethod.addStmt(new o.IfStmt(
+    afterContentLifecycleCallbacksMethod.addStmt(o.IfStmt(
         DetectChangesVars.firstCheck,
         [directiveInstance.callMethod('ngAfterContentInit', []).toStmt()]));
   }
@@ -76,7 +75,7 @@ void bindDirectiveAfterViewLifecycleCallbacks(
   var afterViewLifecycleCallbacksMethod =
       view.afterViewLifecycleCallbacksMethod;
   if (!identical(lifecycleHooks.indexOf(LifecycleHooks.afterViewInit), -1)) {
-    afterViewLifecycleCallbacksMethod.addStmt(new o.IfStmt(
+    afterViewLifecycleCallbacksMethod.addStmt(o.IfStmt(
         DetectChangesVars.firstCheck,
         [directiveInstance.callMethod('ngAfterViewInit', []).toStmt()]));
   }

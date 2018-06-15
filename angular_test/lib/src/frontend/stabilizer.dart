@@ -70,7 +70,7 @@ abstract class NgTestStabilizer {
   /// }
   /// ```
   Future<bool> update([void Function() runAndTrackSideEffects]) {
-    return new Future<bool>.sync(() {
+    return Future<bool>.sync(() {
       if (runAndTrackSideEffects != null) {
         runAndTrackSideEffects();
       }
@@ -86,7 +86,7 @@ abstract class NgTestStabilizer {
     int threshold = 100,
   }) async {
     if (threshold == null) {
-      throw new ArgumentError.notNull('threshold');
+      throw ArgumentError.notNull('threshold');
     }
     if (runAndTrackSideEffects != null) {
       await update(runAndTrackSideEffects);
@@ -100,7 +100,7 @@ abstract class NgTestStabilizer {
   @protected
   Future<void> stabilizeWithThreshold(int threshold) async {
     if (threshold < 1) {
-      throw new ArgumentError.value(threshold, 'threshold', 'Must be >= 1');
+      throw ArgumentError.value(threshold, 'threshold', 'Must be >= 1');
     }
 
     var count = 0;
@@ -109,7 +109,7 @@ abstract class NgTestStabilizer {
     // ... and once update says there is no more work to do, we will bail out.
     while (!await update()) {
       if (thresholdExceeded()) {
-        throw new WillNeverStabilizeError(threshold);
+        throw WillNeverStabilizeError(threshold);
       }
     }
   }
@@ -186,7 +186,7 @@ class NgZoneStabilizer extends NgTestStabilizer {
 
   @override
   Future<bool> update([void Function() fn]) {
-    return new Future.sync(() => _waitForZone(fn)).then((_) => isStable);
+    return Future.sync(() => _waitForZone(fn)).then((_) => isStable);
   }
 
   Future<void> _waitForZone([void fn()]) async {
@@ -209,13 +209,13 @@ class NgZoneStabilizer extends NgTestStabilizer {
     ]);
 
     // Give a bit of time to catch up, we could still have an occur in future.
-    await new Future(() {});
+    await Future(() {});
 
     // Fail if we caught an error.
     if (caughtError != null) {
-      return new Future.error(
+      return Future.error(
         caughtError.error,
-        new StackTrace.fromString(caughtError.stackTrace.join('\n')),
+        StackTrace.fromString(caughtError.stackTrace.join('\n')),
       );
     }
 

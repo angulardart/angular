@@ -29,7 +29,7 @@ void main() {
     });
 
     test('toUrl should return a Url string', () {
-      var url1 = new Url('/1', fragment: '2', queryParameters: {'3': 'true'});
+      var url1 = Url('/1', fragment: '2', queryParameters: {'3': 'true'});
       expect(url1.toUrl(), '/1?3=true#2');
     });
   });

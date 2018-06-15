@@ -12,7 +12,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should evaluate conditional operator with right precedence', () async {
-    final testBed = new NgTestBed<RightPrecedenceConditionalComponent>();
+    final testBed = NgTestBed<RightPrecedenceConditionalComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'red');
     await testFixture.update((component) => component.hasBorder = true);
@@ -28,7 +28,7 @@ void main() {
     }
 
     test("should support OpaqueToken with name containing '.'", () {
-      testProvider(new OpaqueToken('a.b'), 1);
+      testProvider(OpaqueToken('a.b'), 1);
     });
 
     test("should support string token containing '.'", () {
@@ -45,14 +45,14 @@ void main() {
   });
 
   test("should interpolate previous element's class binding", () async {
-    final testBed = new NgTestBed<InterpolateClassBindingComponent>();
+    final testBed = NgTestBed<InterpolateClassBindingComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'foo');
   });
 
   test('should support ngClass before a component and transclusion inside ngIf',
       () async {
-    final testBed = new NgTestBed<ContentProviderComponent>();
+    final testBed = NgTestBed<ContentProviderComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'ABC');
   });
@@ -81,7 +81,7 @@ class ContentHostComponent {}
 @Component(
   selector: 'content-provider',
   template: 'A<content-host *ngIf="true" [ngClass]="\'red\'">B</content-host>C',
-  directives: const [
+  directives: [
     ContentHostComponent,
     NgClass,
     NgIf,

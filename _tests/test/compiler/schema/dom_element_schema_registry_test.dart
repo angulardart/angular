@@ -8,7 +8,7 @@ void main() {
   group("DOMElementSchema", () {
     DomElementSchemaRegistry registry;
     setUp(() {
-      registry = new DomElementSchemaRegistry();
+      registry = DomElementSchemaRegistry();
     });
     test("should detect properties on regular elements", () {
       expect(registry.hasProperty("div", "id"), true);

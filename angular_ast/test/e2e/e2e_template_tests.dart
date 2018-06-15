@@ -13,7 +13,7 @@ main() {
   var templatesDir = p.join('test', 'e2e', 'templates');
 
   // Just assert that we can parse all of these templates without failing.
-  new Directory(templatesDir).listSync().forEach((file) {
+  Directory(templatesDir).listSync().forEach((file) {
     if (file is File) {
       test('should parse ${p.basenameWithoutExtension(file.path)}', () {
         parse(file.readAsStringSync(), sourceUrl: file.absolute.path);

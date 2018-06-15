@@ -41,8 +41,8 @@ o.OutputType fromDartType(
       }
     }
   }
-  return new o.ExternalType(
-    new CompileIdentifierMetadata(
+  return o.ExternalType(
+    CompileIdentifierMetadata(
       name: dartType.name,
       moduleUrl: moduleUrl(dartType.element),
       // Most o.ExternalTypes are not created, but those that are (like
@@ -58,7 +58,7 @@ o.OutputType fromTypeLink(TypeLink typeLink, LibraryReader library) {
   if (typeLink == null || typeLink.isDynamic || typeLink.isPrivate) {
     return null;
   }
-  var typeArguments = new List<o.OutputType>(typeLink.generics.length);
+  var typeArguments = List<o.OutputType>(typeLink.generics.length);
   for (var i = 0; i < typeArguments.length; i++) {
     final arg = fromTypeLink(typeLink.generics[i], library);
     if (arg == null) {
@@ -67,8 +67,8 @@ o.OutputType fromTypeLink(TypeLink typeLink, LibraryReader library) {
     }
     typeArguments[i] = arg;
   }
-  return new o.ExternalType(
-    new CompileIdentifierMetadata(
+  return o.ExternalType(
+    CompileIdentifierMetadata(
       name: typeLink.symbol,
       moduleUrl: linkToReference(typeLink, library).url,
       genericTypes: typeArguments,
@@ -84,5 +84,5 @@ o.FunctionType fromFunctionType(FunctionType functionType) {
   for (var parameter in functionType.parameters) {
     paramTypes.add(fromDartType(parameter.type));
   }
-  return new o.FunctionType(returnType, paramTypes);
+  return o.FunctionType(returnType, paramTypes);
 }

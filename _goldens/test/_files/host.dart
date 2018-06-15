@@ -27,7 +27,7 @@ class HostComponent {
   @HostBinding('style.color')
   static const String hostStyleColor = 'red';
 
-  @HostListener('click', const [r'$event'])
+  @HostListener('click', [r'$event'])
   void onClick(event) {}
 
   @HostListener('keydown')

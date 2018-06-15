@@ -13,7 +13,7 @@ void main() {
     final testBed = NgTestBed.forComponent<BenchmarkComponent>(
       common.BenchmarkComponentNgFactory,
       rootInjector: ([i]) {
-        return new Injector.map(
+        return Injector.map(
           {runBenchmarkOn: ng.ExampleBenchmarkNgFactory},
           i,
         );

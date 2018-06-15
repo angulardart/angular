@@ -83,24 +83,24 @@ class NgZone {
 
   static void assertInAngularZone() {
     if (!isInAngularZone()) {
-      throw new Exception("Expected to be in Angular Zone, but it is not!");
+      throw Exception("Expected to be in Angular Zone, but it is not!");
     }
   }
 
   static void assertNotInAngularZone() {
     if (isInAngularZone()) {
-      throw new Exception("Expected to not be in Angular Zone, but it is!");
+      throw Exception("Expected to not be in Angular Zone, but it is!");
     }
   }
 
   final StreamController<Null> _onTurnStart =
-      new StreamController.broadcast(sync: true);
+      StreamController.broadcast(sync: true);
   final StreamController<Null> _onMicrotaskEmpty =
-      new StreamController.broadcast(sync: true);
+      StreamController.broadcast(sync: true);
   final StreamController<Null> _onTurnDone =
-      new StreamController.broadcast(sync: true);
+      StreamController.broadcast(sync: true);
   final StreamController<NgZoneError> _onError =
-      new StreamController<NgZoneError>.broadcast(sync: true);
+      StreamController<NgZoneError>.broadcast(sync: true);
 
   Zone _outerZone;
   Zone _innerZone;
@@ -140,7 +140,7 @@ class NgZone {
       {void handleUncaughtError(
           Zone _, ZoneDelegate __, Zone ___, Object ____, StackTrace s)}) {
     return zone.fork(
-        specification: new ZoneSpecification(
+        specification: ZoneSpecification(
             scheduleMicrotask: _scheduleMicrotask,
             run: _run,
             runUnary: _runUnary,
@@ -224,13 +224,13 @@ class NgZone {
   // Called by Chain.capture() on errors when long stack traces are enabled
   void _onErrorWithLongStackTrace(error, Chain chain) {
     final traces = chain.terse.traces.map((t) => t.toString()).toList();
-    _onError.add(new NgZoneError(error, traces));
+    _onError.add(NgZoneError(error, traces));
   }
 
   // Outer zone handleUnchaughtError when long stack traces are not used
   void _onErrorWithoutLongStackTrace(
       Zone self, ZoneDelegate parent, Zone zone, error, StackTrace trace) {
-    _onError.add(new NgZoneError(error, [trace.toString()]));
+    _onError.add(NgZoneError(error, [trace.toString()]));
   }
 
   Timer _createTimer(
@@ -245,7 +245,7 @@ class NgZone {
       }
     };
     Timer timer = parent.createTimer(zone, duration, cb);
-    wrappedTimer = new _WrappedTimer(timer);
+    wrappedTimer = _WrappedTimer(timer);
     wrappedTimer.addOnCancelCb(() {
       _pendingTimers.remove(wrappedTimer);
       _setMacrotask(_pendingTimers.isNotEmpty);
@@ -389,7 +389,7 @@ class _WrappedTimer implements Timer {
 
   void addOnCancelCb(void Function() onCancelCb) {
     if (this._onCancelCb != null) {
-      throw new StateError("On cancel cb already registered");
+      throw StateError("On cancel cb already registered");
     }
     this._onCancelCb = onCancelCb;
   }
@@ -408,7 +408,7 @@ class _WrappedTimer implements Timer {
   // See https://github.com/dart-lang/sdk/issues/31664
   // ignore: override_on_non_overriding_getter
   int get tick {
-    throw new UnimplementedError("tick");
+    throw UnimplementedError("tick");
   }
 }
 

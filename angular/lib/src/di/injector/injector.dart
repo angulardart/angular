@@ -12,7 +12,7 @@ import 'runtime.dart';
 export '../../core/di/opaque_token.dart' show MultiToken, OpaqueToken;
 
 /// **INTERNAL ONLY**: Sentinel value for determining a missing DI instance.
-const Object throwIfNotFound = const Object();
+const Object throwIfNotFound = Object();
 
 /// **INTERNAL ONLY**: Throws "no provider found for {token}".
 Null throwsNotFound(Injector injector, Object token) {

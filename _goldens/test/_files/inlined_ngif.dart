@@ -6,7 +6,7 @@ import 'package:angular/angular.dart';
   template: '''
 <div *ngIf="foo">Hello World!</div>
     ''',
-  directives: const [NgIf],
+  directives: [NgIf],
   visibility: Visibility.local,
 )
 class InlinedNgIfComponent {
@@ -18,7 +18,7 @@ class InlinedNgIfComponent {
   template: '''
 <div *ngIf="foo">Hello World!</div>
     ''',
-  directives: const [NgIf],
+  directives: [NgIf],
   visibility: Visibility.local,
 )
 class InlinedNgIfWithImmutableConditionComponent {

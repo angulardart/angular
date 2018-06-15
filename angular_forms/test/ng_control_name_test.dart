@@ -95,7 +95,7 @@ class NgControlNameTest {
 
   String loginValue;
 
-  ControlGroup formModel = new ControlGroup({'login': new Control('login')});
+  ControlGroup formModel = ControlGroup({'login': Control('login')});
 
   bool disabled = false;
 
@@ -124,8 +124,8 @@ class NgControlNameInitTest {
 
 @Directive(
   selector: '[test-accessor]',
-  providers: const [
-    const ExistingProvider.forToken(
+  providers: [
+    ExistingProvider.forToken(
       ngValueAccessor,
       TestAccessor,
     )

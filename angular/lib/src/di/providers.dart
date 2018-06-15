@@ -43,7 +43,7 @@ Provider<T> provide<T>(
   List<Object> deps,
   bool multi,
 }) =>
-    new Provider<T>(
+    Provider<T>(
       token,
       useClass: useClass,
       useValue: useValue,

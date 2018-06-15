@@ -11,7 +11,7 @@ _testNgToken() {
   NgToken token;
 
   test('beforeElementDecorator', () {
-    token = new NgToken.beforeElementDecorator(0, '\n  \n');
+    token = NgToken.beforeElementDecorator(0, '\n  \n');
     expect(token.lexeme, '\n  \n');
     expect(token.end, 4);
     expect(token.length, 4);
@@ -20,7 +20,7 @@ _testNgToken() {
   });
 
   test('closeElementEnd', () {
-    token = new NgToken.closeElementEnd(0);
+    token = NgToken.closeElementEnd(0);
     expect(token.lexeme, '>');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -29,7 +29,7 @@ _testNgToken() {
   });
 
   test('closeElementStart', () {
-    token = new NgToken.closeElementStart(0);
+    token = NgToken.closeElementStart(0);
     expect(token.lexeme, '</');
     expect(token.end, 2);
     expect(token.length, 2);
@@ -38,7 +38,7 @@ _testNgToken() {
   });
 
   test('elementDecorator', () {
-    token = new NgToken.elementDecorator(0, 'title');
+    token = NgToken.elementDecorator(0, 'title');
     expect(token.lexeme, 'title');
     expect(token.end, 5);
     expect(token.length, 5);
@@ -47,7 +47,7 @@ _testNgToken() {
   });
 
   test('elementIdentifier', () {
-    token = new NgToken.elementIdentifier(0, 'div');
+    token = NgToken.elementIdentifier(0, 'div');
     expect(token.lexeme, 'div');
     expect(token.end, 3);
     expect(token.length, 3);
@@ -56,7 +56,7 @@ _testNgToken() {
   });
 
   test('openElementEnd', () {
-    token = new NgToken.openElementEnd(0);
+    token = NgToken.openElementEnd(0);
     expect(token.lexeme, '>');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -65,7 +65,7 @@ _testNgToken() {
   });
 
   test('openElementStart', () {
-    token = new NgToken.openElementStart(0);
+    token = NgToken.openElementStart(0);
     expect(token.lexeme, '<');
     expect(token.end, 1);
     expect(token.length, 1);
@@ -74,7 +74,7 @@ _testNgToken() {
   });
 
   test('text', () {
-    token = new NgToken.text(0, 'Hello');
+    token = NgToken.text(0, 'Hello');
     expect(token.lexeme, 'Hello');
     expect(token.end, 5);
     expect(token.length, 5);

@@ -12,11 +12,11 @@ void main() {
     StreamController emitter;
     AsyncPipe pipe;
     ChangeDetectorRef ref;
-    var message = new Object();
+    var message = Object();
     setUp(() {
-      emitter = new StreamController.broadcast();
-      ref = new MockChangeDetectorRef();
-      pipe = new AsyncPipe(ref);
+      emitter = StreamController.broadcast();
+      ref = MockChangeDetectorRef();
+      pipe = AsyncPipe(ref);
     });
     group('transform', () {
       test('should return null when subscribing to an observable', () {
@@ -44,7 +44,7 @@ void main() {
           'should dispose of the existing subscription when '
           'subscribing to a new observable', () async {
         pipe.transform(emitter.stream);
-        var newEmitter = new StreamController.broadcast();
+        var newEmitter = StreamController.broadcast();
         expect(pipe.transform(newEmitter.stream), isNull);
         // this should not affect the pipe
         emitter.add(message);
@@ -55,7 +55,7 @@ void main() {
       test('should not dispose of existing subscription when Streams are equal',
           () async {
         // See https://github.com/dart-lang/angular2/issues/260
-        StreamController _ctrl = new StreamController.broadcast();
+        StreamController _ctrl = StreamController.broadcast();
         expect(pipe.transform(_ctrl.stream), isNull);
         _ctrl.add(message);
         Timer.run(expectAsync0(() {
@@ -66,7 +66,7 @@ void main() {
           () async {
         pipe.transform(emitter.stream);
         emitter.add(message);
-        new Timer(const Duration(milliseconds: 10), expectAsync0(() {
+        Timer(const Duration(milliseconds: 10), expectAsync0(() {
           verify(ref.markForCheck()).called(1);
         }));
       });
@@ -87,15 +87,15 @@ void main() {
     });
   });
   group('Future', () {
-    var message = new Object();
+    var message = Object();
     AsyncPipe pipe;
     Completer completer;
     MockChangeDetectorRef ref;
     var timer = 10;
     setUp(() {
-      completer = new Completer();
-      ref = new MockChangeDetectorRef();
-      pipe = new AsyncPipe((ref as dynamic));
+      completer = Completer();
+      ref = MockChangeDetectorRef();
+      pipe = AsyncPipe((ref as dynamic));
     });
     group('transform', () {
       test('should return null when subscribing to a promise', () {
@@ -104,7 +104,7 @@ void main() {
       test('should return the latest available value', () async {
         pipe.transform(completer.future);
         completer.complete(message);
-        new Timer(new Duration(milliseconds: timer), expectAsync0(() {
+        Timer(Duration(milliseconds: timer), expectAsync0(() {
           final res = pipe.transform(completer.future);
           expect(res, message);
         }));
@@ -114,7 +114,7 @@ void main() {
           'changed since the last call', () async {
         pipe.transform(completer.future);
         completer.complete(message);
-        new Timer(new Duration(milliseconds: timer), expectAsync0(() {
+        Timer(Duration(milliseconds: timer), expectAsync0(() {
           pipe.transform(completer.future);
           expect(pipe.transform(completer.future), message);
         }));
@@ -123,11 +123,11 @@ void main() {
           'should dispose of the existing subscription when '
           'subscribing to a new promise', () async {
         pipe.transform(completer.future);
-        var newCompleter = new Completer();
+        var newCompleter = Completer();
         expect(pipe.transform(newCompleter.future), isNull);
         // this should not affect the pipe, so it should return WrappedValue
         completer.complete(message);
-        new Timer(new Duration(milliseconds: timer), expectAsync0(() {
+        Timer(Duration(milliseconds: timer), expectAsync0(() {
           expect(pipe.transform(newCompleter.future), isNull);
         }));
       });
@@ -135,7 +135,7 @@ void main() {
           () async {
         pipe.transform(completer.future);
         completer.complete(message);
-        new Timer(new Duration(milliseconds: timer), expectAsync0(() {
+        Timer(Duration(milliseconds: timer), expectAsync0(() {
           verify(ref.markForCheck()).called(1);
         }));
       });
@@ -147,7 +147,7 @@ void main() {
           pipe.transform(completer.future);
           expect(pipe.transform(completer.future), isNull);
           completer.complete(message);
-          new Timer(new Duration(milliseconds: timer), expectAsync0(() {
+          Timer(Duration(milliseconds: timer), expectAsync0(() {
             final res = pipe.transform(completer.future);
             expect(res, message);
             pipe.ngOnDestroy();
@@ -159,15 +159,15 @@ void main() {
   });
   group('null', () {
     test('should return null when given null', () {
-      var pipe = new AsyncPipe(null);
+      var pipe = AsyncPipe(null);
       expect(pipe.transform(null), isNull);
     });
   });
   group('other types', () {
     test('should throw when given an invalid object', () {
-      var pipe = new AsyncPipe(null);
+      var pipe = AsyncPipe(null);
       expect(() => pipe.transform('some bogus object'),
-          throwsA(new isInstanceOf<InvalidPipeArgumentException>()));
+          throwsA(isInstanceOf<InvalidPipeArgumentException>()));
     });
   });
 }

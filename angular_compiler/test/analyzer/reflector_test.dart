@@ -7,10 +7,10 @@ import '../src/resolve.dart';
 void main() {
   test('should record a no-op', () async {
     final testLib = await resolveLibrary('');
-    final output = await new ReflectableReader.noLinking().resolve(testLib);
+    final output = await ReflectableReader.noLinking().resolve(testLib);
     expect(
       output,
-      new ReflectableOutput(),
+      ReflectableOutput(),
     );
   });
 
@@ -21,18 +21,18 @@ void main() {
 
       Duration notAnnotated() => null;
     ''');
-    final output = await new ReflectableReader.noLinking().resolve(testLib);
+    final output = await ReflectableReader.noLinking().resolve(testLib);
     expect(
       output,
-      new ReflectableOutput(
+      ReflectableOutput(
         registerFunctions: [
-          new DependencyInvocation(
+          DependencyInvocation(
             testLib.definingCompilationUnit.functions.firstWhere(
               (e) => e.name == 'getDuration',
             ),
             [
-              new DependencyElement(
-                new TypeTokenElement(
+              DependencyElement(
+                TypeTokenElement(
                   const TypeLink('DateTime', 'dart:core'),
                 ),
               ),
@@ -50,19 +50,19 @@ void main() {
         Example(Duration duration);
       }
     ''');
-    final output = await new ReflectableReader.noLinking().resolve(testLib);
+    final output = await ReflectableReader.noLinking().resolve(testLib);
     final clazz = testLib.definingCompilationUnit.types.first;
     expect(
       output,
-      new ReflectableOutput(registerClasses: [
-        new ReflectableClass(
+      ReflectableOutput(registerClasses: [
+        ReflectableClass(
           element: clazz,
           name: 'Example',
-          factory: new DependencyInvocation(
+          factory: DependencyInvocation(
             clazz.unnamedConstructor,
             [
-              new DependencyElement(
-                new TypeTokenElement(
+              DependencyElement(
+                TypeTokenElement(
                   const TypeLink('Duration', 'dart:core'),
                 ),
               ),
@@ -104,16 +104,16 @@ void main() {
         Example(Duration duration);
       }
     ''');
-    final output = await new ReflectableReader.noLinking().resolve(testLib);
+    final output = await ReflectableReader.noLinking().resolve(testLib);
     final clazz = testLib.definingCompilationUnit.types.first;
     expect(
       output,
-      new ReflectableOutput(registerClasses: [
-        new ReflectableClass(
+      ReflectableOutput(registerClasses: [
+        ReflectableClass(
           element: clazz,
           name: 'Example',
           factory: null,
-          registerAnnotation: new _StubRevivable(
+          registerAnnotation: _StubRevivable(
             Uri.parse('asset:test_lib/lib/test_lib.dart#RouteConfig'),
           ),
           registerComponentFactory: true,
@@ -128,9 +128,9 @@ void main() {
     ReflectableReader reader;
 
     setUp(() {
-      _fakeInputs = new Set<String>();
-      _fakeIsLibrary = new Set<String>();
-      reader = new ReflectableReader(
+      _fakeInputs = Set<String>();
+      _fakeIsLibrary = Set<String>();
+      reader = ReflectableReader(
         hasInput: _fakeInputs.contains,
         isLibrary: (lib) async => _fakeIsLibrary.contains(lib),
       );

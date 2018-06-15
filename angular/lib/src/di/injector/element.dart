@@ -42,19 +42,19 @@ class ElementInjector extends HierarchicalInjector {
     Object token, [
     Object orElse = throwIfNotFound,
   ]) =>
-      throw new UnimplementedError();
+      throw UnimplementedError();
 
   @override
   injectFromSelfOptional(
     Object token, [
     Object orElse = throwIfNotFound,
   ]) =>
-      throw new UnimplementedError();
+      throw UnimplementedError();
 
   @override
   HierarchicalInjector get parent {
     if (_parent == null) {
-      _parent = new ElementInjector(
+      _parent = ElementInjector(
         _view.parentView,
         _view.viewData.parentIndex,
       );

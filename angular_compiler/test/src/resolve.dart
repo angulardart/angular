@@ -13,7 +13,7 @@ Future<LibraryElement> resolveLibrary(String source) => resolveSource('''
       library _test;
       import '$angular';\n\n$source''',
     (resolver) => resolver.findLibraryByName('_test'),
-    inputId: new AssetId('test_lib', 'lib/test_lib.dart'));
+    inputId: AssetId('test_lib', 'lib/test_lib.dart'));
 
 /// Resolves [source] code as-if it is implemented with an AngularDart import.
 ///

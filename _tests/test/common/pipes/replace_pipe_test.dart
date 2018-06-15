@@ -6,7 +6,7 @@ final someNumber = 42;
 final str = "Douglas Adams";
 
 final Matcher throwsAnInvalidPipeArgumentException =
-    throwsA(new isInstanceOf<InvalidPipeArgumentException>());
+    throwsA(isInstanceOf<InvalidPipeArgumentException>());
 
 void main() {
   group("ReplacePipe", () {
@@ -39,9 +39,9 @@ void main() {
       });
       test("should return a new string with the pattern replaced", () {
         var result1 = pipe.transform(str, "Douglas", "Hugh");
-        var result2 = pipe.transform(str, new RegExp("a"), "_");
+        var result2 = pipe.transform(str, RegExp("a"), "_");
         var result3 =
-            pipe.transform(str, new RegExp("a", caseSensitive: false), "_");
+            pipe.transform(str, RegExp("a", caseSensitive: false), "_");
         var f = ((x) {
           return "Adams!";
         });

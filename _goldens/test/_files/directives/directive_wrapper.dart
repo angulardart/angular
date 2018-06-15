@@ -25,7 +25,7 @@ class ChildDirective {
 
   @Output()
   Stream get trigger {
-    _triggerController ??= new StreamController.broadcast();
+    _triggerController ??= StreamController.broadcast();
     return _triggerController.stream;
   }
 
@@ -56,7 +56,7 @@ class ChildDirective {
 )
 class DirectiveWithOutput {
   String msg;
-  final _streamController = new StreamController<String>();
+  final _streamController = StreamController<String>();
 
   @Output()
   Stream get eventXyz => _streamController.stream;
@@ -73,8 +73,8 @@ class DirectiveWithOutput {
       Foo
     </div>
   ''',
-  directives: const [ChildDirective, DirectiveWithOutput],
-  styles: const ['div { font-size: 10px; }'],
+  directives: [ChildDirective, DirectiveWithOutput],
+  styles: ['div { font-size: 10px; }'],
 )
 class TestFooComponent {
   int get rowIndex => 5;
@@ -112,7 +112,7 @@ class FastDirective extends ComponentState {
     <div class="target1" fastDirective [name]="finalName"></div>
     <div class="target2" fastDirective [name]="nonFinal"></div>
   ''',
-  directives: const [FastDirective],
+  directives: [FastDirective],
 )
 class DirectiveContainerTest {
   final String finalName = "xyz";

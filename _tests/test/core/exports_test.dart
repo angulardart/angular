@@ -17,40 +17,40 @@ void main() {
 
     group('can interpolate', () {
       test('constants', () async {
-        var testBed = new NgTestBed<InterpolateConstantTest>();
+        var testBed = NgTestBed<InterpolateConstantTest>();
         var fixture = await testBed.create();
         expect(fixture.text, 'hello');
       });
       test('static fields', () async {
-        var testBed = new NgTestBed<InterpolateStaticFieldTest>();
+        var testBed = NgTestBed<InterpolateStaticFieldTest>();
         var fixture = await testBed.create();
         expect(fixture.text, 'static field');
       });
       test('enums', () async {
-        var testBed = new NgTestBed<InterpolateEnumTest>();
+        var testBed = NgTestBed<InterpolateEnumTest>();
         var fixture = await testBed.create();
         expect(fixture.text, 'MyEnum.a');
       });
       test('top-level functions', () async {
-        var testBed = new NgTestBed<InterpolateTopLevelFunctionTest>();
+        var testBed = NgTestBed<InterpolateTopLevelFunctionTest>();
         var fixture = await testBed.create();
         expect(fixture.text, 'hello!!!');
       });
       test('static functions', () async {
-        var testBed = new NgTestBed<InterpolateStaticFunctionTest>();
+        var testBed = NgTestBed<InterpolateStaticFunctionTest>();
         var fixture = await testBed.create();
         expect(fixture.text, 'hello???');
       });
     });
 
     test('can be used in NgFor', () async {
-      var testBed = new NgTestBed<StaticNgForTest>();
+      var testBed = NgTestBed<StaticNgForTest>();
       var fixture = await testBed.create();
       expect(fixture.text, '123');
     });
 
     test('can be used in event handlers', () async {
-      var testBed = new NgTestBed<StaticEventHandlerTest>();
+      var testBed = NgTestBed<StaticEventHandlerTest>();
       var fixture = await testBed.create();
       var div = fixture.rootElement.querySelector('div');
       clickHandled = false;
@@ -61,7 +61,7 @@ void main() {
     });
 
     test('can be assigned in an event handler', () async {
-      var testBed = new NgTestBed<StaticEventHandlerTargetTest>();
+      var testBed = NgTestBed<StaticEventHandlerTargetTest>();
       var fixture = await testBed.create();
       var div = fixture.rootElement.querySelector('div');
       MyClass.clickHandled = false;
@@ -72,7 +72,7 @@ void main() {
     });
 
     test('can be used as event handler arguments', () async {
-      var testBed = new NgTestBed<StaticEventHandlerArgTest>();
+      var testBed = NgTestBed<StaticEventHandlerArgTest>();
       var fixture = await testBed.create();
       var div = fixture.rootElement.querySelector('div');
       var listArg;
@@ -86,7 +86,7 @@ void main() {
     });
 
     test('can refer to own statics automatically', () async {
-      var testBed = new NgTestBed<SelfReferTest>();
+      var testBed = NgTestBed<SelfReferTest>();
       var fixture = await testBed.create();
       expect(fixture.text, 'hello');
       await fixture.update((_) {
@@ -96,7 +96,7 @@ void main() {
     });
 
     test('can refer to own statics automatically with @HostBinding', () async {
-      var testBed = new NgTestBed<SelfReferHostBindingTest>();
+      var testBed = NgTestBed<SelfReferHostBindingTest>();
       var fixture = await testBed.create();
       expect(fixture.rootElement.title, 'hello');
       await fixture.update((_) {
@@ -107,7 +107,7 @@ void main() {
 
     group('can be prefixed', () {
       test('with library prefix', () async {
-        var testBed = new NgTestBed<StaticLibraryPrefixTest>();
+        var testBed = NgTestBed<StaticLibraryPrefixTest>();
         var fixture = await testBed.create();
         expect(fixture.text, 'hello');
       });
@@ -118,64 +118,64 @@ void main() {
 @Component(
   selector: 'interpolate-constant-test',
   template: '<div>{{myConst}}</div>',
-  exports: const [myConst],
+  exports: [myConst],
 )
 class InterpolateConstantTest {}
 
 @Component(
   selector: 'interpolate-static-field-test',
   template: '<div>{{MyClass.staticField}}</div>',
-  exports: const [MyClass],
+  exports: [MyClass],
 )
 class InterpolateStaticFieldTest {}
 
 @Component(
   selector: 'interpolate-enum-test',
   template: '<div>{{MyEnum.a}}</div>',
-  exports: const [MyEnum],
+  exports: [MyEnum],
 )
 class InterpolateEnumTest {}
 
 @Component(
   selector: 'interpolate-top-level-function-test',
   template: '<div>{{myFunc("hello")}}</div>',
-  exports: const [myFunc],
+  exports: [myFunc],
 )
 class InterpolateTopLevelFunctionTest {}
 
 @Component(
   selector: 'interpolate-static-function-test',
   template: '<div>{{MyClass.staticFunc("hello")}}</div>',
-  exports: const [MyClass],
+  exports: [MyClass],
 )
 class InterpolateStaticFunctionTest {}
 
 @Component(
   selector: 'static-ng-for-test',
   template: '<div *ngFor="let item of myList">{{item}}</div>',
-  exports: const [myList],
-  directives: const [NgFor],
+  exports: [myList],
+  directives: [NgFor],
 )
 class StaticNgForTest {}
 
 @Component(
   selector: 'static-event-handler-test',
   template: '<div (click)="staticClickHandler()"></div>',
-  exports: const [staticClickHandler],
+  exports: [staticClickHandler],
 )
 class StaticEventHandlerTest {}
 
 @Component(
   selector: 'static-event-handler-target-test',
   template: '<div (click)="MyClass.clickHandled = true"></div>',
-  exports: const [MyClass],
+  exports: [MyClass],
 )
 class StaticEventHandlerTargetTest {}
 
 @Component(
   selector: 'static-event-handle-arg-test',
   template: '<div (click)="handleClick(myList)"></div>',
-  exports: const [myList],
+  exports: [myList],
 )
 class StaticEventHandlerArgTest {
   Function clickHandler;
@@ -188,7 +188,7 @@ class StaticEventHandlerArgTest {
 @Component(
   selector: 'static-library-prefix-test',
   template: '<p>{{lib.myConst}}</p>',
-  exports: const [lib.myConst],
+  exports: [lib.myConst],
 )
 class StaticLibraryPrefixTest {}
 

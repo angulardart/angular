@@ -3,7 +3,7 @@ import 'package:angular/src/compiler/template_ast.dart';
 
 import 'expression_parser/unparser.dart' show Unparser;
 
-var expressionUnparser = new Unparser();
+var expressionUnparser = Unparser();
 
 class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   bool includeSourceSpan;
@@ -148,7 +148,7 @@ String sourceInfo(TemplateAst ast) {
 }
 
 List<dynamic> humanizeContentProjection(List<TemplateAst> templateAsts) {
-  var humanizer = new TemplateContentProjectionHumanizer();
+  var humanizer = TemplateContentProjectionHumanizer();
   templateVisitAll(humanizer, templateAsts);
   return humanizer.result;
 }
@@ -208,13 +208,13 @@ class TemplateContentProjectionHumanizer
 }
 
 List<dynamic> humanizeTplAst(List<TemplateAst> templateAsts) {
-  var humanizer = new TemplateHumanizer(false);
+  var humanizer = TemplateHumanizer(false);
   templateVisitAll(humanizer, templateAsts);
   return humanizer.result;
 }
 
 List<dynamic> humanizeTplAstSourceSpans(List<TemplateAst> templateAsts) {
-  var humanizer = new TemplateHumanizer(true);
+  var humanizer = TemplateHumanizer(true);
   templateVisitAll(humanizer, templateAsts);
   return humanizer.result;
 }

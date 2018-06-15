@@ -136,7 +136,7 @@ void main() {
 
 @Component(
   selector: 'test-control-component',
-  directives: const [MemorizedForm, formDirectives, NgIf],
+  directives: [MemorizedForm, formDirectives, NgIf],
   template: r'''
 <div memorizedForm>
   <div *ngIf="showInputOne">One: <input ngControl="one" [ngModel]="one"></div>
@@ -154,7 +154,7 @@ class TestControlComponent {
 
 @Component(
   selector: 'test-group-component',
-  directives: const [MemorizedForm, formDirectives, NgIf],
+  directives: [MemorizedForm, formDirectives, NgIf],
   template: r'''
 <div memorizedForm>
   <div *ngIf="showGroupOne" ngControlGroup="one">One: <input ngControl="one" [ngModel]="one"></div>

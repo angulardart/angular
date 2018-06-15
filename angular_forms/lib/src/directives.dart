@@ -68,7 +68,7 @@ export 'directives/validators.dart'
 /// )
 /// class MyApp {}
 /// ```
-const List<Type> formDirectives = const [
+const List<Type> formDirectives = [
   NgControlName,
   NgControlGroup,
   NgFormControl,

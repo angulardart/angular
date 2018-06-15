@@ -10,9 +10,9 @@ import 'package:test/test.dart';
 // ignore: uri_has_not_been_generated
 import 'navigation_queue_test.template.dart' as ng;
 
-const firstToken = const OpaqueToken<Future<Null>>('first');
-const secondToken = const OpaqueToken<Future<Null>>('second');
-const thirdToken = const OpaqueToken<Future<Null>>('third');
+const firstToken = OpaqueToken<Future<Null>>('first');
+const secondToken = OpaqueToken<Future<Null>>('second');
+const thirdToken = OpaqueToken<Future<Null>>('third');
 
 void main() {
   ng.initReflector();
@@ -21,15 +21,15 @@ void main() {
 
   test('navigation should complete in requested order', () async {
     // These are used to delay route activation guards.
-    final firstCompleter = new Completer<Null>();
-    final secondCompleter = new Completer<Null>();
-    final thirdCompleter = new Completer<Null>();
+    final firstCompleter = Completer<Null>();
+    final secondCompleter = Completer<Null>();
+    final thirdCompleter = Completer<Null>();
 
-    final testBed = new NgTestBed<TestComponent>().addProviders([
+    final testBed = NgTestBed<TestComponent>().addProviders([
       routerProvidersTest,
-      new ValueProvider.forToken(firstToken, firstCompleter.future),
-      new ValueProvider.forToken(secondToken, secondCompleter.future),
-      new ValueProvider.forToken(thirdToken, thirdCompleter.future),
+      ValueProvider.forToken(firstToken, firstCompleter.future),
+      ValueProvider.forToken(secondToken, secondCompleter.future),
+      ValueProvider.forToken(thirdToken, thirdCompleter.future),
     ]);
 
     final testFixture = await testBed.create();
@@ -49,32 +49,32 @@ void main() {
     // activations are permitted in the same event loop, the pending awaited
     // activation guards will execute in the original order.
     thirdCompleter.complete();
-    new Future(secondCompleter.complete);
-    new Future(firstCompleter.complete);
+    Future(secondCompleter.complete);
+    Future(firstCompleter.complete);
   });
 }
 
 @Component(
   selector: 'test',
   template: '<router-outlet [routes]="routes"></router-outlet>',
-  directives: const [RouterOutlet],
+  directives: [RouterOutlet],
 )
 class TestComponent {
   final Router router;
   final List<RouteDefinition> routes = [
-    new RouteDefinition(
+    RouteDefinition(
       path: '/first',
       component: ng.FirstComponentNgFactory,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       path: '/second',
       component: ng.SecondComponentNgFactory,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       path: '/third',
       component: ng.ThirdComponentNgFactory,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       path: '/',
       component: ng.DefaultComponentNgFactory,
       useAsDefault: true,

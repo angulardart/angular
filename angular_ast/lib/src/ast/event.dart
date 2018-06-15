@@ -10,7 +10,7 @@ import '../hash.dart';
 import '../token/tokens.dart';
 import '../visitor.dart';
 
-const _listEquals = const ListEquality<dynamic>();
+const _listEquals = ListEquality<dynamic>();
 
 /// Represents an event listener `(eventName.reductions)="expression"` on an
 /// element.

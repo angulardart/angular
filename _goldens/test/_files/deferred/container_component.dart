@@ -9,6 +9,6 @@ import 'deferred_component.dart';
       <deferred-component @deferred>Foo</deferred-component>
       <sample-component @deferred></sample-component>
   ''',
-  directives: const [DeferredChildComponent, SampleComponent],
+  directives: [DeferredChildComponent, SampleComponent],
 )
 class TestContainerComponent {}

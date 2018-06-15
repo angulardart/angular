@@ -23,7 +23,7 @@ import 'router/router_impl.dart';
 /// )
 /// class MyApp {}
 /// ```
-const routerDirectives = const [RouterOutlet, RouterLink, RouterLinkActive];
+const routerDirectives = [RouterOutlet, RouterLink, RouterLinkActive];
 
 /// The main [Router] providers.
 ///
@@ -32,11 +32,11 @@ const routerDirectives = const [RouterOutlet, RouterLink, RouterLinkActive];
 /// ```
 /// bootstrap(MyAppComponent, [routerProviders]);
 /// ```
-const routerProviders = const [
-  const Provider(LocationStrategy, useClass: PathLocationStrategy),
-  const Provider(PlatformLocation, useClass: BrowserPlatformLocation),
-  const Provider(Location),
-  const Provider(Router, useClass: RouterImpl)
+const routerProviders = [
+  Provider(LocationStrategy, useClass: PathLocationStrategy),
+  Provider(PlatformLocation, useClass: BrowserPlatformLocation),
+  Provider(Location),
+  Provider(Router, useClass: RouterImpl)
 ];
 
 /// The main [Router] providers when using hash routing.
@@ -46,9 +46,9 @@ const routerProviders = const [
 /// ```
 /// bootstrap(MyAppComponent, [routerProvidersHash]);
 /// ```
-const routerProvidersHash = const [
-  const Provider(LocationStrategy, useClass: HashLocationStrategy),
-  const Provider(PlatformLocation, useClass: BrowserPlatformLocation),
-  const Provider(Location),
-  const Provider(Router, useClass: RouterImpl)
+const routerProvidersHash = [
+  Provider(LocationStrategy, useClass: HashLocationStrategy),
+  Provider(PlatformLocation, useClass: BrowserPlatformLocation),
+  Provider(Location),
+  Provider(Router, useClass: RouterImpl)
 ];

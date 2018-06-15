@@ -14,7 +14,7 @@ void main() {
 
   group('Property access', () {
     test('should not fallback on map access if property missing', () async {
-      var testBed = new NgTestBed<ContainerWithNoPropertyAccess>();
+      var testBed = NgTestBed<ContainerWithNoPropertyAccess>();
       await testBed.create().catchError((e, stack) {
         expect(e.toString(), contains("property not found"));
       });
@@ -23,7 +23,7 @@ void main() {
 
   group('OnChange', () {
     test('should be notified of changes', () async {
-      var testBed = new NgTestBed<OnChangeContainer>();
+      var testBed = NgTestBed<OnChangeContainer>();
       var testFixture = await testBed.create();
       var cmp = testFixture.assertOnlyInstance.child;
       expect(cmp.prop, 'hello');
@@ -33,10 +33,10 @@ void main() {
 
   group('Reference in Template element', () {
     test('should assign the TemplateRef to a user-defined variable', () async {
-      var testBed = new NgTestBed<MyCompWithTemplateRef>();
+      var testBed = NgTestBed<MyCompWithTemplateRef>();
       var testFixture = await testBed.create();
       var refReader = testFixture.assertOnlyInstance.refReaderComponent;
-      expect(refReader.ref1, new isInstanceOf<TemplateRef>());
+      expect(refReader.ref1, isInstanceOf<TemplateRef>());
     });
   });
 }
@@ -45,7 +45,7 @@ void main() {
   selector: 'my-comp-with-tref',
   template: '<template #alice>Unstamped tmp</template>'
       '<ref-reader [ref1]="alice"></ref-reader>',
-  directives: const [RefReaderComponent],
+  directives: [RefReaderComponent],
 )
 class MyCompWithTemplateRef {
   @ViewChild(RefReaderComponent)
@@ -73,7 +73,7 @@ class NonError {
 @Component(
   selector: 'container-with-no-propertyaccess',
   template: '<no-property-access></no-property-access>',
-  directives: const [NoPropertyAccess],
+  directives: [NoPropertyAccess],
 )
 class ContainerWithNoPropertyAccess {
   dynamic value;
@@ -82,7 +82,7 @@ class ContainerWithNoPropertyAccess {
 @Component(
   selector: 'container-with-onchange',
   template: '<on-change [prop]="\'hello\'"></on-change>',
-  directives: const [OnChangeComponent],
+  directives: [OnChangeComponent],
 )
 class OnChangeContainer {
   dynamic value;
@@ -97,7 +97,7 @@ class PropModel implements Map {
   String operator [](_) => 'foo-map';
 
   dynamic noSuchMethod(_) {
-    throw new StateError('property not found');
+    throw StateError('property not found');
   }
 
   get doesNotExist;
@@ -108,7 +108,7 @@ class PropModel implements Map {
   template: '''prop:{{model.foo}};map:{{model['foo']}}''',
 )
 class PropertyAccess {
-  final model = new PropModel();
+  final model = PropModel();
 }
 
 @Component(
@@ -116,7 +116,7 @@ class PropertyAccess {
   template: '''{{model.doesNotExist}}''',
 )
 class NoPropertyAccess {
-  final model = new PropModel();
+  final model = PropModel();
 }
 
 @Component(

@@ -15,10 +15,10 @@ void main() {
     var fixture;
 
     setUp(() async {
-      log = new Log();
+      log = Log();
 
-      var testBed = new NgTestBed<MyComp>();
-      testBed = testBed.addProviders([new Provider(Log, useValue: log)]);
+      var testBed = NgTestBed<MyComp>();
+      testBed = testBed.addProviders([Provider(Log, useValue: log)]);
       fixture = await testBed.create();
     });
 
@@ -46,7 +46,7 @@ void main() {
 
 @Injectable()
 class Log {
-  final List logItems = new List();
+  final List logItems = List();
 
   void add(value) {
     logItems.add(value);
@@ -74,7 +74,7 @@ class LifecycleDir implements DoCheck {
 @Component(
   selector: "lifecycle",
   template: '<div lifecycle-dir></div>',
-  directives: const [LifecycleDir],
+  directives: [LifecycleDir],
 )
 class LifecycleCmp
     implements
@@ -123,6 +123,6 @@ class LifecycleCmp
 @Component(
   selector: "my-comp",
   template: '<lifecycle [field]="123"></lifecycle>',
-  directives: const [LifecycleCmp],
+  directives: [LifecycleCmp],
 )
 class MyComp {}

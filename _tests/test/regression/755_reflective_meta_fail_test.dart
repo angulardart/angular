@@ -21,7 +21,7 @@ void main() {
   });
 }
 
-const stringToken = const OpaqueToken('stringToken');
+const stringToken = OpaqueToken('stringToken');
 
 @Injectable()
 class ServiceInjectingToken {

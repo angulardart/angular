@@ -20,7 +20,7 @@ abstract class NgAssetReader {
   String resolveUrl(String baseUrl, String url) {
     baseUrl = _normalize(baseUrl);
     url = _normalize(url);
-    final asset = new AssetId.resolve(url, from: new AssetId.resolve(baseUrl));
+    final asset = AssetId.resolve(url, from: AssetId.resolve(baseUrl));
     return asset.uri.toString();
   }
 
@@ -40,13 +40,13 @@ class _BuildStepAssetReader extends NgAssetReader {
 
   @override
   Future<bool> canRead(String url) {
-    final asset = new AssetId.resolve(_normalize(url));
+    final asset = AssetId.resolve(_normalize(url));
     return _buildStep.canRead(asset);
   }
 
   @override
   Future<String> readText(String url) async {
-    final asset = new AssetId.resolve(_normalize(url));
+    final asset = AssetId.resolve(_normalize(url));
     return _buildStep.readAsString(asset).catchError((e) async {
       if (!await _buildStep.canRead(asset)) {
         // TODO: https://github.com/dart-lang/angular/issues/851.
