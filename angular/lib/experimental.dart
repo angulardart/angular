@@ -19,6 +19,7 @@ import 'src/runtime.dart';
 
 export 'src/bootstrap/modules.dart' show bootstrapLegacyModule;
 export 'src/core/linker/component_resolver.dart' show typeToFactory;
+export 'src/core/zone/ng_zone.dart' show longestPendingTimer;
 
 /// Create a root (legacy, with `SlowComponentLoader`) application injector.
 ///
