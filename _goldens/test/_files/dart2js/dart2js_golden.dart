@@ -1,3 +1,7 @@
+import 'package:angular/angular.dart';
+
+import 'dart2js_golden.template.dart' as ng;
+
 /// This file entirely exists as synthetic AngularDart application.
 ///
 /// The results, compiled with Dart2JS (without minification) are expected to
@@ -8,5 +12,11 @@
 ///
 /// **NOTE**: The test is not executed externally.
 void main() {
-  print('Hello World');
+  runApp(ng.RootComponentNgFactory);
 }
+
+@Component(
+  selector: 'root-component',
+  template: '',
+)
+class RootComponent {}

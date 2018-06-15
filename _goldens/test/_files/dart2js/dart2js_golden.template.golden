@@ -5,6 +5,84 @@
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'dart2js_golden.dart';
 export 'dart2js_golden.dart';
+import 'package:angular/angular.dart';
+import 'dart2js_golden.template.dart' as ng;
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'dart2js_golden.template.dart' as _ref0;
+import 'package:angular/angular.template.dart' as _ref1;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'dart2js_golden.dart' as import1;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/angular.dart';
 
-// No initReflector() linking required.
-void initReflector() {}
+final List<dynamic> styles$RootComponent = const [];
+
+class ViewRootComponent0 extends AppView<import1.RootComponent> {
+  static RenderComponentType _renderType;
+  ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('root-component');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$RootComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.RootComponent> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.RootComponent> viewFactory_RootComponent0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewRootComponent0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$RootComponentHost = const [];
+
+class _ViewRootComponentHost0 extends AppView<dynamic> {
+  ViewRootComponent0 _compView_0;
+  import1.RootComponent _RootComponent_0_5;
+  _ViewRootComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef build() {
+    _compView_0 = new ViewRootComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _RootComponent_0_5 = new import1.RootComponent();
+    _compView_0.create(_RootComponent_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef<import1.RootComponent>(0, this, rootEl, _RootComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView viewFactory_RootComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewRootComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.RootComponent> RootComponentNgFactory = const ComponentFactory<import1.RootComponent>('root-component', viewFactory_RootComponentHost0, _RootComponentMetadata);
+const _RootComponentMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(RootComponent, RootComponentNgFactory);
+  _ref0.initReflector();
+  _ref1.initReflector();
+}
