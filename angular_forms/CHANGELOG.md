@@ -1,3 +1,5 @@
+## 2.0.0-alpha+7
+
 ### New Features
 
 *   `reset` method added to `AbstractControl` and `AbstractControlDirective`.

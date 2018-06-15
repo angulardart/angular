@@ -1,3 +1,5 @@
+## 0.4.0-alpha+15
+
 *   `CompilerFlags` no longer parses and supports the `'debug'` option and
     `genDebugInfo` is always `false`, and is deprecated pending removal in a
     future version.

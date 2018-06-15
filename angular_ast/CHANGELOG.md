@@ -1,3 +1,7 @@
+## 0.5.3+3
+
+*   Maintenance release for `-dev.60`.
+
 ## 0.5.3+2
 
 *   Maintenance release for `-dev.56`.
