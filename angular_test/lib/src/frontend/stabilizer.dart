@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:angular/di.dart';
+import 'package:angular/experimental.dart';
 
 import '../errors.dart';
 
@@ -196,12 +197,25 @@ class NgZoneStabilizer extends NgTestStabilizer {
       _ngZone.runGuarded(fn ?? () => scheduleMicrotask(() {}));
     });
 
-    // Stop executing as soon as either stability or an error occurs.
+    var ngZoneErrorFuture = _ngZone.onError.first;
+    await _waitForFutureOrFailOnNgZoneError(
+        _ngZone.onTurnDone.first, ngZoneErrorFuture);
+
+    var longestPendingTimerDuration = longestPendingTimer(_ngZone);
+    if (longestPendingTimerDuration != Duration.ZERO) {
+      await _waitForFutureOrFailOnNgZoneError(
+          new Future.delayed(longestPendingTimerDuration), ngZoneErrorFuture);
+    }
+  }
+
+  Future<void> _waitForFutureOrFailOnNgZoneError(
+      Future future, Future<NgZoneError> ngZoneErrorFuture) async {
+    // Stop executing as soon as either [future] or an error occurs.
     NgZoneError caughtError;
     var finishedWithoutError = false;
     await Future.any([
-      _ngZone.onTurnDone.first,
-      _ngZone.onError.first.then((e) {
+      future,
+      ngZoneErrorFuture.then((e) {
         if (!finishedWithoutError) {
           caughtError = e;
         }

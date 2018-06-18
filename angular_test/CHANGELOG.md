@@ -1,3 +1,5 @@
+*   `NgZoneStabilizer` waited for the longest pending timer during `update()`.
+
 ## 2.0.0-alpha+13
 
 *   Removed `throwsInAngular` (was a no-op since `alpha+8`). Use `throwsA`.
