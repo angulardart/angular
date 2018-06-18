@@ -49,18 +49,18 @@ AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(
 
 final List<dynamic> styles$HasTemplateFileComponentHost = const [];
 
-class _ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
+class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFileComponent> {
   ViewHasTemplateFileComponent0 _compView_0;
   import2.HasTemplateFileComponent _HasTemplateFileComponent_0_5;
   _ViewHasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import2.HasTemplateFileComponent> build() {
     _compView_0 = new ViewHasTemplateFileComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _HasTemplateFileComponent_0_5 = new import2.HasTemplateFileComponent();
     _compView_0.create(_HasTemplateFileComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import2.HasTemplateFileComponent>(0, this, rootEl, _HasTemplateFileComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_5);
   }
 
   @override
@@ -74,7 +74,7 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_HasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
 }
 

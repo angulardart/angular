@@ -104,18 +104,18 @@ AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(
 
 final List<dynamic> styles$EmptyPropertiesComponentHost = const [];
 
-class _ViewEmptyPropertiesComponentHost0 extends AppView<dynamic> {
+class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyPropertiesComponent> {
   ViewEmptyPropertiesComponent0 _compView_0;
   import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_5;
   _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.EmptyPropertiesComponent> build() {
     _compView_0 = new ViewEmptyPropertiesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmptyPropertiesComponent_0_5 = new import1.EmptyPropertiesComponent();
     _compView_0.create(_EmptyPropertiesComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.EmptyPropertiesComponent>(0, this, rootEl, _EmptyPropertiesComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _EmptyPropertiesComponent_0_5);
   }
 
   @override
@@ -129,7 +129,7 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_EmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewEmptyPropertiesComponentHost0(parentView, parentIndex);
 }
 
@@ -158,18 +158,18 @@ AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponent0(AppView<
 
 final List<dynamic> styles$FancyButtonComponentHost = const [];
 
-class _ViewFancyButtonComponentHost0 extends AppView<dynamic> {
+class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponent> {
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_5;
   _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.FancyButtonComponent> build() {
     _compView_0 = new ViewFancyButtonComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _FancyButtonComponent_0_5 = new import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.FancyButtonComponent>(0, this, rootEl, _FancyButtonComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _FancyButtonComponent_0_5);
   }
 
   @override
@@ -183,7 +183,7 @@ class _ViewFancyButtonComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_FancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewFancyButtonComponentHost0(parentView, parentIndex);
 }
 

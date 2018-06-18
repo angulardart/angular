@@ -14,13 +14,17 @@ Each `@Component` generates the following code at compile-time:
 
 #### Host View
 
-`class _View{Type}Host extends AppView<dynamic> { ... }`
+`class _View{Type}Host0 extends AppView<{Type}> { ... }`
 
 This is a class generated that matches `ViewType.HOST`, and is used to back the
 implementation of `ComponentFactory`, which in turn is used for imperative
 component creation.
 
 It is considered _private_ API.
+
+It is also the only `AppView` implementation type that _actually_ returns a
+`ComponentRef<T>` (where `T` is the annotated class). The other implementations
+return `ComponentRef<T>` statically (and `null` at runtime).
 
 #### Component View
 
@@ -35,7 +39,7 @@ It is considered _public_ but _internal only_ API (i.e. internal to Angular).
 
 #### Embedded Views
 
-`class _View{Type}{n > 0} extends AppView<dynamic> { ... }`
+`class _View{Type}{n > 0} extends AppView<{Type}> { ... }`
 
 This is any number of classes, generated, that back the implementation of the
 `template|templateUrl` of an `@Component`. As the template changes these will
@@ -53,7 +57,7 @@ implementation, as well as a "view factory" (below).
 
 #### View Factory
 
-`AppView viewFactory_{Type}Host0`
+`AppView<{Type}> viewFactory_{Type}Host0`
 
 A top-level function that helps back the implementation of `ComponentFactory`.
 

@@ -125,21 +125,21 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponent1(AppView<dynamic>
 
 final List<dynamic> styles$QueriesComponentHost = const [];
 
-class _ViewQueriesComponentHost0 extends AppView<dynamic> {
+class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_5;
   bool _query_AnotherDirective_0_0_isDirty = true;
   bool _query_AnotherDirective_0_1_isDirty = true;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.QueriesComponent> build() {
     _compView_0 = new ViewQueriesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _QueriesComponent_0_5 = new import1.QueriesComponent();
     _QueriesComponent_0_5.contentChildrenFromField = [];
     _compView_0.create(_QueriesComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.QueriesComponent>(0, this, rootEl, _QueriesComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _QueriesComponent_0_5);
   }
 
   @override
@@ -153,7 +153,7 @@ class _ViewQueriesComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_QueriesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.QueriesComponent> viewFactory_QueriesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewQueriesComponentHost0(parentView, parentIndex);
 }
 
@@ -266,18 +266,18 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries2(AppView<dynamic> p
 
 final List<dynamic> styles$EmbeddedQueriesHost = const [];
 
-class _ViewEmbeddedQueriesHost0 extends AppView<dynamic> {
+class _ViewEmbeddedQueriesHost0 extends AppView<import1.EmbeddedQueries> {
   ViewEmbeddedQueries0 _compView_0;
   import1.EmbeddedQueries _EmbeddedQueries_0_5;
   _ViewEmbeddedQueriesHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.EmbeddedQueries> build() {
     _compView_0 = new ViewEmbeddedQueries0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmbeddedQueries_0_5 = new import1.EmbeddedQueries();
     _compView_0.create(_EmbeddedQueries_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.EmbeddedQueries>(0, this, rootEl, _EmbeddedQueries_0_5);
+    return new ComponentRef(0, this, rootEl, _EmbeddedQueries_0_5);
   }
 
   @override
@@ -291,7 +291,7 @@ class _ViewEmbeddedQueriesHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_EmbeddedQueriesHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewEmbeddedQueriesHost0(parentView, parentIndex);
 }
 
@@ -404,18 +404,18 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList2(AppView<dy
 
 final List<dynamic> styles$EmbeddedQueriesListHost = const [];
 
-class _ViewEmbeddedQueriesListHost0 extends AppView<dynamic> {
+class _ViewEmbeddedQueriesListHost0 extends AppView<import1.EmbeddedQueriesList> {
   ViewEmbeddedQueriesList0 _compView_0;
   import1.EmbeddedQueriesList _EmbeddedQueriesList_0_5;
   _ViewEmbeddedQueriesListHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.EmbeddedQueriesList> build() {
     _compView_0 = new ViewEmbeddedQueriesList0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmbeddedQueriesList_0_5 = new import1.EmbeddedQueriesList();
     _compView_0.create(_EmbeddedQueriesList_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.EmbeddedQueriesList>(0, this, rootEl, _EmbeddedQueriesList_0_5);
+    return new ComponentRef(0, this, rootEl, _EmbeddedQueriesList_0_5);
   }
 
   @override
@@ -429,7 +429,7 @@ class _ViewEmbeddedQueriesListHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_EmbeddedQueriesListHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewEmbeddedQueriesListHost0(parentView, parentIndex);
 }
 
@@ -599,18 +599,18 @@ AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList3(AppV
 
 final List<dynamic> styles$NestedNgForQueriesListHost = const [];
 
-class _ViewNestedNgForQueriesListHost0 extends AppView<dynamic> {
+class _ViewNestedNgForQueriesListHost0 extends AppView<import1.NestedNgForQueriesList> {
   ViewNestedNgForQueriesList0 _compView_0;
   import1.NestedNgForQueriesList _NestedNgForQueriesList_0_5;
   _ViewNestedNgForQueriesListHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.NestedNgForQueriesList> build() {
     _compView_0 = new ViewNestedNgForQueriesList0(this, 0);
     rootEl = _compView_0.rootEl;
     _NestedNgForQueriesList_0_5 = new import1.NestedNgForQueriesList();
     _compView_0.create(_NestedNgForQueriesList_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.NestedNgForQueriesList>(0, this, rootEl, _NestedNgForQueriesList_0_5);
+    return new ComponentRef(0, this, rootEl, _NestedNgForQueriesList_0_5);
   }
 
   @override
@@ -624,7 +624,7 @@ class _ViewNestedNgForQueriesListHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_NestedNgForQueriesListHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesListHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewNestedNgForQueriesListHost0(parentView, parentIndex);
 }
 

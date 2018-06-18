@@ -72,18 +72,18 @@ AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinal0(AppView<dynamic>
 
 final List<dynamic> styles$CompWithoutFinalHost = const [];
 
-class _ViewCompWithoutFinalHost0 extends AppView<dynamic> {
+class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
   ViewCompWithoutFinal0 _compView_0;
   import1.CompWithoutFinal _CompWithoutFinal_0_5;
   _ViewCompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.CompWithoutFinal> build() {
     _compView_0 = new ViewCompWithoutFinal0(this, 0);
     rootEl = _compView_0.rootEl;
     _CompWithoutFinal_0_5 = new import1.CompWithoutFinal();
     _compView_0.create(_CompWithoutFinal_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.CompWithoutFinal>(0, this, rootEl, _CompWithoutFinal_0_5);
+    return new ComponentRef(0, this, rootEl, _CompWithoutFinal_0_5);
   }
 
   @override
@@ -97,7 +97,7 @@ class _ViewCompWithoutFinalHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_CompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCompWithoutFinalHost0(parentView, parentIndex);
 }
 
@@ -139,18 +139,18 @@ AppView<import1.CompWithFinal> viewFactory_CompWithFinal0(AppView<dynamic> paren
 
 final List<dynamic> styles$CompWithFinalHost = const [];
 
-class _ViewCompWithFinalHost0 extends AppView<dynamic> {
+class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
   ViewCompWithFinal0 _compView_0;
   import1.CompWithFinal _CompWithFinal_0_5;
   _ViewCompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.CompWithFinal> build() {
     _compView_0 = new ViewCompWithFinal0(this, 0);
     rootEl = _compView_0.rootEl;
     _CompWithFinal_0_5 = new import1.CompWithFinal();
     _compView_0.create(_CompWithFinal_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.CompWithFinal>(0, this, rootEl, _CompWithFinal_0_5);
+    return new ComponentRef(0, this, rootEl, _CompWithFinal_0_5);
   }
 
   @override
@@ -164,7 +164,7 @@ class _ViewCompWithFinalHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_CompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.CompWithFinal> viewFactory_CompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCompWithFinalHost0(parentView, parentIndex);
 }
 
@@ -206,18 +206,18 @@ AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(AppView<dy
 
 final List<dynamic> styles$CompWithFinalStaticHost = const [];
 
-class _ViewCompWithFinalStaticHost0 extends AppView<dynamic> {
+class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic> {
   ViewCompWithFinalStatic0 _compView_0;
   import1.CompWithFinalStatic _CompWithFinalStatic_0_5;
   _ViewCompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.CompWithFinalStatic> build() {
     _compView_0 = new ViewCompWithFinalStatic0(this, 0);
     rootEl = _compView_0.rootEl;
     _CompWithFinalStatic_0_5 = new import1.CompWithFinalStatic();
     _compView_0.create(_CompWithFinalStatic_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.CompWithFinalStatic>(0, this, rootEl, _CompWithFinalStatic_0_5);
+    return new ComponentRef(0, this, rootEl, _CompWithFinalStatic_0_5);
   }
 
   @override
@@ -231,7 +231,7 @@ class _ViewCompWithFinalStaticHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_CompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCompWithFinalStaticHost0(parentView, parentIndex);
 }
 
@@ -273,18 +273,18 @@ AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(AppVie
 
 final List<dynamic> styles$CompWithExternalFinalHost = const [];
 
-class _ViewCompWithExternalFinalHost0 extends AppView<dynamic> {
+class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFinal> {
   ViewCompWithExternalFinal0 _compView_0;
   import1.CompWithExternalFinal _CompWithExternalFinal_0_5;
   _ViewCompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.CompWithExternalFinal> build() {
     _compView_0 = new ViewCompWithExternalFinal0(this, 0);
     rootEl = _compView_0.rootEl;
     _CompWithExternalFinal_0_5 = new import1.CompWithExternalFinal();
     _compView_0.create(_CompWithExternalFinal_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.CompWithExternalFinal>(0, this, rootEl, _CompWithExternalFinal_0_5);
+    return new ComponentRef(0, this, rootEl, _CompWithExternalFinal_0_5);
   }
 
   @override
@@ -298,7 +298,7 @@ class _ViewCompWithExternalFinalHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_CompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewCompWithExternalFinalHost0(parentView, parentIndex);
 }
 

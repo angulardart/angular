@@ -57,18 +57,18 @@ AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespace0(AppView<dyna
 
 final List<dynamic> styles$PreserveWhitespaceHost = const [];
 
-class _ViewPreserveWhitespaceHost0 extends AppView<dynamic> {
+class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
   ViewPreserveWhitespace0 _compView_0;
   import1.PreserveWhitespace _PreserveWhitespace_0_5;
   _ViewPreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.PreserveWhitespace> build() {
     _compView_0 = new ViewPreserveWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
     _PreserveWhitespace_0_5 = new import1.PreserveWhitespace();
     _compView_0.create(_PreserveWhitespace_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.PreserveWhitespace>(0, this, rootEl, _PreserveWhitespace_0_5);
+    return new ComponentRef(0, this, rootEl, _PreserveWhitespace_0_5);
   }
 
   @override
@@ -82,7 +82,7 @@ class _ViewPreserveWhitespaceHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_PreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewPreserveWhitespaceHost0(parentView, parentIndex);
 }
 
@@ -122,18 +122,18 @@ AppView<import1.MinifyWhitespace> viewFactory_MinifyWhitespace0(AppView<dynamic>
 
 final List<dynamic> styles$MinifyWhitespaceHost = const [];
 
-class _ViewMinifyWhitespaceHost0 extends AppView<dynamic> {
+class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
   ViewMinifyWhitespace0 _compView_0;
   import1.MinifyWhitespace _MinifyWhitespace_0_5;
   _ViewMinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.MinifyWhitespace> build() {
     _compView_0 = new ViewMinifyWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
     _MinifyWhitespace_0_5 = new import1.MinifyWhitespace();
     _compView_0.create(_MinifyWhitespace_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.MinifyWhitespace>(0, this, rootEl, _MinifyWhitespace_0_5);
+    return new ComponentRef(0, this, rootEl, _MinifyWhitespace_0_5);
   }
 
   @override
@@ -147,7 +147,7 @@ class _ViewMinifyWhitespaceHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_MinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.MinifyWhitespace> viewFactory_MinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewMinifyWhitespaceHost0(parentView, parentIndex);
 }
 

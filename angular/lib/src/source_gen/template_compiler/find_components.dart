@@ -228,6 +228,7 @@ class _ComponentVisitor
     final selector = coerceString(annotationValue, 'selector');
     return new CompileDirectiveMetadata(
       type: type,
+      originType: type,
       metadataType: CompileDirectiveMetadataType.FunctionalDirective,
       selector: selector,
       inputs: const {},
@@ -553,6 +554,7 @@ class _ComponentVisitor
     }
     return new CompileDirectiveMetadata(
       type: componentType,
+      originType: componentType,
       metadataType: isComp
           ? CompileDirectiveMetadataType.Component
           : CompileDirectiveMetadataType.Directive,

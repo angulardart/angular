@@ -66,18 +66,18 @@ AppView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponent0(AppView<
 
 final List<dynamic> styles$InlinedNgIfComponentHost = const [];
 
-class _ViewInlinedNgIfComponentHost0 extends AppView<dynamic> {
+class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponent> {
   ViewInlinedNgIfComponent0 _compView_0;
   import1.InlinedNgIfComponent _InlinedNgIfComponent_0_5;
   _ViewInlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.InlinedNgIfComponent> build() {
     _compView_0 = new ViewInlinedNgIfComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _InlinedNgIfComponent_0_5 = new import1.InlinedNgIfComponent();
     _compView_0.create(_InlinedNgIfComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.InlinedNgIfComponent>(0, this, rootEl, _InlinedNgIfComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _InlinedNgIfComponent_0_5);
   }
 
   @override
@@ -91,7 +91,7 @@ class _ViewInlinedNgIfComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_InlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewInlinedNgIfComponentHost0(parentView, parentIndex);
 }
 
@@ -142,18 +142,18 @@ AppView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedN
 
 final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponentHost = const [];
 
-class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<dynamic> {
+class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<import1.InlinedNgIfWithImmutableConditionComponent> {
   ViewInlinedNgIfWithImmutableConditionComponent0 _compView_0;
   import1.InlinedNgIfWithImmutableConditionComponent _InlinedNgIfWithImmutableConditionComponent_0_5;
   _ViewInlinedNgIfWithImmutableConditionComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
     _compView_0 = new ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _InlinedNgIfWithImmutableConditionComponent_0_5 = new import1.InlinedNgIfWithImmutableConditionComponent();
     _compView_0.create(_InlinedNgIfWithImmutableConditionComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent>(0, this, rootEl, _InlinedNgIfWithImmutableConditionComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _InlinedNgIfWithImmutableConditionComponent_0_5);
   }
 
   @override
@@ -167,7 +167,7 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<dynam
   }
 }
 
-AppView viewFactory_InlinedNgIfWithImmutableConditionComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedNgIfWithImmutableConditionComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewInlinedNgIfWithImmutableConditionComponentHost0(parentView, parentIndex);
 }
 

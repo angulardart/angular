@@ -1,3 +1,9 @@
+### Bug fixes
+
+*   The generated `.template.dart` code now properly subtypes `AppView<C>` where
+    `C` is the annotated `@Component` class. This avoids implicit down-casts in
+    the framework.
+
 ## 5.0.0-alpha+15
 
 ### Breaking changes

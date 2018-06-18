@@ -150,18 +150,18 @@ AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent2(AppView<
 
 final List<dynamic> styles$NestedNgForComponentHost = const [];
 
-class _ViewNestedNgForComponentHost0 extends AppView<dynamic> {
+class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponent> {
   ViewNestedNgForComponent0 _compView_0;
   import1.NestedNgForComponent _NestedNgForComponent_0_5;
   _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.NestedNgForComponent> build() {
     _compView_0 = new ViewNestedNgForComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _NestedNgForComponent_0_5 = new import1.NestedNgForComponent();
     _compView_0.create(_NestedNgForComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.NestedNgForComponent>(0, this, rootEl, _NestedNgForComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _NestedNgForComponent_0_5);
   }
 
   @override
@@ -175,7 +175,7 @@ class _ViewNestedNgForComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_NestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewNestedNgForComponentHost0(parentView, parentIndex);
 }
 

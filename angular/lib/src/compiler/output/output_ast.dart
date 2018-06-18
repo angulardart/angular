@@ -14,7 +14,15 @@ abstract class OutputType {
   }
 }
 
-enum BuiltinTypeName { Dynamic, Bool, String, Int, Double, Number, Function }
+enum BuiltinTypeName {
+  Dynamic,
+  Bool,
+  String,
+  Int,
+  Double,
+  Number,
+  Function,
+}
 
 class BuiltinType extends OutputType {
   final BuiltinTypeName name;

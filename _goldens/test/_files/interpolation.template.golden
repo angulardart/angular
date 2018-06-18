@@ -59,18 +59,18 @@ AppView<import1.InterpolationComponent> viewFactory_InterpolationComponent0(AppV
 
 final List<dynamic> styles$InterpolationComponentHost = const [];
 
-class _ViewInterpolationComponentHost0 extends AppView<dynamic> {
+class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComponent> {
   ViewInterpolationComponent0 _compView_0;
   import1.InterpolationComponent _InterpolationComponent_0_5;
   _ViewInterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.InterpolationComponent> build() {
     _compView_0 = new ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationComponent_0_5 = new import1.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.InterpolationComponent>(0, this, rootEl, _InterpolationComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _InterpolationComponent_0_5);
   }
 
   @override
@@ -84,7 +84,7 @@ class _ViewInterpolationComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_InterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.InterpolationComponent> viewFactory_InterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewInterpolationComponentHost0(parentView, parentIndex);
 }
 
@@ -130,18 +130,18 @@ AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationCom
 
 final List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 
-class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
+class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.InterpolationComponentNoWhitespace> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
   import1.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
   _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
     _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationComponentNoWhitespace_0_5 = new import1.InterpolationComponentNoWhitespace();
     _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.InterpolationComponentNoWhitespace>(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
+    return new ComponentRef(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
   }
 
   @override
@@ -155,7 +155,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_InterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewInterpolationComponentNoWhitespaceHost0(parentView, parentIndex);
 }
 

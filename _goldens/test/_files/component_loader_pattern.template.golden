@@ -46,18 +46,18 @@ AppView<import1.TestComponent> viewFactory_TestComponent0(AppView<dynamic> paren
 
 final List<dynamic> styles$TestComponentHost = const [];
 
-class _ViewTestComponentHost0 extends AppView<dynamic> {
+class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
   ViewTestComponent0 _compView_0;
   import1.TestComponent _TestComponent_0_5;
   _ViewTestComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.TestComponent> build() {
     _compView_0 = new ViewTestComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _TestComponent_0_5 = new import1.TestComponent();
     _compView_0.create(_TestComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.TestComponent>(0, this, rootEl, _TestComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _TestComponent_0_5);
   }
 
   @override
@@ -71,7 +71,7 @@ class _ViewTestComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.TestComponent> viewFactory_TestComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewTestComponentHost0(parentView, parentIndex);
 }
 

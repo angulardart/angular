@@ -44,7 +44,7 @@ AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(
 
 final List<dynamic> styles$ProviderModulesComponentHost = const [];
 
-class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
+class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModulesComponent> {
   ViewProviderModulesComponent0 _compView_0;
   import1.ProviderModulesComponent _ProviderModulesComponent_0_5;
   import1.FooService __FooService_0_6;
@@ -81,13 +81,13 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   }
 
   @override
-  ComponentRef build() {
+  ComponentRef<import1.ProviderModulesComponent> build() {
     _compView_0 = new ViewProviderModulesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ProviderModulesComponent_0_5 = new import1.ProviderModulesComponent();
     _compView_0.create(_ProviderModulesComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.ProviderModulesComponent>(0, this, rootEl, _ProviderModulesComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_5);
   }
 
   @override
@@ -118,7 +118,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_ProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewProviderModulesComponentHost0(parentView, parentIndex);
 }
 

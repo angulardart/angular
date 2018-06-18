@@ -44,18 +44,18 @@ AppView<import1.RootComponent> viewFactory_RootComponent0(AppView<dynamic> paren
 
 final List<dynamic> styles$RootComponentHost = const [];
 
-class _ViewRootComponentHost0 extends AppView<dynamic> {
+class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
   ViewRootComponent0 _compView_0;
   import1.RootComponent _RootComponent_0_5;
   _ViewRootComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.RootComponent> build() {
     _compView_0 = new ViewRootComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _RootComponent_0_5 = new import1.RootComponent();
     _compView_0.create(_RootComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.RootComponent>(0, this, rootEl, _RootComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _RootComponent_0_5);
   }
 
   @override
@@ -69,7 +69,7 @@ class _ViewRootComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_RootComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.RootComponent> viewFactory_RootComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewRootComponentHost0(parentView, parentIndex);
 }
 

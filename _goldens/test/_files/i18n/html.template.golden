@@ -52,18 +52,18 @@ AppView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponent0(AppView<dynami
 
 final List<dynamic> styles$I18nHtmlComponentHost = const [];
 
-class _ViewI18nHtmlComponentHost0 extends AppView<dynamic> {
+class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
   ViewI18nHtmlComponent0 _compView_0;
   import1.I18nHtmlComponent _I18nHtmlComponent_0_5;
   _ViewI18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.I18nHtmlComponent> build() {
     _compView_0 = new ViewI18nHtmlComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _I18nHtmlComponent_0_5 = new import1.I18nHtmlComponent();
     _compView_0.create(_I18nHtmlComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.I18nHtmlComponent>(0, this, rootEl, _I18nHtmlComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _I18nHtmlComponent_0_5);
   }
 
   @override
@@ -77,7 +77,7 @@ class _ViewI18nHtmlComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_I18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewI18nHtmlComponentHost0(parentView, parentIndex);
 }
 
