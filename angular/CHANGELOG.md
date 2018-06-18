@@ -8,6 +8,11 @@
     be used. We will rely on assertion-based tree-shaking (from `Dart2JS`)
     going forward to emit debug-only conditional code.
 
+*   It is now a compile error to implement both the `DoCheck` and `OnChanges`
+    lifecycle interfaces. `DoCheck` will never fill in values for the `Map` in
+    `OnChanges`, so this compile-error helps avoid bugs and directs the user to
+    use `DoCheck` and `AfterChanges` _instead_.
+
 ### New features
 
 *   The `from` attribute added to `<style>` tags created for component styles
