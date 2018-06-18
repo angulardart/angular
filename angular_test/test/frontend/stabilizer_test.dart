@@ -63,6 +63,15 @@ void main() {
       }), throwsStateError);
     });
 
+    test('should forward an asynchronus error via delayed future stabilizing',
+        () async {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
+        new Future.delayed(new Duration(milliseconds: 100), () {
+          throw new StateError('Test');
+        });
+      }), throwsStateError);
+    });
+
     test('should forward an asynchronous error via late stabilizing', () async {
       expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         Timer.run(() {
@@ -125,10 +134,10 @@ void main() {
     test('should stabilize if animation timers are used', () async {
       expect(
         ngZoneStabilizer.stabilize(
-          runAndTrackSideEffects: () async {
-            new Timer(const Duration(milliseconds: 100), () {});
-          },
-        ),
+            runAndTrackSideEffects: () async {
+              new Timer(const Duration(milliseconds: 100), () {});
+            },
+            threshold: 1),
         completion(isNull),
       );
     });
