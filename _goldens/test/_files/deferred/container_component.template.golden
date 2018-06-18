@@ -135,18 +135,18 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(AppV
 
 final List<dynamic> styles$TestContainerComponentHost = const [];
 
-class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
+class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComponent> {
   ViewTestContainerComponent0 _compView_0;
   import1.TestContainerComponent _TestContainerComponent_0_5;
   _ViewTestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = new ViewTestContainerComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _TestContainerComponent_0_5 = new import1.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.TestContainerComponent>(0, this, rootEl, _TestContainerComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _TestContainerComponent_0_5);
   }
 
   @override
@@ -160,7 +160,7 @@ class _ViewTestContainerComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_TestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.TestContainerComponent> viewFactory_TestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewTestContainerComponentHost0(parentView, parentIndex);
 }
 

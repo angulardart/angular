@@ -41,6 +41,7 @@ class AstDirectiveNormalizer {
     ).then((result) {
       return new CompileDirectiveMetadata(
         type: directive.type,
+        originType: directive.originType,
         metadataType: directive.metadataType,
         selector: directive.selector,
         exportAs: directive.exportAs,

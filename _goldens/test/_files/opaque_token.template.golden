@@ -50,20 +50,20 @@ AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dynamic> p
 
 final List<dynamic> styles$HasOpaqueTokensHost = const [];
 
-class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
+class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
   ViewHasOpaqueTokens0 _compView_0;
   String _baseUrlDescription_0_5;
   import1.HasOpaqueTokens _HasOpaqueTokens_0_6;
   _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.HasOpaqueTokens> build() {
     _compView_0 = new ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     _baseUrlDescription_0_5 = 'https://localhost';
     _HasOpaqueTokens_0_6 = new import1.HasOpaqueTokens(_baseUrlDescription_0_5);
     _compView_0.create(_HasOpaqueTokens_0_6, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.HasOpaqueTokens>(0, this, rootEl, _HasOpaqueTokens_0_6);
+    return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_6);
   }
 
   @override
@@ -85,7 +85,7 @@ class _ViewHasOpaqueTokensHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_HasOpaqueTokensHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokensHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewHasOpaqueTokensHost0(parentView, parentIndex);
 }
 
@@ -206,18 +206,18 @@ AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent2(AppV
 
 final List<dynamic> styles$ContainsChildComponentHost = const [];
 
-class _ViewContainsChildComponentHost0 extends AppView<dynamic> {
+class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComponent> {
   ViewContainsChildComponent0 _compView_0;
   import1.ContainsChildComponent _ContainsChildComponent_0_5;
   _ViewContainsChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.ContainsChildComponent> build() {
     _compView_0 = new ViewContainsChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ContainsChildComponent_0_5 = new import1.ContainsChildComponent();
     _compView_0.create(_ContainsChildComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.ContainsChildComponent>(0, this, rootEl, _ContainsChildComponent_0_5);
+    return new ComponentRef(0, this, rootEl, _ContainsChildComponent_0_5);
   }
 
   @override
@@ -231,7 +231,7 @@ class _ViewContainsChildComponentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_ContainsChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewContainsChildComponentHost0(parentView, parentIndex);
 }
 
@@ -260,18 +260,18 @@ AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFr
 
 final List<dynamic> styles$InjectsTypedTokenFromSomeParentHost = const [];
 
-class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<dynamic> {
+class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsTypedTokenFromSomeParent> {
   ViewInjectsTypedTokenFromSomeParent0 _compView_0;
   import1.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_0_5;
   _ViewInjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef build() {
+  ComponentRef<import1.InjectsTypedTokenFromSomeParent> build() {
     _compView_0 = new ViewInjectsTypedTokenFromSomeParent0(this, 0);
     rootEl = _compView_0.rootEl;
     _InjectsTypedTokenFromSomeParent_0_5 = new import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
     _compView_0.create(_InjectsTypedTokenFromSomeParent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef<import1.InjectsTypedTokenFromSomeParent>(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_5);
+    return new ComponentRef(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_5);
   }
 
   @override
@@ -285,7 +285,7 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<dynamic> {
   }
 }
 
-AppView viewFactory_InjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, int parentIndex) {
   return new _ViewInjectsTypedTokenFromSomeParentHost0(parentView, parentIndex);
 }
 

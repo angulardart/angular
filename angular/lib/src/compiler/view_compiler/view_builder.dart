@@ -367,13 +367,15 @@ o.ClassStmt createViewClass(
         [],
         _generateBuildMethod(view, parser),
         o.importType(
-          Identifiers.ComponentRef,
-          // The 'HOST' view is a <dynamic> view that "hosts" the actual
-          // component view, therefore it is not typed.
-          view.viewType != ViewType.host
-              ? [o.importType(view.component.type)]
-              : const [],
-        ),
+            Identifiers.ComponentRef,
+            // The 'HOST' view is the only implementation that actually returns
+            // a ComponentRef, the rest statically declare they do but in
+            // reality return `null`. There is no way to fix this without
+            // creating new sub-class-able AppView types:
+            // https://github.com/dart-lang/angular/issues/1421
+            view.component.originType != null
+                ? [o.importType(view.component.originType)]
+                : const []),
         null,
         ['override']),
     view.writeInjectorGetMethod(),
@@ -552,11 +554,15 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
   ];
   var initRenderCompTypeStmts = [];
   o.OutputType factoryReturnType;
-  if (view.viewType == ViewType.host) {
+  if (view.component.originType == null) {
+    // TODO(matanl): Verify that this is needed:
+    // https://github.com/dart-lang/angular/issues/1421
     factoryReturnType = o.importType(Identifiers.AppView);
   } else {
-    factoryReturnType =
-        o.importType(Identifiers.AppView, [o.importType(view.component.type)]);
+    factoryReturnType = o.importType(
+      Identifiers.AppView,
+      [o.importType(view.component.originType)],
+    );
   }
   return o
       .fn(
@@ -677,15 +683,14 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     }
     var hostElement = view.nodes[0] as CompileElement;
     resultExpr = o.importExpr(Identifiers.ComponentRef).instantiate(
-          [
-            o.literal(hostElement.nodeIndex),
-            o.THIS_EXPR,
-            hostElement.renderNode.toReadExpr(),
-            hostElement.getComponent()
-          ],
-          null,
-          [o.importType(view.component.originType.type)],
-        );
+      [
+        o.literal(hostElement.nodeIndex),
+        o.THIS_EXPR,
+        hostElement.renderNode.toReadExpr(),
+        hostElement.getComponent()
+      ],
+      null,
+    );
   } else {
     resultExpr = o.NULL_EXPR;
   }
@@ -787,8 +792,12 @@ void _writeComponentHostEventListeners(
 }
 
 o.OutputType _getContextType(CompileView view) {
-  var typeMeta = view.component.type;
-  return typeMeta.isHost ? o.DYNAMIC_TYPE : o.importType(typeMeta);
+  // TODO(matanl): Cleanup in https://github.com/dart-lang/angular/issues/1421.
+  final originType = view.component.originType;
+  if (originType != null) {
+    return o.importType(originType);
+  }
+  return o.DYNAMIC_TYPE;
 }
 
 int _getChangeDetectionMode(CompileView view) {
