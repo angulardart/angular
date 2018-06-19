@@ -25,49 +25,7 @@ Node _getInertElement() {
 String sanitizeHtmlInternal(String value) {
   Element element = _getInertElement();
   element.innerHtml = value;
-  _mXSSProtection(element, value);
   String safeHtml = element.innerHtml;
   element.children?.clear();
   return safeHtml;
-}
-
-/// Protect against mXSS.
-///
-/// Repeatedly parse the document to make sure it stabilizes, so that a browser
-/// trying to auto-correct incorrect HTML cannot cause formerly inert HTML to
-/// become dangerous.
-void _mXSSProtection(Element containerElement, String unsafeHtml) {
-  int mXSSAttempts = 5;
-  String parsedHtml = unsafeHtml;
-  do {
-    if (mXSSAttempts == 0) {
-      throw new Exception(
-          'Failed to sanitize html because the input is unstable');
-    }
-    if (mXSSAttempts == 1) {
-      // For IE<=11 strip custom-namespaced attributes on IE<=11.
-      _stripCustomNsAttrs(containerElement);
-    }
-    mXSSAttempts--;
-    unsafeHtml = parsedHtml;
-    containerElement.innerHtml = unsafeHtml;
-    parsedHtml = containerElement.innerHtml;
-  } while (unsafeHtml != parsedHtml);
-}
-
-/// When IE9-11 comes across an unknown namespaced attribute e.g. 'xlink:foo'
-/// it adds 'xmlns:ns1' attribute to declare ns1 namespace and prefixes the
-/// attribute with 'ns1' (e.g. 'ns1:xlink:foo').
-///
-/// This is undesirable since we don't want to allow any of these custom
-/// attributes. This method strips them all.
-void _stripCustomNsAttrs(Element element) {
-  for (var attrName in element.attributes.keys) {
-    if (attrName == 'xmlns:ns1' || attrName.startsWith('ns1:')) {
-      element.attributes.remove(attrName);
-    }
-  }
-  for (var n in element.childNodes) {
-    if (n is Element) _stripCustomNsAttrs(n);
-  }
 }
