@@ -68,7 +68,7 @@ a set of [community contributed tutorials][comm].
  * Community/support:
    [mailing list](https://groups.google.com/a/dartlang.org/forum/#!forum/web),
    [Gitter chat room](https://gitter.im/dart-lang/angular)
- * [Logo (SVG)](https://raw.githubusercontent.com/dart-lang/logos/master/logos_and_wordmarks/angulardart-logo.svg)
+ * [Logo (SVG)](https://raw.githubusercontent.com/dart-lang/logos/master/angular/logo/default.svg)
  * [Documentation][webdev_angular]
 
 [ad_sense]: http://news.dartlang.org/2016/10/google-adsense-angular-dart.html
