@@ -34,7 +34,11 @@ stages:
   - presubmit
   - building
   - testing
-  - deploying
+  # Disable until the following issues are resolved to prevent deploying a
+  # broken app:
+  # * https://github.com/dart-lang/angular/issues/1305
+  # * https://github.com/dart-lang/angular/issues/1369
+  #- deploying
 
 jobs:
   # Both of these packages have external dependencies that will not always
