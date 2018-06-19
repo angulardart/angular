@@ -482,7 +482,7 @@ class CompileView implements AppViewBuilder {
         methodParameters.add(new o.FnParam(parameter, o.STRING_TYPE));
       }
       args
-        ..add(new o.NamedExpr('name', o.literal('$className$name')))
+        ..add(new o.NamedExpr('name', o.literal('${className}_$name')))
         ..add(new o.NamedExpr('args', o.literalArr(messageArgs)))
         ..add(new o.NamedExpr(
           'examples',
