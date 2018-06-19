@@ -131,7 +131,7 @@ abstract class RouterHook {
     return true;
   }
 
-  /// Called by the router to indicate if a component canNavigate.
+  /// Called by the router to indicate if navigation is allowed.
   ///
   /// The client should return a future that completes with the whether the
   /// navigation can happen. If the component extends the [CanNavigate]
@@ -145,13 +145,13 @@ abstract class RouterHook {
   ///   final Window _window;
   ///
   ///   @override
-  ///   Future<bool> canNavigate(Object component) async {
+  ///   Future<bool> canNavigate() async {
   ///     // Always ask if the user wants to navigate away from the page.
   ///     return _window.confirm('Discard changes?');
   ///   }
   /// }
   /// ```
-  Future<bool> canNavigate(Object componentInstance) async {
+  Future<bool> canNavigate() async {
     // Provided as a default if someone extends or mixes-in this interface.
     return true;
   }
