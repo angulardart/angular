@@ -34,7 +34,11 @@ stages:
   - presubmit
   - building
   - testing
-  - deploying
+  # Disable until the following issues are resolved to prevent deploying a
+  # broken app:
+  # * https://github.com/dart-lang/angular/issues/1305
+  # * https://github.com/dart-lang/angular/issues/1369
+  #- deploying
 
 jobs:
   # Both of these packages have external dependencies that will not always
@@ -310,19 +314,19 @@ jobs:
 
     # Deploy the PWA application to Firebase.
     # See https://docs.travis-ci.com/user/build-stages/#Build-Stages-and-Deployments.
-    - stage: deploying
-      script: skip
-      env: PKG="examples/hacker_news_pwa"
-      cache:
-        directories:
-          - examples/hacker_news_pwa/.dart_tool
-      before_deploy:
-        - pushd examples/hacker_news_pwa
-        - pub upgrade
-      deploy:
-        skip_cleanup: true
-        on:
-          repo: dart-lang/angular
-        provider: firebase
-        message: "Travis deploy from commit $TRAVIS_COMMIT"
-        project: dart-hn
+    #- stage: deploying
+    #  script: skip
+    #  env: PKG="examples/hacker_news_pwa"
+    #  cache:
+    #    directories:
+    #      - examples/hacker_news_pwa/.dart_tool
+    #  before_deploy:
+    #    - pushd examples/hacker_news_pwa
+    #    - pub upgrade
+    #  deploy:
+    #    skip_cleanup: true
+    #    on:
+    #      repo: dart-lang/angular
+    #    provider: firebase
+    #    message: "Travis deploy from commit $TRAVIS_COMMIT"
+    #    project: dart-hn
