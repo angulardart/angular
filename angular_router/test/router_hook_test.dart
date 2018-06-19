@@ -45,7 +45,7 @@ void main() {
     });
 
     test('canNavigate should block navigation', () async {
-      testRouterHook.canNavigateFn = (_) async {
+      testRouterHook.canNavigateFn = () async {
         // Block navigation.
         return false;
       };
@@ -121,7 +121,7 @@ typedef NavigationGuard = Future<bool> Function(
 class TestRouterHook extends RouterHook {
   NavigationGuard canActivateFn;
   NavigationGuard canDeactivateFn;
-  Future<bool> Function(Object) canNavigateFn;
+  Future<bool> Function() canNavigateFn;
   NavigationGuard canReuseFn;
 
   @override
@@ -147,10 +147,8 @@ class TestRouterHook extends RouterHook {
   }
 
   @override
-  Future<bool> canNavigate(Object componentInstance) {
-    return canNavigateFn != null
-        ? canNavigateFn(componentInstance)
-        : super.canNavigate(componentInstance);
+  Future<bool> canNavigate() {
+    return canNavigateFn != null ? canNavigateFn() : super.canNavigate();
   }
 
   @override

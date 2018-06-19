@@ -1,3 +1,7 @@
+### Breaking changes
+
+*   Removed component instance parameter from `RouterHook.canNavigate()`.
+
 ## 2.0.0-alpha+14
 
 ### Bug fixes
