@@ -1,3 +1,12 @@
+### Breaking changes
+
+*   Removed `SafeScript` and its associated APIs. There was no path through the
+    compiler that made use of this type.
+
+*   Removed the `sanitize()` method from `SanitizationService`. This method was
+    entirely unused. Use the more specific methods such as `sanitizeHtml()` and
+    `sanitizeUrl()` instead.
+
 ### Bug fixes
 
 *   The generated `.template.dart` code now properly subtypes `AppView<C>` where

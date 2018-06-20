@@ -6,8 +6,6 @@ abstract class SafeHtml extends SafeValue {}
 
 abstract class SafeStyle extends SafeValue {}
 
-abstract class SafeScript extends SafeValue {}
-
 abstract class SafeUrl extends SafeValue {}
 
 abstract class SafeResourceUrl extends SafeValue {}
@@ -39,19 +37,8 @@ abstract class SafeResourceUrl extends SafeValue {}
 /// HTML snippet that does not contain dangerous code. The sanitizer leaves
 /// safe values intact.
 abstract class DomSanitizationService implements SanitizationService {
-  /// Sanitizes a value for use in the given SecurityContext.
-  ///
-  /// If value is trusted for the context, this method will unwrap the contained
-  /// safe value and use it directly. Otherwise, value will be sanitized to be
-  /// safe in the given context, for example by replacing URLs that have an
-  /// unsafe protocol part (such as `javascript:`). The implementation
-  /// is responsible to make sure that the value can definitely be safely used
-  /// in the given context.
-  String sanitize(TemplateSecurityContext context, value);
-
   String sanitizeHtml(value);
   String sanitizeStyle(value);
-  String sanitizeScript(value);
   String sanitizeUrl(value);
   String sanitizeResourceUrl(value);
 
@@ -70,12 +57,6 @@ abstract class DomSanitizationService implements SanitizationService {
   /// WARNING: calling this method with untrusted user data will cause severe
   /// security bugs!
   SafeStyle bypassSecurityTrustStyle(String value);
-
-  /// Bypass security and trust the given value to be safe JavaScript.
-  ///
-  /// WARNING: calling this method with untrusted user data will cause severe
-  /// security bugs!
-  SafeScript bypassSecurityTrustScript(String value);
 
   /// Bypass security and trust the given value to be a safe style URL, i.e. a
   /// value that can be used in hyperlinks or `<iframe src>`.

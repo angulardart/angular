@@ -331,9 +331,6 @@ o.Expression _sanitizedValue(
     case TemplateSecurityContext.style:
       methodName = 'sanitizeStyle';
       break;
-    case TemplateSecurityContext.script:
-      methodName = 'sanitizeScript';
-      break;
     case TemplateSecurityContext.url:
       methodName = 'sanitizeUrl';
       break;

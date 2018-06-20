@@ -10,56 +10,6 @@ import 'url_sanitizer.dart';
 @Injectable()
 class DomSanitizationServiceImpl implements DomSanitizationService {
   @override
-  String sanitize(TemplateSecurityContext ctx, value) {
-    if (value == null) return null;
-    switch (ctx) {
-      case TemplateSecurityContext.none:
-        // ignore: return_of_invalid_type
-        return value;
-      case TemplateSecurityContext.html:
-        if (value is SafeHtmlImpl) {
-          return value.changingThisWillBypassSecurityTrust;
-        }
-        this._checkNotSafeValue(value, 'HTML');
-        return sanitizeHtmlInternal(value.toString());
-      case TemplateSecurityContext.style:
-        if (value is SafeStyleImpl) {
-          return value.changingThisWillBypassSecurityTrust;
-        }
-        this._checkNotSafeValue(value, 'Style');
-        return internalSanitizeStyle(unsafeCast(value));
-      case TemplateSecurityContext.script:
-        if (value is SafeScriptImpl) {
-          return value.changingThisWillBypassSecurityTrust;
-        }
-        this._checkNotSafeValue(value, 'Script');
-        throw new UnsupportedError('unsafe value used in a script context');
-      case TemplateSecurityContext.url:
-        if (value is SafeUrlImpl) {
-          return value.changingThisWillBypassSecurityTrust;
-        }
-        this._checkNotSafeValue(value, 'URL');
-        return internalSanitizeUrl(value.toString());
-      case TemplateSecurityContext.resourceUrl:
-        if (value is SafeResourceUrlImpl) {
-          return value.changingThisWillBypassSecurityTrust;
-        }
-        this._checkNotSafeValue(value, 'ResourceURL');
-        throw new UnsupportedError(
-            'unsafe value used in a resource URL context');
-      default:
-        throw new UnsupportedError('Unexpected SecurityContext $ctx');
-    }
-  }
-
-  void _checkNotSafeValue(dynamic value, String expectedType) {
-    if (value is SafeValueImpl) {
-      throw new UnsupportedError('Required a safe $expectedType, '
-          'got a ${value.getTypeName()}');
-    }
-  }
-
-  @override
   String sanitizeHtml(value) {
     if (value == null) return null;
     if (value is SafeHtmlImpl) return value.changingThisWillBypassSecurityTrust;
@@ -80,18 +30,6 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
           'expecting style');
     if (value == null) return null;
     return internalSanitizeStyle(value is String ? value : value.toString());
-  }
-
-  @override
-  String sanitizeScript(value) {
-    if (value == null) return null;
-    if (value is SafeScriptImpl) {
-      return value.changingThisWillBypassSecurityTrust;
-    }
-    if (value is SafeValue)
-      throw new UnsupportedError(
-          'Unexpected SecurityContext $value, expecting script');
-    throw new UnsupportedError('Security violation in script binding.');
   }
 
   @override
@@ -126,10 +64,6 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
       new SafeStyleImpl(value ?? '');
 
   @override
-  SafeScript bypassSecurityTrustScript(String value) =>
-      new SafeScriptImpl(value ?? '');
-
-  @override
   SafeUrl bypassSecurityTrustUrl(String value) => new SafeUrlImpl(value ?? '');
 
   @override
@@ -160,13 +94,6 @@ class SafeStyleImpl extends SafeValueImpl implements SafeStyle {
   @override
   String getTypeName() {
     return 'Style';
-  }
-}
-
-class SafeScriptImpl extends SafeValueImpl implements SafeScript {
-  SafeScriptImpl(String value) : super(value);
-  String getTypeName() {
-    return 'Script';
   }
 }
 
