@@ -12,6 +12,7 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'host.dart' as _user;
 
 // Required for "type inference" (scoping).
+import 'dart:async';
 import 'package:angular/angular.dart';
 
 // For @Component class HostComponentNewSyntax.
@@ -21,12 +22,26 @@ external AppView<_user.HostComponentNewSyntax> viewFactory_HostComponentNewSynta
 class ViewHostComponentNewSyntax0 extends AppView<_user.HostComponentNewSyntax> {
   external ViewHostComponentNewSyntax0(AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesHostComponentWithDirective.
+external List<dynamic> get styles$UsesHostComponentWithDirective;
+external ComponentFactory<_user.UsesHostComponentWithDirective> get UsesHostComponentWithDirectiveNgFactory;
+external AppView<_user.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirective0(AppView<dynamic> parentView, int parentIndex);
+class ViewUsesHostComponentWithDirective0 extends AppView<_user.UsesHostComponentWithDirective> {
+  external ViewUsesHostComponentWithDirective0(AppView<dynamic> parentView, int parentIndex);
+}
 // For @Component class HostComponent.
 external List<dynamic> get styles$HostComponent;
 external ComponentFactory<_user.HostComponent> get HostComponentNgFactory;
 external AppView<_user.HostComponent> viewFactory_HostComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewHostComponent0 extends AppView<_user.HostComponent> {
   external ViewHostComponent0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Directive class ListensToFooEvent.
+class ListensToFooEventNgCd extends DirectiveChangeDetector {
+  external _user.ListensToFooEvent get instance;
+  external void deliverChanges();
+  external ListensToFooEventNgCd(_user.ListensToFooEvent instance);
+  external void detectHostChanges(AppView view, Element node);
 }
 
 external void initReflector();

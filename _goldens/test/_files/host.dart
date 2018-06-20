@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:angular/angular.dart';
 
 @Component(
@@ -8,6 +10,18 @@ class HostComponentNewSyntax {
   @HostBinding('class')
   static const hostClass = 'themeable';
 }
+
+@Component(
+  selector: 'uses-host',
+  directives: const [
+    HostComponent,
+    ListensToFooEvent,
+  ],
+  template: r'''
+    <host listens-to-foo></host>
+  ''',
+)
+class UsesHostComponentWithDirective {}
 
 @Component(
   selector: 'host',
@@ -32,4 +46,15 @@ class HostComponent {
 
   @HostListener('keydown')
   void onKeyDown() {}
+
+  @Output('onFoo')
+  final fooEvents = new StreamController<void>().stream;
+}
+
+@Directive(
+  selector: '[listens-to-foo]',
+)
+class ListensToFooEvent {
+  @HostListener('onFoo')
+  void onOutputFoo() {}
 }
