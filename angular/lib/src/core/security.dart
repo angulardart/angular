@@ -19,9 +19,6 @@ enum TemplateSecurityContext {
   /// Context for element style.
   style,
 
-  /// Contents of script tag.
-  script,
-
   /// Link such as a,href.
   url,
 
@@ -32,14 +29,10 @@ enum TemplateSecurityContext {
 /// [SanitizationService] is used by the views to sanitize values as create
 /// SafeValue equivalents that can be used to bind to in templates.
 abstract class SanitizationService {
-  // Only used by compiler. Not tree shakeable.
-  String sanitize(TemplateSecurityContext context, value);
   // Sanitizes html content.
   String sanitizeHtml(value);
   // Sanitizes css style.
   String sanitizeStyle(value);
-  // Sanitizes script content.
-  String sanitizeScript(value);
   // Sanitizes url link.
   String sanitizeUrl(value);
   // Sanitizes resource loading url.

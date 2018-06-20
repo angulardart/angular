@@ -93,10 +93,10 @@ class TrustedValueComponent {
   template: '<a [href]="href">Link Title</a>',
 )
 class WrongTrustedValueComponent {
-  SafeScript href;
+  SafeHtml href;
 
   WrongTrustedValueComponent(DomSanitizationService sanitizer) {
-    href = sanitizer.bypassSecurityTrustScript('javascript:alert(1)');
+    href = sanitizer.bypassSecurityTrustHtml('javascript:alert(1)');
   }
 }
 
