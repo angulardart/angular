@@ -1,5 +1,7 @@
 # Effective Angular: Styling
 
+go/effective-angular-dart/styling <!-- !g3-only(internal link) -->
+
 AngularDart offers a variety of methods for styling your application. This
 document is intended to help developers understand how and when to use these
 options.
