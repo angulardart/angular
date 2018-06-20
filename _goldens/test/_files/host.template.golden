@@ -5,6 +5,7 @@
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'host.dart';
 export 'host.dart';
+import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
@@ -73,6 +74,84 @@ AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0(
 }
 
 const ComponentFactory<import1.HostComponentNewSyntax> HostComponentNewSyntaxNgFactory = const ComponentFactory<import1.HostComponentNewSyntax>('host', viewFactory_HostComponentNewSyntaxHost0, _HostComponentNewSyntaxMetadata);
+final List<dynamic> styles$UsesHostComponentWithDirective = const [];
+
+class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostComponentWithDirective> {
+  import5.Element _el_0;
+  ViewHostComponent0 _compView_0;
+  import1.HostComponent _HostComponent_0_5;
+  import1.ListensToFooEvent _ListensToFooEvent_0_6;
+  static RenderComponentType _renderType;
+  ViewUsesHostComponentWithDirective0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('uses-host');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null), ViewEncapsulation.None, styles$UsesHostComponentWithDirective);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesHostComponentWithDirective> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewHostComponent0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    createAttr(_el_0, 'listens-to-foo', '');
+    _HostComponent_0_5 = new import1.HostComponent();
+    _ListensToFooEvent_0_6 = new import1.ListensToFooEvent();
+    _compView_0.create(_HostComponent_0_5, []);
+    final subscription_0 = _HostComponent_0_5.fooEvents.listen(eventHandler0(_ListensToFooEvent_0_6.onOutputFoo));
+    init(const [], [subscription_0]);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool firstCheck = (this.cdState == 0);
+    _compView_0.detectHostChanges(firstCheck);
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirective0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesHostComponentWithDirective0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesHostComponentWithDirectiveHost = const [];
+
+class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostComponentWithDirective> {
+  ViewUsesHostComponentWithDirective0 _compView_0;
+  import1.UsesHostComponentWithDirective _UsesHostComponentWithDirective_0_5;
+  _ViewUsesHostComponentWithDirectiveHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.UsesHostComponentWithDirective> build() {
+    _compView_0 = new ViewUsesHostComponentWithDirective0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesHostComponentWithDirective_0_5 = new import1.UsesHostComponentWithDirective();
+    _compView_0.create(_UsesHostComponentWithDirective_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef(0, this, rootEl, _UsesHostComponentWithDirective_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirectiveHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesHostComponentWithDirectiveHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesHostComponentWithDirective> UsesHostComponentWithDirectiveNgFactory = const ComponentFactory<import1.UsesHostComponentWithDirective>('uses-host', viewFactory_UsesHostComponentWithDirectiveHost0, _UsesHostComponentWithDirectiveMetadata);
 final List<dynamic> styles$HostComponent = const [];
 
 class ViewHostComponent0 extends AppView<import1.HostComponent> {
@@ -162,6 +241,7 @@ AppView<import1.HostComponent> viewFactory_HostComponentHost0(AppView<dynamic> p
 
 const ComponentFactory<import1.HostComponent> HostComponentNgFactory = const ComponentFactory<import1.HostComponent>('host', viewFactory_HostComponentHost0, _HostComponentMetadata);
 const _HostComponentNewSyntaxMetadata = const [];
+const _UsesHostComponentWithDirectiveMetadata = const [];
 const _HostComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
@@ -171,6 +251,7 @@ void initReflector() {
   _visited = true;
 
   _ngRef.registerComponent(HostComponentNewSyntax, HostComponentNewSyntaxNgFactory);
+  _ngRef.registerComponent(UsesHostComponentWithDirective, UsesHostComponentWithDirectiveNgFactory);
   _ngRef.registerComponent(HostComponent, HostComponentNgFactory);
   _ref0.initReflector();
 }
