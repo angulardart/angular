@@ -1,5 +1,7 @@
 # Effective Angular: Dependency Injection
 
+go/effective-angular-dart/di <!-- !g3-only(internal link) -->
+
 > **NOTE**: This is a work-in-progress, and not yet final. Some of the links may
 > be substituted with `(...)`, and some TODOs or missing parts may be in the
 > documentation.
