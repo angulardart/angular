@@ -177,10 +177,10 @@ window['$_createKeyboardEventName'] = function(
 Event createKeyboardEvent(
   String type,
   int keyCode, {
-  bool ctrlKey: false,
-  bool altKey: false,
-  bool shiftKey: false,
-  bool metaKey: false,
+  bool ctrlKey = false,
+  bool altKey = false,
+  bool shiftKey = false,
+  bool metaKey = false,
 }) {
   if (!context.hasProperty(_createKeyboardEventName)) {
     final script = document.createElement('script')
