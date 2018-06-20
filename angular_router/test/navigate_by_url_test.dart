@@ -107,10 +107,10 @@ class DelegatingRouter extends RouterImpl {
 }
 
 Matcher navigationParams({
-  Map<String, String> queryParameters: const {},
-  String fragment: '',
-  bool reload: false,
-  bool replace: false,
+  Map<String, String> queryParameters = const {},
+  String fragment = '',
+  bool reload = false,
+  bool replace = false,
 }) =>
     new NavigationParamsMatcher(new NavigationParams(
       queryParameters: queryParameters,

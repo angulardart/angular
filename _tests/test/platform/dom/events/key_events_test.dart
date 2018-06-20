@@ -196,10 +196,10 @@ window['$CREATE_KEYBOARD_EVENT_NAME'] = function(
 Event createKeyboardEvent(
   String type,
   int keyCode, {
-  bool ctrlKey: false,
-  bool altKey: false,
-  bool shiftKey: false,
-  bool metaKey: false,
+  bool ctrlKey = false,
+  bool altKey = false,
+  bool shiftKey = false,
+  bool metaKey = false,
 }) {
   if (!context.hasProperty(CREATE_KEYBOARD_EVENT_NAME)) {
     var script = document.createElement('script')
