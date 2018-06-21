@@ -1,3 +1,17 @@
+# End to End Testing
+
+<!-- !g3-begin(For internal use only) -->
+<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
+<!-- !g3-end -->
+
+* [Dart Interface](#dart-interface)
+* [JS Interface](#js-interface)
+  * [API](#api)
+      * [`getAngularTestability(element)`](#getangulartestabilityelement)
+      * [`getAllAngularTestabilities()`](#getallangulartestabilities)
+      * [`ngTestabilityRegistries`](#ngtestabilityregistries)
+      * [`frameworkStabilizers`](#frameworkstabilizers)
+
 AngularDart does not currently have _direct_ support for integration/end-to-end
 testing, but instead has some Dart and JavaScript code for communicating with
 running AngularDart applications. This can be used by third-party tools like
@@ -9,7 +23,7 @@ Dart's `web_driver` or JS's `protractor` - or you can roll your own tool.
              code-size and initial startup. We may change this at a future point
              of time.
 
-# Dart Interface
+## Dart Interface
 
 AngularDart supports a _Dart_ interface, `Testability`, which can be injected:
 
@@ -29,16 +43,16 @@ abstract class Testability {
 
 It is semantically equivalent to the API described in _getAngularTestability_.
 
-# JS Interface
+## JS Interface
 
 AngularDart inserts the following properties in the JS context (`window`),
 which in turn can be used by tools to communicate with AngularDart
 
-## API
+### API
 
 The following are methods attached to `window`:
 
-### `getAngularTestability(element)`
+#### `getAngularTestability(element)`
 
 Given a DOM element that is the _root_ component (i.e. the one created by
 `runApp` or `bootstrapStatic`), returns the `Testability` interface for the
@@ -61,17 +75,17 @@ The JS interface of `Testability` is as follows:
     whether the `whenStable` call had to wait for asynchronous work.
   * It will be invoked with `false` when the application was already stable.
 
-### `getAllAngularTestabilities()`
+#### `getAllAngularTestabilities()`
 
 Returns an array of _all_ `Testability` interfaces in the browser.
 
-### `ngTestabilityRegistries`
+#### `ngTestabilityRegistries`
 
-An array of all `TestabilityRegistry` interfaces in the browser. 
+An array of all `TestabilityRegistry` interfaces in the browser.
 
 **NOTE**: Currently this does not seem to be used today, and may be removed.
 
-### `frameworkStabilizers`
+#### `frameworkStabilizers`
 
 An array of functions with a definition similar to `Testability.whenStable`:
 
@@ -80,7 +94,7 @@ var stabilizers = frameworkStabilizers;
 for (var i = 0; i < stabilizers.length; i++) {
   var fn = stabilizers[i];
   fn(function(didAsyncWork) {
-     // Invoked when reported stable. 
+     // Invoked when reported stable.
   });
 }
 ```
