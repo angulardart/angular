@@ -1,25 +1,15 @@
-# Effective Angular: Styling
+# Effective AngularDart: Styling
+
+<!-- !g3-begin(G3DOC) -->
+go/effective-angular-dart/styling
+
+[TOC]
+<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
+<!-- !g3-end -->
 
 AngularDart offers a variety of methods for styling your application. This
 document is intended to help developers understand how and when to use these
 options.
-
-* [Global styles](#global-styles)
-  * [DO declare application-wide styles in
-    index.html](#do-declare-application-wide-styles-in-indexhtml)
-  * [DO include external style sheets in
-    index.html](#do-include-external-style-sheets-in-indexhtml)
-* [Component styles](#component-styles)
-  * [Understanding style encapsulation](#understanding-style-encapsulation)
-  * [DO use component styles where
-    applicable](#do-use-component-styles-where-applicable)
-  * [DO reuse styles in shared style
-    sheets](#do-reuse-styles-in-shared-style-sheets)
-  * [DO use host selectors to style host
-    elements](#do-use-host-selectors-to-style-host-elements)
-  * [AVOID excessive use of ::ng-deep](#avoid-excessive-use-of-ng-deep)
-  * [AVOID using ::ng-deep as the left-most
-    selector](#avoid-using-ng-deep-as-the-left-most-selector)
 
 ## Global styles
 
