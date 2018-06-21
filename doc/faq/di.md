@@ -1,6 +1,9 @@
 # Dependency Injection FAQ
 
-<!-- !g3-begin(For internal use only) -->
+<!-- !g3-begin(G3DOC) -->
+go/angulardart/faq/di
+
+[TOC]
 <!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
 <!-- !g3-end -->
 
@@ -10,12 +13,6 @@ large concerted effort (and potentially breaking changes).
 
 Below are some of the most common questions received from users of AngularDart
 regarding dependency injection, and the canonical answers for those questions.
-
-* [Overview](#overview)
-* [Why can't I be told at compile-time if providers are missing?](#why-cant-i-be-told-at-compile-time-if-providers-are-missing)
-* [Why can't I require a provider?](#why-cant-i-require-a-provider)
-* [Why can't I prevent a provider from being overridden?](#why-cant-i-prevent-a-provider-from-being-overridden)
-* [How can I override a provider in a component for testing?](#how-can-i-override-a-provider-in-a-component-for-testing)
 
 ## Overview
 

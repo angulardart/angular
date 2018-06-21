@@ -1,8 +1,19 @@
-# Dart2JS Style Guide
+# AngularDart Internal Style Guide
+
+<!-- !g3-begin(G3DOC) -->
+go/angulardart/developing/style_guide
+
+[TOC]
+
+<!--*
+# Document freshness: For more information, see go/fresh-source.
+freshness: { owner: 'matanl' reviewed: '2018-06-21' }
+*-->
+<!-- !g3-end -->
 
 Below is a non-authoritative style guide for building
 low-overhead/high-performance Dart applications, specifically when compiled to
-dart2js. The AngularDart team follows these _additional_ restrictions on top of
+Dart2JS. The AngularDart team follows these _additional_ restrictions on top of
 the Dart style guide when _developing_ AngularDart's _runtime_ components (i.e.
 code that is eventually compiled and run as JavaScript).
 
