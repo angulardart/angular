@@ -1,5 +1,12 @@
 # Router Migration Guide
 
+<!-- !g3-begin(G3DOC) -->
+go/angulardart/router/migration
+
+[TOC]
+<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
+<!-- !g3-end -->
+
 ## Major changes
 
 *   Routes are not defined in annotations. They are defined as a router-outlet
