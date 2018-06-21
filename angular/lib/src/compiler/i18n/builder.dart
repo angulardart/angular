@@ -146,6 +146,8 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
 
   @override
   void visitText(TextAst astNode, [_]) {
+    // We must escape any newline characters, '$', and '\' so that the generated
+    // message string is valid Dart.
     final text = _escape(astNode.value);
     _hasText = _hasText || text.trim().isNotEmpty;
     _messageBuffer.write(text);
