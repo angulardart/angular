@@ -1,5 +1,11 @@
 # Imperative Component Loading
 
+<!-- !g3-begin(For internal use only) -->
+[TOC]
+
+<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
+<!-- !g3-end -->
+
 AngularDart performs best when a template and application tree is statically
 defined. However, some smaller parts of an application might need to, at
 runtime, add new components. This guide shows you how to use `ComponentLoader`

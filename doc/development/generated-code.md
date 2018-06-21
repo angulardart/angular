@@ -1,5 +1,11 @@
 # AngularDart's generated code
 
+<!-- !g3-begin(For internal use only) -->
+[TOC]
+
+<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
+<!-- !g3-end -->
+
 This is a document focused on the _internals_ of the generated
 (`.template.dart`) files aimed primarily at _developers_ of AngularDart (versus
 consumers).
