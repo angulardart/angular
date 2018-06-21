@@ -1,16 +1,10 @@
 # End to End Testing
 
 <!-- !g3-begin(For internal use only) -->
+[TOC]
+
 <!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
 <!-- !g3-end -->
-
-* [Dart Interface](#dart-interface)
-* [JS Interface](#js-interface)
-  * [API](#api)
-      * [`getAngularTestability(element)`](#getangulartestabilityelement)
-      * [`getAllAngularTestabilities()`](#getallangulartestabilities)
-      * [`ngTestabilityRegistries`](#ngtestabilityregistries)
-      * [`frameworkStabilizers`](#frameworkstabilizers)
 
 AngularDart does not currently have _direct_ support for integration/end-to-end
 testing, but instead has some Dart and JavaScript code for communicating with
