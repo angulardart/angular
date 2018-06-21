@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/view_compiler/expression_converter.dart';
@@ -440,30 +442,25 @@ class CompileView implements AppViewBuilder {
   ///
   /// Returns an expression that evaluates to the internationalized message.
   o.Expression createI18nMessage(I18nMessage message) {
-    final name = '_message_${_i18nMessageCount++}';
+    var text = message.text;
+    if (message.containsHtml) {
+      // If the message contains HTML, it will be parsed into a document
+      // fragment. To prevent any manually escaped '<' and '>' characters (that
+      // were decoded during template parsing) from being interpreted as HTML
+      // tags, we must escape them again.
+      final htmlEscape = const HtmlEscape(HtmlEscapeMode.element);
+      text = htmlEscape.convert(text);
+    }
     final args = [
-      o.escapedString(message.text),
+      o.escapedString(text),
       new o.NamedExpr('desc', o.literal(message.metadata.description)),
     ];
     if (message.metadata.meaning != null) {
       args.add(new o.NamedExpr('meaning', o.literal(message.metadata.meaning)));
     }
     final i18n = o.importExpr(Identifiers.Intl);
-    if (message.args.isEmpty) {
-      // A message with no arguments is generated as a static final field.
-      final value = i18n.callMethod('message', args);
-      final item = storage.allocate(
-        name,
-        outputType: o.STRING_TYPE,
-        initializer: value,
-        modifiers: const [
-          o.StmtModifier.Static,
-          o.StmtModifier.Final,
-          o.StmtModifier.Private,
-        ],
-      );
-      return storage.buildReadExpr(item);
-    } else {
+    final name = '_message_${_i18nMessageCount++}';
+    if (message.containsHtml) {
       // A message with arguments is generated as a static method.
       // These are passed to `args` in `Intl.message()`.
       final messageArgs = <o.ReadVarExpr>[];
@@ -502,6 +499,20 @@ class CompileView implements AppViewBuilder {
         methodArgs,
         outputType: o.STRING_TYPE,
       );
+    } else {
+      // A message with no arguments is generated as a static final field.
+      final value = i18n.callMethod('message', args);
+      final item = storage.allocate(
+        name,
+        outputType: o.STRING_TYPE,
+        initializer: value,
+        modifiers: const [
+          o.StmtModifier.Static,
+          o.StmtModifier.Final,
+          o.StmtModifier.Private,
+        ],
+      );
+      return storage.buildReadExpr(item);
     }
   }
 
