@@ -1,7 +1,5 @@
 # Effective Angular: Dependency Injection
 
-go/effective-angular-dart/di <!-- !g3-only(internal link) -->
-
 > **NOTE**: This is a work-in-progress, and not yet final. Some of the links may
 > be substituted with `(...)`, and some TODOs or missing parts may be in the
 > documentation.
@@ -292,7 +290,7 @@ that are configured for that token/type.
 **BAD**: Using `multi: true` for this configuration.
 
 ```dart
-const usPresident = const OpaqueToken<String>('usPresident');
+const usPresident = const OpaqueToken<List<String>>('usPresident');
 
 const usPresidentProviders = const [
   const Provider(usPresident, useValue: 'George', multi: true),
