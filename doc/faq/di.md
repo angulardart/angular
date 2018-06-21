@@ -1,11 +1,23 @@
 # Dependency Injection FAQ
 
+<!-- !g3-begin(For internal use only) -->
+<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
+<!-- !g3-end -->
+
 Dependency Injection in AngularDart has several significant technical and
 pattern implications that are not trivial to work around or change without a
 large concerted effort (and potentially breaking changes).
 
 Below are some of the most common questions received from users of AngularDart
 regarding dependency injection, and the canonical answers for those questions.
+
+* [Overview](#overview)
+* [Why can't I be told at compile-time if providers are missing?](#why-cant-i-be-told-at-compile-time-if-providers-are-missing)
+* [Why can't I require a provider?](#why-cant-i-require-a-provider)
+* [Why can't I prevent a provider from being overridden?](#why-cant-i-prevent-a-provider-from-being-overridden)
+* [How can I override a provider in a component for testing?](#how-can-i-override-a-provider-in-a-component-for-testing)
+
+## Overview
 
 In general, most everything can be explained by giving a simple technical
 overview of how dependency injection is implemented, and why it is implemented
@@ -94,7 +106,7 @@ will deviate sharply from a simple set of linked hash maps.
 
 ## Why can't I be told, at compile-time, if providers are missing?
 
-AngularDart 2.0+, unlike the previous AngularDart 1.0 or AngularJS 1.x, is a
+AngularDart unlike the previous AngularDart 1.0 or AngularJS 1.x, is a
 mostly _static_ web framework. What that means is that _most_ user and template
 code is declared ahead-of-time, in a combination of HTML templates and Dart
 metadata annotations.
@@ -226,3 +238,83 @@ prevent overriding a provider, but like the above questions they will all likely
 either have many false positives/negatives, user confusion, or further
 complicate dependency injection.
 
+## How can I override a provider in a component for testing?
+
+### Overriding providers
+
+A common pattern in component-driven design is to include dependencies in a
+`@Component`-annotated `class` that are required by the component or its
+children (in the template).
+
+For example, assume you are creating the next great "Google Play"-like frontend
+where you have a _shopping_ view (where most users interact 95% of the time)
+and a _checkout_ view (which is lazily loaded on demand, and includes services
+for checking out with a credit card):
+
+```dart
+// shopping.dart
+@Component(
+  selector: 'shopping-view',
+  providers: const [ shoppingModule ] ,
+  template: '...',
+)
+class ShoppingView {}
+```
+
+```dart
+// checkout.dart
+@Component(
+  selector: 'checkout-view',
+  providers: const [
+    const ClassProvider(CreditCardProcessor, useClass: GoogleWallet),
+  ],
+  template: '...',
+)
+class CheckoutView {}
+```
+
+Great! You can now _defer_ load `CheckoutView`, and it will load itself and the
+`GoogleWallet` service on-demand (versus by default, when most users are just
+browsing and don't need it).
+
+But in a test, you don't want to use `GoogleWallet`... What do you do?
+
+### Creating a test directive
+
+You can create a `@Directive` and use it to _annotate_ your view class during
+a test to override certain providers. Here for the above example lets add a
+simple `StubCreditCardProcessor` that _always_ just "succeeds":
+
+```dart
+@Injectable()
+class StubCreditCardProcessor implements CreditCardProcessor {
+  @override
+  Future<bool> charge(double amount) async => true;
+}
+```
+
+Now lets wire it up:
+
+```dart
+@Directive(
+  selector: '[override]',
+  providers: const [
+    const ClassProvider(CreditCardProcessor, useClass: StubCreditCardProcessor),
+  ],
+)
+class OverrideDirective {}
+
+@Component(
+  selector: 'test-checkout-view',
+  directives: const [
+    CheckoutView,
+    OverrideDirective,
+  ],
+  template: '<checkout-view override></checkout-view>',
+)
+class TestCheckoutView {}
+```
+
+You can now create and test `TestCheckoutView`: it will create an instance of
+the `CheckoutView` component, but it and its children will get
+`StubCreditCardProcessor` whenever `CreditCardProcessor` is injected!
