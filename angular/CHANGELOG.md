@@ -12,6 +12,12 @@
     factories in their own `const` contexts, which was known to cause problems
     in some build systems.
 
+*   `MultiToken<T>` now extends `OpaqueToken<List<T>>`. This should have no real
+    affect on most programs, unless you manually typed your `MultiToken` such as
+    `usPresidents = const MultiToken<List<String>>()`. This will allow future
+    features for the `Injector` interface:
+    https://github.com/dart-lang/angular/issues/555.
+
 ### Bug fixes
 
 *   The generated `.template.dart` code now properly subtypes `AppView<C>` where

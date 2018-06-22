@@ -490,9 +490,19 @@ void main() {
         expect(
           result,
           const isInstanceOf<List<String>>(),
-          reason: 'A reified List<String> is expected',
+          reason: 'List<String> expected, got $result of ${result.runtimeType}',
         );
         expect(result, ['A', 'B']);
+      });
+
+      test('should support a custom MultiToken', () {
+        final result = injector.get(const CustomMultiString());
+        expect(
+          result,
+          const isInstanceOf<List<String>>(),
+          reason: 'List<String> expected, got $result of ${result.runtimeType}',
+        );
+        expect(result, ['C', 'D']);
       });
 
       test('should consider opaque tokens with different types unique', () {
@@ -602,7 +612,7 @@ const stringToken = const OpaqueToken('stringToken');
 const numberToken = const OpaqueToken('numberToken');
 const booleanToken = const OpaqueToken('booleanToken');
 const simpleConstToken = const OpaqueToken('simpleConstToken');
-const multiStringToken = const MultiToken<dynamic>('multiStringToken');
+const multiStringToken = const MultiToken<String>('multiStringToken');
 
 // We are going to expect these are different bindings.
 const typedTokenOfDynamic = const OpaqueToken('typedToken');
@@ -616,6 +626,10 @@ const unnamedTokenOfString = const OpaqueToken<String>();
 
 Null willNeverBeCalled1(Object _) => null;
 Null willNeverBeCalled2(Object _, Object __) => null;
+
+class CustomMultiString extends MultiToken<String> {
+  const CustomMultiString();
+}
 
 @GenerateInjector(const [
   const Provider(ExampleService, useClass: ExampleService2),
@@ -640,9 +654,10 @@ Null willNeverBeCalled2(Object _, Object __) => null;
     deps: const [ExampleService2, ExampleService3],
   ),
 
-  // TODO(matanl): Switch to ValueProvider.forToken once supported.
-  const Provider<String>(multiStringToken, useValue: 'A'),
-  const Provider<String>(multiStringToken, useValue: 'B'),
+  const ValueProvider.forToken(multiStringToken, 'A'),
+  const ValueProvider.forToken(multiStringToken, 'B'),
+  const ValueProvider.forToken(const CustomMultiString(), 'C'),
+  const ValueProvider.forToken(const CustomMultiString(), 'D'),
 
   // We are going to expect these are different bindings.
   const Provider(typedTokenOfDynamic, useValue: 1),

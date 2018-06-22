@@ -115,8 +115,11 @@ class OpaqueToken<T> {
 /// class or sub-types of this class. Instances should only be created or
 /// referenced using the `const` operator.
 @optionalTypeArgs
-class MultiToken<T> extends OpaqueToken<T> {
+class MultiToken<T> extends OpaqueToken<List<T>> {
   const MultiToken([String uniqueName = '']) : super(uniqueName);
+
+  /// See [listOfMultiToken].
+  List<T> _listOf() => <T>[];
 
   @override
   String toString() {
@@ -126,3 +129,6 @@ class MultiToken<T> extends OpaqueToken<T> {
     return super.toString();
   }
 }
+
+/// **INTERNAL ONLY**: Used to provide type inference for [MultiToken].
+List<T> listOfMultiToken<T>(MultiToken<T> token) => token._listOf();

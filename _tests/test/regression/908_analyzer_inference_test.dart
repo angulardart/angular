@@ -68,7 +68,7 @@ class CompProvidesImplicitTypes implements SomeInterface {
 @Component(
   selector: 'comp-provides-explicit-types',
   providers: const [
-    const ExistingProvider<SomeInterface>.forToken(
+    const ExistingProvider<List<SomeInterface>>.forToken(
       someInterfaces,
       CompProvidesExplicitTypes,
     ),

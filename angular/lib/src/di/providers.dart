@@ -189,7 +189,17 @@ Object buildAtRuntime(Provider provider, RuntimeInjectorBuilder builder) {
 }
 
 /// **INTERNAL ONLY**: Used to provide type inference for `multi: true`.
-List<T> listOfMulti<T>(Provider<T> provider) => provider._listOfMulti();
+///
+/// The returned [List] instance should be correctly reified as `List<T>`, where
+/// `T` is either the type of `Provider<T>` when [Provider.multi] is `true` or
+/// the `T` of `MultiToken<T>`, if this approach is used (preferred).
+List listOfMulti(Provider provider) {
+  final token = provider.token;
+  if (token is MultiToken) {
+    return listOfMultiToken(token);
+  }
+  return provider._listOfMulti();
+}
 
 /// Describes at compile-time configuring to return an instance of a `class`.
 ///

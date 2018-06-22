@@ -44,13 +44,22 @@ class TokenReader {
   /// Returns [object] parsed into an [OpaqueTokenElement].
   OpaqueTokenElement _parseOpaqueToken(ConstantReader constant) {
     final value = constant.objectValue;
+    final valueType = value.type;
+    List<DartType> typeArgs;
+    if (!$OpaqueToken.isExactlyType(valueType) &&
+        !$MultiToken.isExactlyType(valueType)) {
+      final clazz = valueType.element;
+      if (clazz is ClassElement) {
+        typeArgs = clazz.supertype.typeArguments;
+      }
+    } else {
+      typeArgs = valueType.typeArguments;
+    }
     return new OpaqueTokenElement(
       constant.read('_uniqueName').stringValue,
       isMultiToken: constant.instanceOf($MultiToken),
       classUrl: linkToOpaqueToken(constant.objectValue.type),
-      typeUrl: value.type.typeArguments.isNotEmpty
-          ? linkTypeOf(value.type.typeArguments.first)
-          : null,
+      typeUrl: typeArgs.isNotEmpty ? linkTypeOf(typeArgs.first) : null,
     );
   }
 
@@ -74,8 +83,10 @@ class TokenReader {
       );
     }
     if (clazz.isPrivate || clazz.isAbstract) {
-      BuildError.throwForElement(type.element,
-          'Must not be abstract or a private (i.e. prefixed with `_`) class.');
+      BuildError.throwForElement(
+        type.element,
+        'Must not be abstract or a private (i.e. prefixed with `_`) class.',
+      );
     }
     if (clazz.constructors.length != 1 ||
         clazz.unnamedConstructor == null ||
