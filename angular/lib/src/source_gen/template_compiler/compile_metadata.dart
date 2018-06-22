@@ -15,11 +15,12 @@ import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart'
     as annotation_matcher;
 import 'package:angular/src/source_gen/common/url_resolver.dart';
-import 'package:angular_compiler/cli.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:source_gen/source_gen.dart';
 
 import 'dart_object_utils.dart' as dart_objects;
+import 'provider_inference.dart';
 
 /// Returns whether the string is `null` _or_ an empty string.
 bool _isEmptyString(String s) => s == null || s.isEmpty;
@@ -101,44 +102,17 @@ class CompileTypeMetadataVisitor
         useClass: metadata,
       );
     }
-    CompileTypeMetadata providerTypeArgument;
-    final typeArguments = provider.type?.typeArguments;
-    if (typeArguments != null && typeArguments.isNotEmpty) {
-      final genericType = typeArguments.first;
-      if (!genericType.isDynamic) {
-        providerTypeArgument = _getCompileTypeMetadata(
-          genericType.element as ClassElement,
-          genericTypes: genericType is ParameterizedType
-              ? genericType.typeArguments
-              : const [],
-        );
-      }
-    }
-    final token = dart_objects.getField(provider, 'token');
 
-    // Workaround for analyzer bug.
-    // https://github.com/dart-lang/angular/issues/917
-    if (providerTypeArgument == null &&
-        token?.type != null &&
-        $OpaqueToken.isAssignableFromType(token.type) &&
-        // Only apply "auto inference" to "new-type" Providers like
-        // Value, Class, Existing, FactoryProvider.
-        !$Provider.isExactlyType(provider.type) &&
-        token.type.typeArguments.isNotEmpty) {
-      // If we see a Provider<dynamic> (no generic type), but the token is a
-      // typed OpaqueToken<T>, pretend that the Provider was actually inferred
-      // as Provider<T>:
-      // (Again, see https://github.com/dart-lang/angular/issues/917)
-      final opaqueTokenGeneric = token.type.typeArguments.first;
-      if (!opaqueTokenGeneric.isDynamic) {
-        providerTypeArgument = _getCompileTypeMetadata(
-          opaqueTokenGeneric.element as ClassElement,
-          genericTypes: opaqueTokenGeneric is ParameterizedType
-              ? opaqueTokenGeneric.typeArguments
-              : const [],
-        );
-      }
-    }
+    final token = dart_objects.getField(provider, 'token');
+    final providerType = inferProviderType(provider, token);
+    final providerTypeElement = providerType?.element;
+    final providerTypeArgument = providerTypeElement is ClassElement
+        ? _getCompileTypeMetadata(providerTypeElement,
+            genericTypes: providerType is ParameterizedType
+                ? providerType.typeArguments
+                : const [])
+        : null;
+
     return new CompileProviderMetadata(
       token: _token(token),
       useClass: _getUseClass(provider, token),
@@ -392,6 +366,9 @@ class CompileTypeMetadataVisitor
     throw new ArgumentError('@Inject is not yet supported for $token.');
   }
 
+  bool _isBuiltInToken(TypeLink classUrl) =>
+      classUrl.symbol == 'OpaqueToken' || classUrl.symbol == 'MultiToken';
+
   CompileTokenMetadata _canonicalOpaqueToken(DartObject object) {
     // Re-use code from angular_compiler :)
     const reader = const TokenReader();
@@ -399,7 +376,12 @@ class CompileTypeMetadataVisitor
 
     // Create an identifier referencing {Opaque|Multi}Token<T>.
     final typeArgument =
-        token.typeUrl == null ? null : fromTypeLink(token.typeUrl, _library);
+        // Custom tokens (i.e. class MyToken extends OpaqueToken) won't need
+        // a generic type parameter. Without checking for a built-in we encode
+        // as new MyToken<String>(), which is a compile-error.
+        token.typeUrl == null || !_isBuiltInToken(token.classUrl)
+            ? null
+            : fromTypeLink(token.typeUrl, _library);
     final tokenId = new CompileIdentifierMetadata(
       name: token.classUrl.symbol,
       moduleUrl: linkToReference(token.classUrl, _library).url,
