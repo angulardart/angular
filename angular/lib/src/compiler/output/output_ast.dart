@@ -548,7 +548,23 @@ class FunctionExpr extends Expression {
 
   DeclareFunctionStmt toDeclStmt(String name, [List<StmtModifier> modifiers]) {
     return new DeclareFunctionStmt(
-        name, this.params, this.statements, this.type, modifiers);
+      name,
+      this.params,
+      this.statements,
+      this.type,
+      modifiers,
+    );
+  }
+
+  DeclareFunctionStmt toGetter(String name) {
+    return new DeclareFunctionStmt(
+      name,
+      [],
+      this.statements,
+      this.type,
+      [],
+      true,
+    );
   }
 }
 
@@ -706,9 +722,16 @@ class DeclareFunctionStmt extends Statement {
   final List<FnParam> params;
   final List<Statement> statements;
   final OutputType type;
-  DeclareFunctionStmt(this.name, this.params, this.statements,
-      [this.type, List<StmtModifier> modifiers])
-      : super(modifiers);
+  final bool isGetter;
+
+  DeclareFunctionStmt(
+    this.name,
+    this.params,
+    this.statements, [
+    this.type,
+    List<StmtModifier> modifiers,
+    this.isGetter = false,
+  ]) : super(modifiers);
 
   @override
   R visitStatement<R, C>(StatementVisitor<R, C> visitor, C context) {

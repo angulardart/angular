@@ -76,7 +76,11 @@ AppView<import1.EmulatedComponent> viewFactory_EmulatedComponentHost0(AppView<dy
   return new _ViewEmulatedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmulatedComponent> EmulatedComponentNgFactory = const ComponentFactory<import1.EmulatedComponent>('Emulated', viewFactory_EmulatedComponentHost0, _EmulatedComponentMetadata);
+const ComponentFactory<import1.EmulatedComponent> _EmulatedComponentNgFactory = const ComponentFactory('Emulated', viewFactory_EmulatedComponentHost0, _EmulatedComponentMetadata);
+ComponentFactory<import1.EmulatedComponent> get EmulatedComponentNgFactory {
+  return _EmulatedComponentNgFactory;
+}
+
 final List<dynamic> styles$NoneComponent = const [];
 
 class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
@@ -135,7 +139,11 @@ AppView<import1.NoneComponent> viewFactory_NoneComponentHost0(AppView<dynamic> p
   return new _ViewNoneComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.NoneComponent> NoneComponentNgFactory = const ComponentFactory<import1.NoneComponent>('None', viewFactory_NoneComponentHost0, _NoneComponentMetadata);
+const ComponentFactory<import1.NoneComponent> _NoneComponentNgFactory = const ComponentFactory('None', viewFactory_NoneComponentHost0, _NoneComponentMetadata);
+ComponentFactory<import1.NoneComponent> get NoneComponentNgFactory {
+  return _NoneComponentNgFactory;
+}
+
 const _EmulatedComponentMetadata = const [];
 const _NoneComponentMetadata = const [];
 var _visited = false;

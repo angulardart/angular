@@ -101,7 +101,11 @@ AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinalHost0(AppView<dyna
   return new _ViewCompWithoutFinalHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.CompWithoutFinal> CompWithoutFinalNgFactory = const ComponentFactory<import1.CompWithoutFinal>('comp-without-final', viewFactory_CompWithoutFinalHost0, _CompWithoutFinalMetadata);
+const ComponentFactory<import1.CompWithoutFinal> _CompWithoutFinalNgFactory = const ComponentFactory('comp-without-final', viewFactory_CompWithoutFinalHost0, _CompWithoutFinalMetadata);
+ComponentFactory<import1.CompWithoutFinal> get CompWithoutFinalNgFactory {
+  return _CompWithoutFinalNgFactory;
+}
+
 final List<dynamic> styles$CompWithFinal = const [];
 
 class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
@@ -168,7 +172,11 @@ AppView<import1.CompWithFinal> viewFactory_CompWithFinalHost0(AppView<dynamic> p
   return new _ViewCompWithFinalHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.CompWithFinal> CompWithFinalNgFactory = const ComponentFactory<import1.CompWithFinal>('comp-with-final', viewFactory_CompWithFinalHost0, _CompWithFinalMetadata);
+const ComponentFactory<import1.CompWithFinal> _CompWithFinalNgFactory = const ComponentFactory('comp-with-final', viewFactory_CompWithFinalHost0, _CompWithFinalMetadata);
+ComponentFactory<import1.CompWithFinal> get CompWithFinalNgFactory {
+  return _CompWithFinalNgFactory;
+}
+
 final List<dynamic> styles$CompWithFinalStatic = const [];
 
 class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
@@ -235,7 +243,11 @@ AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStaticHost0(AppVie
   return new _ViewCompWithFinalStaticHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.CompWithFinalStatic> CompWithFinalStaticNgFactory = const ComponentFactory<import1.CompWithFinalStatic>('comp-with-final-static', viewFactory_CompWithFinalStaticHost0, _CompWithFinalStaticMetadata);
+const ComponentFactory<import1.CompWithFinalStatic> _CompWithFinalStaticNgFactory = const ComponentFactory('comp-with-final-static', viewFactory_CompWithFinalStaticHost0, _CompWithFinalStaticMetadata);
+ComponentFactory<import1.CompWithFinalStatic> get CompWithFinalStaticNgFactory {
+  return _CompWithFinalStaticNgFactory;
+}
+
 final List<dynamic> styles$CompWithExternalFinal = const [];
 
 class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> {
@@ -302,7 +314,11 @@ AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinalHost0(Ap
   return new _ViewCompWithExternalFinalHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.CompWithExternalFinal> CompWithExternalFinalNgFactory = const ComponentFactory<import1.CompWithExternalFinal>('comp-with-external-final', viewFactory_CompWithExternalFinalHost0, _CompWithExternalFinalMetadata);
+const ComponentFactory<import1.CompWithExternalFinal> _CompWithExternalFinalNgFactory = const ComponentFactory('comp-with-external-final', viewFactory_CompWithExternalFinalHost0, _CompWithExternalFinalMetadata);
+ComponentFactory<import1.CompWithExternalFinal> get CompWithExternalFinalNgFactory {
+  return _CompWithExternalFinalNgFactory;
+}
+
 const _CompWithoutFinalMetadata = const [];
 const _CompWithFinalMetadata = const [];
 const _CompWithFinalStaticMetadata = const [];

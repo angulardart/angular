@@ -89,7 +89,11 @@ AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokensHost0(AppView<dynami
   return new _ViewHasOpaqueTokensHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.HasOpaqueTokens> HasOpaqueTokensNgFactory = const ComponentFactory<import1.HasOpaqueTokens>('has-opaque-tokens', viewFactory_HasOpaqueTokensHost0, _HasOpaqueTokensMetadata);
+const ComponentFactory<import1.HasOpaqueTokens> _HasOpaqueTokensNgFactory = const ComponentFactory('has-opaque-tokens', viewFactory_HasOpaqueTokensHost0, _HasOpaqueTokensMetadata);
+ComponentFactory<import1.HasOpaqueTokens> get HasOpaqueTokensNgFactory {
+  return _HasOpaqueTokensNgFactory;
+}
+
 final List<dynamic> styles$ContainsChildComponent = const [];
 
 class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent> {
@@ -235,7 +239,11 @@ AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponentHost0(
   return new _ViewContainsChildComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.ContainsChildComponent> ContainsChildComponentNgFactory = const ComponentFactory<import1.ContainsChildComponent>('contains-child-component', viewFactory_ContainsChildComponentHost0, _ContainsChildComponentMetadata);
+const ComponentFactory<import1.ContainsChildComponent> _ContainsChildComponentNgFactory = const ComponentFactory('contains-child-component', viewFactory_ContainsChildComponentHost0, _ContainsChildComponentMetadata);
+ComponentFactory<import1.ContainsChildComponent> get ContainsChildComponentNgFactory {
+  return _ContainsChildComponentNgFactory;
+}
+
 final List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
 
 class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedTokenFromSomeParent> {
@@ -289,7 +297,11 @@ AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFr
   return new _ViewInjectsTypedTokenFromSomeParentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InjectsTypedTokenFromSomeParent> InjectsTypedTokenFromSomeParentNgFactory = const ComponentFactory<import1.InjectsTypedTokenFromSomeParent>('injects-typed-token-from-parent', viewFactory_InjectsTypedTokenFromSomeParentHost0, _InjectsTypedTokenFromSomeParentMetadata);
+const ComponentFactory<import1.InjectsTypedTokenFromSomeParent> _InjectsTypedTokenFromSomeParentNgFactory = const ComponentFactory('injects-typed-token-from-parent', viewFactory_InjectsTypedTokenFromSomeParentHost0, _InjectsTypedTokenFromSomeParentMetadata);
+ComponentFactory<import1.InjectsTypedTokenFromSomeParent> get InjectsTypedTokenFromSomeParentNgFactory {
+  return _InjectsTypedTokenFromSomeParentNgFactory;
+}
+
 const _HasOpaqueTokensMetadata = const [];
 const _ContainsChildComponentMetadata = const [];
 const _InjectsTypedTokenFromSomeParentMetadata = const [];

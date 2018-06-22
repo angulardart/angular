@@ -191,7 +191,11 @@ AppView<import1.ProvidersComponent> viewFactory_ProvidersComponentHost0(AppView<
   return new _ViewProvidersComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.ProvidersComponent> ProvidersComponentNgFactory = const ComponentFactory<import1.ProvidersComponent>('providers', viewFactory_ProvidersComponentHost0, _ProvidersComponentMetadata);
+const ComponentFactory<import1.ProvidersComponent> _ProvidersComponentNgFactory = const ComponentFactory('providers', viewFactory_ProvidersComponentHost0, _ProvidersComponentMetadata);
+ComponentFactory<import1.ProvidersComponent> get ProvidersComponentNgFactory {
+  return _ProvidersComponentNgFactory;
+}
+
 const _ProvidersComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

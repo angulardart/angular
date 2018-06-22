@@ -77,7 +77,11 @@ AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponentHost0(
   return new _ViewI18nAttributeComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.I18nAttributeComponent> I18nAttributeComponentNgFactory = const ComponentFactory<import1.I18nAttributeComponent>('message', viewFactory_I18nAttributeComponentHost0, _I18nAttributeComponentMetadata);
+const ComponentFactory<import1.I18nAttributeComponent> _I18nAttributeComponentNgFactory = const ComponentFactory('message', viewFactory_I18nAttributeComponentHost0, _I18nAttributeComponentMetadata);
+ComponentFactory<import1.I18nAttributeComponent> get I18nAttributeComponentNgFactory {
+  return _I18nAttributeComponentNgFactory;
+}
+
 const _I18nAttributeComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

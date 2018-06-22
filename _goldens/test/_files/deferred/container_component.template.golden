@@ -164,7 +164,11 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponentHost0(
   return new _ViewTestContainerComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.TestContainerComponent> TestContainerComponentNgFactory = const ComponentFactory<import1.TestContainerComponent>('test-container', viewFactory_TestContainerComponentHost0, _TestContainerComponentMetadata);
+const ComponentFactory<import1.TestContainerComponent> _TestContainerComponentNgFactory = const ComponentFactory('test-container', viewFactory_TestContainerComponentHost0, _TestContainerComponentMetadata);
+ComponentFactory<import1.TestContainerComponent> get TestContainerComponentNgFactory {
+  return _TestContainerComponentNgFactory;
+}
+
 const _TestContainerComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

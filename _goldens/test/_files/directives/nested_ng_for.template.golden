@@ -179,7 +179,11 @@ AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponentHost0(AppV
   return new _ViewNestedNgForComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.NestedNgForComponent> NestedNgForComponentNgFactory = const ComponentFactory<import1.NestedNgForComponent>('nested-ng-for', viewFactory_NestedNgForComponentHost0, _NestedNgForComponentMetadata);
+const ComponentFactory<import1.NestedNgForComponent> _NestedNgForComponentNgFactory = const ComponentFactory('nested-ng-for', viewFactory_NestedNgForComponentHost0, _NestedNgForComponentMetadata);
+ComponentFactory<import1.NestedNgForComponent> get NestedNgForComponentNgFactory {
+  return _NestedNgForComponentNgFactory;
+}
+
 const _NestedNgForComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

@@ -133,7 +133,11 @@ AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponentHo
   return new _ViewEmptyPropertiesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmptyPropertiesComponent> EmptyPropertiesComponentNgFactory = const ComponentFactory<import1.EmptyPropertiesComponent>('empty-properties', viewFactory_EmptyPropertiesComponentHost0, _EmptyPropertiesComponentMetadata);
+const ComponentFactory<import1.EmptyPropertiesComponent> _EmptyPropertiesComponentNgFactory = const ComponentFactory('empty-properties', viewFactory_EmptyPropertiesComponentHost0, _EmptyPropertiesComponentMetadata);
+ComponentFactory<import1.EmptyPropertiesComponent> get EmptyPropertiesComponentNgFactory {
+  return _EmptyPropertiesComponentNgFactory;
+}
+
 final List<dynamic> styles$FancyButtonComponent = const [];
 
 class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
@@ -187,7 +191,11 @@ AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0(AppV
   return new _ViewFancyButtonComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.FancyButtonComponent> FancyButtonComponentNgFactory = const ComponentFactory<import1.FancyButtonComponent>('fancy-button', viewFactory_FancyButtonComponentHost0, _FancyButtonComponentMetadata);
+const ComponentFactory<import1.FancyButtonComponent> _FancyButtonComponentNgFactory = const ComponentFactory('fancy-button', viewFactory_FancyButtonComponentHost0, _FancyButtonComponentMetadata);
+ComponentFactory<import1.FancyButtonComponent> get FancyButtonComponentNgFactory {
+  return _FancyButtonComponentNgFactory;
+}
+
 const _EmptyPropertiesComponentMetadata = const [];
 const _FancyButtonComponentMetadata = const [];
 var _visited = false;

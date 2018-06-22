@@ -73,7 +73,11 @@ AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0(
   return new _ViewHostComponentNewSyntaxHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.HostComponentNewSyntax> HostComponentNewSyntaxNgFactory = const ComponentFactory<import1.HostComponentNewSyntax>('host', viewFactory_HostComponentNewSyntaxHost0, _HostComponentNewSyntaxMetadata);
+const ComponentFactory<import1.HostComponentNewSyntax> _HostComponentNewSyntaxNgFactory = const ComponentFactory('host', viewFactory_HostComponentNewSyntaxHost0, _HostComponentNewSyntaxMetadata);
+ComponentFactory<import1.HostComponentNewSyntax> get HostComponentNewSyntaxNgFactory {
+  return _HostComponentNewSyntaxNgFactory;
+}
+
 final List<dynamic> styles$UsesHostComponentWithDirective = const [];
 
 class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostComponentWithDirective> {
@@ -151,7 +155,11 @@ AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWit
   return new _ViewUsesHostComponentWithDirectiveHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesHostComponentWithDirective> UsesHostComponentWithDirectiveNgFactory = const ComponentFactory<import1.UsesHostComponentWithDirective>('uses-host', viewFactory_UsesHostComponentWithDirectiveHost0, _UsesHostComponentWithDirectiveMetadata);
+const ComponentFactory<import1.UsesHostComponentWithDirective> _UsesHostComponentWithDirectiveNgFactory = const ComponentFactory('uses-host', viewFactory_UsesHostComponentWithDirectiveHost0, _UsesHostComponentWithDirectiveMetadata);
+ComponentFactory<import1.UsesHostComponentWithDirective> get UsesHostComponentWithDirectiveNgFactory {
+  return _UsesHostComponentWithDirectiveNgFactory;
+}
+
 final List<dynamic> styles$HostComponent = const [];
 
 class ViewHostComponent0 extends AppView<import1.HostComponent> {
@@ -239,7 +247,11 @@ AppView<import1.HostComponent> viewFactory_HostComponentHost0(AppView<dynamic> p
   return new _ViewHostComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.HostComponent> HostComponentNgFactory = const ComponentFactory<import1.HostComponent>('host', viewFactory_HostComponentHost0, _HostComponentMetadata);
+const ComponentFactory<import1.HostComponent> _HostComponentNgFactory = const ComponentFactory('host', viewFactory_HostComponentHost0, _HostComponentMetadata);
+ComponentFactory<import1.HostComponent> get HostComponentNgFactory {
+  return _HostComponentNgFactory;
+}
+
 const _HostComponentNewSyntaxMetadata = const [];
 const _UsesHostComponentWithDirectiveMetadata = const [];
 const _HostComponentMetadata = const [];

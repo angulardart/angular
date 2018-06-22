@@ -91,7 +91,11 @@ AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponentHost
   return new _ViewLifecycleHooksComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.LifecycleHooksComponent> LifecycleHooksComponentNgFactory = const ComponentFactory<import1.LifecycleHooksComponent>('lifecycle-hooks', viewFactory_LifecycleHooksComponentHost0, _LifecycleHooksComponentMetadata);
+const ComponentFactory<import1.LifecycleHooksComponent> _LifecycleHooksComponentNgFactory = const ComponentFactory('lifecycle-hooks', viewFactory_LifecycleHooksComponentHost0, _LifecycleHooksComponentMetadata);
+ComponentFactory<import1.LifecycleHooksComponent> get LifecycleHooksComponentNgFactory {
+  return _LifecycleHooksComponentNgFactory;
+}
+
 const _LifecycleHooksComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

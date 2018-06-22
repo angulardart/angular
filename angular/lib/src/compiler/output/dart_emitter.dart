@@ -264,12 +264,20 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       o.DeclareFunctionStmt stmt, EmitterVisitorContext context) {
     if (stmt.type != null) {
       stmt.type.visitType(this, context);
-    } else {
+    } else if (!stmt.isGetter) {
       context.print('void');
     }
-    context.print(' ${stmt.name}(');
-    _visitParams(stmt.params, context);
-    context.println(') {');
+    if (stmt.isGetter) {
+      context.print(' get');
+    }
+    context.print(' ${stmt.name}');
+    if (!stmt.isGetter) {
+      context.print('(');
+      _visitParams(stmt.params, context);
+      context.println(') {');
+    } else {
+      context.print(' {');
+    }
     context.incIndent();
     visitAllStatements(stmt.statements, context);
     context.decIndent();

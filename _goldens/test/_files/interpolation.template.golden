@@ -88,7 +88,11 @@ AppView<import1.InterpolationComponent> viewFactory_InterpolationComponentHost0(
   return new _ViewInterpolationComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InterpolationComponent> InterpolationComponentNgFactory = const ComponentFactory<import1.InterpolationComponent>('interpolation', viewFactory_InterpolationComponentHost0, _InterpolationComponentMetadata);
+const ComponentFactory<import1.InterpolationComponent> _InterpolationComponentNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationComponentHost0, _InterpolationComponentMetadata);
+ComponentFactory<import1.InterpolationComponent> get InterpolationComponentNgFactory {
+  return _InterpolationComponentNgFactory;
+}
+
 final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
 class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.InterpolationComponentNoWhitespace> {
@@ -159,7 +163,11 @@ AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationCom
   return new _ViewInterpolationComponentNoWhitespaceHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InterpolationComponentNoWhitespace> InterpolationComponentNoWhitespaceNgFactory = const ComponentFactory<import1.InterpolationComponentNoWhitespace>('interpolation', viewFactory_InterpolationComponentNoWhitespaceHost0, _InterpolationComponentNoWhitespaceMetadata);
+const ComponentFactory<import1.InterpolationComponentNoWhitespace> _InterpolationComponentNoWhitespaceNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationComponentNoWhitespaceHost0, _InterpolationComponentNoWhitespaceMetadata);
+ComponentFactory<import1.InterpolationComponentNoWhitespace> get InterpolationComponentNoWhitespaceNgFactory {
+  return _InterpolationComponentNoWhitespaceNgFactory;
+}
+
 const _InterpolationComponentMetadata = const [];
 const _InterpolationComponentNoWhitespaceMetadata = const [];
 var _visited = false;

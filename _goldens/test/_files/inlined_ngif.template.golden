@@ -95,7 +95,11 @@ AppView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponentHost0(AppV
   return new _ViewInlinedNgIfComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InlinedNgIfComponent> InlinedNgIfComponentNgFactory = const ComponentFactory<import1.InlinedNgIfComponent>('inlined-ngif', viewFactory_InlinedNgIfComponentHost0, _InlinedNgIfComponentMetadata);
+const ComponentFactory<import1.InlinedNgIfComponent> _InlinedNgIfComponentNgFactory = const ComponentFactory('inlined-ngif', viewFactory_InlinedNgIfComponentHost0, _InlinedNgIfComponentMetadata);
+ComponentFactory<import1.InlinedNgIfComponent> get InlinedNgIfComponentNgFactory {
+  return _InlinedNgIfComponentNgFactory;
+}
+
 final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponent = const [];
 
 class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.InlinedNgIfWithImmutableConditionComponent> {
@@ -171,7 +175,11 @@ AppView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedN
   return new _ViewInlinedNgIfWithImmutableConditionComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent> InlinedNgIfWithImmutableConditionComponentNgFactory = const ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent>('inlined-ngif-with-immutable-condition', viewFactory_InlinedNgIfWithImmutableConditionComponentHost0, _InlinedNgIfWithImmutableConditionComponentMetadata);
+const ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent> _InlinedNgIfWithImmutableConditionComponentNgFactory = const ComponentFactory('inlined-ngif-with-immutable-condition', viewFactory_InlinedNgIfWithImmutableConditionComponentHost0, _InlinedNgIfWithImmutableConditionComponentMetadata);
+ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent> get InlinedNgIfWithImmutableConditionComponentNgFactory {
+  return _InlinedNgIfWithImmutableConditionComponentNgFactory;
+}
+
 const _InlinedNgIfComponentMetadata = const [];
 const _InlinedNgIfWithImmutableConditionComponentMetadata = const [];
 var _visited = false;
