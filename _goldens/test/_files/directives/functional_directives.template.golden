@@ -95,7 +95,11 @@ AppView<import1.AppComponent> viewFactory_AppComponentHost0(AppView<dynamic> par
   return new _ViewAppComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.AppComponent> AppComponentNgFactory = const ComponentFactory<import1.AppComponent>('app', viewFactory_AppComponentHost0, _AppComponentMetadata);
+const ComponentFactory<import1.AppComponent> _AppComponentNgFactory = const ComponentFactory('app', viewFactory_AppComponentHost0, _AppComponentMetadata);
+ComponentFactory<import1.AppComponent> get AppComponentNgFactory {
+  return _AppComponentNgFactory;
+}
+
 const _AppComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

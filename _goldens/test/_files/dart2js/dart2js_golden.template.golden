@@ -73,7 +73,11 @@ AppView<import1.RootComponent> viewFactory_RootComponentHost0(AppView<dynamic> p
   return new _ViewRootComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.RootComponent> RootComponentNgFactory = const ComponentFactory<import1.RootComponent>('root-component', viewFactory_RootComponentHost0, _RootComponentMetadata);
+const ComponentFactory<import1.RootComponent> _RootComponentNgFactory = const ComponentFactory('root-component', viewFactory_RootComponentHost0, _RootComponentMetadata);
+ComponentFactory<import1.RootComponent> get RootComponentNgFactory {
+  return _RootComponentNgFactory;
+}
+
 const _RootComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

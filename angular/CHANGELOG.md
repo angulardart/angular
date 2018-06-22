@@ -7,6 +7,11 @@
     entirely unused. Use the more specific methods such as `sanitizeHtml()` and
     `sanitizeUrl()` instead.
 
+*   Generated `ComponentFactory` instances are no longer functionally `const`.
+    This is to prevent issues where users attempt to use generated component
+    factories in their own `const` contexts, which was known to cause problems
+    in some build systems.
+
 ### Bug fixes
 
 *   The generated `.template.dart` code now properly subtypes `AppView<C>` where

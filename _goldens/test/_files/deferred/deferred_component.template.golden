@@ -76,7 +76,11 @@ AppView<import1.DeferredChildComponent> viewFactory_DeferredChildComponentHost0(
   return new _ViewDeferredChildComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DeferredChildComponent> DeferredChildComponentNgFactory = const ComponentFactory<import1.DeferredChildComponent>('deferred-component', viewFactory_DeferredChildComponentHost0, _DeferredChildComponentMetadata);
+const ComponentFactory<import1.DeferredChildComponent> _DeferredChildComponentNgFactory = const ComponentFactory('deferred-component', viewFactory_DeferredChildComponentHost0, _DeferredChildComponentMetadata);
+ComponentFactory<import1.DeferredChildComponent> get DeferredChildComponentNgFactory {
+  return _DeferredChildComponentNgFactory;
+}
+
 const _DeferredChildComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

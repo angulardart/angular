@@ -76,7 +76,11 @@ AppView<import1.TestSubComponent> viewFactory_TestSubComponentHost0(AppView<dyna
   return new _ViewTestSubComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.TestSubComponent> TestSubComponentNgFactory = const ComponentFactory<import1.TestSubComponent>('test-bar', viewFactory_TestSubComponentHost0, _TestSubComponentMetadata);
+const ComponentFactory<import1.TestSubComponent> _TestSubComponentNgFactory = const ComponentFactory('test-bar', viewFactory_TestSubComponentHost0, _TestSubComponentMetadata);
+ComponentFactory<import1.TestSubComponent> get TestSubComponentNgFactory {
+  return _TestSubComponentNgFactory;
+}
+
 const _TestSubComponentMetadata = const [];
 var _visited = false;
 void initReflector() {

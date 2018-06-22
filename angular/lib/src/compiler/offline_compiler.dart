@@ -113,32 +113,48 @@ class OfflineCompiler {
       var compFactoryVar = '${compMeta.type.name}NgFactory';
       var factoryType = [o.importType(compMeta.type)];
 
-      // Adds const FooNgFactory = const ComponentFactory<Foo>(...).
+      // Adds const _FooNgFactory = const ComponentFactory<Foo>(...).
+      // ComponentFactory<Foo> FooNgFactory get _FooNgFactory;
       //
       // This is referenced in `initReflector/METADATA` and by user-code.
       statements.add(o
-          .variable('$compFactoryVar')
+          .variable('_$compFactoryVar')
           .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
-              <o.Expression>[
-                o.literal(compMeta.selector),
-                o.variable(hostViewFactoryVar),
-                // If we aren't emitting component factories, we don't have
-                // any metadata to collect. This is a stop-gap until we no
-                // longer support the metadata field (for the old router).
-                _compilerFlags.emitComponentFactories
-                    ? new o.ReadVarExpr('_${compMeta.type.name}Metadata')
-                    : o.literalArr(
-                        [],
-                        new o.ArrayType(null, [o.TypeModifier.Const]),
-                      ),
-              ],
-              o.importType(
-                Identifiers.ComponentFactory,
-                factoryType,
-                [o.TypeModifier.Const],
-              ),
-              factoryType))
+            <o.Expression>[
+              o.literal(compMeta.selector),
+              o.variable(hostViewFactoryVar),
+              // If we aren't emitting component factories, we don't have
+              // any metadata to collect. This is a stop-gap until we no
+              // longer support the metadata field (for the old router).
+              _compilerFlags.emitComponentFactories
+                  ? new o.ReadVarExpr('_${compMeta.type.name}Metadata')
+                  : o.literalArr(
+                      [],
+                      new o.ArrayType(null, [o.TypeModifier.Const]),
+                    ),
+            ],
+            o.importType(
+              Identifiers.ComponentFactory,
+              factoryType,
+              [o.TypeModifier.Const],
+            ),
+          ))
           .toDeclStmt(null, [o.StmtModifier.Const]));
+
+      statements.add(
+        o.fn(
+          // No parameters.
+          [],
+          // Statements.
+          [
+            new o.ReturnStatement(new o.ReadVarExpr('_$compFactoryVar')),
+          ],
+          o.importType(
+            Identifiers.ComponentFactory,
+            factoryType,
+          ),
+        ).toGetter('$compFactoryVar'),
+      );
 
       exportedVars.add(compFactoryVar);
     }
