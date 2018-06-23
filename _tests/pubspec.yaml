@@ -21,9 +21,9 @@ dev_dependencies:
 
   # Actual valid dependencies required.
   analyzer: ^0.32.0
-  build_runner: ^0.8.0
-  build_test: ^0.10.2+1
-  build_web_compilers: ^0.4.0
+  build_runner: ^0.8.10
+  build_test: ^0.10.2+5
+  build_web_compilers: ^0.4.0+4
   mockito: '>=0.11.0 <3.0.0'
   source_span: ^1.4.0
 
