@@ -22,5 +22,47 @@ external AppView<_user.RootComponent> viewFactory_RootComponent0(AppView<dynamic
 class ViewRootComponent0 extends AppView<_user.RootComponent> {
   external ViewRootComponent0(AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesDefaultChangeDetectionAndInput.
+external List<dynamic> get styles$UsesDefaultChangeDetectionAndInput;
+external ComponentFactory<_user.UsesDefaultChangeDetectionAndInput> get UsesDefaultChangeDetectionAndInputNgFactory;
+external AppView<_user.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex);
+class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<_user.UsesDefaultChangeDetectionAndInput> {
+  external ViewUsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class DefaultChangeDetectionAndInput.
+external List<dynamic> get styles$DefaultChangeDetectionAndInput;
+external ComponentFactory<_user.DefaultChangeDetectionAndInput> get DefaultChangeDetectionAndInputNgFactory;
+external AppView<_user.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex);
+class ViewDefaultChangeDetectionAndInput0 extends AppView<_user.DefaultChangeDetectionAndInput> {
+  external ViewDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class InlinedNgIf.
+external List<dynamic> get styles$InlinedNgIf;
+external ComponentFactory<_user.InlinedNgIf> get InlinedNgIfNgFactory;
+external AppView<_user.InlinedNgIf> viewFactory_InlinedNgIf0(AppView<dynamic> parentView, int parentIndex);
+class ViewInlinedNgIf0 extends AppView<_user.InlinedNgIf> {
+  external ViewInlinedNgIf0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class EmbeddedNgIf.
+external List<dynamic> get styles$EmbeddedNgIf;
+external ComponentFactory<_user.EmbeddedNgIf> get EmbeddedNgIfNgFactory;
+external AppView<_user.EmbeddedNgIf> viewFactory_EmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex);
+class ViewEmbeddedNgIf0 extends AppView<_user.EmbeddedNgIf> {
+  external ViewEmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class NullComponent.
+external List<dynamic> get styles$NullComponent;
+external ComponentFactory<_user.NullComponent> get NullComponentNgFactory;
+external AppView<_user.NullComponent> viewFactory_NullComponent0(AppView<dynamic> parentView, int parentIndex);
+class ViewNullComponent0 extends AppView<_user.NullComponent> {
+  external ViewNullComponent0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class InjectsFromArbitraryParent.
+external List<dynamic> get styles$InjectsFromArbitraryParent;
+external ComponentFactory<_user.InjectsFromArbitraryParent> get InjectsFromArbitraryParentNgFactory;
+external AppView<_user.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex);
+class ViewInjectsFromArbitraryParent0 extends AppView<_user.InjectsFromArbitraryParent> {
+  external ViewInjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex);
+}
 
 external void initReflector();

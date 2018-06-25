@@ -281,7 +281,8 @@ class _Scanner {
     bool simple = index == start;
     advance();
     while (true) {
-      if (isDigit(peek)) {} else if (peek == $PERIOD) {
+      if (isDigit(peek)) {
+      } else if (peek == $PERIOD) {
         simple = false;
       } else if (isExponentStart(peek)) {
         advance();
