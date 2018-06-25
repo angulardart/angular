@@ -6,7 +6,7 @@ import 'package:angular/builder.dart';
 import 'package:angular_compiler/cli.dart';
 import 'package:logging/logging.dart';
 import 'package:build/build.dart';
-import 'package:build_barback/build_barback.dart';
+import 'package:build_resolvers/build_resolvers.dart';
 import 'package:build_test/build_test.dart' hide testBuilder;
 import 'package:test/test.dart';
 
@@ -97,7 +97,7 @@ Future<Null> _testBuilder(
       inputIds,
       reader,
       writer,
-      const BarbackResolvers(),
+      new AnalyzerResolvers(),
       logger: logger,
     );
   });
