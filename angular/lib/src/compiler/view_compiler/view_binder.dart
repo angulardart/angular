@@ -68,8 +68,8 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
 
   void visitElement(ElementAst ast, dynamic context) {
     var compileElement = (view.nodes[_nodeIndex++] as CompileElement);
-    var listeners =
-        collectEventListeners(ast.outputs, ast.directives, compileElement);
+    var listeners = collectEventListeners(ast.outputs, ast.directives,
+        compileElement, view.component.analyzedClass);
 
     // Collect directive output names.
     final directiveOutputs = new Set<String>();
@@ -134,8 +134,8 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
     }
     // The template parser ensures these listeners are for directive outputs,
     // so they all must be registered as stream subscriptions.
-    var eventListeners =
-        collectEventListeners(ast.outputs, ast.directives, compileElement);
+    var eventListeners = collectEventListeners(ast.outputs, ast.directives,
+        compileElement, view.component.analyzedClass);
     var index = -1;
     for (var directiveAst in ast.directives) {
       index++;
