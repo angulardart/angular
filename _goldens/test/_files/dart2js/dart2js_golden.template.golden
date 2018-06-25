@@ -12,29 +12,82 @@ import 'dart2js_golden.template.dart' as _ref0;
 import 'package:angular/angular.template.dart' as _ref1;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'dart2js_golden.dart' as import1;
+import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/di/opaque_token.dart' as import9;
+import 'dart:core';
+import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/common/directives/ng_if.dart';
+import 'package:angular/src/core/linker/template_ref.dart';
 
 final List<dynamic> styles$RootComponent = const [];
 
 class ViewRootComponent0 extends AppView<import1.RootComponent> {
+  import2.Element _el_0;
+  ViewUsesDefaultChangeDetectionAndInput0 _compView_0;
+  import1.UsesDefaultChangeDetectionAndInput _UsesDefaultChangeDetectionAndInput_0_5;
+  import2.Element _el_1;
+  ViewInlinedNgIf0 _compView_1;
+  import1.InlinedNgIf _InlinedNgIf_1_5;
+  import2.Element _el_2;
+  ViewEmbeddedNgIf0 _compView_2;
+  import1.EmbeddedNgIf _EmbeddedNgIf_2_5;
+  import2.Element _el_3;
+  ViewInjectsFromArbitraryParent0 _compView_3;
+  import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_3_5;
   static RenderComponentType _renderType;
-  ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('root-component');
+  ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('root-component');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$RootComponent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.RootComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = new ViewUsesDefaultChangeDetectionAndInput0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _UsesDefaultChangeDetectionAndInput_0_5 = new import1.UsesDefaultChangeDetectionAndInput();
+    _compView_0.create(_UsesDefaultChangeDetectionAndInput_0_5, []);
+    _compView_1 = new ViewInlinedNgIf0(this, 1);
+    _el_1 = _compView_1.rootEl;
+    parentRenderNode.append(_el_1);
+    _InlinedNgIf_1_5 = new import1.InlinedNgIf();
+    _compView_1.create(_InlinedNgIf_1_5, []);
+    _compView_2 = new ViewEmbeddedNgIf0(this, 2);
+    _el_2 = _compView_2.rootEl;
+    parentRenderNode.append(_el_2);
+    _EmbeddedNgIf_2_5 = new import1.EmbeddedNgIf();
+    _compView_2.create(_EmbeddedNgIf_2_5, []);
+    _compView_3 = new ViewInjectsFromArbitraryParent0(this, 3);
+    _el_3 = _compView_3.rootEl;
+    parentRenderNode.append(_el_3);
+    _InjectsFromArbitraryParent_3_5 = new import1.InjectsFromArbitraryParent(parentView.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex));
+    _compView_3.create(_InjectsFromArbitraryParent_3_5, []);
     init(const [], null);
     return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+    _compView_1.detectChanges();
+    _compView_2.detectChanges();
+    _compView_3.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+    _compView_1?.destroy();
+    _compView_2?.destroy();
+    _compView_3?.destroy();
   }
 }
 
@@ -47,7 +100,7 @@ final List<dynamic> styles$RootComponentHost = const [];
 class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
   ViewRootComponent0 _compView_0;
   import1.RootComponent _RootComponent_0_5;
-  _ViewRootComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewRootComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.RootComponent> build() {
     _compView_0 = new ViewRootComponent0(this, 0);
@@ -78,7 +131,466 @@ ComponentFactory<import1.RootComponent> get RootComponentNgFactory {
   return _RootComponentNgFactory;
 }
 
+final List<dynamic> styles$UsesDefaultChangeDetectionAndInput = const [];
+
+class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaultChangeDetectionAndInput> {
+  import2.Element _el_0;
+  var _expr_0;
+  static RenderComponentType _renderType;
+  ViewUsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('uses-default-change-detection-and-input');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$UsesDefaultChangeDetectionAndInput);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesDefaultChangeDetectionAndInput> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = createAndAppend(doc, 'default-change-detection-and-input', parentRenderNode);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesDefaultChangeDetectionAndInput _ctx = ctx;
+    final currVal_0 = _ctx.name;
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      setProp(_el_0, 'name', currVal_0);
+      _expr_0 = currVal_0;
+    }
+  }
+}
+
+AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesDefaultChangeDetectionAndInput0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesDefaultChangeDetectionAndInputHost = const [];
+
+class _ViewUsesDefaultChangeDetectionAndInputHost0 extends AppView<import1.UsesDefaultChangeDetectionAndInput> {
+  ViewUsesDefaultChangeDetectionAndInput0 _compView_0;
+  import1.UsesDefaultChangeDetectionAndInput _UsesDefaultChangeDetectionAndInput_0_5;
+  _ViewUsesDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.UsesDefaultChangeDetectionAndInput> build() {
+    _compView_0 = new ViewUsesDefaultChangeDetectionAndInput0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesDefaultChangeDetectionAndInput_0_5 = new import1.UsesDefaultChangeDetectionAndInput();
+    _compView_0.create(_UsesDefaultChangeDetectionAndInput_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef(0, this, rootEl, _UsesDefaultChangeDetectionAndInput_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> _UsesDefaultChangeDetectionAndInputNgFactory = const ComponentFactory('uses-default-change-detection-and-input', viewFactory_UsesDefaultChangeDetectionAndInputHost0, _UsesDefaultChangeDetectionAndInputMetadata);
+ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> get UsesDefaultChangeDetectionAndInputNgFactory {
+  return _UsesDefaultChangeDetectionAndInputNgFactory;
+}
+
+final List<dynamic> styles$DefaultChangeDetectionAndInput = const [];
+
+class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeDetectionAndInput> {
+  import2.Text _text_1;
+  var _expr_0;
+  static RenderComponentType _renderType;
+  ViewDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('default-change-detection-and-input');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$DefaultChangeDetectionAndInput);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    import2.Text _text_0 = new import2.Text('Hello ');
+    parentRenderNode.append(_text_0);
+    _text_1 = new import2.Text('');
+    parentRenderNode.append(_text_1);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.DefaultChangeDetectionAndInput _ctx = ctx;
+    final currVal_0 = (_ctx.name ?? '');
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      _text_1.text = currVal_0;
+      _expr_0 = currVal_0;
+    }
+  }
+}
+
+AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewDefaultChangeDetectionAndInput0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$DefaultChangeDetectionAndInputHost = const [];
+
+class _ViewDefaultChangeDetectionAndInputHost0 extends AppView<import1.DefaultChangeDetectionAndInput> {
+  ViewDefaultChangeDetectionAndInput0 _compView_0;
+  import1.DefaultChangeDetectionAndInput _DefaultChangeDetectionAndInput_0_5;
+  _ViewDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
+    _compView_0 = new ViewDefaultChangeDetectionAndInput0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _DefaultChangeDetectionAndInput_0_5 = new import1.DefaultChangeDetectionAndInput();
+    _compView_0.create(_DefaultChangeDetectionAndInput_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef(0, this, rootEl, _DefaultChangeDetectionAndInput_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.DefaultChangeDetectionAndInput> _DefaultChangeDetectionAndInputNgFactory = const ComponentFactory('default-change-detection-and-input', viewFactory_DefaultChangeDetectionAndInputHost0, _DefaultChangeDetectionAndInputMetadata);
+ComponentFactory<import1.DefaultChangeDetectionAndInput> get DefaultChangeDetectionAndInputNgFactory {
+  return _DefaultChangeDetectionAndInputNgFactory;
+}
+
+final List<dynamic> styles$InlinedNgIf = const [];
+
+class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
+  import2.Comment _anchor_0;
+  import2.DivElement _el_0_0;
+  import2.Text _text_0_1;
+  bool _expr_0 = false;
+  static RenderComponentType _renderType;
+  ViewInlinedNgIf0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('inlined-ng-if');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$InlinedNgIf);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.InlinedNgIf> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _anchor_0 = createViewContainerAnchor();
+    parentRenderNode.append(_anchor_0);
+    init([], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.InlinedNgIf _ctx = ctx;
+    final currVal_0 = (_ctx.showDiv == true);
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      if (currVal_0) {
+        var doc = import2.document;
+        _el_0_0 = doc.createElement('div');
+        _text_0_1 = new import2.Text('Hello World');
+        _el_0_0.append(_text_0_1);
+        addInlinedNodes(_anchor_0, [_el_0_0], true);
+      } else {
+        removeInlinedNodes([_el_0_0], true);
+      }
+      _expr_0 = currVal_0;
+    }
+  }
+}
+
+AppView<import1.InlinedNgIf> viewFactory_InlinedNgIf0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewInlinedNgIf0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$InlinedNgIfHost = const [];
+
+class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
+  ViewInlinedNgIf0 _compView_0;
+  import1.InlinedNgIf _InlinedNgIf_0_5;
+  _ViewInlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.InlinedNgIf> build() {
+    _compView_0 = new ViewInlinedNgIf0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _InlinedNgIf_0_5 = new import1.InlinedNgIf();
+    _compView_0.create(_InlinedNgIf_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef(0, this, rootEl, _InlinedNgIf_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.InlinedNgIf> viewFactory_InlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewInlinedNgIfHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.InlinedNgIf> _InlinedNgIfNgFactory = const ComponentFactory('inlined-ng-if', viewFactory_InlinedNgIfHost0, _InlinedNgIfMetadata);
+ComponentFactory<import1.InlinedNgIf> get InlinedNgIfNgFactory {
+  return _InlinedNgIfNgFactory;
+}
+
+final List<dynamic> styles$EmbeddedNgIf = const [];
+
+class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
+  ViewContainer _appEl_0;
+  NgIf _NgIf_0_9;
+  static RenderComponentType _renderType;
+  ViewEmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('embedded-ng-if');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$EmbeddedNgIf);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.EmbeddedNgIf> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _anchor_0 = createViewContainerAnchor();
+    parentRenderNode.append(_anchor_0);
+    _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_EmbeddedNgIf1);
+    _NgIf_0_9 = new NgIf(_appEl_0, _TemplateRef_0_8);
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.EmbeddedNgIf _ctx = ctx;
+    _NgIf_0_9.ngIf = _ctx.showNull;
+    _appEl_0.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_0?.destroyNestedViews();
+  }
+}
+
+AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewEmbeddedNgIf0(parentView, parentIndex);
+}
+
+class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
+  import2.Element _el_0;
+  ViewNullComponent0 _compView_0;
+  import1.NullComponent _NullComponent_0_5;
+  _ViewEmbeddedNgIf1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    componentType = ViewEmbeddedNgIf0._renderType;
+  }
+  @override
+  ComponentRef<import1.EmbeddedNgIf> build() {
+    _compView_0 = new ViewNullComponent0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    _NullComponent_0_5 = new import1.NullComponent();
+    _compView_0.create(_NullComponent_0_5, []);
+    init0(_el_0);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIf1(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewEmbeddedNgIf1(parentView, parentIndex);
+}
+
+final List<dynamic> styles$EmbeddedNgIfHost = const [];
+
+class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
+  ViewEmbeddedNgIf0 _compView_0;
+  import1.EmbeddedNgIf _EmbeddedNgIf_0_5;
+  _ViewEmbeddedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.EmbeddedNgIf> build() {
+    _compView_0 = new ViewEmbeddedNgIf0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _EmbeddedNgIf_0_5 = new import1.EmbeddedNgIf();
+    _compView_0.create(_EmbeddedNgIf_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef(0, this, rootEl, _EmbeddedNgIf_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIfHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewEmbeddedNgIfHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.EmbeddedNgIf> _EmbeddedNgIfNgFactory = const ComponentFactory('embedded-ng-if', viewFactory_EmbeddedNgIfHost0, _EmbeddedNgIfMetadata);
+ComponentFactory<import1.EmbeddedNgIf> get EmbeddedNgIfNgFactory {
+  return _EmbeddedNgIfNgFactory;
+}
+
+final List<dynamic> styles$NullComponent = const [];
+
+class ViewNullComponent0 extends AppView<import1.NullComponent> {
+  static RenderComponentType _renderType;
+  ViewNullComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('null');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$NullComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.NullComponent> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.NullComponent> viewFactory_NullComponent0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewNullComponent0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$NullComponentHost = const [];
+
+class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
+  ViewNullComponent0 _compView_0;
+  import1.NullComponent _NullComponent_0_5;
+  _ViewNullComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.NullComponent> build() {
+    _compView_0 = new ViewNullComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _NullComponent_0_5 = new import1.NullComponent();
+    _compView_0.create(_NullComponent_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef(0, this, rootEl, _NullComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.NullComponent> viewFactory_NullComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewNullComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.NullComponent> _NullComponentNgFactory = const ComponentFactory('null', viewFactory_NullComponentHost0, _NullComponentMetadata);
+ComponentFactory<import1.NullComponent> get NullComponentNgFactory {
+  return _NullComponentNgFactory;
+}
+
+final List<dynamic> styles$InjectsFromArbitraryParent = const [];
+
+class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitraryParent> {
+  static RenderComponentType _renderType;
+  ViewInjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('injects-from-arbitrary-parent');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$InjectsFromArbitraryParent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.InjectsFromArbitraryParent> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewInjectsFromArbitraryParent0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$InjectsFromArbitraryParentHost = const [];
+
+class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromArbitraryParent> {
+  ViewInjectsFromArbitraryParent0 _compView_0;
+  import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_0_5;
+  _ViewInjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.InjectsFromArbitraryParent> build() {
+    _compView_0 = new ViewInjectsFromArbitraryParent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _InjectsFromArbitraryParent_0_5 = new import1.InjectsFromArbitraryParent(this.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex));
+    _compView_0.create(_InjectsFromArbitraryParent_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef(0, this, rootEl, _InjectsFromArbitraryParent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewInjectsFromArbitraryParentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.InjectsFromArbitraryParent> _InjectsFromArbitraryParentNgFactory = const ComponentFactory('injects-from-arbitrary-parent', viewFactory_InjectsFromArbitraryParentHost0, _InjectsFromArbitraryParentMetadata);
+ComponentFactory<import1.InjectsFromArbitraryParent> get InjectsFromArbitraryParentNgFactory {
+  return _InjectsFromArbitraryParentNgFactory;
+}
+
 const _RootComponentMetadata = const [];
+const _UsesDefaultChangeDetectionAndInputMetadata = const [];
+const _DefaultChangeDetectionAndInputMetadata = const [];
+const _InlinedNgIfMetadata = const [];
+const _EmbeddedNgIfMetadata = const [];
+const _NullComponentMetadata = const [];
+const _InjectsFromArbitraryParentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -87,6 +599,12 @@ void initReflector() {
   _visited = true;
 
   _ngRef.registerComponent(RootComponent, RootComponentNgFactory);
+  _ngRef.registerComponent(UsesDefaultChangeDetectionAndInput, UsesDefaultChangeDetectionAndInputNgFactory);
+  _ngRef.registerComponent(DefaultChangeDetectionAndInput, DefaultChangeDetectionAndInputNgFactory);
+  _ngRef.registerComponent(InlinedNgIf, InlinedNgIfNgFactory);
+  _ngRef.registerComponent(EmbeddedNgIf, EmbeddedNgIfNgFactory);
+  _ngRef.registerComponent(NullComponent, NullComponentNgFactory);
+  _ngRef.registerComponent(InjectsFromArbitraryParent, InjectsFromArbitraryParentNgFactory);
   _ref0.initReflector();
   _ref1.initReflector();
 }
