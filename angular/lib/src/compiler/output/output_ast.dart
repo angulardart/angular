@@ -22,6 +22,8 @@ enum BuiltinTypeName {
   Double,
   Number,
   Function,
+  Void,
+  Null,
 }
 
 class BuiltinType extends OutputType {
@@ -77,6 +79,8 @@ class MapType extends OutputType {
 }
 
 const DYNAMIC_TYPE = const BuiltinType(BuiltinTypeName.Dynamic);
+const VOID_TYPE = const BuiltinType(BuiltinTypeName.Void);
+const NULL_TYPE = const BuiltinType(BuiltinTypeName.Null);
 const BOOL_TYPE = const BuiltinType(BuiltinTypeName.Bool);
 const INT_TYPE = const BuiltinType(BuiltinTypeName.Int);
 const DOUBLE_TYPE = const BuiltinType(BuiltinTypeName.Double);

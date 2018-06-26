@@ -32,6 +32,9 @@
     `C` is the annotated `@Component` class. This avoids implicit down-casts in
     the framework.
 
+*   Fixed a bug where the compiler crashed if an injectable token contained the
+    type `void` (directly or in some nested type like `List<void>`).
+
 ## 5.0.0-alpha+15
 
 ### Breaking changes

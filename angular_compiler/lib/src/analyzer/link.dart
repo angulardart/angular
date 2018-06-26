@@ -27,8 +27,15 @@ DartType _resolveBounds(DartType type) {
 
 /// Returns a [TypeLink] to the given statically analyzed [DartType].
 TypeLink linkTypeOf(DartType type) {
+  // Return void or Null types.
+  if (type.isVoid) {
+    return TypeLink.$void;
+  }
+  if (type.isDartCoreNull) {
+    return TypeLink.$null;
+  }
   // Return dynamic type (no type found).
-  if (type.element.library == null) {
+  if (type.isDynamic || type.element.library == null) {
     return TypeLink.$dynamic;
   }
   type = _resolveBounds(type);
@@ -55,6 +62,12 @@ TypeLink linkTypeOf(DartType type) {
 class TypeLink {
   /// Represents the type of `dynamic` (i.e. omitted type).
   static const $dynamic = const TypeLink('dynamic', null);
+
+  /// Represents the type of `void`.
+  static const $void = const TypeLink('void', 'dart:core');
+
+  /// Represents the type of `Null`.
+  static const $null = const TypeLink('Null', 'dart:core');
 
   /// Name of the symbol for the type, such as `String`.
   final String symbol;
