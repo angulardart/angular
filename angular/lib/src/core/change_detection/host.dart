@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:meta/meta.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 
 import 'package:angular/src/runtime.dart';
 import 'package:angular/src/core/linker/app_view.dart';
@@ -9,8 +10,6 @@ import 'package:angular/src/core/linker/view_ref.dart';
 
 import 'change_detection.dart';
 import 'constants.dart';
-
-// ignore_for_file: dead_code
 
 /// A host for tracking the current application and stateful components.
 ///
@@ -30,6 +29,7 @@ abstract class ChangeDetectionHost {
   /// **INTERNAL ONLY**: Register a crash during [view.detectCrash].
   static void handleCrash(AppView<void> view, Object error, StackTrace trace) {
     final current = _current;
+    assert(current != null);
     current
       .._lastGuardedView = view
       .._lastCaughtException = error
@@ -54,9 +54,6 @@ abstract class ChangeDetectionHost {
     assert(current != null, 'No current ChangeDetectionHost in context');
     current._scheduleViewUpdate(callback, view, host);
   }
-
-  /// Whether a second pass of change detection should be executed.
-  static final _enforceNoNewChanges = isDevMode;
 
   /// If a crash is detected during zone-based change detection, then this view
   /// is set (non-null). Change detection is re-run (synchronously) in a
@@ -146,8 +143,14 @@ abstract class ChangeDetectionHost {
       _runningTick = true;
       _runTick();
     } catch (e, s) {
+      // A crash (uncaught exception) was found. That means at least one
+      // directive in the application tree is throwing. We need to re-run
+      // change detection to disable offending directives.
       if (!_runTickGuarded()) {
-        handleUncaughtException(e, s);
+        // Propagate the original exception/stack upwards, with 'DigestTick'
+        // keyword. Then application can join tick exception with original
+        // exception, which usually named "AppView.detectCrash".
+        handleUncaughtException(e, s, 'DigestTick');
       }
       rethrow;
     } finally {
@@ -164,7 +167,7 @@ abstract class ChangeDetectionHost {
     for (var i = 0; i < length; i++) {
       detectors[i].detectChanges();
     }
-    if (_enforceNoNewChanges) {
+    if (isDevMode) {
       for (var i = 0; i < length; i++) {
         detectors[i].checkNoChanges();
       }
@@ -193,6 +196,7 @@ abstract class ChangeDetectionHost {
   }
 
   /// Checks for any uncaught exception that occurred during change detection.
+  @dart2js.noInline
   bool _checkForChangeDetectionError() {
     if (_lastGuardedView != null) {
       reportViewException(
@@ -203,19 +207,16 @@ abstract class ChangeDetectionHost {
       _resetViewErrors();
       return true;
     }
-    // @noInline
-    return false;
     return false;
   }
 
+  @dart2js.noInline
   void _resetViewErrors() {
     _lastGuardedView = _lastCaughtException = _lastCaughtTrace = null;
-    // @noInline
-    return null;
-    return null;
   }
 
   /// Disables the [view] as an error, and forwards to [reportException].
+  @dart2js.noInline
   void reportViewException(
     AppView<void> view,
     Object error, [
@@ -223,9 +224,6 @@ abstract class ChangeDetectionHost {
   ]) {
     view.cdState = ChangeDetectorState.Errored;
     handleUncaughtException(error, trace);
-    // @noInline
-    return null;
-    return null;
   }
 
   /// Forwards an [error] and [trace] to the user's error handler.
@@ -233,7 +231,7 @@ abstract class ChangeDetectionHost {
   /// This is expected to be provided by the current application.
   @protected
   @visibleForOverriding
-  void handleUncaughtException(Object error, [StackTrace trace]);
+  void handleUncaughtException(Object error, [StackTrace trace, String reason]);
 
   /// Runs the given [callback] in the zone and returns the result of that call.
   ///

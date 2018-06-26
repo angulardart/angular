@@ -17,7 +17,7 @@ String getImportModulePath(String moduleUrlStr, String importedUrlStr) {
   // Try to create a relative path first
   if (moduleUrl.firstLevelDir == importedUrl.firstLevelDir &&
       moduleUrl.packageName == importedUrl.packageName) {
-    return getRelativePath(moduleUrl.modulePath, importedUrl.modulePath);
+    return _getRelativePath(moduleUrl.modulePath, importedUrl.modulePath);
   } else if (importedUrl.firstLevelDir == "lib") {
     return "$absolutePathPrefix${importedUrl.packageName}"
         "/${importedUrl.modulePath}";
@@ -42,10 +42,10 @@ class _AssetUrl {
   _AssetUrl(this.packageName, this.firstLevelDir, this.modulePath);
 }
 
-String getRelativePath(String modulePath, String importedPath) {
+String _getRelativePath(String modulePath, String importedPath) {
   var moduleParts = modulePath.split(_PATH_SEP_RE);
   var importedParts = importedPath.split(_PATH_SEP_RE);
-  var longestPrefix = getLongestPathSegmentPrefix(moduleParts, importedParts);
+  var longestPrefix = _getLongestPathSegmentPrefix(moduleParts, importedParts);
   var resultParts = [];
   var goParentCount = moduleParts.length - 1 - longestPrefix;
   for (var i = 0; i < goParentCount; i++) {
@@ -57,7 +57,7 @@ String getRelativePath(String modulePath, String importedPath) {
   return resultParts.join(_PATH_SEP);
 }
 
-int getLongestPathSegmentPrefix(List<String> arr1, List<String> arr2) {
+int _getLongestPathSegmentPrefix(List<String> arr1, List<String> arr2) {
   var prefixSize = 0;
   var minLen = math.min(arr1.length, arr2.length);
   while (prefixSize < minLen && arr1[prefixSize] == arr2[prefixSize]) {

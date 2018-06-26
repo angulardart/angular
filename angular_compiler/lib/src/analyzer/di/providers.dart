@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -15,8 +16,8 @@ class ProviderReader {
   final TokenReader _tokenReader;
 
   const ProviderReader(
-      {DependencyReader dependencyReader: const DependencyReader(),
-      TokenReader tokenReader: const TokenReader()})
+      {DependencyReader dependencyReader = const DependencyReader(),
+      TokenReader tokenReader = const TokenReader()})
       : _dependencyReader = dependencyReader,
         _tokenReader = tokenReader;
 
@@ -83,16 +84,34 @@ class ProviderReader {
     throw new UnsupportedError('Could not parse provider: $o.');
   }
 
+  TypeLink _actualProviderType(
+    DartType providerClass,
+    DartType providerType,
+    TokenElement token,
+  ) {
+    // Only the "new" Provider sub-types support type inference:
+    // i.e. ValueProvider<T>.forToken(OpaqueToken<T>)
+    //
+    // Provider(Object token) does not have any type inference support, so
+    // using OpaqueToken.type instead of Provider.type would be invalid and
+    // a breaking change.
+    if (!$Provider.isExactlyType(providerClass) &&
+        token is OpaqueTokenElement) {
+      // Recover from https://github.com/dart-lang/sdk/issues/32290.
+      return token.typeUrl ?? TypeLink.$dynamic;
+    }
+    return linkTypeOf(providerType);
+  }
+
   // const Provider(<token>, useClass: Foo)
   ProviderElement _parseUseClass(
     TokenElement token,
     DartObject provider,
     ClassElement clazz,
   ) {
-    // TODO(matanl): Validate that clazz has @Injectable() when flag is set.
     return new UseClassProviderElement(
       token,
-      linkTypeOf(typeArgumentOf(provider)),
+      _actualProviderType(provider.type, typeArgumentOf(provider), token),
       linkTypeOf(clazz.type),
       dependencies: _dependencyReader.parseDependencies(clazz),
     );
@@ -106,7 +125,7 @@ class ProviderReader {
   ) {
     return new UseExistingProviderElement(
       token,
-      linkTypeOf(typeArgumentOf(provider)),
+      _actualProviderType(provider.type, typeArgumentOf(provider), token),
       _tokenReader.parseTokenObject(object),
     );
   }
@@ -118,10 +137,13 @@ class ProviderReader {
   ) {
     final factoryElement = provider.read('useFactory').objectValue.type.element;
     final manualDeps = provider.read('deps');
-    // TODO(matanl): Validate that Foo has @Injectable() when flag is set.
     return new UseFactoryProviderElement(
       token,
-      linkTypeOf(typeArgumentOf(provider.objectValue)),
+      _actualProviderType(
+        provider.objectValue.type,
+        typeArgumentOf(provider.objectValue),
+        token,
+      ),
       urlOf(factoryElement),
       dependencies: manualDeps.isList
           ? _dependencyReader.parseDependenciesList(
@@ -138,7 +160,7 @@ class ProviderReader {
     // TODO(matanl): For corner-cases that can't be revived, display error.
     return new UseValueProviderElement._(
       token,
-      linkTypeOf(typeArgumentOf(provider)),
+      _actualProviderType(provider.type, typeArgumentOf(provider), token),
       useValue,
     );
   }
@@ -204,7 +226,7 @@ class UseClassProviderElement extends ProviderElement {
     TypeLink providerType,
     this.useClass, {
     @required this.dependencies,
-    bool multi: false,
+    bool multi = false,
   }) : super._(e, providerType, multi);
 
   @override
@@ -236,7 +258,7 @@ class UseExistingProviderElement extends ProviderElement {
     TokenElement e,
     TypeLink providerType,
     this.redirect, {
-    bool multi: false,
+    bool multi = false,
   }) : super._(e, providerType, multi);
 
   @override
@@ -269,7 +291,7 @@ class UseFactoryProviderElement extends ProviderElement {
     TypeLink providerType,
     this.useFactory, {
     @required this.dependencies,
-    bool multi: false,
+    bool multi = false,
   }) : super._(e, providerType, multi);
 
   @override
@@ -303,6 +325,6 @@ class UseValueProviderElement extends ProviderElement {
     TokenElement e,
     TypeLink providerType,
     this.useValue, {
-    bool multi: false,
+    bool multi = false,
   }) : super._(e, providerType, multi);
 }

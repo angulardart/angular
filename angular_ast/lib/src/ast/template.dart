@@ -177,13 +177,13 @@ class _ParsedEmbeddedTemplateAst extends TemplateAst with EmbeddedTemplateAst {
     NgToken beginToken,
     NgToken endToken, {
     this.closeComplement,
-    this.attributes: const [],
-    this.childNodes: const [],
-    this.events: const [],
-    this.properties: const [],
-    this.references: const [],
-    this.letBindings: const [],
-    this.hasDeferredComponent: false,
+    this.attributes = const [],
+    this.childNodes = const [],
+    this.events = const [],
+    this.properties = const [],
+    this.references = const [],
+    this.letBindings = const [],
+    this.hasDeferredComponent = false,
   }) : super.parsed(beginToken, endToken, sourceFile);
 
   @override
@@ -214,24 +214,24 @@ class _ParsedEmbeddedTemplateAst extends TemplateAst with EmbeddedTemplateAst {
 class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     with EmbeddedTemplateAst {
   _SyntheticEmbeddedTemplateAst({
-    this.attributes: const [],
-    this.childNodes: const [],
-    this.events: const [],
-    this.properties: const [],
-    this.references: const [],
-    this.letBindings: const [],
-    this.hasDeferredComponent: false,
+    this.attributes = const [],
+    this.childNodes = const [],
+    this.events = const [],
+    this.properties = const [],
+    this.references = const [],
+    this.letBindings = const [],
+    this.hasDeferredComponent = false,
   }) : closeComplement = new CloseElementAst('template');
 
   _SyntheticEmbeddedTemplateAst.from(
     TemplateAst origin, {
-    this.attributes: const [],
-    this.childNodes: const [],
-    this.events: const [],
-    this.properties: const [],
-    this.references: const [],
-    this.letBindings: const [],
-    this.hasDeferredComponent: false,
+    this.attributes = const [],
+    this.childNodes = const [],
+    this.events = const [],
+    this.properties = const [],
+    this.references = const [],
+    this.letBindings = const [],
+    this.hasDeferredComponent = false,
   })  : closeComplement = new CloseElementAst('template'),
         super.from(origin);
 

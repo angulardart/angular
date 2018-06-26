@@ -53,11 +53,11 @@ abstract class AbstractControl<T> {
   T get value => _value;
 
   /// The validation status of the control.
-  ///
-  /// One of [VALID], or [INVALID].
   String get status => _status;
 
   bool get valid => _status == VALID;
+
+  bool get invalid => _status == INVALID;
 
   bool get disabled => _status == DISABLED;
 
@@ -82,14 +82,42 @@ abstract class AbstractControl<T> {
 
   bool get pending => _status == PENDING;
 
-  void markAsTouched() {
+  /// Marks the control as `touched`.
+  ///
+  /// This will also mark all direct ancestors as `touched` to maintain the
+  /// model.
+  void markAsTouched({bool updateParent}) {
+    updateParent = updateParent ?? true;
+
     _touched = true;
+
+    if (_parent != null && updateParent) {
+      _parent.markAsTouched(updateParent: updateParent);
+    }
   }
 
-  void markAsUntouched() {
+  /// Marks the control as `untouched`.
+  ///
+  /// If the control has any children, it will also mark all children as
+  /// `untouched` to maintain the model, and re-calculate the `touched` status
+  /// of all parent controls.
+  void markAsUntouched({bool updateParent}) {
+    updateParent = updateParent ?? true;
     _touched = false;
+
+    _forEachChild(
+        // Only set self, so that children don't try to update their parent,
+        // and thus create a loop of updates.
+        (c) => c.markAsUntouched(updateParent: false));
+
+    if (_parent != null && updateParent) {
+      _parent._updateTouched(updateParent: updateParent);
+    }
   }
 
+  /// Mark the control as `dirty`.
+  ///
+  /// This will also mark all direct ancestors as `dirty` to maintain the model.
   void markAsDirty({bool onlySelf, bool emitEvent}) {
     onlySelf = onlySelf == true;
     emitEvent = emitEvent ?? true;
@@ -97,6 +125,25 @@ abstract class AbstractControl<T> {
     if (emitEvent) _statusChanges.add(_status);
     if (_parent != null && !onlySelf) {
       _parent.markAsDirty(onlySelf: onlySelf);
+    }
+  }
+
+  /// Marks the control as `pristine`.
+  ///
+  /// If the control has any children, it will also mark all children as
+  /// `pristine` to maintain the model, and re-calculate the `pristine` status
+  /// of all parent controls.
+  void markAsPristine({bool updateParent}) {
+    updateParent = updateParent ?? true;
+    _pristine = true;
+
+    _forEachChild(
+        // Only set self, so that children don't try to update their parent,
+        // and thus create a loop of updates.
+        (c) => c.markAsPristine(updateParent: false));
+
+    if (_parent != null && updateParent) {
+      _parent._updatePristine(updateParent: updateParent);
     }
   }
 
@@ -148,6 +195,31 @@ abstract class AbstractControl<T> {
     updateValueAndValidity(onlySelf: true, emitEvent: emitEvent);
     _updateAncestors(updateParent: updateParent, emitEvent: emitEvent);
     _disabledChanges.add(false);
+  }
+
+  /// Resets the form control.
+  ///
+  /// This means by default:
+  /// * it is marked as `pristine`
+  /// * it is marked as `untouched`
+  /// * value is set to null
+  ///
+  /// You can also reset to a specific form state by passing through a
+  /// standalone value or a disabled state. We allow setting value and
+  /// disabled here because these are the only two properties that
+  /// cannot be calculated.
+  void reset({T value, bool isDisabled, bool updateParent, bool emitEvent}) {
+    updateParent ??= true;
+    emitEvent ??= true;
+
+    updateValue(value, onlySelf: !updateParent, emitEvent: emitEvent);
+    if (isDisabled != null) {
+      isDisabled
+          ? markAsDisabled(updateParent: updateParent, emitEvent: emitEvent)
+          : markAsEnabled(updateParent: updateParent, emitEvent: emitEvent);
+    }
+    markAsPristine(updateParent: updateParent);
+    markAsUntouched(updateParent: updateParent);
   }
 
   void _updateAncestors({bool updateParent, bool emitEvent}) {
@@ -268,6 +340,38 @@ abstract class AbstractControl<T> {
     return VALID;
   }
 
+  void _updateTouched({bool updateParent}) {
+    _touched = _anyControlsTouched();
+
+    if (_parent != null && updateParent) {
+      _parent._updateTouched(updateParent: updateParent);
+    }
+  }
+
+  void _updatePristine({bool updateParent}) {
+    _pristine = !_anyControlsDirty();
+
+    if (_parent != null && updateParent) {
+      _parent._updatePristine(updateParent: updateParent);
+    }
+  }
+
+  /// Set the value of the AbstractControl to `value`.
+  ///
+  /// If `onlySelf` is `true`, this change will only affect the validation of
+  /// this `Control` and not its parent component. If `emitEvent` is `true`,
+  /// this change will cause a `valueChanges` event on the `Control` to be
+  /// emitted. Both of these options default to `false`.
+  ///
+  /// If `emitModelToViewChange` is `true`, the view will be notified about the
+  /// new value via an `onChange` event. This is the default behavior if
+  /// `emitModelToViewChange` is not specified.
+  void updateValue(T value,
+      {bool onlySelf,
+      bool emitEvent,
+      bool emitModelToViewChange,
+      String rawValue});
+
   /// Callback when control is asked to update it's value.
   ///
   /// Allows controls to calculate their value. For example control groups
@@ -275,10 +379,15 @@ abstract class AbstractControl<T> {
   @protected
   void onUpdate();
 
-  bool _anyControlsHaveStatus(String status);
+  bool _anyControlsHaveStatus(String status) =>
+      _anyControls((c) => c.status == status);
   bool _allControlsHaveStatus(String status);
+  bool _anyControlsTouched() => _anyControls((c) => c.touched);
+  bool _anyControlsDirty() => _anyControls((c) => c.dirty);
 
   void _forEachChild(void callback(AbstractControl c));
+
+  bool _anyControls(bool condition(AbstractControl c));
 }
 
 /// Defines a part of a form that cannot be divided into other controls.
@@ -312,6 +421,7 @@ class Control<T> extends AbstractControl<T> {
   /// If `emitModelToViewChange` is `true`, the view will be notified about the
   /// new value via an `onChange` event. This is the default behavior if
   /// `emitModelToViewChange` is not specified.
+  @override
   void updateValue(T value,
       {bool onlySelf,
       bool emitEvent,
@@ -335,7 +445,7 @@ class Control<T> extends AbstractControl<T> {
   void onUpdate() {}
 
   @override
-  bool _anyControlsHaveStatus(String status) => false;
+  bool _anyControls(_) => false;
 
   @override
   bool _allControlsHaveStatus(String status) => this.status == status;
@@ -387,14 +497,32 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
       controls.containsKey(controlName) && controls[controlName].enabled;
 
   @override
+  void updateValue(Map<String, dynamic> value,
+      {bool onlySelf,
+      bool emitEvent,
+      bool emitModelToViewChange,
+      String rawValue}) {
+    // Treat null and empty as the same thing.
+    if (value?.isEmpty ?? false) value = null;
+    _checkAllValuesPresent(value);
+    for (var name in controls.keys) {
+      controls[name].updateValue(value == null ? null : value[name],
+          onlySelf: true,
+          emitEvent: emitEvent,
+          emitModelToViewChange: emitModelToViewChange);
+    }
+    updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
+  }
+
+  @override
   void onUpdate() {
     _value = _reduceValue();
   }
 
   @override
-  bool _anyControlsHaveStatus(String status) {
+  bool _anyControls(bool condition(AbstractControl c)) {
     for (var name in controls.keys) {
-      if (contains(name) && controls[name].status == status) return true;
+      if (contains(name) && condition(controls[name])) return true;
     }
     return false;
   }
@@ -427,6 +555,26 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
   }
 
   bool _included(String controlName) => controls[controlName]?.enabled ?? false;
+
+  void _checkAllValuesPresent(Map<String, dynamic> value) {
+    if (value == null) return;
+
+    assert(() {
+      for (var name in controls.keys) {
+        if (!value.containsKey(name)) {
+          throw new ArgumentError.value(
+              value, 'Must supply a value for form control with name: $name.');
+        }
+      }
+      for (var name in value.keys) {
+        if (!controls.containsKey(name)) {
+          throw new ArgumentError.value(
+              value, 'No form control found with name: $name.');
+        }
+      }
+      return true;
+    }());
+  }
 }
 
 /// Defines a part of a form, of variable length, that can contain other
@@ -483,6 +631,24 @@ class ControlArray extends AbstractControl<List> {
   num get length => controls.length;
 
   @override
+  void updateValue(List value,
+      {bool onlySelf,
+      bool emitEvent,
+      bool emitModelToViewChange,
+      String rawValue}) {
+    // Treat empty and null as the same.
+    if (value?.isEmpty ?? false) value = null;
+    _checkAllValuesPresent(value);
+    for (int i = 0; i < controls.length; i++) {
+      controls[i].updateValue(value == null ? null : value[i],
+          onlySelf: true,
+          emitEvent: emitEvent,
+          emitModelToViewChange: emitModelToViewChange);
+    }
+    updateValueAndValidity(onlySelf: onlySelf, emitEvent: emitEvent);
+  }
+
+  @override
   void onUpdate() {
     _value = [];
     for (var control in controls) {
@@ -493,9 +659,9 @@ class ControlArray extends AbstractControl<List> {
   }
 
   @override
-  bool _anyControlsHaveStatus(String status) {
+  bool _anyControls(bool condition(AbstractControl c)) {
     for (var control in controls) {
-      if (control.status == status) return true;
+      if (condition(control)) return true;
     }
     return false;
   }
@@ -515,6 +681,20 @@ class ControlArray extends AbstractControl<List> {
     for (var control in controls) {
       callback(control);
     }
+  }
+
+  void _checkAllValuesPresent(List value) {
+    if (value == null) return;
+
+    assert(() {
+      if (value.length != controls.length) {
+        throw new ArgumentError.value(
+            value,
+            'ControlArray has ${controls.length} controls, but received a list '
+            'of ${value.length} values.');
+      }
+      return true;
+    }());
   }
 }
 

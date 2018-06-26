@@ -138,20 +138,20 @@ class NgFor implements DoCheck {
     // TODO(rado): check if change detection can produce a change record that is
     // easier to consume than current.
 
-    final insertTuples = <RecordViewTuple>[];
+    final insertTuples = <_RecordViewTuple>[];
     changes.forEachOperation((CollectionChangeRecord item,
         int adjustedPreviousIndex, int currentIndex) {
       if (item.previousIndex == null) {
         var view =
             _viewContainer.insertEmbeddedView(_templateRef, currentIndex);
-        var tuple = new RecordViewTuple(item, view);
+        var tuple = new _RecordViewTuple(item, view);
         insertTuples.add(tuple);
       } else if (currentIndex == null) {
         _viewContainer.remove(adjustedPreviousIndex);
       } else {
         var view = _viewContainer.get(adjustedPreviousIndex);
         _viewContainer.move(view, currentIndex);
-        var tuple = new RecordViewTuple(item, view);
+        var tuple = new _RecordViewTuple(item, view);
         insertTuples.add(tuple);
       }
     });
@@ -179,8 +179,8 @@ class NgFor implements DoCheck {
   }
 }
 
-class RecordViewTuple {
+class _RecordViewTuple {
   final EmbeddedViewRef view;
   final CollectionChangeRecord record;
-  RecordViewTuple(this.record, this.view);
+  _RecordViewTuple(this.record, this.view);
 }

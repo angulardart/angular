@@ -31,7 +31,7 @@ List<E> _concat<E>(Iterable<E> a, Iterable<E> b) {
 /// ```dart
 /// tearDown(() => disposeAnyRunningTest());
 /// ```
-Future<Null> disposeAnyRunningTest() async => activeTest?.dispose();
+Future<void> disposeAnyRunningTest() async => activeTest?.dispose();
 
 /// An alternative method for [NgTestBed.create] that allows a dynamic [type].
 ///
@@ -50,7 +50,7 @@ Future<NgTestFixture<T>> createDynamicFixture<T>(
 NgTestBed<T> createDynamicTestBed<T>({
   Element host,
   InjectorFactory rootInjector,
-  bool watchAngularLifecycle: true,
+  bool watchAngularLifecycle = true,
 }) {
   return new NgTestBed<T>._allowDynamicType(
     host: host,
@@ -147,8 +147,8 @@ class NgTestBed<T> {
   static NgTestBed<T> forComponent<T>(
     ComponentFactory<T> component, {
     Element host,
-    InjectorFactory rootInjector: _defaultRootInjector,
-    bool watchAngularLifecycle: true,
+    InjectorFactory rootInjector = _defaultRootInjector,
+    bool watchAngularLifecycle = true,
   }) {
     if (T == dynamic) {
       throw new GenericTypeMissingError();
@@ -174,7 +174,7 @@ class NgTestBed<T> {
   factory NgTestBed({
     Element host,
     InjectorFactory rootInjector,
-    bool watchAngularLifecycle: true,
+    bool watchAngularLifecycle = true,
   }) {
     if (T == dynamic) {
       throw new GenericTypeMissingError();
@@ -190,7 +190,7 @@ class NgTestBed<T> {
   factory NgTestBed._allowDynamicType({
     Element host,
     InjectorFactory rootInjector,
-    bool watchAngularLifecycle: true,
+    bool watchAngularLifecycle = true,
   }) {
     return new NgTestBed<T>._(
       host: host,
@@ -287,7 +287,8 @@ class NgTestBed<T> {
       var rootInjector = _rootInjector;
       if (_providers.isNotEmpty) {
         rootInjector = ([parent]) {
-          return ReflectiveInjector.resolveAndCreate(_providers, parent);
+          return ReflectiveInjector.resolveAndCreate(
+              _providers, _rootInjector(parent));
         };
       }
       return bootstrapForTest<T>(

@@ -26,7 +26,7 @@ void main() {
     });
 
     test('should forward a synchronous error while stabilizng', () async {
-      expect(ngZoneStabilizer.stabilize(run: () {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         throw new StateError('Test');
       }), throwsStateError);
     });
@@ -40,7 +40,7 @@ void main() {
     });
 
     test('should forward an asynchronous error while stabilizing', () async {
-      expect(ngZoneStabilizer.stabilize(run: () {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         scheduleMicrotask(() {
           throw new StateError('Test');
         });
@@ -56,15 +56,24 @@ void main() {
     });
 
     test('should forward an asynchronus error via timer stabilizing', () async {
-      expect(ngZoneStabilizer.stabilize(run: () {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         Timer.run(() {
           throw new StateError('Test');
         });
       }), throwsStateError);
     });
 
+    test('should forward an asynchronus error via delayed future stabilizing',
+        () async {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
+        new Future.delayed(new Duration(milliseconds: 100), () {
+          throw new StateError('Test');
+        });
+      }), throwsStateError);
+    });
+
     test('should forward an asynchronous error via late stabilizing', () async {
-      expect(ngZoneStabilizer.stabilize(run: () {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         Timer.run(() {
           scheduleMicrotask(() {
             Timer.run(() {
@@ -78,7 +87,7 @@ void main() {
     });
 
     test('should forward an asynchrnous error in the far future', () async {
-      expect(ngZoneStabilizer.stabilize(run: () async {
+      expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () async {
         for (var i = 0; i < 20; i++) {
           await new Future(() {});
           await new Future.value();
@@ -103,17 +112,140 @@ void main() {
 
     test('should throw if stabilization never occurs', () async {
       expect(
-          ngZoneStabilizer.stabilize(
-              run: () {
-                // Just enough asynchronous events to exceed the threshold; not 1:1.
-                Timer.run(() {
-                  Timer.run(() {
-                    Timer.run(() {});
-                  });
-                });
-              },
-              threshold: 5),
-          throwsA(const isInstanceOf<WillNeverStabilizeError>()));
+        ngZoneStabilizer.stabilize(
+          runAndTrackSideEffects: () {
+            // Just enough asynchronous events to exceed the threshold; not 1:1.
+            var timersRemaining = 10;
+
+            void runTimer() {
+              if (--timersRemaining > 0) {
+                scheduleMicrotask(() => Timer.run(runTimer));
+              }
+            }
+
+            runTimer();
+          },
+          threshold: 5,
+        ),
+        throwsA(const isInstanceOf<WillNeverStabilizeError>()),
+      );
+    });
+
+    test('should stabilize if animation timers are used', () async {
+      expect(
+        ngZoneStabilizer.stabilize(
+            runAndTrackSideEffects: () async {
+              new Timer(const Duration(milliseconds: 100), () {});
+            },
+            threshold: 1),
+        completion(isNull),
+      );
     });
   });
+
+  group('$DelegatingNgTestStabilizer', () {
+    NgZoneStabilizerForTesting ngZoneStabilizer;
+    FakeNgTestStabilizer fakeNgTestStabilizer;
+    AlwaysStableNgTestStabilizer alwaysStableNgTestStabilizer;
+    DelegatingNgTestStabilizer delegatingNgTestStabilizer;
+
+    setUp(() {
+      final ngZone = new NgZone();
+      ngZoneStabilizer = new NgZoneStabilizerForTesting(ngZone);
+      fakeNgTestStabilizer = new FakeNgTestStabilizer(ngZone);
+      alwaysStableNgTestStabilizer = new AlwaysStableNgTestStabilizer();
+      delegatingNgTestStabilizer = new DelegatingNgTestStabilizer([
+        ngZoneStabilizer,
+        fakeNgTestStabilizer,
+        alwaysStableNgTestStabilizer
+      ]);
+    });
+
+    test('should stabilize if there is no function to run', () async {
+      await delegatingNgTestStabilizer.stabilize();
+      expect(ngZoneStabilizer.updateCount, 1);
+      expect(fakeNgTestStabilizer.updateCount, 1);
+      expect(alwaysStableNgTestStabilizer.updateCount, 1);
+    });
+
+    test('should stabilize if there is a function to run', () async {
+      await delegatingNgTestStabilizer.stabilize(runAndTrackSideEffects: () {
+        scheduleMicrotask(() {});
+      });
+      expect(ngZoneStabilizer.updateCount, 2);
+      expect(fakeNgTestStabilizer.updateCount, 2);
+      expect(alwaysStableNgTestStabilizer.updateCount, 1);
+    });
+
+    test('should only run update at least once and when needed', () async {
+      fakeNgTestStabilizer.minUpdateCountToStabilize = 5;
+
+      await delegatingNgTestStabilizer.stabilize();
+      expect(ngZoneStabilizer.updateCount, 1);
+      expect(fakeNgTestStabilizer.updateCount, 5);
+      expect(alwaysStableNgTestStabilizer.updateCount, 1);
+    });
+  });
+}
+
+abstract class _HasUpdateCount {
+  int updateCount = 0;
+}
+
+/// [NgZoneStabilizerForTesting] increments [updateCount] when a `update` is
+/// called.
+class NgZoneStabilizerForTesting extends NgZoneStabilizer with _HasUpdateCount {
+  NgZoneStabilizerForTesting(NgZone ngZone) : super(ngZone);
+
+  @override
+  Future<bool> update([void Function() fn]) async {
+    final result = await super.update(fn);
+    updateCount++;
+    return result;
+  }
+}
+
+class AlwaysStableNgTestStabilizer extends NgTestStabilizer
+    with _HasUpdateCount {
+  @override
+  bool get isStable => true;
+
+  @override
+  Future<bool> update([void Function() fn]) async {
+    // [fn] is not supported.
+    if (fn != null) return false;
+
+    updateCount++;
+    return isStable;
+  }
+}
+
+/// [FakeNgTestStabilizer] adds every [NgZone] onEventDone to its task list.
+class FakeNgTestStabilizer extends NgTestStabilizer with _HasUpdateCount {
+  final _tasks = <int>[];
+  int _nextTaskId = 0;
+
+  int minUpdateCountToStabilize = 0;
+
+  FakeNgTestStabilizer(NgZone ngZone) {
+    ngZone.onEventDone.listen((_) {
+      _tasks.add(_nextTaskId++);
+    });
+  }
+
+  @override
+  bool get isStable =>
+      _tasks.isEmpty && updateCount >= minUpdateCountToStabilize;
+
+  @override
+  Future<bool> update([void Function() fn]) async {
+    // [fn] is not supported.
+    if (fn != null) return false;
+
+    if (_tasks.isNotEmpty) {
+      _tasks.removeAt(0);
+    }
+    updateCount++;
+    return isStable;
+  }
 }

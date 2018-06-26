@@ -1,21 +1,21 @@
 name: examples.github_issues
 environment:
-  sdk: ">=2.0.0-dev.46.0 <2.0.0"
+  sdk: ">=2.0.0-dev.60.0 <2.0.0"
 
 dependencies:
-  angular_components: ^0.9.0-alpha+8
+  angular_components: ^0.9.0-alpha+13
   angular: ^5.0.0-alpha
   angular_forms: ^1.0.1-alpha+7
   markdown: ^1.1.1
-  sass_builder: ^1.1.5
+  sass_builder: ^2.0.0
 
 dev_dependencies:
   angular_test: ^2.0.0-alpha
-  build_runner: ^0.8.2
-  build_test: ^0.10.1+1
-  build_web_compilers: ^0.3.6
+  build_runner: ^0.9.0
+  build_test: ^0.10.2+5
+  build_web_compilers: ^0.4.0+4
   mockito: ^2.2.3
-  test: ^0.12.32+1
+  test: ">0.12.32+1 <2.0.0"
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:

@@ -80,105 +80,6 @@ class Directive {
   /// element.
   final String selector;
 
-  /// Events, actions, properties, and attributes related to the host element.
-  ///
-  /// ## Host listeners
-  /// Specifies which DOM events the directive listens to via a set of
-  /// '(_event_)' to _statement_ key-value pairs:
-  ///
-  /// - _event_: the DOM event that the directive listens to
-  /// - _statement_: the statement to execute when the event occurs
-  ///
-  /// If the evaluation of the statement returns [false], then [preventDefault]
-  /// is applied on the DOM event.
-  ///
-  /// To listen to global events, a target must be added to the event name.
-  /// The target can be `window`, `document`, or `body`.
-  ///
-  /// When writing a directive event binding, you can also refer to the `$event`
-  /// local variable.
-  ///
-  /// The following example declares a directive that attaches a click listener
-  /// to the button and counts clicks.
-  ///
-  /// ```dart
-  /// @Directive(
-  ///   selector: 'button[counting]',
-  ///   host: const {
-  ///     '(click)': 'onClick($event.target)'
-  ///   })
-  /// class CountClicks {
-  ///   var numberOfClicks = 0;
-  ///
-  ///   void onClick(btn) {
-  ///     print("Button $btn, number of clicks: ${numberOfClicks++}.");
-  ///   }
-  /// }
-  ///
-  /// @Component(
-  ///   selector: 'app',
-  ///   template: `<button counting>Increment</button>`,
-  ///   directives: const [CountClicks])
-  /// class App {}
-  /// ```
-  ///
-  /// ## Host property bindings
-  /// Specifies which DOM properties the directive updates.
-  ///
-  /// Angular automatically checks host property bindings during change
-  /// detection. If a binding changes, it will update the host element of the
-  /// directive.
-  ///
-  /// The following example creates a directive that sets the `valid` and
-  /// `invalid` classes on the DOM element that has ngModel directive on it.
-  ///
-  ///     @Directive(
-  ///       selector: '[ngModel]',
-  ///       host: {
-  ///         '[class.valid]': 'valid',
-  ///         '[class.invalid]': 'invalid'
-  ///       }
-  ///     )
-  ///     class NgModelStatus {
-  ///       NgModel control;
-  ///
-  ///       NgModelStatus(this.control);
-  ///       get valid => control.valid;
-  ///       get invalid => control.invalid;
-  ///     }
-  ///
-  ///     @Component({
-  ///       selector: 'app',
-  ///       template: `<input [(ngModel)]="prop">`,
-  ///       directives: [formDirectives, NgModelStatus]
-  ///     })
-  ///     class App {
-  ///       prop;
-  ///     }
-  ///
-  ///     bootstrap(App);
-  ///
-  /// ## Attributes
-  ///
-  /// Specifies static attributes that should be propagated to a host element.
-  ///
-  /// ### Example
-  ///
-  /// In this example using `my-button` directive (ex.: `<div my-button></div>`)
-  /// on a host element (here: `<div>` ) will ensure that this element will get
-  /// the "button" role.
-  ///
-  /// ```dart
-  /// @Directive(
-  ///   selector: '[my-button]',
-  ///   host: const {
-  ///     'role': 'button'
-  ///   })
-  /// class MyButton {}
-  /// ```
-  @Deprecated('Use @HostBinding() on a getter or @HostListener on a method')
-  final Map<String, String> host;
-
   /// The set of injectable objects that are visible to the directive and
   /// its light DOM children.
   ///
@@ -229,19 +130,16 @@ class Directive {
 
   const Directive({
     @required this.selector,
-    @Deprecated('Use @HostBinding() on a getter or @HostListener on a method')
-        this.host,
     this.providers,
     this.exportAs,
-    this.visibility: Visibility.local,
+    this.visibility = Visibility.local,
   });
 }
 
 /// Declare reusable UI building blocks for an application.
 ///
 /// Each Angular component requires a single `@Component` annotation. The
-/// `@Component` annotation specifies when a component is instantiated, and
-/// which properties and hostListeners it binds to.
+/// `@Component` annotation specifies when a component is instantiated.
 ///
 /// When a component is instantiated, Angular
 ///
@@ -338,17 +236,15 @@ class Component extends Directive {
 
   const Component({
     String selector,
-    @Deprecated('Use @HostBinding() on a getter or @HostListener on a method')
-        Map<String, String> host,
     String exportAs,
     List providers,
-    Visibility visibility: Visibility.local,
+    Visibility visibility = Visibility.local,
     this.viewProviders,
     this.exports,
-    this.changeDetection: ChangeDetectionStrategy.Default,
+    this.changeDetection = ChangeDetectionStrategy.Default,
     this.templateUrl,
     this.template,
-    this.preserveWhitespace: false,
+    this.preserveWhitespace = false,
     this.styleUrls,
     this.styles,
     this.directives,
@@ -356,7 +252,6 @@ class Component extends Directive {
     this.encapsulation,
   }) : super(
           selector: selector,
-          host: host,
           exportAs: exportAs,
           providers: providers,
           visibility: visibility,
@@ -372,7 +267,7 @@ class Pipe {
   final String name;
   final bool pure;
 
-  const Pipe(this.name, {this.pure: true});
+  const Pipe(this.name, {this.pure = true});
 }
 
 /// An annotation to specify that a constant attribute value should be injected.
@@ -419,8 +314,8 @@ abstract class _Query {
 
   const _Query(
     this.selector, {
-    this.descendants: false,
-    this.first: false,
+    this.descendants = false,
+    this.first = false,
     this.read,
   });
 }
@@ -446,7 +341,7 @@ abstract class _Query {
 class ContentChildren extends _Query {
   const ContentChildren(
     Object selector, {
-    bool descendants: true,
+    bool descendants = true,
     Object read,
   }) : super(
           selector,
@@ -488,8 +383,8 @@ class ContentChild extends _Query {
 abstract class _ViewQuery extends _Query {
   const _ViewQuery(
     Object selector, {
-    bool descendants: false,
-    bool first: false,
+    bool descendants = false,
+    bool first = false,
     Object read,
   }) : super(
           selector,

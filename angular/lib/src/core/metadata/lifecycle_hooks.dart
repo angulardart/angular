@@ -155,27 +155,27 @@ abstract class OnDestroy {
   void ngOnDestroy();
 }
 
-/// Implement this interface to override the default change detection algorithm
-/// for your directive.
+/// Implement to execute [ngDoCheck] and implement your own change detection.
 ///
-/// [ngDoCheck] gets called to check the changes in the directives instead of
-/// the default algorithm.
+/// By default, AngularDart does an _identity_ based change detection of all
+/// input bindings (`@Input()`). That is, for an `@Input() Object a`, if the
+/// expression `identical(oldA, newA)` is `false`, AngularDart will invoke
+/// `comp.a = newA`.
 ///
-/// The default change detection algorithm looks for differences by comparing
-/// bound-property values by reference across change detection runs. When
-/// [DoCheck] is implemented, the default algorithm is disabled and [ngDoCheck]
-/// is responsible for checking for changes.
+/// When [DoCheck] is implemented, AngularDart will _always_ invoke `comp.a = `,
+/// meaning that the field (or setter) may get called multiple times with the
+/// exact same object. This is used by `NgFor`, `NgStyle` and `NgClass`, for
+/// example, in order to update when the _contents_ of the passed in collection
+/// (either `Iterable` or `Map`) changes, not necessarily just if the identity
+/// changes.
 ///
-/// Implementing this interface allows improving performance by using insights
-/// about the component, its implementation and data types of its properties.
+/// **WARNING**: It is invalid to trigger any asynchronous event in `ngDoCheck`.
+/// Doing so may cause an infinite loop, as [DoCheck] will continue to be called
+/// and the asynchronous events will invalidate the state.
 ///
-/// Note that a directive should not implement both [DoCheck] and [OnChanges] at
-/// the same time.  [ngOnChanges] would not be called when a directive
-/// implements [DoCheck]. Reaction to the changes have to be handled from within
-/// the [ngDoCheck] callback.
-///
-/// Use [KeyValueDiffers] and [IterableDiffers] to add your custom check
-/// mechanisms.
+/// **WARNING**: It is invalid to implement both [DoCheck] _and_ [OnChanges]
+/// or [AfterChanges]. `ngOnChanges` and `ngAfterChanges` will never be called,
+/// as `ngDoCheck` is used instead of the default change detector.
 ///
 /// ### Examples
 ///

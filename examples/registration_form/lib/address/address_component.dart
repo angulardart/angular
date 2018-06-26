@@ -20,9 +20,7 @@ bool isPristine(NgControl control) => control.pristine;
 
 @Directive(
     selector: 'material-auto-suggest-input[ngControl="state"]',
-    providers: const [
-      const ExistingProvider.forToken(NG_VALIDATORS, RequiredState)
-    ])
+    providers: [ExistingProvider.forToken(NG_VALIDATORS, RequiredState)])
 class RequiredState implements Validator {
   @override
   Map<String, dynamic> validate(AbstractControl control) =>
@@ -31,7 +29,7 @@ class RequiredState implements Validator {
           : {'state': 'Please select a state from the list'};
 }
 
-const List<String> states = const <String>[
+const List<String> states = <String>[
   'Alabama',
   'Alaska',
   'Arizona',

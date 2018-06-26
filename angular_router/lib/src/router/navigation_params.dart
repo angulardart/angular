@@ -32,11 +32,11 @@ class NavigationParams {
   final bool updateUrl;
 
   const NavigationParams({
-    this.queryParameters: const {},
-    this.fragment: '',
-    this.reload: false,
-    this.replace: false,
-    this.updateUrl: true,
+    this.queryParameters = const {},
+    this.fragment = '',
+    this.reload = false,
+    this.replace = false,
+    this.updateUrl = true,
   });
 
   /// Runs a dev-mode assertion that the definition is valid.

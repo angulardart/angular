@@ -12,6 +12,7 @@ import 'package:angular/src/di/injector/injector.dart'
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 
 import 'app_view_utils.dart';
 import 'component_factory.dart';
@@ -94,11 +95,10 @@ class AppViewData<T> {
   AppViewData._(AppView<T> appView, this._cdMode, this.type, this.parentIndex)
       : ref = new ViewRefImpl(appView);
 
+  @dart2js.noInline
   factory AppViewData(
       AppView<T> appView, int cdMode, ViewType viewType, int parentIndex) {
     return new AppViewData._(appView, cdMode, viewType, parentIndex);
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
   }
 
   set cdMode(int value) {
@@ -246,43 +246,34 @@ abstract class AppView<T> {
   ComponentRef<T> build() => null;
 
   /// Specialized init when component has a single root node.
+  @dart2js.noInline
   void init0(dynamic e) {
     viewData.rootNodesOrViewContainers = <dynamic>[e];
     if (viewData.type == ViewType.component) {
       dirtyParentQueriesInternal();
     }
-    // Workaround since package expect/@NoInline not available outside sdk.
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
   }
 
   /// Specialized init when component has a single root node.
+  @dart2js.noInline
   void init0WithSub(dynamic e, List subscriptions) {
     viewData.subscriptions = subscriptions;
     init0(e);
-    // Workaround since package expect/@NoInline not available outside sdk.
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
   }
 
   /// Called by build once all dom nodes are available.
+  @dart2js.noInline
   void init(List rootNodesOrViewContainers, List subscriptions) {
     viewData.rootNodesOrViewContainers = rootNodesOrViewContainers;
     viewData.subscriptions = subscriptions;
     if (viewData.type == ViewType.component) {
       dirtyParentQueriesInternal();
     }
-    // Workaround since package expect/@NoInline not available outside sdk.
-    return; // ignore: dead_code
-    return; // ignore: dead_code
-    return; // ignore: dead_code
   }
 
   void addInlinedNodes(Node anchor, List<Node> inlinedNodes,
       [bool isRoot = false]) {
-    moveNodesAfterSibling(anchor, inlinedNodes);
+    _moveNodesAfterSibling(anchor, inlinedNodes);
     if (isRoot) {
       viewData.rootNodesOrViewContainers.addAll(inlinedNodes);
     } else {
@@ -291,7 +282,7 @@ abstract class AppView<T> {
   }
 
   void removeInlinedNodes(List<Node> inlinedNodes, [bool isRoot = false]) {
-    detachAll(inlinedNodes);
+    _detachAll(inlinedNodes);
     var nodeList =
         isRoot ? viewData.rootNodesOrViewContainers : viewData.inlinedNodes;
     for (int i = nodeList.length - 1; i >= 0; i--) {
@@ -303,7 +294,7 @@ abstract class AppView<T> {
   }
 
   void attachViewAfter(Node node, List<Node> viewRootNodes) {
-    moveNodesAfterSibling(node, viewRootNodes);
+    _moveNodesAfterSibling(node, viewRootNodes);
     domRootRendererIsDirty = true;
   }
 
@@ -344,7 +335,7 @@ abstract class AppView<T> {
   }
 
   void detachViewNodes(List<Node> viewRootNodes) {
-    detachAll(viewRootNodes);
+    _detachAll(viewRootNodes);
   }
 
   void destroy() {
@@ -623,7 +614,9 @@ abstract class AppView<T> {
   void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
     return (E event) {
       markPathToRootAsCheckOnce();
-      appViewUtils.eventManager.getZone().runGuarded(() => handler(event as F));
+      appViewUtils.eventManager
+          .getZone()
+          .runGuarded(() => handler(unsafeCast<F>(event)));
     };
   }
 
@@ -721,7 +714,7 @@ List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
   return renderNodes;
 }
 
-void moveNodesAfterSibling(Node sibling, List<Node> nodes) {
+void _moveNodesAfterSibling(Node sibling, List<Node> nodes) {
   Node parent = sibling.parentNode;
   if (nodes.isNotEmpty && parent != null) {
     var nextSibling = sibling.nextNode;
@@ -739,39 +732,30 @@ void moveNodesAfterSibling(Node sibling, List<Node> nodes) {
 }
 
 /// Helper function called by AppView.build to reduce code size.
+@dart2js.noInline
 Element createAndAppend(Document doc, String tagName, Element parent) {
   // Allow implicit cast here to avoid messing with inlining heuristics.
   // ignore: return_of_invalid_type
   return parent.append(doc.createElement(tagName));
-  // Workaround since package expect/@NoInline not available outside sdk.
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
 }
 
 /// Helper function called by AppView.build to reduce code size.
+@dart2js.noInline
 DivElement createDivAndAppend(Document doc, Element parent) {
   // Allow implicit cast here to avoid messing with inlining heuristics.
   // ignore: return_of_invalid_type
   return parent.append(doc.createElement('div'));
-  // Workaround since package expect/@NoInline not available outside sdk.
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
 }
 
 /// Helper function called by AppView.build to reduce code size.
+@dart2js.noInline
 SpanElement createSpanAndAppend(Document doc, Element parent) {
   // Allow implicit cast here to avoid messing with inlining heuristics.
   // ignore: return_of_invalid_type
   return parent.append(doc.createElement('span'));
-  // Workaround since package expect/@NoInline not available outside sdk.
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
-  return null; // ignore: dead_code
 }
 
-void detachAll(List<Node> viewRootNodes) {
+void _detachAll(List<Node> viewRootNodes) {
   int len = viewRootNodes.length;
   for (var i = 0; i < len; i++) {
     Node node = viewRootNodes[i];

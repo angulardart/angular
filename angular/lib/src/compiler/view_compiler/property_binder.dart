@@ -1,13 +1,13 @@
 import 'package:angular/src/compiler/analyzed_class.dart';
-import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 import 'package:angular/src/core/change_detection/constants.dart'
     show isDefaultChangeDetectionStrategy, ChangeDetectionStrategy;
-import 'package:angular/src/core/linker/view_type.dart' show ViewType;
+import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';
 import 'package:angular/src/source_gen/common/names.dart'
     show toTemplateExtension;
+import 'package:source_span/source_span.dart';
 
 import "../compile_metadata.dart";
 import '../expression_parser/ast.dart' as ast;
@@ -30,15 +30,16 @@ import 'view_compiler_utils.dart'
     show
         createFlatArray,
         createSetAttributeParams,
+        namespaceUris,
         outlinerDeprecated,
         unwrapDirective,
         unwrapDirectiveInstance;
 import 'view_name_resolver.dart';
 
-o.ReadClassMemberExpr createBindFieldExpr(num exprIndex) =>
+o.ReadClassMemberExpr _createBindFieldExpr(num exprIndex) =>
     new o.ReadClassMemberExpr('_expr_$exprIndex');
 
-o.ReadVarExpr createCurrValueExpr(num exprIndex) =>
+o.ReadVarExpr _createCurrValueExpr(num exprIndex) =>
     o.variable('currVal_$exprIndex');
 
 /// Generates code to bind template expression.
@@ -56,20 +57,21 @@ o.ReadVarExpr createCurrValueExpr(num exprIndex) =>
 /// once when component is created.
 /// Otherwise statements are added to method to be executed on
 /// each change detection cycle.
-void bind(
+void _bind(
     CompileDirectiveMetadata viewDirective,
     ViewNameResolver nameResolver,
     ViewStorage storage,
     o.ReadVarExpr currValExpr,
     o.ReadClassMemberExpr fieldExpr,
     ast.AST parsedExpression,
+    SourceSpan parsedExpressionSourceSpan,
     o.Expression context,
     List<o.Statement> actions,
     CompileMethod method,
     CompileMethod literalMethod,
     bool genDebugInfo,
     {o.OutputType fieldType,
-    bool isHostComponent: false,
+    bool isHostComponent = false,
     o.Expression fieldExprInitializer}) {
   parsedExpression =
       rewriteInterpolate(parsedExpression, viewDirective.analyzedClass);
@@ -77,6 +79,7 @@ void bind(
     nameResolver,
     context,
     parsedExpression,
+    parsedExpressionSourceSpan,
     viewDirective,
     fieldType,
   );
@@ -93,7 +96,7 @@ void bind(
     // e.g. an empty expression was given
     return;
   }
-  bool isPrimitive = isPrimitiveFieldType(fieldType);
+  bool isPrimitive = _isPrimitiveFieldType(fieldType);
   ViewStorageItem previousValueField = storage.allocate(fieldExpr.name,
       modifiers: const [o.StmtModifier.Private],
       initializer: fieldExprInitializer,
@@ -101,23 +104,15 @@ void bind(
   method.addStmt(currValExpr
       .set(checkExpression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
-  o.Expression condition;
-  if (genDebugInfo) {
-    condition =
-        o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]);
-  } else {
-    condition = new o.NotExpr(
-        o.importExpr(Identifiers.identical).callFn([fieldExpr, currValExpr]));
-  }
   method.addStmt(new o.IfStmt(
-      condition,
+      o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]),
       new List.from(actions)
         ..addAll([
           storage.buildWriteExpr(previousValueField, currValExpr).toStmt()
         ])));
 }
 
-/// The same as [bind], but we know that [checkExpression] is a literal.
+/// The same as [_bind], but we know that [checkExpression] is a literal.
 ///
 /// This means we don't need to create a change detection field or check if it
 /// has changed. We know for sure that there will only be one transition from
@@ -159,19 +154,19 @@ void bindRenderText(
   }
   int bindingIndex = view.nameResolver.createUniqueBindIndex();
   // Expression for current value of expression when value is re-read.
-  var currValExpr = createCurrValueExpr(bindingIndex);
+  var currValExpr = _createCurrValueExpr(bindingIndex);
   // Expression that points to _expr_## stored value.
-  var valueField = createBindFieldExpr(bindingIndex);
+  var valueField = _createBindFieldExpr(bindingIndex);
   var dynamicRenderMethod = new CompileMethod(view.genDebugInfo);
-  dynamicRenderMethod.resetDebugInfo(compileNode.nodeIndex, boundText);
   var constantRenderMethod = new CompileMethod(view.genDebugInfo);
-  bind(
+  _bind(
       view.component,
       view.nameResolver,
       view.storage,
       currValExpr,
       valueField,
       boundText.value,
+      boundText.sourceSpan,
       DetectChangesVars.cachedCtx,
       [
         compileNode.renderNode
@@ -213,8 +208,8 @@ void bindAndWriteToRenderer(
     ViewStorage storage,
     CompileMethod targetMethod,
     bool genDebugInfo,
-    {bool updatingHostAttribute: false,
-    bool isHostComponent: false}) {
+    {bool updatingHostAttribute = false,
+    bool isHostComponent = false}) {
   final dynamicPropertiesMethod = new CompileMethod(genDebugInfo);
   final constantPropertiesMethod = new CompileMethod(genDebugInfo);
   for (var boundProp in boundProps) {
@@ -222,15 +217,15 @@ void bindAndWriteToRenderer(
     int bindingIndex = nameResolver.createUniqueBindIndex();
 
     // Expression that points to _expr_## stored value.
-    var fieldExpr = createBindFieldExpr(bindingIndex);
+    var fieldExpr = _createBindFieldExpr(bindingIndex);
 
     // Expression for current value of expression when value is re-read.
-    var currValExpr = createCurrValueExpr(bindingIndex);
+    var currValExpr = _createCurrValueExpr(bindingIndex);
 
     String renderMethod;
     o.OutputType fieldType;
     // Wraps current value with sanitization call if necessary.
-    o.Expression renderValue = sanitizedValue(boundProp, currValExpr);
+    o.Expression renderValue = _sanitizedValue(boundProp, currValExpr);
 
     var updateStmts = <o.Statement>[];
     switch (boundProp.type) {
@@ -299,13 +294,14 @@ void bindAndWriteToRenderer(
         break;
     }
 
-    bind(
+    _bind(
         directiveMeta,
         nameResolver,
         storage,
         currValExpr,
         fieldExpr,
         boundProp.value,
+        boundProp.sourceSpan,
         context,
         updateStmts,
         dynamicPropertiesMethod,
@@ -323,7 +319,7 @@ void bindAndWriteToRenderer(
   }
 }
 
-o.Expression sanitizedValue(
+o.Expression _sanitizedValue(
     BoundElementPropertyAst boundProp, o.Expression renderValue) {
   String methodName;
   switch (boundProp.securityContext) {
@@ -334,9 +330,6 @@ o.Expression sanitizedValue(
       break;
     case TemplateSecurityContext.style:
       methodName = 'sanitizeStyle';
-      break;
-    case TemplateSecurityContext.script:
-      methodName = 'sanitizeScript';
       break;
     case TemplateSecurityContext.url:
       methodName = 'sanitizeUrl';
@@ -406,7 +399,7 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
 
 void bindDirectiveInputs(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement,
-    {bool isHostComponent: false}) {
+    {bool isHostComponent = false}) {
   var directive = directiveAst.directive;
   if (directive.inputs.isEmpty) {
     return;
@@ -416,8 +409,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var dynamicInputsMethod = new CompileMethod(view.genDebugInfo);
   var constantInputsMethod = new CompileMethod(view.genDebugInfo);
-  dynamicInputsMethod.resetDebugInfo(
-      compileElement.nodeIndex, compileElement.sourceAst);
   var lifecycleHooks = directive.lifecycleHooks;
   bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.onChanges);
   bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.afterChanges);
@@ -453,9 +444,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   // input is a BoundPropertyAst that contains binding metadata.
   for (var input in directiveAst.inputs) {
     var bindingIndex = view.nameResolver.createUniqueBindIndex();
-    dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
-    var fieldExpr = createBindFieldExpr(bindingIndex);
-    var currValExpr = createCurrValueExpr(bindingIndex);
+    var fieldExpr = _createBindFieldExpr(bindingIndex);
+    var currValExpr = _createCurrValueExpr(bindingIndex);
     var statements = <o.Statement>[];
 
     // Optimization specifically for NgIf. Since the directive already performs
@@ -466,6 +456,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           view.nameResolver,
           DetectChangesVars.cachedCtx,
           input.value,
+          input.sourceSpan,
           view.component,
           o.BOOL_TYPE);
       dynamicInputsMethod.addStmt(directiveInstance
@@ -476,8 +467,13 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     }
     if (isStatefulDirective) {
       var fieldType = o.importType(directive.inputTypes[input.directiveName]);
-      var checkExpression = convertCdExpressionToIr(view.nameResolver,
-          DetectChangesVars.cachedCtx, input.value, view.component, fieldType);
+      var checkExpression = convertCdExpressionToIr(
+          view.nameResolver,
+          DetectChangesVars.cachedCtx,
+          input.value,
+          input.sourceSpan,
+          view.component,
+          fieldType);
       if (isImmutable(input.value, view.component.analyzedClass)) {
         constantInputsMethod.addStmt(directiveInstance
             .prop(input.directiveName)
@@ -534,17 +530,25 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
         ? o.importType(inputTypeMeta, inputTypeMeta.genericTypes)
         : null;
     if (isStatefulComp) {
-      bindToUpdateMethod(view, currValExpr, fieldExpr, input.value,
-          DetectChangesVars.cachedCtx, statements, dynamicInputsMethod,
+      _bindToUpdateMethod(
+          view,
+          currValExpr,
+          fieldExpr,
+          input.value,
+          input.sourceSpan,
+          DetectChangesVars.cachedCtx,
+          statements,
+          dynamicInputsMethod,
           fieldType: inputType);
     } else {
-      bind(
+      _bind(
           view.component,
           view.nameResolver,
           view.storage,
           currValExpr,
           fieldExpr,
           input.value,
+          input.sourceSpan,
           DetectChangesVars.cachedCtx,
           statements,
           dynamicInputsMethod,
@@ -569,23 +573,24 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   }
 }
 
-void bindToUpdateMethod(
+void _bindToUpdateMethod(
     CompileView view,
     o.ReadVarExpr currValExpr,
     o.ReadClassMemberExpr fieldExpr,
     ast.AST parsedExpression,
+    SourceSpan parseExpressionSourceSpan,
     o.Expression context,
     List<o.Statement> actions,
     CompileMethod method,
     {o.OutputType fieldType}) {
-  var checkExpression = convertCdExpressionToIr(
-      view.nameResolver, context, parsedExpression, view.component, fieldType);
+  var checkExpression = convertCdExpressionToIr(view.nameResolver, context,
+      parsedExpression, parseExpressionSourceSpan, view.component, fieldType);
   if (checkExpression == null) {
     // e.g. an empty expression was given
     return;
   }
   // Add class field to store previous value.
-  bool isPrimitive = isPrimitiveFieldType(fieldType);
+  bool isPrimitive = _isPrimitiveFieldType(fieldType);
   ViewStorageItem previousValueField = view.storage.allocate(fieldExpr.name,
       outputType: isPrimitive ? fieldType : null,
       modifiers: const [o.StmtModifier.Private]);
@@ -601,18 +606,8 @@ void bindToUpdateMethod(
     method.addStmt(
         view.storage.buildWriteExpr(previousValueField, currValExpr).toStmt());
   } else {
-    // Otherwise use traditional checkBinding call.
-    o.Expression condition;
-    if (view.genConfig.genDebugInfo) {
-      condition = o
-          .importExpr(Identifiers.checkBinding)
-          .callFn([fieldExpr, currValExpr]);
-    } else {
-      condition = new o.NotExpr(
-          o.importExpr(Identifiers.identical).callFn([fieldExpr, currValExpr]));
-    }
     method.addStmt(new o.IfStmt(
-        condition,
+        o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]),
         new List.from(actions)
           ..addAll([
             new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()
@@ -627,14 +622,11 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var dynamicInputsMethod = new CompileMethod(view.genDebugInfo);
   var constantInputsMethod = new CompileMethod(view.genDebugInfo);
-  dynamicInputsMethod.resetDebugInfo(
-      compileElement.nodeIndex, compileElement.sourceAst);
 
   var input = directiveAst.inputs.single;
   var bindingIndex = view.nameResolver.createUniqueBindIndex();
-  dynamicInputsMethod.resetDebugInfo(compileElement.nodeIndex, input);
-  var fieldExpr = createBindFieldExpr(bindingIndex);
-  var currValExpr = createCurrValueExpr(bindingIndex);
+  var fieldExpr = _createBindFieldExpr(bindingIndex);
+  var currValExpr = _createCurrValueExpr(bindingIndex);
 
   var embeddedView = compileElement.embeddedView;
 
@@ -675,13 +667,14 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
         new ast.Binary('==', input.value, new ast.LiteralPrimitive(true));
   }
 
-  bind(
+  _bind(
       view.component,
       view.nameResolver,
       view.storage,
       currValExpr,
       fieldExpr,
       condition,
+      input.sourceSpan,
       DetectChangesVars.cachedCtx,
       statements,
       dynamicInputsMethod,
@@ -700,16 +693,7 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
   }
 }
 
-o.Statement logBindingUpdateStmt(
-    o.Expression renderNode, String propName, o.Expression value) {
-  return new o.InvokeMemberMethodExpr('setBindingDebugInfo', [
-    renderNode,
-    o.literal('ng-reflect-$propName'),
-    value.isBlank().conditional(o.NULL_EXPR, value.callMethod('toString', []))
-  ]).toStmt();
-}
-
-bool isPrimitiveFieldType(o.OutputType type) {
+bool _isPrimitiveFieldType(o.OutputType type) {
   if (type == o.BOOL_TYPE ||
       type == o.INT_TYPE ||
       type == o.DOUBLE_TYPE ||

@@ -4,4 +4,5 @@
 
 export 'frontend/bed.dart' show disposeAnyRunningTest, NgTestBed;
 export 'frontend/fixture.dart' show NgTestFixture;
-export 'frontend/stabilizer.dart' show NgTestStabilizer, NgZoneStabilizer;
+export 'frontend/stabilizer.dart'
+    show NgTestStabilizerFactory, NgTestStabilizer, NgZoneStabilizer;

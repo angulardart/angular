@@ -2,18 +2,17 @@ import 'package:angular/src/compiler/output/output_ast.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular/src/core/app_view_consts.dart' show namespaceUris;
 import 'package:angular_compiler/cli.dart';
 import 'package:meta/meta.dart';
 
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompileTypeMetadata;
+import '../expression_parser/ast.dart' as ast;
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
-import '../identifiers.dart' show Identifiers, identifierToken;
+import '../identifiers.dart' show Identifiers;
 import '../is_pure_html.dart';
 import '../output/output_ast.dart' as o;
-import '../provider_parser.dart' show ngIfTokenMetadata, ngForTokenMetadata;
 import '../style_compiler.dart' show StylesCompileResult;
 import '../template_ast.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
@@ -36,13 +35,11 @@ import 'view_compiler_utils.dart'
     show
         cachedParentIndexVarName,
         createFlatArray,
-        createDebugInfoTokenExpression,
         createSetAttributeStatement,
         detectHtmlElementFromTagName,
         componentFromDirectives,
-        identifierFromTagName;
-
-var rootSelectorVar = o.variable("rootSelector");
+        identifierFromTagName,
+        namespaceUris;
 
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   final CompileView view;
@@ -65,7 +62,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   ViewBuilderVisitor(
     this.view,
     this.stylesCompileResult, {
-    this.isInlinedView: false,
+    this.isInlinedView = false,
   });
 
   bool _isRootNode(CompileElement parent) {
@@ -100,7 +97,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   void visitText(TextAst ast, CompileElement parent) {
     int nodeIndex = view.nodes.length;
     NodeReference renderNode =
-        view.createTextNode(parent, nodeIndex, ast.value, ast);
+        view.createTextNode(parent, nodeIndex, o.literal(ast.value), ast);
     var compileNode = new CompileNode(parent, view, nodeIndex, renderNode, ast);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
@@ -153,7 +150,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       NodeReference elementRef,
       List<CompileDirectiveMetadata> directives,
       ElementAst ast,
-      {bool isDeferred: false}) {
+      {bool isDeferred = false}) {
     AppViewReference compAppViewExpr = view.createComponentNodeAndAppend(
         component, parent, elementRef, nodeIndex, ast,
         isDeferred: isDeferred);
@@ -339,64 +336,46 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       BoundElementPropertyAst ast, CompileElement parent) {}
 
   void visitProvider(ProviderAst ast, CompileElement parent) {}
-}
 
-o.Expression createStaticNodeDebugInfo(CompileNode node) {
-  var compileElement = node is CompileElement ? node : null;
-  List<o.Expression> providerTokens = [];
-  o.Expression componentToken = o.NULL_EXPR;
-  var varTokenEntries = <List>[];
-  if (compileElement != null) {
-    providerTokens = compileElement.getProviderTokens();
-    if (compileElement.component != null) {
-      componentToken = createDebugInfoTokenExpression(
-          identifierToken(compileElement.component.type));
-    }
-    compileElement.referenceTokens?.forEach((String varName, token) {
-      // Skip generating debug info for NgIf/NgFor since they are not
-      // reachable through injection anymore.
-      if (token == null ||
-          !(token.equalsTo(ngIfTokenMetadata) ||
-              token.equalsTo(ngForTokenMetadata))) {
-        varTokenEntries.add([
-          varName,
-          token != null ? createDebugInfoTokenExpression(token) : o.NULL_EXPR
-        ]);
-      }
-    });
+  @override
+  void visitI18nAttr(I18nAttrAst ast, CompileElement parent) {}
+
+  @override
+  void visitI18nText(I18nTextAst ast, CompileElement parent) {
+    final nodeIndex = view.nodes.length;
+    final message = view.createI18nMessage(ast.value);
+    final renderNode = ast.value.containsHtml
+        ? view.createHtml(parent, nodeIndex, message)
+        : view.createTextNode(parent, nodeIndex, message, ast);
+    final compileNode =
+        new CompileNode(parent, view, nodeIndex, renderNode, ast);
+    view.nodes.add(compileNode);
+    _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
   }
-  // Optimize StaticNodeDebugInfo(const [],null,const <String, dynamic>{}), case
-  // by writing out null.
-  if (providerTokens.isEmpty &&
-      componentToken == o.NULL_EXPR &&
-      varTokenEntries.isEmpty) {
-    return o.NULL_EXPR;
-  }
-  return o.importExpr(Identifiers.StaticNodeDebugInfo).instantiate([
-    o.literalArr(providerTokens, new o.ArrayType(o.DYNAMIC_TYPE)),
-    componentToken,
-    o.literalMap(varTokenEntries, new o.MapType(o.DYNAMIC_TYPE))
-  ], o.importType(Identifiers.StaticNodeDebugInfo, null));
 }
 
 /// Generates output ast for a CompileView and returns a [ClassStmt] for the
 /// view of embedded template.
 o.ClassStmt createViewClass(
-    CompileView view, o.Expression nodeDebugInfosVar, Parser parser) {
-  var viewConstructor = _createViewClassConstructor(view, nodeDebugInfosVar);
+  CompileView view,
+  Parser parser,
+) {
+  var viewConstructor = _createViewClassConstructor(view);
   var viewMethods = <o.ClassMethod>[
     new o.ClassMethod(
         "build",
         [],
-        generateBuildMethod(view, parser),
+        _generateBuildMethod(view, parser),
         o.importType(
-          Identifiers.ComponentRef,
-          // The 'HOST' view is a <dynamic> view that "hosts" the actual
-          // component view, therefore it is not typed.
-          view.viewType != ViewType.host
-              ? [o.importType(view.component.type)]
-              : const [],
-        ),
+            Identifiers.ComponentRef,
+            // The 'HOST' view is the only implementation that actually returns
+            // a ComponentRef, the rest statically declare they do but in
+            // reality return `null`. There is no way to fix this without
+            // creating new sub-class-able AppView types:
+            // https://github.com/dart-lang/angular/issues/1421
+            view.component.originType != null
+                ? [o.importType(view.component.originType)]
+                : const []),
         null,
         ['override']),
     view.writeInjectorGetMethod(),
@@ -404,21 +383,18 @@ o.ClassStmt createViewClass(
         view.writeChangeDetectionStatements(), null, null, ['override']),
     new o.ClassMethod("dirtyParentQueriesInternal", [],
         view.dirtyParentQueriesMethod.finish(), null, null, ['override']),
-    new o.ClassMethod("destroyInternal", [], generateDestroyMethod(view), null,
+    new o.ClassMethod("destroyInternal", [], _generateDestroyMethod(view), null,
         null, ['override'])
-  ]..addAll(view.eventHandlerMethods);
+  ]..addAll(view.methods);
   if (view.detectHostChangesMethod != null) {
     viewMethods.add(new o.ClassMethod(
         'detectHostChanges',
         [new o.FnParam(DetectChangesVars.firstCheck.name, o.BOOL_TYPE)],
         view.detectHostChangesMethod.finish()));
   }
-  var superClass = view.genConfig.genDebugInfo
-      ? Identifiers.DebugAppView
-      : Identifiers.AppView;
   var viewClass = new o.ClassStmt(
       view.className,
-      o.importExpr(superClass, typeParams: [getContextType(view)]),
+      o.importExpr(Identifiers.AppView, typeParams: [_getContextType(view)]),
       view.storage.fields,
       view.getters,
       viewConstructor,
@@ -431,8 +407,7 @@ o.ClassStmt createViewClass(
   return viewClass;
 }
 
-o.ClassMethod _createViewClassConstructor(
-    CompileView view, o.Expression nodeDebugInfosVar) {
+o.ClassMethod _createViewClassConstructor(CompileView view) {
   var emptyTemplateVariableBindings = view.templateVariables
       .map((variable) => [variable.value, o.NULL_EXPR])
       .toList();
@@ -446,11 +421,8 @@ o.ClassMethod _createViewClassConstructor(
     o.literalMap(emptyTemplateVariableBindings),
     ViewConstructorVars.parentView,
     ViewConstructorVars.parentIndex,
-    changeDetectionStrategyToConst(getChangeDetectionMode(view))
+    changeDetectionStrategyToConst(_getChangeDetectionMode(view))
   ];
-  if (view.genConfig.genDebugInfo) {
-    superConstructorArgs.add(nodeDebugInfosVar);
-  }
   o.ClassMethod ctor = new o.ClassMethod(null, viewConstructorArgs,
       [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()]);
   if (view.viewType == ViewType.component && view.viewIndex == 0) {
@@ -471,9 +443,19 @@ o.ClassMethod _createViewClassConstructor(
 
     // Write literal attribute values on element.
     CompileDirectiveMetadata componentMeta = view.component;
-    componentMeta.hostAttributes.forEach((String name, String value) {
+    componentMeta.hostAttributes.forEach((String name, ast.AST value) {
+      var expression = convertCdExpressionToIr(
+        view.nameResolver,
+        o.THIS_EXPR,
+        value,
+        // We neither have a source span to provide, nor should it be possible
+        // for a host binding to fail expression conversion and need it.
+        null,
+        view.component,
+        o.STRING_TYPE,
+      );
       o.Statement stmt = createSetAttributeStatement(
-          tagName, o.variable(appViewRootElementName), name, value);
+          tagName, o.variable(appViewRootElementName), name, expression);
       ctor.body.add(stmt);
     });
     if (view.genConfig.profileFor != Profile.none) {
@@ -517,14 +499,7 @@ void _addRenderTypeCtorInitialization(CompileView view, o.ClassStmt viewClass) {
 o.Expression _constructRenderType(
     CompileView view, o.ClassStmt viewClass, o.ClassMethod viewConstructor) {
   assert(view.viewIndex == 0);
-  var templateUrlInfo;
-  if (view.component.template.templateUrl == view.component.type.moduleUrl) {
-    templateUrlInfo = '${view.component.type.moduleUrl} '
-        'class ${view.component.type.name} - inline template';
-  } else {
-    templateUrlInfo = view.component.template.templateUrl;
-  }
-
+  final templateUrlInfo = view.component.type.moduleUrl;
   // renderType static to hold RenderComponentType instance.
   String renderTypeVarName = '_renderType';
   o.Expression renderCompTypeVar =
@@ -535,9 +510,15 @@ o.Expression _constructRenderType(
           o
               .importExpr(Identifiers.appViewUtils)
               .callMethod("createRenderType", [
-            o.literal(view.genConfig.genDebugInfo ? templateUrlInfo : ''),
-            createEnumExpression(Identifiers.ViewEncapsulation,
-                view.component.template.encapsulation),
+            new o.ConditionalExpr(
+              o.importExpr(Identifiers.isDevMode),
+              o.literal(templateUrlInfo),
+              o.NULL_EXPR,
+            ),
+            createEnumExpression(
+              Identifiers.ViewEncapsulation,
+              view.component.template.encapsulation,
+            ),
             view.styles
           ]),
           checkIfNull: true)
@@ -552,7 +533,7 @@ o.Expression _constructRenderType(
   return renderCompTypeVar;
 }
 
-List<o.Statement> generateDestroyMethod(CompileView view) {
+List<o.Statement> _generateDestroyMethod(CompileView view) {
   var statements = <o.Statement>[];
   for (o.Expression child in view.viewContainers) {
     statements.add(
@@ -565,11 +546,6 @@ List<o.Statement> generateDestroyMethod(CompileView view) {
   return statements;
 }
 
-o.Statement createInputUpdateFunction(
-    CompileView view, o.ClassStmt viewClass, o.ReadVarExpr renderCompTypeVar) {
-  return null;
-}
-
 o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
   var viewFactoryArgs = [
     new o.FnParam(ViewConstructorVars.parentView.name,
@@ -578,11 +554,15 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
   ];
   var initRenderCompTypeStmts = [];
   o.OutputType factoryReturnType;
-  if (view.viewType == ViewType.host) {
+  if (view.component.originType == null) {
+    // TODO(matanl): Verify that this is needed:
+    // https://github.com/dart-lang/angular/issues/1421
     factoryReturnType = o.importType(Identifiers.AppView);
   } else {
-    factoryReturnType =
-        o.importType(Identifiers.AppView, [o.importType(view.component.type)]);
+    factoryReturnType = o.importType(
+      Identifiers.AppView,
+      [o.importType(view.component.originType)],
+    );
   }
   return o
       .fn(
@@ -598,7 +578,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
       .toDeclStmt(view.viewFactory.name, [o.StmtModifier.Final]);
 }
 
-List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
+List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   // Hoist the `rootEl` class field as `_rootEl` locally for Dart2JS.
   o.ReadVarExpr cachedRootEl;
   final parentRenderNodeStmts = <o.Statement>[];
@@ -664,34 +644,16 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
     initParams.add(subscriptions);
   }
 
-  // In DEBUG mode we call:
-  //
-  // init(rootNodes, subscriptions, renderNodes);
-  //
   // In RELEASE mode we call:
   //
   // init(rootNodes, subscriptions);
   // or init0 if we have a single root node with no subscriptions.
-  o.Expression renderNodesArrayExpr;
-  if (view.genConfig.genDebugInfo) {
-    final renderNodes =
-        view.nodes.map((node) => node.renderNode.toReadExpr()).toList();
-    renderNodesArrayExpr = o.literalArr(renderNodes);
-    initParams.add(renderNodesArrayExpr);
-  }
-
   if (rootElements is o.LiteralArrayExpr &&
       rootElements.entries.length == 1 &&
       subscriptions == o.NULL_EXPR) {
-    if (view.genConfig.genDebugInfo) {
-      statements.add(new o.InvokeMemberMethodExpr(
-              'init0Dbg', [rootElements.entries[0], renderNodesArrayExpr])
-          .toStmt());
-    } else {
-      statements.add(
-          new o.InvokeMemberMethodExpr('init0', [rootElements.entries[0]])
-              .toStmt());
-    }
+    statements.add(
+        new o.InvokeMemberMethodExpr('init0', [rootElements.entries[0]])
+            .toStmt());
   } else {
     statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
   }
@@ -721,15 +683,14 @@ List<o.Statement> generateBuildMethod(CompileView view, Parser parser) {
     }
     var hostElement = view.nodes[0] as CompileElement;
     resultExpr = o.importExpr(Identifiers.ComponentRef).instantiate(
-          [
-            o.literal(hostElement.nodeIndex),
-            o.THIS_EXPR,
-            hostElement.renderNode.toReadExpr(),
-            hostElement.getComponent()
-          ],
-          null,
-          [o.importType(view.component.originType.type)],
-        );
+      [
+        o.literal(hostElement.nodeIndex),
+        o.THIS_EXPR,
+        hostElement.renderNode.toReadExpr(),
+        hostElement.getComponent()
+      ],
+      null,
+    );
   } else {
     resultExpr = o.NULL_EXPR;
   }
@@ -766,13 +727,21 @@ void _writeComponentHostEventListeners(
     if (handlerType == HandlerType.notSimple) {
       var context = new o.ReadClassMemberExpr('ctx');
       var actionStmts = convertCdStatementToIr(
-          view.nameResolver, context, handlerAst, component);
+        view.nameResolver,
+        context,
+        handlerAst,
+        // The only way a host listener could fail expression conversion is if
+        // the arguments specified in the `HostListener` annotation are invalid,
+        // but we don't have its source span to provide here.
+        null,
+        component,
+      );
       var actionExpr = convertStmtIntoExpression(actionStmts.last);
       List<o.Statement> stmts = <o.Statement>[
         new o.ReturnStatement(actionExpr)
       ];
       String methodName = '_handle_${sanitizeEventName(eventName)}__';
-      view.eventHandlerMethods.add(new o.ClassMethod(
+      view.methods.add(new o.ClassMethod(
           methodName,
           [new o.FnParam(EventHandlerVars.event.name, o.importType(null))],
           stmts,
@@ -783,7 +752,15 @@ void _writeComponentHostEventListeners(
     } else {
       var context = DetectChangesVars.cachedCtx;
       var actionStmts = convertCdStatementToIr(
-          view.nameResolver, context, handlerAst, component);
+        view.nameResolver,
+        context,
+        handlerAst,
+        // The only way a host listener could fail expression conversion is if
+        // the arguments specified in the `HostListener` annotation are invalid,
+        // but we don't have its source span to provide here.
+        null,
+        component,
+      );
       var actionExpr = convertStmtIntoExpression(actionStmts.last);
       assert(actionExpr is o.InvokeMethodExpr);
       var callExpr = actionExpr as o.InvokeMethodExpr;
@@ -814,12 +791,16 @@ void _writeComponentHostEventListeners(
   }
 }
 
-o.OutputType getContextType(CompileView view) {
-  var typeMeta = view.component.type;
-  return typeMeta.isHost ? o.DYNAMIC_TYPE : o.importType(typeMeta);
+o.OutputType _getContextType(CompileView view) {
+  // TODO(matanl): Cleanup in https://github.com/dart-lang/angular/issues/1421.
+  final originType = view.component.originType;
+  if (originType != null) {
+    return o.importType(originType);
+  }
+  return o.DYNAMIC_TYPE;
 }
 
-int getChangeDetectionMode(CompileView view) {
+int _getChangeDetectionMode(CompileView view) {
   int mode;
   if (identical(view.viewType, ViewType.component)) {
     mode = isDefaultChangeDetectionStrategy(view.component.changeDetection)
@@ -838,13 +819,13 @@ void writeInputUpdaters(CompileView view, List<o.Statement> targetStatements) {
     for (String input in view.component.inputs.keys) {
       if (!writtenInputs.contains(input)) {
         writtenInputs.add(input);
-        writeInputUpdater(view, input, targetStatements);
+        _writeInputUpdater(view, input, targetStatements);
       }
     }
   }
 }
 
-void writeInputUpdater(
+void _writeInputUpdater(
     CompileView view, String inputName, List<o.Statement> targetStatements) {
   var prevValueVarName = 'prev$inputName';
   CompileTypeMetadata inputTypeMeta = view.component.inputTypes != null
@@ -852,7 +833,7 @@ void writeInputUpdater(
       : null;
   var inputType = inputTypeMeta != null ? o.importType(inputTypeMeta) : null;
   var arguments = [
-    new o.FnParam('component', getContextType(view)),
+    new o.FnParam('component', _getContextType(view)),
     new o.FnParam(prevValueVarName, inputType),
     new o.FnParam(inputName, inputType)
   ];

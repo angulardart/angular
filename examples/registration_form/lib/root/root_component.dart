@@ -28,12 +28,13 @@ class RootComponent {
   }
 
   // TODO(alorenzen): Reset form inputs.
-  void onClear() {
+  void onClear(NgForm form) {
     person = null;
+    form.control.reset();
   }
 
   Person _createPerson(Map<String, dynamic> values) {
-    return new Person(
+    return Person(
       firstName: values['first-name'],
       lastName: values['last-name'],
       address: _createAddress(values['address']),
@@ -41,7 +42,7 @@ class RootComponent {
   }
 
   Address _createAddress(Map<String, dynamic> values) {
-    return new Address(
+    return Address(
       address1: values['address1'],
       address2: values['address2'],
       city: values['city'],

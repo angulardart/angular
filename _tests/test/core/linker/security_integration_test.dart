@@ -34,7 +34,7 @@ void main() {
 
   test('should throw error when using the wrong trusted value', () async {
     final testBed = new NgTestBed<WrongTrustedValueComponent>();
-    expect(testBed.create(), throwsInAngular(isUnsupportedError));
+    expect(testBed.create(), throwsA(isUnsupportedError));
   });
 
   test('should escape unsafe styles', () async {
@@ -93,10 +93,10 @@ class TrustedValueComponent {
   template: '<a [href]="href">Link Title</a>',
 )
 class WrongTrustedValueComponent {
-  SafeScript href;
+  SafeHtml href;
 
   WrongTrustedValueComponent(DomSanitizationService sanitizer) {
-    href = sanitizer.bypassSecurityTrustScript('javascript:alert(1)');
+    href = sanitizer.bypassSecurityTrustHtml('javascript:alert(1)');
   }
 }
 

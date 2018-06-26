@@ -1,4 +1,11 @@
-# Effective Angular: Dependency Injection
+# Effective AngularDart: Dependency Injection
+
+<!-- !g3-begin(G3DOC) -->
+go/effective-angular-dart/di
+
+[TOC]
+<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
+<!-- !g3-end -->
 
 > **NOTE**: This is a work-in-progress, and not yet final. Some of the links may
 > be substituted with `(...)`, and some TODOs or missing parts may be in the
@@ -82,19 +89,22 @@ Provider bindUser(Flags flags) {
   if (flags.isAdminUser) {
     return new ClassProvider(User, useClass: AdminUser);
   }
-  return new ClassProvider(Use, useClass: RegularUser);
+  return new ClassProvider(User, useClass: RegularUser);
 }
 ```
 
 **GOOD**:
 
 ```dart
-const FactoryProvider(User, useFactory: createUserFromFlags);
+const FactoryProvider(User, createUserFromFlags);
 
 User createUserFromFlags(Flags flags) {
   return flags.isAdminUser ? new AdminUser() : new RegularUser();
 }
 ```
+
+The value provided is still dynamically determined, but the key (`User`) can be
+determined at compile time.
 
 ### DO Use `const` providers
 
@@ -287,7 +297,7 @@ that are configured for that token/type.
 **BAD**: Using `multi: true` for this configuration.
 
 ```dart
-const usPresident = const OpaqueToken<String>('usPresident');
+const usPresident = const OpaqueToken<List<String>>('usPresident');
 
 const usPresidentProviders = const [
   const Provider(usPresident, useValue: 'George', multi: true),

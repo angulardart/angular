@@ -10,7 +10,7 @@ String moduleUrl(Element element) {
   var uri = source?.uri?.toString();
   if (uri == null) return null;
   if (Uri.parse(uri).scheme == 'dart') return uri;
-  return toAssetUri(fromUri(uri));
+  return toAssetUri(_fromUri(uri));
 }
 
 String toAssetUri(AssetId assetId) {
@@ -18,18 +18,18 @@ String toAssetUri(AssetId assetId) {
   return 'asset:${assetId.package}/${assetId.path}';
 }
 
-AssetId fromUri(String assetUri) {
+AssetId _fromUri(String assetUri) {
   if (assetUri == null) throw new ArgumentError.notNull('assetUri');
   if (assetUri.isEmpty)
     throw new ArgumentError.value('(empty string)', 'assetUri');
-  var uri = toAssetScheme(Uri.parse(assetUri));
+  var uri = _toAssetScheme(Uri.parse(assetUri));
   return new AssetId(
       uri.pathSegments.first, uri.pathSegments.skip(1).join('/'));
 }
 
 /// Returns the base file name for [AssetId].
 String fileName(AssetId id) {
-  var uri = toAssetScheme(Uri.parse(toAssetUri(id)));
+  var uri = _toAssetScheme(Uri.parse(toAssetUri(id)));
   return uri.pathSegments.last;
 }
 
@@ -38,7 +38,7 @@ String fileName(AssetId id) {
 ///
 /// The `scheme` of `absoluteUri` is expected to be either 'package' or
 /// 'asset'.
-Uri toAssetScheme(Uri absoluteUri) {
+Uri _toAssetScheme(Uri absoluteUri) {
   if (absoluteUri == null) throw new ArgumentError.notNull('absoluteUri');
 
   if (!absoluteUri.isAbsolute) {
@@ -70,10 +70,4 @@ Uri toAssetScheme(Uri absoluteUri) {
 
   var pathSegments = absoluteUri.pathSegments.toList()..insert(1, 'lib');
   return new Uri(scheme: 'asset', pathSegments: pathSegments);
-}
-
-bool isDartCoreUri(String uri) {
-  if (uri == null) throw new ArgumentError.notNull('uri');
-  if (uri.isEmpty) throw new ArgumentError.value('(empty string)', 'uri');
-  return uri.startsWith('dart:');
 }

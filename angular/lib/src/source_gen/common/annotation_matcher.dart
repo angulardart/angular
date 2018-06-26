@@ -29,15 +29,8 @@ AnnotationMatcher safeMatcherType(
 
 /// Creates a matcher that checks for [types], warning if an error is thrown.
 AnnotationMatcher safeMatcherTypes(Iterable<Type> types) => safeMatcher(
-      (annotation) => matchTypes(types, annotation),
+      (annotation) => _matchTypes(types, annotation),
     );
-
-/// Like [isInjectable], but writes to a logger on failure.
-bool safeIsInjectable(Element element) =>
-    element.metadata.any(safeMatcher(_isInjectable));
-
-/// Checks if any of the [Element]'s metadata is an injectable component.
-bool isInjectable(Element element) => element.metadata.any(_isInjectable);
 
 /// Checks if an [ElementAnnotation] node implements [Component].
 bool isComponent(ElementAnnotation annotation) =>
@@ -45,17 +38,17 @@ bool isComponent(ElementAnnotation annotation) =>
 
 /// Checks if an [ElementAnnotation] node implements [Directive].
 bool isDirective(ElementAnnotation annotation) =>
-    matchTypes([Component, Directive], annotation);
+    _matchTypes([Component, Directive], annotation);
 
 /// Checks if an [ElementAnnotation] node is an annotation with directive
 /// fields.
 bool hasDirectives(ElementAnnotation annotation) =>
-    matchTypes([Component, Directive], annotation);
+    _matchTypes([Component, Directive], annotation);
 
 /// Checks if an [ElementAnnotation] node implements [Pipe].
 bool isPipe(ElementAnnotation annotation) => matchAnnotation(Pipe, annotation);
 
-bool matchTypes(Iterable<Type> types, ElementAnnotation annotation) =>
+bool _matchTypes(Iterable<Type> types, ElementAnnotation annotation) =>
     types.any((type) => matchAnnotation(type, annotation));
 
 /// Checks if an [ElementAnnotation] node is exactly the specified [Type].
@@ -93,10 +86,3 @@ bool matchAnnotation(Type type, ElementAnnotation annotation) {
 
 /// Checks if an [ElementAnnotation] node matches specific [Type]s.
 typedef bool AnnotationMatcher(ElementAnnotation annotation);
-
-bool _isInjectable(ElementAnnotation element) => matchTypes(const [
-      Component,
-      Directive,
-      Pipe,
-      Injectable,
-    ], element);

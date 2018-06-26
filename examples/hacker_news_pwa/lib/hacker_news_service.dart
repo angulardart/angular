@@ -5,7 +5,7 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 /// Represents the base URL for HTTP requests using [HackerNewsService].
-const baseUrl = const OpaqueToken<String>('baseUrl');
+const baseUrl = OpaqueToken<String>('baseUrl');
 
 const defaultBaseUrl = 'https://api.hnpwa.com/v0';
 
@@ -18,20 +18,23 @@ class HackerNewsService {
 
   HackerNewsService(@baseUrl this._baseUrl);
 
-  Future<List<Map>> getFeed(String name, int page) async {
+  Future<List<Map>> getFeed(String name, int page) {
     final url = '$_baseUrl/$name/$page.json';
     if (_cacheFeedKey == url) {
-      return _cacheFeedResult;
+      return Future.value(_cacheFeedResult);
     }
-    final response = await HttpRequest.getString(url);
-    final decoded = JSON.decode(response) as List;
-    _cacheFeedKey = url;
-    return _cacheFeedResult = decoded.cast<Map>();
+    return HttpRequest.getString(url).then((response) {
+      final List<dynamic> decoded = JSON.decode(response);
+      _cacheFeedKey = url;
+      return _cacheFeedResult = List<Map>.from(decoded);
+    });
   }
 
-  Future<Map> getItem(String id) async {
+  Future<Map> getItem(String id) {
     final url = '$_baseUrl/item/$id.json';
-    final response = await HttpRequest.getString(url);
-    return JSON.decode(response);
+    return HttpRequest.getString(url).then((response) {
+      final Map decoded = JSON.decode(response);
+      return decoded;
+    });
   }
 }

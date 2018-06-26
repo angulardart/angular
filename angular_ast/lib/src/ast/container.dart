@@ -15,12 +15,14 @@ const _listEquals = const ListEquality();
 /// Clients should not extend, implement, or mix-in this class.
 abstract class ContainerAst implements StandaloneTemplateAst {
   factory ContainerAst({
+    List<AnnotationAst> annotations,
     List<StandaloneTemplateAst> childNodes,
     List<StarAst> stars,
   }) = _SyntheticContainerAst;
 
   factory ContainerAst.from(
     TemplateAst origin, {
+    List<AnnotationAst> annotations,
     List<StandaloneTemplateAst> childNodes,
     List<StarAst> stars,
   }) = _SyntheticContainerAst.from;
@@ -29,9 +31,13 @@ abstract class ContainerAst implements StandaloneTemplateAst {
     SourceFile sourceFile,
     NgToken beginToken,
     NgToken endToken, {
+    List<AnnotationAst> annotations,
     List<StandaloneTemplateAst> childNodes,
     List<StarAst> stars,
   }) = _ParsedContainerAst;
+
+  /// Annotation assignments.
+  List<AnnotationAst> get annotations;
 
   /// Star assignments.
   List<StarAst> get stars;
@@ -65,6 +71,12 @@ abstract class ContainerAst implements StandaloneTemplateAst {
         ..writeAll(stars, ', ')
         ..write(' ');
     }
+    if (annotations.isNotEmpty) {
+      buffer
+        ..write('annotations=')
+        ..writeAll(annotations, ', ')
+        ..write(' ');
+    }
     if (childNodes.isNotEmpty) {
       buffer
         ..write('childNodes=')
@@ -81,9 +93,13 @@ class _ParsedContainerAst extends TemplateAst with ContainerAst {
     SourceFile sourceFile,
     NgToken beginToken,
     NgToken endToken, {
-    this.childNodes: const [],
-    this.stars: const [],
+    this.annotations = const [],
+    this.childNodes = const [],
+    this.stars = const [],
   }) : super.parsed(beginToken, endToken, sourceFile);
+
+  @override
+  final List<AnnotationAst> annotations;
 
   @override
   final List<StandaloneTemplateAst> childNodes;
@@ -94,15 +110,20 @@ class _ParsedContainerAst extends TemplateAst with ContainerAst {
 
 class _SyntheticContainerAst extends SyntheticTemplateAst with ContainerAst {
   _SyntheticContainerAst({
-    this.childNodes: const [],
-    this.stars: const [],
+    this.annotations = const [],
+    this.childNodes = const [],
+    this.stars = const [],
   });
 
   _SyntheticContainerAst.from(
     TemplateAst origin, {
-    this.childNodes: const [],
-    this.stars: const [],
+    this.annotations = const [],
+    this.childNodes = const [],
+    this.stars = const [],
   }) : super.from(origin);
+
+  @override
+  final List<AnnotationAst> annotations;
 
   @override
   final List<StandaloneTemplateAst> childNodes;

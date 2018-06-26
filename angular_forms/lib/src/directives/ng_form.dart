@@ -67,7 +67,8 @@ import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
 /// }
 /// ```
 @Directive(
-  selector: 'form:not([ngNoForm]):not([ngFormModel]),ngForm,[ngForm]',
+  selector: 'form:not([ngNoForm]):not([ngFormModel]):not([memorizedForm]),'
+      'ngForm,[ngForm]',
   providers: const [
     const ExistingProvider(ControlContainer, NgForm),
   ],

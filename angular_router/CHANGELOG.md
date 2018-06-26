@@ -1,9 +1,40 @@
+### Breaking changes
+
+*   Removed component instance parameter from `RouterHook.canNavigate()`.
+
+## 2.0.0-alpha+14
+
 ### Bug fixes
 
-*   The browser location navigated to by clicking on a `RouterLinkDirective` is
-    now consistent with the displayed href when using `routerProvidersHash`.
-    Previously the browser location lacked the leading `/`, while the href did
-    not. This resulted in the links never appearing visited.
+*   Preserves `NavigationParams` on redirection.
+
+*   Added `canNavigate` to `RouterHook`.
+
+*   Navigation will no longer succeed for an empty path if it doesn't match a
+    route.
+
+## 2.0.0-alpha+13
+
+### New features
+
+*   Moved `normalizePath()` from an internal type to `Location` to give
+    fine-grained control over path normalization.
+
+### Bug fixes
+
+*   Fixed a regression where the `RouterLinkActive` directive would not activate
+    for empty paths (including `'/'`).
+
+*   Fixed a bug where if a component threw an exception during routing the
+    router would get in a perpetual bad state where it was impossible to route
+    away or otherwise use the application.
+
+## 2.0.0-alpha+12
+
+### Breaking changes
+
+*   Renamed the `platformStrategy` field of `Location` to `locationStrategy`,
+    since it's of type `LocationStrategy`.
 
 ## 2.0.0-alpha+11
 

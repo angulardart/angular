@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/runtime.dart';
 
 /// Implementation of DomSharedStyleHost for DOM.
 class DomSharedStylesHost implements SharedStylesHost {
@@ -11,10 +12,14 @@ class DomSharedStylesHost implements SharedStylesHost {
 
   @override
   void addStyles(List<String> styles) {
-    for (var i = 0, l = styles.length; i < l; i++) {
+    for (var i = isDevMode ? 1 : 0, l = styles.length; i < l; i++) {
       final style = styles[i];
       if (_stylesSet.add(style)) {
-        _rootHost.append(new StyleElement()..text = style);
+        final styleElement = new StyleElement()..text = style;
+        if (isDevMode) {
+          styleElement.setAttribute('from', styles[0]);
+        }
+        _rootHost.append(styleElement);
       }
     }
   }

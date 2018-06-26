@@ -12,25 +12,10 @@ class Url {
   static Url parse(String url) {
     final uri = Uri.parse(url);
     return new Url(
-      normalizePath(uri.path),
+      uri.path,
       fragment: uri.fragment,
       queryParameters: uri.queryParameters,
     );
-  }
-
-  /// Normalizes paths so they are standardized when handled around the router.
-  static String normalizePath(String path) {
-    if (path == null) return null;
-
-    if (!path.startsWith('/')) {
-      path = '/$path';
-    }
-
-    if (path.endsWith('/')) {
-      path = path.substring(0, path.length - 1);
-    }
-
-    return path;
   }
 
   /// Normalizes hashes so they are standardized.
@@ -59,7 +44,7 @@ class Url {
   /// Query parameters.
   final Map<String, String> queryParameters;
 
-  Url(String path, {String fragment: '', Map<String, String> queryParameters})
+  Url(String path, {String fragment = '', Map<String, String> queryParameters})
       : this.path = path ?? '',
         this.fragment = fragment ?? '',
         this.queryParameters = new Map.unmodifiable(queryParameters ?? {});

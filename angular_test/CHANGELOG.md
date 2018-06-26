@@ -1,3 +1,35 @@
+*   `NgZoneStabilizer` waited for the longest pending timer during `update()`.
+
+## 2.0.0-alpha+13
+
+*   Removed `throwsInAngular` (was a no-op since `alpha+8`). Use `throwsA`.
+
+*   Removed `NgTestFixture#query/queryAll`, as debug-mode is being turned down.
+
+*   Added `isStable` API to `NgTestStabilizer`.
+
+*   Run `DelegatingNgTestStabilizer` stabilizers one by one instead of run all
+    at once. `update()` for each stabilizers will be run at least once. After
+    that, it will only be run if the current stabilizer is not stable.
+
+## 2.0.0-alpha+12
+
+*   Made `NgTestStabilizerFactory` public.
+
+## 2.0.0-alpha+11
+
+*   Fixed a bug where a `WillNeverStabilizeError` was thrown whenever there was
+    a non-zero length `Timer` being executed. This was due to a bug in how the
+    `NgStabilizer` was executing - constantly calling the `update` function
+    instead of calling it _once_ and waiting for stabilization.
+
+*   Fixed a bug where stabilizers are considered stable even when some of them
+    are not.
+
+## 2.0.0-alpha+10
+
+*   Fixed a bug where `_createDynamic` does not preserve `rootInjector`.
+
 ## 2.0.0-alpha+9
 
 *   `pub run angular_test` was entirely removed. This hasn't worked since

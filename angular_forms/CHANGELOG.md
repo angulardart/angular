@@ -1,7 +1,51 @@
+## 2.0.0-alpha+7
+
+### New Features
+
+*   `reset` method added to `AbstractControl` and `AbstractControlDirective`.
+
+*   `RequiredValidator` now has a `required` input. This allows the `required`
+    property to be toggled at runtime. Previously, this could only be set
+    statically at compile time.
+
+*   `Control.invalid` getter added.
+
+### Breaking Changes
+
+*   Remove deprecated `NG_VALUE_ACCESSOR` token. Use `ngValueAccessor` instead.
+
+*   Abstract `updateValue` method added to `AbstractControl`. All subclasses of
+    `AbstractControl` will need to implement this method.
+
+## 2.0.0-alpha+6
+
+*   Maintenence release.
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.56.0 <2.0.0"`.
+
+## 2.0.0-alpha+5
+
+*   Maintenence release.
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.55.0 <2.0.0"`.
+
+## 2.0.0-alpha+4
+
+### New Features
+
+*   `Control.markAsPristine` added. This will clear the `dirty` property.
+
 ### Breaking Changes
 
 *   `NgControlName` will no longer initialize with `null` if a value is
     specified by 'ngModel'.
+
+*   The `touched` property of `Control`s is now propagated to parents /
+    children.
+
+### Bug fixes
+
+*   Add a not selector to ngForm for memorizedForm since memorized_form is now
+    in angular_forms. This fixes the DIRECTIVE_EXPORTED_BY_AMBIGIOUS error when
+    using: <form #form="ngForm" memorizedForm>
 
 ## 2.0.0-alpha+3
 

@@ -10,7 +10,7 @@ import 'router/router_state.dart';
 /// An interface that can be extended in order to hook into a route navigation.
 ///
 /// A class should extend this class and be injected along with the router to
-/// hook into route navigations.
+/// hook into route navigation.
 ///
 /// ```
 /// @Injectable
@@ -127,6 +127,31 @@ abstract class RouterHook {
   /// ```
   Future<bool> canDeactivate(Object componentInstance, RouterState oldState,
       RouterState newState) async {
+    // Provided as a default if someone extends or mixes-in this interface.
+    return true;
+  }
+
+  /// Called by the router to indicate if navigation is allowed.
+  ///
+  /// The client should return a future that completes with the whether the
+  /// navigation can happen. If the component extends the [CanNavigate]
+  /// lifecycle, that will override this behavior.
+  ///
+  /// You can use `async` in order to simplify when returning synchronously:
+  ///
+  /// ```
+  /// @Injectable
+  /// class MyHook implements RouterHook {
+  ///   final Window _window;
+  ///
+  ///   @override
+  ///   Future<bool> canNavigate() async {
+  ///     // Always ask if the user wants to navigate away from the page.
+  ///     return _window.confirm('Discard changes?');
+  ///   }
+  /// }
+  /// ```
+  Future<bool> canNavigate() async {
     // Provided as a default if someone extends or mixes-in this interface.
     return true;
   }

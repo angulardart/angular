@@ -10,13 +10,15 @@ targets:
 
 builders:
   angular:
-    target: "angular"
     import: "package:angular/builder.dart"
     builder_factories:
       - templatePlaceholder
       - templateCompiler
       - stylesheetCompiler
     auto_apply: dependents
+    applies_builders:
+      - "angular|placeholder_cleanup"
+      - "angular|component_source_cleanup"
     # See https://github.com/dart-lang/angular/issues/988.
     is_optional: true
     required_inputs:
@@ -27,3 +29,14 @@ builders:
         - ".css.shim.dart"
       .dart:
         - ".template.dart"
+post_process_builders:
+  placeholder_cleanup:
+    import: "package:angular/builder.dart"
+    builder_factory: "placeholderCleanup"
+  component_source_cleanup:
+    import: "package:angular/builder.dart"
+    builder_factory: "componentSourceCleanup"
+    defaults:
+      generate_for: ["lib/**"]
+      release_options:
+        enabled: true

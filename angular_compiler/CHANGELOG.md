@@ -1,3 +1,21 @@
+## 0.4.0-alpha+15
+
+*   `CompilerFlags` no longer parses and supports the `'debug'` option and
+    `genDebugInfo` is always `false`, and is deprecated pending removal in a
+    future version.
+
+## 0.4.0-alpha+14
+
+*   Maintenance release.
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.56.0 <2.0.0"`.
+
+## 0.4.0-alpha+13
+
+*   Maintenance release.
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.55.0 <2.0.0"`.
+
+## 0.4.0-alpha+12
+
 *   Removes unused APIs of `ComponentReader`.
 *   Added `DirectiveVisitor`, and removed `$HostBinding` and `$HostListener`.
 

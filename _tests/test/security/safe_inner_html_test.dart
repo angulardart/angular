@@ -34,7 +34,7 @@ void main() {
 
     test('unsafe HTML should throw', () async {
       var testBed = new NgTestBed<UntrustedInnerHtmlTest>();
-      expect(testBed.create(), throwsInAngular(isUnsupportedError));
+      expect(testBed.create(), throwsA(isUnsupportedError));
     });
   });
 }

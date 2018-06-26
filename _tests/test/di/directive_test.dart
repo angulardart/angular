@@ -82,6 +82,14 @@ void main() {
     );
   });
 
+  test('should support custom MultiToken', () async {
+    final fixture = await new NgTestBed<SupportsCustomMultiToken>().create();
+    expect(
+      fixture.assertOnlyInstance.values,
+      const isInstanceOf<List<String>>(),
+    );
+  });
+
   test('should not consider Opaque/MultiToken the same token', () async {
     final fixture = await new NgTestBed<NoClashTokens>().create();
     expect(fixture.assertOnlyInstance.fooTokenFromOpaque, hasLength(1));
@@ -93,7 +101,7 @@ void main() {
     final value1 = fixture.assertOnlyInstance.injector.get(barTypedToken1);
     expect(value1, 1);
     final value2 = fixture.assertOnlyInstance.injector.get(barTypedToken2);
-    expect(value2, 2);
+    expect(value2, true);
   });
 
   group('should support optional values', () {
@@ -431,6 +439,24 @@ class SupportsMultiToken {
   SupportsMultiToken(@Inject(usPresidentsMulti) this.values);
 }
 
+class CustomMultiToken extends MultiToken<String> {
+  const CustomMultiToken();
+}
+
+@Component(
+  selector: 'supports-multi-token',
+  providers: const [
+    const ValueProvider.forToken(const CustomMultiToken(), 'A'),
+    const ValueProvider.forToken(const CustomMultiToken(), 'B'),
+  ],
+  template: '',
+)
+class SupportsCustomMultiToken {
+  final List<String> values;
+
+  SupportsCustomMultiToken(@Inject(const CustomMultiToken()) this.values);
+}
+
 const fooOpaqueToken = const OpaqueToken<String>('fooToken');
 const fooMultiToken = const MultiToken<String>('fooToken');
 
@@ -459,7 +485,7 @@ const barTypedToken2 = const OpaqueToken<bool>('barTypedToken');
   selector: 'supports-typed-token',
   providers: const [
     const ValueProvider.forToken(barTypedToken1, 1),
-    const ValueProvider.forToken(barTypedToken2, 2),
+    const ValueProvider.forToken(barTypedToken2, true),
   ],
   template: '',
 )

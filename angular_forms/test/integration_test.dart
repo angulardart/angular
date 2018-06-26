@@ -39,7 +39,7 @@ void main() {
       });
       expect(
           update,
-          throwsInAngular(allOf(
+          throwsA(allOf(
               new isInstanceOf<Error>(),
               predicate((e) => e.message.contains(
                   'ngFormModel expects a form. Please pass one in.')))));
@@ -768,17 +768,19 @@ void main() {
   });
 }
 
-@Directive(selector: '[wrapped-value]', host: const {
-  '(input)': 'handleOnInput(\$event.target.value)',
-  '[value]': 'value'
-}, providers: [
-  const ExistingProvider.forToken(
-    NG_VALUE_ACCESSOR,
-    WrappedAccessor,
-  )
-])
+@Directive(
+  selector: '[wrapped-value]',
+  providers: [
+    const ExistingProvider.forToken(
+      ngValueAccessor,
+      WrappedAccessor,
+    )
+  ],
+)
 class WrappedAccessor implements ControlValueAccessor {
+  @HostBinding('value')
   var value;
+
   Function onChange;
 
   @override
@@ -794,6 +796,7 @@ class WrappedAccessor implements ControlValueAccessor {
   @override
   void registerOnTouched(fn) {}
 
+  @HostListener('input', const [r'$event.target.value'])
   void handleOnInput(value) {
     this.onChange(value.substring(1, value.length - 1));
   }
@@ -804,7 +807,7 @@ class WrappedAccessor implements ControlValueAccessor {
 
 @Component(selector: 'my-input', template: '', providers: [
   const ExistingProvider.forToken(
-    NG_VALUE_ACCESSOR,
+    ngValueAccessor,
     MyInput,
   )
 ])
@@ -834,8 +837,9 @@ class MyInput implements ControlValueAccessor {
   void onDisabledChanged(bool isDisabled) {}
 }
 
-Map loginIsEmptyGroupValidator(ControlGroup c) {
-  return c.controls['login'].value == '' ? {'loginIsEmpty': true} : null;
+Map<String, dynamic> loginIsEmptyGroupValidator(AbstractControl c) {
+  ControlGroup group = c;
+  return group.controls['login'].value == '' ? {'loginIsEmpty': true} : null;
 }
 
 @Directive(selector: '[login-is-empty-validator]', providers: const [

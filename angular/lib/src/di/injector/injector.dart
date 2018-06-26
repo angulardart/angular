@@ -46,6 +46,11 @@ typedef InjectorFactory = Injector Function([Injector parent]);
 /// [Injector] is a simple interface that accepts a valid _token_ (often either
 /// a `Type` or `OpaqueToken`, but can be a custom object that respects equality
 /// based on identity), and returns an instance for that token.
+///
+/// **WARNING**: It is not supported to sub-class this type in your own
+/// applications. There are hidden contracts that are not implementable by
+/// client code. If you need a _mock-like_ implementation of [Injector] instead
+/// prefer using [Injector.map].
 abstract class Injector {
   @visibleForTesting
   const Injector();

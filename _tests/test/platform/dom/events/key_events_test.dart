@@ -110,40 +110,48 @@ void main() {
 
 @Component(
   selector: 'keydown-listener',
-  host: const {
-    '(keydown)': 'receivedKeydown = true',
-    '(keydown.a)': 'receivedKeydownA = true',
-    '(keydown.shift.a)': 'receivedKeydownShiftA = true',
-  },
   template: '<div></div>',
 )
 class KeydownListenerComponent {
   bool receivedKeydown = false;
   bool receivedKeydownA = false;
   bool receivedKeydownShiftA = false;
+
+  @HostListener('keydown')
+  void onKeyDown() => receivedKeydown = true;
+
+  @HostListener('keydown.a')
+  void onKeyDownA() => receivedKeydownA = true;
+
+  @HostListener('keydown.shift.a')
+  void onKeyDownShiftA() => receivedKeydownShiftA = true;
 }
 
 @Component(
   selector: 'keypress-listener',
-  host: const {
-    '(keypress)': 'receivedKeypress = true',
-  },
   template: '<div></div>',
 )
 class KeypressListenerComponent {
+  @HostListener('keypress')
+  void onKeyPress() => receivedKeypress = true;
+
   bool receivedKeypress = false;
 }
 
 @Component(
   selector: 'keyup-listener',
-  host: const {
-    '(keyup)': 'receivedKeyup = true',
-    '(keyup.enter)': 'receivedKeyupEnter = true',
-    '(keyup.control.enter)': 'receivedKeyupCtrlEnter = true',
-  },
   template: '<div></div>',
 )
 class KeyupListenerComponent {
+  @HostListener('keyup')
+  void onKeyUp() => receivedKeyup = true;
+
+  @HostListener('keyup.enter')
+  void onKeyUpEnter() => receivedKeyupEnter = true;
+
+  @HostListener('keyup.control.enter')
+  void onKeyUpControlEnter() => receivedKeyupCtrlEnter = true;
+
   bool receivedKeyup = false;
   bool receivedKeyupEnter = false;
   bool receivedKeyupCtrlEnter = false;
@@ -151,12 +159,12 @@ class KeyupListenerComponent {
 
 @Component(
   selector: 'modifiers-listener',
-  host: const {
-    '(keyup.alt.meta.0)': 'receivedModifiers = true',
-  },
   template: '<div></div>',
 )
 class ModifiersListener {
+  @HostListener('keyup.alt.meta.0')
+  void onKeyUpAltMeta0() => receivedModifiers = true;
+
   bool receivedModifiers = false;
 }
 
@@ -188,10 +196,10 @@ window['$CREATE_KEYBOARD_EVENT_NAME'] = function(
 Event createKeyboardEvent(
   String type,
   int keyCode, {
-  bool ctrlKey: false,
-  bool altKey: false,
-  bool shiftKey: false,
-  bool metaKey: false,
+  bool ctrlKey = false,
+  bool altKey = false,
+  bool shiftKey = false,
+  bool metaKey = false,
 }) {
   if (!context.hasProperty(CREATE_KEYBOARD_EVENT_NAME)) {
     var script = document.createElement('script')

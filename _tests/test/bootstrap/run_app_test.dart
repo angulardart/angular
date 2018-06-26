@@ -24,7 +24,7 @@ void main() {
   }
 
   /// Verify that the DOM of the page represents the component.
-  void verifyDomAndStyles({String innerText: 'Hello World!'}) {
+  void verifyDomAndStyles({String innerText = 'Hello World!'}) {
     expect(rootDomContainer.text, innerText);
     final h1 = rootDomContainer.querySelector('h1');
     expect(h1.getComputedStyle().height, '100px');

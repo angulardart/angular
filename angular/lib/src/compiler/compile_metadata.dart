@@ -7,14 +7,11 @@ import '../core/metadata/view.dart';
 import '../core/metadata/visibility.dart';
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';
+import 'expression_parser/ast.dart' as ast;
 import 'output/output_ast.dart' as o;
 import 'selector.dart' show CssSelector;
 
 final _listsEqual = const ListEquality<Object>().equals;
-
-// group 1: 'property' from '[property]'
-// group 2: 'event' from '(event)'
-final _hostRegExp = new RegExp(r'^(?:(?:\[([^\]]+)\])|(?:\(([^\)]+)\)))$');
 
 abstract class CompileMetadataWithIdentifier<T> {
   CompileIdentifierMetadata<T> get identifier;
@@ -44,8 +41,8 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
       {this.name,
       this.moduleUrl,
       this.prefix,
-      this.emitPrefix: false,
-      this.genericTypes: const [],
+      this.emitPrefix = false,
+      this.genericTypes = const [],
       this.value,
       this.analyzedClass});
 
@@ -63,12 +60,12 @@ class CompileDiDependencyMetadata {
   CompileTokenMetadata token;
   dynamic value;
   CompileDiDependencyMetadata(
-      {this.isAttribute: false,
-      this.isSelf: false,
-      this.isHost: false,
-      this.isSkipSelf: false,
-      this.isOptional: false,
-      this.isValue: false,
+      {this.isAttribute = false,
+      this.isSelf = false,
+      this.isHost = false,
+      this.isSkipSelf = false,
+      this.isOptional = false,
+      this.isValue = false,
       this.token,
       this.value});
 }
@@ -96,8 +93,8 @@ class CompileProviderMetadata {
     this.useExisting,
     this.useFactory,
     this.deps,
-    this.visibility: Visibility.all,
-    this.multi: false,
+    this.visibility = Visibility.all,
+    this.multi = false,
     this.typeArgument,
   });
 
@@ -152,8 +149,8 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata<Function> {
       {this.name,
       this.moduleUrl,
       this.prefix,
-      this.emitPrefix: false,
-      this.diDeps: const [],
+      this.emitPrefix = false,
+      this.diDeps = const [],
       this.value});
 
   @override
@@ -170,7 +167,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   bool identifierIsInstance;
 
   CompileTokenMetadata(
-      {this.value, this.identifier, this.identifierIsInstance: false});
+      {this.value, this.identifier, this.identifierIsInstance = false});
 
   // Used to determine unique-ness of CompileTokenMetadata.
   //
@@ -293,10 +290,10 @@ class CompileTypeMetadata
       {this.name,
       this.moduleUrl,
       this.prefix,
-      this.isHost: false,
+      this.isHost = false,
       this.value,
-      this.genericTypes: const [],
-      this.diDeps: const []});
+      this.genericTypes = const [],
+      this.diDeps = const []});
 
   @override
   CompileIdentifierMetadata<Type> get identifier => this;
@@ -361,10 +358,10 @@ class CompileQueryMetadata {
 
   const CompileQueryMetadata({
     this.selectors,
-    this.descendants: false,
-    this.first: false,
+    this.descendants = false,
+    this.first = false,
     this.propertyName,
-    this.isElementType: false,
+    this.isElementType = false,
     this.read,
   });
 }
@@ -379,13 +376,13 @@ class CompileTemplateMetadata {
   final List<String> styleUrls;
   final List<String> ngContentSelectors;
   CompileTemplateMetadata(
-      {this.encapsulation: ViewEncapsulation.Emulated,
+      {this.encapsulation = ViewEncapsulation.Emulated,
       this.template,
       this.templateUrl,
-      this.preserveWhitespace: false,
-      this.styles: const [],
-      this.styleUrls: const [],
-      this.ngContentSelectors: const []});
+      this.preserveWhitespace = false,
+      this.styles = const [],
+      this.styleUrls = const [],
+      this.ngContentSelectors = const []});
 }
 
 enum CompileDirectiveMetadataType {
@@ -401,51 +398,6 @@ enum CompileDirectiveMetadataType {
 
 /// Metadata regarding compilation of a directive.
 class CompileDirectiveMetadata implements CompileMetadataWithType {
-  /// Maps host attributes, listeners, and properties from a serialized map.
-  ///
-  /// Serialized host key grammar:
-  ///
-  ///     <key> :=
-  ///         <attribute-key> |
-  ///         <listener-key> |
-  ///         <property-key>
-  ///
-  ///     <attribute-key> :=
-  ///         <identifier>
-  ///
-  ///     <listener-key> :=
-  ///         '(' <identifier> ')'
-  ///
-  ///     <property-key> :=
-  ///         '[' <identifier> ']'
-  ///
-  /// For each (<key>, <value>) in [host], (<identifier>, <value>) is added to
-  ///
-  /// * [outAttributes] if <key> is an <attribute-key>,
-  /// * [outListeners] if <key> is a <listener-key>, or
-  /// * [outProperties] if <key> is a <property-key>.
-  static void deserializeHost(
-    Map<String, String> host,
-    Map<String, String> outAttributes,
-    Map<String, String> outListeners,
-    Map<String, String> outProperties,
-  ) {
-    assert(outAttributes != null);
-    assert(outListeners != null);
-    assert(outProperties != null);
-
-    host?.forEach((key, value) {
-      final matches = _hostRegExp.firstMatch(key);
-      if (matches == null) {
-        outAttributes[key] = value;
-      } else if (matches[1] != null) {
-        outProperties[matches[1]] = value;
-      } else if (matches[2] != null) {
-        outListeners[matches[2]] = value;
-      }
-    });
-  }
-
   @override
   final CompileTypeMetadata type;
 
@@ -459,9 +411,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   final Map<String, String> inputs;
   final Map<String, CompileTypeMetadata> inputTypes;
   final Map<String, String> outputs;
+  final Map<String, ast.AST> hostBindings;
   final Map<String, String> hostListeners;
-  final Map<String, String> hostProperties;
-  final Map<String, String> hostAttributes;
   final List<LifecycleHooks> lifecycleHooks;
   final List<CompileProviderMetadata> providers;
   final List<CompileProviderMetadata> viewProviders;
@@ -485,18 +436,17 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.inputs,
     this.inputTypes,
     this.outputs,
+    this.hostBindings,
     this.hostListeners,
-    this.hostProperties,
-    this.hostAttributes,
     this.analyzedClass,
     this.template,
-    this.visibility: Visibility.all,
-    this.lifecycleHooks: const [],
-    this.providers: const [],
-    this.viewProviders: const [],
-    this.exports: const [],
-    this.queries: const [],
-    this.viewQueries: const [],
+    this.visibility = Visibility.all,
+    this.lifecycleHooks = const [],
+    this.providers = const [],
+    this.viewProviders = const [],
+    this.exports = const [],
+    this.queries = const [],
+    this.viewQueries = const [],
   });
 
   @override
@@ -518,6 +468,64 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
               hostProperties.isNotEmpty;
     }
     return _requiresDirectiveChangeDetector;
+  }
+
+  Map<String, ast.AST> _cachedHostAttributes;
+  Map<String, ast.AST> _cachedHostProperties;
+
+  /// The subset of `hostBindings` that are immutable bindings.
+  ///
+  /// It's useful to separate these out because we can set them at
+  /// build time and avoid change detecting them.
+  Map<String, ast.AST> get hostAttributes {
+    if (_cachedHostAttributes == null) {
+      _computeHostBindingImmutability();
+    }
+    assert(_cachedHostAttributes != null);
+    return _cachedHostAttributes;
+  }
+
+  Map<String, ast.AST> get hostProperties {
+    if (_cachedHostProperties == null) {
+      _computeHostBindingImmutability();
+    }
+    assert(_cachedHostProperties != null);
+    return _cachedHostProperties;
+  }
+
+  void _computeHostBindingImmutability() {
+    assert(_cachedHostAttributes == null);
+    assert(_cachedHostProperties == null);
+    _cachedHostAttributes = <String, ast.AST>{};
+    _cachedHostProperties = <String, ast.AST>{};
+
+    // Host bindings are either literal strings or a property access. We have
+    // to filter out non-static property accesses because the directive instance
+    // is not available at build time.
+    bool _isStatic(ast.AST value) {
+      if (value is ast.LiteralPrimitive) return true;
+      if (value is ast.PropertyRead) {
+        return value.receiver is ast.StaticRead;
+      }
+      // Unrecognized binding type, just assume it's not static.
+      return false;
+    }
+
+    hostBindings.forEach((name, value) {
+      // TODO(het): We should also inline style and class bindings
+      var isStyleOrClassBinding =
+          name.startsWith('style.') || name.startsWith('class.');
+      if (isImmutable(value, analyzedClass) &&
+          _isStatic(value) &&
+          !isStyleOrClassBinding) {
+        if (name.startsWith('attr.')) {
+          name = name.substring('attr.'.length);
+        }
+        _cachedHostAttributes[name] = value;
+      } else {
+        _cachedHostProperties[name] = value;
+      }
+    });
   }
 }
 
@@ -546,9 +554,8 @@ CompileDirectiveMetadata createHostComponentMeta(
     inputs: const {},
     inputTypes: const {},
     outputs: const {},
-    hostAttributes: const {},
+    hostBindings: const {},
     hostListeners: const {},
-    hostProperties: const {},
     metadataType: CompileDirectiveMetadataType.Component,
     selector: '*',
   );
@@ -566,8 +573,8 @@ class CompilePipeMetadata implements CompileMetadataWithType {
     this.type,
     this.transformType,
     this.name,
-    this.pure: true,
-    this.lifecycleHooks: const [],
+    this.pure = true,
+    this.lifecycleHooks = const [],
   });
 
   @override

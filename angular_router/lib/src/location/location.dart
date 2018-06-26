@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:angular/angular.dart' show Injectable;
 
+import 'hash_location_strategy.dart';
 import 'location_strategy.dart' show LocationStrategy;
 
 /// `Location` is a service that applications can use to interact with a
@@ -49,13 +50,13 @@ import 'location_strategy.dart' show LocationStrategy;
 /// ```
 @Injectable()
 class Location {
-  final LocationStrategy platformStrategy;
+  final LocationStrategy locationStrategy;
   final _subject = new StreamController<dynamic>();
   final String _baseHref;
 
-  Location(this.platformStrategy)
-      : _baseHref = _sanitizeBaseHref(platformStrategy) {
-    platformStrategy.onPopState((ev) {
+  Location(this.locationStrategy)
+      : _baseHref = _sanitizeBaseHref(locationStrategy) {
+    locationStrategy.onPopState((ev) {
       _subject.add({'url': path(), 'pop': true, 'type': ev.type});
     });
   }
@@ -66,14 +67,37 @@ class Location {
   }
 
   /// Returns the normalized URL path.
-  String path() => normalize(platformStrategy.path());
+  String path() => normalize(locationStrategy.path());
 
-  String hash() => normalize(platformStrategy.hash());
+  String hash() => normalize(locationStrategy.hash());
 
   /// Given a string representing a URL, returns the normalized URL path without
   /// leading or trailing slashes
   String normalize(String url) => Location
       .stripTrailingSlash(_stripBaseHref(_baseHref, _stripIndexHtml(url)));
+
+  /// Normalizes [path] for navigation.
+  ///
+  /// This determines the representation of [path] used to manipulate browser
+  /// history and exposed through router states.
+  String normalizePath(String path) {
+    if (path == null) return null;
+    // TODO(https://github.com/dart-lang/angular/issues/748): remove this case.
+    final hashStrategy = locationStrategy is HashLocationStrategy;
+
+    if (!hashStrategy && !path.startsWith('/')) {
+      path = '/$path';
+    }
+    if (hashStrategy && path.startsWith('/')) {
+      path = path.substring(1);
+    }
+
+    if (path.endsWith('/')) {
+      path = path.substring(0, path.length - 1);
+    }
+
+    return path;
+  }
 
   /// Given a string representing a URL, returns the platform-specific external
   /// URL path. If the given URL doesn't begin with a leading slash (`'/'`),
@@ -84,30 +108,30 @@ class Location {
     if (url.isNotEmpty && !url.startsWith('/')) {
       url = '/$url';
     }
-    return platformStrategy.prepareExternalUrl(url);
+    return locationStrategy.prepareExternalUrl(url);
   }
 
   // TODO: rename this method to pushState
   /// Changes the browsers URL to the normalized version of the given URL, and
   /// pushes a new item onto the platform's history.
   void go(String path, [String query = '']) {
-    platformStrategy.pushState(null, '', path, query);
+    locationStrategy.pushState(null, '', path, query);
   }
 
   /// Changes the browsers URL to the normalized version of the given URL, and
   /// replaces the top item on the platform's history stack.
   void replaceState(String path, [String query = '']) {
-    platformStrategy.replaceState(null, '', path, query);
+    locationStrategy.replaceState(null, '', path, query);
   }
 
   /// Navigates forward in the platform's history.
   void forward() {
-    platformStrategy.forward();
+    locationStrategy.forward();
   }
 
   /// Navigates back in the platform's history.
   void back() {
-    platformStrategy.back();
+    locationStrategy.back();
   }
 
   /// Subscribe to the platform's `popState` events.

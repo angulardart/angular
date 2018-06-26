@@ -138,17 +138,11 @@ void main() {
 
     test("should throw on non-iterable ref and suggest using an array",
         () async {
-      var testBed = new NgTestBed<NgForOptionsTest>();
-      NgTestFixture<NgForOptionsTest> testFixture = await testBed.create();
-      bool didThrowException = false;
-      await testFixture.update((NgForOptionsTest component) {
-        component.items = "this is not iterable";
-      }).catchError((e) {
-        expect(e.toString(),
-            contains("Type 'String' is not a subtype of type 'Iterable'"));
-        didThrowException = true;
-      });
-      expect(didThrowException, true);
+      final testBed = new NgTestBed<NgForOptionsTest>();
+      final testFixture = await testBed.create();
+      expect(testFixture.update((component) {
+        component.items = 'this is not iterable';
+      }), throwsA(const isInstanceOf<TypeError>()));
     });
 
     test("should work with duplicates", () async {

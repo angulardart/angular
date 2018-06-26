@@ -1,5 +1,145 @@
 ### Breaking changes
 
+*   Removed `SafeScript` and its associated APIs. There was no path through the
+    compiler that made use of this type.
+
+*   Removed the `sanitize()` method from `SanitizationService`. This method was
+    entirely unused. Use the more specific methods such as `sanitizeHtml()` and
+    `sanitizeUrl()` instead.
+
+*   Generated `ComponentFactory` instances are no longer functionally `const`.
+    This is to prevent issues where users attempt to use generated component
+    factories in their own `const` contexts, which was known to cause problems
+    in some build systems.
+
+*   `MultiToken<T>` now extends `OpaqueToken<List<T>>`. This should have no real
+    affect on most programs, unless you manually typed your `MultiToken` such as
+    `usPresidents = const MultiToken<List<String>>()`. This will allow future
+    features for the `Injector` interface:
+    https://github.com/dart-lang/angular/issues/555.
+
+### Bug fixes
+
+*   The generated `.template.dart` code now properly subtypes `AppView<C>` where
+    `C` is the annotated `@Component` class. This avoids implicit down-casts in
+    the framework.
+
+## 5.0.0-alpha+15
+
+### Breaking changes
+
+*   The compilation mode `--debug` (sparingly used externally) is now no longer
+    supported. Some flags and code paths in the compiler still check/support it
+    but it will be removed entirely by the final release and should no longer
+    be used. We will rely on assertion-based tree-shaking (from `Dart2JS`)
+    going forward to emit debug-only conditional code.
+
+*   It is now a compile error to implement both the `DoCheck` and `OnChanges`
+    lifecycle interfaces. `DoCheck` will never fill in values for the `Map` in
+    `OnChanges`, so this compile-error helps avoid bugs and directs the user to
+    use `DoCheck` and `AfterChanges` _instead_.
+
+### New features
+
+*   The `from` attribute added to `<style>` tags created for component styles
+    now refers to the component URL, rather than its template URL.
+
+*   AngularDart now has official support of the
+    [optional new/const](https://github.com/dart-lang/sdk/issues/30921) feature
+    of Dart2. The most significant impact to the framework will be increased
+    terse-ness of the various metadata annotations. Please file issues if you
+    see any unexpected behavior. Here is one example:
+
+    ```dart
+    // Before
+    @Component(
+      selector: 'comp',
+      directives: const [
+        FooComponent,
+      ],
+      providers: const [
+        const ClassProvider(SomeService),
+      ],
+    )
+
+    // After
+    @Component(
+      selector: 'comp',
+      directives: [
+        FooComponent,
+      ],
+      providers: [
+        ClassProvider(SomeService),
+      ],
+    )
+    ```
+
+### Bug fixes
+
+*   Prevented a crash in `NgTemplateOutlet` caused by a specific sequence of
+    inputs to `[ngTemplateOutlet]`.
+
+*   Relaxed type checks for events bound with a single parameter. In practice
+    this started failing in Dart2JS with `--preview-dart-2`, potentially where
+    synthetic events were being passed instead of the real DOM event:
+
+    ```html
+    <some-comp (focus)="handleFocus($event)"></some-comp>
+    ```
+
+    ```dart
+    import 'dart:html';
+
+    void handleFocus(FocusEvent e) {
+      // Failed when 'e' was a CustomEvent or not strictly a FocusEvent.
+    }
+    ```
+
+*   Fixed a bug where a recursive type signature on a component or directive
+    would cause a stack overflow. We don't support generic type arguments yet
+    (the reified type is always `dynamic`), but the compiler no longer crashes.
+
+*   Fixed a bug where `Iterable.retype` being removed from the SDK caused the
+    compiler to crash on the newest Dart2 -dev SDKs. We now use `.cast` instead.
+
+## 5.0.0-alpha+14
+
+### New features
+
+*   In dev mode only, an attribute named `from` is now added to each `<style>`
+    tag whose value identifies the source file URL and name of the component
+    from which the styles originate.
+
+*   Styles that are inlined into generated `.dart` code (either in
+    `.template.dart` or `.css.dart`) now are `final` rather than `const` when
+    specified. This allows incremental compilers (such as DDC) to avoid
+    cascading rebuilds when only CSS styles are changed (not HTML or Dart).
+
+### Bug fixes
+
+*   Expression conversion failures are now reported as build failures, with
+    source context if available, rather than as bugs in the compiler.
+
+*   Unresolved `exports` arguments in `@Component` annotations will no longer
+    crash the compiler and are now reported as build failures.
+
+## 5.0.0-alpha+13
+
+### Breaking changes
+
+*   A directive with `Visibility.local` may now be injected by another directive
+    on the same host element, or by a descendant within the same view.
+
+*   Removed support for (deprecated) `host: const { ... }` syntax in a
+    `@Directive` or `@Component` annotation. This can be easily migrated to use
+    `@HostBinding` or `@HostListener`.
+
+*   Pins `angular_ast` and `angular_compiler` to avoid future versioning issues.
+
+## 5.0.0-alpha+12
+
+### Breaking changes
+
 *   It is now a compile-time error to place a `@HostBinding` or `@HostListener`
     annotation on a class member that does not accept the respective annotation.
     For example, the following snippet will break at compile-time:
@@ -15,6 +155,73 @@
 
     ... as part of this refactor, error messages in general around use of
     these annotations have been greatly improved.
+
+*   The semantics of `@Component(preserveWhitespace: false)` (the default flag)
+    have changed somewhat in this release due to user feedback both internally
+    and externally (see https://github.com/dart-lang/angular/issues/804). The
+    easiest way to explain the changes are with this example:
+
+    ```html
+    Foo <strong>Bar</strong> Baz
+    ```
+
+    ... used to display "Foo**Bar**Baz" in the _old_ semantics, and now displays
+    "Foo **Bar** Baz" in the _new_ semantics. There are some cases where
+    generated code is slightly larger, and other cases where it is smaller (we
+    have some smarter heuristics around safe places to collapse whitespace).
+
+### New features
+
+*   Added `<ng-container>`, an element for logical grouping that has no effect
+    on layout. This enables use of the *-syntax for structural directives,
+    without requiring the cost an HTML element.
+
+    **Before**
+
+    ```html
+    <ul>
+      <template ngFor let-user [ngForOf]="users">
+        <li *ngIf="user.visible">{{user.name}}</li>
+      </template>
+    </ul>
+    ```
+
+    **After**
+
+    ```html
+    <ul>
+      <ng-container *ngFor="let user of users">
+        <li *ngIf="user.visible">{{user.name}}</li>
+      </ng-container>
+    </ul>
+    ```
+
+*   `.ng_placeholder` files will be excluded from `--output` builds. `.css` and
+    `.html` files will be excluded by default from the `lib/` directory for
+    release builds. Disable entirely with:
+
+    ```yaml
+    targets:
+      $default:
+        angular|component_source_cleanup:
+          options:
+            enabled: false
+    ```
+
+    or exclude some sources by glob:
+
+    ```yaml
+    targets:
+      $default:
+        angular|component_source_cleanup:
+          options:
+            exclude:
+              - "lib/non_angular_style.css"
+              - "lib/something/**"
+    ```
+
+*   `@HostBinding()` for `static` `const` or `final` fields are set at build
+    time rather than being change-detected.
 
 ### Bug fixes
 
@@ -49,6 +256,9 @@
 *   URLs from `@import` statements with the `package` scheme are no longer
     resolved to the `packages/` directory. The `package` scheme is now preserved
     which the build ecosystem understands.
+
+*   In `ReflectiveInjector`, `.injectFromSelfOptional` now checks if it is truly
+    a instance cache misses before creating a new instance.
 
 ## 5.0.0-alpha+11
 
@@ -196,30 +406,6 @@
       @HostListener('click')
       void onClick(MouseEvent e) {}
     }
-    ```
-
-*   Added `<ng-container>`, an element for logical grouping that has no effect
-    on layout. This enables use of the *-syntax for structural directives,
-    without requiring the cost an HTML element.
-
-    **Before**
-
-    ```html
-    <ul>
-      <template ngFor let-user [ngForOf]="users">
-        <li *ngIf="user.visible">{{user.name}}</li>
-      </template>
-    </ul>
-    ```
-
-    **After**
-
-    ```html
-    <ul>
-      <ng-container *ngFor="let user of users">
-        <li *ngIf="user.visible">{{user.name}}</li>
-      </ng-container>
-    </ul>
     ```
 
 ### Bug fixes

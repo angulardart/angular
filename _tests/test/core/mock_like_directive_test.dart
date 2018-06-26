@@ -20,8 +20,7 @@ void main() {
 
   test("shouldn't support null @Output if not mock-like", () async {
     final testBed = new NgTestBed<TestFakeNotificationComponent>();
-    expect(testBed.create(),
-        throwsInAngular(new isInstanceOf<NoSuchMethodError>()));
+    expect(testBed.create(), throwsA(const isInstanceOf<NoSuchMethodError>()));
   });
 }
 

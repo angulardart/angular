@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:angular_compiler/cli.dart';
+
 import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
     show CompileDirectiveMetadata, CompilePipeMetadata, createHostComponentMeta;
@@ -50,18 +52,21 @@ class OfflineCompiler {
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;
   final OutputEmitter _outputEmitter;
+  final CompilerFlags _compilerFlags;
 
   /// Maps a moduleUrl to a library prefix. Deferred modules have defer###
   /// prefixes. The moduleUrl has asset: scheme or is a relative url.
   final Map<String, String> _deferredModules;
 
   const OfflineCompiler(
-      this._directiveNormalizer,
-      this._templateParser,
-      this._styleCompiler,
-      this._viewCompiler,
-      this._outputEmitter,
-      this._deferredModules);
+    this._directiveNormalizer,
+    this._templateParser,
+    this._styleCompiler,
+    this._viewCompiler,
+    this._outputEmitter,
+    this._deferredModules,
+    this._compilerFlags,
+  );
 
   Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
       CompileDirectiveMetadata directive) {
@@ -108,35 +113,56 @@ class OfflineCompiler {
       var compFactoryVar = '${compMeta.type.name}NgFactory';
       var factoryType = [o.importType(compMeta.type)];
 
-      // Adds const FooNgFactory = const ComponentFactory<Foo>(...).
+      // Adds const _FooNgFactory = const ComponentFactory<Foo>(...).
+      // ComponentFactory<Foo> FooNgFactory get _FooNgFactory;
       //
       // This is referenced in `initReflector/METADATA` and by user-code.
       statements.add(o
-          .variable('$compFactoryVar')
+          .variable('_$compFactoryVar')
           .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
-              <o.Expression>[
-                o.literal(compMeta.selector),
-                o.variable(hostViewFactoryVar),
-                new o.ReadVarExpr('_${compMeta.type.name}Metadata'),
-              ],
-              o.importType(
-                Identifiers.ComponentFactory,
-                factoryType,
-                [o.TypeModifier.Const],
-              ),
-              factoryType))
+            <o.Expression>[
+              o.literal(compMeta.selector),
+              o.variable(hostViewFactoryVar),
+              // If we aren't emitting component factories, we don't have
+              // any metadata to collect. This is a stop-gap until we no
+              // longer support the metadata field (for the old router).
+              _compilerFlags.emitComponentFactories
+                  ? new o.ReadVarExpr('_${compMeta.type.name}Metadata')
+                  : o.literalArr(
+                      [],
+                      new o.ArrayType(null, [o.TypeModifier.Const]),
+                    ),
+            ],
+            o.importType(
+              Identifiers.ComponentFactory,
+              factoryType,
+              [o.TypeModifier.Const],
+            ),
+          ))
           .toDeclStmt(null, [o.StmtModifier.Const]));
+
+      statements.add(
+        o.fn(
+          // No parameters.
+          [],
+          // Statements.
+          [
+            new o.ReturnStatement(new o.ReadVarExpr('_$compFactoryVar')),
+          ],
+          o.importType(
+            Identifiers.ComponentFactory,
+            factoryType,
+          ),
+        ).toGetter('$compFactoryVar'),
+      );
 
       exportedVars.add(compFactoryVar);
     }
 
     for (CompileDirectiveMetadata directive in artifacts.directives) {
       if (!directive.requiresDirectiveChangeDetector) continue;
-      DirectiveCompiler comp = new DirectiveCompiler(
-          directive,
-          _viewCompiler.parser,
-          _templateParser.schemaRegistry,
-          _viewCompiler.genDebugInfo);
+      DirectiveCompiler comp = new DirectiveCompiler(directive,
+          _templateParser.schemaRegistry, _viewCompiler.genDebugInfo);
       DirectiveCompileResult res = comp.compile();
       statements.addAll(res.statements);
       exportedVars.add(comp.changeDetectorClassName);

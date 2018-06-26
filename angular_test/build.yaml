@@ -1,6 +1,0 @@
-targets:
-  $default:
-    builders:
-      angular:
-        options:
-          debug: True

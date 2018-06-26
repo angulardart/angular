@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 import 'src/compare_to_golden.dart';
 
-final _outputModes = ['release', 'debug', 'outline'];
+final _outputModes = ['template', 'outline'];
 final _inputFiles = p.join('test', '_files', '**.dart');
 final _isBazel = Platform.environment['RUNFILES'] != null;
 
@@ -49,11 +49,22 @@ void main() {
         test(file.path, () {
           compareCheckFileToGolden(
             file.path,
-            checkExtension: '.template_$mode.check',
-            goldenExtension: '.template_$mode.golden',
+            checkExtension: '.$mode.check',
+            goldenExtension: '.$mode.golden',
           );
         });
       }
+    });
+  }
+
+  if (_isBazel) {
+    test('Dart2JS', () {
+      compareCheckFileToGolden(
+        p.join(path, 'test', '_files', 'dart2js', 'dart2js_golden.dart'),
+        formatDart: false,
+        checkExtension: '.check',
+        goldenExtension: '.golden',
+      );
     });
   }
 }

@@ -34,7 +34,7 @@ class Compiler implements Generator {
   }
 
   /// Returns the compiler wrapped as a [Builder].
-  Builder asBuilder({String extension: '.template.dart'}) {
+  Builder asBuilder({String extension = '.template.dart'}) {
     return new LibraryBuilder(
       this,
       formatOutput: (s) => _formatter.format(s),

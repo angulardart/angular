@@ -5,21 +5,21 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/view_ref.dart';
-import 'package:angular/src/debug/debug_app_view.dart';
+import 'package:test/test.dart';
 
-import 'deferred_component_test.template.dart' as ng_generated;
+import 'deferred_component_test.template.dart' as ng;
 import 'deferred_view.dart';
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should load a @deferred component', () async {
-    final fixture = await new NgTestBed<SimpleContainerTest>().create();
+    final fixture = await NgTestBed
+        .forComponent<SimpleContainerTest>(
+          ng.SimpleContainerTestNgFactory,
+        )
+        .create();
 
     SimpleContainerTest comp;
     await fixture.update((SimpleContainerTest component) {
@@ -32,7 +32,11 @@ void main() {
   });
 
   test('should load a @deferred component nested in an *ngIf', () async {
-    final fixture = await new NgTestBed<NestedContainerTest>().create();
+    final fixture = await NgTestBed
+        .forComponent<NestedContainerTest>(
+          ng.NestedContainerTestNgFactory,
+        )
+        .create();
     Element view = fixture.rootElement.querySelector('my-deferred-view');
     expect(view, isNull);
 
@@ -42,12 +46,20 @@ void main() {
   });
 
   test('should pass property values to an @deferred component', () async {
-    final fixture = await new NgTestBed<PropertyContainerTest>().create();
+    final fixture = await NgTestBed
+        .forComponent<PropertyContainerTest>(
+          ng.PropertyContainerTestNgFactory,
+        )
+        .create();
     expect(fixture.text, contains('Title: Hello World'));
   });
 
   test('should listen to events from an @deferred component', () async {
-    final fixture = await new NgTestBed<EventContainerTest>().create();
+    final fixture = await NgTestBed
+        .forComponent<EventContainerTest>(
+          ng.EventContainerTestNgFactory,
+        )
+        .create();
     final div = fixture.rootElement.querySelector('my-deferred-view > button');
     expect(fixture.text, contains('Events: 0'));
     await fixture.update((_) {
@@ -72,10 +84,12 @@ class SimpleContainerTest {
   SimpleContainerTest(this.cdRef);
 
   Future waitForDeferred() async {
+    // TODO(matanl): Add proper support to this instead of using a timer.
+    await new Future.delayed(Duration.zero);
     // TODO(het): remove this once angular_test supports waiting for deferred
     // components
-    var view = (cdRef as ViewRefImpl).appView as DebugAppView;
-    return Future.wait(view.deferredLoads);
+    // var view = (cdRef as ViewRefImpl).appView as AppView;
+    // return Future.wait(view.deferredLoads);
   }
 }
 

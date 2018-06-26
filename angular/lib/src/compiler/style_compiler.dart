@@ -9,7 +9,7 @@ import "shadow_css.dart";
 import "style_url_resolver.dart" show extractStyleUrls;
 
 /// This placeholder is replaced by the component ID at run-time.
-const _componentIdPlaceholder = '%COMP%';
+const _componentIdPlaceholder = '%ID%';
 
 /// This CSS class is used to apply styles to a component's host element.
 const _hostClass = '_nghost-$_componentIdPlaceholder';
@@ -45,14 +45,14 @@ class StyleCompiler {
     usesHostAttribute = false;
     var requiresShim =
         comp.template.encapsulation == ViewEncapsulation.Emulated;
-    return this._compileStyles(getStylesVarName(comp), comp.template.styles,
+    return this._compileStyles(_getStylesVarName(comp), comp.template.styles,
         comp.template.styleUrls, requiresShim);
   }
 
   StylesCompileResult compileStylesheet(
       String stylesheetUrl, String cssText, bool isShimmed) {
     var styleWithImports = extractStyleUrls(stylesheetUrl, cssText);
-    return this._compileStyles(getStylesVarName(), [styleWithImports.style],
+    return this._compileStyles(_getStylesVarName(), [styleWithImports.style],
         styleWithImports.styleUrls, isShimmed);
   }
 
@@ -67,7 +67,7 @@ class StyleCompiler {
     /// Add URLs from @import statements first.
     for (final url in styleUrls) {
       final identifier = new CompileIdentifierMetadata(
-        name: getStylesVarName(),
+        name: _getStylesVarName(),
         moduleUrl: stylesModuleUrl(url, shim),
       );
       styleExpressions.add(new o.ExternalExpr(identifier));
@@ -81,13 +81,25 @@ class StyleCompiler {
 
     // Styles variable contains plain strings and arrays of other styles arrays
     // (recursive), so we set its type to dynamic.
-    var stmt = o
+    final listShouldBeConst = styleExpressions.isEmpty;
+    final statement = o
         .variable(stylesVar)
-        .set(o.literalArr(styleExpressions,
-            new o.ArrayType(o.DYNAMIC_TYPE, [o.TypeModifier.Const])))
-        .toDeclStmt(null, [o.StmtModifier.Const]);
+        .set(o.literalArr(
+            styleExpressions,
+            new o.ArrayType(
+              o.DYNAMIC_TYPE,
+              listShouldBeConst ? [o.TypeModifier.Const] : const [],
+            )))
+        .toDeclStmt(
+      null,
+      [o.StmtModifier.Final],
+    );
     return new StylesCompileResult(
-        [stmt], stylesVar, usesHostAttribute, usesContentAttribute);
+      [statement],
+      stylesVar,
+      usesHostAttribute,
+      usesContentAttribute,
+    );
   }
 
   String _shimIfNeeded(String style, bool shim) {
@@ -110,5 +122,5 @@ class StyleCompiler {
 ///
 /// Styles are assigned to style_componentTypeName variables and
 /// passed onto ViewUtils.createRenderComponentType for creating the prototype.
-String getStylesVarName([CompileDirectiveMetadata component]) =>
+String _getStylesVarName([CompileDirectiveMetadata component]) =>
     component != null ? 'styles\$${component.type.name}' : 'styles';

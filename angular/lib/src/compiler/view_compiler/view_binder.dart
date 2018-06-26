@@ -1,6 +1,7 @@
 import 'package:source_span/source_span.dart';
 
 import '../../core/linker/view_type.dart';
+import '../expression_parser/ast.dart' as ast;
 import '../expression_parser/parser.dart';
 import '../output/output_ast.dart' as o;
 import '../schema/element_schema_registry.dart';
@@ -37,17 +38,17 @@ import "property_binder.dart"
 /// Called by ViewCompiler for each top level CompileView and the
 /// ViewBinderVisitor recursively for each embedded template.
 void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
-  var visitor = new ViewBinderVisitor(view);
+  var visitor = new _ViewBinderVisitor(view);
   templateVisitAll(visitor, parsedTemplate);
   for (var pipe in view.pipes) {
     bindPipeDestroyLifecycleCallbacks(pipe.meta, pipe.instance, pipe.view);
   }
 }
 
-class ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
+class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
   final CompileView view;
   int _nodeIndex = 0;
-  ViewBinderVisitor(this.view);
+  _ViewBinderVisitor(this.view);
 
   void visitBoundText(BoundTextAst ast, dynamic context) {
     var node = this.view.nodes[_nodeIndex++];
@@ -184,6 +185,12 @@ class ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
   void visitElementProperty(BoundElementPropertyAst ast, dynamic context) {}
 
   void visitProvider(ProviderAst ast, dynamic context) {}
+
+  void visitI18nAttr(I18nAttrAst ast, dynamic context) {}
+
+  void visitI18nText(I18nTextAst ast, dynamic context) {
+    _nodeIndex++;
+  }
 }
 
 void bindViewHostProperties(CompileView view, Parser parser,
@@ -195,11 +202,10 @@ void bindViewHostProperties(CompileView view, Parser parser,
   List<BoundElementPropertyAst> hostProperties = <BoundElementPropertyAst>[];
 
   var span = new SourceSpan(new SourceLocation(0), new SourceLocation(0), '');
-  hostProps.forEach((String propName, String expression) {
-    var exprAst = parser.parseBinding(expression, null, view.component.exports);
+  hostProps.forEach((String propName, ast.AST expression) {
     var elementName = view.component.selector;
-    hostProperties.add(createElementPropertyAst(
-        elementName, propName, exprAst, span, schemaRegistry, errorCallback));
+    hostProperties.add(createElementPropertyAst(elementName, propName,
+        expression, span, schemaRegistry, errorCallback));
   });
 
   final CompileMethod method = new CompileMethod(view.genDebugInfo);

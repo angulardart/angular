@@ -49,7 +49,7 @@ class ChildComponent extends SomeDirective {}
   selector: '[someDirective]',
 )
 class SomeDirective {
-  @HostBinding('role')
+  @HostBinding('attr.role')
   static const hostRole = 'button';
 
   @HostBinding('attr.data-xyz')

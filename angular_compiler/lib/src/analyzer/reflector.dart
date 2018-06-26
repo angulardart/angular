@@ -46,42 +46,30 @@ class ReflectableReader {
   /// By default this is `.template.dart`.
   final String outputExtension;
 
-  /// Whether to treat an `@Component`-annotated `class` as an `@Component`.
-  ///
-  /// This means that a factory to create the component at runtime needs to be
-  /// registered. This also disables tree-shaking classes annotated with
-  /// `@Component`.
-  final bool recordComponentsAsInjectables;
-
-  /// Whether to treat an `@Directive`-annotated `class` as an `@Injectable`.
-  ///
-  /// This means that a factory to create the directive at runtime needs to be
-  /// registered. This also disables tree-shaking classes annotated with
-  /// `@Directive`.
-  final bool recordDirectivesAsInjectables;
-
-  /// Whether to treat a `@Pipe`-annotated `class` as an `@Injectable`.
-  ///
-  /// This means that a factory to create the pipe at runtime needs to be
-  /// registered. This also disables tree-shaking classes annotated with
-  /// `@Pipe`.
-  final bool recordPipesAsInjectables;
-
   /// Whether to record `@RouteConfig`s for `@Component`-annotated classes.
   ///
   /// This is only required in order to support the legacy router, which looks
   /// up metadata information at runtime in order to configure itself.
   final bool recordRouterAnnotationsForComponents;
 
+  /// Whether to record `ComponentFactory` for `@Component`-annotated classes.
+  ///
+  /// This is used to support `SlowComponentLoader`.
+  final bool recordComponentFactories;
+
+  /// Whether to record factory functions for `@Injectable`-annotated elements.
+  ///
+  /// This is used to support `ReflectiveInjector`.
+  final bool recordInjectableFactories;
+
   const ReflectableReader({
-    this.dependencyReader: const DependencyReader(),
+    this.dependencyReader = const DependencyReader(),
     @required this.hasInput,
     @required this.isLibrary,
-    this.outputExtension: _defaultOutputExtension,
-    this.recordComponentsAsInjectables: false,
-    this.recordDirectivesAsInjectables: false,
-    this.recordPipesAsInjectables: false,
-    this.recordRouterAnnotationsForComponents: true,
+    this.outputExtension = _defaultOutputExtension,
+    this.recordRouterAnnotationsForComponents = true,
+    this.recordComponentFactories = true,
+    this.recordInjectableFactories = true,
   });
 
   /// Always emits an empty [ReflectableOutput.urlsNeedingInitReflector].
@@ -89,12 +77,11 @@ class ReflectableReader {
   /// Useful for tests that do not want to try emulating a complete build.
   @visibleForTesting
   const ReflectableReader.noLinking({
-    this.dependencyReader: const DependencyReader(),
-    this.outputExtension: _defaultOutputExtension,
-    this.recordComponentsAsInjectables: true,
-    this.recordDirectivesAsInjectables: true,
-    this.recordPipesAsInjectables: true,
-    this.recordRouterAnnotationsForComponents: true,
+    this.dependencyReader = const DependencyReader(),
+    this.outputExtension = _defaultOutputExtension,
+    this.recordRouterAnnotationsForComponents = true,
+    this.recordComponentFactories = true,
+    this.recordInjectableFactories = true,
   })  : hasInput = _nullHasInput,
         isLibrary = _nullIsLibrary;
 
@@ -117,12 +104,21 @@ class ReflectableReader {
           registerClasses.add(reflectable);
         }
       }
-      registerFunctions.addAll(unit.functions
-          .where((e) => $Injectable.firstAnnotationOfExact(e) != null)
-          .map(dependencyReader.parseDependencies));
+      if (recordInjectableFactories) {
+        registerFunctions.addAll(unit.functions
+            .where((e) => $Injectable.firstAnnotationOfExact(e) != null)
+            .map(dependencyReader.parseDependencies));
+      }
     }
+    List<String> urlsNeedingInitReflector = const [];
+
+    // Only link to other ".initReflector" calls if either flag is enabled.
+    if (recordInjectableFactories || recordComponentFactories) {
+      urlsNeedingInitReflector = await _resolveNeedsReflector(library);
+    }
+
     return new ReflectableOutput(
-      urlsNeedingInitReflector: await _resolveNeedsReflector(library),
+      urlsNeedingInitReflector: urlsNeedingInitReflector,
       registerClasses: registerClasses,
       registerFunctions: registerFunctions,
     );
@@ -130,7 +126,7 @@ class ReflectableReader {
 
   ReflectableClass _resolveClass(ClassElement element) {
     DependencyInvocation<ConstructorElement> factory;
-    if (_shouldRecordFactory(element)) {
+    if (_shouldRecordFactory(element) && recordInjectableFactories) {
       if (element.isPrivate) {
         // TODO(matanl): Make this a better error message.
         throw new BuildError('Cannot access private class ${element.name}');
@@ -148,7 +144,7 @@ class ReflectableReader {
       registerAnnotation: recordRouterAnnotationsForComponents && isComponent
           ? _findRouteConfig(element)?.revive()
           : null,
-      registerComponentFactory: isComponent,
+      registerComponentFactory: isComponent && recordComponentFactories,
     );
   }
 
@@ -224,12 +220,7 @@ class ReflectableReader {
   }
 
   bool _shouldRecordFactory(ClassElement element) =>
-      $Injectable.firstAnnotationOfExact(element) != null ||
-      recordComponentsAsInjectables &&
-          $Component.firstAnnotationOfExact(element) != null ||
-      recordDirectivesAsInjectables &&
-          $Directive.firstAnnotationOfExact(element) != null ||
-      recordPipesAsInjectables && $Pipe.firstAnnotationOfExact(element) != null;
+      $Injectable.hasAnnotationOfExact(element);
 }
 
 class ReflectableOutput {
@@ -244,9 +235,9 @@ class ReflectableOutput {
 
   @visibleForTesting
   const ReflectableOutput({
-    this.urlsNeedingInitReflector: const [],
-    this.registerClasses: const [],
-    this.registerFunctions: const [],
+    this.urlsNeedingInitReflector = const [],
+    this.registerClasses = const [],
+    this.registerFunctions = const [],
   });
 
   static const _list = const ListEquality<Object>();
@@ -296,7 +287,7 @@ class ReflectableClass {
     this.factory,
     @required this.name,
     this.registerAnnotation,
-    this.registerComponentFactory: false,
+    this.registerComponentFactory = false,
   });
 
   @override

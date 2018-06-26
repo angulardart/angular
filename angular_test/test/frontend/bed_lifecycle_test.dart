@@ -43,11 +43,9 @@ void main() {
     final fixture = await new NgTestBed<NgOnChangesInitOrder>().create(
       beforeChangeDetection: (root) => root.name = 'Hello',
     );
-    await fixture.query<ChildWithLifeCycles>(
-      (el) => el.componentInstance is ChildWithLifeCycles,
-      (child) {
-        expect(child.events, ['OnChanges:name=Hello', 'OnInit']);
-      },
+    expect(
+      fixture.assertOnlyInstance.child.events,
+      ['OnChanges:name=Hello', 'OnInit'],
     );
   });
 }
@@ -67,6 +65,9 @@ class AngularLifecycle {
 )
 class NgOnChangesInitOrder {
   String name;
+
+  @ViewChild(ChildWithLifeCycles)
+  ChildWithLifeCycles child;
 }
 
 @Component(

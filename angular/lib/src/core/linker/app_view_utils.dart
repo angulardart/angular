@@ -1,3 +1,5 @@
+import 'dart:html' show DocumentFragment, NodeTreeSanitizer;
+
 import 'package:angular/di.dart' show Injectable, Inject;
 import 'package:angular/src/core/application_tokens.dart' show APP_ID;
 import 'package:angular/src/core/change_detection/change_detection.dart'
@@ -7,6 +9,8 @@ import 'package:angular/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular/src/core/security.dart';
 import 'package:angular/src/platform/dom/events/event_manager.dart'
     show EventManager;
+import 'package:angular/src/runtime.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 
 import 'exceptions.dart' show ExpressionChangedAfterItHasBeenCheckedException;
 
@@ -28,22 +32,24 @@ class AppViewUtils {
   /// detected.
   ///
   /// Latency sensitive! Used by checkBinding during change detection.
-  static bool throwOnChanges = false;
+  static bool get throwOnChanges => isDevMode && _throwOnChanges;
+  static set throwOnChanges(bool value) => _throwOnChanges = value;
+  static bool _throwOnChanges = false;
   static int _throwOnChangesCounter = 0;
+
   SanitizationService sanitizer;
 
   AppViewUtils(@Inject(APP_ID) this._appId, this.sanitizer, this.eventManager);
 
   /// Used by the generated code to initialize and share common rendering data
   /// such as css across instances.
+  @dart2js.noInline
   RenderComponentType createRenderType(
       String templateUrl,
       ViewEncapsulation encapsulation,
       List<dynamic /* String | List < dynamic > */ > styles) {
     return new RenderComponentType(
         '$_appId-${_nextCompTypeId++}', templateUrl, encapsulation, styles);
-    return null; // ignore: dead_code
-    return null; // ignore: dead_code
   }
 
   /// Enters execution mode that will throw exceptions if any binding
@@ -70,6 +76,14 @@ class AppViewUtils {
     _throwOnChangesCounter = 0;
     throwOnChanges = false;
   }
+}
+
+/// Creates a document fragment from [trustedHtml].
+DocumentFragment createTrustedHtml(String trustedHtml) {
+  return new DocumentFragment.html(
+    trustedHtml,
+    treeSanitizer: NodeTreeSanitizer.trusted,
+  );
 }
 
 /// Flattens a `List<List<?>>` into a `List<?>`.
@@ -302,6 +316,7 @@ String _toStringWithNull(dynamic v) => v == null ? '' : '$v';
 ///
 /// In _dev-mode_ it throws if a second-pass change-detection is being made to
 /// ensure that values are not changing during change detection (illegal).
+@dart2js.tryInline
 bool checkBinding(oldValue, newValue) {
   // This is only ever possibly true when assertions are enabled.
   //

@@ -6,9 +6,6 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/view_ref.dart';
-import 'package:angular/src/debug/debug_app_view.dart';
-import 'package:angular/src/debug/debug_node.dart';
 
 import 'bed.dart';
 import 'stabilizer.dart';
@@ -37,79 +34,15 @@ class NgTestFixture<T> {
     this._testStabilizer,
   );
 
-  /// Whether the test component was generated in debug-mode.
-  bool get _isDebugMode {
-    return (_rootComponentRef.hostView as ViewRefImpl).appView is DebugAppView;
-  }
-
-  /// Root debug element, throwing if not available.
-  DebugElement get _debugElement {
-    if (_isDebugMode) {
-      var node = getDebugNode(_rootComponentRef.location);
-      if (node is DebugElement) {
-        return node;
-      }
-      throw new StateError('Root is not an element');
-    }
-    throw new UnsupportedError('Cannot utilize in codegen release mode');
-  }
-
   /// Destroys the test case, returning a future that completes after disposed.
   ///
   /// In most cases, it is preferable to use `disposeAnyRunningTest`.
-  Future<Null> dispose() async {
+  Future<void> dispose() async {
     await update();
     _rootComponentRef.destroy();
     _rootComponentRef.location.parent.remove();
     _applicationRef.dispose();
     activeTest = null;
-  }
-
-  /// Returns the first component instance that matches predicate [test].
-  ///
-  /// Example use:
-  /// ```dart
-  /// await fixture.query<FooComponent>(
-  ///   (el) => el.componentInstance is FooComponent,
-  ///   (foo) {
-  ///     // Run expectation or interact.
-  ///   },
-  /// );
-  /// ```
-  ///
-  /// Calls [run] with `null` if there was no matching element.
-  ///
-  /// **NOTE**: The root component is _not_ query-able. See [update] instead.
-  Future<Null> query<E>(
-    bool Function(DebugElement element) test,
-    void Function(E instance) run,
-  ) {
-    final instance = _debugElement.query(test)?.componentInstance;
-    return update((_) => run(instance));
-  }
-
-  /// Returns all component instances that matches predicate [test].
-  ///
-  /// Example use:
-  /// ```dart
-  /// await fixture.queryAll<FooComponent>(
-  ///   (el) => el.componentInstance is FooComponent,
-  ///   (foo) {
-  ///     // Run expectation or interact.
-  ///   },
-  /// );
-  /// ```
-  ///
-  /// Calls [run] with an empty iterable if there was no matching element.
-  ///
-  /// **NOTE**: The root component is _not_ query-able. See [update] instead.
-  Future<Null> queryAll<E>(
-    bool Function(DebugElement element) test,
-    void run(Iterable<E> instances),
-  ) {
-    return update((_) {
-      return run(_debugElement.queryAll(test).map((e) => e.componentInstance));
-    });
   }
 
   /// Root element.
@@ -133,10 +66,10 @@ class NgTestFixture<T> {
   ///   c.value = 5;
   /// });
   /// expect(fixture.text, contains('5 little piggies'));
-  Future<Null> update([void Function(T instance) run]) {
-    return _testStabilizer.stabilize(run: () {
+  Future<void> update([void Function(T instance) run]) {
+    return _testStabilizer.stabilize(runAndTrackSideEffects: () {
       if (run != null) {
-        new Future<Null>.sync(() {
+        new Future<void>.sync(() {
           run(_rootComponentRef.instance);
         });
       }

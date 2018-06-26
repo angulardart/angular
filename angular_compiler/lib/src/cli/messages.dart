@@ -17,7 +17,7 @@ abstract class Messages {
   /// Returns a message that the following [sourceSpans] were unresolvable.
   String unresolvedSource(
     Iterable<SourceSpan> sourceSpans, {
-    String message: 'Was not resolved',
+    String message = 'Was not resolved',
     @required String reason,
   }) {
     final buffer = new StringBuffer(reason)..writeln()..writeln();

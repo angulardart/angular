@@ -70,11 +70,10 @@ class CompileEventListener {
     if (directive != null && directive.isComponent) {
       _hasComponentHostListener = true;
     }
-    _method.resetDebugInfo(compileElement.nodeIndex, hostEvent);
     var context =
         directiveInstance?.build() ?? new o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(_nameResolver, context,
-        hostEvent.handler, compileElement.view.component);
+        hostEvent.handler, hostEvent.sourceSpan, compileElement.view.component);
     _method.addStmts(actionStmts);
   }
 
@@ -87,7 +86,7 @@ class CompileEventListener {
     } else {
       // Declare variables for locals used in this event listener.
       stmts.insertAll(0, _nameResolver.getLocalDeclarations());
-      compileElement.view.eventHandlerMethods.add(new o.ClassMethod(
+      compileElement.view.methods.add(new o.ClassMethod(
           _methodName, [_eventParam], stmts, null, [o.StmtModifier.Private]));
     }
   }

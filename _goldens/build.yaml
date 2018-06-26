@@ -8,20 +8,17 @@ targets:
         generate_for: ["test/_files/**"]
         options:
           extensions:
-            debug: ".template_debug.check"
-            release: ".template_release.check"
-            outline: ".template_outline.check"
+            template: ".template.check"
+            outline: ".outline.check"
 
 builders:
   goldens:
     target: "goldens"
     import: "../../../tool/src/builder.dart"
     builder_factories:
-      - debugBuilder
       - releaseBuilder
       - outlineBuilder
     build_extensions:
       ".dart":
-        - ".template_debug.check"
-        - ".template_release.check"
-        - ".template_outline.check"
+        - ".template.check"
+        - ".outline.check"

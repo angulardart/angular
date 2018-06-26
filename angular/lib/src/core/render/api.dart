@@ -5,6 +5,10 @@ import 'package:angular/src/runtime.dart';
 /// Styles host that adds encapsulated styles to global style sheet for use
 /// by [RenderComponentType].
 abstract class SharedStylesHost {
+  /// Adds [styles] to this style host.
+  ///
+  /// In dev mode the first style will be a identifier that may be used to
+  /// attribute the [styles] to their component of origin.
   void addStyles(List<String> styles);
 }
 
@@ -14,7 +18,7 @@ abstract class SharedStylesHost {
 SharedStylesHost sharedStylesHost;
 
 /// This matches the component ID placeholder in encapsulating CSS classes.
-final _componentIdPlaceholder = new RegExp(r'%COMP%');
+final _componentIdPlaceholder = new RegExp(r'%ID%');
 
 /// Component prototype and runtime style information that are shared
 /// across all instances of a component type.
@@ -39,15 +43,21 @@ class RenderComponentType {
   // Host attribute name of elements in the template for this component type.
   String _hostAttr;
 
-  List<String> _styles;
   bool stylesShimmed = false;
 
   RenderComponentType(
       this.id, this.templateUrl, this.encapsulation, this.templateStyles);
 
   void shimStyles(SharedStylesHost stylesHost) {
-    _styles = _flattenStyles(id, templateStyles, []);
-    stylesHost.addStyles(this._styles);
+    final styles = <String>[];
+    if (isDevMode) {
+      // In dev mode, pass the `templateUrl` as the first style. This is used by
+      // the `SharedStyleHost` to attribute the resulting <style> tag to the
+      // component from which it originates.
+      styles.add(templateUrl);
+    }
+    _flattenStyles(id, templateStyles, styles);
+    stylesHost.addStyles(styles);
     if (encapsulation == ViewEncapsulation.Emulated) {
       _hostAttr = '$_hostClassPrefix$id';
       _viewAttr = '$_viewClassPrefix$id';
@@ -57,8 +67,6 @@ class RenderComponentType {
   String get contentAttr => _viewAttr;
 
   String get hostAttr => _hostAttr;
-
-  List<String> get styles => _styles;
 
   List<String> _flattenStyles(
       String compId,

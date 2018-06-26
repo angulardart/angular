@@ -45,9 +45,9 @@ Builder templatePlaceholder(_) => const Placeholder();
 /// * [outlineExtension]: Outline extension to use when `--outline-only` used.
 Builder templateCompiler(
   BuilderOptions options, {
-  CompilerFlags defaultFlags: _defaultFlags,
-  String templateExtension: _templateExtension,
-  String outlineExtension: _outlineExtension,
+  CompilerFlags defaultFlags = _defaultFlags,
+  String templateExtension = _templateExtension,
+  String outlineExtension = _outlineExtension,
 }) {
   final config = <String, dynamic>{}..addAll(options.config);
   // We may just run in outliner mode.
@@ -62,7 +62,7 @@ Builder templateCompiler(
     severity: Level.SEVERE,
   );
   if (outline) {
-    return new TemplateOutliner(flags, extension: outlineExtension);
+    return new TemplateOutliner(extension: outlineExtension);
   }
   return new Compiler(flags, generate).asBuilder(extension: templateExtension);
 }
@@ -73,15 +73,10 @@ Builder templateCompiler(
 /// * [extension]: Extension to use when compiling.
 Builder outlineCompiler(
   BuilderOptions options, {
-  CompilerFlags defaultFlags: _defaultFlags,
-  String extension: _outlineExtension,
+  CompilerFlags defaultFlags = _defaultFlags,
+  String extension = _outlineExtension,
 }) {
-  final flags = new CompilerFlags.parseRaw(
-    options.config,
-    defaultFlags,
-    severity: Level.SEVERE,
-  );
-  return new TemplateOutliner(flags, extension: extension);
+  return new TemplateOutliner(extension: extension);
 }
 
 /// Generates `.css.dart` files that are imported by the template compiler.
@@ -89,3 +84,17 @@ Builder stylesheetCompiler(BuilderOptions options) {
   final flags = new CompilerFlags.parseRaw(options.config, _defaultFlags);
   return new StylesheetCompiler(flags);
 }
+
+/// Removes the `.ng_placeholder` files which are only necessary during the
+/// build.
+PostProcessBuilder placeholderCleanup(_) =>
+    const FileDeletingBuilder(const ['.ng_placeholder']);
+
+/// Removes`.html` and `.css` files in `lib/` since they are likely sources for
+/// angular templates.
+///
+/// HTML or CSS files that are required at runtime can be exlcuded by glob.
+PostProcessBuilder componentSourceCleanup(BuilderOptions options) =>
+    new FileDeletingBuilder.withExcludes(const ['.html', '.css'],
+        (options.config['exclude'] as List)?.cast<String>() ?? const [],
+        isEnabled: (options.config['enabled'] as bool) ?? false);

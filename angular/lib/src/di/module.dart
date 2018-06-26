@@ -54,8 +54,8 @@ class Module {
   }) = Module._;
 
   const Module._({
-    this.include: const [],
-    this.provide: const [],
+    this.include = const [],
+    this.provide = const [],
   });
 }
 

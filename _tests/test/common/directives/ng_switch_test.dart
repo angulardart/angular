@@ -89,11 +89,11 @@ void main() {
       final testFixture = await testBed.create(beforeChangeDetection: (comp) {
         comp.switchCase = 'one';
       });
-      expect(testFixture.text, 'first case');
+      expect(testFixture.text, contains('first case'));
       await testFixture.update((comp) {
         comp.switchCase = 'two';
       });
-      expect(testFixture.text, 'second case');
+      expect(testFixture.text, contains('second case'));
     });
   });
 }

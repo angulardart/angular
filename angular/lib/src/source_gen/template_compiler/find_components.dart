@@ -4,21 +4,22 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
-import 'package:angular/src/compiler/output/output_ast.dart' as o;
-import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
+import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/compiler/output/convert.dart';
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/angular_compiler.dart';
-import 'package:source_span/source_span.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../../compiler/view_compiler/property_binder.dart'
     show isPrimitiveTypeName;
@@ -30,11 +31,10 @@ const String _directivesProperty = 'directives';
 const String _visibilityProperty = 'visibility';
 const _statefulDirectiveFields = const [
   'exportAs',
-  'host',
 ];
 
 AngularArtifacts findComponentsAndDirectives(LibraryReader library) {
-  var componentVisitor = new NormalizedComponentVisitor(library);
+  var componentVisitor = new _NormalizedComponentVisitor(library);
   library.element.accept(componentVisitor);
   return new AngularArtifacts(
     componentVisitor.components,
@@ -42,16 +42,16 @@ AngularArtifacts findComponentsAndDirectives(LibraryReader library) {
   );
 }
 
-class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
+class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   final List<NormalizedComponentWithViewDirectives> components = [];
   final List<CompileDirectiveMetadata> directives = [];
   final LibraryReader _library;
 
-  NormalizedComponentVisitor(this._library);
+  _NormalizedComponentVisitor(this._library);
 
   @override
   Null visitClassElement(ClassElement element) {
-    final directive = element.accept(new ComponentVisitor(_library));
+    final directive = element.accept(new _ComponentVisitor(_library));
     if (directive != null) {
       if (directive.isComponent) {
         var pipes = _visitPipes(element);
@@ -66,7 +66,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   @override
   Null visitFunctionElement(FunctionElement element) {
-    final directive = element.accept(new ComponentVisitor(_library));
+    final directive = element.accept(new _ComponentVisitor(_library));
     if (directive != null) {
       directives.add(directive);
     }
@@ -85,7 +85,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         element,
         _directivesProperty,
         safeMatcher(isDirective),
-        () => new ComponentVisitor(_library),
+        () => new _ComponentVisitor(_library),
       );
 
   List<T> _visitTypes<T>(
@@ -109,28 +109,6 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
               element: element,
             ))
         .toList();
-  }
-
-  void _failFastOnUnresolvedDirectives(
-    Iterable<Expression> expressions,
-    ClassElement componentType,
-  ) {
-    final sourceUrl = componentType.source.uri;
-    throw new BuildError(
-      messages.unresolvedSource(
-        expressions.map((e) {
-          return new SourceSpan(
-            new SourceLocation(e.offset, sourceUrl: sourceUrl),
-            new SourceLocation(e.offset + e.length, sourceUrl: sourceUrl),
-            e.toSource(),
-          );
-        }),
-        message: 'This argument *may* have not been resolved',
-        reason: ''
-            'Compiling @Component-annotated class "${componentType.name}" '
-            'failed.\n\n${messages.analysisFailureReasons}',
-      ),
-    );
   }
 
   List<T> _visitTypesForComponent<T>(
@@ -160,7 +138,7 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
               // check anyway at this point.
               values.elements.every((e) => e.staticType?.isDynamic != false)) {
             // We didn't resolve something.
-            _failFastOnUnresolvedDirectives(
+            _failFastOnUnresolvedExpressions(
                 values.elements.where((e) => e.staticType?.isDynamic != false),
                 element);
           }
@@ -175,16 +153,15 @@ class NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   }
 }
 
-class ComponentVisitor
+class _ComponentVisitor
     extends RecursiveElementVisitor<CompileDirectiveMetadata> {
   final _fieldInputs = <String, String>{};
   final _setterInputs = <String, String>{};
   final _inputs = <String, String>{};
   final _inputTypes = <String, CompileTypeMetadata>{};
   final _outputs = <String, String>{};
-  final _hostAttributes = <String, String>{};
+  final _hostBindings = <String, ast.AST>{};
   final _hostListeners = <String, String>{};
-  final _hostProperties = <String, String>{};
   final _queries = <CompileQueryMetadata>[];
   final _viewQueries = <CompileQueryMetadata>[];
 
@@ -198,7 +175,7 @@ class ComponentVisitor
   /// This is used to look up resolved type information.
   ClassElement _directiveClassElement;
 
-  ComponentVisitor(this._library);
+  _ComponentVisitor(this._library);
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
@@ -251,14 +228,14 @@ class ComponentVisitor
     final selector = coerceString(annotationValue, 'selector');
     return new CompileDirectiveMetadata(
       type: type,
+      originType: type,
       metadataType: CompileDirectiveMetadataType.FunctionalDirective,
       selector: selector,
       inputs: const {},
       inputTypes: const {},
       outputs: const {},
+      hostBindings: const {},
       hostListeners: const {},
-      hostProperties: const {},
-      hostAttributes: const {},
       providers: _extractProviders(annotationValue, 'providers'),
     );
   }
@@ -289,8 +266,8 @@ class ComponentVisitor
 
   void _visitClassMember(
     Element element, {
-    bool isGetter: false,
-    bool isSetter: false,
+    bool isGetter = false,
+    bool isSetter = false,
   }) {
     for (ElementAnnotation annotation in element.metadata) {
       if (safeMatcherType(Input)(annotation)) {
@@ -453,7 +430,7 @@ class ComponentVisitor
     //   @HostBinding('title')
     //   static const title = 'Hello';
     // }
-    var bindTo = element.name;
+    var bindTo = new ast.PropertyRead(new ast.ImplicitReceiver(), element.name);
     if (element is PropertyAccessorElement && element.isStatic ||
         element is FieldElement && element.isStatic) {
       if (element.enclosingElement != _directiveClassElement) {
@@ -461,9 +438,13 @@ class ComponentVisitor
         // https://github.com/dart-lang/angular/issues/1272
         return;
       }
-      bindTo = '${_directiveClassElement.name}.$bindTo';
+      var classId = new CompileIdentifierMetadata(
+          name: _directiveClassElement.name,
+          moduleUrl: moduleUrl(_directiveClassElement.library),
+          analyzedClass: new AnalyzedClass(_directiveClassElement));
+      bindTo = new ast.PropertyRead(new ast.StaticRead(classId), element.name);
     }
-    _hostProperties[property] = bindTo;
+    _hostBindings[property] = bindTo;
   }
 
   void _addHostListener(MethodElement element, DartObject value) {
@@ -510,15 +491,6 @@ class ComponentVisitor
     if (element.getMethod('noSuchMethod') != null) {
       _implementsNoSuchMethod = true;
     }
-    final annotation = element.metadata
-        .firstWhere(safeMatcher(isDirective), orElse: () => null);
-    if (annotation != null) {
-      // Collect metadata from class annotation.
-      final annotationValue = annotation.computeConstantValue();
-      final host = coerceStringMap(annotationValue, 'host');
-      CompileDirectiveMetadata.deserializeHost(
-          host, _hostAttributes, _hostListeners, _hostProperties);
-    }
     // Collect metadata from field and property accessor annotations.
     super.visitClassElement(element);
     // Merge field and setter inputs, so that a derived field input binding is
@@ -559,8 +531,30 @@ class ComponentVisitor
         : new CompileTemplateMetadata();
     final analyzedClass =
         new AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
+    final lifecycleHooks = extractLifecycleHooks(element);
+    if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
+      final ngDoCheck = element.getMethod('ngDoCheck') ??
+          element.lookUpInheritedMethod('ngDoCheck', element.library);
+      if (ngDoCheck != null && ngDoCheck.isAsynchronous) {
+        BuildError.throwForElement(
+            ngDoCheck,
+            'ngDoCheck should not be "async". The "ngDoCheck" lifecycle event '
+            'must be strictly synchronous, and should not invoke any methods '
+            '(or getters/setters) that directly run asynchronous code (such as '
+            'microtasks, timers).');
+      }
+      if (lifecycleHooks.contains(LifecycleHooks.onChanges)) {
+        BuildError.throwForElement(
+            element,
+            'Cannot implement both the DoCheck and OnChanges lifecycle '
+            'events. By implementing "DoCheck", default change detection of '
+            'inputs is disabled, meaning that "ngOnChanges" will never be '
+            'invoked with values. Consider "AfterChanges" instead.');
+      }
+    }
     return new CompileDirectiveMetadata(
       type: componentType,
+      originType: componentType,
       metadataType: isComp
           ? CompileDirectiveMetadataType.Component
           : CompileDirectiveMetadataType.Directive,
@@ -572,11 +566,10 @@ class ComponentVisitor
       inputs: _inputs,
       inputTypes: _inputTypes,
       outputs: _outputs,
+      hostBindings: _hostBindings,
       hostListeners: _hostListeners,
-      hostProperties: _hostProperties,
-      hostAttributes: _hostAttributes,
       analyzedClass: analyzedClass,
-      lifecycleHooks: extractLifecycleHooks(element),
+      lifecycleHooks: lifecycleHooks,
       providers: _extractProviders(annotationValue, 'providers'),
       viewProviders: _extractProviders(annotationValue, 'viewProviders'),
       exports: _extractExports(annotation as ElementAnnotationImpl, element),
@@ -668,6 +661,7 @@ class ComponentVisitor
       return exports;
     }
 
+    final unresolvedExports = <Identifier>[];
     for (Identifier id in staticNames) {
       String name;
       String prefix;
@@ -685,17 +679,25 @@ class ComponentVisitor
         name = id.name;
       }
 
-      if (id.staticElement is ClassElement) {
-        analyzedClass = new AnalyzedClass(id.staticElement as ClassElement);
+      final staticElement = id.staticElement;
+      if (staticElement is ClassElement) {
+        analyzedClass = new AnalyzedClass(staticElement);
+      } else if (staticElement == null) {
+        unresolvedExports.add(id);
+        continue;
       }
 
       // TODO(het): Also store the `DartType` since we know it statically.
       exports.add(new CompileIdentifierMetadata(
         name: name,
         prefix: prefix,
-        moduleUrl: moduleUrl(id.staticElement.library),
+        moduleUrl: moduleUrl(staticElement.library),
         analyzedClass: analyzedClass,
       ));
+    }
+    if (unresolvedExports.isNotEmpty) {
+      _failFastOnUnresolvedExpressions(
+          unresolvedExports, _directiveClassElement);
     }
     return exports;
   }
@@ -720,6 +722,28 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
       .where((hook) => hook.isAssignableFrom(clazz))
       .map((t) => hooks[t])
       .toList();
+}
+
+void _failFastOnUnresolvedExpressions(
+  Iterable<Expression> expressions,
+  ClassElement componentType,
+) {
+  final sourceUrl = componentType.source.uri;
+  throw new BuildError(
+    messages.unresolvedSource(
+      expressions.map((e) {
+        return new SourceSpan(
+          new SourceLocation(e.offset, sourceUrl: sourceUrl),
+          new SourceLocation(e.offset + e.length, sourceUrl: sourceUrl),
+          e.toSource(),
+        );
+      }),
+      message: 'This argument *may* have not been resolved',
+      reason: ''
+          'Compiling @Component-annotated class "${componentType.name}" '
+          'failed.\n\n${messages.analysisFailureReasons}',
+    ),
+  );
 }
 
 void _prohibitBindingChange(

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/view_compiler/expression_converter.dart';
@@ -18,6 +20,7 @@ import '../compile_metadata.dart'
         CompileQueryMetadata,
         CompileTokenMap;
 import '../compiler_utils.dart';
+import '../i18n/message.dart';
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
@@ -47,7 +50,6 @@ import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'
     show
         astAttribListToMap,
-        createDbgElementCall,
         createDiTokenExpression,
         createSetAttributeStatement,
         cachedParentIndexVarName,
@@ -63,7 +65,7 @@ enum NodeReferenceVisibility {
   build, // Only visible inside DOM build process.
 }
 
-var NOT_THROW_ON_CHANGES = o.not(o.importExpr(Identifiers.throwOnChanges));
+final notThrowOnChanges = o.not(o.importExpr(Identifiers.throwOnChanges));
 
 /// Reference to html node created during AppView build.
 class NodeReference {
@@ -74,6 +76,7 @@ class NodeReference {
   NodeReferenceVisibility _visibility = NodeReferenceVisibility.classPublic;
 
   NodeReference(this.parent, this.nodeIndex) : _name = '_el_$nodeIndex';
+  NodeReference.html(this.parent, this.nodeIndex) : _name = '_html_$nodeIndex';
   NodeReference.inlinedNode(this.parent, this.nodeIndex, int inlinedNodeIndex)
       : _name = '_el_${nodeIndex}_$inlinedNodeIndex';
   NodeReference.textNode(this.parent, this.nodeIndex)
@@ -131,9 +134,19 @@ class AppViewReference {
 
 /// Interface to generate a build function for an AppView.
 abstract class AppViewBuilder {
+  /// Creates an HTML document fragment from trusted [html].
+  ///
+  /// The [html] argument may be any expression that evaluates to a string
+  /// containing **trusted** HTML.
+  NodeReference createHtml(
+    CompileElement parent,
+    int nodeIndex,
+    o.Expression html,
+  );
+
   /// Creates an unbound literal text node.
   NodeReference createTextNode(
-      CompileElement parent, int nodeIndex, String text, TemplateAst ast);
+      CompileElement parent, int nodeIndex, o.Expression text, TemplateAst ast);
 
   NodeReference createBoundTextNode(
       CompileElement parent, int nodeIndex, BoundTextAst ast);
@@ -181,7 +194,7 @@ abstract class AppViewBuilder {
 
   /// Creates a field to store a stream subscription to be destroyed.
   void createSubscription(o.Expression streamReference, o.Expression handler,
-      {bool isMockLike: false});
+      {bool isMockLike = false});
 
   /// Add DOM event listener.
   void addDomEventListener(
@@ -207,7 +220,7 @@ abstract class AppViewBuilder {
       bool isMulti,
       bool isEager,
       CompileElement compileElement,
-      {bool forceDynamic: false});
+      {bool forceDynamic = false});
 
   /// Calls function directive on view startup.
   void callFunctionalDirective(o.Expression invokeExpr);
@@ -256,7 +269,16 @@ class CompileView implements AppViewBuilder {
   final List<CompilePipeMetadata> pipeMetas;
   final o.Expression styles;
   final Map<String, String> deferredModules;
+
+  /// Whether this is rendered by another view, rather than by its own class.
+  ///
+  /// Normally a unique class is generated to handle construction and change
+  /// detection of each component and embedded view. To avoid this overhead for
+  /// simple embedded views created by `NgIf`, this work is instead inlined into
+  /// the parent view.
   final bool isInlined;
+
+  /// Whether this inlines any of its child views.
   bool hasInlinedView = false;
 
   int viewIndex;
@@ -292,9 +314,11 @@ class CompileView implements AppViewBuilder {
   CompileMethod afterViewLifecycleCallbacksMethod;
   CompileMethod destroyMethod;
 
-  /// List of methods used to handle events with non standard parameters in
-  /// handlers or events with multiple actions.
-  List<o.ClassMethod> eventHandlerMethods = [];
+  /// Methods generated during view compilation.
+  ///
+  /// These include event handlers with non-standard parameters or multiple
+  /// actions, and internationalized messages with arguments.
+  List<o.ClassMethod> methods = [];
   List<o.ClassGetter> getters = [];
   List<o.Expression> subscriptions = [];
   bool subscribesToMockLike = false;
@@ -313,6 +337,9 @@ class CompileView implements AppViewBuilder {
   /// Local variable name used to refer to document. null if not created yet.
   String docVarName;
 
+  /// The number of internationalized messages in this view.
+  var _i18nMessageCount = 0;
+
   CompileView(
       this.component,
       this.genConfig,
@@ -322,7 +349,7 @@ class CompileView implements AppViewBuilder {
       this.declarationElement,
       this.templateVariables,
       this.deferredModules,
-      {this.isInlined: false}) {
+      {this.isInlined = false}) {
     _createMethod = new CompileMethod(genDebugInfo);
     _injectorGetMethod = new CompileMethod(genDebugInfo);
     _updateContentQueriesMethod = new CompileMethod(genDebugInfo);
@@ -340,7 +367,7 @@ class CompileView implements AppViewBuilder {
       nameResolver = new ViewNameResolver(this);
       storage = new CompileViewStorage();
     }
-    viewType = getViewType(component, viewIndex);
+    viewType = _getViewType(component, viewIndex);
     className = '${viewIndex == 0 && viewType != ViewType.host ? '' : '_'}'
         'View${component.type.name}$viewIndex';
     classType = o.importType(new CompileIdentifierMetadata(name: className));
@@ -411,9 +438,107 @@ class CompileView implements AppViewBuilder {
     }
   }
 
+  /// Generates code to internationalize [message].
+  ///
+  /// Returns an expression that evaluates to the internationalized message.
+  o.Expression createI18nMessage(I18nMessage message) {
+    var text = message.text;
+    if (message.containsHtml) {
+      // If the message contains HTML, it will be parsed into a document
+      // fragment. To prevent any manually escaped '<' and '>' characters (that
+      // were decoded during template parsing) from being interpreted as HTML
+      // tags, we must escape them again.
+      final htmlEscape = const HtmlEscape(HtmlEscapeMode.element);
+      text = htmlEscape.convert(text);
+    }
+    final args = [
+      o.escapedString(text),
+      new o.NamedExpr('desc', o.literal(message.metadata.description)),
+    ];
+    if (message.metadata.meaning != null) {
+      args.add(new o.NamedExpr('meaning', o.literal(message.metadata.meaning)));
+    }
+    final i18n = o.importExpr(Identifiers.Intl);
+    final name = '_message_${_i18nMessageCount++}';
+    if (message.containsHtml) {
+      // A message with arguments is generated as a static method.
+      // These are passed to `args` in `Intl.message()`.
+      final messageArgs = <o.ReadVarExpr>[];
+      // These are passed to `examples` in `Intl.message()`.
+      final messageExamples = <List<dynamic>>[];
+      final messageExamplesType = new o.MapType(null, [o.TypeModifier.Const]);
+      // These are the arguments used to invoke the generated method.
+      final methodArgs = <o.LiteralExpr>[];
+      // These are the parameters of the generated method.
+      final methodParameters = <o.FnParam>[];
+      for (final parameter in message.args.keys) {
+        final argument = o.literal(message.args[parameter]);
+        messageArgs.add(o.variable(parameter));
+        messageExamples.add([parameter, argument]);
+        methodArgs.add(argument);
+        methodParameters.add(new o.FnParam(parameter, o.STRING_TYPE));
+      }
+      args
+        ..add(new o.NamedExpr('name', o.literal('${className}_$name')))
+        ..add(new o.NamedExpr('args', o.literalArr(messageArgs)))
+        ..add(new o.NamedExpr(
+          'examples',
+          o.literalMap(messageExamples, messageExamplesType),
+        ));
+      final value = i18n.callMethod('message', args);
+      final method = new o.ClassMethod(
+        name,
+        methodParameters,
+        [new o.ReturnStatement(value)],
+        o.STRING_TYPE,
+        [o.StmtModifier.Static, o.StmtModifier.Private],
+      );
+      methods.add(method);
+      return new o.InvokeMemberMethodExpr(
+        name,
+        methodArgs,
+        outputType: o.STRING_TYPE,
+      );
+    } else {
+      // A message with no arguments is generated as a static final field.
+      final value = i18n.callMethod('message', args);
+      final item = storage.allocate(
+        name,
+        outputType: o.STRING_TYPE,
+        initializer: value,
+        modifiers: const [
+          o.StmtModifier.Static,
+          o.StmtModifier.Final,
+          o.StmtModifier.Private,
+        ],
+      );
+      return storage.buildReadExpr(item);
+    }
+  }
+
   @override
-  NodeReference createTextNode(
-      CompileElement parent, int nodeIndex, String text, TemplateAst ast) {
+  NodeReference createHtml(
+    CompileElement parent,
+    int nodeIndex,
+    o.Expression html,
+  ) {
+    final renderNode = new NodeReference.html(parent, nodeIndex);
+    _createMethod.addStmt(new o.DeclareVarStmt(
+      renderNode._name,
+      o.importExpr(Identifiers.createTrustedHtml).callFn([html]),
+      o.importType(Identifiers.HTML_DOCUMENT_FRAGMENT),
+    ));
+    final parentRenderNodeExpr = _getParentRenderNode(parent);
+    if (parentRenderNodeExpr != o.NULL_EXPR) {
+      _createMethod.addStmt(parentRenderNodeExpr
+          .callMethod('append', [renderNode.toReadExpr()]).toStmt());
+    }
+    return renderNode;
+  }
+
+  @override
+  NodeReference createTextNode(CompileElement parent, int nodeIndex,
+      o.Expression text, TemplateAst ast) {
     NodeReference renderNode;
     if (isInlined) {
       renderNode = new NodeReference.inlinedTextNode(
@@ -422,18 +547,15 @@ class CompileView implements AppViewBuilder {
           outputType: o.importType(Identifiers.HTML_TEXT_NODE),
           modifiers: const [o.StmtModifier.Private]);
       _createMethod.addStmt(renderNode
-          .toWriteExpr(o
-              .importExpr(Identifiers.HTML_TEXT_NODE)
-              .instantiate([o.literal(text)]))
+          .toWriteExpr(
+              o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text]))
           .toStmt());
     } else {
       renderNode = new NodeReference.textNode(parent, nodeIndex);
       renderNode.lockVisibility(NodeReferenceVisibility.build);
       _createMethod.addStmt(new o.DeclareVarStmt(
           renderNode._name,
-          o
-              .importExpr(Identifiers.HTML_TEXT_NODE)
-              .instantiate([o.literal(text)]),
+          o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text]),
           o.importType(Identifiers.HTML_TEXT_NODE)));
     }
     var parentRenderNodeExpr = _getParentRenderNode(parent);
@@ -441,10 +563,6 @@ class CompileView implements AppViewBuilder {
       // Write append code.
       _createMethod.addStmt(parentRenderNodeExpr
           .callMethod('append', [renderNode.toReadExpr()]).toStmt());
-    }
-    if (genConfig.genDebugInfo) {
-      _createMethod.addStmt(
-          createDbgElementCall(renderNode.toReadExpr(), nodeIndex, ast));
     }
     return renderNode;
   }
@@ -468,6 +586,7 @@ class CompileView implements AppViewBuilder {
         nameResolver,
         new o.ReadClassMemberExpr('ctx'),
         newValue,
+        ast.sourceSpan,
         component,
         o.STRING_TYPE,
       );
@@ -480,10 +599,6 @@ class CompileView implements AppViewBuilder {
       // Write append code.
       _createMethod.addStmt(parentRenderNodeExpr
           .callMethod('append', [renderNode.toReadExpr()]).toStmt());
-    }
-    if (genConfig.genDebugInfo) {
-      _createMethod.addStmt(
-          createDbgElementCall(renderNode.toReadExpr(), nodeIndex, ast));
     }
     return renderNode;
   }
@@ -517,54 +632,24 @@ class CompileView implements AppViewBuilder {
       _createMethod.addStmt(_createLocalDocumentVar());
     }
 
-    List<o.Expression> debugParams;
-    if (generateDebugInfo) {
-      debugParams = [
-        o.literal(debugNodeIndex),
-        debugSpan?.start == null
-            ? o.NULL_EXPR
-            : o.literal(debugSpan.start.line),
-        debugSpan?.start == null
-            ? o.NULL_EXPR
-            : o.literal(debugSpan.start.column)
-      ];
-    }
-
     if (parent != null && parent != o.NULL_EXPR) {
       o.Expression createExpr;
-      List<o.Expression> createParams;
-      if (generateDebugInfo) {
-        createParams = <o.Expression>[
-          o.THIS_EXPR,
-          new o.ReadVarExpr(docVarName)
-        ];
-      } else {
-        createParams = <o.Expression>[new o.ReadVarExpr(docVarName)];
-      }
+      final createParams = <o.Expression>[new o.ReadVarExpr(docVarName)];
 
       CompileIdentifierMetadata createAndAppendMethod;
       switch (tagName) {
         case 'div':
-          createAndAppendMethod = generateDebugInfo
-              ? Identifiers.createDivAndAppendDbg
-              : Identifiers.createDivAndAppend;
+          createAndAppendMethod = Identifiers.createDivAndAppend;
           break;
         case 'span':
-          createAndAppendMethod = generateDebugInfo
-              ? Identifiers.createSpanAndAppendDbg
-              : Identifiers.createSpanAndAppend;
+          createAndAppendMethod = Identifiers.createSpanAndAppend;
           break;
         default:
-          createAndAppendMethod = generateDebugInfo
-              ? Identifiers.createAndAppendDbg
-              : Identifiers.createAndAppend;
+          createAndAppendMethod = Identifiers.createAndAppend;
           createParams.add(o.literal(tagName));
           break;
       }
       createParams.add(parent);
-      if (generateDebugInfo) {
-        createParams.addAll(debugParams);
-      }
       createExpr = o.importExpr(createAndAppendMethod).callFn(createParams);
       _createMethod.addStmt(elementRef.toWriteExpr(createExpr).toStmt());
     } else {
@@ -573,13 +658,6 @@ class CompileView implements AppViewBuilder {
           .callMethod('createElement', [o.literal(tagName)]);
       _createMethod
           .addStmt(elementRef.toWriteExpr(createRenderNodeExpr).toStmt());
-      if (generateDebugInfo) {
-        _createMethod.addStmt(o
-            .importExpr(Identifiers.dbgElm)
-            .callFn(<o.Expression>[o.THIS_EXPR, elementRef.toReadExpr()]
-              ..addAll(debugParams))
-            .toStmt());
-      }
     }
   }
 
@@ -593,7 +671,6 @@ class CompileView implements AppViewBuilder {
   void createElementNs(CompileElement parent, NodeReference elementRef,
       int nodeIndex, String ns, String tagName, TemplateAst ast) {
     var parentRenderNodeExpr = _getParentRenderNode(parent);
-    final generateDebugInfo = genConfig.genDebugInfo;
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());
     }
@@ -613,10 +690,6 @@ class CompileView implements AppViewBuilder {
       // Write code to append to parent node.
       _createMethod.addStmt(parentRenderNodeExpr
           .callMethod('append', [elementRef.toReadExpr()]).toStmt());
-    }
-    if (generateDebugInfo) {
-      _createMethod.addStmt(
-          createDbgElementCall(elementRef.toReadExpr(), nodeIndex, ast));
     }
   }
 
@@ -713,11 +786,6 @@ class CompileView implements AppViewBuilder {
           parentNode.callMethod('append', [renderNode.toReadExpr()]).toStmt();
       _createMethod.addStmt(addCommentStmt);
     }
-
-    if (genConfig.genDebugInfo) {
-      _createMethod.addStmt(
-          createDbgElementCall(renderNode.toReadExpr(), nodeIndex, ast));
-    }
     return renderNode;
   }
 
@@ -768,13 +836,8 @@ class CompileView implements AppViewBuilder {
           .toWriteExpr(
               compAppViewExpr.toReadExpr().prop(appViewRootElementName))
           .toStmt());
-      if (genConfig.genDebugInfo) {
-        _createMethod
-            .addStmt(_createDbgIndexElementCall(elementRef, nodes.length));
-      }
     } else {
       var parentRenderNodeExpr = _getParentRenderNode(parent);
-      final generateDebugInfo = genConfig.genDebugInfo;
       _createMethod.addStmt(elementRef
           .toWriteExpr(
               compAppViewExpr.toReadExpr().prop(appViewRootElementName))
@@ -783,10 +846,6 @@ class CompileView implements AppViewBuilder {
         // Write code to append to parent node.
         _createMethod.addStmt(parentRenderNodeExpr
             .callMethod('append', [elementRef.toReadExpr()]).toStmt());
-      }
-      if (generateDebugInfo) {
-        _createMethod.addStmt(
-            createDbgElementCall(elementRef.toReadExpr(), nodes.length, ast));
       }
     }
     return compAppViewExpr;
@@ -800,11 +859,6 @@ class CompileView implements AppViewBuilder {
         .callMethod('create', [componentInstance, contentNodesArray]).toStmt());
   }
 
-  o.Statement _createDbgIndexElementCall(NodeReference nodeRef, int nodeIndex) {
-    return new o.InvokeMemberMethodExpr(
-        'dbgIdx', [nodeRef.toReadExpr(), o.literal(nodeIndex)]).toStmt();
-  }
-
   bool _isRootNodeOfHost(int nodeIndex) =>
       nodeIndex == 0 && viewType == ViewType.host;
 
@@ -813,7 +867,6 @@ class CompileView implements AppViewBuilder {
       CompileElement target, int sourceAstIndex, NgContentAst ast) {
     // The projected nodes originate from a different view, so we don't
     // have debug information for them.
-    _createMethod.resetDebugInfo(null, ast);
     var parentRenderNode = _getParentRenderNode(target);
     // AppView.projectableNodes property contains the list of nodes
     // to project for each NgContent.
@@ -853,7 +906,7 @@ class CompileView implements AppViewBuilder {
 
   @override
   void createSubscription(o.Expression streamReference, o.Expression handler,
-      {bool isMockLike: false}) {
+      {bool isMockLike = false}) {
     final subscription = o.variable('subscription_${subscriptions.length}');
     subscriptions.add(subscription);
     _createMethod.addStmt(subscription
@@ -914,7 +967,7 @@ class CompileView implements AppViewBuilder {
       bool isMulti,
       bool isEager,
       CompileElement compileElement,
-      {bool forceDynamic: false}) {
+      {bool forceDynamic = false}) {
     o.Expression resolvedProviderValueExpr;
     o.OutputType type;
     if (isMulti) {
@@ -1012,7 +1065,6 @@ class CompileView implements AppViewBuilder {
               : (providerHasChangeDetector ? changeDetectorType : type),
           modifiers: const [o.StmtModifier.Private]);
       var getter = new CompileMethod(genDebugInfo);
-      getter.resetDebugInfo(compileElement.nodeIndex, compileElement.sourceAst);
 
       if (providerHasChangeDetector) {
         resolvedProviderValueExpr =
@@ -1062,7 +1114,6 @@ class CompileView implements AppViewBuilder {
     ViewStorageItem pipeInstance = storage.allocate(name,
         outputType: o.importType(pipeMeta.type),
         modifiers: [o.StmtModifier.Private]);
-    _createMethod.resetDebugInfo(null, null);
     _createMethod.addStmt(storage
         .buildWriteExpr(
             pipeInstance, o.importExpr(pipeMeta.type).instantiate(deps))
@@ -1103,15 +1154,33 @@ class CompileView implements AppViewBuilder {
     var htmlAttrs = astAttribListToMap(attrs);
     // Create statements to initialize literal attribute values.
     // For example, a directive may have hostAttributes setting class name.
-    var attrNameAndValues = mergeHtmlAndDirectiveAttrs(htmlAttrs, directives,
-        excludeComponent: true);
-    for (int i = 0, len = attrNameAndValues.length; i < len; i++) {
+    var attrNameAndValues = mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);
+    attrNameAndValues.forEach((name, value) {
+      var expression = convertCdExpressionToIr(
+        nameResolver,
+        o.THIS_EXPR,
+        value,
+        // While the expression being converted may be the merged result of
+        // several bindings (a template binding and/or any number of host
+        // bindings), the only kind that could fail conversion is a template
+        // binding, so we pass its source span if present.
+        htmlAttrs[name]?.sourceSpan,
+        component,
+        o.STRING_TYPE,
+      );
       o.Statement stmt = createSetAttributeStatement(
-          elementAst.name,
-          nodeReference.toReadExpr(),
-          attrNameAndValues[i][0],
-          attrNameAndValues[i][1]);
+          elementAst.name, nodeReference.toReadExpr(), name, expression);
       _createMethod.addStmt(stmt);
+    });
+    for (final i18nAttr in elementAst.i18nAttrs) {
+      // Don't set any internationalized attributes that were overriden by a
+      // directive host binding.
+      if (!attrNameAndValues.containsKey(i18nAttr.name)) {
+        final message = createI18nMessage(i18nAttr.value);
+        final stmt = createSetAttributeStatement(elementAst.name,
+            nodeReference.toReadExpr(), i18nAttr.name, message);
+        _createMethod.addStmt(stmt);
+      }
     }
   }
 
@@ -1166,13 +1235,7 @@ class CompileView implements AppViewBuilder {
         new List.from(_updateContentQueriesMethod.finish())
           ..addAll(afterContentLifecycleCallbacksMethod.finish());
     if (afterContentStmts.isNotEmpty) {
-      if (genConfig.genDebugInfo) {
-        // Prevent query list updates when we run change detection for
-        // second time to check if values are stabilized.
-        statements.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterContentStmts));
-      } else {
-        statements.addAll(afterContentStmts);
-      }
+      statements.add(new o.IfStmt(notThrowOnChanges, afterContentStmts));
     }
 
     // Add render properties change detectors.
@@ -1187,11 +1250,7 @@ class CompileView implements AppViewBuilder {
         new List.from(_updateViewQueriesMethod.finish())
           ..addAll(afterViewLifecycleCallbacksMethod.finish());
     if (afterViewStmts.isNotEmpty) {
-      if (genConfig.genDebugInfo) {
-        statements.add(new o.IfStmt(NOT_THROW_ON_CHANGES, afterViewStmts));
-      } else {
-        statements.addAll(afterViewStmts);
-      }
+      statements.add(new o.IfStmt(notThrowOnChanges, afterViewStmts));
     }
     var varStmts = [];
     var readVars = o.findReadVarNames(statements);
@@ -1299,7 +1358,7 @@ class CompileView implements AppViewBuilder {
   }
 }
 
-ViewType getViewType(
+ViewType _getViewType(
     CompileDirectiveMetadata component, int embeddedTemplateIndex) {
   if (embeddedTemplateIndex > 0) {
     return ViewType.embedded;

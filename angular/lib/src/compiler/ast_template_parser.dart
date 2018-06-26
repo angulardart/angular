@@ -7,6 +7,7 @@ import 'compile_metadata.dart';
 import 'expression_parser/ast.dart';
 import 'expression_parser/parser.dart';
 import 'html_tags.dart';
+import 'i18n.dart';
 import 'identifiers.dart';
 import 'parse_util.dart';
 import 'provider_parser.dart';
@@ -18,14 +19,12 @@ import 'template_optimize.dart';
 import 'template_parser.dart';
 import 'template_parser/recursive_template_visitor.dart';
 
-const ngContentSelectAttr = 'select';
-const ngContentElement = 'ng-content';
-const linkElement = 'link';
-const linkStyleRelAttr = 'rel';
-const linkStyleHrefAttr = 'href';
-const linkStyleRelValue = 'stylesheet';
-const styleElement = 'style';
-const scriptElement = 'script';
+const _ngContentSelectAttr = 'select';
+const _ngContentElement = 'ng-content';
+const _linkElement = 'link';
+const _linkStyleHrefAttr = 'href';
+const _styleElement = 'style';
+const _scriptElement = 'script';
 const _templateElement = 'template';
 final CssSelector _textCssSelector = CssSelector.parse('*')[0];
 
@@ -95,11 +94,16 @@ class AstTemplateParser implements TemplateParser {
           exceptionHandler: exceptionHandler);
 
   List<ast.TemplateAst> _processRawTemplateNodes(
-      List<ast.TemplateAst> parsedAst,
-      {String template,
-      String name,
-      AstExceptionHandler exceptionHandler,
-      bool preserveWhitespace: false}) {
+    List<ast.TemplateAst> parsedAst, {
+    String template,
+    String name,
+    AstExceptionHandler exceptionHandler,
+    bool preserveWhitespace = false,
+  }) {
+    if (flags.forceMinifyWhitespace) {
+      logWarning('FORCING MINIFICATION');
+      preserveWhitespace = false;
+    }
     final implicNamespace = _applyImplicitNamespace(parsedAst);
     var filterElements = _filterElements(implicNamespace, preserveWhitespace);
     _validateTemplate(filterElements, exceptionHandler);
@@ -133,14 +137,11 @@ class AstTemplateParser implements TemplateParser {
     var filteredElements = new _ElementFilter()
         .visitAll<ast.StandaloneTemplateAst>(
             parsedAst.cast<ast.StandaloneTemplateAst>());
-    if (flags.useNewPreserveWhitespace) {
-      if (!preserveWhitespace) {
-        return filteredElements;
-      }
+    // New preserveWhitespace: false semantics (and preserveWhitespace: false).
+    if (!preserveWhitespace) {
       return new ast.MinimizeWhitespaceVisitor().visitAllRoot(filteredElements);
     }
-    return new _PreserveWhitespaceVisitor()
-        .visitAll(filteredElements, preserveWhitespace);
+    return new _PreserveWhitespaceVisitor().visitAll(filteredElements);
   }
 
   List<ng.TemplateAst> _bindDirectives(
@@ -148,8 +149,8 @@ class AstTemplateParser implements TemplateParser {
       CompileDirectiveMetadata compMeta,
       List<ast.TemplateAst> filteredAst,
       AstExceptionHandler exceptionHandler) {
-    final visitor = new _BindDirectivesVisitor();
-    final context = new _ParseContext.forRoot(new _TemplateContext(
+    final visitor = new _BindDirectivesVisitor(flags.i18nEnabled);
+    final context = new _ParseContext.forRoot(new TemplateContext(
         parser: parser,
         schemaRegistry: schemaRegistry,
         directives: removeDuplicates(directives),
@@ -205,35 +206,64 @@ class AstTemplateParser implements TemplateParser {
 /// A visitor which binds directives to element nodes.
 ///
 /// This visitor also converts from the pkg:angular_ast types to the angular
-/// compiler types.
+/// compiler types, which includes transformation of internationalized nodes.
 class _BindDirectivesVisitor
     implements ast.TemplateAstVisitor<ng.TemplateAst, _ParseContext> {
+  /// Whether internationalization of `@i18n`-annotated nodes is supported.
+  final bool i18nEnabled;
+
   /// A count of how many <ng-content> elements have been seen so far.
   ///
   /// This is necessary so that we can assign a unique index to each one as we
   /// visit it.
   int ngContentCount = 0;
 
+  _BindDirectivesVisitor(this.i18nEnabled);
+
   @override
   ng.TemplateAst visitElement(ast.ElementAst astNode,
       [_ParseContext parentContext]) {
     final elementContext =
         new _ParseContext.forElement(astNode, parentContext.templateContext);
-
+    final attributes = <ast.AttributeAst>[];
+    final i18nAttributes = <ng.I18nAttrAst>[];
+    final i18nAttributeAnnotations =
+        i18nAttributeAnnotationsFrom(astNode.annotations);
+    for (final attribute in astNode.attributes) {
+      if (i18nAttributeAnnotations.containsKey(attribute.name)) {
+        final annotation = i18nAttributeAnnotations[attribute.name];
+        final metadata =
+            parseI18nMetadata(annotation, elementContext.templateContext);
+        if (metadata == null) {
+          // Drop any attributes with invalid i18n metadata. We can't
+          // internationalize them with invalid metadata, nor do we want to
+          // treat them as non-internationalized attributes.
+          continue;
+        }
+        final message = new I18nMessage(attribute.value, metadata);
+        i18nAttributes.add(new ng.I18nAttrAst(
+          attribute.name,
+          message,
+          attribute.sourceSpan,
+        ));
+      } else {
+        attributes.add(attribute);
+      }
+    }
     // Note: We rely on the fact that attributes are visited before properties
     // in order to ensure that properties take precedence over attributes with
     // the same name.
     return new ng.ElementAst(
         astNode.name,
-        _visitAll(astNode.attributes, elementContext),
-        _visitProperties(
-            astNode.properties, astNode.attributes, elementContext),
+        _visitAll(attributes, elementContext),
+        i18nAttributes,
+        _visitProperties(astNode.properties, attributes, elementContext),
         _visitAll(astNode.events, elementContext),
         _visitAll(astNode.references, elementContext),
         elementContext.boundDirectives,
         [] /* providers */,
         null /* elementProviderUsage */,
-        _visitAll(astNode.childNodes, elementContext),
+        _visitChildren(astNode, astNode.annotations, elementContext),
         _findNgContentIndexForElement(astNode, parentContext),
         astNode.sourceSpan);
   }
@@ -289,7 +319,8 @@ class _BindDirectivesVisitor
   ng.TemplateAst visitContainer(ast.ContainerAst astNode,
           [_ParseContext context]) =>
       new ng.NgContainerAst(
-          _visitAll(astNode.childNodes, context), astNode.sourceSpan);
+          _visitChildren(astNode, astNode.annotations, context),
+          astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
@@ -348,8 +379,8 @@ class _BindDirectivesVisitor
   CssSelector _embeddedContentSelector(ast.EmbeddedContentAst astNode) =>
       astNode.ngProjectAs != null
           ? CssSelector.parse(astNode.ngProjectAs)[0]
-          : createElementCssSelector(ngContentElement, [
-              [ngContentSelectAttr, astNode.selector]
+          : createElementCssSelector(_ngContentElement, [
+              [_ngContentSelectAttr, astNode.selector]
             ]);
 
   @override
@@ -490,32 +521,41 @@ class _BindDirectivesVisitor
     }
     return results;
   }
-}
 
-class _TemplateContext {
-  final Parser parser;
-  final ElementSchemaRegistry schemaRegistry;
-  final List<CompileDirectiveMetadata> directives;
-  final List<CompileIdentifierMetadata> exports;
-  final AstExceptionHandler exceptionHandler;
-
-  _TemplateContext(
-      {this.parser,
-      this.schemaRegistry,
-      this.directives,
-      this.exports,
-      this.exceptionHandler});
-
-  void reportError(String message, SourceSpan sourceSpan,
-      [ParseErrorLevel level]) {
-    level ??= ParseErrorLevel.FATAL;
-    exceptionHandler
-        .handleParseError(new TemplateParseError(message, sourceSpan, level));
+  /// Visits [children], converting them for internationalization if necessary.
+  ///
+  /// The [children] are internationalized if their parent's [annotations]
+  /// contain a valid `@i18n` annotation.
+  List<ng.TemplateAst> _visitChildren(
+    ast.StandaloneTemplateAst parent,
+    List<ast.AnnotationAst> annotations,
+    _ParseContext context,
+  ) {
+    if (i18nEnabled) {
+      final i18nAnnotation = i18nAnnotationFrom(annotations);
+      if (i18nAnnotation != null) {
+        final i18nMetadata =
+            parseI18nMetadata(i18nAnnotation, context.templateContext);
+        if (i18nMetadata == null) {
+          // Drop the child nodes of an AST with invalid i18n metadata. We can't
+          // internationalize them with invalid metadata, nor do we want to
+          // treat them as non-internationalized nodes.
+          return [];
+        }
+        return internationalize(
+          parent,
+          i18nMetadata,
+          context.findNgContentIndex(_textCssSelector),
+          context.templateContext,
+        );
+      }
+    }
+    return _visitAll(parent.childNodes, context);
   }
 }
 
 class _ParseContext {
-  final _TemplateContext templateContext;
+  final TemplateContext templateContext;
   final String elementName;
   final List<ng.DirectiveAst> boundDirectives;
   final bool isTemplate;
@@ -538,7 +578,7 @@ class _ParseContext {
         _wildcardNgContentIndex = null;
 
   factory _ParseContext.forElement(
-      ast.ElementAst element, _TemplateContext templateContext) {
+      ast.ElementAst element, TemplateContext templateContext) {
     var boundDirectives = _toAst(
         _matchElementDirectives(templateContext.directives, element),
         element.sourceSpan,
@@ -556,7 +596,7 @@ class _ParseContext {
   }
 
   factory _ParseContext.forTemplate(
-      ast.EmbeddedTemplateAst template, _TemplateContext templateContext) {
+      ast.EmbeddedTemplateAst template, TemplateContext templateContext) {
     var boundDirectives = _toAst(
         _matchTemplateDirectives(templateContext.directives, template),
         template.sourceSpan,
@@ -645,7 +685,7 @@ class _ParseContext {
           SourceSpan sourceSpan,
           String elementName,
           String location,
-          _TemplateContext templateContext) =>
+          TemplateContext templateContext) =>
       directiveMetas
           .map((directive) => new ng.DirectiveAst(
               directive,
@@ -694,17 +734,15 @@ class _ParseContext {
       SourceSpan sourceSpan,
       String elementName,
       String location,
-      _TemplateContext templateContext) {
+      TemplateContext templateContext) {
     var result = <ng.BoundElementPropertyAst>[];
     for (var propName in directive.hostProperties.keys) {
       try {
         var expression = directive.hostProperties[propName];
-        var exprAst = templateContext.parser
-            .parseBinding(expression, location, templateContext.exports);
         result.add(createElementPropertyAst(
             elementName,
             propName,
-            exprAst,
+            expression,
             sourceSpan,
             templateContext.schemaRegistry,
             templateContext.reportError));
@@ -721,7 +759,7 @@ class _ParseContext {
       SourceSpan sourceSpan,
       String elementName,
       String location,
-      _TemplateContext templateContext) {
+      TemplateContext templateContext) {
     var result = <ng.BoundEventAst>[];
     for (var eventName in directive.hostListeners.keys) {
       try {
@@ -820,20 +858,20 @@ class _ElementFilter extends ast.RecursiveTemplateAstVisitor<Null> {
       _filterStyleSheets(astNode);
 
   static bool _filterStyles(ast.ElementAst astNode) =>
-      astNode.name.toLowerCase() == styleElement;
+      astNode.name.toLowerCase() == _styleElement;
 
   static bool _filterScripts(ast.ElementAst astNode) =>
-      astNode.name.toLowerCase() == scriptElement;
+      astNode.name.toLowerCase() == _scriptElement;
 
   static bool _filterStyleSheets(ast.ElementAst astNode) {
-    if (astNode.name != linkElement) return false;
+    if (astNode.name != _linkElement) return false;
     var href = _findHref(astNode.attributes);
     return isStyleUrlResolvable(href?.value);
   }
 
   static ast.AttributeAst _findHref(List<ast.AttributeAst> attributes) {
     for (var attr in attributes) {
-      if (attr.name.toLowerCase() == linkStyleHrefAttr) return attr;
+      if (attr.name.toLowerCase() == _linkStyleHrefAttr) return attr;
     }
     return null;
   }
@@ -865,6 +903,7 @@ class _ProviderVisitor
     return new ng.ElementAst(
         ast.name,
         ast.attrs,
+        ast.i18nAttrs,
         ast.inputs,
         ast.outputs,
         ast.references,
@@ -916,6 +955,7 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
         visitedElement,
         mergeNsAndName(prefix, _getName(visitedElement.name)),
         visitedElement.closeComplement,
+        annotations: visitedElement.annotations,
         attributes: visitedElement.attributes,
         childNodes: visitedElement.childNodes,
         events: visitedElement.events,
@@ -971,6 +1011,17 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
     _findDuplicateProperties(astNode.properties);
     _findDuplicateEvents(astNode.events);
     return super.visitEmbeddedTemplate(astNode);
+  }
+
+  @override
+  ast.TemplateAst visitAnnotation(ast.AnnotationAst astNode, [_]) {
+    if ((astNode.name == i18nAnnotationName ||
+            astNode.name.startsWith(i18nAnnotationPrefix)) &&
+        astNode.value == null) {
+      _reportError(astNode,
+          'Requires a value describing the message to help translators');
+    }
+    return super.visitAnnotation(astNode);
   }
 
   @override
@@ -1170,88 +1221,50 @@ class _PipeCollector extends RecursiveAstVisitor {
   }
 }
 
-class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<bool> {
-  List<T> visitAll<T extends ast.TemplateAst>(
-      List<T> astNodes, bool preserveWhitespace) {
+class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<void> {
+  List<T> visitAll<T extends ast.TemplateAst>(List<T> astNodes) {
     final result = <T>[];
     for (int i = 0; i < astNodes.length; i++) {
       var node = astNodes[i];
       final visited = node is ast.TextAst
-          ? _stripWhitespace(i, node, astNodes, preserveWhitespace)
-          : node.accept(this, preserveWhitespace);
+          ? _stripWhitespace(i, node, astNodes)
+          : node.accept(this);
       if (visited != null) result.add(visited as T);
     }
     return result;
   }
 
   @override
-  visitContainer(ast.ContainerAst astNode, [bool preserveWhitespace]) {
-    var children = visitAll(astNode.childNodes, preserveWhitespace);
+  visitContainer(ast.ContainerAst astNode, [_]) {
+    var children = visitAll(astNode.childNodes);
     astNode.childNodes.clear();
     astNode.childNodes.addAll(children);
     return astNode;
   }
 
   @override
-  visitElement(ast.ElementAst astNode, [bool preserveWhitespace]) {
-    var children = visitAll(astNode.childNodes, preserveWhitespace);
+  visitElement(ast.ElementAst astNode, [_]) {
+    var children = visitAll(astNode.childNodes);
     astNode.childNodes.clear();
     astNode.childNodes.addAll(children);
     return astNode;
   }
 
   @override
-  visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
-      [bool preserveWhitespace]) {
-    var children = visitAll(astNode.childNodes, preserveWhitespace);
+  visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode, [_]) {
+    var children = visitAll(astNode.childNodes);
     astNode.childNodes.clear();
     astNode.childNodes.addAll(children);
     return astNode;
   }
 
-  ast.TextAst _stripWhitespace(int i, ast.TextAst node,
-      List<ast.TemplateAst> astNodes, bool preserveWhitespace) {
-    var text = node.value;
-
-    if (preserveWhitespace ||
-        text.contains('\u00A0') ||
-        text.contains(ngSpace) ||
-        _betweenInterpolation(astNodes, i)) {
-      return new ast.TextAst.from(node, replaceNgSpace(text));
-    }
-
-    if (_hasInterpolation(astNodes, i)) {
-      if (text.contains('\n')) {
-        if (!_hasInterpolationBefore(astNodes, i)) text = text.trimLeft();
-        if (!_hasInterpolationAfter(astNodes, i)) text = text.trimRight();
-      }
-    } else {
-      text = text.trim();
-    }
-
-    if (text.isEmpty) return null;
-
-    // Convert &ngsp to actual space.
-    text = replaceNgSpace(text);
-    return new ast.TextAst.from(node, text);
-  }
-
-  bool _hasInterpolation(List<ast.TemplateAst> astNodes, int i) =>
-      _hasInterpolationBefore(astNodes, i) ||
-      _hasInterpolationAfter(astNodes, i);
-
-  bool _betweenInterpolation(List<ast.TemplateAst> astNodes, int i) =>
-      _hasInterpolationBefore(astNodes, i) &&
-      _hasInterpolationAfter(astNodes, i);
-
-  bool _hasInterpolationBefore(List<ast.TemplateAst> astNodes, int i) {
-    if (i == 0) return false;
-    return astNodes[i - 1] is ast.InterpolationAst;
-  }
-
-  bool _hasInterpolationAfter(List<ast.TemplateAst> astNodes, int i) {
-    if (i == (astNodes.length - 1)) return false;
-    return astNodes[i + 1] is ast.InterpolationAst;
+  ast.TextAst _stripWhitespace(
+    int i,
+    ast.TextAst node,
+    List<ast.TemplateAst> astNodes,
+  ) {
+    // TODO(matanl): Consider removing this case entirely.
+    return new ast.TextAst.from(node, replaceNgSpace(node.value));
   }
 }
 

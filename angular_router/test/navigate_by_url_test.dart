@@ -25,19 +25,19 @@ void main() {
       router.navigateByUrl('/to/path');
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         ['/to/path', navigationParams()],
       );
     });
 
     test('invokes navigate with query parameters', () {
-      router.navigateByUrl('to/path?q=hello%20world');
+      router.navigateByUrl('/to/path?q=hello%20world');
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         [
           '/to/path',
@@ -50,8 +50,8 @@ void main() {
       router.navigateByUrl('/to/path#with-fragment');
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         [
           '/to/path',
@@ -64,8 +64,8 @@ void main() {
       router.navigateByUrl('/to/path', reload: true);
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         [
           '/to/path',
@@ -78,8 +78,8 @@ void main() {
       router.navigateByUrl('/to/path', replace: true);
       expect(
         verify(mockRouter.navigate(
-          typed(captureAny),
-          typed(captureAny),
+          captureAny,
+          captureAny,
         )).captured,
         [
           '/to/path',
@@ -107,10 +107,10 @@ class DelegatingRouter extends RouterImpl {
 }
 
 Matcher navigationParams({
-  Map<String, String> queryParameters: const {},
-  String fragment: '',
-  bool reload: false,
-  bool replace: false,
+  Map<String, String> queryParameters = const {},
+  String fragment = '',
+  bool reload = false,
+  bool replace = false,
 }) =>
     new NavigationParamsMatcher(new NavigationParams(
       queryParameters: queryParameters,

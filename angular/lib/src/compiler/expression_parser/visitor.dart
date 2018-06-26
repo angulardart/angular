@@ -15,7 +15,7 @@ class LegacyExpressionVisitor implements TemplateAstVisitor<Null, Null> {
   final List<CompileIdentifierMetadata> _exports;
 
   LegacyExpressionVisitor({
-    List<CompileIdentifierMetadata> exports: const [],
+    List<CompileIdentifierMetadata> exports = const [],
     legacy.Parser parser,
   })  : _exports = exports,
         _parser = parser ?? new legacy.Parser(new legacy.Lexer());

@@ -181,7 +181,7 @@ class NgSimpleToken implements NgBaseToken<NgSimpleTokenType> {
   const NgSimpleToken._(
     this.type,
     this.offset, {
-    bool errorSynthetic: false,
+    bool errorSynthetic = false,
   });
 
   NgSimpleToken(
@@ -248,7 +248,7 @@ class NgSimpleQuoteToken extends _LexemeNgSimpleToken {
 
   NgSimpleQuoteToken(
       NgSimpleTokenType type, int offset, String lexeme, bool isClosed,
-      {bool isErrorSynthetic: false})
+      {bool isErrorSynthetic = false})
       : contentOffset = offset + 1,
         contentLexeme = lexeme.isEmpty
             ? lexeme
@@ -316,7 +316,7 @@ class NgToken implements NgBaseToken<NgTokenType> {
   };
 
   factory NgToken.generateErrorSynthetic(int offset, NgTokenType type,
-      {String lexeme: ''}) {
+      {String lexeme = ''}) {
     if (type == NgTokenType.beforeElementDecorator ||
         type == NgTokenType.elementDecoratorValue ||
         type == NgTokenType.elementDecorator ||
@@ -469,7 +469,7 @@ class NgToken implements NgBaseToken<NgTokenType> {
   const NgToken._(
     this.type,
     this.offset, {
-    bool errorSynthetic: false,
+    bool errorSynthetic = false,
   }) : errorSynthetic = errorSynthetic;
 
   @override

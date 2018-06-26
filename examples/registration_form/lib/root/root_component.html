@@ -26,7 +26,7 @@
             raised
             [yesDisabled]="!myForm.valid"
             (yes)="onSubmit(myForm)"
-            (no)="onClear()">
+            (no)="onClear(myForm)">
         <!-- Passes myForm value to callback methods. -->
     </material-yes-no-buttons>
 </form>

@@ -4,7 +4,7 @@ import '../metadata.dart';
 ///
 /// See [Directive.visibility] for details including the default behavior.
 enum Visibility {
-  /// The directive can only be injected "locally"; i.e. not by children.
+  /// The directive can only be injected "locally"; i.e. not from another view.
   ///
   /// For example, the following code will fail at runtime:
   /// ```dart
@@ -28,7 +28,43 @@ enum Visibility {
   /// }
   /// ```
   ///
-  /// However, it is possible to provide another interface to children:
+  /// However, if the `Parent` and `Child` components are in the same view, the
+  /// example works:
+  /// ```dart
+  /// @Component(
+  ///   selector: 'parent',
+  ///   template: '',
+  ///
+  ///   // The default, but here explicitly for clarity.
+  ///   visibility: Visibility.local,
+  /// )
+  /// class Parent {}
+  ///
+  /// @Component(
+  ///   selector: 'child',
+  ///   template: '',
+  /// )
+  /// class Child {
+  ///   // Will successfully inject the `Parent` instance.
+  ///   Child(Parent parent);
+  /// }
+  ///
+  /// @Component(
+  ///   selector: 'app',
+  ///   directives: const [Child, Parent],
+  ///   template: '''
+  ///     <parent>
+  ///       <child></child>
+  ///     </parent>
+  ///   ''',
+  /// )
+  /// class App {}
+  /// ```
+  ///
+  /// Similarly, directives on the same host (including a component) can inject
+  /// each other regardless of visibility.
+  ///
+  /// Furthermore, it is possible to provide another interface to children:
   /// ```dart
   /// // An interface that will be provided by the Parent class.
   /// abstract class Example {}

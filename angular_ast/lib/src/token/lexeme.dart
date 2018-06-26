@@ -35,7 +35,7 @@ class _LexemeNgSimpleToken extends NgSimpleToken {
 /// For example, an `elementIdentifier` is (almost) any arbitrary string.
 class _LexemeNgToken extends NgToken {
   const _LexemeNgToken(int offset, this.lexeme, NgTokenType type,
-      {errorSynthetic: false})
+      {errorSynthetic = false})
       : super._(type, offset, errorSynthetic: errorSynthetic);
 
   @override

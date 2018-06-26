@@ -12,14 +12,13 @@ final ngIfUrl = "asset:angular/lib/src/common/directives/ng_if.dart";
 final ngForUrl = "asset:angular/lib/src/common/directives/ng_for.dart";
 final profileRuntimeModuleUrl =
     "asset:angular/lib/src/debug/profile_runtime.dart";
+final runtimeUtilsModuleUrl = "asset:angular/lib/src/runtime.dart";
 
 class Identifiers {
   static final appViewUtils = new CompileIdentifierMetadata<dynamic>(
       name: "appViewUtils", moduleUrl: appViewUtilsModuleUrl);
   static final AppView = new CompileIdentifierMetadata<dynamic>(
       name: "AppView", moduleUrl: appViewModuleUrl);
-  static final DebugAppView = new CompileIdentifierMetadata<dynamic>(
-      name: "DebugAppView", moduleUrl: debugAppViewModuleUrl);
   static final ViewContainer = new CompileIdentifierMetadata<dynamic>(
       name: "ViewContainer",
       moduleUrl: "asset:angular/lib/src/core/linker/view_container.dart");
@@ -71,12 +70,6 @@ class Identifiers {
       moduleUrl: 'asset:angular/lib/src/core/linker/view_type.dart');
   static final ChangeDetectionStrategy = new CompileIdentifierMetadata<dynamic>(
       name: "ChangeDetectionStrategy", moduleUrl: cdModuleUrl);
-  static final StaticNodeDebugInfo = new CompileIdentifierMetadata<dynamic>(
-      name: "StaticNodeDebugInfo",
-      moduleUrl: 'asset:angular/lib/src/debug/debug_context.dart');
-  static final DebugContext = new CompileIdentifierMetadata<dynamic>(
-      name: "DebugContext",
-      moduleUrl: 'asset:angular/lib/src/debug/debug_context.dart');
   static final TemplateSecurityContext = new CompileIdentifierMetadata<dynamic>(
       name: 'TemplateSecurityContext',
       moduleUrl: 'asset:angular/lib/src/core/security.dart');
@@ -88,20 +81,12 @@ class Identifiers {
       name: "checkBinding", moduleUrl: appViewUtilsModuleUrl);
   static final createAndAppend = new CompileIdentifierMetadata<dynamic>(
       name: "createAndAppend", moduleUrl: appViewModuleUrl);
-  static final createAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
-      name: "createAndAppendDbg", moduleUrl: debugAppViewModuleUrl);
   static final createDivAndAppend = new CompileIdentifierMetadata<dynamic>(
       name: "createDivAndAppend", moduleUrl: appViewModuleUrl);
-  static final createDivAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
-      name: "createDivAndAppendDbg", moduleUrl: debugAppViewModuleUrl);
   static final createSpanAndAppend = new CompileIdentifierMetadata<dynamic>(
       name: "createSpanAndAppend", moduleUrl: appViewModuleUrl);
-  static final createSpanAndAppendDbg = new CompileIdentifierMetadata<dynamic>(
-      name: "createSpanAndAppendDbg", moduleUrl: debugAppViewModuleUrl);
   static final createViewContainerAnchor = new CompileIdentifierMetadata(
       name: 'createViewContainerAnchor', moduleUrl: appViewModuleUrl);
-  static final dbgElm = new CompileIdentifierMetadata<dynamic>(
-      name: "dbgElm", moduleUrl: debugAppViewModuleUrl);
   static final devModeEqual = new CompileIdentifierMetadata<dynamic>(
       name: "devModeEqual", moduleUrl: cdModuleUrl);
   static final identical =
@@ -117,6 +102,8 @@ class Identifiers {
   /// (most common case).
   static final throwOnChanges = new CompileIdentifierMetadata<dynamic>(
       name: "AppViewUtils.throwOnChanges", moduleUrl: appViewUtilsModuleUrl);
+  static final isDevMode = new CompileIdentifierMetadata<dynamic>(
+      name: "isDevMode", moduleUrl: runtimeUtilsModuleUrl);
   static final interpolate = <CompileIdentifierMetadata>[
     new CompileIdentifierMetadata<dynamic>(
         name: "interpolate0", moduleUrl: appViewUtilsModuleUrl),
@@ -139,6 +126,8 @@ class Identifiers {
     new CompileIdentifierMetadata<dynamic>(
         name: "interpolate9", moduleUrl: appViewUtilsModuleUrl),
   ];
+  static final createTrustedHtml = new CompileIdentifierMetadata(
+      name: 'createTrustedHtml', moduleUrl: appViewUtilsModuleUrl);
   static final flattenNodes = new CompileIdentifierMetadata<dynamic>(
       name: "flattenNodes", moduleUrl: appViewUtilsModuleUrl);
   static final EMPTY_ARRAY = new CompileIdentifierMetadata<dynamic>(
@@ -180,15 +169,14 @@ class Identifiers {
       name: "Text", moduleUrl: "dart:html");
   static var HTML_DOCUMENT = new CompileIdentifierMetadata<dynamic>(
       name: "document", moduleUrl: "dart:html");
+  static final HTML_DOCUMENT_FRAGMENT = new CompileIdentifierMetadata(
+      name: 'DocumentFragment', moduleUrl: 'dart:html');
   static final HTML_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "Element", moduleUrl: "dart:html");
   static final ElementToken = identifierToken(HTML_ELEMENT);
   static final HTML_HTML_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "HtmlElement", moduleUrl: "dart:html");
   static final HtmlElementToken = identifierToken(HTML_HTML_ELEMENT);
-  static final HTML_SHADOW_ROOT_ELEMENT =
-      new CompileIdentifierMetadata<dynamic>(
-          name: "ShadowRoot", moduleUrl: "dart:html");
   static final SVG_SVG_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "SvgSvgElement", moduleUrl: "dart:svg");
   static final SVG_ELEMENT = new CompileIdentifierMetadata<dynamic>(
@@ -219,6 +207,8 @@ class Identifiers {
       name: "MediaElement", moduleUrl: "dart:html");
   static final HTML_MENU_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "MenuElement", moduleUrl: "dart:html");
+  static final HTML_NODE_TREE_SANITIZER = new CompileIdentifierMetadata(
+      name: 'NodeTreeSanitizer', moduleUrl: 'dart:html');
   static final HTML_OPTION_ELEMENT = new CompileIdentifierMetadata<dynamic>(
       name: "OptionElement", moduleUrl: "dart:html");
   static final HTML_OLIST_ELEMENT = new CompileIdentifierMetadata<dynamic>(
@@ -237,6 +227,12 @@ class Identifiers {
       name: "Event", moduleUrl: "dart:html");
   static final HTML_NODE = new CompileIdentifierMetadata<dynamic>(
       name: "Node", moduleUrl: "dart:html");
+
+  /// A class used for message internationalization.
+  static final Intl = new CompileIdentifierMetadata(
+    name: 'Intl',
+    moduleUrl: 'package:intl/intl.dart',
+  );
 }
 
 CompileTokenMetadata identifierToken(CompileIdentifierMetadata identifier) {

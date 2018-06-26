@@ -178,7 +178,7 @@ Injector _identityInjector([Injector parent]) => parent;
 /// internals setup.
 ComponentRef<T> runApp<T>(
   ComponentFactory<T> componentFactory, {
-  InjectorFactory createInjector: _identityInjector,
+  InjectorFactory createInjector = _identityInjector,
 }) {
   if (isDevMode && componentFactory == null) {
     throw new ArgumentError.notNull('componentFactory');
@@ -199,7 +199,7 @@ ComponentRef<T> runApp<T>(
 Future<ComponentRef<T>> runAppAsync<T>(
   ComponentFactory<T> componentFactory, {
   @required Future<void> Function(Injector) beforeComponentCreated,
-  InjectorFactory createInjector: _identityInjector,
+  InjectorFactory createInjector = _identityInjector,
 }) {
   if (isDevMode) {
     if (componentFactory == null) {
@@ -229,7 +229,7 @@ Future<ComponentRef<T>> runAppAsync<T>(
 /// and startup time benefits.
 ComponentRef<T> runAppLegacy<T>(
   Type componentType, {
-  List<Object> createInjectorFromProviders: const [],
+  List<Object> createInjectorFromProviders = const [],
   void Function() initReflector,
 }) {
   assert(T == dynamic || T == componentType, 'Expected $componentType == $T');
@@ -270,7 +270,7 @@ ComponentRef<T> runAppLegacy<T>(
 Future<ComponentRef<T>> runAppLegacyAsync<T>(
   Type componentType, {
   @required Future<void> Function(Injector) beforeComponentCreated,
-  List<Object> createInjectorFromProviders: const [],
+  List<Object> createInjectorFromProviders = const [],
   void Function() initReflector,
 }) {
   assert(T == dynamic || T == componentType, 'Expected $componentType == $T');

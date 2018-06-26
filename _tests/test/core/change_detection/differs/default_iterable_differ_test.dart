@@ -417,12 +417,12 @@ class TestIterable extends IterableBase<int> {
 }
 
 String iterableChangesAsString(
-    {collection: const [],
-    previous: const [],
-    additions: const [],
-    moves: const [],
-    removals: const [],
-    identityChanges: const []}) {
+    {collection = const [],
+    previous = const [],
+    additions = const [],
+    moves = const [],
+    removals = const [],
+    identityChanges = const []}) {
   return "collection: " +
       collection.join(", ") +
       "\n" +

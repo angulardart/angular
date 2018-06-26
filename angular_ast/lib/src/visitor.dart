@@ -34,7 +34,10 @@ abstract class TemplateAstVisitor<R, C> {
   R visitComment(CommentAst astNode, [C context]);
 
   /// Visits all container ASTs.
-  R visitContainer(ContainerAst astNode, [C context]);
+  R visitContainer(ContainerAst astNode, [C context]) {
+    astNode.childNodes.forEach((c) => c.accept<R, C>(this, context));
+    return null;
+  }
 
   /// Visits all embedded content ASTs.
   R visitEmbeddedContent(EmbeddedContentAst astNode, [C context]);

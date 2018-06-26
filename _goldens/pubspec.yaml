@@ -2,7 +2,7 @@ name: _goldens
 author: Dart Team <web@dartlang.org>
 description: Goldens for AngularDart.
 environment:
-  sdk: ">=2.0.0-dev.46.0 <2.0.0"
+  sdk: ">=2.0.0-dev.60.0 <2.0.0"
 
 dependencies:
   # No strict dependencies, we always use dependency_overrides.
@@ -13,12 +13,12 @@ dev_dependencies:
   angular_forms:
 
   # Actual valid dependencies required.
-  build_runner: ^0.8.0
-  build_test: ^0.10.1+1
+  build_runner: ^0.9.0
+  build_test: ^0.10.2+5
   dart_style: ^1.0.9
   meta: ^1.1.0
   path: ^1.5.1
-  test: ^0.12.32
+  test: ">0.12.32+1 <2.0.0"
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:

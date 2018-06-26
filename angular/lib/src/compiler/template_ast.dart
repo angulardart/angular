@@ -10,6 +10,7 @@ import 'compile_metadata.dart'
         CompileTokenMetadata,
         CompileTypeMetadata;
 import 'expression_parser/ast.dart' show AST;
+import 'i18n/message.dart';
 import 'output/output_ast.dart' show OutputType;
 
 /// An Abstract Syntax Tree node representing part of a parsed Angular template.
@@ -45,6 +46,19 @@ class BoundTextAst implements TemplateAst {
       visitor.visitBoundText(this, context);
 }
 
+/// A segment of internationalized text within a template.
+class I18nTextAst implements TemplateAst {
+  final I18nMessage value;
+  final int ngContentIndex;
+  final SourceSpan sourceSpan;
+
+  I18nTextAst(this.value, this.ngContentIndex, this.sourceSpan);
+
+  @override
+  R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
+      visitor.visitI18nText(this, context);
+}
+
 /// A plain attribute on an element.
 class AttrAst implements TemplateAst {
   final String name;
@@ -71,6 +85,19 @@ class BoundElementPropertyAst implements TemplateAst {
 
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
       visitor.visitElementProperty(this, context);
+}
+
+/// An internationalized attribute on an element.
+class I18nAttrAst implements TemplateAst {
+  final String name;
+  final I18nMessage value;
+  final SourceSpan sourceSpan;
+
+  I18nAttrAst(this.name, this.value, this.sourceSpan);
+
+  @override
+  R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
+      visitor.visitI18nAttr(this, context);
 }
 
 /// Public part of ProviderElementContext passed to
@@ -133,6 +160,7 @@ class VariableAst implements TemplateAst {
 class ElementAst implements TemplateAst {
   final String name;
   final List<AttrAst> attrs;
+  final List<I18nAttrAst> i18nAttrs;
   final List<BoundElementPropertyAst> inputs;
   final List<BoundEventAst> outputs;
   final List<ReferenceAst> references;
@@ -146,6 +174,7 @@ class ElementAst implements TemplateAst {
   ElementAst(
       this.name,
       this.attrs,
+      this.i18nAttrs,
       this.inputs,
       this.outputs,
       this.references,
@@ -200,7 +229,7 @@ class EmbeddedTemplateAst implements TemplateAst {
       this.children,
       this.ngContentIndex,
       this.sourceSpan,
-      {this.hasDeferredComponent: false});
+      {this.hasDeferredComponent = false});
 
   bool get hasViewContainer => elementProviderUsage.requiresViewContainer;
 
@@ -268,12 +297,6 @@ class ProviderAst implements TemplateAst {
   /// dependencies.
   final bool visibleForInjection;
 
-  /// Whether the provider is an alias for a directive with local visibility.
-  ///
-  /// This is non-final as it could be changed by another provider overriding
-  /// the original [providers].
-  bool implementedByDirectiveWithNoVisibility;
-
   final List<CompileProviderMetadata> providers;
   final ProviderAstType providerType;
   final SourceSpan sourceSpan;
@@ -285,10 +308,9 @@ class ProviderAst implements TemplateAst {
     this.providerType,
     this.sourceSpan, {
     this.eager,
-    this.dynamicallyReachable: true,
+    this.dynamicallyReachable = true,
     this.typeArgument,
-    this.visibleForInjection: true,
-    this.implementedByDirectiveWithNoVisibility: false,
+    this.visibleForInjection = true,
   });
 
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
@@ -367,6 +389,8 @@ abstract class TemplateAstVisitor<R, C> {
   R visitDirective(DirectiveAst ast, C context);
   R visitDirectiveProperty(BoundDirectivePropertyAst ast, C context);
   R visitProvider(ProviderAst providerAst, C context);
+  R visitI18nAttr(I18nAttrAst ast, C context);
+  R visitI18nText(I18nTextAst ast, C context);
 }
 
 /// Visit every node in a list of [TemplateAst]s with the given

@@ -91,13 +91,16 @@ class RecursiveAstParser {
     NgToken nameToken,
     List<String> tagStack,
   ) {
+    final annotations = <AnnotationAst>[];
     final childNodes = <StandaloneTemplateAst>[];
     final stars = <StarAst>[];
 
     while (_reader.peekType() == NgTokenType.beforeElementDecorator) {
       final nextToken = _reader.next();
       final decorator = parseDecorator(nextToken);
-      if (decorator is StarAst) {
+      if (decorator is AnnotationAst) {
+        annotations.add(decorator);
+      } else if (decorator is StarAst) {
         _addStarAst(decorator, stars);
       } else {
         exceptionHandler.handle(new AngularParserException(
@@ -115,6 +118,7 @@ class RecursiveAstParser {
       _source,
       beginToken,
       endToken,
+      annotations: annotations,
       childNodes: childNodes,
       stars: stars,
     );
@@ -220,7 +224,13 @@ class RecursiveAstParser {
           equalSignToken,
         );
       } else if (prefixType == NgTokenType.annotationPrefix) {
-        return new AnnotationAst.parsed(_source, prefixToken, decoratorToken);
+        return new AnnotationAst.parsed(
+          _source,
+          prefixToken,
+          decoratorToken,
+          valueToken,
+          equalSignToken,
+        );
       }
     }
 
@@ -538,6 +548,15 @@ class RecursiveAstParser {
     }
 
     endToken = _parseOpenElementEnd();
+
+    // Skip whitespace after <ng-content>.
+    if (_reader.peekType() == NgTokenType.text) {
+      final textToken = _reader.next();
+      final text = parseText(textToken);
+      if (text.value.trim().isNotEmpty) {
+        _reader.putBack(textToken);
+      }
+    }
 
     // Ensure closing </ng-content> exists.
     if (_reader.peekType() != NgTokenType.closeElementStart) {

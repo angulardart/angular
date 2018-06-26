@@ -2,7 +2,6 @@ import 'dart:html';
 
 import 'package:angular/src/core/di.dart' show Injector;
 import 'package:angular/src/di/reflector.dart' show runtimeTypeProvider;
-import 'package:angular/src/runtime.dart';
 
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
 import 'app_view.dart';
@@ -86,7 +85,10 @@ class ComponentFactory<T> {
   // Not intuitive, but the _Host{Comp}View0 is NOT AppView<{Comp}>, but is a
   // special (not-typed to a user-defined class) AppView that itself creates a
   // AppView<{Comp}> as a child view.
-  final NgViewFactory<dynamic> _viewFactory;
+  final AppView<T> Function(
+    AppView<void> parentView,
+    int parentIndex,
+  ) _viewFactory;
 
   const ComponentFactory(
     this.selector,
@@ -106,24 +108,7 @@ class ComponentFactory<T> {
     List<List> projectableNodes,
   ]) {
     // Note: Host views don't need a declarationViewContainer!
-    final AppView<dynamic> hostView = _viewFactory(null, null);
-    return unsafeCast<ComponentRef<T>>(
-      hostView.createHostView(injector, projectableNodes ?? const []),
-    );
+    final hostView = _viewFactory(null, null);
+    return hostView.createHostView(injector, projectableNodes ?? const []);
   }
 }
-
-/// Angular Component Factory signature.
-///
-/// Do not rely on parameters of this signature in your code. Instead use
-/// the typedef only and ViewContainer(sync) apis to pass this factory to
-/// construct the component.
-/// This signature will likely change over time as actual implementation
-/// of views change for further optimizations.
-///
-/// Example:
-///     const ComponentFactory MaterialFabComponentNgFactory =
-///     const ComponentFactory('material-fab',
-///         viewFactory_MaterialFabComponentHost0,
-///         import5.MaterialFabComponent,_METADATA);
-typedef AppView<T> NgViewFactory<T>(AppView<T> parentView, int parentIndex);

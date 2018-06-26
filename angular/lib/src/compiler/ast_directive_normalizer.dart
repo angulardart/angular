@@ -41,6 +41,7 @@ class AstDirectiveNormalizer {
     ).then((result) {
       return new CompileDirectiveMetadata(
         type: directive.type,
+        originType: directive.originType,
         metadataType: directive.metadataType,
         selector: directive.selector,
         exportAs: directive.exportAs,
@@ -48,9 +49,8 @@ class AstDirectiveNormalizer {
         inputs: directive.inputs,
         inputTypes: directive.inputTypes,
         outputs: directive.outputs,
+        hostBindings: directive.hostBindings,
         hostListeners: directive.hostListeners,
-        hostProperties: directive.hostProperties,
-        hostAttributes: directive.hostAttributes,
         lifecycleHooks: directive.lifecycleHooks,
         providers: directive.providers,
         viewProviders: directive.viewProviders,
@@ -158,7 +158,7 @@ class AstDirectiveNormalizer {
     String template,
     String templateAbsUrl,
     bool preserveWhitespace, {
-    List<CompileIdentifierMetadata> exports: const [],
+    List<CompileIdentifierMetadata> exports = const [],
   }) {
     // Parse the template, and visit to find <style>/<link> and <ng-content>.
     final visitor = new _TemplateNormalizerVisitor();

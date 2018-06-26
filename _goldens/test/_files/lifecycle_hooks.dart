@@ -7,7 +7,6 @@ import 'package:angular/angular.dart';
 class LifecycleHooksComponent
     implements
         OnDestroy,
-        OnChanges,
         OnInit,
         AfterContentChecked,
         AfterContentInit,
@@ -28,9 +27,6 @@ class LifecycleHooksComponent
 
   @override
   ngDoCheck() {}
-
-  @override
-  ngOnChanges(_) {}
 
   @override
   ngOnDestroy() {}

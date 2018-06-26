@@ -27,6 +27,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     if (astNode.childNodes.isNotEmpty) {
       astNode = new ContainerAst.from(
         astNode,
+        annotations: astNode.annotations,
         childNodes: _visitRemovingWhitespace(astNode.childNodes),
         stars: astNode.stars,
       );
@@ -75,7 +76,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   TemplateAst visitText(TextAst astNode, [_]) {
     return new TextAst.from(
       astNode,
-      astNode.value.replaceAll(_manualWhitespace, ' '),
+      astNode.value.replaceAll(_ngsp, ' '),
     );
   }
 
@@ -86,13 +87,16 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     @required bool trimRight,
   }) {
     // Collapses all adjacent whitespace into a single space.
-    var value = text.value.replaceAll(_allWhitespace, ' ');
+    const preserveNbsp = '\uE501';
+    var value = text.value.replaceAll(_nbsp, preserveNbsp);
+    value = value.replaceAll(_allWhitespace, ' ');
     if (trimLeft) {
       value = value.trimLeft();
     }
     if (trimRight) {
       value = value.trimRight();
     }
+    value = value.replaceAll(preserveNbsp, _nbsp);
     if (value.isEmpty) {
       return null;
     }
@@ -100,10 +104,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   }
 
   static final _allWhitespace = new RegExp(r'\s\s+', multiLine: true);
+  static const _nbsp = '\u00A0';
   static const _ngsp = '\uE500';
-
-  // TODO: Add &#32;
-  static final _manualWhitespace = new RegExp('$_ngsp', multiLine: true);
 
   List<StandaloneTemplateAst> _visitRemovingWhitespace(
     List<StandaloneTemplateAst> childNodes,
@@ -131,9 +133,10 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
         // Node i, where i - 1 and i + 1 are not interpolations, we can
         // completely remove the (text) node. For example, this would take
         // `<span>\n</span>` and return `<span></span>`.
-        if (_shouldCollapseAdjacentTo(prevNode) &&
-            _shouldCollapseAdjacentTo(nextNode) &&
-            currentNodeCasted.value.trim().isEmpty) {
+        if (_shouldCollapseAdjacentTo(prevNode, lastNode: true) &&
+            _shouldCollapseAdjacentTo(nextNode, lastNode: false) &&
+            currentNodeCasted.value.trim().isEmpty &&
+            !currentNodeCasted.value.contains(_nbsp)) {
           currentNode = null;
         } else {
           // Otherwise, we collapse whitespace:
@@ -141,8 +144,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
           // 2. Depending on siblings, *also* trimLeft or trimRight.
           currentNode = _collapseWhitespace(
             currentNode,
-            trimLeft: _shouldCollapseAdjacentTo(prevNode),
-            trimRight: _shouldCollapseAdjacentTo(nextNode),
+            trimLeft: _shouldCollapseAdjacentTo(prevNode, lastNode: true),
+            trimRight: _shouldCollapseAdjacentTo(nextNode, lastNode: false),
           );
         }
 
@@ -157,54 +160,108 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     return childNodes.where((a) => a != null).toList();
   }
 
-  // https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements
-  static final _commonBlockElements = new Set<String>.from([
-    'address',
-    'article',
-    'aside',
-    'blockquote',
-    'canvas',
-    'dd',
-    'div',
-    'dl',
-    'dt',
-    'fieldset',
-    'figcaption',
-    'figure',
-    'footer',
-    'form',
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-    'header',
-    'hgroup',
-    'hr',
-    'li',
-    'main',
-    'nav',
-    'noscript',
-    'ol',
-    'output',
-    'p',
-    'pre',
-    'section',
-    'table',
-    'tfoot',
-    'ul',
-    'video',
+  // https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements
+  static final _commonInlineElements = new Set<String>.from([
+    'a',
+    'abbr',
+    'acronym',
+    'b',
+    'bdo',
+    'big',
+    'br',
+    'button',
+    'cite',
+    'code',
+    'dfn',
+    'em',
+    'i',
+    'img',
+    'input',
+    'kbd',
+    'label',
+    'map',
+    'object',
+    'q',
+    'samp',
+    'script',
+    'select',
+    'small',
+    'span',
+    'strong',
+    'sub',
+    'sup',
+    'textarea',
+    'time',
+    'tt',
+    'var'
   ]);
 
   /// Returns whether [tagName] is normally an `display: inline` element.
   ///
   /// This helps to make the right (default) decision around whitespace.
   static bool _isPotentiallyInline(ElementAst astNode) =>
-      !_commonBlockElements.contains(astNode.name.toLowerCase());
+      _commonInlineElements.contains(astNode.name.toLowerCase());
 
   /// Whether [astNode] should be treated as insignficant to nearby whitespace.
-  static bool _shouldCollapseAdjacentTo(TemplateAst astNode) =>
+  static bool _shouldCollapseAdjacentTo(
+    TemplateAst astNode, {
+    bool lastNode = false,
+  }) =>
+      // Always collpase adjacent to a non-element-like node.
       astNode is! StandaloneTemplateAst ||
-      astNode is ElementAst && !_isPotentiallyInline(astNode);
+      // Sometimes collapse adjacent to another element if not inline.
+      astNode is ElementAst && !_isPotentiallyInline(astNode) ||
+      // Sometimes collapse adjacent to a template or container node.
+      _shouldCollapseWrapperNode(astNode, lastNode: lastNode);
+
+  // Determining how to collapse next to a template/container is more complex.
+  //
+  // If the <template> wraps HTML DOM, i.e. <div *ngIf>, we should just use the
+  // immediate wrapped DOM node as the indicator of collapsing. <div *ngIf>
+  // should be treated just like a <div>.
+  //
+  // Otherwise, return `false` and assume it could be a source of inline nodes.
+  static bool _shouldCollapseWrapperNode(
+    StandaloneTemplateAst astNode, {
+    bool lastNode = false,
+  }) {
+    if (astNode is! ContainerAst && astNode is! EmbeddedTemplateAst) {
+      return false;
+    }
+    final nodes = astNode.childNodes;
+    if (nodes.isNotEmpty) {
+      var checkChild = lastNode ? nodes.last : nodes.first;
+      // Cover the corner case of:
+      // <template [ngIf]>
+      //   <span>Hello</span>
+      // </template>
+      //
+      // The immediate child of <template> (in either direction) is a TextAst,
+      // but it is just whitespace, so we want to consider the next relevant
+      // node.
+      //
+      // TODO(matanl): Refactor this entire function after feature submitted.
+      if (checkChild is TextAst && checkChild.value.trim().isEmpty) {
+        if (nodes.length == 1) {
+          // Another corner-corner case:
+          //
+          // <template [ngIf]>
+          //   <div>
+          //     Dynamic Content:
+          //     <template>
+          //     </template>
+          //   </div>
+          // </template>
+          //
+          // We want to assume the inner-template will be modified dynamically
+          // at runtime (content inserted), so we assume inline instead of
+          // assuming block, hence returning false.
+          return false;
+        }
+        checkChild = lastNode ? nodes[nodes.length - 2] : nodes[1];
+      }
+      return _shouldCollapseAdjacentTo(checkChild);
+    }
+    return false;
+  }
 }

@@ -57,7 +57,7 @@ class ReflectableEmitter {
     this._output,
     this._library, {
     Allocator allocator,
-    this.reflectorSource: '$_package/src/di/reflector.dart',
+    this.reflectorSource = '$_package/src/di/reflector.dart',
     List<String> deferredModules,
     this.deferredModuleSource,
   })  : _allocator = allocator ?? Allocator.none,

@@ -37,7 +37,7 @@ abstract class RuntimeInjectorBuilder {
 Provider<T> provide<T>(
   Object token, {
   Type useClass,
-  Object useValue: noValueProvided,
+  Object useValue = noValueProvided,
   Object useExisting,
   Function useFactory,
   List<Object> deps,
@@ -154,11 +154,11 @@ class Provider<T> {
   const Provider._(
     this.token, {
     this.useClass,
-    this.useValue: noValueProvided,
+    this.useValue = noValueProvided,
     this.useExisting,
     this.useFactory,
     this.deps,
-    this.multi: false,
+    this.multi = false,
   });
 
   /// Configures the provided [builder] using this provider object.
@@ -189,7 +189,17 @@ Object buildAtRuntime(Provider provider, RuntimeInjectorBuilder builder) {
 }
 
 /// **INTERNAL ONLY**: Used to provide type inference for `multi: true`.
-List<T> listOfMulti<T>(Provider<T> provider) => provider._listOfMulti();
+///
+/// The returned [List] instance should be correctly reified as `List<T>`, where
+/// `T` is either the type of `Provider<T>` when [Provider.multi] is `true` or
+/// the `T` of `MultiToken<T>`, if this approach is used (preferred).
+List listOfMulti(Provider provider) {
+  final token = provider.token;
+  if (token is MultiToken) {
+    return listOfMultiToken(token);
+  }
+  return provider._listOfMulti();
+}
 
 /// Describes at compile-time configuring to return an instance of a `class`.
 ///
@@ -222,7 +232,7 @@ class ClassProvider<T> extends Provider<T> {
   const ClassProvider._(
     Object token, {
     Type useClass,
-    bool multi: false,
+    bool multi = false,
   }) : super._(
           token,
           // ignore: argument_type_not_assignable
@@ -269,7 +279,7 @@ class ExistingProvider<T> extends Provider<T> {
 /// unless you have no arguments:
 /// ```dart
 /// ReflectiveInjector.resolveAndCreate([
-///   new Provider(Foo, useFactory: (Bar bar) => new Foo(bar), deps: [Bar]),
+///   new FactoryProvider(Foo, (Bar bar) => new Foo(bar), deps: [Bar]),
 /// ]);
 /// ```
 @optionalTypeArgs
@@ -308,7 +318,7 @@ class FactoryProvider<T> extends Provider<T> {
 /// ```dart
 /// const animationDelay = const OpaqueToken<Duration>('animationDelay');
 ///
-/// const Provider(animationDelay, useValue: const Duration(seconds: 1));
+/// const ValueProvider(animationDelay, const Duration(seconds: 1));
 /// ```
 ///
 /// **NOTE**: The AngularDart compiler has limited heuristics for supporting

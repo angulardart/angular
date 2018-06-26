@@ -71,7 +71,11 @@ void main() {
   ParseTemplate _parse;
 
   // TODO(matanl): Add common log testing functionality to lib/.
-  parse(template, directive, [pipes]) {
+  parse(
+    String template, [
+    List<CompileDirectiveMetadata> directive,
+    List<CompilePipeMetadata> pipes,
+  ]) {
     return runZoned(() => _parse(template, directive, pipes), zoneValues: {
       #buildLog: Logger.root,
     });
@@ -81,9 +85,12 @@ void main() {
     elementSchemaRegistry ??= new MockSchemaRegistry(
         {'invalidProp': false}, {'mappedAttr': 'mappedProp'});
     final parser = new AstTemplateParser(
-        elementSchemaRegistry, new Parser(new Lexer()), new CompilerFlags());
-    _parse = (template, directives, [pipes]) =>
-        parser.parse(component, template, directives, pipes ?? [], 'TestComp');
+      elementSchemaRegistry,
+      new Parser(new Lexer()),
+      new CompilerFlags(i18nEnabled: true),
+    );
+    _parse = (template, [directives, pipes]) => parser.parse(
+        component, template, directives ?? [], pipes ?? [], 'TestComp');
   }
 
   group('TemplateParser', () {
@@ -481,38 +488,6 @@ void main() {
             [ElementAst, 'div'],
             [BoundEventAst, 'a', null, 'b'],
             [DirectiveAst, dirA]
-          ]);
-        });
-
-        test('should parse directive host properties', () {
-          var dirA = createCompileDirectiveMetadata(
-              selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
-              host: {'[a]': 'expr'});
-          expect(humanizeTplAst(parse('<div></div>', [dirA])), [
-            [ElementAst, 'div'],
-            [DirectiveAst, dirA],
-            [
-              BoundElementPropertyAst,
-              PropertyBindingType.Property,
-              'a',
-              'expr',
-              null
-            ]
-          ]);
-        });
-
-        test('should parse directive host listeners', () {
-          var dirA = createCompileDirectiveMetadata(
-              selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
-              host: {'(a)': 'expr'});
-          expect(humanizeTplAst(parse('<div></div>', [dirA])), [
-            [ElementAst, 'div'],
-            [DirectiveAst, dirA],
-            [BoundEventAst, 'a', null, 'expr']
           ]);
         });
 
@@ -1271,6 +1246,94 @@ void main() {
           ]);
         });
       });
+
+      group('@i18n', () {
+        test('should internationalize element text', () {
+          final ast = parse('<div @i18n="description">message</div>');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'div'],
+            [I18nTextAst, 'message', 'description'],
+          ]);
+        });
+
+        test('should internationalize container text', () {
+          final ast =
+              parse('<ng-container @i18n="description">message</ng-container>');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [NgContainerAst],
+            [I18nTextAst, 'message', 'description'],
+          ]);
+        });
+
+        test('should support optional meaning', () {
+          final ast = parse('<p @i18n="meaning | description">message</p>');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'p'],
+            [I18nTextAst, 'message', 'description', 'meaning'],
+          ]);
+        });
+
+        test('should support nested HTML', () {
+          final ast = parse('''
+            <ng-container @i18n="description">
+              This contains <b>HTML</b>!
+            </ng-container>
+          ''');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [NgContainerAst],
+            [
+              I18nTextAst,
+              r'This contains ${startTag0}HTML${endTag0}!',
+              'description',
+              {'startTag0': '<b>', 'endTag0': '</b>'},
+            ],
+          ]);
+        });
+      });
+
+      group('@i18n-<attr>', () {
+        test('should internationalize attribute', () {
+          final ast = parse('''
+            <img
+                src="puppy.gif"
+                alt="message"
+                @i18n-alt="meaning | description" />
+          ''');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'img'],
+            [AttrAst, 'src', 'puppy.gif'],
+            [I18nAttrAst, 'alt', 'message', 'description', 'meaning'],
+          ]);
+        });
+
+        test('should internationalize multiple attributes', () {
+          final ast = parse('''
+            <div
+                foo="foo message"
+                @i18n-foo="foo meaning|foo description"
+                bar="bar message"
+                @i18n-bar="bar description">
+            </div>
+          ''');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'div'],
+            [
+              I18nAttrAst,
+              'foo',
+              'foo message',
+              'foo description',
+              'foo meaning'
+            ],
+            [I18nAttrAst, 'bar', 'bar message', 'bar description'],
+          ]);
+        });
+      });
     });
 
     group('content projection', () {
@@ -1721,6 +1784,52 @@ void main() {
                 '<div *ngFor="let item in items"></div>\n'
                 '     ^^^^^^^^^^^^^^^^^^^^^^^^^^'));
       });
+
+      test('should prevent @i18n without a description', () {
+        expect(
+            () => parse('<p @i18n></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: '
+                'Requires a value describing the message to help translators\n'
+                '<p @i18n></p>\n'
+                '   ^^^^^'));
+      });
+
+      test('should report error for empty description', () {
+        expect(
+            () => parse(
+                '<p @i18n="">message</p>\n<p @i18n="meaning | ">message</p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: '
+                'Requires a non-empty message description to help translators\n'
+                '<p @i18n="">message</p>\n'
+                '   ^^^^^^^^\n'
+                'line 2, column 4 of TestComp: ParseErrorLevel.FATAL: '
+                'Requires a non-empty message description to help translators\n'
+                '<p @i18n="meaning | ">message</p>\n'
+                '   ^^^^^^^^^^^^^^^^^^'));
+      });
+
+      test('should report warning for empty meaning before "|"', () {
+        parse('<p @i18n=" | description">message</p>');
+        expect(console.warnings, [
+          'Template parse warnings:\n'
+              'line 1, column 4 of TestComp: ParseErrorLevel.WARNING: '
+              'Expected a non-empty message meaning before "|"\n'
+              '<p @i18n=" | description">message</p>\n'
+              '   ^^^^^^^^^^^^^^^^^^^^^^'
+        ]);
+      });
+
+      test('should prevent an empty @i18n message', () {
+        expect(
+            () => parse('<p @i18n="description"></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 1 of TestComp: ParseErrorLevel.FATAL: '
+                'Internationalized messages must contain text\n'
+                '<p @i18n="description"></p>\n'
+                '^^^^^^^^^^^^^^^^^^^^^^^'));
+      });
     });
 
     group('ignore elements', () {
@@ -1991,7 +2100,6 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   String exportAs,
   List<String> inputs,
   List<String> outputs,
-  Map<String, String> host,
   // CompileProviderMetadata | CompileTypeMetadata |
   // CompileIdentifierMetadata | List
   List providers,
@@ -2001,12 +2109,6 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   List<CompileQueryMetadata> queries,
   CompileTemplateMetadata template,
 }) {
-  final hostListeners = <String, String>{};
-  final hostProperties = <String, String>{};
-  final hostAttributes = <String, String>{};
-  CompileDirectiveMetadata.deserializeHost(
-      host, hostAttributes, hostListeners, hostProperties);
-
   final inputsMap = <String, String>{};
   final inputTypeMap = <String, CompileTypeMetadata>{};
   inputs?.forEach((input) {
@@ -2034,9 +2136,8 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
     inputs: inputsMap,
     inputTypes: inputTypeMap,
     outputs: outputsMap,
-    hostListeners: hostListeners,
-    hostProperties: hostProperties,
-    hostAttributes: hostAttributes,
+    hostListeners: {},
+    hostBindings: {},
     lifecycleHooks: [],
     providers: providers,
     viewProviders: viewProviders,

@@ -20,11 +20,11 @@ Future<Map<AssetId, String>> processStylesheet(
 
   return new Map.fromIterable(sourceModules,
       key: (module) => new AssetId.resolve((module as SourceModule).moduleUrl),
-      value: (module) => writeSourceModule(module as SourceModule));
+      value: (module) => _writeSourceModule(module as SourceModule));
 }
 
 /// Writes the full Dart code for the provided [SourceModule].
-String writeSourceModule(SourceModule sourceModule, {String libraryName}) {
+String _writeSourceModule(SourceModule sourceModule, {String libraryName}) {
   if (sourceModule == null) return null;
   var buf = new StringBuffer();
   libraryName = _sanitizeLibName(

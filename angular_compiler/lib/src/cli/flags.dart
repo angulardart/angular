@@ -3,11 +3,14 @@ import 'package:build/build.dart' as build;
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
-const _argDebugMode = 'debug';
 const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
-const _argFastBoot = 'fast_boot';
-const _argLegacyWhitespace = 'use_legacy_preserve_whitespace';
+
+// Experimental flags (not published).
+const _argForceMinifyWhitespace = 'force-minify-whitespace';
+const _argI18nEnabled = 'i18n';
+const _argNoEmitComponentFactories = 'no-emit-component-factories';
+const _argNoEmitInjectableFactories = 'no-emit-injectable-factories';
 
 /// Compiler-wide configuration (flags) to allow opting in/out.
 ///
@@ -17,14 +20,6 @@ const _argLegacyWhitespace = 'use_legacy_preserve_whitespace';
 /// with an option to use defaults set by bazel or pub's build systems.
 class CompilerFlags {
   static final _argParser = new ArgParser()
-    ..addFlag(
-      _argDebugMode,
-      defaultsTo: null,
-      help: ''
-          'Whether to run the code generator in debug mode. This is '
-          'useful for local development but should be disabled for '
-          'production builds.',
-    )
     ..addFlag(
       _argLegacyStyle,
       defaultsTo: null,
@@ -42,30 +37,30 @@ class CompilerFlags {
           'in order to profile performance or other runtime information.',
     )
     ..addFlag(
-      _argFastBoot,
+      _argForceMinifyWhitespace,
       defaultsTo: null,
-      help: 'Whether to support AngularDart v5\'s "fastBoot" functionality.',
+      hide: true,
     )
     ..addFlag(
-      _argLegacyWhitespace,
+      _argI18nEnabled,
       defaultsTo: null,
-      help: 'Whether to opt-in/out of the new preserveWhitespace: false',
-      // It's not clear we will keep this flag through the 5.x final release.
+      hide: true,
+    )
+    ..addFlag(
+      _argNoEmitComponentFactories,
+      hide: true,
+    )
+    ..addFlag(
+      _argNoEmitInjectableFactories,
       hide: true,
     );
 
   /// Whether to emit extra code suitable for testing and local development.
+  @Deprecated('This value is always `false`')
   final bool genDebugInfo;
 
   /// May emit extra code suitable for profiling or tooling.
   final Profile profileFor;
-
-  /// Whether to support AngularDart v5's "fastBoot" functionality.
-  ///
-  /// If `false`, additional code may be generated that negatively affects
-  /// startup performance and code size, but allows compatibility with
-  /// functionality such as `SlowComponentLoader` and `ReflectiveInjector`.
-  final bool useFastBoot;
 
   /// Whether to opt-in to supporting a legacy mode of style encapsulation.
   ///
@@ -78,6 +73,13 @@ class CompilerFlags {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
+  /// Whether internationalization of templates is supported.
+  ///
+  /// This flag is currently used to disable support while the feature is
+  /// developed.
+  @experimental
+  final bool i18nEnabled;
+
   /// Whether to look for a file to determine if `.template.dart` will exist.
   ///
   /// **NOTE**: This is an _internal_ flag that is currently only supported for
@@ -86,17 +88,27 @@ class CompilerFlags {
   @experimental
   final bool ignoreNgPlaceholderForGoldens;
 
-  /// Whether to use a new implementation of `preserveWhitespace: false`.
+  /// Whether to operate as if `preserveWhitespace: false` is always set.
   @experimental
-  final bool useNewPreserveWhitespace;
+  final bool forceMinifyWhitespace;
+
+  /// Whether to emit code supporting `SlowComponentLoader`.
+  @experimental
+  final bool emitComponentFactories;
+
+  /// Whether to emit code supporting `ReflectiveInjector`.
+  @experimental
+  final bool emitInjectableFactories;
 
   const CompilerFlags({
-    this.genDebugInfo: false,
-    this.ignoreNgPlaceholderForGoldens: false,
-    this.profileFor: Profile.none,
-    this.useFastBoot: true,
-    this.useLegacyStyleEncapsulation: false,
-    this.useNewPreserveWhitespace: false,
+    this.genDebugInfo = false,
+    this.i18nEnabled = false,
+    this.ignoreNgPlaceholderForGoldens = false,
+    this.profileFor = Profile.none,
+    this.useLegacyStyleEncapsulation = false,
+    this.forceMinifyWhitespace = false,
+    this.emitComponentFactories = true,
+    this.emitInjectableFactories = true,
   });
 
   /// Creates flags by parsing command-line arguments.
@@ -104,9 +116,9 @@ class CompilerFlags {
   /// Failures are reported to [logger].
   factory CompilerFlags.parseArgs(
     List<String> args, {
-    CompilerFlags defaultTo: const CompilerFlags(genDebugInfo: false),
+    CompilerFlags defaultTo = const CompilerFlags(genDebugInfo: false),
     Logger logger,
-    Level severity: Level.WARNING,
+    Level severity = Level.WARNING,
   }) {
     final results = _argParser.parse(args);
     return new CompilerFlags.parseRaw(
@@ -125,7 +137,7 @@ class CompilerFlags {
     dynamic options,
     CompilerFlags defaultTo, {
     Logger logger,
-    Level severity: Level.WARNING,
+    Level severity = Level.WARNING,
   }) {
     // Use the default package:build logger if not specified, otherwise throw.
     logger ??= build.log;
@@ -137,11 +149,12 @@ class CompilerFlags {
     // Check for invalid (unknown) arguments when possible.
     if (options is Map) {
       final knownArgs = const [
-        _argDebugMode,
+        _argI18nEnabled,
         _argProfileFor,
         _argLegacyStyle,
-        _argFastBoot,
-        _argLegacyWhitespace
+        _argForceMinifyWhitespace,
+        _argNoEmitComponentFactories,
+        _argNoEmitInjectableFactories,
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
@@ -154,40 +167,23 @@ class CompilerFlags {
       }
     }
 
-    var debugMode = options[_argDebugMode];
-    if (debugMode != null && debugMode is! bool) {
-      log('Invalid value "$_argDebugMode": $debugMode');
-      debugMode = null;
-    }
-    var profileFor = options[_argProfileFor];
-    if (profileFor != null && profileFor is! String) {
-      log('Invalid value "$_argProfileFor": $profileFor');
-      profileFor = null;
-    }
-    var useLegacyStyle = options[_argLegacyStyle];
-    if (useLegacyStyle != null && useLegacyStyle is! bool) {
-      log('Invalid value for "$_argLegacyStyle": $useLegacyStyle');
-      useLegacyStyle = null;
-    }
-    var useFastBoot = options[_argFastBoot];
-    if (useFastBoot != null && useFastBoot is! bool) {
-      log('Invalid value for "$_argFastBoot": $useFastBoot');
-      useFastBoot = null;
-    }
-    var useLegacyWhitespace = options[_argLegacyWhitespace];
-    if (useLegacyStyle != null && useLegacyStyle is! bool) {
-      log('Invalid value for "$_argLegacyWhitespace": $_argLegacyWhitespace');
-      useLegacyWhitespace = null;
-    }
+    final i18nEnabled = options[_argI18nEnabled];
+    final profileFor = options[_argProfileFor];
+    final useLegacyStyle = options[_argLegacyStyle];
+    final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
+    final noEmitComponentFactories = options[_argNoEmitComponentFactories];
+    final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
+
     return new CompilerFlags(
-      genDebugInfo: debugMode ?? defaultTo.genDebugInfo,
+      genDebugInfo: false,
+      i18nEnabled: i18nEnabled ?? defaultTo.i18nEnabled,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
-      useFastBoot: useFastBoot ?? defaultTo.useFastBoot,
-      useNewPreserveWhitespace: useLegacyWhitespace != null
-          ? !useLegacyWhitespace
-          : defaultTo.useNewPreserveWhitespace,
+      forceMinifyWhitespace:
+          forceMinifyWhitespace ?? defaultTo.forceMinifyWhitespace,
+      emitComponentFactories: !(noEmitComponentFactories == true),
+      emitInjectableFactories: !(noEmitInjectableFactories == true),
     );
   }
 }

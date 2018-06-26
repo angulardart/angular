@@ -5,7 +5,7 @@ import 'package:angular/core.dart'
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
-class ObservableStrategy {
+class _ObservableStrategy {
   StreamSubscription createSubscription(
       Stream stream, void updateLatestValue(value)) {
     return stream.listen(updateLatestValue, onError: (e) => throw e);
@@ -20,7 +20,7 @@ class ObservableStrategy {
   }
 }
 
-class PromiseStrategy {
+class _PromiseStrategy {
   dynamic createSubscription(
       Future<dynamic> async, dynamic updateLatestValue(dynamic v)) {
     return async.then(updateLatestValue);
@@ -30,8 +30,8 @@ class PromiseStrategy {
   void onDestroy(dynamic subscription) {}
 }
 
-final _promiseStrategy = new PromiseStrategy();
-final _observableStrategy = new ObservableStrategy();
+final _promiseStrategy = new _PromiseStrategy();
+final _observableStrategy = new _ObservableStrategy();
 
 /// An `async` pipe awaits for a value from a [Future] or [Stream]. When a value
 /// is received, the `async` pipe marks the component to be checked for changes.

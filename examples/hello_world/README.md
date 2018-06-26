@@ -6,26 +6,19 @@ To debug locally with DDC:
 
 ```bash
 $ pub get
-$ pub run build_runner serve
-```
-
-To debug locally with Dart2JS, unminified:
-
-```bash
-$ pub get
-$ pub run build_runner serve --config=debug
+$ webdev serve
 ```
 
 To debug locally with Dart2JS, minified:
 
 ```bash
 $ pub get
-$ pub run build_runner serve --config=release
+$ webdev serve --release
 ```
 
 ## Building a binary
 
 ```bash
 $ pub get
-$ pub run build_runner build --config=release -o build
+$ webdev build
 ```

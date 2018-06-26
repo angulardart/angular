@@ -268,140 +268,120 @@ abstract class AstVisitor<R, C> {
   R visitStaticRead(StaticRead ast, C context);
 }
 
-class RecursiveAstVisitor implements AstVisitor {
+class RecursiveAstVisitor<C> implements AstVisitor<void, C> {
   @override
-  dynamic visitBinary(Binary ast, dynamic context) {
-    ast.left.visit(this);
-    ast.right.visit(this);
-    return null;
+  void visitBinary(Binary ast, C context) {
+    ast.left.visit(this, context);
+    ast.right.visit(this, context);
   }
 
   @override
-  dynamic visitChain(Chain ast, dynamic context) {
-    return this.visitAll(ast.expressions, context);
+  void visitChain(Chain ast, C context) {
+    visitAll(ast.expressions, context);
   }
 
   @override
-  dynamic visitConditional(Conditional ast, dynamic context) {
-    ast.condition.visit(this);
-    ast.trueExp.visit(this);
-    ast.falseExp.visit(this);
-    return null;
+  void visitConditional(Conditional ast, C context) {
+    ast.condition.visit(this, context);
+    ast.trueExp.visit(this, context);
+    ast.falseExp.visit(this, context);
   }
 
   @override
-  dynamic visitEmptyExpr(EmptyExpr ast, dynamic context) {
-    return null;
+  void visitEmptyExpr(EmptyExpr ast, C context) {}
+
+  @override
+  void visitPipe(BindingPipe ast, C context) {
+    ast.exp.visit(this, context);
+    visitAll(ast.args, context);
   }
 
   @override
-  dynamic visitPipe(BindingPipe ast, dynamic context) {
-    ast.exp.visit(this);
-    this.visitAll(ast.args, context);
-    return null;
+  void visitFunctionCall(FunctionCall ast, C context) {
+    ast.target.visit(this, context);
+    visitAll(ast.args, context);
   }
 
   @override
-  dynamic visitFunctionCall(FunctionCall ast, dynamic context) {
-    ast.target.visit(this);
-    this.visitAll(ast.args, context);
-    return null;
+  void visitIfNull(IfNull ast, C context) {
+    ast.condition.visit(this, context);
+    ast.nullExp.visit(this, context);
   }
 
   @override
-  dynamic visitIfNull(IfNull ast, dynamic context) {
-    ast.condition.visit(this);
-    ast.nullExp.visit(this);
-    return null;
+  void visitImplicitReceiver(ImplicitReceiver ast, C context) {}
+
+  @override
+  void visitInterpolation(Interpolation ast, C context) {
+    visitAll(ast.expressions, context);
   }
 
   @override
-  dynamic visitImplicitReceiver(ImplicitReceiver ast, dynamic context) {
-    return null;
+  void visitKeyedRead(KeyedRead ast, C context) {
+    ast.obj.visit(this, context);
+    ast.key.visit(this, context);
   }
 
   @override
-  dynamic visitInterpolation(Interpolation ast, dynamic context) {
-    return this.visitAll(ast.expressions, context);
+  void visitKeyedWrite(KeyedWrite ast, C context) {
+    ast.obj.visit(this, context);
+    ast.key.visit(this, context);
+    ast.value.visit(this, context);
   }
 
   @override
-  dynamic visitKeyedRead(KeyedRead ast, dynamic context) {
-    ast.obj.visit(this);
-    ast.key.visit(this);
-    return null;
+  void visitLiteralArray(LiteralArray ast, C context) {
+    visitAll(ast.expressions, context);
   }
 
   @override
-  dynamic visitKeyedWrite(KeyedWrite ast, dynamic context) {
-    ast.obj.visit(this);
-    ast.key.visit(this);
-    ast.value.visit(this);
-    return null;
+  void visitLiteralMap(LiteralMap ast, C context) {
+    visitAll(ast.values, context);
   }
 
   @override
-  dynamic visitLiteralArray(LiteralArray ast, dynamic context) {
-    return this.visitAll(ast.expressions, context);
+  void visitLiteralPrimitive(LiteralPrimitive ast, C context) {}
+
+  @override
+  void visitMethodCall(MethodCall ast, C context) {
+    ast.receiver.visit(this, context);
+    visitAll(ast.args, context);
   }
 
   @override
-  dynamic visitLiteralMap(LiteralMap ast, dynamic context) {
-    return this.visitAll(ast.values, context);
+  void visitPrefixNot(PrefixNot ast, C context) {
+    ast.expression.visit(this, context);
   }
 
   @override
-  dynamic visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {
-    return null;
+  void visitPropertyRead(PropertyRead ast, C context) {
+    ast.receiver.visit(this, context);
   }
 
   @override
-  dynamic visitMethodCall(MethodCall ast, dynamic context) {
-    ast.receiver.visit(this);
-    return this.visitAll(ast.args, context);
+  void visitPropertyWrite(PropertyWrite ast, C context) {
+    ast.receiver.visit(this, context);
+    ast.value.visit(this, context);
   }
 
   @override
-  dynamic visitPrefixNot(PrefixNot ast, dynamic context) {
-    ast.expression.visit(this);
-    return null;
+  void visitSafePropertyRead(SafePropertyRead ast, C context) {
+    ast.receiver.visit(this, context);
   }
 
   @override
-  dynamic visitPropertyRead(PropertyRead ast, dynamic context) {
-    ast.receiver.visit(this);
-    return null;
+  void visitSafeMethodCall(SafeMethodCall ast, C context) {
+    ast.receiver.visit(this, context);
+    visitAll(ast.args, context);
   }
 
   @override
-  dynamic visitPropertyWrite(PropertyWrite ast, dynamic context) {
-    ast.receiver.visit(this);
-    ast.value.visit(this);
-    return null;
-  }
+  void visitStaticRead(StaticRead ast, C context) {}
 
-  @override
-  dynamic visitSafePropertyRead(SafePropertyRead ast, dynamic context) {
-    ast.receiver.visit(this);
-    return null;
-  }
-
-  @override
-  dynamic visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
-    ast.receiver.visit(this);
-    return this.visitAll(ast.args, context);
-  }
-
-  @override
-  dynamic visitStaticRead(StaticRead ast, dynamic context) {
-    return null;
-  }
-
-  dynamic visitAll(List<AST> asts, dynamic context) {
+  void visitAll(List<AST> asts, C context) {
     for (var ast in asts) {
       ast.visit(this, context);
     }
-    return null;
   }
 }
 

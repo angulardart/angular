@@ -44,6 +44,7 @@ abstract class RecursiveTemplateVisitor<C>
   TemplateAst visitElement(ElementAst ast, C context) => new ElementAst(
       ast.name,
       visitAll(ast.attrs, context),
+      visitAll(ast.i18nAttrs, context),
       visitAll(ast.inputs, context),
       visitAll(ast.outputs, context),
       visitAll(ast.references, context),
@@ -97,4 +98,10 @@ abstract class RecursiveTemplateVisitor<C>
 
   @override
   TemplateAst visitProvider(ProviderAst ast, _) => ast;
+
+  @override
+  TemplateAst visitI18nAttr(I18nAttrAst ast, _) => ast;
+
+  @override
+  TemplateAst visitI18nText(I18nTextAst ast, _) => ast;
 }

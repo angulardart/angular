@@ -7,6 +7,6 @@ export 'src/core/di.dart';
 export 'src/core/metadata.dart' show Component, Directive, Input, Output;
 // TODO: move pipes into separate library target.
 export 'src/core/metadata.dart' show Pipe;
-export 'src/core/zone/ng_zone.dart' hide WrappedTimer;
+export 'src/core/zone/ng_zone.dart';
 // TODO: remove ExceptionHandler and WrappedException after deprecation.
 export 'src/facade/facade.dart' show ExceptionHandler;

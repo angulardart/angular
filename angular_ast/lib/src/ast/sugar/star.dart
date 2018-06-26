@@ -121,7 +121,7 @@ class ParsedStarAst extends TemplateAst
   @override
   String get value => valueToken?.innerValue?.lexeme;
 
-  /// Offset of value; may be `null to have no value.
+  /// Offset of value; may be `null` to have no value.
   @override
   int get valueOffset => valueToken?.innerValue?.offset;
 

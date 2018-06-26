@@ -33,14 +33,14 @@ class RouterImpl extends Router {
   StreamController<String> _onNavigationStart;
   RouterOutlet _rootOutlet;
 
-  /// Tracks the latest navigation request.
+  /// Completes when the latest navigation request is complete.
   ///
   /// This is used to synchronize all navigation requests, so that they are run
   /// sequentially, rather than concurrently.
-  Future<NavigationResult> _lastNavigation = new Future.value();
+  var _lastNavigation = new Future<void>.value();
 
   RouterImpl(this._location, @Optional() this._routerHook) {
-    Url.isHashStrategy = _location.platformStrategy is HashLocationStrategy;
+    Url.isHashStrategy = _location.locationStrategy is HashLocationStrategy;
 
     _location.subscribe((_) {
       final url = Url.parse(_location.path());
@@ -85,7 +85,7 @@ class RouterImpl extends Router {
               fragment: Url.isHashStrategy
                   ? url.fragment
                   : Url.normalizeHash(_location.hash()),
-              updateUrl: false));
+              replace: true));
     }
   }
 
@@ -112,8 +112,8 @@ class RouterImpl extends Router {
   @override
   Future<NavigationResult> navigateByUrl(
     String url, {
-    bool reload: false,
-    bool replace: false,
+    bool reload = false,
+    bool replace = false,
   }) {
     final parsed = Url.parse(url);
     return navigate(
@@ -131,8 +131,19 @@ class RouterImpl extends Router {
     String path,
     NavigationParams navigationParams,
   ) {
-    return _lastNavigation =
-        _lastNavigation.then((_) => _navigate(path, navigationParams));
+    // This is used to forward the navigation result or error to the caller.
+    final navigationCompleter = new Completer<NavigationResult>.sync();
+    // Note how this does not await the result of the last navigation, but
+    // rather the act of forwarding the result through a completer. This
+    // indirection is an important distinction that allows enqueued navigation
+    // requests to be run even if a preceding request throws, since the act of
+    // awaiting an errored future rethrows that error.
+    _lastNavigation = _lastNavigation.then((_) {
+      return _navigate(path, navigationParams)
+          .then(navigationCompleter.complete)
+          .catchError(navigationCompleter.completeError);
+    });
+    return navigationCompleter.future;
   }
 
   /// Navigate this router to the given url.
@@ -141,7 +152,7 @@ class RouterImpl extends Router {
   Future<NavigationResult> _navigate(
     String path,
     NavigationParams navigationParams, {
-    bool isRedirect: false,
+    bool isRedirect = false,
   }) async {
     if (!isRedirect) {
       // Don't check `CanNavigate` or trigger `onNavigationStart` on redirect.
@@ -154,7 +165,7 @@ class RouterImpl extends Router {
 
     navigationParams?.assertValid();
     path = await _routerHook?.navigationPath(path, navigationParams) ?? path;
-    path = Url.normalizePath(path);
+    path = _location.normalizePath(path);
     navigationParams =
         await _routerHook?.navigationParams(path, navigationParams) ??
             navigationParams;
@@ -171,23 +182,18 @@ class RouterImpl extends Router {
     }
 
     MutableRouterState nextState = await _resolveState(path, navigationParams);
-    if (nextState == null) {
+    // In the event that `path` is empty and doesn't match any routes,
+    // `_resolveState` will return a state with no routes, instead of null.
+    if (nextState == null || nextState.routes.isEmpty) {
       return NavigationResult.INVALID_ROUTE;
     }
 
-    if (nextState.routes.isNotEmpty &&
-        nextState.routes.last is RedirectRouteDefinition) {
-      var redirectUrl =
-          (nextState.routes.last as RedirectRouteDefinition).redirectTo;
-      return _navigate(
-        _getAbsolutePath(redirectUrl, nextState.build()),
-        navigationParams == null
-            ? null
-            : new NavigationParams(
-                fragment: navigationParams.fragment,
-                queryParameters: navigationParams.queryParameters),
-        isRedirect: true,
-      );
+    if (nextState.routes.isNotEmpty) {
+      final leaf = nextState.routes.last;
+      if (leaf is RedirectRouteDefinition) {
+        final newPath = _getAbsolutePath(leaf.redirectTo, nextState.build());
+        return _navigate(newPath, navigationParams, isRedirect: true);
+      }
     }
 
     if (!await _canDeactivate(nextState)) {
@@ -390,6 +396,9 @@ class RouterImpl extends Router {
       if (component is CanNavigate && !await component.canNavigate()) {
         return false;
       }
+    }
+    if (_routerHook != null && !(await _routerHook.canNavigate())) {
+      return false;
     }
     return true;
   }

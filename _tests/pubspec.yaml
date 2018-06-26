@@ -2,7 +2,7 @@ name: _tests
 author: Dart Team <web@dartlang.org>
 description: Tests for AngularDart.
 environment:
-  sdk: ">=2.0.0-dev.46.0 <2.0.0"
+  sdk: ">=2.0.0-dev.60.0 <2.0.0"
 
 dependencies:
   # No strict dependencies, we always use dependency_overrides.
@@ -10,19 +10,20 @@ dependencies:
   angular_test:
 
   # Actual valid dependencies required.
+  build_resolvers: ^0.2.0+1
   collection: ^1.14.5
   meta: ^1.1.2
-  test: ^0.12.32
+  test: ">0.12.32+1 <2.0.0"
 
 dev_dependencies:
   # No strict dependencies, we always use dependency_overrides.
   angular_forms:
 
   # Actual valid dependencies required.
-  analyzer: ^0.31.0+1
-  build_runner: ^0.8.0
-  build_test: ^0.10.2+1
-  build_web_compilers: ^0.3.4+1
+  analyzer: ^0.32.0
+  build_runner: ^0.9.0
+  build_test: ^0.10.2+5
+  build_web_compilers: ^0.4.0+4
   mockito: '>=0.11.0 <3.0.0'
   source_span: ^1.4.0
 

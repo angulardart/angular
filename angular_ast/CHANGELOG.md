@@ -1,4 +1,30 @@
+## 0.5.3+3
+
+*   Maintenance release for `-dev.60`.
+
+## 0.5.3+2
+
+*   Maintenance release for `-dev.56`.
+
+## 0.5.3+1
+
+*   Fixed source span range of `AttributeAst` which would extend past EOF when
+    recovering from a value with an unclosed quote.
+
+## 0.5.3
+
+*   Exported `ParsedAnnotationAst`.
+
 *   Added `ContainerAst`.
+
+*   Annotations may now be assigned values.
+
+*   Added support for annotations on `ContainerAst`.
+
+*   The `*` micro-syntax now supports leading whitespace.
+
+*   Whitespace between `<ng-content>` and `</ng-content>` will no longer yield a
+    parsing error.
 
 ## 0.5.2
 
