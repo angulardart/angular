@@ -1,3 +1,5 @@
+*   Added support for `void` and `Null` types to appear in tokens.
+
 ## 0.4.0-alpha+15
 
 *   `CompilerFlags` no longer parses and supports the `'debug'` option and
