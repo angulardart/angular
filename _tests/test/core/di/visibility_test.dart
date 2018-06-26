@@ -68,6 +68,20 @@ void main() {
           const isInstanceOf<VisibilityAllImplementation>(),
         ]);
       });
+
+      test('should support $FactoryProvider', () async {
+        final testBed = NgTestBed
+            .forComponent(ng_generated.ShouldSupportFactoryProviderNgFactory);
+        final testFixture = await testBed.create();
+        expect(testFixture.assertOnlyInstance.child.interface, isNotNull);
+      });
+
+      test('should support $ClassProvider', () async {
+        final testBed = NgTestBed
+            .forComponent(ng_generated.ShouldSupportClassProviderNgFactory);
+        final testFixture = await testBed.create();
+        expect(testFixture.assertOnlyInstance.child.interface, isNotNull);
+      });
     });
 
     group('all', () {
@@ -210,7 +224,7 @@ class MyComponentWithServiceTest {}
 @Component(
   selector: 'child-component-provides-service',
   providers: const [
-    const Provider(SomeService, useExisting: MyChildComponentProvidesService)
+    const ExistingProvider(SomeService, MyChildComponentProvidesService)
   ],
   template: '<div></div>',
 )
@@ -238,7 +252,7 @@ abstract class Dependency {
   template: '<injects-aliased-local></injects-aliased-local>',
   directives: const [InjectsAliasedLocal],
   providers: const [
-    const Provider(Dependency, useExisting: ShouldInjectAliasedLocal),
+    const ExistingProvider(Dependency, ShouldInjectAliasedLocal),
   ],
 )
 class ShouldInjectAliasedLocal extends Dependency {
@@ -314,7 +328,7 @@ class InjectsMultiToken {
 }
 
 @Component(
-  selector: 'should-injects-multi-token',
+  selector: 'should-inject-multi-token',
   template: '<injects-multi-token local all></injects-multi-token>',
   directives: const [
     InjectsMultiToken,
@@ -325,4 +339,45 @@ class InjectsMultiToken {
 class ShouldInjectMultiToken {
   @ViewChild(InjectsMultiToken)
   InjectsMultiToken child;
+}
+
+Interface getInterfaceFromImpl(ShouldSupportFactoryProvider impl) => impl;
+
+@Component(
+  selector: 'test',
+  template: '<should-inject-interface></should-inject-interface>',
+  directives: const [
+    ShouldInjectInterface,
+  ],
+  providers: const [
+    const FactoryProvider(Interface, getInterfaceFromImpl),
+  ],
+)
+class ShouldSupportFactoryProvider implements Interface {
+  @ViewChild(ShouldInjectInterface)
+  ShouldInjectInterface child;
+}
+
+@Component(
+  selector: 'should-inject-interface',
+  template: '',
+)
+class ShouldInjectInterface {
+  Interface interface;
+  ShouldInjectInterface(this.interface);
+}
+
+@Component(
+  selector: 'test',
+  template: '<should-inject-interface></should-inject-interface>',
+  directives: const [
+    ShouldInjectInterface,
+  ],
+  providers: const [
+    ClassProvider(Interface, useClass: ShouldSupportClassProvider),
+  ],
+)
+class ShouldSupportClassProvider implements Interface {
+  @ViewChild(ShouldInjectInterface)
+  ShouldInjectInterface child;
 }
