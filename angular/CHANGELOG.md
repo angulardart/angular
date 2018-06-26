@@ -18,6 +18,14 @@
     features for the `Injector` interface:
     https://github.com/dart-lang/angular/issues/555.
 
+### New features
+
+*   `ReflectiveInjector.resolveStaticAndCreate` was added as an _experimental_
+    API (subject to breaking change at any time). This is primarily for adopting
+    `runApp` incrementally in existing large code-bases that use
+    `ReflectiveInjector`. See https://github.com/dart-lang/angular/issues/1426
+    for details.
+
 ### Bug fixes
 
 *   The generated `.template.dart` code now properly subtypes `AppView<C>` where
