@@ -2,13 +2,13 @@ name: angular_test
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Testing runner and library for AngularDart
-version: 2.0.0-alpha+13
+version: 2.0.0-beta
 
 environment:
   sdk: ">=2.0.0-dev.60.0 <2.0.0"
 
 dependencies:
-  angular: 5.0.0-alpha+15
+  angular: ^5.0.0-beta
   meta: ^1.1.2
 
 dev_dependencies:

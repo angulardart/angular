@@ -1,3 +1,10 @@
+## 5.0.0-beta
+
+We are no longer expecting further breaking changes as we get closer to a final
+release (which itself is pending a final release of the Dart 2 SDK). Please
+continue to report stability issues, bugs, or requests for small non-breaking
+enhancements.
+
 ### Breaking changes
 
 *   Removed `SafeScript` and its associated APIs. There was no path through the
