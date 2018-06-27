@@ -14,7 +14,7 @@ targets:
 builders:
   goldens:
     target: "goldens"
-    import: "../../../tool/src/builder.dart"
+    import: "tool/src/builder.dart"
     builder_factories:
       - releaseBuilder
       - outlineBuilder

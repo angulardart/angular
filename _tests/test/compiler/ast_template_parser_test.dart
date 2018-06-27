@@ -159,7 +159,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Property,
+              PropertyBindingType.property,
               'someProp',
               'v',
               null
@@ -172,7 +172,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Property,
+              PropertyBindingType.property,
               'some-prop',
               'v',
               null
@@ -185,7 +185,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Property,
+              PropertyBindingType.property,
               'mappedProp',
               'v',
               null
@@ -198,7 +198,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Attribute,
+              PropertyBindingType.attribute,
               'someAttr',
               'v',
               null
@@ -212,7 +212,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Class,
+              PropertyBindingType.cssClass,
               'some-class',
               'v',
               null
@@ -226,7 +226,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Class,
+              PropertyBindingType.cssClass,
               'someClass',
               'v',
               null
@@ -240,7 +240,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Style,
+              PropertyBindingType.style,
               'someStyle',
               'v',
               null
@@ -282,7 +282,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Property,
+              PropertyBindingType.property,
               'prop',
               'v',
               null
@@ -297,7 +297,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Property,
+              PropertyBindingType.property,
               'prop',
               'v',
               null
@@ -312,7 +312,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Property,
+              PropertyBindingType.property,
               'prop',
               '{{ v }}',
               null
@@ -385,7 +385,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Property,
+              PropertyBindingType.property,
               'prop',
               'v',
               null
@@ -439,14 +439,14 @@ void main() {
                 [AttrAst, 'b', ''],
                 [
                   BoundElementPropertyAst,
-                  PropertyBindingType.Property,
+                  PropertyBindingType.property,
                   'a',
                   'foo',
                   null
                 ],
                 [
                   BoundElementPropertyAst,
-                  PropertyBindingType.Property,
+                  PropertyBindingType.property,
                   'b',
                   'bar',
                   null
@@ -470,7 +470,7 @@ void main() {
             [ElementAst, 'div'],
             [
               BoundElementPropertyAst,
-              PropertyBindingType.Property,
+              PropertyBindingType.property,
               'a',
               'b',
               null
@@ -1951,7 +1951,7 @@ void main() {
               [ElementAst, 'div', '<div [someProp]="v">'],
               [
                 BoundElementPropertyAst,
-                PropertyBindingType.Property,
+                PropertyBindingType.property,
                 'someProp',
                 'v',
                 null,
