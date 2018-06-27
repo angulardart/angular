@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:angular/src/runtime.dart';
 
 import '../../core/di/decorators.dart';
@@ -25,7 +26,7 @@ abstract class ReflectiveInjector implements HierarchicalInjector {
   /// is provided for legacy compatibility only.
   static ReflectiveInjector resolveAndCreate(
     List<Object> providersOrLists, [
-    HierarchicalInjector parent = const EmptyInjector(),
+    Injector parent = const EmptyInjector(),
   ]) {
     // Return the default implementation.
     final flatProviders = _flattenProviders(providersOrLists);
@@ -36,7 +37,47 @@ abstract class ReflectiveInjector implements HierarchicalInjector {
     return new _RuntimeInjector(
       flatProviders.providers,
       flatProviders.multiProviders,
-      parent,
+      unsafeCast(parent),
+      false,
+    );
+  }
+
+  /// Creates a new [Injector] that resolves some `Provider` instances.
+  ///
+  /// In particular, only the following provider types are now valid:
+  /// * `ValueProvider` (or `Provider(useValue: ...)`)
+  /// * `ExistingProvider` (or `Provider(useExisting: ...)`)
+  /// * `FactoryProvider` (or `Provider(useFactory: ...)`) with `deps` provided.
+  ///
+  /// Specifically, any providers that require looking up factory functions or
+  /// argument information for factory functions at runtime are not supported
+  /// since they would defeat the tree-shaking improvements of "runApp".
+  ///
+  /// See https://github.com/dart-lang/angular/issues/1426 for details.
+  ///
+  /// Any other type of [Provider] will throw during creation in development
+  /// mode and may fail unexpectedly in production mode. This is to allow eased
+  /// migration towards the `runApp` API without entirely giving up the ability
+  /// to use the dynamic nature of [ReflectiveInjector].
+  ///
+  /// **WARNING**: This is not intended to be a long-term API, and instead is
+  /// an _alternative_ to [ReflectiveInjector.resolveAndCreate]. It is greatly
+  /// preferred to use `Injector.map` or `@GeneratedInjector` for new usages.
+  @experimental
+  static ReflectiveInjector resolveStaticAndCreate(
+    List<Object> providersOrLists, [
+    Injector parent = const EmptyInjector(),
+  ]) {
+    final flatProviders = _flattenProviders(providersOrLists);
+    if (isDevMode) {
+      _assertStaticProviders(flatProviders.providers.values);
+      _assertStaticProviders(flatProviders.multiProviders);
+    }
+    return new _RuntimeInjector(
+      flatProviders.providers,
+      flatProviders.multiProviders,
+      unsafeCast(parent),
+      true,
     );
   }
 
@@ -57,11 +98,13 @@ class _RuntimeInjector extends HierarchicalInjector
   // A pre-processed token -> `RuntimeProvider` mapping.
   final Map<Object, Provider<Object>> _providers;
   final List<Provider<Object>> _multiProviders;
+  final bool _staticOnlyResolveAndCreate;
 
   _RuntimeInjector(
     this._providers,
     this._multiProviders,
     HierarchicalInjector parent,
+    this._staticOnlyResolveAndCreate,
   ) : super(parent) {
     assert(parent != null, 'A parent injector is always required.');
     // Injectors as a contract must return themselves if `Injector` is a token.
@@ -93,6 +136,9 @@ class _RuntimeInjector extends HierarchicalInjector
 
   @override
   ReflectiveInjector resolveAndCreateChild(List<Object> providersOrLists) {
+    if (_staticOnlyResolveAndCreate) {
+      return ReflectiveInjector.resolveStaticAndCreate(providersOrLists, this);
+    }
     return ReflectiveInjector.resolveAndCreate(providersOrLists, this);
   }
 
@@ -104,6 +150,9 @@ class _RuntimeInjector extends HierarchicalInjector
             providerOrType,
             useClass: unsafeCast<Type>(providerOrType),
           );
+    if (_staticOnlyResolveAndCreate) {
+      _assertStaticProviders([provider]);
+    }
     return buildAtRuntime(provider, this);
   }
 
@@ -222,20 +271,57 @@ class _FlatProviders {
 //
 // This matches the old behavior of ReflectiveInjector (which eagerly resolved
 // all providers), instead of letting teams introduce unresolvable providers.
-void _assertProviders(Iterable<Provider<Object>> providers) {
+void _assertProviders(Iterable<Provider<void>> providers) {
   for (final provider in providers) {
-    if (provider.deps != null) {
-      continue;
-    }
     if (provider.useClass != null) {
       reflector.getFactory(provider.useClass);
-    } else if (provider.useFactory != null) {
+    } else if (provider.useFactory != null && provider.deps == null) {
       reflector.getDependencies(provider.useFactory);
-    } else if (provider.useFactory == noValueProvided &&
+    } else if (identical(provider.useFactory, noValueProvided) &&
         provider.useExisting == null &&
         provider.token is Type) {
       reflector.getFactory(unsafeCast<Type>(provider.token));
     }
+  }
+}
+
+@alwaysThrows
+void _throwUnsupportedProvider(Provider<void> provider) {
+  throw new UnsupportedError(
+    'Could not create a provider for token "${provider.token}"!\n\n'
+        'ReflectiveInjector.resolveStaticAndCreate only supports some providers.\n'
+        '\n'
+        '* FactoryProvider (or Provider(useFactory: ...)) with deps: [ ... ] set\n'
+        '* ValueProvider (or Provider(useValue: ...))\n'
+        '* ExistingProvider (or Provider(useExisting: ...))\n'
+        '\n'
+        'Specifically, any providers that require looking up factory functions or '
+        'argument information for factory functions at runtime are not supported '
+        'since they would defeat the tree-shaking improvements of "runApp".\n\n'
+        'See https://github.com/dart-lang/angular/issues/1426 for details',
+  );
+}
+
+// When assertions enabled, verify that providers do not need initReflector.
+//
+// See https://github.com/dart-lang/angular/issues/1426.
+void _assertStaticProviders(Iterable<Provider<void>> providers) {
+  for (final provider in providers) {
+    // ValueProvider or Provider(useValue: ...) is fine.
+    if (!identical(provider.useValue, noValueProvided)) {
+      continue;
+    }
+    // ExistingProvider or Provider(useExisting: ...) is fine.
+    if (!identical(provider.useExisting, null)) {
+      continue;
+    }
+    // FactoryProvider or Provider(useFactory: ...) with deps is fine.
+    if (!identical(provider.useFactory, noValueProvided)) {
+      if (provider.deps != null) {
+        continue;
+      }
+    }
+    _throwUnsupportedProvider(provider);
   }
 }
 

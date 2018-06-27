@@ -14,7 +14,10 @@ o.OutputType fromDartType(
   DartType dartType,
 ) {
   if (dartType.isVoid) {
-    return null;
+    return o.VOID_TYPE;
+  }
+  if (dartType.isDartCoreNull) {
+    return o.NULL_TYPE;
   }
   if (dartType.element.isPrivate) {
     return o.DYNAMIC_TYPE;

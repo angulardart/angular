@@ -722,6 +722,13 @@
           H.throwExpression(P.UnsupportedError$("add"));
         receiver.push(value);
       },
+      removeAt$1: function(receiver, index) {
+        if (!!receiver.fixed$length)
+          H.throwExpression(P.UnsupportedError$("removeAt"));
+        if (index < 0 || index >= receiver.length)
+          throw H.wrapException(P.RangeError$value(index, null, null));
+        return receiver.splice(index, 1)[0];
+      },
       remove$1: function(receiver, element) {
         var i;
         if (!!receiver.fixed$length)
@@ -2779,7 +2786,7 @@
       }
     },
     initHooks_closure0: {
-      "^": "Closure:21;getUnknownTag",
+      "^": "Closure:20;getUnknownTag",
       call$2: function(o, tag) {
         return this.getUnknownTag(o, tag);
       }
@@ -3020,13 +3027,13 @@
     },
     _AsyncRun__scheduleImmediateJsOverride: [function(callback) {
       self.scheduleImmediate(H.convertDartClosureToJS(new P._AsyncRun__scheduleImmediateJsOverride_internalCallback(callback), 0));
-    }, "call$1", "async__AsyncRun__scheduleImmediateJsOverride$closure", 4, 0, 6],
+    }, "call$1", "async__AsyncRun__scheduleImmediateJsOverride$closure", 4, 0, 5],
     _AsyncRun__scheduleImmediateWithSetImmediate: [function(callback) {
       self.setImmediate(H.convertDartClosureToJS(new P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback(callback), 0));
-    }, "call$1", "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", 4, 0, 6],
+    }, "call$1", "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", 4, 0, 5],
     _AsyncRun__scheduleImmediateWithTimer: [function(callback) {
       P.Timer__createTimer(C.Duration_0, callback);
-    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 6],
+    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 5],
     Timer__createTimer: function(duration, callback) {
       var milliseconds = C.JSInt_methods._tdivFast$1(duration._duration, 1000);
       return P._TimerImpl$(milliseconds < 0 ? 0 : milliseconds, callback);
@@ -3081,7 +3088,7 @@
         if ($._nextCallback != null)
           $.$get$_AsyncRun__scheduleImmediateClosure().call$1(P.async___startMicrotaskLoop$closure());
       }
-    }, "call$0", "async___startMicrotaskLoop$closure", 0, 0, 4],
+    }, "call$0", "async___startMicrotaskLoop$closure", 0, 0, 6],
     _scheduleAsyncCallback: function(callback) {
       var newEntry = new P._AsyncCallbackEntry(callback, null);
       if ($._nextCallback == null) {
@@ -3138,14 +3145,14 @@
       return;
     },
     _nullDataHandler: [function(value) {
-    }, "call$1", "async___nullDataHandler$closure", 4, 0, 25, 13],
+    }, "call$1", "async___nullDataHandler$closure", 4, 0, 26, 13],
     _nullErrorHandler: [function(error, stackTrace) {
       $.Zone__current.handleUncaughtError$2(error, stackTrace);
     }, function(error) {
       return P._nullErrorHandler(error, null);
-    }, "call$2", "call$1", "async___nullErrorHandler$closure", 4, 2, 3, 8, 1, 9],
+    }, "call$2", "call$1", "async___nullErrorHandler$closure", 4, 2, 4, 8, 1, 9],
     _nullDoneHandler: [function() {
-    }, "call$0", "async___nullDoneHandler$closure", 0, 0, 4],
+    }, "call$0", "async___nullDoneHandler$closure", 0, 0, 6],
     _parentDelegate: function(zone) {
       if (zone.get$parent(zone) == null)
         return;
@@ -3155,7 +3162,7 @@
       var t1 = {};
       t1.error = error;
       P._schedulePriorityAsyncCallback(new P._rootHandleUncaughtError_closure(t1, stackTrace));
-    }, "call$5", "async___rootHandleUncaughtError$closure", 20, 0, 14],
+    }, "call$5", "async___rootHandleUncaughtError$closure", 20, 0, 13],
     _rootRun: [function($self, $parent, zone, f) {
       var old, t1;
       t1 = $.Zone__current;
@@ -3171,7 +3178,7 @@
       }
     }, function($self, $parent, zone, f) {
       return P._rootRun($self, $parent, zone, f, P.Object);
-    }, "call$1$4", "call$4", "async___rootRun$closure", 16, 0, 11, 2, 3, 4, 10],
+    }, "call$1$4", "call$4", "async___rootRun$closure", 16, 0, 7, 2, 3, 4, 10],
     _rootRunUnary: [function($self, $parent, zone, f, arg) {
       var old, t1;
       t1 = $.Zone__current;
@@ -3187,7 +3194,7 @@
       }
     }, function($self, $parent, zone, f, arg) {
       return P._rootRunUnary($self, $parent, zone, f, arg, P.Object, P.Object);
-    }, "call$2$5", "call$5", "async___rootRunUnary$closure", 20, 0, 12, 2, 3, 4, 10, 5],
+    }, "call$2$5", "call$5", "async___rootRunUnary$closure", 20, 0, 11, 2, 3, 4, 10, 5],
     _rootRunBinary: [function($self, $parent, zone, f, arg1, arg2) {
       var old, t1;
       t1 = $.Zone__current;
@@ -3201,45 +3208,45 @@
       } finally {
         $.Zone__current = old;
       }
-    }, "call$3$6", "async___rootRunBinary$closure", 24, 0, 13, 2, 3, 4, 10, 6, 7],
+    }, "call$3$6", "async___rootRunBinary$closure", 24, 0, 12, 2, 3, 4, 10, 6, 7],
     _rootRegisterCallback: [function($self, $parent, zone, f) {
       return f;
     }, function($self, $parent, zone, f) {
       return P._rootRegisterCallback($self, $parent, zone, f, P.Object);
-    }, "call$1$4", "call$4", "async___rootRegisterCallback$closure", 16, 0, 26],
+    }, "call$1$4", "call$4", "async___rootRegisterCallback$closure", 16, 0, 27],
     _rootRegisterUnaryCallback: [function($self, $parent, zone, f) {
       return f;
     }, function($self, $parent, zone, f) {
       return P._rootRegisterUnaryCallback($self, $parent, zone, f, P.Object, P.Object);
-    }, "call$2$4", "call$4", "async___rootRegisterUnaryCallback$closure", 16, 0, 27],
+    }, "call$2$4", "call$4", "async___rootRegisterUnaryCallback$closure", 16, 0, 28],
     _rootRegisterBinaryCallback: [function($self, $parent, zone, f) {
       return f;
     }, function($self, $parent, zone, f) {
       return P._rootRegisterBinaryCallback($self, $parent, zone, f, P.Object, P.Object, P.Object);
-    }, "call$3$4", "call$4", "async___rootRegisterBinaryCallback$closure", 16, 0, 28],
+    }, "call$3$4", "call$4", "async___rootRegisterBinaryCallback$closure", 16, 0, 29],
     _rootErrorCallback: [function($self, $parent, zone, error, stackTrace) {
       return;
-    }, "call$5", "async___rootErrorCallback$closure", 20, 0, 29],
+    }, "call$5", "async___rootErrorCallback$closure", 20, 0, 30],
     _rootScheduleMicrotask: [function($self, $parent, zone, f) {
       var t1 = C.C__RootZone !== zone;
       if (t1)
         f = !(!t1 || C.C__RootZone.get$errorZone() === zone.get$errorZone()) ? zone.bindCallbackGuarded$1(f) : zone.bindCallback$1$1(f, -1);
       P._scheduleAsyncCallback(f);
-    }, "call$4", "async___rootScheduleMicrotask$closure", 16, 0, 9],
+    }, "call$4", "async___rootScheduleMicrotask$closure", 16, 0, 10],
     _rootCreateTimer: [function($self, $parent, zone, duration, callback) {
       callback = zone.bindCallback$1$1(callback, -1);
       return P.Timer__createTimer(duration, callback);
-    }, "call$5", "async___rootCreateTimer$closure", 20, 0, 15],
+    }, "call$5", "async___rootCreateTimer$closure", 20, 0, 14],
     _rootCreatePeriodicTimer: [function($self, $parent, zone, duration, callback) {
       callback = zone.bindUnaryCallback$2$1(callback, null, P.Timer);
       return P.Timer__createPeriodicTimer(duration, callback);
-    }, "call$5", "async___rootCreatePeriodicTimer$closure", 20, 0, 30],
+    }, "call$5", "async___rootCreatePeriodicTimer$closure", 20, 0, 31],
     _rootPrint: [function($self, $parent, zone, line) {
       H.printString(line);
-    }, "call$4", "async___rootPrint$closure", 16, 0, 31],
+    }, "call$4", "async___rootPrint$closure", 16, 0, 32],
     _printToZone: [function(line) {
       $.Zone__current.print$1(0, line);
-    }, "call$1", "async___printToZone$closure", 4, 0, 32],
+    }, "call$1", "async___printToZone$closure", 4, 0, 33],
     _rootFork: [function($self, $parent, zone, specification, zoneValues) {
       var valueMap, t1, t2;
       $.printToZone = P.async___printToZone$closure();
@@ -3277,9 +3284,9 @@
       t2 = specification.handleUncaughtError;
       t1._handleUncaughtError = t2 != null ? new P._ZoneFunction(t1, t2) : zone.get$_handleUncaughtError();
       return t1;
-    }, "call$5", "async___rootFork$closure", 20, 0, 33, 2, 3, 4, 21, 22],
+    }, "call$5", "async___rootFork$closure", 20, 0, 34, 2, 3, 4, 21, 22],
     _AsyncRun__initializeScheduleImmediate_internalCallback: {
-      "^": "Closure:2;_box_0",
+      "^": "Closure:3;_box_0",
       call$1: [function(_) {
         var t1, f;
         t1 = this._box_0;
@@ -3520,7 +3527,7 @@
         this._completeError$2(error, stackTrace);
       }, function(error) {
         return this.completeError$2(error, null);
-      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 3]
+      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 4]
     },
     _AsyncCompleter: {
       "^": "_Completer;future,$ti",
@@ -3663,7 +3670,7 @@
         P._Future__propagateToListeners(this, listeners);
       }, function(error) {
         return this._completeError$2(error, null);
-      }, "_completeError$1", "call$2", "call$1", "get$_completeError", 4, 2, 3, 8, 1, 9],
+      }, "_completeError$1", "call$2", "call$1", "get$_completeError", 4, 2, 4, 8, 1, 9],
       _asyncComplete$1: function(value) {
         var t1 = H.checkSubtypeV2(value, "$isFuture", this.$ti, "$asFuture");
         if (t1) {
@@ -3823,7 +3830,7 @@
       }, null, null, 0, 0, null, "call"]
     },
     _Future__chainForeignFuture_closure: {
-      "^": "Closure:2;target",
+      "^": "Closure:3;target",
       call$1: [function(value) {
         var t1 = this.target;
         t1._state = 0;
@@ -3831,7 +3838,7 @@
       }, null, null, 4, 0, null, 13, "call"]
     },
     _Future__chainForeignFuture_closure0: {
-      "^": "Closure:18;target",
+      "^": "Closure:16;target",
       call$2: [function(error, stackTrace) {
         this.target._completeError$2(error, stackTrace);
       }, function(error) {
@@ -3910,7 +3917,7 @@
       }
     },
     _Future__propagateToListeners_handleWhenCompleteCallback_closure: {
-      "^": "Closure:17;originalSource",
+      "^": "Closure:36;originalSource",
       call$1: [function(_) {
         return this.originalSource;
       }, null, null, 4, 0, null, 0, "call"]
@@ -4185,7 +4192,7 @@
         t1 = this._onDone;
         if (t1 != null)
           this._async$_zone.runGuarded$1(t1);
-      }, "call$0", "get$_sendDone", 0, 0, 4]
+      }, "call$0", "get$_sendDone", 0, 0, 6]
     },
     Timer: {
       "^": "Object;"
@@ -5255,7 +5262,7 @@
       return new P._Exception(message);
     },
     NoSuchMethodError_toString_closure: {
-      "^": "Closure:22;_box_0,sb",
+      "^": "Closure:17;_box_0,sb",
       call$2: function(key, value) {
         var t1, t2, t3;
         t1 = this.sb;
@@ -5740,6 +5747,9 @@
     }
   }], ["dart.dom.html", "dart:html",, W, {
     "^": "",
+    document: function() {
+      return document;
+    },
     _JenkinsSmiHash_combine: function(hash, value) {
       hash = 536870911 & hash + value;
       hash = 536870911 & hash + ((524287 & hash) << 10);
@@ -6331,6 +6341,11 @@
     },
     Node: {
       "^": "EventTarget;",
+      remove$0: function(receiver) {
+        var t1 = receiver.parentNode;
+        if (t1 != null)
+          t1.removeChild(receiver);
+      },
       replaceWith$1: function(receiver, otherNode) {
         var $parent, exception;
         try {
@@ -6348,6 +6363,7 @@
       _replaceChild$2: function(receiver, node, child) {
         return receiver.replaceChild(node, child);
       },
+      $isNode: 1,
       "%": "Attr|Document|DocumentFragment|DocumentType|HTMLDocument|ShadowRoot|XMLDocument;Node"
     },
     NodeList: {
@@ -6620,7 +6636,7 @@
       "%": "Storage"
     },
     Storage_keys_closure: {
-      "^": "Closure:16;keys",
+      "^": "Closure:18;keys",
       call$2: function(k, v) {
         return this.keys.push(k);
       }
@@ -7449,7 +7465,7 @@
       }
     },
     _AcceptStructuredClone_walk_closure: {
-      "^": "Closure:20;_box_0,$this",
+      "^": "Closure:23;_box_0,$this",
       call$2: function(key, value) {
         var t1, t2;
         t1 = this._box_0.copy;
@@ -7472,13 +7488,13 @@
       }
     },
     convertNativePromiseToDartFuture_closure: {
-      "^": "Closure:10;completer",
+      "^": "Closure:9;completer",
       call$1: [function(result) {
         return this.completer.complete$1(0, result);
       }, null, null, 4, 0, null, 11, "call"]
     },
     convertNativePromiseToDartFuture_closure0: {
-      "^": "Closure:10;completer",
+      "^": "Closure:9;completer",
       call$1: [function(result) {
         return this.completer.completeError$1(result);
       }, null, null, 4, 0, null, 11, "call"]
@@ -7986,7 +8002,7 @@
       return new Y._Injector$minimalApp(null, null, null, null, null, null, null, null, null, $parent == null ? C.EmptyInjector_null : $parent);
     }, function() {
       return Y.minimalApp$Injector(null);
-    }, "call$1", "call$0", "modules_template__minimalApp$Injector$closure", 0, 2, 7],
+    }, "call$1", "call$0", "modules_template__minimalApp$Injector$closure", 0, 2, 15],
     _Injector$minimalApp: {
       "^": "HierarchicalInjector;_field0,_field2,_field3,_field4,_field5,_field6,_field7,_field8,_field9,parent",
       injectFromSelfOptional$2: function(token, orElse) {
@@ -8100,7 +8116,7 @@
       return $parent;
     }, function() {
       return G._identityInjector(null);
-    }, "call$1", "call$0", "run___identityInjector$closure", 0, 2, 7],
+    }, "call$1", "call$0", "run___identityInjector$closure", 0, 2, 15],
     appInjector_closure: {
       "^": "Closure;_box_0",
       call$0: function() {
@@ -8135,6 +8151,18 @@
           return orElse;
         }
         return result.call$0();
+      }
+    }
+  }], ["", "package:angular/src/common/directives/ng_if.dart",, K, {
+    "^": "",
+    NgIf: {
+      "^": "Object;_templateRef,_viewContainer,_prevCondition",
+      set$ngIf: function(newCondition) {
+        var t1 = this._prevCondition;
+        if (!t1)
+          return;
+        this._viewContainer.clear$0(0);
+        this._prevCondition = false;
       }
     }
   }], ["", "package:angular/src/core/application_ref.dart",, Y, {
@@ -8189,7 +8217,7 @@
       }, null, null, 4, 0, null, 1, "call"]
     },
     ApplicationRefImpl_closure1: {
-      "^": "Closure:5;$this",
+      "^": "Closure:2;$this",
       call$1: [function(_) {
         var t1 = this.$this;
         t1._zone._innerZone.runGuarded$1(new Y.ApplicationRefImpl__closure(t1));
@@ -8253,14 +8281,10 @@
     ApplicationRefImpl_bootstrap__closure: {
       "^": "Closure;_box_0,$this,compRef",
       call$0: function() {
-        var t1, t2;
         this.$this._unloadComponent$1(this.compRef);
-        t1 = this._box_0.replacement;
-        if (!(t1 == null)) {
-          t2 = t1.parentNode;
-          if (t2 != null)
-            t2.removeChild(t1);
-        }
+        var t1 = this._box_0.replacement;
+        if (!(t1 == null))
+          J.remove$0$ax(t1);
       }
     },
     _ApplicationRefImpl_ApplicationRef_ChangeDetectionHost: {
@@ -8385,12 +8409,59 @@
     "^": "",
     OpaqueToken: {
       "^": "Object;_uniqueName,$ti",
-      toString$0: function(_) {
+      toString$0: ["super$OpaqueToken$toString", function(_) {
         return this.super$Object$toString(0);
+      }]
+    },
+    MultiToken: {
+      "^": "OpaqueToken;_uniqueName,$ti",
+      toString$0: function(_) {
+        return this.super$OpaqueToken$toString(0);
+      },
+      $asOpaqueToken: function($T) {
+        return [[P.List, $T]];
       }
     }
   }], ["", "package:angular/src/core/linker/app_view.dart",, S, {
     "^": "",
+    _flattenNestedViewRenderNodes: function(nodes, renderNodes) {
+      var nodeCount, i, node, nestedViews, len, k;
+      nodeCount = nodes.length;
+      for (i = 0; i < nodeCount; ++i) {
+        if (i >= nodes.length)
+          return H.ioore(nodes, i);
+        node = nodes[i];
+        if (node instanceof V.ViewContainer) {
+          renderNodes.push(node.nativeElement);
+          nestedViews = node.nestedViews;
+          if (nestedViews != null)
+            for (len = nestedViews.length, k = 0; k < len; ++k) {
+              if (k >= nestedViews.length)
+                return H.ioore(nestedViews, k);
+              S._flattenNestedViewRenderNodes(nestedViews[k].viewData.rootNodesOrViewContainers, renderNodes);
+            }
+        } else
+          renderNodes.push(node);
+      }
+      return renderNodes;
+    },
+    createAndAppend: function(doc, tagName, $parent) {
+      var t1 = doc.createElement(tagName);
+      return $parent.appendChild(t1);
+    },
+    _detachAll: function(viewRootNodes) {
+      var len, i, node, t1;
+      len = viewRootNodes.length;
+      for (i = 0; i < len; ++i) {
+        if (i >= viewRootNodes.length)
+          return H.ioore(viewRootNodes, i);
+        node = viewRootNodes[i];
+        t1 = node.parentNode;
+        if (t1 != null)
+          t1.removeChild(node);
+        $.domRootRendererIsDirty = true;
+      }
+    },
     AppViewData: {
       "^": "Object;type,ref,destroyed,_viewContainerElement,projectableNodes,_hostInjector,subscriptions,_onDestroyCallbacks,rootNodesOrViewContainers,inlinedNodes,parentIndex,_cdMode,_skipChangeDetection,_cdState",
       set$cdState: function(value) {
@@ -8400,6 +8471,18 @@
           t1 = this._cdMode;
           this._skipChangeDetection = t1 === 4 || t1 === 2 || value === 2;
         }
+      },
+      destroy$0: function() {
+        var t1, len, i;
+        t1 = this._onDestroyCallbacks;
+        if (t1 != null)
+          for (len = t1.length, i = 0; i < len; ++i) {
+            t1 = this._onDestroyCallbacks;
+            if (i >= t1.length)
+              return H.ioore(t1, i);
+            t1[i].call$0();
+          }
+        return;
       },
       static: {
         AppViewData_AppViewData: function(appView, cdMode, viewType, parentIndex) {
@@ -8426,6 +8509,11 @@
         }
         this.componentType = renderType;
       },
+      create$2: function(_, context, givenProjectableNodes) {
+        this.ctx = context;
+        this.viewData.projectableNodes = givenProjectableNodes;
+        return this.build$0();
+      },
       build$0: function() {
         return;
       },
@@ -8439,6 +8527,18 @@
         t1.rootNodesOrViewContainers = rootNodesOrViewContainers;
         t1.subscriptions = subscriptions;
         t1.type;
+      },
+      removeInlinedNodes$2: function(inlinedNodes, isRoot) {
+        var nodeList, i, node;
+        S._detachAll(inlinedNodes);
+        nodeList = this.viewData.rootNodesOrViewContainers;
+        for (i = nodeList.length - 1; i >= 0; --i) {
+          if (i >= nodeList.length)
+            return H.ioore(nodeList, i);
+          node = nodeList[i];
+          if (C.JSArray_methods.contains$1(inlinedNodes, node))
+            C.JSArray_methods.remove$1(nodeList, node);
+        }
       },
       injectorGet$3: function(token, nodeIndex, notFoundValue) {
         var result, view, injector;
@@ -8458,6 +8558,19 @@
         }
         A.debugInjectorLeave(token);
         return result;
+      },
+      injectorGet$2: function(token, nodeIndex) {
+        return this.injectorGet$3(token, nodeIndex, C.C_Object);
+      },
+      destroy$0: function() {
+        var t1 = this.viewData;
+        if (t1.destroyed)
+          return;
+        t1.destroyed = true;
+        t1.destroy$0();
+        this.destroyInternal$0();
+      },
+      destroyInternal$0: function() {
       },
       detectChanges$0: function() {
         if (this.viewData._skipChangeDetection)
@@ -8488,6 +8601,12 @@
         }
       },
       detectChangesInternal$0: function() {
+      },
+      initViewRoot$1: function(hostElement) {
+        var t1 = this.componentType._hostAttr;
+        if (t1 != null)
+          hostElement.classList.add(t1);
+        return hostElement;
       }
     }
   }], ["", "package:angular/src/core/linker/app_view_utils.dart",, Q, {
@@ -8514,6 +8633,67 @@
     "^": "",
     ComponentLoader: {
       "^": "Object;"
+    }
+  }], ["", "package:angular/src/core/linker/template_ref.dart",, D, {
+    "^": "",
+    TemplateRef: {
+      "^": "Object;_template_ref$_viewContainer,_template_ref$_viewFactory"
+    }
+  }], ["", "package:angular/src/core/linker/view_container.dart",, V, {
+    "^": "",
+    ViewContainer: {
+      "^": "ComponentLoader;index,parentIndex,parentView,nativeElement,nestedViews,_elementRef,_parentInjector",
+      get$length: function(_) {
+        var nested = this.nestedViews;
+        return nested == null ? 0 : nested.length;
+      },
+      detectChangesInNestedViews$0: function() {
+        var _nestedViews, len, i;
+        _nestedViews = this.nestedViews;
+        if (_nestedViews == null)
+          return;
+        for (len = _nestedViews.length, i = 0; i < len; ++i) {
+          if (i >= _nestedViews.length)
+            return H.ioore(_nestedViews, i);
+          _nestedViews[i].detectChanges$0();
+        }
+      },
+      destroyNestedViews$0: function() {
+        var _nestedViews, len, i;
+        _nestedViews = this.nestedViews;
+        if (_nestedViews == null)
+          return;
+        for (len = _nestedViews.length, i = 0; i < len; ++i) {
+          if (i >= _nestedViews.length)
+            return H.ioore(_nestedViews, i);
+          _nestedViews[i].destroy$0();
+        }
+      },
+      clear$0: function(_) {
+        var i, nested, index;
+        for (i = this.get$length(this) - 1; i >= 0; --i) {
+          if (i === -1) {
+            nested = this.nestedViews;
+            index = (nested == null ? 0 : nested.length) - 1;
+          } else
+            index = i;
+          this.detachView$1(index).destroy$0();
+        }
+      },
+      detachView$1: function(viewIndex) {
+        var t1, view;
+        t1 = this.nestedViews;
+        view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex);
+        t1 = view.viewData;
+        if (t1.type === C.ViewType_1)
+          throw H.wrapException(P.StateError$("Component views can't be moved!"));
+        S._detachAll(S._flattenNestedViewRenderNodes(t1.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
+        t1 = view.viewData.inlinedNodes;
+        if (t1 != null)
+          S._detachAll(t1);
+        view.viewData._viewContainerElement = null;
+        return view;
+      }
     }
   }], ["", "package:angular/src/core/linker/view_ref.dart",, L, {
     "^": "",
@@ -8563,7 +8743,7 @@
       },
       isStable$0: [function(_) {
         return this._isZoneStable && this._pendingCount === 0 && !this._ngZone._hasPendingMacrotasks;
-      }, "call$0", "get$isStable", 1, 0, 24],
+      }, "call$0", "get$isStable", 1, 0, 21],
       _runCallbacksIfReady$0: function() {
         if (this.isStable$0(0))
           P.scheduleMicrotask(new D.Testability__runCallbacksIfReady_closure(this));
@@ -8573,10 +8753,10 @@
       whenStable$1: [function(_, callback) {
         this._callbacks.push(callback);
         this._runCallbacksIfReady$0();
-      }, "call$1", "get$whenStable", 5, 0, 34, 12]
+      }, "call$1", "get$whenStable", 5, 0, 22, 12]
     },
     Testability__watchAngularEvents_closure: {
-      "^": "Closure:5;$this",
+      "^": "Closure:2;$this",
       call$1: [function(_) {
         var t1 = this.$this;
         t1._didWork = true;
@@ -8593,7 +8773,7 @@
       }, null, null, 0, 0, null, "call"]
     },
     Testability__watchAngularEvents__closure: {
-      "^": "Closure:5;$this",
+      "^": "Closure:2;$this",
       call$1: [function(_) {
         if (J.$eq$($.Zone__current.$index(0, "isAngularZone"), true))
           H.throwExpression(P.Exception_Exception("Expected to not be in Angular Zone, but it is!"));
@@ -8654,7 +8834,7 @@
         implementation = $parent._delegationTarget.get$_scheduleMicrotask();
         implZone = implementation.zone;
         implementation.$function.call$4(implZone, P._parentDelegate(implZone), zone, new Y.NgZone__scheduleMicrotask_closure(this, fn));
-      }, "call$4", "get$_ng_zone$_scheduleMicrotask", 16, 0, 9],
+      }, "call$4", "get$_ng_zone$_scheduleMicrotask", 16, 0, 10],
       _run$1$4: [function($self, $parent, zone, fn) {
         var implementation, implZone;
         implementation = $parent._delegationTarget.get$_async$_run();
@@ -8662,7 +8842,7 @@
         return implementation.$function.call$4(implZone, P._parentDelegate(implZone), zone, new Y.NgZone__run_closure(this, fn));
       }, function($self, $parent, zone, fn) {
         return this._run$1$4($self, $parent, zone, fn, P.Object);
-      }, "_run$4", "call$1$4", "call$4", "get$_run", 16, 0, 11],
+      }, "_run$4", "call$1$4", "call$4", "get$_run", 16, 0, 7],
       _runUnary$2$5: [function($self, $parent, zone, fn, arg, $R, $T) {
         var implementation, implZone;
         implementation = $parent._delegationTarget.get$_async$_runUnary();
@@ -8670,13 +8850,13 @@
         return implementation.$function.call$2$5(implZone, P._parentDelegate(implZone), zone, new Y.NgZone__runUnary_closure(this, fn, $T, $R), arg, $R, $T);
       }, function($self, $parent, zone, fn, arg) {
         return this._runUnary$2$5($self, $parent, zone, fn, arg, P.Object, P.Object);
-      }, "_runUnary$5", "call$2$5", "call$5", "get$_runUnary", 20, 0, 12],
+      }, "_runUnary$5", "call$2$5", "call$5", "get$_runUnary", 20, 0, 11],
       _runBinary$3$6: [function($self, $parent, zone, fn, arg1, arg2, $R, T1, T2) {
         var implementation, implZone;
         implementation = $parent._delegationTarget.get$_async$_runBinary();
         implZone = implementation.zone;
         return implementation.$function.call$3$6(implZone, P._parentDelegate(implZone), zone, new Y.NgZone__runBinary_closure(this, fn, T1, T2, $R), arg1, arg2, $R, T1, T2);
-      }, "call$3$6", "get$_runBinary", 24, 0, 13],
+      }, "call$3$6", "get$_runBinary", 24, 0, 12],
       _onEnter$0: function() {
         ++this._nesting;
         if (this._isStable) {
@@ -8691,7 +8871,7 @@
       },
       _onErrorWithoutLongStackTrace$5: [function($self, $parent, zone, error, trace) {
         this._ng_zone$_onError.add$1(0, new Y.NgZoneError(error, [J.toString$0$(trace)]));
-      }, "call$5", "get$_onErrorWithoutLongStackTrace", 20, 0, 14, 2, 3, 4, 1, 24],
+      }, "call$5", "get$_onErrorWithoutLongStackTrace", 20, 0, 13, 2, 3, 4, 1, 24],
       _createTimer$5: [function($self, $parent, zone, duration, fn) {
         var t1, onDone, implementation, implZone, wrappedTimer;
         t1 = {};
@@ -8704,7 +8884,7 @@
         this._pendingTimers.push(wrappedTimer);
         this._hasPendingMacrotasks = true;
         return t1.wrappedTimer;
-      }, "call$5", "get$_createTimer", 20, 0, 15],
+      }, "call$5", "get$_createTimer", 20, 0, 14],
       _checkStable$0: function() {
         var t1 = this._nesting;
         if (t1 === 0)
@@ -9005,7 +9185,7 @@
       }
     },
     BrowserGetTestability_addToWindow_closure: {
-      "^": "Closure:35;",
+      "^": "Closure:24;",
       call$2: [function(elem, findInAncestors) {
         var registry, t1, i, t2, result;
         registry = self.self.ngTestabilityRegistries;
@@ -9040,7 +9220,7 @@
       }, null, null, 0, 0, null, "call"]
     },
     BrowserGetTestability_addToWindow_closure1: {
-      "^": "Closure:2;getAllAngularTestabilities",
+      "^": "Closure:3;getAllAngularTestabilities",
       call$1: [function(callback) {
         var _box_0, testabilities, t1, decrement, testability;
         _box_0 = {};
@@ -9162,6 +9342,21 @@
     },
     RootComponent: {
       "^": "Object;"
+    },
+    UsesDefaultChangeDetectionAndInput: {
+      "^": "Object;name"
+    },
+    InlinedNgIf: {
+      "^": "Object;showDiv"
+    },
+    EmbeddedNgIf: {
+      "^": "Object;showNull"
+    },
+    NullComponent: {
+      "^": "Object;"
+    },
+    InjectsFromArbitraryParent: {
+      "^": "Object;"
     }
   }, 1], ["", "/bazel-root/third_party/dart_src/angular/_goldens/test/_files/dart2js/dart2js_golden.template.dart",, N, {
     "^": "",
@@ -9169,17 +9364,119 @@
       var t1 = new N._ViewRootComponentHost0(null, null, null, P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), parentView, null, null, null);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_0, parentIndex);
       return t1;
-    }, "call$2", "dart2js_golden_template__viewFactory_RootComponentHost0$closure", 8, 0, 23],
+    }, "call$2", "dart2js_golden_template__viewFactory_RootComponentHost0$closure", 8, 0, 35],
+    viewFactory_EmbeddedNgIf1: [function(parentView, parentIndex) {
+      var t1 = new N._ViewEmbeddedNgIf1(null, null, null, null, P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), parentView, null, null, null);
+      t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_2, parentIndex);
+      t1.componentType = $.ViewEmbeddedNgIf0__renderType;
+      return t1;
+    }, "call$2", "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", 8, 0, 25],
     ViewRootComponent0: {
-      "^": "AppView;viewData,locals,parentView,componentType,rootEl,ctx",
+      "^": "AppView;_el_0,_compView_0,_UsesDefaultChangeDetectionAndInput_0_5,_el_1,_compView_1,_InlinedNgIf_1_5,_el_2,_compView_2,_EmbeddedNgIf_2_5,_el_3,_compView_3,_InjectsFromArbitraryParent_3_5,viewData,locals,parentView,componentType,rootEl,ctx",
       build$0: function() {
-        var _rootEl, t1;
-        _rootEl = this.rootEl;
-        t1 = this.componentType._hostAttr;
-        if (t1 != null)
-          _rootEl.classList.add(t1);
+        var parentRenderNode, t1, t2, t3, t4, t5;
+        parentRenderNode = this.initViewRoot$1(this.rootEl);
+        t1 = P.String;
+        t2 = new N.ViewUsesDefaultChangeDetectionAndInput0(null, null, null, P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this, null, null, null);
+        t2.viewData = S.AppViewData_AppViewData(t2, 3, C.ViewType_1, 0);
+        t3 = document;
+        t4 = t3.createElement("uses-default-change-detection-and-input");
+        t2.rootEl = t4;
+        t4 = $.ViewUsesDefaultChangeDetectionAndInput0__renderType;
+        if (t4 == null) {
+          t4 = $.appViewUtils;
+          t4 = t4.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty0);
+          $.ViewUsesDefaultChangeDetectionAndInput0__renderType = t4;
+        }
+        t2.setupComponentType$1(t4);
+        this._compView_0 = t2;
+        t2 = t2.rootEl;
+        this._el_0 = t2;
+        parentRenderNode.appendChild(t2);
+        t2 = $.$get$_emptyMap();
+        t4 = new E.UsesDefaultChangeDetectionAndInput(t2.$index(0, "String"));
+        this._UsesDefaultChangeDetectionAndInput_0_5 = t4;
+        this._compView_0.create$2(0, t4, []);
+        t4 = new N.ViewInlinedNgIf0(null, null, null, false, null, P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this, null, null, null);
+        t4.viewData = S.AppViewData_AppViewData(t4, 3, C.ViewType_1, 1);
+        t5 = t3.createElement("inlined-ng-if");
+        t4.rootEl = t5;
+        t5 = $.ViewInlinedNgIf0__renderType;
+        if (t5 == null) {
+          t5 = $.appViewUtils;
+          t5 = t5.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty0);
+          $.ViewInlinedNgIf0__renderType = t5;
+        }
+        t4.setupComponentType$1(t5);
+        this._compView_1 = t4;
+        t4 = t4.rootEl;
+        this._el_1 = t4;
+        parentRenderNode.appendChild(t4);
+        t4 = new E.InlinedNgIf(t2.$index(0, "bool"));
+        this._InlinedNgIf_1_5 = t4;
+        this._compView_1.create$2(0, t4, []);
+        t4 = new N.ViewEmbeddedNgIf0(null, null, null, P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this, null, null, null);
+        t4.viewData = S.AppViewData_AppViewData(t4, 3, C.ViewType_1, 2);
+        t5 = t3.createElement("embedded-ng-if");
+        t4.rootEl = t5;
+        t5 = $.ViewEmbeddedNgIf0__renderType;
+        if (t5 == null) {
+          t5 = $.appViewUtils;
+          t5 = t5.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty0);
+          $.ViewEmbeddedNgIf0__renderType = t5;
+        }
+        t4.setupComponentType$1(t5);
+        this._compView_2 = t4;
+        t4 = t4.rootEl;
+        this._el_2 = t4;
+        parentRenderNode.appendChild(t4);
+        t2 = new E.EmbeddedNgIf(t2.$index(0, "bool"));
+        this._EmbeddedNgIf_2_5 = t2;
+        this._compView_2.create$2(0, t2, []);
+        t1 = new N.ViewInjectsFromArbitraryParent0(null, P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this, null, null, null);
+        t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 3);
+        t2 = t3.createElement("injects-from-arbitrary-parent");
+        t1.rootEl = t2;
+        t2 = $.ViewInjectsFromArbitraryParent0__renderType;
+        if (t2 == null) {
+          t2 = $.appViewUtils;
+          t2 = t2.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty0);
+          $.ViewInjectsFromArbitraryParent0__renderType = t2;
+        }
+        t1.setupComponentType$1(t2);
+        this._compView_3 = t1;
+        t1 = t1.rootEl;
+        this._el_3 = t1;
+        parentRenderNode.appendChild(t1);
+        t1 = this.parentView;
+        t2 = t1.injectorGet$2(C.MultiToken_usPresidents, this.viewData.parentIndex);
+        t3 = t1.injectorGet$2(C.MultiToken_whiteHouse, this.viewData.parentIndex);
+        t4 = new E.InjectsFromArbitraryParent();
+        t1.injectorGet$2(C.Type_InjectableService_AmT, this.viewData.parentIndex).printWashingtonDc$2(t3, t2);
+        this._InjectsFromArbitraryParent_3_5 = t4;
+        this._compView_3.create$2(0, t4, []);
         this.init$2(C.List_empty0, null);
         return;
+      },
+      detectChangesInternal$0: function() {
+        this._compView_0.detectChanges$0();
+        this._compView_1.detectChanges$0();
+        this._compView_2.detectChanges$0();
+        this._compView_3.detectChanges$0();
+      },
+      destroyInternal$0: function() {
+        var t1 = this._compView_0;
+        if (!(t1 == null))
+          t1.destroy$0();
+        t1 = this._compView_1;
+        if (!(t1 == null))
+          t1.destroy$0();
+        t1 = this._compView_2;
+        if (!(t1 == null))
+          t1.destroy$0();
+        t1 = this._compView_3;
+        if (!(t1 == null))
+          t1.destroy$0();
       },
       $asAppView: function() {
         return [E.RootComponent];
@@ -9188,8 +9485,8 @@
     _ViewRootComponentHost0: {
       "^": "AppView;_compView_0,_RootComponent_0_5,viewData,locals,parentView,componentType,rootEl,ctx",
       build$0: function() {
-        var t1, t2, t3;
-        t1 = new N.ViewRootComponent0(null, P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this, null, null, null);
+        var t1, t2;
+        t1 = new N.ViewRootComponent0(null, null, null, null, null, null, null, null, null, null, null, null, null, P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this, null, null, null);
         t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 0);
         t2 = document.createElement("root-component");
         t1.rootEl = t2;
@@ -9204,18 +9501,142 @@
         this.rootEl = t1.rootEl;
         t2 = new E.RootComponent();
         this._RootComponent_0_5 = t2;
-        t3 = this.viewData.projectableNodes;
-        t1.ctx = t2;
-        t1.viewData.projectableNodes = t3;
-        t1.build$0();
+        t1.create$2(0, t2, this.viewData.projectableNodes);
         this.init0$1(this.rootEl);
         return new D.ComponentRef(this, 0, this.rootEl, this._RootComponent_0_5);
       },
       detectChangesInternal$0: function() {
         this._compView_0.detectChanges$0();
       },
+      destroyInternal$0: function() {
+        var t1 = this._compView_0;
+        if (!(t1 == null))
+          t1.destroy$0();
+      },
       $asAppView: function() {
         return [E.RootComponent];
+      }
+    },
+    ViewUsesDefaultChangeDetectionAndInput0: {
+      "^": "AppView;_el_0,_expr_0,viewData,locals,parentView,componentType,rootEl,ctx",
+      build$0: function() {
+        var parentRenderNode = this.initViewRoot$1(this.rootEl);
+        this._el_0 = S.createAndAppend(document, "default-change-detection-and-input", parentRenderNode);
+        this.init$2(C.List_empty0, null);
+        return;
+      },
+      detectChangesInternal$0: function() {
+        this.ctx.name;
+      },
+      $asAppView: function() {
+        return [E.UsesDefaultChangeDetectionAndInput];
+      }
+    },
+    ViewInlinedNgIf0: {
+      "^": "AppView;_anchor_0,_el_0_0,_text_0_1,_expr_0,viewData,locals,parentView,componentType,rootEl,ctx",
+      build$0: function() {
+        var parentRenderNode, t1;
+        parentRenderNode = this.initViewRoot$1(this.rootEl);
+        t1 = $.$get$_viewContainerAnchor().cloneNode(false);
+        this._anchor_0 = t1;
+        parentRenderNode.appendChild(t1);
+        this.init$2([], null);
+        return;
+      },
+      detectChangesInternal$0: function() {
+        this.ctx.showDiv;
+        var t1 = this._expr_0;
+        if (t1) {
+          this.removeInlinedNodes$2(H.setRuntimeTypeInfo([this._el_0_0], [W.Node]), true);
+          this._expr_0 = false;
+        }
+      },
+      $asAppView: function() {
+        return [E.InlinedNgIf];
+      }
+    },
+    ViewEmbeddedNgIf0: {
+      "^": "AppView;_appEl_0,_NgIf_0_9,viewData,locals,parentView,componentType,rootEl,ctx",
+      build$0: function() {
+        var parentRenderNode, t1;
+        parentRenderNode = this.initViewRoot$1(this.rootEl);
+        t1 = $.$get$_viewContainerAnchor().cloneNode(false);
+        parentRenderNode.appendChild(t1);
+        t1 = new V.ViewContainer(0, null, this, t1, null, null, null);
+        this._appEl_0 = t1;
+        this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure()), t1, false);
+        this.init$2(C.List_empty0, null);
+        return;
+      },
+      detectChangesInternal$0: function() {
+        var _ctx = this.ctx;
+        this._NgIf_0_9.set$ngIf(_ctx.showNull);
+        this._appEl_0.detectChangesInNestedViews$0();
+      },
+      destroyInternal$0: function() {
+        var t1 = this._appEl_0;
+        if (!(t1 == null))
+          t1.destroyNestedViews$0();
+      },
+      $asAppView: function() {
+        return [E.EmbeddedNgIf];
+      }
+    },
+    _ViewEmbeddedNgIf1: {
+      "^": "AppView;_el_0,_compView_0,_NullComponent_0_5,viewData,locals,parentView,componentType,rootEl,ctx",
+      build$0: function() {
+        var t1, t2;
+        t1 = new N.ViewNullComponent0(null, P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this, null, null, null);
+        t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 0);
+        t2 = document.createElement("null");
+        t1.rootEl = t2;
+        t2 = $.ViewNullComponent0__renderType;
+        if (t2 == null) {
+          t2 = $.appViewUtils;
+          t2 = t2.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty0);
+          $.ViewNullComponent0__renderType = t2;
+        }
+        t1.setupComponentType$1(t2);
+        this._compView_0 = t1;
+        this._el_0 = t1.rootEl;
+        t2 = new E.NullComponent();
+        this._NullComponent_0_5 = t2;
+        t1.create$2(0, t2, []);
+        this.init0$1(this._el_0);
+        return;
+      },
+      detectChangesInternal$0: function() {
+        this._compView_0.detectChanges$0();
+      },
+      destroyInternal$0: function() {
+        var t1 = this._compView_0;
+        if (!(t1 == null))
+          t1.destroy$0();
+      },
+      $asAppView: function() {
+        return [E.EmbeddedNgIf];
+      }
+    },
+    ViewNullComponent0: {
+      "^": "AppView;viewData,locals,parentView,componentType,rootEl,ctx",
+      build$0: function() {
+        this.initViewRoot$1(this.rootEl);
+        this.init$2(C.List_empty0, null);
+        return;
+      },
+      $asAppView: function() {
+        return [E.NullComponent];
+      }
+    },
+    ViewInjectsFromArbitraryParent0: {
+      "^": "AppView;viewData,locals,parentView,componentType,rootEl,ctx",
+      build$0: function() {
+        this.initViewRoot$1(this.rootEl);
+        this.init$2(C.List_empty0, null);
+        return;
+      },
+      $asAppView: function() {
+        return [E.InjectsFromArbitraryParent];
       }
     }
   }]];
@@ -9336,6 +9757,9 @@
   };
   J.forEach$1$ax = function(receiver, a0) {
     return J.getInterceptor$ax(receiver).forEach$1(receiver, a0);
+  };
+  J.remove$0$ax = function(receiver) {
+    return J.getInterceptor$ax(receiver).remove$0(receiver);
   };
   J.replaceWith$1$x = function(receiver, a0) {
     return J.getInterceptor$x(receiver).replaceWith$1(receiver, a0);
@@ -9499,6 +9923,8 @@
   C.List_empty = H.setRuntimeTypeInfo(Isolate.makeConstantList([]), [P.List]);
   C.List_empty1 = H.setRuntimeTypeInfo(Isolate.makeConstantList([]), [P.Symbol0]);
   C.Map_empty = new H.ConstantStringMap(0, {}, C.List_empty1, [P.Symbol0, null]);
+  C.MultiToken_usPresidents = new S.MultiToken("usPresidents", [P.String]);
+  C.MultiToken_whiteHouse = new S.MultiToken("whiteHouse", [P.String]);
   C.OpaqueToken_APP_ID = new S.OpaqueToken("APP_ID", [P.String]);
   C.OpaqueToken_EventManagerPlugins = new S.OpaqueToken("EventManagerPlugins", [null]);
   C.Symbol_call = new H.Symbol("call");
@@ -9508,6 +9934,7 @@
   C.Type_DomSanitizationService_cKo = H.createRuntimeType("DomSanitizationService");
   C.Type_EventManager_hsx = H.createRuntimeType("EventManager");
   C.Type_ExceptionHandler_qBE = H.createRuntimeType("ExceptionHandler");
+  C.Type_InjectableService_AmT = H.createRuntimeType("InjectableService");
   C.Type_Injector_aJC = H.createRuntimeType("Injector");
   C.Type_NgZone_6ty = H.createRuntimeType("NgZone");
   C.Type_SanitizationService_bRS = H.createRuntimeType("SanitizationService");
@@ -9518,6 +9945,7 @@
   C.ViewEncapsulation_1 = new A.ViewEncapsulation(1, "ViewEncapsulation.None");
   C.ViewType_0 = new R.ViewType(0, "ViewType.host");
   C.ViewType_1 = new R.ViewType(1, "ViewType.component");
+  C.ViewType_2 = new R.ViewType(2, "ViewType.embedded");
   C._ZoneFunction_3bB = new P._ZoneFunction(C.C__RootZone, P.async___rootCreatePeriodicTimer$closure());
   C._ZoneFunction_7G2 = new P._ZoneFunction(C.C__RootZone, P.async___rootRegisterBinaryCallback$closure());
   C._ZoneFunction_Eeh = new P._ZoneFunction(C.C__RootZone, P.async___rootRegisterUnaryCallback$closure());
@@ -9554,10 +9982,16 @@
   $.Device__cachedCssPrefix = null;
   $._platformInjectorCache = null;
   $.ChangeDetectionHost__current = null;
+  $.domRootRendererIsDirty = false;
   $.appViewUtils = null;
   $.AppViewUtils__nextCompTypeId = 0;
   $.sharedStylesHost = null;
   $.ViewRootComponent0__renderType = null;
+  $.ViewUsesDefaultChangeDetectionAndInput0__renderType = null;
+  $.ViewInlinedNgIf0__renderType = null;
+  $.ViewEmbeddedNgIf0__renderType = null;
+  $.ViewNullComponent0__renderType = null;
+  $.ViewInjectsFromArbitraryParent0__renderType = null;
   $ = null;
   init.isHunkLoaded = function(hunkHash) {
     return !!$dart_deferred_initializers$[hunkHash];
@@ -9651,11 +10085,17 @@
     return [];
   }, "_toStringVisiting", "CssStyleDeclaration__propertyCache", "$get$CssStyleDeclaration__propertyCache", function() {
     return {};
-  }, "CssStyleDeclaration__propertyCache"]);
+  }, "CssStyleDeclaration__propertyCache", "_viewContainerAnchor", "$get$_viewContainerAnchor", function() {
+    var t1 = W.document();
+    return t1.createComment("");
+  }, "_viewContainerAnchor", "_emptyMap", "$get$_emptyMap", function() {
+    var t1 = P.Object;
+    return P.LinkedHashMap_LinkedHashMap$_empty(t1, t1);
+  }, "_emptyMap"]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = ["_", "error", "self", "parent", "zone", "arg", "arg1", "arg2", null, "stackTrace", "f", "result", "callback", "value", "e", "index", "closure", "numberOfArguments", "arg3", "arg4", "each", "specification", "zoneValues", "s", "trace", true, "elem", "findInAncestors", "didWork_", "element", "t", "arguments"];
-  init.types = [{func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.String,,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.String, P.String]}, {func: 1, ret: P._Future, args: [,]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: P.Null, args: [P.String,,]}, {func: 1, args: [,,]}, {func: 1, args: [, P.String]}, {func: 1, ret: P.Null, args: [P.Symbol0,,]}, {func: 1, ret: [S.AppView, E.RootComponent], args: [S.AppView, P.int]}, {func: 1, ret: P.bool}, {func: 1, ret: -1, args: [P.Object]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, P.Map]}, {func: 1, ret: -1, args: [P.Function]}, {func: 1, args: [W.Element], opt: [P.bool]}];
+  init.types = [{func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.String,,]}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: -1}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: P.Null, args: [P.Symbol0,,]}, {func: 1, ret: -1, args: [P.String, P.String]}, {func: 1, ret: P.Null, args: [P.String,,]}, {func: 1, args: [, P.String]}, {func: 1, ret: P.bool}, {func: 1, ret: -1, args: [P.Function]}, {func: 1, args: [,,]}, {func: 1, args: [W.Element], opt: [P.bool]}, {func: 1, ret: [S.AppView, E.EmbeddedNgIf], args: [S.AppView, P.int]}, {func: 1, ret: -1, args: [P.Object]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, P.Map]}, {func: 1, ret: [S.AppView, E.RootComponent], args: [S.AppView, P.int]}, {func: 1, ret: P._Future, args: [,]}];
   function convertToFastObject(properties) {
     function MyClass() {
     }

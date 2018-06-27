@@ -452,6 +452,12 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       case o.BuiltinTypeName.String:
         typeStr = "String";
         break;
+      case o.BuiltinTypeName.Null:
+        typeStr = "Null";
+        break;
+      case o.BuiltinTypeName.Void:
+        typeStr = "void";
+        break;
       default:
         throw new StateError('Unsupported builtin type ${type.name}');
     }
