@@ -32,6 +32,7 @@ class HostComponent {
   @HostBinding('attr.aria-title')
   String get title => 'Hello';
 
+  @HostBinding('attr.aria-disabled.if')
   @HostBinding('class.is-disabled')
   bool get isDisabled => true;
 

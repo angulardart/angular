@@ -361,16 +361,16 @@ class NgContentAst implements TemplateAst {
 /// Enumeration of types of property bindings.
 enum PropertyBindingType {
   /// A normal binding to a property (e.g. [property]='expression').
-  Property,
+  property,
 
   /// A binding to an element attribute (e.g. [attr.name]='expression').
-  Attribute,
+  attribute,
 
   /// A binding to a CSS class (e.g. [class.name]='condition').
-  Class,
+  cssClass,
 
   /// A binding to a style rule (e.g. [style.rule]='expression').
-  Style
+  style
 }
 
 /// A visitor for [TemplateAst] trees that will process each node.
