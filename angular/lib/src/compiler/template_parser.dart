@@ -90,7 +90,7 @@ BoundElementPropertyAst createElementPropertyAst(
     boundPropertyName = schemaRegistry.getMappedPropName(parts[0]);
     securityContext =
         schemaRegistry.securityContext(elementName, boundPropertyName);
-    bindingType = PropertyBindingType.Property;
+    bindingType = PropertyBindingType.property;
     if (!schemaRegistry.hasProperty(elementName, boundPropertyName)) {
       if (boundPropertyName == 'ngclass') {
         reportError(
@@ -114,6 +114,10 @@ BoundElementPropertyAst createElementPropertyAst(
             '(${boundPropertyName.substring(2)})=...',
             sourceSpan);
       }
+      unit = parts.length > 2 ? parts[2] : null;
+      if (unit != null && unit != 'if') {
+        reportError('Invalid attribute unit "$unit"', sourceSpan);
+      }
       // NB: For security purposes, use the mapped property name, not the
       // attribute name.
       securityContext = schemaRegistry.securityContext(
@@ -124,15 +128,15 @@ BoundElementPropertyAst createElementPropertyAst(
         var name = boundPropertyName.substring(nsSeparatorIdx + 1);
         boundPropertyName = mergeNsAndName(ns, name);
       }
-      bindingType = PropertyBindingType.Attribute;
+      bindingType = PropertyBindingType.attribute;
     } else if (parts[0] == _classPrefix) {
       boundPropertyName = parts[1];
-      bindingType = PropertyBindingType.Class;
+      bindingType = PropertyBindingType.cssClass;
       securityContext = TemplateSecurityContext.none;
     } else if (parts[0] == _stylePrefix) {
       unit = parts.length > 2 ? parts[2] : null;
       boundPropertyName = parts[1];
-      bindingType = PropertyBindingType.Style;
+      bindingType = PropertyBindingType.style;
       securityContext = TemplateSecurityContext.style;
     } else {
       reportError("Invalid property name '$name'", sourceSpan);
@@ -140,8 +144,14 @@ BoundElementPropertyAst createElementPropertyAst(
       securityContext = null;
     }
   }
-  return new BoundElementPropertyAst(boundPropertyName, bindingType,
-      securityContext, valueExpr, unit, sourceSpan);
+  return new BoundElementPropertyAst(
+    boundPropertyName,
+    bindingType,
+    securityContext,
+    valueExpr,
+    unit,
+    sourceSpan,
+  );
 }
 
 List<String> _splitClasses(String classAttrValue) {

@@ -229,7 +229,7 @@ void bindAndWriteToRenderer(
 
     var updateStmts = <o.Statement>[];
     switch (boundProp.type) {
-      case PropertyBindingType.Property:
+      case PropertyBindingType.property:
         renderMethod = 'setElementProperty';
         // If user asked for logging bindings, generate code to log them.
         if (boundProp.name == 'className') {
@@ -243,7 +243,7 @@ void bindAndWriteToRenderer(
               [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         }
         break;
-      case PropertyBindingType.Attribute:
+      case PropertyBindingType.attribute:
         String attrNs;
         String attrName = boundProp.name;
         if (attrName.startsWith('@') && attrName.contains(':')) {
@@ -258,27 +258,41 @@ void bindAndWriteToRenderer(
               .callMethod('updateChildClass', [renderNode, renderValue]);
           updateStmts.add(updateClassExpr.toStmt());
         } else {
-          // For attributes other than class convert value to a string.
-          // TODO: Once we have analyzer summaries and know the type is already
-          // String short-circuit.
-          renderValue =
-              renderValue.callMethod('toString', const [], checked: true);
-
+          if (boundProp.unit == 'if') {
+            // Conditional attribute (i.e. [attr.disabled.if]).
+            //
+            // For now we treat this as a pure transform to make the
+            // implementation simpler (and consistent with how it worked before)
+            // - it would be a non-breaking change to optimize further.
+            renderValue = renderValue.conditional(o.literal(''), o.NULL_EXPR);
+          } else {
+            // For attributes other than class convert value to a string.
+            // TODO: Skip toString() when we're sure we are binding to a String.
+            renderValue = renderValue.callMethod(
+              'toString',
+              const [],
+              checked: true,
+            );
+          }
           var params = createSetAttributeParams(
-              renderNode, attrNs, attrName, renderValue);
-
+            renderNode,
+            attrNs,
+            attrName,
+            renderValue,
+          );
           updateStmts.add(new o.InvokeMemberMethodExpr(
-                  attrNs == null ? 'setAttr' : 'setAttrNS', params)
-              .toStmt());
+            attrNs == null ? 'setAttr' : 'setAttrNS',
+            params,
+          ).toStmt());
         }
         break;
-      case PropertyBindingType.Class:
+      case PropertyBindingType.cssClass:
         fieldType = o.BOOL_TYPE;
         renderMethod = isHtmlElement ? 'updateClass' : 'updateElemClass';
         updateStmts.add(new o.InvokeMemberMethodExpr(renderMethod,
             [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
-      case PropertyBindingType.Style:
+      case PropertyBindingType.style:
         // value = value?.toString().
         o.Expression styleValueExpr =
             currValExpr.callMethod('toString', [], checked: true);

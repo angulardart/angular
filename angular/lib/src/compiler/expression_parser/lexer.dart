@@ -282,6 +282,7 @@ class _Scanner {
     advance();
     while (true) {
       if (isDigit(peek)) {
+        // Intentionally left blank.
       } else if (peek == $PERIOD) {
         simple = false;
       } else if (isExponentStart(peek)) {
