@@ -1,5 +1,5 @@
 name: angular
-version: 5.0.0-alpha+15
+version: 5.0.0-beta
 author: Dart Team <web@dartlang.org>
 description: Fast and productive web framework
 homepage: https://webdev.dartlang.org/angular
@@ -21,7 +21,7 @@ dependencies:
 
   # It is extremely important these two dependencies stay pinned to current.
   angular_ast: 0.5.3+3
-  angular_compiler: 0.4.0-alpha+15
+  angular_compiler: 0.4.0-alpha+16
   ##########################################################################
 
   build: ^0.12.7

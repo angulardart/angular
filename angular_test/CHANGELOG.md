@@ -1,4 +1,6 @@
-*   `NgZoneStabilizer` waited for the longest pending timer during `update()`.
+## 2.0.0-beta
+
+*   `NgZoneStabilizer` waits for the longest pending timer during `update()`.
 
 ## 2.0.0-alpha+13
 
