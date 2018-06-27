@@ -89,12 +89,15 @@ void main() {
       final fixture = await testBed.create();
       final element = fixture.rootElement;
       expect(element.attributes.containsKey('disabled'), isFalse);
+      expect(element.attributes.containsKey('aria-disabled'), isFalse);
 
       await fixture.update((c) => c.disabledBackingValue = true);
       expect(element.attributes.containsKey('disabled'), isTrue);
+      expect(element.attributes.containsKey('aria-disabled'), isTrue);
 
       await fixture.update((c) => c.disabledBackingValue = false);
       expect(element.attributes.containsKey('disabled'), isFalse);
+      expect(element.attributes.containsKey('aria-disabled'), isFalse);
     });
 
     test('should support conditional classes', () async {
@@ -228,9 +231,12 @@ class HostBindingInstanceClass {
   template: '',
 )
 class HostBindingConditionalAttribute {
+  // Old Style
   @HostBinding('attr.disabled')
   String get disabled => disabledBackingValue ? 'disabled' : null;
 
+  // New Style
+  @HostBinding('attr.aria-disabled.if')
   bool disabledBackingValue = false;
 }
 

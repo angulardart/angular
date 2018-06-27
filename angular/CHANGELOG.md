@@ -25,6 +25,11 @@ enhancements.
     features for the `Injector` interface:
     https://github.com/dart-lang/angular/issues/555.
 
+*   Using a suffix/unit for the `[attr.name.*]` syntax other than the newly
+    introduced `[attr.name.if]` is now a compile-error. These binding suffixes
+    were silently ignored (users were likely confused with `[style.name.px]`,
+    which is supported).
+
 ### New features
 
 *   `ReflectiveInjector.resolveStaticAndCreate` was added as an _experimental_
@@ -32,6 +37,17 @@ enhancements.
     `runApp` incrementally in existing large code-bases that use
     `ReflectiveInjector`. See https://github.com/dart-lang/angular/issues/1426
     for details.
+
+*   Support for the suffix `.if` for attribute bindings, both in a template and
+    in a `@HostBinding()`. Accepts an expression of type `bool`, and adds an
+    attribute if `true`, and removes it if `false` and closes
+    https://github.com/dart-lang/angular/issues/1058:
+
+    ```html
+    <!-- These are identical -->
+    <button [attr.disabled]="isDisabled ? '' : null"></button>
+    <button [attr.disabled.if]="isDisabled"></button>
+    ```
 
 ### Bug fixes
 
