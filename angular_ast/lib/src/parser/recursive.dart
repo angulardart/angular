@@ -112,12 +112,14 @@ class RecursiveAstParser {
     }
 
     final endToken = _parseOpenElementEnd();
-    _parseCloseElement(beginToken, nameToken, endToken, childNodes, tagStack);
+    final closeComplement = _parseCloseElement(
+        beginToken, nameToken, endToken, childNodes, tagStack);
 
     return new ContainerAst.parsed(
       _source,
       beginToken,
       endToken,
+      closeComplement,
       annotations: annotations,
       childNodes: childNodes,
       stars: stars,
@@ -858,6 +860,7 @@ class RecursiveAstParser {
             ));
             if (closeIdentifier == 'ng-container') {
               var synthContainer = new ContainerAst();
+              synthContainer.closeComplement = closeComplement;
               childNodes.add(synthContainer);
             } else if (closeIdentifier == 'ng-content') {
               var synthContent = new EmbeddedContentAst();

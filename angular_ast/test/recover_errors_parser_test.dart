@@ -163,6 +163,7 @@ void main() {
     final ngContainer = div.childNodes[0];
     expect(ngContainer, const isInstanceOf<ContainerAst>());
     expect(ngContainer.isSynthetic, false);
+    expect((ngContainer as ContainerAst).closeComplement.isSynthetic, true);
     expect(astsToString(asts), '<div><ng-container></ng-container></div>');
 
     checkException(NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE, 5, 14);
@@ -177,7 +178,8 @@ void main() {
 
     final ngContainer = div.childNodes[0];
     expect(ngContainer, const isInstanceOf<ContainerAst>());
-    expect(ngContainer.isSynthetic, isTrue);
+    expect(ngContainer.isSynthetic, true);
+    expect((ngContainer as ContainerAst).closeComplement.isSynthetic, false);
     expect(astsToString(asts), '<div><ng-container></ng-container></div>');
 
     checkException(NgParserWarningCode.DANGLING_CLOSE_ELEMENT, 5, 15);
@@ -713,8 +715,8 @@ void main() {
 
     final p = asts.first as ElementAst;
     expect(p.attributes, hasLength(1));
-    expect(p.isSynthetic, isFalse);
-    expect(p.closeComplement.isSynthetic, isTrue);
+    expect(p.isSynthetic, false);
+    expect(p.closeComplement.isSynthetic, true);
 
     final foo = p.attributes.first;
     // The recovered text used to span an invalid range and cause a crash.
