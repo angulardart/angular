@@ -67,7 +67,7 @@ class ReflectableReader {
     @required this.hasInput,
     @required this.isLibrary,
     this.outputExtension = _defaultOutputExtension,
-    this.recordRouterAnnotationsForComponents = true,
+    this.recordRouterAnnotationsForComponents = false,
     this.recordComponentFactories = true,
     this.recordInjectableFactories = true,
   });

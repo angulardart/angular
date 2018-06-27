@@ -8627,7 +8627,7 @@
       "^": "Object;_parentView,_nodeIndex,_nativeElement,_component"
     },
     ComponentFactory: {
-      "^": "Object;selector,_viewFactory,metadata,$ti"
+      "^": "Object;selector,_viewFactory,$ti"
     }
   }], ["", "package:angular/src/core/linker/component_loader.dart",, M, {
     "^": "",
@@ -9338,7 +9338,7 @@
   }], ["", "/bazel-root/third_party/dart_src/angular/_goldens/test/_files/dart2js/dart2js_golden.dart",, E, {
     "^": "",
     main: function() {
-      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(C.ComponentFactory_zTv, E.RootComponent);
+      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(C.ComponentFactory_2Vk, E.RootComponent);
     },
     RootComponent: {
       "^": "Object;"
@@ -9796,8 +9796,7 @@
   C.C_Object = new P.Object();
   C.C__JSRandom = new P._JSRandom();
   C.C__RootZone = new P._RootZone();
-  C.List_empty0 = Isolate.makeConstantList([]);
-  C.ComponentFactory_zTv = new D.ComponentFactory("root-component", N.dart2js_golden_template__viewFactory_RootComponentHost0$closure(), C.List_empty0, [E.RootComponent]);
+  C.ComponentFactory_2Vk = new D.ComponentFactory("root-component", N.dart2js_golden_template__viewFactory_RootComponentHost0$closure(), [E.RootComponent]);
   C.Duration_0 = new P.Duration(0);
   C.EmptyInjector_null = new R.EmptyInjector(null);
   C.JS_CONST_0 = function(hooks) {
@@ -9921,6 +9920,7 @@
   return s.substring(8, s.length - 1);
 };
   C.List_empty = H.setRuntimeTypeInfo(Isolate.makeConstantList([]), [P.List]);
+  C.List_empty0 = Isolate.makeConstantList([]);
   C.List_empty1 = H.setRuntimeTypeInfo(Isolate.makeConstantList([]), [P.Symbol0]);
   C.Map_empty = new H.ConstantStringMap(0, {}, C.List_empty1, [P.Symbol0, null]);
   C.MultiToken_usPresidents = new S.MultiToken("usPresidents", [P.String]);

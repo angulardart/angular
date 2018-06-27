@@ -93,14 +93,14 @@ class ComponentFactory<T> {
   const ComponentFactory(
     this.selector,
     this._viewFactory, [
-    this.metadata = const [],
+    @Deprecated('Ignored, and will be removed shortly') List<dynamic> metadata,
   ]);
 
   @Deprecated('Used for the deprecated router only.')
   Type get componentType => T;
 
   @Deprecated('Used for the deprecated router only.')
-  final List<dynamic> metadata;
+  List<dynamic> get metadata => throw new UnsupportedError('');
 
   /// Creates a new component.
   ComponentRef<T> create(
