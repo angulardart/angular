@@ -205,7 +205,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     }
     final currVal_2 = ctx.isDisabled;
     if (import6.checkBinding(_expr_2, currVal_2)) {
-      setAttr(rootEl, 'aria-disabled', (identical(currVal_2, true) ? '' : null));
+      setAttr(rootEl, 'aria-disabled', (currVal_2 ? '' : null));
       _expr_2 = currVal_2;
     }
     final currVal_3 = ctx.isDisabled;

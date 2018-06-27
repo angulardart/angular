@@ -264,9 +264,7 @@ void bindAndWriteToRenderer(
             // For now we treat this as a pure transform to make the
             // implementation simpler (and consistent with how it worked before)
             // - it would be a non-breaking change to optimize further.
-            renderValue = renderValue
-                .identical(o.literal(true))
-                .conditional(o.literal(''), o.NULL_EXPR);
+            renderValue = renderValue.conditional(o.literal(''), o.NULL_EXPR);
           } else {
             // For attributes other than class convert value to a string.
             // TODO: Skip toString() when we're sure we are binding to a String.
