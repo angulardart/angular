@@ -1,3 +1,13 @@
+### New Features
+
+*   Add support for tear-offs in event handlers in the templates.
+
+    **BEFORE**:
+    `<button (onClick)="clickHandler($event)">`
+    
+    **AFTER**:
+    `<button (onClick)="clickHandler">`
+   
 ### Breaking changes
 
 *   Removed `SafeScript` and its associated APIs. There was no path through the

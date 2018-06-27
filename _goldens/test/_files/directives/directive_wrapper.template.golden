@@ -51,7 +51,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _el_0.append(_text_1);
     _el_0.addEventListener('click', eventHandler1(_ChildDirective_0_5.instance.handleClick));
     _el_0.addEventListener('keypress', eventHandler1(_ChildDirective_0_5.instance.handleKeyPress));
-    final subscription_0 = _ChildDirective_0_5.instance.trigger.listen(eventHandler1(_handle_trigger_0_0));
+    final subscription_0 = _ChildDirective_0_5.instance.trigger.listen(eventHandler1(ctx.onTrigger));
     final subscription_1 = _DirectiveWithOutput_0_6.eventXyz.listen(eventHandler1(_ChildDirective_0_5.instance.handleXyzEventFromOtherDirective));
     init(const [], [subscription_0, subscription_1]);
     return null;
@@ -66,10 +66,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
       _expr_0 = currVal_0;
     }
     _ChildDirective_0_5.detectHostChanges(this, _el_0);
-  }
-
-  void _handle_trigger_0_0($event) {
-    ctx.onTrigger;
   }
 }
 
