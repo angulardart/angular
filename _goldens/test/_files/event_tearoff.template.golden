@@ -1,0 +1,94 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+// ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
+import 'event_tearoff.dart';
+export 'event_tearoff.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'event_tearoff.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/angular.dart';
+
+final List<dynamic> styles$UsesEventTearoff = const [];
+
+class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
+  import2.ButtonElement _el_0;
+  static RenderComponentType _renderType;
+  ViewUsesEventTearoff0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('uses-event-tearoff');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/event_tearoff.dart' : null), ViewEncapsulation.None, styles$UsesEventTearoff);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesEventTearoff> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    _el_0.addEventListener('click', eventHandler1(ctx.onClick));
+    _el_0.addEventListener('blur', eventHandler0(ctx.onBlur));
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.UsesEventTearoff> viewFactory_UsesEventTearoff0(AppView<dynamic> parentView, int parentIndex) {
+  return new ViewUsesEventTearoff0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesEventTearoffHost = const [];
+
+class _ViewUsesEventTearoffHost0 extends AppView<import1.UsesEventTearoff> {
+  ViewUsesEventTearoff0 _compView_0;
+  import1.UsesEventTearoff _UsesEventTearoff_0_5;
+  _ViewUsesEventTearoffHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.UsesEventTearoff> build() {
+    _compView_0 = new ViewUsesEventTearoff0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesEventTearoff_0_5 = new import1.UsesEventTearoff();
+    _compView_0.create(_UsesEventTearoff_0_5, projectableNodes);
+    init0(rootEl);
+    return new ComponentRef(0, this, rootEl, _UsesEventTearoff_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesEventTearoff> viewFactory_UsesEventTearoffHost0(AppView<dynamic> parentView, int parentIndex) {
+  return new _ViewUsesEventTearoffHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesEventTearoff> _UsesEventTearoffNgFactory = const ComponentFactory('uses-event-tearoff', viewFactory_UsesEventTearoffHost0, _UsesEventTearoffMetadata);
+ComponentFactory<import1.UsesEventTearoff> get UsesEventTearoffNgFactory {
+  return _UsesEventTearoffNgFactory;
+}
+
+const _UsesEventTearoffMetadata = const [];
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(UsesEventTearoff, UsesEventTearoffNgFactory);
+  _ref0.initReflector();
+}
