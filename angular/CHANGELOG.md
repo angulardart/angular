@@ -1,210 +1,389 @@
 ## 5.0.0-beta
 
-We are no longer expecting further breaking changes as we get closer to a final
+Welcome to the first release candidate of AngularDart v5.0.0, with full support
+for Dart 2. Please note that an up-to-date copy of `dev` channel Dart SDK is
+required (at least `2.0.0-dev.65` as of this writing) to use this version of
+AngularDart. Additionally:
+
+*   _Dartium_ is no longer supported. Instead, use the new
+    [DartDevCompiler](https://webdev.dartlang.org/tools/dartdevc)
+*   Pub _transformers_ are no longer used. Instead, use the new
+    [webdev](https://pub.dartlang.org/packages/webdev) CLI, or, for advanced
+    users, the [build_runner](https://pub.dartlang.org/packages/build_runner)
+    CLI.
+
+More details of [changes to Dart 2 for web
+users](https://webdev.dartlang.org/dart-2) are available on our webiste.
+
+_We are no longer expecting further breaking changes as we get closer to a final
 release (which itself is pending a final release of the Dart 2 SDK). Please
 continue to report stability issues, bugs, or requests for small non-breaking
-enhancements.
+enhancements._
 
-### Breaking changes
+**Thanks**, and enjoy AngularDart!
 
-*   Removed `SafeScript` and its associated APIs. There was no path through the
-    compiler that made use of this type.
+### Dependency Injection
 
-*   Removed the `sanitize()` method from `SanitizationService`. This method was
-    entirely unused. Use the more specific methods such as `sanitizeHtml()` and
-    `sanitizeUrl()` instead.
+Dependency injection was enhanced greatly for 5.0.0, primarily around using
+proper types (for Dart 2), and paths to enable much smaller code size (for
+everyone).
 
-*   Generated `ComponentFactory` instances are no longer functionally `const`.
-    This is to prevent issues where users attempt to use generated component
-    factories in their own `const` contexts, which was known to cause problems
-    in some build systems.
+#### New features
 
-*   `MultiToken<T>` now extends `OpaqueToken<List<T>>`. This should have no real
-    affect on most programs, unless you manually typed your `MultiToken` such as
-    `usPresidents = const MultiToken<List<String>>()`. This will allow future
-    features for the `Injector` interface:
-    https://github.com/dart-lang/angular/issues/555.
+*   `Provider` (and `provide`) are _soft_ deprecated, and in their place are
+    four new classes with more precise type signatures. Additionally, `Provider`
+    now supports an optional type argument `<T>`, making it `Provider<T>`.
 
-*   Using a suffix/unit for the `[attr.name.*]` syntax other than the newly
-    introduced `[attr.name.if]` is now a compile-error. These binding suffixes
-    were silently ignored (users were likely confused with `[style.name.px]`,
-    which is supported).
+    *   `ValueProvider(Type, T)` and `ValueProvider.forToken(OpaqueToken<T>, T)`
+        _instead_ of `Provider(typeOrToken, useValue: ...)`.
 
-### New features
+    *   `FactoryProvider(Type, T)` and `FactoryProvider.forToken(OpaqueToken<T>,
+        T)` _instead_ of `Provider(typeOrToken, useFactory: ...)`.
 
-*   `ReflectiveInjector.resolveStaticAndCreate` was added as an _experimental_
-    API (subject to breaking change at any time). This is primarily for adopting
-    `runApp` incrementally in existing large code-bases that use
-    `ReflectiveInjector`. See https://github.com/dart-lang/angular/issues/1426
-    for details.
+    *   `ClassProvider(Type, useClass: T)` and
+        `ClassProvider.forToken(OpaqueToken<T>, useClass: T)` _instead_ of
+        `Provider(typeOrToken, useClass: ...)` or an implicit `Type`.
 
-*   Support for the suffix `.if` for attribute bindings, both in a template and
-    in a `@HostBinding()`. Accepts an expression of type `bool`, and adds an
-    attribute if `true`, and removes it if `false` and closes
-    https://github.com/dart-lang/angular/issues/1058:
+    *   `ExistingProvider(Type, T)` and
+        `ExistingProvider.forToken(OpaqueToken<T>, T)` _instead_ of
+        `Provider(typeOrToken, useExisting: ...)`.
 
-    ```html
-    <!-- These are identical -->
-    <button [attr.disabled]="isDisabled ? '' : null"></button>
-    <button [attr.disabled.if]="isDisabled"></button>
-    ```
-
-### Bug fixes
-
-*   The generated `.template.dart` code now properly subtypes `AppView<C>` where
-    `C` is the annotated `@Component` class. This avoids implicit down-casts in
-    the framework.
-
-*   Fixed a bug where the compiler crashed if an injectable token contained the
-    type `void` (directly or in some nested type like `List<void>`).
-
-## 5.0.0-alpha+15
-
-### Breaking changes
-
-*   The compilation mode `--debug` (sparingly used externally) is now no longer
-    supported. Some flags and code paths in the compiler still check/support it
-    but it will be removed entirely by the final release and should no longer
-    be used. We will rely on assertion-based tree-shaking (from `Dart2JS`)
-    going forward to emit debug-only conditional code.
-
-*   It is now a compile error to implement both the `DoCheck` and `OnChanges`
-    lifecycle interfaces. `DoCheck` will never fill in values for the `Map` in
-    `OnChanges`, so this compile-error helps avoid bugs and directs the user to
-    use `DoCheck` and `AfterChanges` _instead_.
-
-### New features
-
-*   The `from` attribute added to `<style>` tags created for component styles
-    now refers to the component URL, rather than its template URL.
-
-*   AngularDart now has official support of the
-    [optional new/const](https://github.com/dart-lang/sdk/issues/30921) feature
-    of Dart2. The most significant impact to the framework will be increased
-    terse-ness of the various metadata annotations. Please file issues if you
-    see any unexpected behavior. Here is one example:
+*   `OpaqueToken` is now much more useful. Previously, it could be used to
+    define a custom, non-`Type` to refer to something to be injected; commonly
+    instead of types like `String`. For example, you might use an `OpaqueToken`
+    to refer to the a URL to download a file from:
 
     ```dart
-    // Before
-    @Component(
-      selector: 'comp',
-      directives: const [
-        FooComponent,
-      ],
-      providers: const [
-        const ClassProvider(SomeService),
-      ],
-    )
+    const downloadUrl = OpaqueToken('downloadUrl');
 
-    // After
     @Component(
-      selector: 'comp',
-      directives: [
-        FooComponent,
-      ],
       providers: [
-        ClassProvider(SomeService),
+        Provider(downloadUrl, useValue: 'https://a-site.com/file.zip'),
       ],
     )
-    ```
-
-### Bug fixes
-
-*   Prevented a crash in `NgTemplateOutlet` caused by a specific sequence of
-    inputs to `[ngTemplateOutlet]`.
-
-*   Relaxed type checks for events bound with a single parameter. In practice
-    this started failing in Dart2JS with `--preview-dart-2`, potentially where
-    synthetic events were being passed instead of the real DOM event:
-
-    ```html
-    <some-comp (focus)="handleFocus($event)"></some-comp>
-    ```
-
-    ```dart
-    import 'dart:html';
-
-    void handleFocus(FocusEvent e) {
-      // Failed when 'e' was a CustomEvent or not strictly a FocusEvent.
+    class Example {
+      Example(@Inject(downloadUrl) String url) {
+        // url == 'https://a-site.com/file.zip'
+      }
     }
     ```
 
-*   Fixed a bug where a recursive type signature on a component or directive
-    would cause a stack overflow. We don't support generic type arguments yet
-    (the reified type is always `dynamic`), but the compiler no longer crashes.
+    First, `OpaqueToken` adds an optional type argument, making
+    `OpaqueToken<T>`. The type argument, `T`, should be used to refer to the
+    `Type` of the object this token should be bound to:
 
-*   Fixed a bug where `Iterable.retype` being removed from the SDK caused the
-    compiler to crash on the newest Dart2 -dev SDKs. We now use `.cast` instead.
+    ```dart
+    const downloadUrl = OpaqueToken<String>('downloadUrl');
+    ```
 
-## 5.0.0-alpha+14
+    Coupled with the new named `Provider` classes and their `.forToken` named
+    constructor (see below), you now also have a way to specify the type of
+    providers using type inference:
 
-### New features
+    ```dart
+    @Component(
+      providers: [
+        // This is now a Provider<String>.
+        ValueProvider.forToken(downloadUrl, 'https://a-site.com/file.zip'),
+      ],
+    )
+    ```
 
-*   In dev mode only, an attribute named `from` is now added to each `<style>`
-    tag whose value identifies the source file URL and name of the component
-    from which the styles originate.
+    Second, `MultiToken<T>` has been added, and it extends
+    `OpaqueToken<List<T>>`. This is an idiomatic replacement for the now
+    _deprecated_ `multi: true` argument to the `Provider` constructor:
 
-*   Styles that are inlined into generated `.dart` code (either in
-    `.template.dart` or `.css.dart`) now are `final` rather than `const` when
-    specified. This allows incremental compilers (such as DDC) to avoid
-    cascading rebuilds when only CSS styles are changed (not HTML or Dart).
+    ```dart
+    const usPresidents = MultiToken<String>('usPresidents');
 
-### Bug fixes
+    @Component(
+      providers: [
+        ValueProvider.forToken(usPresidents, 'George'),
+        ValueProvider.forToken(usPresidents, 'Abe'),
+      ],
+    )
+    class Example {
+      Example(@Inject(usPresidents) List<String> names) {
+        // names == ['George', 'Abe']
+      }
+    }
+    ```
 
-*   Expression conversion failures are now reported as build failures, with
-    source context if available, rather than as bugs in the compiler.
+    Third, we heard feedback that the `String`-based name of tokens was
+    insufficient for larger teams because the names could collide. Imagine 2
+    different tokens being registered with a name of `'importantThing'`! It is
+    now possible (but optional) to `extend` either `OpaqueToken` or `MultiToken`
+    to create scoped custom token names:
 
-*   Unresolved `exports` arguments in `@Component` annotations will no longer
-    crash the compiler and are now reported as build failures.
+    ```dart
+    class DownloadUrl extends OpaqueToken<String> {
+      const DownloadUrl();
+    }
 
-## 5.0.0-alpha+13
+    class UsPresidents extends MultiToken<String> {
+      const UsPresidents();
+    }
 
-### Breaking changes
+    class Example {
+      providers: const [
+        ValueProvider.forToken(DownloadUrl(), 'https://a-site.com/file.zip'),
+        ValueProvider.forToken(UsPresidents(), 'George'),
+        ValueProvider.forToken(UsPresidents(), 'Abe'),
+      ],
+    }
+    ```
 
-*   A directive with `Visibility.local` may now be injected by another directive
-    on the same host element, or by a descendant within the same view.
+    Fourth, and finally, we'd like to repurpose `@Inject` in the future, and let
+    you write _less_ to inject tokens. So, `OpaqueToken` and `MultiToken`
+    instances may now be used _directly_ as annotations:
 
-*   Removed support for (deprecated) `host: const { ... }` syntax in a
-    `@Directive` or `@Component` annotation. This can be easily migrated to use
-    `@HostBinding` or `@HostListener`.
+    ```dart
+    class Example {
+      Example(@DownloadUrl() String url, @UsPresidents() List<String> names) {
+        // url == 'https://a-site.com/file.zip'
+        // names == ['George', 'Abe']
+      }
+    }
+    ```
 
-*   Pins `angular_ast` and `angular_compiler` to avoid future versioning issues.
+*   `InjectorFactory`, a function type definition of `Injector
+    Function([Injector parent])`, was added and started to be used across the
+    framework. It normally indicates the ability to create a _new_ `Injector`
+    instance with an optional _parent_.
 
-## 5.0.0-alpha+12
+*   A new annotation, `@GenerateInjector`, was added. It is now posibble to
+    generate, at compile-time, a standalone `InjectorFactory` method for
+    providers, without explicitly wrapping in an `@Component`:
 
-### Breaking changes
+    ```dart
+    // example.dart
 
-*   It is now a compile-time error to place a `@HostBinding` or `@HostListener`
-    annotation on a class member that does not accept the respective annotation.
-    For example, the following snippet will break at compile-time:
+    import 'example.template.dart' as ng;
+
+    @GenerateInjector([
+      ClassProvider(HelloService),
+    ])
+    final InjectorFactory rootInjector = ng.rootInjector$Injector;
+    ```
+
+*   `Module` has been added as a new, more-typed way to encapsulate a collection
+    of `Provider` instances. This is an _optional_ feature to use instead of
+    nested `const` lists to represent shared providers. For example:
+
+    ```dart
+    const httpModule = [ /* Other providers and/or modules. */ ];
+
+    const commonModule = [
+      httpModule,
+      ClassProvider(AuthService, useClass: OAuthService),
+      FactoryProvider.forToken(xsrfToken, useFactory: readXsrfToken),
+    ];
+    ```
+
+    ... you can represent this with the new typed `Module` syntax:
+
+    ```dart
+    const httpModule = Module( /* ... Configuration ... */);
+
+    const commonModule = Module(
+      include: [httpModule],
+      provide: [
+        ClassProvider(AuthService, useClass: OAuthService),
+        FactoryProvider.forToken(xsrfToken, useFactory: readXsrfToken),
+      ],
+    );
+    ````
+
+    The advantages here are numerous:
+
+    *   Less ambiguity around ordering of providers. Engineers would tend to try
+        and sort providers alphabetically, would of course, would lead to
+        problems. `Module` specifically outlines that _order_ is significant,
+        and that `include` is processed _before_ `provide`.
+
+    *   `Module` rejects using a `Type` implicitly as a `ClassProvider`. This
+        removes additional ambiguity around supporting `List<dynamic>`, and
+        while more verbose, should lead to more correct use.
+
+    *   `Module` tends to be more understandable by users of other dependency
+        injection systems such as Guice or Dagger, and reads better than a
+        `const` `List` (which is a very Dart-only idiom).
+
+    **NOTE**: It is also possible to use `Module` in `@GenerateInjector`:
+
+    ```dart
+    @GenerateInjector.fromModules([
+      commonModule,
+    ])
+    final InjectorFactory exampleFromModule = ng.exampleFromModule$Injector;
+    ```
+
+    **NOTE**: It is also possible to use `Module` in `ReflectiveInjector`:
+
+    ```dart
+    // Using ReflectiveInjector is strongly not recommended for new code
+    // due to adverse effects on code-size and runtime performance.
+    final injector = ReflectiveInjector.resolveAndCreate([
+      commonModule,
+    ]);
+    ```
+
+#### Breaking changes
+
+*   `OpaqueToken` no longer overrides `operator==` or `hashCode`. In practice
+    this should have no effect for most programs, but it does mean that
+    effectively that only `const` instances of `OpaqueToken` (or `MultiToken`)
+    are valid.
+
+*   It is no longer valid to provide a token type of anything other than `Type`
+    or an `OpaqueToken` (or `MultiToken`). In the past anything from aribtrary
+    literals (such as a string - `'iAmAToken'`) or a custom `const` instance of
+    a class were supported.
+
+*   For defining whether a component or directive should provide itself for
+    injection, `Visibility.none` has been renamed `Visibility.local` to make it
+    more clear that it _is_ accessable locally (within `providers` for example).
+
+*   Classes annotated with `@Component` or `@Directive` are no longer treated
+    like services annotated with `@Injectable`, and not accessible (by default)
+    to `ReflectiveInjector`. `@Injectable` can always be added to these classes
+    in order to return to the old behavior.
+
+#### Bug fixes
+
+*   Fixed a bug where calling `get` on an `Injector` injected in the context of
+    an `@Component` or `@Directive`-annotated class and passing a second
+    argument always returned `null` (instead of that second argument) if the
+    token was not found.
+
+*   Setting `@Component(visibility: Visibility.none`) no longer applies to
+    `providers`, if any. Note that `Visibility.none` was always renamed
+    `Visibility.local` in _breaking changes_ above.
+
+*   Fixed a bug where `Provider(SomeType)` was not parsed correctly as an
+    implicit use of `Provider(SomeType, useClass: SomeType`).
+
+*   Fixed a bug where `<ReflectiveInjectior>.get(X)` would throw with a message
+    of _no provider found for X_, even when the acutal cause was a missing
+    downstream dependency `Y`. We now emit the correct message.
+
+#### Other improvements
+
+*   Some injection failures will display the chain of dependencies that were
+    attempted before a token was not found (`'X -> Y -> Z'`) in development
+    mode. We are working on making sure this better error message shows up
+    _always_ but it is likely to slip until after the v5 release.
+
+*   It is no longer a build warning to have an `@Injectable`-annotated service
+    with more than one constructor. This was originally meant to keep injection
+    from being too ambiguous, but there are understood patterns now (first
+    constructor), and there is no alternative present yet. We may re-add this as
+    a warning if there ends up being a mechanism to pick a constructor in the
+    future.
+
+*   It is no longer a build warning to have `@Injectable`-annotated services
+    with named constructor parameters. While they are still not supported for
+    injected, they were always successfully ignored in the past, and showing a
+    warning to the user on every build served no purpose.
+
+*   If a private class is annotated with `@Injectable()` the compiler fails. In
+    practice this caused a compilation error later in DDC/Dart2JS, but now the
+    AngularDart compiler will not emit invalid code.
+
+*   Removed spurious/incorrect warnings about classes that are used as
+    interfaces needing `@Injectable` (or needing to be non-abstract), which are
+    wrong and confusing.
+
+*   The compiler behind `initReflector()` has changed implementations and now
+    uses fully-scoped import statements instead of trying to figure out the
+    original scope (including import prefixes) of your source code. This was not
+    intended to be a breaking change.
+
+### Components and Templates
+
+#### New features
+
+*   `NgTemplateOutlet` added `ngTemplateOutletContext` for setting local
+    variables in an embedded view. These variables are assignable to template
+    input variables declared using `let`, which can be bound within the
+    template. See the `NgTemplateOutlet` documentation for examples.
+
+*   Added a lifecycle event `AfterChanges`, which is similar to `OnChanges`, but
+    with a much lower performance cost - it does not take any parameters and is
+    suitable when you have multiple fields and you want to be notified when any
+    of them change:
+
+    ```dart
+    class Comp implements AfterChanges {
+      @Input()
+      String field1;
+
+      @Input()
+      String field2;
+
+      @override
+      void ngAfterChanges() {
+        print('Field1: $field1, Field2: $field2');
+      }
+    }
+    ```
+
+*   It is possible to directly request `Element` or `HtmlElement` types from
+    content or view children instead of `ElementRef` (which is deprecated). For
+    example:
+
+    ```dart
+    @Component(
+      selector: 'uses-element',
+      template: '<div #div>1</div>'
+    )
+    class UsesElement {
+      @ViewChild('div')
+      // Could also be HtmlElement.
+      Element div;
+    }
+    ```
+
+*   Additionally, `List<Element>` and `List<HtmlElement>` for `@ViewChildren`
+    and `@ContentChildren` no longer require `read: Element`, and the type is
+    correctly inferred the same as a single child is.
+
+*   Static properties and methods of a component may now be referenced without a
+    receiver in the component's own template. For example:
+
+    **Before:** `ExampleComponent` as receiver is necessary.
+
+    ```dart
+    @Component(
+      selector: 'example',
+      template: '<h1>{{ExampleComponent.title}}</h1>',
+    )
+    class ExampleComponent {
+      static String title;
+    }
+    ```
+
+    **After**: No receiver is necessary.
+
+    ```dart
+    @Component(
+      selector: 'example',
+      template: '<h1>{{title}}</h1>',
+    )
+    class ExampleComponent {
+      static String title;
+    }
+    ```
+
+*   `@HostListener()` can now automatically infer the `const ['$event']`
+    parameter when it is omitted but the bound method has a single argument:
 
     ```dart
     class Comp {
-      // Deceptively, this did not do *anything* before, but the user was never
-      // told that the annotation was effectively a no-op. It will fail now!
       @HostListener('click')
-      Function onClick;
+      void onClick(MouseEvent e) {}
     }
     ```
-
-    ... as part of this refactor, error messages in general around use of
-    these annotations have been greatly improved.
-
-*   The semantics of `@Component(preserveWhitespace: false)` (the default flag)
-    have changed somewhat in this release due to user feedback both internally
-    and externally (see https://github.com/dart-lang/angular/issues/804). The
-    easiest way to explain the changes are with this example:
-
-    ```html
-    Foo <strong>Bar</strong> Baz
-    ```
-
-    ... used to display "Foo**Bar**Baz" in the _old_ semantics, and now displays
-    "Foo **Bar** Baz" in the _new_ semantics. There are some cases where
-    generated code is slightly larger, and other cases where it is smaller (we
-    have some smarter heuristics around safe places to collapse whitespace).
-
-### New features
 
 *   Added `<ng-container>`, an element for logical grouping that has no effect
     on layout. This enables use of the *-syntax for structural directives,
@@ -230,82 +409,116 @@ enhancements.
     </ul>
     ```
 
-*   `.ng_placeholder` files will be excluded from `--output` builds. `.css` and
-    `.html` files will be excluded by default from the `lib/` directory for
-    release builds. Disable entirely with:
+*   In dev mode only, an attribute named `from` is now added to each `<style>`
+    tag whose value identifies the source file URL and name of the component
+    from which the styles originate.
 
-    ```yaml
-    targets:
-      $default:
-        angular|component_source_cleanup:
-          options:
-            enabled: false
+*   Support for the suffix `.if` for attribute bindings, both in a template and
+    in a `@HostBinding()`. Accepts an expression of type `bool`, and adds an
+    attribute if `true`, and removes it if `false` and closes
+    https://github.com/dart-lang/angular/issues/1058:
+
+    ```html
+    <!-- These are identical -->
+    <button [attr.disabled]="isDisabled ? '' : null"></button>
+    <button [attr.disabled.if]="isDisabled"></button>
     ```
 
-    or exclude some sources by glob:
+#### Breaking changes
 
-    ```yaml
-    targets:
-      $default:
-        angular|component_source_cleanup:
-          options:
-            exclude:
-              - "lib/non_angular_style.css"
-              - "lib/something/**"
-    ```
+*   We now have a new, more stricter template parser, which strictly requires
+    double quotes (`"..."`) versus single quotes, and in general enforces a
+    stricter HTML-like syntax. It does produce better error messages than
+    before.
 
-*   `@HostBinding()` for `static` `const` or `final` fields are set at build
-    time rather than being change-detected.
+*   We removed support for `ngNonBindable` in the new template syntax.
 
-### Bug fixes
+*   The fields `inputs:`, `outputs:`, and `host:` have been removed from
+    `@Directive(...)` and `@Component(...`). It is expected to use the member
+    annotations (`@Input()`, `@Output()`, `@HostBinding()`, `@HostLitsener()`)
+    instead.
 
-*   Inheriting from a class that defines a `@HostBinding()` on a static member
-    no longer causes the web compiler (Dartdevc or Dart2JS) to fail. We
-    previously inherited these bindings and generated invalid Dart code. Given
-    that static members are not inherited in the Dart language, it made sense
-    to give a similar treatment to these annotations. Instance-level members are
-    still inherited:
+*   The default for `@Component(preserveWhitespace: ...)` is now `true`. Many
+    improvements were put into the whitespace optimziation in order to make the
+    results easier to understand and work around.
+
+*   `<AsyncPipe>.transform` no longer returns the (now removed) `WrappedValue`
+    when a transformed result changes, and relies on regular change detection.
+
+*   Pipes no longer support private types in their `transform` method signature.
+    This method's type is now used to generate a type annotation in the
+    generated code, which can't import private types from another library.
+
+*   Using `@deferred` no longer supports the legacy bootstrap processes. You
+    must use `runApp` (or `runAppAsync`) to bootstrap the application without
+    relying on `initReflector()`.
+
+*   `<ComponentRef>.componentType` always throws `UnsupportedError`, and will be
+    removed in a later minor release. This removes our last invocation of
+    `.runtimeType`, which has potentially severe code-size implications for some
+    apps.
+
+*   `QueryList` for `@ViewChildren` and `@ContentChildren` has been removed, in
+    favor of just a plain `List` that is replaced with a new instance when the
+    children change (instead of requiring a custom collection and listener):
 
     ```dart
-    class Base {
-      @HostBinding('title')
-      static const hostTitle = 'Hello';
+    class Comp {
+      @ViewChildren(ChildComponent)
+      set viewChildren(List<ChildComponent> viewChildren) {
+        // ...
+      }
 
-      @HostBinding('class')
-      final hostClass = 'fancy';
+      // Can also be a simple field.
+      @ContentChildren(ChildComponent)
+      List<ChildComponent> contentChildren;
     }
-
-    // Will have DOM of <fancy-button class="fancny"> but *not* title="Hello".
-    @Component(
-      selector: 'fancy-button',
-      template: '...',
-    )
-    class FancyButton extends Base {}
     ```
 
-*   Styles from an `@import` statement are now included _before_ the styles
-    declared within the file, instead of _after_. This allows a style declared
-    within a file to override an imported one of equivalent specificity.
+*   `EventEmitter` was removed in favor using `Stream` and `StreamController`.
 
-*   URLs from `@import` statements with the `package` scheme are no longer
-    resolved to the `packages/` directory. The `package` scheme is now preserved
-    which the build ecosystem understands.
+*   `COMMON_DIRECTIVES` was renamed `commonDirectives`.
 
-*   In `ReflectiveInjector`, `.injectFromSelfOptional` now checks if it is truly
-    a instance cache misses before creating a new instance.
+*   `CORE_DIRECTIVES` was renamed `coreDirectives`.
 
-## 5.0.0-alpha+11
+*   `COMMON_PIPES` was renamed `commonPipes`.
 
-### Breaking changes
+*   Private types can't be used in template collection literals bound to an
+    input. This is a consequence of fixing a cast warning that is soon to be an
+    error caused by the code generated for change detecting collection literals
+    in templates. See https://github.com/dart-lang/angular/issues/844 for more
+    information.
 
-*   Removed `ApplicationRef.injector` from the public API. This was a sparingly
-    used API, and it was usually _incorrect_ to specifically use this injector
-    over the current injector in the component context _or_ the root component's
-    `Injector`.
+*   `SafeInnerHtmlDirective` is no longer injectable.
 
-*   Removed the experimental `parent` argument to `ApplicationRef.bootstrap`.
-    It is no longer needed since all applications use the same bootstrap code
-    branch (either `runApp`, or code that eventually runs through `runApp`).
+*   The following types were never intended for external use and are no longer
+    exported by `package:angular/security.dart`:
+
+    *   `SafeHtmlImpl`
+    *   `SafeScriptImpl`
+    *   `SafeStyleImpl`
+    *   `SafeResourceUrlImpl`
+    *   `SafeUrlImpl`
+    *   `SafeValueImpl`
+
+    To mark a value as safe, users should inject `DomSanitizationService` and
+    invoke the corresponding `bypassSecurityTrust*()` method, instead of
+    constructing these types directly.
+
+*   `ComponentResolver` was removed, and `SlowComponentLoader` was deprecated.
+
+*   Methods in lifecycle hooks have `void` return type. This is breaking change
+    if the override doesn't specify return type and uses `return` without any
+    value. To fix add a `void` or `Future<void>` return type to the override:
+
+    ```dart
+    class MyComp implements OnInit {
+      @override
+      void ngOnInit() {
+        // ...
+      }
+    }
+    ```
 
 *   Removed the rarely used `template` attribute syntax. Uses can be replaced
     with either the `*` micro-syntax, or a `<template>` element.
@@ -339,1101 +552,68 @@ enhancements.
     </template>
     ```
 
-### New features
+*   It is now a compile error to implement both the `DoCheck` and `OnChanges`
+    lifecycle interfaces. `DoCheck` will never fill in values for the `Map` in
+    `OnChanges`, so this compile-error helps avoid bugs and directs the user to
+    use `DoCheck` and `AfterChanges` _instead_.
 
-*   The new `Module` syntax for dependency injection is _shipped_! This is an
-    _optional_ feature instead of using nested `const` lists to represent sets
-    of shared providers. For example, instead of the following:
+*   Using a suffix/unit for the `[attr.name.*]` syntax other than the newly
+    introduced `[attr.name.if]` is now a compile-error. These binding suffixes
+    were silently ignored (users were likely confused with `[style.name.px]`,
+    which is supported).
 
-    ```dart
-    const httpModule = const [ /* Other providers and/or modules. */ ];
+#### Bug fixes
 
-    const commonModule = const [
-      httpModule,
-      const ClassProvider(AuthService, useClass: OAuthService),
-      const FactoryProvider.forToken(xsrfToken, useFactory: readXsrfToken),
-    ];
-    ```
+*   Fixed a bug where an `@deferred` components were still being linked to in
+    `initReflector()`.
 
-    ... you can represent this with the new typed `Module` syntax:
+*   Fixed a bug where errors thrown in event listeners were sometimes uncaught
+    by the framework and never forwarded to the `ExceptionHandler`.
 
-    ```dart
-    const httpModule = const Module( /* ... Configuration ... */);
+*   Fixed a bug where `DatePipe` didn't format `millisecondsSinceEpoch` in the
+    local time zone (consistent with how it formats `DateTime`).
 
-    const commonModule = const Module(
-      include: const [httpModule],
-      provide: const [
-        const ClassProvider(AuthService, useClass: OAuthService),
-        const FactoryProvider.forToken(xsrfToken, useFactory: readXsrfToken),
-      ],
-    );
-    ```
-
-    The advantages here are numerous:
-
-    * Less ambiguity around ordering of providers. Engineers would tend to try
-      and sort providers alphabetically, would of course, would lead to
-      problems. `Module` specifically outlines that _order_ is significant, and
-      that `include` is processed _before_ `provide`.
-
-    * `Module` rejects using a `Type` implicitly as a `ClassProvider`. This
-      removes additional ambiguity around supporting `List<dynamic>`, and while
-      more verbose, should lead to more correct use.
-
-    * `Module` tends to be more understandable by users of other dependency
-      injection systems such as Guice or Dagger, and reads better than a `const`
-      `List` (which is a very Dart-only idiom).
-
-    We're not yet updating the [style guide]
-    (https://github.com/dart-lang/angular/blob/master/doc/effective/di.md) in
-    this release, but we are looking for users to help validate that this is
-    the way to go for the future.
-
-    **NOTE**: It is also possible to use `Module` in `@GenerateInjector`:
-
-    ```dart
-    @GenerateInjector.fromModules(const [
-      const Module(
-        include: const [
-          const Module(
-            provide: const [
-              const ValueProvider(ExampleService, const ExampleService()),
-            ],
-          ),
-        ],
-        provide: const [
-          const ValueProvider(ExampleService2, const ExampleService2()),
-          const ExistingProvider(ExampleService, ExampleService2),
-        ],
-      ),
-    ])
-    final InjectorFactory exampleFromModule = ng.exampleFromModule$Injector;
-    ```
-
-    **NOTE**: It is also possible to use `Module` in `ReflectiveInjector`:
-
-    ```dart
-    // Using ReflectiveInjector is strongly not recommended for new code
-    // due to adverse effects on code-size and runtime performance.
-    final injector = ReflectiveInjector.resolveAndCreate([
-      const Module(
-        include: const [
-          const Module(
-            provide: const [
-              const ValueProvider(ExampleService, const ExampleService()),
-            ],
-          ),
-        ],
-        provide: const [
-          const ValueProvider(ExampleService2, const ExampleService2()),
-          const ExistingProvider(ExampleService, ExampleService2),
-        ],
-      ),
-    ]);
-    ```
-
-*   `@HostListener()` can now automatically infer the `const ['$event']`
-    parameter when it is omitted but the bound method has a single argument:
-
-    ```dart
-    class Comp {
-      @HostListener('click')
-      void onClick(MouseEvent e) {}
-    }
-    ```
-
-### Bug fixes
-
-*   The `*` micro-syntax now supports newlines after an identifier.
-
-*   The compiler is now reporting errors again for invalid property bindings on
-    `<template>` elements.
-
-## 5.0.0-alpha+10
-
-### Breaking changes
-
-*   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
-
-*   The process for starting your AngularDart application changed significantly:
-
-    *   For most applications, we recommend now strongly recommend using the new
-        `runApp` function. Instead of starting your application by passing the
-        `Type` of an `@Component`-annotated `class`, you now pass a
-        `ComponentFactory`, the generated code for a component:
-
-        ```dart
-        import 'package:angular/angular.dart';
-
-        // ignore: uri_has_not_been_generated
-        import 'main.template.dart' as ng;
-
-        void main() {
-          runApp(ng.RootComponentNgFactory);
-        }
-
-        @Component(
-          selector: 'root',
-          template: 'Hello World',
-        )
-        class RootComponent {}
-        ```
-
-        To provide top-level services, use the `createInjector` parameter, and
-        pass a generated `InjectorFactory` for a top-level annotated with
-        `@GenerateInjector`:
-
-        ```dart
-        import 'package:angular/angular.dart';
-
-        // ignore: uri_has_not_been_generated
-        import 'main.template.dart' as ng;
-
-        void main() {
-          runApp(ng.RootComponentNgFactory, createInjector: rootInjector);
-        }
-
-        class HelloService {
-          void sayHello() => print('Hello!');
-        }
-
-        @GenerateInjector(const [
-          const ClassProvider(HelloService),
-        ])
-        final InjectorFactory rootInjector = ng.rootInjector$Injector;
-        ```
-
-        A major difference between `runApp` and previous bootstrapping code is
-        the lack of the `initReflector()` method or call, which is no longer
-        needed. That means using `runApp` disables the use of
-        `SlowComponentLoader` and `ReflectiveInjector`, two APIs that require
-        this extra runtime metadata.
-
-        To enable use of these classes for migration purposes, use
-        `runAppLegacy`:
-
-        ```dart
-        import 'package:angular/angular.dart';
-
-        // ignore: uri_has_not_been_generated
-        import 'main.template.dart' as ng;
-
-        void main() {
-          runAppLegacy(
-            RootComponent,
-            createInjectorFromProviders: [
-              const ClassProvider(HelloService),
-            ],
-            initReflector: ng.initReflector,
-          );
-        }
-        ```
-
-        **NOTE**: `initReflector` and `runAppLegacy` disables tree-shaking on
-        any class annotated with `@Component` or `@Injectable`. We strongly
-        recommend migrating to the `runApp` pattern.
-
-    *   The `APP_INITIALIZERS` token was removed. The closest functionality
-        (running a function that returns a `Future` before creating the root
-        component) is using `runAppAsync` or `runAppLegacyAsync` functions with
-        a `befofreComponentCreated` callback:
-
-        ```dart
-        import 'dart:async';
-
-        import 'package:angular/angular.dart';
-
-        // ignore: uri_has_not_been_generated
-        import 'main.template.dart' as ng;
-
-        Future<String> fetchSomeText() => ...
-
-        void main() {
-          runApp(
-            ng.RootComponentNgFactory,
-            beforeComponentCreated: (injector) {
-              final prefetch = injector.get(Prefetch) as Prefetch;
-              return prefetch.prefetchSomeData();
-            },
-            // @GenerateInjector could be used instead. This is a simple example.
-            createInjector: (parent) {
-              return new Injector.map({
-                Prefetch: new Prefetch();
-              }, parent);
-            },
-          );
-        }
-
-        @Component(
-          selector: 'root',
-          template: 'Hello World',
-        )
-        class RootComponent {}
-
-        class Prefetch {
-          Future<void> prefetchSomeData() => ...
-        }
-        ```
-
-    *   The top-level function `bootstrap` was deleted. This function always
-        threw a runtime exception since `5.0.0-alpha+5`, and was a relic of when
-        a code transformer rewrote it automatically as `bootstrapStatic`.
-
-    *   The top-level function `bootstrapStatic` is now _deprecated_. The
-        closest equivalent is the new `runAppLegacy` _or `runAppLegacyAsync`
-        functions.
-
-*   The interface `PlatformRef` (and `PlatformRefImpl`) were removed. They were
-    not used, and added an unnecessary code-size overhead to every application.
-
-*   Removed the deprecated `QueryList` class, `List` is used instead, only.
-
-*   Removed `ApplicationRef.registerBootstrapListener`, which was unused.
-
-### New features
-
-*   The compiler now warns when a `@Component.styles` seems to reference a file
-    on disk, such as `styles: const ['a.css']` (this is usually an accident). We
-    already warned for `template: 'a.html'`.
-
-*   Running within an angular zone will no longer cause addtional turns to occur
-    within it's parent's zone. ngZone's run() will now run inside the parent
-    zone's run() function as opposed to the other way around.
-
-### Internal cleanup
-
-*   Add explicit error for when angular codegen is not invoked, the previous
-    error was "Could not find a factory for X" but this is not the real issue
-    since none of the factories had been loaded due to lack of angular codegen.
-
-## 5.0.0-alpha+9
-
-### New features
-
-*   Static properties and methods of a component may now be referenced without a
-    receiver in the component's own template.
-
-    **Before:** `ExampleComponent` as receiver is necessary.
-
-    ```dart
-    @Component(
-      selector: 'example',
-      template: '<h1>{{ExampleComponent.title}}</h1>',
-    )
-    class ExampleComponent {
-      static String title;
-    }
-    ```
-
-    **After**: No receiver is necessary.
-
-    ```dart
-    @Component(
-      selector: 'example',
-      template: '<h1>{{title}}</h1>',
-    )
-    class ExampleComponent {
-      static String title;
-    }
-    ```
-
-### Breaking changes
-
-*   The field `COMMON_PIPES` has been renamed to `commonPipes`.
-
-*   The field `zone` in `ApplicationRef` has been removed from the API.
-
-*   The token `PLATFORM_INITIALIZERS` has been removed. This was used sparingly to
-    run functions before the application was started, but can just as easily be
-    converted into running functions in `main()` before.
-
-*   The token `APP_INITIALIZER` is now **DEPRECATED**. It was used sparingly,
-    and can easily be replaced by running functions in your root component with
-    an `*ngIf` guard for initialization.
-
-*   Methods in lifecycle hooks have `void` return type. This is breaking change
-    if the override doesn't specify return type and uses `return` without any
-    value. To fix add a `void` or `Future<void>` return type to the override:
-
-    ```dart
-    class MyComp implements OnInit {
-      @override
-      void ngOnInit() {
-        // ...
-      }
-    }
-    ```
-
-*   Removed deprecated `ComponentResolver` class.
-
-*   Removed deprecated `componentFactories` and `componentTypes` getters from
-    the `ApplicationRef` class. These were used internally by the legacy router
-    and were not intended to be parts of the public API.
-
-### Bug fixes
+*   Testability now includes `ComponentState` updates. Due to prior use of
+    `animationFrame` callback, `NgTestBed` was not able to detect a stable
+    state.
 
 *   String literals bound in templates now support Unicode escapes of the form
     `\u{?-??????}`. This enables support for Unicode supplementary planes, which
     includes emojis!
 
-*   Using `@GenerateInjector` with a `ValueProvider` where the value is either a
-    top-level function or static-class method no longer crashes.
-
-### Internal cleanup
-
-*   Template normalization in the compiler now uses the newer template parser
-    based on `package:angular_ast`. There is no flag to enable the old behavior
-    but please reach out if you see issues in this release.
-
-## 5.0.0-alpha+8
-
-### New features
-
-*   Compiler can optimize field accesses to classes that are statically accessed
-    using `exports`.
-
-*   Compiler will now set immutable `Text` node values at component build time.
-    For more details see https://github.com/dart-lang/angular/issues/993
-
-### Breaking changes
-
-*   Removes the old template parser completely. The new template parser was made
-    the default in `5.0.0-alpha+5`.
-
-*   `InjectionError.enableBetterErrors` was removed, it is now the (only) option
-    and is always enabled at development time. We are still waiting for fixes
-    to the view compiler to complete this feature:
-    https://github.com/dart-lang/angular/issues/434
-
-*   Support for injecting services by an arbitrary object or literal is being
-    discontinued for compile-time injection. You'll receive a build exception;
-    fix by instead either providing by a `Type` or `OpaqueToken`/`MultiToken`.
-
-### Bug fixes
-
-*   Testability now includes ComponentState updates. Due to prior use of
-    animationFrame callback, testbed was not able to detect stable state.
-
-*   Misspelled or otherwise erroneous annotations on classes now produce a more
-    understandable error message, including the element that was annotated and
-    the annotation that was not resolved.
-
-*   `bootstrapFactory` now injects an implementation of `SlowComponentLoader`
-    that always throws. This is to allow a migration path for common components
-    that still inject `SlowComponentLoader` into apps that are using the new
-    bootstrap.
-
-*   `List<Element>` and `List<HtmlElement>` for `@ViewChildren` and
-    `@ContentChildren` no longer require `read: Element`, and the type is
-    correctly inferred the same as a single child is.
-
-*   Missing a selector for a query (such as `@ViewChild`) throws a better error.
-
-## 5.0.0-alpha+7
-
-**NOTE**: We now require a dev SDK of `>=2.0.0-dev.28.0`.
-
-### Breaking changes
-
-*   `SafeInnerHtmlDirective` is no longer injectable.
-
-*   The following types were never intended for external use and are no longer
-    exported by `package:angular/security.dart`:
-
-    *   `SafeHtmlImpl`
-    *   `SafeScriptImpl`
-    *   `SafeStyleImpl`
-    *   `SafeResourceUrlImpl`
-    *   `SafeUrlImpl`
-    *   `SafeValueImpl`
-
-    To mark a value as safe, users should inject `DomSanitizationService` and
-    invoke the corresponding `bypassSecurityTrust*()` method, instead of
-    constructing these types directly.
-
-*   Private types can't be used in template collection literals bound to an
-    input. This is a consequence of fixing a cast warning that is soon to be an
-    error caused by the code generated for change detecting collection literals
-    in templates. See https://github.com/dart-lang/angular/issues/844 for more
-    information.
-
-*   `OpaqueToken` and `MultiToken` no longer have overridden `operator==` and
-    `hashCode` methods/fields. This wasn't supported, in practice, in most of
-    the DI systems, but any custom use of this class may have relied on this.
-
-### Bug fixes
-
-*   The view compiler hoists `this.rootEl` as a `final` local variable to help
-    Dart2JS know that its type stays the same and that repeated accesses to the
-    class instance variable is not needed. This should help remove interceptors
-    and reduce code-size a bit, especially for users of `@HostBinding` or
-    `@HostListener` (https://github.com/dart-lang/angular/issues/450).
-
-*   Fixed a cast warning caused by untyped code generated for change detecting
-    collection literals in templates.
-
-*   The view compiler is now able to tell when `exports` which are static reads
-    of the component class are immutable and `String` type. This allows us to
-    optimize them when they are used in template bindings. See
-    https://github.com/dart-lang/angular/issues/995 for more information.
-
-## 5.0.0-alpha+6
-
-### New features
-
-*   The compiler optimizes `NgIf` usages where the content is pure HTML.
-
-*   The compiler now reports an actionable error when an annotation is used on a
-    private class member.
-
-*   Added `InjectionError` and `NoProviderError`, which _may_ be thrown during
-    dependency injection when `InjectionError.enableBetterErrors` is set to
-    `true`. This is an experiment, and we may not complete this feature (and it
-    could be rolled back entirely).
-
-*   Added `@GenerateInjector`, a way to generate a factory for an `Injector`
-    completely at compile-time, similar to `@Component` or `@Directive`. This
-    replaces the experimental feature `@Injector.generate`, and can be used in
-    conjunction with the `InjectorFactory` function type:
-
-```dart
-import 'my_file.template.dart' as ng;
-
-@GenerateInjector(const [
-  const Provider(A, useClass: APrime),
-])
-// The generated factory is your method's name, suffixed with `$Injector`.
-final InjectorFactory example = example$Injector;
-```
-
-* You are now able to use an `OpaqueToken` or `MultiToken` as an annotation
-  directly instead of wrapping it in `@Inject`. For example, the following
-  classes are identically understood by AngularDart:
-
-```dart
-const baseUrl = const OpaqueToken<String>('baseUrl');
-
-class Comp1 {
-  Comp1(@Inject(baseUrl) String url);
-}
-
-class Comp2 {
-  Comp2(@baseUrl String url);
-}
-```
-
-* You are now able to `extend` `OpaqueToken` or `MulitToken` to provide
-  custom application-specific injection tokens. For example, providing a
-  specific token for XSRF purposes:
-
-```dart
-class XsrfToken extends OpaqueToken<String> {
-  const XsrfToken();
-}
-
-@Component(
-  providers: const [
-    const ValueProvider.forToken(const XsrfToken(), 'ABC123'),
-  ],
-)
-class Comp {
-  Comp(@XsrfToken() String token) {
-    print(token); // ABC123
-  }
-}
-```
-
-### Breaking changes
-
-*   Restricted the default visibility of all components and directives to
-    `Visibility.local`. This means components and directives will no longer be
-    available for injection by their descendants, unless their visibility is
-    explicitly set to `Visibility.all`. This feature had a cost in code size but
-    was rarely used, so it's now opt-in, rather than the default behavior.
-
-*   We now use a different code-path for the majority of content and view
-    queries, with the exception of places statically typed `QueryList`. While
-    this is not intended to be a breaking change it could have timing
-    implications.
-
-*   Both `COMMON_DIRECTIVES` and `CORE_DIRECTIVES` are now deprecated, and
-    should be replaced by `coreDirectives`. This is a no-op change (alias).
-
-*   Removed the deprecated `EventEmitter` class from the public entrypoints.
-
-### Bug fixes
-
-*   An invalid event binding (`<comp (event-with-no-expression)>`) no longer
-    crashes the parser during compilation and instead reports that such a
-    binding is not allowed.
-
-*   Corrects the behavior of `Visibility.local` to match documentation.
-
-    Previously, a directive with `Visibility.local` was only injectable via an
-    alias within its defining view. This meant the following was possible
+*   Inheriting from a class that defines a `@HostBinding()` on a static member
+    no longer causes the web compiler (Dartdevc or Dart2JS) to fail. We
+    previously inherited these bindings and generated invalid Dart code. Given
+    that static members are not inherited in the Dart language, it made sense to
+    give a similar treatment to these annotations. Instance-level members are
+    still inherited:
 
     ```dart
-    abstract class Dependency {}
+    class Base {
+      @HostBinding('title')
+      static const hostTitle = 'Hello';
 
-    @Component(
-      selector: 'dependency',
-      template: '<ng-content></ng-content>',
-      providers: const [
-        const Provider(Dependency, useExisting: DependencyImpl),
-      ],
-      visibility: Visibility.local,
-    )
-    class DependencyImpl implements Dependency {}
-
-    @Component(
-      selector: 'dependent',
-      ...
-    )
-    class Dependent {
-      Dependent(Dependency _); // Injection succeeds.
+      @HostBinding('class')
+      final hostClass = 'fancy';
     }
 
+    // Will have DOM of <fancy-button class="fancy"> but *not* title="Hello".
     @Component(
-      selector: 'app',
-      template: '''
-        <dependency>
-          <dependent></dependent>
-        </dependency>
-      ''',
-      directives: const [Dependency, Dependent],
+      selector: 'fancy-button',
+      template: '...',
     )
-    class AppComponent {}
+    class FancyButton extends Base {}
     ```
 
-    because both `DependencyImpl` and `Dependent` are constructed in the same
-    method, thus the instance of `DependencyImpl` could be passed directly to
-    `Dependent` without an injector lookup. However, the following failed
-
-    ```dart
-    @Component(
-      selector: 'dependency',
-      // `Dependent` will fail to inject `Dependency`.
-      template: '<dependent></dependent>',
-      directives: const [Dependent],
-      providers: const [
-        const Provider(Dependency, useExisting: DependencyImpl),
-      ],
-      visibility: Visibility.local,
-    )
-    class DependencyImpl implements Dependency {}
-    ```
-
-    because no code was generated for children to inject `Dependency`. This was
-    at odds with the documentation, and optimized for a very specific use case.
-
-    This has been fixed and it's now possible for all children of
-    `DependencyImpl` to inject `Dependency`, not just those constructed in the
-    same view.
-
-*   Services that were _not_ marked `@Injectable()` are _no longer skipped_ when
-    provided in `providers: const [ ... ]` for a `@Directive` or `@Component`.
-    This choice made sense when `@Injectable()` was required, but this is no
-    longer the case. Additionally, the warning that was printed to console has
-    been removed.
-
-*   It is no longer a build warning to have an injectable service with multiple
-    constructors. This was originally meant to keep injection from being too
-    ambiguous, but there are understood patterns now (first constructor), and
-    there is no alternative present yet. We may re-add this as a warning if
-    there ends up being a mechanism to pick a constructor in the future.
-
-*   It is no longer a build warning to have injectable services or components
-    with named constructor parameters. While they are still not supported for
-    injected, they were always successfully ignored in the past, and showing a
-    warning to the user on every build served no purpose.
-
-*   If a `templateUrl` is mispelled, a more readable exception is thrown (closes
-    https://github.com/dart-lang/angular/issues/389):
-
-    ```shell
-    [SEVERE]: Unable to read file:
-      "package:.../not_a_template.html"
-      Ensure the file exists on disk and is available to the compiler.
-    ```
-
-*   If both `template` AND `templateUrl` are supplied, it is now a cleaner build
-    error (closes https://github.com/dart-lang/angular/issues/451):
-
-    ```shell
-    [SEVERE]: Component "CompWithBothProperties" in
-      asset:experimental.users.matanl.examples.angular.template_url_crash/lib/template_url_crash.dart:
-      Cannot supply both "template" and "templateUrl"
-    ```
-
-*   If _neither_ is supplied, it is also a cleaner build error:
-
-    ```shell
-    [SEVERE]: Component "CompWithNoTemplate" in
-      asset:experimental.users.matanl.examples.angular.template_url_crash/lib/template_url_crash.dart:
-      Requires either a "template" or "templateUrl"; had neither.
-    ```
-
-*   If a `template` is a string that points to a file on disk, we now warn:
-
-    ```shell
-    [WARNING]: Component "CompMeantTemplateUrl" in
-      asset:experimental.users.matanl.examples.angular.template_url_crash/lib/template_url_crash.dart:
-      Has a "template" property set to a string that is a file.
-      This is a common mistake, did you mean "templateUrl" instead?
-    ```
-
-*   If a private class is annotated with `@Injectable()` the compiler fails. In
-    practice this caused a compilation error later in DDC/Dart2JS, but now the
-    AngularDart compiler will not emit invalid code.
-
-*   Removed spurious/incorrect warnings about classes that are used as
-    interfaces needing `@Injectable` (or needing to be non-abstract), which
-    are wrong and confusing.
-
-*   Fixed a case where the compiler generated incorrect code when a directive D
-    was applied to the host element of component C where
-
-    *   C implements D,
-    *   C provides D as an alias for itself, and
-    *   C has `Visibility.local`.
-
-    Normally the local reference for C would be reused instead of creating a new
-    D. Giving C local visibility incorrectly prevented this assignment and
-    generated code to inject D from the parent injector.
-
-*   Fixed a bug where `Provider<List<T>>` was treated as `Provider<List>` when
-    compiled as part of the view compiler (`@Component.providers:`). Now the
-    additional generic types flow through the compiler.
-
-*   Fixed a case where provider fields weren't type annotated. In some cases
-    this led to DDC warnings that are to become errors.
-
-*   The code generated for injecting a multi-token will now correctly inject a
-    provider that uses an existing directive with `Visibility.local`. This
-    previously failed if another existing directive with `Visibility.all` was
-    provided for the same multi-token, after the one with `Visibility.local`.
-
-## 5.0.0-alpha+5
-
-### New features
-
-*   Enables the new template parser by default. This parser is much stricter
-    than the old one, as it will detect things like missing closing tags or
-    quotation marks.
-
-    If you need to turn it off temporarily, you need to set the following flag
-    in your `build.yaml`:
-
-    ```yaml
-    targets:
-      $default:
-        builders:
-          angular:
-            options:
-              use_new_template_parser: false
-    ```
-
-*   Requires `source_gen ^0.7.4+2` (was previously `^0.7.0`).
-
-*   The compiler behind `initReflector()` has changed implementations and now
-    uses fully-scoped import statements instead of trying to figure out the
-    original scope (including import prefixes) of your source code. This is not
-    intended to be a breaking change.
-
-### Breaking changes
-
-*   **We have removed the transformer completely from `angular`.** It is now a
-    requirement that you use `build_runner` to build `angular`. For more
-    details, see [Building Angular][building_angular].
-
-*   `QueryList` is now formally *deprecated*. See
-    `doc/deprecated_query_list.md`. This feature is not compatible with future
-    restrictions of Dart 2, because `QueryList` was always created as a
-    `QueryList<dynamic>`, even though users expected it to be a `QueryList<T>`.
-    The new API is fully compatible.
-
-*   `SlowComponentLoader` is now formally *deprecated*. See
-    `doc/component_loading.md`. This feature is not compatible with future
-    restrictions of AngularDart, because it requires collecting metadata and
-    disabling tree-shaking of classes annotated with `@Component`. The newer API
-    is nearly fully compatible, is faster, and will be supported long-term.
-
-*   Explicitly remove support for `ngNonBindable` in the new template parser.
-
-*   Both `@Component.host` and `@Directive.host` were deprecated several
-    versions back, but not properly, so warnings never appeared in IDEs. They
-    are now properly deprecated: `'Use @HostBinding() on a getter or
-    @HostListener on a method'`.
-
-*   `ElementRef` is now deprecated. Inject `Element` or `HtmlElement` instead.
-    This has unnecessary overhead on-top of the native DOM bindings without any
-    benefit.
-
-[building_angular]: https://github.com/dart-lang/angular/blob/master/doc/building_angular.md
-
-### Bug fixes
-
-*   The experimental feature `@Injector.generate` now supports some `const`
-    expressions in a Provider's `useValue: ...`. There are remaining known
-    issues with this implementation, and `useFactory` should be used instead if
-    you encounter issues.
-
-*   Fixed a bug where a `Injector.get` call where `Injector` is a
-    `ReflectiveInjector` (which is also the injector most commonly used for both
-    the entrypoint and virtually every test) would throw `No provider found for
-    X`, where `X` was a class or factory that _was_ found but one or more of
-    `X`'s dependencies were not found. We now correctly throw `No provider found
-    for Y` (where `Y` was that actual missing dependency).
-
-*   `OpaqueToken<T>` was emitted as `OpaqueToken<dynamic>` when you used nested
-    views (`<div *ngIf="..."><comp></comp></div>`), and `<comp>` was a component
-    or directive that `@Inject`-ed a typed token (like `OpaqueToken<String>`);
-    this is now fixed.
-
-*   Trying to use `@{Content|View}Child{ren}` with `Element` or `HtmlElement`
-    (from `dart:html`) caused a runtime exception, as `ElementRef` was passed
-    instead. The following now works:
-
-```dart
-@Component(
-  selector: 'uses-element',
-  template: '<div #div>1</div>'
-)
-class UsesElement {
-  @ViewChild('div')
-  // Could also be HtmlElement.
-  Element div;
-}
-```
-
-## 5.0.0-alpha+4
-
-*   We have a new template parser. This parser is much stricter than the old
-    one, as it will detect things like missing closing tags or quotation marks.
-    Enabling it will be a major breaking change, so we encourage you to try it
-    out in this alpha release before we enable it by default in the next one.
-
-    In order to use it, you need to set the following flag in your `build.yaml`:
-
-    ```yaml
-    targets:
-      $default:
-        builders:
-          angular:
-            options:
-              use_new_template_parser: true
-    ```
-
-*   We now require `code_builder ^3.0.0`.
-
-### New features
-
-*   Using `OpaqueToken<T>` and `MutliToken<T>` where `T` is not `dynamic` is now
-    properly supported in all the different implementations of Injector. As a
-    consequence relying on the following is now a breaking change:
-
-    ```dart
-    // These used to be considered the same in some DI implementations.
-    const tokenA = const OpaqueToken<String>('a');
-    const tokenB = const OpaqueToken<dynamic>('b');
-    ```
-
-*   Added a lifecycle event `AfterChanges`, which is similar to `OnChanges`, but
-    with a much lower performance cost - it does not take any parameters and is
-    suitable when you have multiple fields and you want to be notified when any
-    of them change:
-
-    ```dart
-    class Comp implements AfterChanges {
-      @Input()
-      String field1;
-
-      @Input()
-      String field2;
-
-      @override
-      void ngAfterChanges() {
-        print('Field1: $field1, Field2: $field2');
-      }
-    }
-    ```
-
-### Breaking changes
-
-*   `ComponentRef.componentType` throws an `UnsupportedError`, pending removal.
-    This removes our last invocation of `.runtimeType`, which has potentially
-    severe code-size implications for some apps.
-*   The type of `EmbeddedViewRef.rootNodes` and `ViewRefImpl.rootNodes` has
-    changed from `List<dynamic>` to `List<Node>`.
-
-### Bug fixes
-
-*   Fixed a bug where `Provider(T)` was not correctly parsed as an implicit use
-    of `Provider(T, useClass: T)`.
-
-## 5.0.0-alpha+3
-
-### New features
-
-*   `Provider` is now soft-deprecated (not preferred), and new more-typed
-    classes exist: `ClassProvider`, `ExistingProvider`, `FactoryProvider`, and
-    `ValueProvider`. Each also has a `.forToken` named constructor that infers
-    the `Provider<T>`'s `T` value from the provided `OpaqueToken<T>`'s `T`. This
-    is meant to help with the move to strong mode and DDC, and is now the
-    preferred way to configure dependency injection.
-
-*   Any variation of `multi: true` when configuring dependency injection is now
-    soft-deprecated (not preferred), and the `MultiToken` class has been added.
-    A `MultiToken<T>` now represents an `OpaqueToken<T>` where `multi: true` is
-    implicitly always `true`:
-
-    ```dart
-    const usPresidents = const MultiToken<String>('usPresidents');
-
-    @Component(
-      selector: 'presidents-list',
-      providers: const [
-        const ValueProvider.forToken(usPresidents, 'George Washington'),
-        const ValueProvider.forToken(usPresidents, 'Abraham Lincoln'),
-      ],
-    )
-    class PresidentsListComponent {
-      // Will be ['George Washington', 'Abraham Lincoln'].
-      final List<String> items;
-
-      PresidentsListComponent(@Inject(usPresidents) this.items);
-    }
-    ```
-
-*   We are starting to support the new build system at `dart-lang/build`. More
-    information and documentation will be included in a future release, but we
-    expect to drop support for `pub serve/build` by 5.0.0 final.
-
-### Breaking changes
-
-*   Dartium is no longer supported. Use [dartdevc][ddc] and Chrome instead when
-    developing your AngularDart apps. With incoming language and library
-    changes, using dartdevc would have been required regardless, but we expect
-    to have faster build tools available (instead of `pub serve`) soon.
-
-[ddc]: https://webdev.dartlang.org/tools/dartdevc
-
-### Bug fixes
-
-*   Fixed a bug where `ReflectiveInjector` would return an `Object` instead of
-    throwing `ArgumentError` when resolving an `@Injectable()` service that
-    injected a dependency with one or more annotations (i.e. `@Inject(...)`).
-
-*   Fixed a bug where `DatePipe` didn't format`millisecondsSinceEpoch` in the
-    local time zone (consistent with how it formats `DateTime`).
-
-## 5.0.0-alpha+2
-
-### Breaking changes
-
-*   Replaced `Visibility.none` with `Visibility.local`. The former name is
-    misleading, as a directive is always capable of providing itself locally for
-    injection via another token.
-
-*   `RenderComponentType` is no longer part of the public API.
-
-*   Dropped support for `@AngularEntrypoint` and rewriting entrypoints to
-    automatically use `initReflector()` and `bootstrapStatic`. This will no
-    longer be supported in the new build system so we're encouraging that manual
-    changes are made as of this release:
-
-    ```dart
-    // test/a_test.dart
-
-    import 'a_test.template.dart' as ng;
-
-    void main() {
-      ng.initReflector();
-    }
-    ```
-
-    ```dart
-    // web/a_app.dart
-
-    import 'package:angular/angular.dart';
-    import 'a_app.template.dart' as ng;
-
-    @Component(selector: 'app', template: '')
-    class AppComponent {}
-
-    void main() {
-      bootstrapStatic(AppComponent, [/*providers*/], ng.initReflector);
-    }
-    ```
-
-*   Use of the template annotation `@deferred` does not work out of the box with
-    the standard bootstrap process (`bootstrap/bootstrapStatic`), only the
-    experimental `bootstrapFactory`. We've added a backwards compatible compiler
-    flag, `fast_boot`, that may be changed to `false`. We don't expect this to
-    impact most users.
-
-    ```yaml
-    transformers:
-      angular:
-        fast_boot: false
-    ```
-
-### Bug fixes
-
-*   Fixed a bug where errors thrown in event listeners were sometimes uncaught
-    by the framework and never forwarded to the `ExceptionHandler`. Closes
-    https://github.com/dart-lang/angular/issues/721.
-
-*   The `$implicit` (iterable) value in `*ngFor` is now properly typed whenever
-    possible. It was previously always typed as `dynamic`, which caused dynamic
-    lookups/calls at runtime, and hid compilation errors.
-
-*   Fixed a bug where an `@deferred` components were still being linked to in
-    `initReflector()`.
-
-### Refactors
-
-*   Added `Visibility.all` as the default visibility of all directives. This has
-    no user-facing implications yet, but will allow migrating the default from
-    `Visibility.all` to `Visibility.local`.
-
-## 5.0.0-alpha+1
-
-**NOTE**: As of `angular 5.0.0-alpha+1` [`dependency_overrides`][dep_overrides]
-are **required**:
-
-```yaml
-dependency_overrides:
-  analyzer: ^0.31.0-alpha.1
-```
-
-This is because we are starting to use and support the Dart 2.0.0 SDK, which is
-evolving. We expect to no longer require overrides once we are at a beta
-release, but this is unlikely until sometime in early 2018.
-
-[dep_overrides]: https://www.dartlang.org/tools/pub/dependencies#dependency-overrides
-
-### New features
-
-*   Added an optional input to `NgTemplateOutlet` named
-    `ngTemplateOutletContext` for setting local variables in the embedded view.
-    These variables are assignable to template input variables declared using
-    `let`, which can be bound within the template. See the `NgTemplateOutlet`
-    documentation for examples.
-
-### Breaking changes
-
-*   Removed `WrappedValue`. `AsyncPipe.transform` will no longer return a
-    `WrappedValue` when the transformed result changes, and instead will rely on
-    regular change detection.
-
-*   Pipes no longer support private types in their `transform` method signature.
-    This method's type is now used to generate a type annotation in the
-    generated code, which can't import private types from another library.
-
-*   Removed the following from the public API:
-
-    *   `APPLICATION_COMMON_PROVIDERS`
-    *   `BROWSER_APP_COMMON_PROVIDERS`
-    *   `BROWSER_APP_PROVIDERS`
-    *   `PACKAGE_ROOT_URL`
-    *   `ErrorHandlingFn`
-    *   `UrlResolver`
-    *   `WrappedTimer`
-    *   `ZeroArgFunction`
-    *   `appIdRandomProviderFactory`
-    *   `coreBootstrap`
-    *   `coreLoadAndBootstrap`
-    *   `createNgZone`
-    *   `createPlatform`
-    *   `disposePlatform`
-    *   `getPlatform`
-
-In practice, most of these APIs were never intended to be public and never had a
-documentation or support, and primarily existed for framework-internal
-consumption. Others have been made obsolete by new language features in Dart.
-
-In particular, the `UrlResolver` class was no longer needed by the framework
-itself, and there is a cost to supplying APIs that we don't use. Clients that
-need this code (_deprecated as of 4.x_) can copy it safely into their own
-projects.
-
-*   Removed unused `context` parameter from `TemplateRef.createEmbeddedView`.
-
-*   Removed deprecated getters `onStable`|`onUnstable` from `NgZone`. They have
-    been reachable as `onTurnDone`|`onTurnStart` for a few releases.
-
-### Bug fixes
-
-*   Correctly depend on `analyzer: ^0.31.0-alpha.1`.
-
-### Refactors
-
-*   Use the new generic function syntax, stop using `package:func`.
-*   Now using `code_builder: '>=2.0.0-beta <3.0.0'`.
-
-## 5.0.0-alpha
-
-**We are now tracking the Dart 2.0 SDK**. It is _not_ recommended to use the
-_5.0.0-alpha_ series of releases unless you are using a recent dev release of
-the Dart SDK. We plan to exit an alpha state once Dart 2.0 is released.
-
-If you are individually depending on `angular_compiler`, we require:
-
-```yaml
-dependencies:
-  angular_compiler: '^0.4.0-alpha`
-```
-
-### New features
-
-*   Both `ComponentFactory` and `ComponentRef` are now properly typed `<T>`
-    where `T` is the type of the `@Component`-annotated class. Prior to this
-    release, `ComponentFactory` did not have a type, and `ComponentRef<T>` was
-    always `ComponentRef<dynamic>`.
-
-### Breaking changes
-
-*   `preserveWhitespace` is now `false` by default in `@Component`. The old
-    default behavior can be achieved by setting `preserveWhitespace` to `true`.
-
-*   Classes annotated `@Component` can no longer be treated like services that
-    were annotated with `@Injectable()`, and now fail when they are used within
-    a `ReflectiveInjector`. Similar changes are planned for `@Directive`.
-
-*   Removed `inputs` field from `Directive`. Inputs now must be declared using
-    inline `@Input` annotations.
-
-### Bug fixes
-
-*   Fixed a bug where injecting the `Injector` in a component/directive and
-    passing a second argument (as a default value) always returned `null`. It
-    now correctly returns the second argument (closes
-    [#626](https://github.com/dart-lang/angular/issues/612)).
-
-*   No longer invoke `ExceptionHandler#call` with a `null` exception.
-
-*   Using `Visibility.none` no longer applies to providers directly on the
-    `@Component` or `@Directive`; in practice this makes `none` closer to the
-    `local` visibility in AngularDart v1, or `self` elsewhere in AngularDart; we
-    might consider a rename in the future.
-
-*   Fixed a bug where the hashcode of an item passed via `ngFor` changing would
-    cause a strange runtime exception; while it is considered unsupported for a
-    mutable object to have an overridden `hashCode`, we wanted the exception to
-    be much better.
-
-### Refactors
-
-*   The `StylesheetCompiler` is now a `Builder`, and is being integrated as part
-    of the template code genreator instead of a separate build action. This will
-    let us further optimize the generated code.
-
-### Performance
+*   Fixed a bug where a recursive type signature on a component or directive
+    would cause a stack overflow. We don't support generic type arguments yet
+    (the reified type is always `dynamic`), but the compiler no longer crashes.
+
+#### Other improvements
 
 *   Types bound from generics are now properly resolved in a component when
     inheriting from a class with a generic type. For example, the following used
-    to be untyped:
+    to be untyped in the generated code:
 
     ```dart
     class Container<T> {
@@ -1443,6 +623,183 @@ dependencies:
 
     class StringContainerComponent implements Container<String> {}
     ```
+
+*   Both `ComponentFactory` and `ComponentRef` now have a generic type parameter
+    `<T>`, which is properly reified where `T` is the type of the component
+    class.
+
+*   The `$implicit` (iterable) value in `*ngFor` is now properly typed whenever
+    possible. It was previously always typed as `dynamic`, which caused dynamic
+    lookups/calls at runtime, and hid compilation errors.
+
+*   The type of `<EmbeddedViewRef>.rootNodes` and `<ViewRefImpl>.rootNodes` has
+    been tightened from `List<dynamic>` to `List<Node>` (where `Node` is from
+    `dart:html`).
+
+*   A combination of compile errors and warnings are produced when it seem that
+    `template`, `templateUrl`, `style`, or `styleUrls` are either incorrect or
+    missing when required.
+
+*   The compiler now reports an actionable error when an annotation is used on a
+    private class member. We also report errors when various annotations are
+    used improperly (but not in all cases yet).
+
+*   The compiler optimizes `*ngIf` usages where the content is pure HTML.
+
+*   The view compiler is able to tell when `exports: [ ... ]` in an `@Component`
+    are static reads and are immutable (such as `String`). This allows us to
+    optimize the generated code.
+
+### Application Bootstrap
+
+#### New features
+
+*   The process for starting your AngularDart application changed significantly:
+
+    *   For most applications, we now strongly recommend using the new
+        `runApp` function. Instead of starting your application by passing the
+        `Type` of an `@Component`-annotated `class`, you now pass a
+        `ComponentFactory`, the generated code for a component:
+
+    ```dart
+    import 'package:angular/angular.dart';
+
+    import 'main.template.dart' as ng;
+
+    void main() {
+        runApp(ng.RootComponentNgFactory);
+    }
+
+    @Component(
+        selector: 'root',
+        template: 'Hello World',
+    )
+    class RootComponent {}
+    ```
+
+    To provide top-level services, use the `createInjector` parameter, and pass
+    a generated `InjectorFactory` for a top-level annotated with
+    `@GenerateInjector`:
+
+    ```dart
+    import 'package:angular/angular.dart';
+
+    import 'main.template.dart' as ng;
+
+    void main() {
+      runApp(ng.RootComponentNgFactory, createInjector: rootInjector);
+    }
+
+    class HelloService {
+      void sayHello() => print('Hello!');
+    }
+
+    @GenerateInjector([
+       ClassProvider(HelloService),
+    ])
+    final InjectorFactory rootInjector = ng.rootInjector$Injector;
+    ```
+
+    A major difference between `runApp` and previous bootstrapping code is the
+    lack of the `initReflector()` method or call, which is no longer needed.
+    That means using `runApp` disables the use of `SlowComponentLoader` and
+    `ReflectiveInjector`, two APIs that require this extra runtime metadata.
+
+    To enable use of these classes for migration purposes, use `runAppLegacy`:
+
+    ```dart
+    import 'package:angular/angular.dart';
+
+    // ignore: uri_has_not_been_generated
+    import 'main.template.dart' as ng;
+
+    void main() {
+      runAppLegacy(
+        RootComponent,
+        createInjectorFromProviders: [
+          ClassProvider(HelloService),
+        ],
+        initReflector: ng.initReflector,
+      );
+    }
+    ```
+
+    **NOTE**: `initReflector` and `runAppLegacy` disables tree-shaking on any
+    class annotated with `@Component` or `@Injectable`. We strongly recommend
+    migrating to the `runApp` pattern.
+
+#### Breaking changes
+
+*   The top-level function `bootstrap` was deleted. This function always threw a
+    runtime exception since `5.0.0-alpha+5`, and was a relic of when a code
+    transformer rewrote it automatically as `bootstrapStatic`.
+
+*   Dropped support for `@AngularEntrypoint` and rewriting entrypoints to
+    automatically use `initReflector()` and `bootstrapStatic`. This is no longer
+    supported in the new build system.
+
+*   `RenderComponentType` is no longer part of the public API.
+
+*   `<ApplicationRef>` `.componentFactories`, `.componentTypes`, `.zone`, and
+    `.registerBootstrapListener` were removed; these were used internally by the
+    legacy router and not intended to be part of the public API.
+
+*   `PLATFORM_INITIALIZERS` was removed.
+
+*   `APP_INITIALIZER` was removed. A similar functionality can be accomplished
+    using the `runAppAsync` or `runAppLegacyAsync` functions with the
+    `beforeComponentCreated` callback.
+
+*   `PlatformRef` and `PlatformRefImpl` were removed.
+
+### Misc
+
+#### Breaking changes
+
+*   `<NgZone>.onStable` has been renamed to `onTurnDone`.
+
+*   `<NgZone>.onUnstable` has been renamed to `onTurnStart`.
+
+*   The `context` parameter was removed from `<TemplateRef>.createEmbeddedView`.
+
+*   The following relatively unused fields and functions were removed:
+
+    *   `APPLICATION_COMMON_PROVIDERS`
+    *   `BROWSER_APP_COMMON_PROVIDERS`
+    *   `BROWSER_APP_PROVIDERS`
+    *   `PACKAGE_ROOT_URL`
+    *   `ErrorHandlingFn`
+    *   `UrlResolver`
+    *   `WrappedTimer`
+    *   `WrappedValue`
+    *   `ZeroArgFunction`
+    *   `appIdRandomProviderFactory`
+    *   `coreBootstrap`
+    *   `coreLoadAndBootstrap`
+    *   `createNgZone`
+    *   `createPlatform`
+    *   `disposePlatform`
+    *   `getPlatform`
+
+*   Running within the `NgZone` will no longer cause addtional turns to occur
+    within it's parent's zone. `<NgZone>.run()` will now run inside the parent
+    zone's `run()` function as opposed to the other way around.
+
+*   The compilation mode `--debug` (sparingly used externally) is now no longer
+    supported. Some flags and code paths in the compiler still check/support it
+    but it will be removed entirely by the final release and should no longer be
+    used. We will rely on assertion-based tree-shaking (from `Dart2JS`) going
+    forward to emit debug-only conditional code.
+
+#### Bug fixes
+
+*   We longer invoke `<ExceptionHandler>.call` with a `null` exception.
+
+#### Other improvements
+
+*   Misspelled or otherwise erroneous annotations on classes now produce a more
+    understandable error message, including the element that was annotated and
+    the annotation that was not resolved.
 
 ## 4.0.0
 
