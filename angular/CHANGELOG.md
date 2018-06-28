@@ -424,6 +424,12 @@ everyone).
     <button [attr.disabled.if]="isDisabled"></button>
     ```
 
+*   Add support for tear-offs in event handlers in the templates.
+
+    **BEFORE**: `<button (onClick)="clickHandler($event)">`
+
+    **AFTER**: `<button (onClick)="clickHandler">`
+
 #### Breaking changes
 
 *   We now have a new, more stricter template parser, which strictly requires

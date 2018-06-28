@@ -1,4 +1,6 @@
+import '../analyzed_class.dart';
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
+import '../expression_parser/ast.dart';
 import '../html_events.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show BoundEventAst, DirectiveAst;
@@ -39,8 +41,7 @@ class CompileEventListener {
   /// lists are very small.
   static CompileEventListener getOrCreate(CompileElement compileElement,
       String eventName, List<CompileEventListener> targetEventListeners) {
-    for (int i = 0, len = targetEventListeners.length; i < len; i++) {
-      var existingListener = targetEventListeners[i];
+    for (var existingListener in targetEventListeners) {
       if (existingListener.eventName == eventName) return existingListener;
     }
     var listener = new CompileEventListener(
@@ -61,8 +62,11 @@ class CompileEventListener {
         new o.FnParam(EventHandlerVars.event.name, o.importType(null));
   }
 
-  void addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
-      ProviderSource directiveInstance) {
+  void _addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
+      ProviderSource directiveInstance, AnalyzedClass clazz) {
+    if (_isTearoff(hostEvent)) {
+      hostEvent = _rewriteTearoff(hostEvent, clazz);
+    }
     if (_isSimple) {
       _handlerType = hostEvent.handlerType;
       _isSimple = _method.isEmpty && _handlerType != HandlerType.notSimple;
@@ -77,7 +81,7 @@ class CompileEventListener {
     _method.addStmts(actionStmts);
   }
 
-  void finish() {
+  void _finish() {
     final stmts = _method.finish();
     if (_isSimple) {
       // If debug info is enabled, the first statement is a call to [dbg], so
@@ -91,7 +95,7 @@ class CompileEventListener {
     }
   }
 
-  void listenToRenderer() {
+  void _listenToRenderer() {
     final handlerExpr = _createEventHandlerExpr();
     if (isNativeHtmlEvent(eventName)) {
       compileElement.view.addDomEventListener(
@@ -102,7 +106,7 @@ class CompileEventListener {
     }
   }
 
-  void listenToDirective(
+  void _listenToDirective(
     DirectiveAst directiveAst,
     o.Expression directiveInstance,
     String observablePropName,
@@ -133,15 +137,33 @@ class CompileEventListener {
       return new o.InvokeMemberMethodExpr(wrapperName, [handlerExpr]);
     }
   }
+
+  bool _isTearoff(BoundEventAst hostEvent) =>
+      _handler(hostEvent) is PropertyRead;
+
+  BoundEventAst _rewriteTearoff(BoundEventAst hostEvent, AnalyzedClass clazz) =>
+      new BoundEventAst(hostEvent.name,
+          rewriteTearoff(_handler(hostEvent), clazz), hostEvent.sourceSpan);
+
+  AST _handler(BoundEventAst hostEvent) {
+    var eventHandler = hostEvent.handler;
+    if (eventHandler is ASTWithSource) {
+      return eventHandler.ast;
+    }
+    return eventHandler;
+  }
 }
 
-List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
-    List<DirectiveAst> dirs, CompileElement compileElement) {
+List<CompileEventListener> collectEventListeners(
+    List<BoundEventAst> hostEvents,
+    List<DirectiveAst> dirs,
+    CompileElement compileElement,
+    AnalyzedClass analyzedClass) {
   List<CompileEventListener> eventListeners = [];
   for (var hostEvent in hostEvents) {
     var listener = CompileEventListener.getOrCreate(
         compileElement, hostEvent.name, eventListeners);
-    listener.addAction(hostEvent, null, null);
+    listener._addAction(hostEvent, null, null, analyzedClass);
   }
   for (var i = 0, len = dirs.length; i < len; i++) {
     final directiveAst = dirs[i];
@@ -151,12 +173,12 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
     for (var hostEvent in directiveAst.hostEvents) {
       var listener = CompileEventListener.getOrCreate(
           compileElement, hostEvent.name, eventListeners);
-      listener.addAction(hostEvent, directiveAst.directive,
-          compileElement.directiveInstances[i]);
+      listener._addAction(hostEvent, directiveAst.directive,
+          compileElement.directiveInstances[i], analyzedClass);
     }
   }
   for (int i = 0, len = eventListeners.length; i < len; i++) {
-    eventListeners[i].finish();
+    eventListeners[i]._finish();
   }
   return eventListeners;
 }
@@ -164,19 +186,17 @@ List<CompileEventListener> collectEventListeners(List<BoundEventAst> hostEvents,
 void bindDirectiveOutputs(DirectiveAst directiveAst,
     o.Expression directiveInstance, List<CompileEventListener> eventListeners) {
   directiveAst.directive.outputs.forEach((observablePropName, eventName) {
-    for (int i = 0, len = eventListeners.length; i < len; i++) {
-      CompileEventListener listener = eventListeners[i];
+    for (var listener in eventListeners) {
       if (listener.eventName != eventName) continue;
-      listener.listenToDirective(
+      listener._listenToDirective(
           directiveAst, directiveInstance, observablePropName);
     }
   });
 }
 
 void bindRenderOutputs(List<CompileEventListener> eventListeners) {
-  for (int i = 0, len = eventListeners.length; i < len; i++) {
-    CompileEventListener listener = eventListeners[i];
-    listener.listenToRenderer();
+  for (var listener in eventListeners) {
+    listener._listenToRenderer();
   }
 }
 
