@@ -8,6 +8,8 @@ targets:
           # entrypoints to enable easier debugging.
           - test/**_test.dart
           exclude:
+          - test/**.vm_test.dart
+          - test/**.node_test.dart
           - test/compiler/**
           - test/compiler_integration/**
           - test/source_gen/**
