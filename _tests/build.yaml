@@ -3,6 +3,8 @@ targets:
     builders:
       build_web_compilers|entrypoint:
         generate_for:
+          include:
+          - test/**.browser_test.dart
           exclude:
           - test/compiler/**
           - test/compiler_integration/**
