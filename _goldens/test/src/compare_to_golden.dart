@@ -13,7 +13,7 @@ final _dartfmt = new DartFormatter();
 /// by a build system) and compares it to the source-file of [goldenExtension].
 void compareCheckFileToGolden(
   String dartFile, {
-  bool formatDart: true,
+  bool formatDart = true,
   @required String checkExtension,
   @required String goldenExtension,
 }) {
