@@ -139,6 +139,38 @@ ast.AST rewriteInterpolate(ast.AST original, AnalyzedClass analyzedClass) {
   return original;
 }
 
+/// Rewrites an event tearoff as a method call.
+///
+/// If [original] is a [ast.PropertyRead], and a method with the same name
+/// exists in [analyzedClass], then convert [original] into a [ast.MethodCall].
+///
+/// If the underlying method has any parameters, then assume one parameter of
+/// '$event'.
+ast.AST rewriteTearoff(ast.AST original, AnalyzedClass analyzedClass) {
+  ast.AST unwrappedExpression = original;
+  if (original is ast.ASTWithSource) {
+    unwrappedExpression = original.ast;
+  }
+  if (unwrappedExpression is! ast.PropertyRead) return original;
+  ast.PropertyRead propertyRead = unwrappedExpression;
+  final method = analyzedClass._classElement.getMethod(propertyRead.name);
+  if (method == null) return original;
+
+  if (method.parameters.isEmpty) {
+    return _simpleMethodCall(propertyRead);
+  } else {
+    return _complexMethodCall(propertyRead);
+  }
+}
+
+ast.AST _simpleMethodCall(ast.PropertyRead propertyRead) =>
+    new ast.MethodCall(propertyRead.receiver, propertyRead.name, []);
+
+final _eventArg = new ast.PropertyRead(new ast.ImplicitReceiver(), '\$event');
+
+ast.AST _complexMethodCall(ast.PropertyRead propertyRead) =>
+    new ast.MethodCall(propertyRead.receiver, propertyRead.name, [_eventArg]);
+
 /// Returns [true] if [expression] could be [null].
 bool canBeNull(ast.AST expression) {
   if (expression is ast.ASTWithSource) {

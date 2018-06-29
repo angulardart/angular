@@ -1,3 +1,5 @@
+*   Add `CloseElementAst` complement into `ContainerAst`.
+
 ## 0.5.3+3
 
 *   Maintenance release for `-dev.60`.

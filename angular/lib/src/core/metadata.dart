@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
 import 'change_detection/change_detection.dart';
+import 'metadata/typed.dart';
 import 'metadata/view.dart';
 import 'metadata/visibility.dart';
 
@@ -16,6 +17,8 @@ export 'metadata/lifecycle_hooks.dart'
         OnDestroy,
         OnInit,
         DoCheck;
+// TODO(leonsenft): export when support for generics is complete.
+// export 'metadata/typed.dart';
 export 'metadata/view.dart';
 export 'metadata/visibility.dart';
 
@@ -231,6 +234,12 @@ class Component extends Directive {
   final List<String> styleUrls;
   final List<String> styles;
   final List<Object> directives;
+
+  /// Declares generic type arguments for any generic [directives].
+  ///
+  /// See [Typed] for details.
+  final List<Typed> directiveTypes;
+
   final List<Object> pipes;
   final ViewEncapsulation encapsulation;
 
@@ -248,6 +257,7 @@ class Component extends Directive {
     this.styleUrls,
     this.styles,
     this.directives,
+    this.directiveTypes,
     this.pipes,
     this.encapsulation,
   }) : super(
