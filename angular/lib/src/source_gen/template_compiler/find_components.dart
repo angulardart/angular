@@ -54,9 +54,11 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     final directive = element.accept(new _ComponentVisitor(_library));
     if (directive != null) {
       if (directive.isComponent) {
-        var pipes = _visitPipes(element);
         components.add(new NormalizedComponentWithViewDirectives(
-            directive, _visitDirectives(element), pipes));
+          directive,
+          _visitDirectives(element),
+          _visitPipes(element),
+        ));
       } else {
         directives.add(directive);
       }
@@ -76,7 +78,6 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   List<CompilePipeMetadata> _visitPipes(ClassElement element) => _visitTypes(
         element,
         'pipes',
-        safeMatcher(isPipe),
         () => new PipeVisitor(_library),
       );
 
@@ -84,21 +85,18 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       _visitTypes(
         element,
         _directivesProperty,
-        safeMatcher(isDirective),
         () => new _ComponentVisitor(_library),
       );
 
   List<T> _visitTypes<T>(
     ClassElement element,
     String field,
-    AnnotationMatcher annotationMatcher,
     ElementVisitor<T> visitor(),
   ) {
     return element.metadata
-        .where(safeMatcher(hasDirectives))
+        .where(safeMatcher(isComponent))
         .expand((annotation) => _visitTypesForComponent(
               coerceList(annotation.computeConstantValue(), field),
-              safeMatcher(annotationMatcher),
               visitor,
               // Only pass the annotation for directives: [ ... ], not other
               // elements. They also can cause problems if not resolved but it
@@ -113,7 +111,6 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   List<T> _visitTypesForComponent<T>(
     Iterable<DartObject> directives,
-    AnnotationMatcher annotationMatcher,
     ElementVisitor<T> visitor(), {
     ElementAnnotationImpl annotation,
     ClassElement element,
