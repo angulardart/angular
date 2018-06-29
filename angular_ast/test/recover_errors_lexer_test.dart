@@ -36,7 +36,7 @@ void testRecoverySolution(
   List<NgSimpleTokenType> encounteredTokens,
   NgTokenType expectedSyntheticType,
   NgScannerState expectedNextState, {
-  String syntheticLexeme: '',
+  String syntheticLexeme = '',
 }) {
   var recoveryOffset = baseHtml.length;
 

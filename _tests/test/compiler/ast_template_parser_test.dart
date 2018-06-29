@@ -629,7 +629,7 @@ void main() {
         }
 
         CompileProviderMetadata createProvider(String token,
-            {bool multi: false, List<String> deps: const []}) {
+            {bool multi = false, List<String> deps = const []}) {
           return new CompileProviderMetadata(
               token: createToken(token),
               multi: multi,
@@ -641,8 +641,8 @@ void main() {
         CompileDirectiveMetadata createDir(String selector,
             {List<CompileProviderMetadata> providers,
             List<CompileProviderMetadata> viewProviders,
-            List<String> deps: const [],
-            List<String> queries: const []}) {
+            List<String> deps = const [],
+            List<String> queries = const []}) {
           var isComponent = !selector.startsWith('[');
           return createCompileDirectiveMetadata(
               selector: selector,

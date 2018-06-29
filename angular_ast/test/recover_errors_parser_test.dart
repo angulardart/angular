@@ -12,8 +12,8 @@ RecoveringExceptionHandler recoveringExceptionHandler =
 
 List<StandaloneTemplateAst> parse(
   String template, {
-  desugar: false,
-  bool parseExpression: false,
+  desugar = false,
+  bool parseExpression = false,
 }) {
   recoveringExceptionHandler.exceptions.clear();
   return const NgParser().parse(
