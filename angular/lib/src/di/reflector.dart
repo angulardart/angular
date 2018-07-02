@@ -74,10 +74,13 @@ Function getFactory(Type type) {
           'runApp() semantics, which does not support runtime lookups of '
           'factories (and does not support ReflectiveInjector) *or* '
           'AngularDart code generation was never invoked (either due to a '
-          'mis-configuration of Bazel or Build Runner or a missing invocation '
+          'misconfiguration of Bazel or Build Runner or a missing invocation '
           'of `initReflector()` in your `main.dart`).');
     }
-    throw new StateError('Could not find a factory for $type.');
+    throw new StateError('Could not find a factory for $type. Either a provider'
+        ' was not set, *or* AngularDart code generation was never invoked on '
+        'the depending package (either due to a misconfiguration of Bazel or '
+        'Build Runner).');
   }
   return factory;
 }
