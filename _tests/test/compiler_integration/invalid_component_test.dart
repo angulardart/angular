@@ -3,7 +3,7 @@ import 'package:_tests/compiler.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('should identify a possible unresolvable directive', () async {
+  test('should identify a possibly unresolvable directive', () async {
     await compilesExpecting('''
       import '$ngImport';
 
@@ -19,6 +19,23 @@ void main() {
           ValidDirective,
         ],
         template: '',
+      )
+      class BadComp {}
+    ''', errors: [
+      allOf([
+        contains('Compiling @Component-annotated class "BadComp" failed'),
+      ]),
+    ]);
+  });
+
+  test('should identify a possibly unresolvable pipe', () async {
+    await compilesExpecting('''
+      import '$ngImport';
+
+      @Component(
+        selector: 'bad-comp',
+        template: '',
+        pipes: [MissingPipe],
       )
       class BadComp {}
     ''', errors: [
