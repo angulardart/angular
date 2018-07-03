@@ -8,6 +8,7 @@ const _injector = '$_angular/src/di/injector/injector.dart';
 const _module = '$_angular/src/di/module.dart';
 const _provider = '$_angular/src/di/providers.dart';
 const _token = '$_angular/src/core/di/opaque_token.dart';
+const _typed = '$_angular/src/core/metadata/typed.dart';
 
 // Class metadata.
 const $Directive = const TypeChecker.fromUrl('$_meta#Directive');
@@ -41,3 +42,4 @@ const $Module = const TypeChecker.fromUrl('$_module#Module');
 const $Provider = const TypeChecker.fromUrl('$_provider#Provider');
 const $OpaqueToken = const TypeChecker.fromUrl('$_token#OpaqueToken');
 const $MultiToken = const TypeChecker.fromUrl('$_token#MultiToken');
+const $Typed = const TypeChecker.fromUrl('$_typed#Typed');

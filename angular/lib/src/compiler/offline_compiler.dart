@@ -5,7 +5,11 @@ import 'package:angular_compiler/cli.dart';
 
 import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
-    show CompileDirectiveMetadata, CompilePipeMetadata, createHostComponentMeta;
+    show
+        CompileDirectiveMetadata,
+        CompilePipeMetadata,
+        CompileTypeMetadata,
+        createHostComponentMeta;
 import 'compiler_utils.dart' show stylesModuleUrl, templateModuleUrl;
 import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
@@ -30,14 +34,21 @@ class AngularArtifacts {
 class NormalizedComponentWithViewDirectives {
   CompileDirectiveMetadata component;
   List<CompileDirectiveMetadata> directives;
+  List<CompileTypeMetadata> directiveTypes;
   List<CompilePipeMetadata> pipes;
+
   NormalizedComponentWithViewDirectives(
-      this.component, this.directives, this.pipes);
+    this.component,
+    this.directives,
+    this.directiveTypes,
+    this.pipes,
+  );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'class': 'NormalizedComponentWithViewDirectives',
         'component': component,
         'directives': directives,
+        'directiveTypes': directiveTypes,
         'pipes': pipes,
       };
 }

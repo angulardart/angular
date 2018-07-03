@@ -1,3 +1,5 @@
+*   Added `$Typed`, a `TypeChecker` for `Typed`.
+
 ## 0.4.0-alpha+16
 
 *   Added support for `void` and `Null` types to appear in tokens.

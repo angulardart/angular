@@ -42,6 +42,7 @@ export 'src/analyzer.dart'
         $Provider,
         $Self,
         $SkipSelf,
+        $Typed,
         $ViewChild,
         $ViewChildren;
 export 'src/asset.dart' show NgAssetReader;
