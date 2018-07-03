@@ -27,7 +27,6 @@ import 'compile_metadata.dart';
 import 'dart_object_utils.dart';
 import 'pipe_visitor.dart';
 
-const String _directivesProperty = 'directives';
 const String _visibilityProperty = 'visibility';
 const _statefulDirectiveFields = const [
   'exportAs',
@@ -75,64 +74,50 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     return null;
   }
 
-  List<CompilePipeMetadata> _visitPipes(ClassElement element) => _visitTypes(
-        element,
-        'pipes',
-        () => new PipeVisitor(_library),
-      );
-
-  List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) =>
-      _visitTypes(
-        element,
-        _directivesProperty,
-        () => new _ComponentVisitor(_library),
-      );
-
-  List<T> _visitTypes<T>(
-    ClassElement element,
-    String field,
-    ElementVisitor<T> visitor(),
-  ) {
-    return element.metadata
-        .where(safeMatcher(isComponent))
-        .expand((annotation) => _visitTypesForComponent(
-              coerceList(annotation.computeConstantValue(), field),
-              visitor,
-              // Only pass the annotation for directives: [ ... ], not other
-              // elements. They also can cause problems if not resolved but it
-              // is missing directives that blow up in a non-actionable way.
-              annotation: field == _directivesProperty
-                  ? annotation as ElementAnnotationImpl
-                  : null,
-              element: element,
-            ))
-        .toList();
+  List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) {
+    final values = _getResolvedArgumentsOrFail(element, 'directives');
+    return visitAll(values, (value) {
+      return elementOf(value)?.accept(_ComponentVisitor(_library));
+    });
   }
 
-  List<T> _visitTypesForComponent<T>(
-    Iterable<DartObject> directives,
-    ElementVisitor<T> visitor(), {
-    ElementAnnotationImpl annotation,
+  List<CompilePipeMetadata> _visitPipes(ClassElement element) {
+    final values = _getResolvedArgumentsOrFail(element, 'pipes');
+    return visitAll(values, (value) {
+      return elementOf(value)?.accept(PipeVisitor(_library));
+    });
+  }
+
+  /// Returns the arguments assigned to [field], ensuring they're resolved.
+  ///
+  /// This will immediately fail compilation and inform the user if any
+  /// arguments can't be resolved. Failing here avoids misleading errors that
+  /// arise from unresolved arguments later on in compilation.
+  ///
+  /// This assumes [field] expects a list of arguments.
+  List<DartObject> _getResolvedArgumentsOrFail(
     ClassElement element,
-  }) {
-    // TODO(matanl): Extract this code somewhere common, likely useful.
-    if (directives.isEmpty && annotation != null) {
+    String field,
+  ) {
+    final annotation = element.metadata.firstWhere(safeMatcher(isComponent));
+    final values = coerceList(annotation.computeConstantValue(), field);
+    if (values.isEmpty) {
       // Two reasons we got to this point:
-      // 1. The directives: const [ ... ] list was empty or omitted.
+      // 1. The list argument was empty or omitted.
       // 2. One or more identifiers in the list were not resolved, potentially
       //    due to missing imports or dependencies.
       //
       // The latter is specifically tricky to debug, because it ends up failing
       // template parsing in a similar way to #1, but a user will look at the
       // code and not see a problem potentially.
-      for (final argument in annotation.annotationAst.arguments.arguments) {
-        if (argument is NamedExpression &&
-            argument.name.label.name == _directivesProperty) {
+      final annotationImpl = annotation as ElementAnnotationImpl;
+      for (final argument in annotationImpl.annotationAst.arguments.arguments) {
+        if (argument is NamedExpression && argument.name.label.name == field) {
           final values = argument.expression as ListLiteral;
           if (values.elements.isNotEmpty &&
-              // Avoid an edge case where all of your directives: ... entries
-              // are just empty lists. Not likely to happen, but might as well
-              // check anyway at this point.
+              // Avoid an edge case where all of your entries are just empty
+              // lists. Not likely to happen, but might as well check anyway at
+              // this point.
               values.elements.every((e) => e.staticType?.isDynamic != false)) {
             // We didn't resolve something.
             _failFastOnUnresolvedExpressions(
@@ -142,11 +127,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         }
       }
     }
-    return visitAll<T>(directives, (obj) {
-      // For functions, `toTypeValue()` is null so we fall back on `type`.
-      final type = obj.toTypeValue() ?? obj.type;
-      return type?.element?.accept(visitor());
-    });
+    return values;
   }
 }
 
