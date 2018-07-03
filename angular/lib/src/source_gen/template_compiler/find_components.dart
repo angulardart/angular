@@ -74,16 +74,30 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     return null;
   }
 
-  List<CompilePipeMetadata> _visitPipes(ClassElement element) =>
-      _visitTypes(element, 'pipes', () => new PipeVisitor(_library));
+  List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) {
+    final values = _getResolvedArgumentsOrFail(element, 'directives');
+    return visitAll(values, (value) {
+      return typeDeclarationOf(value)?.accept(_ComponentVisitor(_library));
+    });
+  }
 
-  List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) =>
-      _visitTypes(element, 'directives', () => new _ComponentVisitor(_library));
+  List<CompilePipeMetadata> _visitPipes(ClassElement element) {
+    final values = _getResolvedArgumentsOrFail(element, 'pipes');
+    return visitAll(values, (value) {
+      return typeDeclarationOf(value)?.accept(PipeVisitor(_library));
+    });
+  }
 
-  List<T> _visitTypes<T>(
+  /// Returns the arguments assigned to [field], ensuring they're resolved.
+  ///
+  /// This will immediately fail compilation and inform the user if any
+  /// arguments can't be resolved. Failing here avoids misleading errors that
+  /// arise from unresolved arguments later on in compilation.
+  ///
+  /// This assumes [field] expects a list of arguments.
+  List<DartObject> _getResolvedArgumentsOrFail(
     ClassElement element,
     String field,
-    ElementVisitor<T> visitor(),
   ) {
     final annotation = element.metadata.firstWhere(safeMatcher(isComponent));
     final values = coerceList(annotation.computeConstantValue(), field);
@@ -113,11 +127,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         }
       }
     }
-    return visitAll(values, (value) {
-      // For functions, `toTypeValue()` is null so we fall back on `type`.
-      final type = value.toTypeValue() ?? value.type;
-      return type?.element?.accept(visitor());
-    });
+    return values;
   }
 }
 
