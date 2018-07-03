@@ -1,3 +1,8 @@
+## Bug fixes
+
+*   Fails the build immediately if an element in a component's `pipes` list is
+    unresolved.
+
 ## 5.0.0-beta
 
 Welcome to the first release candidate of AngularDart v5.0.0, with full support
