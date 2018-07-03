@@ -624,7 +624,7 @@ abstract class AppView<T> {
     js_util.setProperty(element, name, value);
   }
 
-  Future<Null> loadDeferred(
+  Future<void> loadDeferred(
     Future loadComponentFunction(),
     Future loadTemplateLibFunction(),
     ViewContainer viewContainer,

@@ -68,7 +68,7 @@ import 'package:stack_trace/stack_trace.dart';
 ///     progress += 1;
 ///     print('Current progress: $progress%');
 ///     if (progress < 100) {
-///       new Future<Null>.delayed(const Duration(milliseconds: 10),
+///       new Future<void>.delayed(const Duration(milliseconds: 10),
 ///           () => _increaseProgress(doneCallback));
 ///     } else {
 ///       doneCallback();
@@ -94,14 +94,14 @@ class NgZone {
     }
   }
 
-  final StreamController<Null> _onTurnStart =
+  final StreamController<void> _onTurnStart =
       new StreamController.broadcast(sync: true);
-  final StreamController<Null> _onMicrotaskEmpty =
+  final StreamController<void> _onMicrotaskEmpty =
       new StreamController.broadcast(sync: true);
-  final StreamController<Null> _onTurnDone =
+  final StreamController<void> _onTurnDone =
       new StreamController.broadcast(sync: true);
   final StreamController<NgZoneError> _onError =
-      new StreamController<NgZoneError>.broadcast(sync: true);
+      new StreamController.broadcast(sync: true);
 
   Zone _outerZone;
   Zone _innerZone;
@@ -360,7 +360,7 @@ class NgZone {
   /// This is a hint for Angular to do change detection, which may enqueue more
   /// microtasks.
   /// For this reason this event can fire multiple times per VM Turn.
-  Stream<Null> get onMicrotaskEmpty => _onMicrotaskEmpty.stream;
+  Stream<void> get onMicrotaskEmpty => _onMicrotaskEmpty.stream;
 
   /// A synchronous stream that fires when the VM turn has started, which means
   /// that the inner (managed) zone has not executed any microtasks.
@@ -368,7 +368,7 @@ class NgZone {
   /// Note:
   /// - Causing any turn action, e.g., spawning a Future, within this zone will
   ///   cause an infinite loop.
-  Stream<Null> get onTurnStart => _onTurnStart.stream;
+  Stream<void> get onTurnStart => _onTurnStart.stream;
 
   /// A synchronous stream that fires when the VM turn is finished, which means
   /// when the inner (managed) zone has completed it's private microtask queue.
@@ -377,7 +377,7 @@ class NgZone {
   /// - This won't wait for microtasks schedules in outer zones.
   /// - Causing any turn action, e.g., spawning a Future, within this zone will
   ///   cause an infinite loop.
-  Stream<Null> get onTurnDone => _onTurnDone.stream;
+  Stream<void> get onTurnDone => _onTurnDone.stream;
 
   /// A synchronous stream that fires when the last turn in an event completes.
   /// This indicates VM event loop end.
@@ -386,7 +386,7 @@ class NgZone {
   /// - This won't wait for microtasks schedules in outer zones.
   /// - Causing any turn action, e.g., spawning a Future, within this zone will
   ///   cause an infinite loop.
-  Stream<Null> get onEventDone => _onMicrotaskEmpty.stream;
+  Stream<void> get onEventDone => _onMicrotaskEmpty.stream;
 
   /// App is disposed stop sending events.
   void dispose() {

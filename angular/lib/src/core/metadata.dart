@@ -643,7 +643,7 @@ class Input {
 ///   @Output()
 ///   final get everySecond => _everySecond.stream;
 ///
-///   final _every5Secs = new StreamController<Null>();
+///   final _every5Secs = new StreamController<void>();
 ///   @Output('everyFiveSeconds')
 ///   final get every5Secs => _every5Secs.stream;
 ///
