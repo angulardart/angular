@@ -4,6 +4,10 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/dart/element/type.dart';
 import 'package:source_gen/src/utils.dart';
 
+/// Returns the import URL for [type].
+String getTypeImport(DartType type) =>
+    normalizeUrl(type.element.library.source.uri).toString();
+
 /// Forwards and backwards-compatible method of getting the "name" of [type].
 String getTypeName(DartType type) {
   // Crux of the issue is that the latest dart analyzer/kernel/frontend does not

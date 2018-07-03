@@ -2,7 +2,6 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart' show TypeReference;
 import 'package:collection/collection.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:source_gen/src/utils.dart';
 
 import 'common.dart';
 
@@ -45,7 +44,7 @@ TypeLink linkTypeOf(DartType type) {
   }
   return new TypeLink(
     getTypeName(type),
-    normalizeUrl(type.element.library.source.uri).toString(),
+    getTypeImport(type),
     type is ParameterizedType
         ? type.typeArguments.map(linkTypeOf).toList()
         : const [],
