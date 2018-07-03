@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/constant/value.dart';
+import 'package:analyzer/dart/element/element.dart';
 
 /// Reads and returns [field] on [value] as a boolean.
 ///
@@ -96,6 +97,16 @@ T coerceEnum<T>(
     );
   }
   return enumValue;
+}
+
+/// Returns the element representing the declaration of [value]'s type.
+///
+/// May return null if [value] isn't a valid constant expression or has an
+/// unknown type.
+Element typeDeclarationOf(DartObject value) {
+  // For functions, `toTypeValue()` is null so we fall back on `type`.
+  final type = value.toTypeValue() ?? value.type;
+  return type?.element;
 }
 
 // TODO: For whatever reason 'ByName' works in Bazel, but not 'ByIndex', and the
