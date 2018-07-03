@@ -56,6 +56,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         components.add(new NormalizedComponentWithViewDirectives(
           directive,
           _visitDirectives(element),
+          _visitDirectiveTypes(element),
           _visitPipes(element),
         ));
       } else {
@@ -78,6 +79,14 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     final values = _getResolvedArgumentsOrFail(element, 'directives');
     return visitAll(values, (value) {
       return typeDeclarationOf(value)?.accept(_ComponentVisitor(_library));
+    });
+  }
+
+  List<CompileTypeMetadata> _visitDirectiveTypes(ClassElement element) {
+    final values = _getResolvedArgumentsOrFail(element, 'directiveTypes');
+    return visitAll(values, (value) {
+      // TODO(leonsenft): read type.
+      return null;
     });
   }
 
