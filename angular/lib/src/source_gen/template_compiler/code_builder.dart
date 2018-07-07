@@ -47,12 +47,14 @@ String buildGeneratedCode(
   buffer.writeln("import '$sourceFile';");
   buffer.writeln("export '$sourceFile';");
 
-  // Write all other imports and exports out directly.
-  final astLibrary = element.definingCompilationUnit.computeNode();
-  for (final directive in astLibrary.directives) {
-    if ((directive is ImportDirective && directive.deferredKeyword == null) ||
-        buffer is ExportDirective) {
-      buffer.writeln(directive.toSource());
+  // Write all other imports out directly.
+  for (final d in element.imports) {
+    if (d.isDeferred) {
+      var directive = "import '${d.uri}'";
+      if (d.prefix != null) {
+        directive += ' as ${d.prefix.name}';
+      }
+      buffer.writeln('$directive;');
     }
   }
 

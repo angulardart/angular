@@ -5,8 +5,6 @@
 // ignore_for_file: cancel_subscriptions,constant_identifier_names,duplicate_import,non_constant_identifier_names,library_prefixes,UNUSED_IMPORT,UNUSED_SHOWN_NAME
 import 'generated_injectors.dart';
 export 'generated_injectors.dart';
-import 'package:angular/angular.dart';
-import 'generated_injectors.template.dart' as ng;
 import 'generated_injectors.template.dart' as _ref0;
 import 'package:angular/angular.template.dart' as _ref1;
 import 'package:angular/src/di/injector/injector.dart' as _i1;

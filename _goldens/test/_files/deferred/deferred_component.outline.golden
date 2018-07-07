@@ -12,7 +12,6 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'deferred_component.dart' as _user;
 
 // Required for "type inference" (scoping).
-import 'package:angular/angular.dart';
 
 // For @Component class DeferredChildComponent.
 external List<dynamic> get styles$DeferredChildComponent;
