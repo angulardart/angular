@@ -28,5 +28,33 @@ external AppView<_user.InterpolationComponentNoWhitespace> viewFactory_Interpola
 class ViewInterpolationComponentNoWhitespace0 extends AppView<_user.InterpolationComponentNoWhitespace> {
   external ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class InterpolationTwoAdjacent.
+external List<dynamic> get styles$InterpolationTwoAdjacent;
+external ComponentFactory<_user.InterpolationTwoAdjacent> get InterpolationTwoAdjacentNgFactory;
+external AppView<_user.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationTwoAdjacent0 extends AppView<_user.InterpolationTwoAdjacent> {
+  external ViewInterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class InterpolationLongerSentence.
+external List<dynamic> get styles$InterpolationLongerSentence;
+external ComponentFactory<_user.InterpolationLongerSentence> get InterpolationLongerSentenceNgFactory;
+external AppView<_user.InterpolationLongerSentence> viewFactory_InterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationLongerSentence0 extends AppView<_user.InterpolationLongerSentence> {
+  external ViewInterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class InterpolationLiterals.
+external List<dynamic> get styles$InterpolationLiterals;
+external ComponentFactory<_user.InterpolationLiterals> get InterpolationLiteralsNgFactory;
+external AppView<_user.InterpolationLiterals> viewFactory_InterpolationLiterals0(AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationLiterals0 extends AppView<_user.InterpolationLiterals> {
+  external ViewInterpolationLiterals0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class InterpolationLocals.
+external List<dynamic> get styles$InterpolationLocals;
+external ComponentFactory<_user.InterpolationLocals> get InterpolationLocalsNgFactory;
+external AppView<_user.InterpolationLocals> viewFactory_InterpolationLocals0(AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationLocals0 extends AppView<_user.InterpolationLocals> {
+  external ViewInterpolationLocals0(AppView<dynamic> parentView, int parentIndex);
+}
 
 external void initReflector();
