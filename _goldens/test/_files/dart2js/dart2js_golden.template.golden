@@ -126,7 +126,7 @@ AppView<import1.RootComponent> viewFactory_RootComponentHost0(AppView<dynamic> p
   return new _ViewRootComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.RootComponent> _RootComponentNgFactory = const ComponentFactory('root-component', viewFactory_RootComponentHost0, _RootComponentMetadata);
+const ComponentFactory<import1.RootComponent> _RootComponentNgFactory = const ComponentFactory('root-component', viewFactory_RootComponentHost0);
 ComponentFactory<import1.RootComponent> get RootComponentNgFactory {
   return _RootComponentNgFactory;
 }
@@ -198,7 +198,7 @@ AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChang
   return new _ViewUsesDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> _UsesDefaultChangeDetectionAndInputNgFactory = const ComponentFactory('uses-default-change-detection-and-input', viewFactory_UsesDefaultChangeDetectionAndInputHost0, _UsesDefaultChangeDetectionAndInputMetadata);
+const ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> _UsesDefaultChangeDetectionAndInputNgFactory = const ComponentFactory('uses-default-change-detection-and-input', viewFactory_UsesDefaultChangeDetectionAndInputHost0);
 ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> get UsesDefaultChangeDetectionAndInputNgFactory {
   return _UsesDefaultChangeDetectionAndInputNgFactory;
 }
@@ -272,7 +272,7 @@ AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetecti
   return new _ViewDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DefaultChangeDetectionAndInput> _DefaultChangeDetectionAndInputNgFactory = const ComponentFactory('default-change-detection-and-input', viewFactory_DefaultChangeDetectionAndInputHost0, _DefaultChangeDetectionAndInputMetadata);
+const ComponentFactory<import1.DefaultChangeDetectionAndInput> _DefaultChangeDetectionAndInputNgFactory = const ComponentFactory('default-change-detection-and-input', viewFactory_DefaultChangeDetectionAndInputHost0);
 ComponentFactory<import1.DefaultChangeDetectionAndInput> get DefaultChangeDetectionAndInputNgFactory {
   return _DefaultChangeDetectionAndInputNgFactory;
 }
@@ -354,7 +354,7 @@ AppView<import1.InlinedNgIf> viewFactory_InlinedNgIfHost0(AppView<dynamic> paren
   return new _ViewInlinedNgIfHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InlinedNgIf> _InlinedNgIfNgFactory = const ComponentFactory('inlined-ng-if', viewFactory_InlinedNgIfHost0, _InlinedNgIfMetadata);
+const ComponentFactory<import1.InlinedNgIf> _InlinedNgIfNgFactory = const ComponentFactory('inlined-ng-if', viewFactory_InlinedNgIfHost0);
 ComponentFactory<import1.InlinedNgIf> get InlinedNgIfNgFactory {
   return _InlinedNgIfNgFactory;
 }
@@ -463,7 +463,7 @@ AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIfHost0(AppView<dynamic> par
   return new _ViewEmbeddedNgIfHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmbeddedNgIf> _EmbeddedNgIfNgFactory = const ComponentFactory('embedded-ng-if', viewFactory_EmbeddedNgIfHost0, _EmbeddedNgIfMetadata);
+const ComponentFactory<import1.EmbeddedNgIf> _EmbeddedNgIfNgFactory = const ComponentFactory('embedded-ng-if', viewFactory_EmbeddedNgIfHost0);
 ComponentFactory<import1.EmbeddedNgIf> get EmbeddedNgIfNgFactory {
   return _EmbeddedNgIfNgFactory;
 }
@@ -521,7 +521,7 @@ AppView<import1.NullComponent> viewFactory_NullComponentHost0(AppView<dynamic> p
   return new _ViewNullComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.NullComponent> _NullComponentNgFactory = const ComponentFactory('null', viewFactory_NullComponentHost0, _NullComponentMetadata);
+const ComponentFactory<import1.NullComponent> _NullComponentNgFactory = const ComponentFactory('null', viewFactory_NullComponentHost0);
 ComponentFactory<import1.NullComponent> get NullComponentNgFactory {
   return _NullComponentNgFactory;
 }
@@ -579,18 +579,11 @@ AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryPare
   return new _ViewInjectsFromArbitraryParentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InjectsFromArbitraryParent> _InjectsFromArbitraryParentNgFactory = const ComponentFactory('injects-from-arbitrary-parent', viewFactory_InjectsFromArbitraryParentHost0, _InjectsFromArbitraryParentMetadata);
+const ComponentFactory<import1.InjectsFromArbitraryParent> _InjectsFromArbitraryParentNgFactory = const ComponentFactory('injects-from-arbitrary-parent', viewFactory_InjectsFromArbitraryParentHost0);
 ComponentFactory<import1.InjectsFromArbitraryParent> get InjectsFromArbitraryParentNgFactory {
   return _InjectsFromArbitraryParentNgFactory;
 }
 
-const _RootComponentMetadata = const [];
-const _UsesDefaultChangeDetectionAndInputMetadata = const [];
-const _DefaultChangeDetectionAndInputMetadata = const [];
-const _InlinedNgIfMetadata = const [];
-const _EmbeddedNgIfMetadata = const [];
-const _NullComponentMetadata = const [];
-const _InjectsFromArbitraryParentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

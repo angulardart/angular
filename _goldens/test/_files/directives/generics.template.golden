@@ -74,7 +74,7 @@ AppView<import1.UntypedComp> viewFactory_UntypedCompHost0(AppView<dynamic> paren
   return new _ViewUntypedCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UntypedComp> _UntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UntypedCompHost0, _UntypedCompMetadata);
+const ComponentFactory<import1.UntypedComp> _UntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UntypedCompHost0);
 ComponentFactory<import1.UntypedComp> get UntypedCompNgFactory {
   return _UntypedCompNgFactory;
 }
@@ -157,7 +157,7 @@ AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0(AppView<dynami
   return new _ViewUsesUntypedCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesUntypedComp> _UsesUntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UsesUntypedCompHost0, _UsesUntypedCompMetadata);
+const ComponentFactory<import1.UsesUntypedComp> _UsesUntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UsesUntypedCompHost0);
 ComponentFactory<import1.UsesUntypedComp> get UsesUntypedCompNgFactory {
   return _UsesUntypedCompNgFactory;
 }
@@ -215,7 +215,7 @@ AppView<import1.GenericComp> viewFactory_GenericCompHost0(AppView<dynamic> paren
   return new _ViewGenericCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.GenericComp> _GenericCompNgFactory = const ComponentFactory('comp', viewFactory_GenericCompHost0, _GenericCompMetadata);
+const ComponentFactory<import1.GenericComp> _GenericCompNgFactory = const ComponentFactory('comp', viewFactory_GenericCompHost0);
 ComponentFactory<import1.GenericComp> get GenericCompNgFactory {
   return _GenericCompNgFactory;
 }
@@ -298,7 +298,7 @@ AppView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0(AppView<dynami
   return new _ViewUsesGenericCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesGenericComp> _UsesGenericCompNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericCompHost0, _UsesGenericCompMetadata);
+const ComponentFactory<import1.UsesGenericComp> _UsesGenericCompNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericCompHost0);
 ComponentFactory<import1.UsesGenericComp> get UsesGenericCompNgFactory {
   return _UsesGenericCompNgFactory;
 }
@@ -356,7 +356,7 @@ AppView<import1.MappingComp1> viewFactory_MappingComp1Host0(AppView<dynamic> par
   return new _ViewMappingComp1Host0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.MappingComp1> _MappingComp1NgFactory = const ComponentFactory('comp', viewFactory_MappingComp1Host0, _MappingComp1Metadata);
+const ComponentFactory<import1.MappingComp1> _MappingComp1NgFactory = const ComponentFactory('comp', viewFactory_MappingComp1Host0);
 ComponentFactory<import1.MappingComp1> get MappingComp1NgFactory {
   return _MappingComp1NgFactory;
 }
@@ -445,7 +445,7 @@ AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0(AppView<dyna
   return new _ViewUsesMappingComp1Host0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesMappingComp1> _UsesMappingComp1NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp1Host0, _UsesMappingComp1Metadata);
+const ComponentFactory<import1.UsesMappingComp1> _UsesMappingComp1NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp1Host0);
 ComponentFactory<import1.UsesMappingComp1> get UsesMappingComp1NgFactory {
   return _UsesMappingComp1NgFactory;
 }
@@ -503,7 +503,7 @@ AppView<import1.MappingComp2> viewFactory_MappingComp2Host0(AppView<dynamic> par
   return new _ViewMappingComp2Host0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.MappingComp2> _MappingComp2NgFactory = const ComponentFactory('comp', viewFactory_MappingComp2Host0, _MappingComp2Metadata);
+const ComponentFactory<import1.MappingComp2> _MappingComp2NgFactory = const ComponentFactory('comp', viewFactory_MappingComp2Host0);
 ComponentFactory<import1.MappingComp2> get MappingComp2NgFactory {
   return _MappingComp2NgFactory;
 }
@@ -586,7 +586,7 @@ AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0(AppView<dyna
   return new _ViewUsesMappingComp2Host0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesMappingComp2> _UsesMappingComp2NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp2Host0, _UsesMappingComp2Metadata);
+const ComponentFactory<import1.UsesMappingComp2> _UsesMappingComp2NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp2Host0);
 ComponentFactory<import1.UsesMappingComp2> get UsesMappingComp2NgFactory {
   return _UsesMappingComp2NgFactory;
 }
@@ -644,7 +644,7 @@ AppView<import1.BoundComp> viewFactory_BoundCompHost0(AppView<dynamic> parentVie
   return new _ViewBoundCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.BoundComp> _BoundCompNgFactory = const ComponentFactory('comp', viewFactory_BoundCompHost0, _BoundCompMetadata);
+const ComponentFactory<import1.BoundComp> _BoundCompNgFactory = const ComponentFactory('comp', viewFactory_BoundCompHost0);
 ComponentFactory<import1.BoundComp> get BoundCompNgFactory {
   return _BoundCompNgFactory;
 }
@@ -727,7 +727,7 @@ AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost
   return new _ViewUsesBoundCompWithBoundsHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesBoundCompWithBounds> _UsesBoundCompWithBoundsNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompWithBoundsHost0, _UsesBoundCompWithBoundsMetadata);
+const ComponentFactory<import1.UsesBoundCompWithBounds> _UsesBoundCompWithBoundsNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompWithBoundsHost0);
 ComponentFactory<import1.UsesBoundCompWithBounds> get UsesBoundCompWithBoundsNgFactory {
   return _UsesBoundCompWithBoundsNgFactory;
 }
@@ -810,7 +810,7 @@ AppView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0(AppView<dynamic> p
   return new _ViewUsesBoundCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesBoundComp> _UsesBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompHost0, _UsesBoundCompMetadata);
+const ComponentFactory<import1.UsesBoundComp> _UsesBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompHost0);
 ComponentFactory<import1.UsesBoundComp> get UsesBoundCompNgFactory {
   return _UsesBoundCompNgFactory;
 }
@@ -868,7 +868,7 @@ AppView<import1.SelfBoundComp> viewFactory_SelfBoundCompHost0(AppView<dynamic> p
   return new _ViewSelfBoundCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.SelfBoundComp> _SelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_SelfBoundCompHost0, _SelfBoundCompMetadata);
+const ComponentFactory<import1.SelfBoundComp> _SelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_SelfBoundCompHost0);
 ComponentFactory<import1.SelfBoundComp> get SelfBoundCompNgFactory {
   return _SelfBoundCompNgFactory;
 }
@@ -957,7 +957,7 @@ AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0(AppView<dy
   return new _ViewUsesSelfBoundCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesSelfBoundComp> _UsesSelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesSelfBoundCompHost0, _UsesSelfBoundCompMetadata);
+const ComponentFactory<import1.UsesSelfBoundComp> _UsesSelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesSelfBoundCompHost0);
 ComponentFactory<import1.UsesSelfBoundComp> get UsesSelfBoundCompNgFactory {
   return _UsesSelfBoundCompNgFactory;
 }
@@ -1015,7 +1015,7 @@ AppView<import1.RecursiveComp> viewFactory_RecursiveCompHost0(AppView<dynamic> p
   return new _ViewRecursiveCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.RecursiveComp> _RecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_RecursiveCompHost0, _RecursiveCompMetadata);
+const ComponentFactory<import1.RecursiveComp> _RecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_RecursiveCompHost0);
 ComponentFactory<import1.RecursiveComp> get RecursiveCompNgFactory {
   return _RecursiveCompNgFactory;
 }
@@ -1098,7 +1098,7 @@ AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveCompHost0(AppView<dy
   return new _ViewUsesRecursiveCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesRecursiveComp> _UsesRecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_UsesRecursiveCompHost0, _UsesRecursiveCompMetadata);
+const ComponentFactory<import1.UsesRecursiveComp> _UsesRecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_UsesRecursiveCompHost0);
 ComponentFactory<import1.UsesRecursiveComp> get UsesRecursiveCompNgFactory {
   return _UsesRecursiveCompNgFactory;
 }
@@ -1156,7 +1156,7 @@ AppView<import1.FunctionTypeComp> viewFactory_FunctionTypeCompHost0(AppView<dyna
   return new _ViewFunctionTypeCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.FunctionTypeComp> _FunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_FunctionTypeCompHost0, _FunctionTypeCompMetadata);
+const ComponentFactory<import1.FunctionTypeComp> _FunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_FunctionTypeCompHost0);
 ComponentFactory<import1.FunctionTypeComp> get FunctionTypeCompNgFactory {
   return _FunctionTypeCompNgFactory;
 }
@@ -1239,7 +1239,7 @@ AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0(AppV
   return new _ViewUsesFunctionTypeCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesFunctionTypeComp> _UsesFunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_UsesFunctionTypeCompHost0, _UsesFunctionTypeCompMetadata);
+const ComponentFactory<import1.UsesFunctionTypeComp> _UsesFunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_UsesFunctionTypeCompHost0);
 ComponentFactory<import1.UsesFunctionTypeComp> get UsesFunctionTypeCompNgFactory {
   return _UsesFunctionTypeCompNgFactory;
 }
@@ -1395,7 +1395,7 @@ AppView<import1.NestedParentComp> viewFactory_NestedParentCompHost0(AppView<dyna
   return new _ViewNestedParentCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.NestedParentComp> _NestedParentCompNgFactory = const ComponentFactory('parent', viewFactory_NestedParentCompHost0, _NestedParentCompMetadata);
+const ComponentFactory<import1.NestedParentComp> _NestedParentCompNgFactory = const ComponentFactory('parent', viewFactory_NestedParentCompHost0);
 ComponentFactory<import1.NestedParentComp> get NestedParentCompNgFactory {
   return _NestedParentCompNgFactory;
 }
@@ -1453,7 +1453,7 @@ AppView<import1.NestedChildComp> viewFactory_NestedChildCompHost0(AppView<dynami
   return new _ViewNestedChildCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.NestedChildComp> _NestedChildCompNgFactory = const ComponentFactory('child', viewFactory_NestedChildCompHost0, _NestedChildCompMetadata);
+const ComponentFactory<import1.NestedChildComp> _NestedChildCompNgFactory = const ComponentFactory('child', viewFactory_NestedChildCompHost0);
 ComponentFactory<import1.NestedChildComp> get NestedChildCompNgFactory {
   return _NestedChildCompNgFactory;
 }
@@ -1548,31 +1548,11 @@ AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0(AppV
   return new _ViewUsesNestedParentCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesNestedParentComp> _UsesNestedParentCompNgFactory = const ComponentFactory('comp', viewFactory_UsesNestedParentCompHost0, _UsesNestedParentCompMetadata);
+const ComponentFactory<import1.UsesNestedParentComp> _UsesNestedParentCompNgFactory = const ComponentFactory('comp', viewFactory_UsesNestedParentCompHost0);
 ComponentFactory<import1.UsesNestedParentComp> get UsesNestedParentCompNgFactory {
   return _UsesNestedParentCompNgFactory;
 }
 
-const _UntypedCompMetadata = const [];
-const _UsesUntypedCompMetadata = const [];
-const _GenericCompMetadata = const [];
-const _UsesGenericCompMetadata = const [];
-const _MappingComp1Metadata = const [];
-const _UsesMappingComp1Metadata = const [];
-const _MappingComp2Metadata = const [];
-const _UsesMappingComp2Metadata = const [];
-const _BoundCompMetadata = const [];
-const _UsesBoundCompWithBoundsMetadata = const [];
-const _UsesBoundCompMetadata = const [];
-const _SelfBoundCompMetadata = const [];
-const _UsesSelfBoundCompMetadata = const [];
-const _RecursiveCompMetadata = const [];
-const _UsesRecursiveCompMetadata = const [];
-const _FunctionTypeCompMetadata = const [];
-const _UsesFunctionTypeCompMetadata = const [];
-const _NestedParentCompMetadata = const [];
-const _NestedChildCompMetadata = const [];
-const _UsesNestedParentCompMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

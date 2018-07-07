@@ -133,7 +133,7 @@ AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponentHo
   return new _ViewEmptyPropertiesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmptyPropertiesComponent> _EmptyPropertiesComponentNgFactory = const ComponentFactory('empty-properties', viewFactory_EmptyPropertiesComponentHost0, _EmptyPropertiesComponentMetadata);
+const ComponentFactory<import1.EmptyPropertiesComponent> _EmptyPropertiesComponentNgFactory = const ComponentFactory('empty-properties', viewFactory_EmptyPropertiesComponentHost0);
 ComponentFactory<import1.EmptyPropertiesComponent> get EmptyPropertiesComponentNgFactory {
   return _EmptyPropertiesComponentNgFactory;
 }
@@ -191,13 +191,11 @@ AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0(AppV
   return new _ViewFancyButtonComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.FancyButtonComponent> _FancyButtonComponentNgFactory = const ComponentFactory('fancy-button', viewFactory_FancyButtonComponentHost0, _FancyButtonComponentMetadata);
+const ComponentFactory<import1.FancyButtonComponent> _FancyButtonComponentNgFactory = const ComponentFactory('fancy-button', viewFactory_FancyButtonComponentHost0);
 ComponentFactory<import1.FancyButtonComponent> get FancyButtonComponentNgFactory {
   return _FancyButtonComponentNgFactory;
 }
 
-const _EmptyPropertiesComponentMetadata = const [];
-const _FancyButtonComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

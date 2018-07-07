@@ -76,12 +76,11 @@ AppView<import1.UsesEventTearoff> viewFactory_UsesEventTearoffHost0(AppView<dyna
   return new _ViewUsesEventTearoffHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesEventTearoff> _UsesEventTearoffNgFactory = const ComponentFactory('uses-event-tearoff', viewFactory_UsesEventTearoffHost0, _UsesEventTearoffMetadata);
+const ComponentFactory<import1.UsesEventTearoff> _UsesEventTearoffNgFactory = const ComponentFactory('uses-event-tearoff', viewFactory_UsesEventTearoffHost0);
 ComponentFactory<import1.UsesEventTearoff> get UsesEventTearoffNgFactory {
   return _UsesEventTearoffNgFactory;
 }
 
-const _UsesEventTearoffMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

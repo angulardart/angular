@@ -138,12 +138,11 @@ AppView<import1.Comp> viewFactory_CompHost0(AppView<dynamic> parentView, int par
   return new _ViewCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.Comp> _CompNgFactory = const ComponentFactory('comp', viewFactory_CompHost0, _CompMetadata);
+const ComponentFactory<import1.Comp> _CompNgFactory = const ComponentFactory('comp', viewFactory_CompHost0);
 ComponentFactory<import1.Comp> get CompNgFactory {
   return _CompNgFactory;
 }
 
-const _CompMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
