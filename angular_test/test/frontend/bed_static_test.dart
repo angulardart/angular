@@ -3,14 +3,14 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
-import 'bed_static_test.template.dart' as ng_generated;
+import 'bed_static_test.template.dart' as ng;
 
 void main() {
   // Intentional explicit lack of ng_generated.initReflector().
 
   test('should create a component with a ComponentFactory', () async {
     final testBed = NgTestBed.forComponent<ExampleComp>(
-      ng_generated.ExampleCompNgFactory,
+      ng.ExampleCompNgFactory,
       rootInjector: mathInjector,
     );
     final fixture = await testBed.create();
@@ -25,7 +25,7 @@ void main() {
 @GenerateInjector(const [
   const Provider(MathService),
 ])
-final InjectorFactory mathInjector = ng_generated.mathInjector$Injector;
+final InjectorFactory mathInjector = ng.mathInjector$Injector;
 
 class MathService {
   num add(num a, num b) => a + b;
