@@ -11,7 +11,7 @@ import 'package:path/path.dart' as p;
 ///
 /// Then:
 /// ```
-/// dart tool/goldens.dart
+/// dart tool/update.dart
 /// ```
 void main() {
   final output = p.join(p.current, 'test', '_files');
