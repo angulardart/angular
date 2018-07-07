@@ -75,6 +75,7 @@ class RecursiveTemplateAstVisitor<C>
   TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [C context]) =>
       new EmbeddedTemplateAst.from(
         astNode,
+        annotations: visitAll(astNode.annotations, context),
         attributes: visitAll(astNode.attributes, context),
         childNodes: visitAll(astNode.childNodes, context),
         events: visitAll(astNode.events, context),
