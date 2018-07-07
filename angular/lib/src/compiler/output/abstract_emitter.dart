@@ -331,15 +331,6 @@ abstract class AbstractEmitterVisitor
   String getBuiltinMethodName(o.BuiltinMethod method);
 
   @override
-  void visitInvokeFunctionExpr(
-      o.InvokeFunctionExpr expr, EmitterVisitorContext context) {
-    expr.fn.visitExpression(this, context);
-    context.print('(');
-    visitAllExpressions(expr.args, context, ',');
-    context.print(')');
-  }
-
-  @override
   void visitReadVarExpr(o.ReadVarExpr ast, EmitterVisitorContext context) {
     var varName = ast.name;
     if (ast.builtin != null) {

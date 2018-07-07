@@ -406,6 +406,28 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   }
 
   @override
+  void visitInvokeFunctionExpr(
+    o.InvokeFunctionExpr expr,
+    EmitterVisitorContext context,
+  ) {
+    expr.fn.visitExpression(this, context);
+    var types = expr.typeArgs;
+    if (types != null && types.isNotEmpty) {
+      context.print('<');
+      for (var i = 0; i < types.length; i++) {
+        types[i].visitType(this, context);
+        if (i < types.length - 1) {
+          context.print(', ');
+        }
+      }
+      context.print('>');
+    }
+    context.print('(');
+    visitAllExpressions(expr.args, context, ',');
+    context.print(')');
+  }
+
+  @override
   void visitInstantiateExpr(
       o.InstantiateExpr ast, EmitterVisitorContext context) {
     context.print(_isConstType(ast.type) ? 'const' : 'new');

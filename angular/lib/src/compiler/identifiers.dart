@@ -104,6 +104,9 @@ class Identifiers {
       name: "AppViewUtils.throwOnChanges", moduleUrl: appViewUtilsModuleUrl);
   static final isDevMode = new CompileIdentifierMetadata<dynamic>(
       name: "isDevMode", moduleUrl: runtimeUtilsModuleUrl);
+  static final unsafeCast = new CompileIdentifierMetadata<dynamic>(
+      name: "unsafeCast", moduleUrl: runtimeUtilsModuleUrl);
+
   static final interpolate = <CompileIdentifierMetadata>[
     new CompileIdentifierMetadata<dynamic>(
         name: "interpolate0", moduleUrl: appViewUtilsModuleUrl),

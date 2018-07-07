@@ -115,7 +115,7 @@ class _ViewQueriesComponent1 extends AppView<import1.QueriesComponent> {
 
   @override
   void dirtyParentQueriesInternal() {
-    (parentView as ViewQueriesComponent0)._query_AnotherDirective_1_5_isDirty = true;
+    import9.unsafeCast<ViewQueriesComponent0>(parentView)._query_AnotherDirective_1_5_isDirty = true;
   }
 }
 
@@ -235,7 +235,7 @@ class _ViewEmbeddedQueries1 extends AppView<import1.EmbeddedQueries> {
 
   @override
   void dirtyParentQueriesInternal() {
-    (parentView as ViewEmbeddedQueries0)._query_AnotherDirective_1_0_isDirty = true;
+    import9.unsafeCast<ViewEmbeddedQueries0>(parentView)._query_AnotherDirective_1_0_isDirty = true;
   }
 }
 
@@ -260,7 +260,7 @@ class _ViewEmbeddedQueries2 extends AppView<import1.EmbeddedQueries> {
 
   @override
   void dirtyParentQueriesInternal() {
-    (parentView as ViewEmbeddedQueries0)._query_AnotherDirective_1_0_isDirty = true;
+    import9.unsafeCast<ViewEmbeddedQueries0>(parentView)._query_AnotherDirective_1_0_isDirty = true;
   }
 }
 
@@ -377,7 +377,7 @@ class _ViewEmbeddedQueriesList1 extends AppView<import1.EmbeddedQueriesList> {
 
   @override
   void dirtyParentQueriesInternal() {
-    (parentView as ViewEmbeddedQueriesList0)._query_AnotherDirective_1_0_isDirty = true;
+    import9.unsafeCast<ViewEmbeddedQueriesList0>(parentView)._query_AnotherDirective_1_0_isDirty = true;
   }
 }
 
@@ -402,7 +402,7 @@ class _ViewEmbeddedQueriesList2 extends AppView<import1.EmbeddedQueriesList> {
 
   @override
   void dirtyParentQueriesInternal() {
-    (parentView as ViewEmbeddedQueriesList0)._query_AnotherDirective_1_0_isDirty = true;
+    import9.unsafeCast<ViewEmbeddedQueriesList0>(parentView)._query_AnotherDirective_1_0_isDirty = true;
   }
 }
 
@@ -601,7 +601,7 @@ class _ViewNestedNgForQueriesList3 extends AppView<import1.NestedNgForQueriesLis
 
   @override
   void dirtyParentQueriesInternal() {
-    (parentView.parentView.parentView as ViewNestedNgForQueriesList0)._query_taggedItem_1_0_isDirty = true;
+    import9.unsafeCast<ViewNestedNgForQueriesList0>(parentView.parentView.parentView)._query_taggedItem_1_0_isDirty = true;
   }
 }
 
