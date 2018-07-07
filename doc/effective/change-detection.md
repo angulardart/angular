@@ -25,6 +25,7 @@ templates that maximize the performance of your app.
     *   [AVOID order-dependent input setters](#avoid-order-dependent-input-setters)
     *   [AVOID any asynchronous actions in `ngDoCheck`](#avoid-any-asynchronous-actions-in-ngdocheck)
     *   [PREFER `ngAfterChanges` to `ngOnChanges`](#prefer-implementing-afterchanges-to-onchanges)
+    *   [PREFER setters to `ngAfterXChecked`](#prefer-settings-to-ngafterxchecked)
     *   [PREFER `bool` setters to using `getBool`](#prefer-bool-setters-to-using-getbool)
     *   [PREFER using `OnPush` where possible](#prefer-using-onpush-where-possible)
 
@@ -345,10 +346,46 @@ class MyComponent implements AfterChanges {
 
 Even in cases where you only care about a handful of inputs out of many, you
 should consider using `ngAfterChanges` and checking just the few inputs you
-care about. The tradeoff you are making is that you have to write your own
+care about. The trade-off you are making is that you have to write your own
 change detection code for the few inputs you care about, but you are avoiding
 creating a Map in the change detection loop and adding entries for every input
 that changed, even if you don't care about them.
+
+### PREFER setters to `ngAfterXChecked`
+
+While it is possible to use `AfterViewChecked` and `AfterContentChecked` to be
+updated when a `@ViewChildren`, `@ContentChildren`, `@ViewChild`, or
+`@ContentChild`-annotated value has been updated, these methods are _always_
+invoked, regardless if the queries have _actually_ changed.
+
+**BAD**:
+
+```dart
+class MyComponent implements AfterViewChecked {
+  @ViewChildren(ChildDirective)
+  List<ChildDirective> children;
+  
+  @override
+  void ngAfterViewChecked() {
+    for (final child in children) {
+      // ...
+    }
+  }
+}
+```
+
+**GOOD**:
+
+```dart
+class MyComponent {
+  @ViewChildren(ChildDirective)
+  set children(List<ChildDirective> children) {
+    for (final child in children) {
+      // ...
+    }  
+  }
+}
+```
 
 ### PREFER `bool` setters to using `getBool`
 
