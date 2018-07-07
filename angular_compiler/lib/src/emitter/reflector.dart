@@ -248,14 +248,6 @@ class ReflectableEmitter {
           refer('${clazz.name}NgFactory'),
         ]),
       );
-
-      // Legacy support for the AngularDart router [v1].
-      if (clazz.registerAnnotation == null) {
-        _registerEmptyMetadata(clazz.name);
-      } else {
-        // We arbitrarily support the `@RouteConfig` annotation for the router.
-        _registerRouteConfig(clazz);
-      }
     }
 
     // Legacy support for ReflectiveInjector.
@@ -339,24 +331,6 @@ class ReflectableEmitter {
         refer(clazz.name),
         _tearOffConstructor(constructor, function),
       ]),
-    );
-  }
-
-  void _registerRouteConfig(ReflectableClass clazz) {
-    var source = clazz.element
-        .computeNode()
-        .metadata
-        .firstWhere((a) => a.name.name == 'RouteConfig')
-        .toSource();
-    source = 'const ${source.substring(1)}';
-    _libraryBuilder.body.add(
-      new Code('const _${clazz.name}Metadata = const [$source];'),
-    );
-  }
-
-  void _registerEmptyMetadata(String className) {
-    _libraryBuilder.body.add(
-      literalConstList([]).assignConst('_${className}Metadata').statement,
     );
   }
 }

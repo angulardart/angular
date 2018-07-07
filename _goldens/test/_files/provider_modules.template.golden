@@ -122,12 +122,11 @@ AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponentHo
   return new _ViewProviderModulesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.ProviderModulesComponent> _ProviderModulesComponentNgFactory = const ComponentFactory('provider-modules', viewFactory_ProviderModulesComponentHost0, _ProviderModulesComponentMetadata);
+const ComponentFactory<import1.ProviderModulesComponent> _ProviderModulesComponentNgFactory = const ComponentFactory('provider-modules', viewFactory_ProviderModulesComponentHost0);
 ComponentFactory<import1.ProviderModulesComponent> get ProviderModulesComponentNgFactory {
   return _ProviderModulesComponentNgFactory;
 }
 
-const _ProviderModulesComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

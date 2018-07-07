@@ -86,7 +86,7 @@ AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespaceHost0(AppView<
   return new _ViewPreserveWhitespaceHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.PreserveWhitespace> _PreserveWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_PreserveWhitespaceHost0, _PreserveWhitespaceMetadata);
+const ComponentFactory<import1.PreserveWhitespace> _PreserveWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_PreserveWhitespaceHost0);
 ComponentFactory<import1.PreserveWhitespace> get PreserveWhitespaceNgFactory {
   return _PreserveWhitespaceNgFactory;
 }
@@ -155,13 +155,11 @@ AppView<import1.MinifyWhitespace> viewFactory_MinifyWhitespaceHost0(AppView<dyna
   return new _ViewMinifyWhitespaceHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.MinifyWhitespace> _MinifyWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_MinifyWhitespaceHost0, _MinifyWhitespaceMetadata);
+const ComponentFactory<import1.MinifyWhitespace> _MinifyWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_MinifyWhitespaceHost0);
 ComponentFactory<import1.MinifyWhitespace> get MinifyWhitespaceNgFactory {
   return _MinifyWhitespaceNgFactory;
 }
 
-const _PreserveWhitespaceMetadata = const [];
-const _MinifyWhitespaceMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

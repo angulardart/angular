@@ -79,6 +79,8 @@ class ComponentRef<C> {
 ///   // Can now use 'comp' as a ComponentFactory<Example>.
 /// }
 /// ```
+///
+/// It is *not* valid to implement, extend, mix-in, or construct this type.
 class ComponentFactory<T> {
   final String selector;
 
@@ -90,17 +92,14 @@ class ComponentFactory<T> {
     int parentIndex,
   ) _viewFactory;
 
+  /// Internal constructor for generated code only - **do not invoke**.
   const ComponentFactory(
     this.selector,
-    this._viewFactory, [
-    @Deprecated('Ignored, and will be removed shortly') List<dynamic> metadata,
-  ]);
+    this._viewFactory,
+  );
 
   @Deprecated('Used for the deprecated router only.')
   Type get componentType => T;
-
-  @Deprecated('Used for the deprecated router only.')
-  List<dynamic> get metadata => throw new UnsupportedError('');
 
   /// Creates a new component.
   ComponentRef<T> create(
