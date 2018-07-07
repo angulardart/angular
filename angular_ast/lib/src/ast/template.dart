@@ -21,6 +21,7 @@ const _listEquals = const ListEquality<dynamic>();
 /// Clients should not extend, implement, or mix-in this class.
 abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
   factory EmbeddedTemplateAst({
+    List<AnnotationAst> annotations,
     List<AttributeAst> attributes,
     List<StandaloneTemplateAst> childNodes,
     List<EventAst> events,
@@ -32,6 +33,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
 
   factory EmbeddedTemplateAst.from(
     TemplateAst origin, {
+    List<AnnotationAst> annotations,
     List<AttributeAst> attributes,
     List<StandaloneTemplateAst> childNodes,
     List<EventAst> events,
@@ -46,6 +48,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
     NgToken beginToken,
     NgToken endToken, {
     CloseElementAst closeComplement,
+    List<AnnotationAst> annotations,
     List<AttributeAst> attributes,
     List<StandaloneTemplateAst> childNodes,
     List<EventAst> events,
@@ -59,6 +62,9 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
   R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
     return visitor.visitEmbeddedTemplate(this, context);
   }
+
+  /// Annotations.
+  List<AnnotationAst> get annotations;
 
   /// Attributes.
   ///
@@ -97,6 +103,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
   bool operator ==(Object o) {
     if (o is EmbeddedTemplateAst) {
       return closeComplement == o.closeComplement &&
+          _listEquals.equals(annotations, o.annotations) &&
           _listEquals.equals(attributes, o.attributes) &&
           _listEquals.equals(events, o.events) &&
           _listEquals.equals(properties, o.properties) &&
@@ -112,6 +119,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
   int get hashCode {
     return hashObjects([
       closeComplement,
+      _listEquals.hash(annotations),
       _listEquals.hash(attributes),
       _listEquals.hash(events),
       _listEquals.hash(childNodes),
@@ -125,6 +133,12 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
   @override
   String toString() {
     final buffer = new StringBuffer('$EmbeddedTemplateAst{ ');
+    if (annotations.isNotEmpty) {
+      buffer
+        ..write('annotations=')
+        ..writeAll(attributes, ', ')
+        ..write(' ');
+    }
     if (attributes.isNotEmpty) {
       buffer
         ..write('attributes=')
@@ -177,6 +191,7 @@ class _ParsedEmbeddedTemplateAst extends TemplateAst with EmbeddedTemplateAst {
     NgToken beginToken,
     NgToken endToken, {
     this.closeComplement,
+    this.annotations = const [],
     this.attributes = const [],
     this.childNodes = const [],
     this.events = const [],
@@ -185,6 +200,9 @@ class _ParsedEmbeddedTemplateAst extends TemplateAst with EmbeddedTemplateAst {
     this.letBindings = const [],
     this.hasDeferredComponent = false,
   }) : super.parsed(beginToken, endToken, sourceFile);
+
+  @override
+  final List<AnnotationAst> annotations;
 
   @override
   final List<AttributeAst> attributes;
@@ -214,6 +232,7 @@ class _ParsedEmbeddedTemplateAst extends TemplateAst with EmbeddedTemplateAst {
 class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     with EmbeddedTemplateAst {
   _SyntheticEmbeddedTemplateAst({
+    this.annotations = const [],
     this.attributes = const [],
     this.childNodes = const [],
     this.events = const [],
@@ -225,6 +244,7 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
 
   _SyntheticEmbeddedTemplateAst.from(
     TemplateAst origin, {
+    this.annotations = const [],
     this.attributes = const [],
     this.childNodes = const [],
     this.events = const [],
@@ -234,6 +254,9 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     this.hasDeferredComponent = false,
   })  : closeComplement = new CloseElementAst('template'),
         super.from(origin);
+
+  @override
+  final List<AnnotationAst> annotations;
 
   @override
   final List<AttributeAst> attributes;

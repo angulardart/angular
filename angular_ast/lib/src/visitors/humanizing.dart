@@ -70,7 +70,11 @@ class HumanizingTemplateAstVisitor
   String visitElement(ElementAst astNode, [StringBuffer context]) {
     context ??= new StringBuffer();
     context..write('<')..write(astNode.name);
-
+    if (astNode.annotations.isNotEmpty) {
+      context
+        ..write(' ')
+        ..writeAll(astNode.annotations.map(visitAnnotation), ' ');
+    }
     if (astNode.attributes.isNotEmpty) {
       context
         ..write(' ')
@@ -139,6 +143,11 @@ class HumanizingTemplateAstVisitor
   ]) {
     context ??= new StringBuffer();
     context..write('<template');
+    if (astNode.annotations.isNotEmpty) {
+      context
+        ..write(' ')
+        ..writeAll(astNode.annotations.map(visitAnnotation), ' ');
+    }
     if (astNode.attributes.isNotEmpty) {
       context
         ..write(' ')

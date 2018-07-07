@@ -445,6 +445,7 @@ class RecursiveAstParser {
         beginToken,
         endToken,
         closeComplement: closeElementAst,
+        annotations: annotations,
         attributes: attributes,
         childNodes: childNodes,
         events: events,
@@ -458,6 +459,7 @@ class RecursiveAstParser {
         beginToken,
         nameToken,
         endToken,
+        annotations: annotations,
         attributes: attributes,
         childNodes: childNodes,
         events: events,
@@ -465,7 +467,6 @@ class RecursiveAstParser {
         references: references,
         bananas: bananas,
         stars: stars,
-        annotations: annotations,
         closeComplement: closeElementAst,
       );
     }
