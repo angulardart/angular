@@ -353,6 +353,17 @@ class _ComponentVisitor
           .toList();
     }
     var selectorType = selector.toTypeValue();
+    if (!$Component.isExactlyType(selectorType) &&
+        !$Directive.isExactlyType(selectorType)) {
+      // TODO: Promote to an error.
+      logWarning(
+        ''
+            'Selector argument for "@${value.type.name}" is a Type, but it is '
+            'not annotated with @Component or @Directive. During runtime this '
+            'query will never find any elements. This may become an error in '
+            'future versions of AngularDart',
+      );
+    }
     return [
       new CompileTokenMetadata(
         identifier: new CompileIdentifierMetadata(
