@@ -578,6 +578,12 @@ abstract class _ViewQuery extends _Query {
 ///   List<Element> children;
 /// }
 /// ```
+///
+/// **WARNING**: Queries such as [ViewChildren], [ContentChildren] and related
+/// are only meant to be used on _static_ content in the template. For example
+/// writing a custom structural directive (like `*ngIf`) that changes the
+/// structure of the DOM in custom ways will not work properly with queries and
+/// could cause runtime type errors.
 class ViewChildren extends _ViewQuery {
   const ViewChildren(
     Object selector, {
