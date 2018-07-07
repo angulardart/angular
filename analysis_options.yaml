@@ -1,5 +1,4 @@
 analyzer:
-  strong-mode: true
   errors:
     unused_element: error
     unused_import: error
@@ -12,8 +11,8 @@ analyzer:
     # The noise of deprecations isn't worth the effort.
     deprecated_member_use: ignore
   exclude:
-    - .dart_tool/**
-    - build/**
+    - "*/.dart_tool/**"
+    - "*/build/**"
 
 linter:
   rules:
