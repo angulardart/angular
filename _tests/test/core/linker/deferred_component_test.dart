@@ -15,28 +15,21 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should load a @deferred component', () async {
-    final fixture = await NgTestBed
-        .forComponent<SimpleContainerTest>(
-          ng.SimpleContainerTestNgFactory,
-        )
-        .create();
+    final fixture = await NgTestBed.forComponent<SimpleContainerTest>(
+      ng.SimpleContainerTestNgFactory,
+    ).create();
 
-    SimpleContainerTest comp;
-    await fixture.update((SimpleContainerTest component) {
-      comp = component;
-    });
-    await comp.waitForDeferred();
+    // We only test this in DDC so a new macro-task is sufficient.
+    await new Future.delayed(Duration.zero);
     final view = fixture.rootElement.querySelector('my-deferred-view');
     expect(view, isNotNull);
     expect(fixture.text, contains('Title:'));
   });
 
   test('should load a @deferred component nested in an *ngIf', () async {
-    final fixture = await NgTestBed
-        .forComponent<NestedContainerTest>(
-          ng.NestedContainerTestNgFactory,
-        )
-        .create();
+    final fixture = await NgTestBed.forComponent<NestedContainerTest>(
+      ng.NestedContainerTestNgFactory,
+    ).create();
     Element view = fixture.rootElement.querySelector('my-deferred-view');
     expect(view, isNull);
 
@@ -46,26 +39,40 @@ void main() {
   });
 
   test('should pass property values to an @deferred component', () async {
-    final fixture = await NgTestBed
-        .forComponent<PropertyContainerTest>(
-          ng.PropertyContainerTestNgFactory,
-        )
-        .create();
+    final fixture = await NgTestBed.forComponent<PropertyContainerTest>(
+      ng.PropertyContainerTestNgFactory,
+    ).create();
     expect(fixture.text, contains('Title: Hello World'));
   });
 
   test('should listen to events from an @deferred component', () async {
-    final fixture = await NgTestBed
-        .forComponent<EventContainerTest>(
-          ng.EventContainerTestNgFactory,
-        )
-        .create();
+    final fixture = await NgTestBed.forComponent<EventContainerTest>(
+      ng.EventContainerTestNgFactory,
+    ).create();
     final div = fixture.rootElement.querySelector('my-deferred-view > button');
     expect(fixture.text, contains('Events: 0'));
     await fixture.update((_) {
       div.click();
     });
     expect(fixture.text, contains('Events: 1'));
+  });
+
+  test('should be notified when a deferred component is loaded', () async {
+    final fixture = await NgTestBed.forComponent<LoadNotifierTest>(
+      ng.LoadNotifierTestNgFactory,
+    ).create(beforeChangeDetection: expectAsync1((comp) {
+      expect(comp.child1, isNull);
+      expect(comp.child2, isNull);
+      expect(comp.children, isNull);
+    }));
+    // We only test this in DDC so a new macro-task is sufficient.
+    await new Future.delayed(Duration.zero);
+    expect(fixture.assertOnlyInstance.child1, isNotNull);
+    expect(fixture.assertOnlyInstance.child2, isNotNull);
+    expect(fixture.assertOnlyInstance.children, [
+      fixture.assertOnlyInstance.child1,
+      fixture.assertOnlyInstance.child2,
+    ]);
   });
 }
 
@@ -82,20 +89,11 @@ class SimpleContainerTest {
   final ChangeDetectorRef cdRef;
 
   SimpleContainerTest(this.cdRef);
-
-  Future waitForDeferred() async {
-    // TODO(matanl): Add proper support to this instead of using a timer.
-    await new Future.delayed(Duration.zero);
-    // TODO(het): remove this once angular_test supports waiting for deferred
-    // components
-    // var view = (cdRef as ViewRefImpl).appView as AppView;
-    // return Future.wait(view.deferredLoads);
-  }
 }
 
 @Component(
   selector: 'nested-container',
-  directives: const [DeferredChildComponent, NgIf],
+  directives: [DeferredChildComponent, NgIf],
   template: r'''
     <section *ngIf="show">
       <my-deferred-view @deferred></my-deferred-view>
@@ -108,7 +106,7 @@ class NestedContainerTest {
 
 @Component(
   selector: 'property-container',
-  directives: const [DeferredChildComponent],
+  directives: [DeferredChildComponent],
   template: r'''
     <section>
       <my-deferred-view @deferred [title]="'Hello World'"></my-deferred-view>
@@ -119,7 +117,7 @@ class PropertyContainerTest {}
 
 @Component(
   selector: 'event-container',
-  directives: const [DeferredChildComponent],
+  directives: [DeferredChildComponent],
   template: r'''
     <section>
       Events:&ngsp;{{count}}
@@ -133,4 +131,23 @@ class EventContainerTest {
   void onSelected() {
     count++;
   }
+}
+
+@Component(
+  selector: 'load-notifier',
+  directives: [DeferredChildComponent],
+  template: r'''
+    <my-deferred-view @deferred #ref1></my-deferred-view>
+    <my-deferred-view @deferred #ref2></my-deferred-view>
+  ''',
+)
+class LoadNotifierTest {
+  @ViewChild('ref1')
+  DeferredChildComponent child1;
+
+  @ViewChild('ref2')
+  DeferredChildComponent child2;
+
+  @ViewChildren(DeferredChildComponent)
+  List<DeferredChildComponent> children;
 }
