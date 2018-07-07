@@ -322,8 +322,9 @@ class FactoryProvider<T> extends Provider<T> {
 /// ```
 ///
 /// **NOTE**: The AngularDart compiler has limited heuristics for supporting
-/// complex nested objects beyond simple literals. If you encounter problems
-/// it is recommended to use [FactoryProvider] instead.
+/// complex nested objects beyond simple literals, including collection literals
+/// like a [List] or [Map] where you might expect specific reified types. If you
+/// encounter problems it is recommended to use [FactoryProvider] instead.
 @optionalTypeArgs
 class ValueProvider<T> extends Provider<T> {
   const factory ValueProvider(

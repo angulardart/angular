@@ -20,6 +20,7 @@ practices** from the developers of the AngularDart framework.
     *   [DO use the "named" providers](#do-use-the-named-providers)
     *   [DO use factories for
         configuration](#do-use-factories-for-configuration)
+    *   [AVOID `ValueProvider` for complex types](#avoid-valueprovider-for-complex-types)
     *   [DO use `const` providers](#do-use-const-providers)
     *   [DO use the `.forToken` constructor for
         tokens](#do-use-the-fortoken-constructor-for-tokens)
@@ -96,7 +97,7 @@ Provider bindUser(Flags flags) {
 **GOOD**:
 
 ```dart
-const FactoryProvider(User, createUserFromFlags);
+const provideUser = FactoryProvider(User, createUserFromFlags);
 
 User createUserFromFlags(Flags flags) {
   return flags.isAdminUser ? new AdminUser() : new RegularUser();
@@ -105,6 +106,70 @@ User createUserFromFlags(Flags flags) {
 
 The value provided is still dynamically determined, but the key (`User`) can be
 determined at compile time.
+
+### AVOID `ValueProvider` for complex types
+
+Similar to [DO use factories for configuration](#do-use-factories-for-configuration),
+`ValueProvider` is poorly suited for complex `const` objects or objects where
+the reified type argument(s) are significant.
+
+**BAD**:
+
+There is an existing pattern, `MultiToken`, exactly for this purpose:
+
+```dart
+const adminUsers = OpaqueToken<List<String>>('adminUsers');
+const provideNames = ValueProvider.forToken(adminUsers, ['Maeve', 'Dolores']);
+``` 
+
+**GOOD**:
+
+```dart
+const adminUsers = MultiToken<String>('adminUsers');
+const provideNames = [
+  ValueProvider.forToken(adminUsers, 'Maeve'),
+  ValueProvider.forToken(adminUsers, 'Dolores'),
+];
+```
+
+**BAD**:
+
+```dart
+class CampaignValue {
+  final String name;
+  final int campaignId;
+  final List<String> metadata;
+  
+  const CampaignValue({this.name, this.campaignId, this.metadata});
+}
+
+const provideCampaignValue = ValueProvider(CampaignValue, CampaignValue(
+  name: 'Westworld',
+  campaignId: 1001,
+  metadata: [
+    'VALLEY_BEYOND',
+  ],
+));
+```
+
+**GOOD**:
+
+Using a custom factory function is better than relying on AngularDart to
+understand the correct way(s) to re-create your custom `const` objects:
+
+```dart
+const provideCampaignValue = FactoryProvider(CampaignValue, createCampaign);
+
+CampaignValue createCampaign() {
+  return const CampaignValue(
+    name: 'Westworld',
+    campaignId: 1001,
+    metadata: [
+     'VALLEY_BEYOND',
+    ],
+  );
+}
+```
 
 ### DO Use `const` providers
 
