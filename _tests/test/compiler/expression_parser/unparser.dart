@@ -79,6 +79,12 @@ class Unparser implements AstVisitor {
       isFirst = false;
       _visit(arg);
     }
+    ast.namedArgs.forEach((name, arg) {
+      if (!isFirst) sb.write(", ");
+      isFirst = false;
+      sb.write("$name: ");
+      _visit(arg);
+    });
     sb.write(")");
   }
 
@@ -159,6 +165,12 @@ class Unparser implements AstVisitor {
       isFirst = false;
       _visit(arg);
     }
+    ast.namedArgs.forEach((name, arg) {
+      if (!isFirst) sb.write(", ");
+      isFirst = false;
+      sb.write("$name: ");
+      _visit(arg);
+    });
     sb.write(")");
   }
 
@@ -184,6 +196,12 @@ class Unparser implements AstVisitor {
       isFirst = false;
       _visit(arg);
     }
+    ast.namedArgs.forEach((name, arg) {
+      if (!isFirst) sb.write(", ");
+      isFirst = false;
+      sb.write("$name: ");
+      _visit(arg);
+    });
     sb.write(")");
   }
 

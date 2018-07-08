@@ -156,7 +156,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       var createTemplateRefExpr = o
           .importExpr(Identifiers.TemplateRef)
           .instantiate([this.appViewContainer, view.viewFactory],
-              o.importType(Identifiers.TemplateRef));
+              type: o.importType(Identifiers.TemplateRef));
       var provider = new CompileProviderMetadata(
           token: identifierToken(Identifiers.TemplateRef),
           useValue: createTemplateRefExpr);

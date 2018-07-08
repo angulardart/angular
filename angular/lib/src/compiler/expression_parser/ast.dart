@@ -10,6 +10,13 @@ class AST {
   String toString() => 'AST';
 }
 
+class NamedExpr extends AST {
+  final String name;
+  final AST expression;
+
+  NamedExpr(this.name, this.expression);
+}
+
 class EmptyExpr extends AST {
   @override
   R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
@@ -193,7 +200,13 @@ class MethodCall extends AST {
   AST receiver;
   String name;
   List<AST> args;
-  MethodCall(this.receiver, this.name, this.args);
+  Map<String, AST> namedArgs;
+  MethodCall(
+    this.receiver,
+    this.name,
+    this.args, [
+    this.namedArgs = const {},
+  ]);
 
   @override
   R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
@@ -204,7 +217,13 @@ class SafeMethodCall extends AST {
   AST receiver;
   String name;
   List<AST> args;
-  SafeMethodCall(this.receiver, this.name, this.args);
+  Map<String, AST> namedArgs;
+  SafeMethodCall(
+    this.receiver,
+    this.name,
+    this.args, [
+    this.namedArgs = const {},
+  ]);
 
   @override
   R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
@@ -214,7 +233,12 @@ class SafeMethodCall extends AST {
 class FunctionCall extends AST {
   AST target;
   List<AST> args;
-  FunctionCall(this.target, this.args);
+  Map<String, AST> namedArgs;
+  FunctionCall(
+    this.target,
+    this.args, [
+    this.namedArgs = const {},
+  ]);
 
   @override
   R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
@@ -414,15 +438,23 @@ class AstTransformer implements AstVisitor<AST, Null> {
 
   @override
   AST visitMethodCall(MethodCall ast, _) => new MethodCall(
-      ast.receiver.visit(this), ast.name, this._visitAll(ast.args));
+      ast.receiver.visit(this),
+      ast.name,
+      _visitAll(ast.args),
+      _visitAllNamed(ast.namedArgs));
 
   @override
   AST visitSafeMethodCall(SafeMethodCall ast, _) => new SafeMethodCall(
-      ast.receiver.visit(this), ast.name, this._visitAll(ast.args));
+      ast.receiver.visit(this),
+      ast.name,
+      _visitAll(ast.args),
+      _visitAllNamed(ast.namedArgs));
 
   @override
-  AST visitFunctionCall(FunctionCall ast, _) =>
-      new FunctionCall(ast.target.visit(this), this._visitAll(ast.args));
+  AST visitFunctionCall(FunctionCall ast, _) => new FunctionCall(
+      ast.target.visit(this),
+      _visitAll(ast.args),
+      _visitAllNamed(ast.namedArgs));
 
   @override
   AST visitLiteralArray(LiteralArray ast, _) =>
@@ -473,6 +505,14 @@ class AstTransformer implements AstVisitor<AST, Null> {
     for (var i = 0; i < asts.length; ++i) {
       res[i] = asts[i].visit(this);
     }
+    return res;
+  }
+
+  Map<String, AST> _visitAllNamed(Map<String, AST> named) {
+    var res = new Map<String, AST>();
+    named.forEach((name, ast) {
+      res[name] = ast.visit(this);
+    });
     return res;
   }
 }

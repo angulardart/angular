@@ -166,11 +166,13 @@ void main() {
           checkAction("add(1, 2)");
           checkAction("a.add(1, 2)");
           checkAction("fn().add(1, 2)");
+          checkAction("fn(a: 1)");
         });
       });
       group("functional calls", () {
         test("should parse function calls", () {
           checkAction("fn()(1, 2)");
+          checkAction("fn()(a: 1)");
         });
       });
       group("conditional", () {
@@ -261,6 +263,8 @@ void main() {
           checkBinding("true | a", "(true | a)");
           checkBinding("a | b:c | d", "((a | b:c) | d)");
           checkBinding("a | b:(c | d)", "(a | b:(c | d))");
+          checkBinding("a(n: (b | c))");
+          checkBinding("a(n: (a | b:c | d))", "a(n: ((a | b:c) | d))");
         });
         test("should only allow identifier or keyword as formatter names", () {
           expectBindingError("\"Foo\"|(", throwsWith("identifier or keyword"));

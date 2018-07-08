@@ -133,7 +133,7 @@ class OfflineCompiler {
                       new o.ArrayType(null, [o.TypeModifier.Const]),
                     ),
             ],
-            o.importType(
+            type: o.importType(
               Identifiers.ComponentFactory,
               factoryType,
               [o.TypeModifier.Const],
