@@ -100,6 +100,10 @@ class CompilerFlags {
   @experimental
   final bool emitInjectableFactories;
 
+  /// Whether to emit `export {{file.dart}}` in `file.template.dart`.
+  @experimental
+  final bool exportUserCodeFromTemplate;
+
   const CompilerFlags({
     this.genDebugInfo = false,
     this.i18nEnabled = false,
@@ -109,6 +113,7 @@ class CompilerFlags {
     this.forceMinifyWhitespace = false,
     this.emitComponentFactories = true,
     this.emitInjectableFactories = true,
+    this.exportUserCodeFromTemplate = true,
   });
 
   /// Creates flags by parsing command-line arguments.
