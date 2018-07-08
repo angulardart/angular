@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular_compiler/angular_compiler.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:source_gen/source_gen.dart' show LibraryReader;
 import 'package:code_builder/code_builder.dart';
 
@@ -21,6 +22,7 @@ String buildGeneratedCode(
   TemplateCompilerOutputs outputs,
   String sourceFile,
   String libraryName,
+  CompilerFlags flags,
 ) {
   final buffer = new StringBuffer();
 
@@ -45,7 +47,9 @@ String buildGeneratedCode(
 
   // Write the input file as an import and an export.
   buffer.writeln("import '$sourceFile';");
-  buffer.writeln("export '$sourceFile';");
+  if (flags.exportUserCodeFromTemplate) {
+    buffer.writeln("export '$sourceFile';");
+  }
 
   // Write all other imports and exports out directly.
   final astLibrary = element.definingCompilationUnit.computeNode();

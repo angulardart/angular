@@ -33,8 +33,11 @@ class TemplateOutliner implements Builder {
 
   String get _appViewClass => 'AppView';
 
+  final bool exportUserCodeFromTemplate;
+
   TemplateOutliner({
     @required String extension,
+    @required this.exportUserCodeFromTemplate,
   })  : _extension = extension,
         buildExtensions = {
           '.dart': [extension],
@@ -82,10 +85,12 @@ class TemplateOutliner implements Builder {
       }
     }
     final output = new StringBuffer('$_analyzerIgnores\n');
-    output
-      ..writeln('// The .template.dart files also export the user code.')
-      ..writeln("export '${p.basename(buildStep.inputId.path)}';")
-      ..writeln();
+    if (exportUserCodeFromTemplate) {
+      output
+        ..writeln('// The .template.dart files also export the user code.')
+        ..writeln("export '${p.basename(buildStep.inputId.path)}';")
+        ..writeln();
+    }
     if (components.isNotEmpty ||
         directives.isNotEmpty ||
         injectors.isNotEmpty) {

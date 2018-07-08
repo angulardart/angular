@@ -17,9 +17,6 @@ Future<String> generate(
   return processTemplates(library.element, buildStep, flags).then((outputs) {
     if (outputs == null) {
       // This will be tree-shaken (100% pure no-op).
-      //
-      // If we ever have a global way of saying "--fast-boot-only", then we
-      // could emit a blank file. Probably not worth it at this point.
       return 'void initReflector() {}';
     }
     return buildGeneratedCode(
@@ -27,6 +24,7 @@ Future<String> generate(
       outputs,
       fileName(buildStep.inputId),
       library.element.name,
+      flags,
     );
   });
 }
