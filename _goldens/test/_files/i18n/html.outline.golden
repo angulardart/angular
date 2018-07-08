@@ -12,7 +12,6 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'html.dart' as _user;
 
 // Required for "type inference" (scoping).
-import 'package:angular/angular.dart';
 
 // For @Component class I18nHtmlComponent.
 external List<dynamic> get styles$I18nHtmlComponent;

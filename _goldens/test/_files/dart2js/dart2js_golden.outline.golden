@@ -12,8 +12,6 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'dart2js_golden.dart' as _user;
 
 // Required for "type inference" (scoping).
-import 'package:angular/angular.dart';
-import 'dart2js_golden.template.dart' as ng;
 
 // For @Component class RootComponent.
 external List<dynamic> get styles$RootComponent;

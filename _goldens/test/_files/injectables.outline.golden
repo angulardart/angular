@@ -12,8 +12,6 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'injectables.dart' as _user;
 
 // Required for "type inference" (scoping).
-import 'dart:html' as html;
-import 'package:angular/angular.dart';
 
 // For @Component class InjectableComponent.
 external List<dynamic> get styles$InjectableComponent;

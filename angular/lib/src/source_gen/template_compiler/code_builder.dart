@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:source_gen/source_gen.dart' show LibraryReader;
@@ -47,12 +46,14 @@ String buildGeneratedCode(
   buffer.writeln("import '$sourceFile';");
   buffer.writeln("export '$sourceFile';");
 
-  // Write all other imports and exports out directly.
-  final astLibrary = element.definingCompilationUnit.computeNode();
-  for (final directive in astLibrary.directives) {
-    if ((directive is ImportDirective && directive.deferredKeyword == null) ||
-        buffer is ExportDirective) {
-      buffer.writeln(directive.toSource());
+  // Write all other imports out directly.
+  for (final d in element.imports) {
+    if (!d.isDeferred && d.uri != null) {
+      var directive = "import '${d.uri}'";
+      if (d.prefix != null) {
+        directive += ' as ${d.prefix.name}';
+      }
+      buffer.writeln('$directive;');
     }
   }
 
