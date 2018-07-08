@@ -132,21 +132,30 @@ abstract class Expression {
   /// If [checked] is specified, the call will make a safe null check before
   /// calling using '?' operator.
   InvokeMethodExpr callMethod(
-      dynamic /* String | BuiltinMethod */ name, List<Expression> params,
-      {bool checked = false}) {
-    return new InvokeMethodExpr(this, name, params, checked: checked);
+    dynamic /* String | BuiltinMethod */ name,
+    List<Expression> params, {
+    bool checked = false,
+    Map<String, Expression> namedParams,
+  }) {
+    return new InvokeMethodExpr(this, name, params,
+        checked: checked, namedArgs: namedParams);
   }
 
-  InvokeFunctionExpr callFn(List<Expression> params) {
-    return new InvokeFunctionExpr(this, params);
+  InvokeFunctionExpr callFn(
+    List<Expression> params, {
+    Map<String, Expression> namedParams,
+  }) {
+    return new InvokeFunctionExpr(this, params, namedArgs: namedParams);
   }
 
   InstantiateExpr instantiate(
-    List<Expression> params, [
+    List<Expression> params, {
+    Map<String, Expression> namedParams,
     OutputType type,
     List<OutputType> genericTypes,
-  ]) {
-    return new InstantiateExpr(this, params, type, genericTypes);
+  }) {
+    return new InstantiateExpr(this, params, type: type, types: genericTypes,
+        namedArgs: namedParams);
   }
 
   ConditionalExpr conditional(Expression trueCase, [Expression falseCase]) {
@@ -381,13 +390,15 @@ enum BuiltinMethod { ConcatArray, SubscribeObservable }
 class InvokeMethodExpr extends Expression {
   final Expression receiver;
   final List<Expression> args;
+  final Map<String, Expression> namedArgs;
+
   String name;
   BuiltinMethod builtin;
   final bool checked;
 
   InvokeMethodExpr(
       this.receiver, dynamic /* String | BuiltinMethod */ method, this.args,
-      {OutputType outputType, this.checked})
+      {OutputType outputType, this.checked, this.namedArgs})
       : super(outputType) {
     assert(() {
       for (int len = args.length, i = 0; i < len; i++) {
@@ -414,9 +425,14 @@ class InvokeMethodExpr extends Expression {
 class InvokeMemberMethodExpr extends Expression {
   final List<Expression> args;
   final String methodName;
+  final Map<String, Expression> namedArgs;
 
-  InvokeMemberMethodExpr(this.methodName, this.args, {OutputType outputType})
-      : super(outputType);
+  InvokeMemberMethodExpr(
+    this.methodName,
+    this.args, {
+    OutputType outputType,
+    this.namedArgs,
+  }) : super(outputType);
 
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
@@ -427,7 +443,13 @@ class InvokeMemberMethodExpr extends Expression {
 class InvokeFunctionExpr extends Expression {
   final Expression fn;
   final List<Expression> args;
-  InvokeFunctionExpr(this.fn, this.args, [OutputType type]) : super(type);
+  final Map<String, Expression> namedArgs;
+  InvokeFunctionExpr(
+    this.fn,
+    this.args, {
+    OutputType type,
+    this.namedArgs,
+  }) : super(type);
 
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
@@ -439,9 +461,15 @@ class InstantiateExpr extends Expression {
   final Expression classExpr;
   final List<Expression> args;
   final List<OutputType> types;
+  final Map<String, Expression> namedArgs;
 
-  InstantiateExpr(this.classExpr, this.args, [OutputType type, this.types])
-      : super(type) {
+  InstantiateExpr(
+    this.classExpr,
+    this.args, {
+    OutputType type,
+    this.types,
+    this.namedArgs,
+  }) : super(type) {
     assert(() {
       for (int len = args.length, i = 0; i < len; i++) {
         if (args[i] == null) {
@@ -976,7 +1004,7 @@ class _ExpressionTransformer<C>
   @override
   Expression visitInvokeFunctionExpr(InvokeFunctionExpr ast, C context) {
     return new InvokeFunctionExpr(ast.fn.visitExpression(this, context),
-        this.visitAllExpressions(ast.args, context), ast.type);
+        this.visitAllExpressions(ast.args, context), type: ast.type);
   }
 
   @override
@@ -984,8 +1012,8 @@ class _ExpressionTransformer<C>
     return new InstantiateExpr(
       ast.classExpr.visitExpression(this, context),
       this.visitAllExpressions(ast.args, context),
-      ast.type,
-      ast.types,
+      type: ast.type,
+      types: ast.types,
     );
   }
 

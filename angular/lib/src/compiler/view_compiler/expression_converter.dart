@@ -222,10 +222,17 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
 
   dynamic visitFunctionCall(compiler_ast.FunctionCall ast, _Mode mode) {
     _visitingRoot = false;
+    var namedArgs = <String, o.Expression>{};
+    ast.namedArgs.forEach((name, ast) {
+      final o.Expression expression =
+          ast.visit<dynamic, _Mode>(this, _Mode.Expression);
+      namedArgs[name] = expression;
+    });
     return _convertToStatementIfNeeded(
         mode,
         ast.target.visit<dynamic, _Mode>(this, _Mode.Expression).callFn(
-            _visitAll(ast.args, _Mode.Expression).cast<o.Expression>()));
+            _visitAll(ast.args, _Mode.Expression).cast<o.Expression>(),
+            namedParams: namedArgs));
   }
 
   dynamic visitIfNull(compiler_ast.IfNull ast, _Mode mode) {
@@ -356,18 +363,24 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
   dynamic visitMethodCall(compiler_ast.MethodCall ast, _Mode mode) {
     _visitingRoot = false;
     var args = _visitAll(ast.args, _Mode.Expression).cast<o.Expression>();
+    var namedArgs = <String, o.Expression>{};
+    ast.namedArgs.forEach((name, ast) {
+      final o.Expression expression =
+          ast.visit<dynamic, _Mode>(this, _Mode.Expression);
+      namedArgs[name] = expression;
+    });
     o.Expression result;
     o.Expression receiver =
         ast.receiver.visit<dynamic, _Mode>(this, _Mode.Expression);
     if (identical(receiver, _implicitReceiverVal)) {
       var varExpr = _nameResolver.getLocal(ast.name);
       if (varExpr != null) {
-        result = varExpr.callFn(args);
+        result = varExpr.callFn(args, namedParams: namedArgs);
       } else {
         receiver = _getImplicitOrStaticReceiver(ast.name, isStaticMethod);
       }
     }
-    result ??= receiver.callMethod(ast.name, args);
+    result ??= receiver.callMethod(ast.name, args, namedParams: namedArgs);
     return _convertToStatementIfNeeded(mode, result);
   }
 

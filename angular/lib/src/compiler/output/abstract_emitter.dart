@@ -317,6 +317,12 @@ abstract class AbstractEmitterVisitor
     }
     context.print('.$name(');
     visitAllExpressions(expr.args, context, ',');
+    visitAllNamedExpressions(
+      expr.namedArgs,
+      context,
+      ',',
+      alwaysAddSeperator: expr.args.isNotEmpty,
+    );
     context.print(')');
   }
 
@@ -325,6 +331,12 @@ abstract class AbstractEmitterVisitor
       o.InvokeMemberMethodExpr expr, EmitterVisitorContext context) {
     context.print('${expr.methodName}(');
     visitAllExpressions(expr.args, context, ',');
+    visitAllNamedExpressions(
+      expr.namedArgs,
+      context,
+      ',',
+      alwaysAddSeperator: expr.args.isNotEmpty,
+    );
     context.print(')');
   }
 
@@ -390,6 +402,12 @@ abstract class AbstractEmitterVisitor
     ast.classExpr.visitExpression(this, context);
     context.print('(');
     visitAllExpressions(ast.args, context, ',');
+    visitAllNamedExpressions(
+      ast.namedArgs,
+      context,
+      ',',
+      alwaysAddSeperator: ast.args.isNotEmpty,
+    );
     context.print(')');
   }
 
@@ -559,6 +577,25 @@ abstract class AbstractEmitterVisitor
     visitAllObjects<o.Expression>(
         (expr) => expr.visitExpression(this, ctx), expressions, ctx, separator,
         newLine: newLine, keepOnSameLine: keepOnSameLine);
+  }
+
+  void visitAllNamedExpressions(
+    Map<String, o.Expression> expressions,
+    EmitterVisitorContext ctx,
+    String seperator, {
+    bool alwaysAddSeperator = false,
+  }) {
+    if (expressions == null || expressions.isEmpty) {
+      return;
+    }
+    if (alwaysAddSeperator) {
+      ctx.print(seperator);
+    }
+    expressions.forEach((name, expr) {
+      ctx.print('$name: ');
+      expr.visitExpression(this, ctx);
+      ctx.print(seperator);
+    });
   }
 
   void visitAllObjects<T>(void Function(T) handler, List<T> expressions,
