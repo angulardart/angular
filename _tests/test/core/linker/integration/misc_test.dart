@@ -195,7 +195,7 @@ class UnsafeComponent {}
 @Component(
   selector: 'named-arg-component',
   template: r'''
-    {{getName(name: 'Hello'}}
+    {{getName(name: 'Hello')}}
   ''',
 )
 class NamedArgComponent {
