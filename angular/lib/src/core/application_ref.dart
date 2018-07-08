@@ -22,7 +22,6 @@ ApplicationRef internalCreateApplicationRef(
     ngZone,
     unsafeCast(injector.get(ExceptionHandler)),
     injector,
-    unsafeCast(injector.get(Testability, null)),
   );
 }
 
@@ -36,7 +35,6 @@ class ApplicationRef extends ChangeDetectionHost {
   final ExceptionHandler _exceptionHandler;
   final Injector _injector;
   final NgZone _ngZone;
-  final Testability _testability;
 
   StreamSubscription<void> _onErrorSub;
   StreamSubscription<void> _onMicroSub;
@@ -45,7 +43,6 @@ class ApplicationRef extends ChangeDetectionHost {
     this._ngZone,
     this._exceptionHandler,
     this._injector,
-    this._testability,
   ) {
     _onErrorSub = _ngZone.onError.listen((e) {
       handleUncaughtException(
@@ -85,13 +82,17 @@ class ApplicationRef extends ChangeDetectionHost {
         replacement = newElement;
         existing.replaceWith(replacement);
       } else {
+        assert(component.location != null);
         document.body.append(component.location);
       }
-      if (_testability != null) {
+      final testability = unsafeCast<Testability>(
+        component.injector.get(Testability, null),
+      );
+      if (testability != null) {
         final registry = unsafeCast<TestabilityRegistry>(
           _injector.get(TestabilityRegistry),
         );
-        registry.registerApplication(component.location, _testability);
+        registry.registerApplication(component.location, testability);
       }
       _loadedRootComponent(component, replacement);
       return component;
