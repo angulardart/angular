@@ -48,7 +48,7 @@ String buildGeneratedCode(
 
   // Write all other imports out directly.
   for (final d in element.imports) {
-    if (!d.isDeferred) {
+    if (!d.isDeferred && d.uri != null) {
       var directive = "import '${d.uri}'";
       if (d.prefix != null) {
         directive += ' as ${d.prefix.name}';
