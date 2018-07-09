@@ -1,4 +1,10 @@
-### Bug fixes
+### New features
+
+*   A warning is produced if the compiler removes any elements
+    (such as `<script>`) from your template. This may become an error in future
+    versions of AngularDart. [Closes #1280][#1280].
+
+## Bug fixes
 
 *   Fails the build immediately if an element in a component's `pipes` list is
     unresolved.
@@ -18,6 +24,7 @@
     produced accidentally created two queries instead of one.
     [Closes #1455][#1455].
 
+[#1280]: https://github.com/dart-lang/angular/issues/1280
 [#1455]: https://github.com/dart-lang/angular/issues/1455
 
 ## 5.0.0-beta

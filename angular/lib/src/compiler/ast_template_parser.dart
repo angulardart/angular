@@ -844,9 +844,20 @@ String _getEventName(ast.EventAst event) =>
 
 /// Visitor which filters elements that are not supported in angular templates.
 class _ElementFilter extends ast.RecursiveTemplateAstVisitor<Null> {
+  static const _securityUrl =
+      'https://webdev.dartlang.org/angular/guide/security';
+
   @override
   ast.ElementAst visitElement(ast.ElementAst astNode, [_]) {
     if (_filterElement(astNode)) {
+      // TODO: Add a flag to upgrade this to an error.
+      final warning = astNode.sourceSpan.message(
+        ''
+            'Ignoring <${astNode.name}>, as this element is unsafe to bind in '
+            'a template without proper sanitization. This may become an error '
+            'in future versions of AngularDart. See $_securityUrl for details.',
+      );
+      logWarning(warning);
       return null;
     }
     return super.visitElement(astNode) as ast.ElementAst;
