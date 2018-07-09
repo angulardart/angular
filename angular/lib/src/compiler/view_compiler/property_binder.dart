@@ -179,8 +179,9 @@ void bindRenderText(
       constantRenderMethod,
       view.genDebugInfo);
   if (constantRenderMethod.isNotEmpty) {
-    view.detectChangesRenderPropertiesMethod.addStmt(new o.IfStmt(
-        DetectChangesVars.firstCheck, constantRenderMethod.finish()));
+    view.detectChangesRenderPropertiesMethod.addStmtsIfFirstCheck(
+      constantRenderMethod.finish(),
+    );
   }
   if (dynamicRenderMethod.isNotEmpty) {
     view.detectChangesRenderPropertiesMethod
@@ -325,8 +326,7 @@ void bindAndWriteToRenderer(
         isHostComponent: isHostComponent);
   }
   if (constantPropertiesMethod.isNotEmpty) {
-    targetMethod.addStmt(new o.IfStmt(
-        DetectChangesVars.firstCheck, constantPropertiesMethod.finish()));
+    targetMethod.addStmtsIfFirstCheck(constantPropertiesMethod.finish());
   }
   if (dynamicPropertiesMethod.isNotEmpty) {
     targetMethod.addStmts(dynamicPropertiesMethod.finish());
@@ -573,8 +573,9 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     }
   }
   if (constantInputsMethod.isNotEmpty) {
-    detectChangesInInputsMethod.addStmt(new o.IfStmt(
-        DetectChangesVars.firstCheck, constantInputsMethod.finish()));
+    detectChangesInInputsMethod.addStmtsIfFirstCheck(
+      constantInputsMethod.finish(),
+    );
   }
   if (dynamicInputsMethod.isNotEmpty) {
     detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
@@ -699,8 +700,9 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       fieldExprInitializer: o.literal(false));
 
   if (constantInputsMethod.isNotEmpty) {
-    detectChangesInInputsMethod.addStmt(new o.IfStmt(
-        DetectChangesVars.firstCheck, constantInputsMethod.finish()));
+    detectChangesInInputsMethod.addStmtsIfFirstCheck(
+      constantInputsMethod.finish(),
+    );
   }
   if (dynamicInputsMethod.isNotEmpty) {
     detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
