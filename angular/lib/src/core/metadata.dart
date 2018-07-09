@@ -330,24 +330,50 @@ abstract class _Query {
   });
 }
 
-/// Configures a content query.
+/// Declares a reference to multiple child nodes projected into `<ng-content>`.
 ///
-/// Content queries are set before the `ngAfterContentInit` callback is called.
+/// The annotated [List] is replaced when the DOM is updated.
 ///
 /// ### Example
 ///
 /// ```dart
-/// @Directive(selector: 'someDir')
-/// class SomeDir implements AfterContentInit {
-///   @ContentChildren(ChildDirective)
-///   QueryList<ChildDirective> contentChildren;
+/// @Component(
+///   selector: 'root-comp',
+///   directives: [TabPanelComponent, TabComponent],
+///   template: '''
+///     <tab-panel>
+///       <tab-comp></tab-comp>
+///       <tab-comp></tab-comp>
+///       <tab-comp></tab-comp>
+///     </tab-panel>
+///   ''',
+/// )
+/// class RootComponent {}
+///
+/// @Component(
+///   selector: 'tab-comp',
+///   template: 'I am a Tab!',
+/// )
+/// class TabComponent {}
+///
+/// @Component(
+///   selector: 'tab-panel',
+///   template: '<ng-content></ng-content>',
+/// )
+/// class TabPanelComponent implements AfterContentInit {
+///   @ContentChildren(TabComponent)
+///   List<TabComponent> tabs;
 ///
 ///   @override
-///   ngAfterContentInit() {
-///     // contentChildren is set
+///   void ngAfterContentInit() {
+///     for (var tab in tabs) {
+///       // Do something.
+///     }
 ///   }
 /// }
 /// ```
+///
+/// See [ViewChildren] for a full documentation of parameters and more examples.
 class ContentChildren extends _Query {
   const ContentChildren(
     Object selector, {
@@ -360,24 +386,13 @@ class ContentChildren extends _Query {
         );
 }
 
-/// Configures a content query.
+/// Declares a reference to a single child node projected into `<ng-content>`.
 ///
-/// Content queries are set before the `ngAfterContentInit` callback is called.
+/// This annotation semantically similar to [ContentChildren], but instead
+/// represents a single (or first, if more than one is found) node being queried
+/// - similar to `querySelector` instead of `querySelectorAll`.
 ///
-/// ### Example
-///
-/// ```dart
-/// @Directive(selector: 'someDir')
-/// class SomeDir implements AfterContentInit {
-///   @ContentChild(ChildDirective)
-///   Query<ChildDirective> contentChild;
-///
-///   @override
-///   ngAfterContentInit() {
-///     // contentChild is set
-///   }
-/// }
-/// ```
+/// See [ContentChildren] and [ViewChildren] for full documentation.
 class ContentChild extends _Query {
   const ContentChild(
     Object selector, {
@@ -404,24 +419,34 @@ abstract class _ViewQuery extends _Query {
         );
 }
 
-/// Declares a reference to multiple child elements.
+/// Declares a reference to multiple child nodes in a component's template.
 ///
-/// The list is automatically updated when the DOM is updated.
+/// The annotated [List] is replaced when the DOM is updated.
 ///
-/// The `ViewChildren` annotation takes an argument that specifies the elements
-/// to be selected.
+/// The annotation requires a [selector] argument:
 ///
-/// - If the argument is a [Type], directives or components with the type will
-///   be bound.
+/// - If the argument is a [Type], directives or components with that exact type
+///   will be bound. A type that is _not_ a `class` annotated with either
+///   `@Directive` or `@Component` will not work, and may become a compile-time
+///   error.
 /// - If the argument is a [String], the string is interpreted as a list of
 ///   comma-separated selectors.  For each selector, an element containing the
 ///   matching template variable (e.g. `#child`) will be bound.
 ///
-/// View children are set before the `ngAfterViewInit` callback is called.
+/// Optionally, a [read] parameter may be specified in order to read a specific
+/// property on the bound directive, component, or element. Common values
+/// include the types `TemplateRef`, `ViewContainerRef`, `Element`, or the
+/// string value of [Directive.exportAs] (when it is ambiguous what node to
+/// select from the template).,
 ///
-/// ### Example
+/// View children are set before the `ngAfterViewInit` method is invoked, and
+/// may be updated before the `ngAfterViewChecked` method is invoked. The
+/// preferred method for being notified of the list instance changing is
+/// creating a _setter_ instead of using a field.
 ///
-/// With type selector:
+/// ### Examples
+///
+/// With a [Type] selector:
 ///
 /// ```dart
 /// @Component(
@@ -429,7 +454,7 @@ abstract class _ViewQuery extends _Query {
 ///   template: '<p>child</p>'
 /// )
 /// class ChildCmp {
-///   doSomething() {}
+///   void doSomething() {}
 /// }
 ///
 /// @Component(
@@ -439,30 +464,31 @@ abstract class _ViewQuery extends _Query {
 ///     <child-cmp></child-cmp>
 ///     <child-cmp></child-cmp>
 ///   ''',
-///   directives: const [ChildCmp]
+///   directives: [ChildCmp],
 /// )
 /// class SomeCmp implements AfterViewInit {
 ///   @ViewChildren(ChildCmp)
-///   QueryList<ChildCmp> children;
+///   List<ChildCmp> children;
 ///
 ///   @override
-///   ngAfterViewInit() {
+///   void ngAfterViewInit() {
 ///     // children are set
-///     for ( var child in children ) {
+///     for (var child in children) {
 ///       child.doSomething();
 ///     }
 ///   }
 /// }
 /// ```
 ///
-/// With string selector:
+/// With a [String] selector:
 ///
 /// ```dart
 /// @Component(
 ///   selector: 'child-cmp',
-///   template: '<p>child</p>')
+///   template: '<p>child</p>',
+/// )
 /// class ChildCmp {
-///   doSomething() {}
+///   void doSomething() {}
 /// }
 ///
 /// @Component(
@@ -472,20 +498,95 @@ abstract class _ViewQuery extends _Query {
 ///     <child-cmp #child2></child-cmp>
 ///     <child-cmp #child3></child-cmp>
 ///   ''',
-///   directives: const [ChildCmp])
+///   directives: [ChildCmp],
+/// )
 /// class SomeCmp implements AfterViewInit {
 ///   @ViewChildren('child1, child2, child3')
 ///   List<ChildCmp> children;
 ///
 ///   @override
-///   ngAfterViewInit() {
-///     // children are set
-///     for ( var child in children ) {
+///   void ngAfterViewInit() {
+///     // Initial children are set
+///     for (var child in children) {
 ///       child.doSomething();
 ///     }
 ///   }
 /// }
 /// ```
+///
+/// Using a _setter_ for update notifications:
+///
+/// ```dart
+/// @Component(
+///   selector: 'child-cmp',
+///   template: '<p>child</p>',
+/// )
+/// class ChildCmp {
+///   void doSomething() {}
+/// }
+///
+/// @Component(
+///   selector: 'some-cmp',
+///   template: '''
+///     <child-cmp *ngIf="condition1" #child1></child-cmp>
+///     <child-cmp *ngIf="condition2" #child2></child-cmp>
+///     <child-cmp *ngIf="condition3" #child3></child-cmp>
+///   ''',
+///   directives: [ChildCmp],
+/// )
+/// class SomeCmp {
+///   @Input()
+///   bool condition1 = false;
+///
+///   @Input()
+///   bool condition2 = false;
+///
+///   @Input()
+///   bool condition3 = false;
+///
+///   @ViewChildren('child1, child2, child3')
+///   set children(List<ChildCmp> children) {
+///     // Note above that the child components may or may not be created (they
+///     // are guarded with '*ngIf'). This setter is called every time the
+///     // visible children change (including the initial visibility, so we do
+///     // not need 'ngAfterViewInit').
+///     for (var child in children) {
+///       child.doSomething();
+///     }
+///   }
+/// }
+///
+/// Reading an HTML element using `read`:
+///
+/// ```dart
+/// @Component(
+///   selector: 'child-cmp',
+///   template: '<p>child</p>',
+/// )
+/// class ChildCmp {
+///   void doSomething() {}
+/// }
+///
+/// @Component(
+///   selector: 'some-cmp',
+///   template: '''
+///     <child-cmp #child1></child-cmp>
+///     <child-cmp #child2></child-cmp>
+///     <child-cmp #child3></child-cmp>
+///   ''',
+///   directives: [ChildCmp],
+/// )
+/// class SomeCmp {
+///   @ViewChildren('child1, child2, child3', read: Element)
+///   List<Element> children;
+/// }
+/// ```
+///
+/// **WARNING**: Queries such as [ViewChildren], [ContentChildren] and related
+/// are only meant to be used on _static_ content in the template. For example
+/// writing a custom structural directive (like `*ngIf`) that changes the
+/// structure of the DOM in custom ways will not work properly with queries and
+/// could cause runtime type errors.
 class ViewChildren extends _ViewQuery {
   const ViewChildren(
     Object selector, {
@@ -497,78 +598,31 @@ class ViewChildren extends _ViewQuery {
         );
 }
 
-/// Declares a reference to a single child element.
+/// Declares a reference to a single child node in a component's template.
 ///
-/// The `ViewChild` annotation takes an argument to select elements.
-///
-/// - If the argument is a [Type], a directive or a component with the type will
-///   be bound.
-/// - If the argument is a [String], the string is interpreted as a selector. An
-///   element containing the matching template variable (e.g. `#child`) will be
-///   bound.
-///
-/// In either case, `@ViewChild()` assigns the first (looking from above)
-/// element if there are multiple matches.
-///
-/// View child is set before the `ngAfterViewInit` callback is called.
-///
-/// ### Example
-///
-/// With type selector:
+/// This annotation semantically similar to [ViewChildren], but instead
+/// represents a single (or first, if more than one is found) node being queried
+/// - similar to `querySelector` instead of `querySelectorAll`.
 ///
 /// ```dart
 /// @Component(
 ///   selector: 'child-cmp',
-///   template: '<p>child</p>'
+///   template: '<p>child</p>',
 /// )
-/// class ChildCmp {
-///   doSomething() {}
-/// }
+/// class ChildCmp {}
 ///
 /// @Component(
 ///   selector: 'some-cmp',
 ///   template: '<child-cmp></child-cmp>',
-///   directives: const [ChildCmp]
+///   directives: [ChildCmp],
 /// )
-/// class SomeCmp implements AfterViewInit {
+/// class SomeCmp {
 ///   @ViewChild(ChildCmp)
 ///   ChildCmp child;
-///
-///   @override
-///   ngAfterViewInit() {
-///     // child is set
-///     child.doSomething();
-///   }
 /// }
 /// ```
 ///
-/// With string selector:
-///
-/// ```dart
-/// @Component(
-///   selector: 'child-cmp',
-///   template: '<p>child</p>'
-/// )
-/// class ChildCmp {
-///   doSomething() {}
-/// }
-///
-/// @Component(
-///   selector: 'some-cmp',
-///   template: '<child-cmp #child></child-cmp>',
-///   directives: const [ChildCmp]
-/// )
-/// class SomeCmp implements AfterViewInit {
-///   @ViewChild('child')
-///   ChildCmp child;
-///
-///   @override
-///   ngAfterViewInit() {
-///     // child is set
-///     child.doSomething();
-///   }
-/// }
-/// ```
+/// See [ViewChildren] for a full documentation of parameters and more examples.
 class ViewChild extends _ViewQuery {
   const ViewChild(
     Object selector, {
