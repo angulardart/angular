@@ -22,7 +22,7 @@ and many more projects.
 >
 > You can view the documentation for the [upcoming 5.0.0 release][new_docs].
 
-[new_docs]: https://webdev-dartlang-org-dev.firebaseapp.com/
+[new_docs]: https://webdev.dartlang.org/
 
 <a href="http://news.dartlang.org/2016/03/the-new-adwords-ui-uses-dart-we-asked.html">
 <img src="https://2.bp.blogspot.com/-T50YZP5hlW4/Vv07k1PPVmI/AAAAAAAAM_Q/kVo8eImMOFUWLYqXg_xGzaWPvvlO7lhng/s0/adwords-dart.png" width="800" alt="Built with AngularDart">
