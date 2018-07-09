@@ -39,9 +39,19 @@ List<o.Expression> createSetAttributeParams(o.Expression renderNode,
   }
 }
 
+final _unsafeCastFn = o.importExpr(Identifiers.unsafeCast);
+
+/// Returns `unsafeCast<{Cast}>(expression)`.
+o.Expression _unsafeCast(o.Expression expression, [o.OutputType cast]) {
+  return _unsafeCastFn.callFn([expression], cast != null ? [cast] : const []);
+}
+
 o.Expression getPropertyInView(
-    o.Expression property, CompileView callingView, CompileView definedView,
-    {bool forceCast = false}) {
+  o.Expression property,
+  CompileView callingView,
+  CompileView definedView, {
+  bool forceCast = false,
+}) {
   if (identical(callingView, definedView)) {
     return property;
   } else {
@@ -67,10 +77,10 @@ o.Expression getPropertyInView(
               .any((field) => field.name == readMemberExpr.name) ||
           definedView.getters
               .any((field) => field.name == readMemberExpr.name)) {
-        viewProp = viewProp.cast(definedView.classType);
+        viewProp = _unsafeCast(viewProp, definedView.classType);
       }
     } else if (forceCast) {
-      viewProp = viewProp.cast(definedView.classType);
+      viewProp = _unsafeCast(viewProp, definedView.classType);
     }
     return o.replaceReadClassMemberInExpression(viewProp, property);
   }

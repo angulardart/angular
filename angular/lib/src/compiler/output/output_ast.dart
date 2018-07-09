@@ -137,8 +137,11 @@ abstract class Expression {
     return new InvokeMethodExpr(this, name, params, checked: checked);
   }
 
-  InvokeFunctionExpr callFn(List<Expression> params) {
-    return new InvokeFunctionExpr(this, params);
+  InvokeFunctionExpr callFn(
+    List<Expression> params, [
+    List<OutputType> typeArguments,
+  ]) {
+    return new InvokeFunctionExpr(this, params, typeArguments);
   }
 
   InstantiateExpr instantiate(
@@ -427,7 +430,10 @@ class InvokeMemberMethodExpr extends Expression {
 class InvokeFunctionExpr extends Expression {
   final Expression fn;
   final List<Expression> args;
-  InvokeFunctionExpr(this.fn, this.args, [OutputType type]) : super(type);
+  final List<OutputType> typeArgs;
+
+  InvokeFunctionExpr(this.fn, this.args, this.typeArgs, [OutputType type])
+      : super(type);
 
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
@@ -976,7 +982,7 @@ class _ExpressionTransformer<C>
   @override
   Expression visitInvokeFunctionExpr(InvokeFunctionExpr ast, C context) {
     return new InvokeFunctionExpr(ast.fn.visitExpression(this, context),
-        this.visitAllExpressions(ast.args, context), ast.type);
+        this.visitAllExpressions(ast.args, context), [], ast.type);
   }
 
   @override
