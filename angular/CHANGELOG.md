@@ -9,6 +9,19 @@
     runtime. This may become an error in future versions of AngularDart.
     [Closes #1220][#1220].
 
+*   It is now possible to annotate parts of a template with
+    `@preserveWhitespace` _instead_ of opting into preserving whitespace for the
+    entire template. [Closes #1295][#1295]:
+
+    ```html
+    <div>
+      <div class="whitespace-sensitive" @preserveWhitespace>
+        Hello
+        World!
+      </div>
+    </div>
+    ```
+
 ## Bug fixes
 
 *   Fails the build immediately if an element in a component's `pipes` list is
@@ -29,8 +42,9 @@
     produced accidentally created two queries instead of one.
     [Closes #1455][#1455].
 
-[#1220]: https://github.com/dart-lang/angular/issues/1280
+[#1220]: https://github.com/dart-lang/angular/issues/1220
 [#1280]: https://github.com/dart-lang/angular/issues/1280
+[#1295]: https://github.com/dart-lang/angular/issues/1295
 [#1455]: https://github.com/dart-lang/angular/issues/1455
 
 ## 5.0.0-beta

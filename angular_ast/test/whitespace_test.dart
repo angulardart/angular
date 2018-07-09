@@ -275,6 +275,27 @@ void main() {
       '<div>${'\u00A0'}</div>',
     );
   });
+
+  test('should skip nodes/trees annotated with @preserveWhitespace', () {
+    expect(
+      _parseAndMinifiy(
+        r'<div @preserveWhitespace>   <span>  </span></div>',
+      ),
+      '<div @preserveWhitespace>   <span>  </span></div>',
+    );
+    expect(
+      _parseAndMinifiy(
+        r'<ng-container @preserveWhitespace>   </ng-container>',
+      ),
+      '<ng-container @preserveWhitespace>   </ng-container>',
+    );
+    expect(
+      _parseAndMinifiy(
+        r'<template @preserveWhitespace><div>  </div></template>',
+      ),
+      '<template @preserveWhitespace><div>  </div></template>',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {

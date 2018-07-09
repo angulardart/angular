@@ -15,6 +15,24 @@ import 'recursive.dart';
 /// nodes = const MinimizeWhitespaceVisitor().visitAllRoot(nodes);
 /// ```
 class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
+  static bool _bailOutToPreserveWhitespace(StandaloneTemplateAst astNode) {
+    List<AnnotationAst> annotations = const [];
+    // TOOD(https://github.com/dart-lang/angular/issues/1460): Refactor.
+    if (astNode is ContainerAst) {
+      annotations = astNode.annotations;
+    } else if (astNode is ElementAst) {
+      annotations = astNode.annotations;
+    } else if (astNode is EmbeddedTemplateAst) {
+      annotations = astNode.annotations;
+    }
+    for (final annotation in annotations) {
+      if (annotation.name == 'preserveWhitespace') {
+        return true;
+      }
+    }
+    return false;
+  }
+
   const MinimizeWhitespaceVisitor();
 
   /// Returns [rootNodes], visited, with whitespace removed.
@@ -24,6 +42,9 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
 
   @override
   TemplateAst visitContainer(ContainerAst astNode, [_]) {
+    if (_bailOutToPreserveWhitespace(astNode)) {
+      return astNode;
+    }
     if (astNode.childNodes.isNotEmpty) {
       astNode = new ContainerAst.from(
         astNode,
@@ -37,6 +58,9 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
 
   @override
   TemplateAst visitElement(ElementAst astNode, [_]) {
+    if (_bailOutToPreserveWhitespace(astNode)) {
+      return astNode;
+    }
     if (astNode.childNodes.isNotEmpty) {
       astNode = new ElementAst.from(
         astNode,
@@ -57,9 +81,13 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
 
   @override
   TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [_]) {
+    if (_bailOutToPreserveWhitespace(astNode)) {
+      return astNode;
+    }
     if (astNode.childNodes.isNotEmpty) {
       astNode = new EmbeddedTemplateAst.from(
         astNode,
+        annotations: astNode.annotations,
         attributes: astNode.attributes,
         childNodes: _visitRemovingWhitespace(astNode.childNodes),
         events: astNode.events,

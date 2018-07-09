@@ -308,6 +308,14 @@ void main() {
     ]);
   });
 
+  test('should parse an annotation on an embedded template', () {
+    expect(parse('<template @annotation></template>'), [
+      new EmbeddedTemplateAst(annotations: [
+        new AnnotationAst('annotation'),
+      ])
+    ]);
+  });
+
   test('should include annotation value in source span', () {
     final source = '@foo="bar"';
     final template = '<p $source></p>';

@@ -1,4 +1,6 @@
 *   Add `CloseElementAst` complement into `ContainerAst`.
+*   Added support for annotations on `<template>`.
+*   The whitespace transformer now understands `@preserveWhitespace`.
 
 ## 0.5.3+3
 
