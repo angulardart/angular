@@ -691,6 +691,10 @@ everyone).
     are static reads and are immutable (such as `String`). This allows us to
     optimize the generated code.
 
+*   Some changes to how template files import 'dart:core' to accomodate analyzer
+    changes that make 'dynamic' a member of 'dart:core'. These should not have
+    user-visible effects.
+
 ### Application Bootstrap
 
 #### New features

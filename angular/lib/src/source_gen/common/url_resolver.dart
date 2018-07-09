@@ -6,6 +6,13 @@ import 'package:build/build.dart';
 /// Note that this needs to check librarySource instead of just source to handle
 /// part files correctly.
 String moduleUrl(Element element) {
+  // TODO(mfairhurst) delete this check. This is just to preserve goldens when
+  // https://dart-review.googlesource.com/c/sdk/+/62730 is rolled out. It has
+  // no user-facing effects.
+  if (element.kind == ElementKind.DYNAMIC) {
+    return null;
+  }
+
   var source = element.librarySource ?? element.source;
   var uri = source?.uri?.toString();
   if (uri == null) return null;
