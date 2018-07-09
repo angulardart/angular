@@ -157,7 +157,7 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponentHost0(AppView<dyna
   return new _ViewQueriesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.QueriesComponent> _QueriesComponentNgFactory = const ComponentFactory('queries', viewFactory_QueriesComponentHost0, _QueriesComponentMetadata);
+const ComponentFactory<import1.QueriesComponent> _QueriesComponentNgFactory = const ComponentFactory('queries', viewFactory_QueriesComponentHost0);
 ComponentFactory<import1.QueriesComponent> get QueriesComponentNgFactory {
   return _QueriesComponentNgFactory;
 }
@@ -299,7 +299,7 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0(AppView<dynami
   return new _ViewEmbeddedQueriesHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmbeddedQueries> _EmbeddedQueriesNgFactory = const ComponentFactory('test', viewFactory_EmbeddedQueriesHost0, _EmbeddedQueriesMetadata);
+const ComponentFactory<import1.EmbeddedQueries> _EmbeddedQueriesNgFactory = const ComponentFactory('test', viewFactory_EmbeddedQueriesHost0);
 ComponentFactory<import1.EmbeddedQueries> get EmbeddedQueriesNgFactory {
   return _EmbeddedQueriesNgFactory;
 }
@@ -441,7 +441,7 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0(AppVie
   return new _ViewEmbeddedQueriesListHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmbeddedQueriesList> _EmbeddedQueriesListNgFactory = const ComponentFactory('test', viewFactory_EmbeddedQueriesListHost0, _EmbeddedQueriesListMetadata);
+const ComponentFactory<import1.EmbeddedQueriesList> _EmbeddedQueriesListNgFactory = const ComponentFactory('test', viewFactory_EmbeddedQueriesListHost0);
 ComponentFactory<import1.EmbeddedQueriesList> get EmbeddedQueriesListNgFactory {
   return _EmbeddedQueriesListNgFactory;
 }
@@ -640,15 +640,11 @@ AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesListHost0(
   return new _ViewNestedNgForQueriesListHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.NestedNgForQueriesList> _NestedNgForQueriesListNgFactory = const ComponentFactory('test', viewFactory_NestedNgForQueriesListHost0, _NestedNgForQueriesListMetadata);
+const ComponentFactory<import1.NestedNgForQueriesList> _NestedNgForQueriesListNgFactory = const ComponentFactory('test', viewFactory_NestedNgForQueriesListHost0);
 ComponentFactory<import1.NestedNgForQueriesList> get NestedNgForQueriesListNgFactory {
   return _NestedNgForQueriesListNgFactory;
 }
 
-const _QueriesComponentMetadata = const [];
-const _EmbeddedQueriesMetadata = const [];
-const _EmbeddedQueriesListMetadata = const [];
-const _NestedNgForQueriesListMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

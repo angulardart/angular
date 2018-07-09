@@ -104,7 +104,7 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0(AppView<dyna
   return new _ViewTestFooComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.TestFooComponent> _TestFooComponentNgFactory = const ComponentFactory('test-foo', viewFactory_TestFooComponentHost0, _TestFooComponentMetadata);
+const ComponentFactory<import1.TestFooComponent> _TestFooComponentNgFactory = const ComponentFactory('test-foo', viewFactory_TestFooComponentHost0);
 ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
   return _TestFooComponentNgFactory;
 }
@@ -185,7 +185,7 @@ AppView<import1.DirectiveContainerTest> viewFactory_DirectiveContainerTestHost0(
   return new _ViewDirectiveContainerTestHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DirectiveContainerTest> _DirectiveContainerTestNgFactory = const ComponentFactory('directive-container', viewFactory_DirectiveContainerTestHost0, _DirectiveContainerTestMetadata);
+const ComponentFactory<import1.DirectiveContainerTest> _DirectiveContainerTestNgFactory = const ComponentFactory('directive-container', viewFactory_DirectiveContainerTestHost0);
 ComponentFactory<import1.DirectiveContainerTest> get DirectiveContainerTestNgFactory {
   return _DirectiveContainerTestNgFactory;
 }
@@ -233,8 +233,6 @@ class FastDirectiveNgCd extends import10.DirectiveChangeDetector {
   }
 }
 
-const _TestFooComponentMetadata = const [];
-const _DirectiveContainerTestMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

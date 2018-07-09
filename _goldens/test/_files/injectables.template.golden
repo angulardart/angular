@@ -113,12 +113,11 @@ AppView<import1.InjectableComponent> viewFactory_InjectableComponentHost0(AppVie
   return new _ViewInjectableComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InjectableComponent> _InjectableComponentNgFactory = const ComponentFactory('test-injectables', viewFactory_InjectableComponentHost0, _InjectableComponentMetadata);
+const ComponentFactory<import1.InjectableComponent> _InjectableComponentNgFactory = const ComponentFactory('test-injectables', viewFactory_InjectableComponentHost0);
 ComponentFactory<import1.InjectableComponent> get InjectableComponentNgFactory {
   return _InjectableComponentNgFactory;
 }
 
-const _InjectableComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

@@ -81,12 +81,11 @@ AppView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0(AppView<dy
   return new _ViewI18nHtmlComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.I18nHtmlComponent> _I18nHtmlComponentNgFactory = const ComponentFactory('message', viewFactory_I18nHtmlComponentHost0, _I18nHtmlComponentMetadata);
+const ComponentFactory<import1.I18nHtmlComponent> _I18nHtmlComponentNgFactory = const ComponentFactory('message', viewFactory_I18nHtmlComponentHost0);
 ComponentFactory<import1.I18nHtmlComponent> get I18nHtmlComponentNgFactory {
   return _I18nHtmlComponentNgFactory;
 }
 
-const _I18nHtmlComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
