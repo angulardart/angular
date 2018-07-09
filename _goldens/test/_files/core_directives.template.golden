@@ -65,8 +65,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }
       }
-    }
-    if (firstCheck) {
       if (!identical(_ctx.bars, null)) {
         (_NgFor_1_9.ngForOf = _ctx.bars);
       }

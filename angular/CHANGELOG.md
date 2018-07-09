@@ -9,6 +9,10 @@
     additional runtime casts in production mode. Now in Dart2JS with
     `--omit-implicit-checks` the casts are removed.
 
+*   Emits more optimized code when there are multiple data bindings in a row
+    that are checked only once (such as `final` strings). Previously we
+    generated redundant code.
+
 ## 5.0.0-beta
 
 Welcome to the first release candidate of AngularDart v5.0.0, with full support

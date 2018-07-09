@@ -72,16 +72,10 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      (_FancyButtonComponent_0_5.raised = true);
-    }
-    if (firstCheck) {
-      (_FancyButtonComponent_1_5.raised = true);
-    }
-    if (firstCheck) {
-      (_FancyButtonComponent_2_5.raised = true);
-    }
-    if (firstCheck) {
-      (_FancyButtonComponent_3_5.raised = false);
+      _FancyButtonComponent_0_5.raised = true;
+      _FancyButtonComponent_1_5.raised = true;
+      _FancyButtonComponent_2_5.raised = true;
+      _FancyButtonComponent_3_5.raised = false;
     }
     _compView_0.detectChanges();
     _compView_1.detectChanges();
