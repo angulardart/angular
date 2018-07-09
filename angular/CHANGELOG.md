@@ -1,7 +1,13 @@
-## Bug fixes
+### Bug fixes
 
 *   Fails the build immediately if an element in a component's `pipes` list is
     unresolved.
+
+### Other improvements
+
+*   Fixed a bug where many queries (`@ViewChildren()` and the like) generated
+    additional runtime casts in production mode. Now in Dart2JS with
+    `--omit-implicit-checks` the casts are removed.
 
 ## 5.0.0-beta
 
