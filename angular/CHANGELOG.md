@@ -4,6 +4,11 @@
     (such as `<script>`) from your template. This may become an error in future
     versions of AngularDart. [Closes #1280][#1280].
 
+*   A warning is produced if the selector provided to a query (such as
+   `@ViewChildren(...)`) is invalid and will not produce any elements at
+    runtime. This may become an error in future versions of AngularDart.
+    [Closes #1220][#1220].
+
 ## Bug fixes
 
 *   Fails the build immediately if an element in a component's `pipes` list is
@@ -24,6 +29,7 @@
     produced accidentally created two queries instead of one.
     [Closes #1455][#1455].
 
+[#1220]: https://github.com/dart-lang/angular/issues/1280
 [#1280]: https://github.com/dart-lang/angular/issues/1280
 [#1455]: https://github.com/dart-lang/angular/issues/1455
 
