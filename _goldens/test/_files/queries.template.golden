@@ -33,6 +33,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   bool _query_q2_1_3_isDirty = true;
   bool _query_q2_1_4_isDirty = true;
   bool _query_AnotherDirective_1_5_isDirty = true;
+  bool _query_q3_1_6_isDirty = true;
   import2.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_5;
   import2.Element _el_1;
@@ -85,6 +86,12 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
         ]);
         _query_AnotherDirective_1_5_isDirty = false;
       }
+      if (_query_q3_1_6_isDirty) {
+        ctx.nestedViewChild = import8.firstOrNull(_appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
+          return [new ElementRef(nestedView._el_0)];
+        }));
+        _query_q3_1_6_isDirty = false;
+      }
     }
   }
 
@@ -116,6 +123,7 @@ class _ViewQueriesComponent1 extends AppView<import1.QueriesComponent> {
   @override
   void dirtyParentQueriesInternal() {
     import9.unsafeCast<ViewQueriesComponent0>(parentView)._query_AnotherDirective_1_5_isDirty = true;
+    import9.unsafeCast<ViewQueriesComponent0>(parentView)._query_q3_1_6_isDirty = true;
   }
 }
 
