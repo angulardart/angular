@@ -41,6 +41,9 @@ class QueriesComponent {
 
   @ViewChildren(AnotherDirective)
   List<AnotherDirective> usingTypeFromField;
+
+  @ViewChild('q3')
+  AnotherDirective nestedViewChild;
 }
 
 @Component(

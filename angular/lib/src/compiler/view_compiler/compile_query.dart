@@ -240,12 +240,6 @@ abstract class CompileQuery {
     ]);
   }
 
-  static final _flattenNodesFn = o.importExpr(Identifiers.flattenNodes);
-
-  /// Flattens a `List<List<?>>` into a `List<?>`.
-  o.Expression _flattenNodes(o.Expression nodeExpressions) =>
-      _flattenNodesFn.callFn([nodeExpressions]);
-
   /// Invoked by [addQueryResult] when the [_queryRoot] is now dirty.
   ///
   /// This means during the next change detection cycle we need to rebuild the
@@ -419,14 +413,18 @@ class _ListCompileQuery extends CompileQuery {
       : o.literalArr(values);
 
   // Returns the equivalent of `{list}.isNotEmpty ? {list}.first : null`.
-  static o.Expression _firstIfNotEmpty(o.Expression list) =>
-      list is o.LiteralArrayExpr && list.entries.isNotEmpty
-          // Optimization: .isNotEmpty always === true.
-          ? list.prop('first')
-          // Base case: Check .isNotEmpty before calling .first.
-          : list
-              .prop('isNotEmpty')
-              .conditional(list.prop('first'), o.NULL_EXPR);
+  static o.Expression _firstIfNotEmpty(o.Expression list) {
+    // Optimization: .isNotEmpty will *always* == true.
+    if (list is o.LiteralArrayExpr && list.entries.isNotEmpty) {
+      return list.prop('first');
+    }
+    // Base case: Check .isNotEmpty before calling .first.
+    //
+    // Note that the list expression could itself be a `.mapNestedValues`, so
+    // we use an external utility function to guarantee that we don't create
+    // this expression twice.
+    return _firstOrNull(list);
+  }
 
   // A single call to "mapNestedViews" is the result of this query.
   //
@@ -468,3 +466,14 @@ void addQueryToTokenMap(
     entry.add(query);
   }
 }
+
+final _flattenNodesFn = o.importExpr(Identifiers.flattenNodes);
+final _firstOrNullFn = o.importExpr(Identifiers.firstOrNull);
+
+/// Flattens a `List<List<?>>` into a `List<?>`.
+o.Expression _flattenNodes(o.Expression nodeExpressions) =>
+    _flattenNodesFn.callFn([nodeExpressions]);
+
+/// Returns `listExpression.isNotEmpty ? listExpression.first : null`.
+o.Expression _firstOrNull(o.Expression listExpression) =>
+    _firstOrNullFn.callFn([listExpression]);

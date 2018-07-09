@@ -133,6 +133,8 @@ class Identifiers {
       name: 'createTrustedHtml', moduleUrl: appViewUtilsModuleUrl);
   static final flattenNodes = new CompileIdentifierMetadata<dynamic>(
       name: "flattenNodes", moduleUrl: appViewUtilsModuleUrl);
+  static final firstOrNull = new CompileIdentifierMetadata<dynamic>(
+      name: "firstOrNull", moduleUrl: appViewUtilsModuleUrl);
   static final EMPTY_ARRAY = new CompileIdentifierMetadata<dynamic>(
       name: "EMPTY_ARRAY", moduleUrl: appViewUtilsModuleUrl);
   static final EMPTY_MAP = new CompileIdentifierMetadata<dynamic>(

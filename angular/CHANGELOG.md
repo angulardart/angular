@@ -13,6 +13,13 @@
     that are checked only once (such as `final` strings). Previously we
     generated redundant code.
 
+*   Fixed an optimization issue when `@ViewChild()` or `@ContentChild()` was
+    used on a nested element (i.e. inside a `<template>`). The code that was
+    produced accidentally created two queries instead of one.
+    [Closes #1455][#1455].
+
+[#1455]: https://github.com/dart-lang/angular/issues/1455
+
 ## 5.0.0-beta
 
 Welcome to the first release candidate of AngularDart v5.0.0, with full support
