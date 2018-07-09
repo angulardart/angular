@@ -102,7 +102,7 @@ import 'example_ad_2.template.dart' as example_2;
 @Component(
   selector: 'blog-article',
   template: '<ad-view [component]="component"></ad-view>',
-  directives: const [
+  directives: [
     AdViewComponent,
   ],
 )
@@ -156,7 +156,7 @@ import 'example_ad_2.template.dart' as example_2;
     This article is sponsored by:<br>
     <template [adView]="component"></template>
   ''',
-  directives: const [
+  directives: [
     AdViewDirective,
   ],
 )
@@ -190,7 +190,7 @@ import 'example_ad_2.template.dart' deferred as example_2;
     This article is sponsored by:<br>
     <template [adView]="component"></template>
   ''',
-  directives: const [
+  directives: [
     AdViewDirective,
   ],
 )
@@ -200,16 +200,12 @@ class BlogArticleComponent implements OnInit {
   BlogArticleComponent(this._adService);
 
   @override
-  ngOnInit() async {
+  void ngOnInit() async {
     if (_adService.showExample1) {
       await example_1.loadLibrary();
-      // Is not done automatically, because we don't know when you will load.
-      example_1.initReflector();
       component = example_1.Example1ComponentNgFactory;
     } else {
       await example_2.loadLibrary();
-      // Is not done automatically, because we don't know when you will load.
-      example_2.initReflector();
       component = example_2.Example2ComponentNgFactory;
     }
   }
@@ -217,6 +213,31 @@ class BlogArticleComponent implements OnInit {
   ComponentFactory component;
 }
 ```
+
+If you are using `SlowComponentLoader` or `ReflectiveInjector` within your
+application, you will need an additional step - calling `initReflector()`:
+
+```dart
+void ngOnInit() async {
+  if (_adService.showExample1) {
+    await example_1.loadLibrary();
+    example_1.initReflector();
+    component = example_1.Example1ComponentNgFactory;
+  } 
+}
+```
+
+Another option, for simple templates, is using `@deffered`:
+
+```html
+<ng-container *ngIf="showAds">
+  <ad-view @deferred></ad-view>
+</ng-container>
+```
+
+This is similar to the code you would write imperatively above. The component
+will be automatically deferred loading, and in Dart2JS be present in a second
+(or subsequent) download of JavaScript.
 
 ## Migration
 
@@ -281,8 +302,10 @@ class DynamicView implements OnInit {
   @override
   void ngOnInit() {
     // Now synchronous.
-    _componentRef =
-        _loader.loadNextToLocation(foo.FooComponentNgFactory, location);
+    _componentRef = _loader.loadNextToLocation(
+      foo.FooComponentNgFactory,
+      location,
+    );
   }
 
   @ViewChild('location', read: ViewContainerRef)
@@ -297,13 +320,13 @@ by the compiler (it's not generated yet!), which means code like this will not
 work:
 
 ```dart
-const provider = const ValueProvider.forToken(someToken, FooComponentNgFactory);
+const provider = ValueProvider.forToken(someToken, FooComponentNgFactory);
 ```
 
 You can work around this by using `useFactory`:
 
 ```dart
-const provider = const FactoryProvider.forToken(someToken, getNgFactory);
+const provider = FactoryProvider.forToken(someToken, getNgFactory);
 
 @Injectable()
 ComponentFactory getNgFactory() => FooComponentNgFactory;
