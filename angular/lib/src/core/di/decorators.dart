@@ -116,7 +116,7 @@ class Injectable {
 /// @Injectable()
 /// class Car {
 ///   final Engine engine;
-///   constructor(@Optional() this.engine);
+///   Car(@Optional() this.engine);
 /// }
 ///
 /// var injector = Injector.resolveAndCreate([Car]);
