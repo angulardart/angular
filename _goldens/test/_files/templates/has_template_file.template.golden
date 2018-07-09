@@ -78,12 +78,11 @@ AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponentHo
   return new _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.HasTemplateFileComponent> _HasTemplateFileComponentNgFactory = const ComponentFactory('has-template-file', viewFactory_HasTemplateFileComponentHost0, _HasTemplateFileComponentMetadata);
+const ComponentFactory<import2.HasTemplateFileComponent> _HasTemplateFileComponentNgFactory = const ComponentFactory('has-template-file', viewFactory_HasTemplateFileComponentHost0);
 ComponentFactory<import2.HasTemplateFileComponent> get HasTemplateFileComponentNgFactory {
   return _HasTemplateFileComponentNgFactory;
 }
 
-const _HasTemplateFileComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {

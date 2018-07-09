@@ -95,7 +95,7 @@ AppView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponentHost0(AppV
   return new _ViewInlinedNgIfComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InlinedNgIfComponent> _InlinedNgIfComponentNgFactory = const ComponentFactory('inlined-ngif', viewFactory_InlinedNgIfComponentHost0, _InlinedNgIfComponentMetadata);
+const ComponentFactory<import1.InlinedNgIfComponent> _InlinedNgIfComponentNgFactory = const ComponentFactory('inlined-ngif', viewFactory_InlinedNgIfComponentHost0);
 ComponentFactory<import1.InlinedNgIfComponent> get InlinedNgIfComponentNgFactory {
   return _InlinedNgIfComponentNgFactory;
 }
@@ -175,13 +175,11 @@ AppView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedN
   return new _ViewInlinedNgIfWithImmutableConditionComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent> _InlinedNgIfWithImmutableConditionComponentNgFactory = const ComponentFactory('inlined-ngif-with-immutable-condition', viewFactory_InlinedNgIfWithImmutableConditionComponentHost0, _InlinedNgIfWithImmutableConditionComponentMetadata);
+const ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent> _InlinedNgIfWithImmutableConditionComponentNgFactory = const ComponentFactory('inlined-ngif-with-immutable-condition', viewFactory_InlinedNgIfWithImmutableConditionComponentHost0);
 ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent> get InlinedNgIfWithImmutableConditionComponentNgFactory {
   return _InlinedNgIfWithImmutableConditionComponentNgFactory;
 }
 
-const _InlinedNgIfComponentMetadata = const [];
-const _InlinedNgIfWithImmutableConditionComponentMetadata = const [];
 var _visited = false;
 void initReflector() {
   if (_visited) {
