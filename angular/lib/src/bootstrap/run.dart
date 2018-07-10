@@ -69,7 +69,7 @@ Injector appInjector(InjectorFactory userProvidedInjector) {
   // We also add other top-level services with similar constraints:
   // * `AppViewUtils`
   return ngZone.run(() {
-    applicationRef = new ApplicationRefImpl(
+    applicationRef = internalCreateApplicationRef(
       ngZone,
       userInjector,
     );
