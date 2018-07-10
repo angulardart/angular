@@ -100,6 +100,16 @@ void main() {
       expect(element.attributes.containsKey('aria-disabled'), isFalse);
     });
 
+    test('should support conditional attributes on static members', () async {
+      final testBed = NgTestBed.forComponent<HostBindingConditionalStatics>(
+        ng.HostBindingConditionalStaticsNgFactory,
+      );
+      final fixture = await testBed.create();
+      final element = fixture.rootElement;
+      expect(element.attributes.containsKey('disabled'), isTrue);
+      expect(element.attributes.containsKey('aria-disabled'), isTrue);
+    });
+
     test('should support conditional classes', () async {
       final testBed = NgTestBed.forComponent<HostBindingConditionalClass>(
         ng.HostBindingConditionalClassNgFactory,
@@ -238,6 +248,19 @@ class HostBindingConditionalAttribute {
   // New Style
   @HostBinding('attr.aria-disabled.if')
   bool disabledBackingValue = false;
+}
+
+@Component(
+  selector: 'host-binding-conditional-attribute-statics',
+  template: '',
+)
+class HostBindingConditionalStatics {
+  @HostBinding('attr.disabled.if')
+  static const bool disabled = true;
+
+  // An example of using a getter instead of a field.
+  @HostBinding('attr.aria-disabled.if')
+  static bool get ariaDisabled => disabled;
 }
 
 @Component(
