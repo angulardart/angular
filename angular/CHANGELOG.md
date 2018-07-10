@@ -493,7 +493,7 @@ everyone).
 
 *   The fields `inputs:`, `outputs:`, and `host:` have been removed from
     `@Directive(...)` and `@Component(...`). It is expected to use the member
-    annotations (`@Input()`, `@Output()`, `@HostBinding()`, `@HostLitsener()`)
+    annotations (`@Input()`, `@Output()`, `@HostBinding()`, `@HostListener()`)
     instead.
 
 *   The default for `@Component(preserveWhitespace: ...)` is now `true`. Many
@@ -708,9 +708,9 @@ everyone).
     are static reads and are immutable (such as `String`). This allows us to
     optimize the generated code.
 
-*   Some changes to how template files import 'dart:core' to accomodate analyzer
-    changes that make 'dynamic' a member of 'dart:core'. These should not have
-    user-visible effects.
+*   Some changes to how template files import 'dart:core' to accommodate
+    analyzer changes that make 'dynamic' a member of 'dart:core'. These should
+    not have user-visible effects.
 
 ### Application Bootstrap
 
