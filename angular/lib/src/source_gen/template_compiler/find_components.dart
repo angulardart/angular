@@ -358,7 +358,7 @@ class _ComponentVisitor
       // TODO: Promote to an error.
       logWarning(
         ''
-            'Selector argument ${selectorType} for "@${value.type.name}" is a '
+            'Selector argument $selectorType for "@${value.type.name}" is a '
             'Type, but it is not annotated with @Component or @Directive. '
             'During runtime this query will never find any elements. This may '
             'become an error in future versions of AngularDart',
