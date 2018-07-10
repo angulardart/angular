@@ -153,7 +153,8 @@ ast.AST rewriteTearoff(ast.AST original, AnalyzedClass analyzedClass) {
   }
   if (unwrappedExpression is! ast.PropertyRead) return original;
   ast.PropertyRead propertyRead = unwrappedExpression;
-  final method = analyzedClass._classElement.getMethod(propertyRead.name);
+  final method =
+      analyzedClass._classElement.type.lookUpInheritedMethod(propertyRead.name);
   if (method == null) return original;
 
   if (method.parameters.isEmpty) {
