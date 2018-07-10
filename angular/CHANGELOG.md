@@ -315,7 +315,7 @@ everyone).
 *   Fixed a bug where `Provider(SomeType)` was not parsed correctly as an
     implicit use of `Provider(SomeType, useClass: SomeType`).
 
-*   Fixed a bug where `<ReflectiveInjectior>.get(X)` would throw with a message
+*   Fixed a bug where `<ReflectiveInjector>.get(X)` would throw with a message
     of _no provider found for X_, even when the acutal cause was a missing
     downstream dependency `Y`. We now emit the correct message.
 
