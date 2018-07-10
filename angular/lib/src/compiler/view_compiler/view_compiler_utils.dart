@@ -286,6 +286,15 @@ ast.AST _mergeAttributeValue(
 o.Statement createSetAttributeStatement(String astNodeName,
     o.Expression renderNode, String attrName, o.Expression attrValue) {
   String attrNs;
+  // Copy of the logic in property_binder.dart.
+  //
+  // Unfortunately host attributes are treated differently (for historic
+  // reasons), and they do run through property_binder. We should eventually
+  // refactor and not have duplicate code here.
+  if (attrName.endsWith('.if')) {
+    attrName = attrName.substring(0, attrName.length - 3);
+    attrValue = attrValue.conditional(o.literal(''), o.NULL_EXPR);
+  }
   if (attrName.startsWith('@') && attrName.contains(':')) {
     var nameParts = attrName.substring(1).split(':');
     attrNs = namespaceUris[nameParts[0]];

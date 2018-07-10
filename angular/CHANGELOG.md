@@ -30,6 +30,9 @@
 *   Support inherited method tear-offs in event listeners. Previously, we only
     considered methods in the Component class itself.
 
+*   Fixed a bug where `[attr.name.if]` did not work on a static `@HostBinding`.
+    [Closes #1484][#1484].
+
 ### Other improvements
 
 *   Fixed a bug where many queries (`@ViewChildren()` and the like) generated
@@ -49,6 +52,7 @@
 [#1280]: https://github.com/dart-lang/angular/issues/1280
 [#1295]: https://github.com/dart-lang/angular/issues/1295
 [#1455]: https://github.com/dart-lang/angular/issues/1455
+[#1484]: https://github.com/dart-lang/angular/issues/1484
 
 ## 5.0.0-beta
 

@@ -28,6 +28,12 @@ class UsesHostComponentWithDirective {}
   template: '',
 )
 class HostComponent {
+  @HostBinding('attr.has-shiny.if')
+  static const bool hasShinyAttribute = true;
+
+  @HostBinding('attr.has-terrible.if')
+  static bool get hasTerrible => false;
+
   @HostBinding()
   @HostBinding('attr.aria-title')
   String get title => 'Hello';
