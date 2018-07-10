@@ -21,24 +21,29 @@ void main() {
 
     group('method call', () {
       test('should handle click with no args', () async {
-        fixture.update((cmp) => cmp.noArgButton.click());
+        await fixture.update((cmp) => cmp.noArgButton.click());
         expect(fixture.assertOnlyInstance.clicks, emits(null));
       });
 
       test('should handle click with one arg', () async {
-        fixture.update((cmp) => cmp.oneArgButton.click());
+        await fixture.update((cmp) => cmp.oneArgButton.click());
         expect(fixture.assertOnlyInstance.clicks, emits(null));
       });
     });
 
     group('tearoffs', () {
       test('should handle click with no args', () async {
-        fixture.update((cmp) => cmp.noArgTearoffButton.click());
+        await fixture.update((cmp) => cmp.noArgTearoffButton.click());
         expect(fixture.assertOnlyInstance.clicks, emits(null));
       });
 
       test('should handle click with one arg', () async {
-        fixture.update((cmp) => cmp.oneArgTearoffButton.click());
+        await fixture.update((cmp) => cmp.oneArgTearoffButton.click());
+        expect(fixture.assertOnlyInstance.clicks, emits(null));
+      });
+
+      test('should handle click with method in superclass', () async {
+        await fixture.update((cmp) => cmp.superTearoffButton.click());
         expect(fixture.assertOnlyInstance.clicks, emits(null));
       });
     });
@@ -52,9 +57,10 @@ void main() {
   <button #oneArg (click)="clickWithEvent(\$event)"></button>
   <button #noArgTearoff (click)="onClick"></button>
   <button #oneArgTearoff (click)="clickWithEvent"></button>
+  <button #superTearoff (click)="superClick"></button>
   ''',
 )
-class ClickHandler {
+class ClickHandler extends SuperClick {
   @ViewChild('noArg')
   HtmlElement noArgButton;
 
@@ -67,12 +73,21 @@ class ClickHandler {
   @ViewChild('oneArgTearoff')
   HtmlElement oneArgTearoffButton;
 
+  @ViewChild('superTearoff')
+  HtmlElement superTearoffButton;
+
   void onClick() {
     _clicks.add(null);
   }
 
   void clickWithEvent(Object event) {
     if (event != null) _clicks.add(null);
+  }
+}
+
+class SuperClick {
+  void superClick() {
+    _clicks.add(null);
   }
 
   Stream get clicks => _clicks.stream;

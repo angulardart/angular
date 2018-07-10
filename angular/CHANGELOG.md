@@ -27,6 +27,9 @@
 *   Fails the build immediately if an element in a component's `pipes` list is
     unresolved.
 
+*   Support inherited method tear-offs in event listeners. Previously, we only
+    considered methods in the Component class itself.
+
 ### Other improvements
 
 *   Fixed a bug where many queries (`@ViewChildren()` and the like) generated
