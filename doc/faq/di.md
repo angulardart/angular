@@ -1,5 +1,11 @@
 # Dependency Injection FAQ
 
+<!-- !g3-begin(G3DOC) -->
+go/angulardart/faq/di
+
+[TOC]
+<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
+<!-- !g3-end -->
 
 Dependency Injection in AngularDart has several significant technical and
 pattern implications that are not trivial to work around or change without a

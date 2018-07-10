@@ -1,5 +1,15 @@
 # AngularDart Internal Style Guide
 
+<!-- !g3-begin(G3DOC) -->
+go/angulardart/developing/style_guide
+
+[TOC]
+
+<!--*
+# Document freshness: For more information, see go/fresh-source.
+freshness: { owner: 'matanl' reviewed: '2018-06-21' }
+*-->
+<!-- !g3-end -->
 
 Below is a non-authoritative style guide for building
 low-overhead/high-performance Dart applications, specifically when compiled to

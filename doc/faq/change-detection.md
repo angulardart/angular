@@ -1,5 +1,11 @@
 # Change Detection FAQ
 
+<!-- !g3-begin(G3DOC) -->
+go/angulardart/faq/change_detection
+
+[TOC]
+<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
+<!-- !g3-end -->
 
 Change detection is the workhorse that drives Angular applications. As such, it
 is important to understand its workings to write performant apps. Being the
