@@ -51,7 +51,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   }
   // This should be kept in sync with 'runApp' as much as possible.
   final injector = appInjector(userInjector);
-  final ApplicationRefImpl appRef = injector.get(ApplicationRef);
+  final ApplicationRef appRef = injector.get(ApplicationRef);
   NgZoneError caughtError;
   final NgZone ngZone = injector.get(NgZone);
   final onErrorSub = ngZone.onError.listen((e) {
@@ -92,7 +92,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
 }
 
 Future<ComponentRef<E>> _runAndLoadComponent<E>(
-  ApplicationRefImpl appRef,
+  ApplicationRef appRef,
   ComponentFactory<E> componentFactory,
   Element hostElement,
   Injector injector, {

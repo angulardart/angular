@@ -12,11 +12,11 @@ import 'package:test/test.dart';
 import 'application_ref_test.template.dart' as ng;
 
 void main() {
-  ApplicationRefImpl appRef;
+  ApplicationRef appRef;
 
   group('dispose should ', () {
     setUp(() {
-      appRef = new ApplicationRefImpl(
+      appRef = internalCreateApplicationRef(
         new NgZone(enableLongStackTrace: true),
         new Injector.map({
           ExceptionHandler: const BrowserExceptionHandler(),

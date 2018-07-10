@@ -121,7 +121,11 @@ String createRandomAppId() {
 @experimental
 const bootstrapLegacyModule = const <Object>[
   bootstrapMinimalModule,
-  const Provider(ApplicationRef, useClass: ApplicationRefImpl),
+  const Provider(
+    ApplicationRef,
+    useFactory: internalCreateApplicationRef,
+    deps: const [NgZone, Injector],
+  ),
   const Provider(AppViewUtils),
   const Provider(SlowComponentLoader),
 ];

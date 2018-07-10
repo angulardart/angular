@@ -1,11 +1,5 @@
 # Effective AngularDart: Change Detection
 
-<!-- !g3-begin(G3DOC) -->
-go/effective-angular-dart/change_detection
-
-[TOC]
-<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
-<!-- !g3-end -->
 
 > **NOTE**: This is a work-in-progress, and not yet final. Some of the links may
 > be substituted with `(...)`, and some TODOs or missing parts may be in the
