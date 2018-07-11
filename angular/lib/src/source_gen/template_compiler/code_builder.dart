@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
@@ -51,12 +50,31 @@ String buildGeneratedCode(
     buffer.writeln("export '$sourceFile';");
   }
 
-  // Write all other imports and exports out directly.
-  final astLibrary = element.definingCompilationUnit.computeNode();
-  for (final directive in astLibrary.directives) {
-    if ((directive is ImportDirective && directive.deferredKeyword == null) ||
-        buffer is ExportDirective) {
-      buffer.writeln(directive.toSource());
+  // TODO(matanl): Add this as a helper function in angular_compiler.
+  // Write all other imports out directly.
+  for (final d in element.imports) {
+    if (!d.isDeferred && d.uri != null) {
+      var directive = "import '${d.uri}'";
+      if (d.prefix != null) {
+        directive += ' as ${d.prefix.name}';
+      }
+      if (d.combinators.isNotEmpty) {
+        final isShow = d.combinators.first is ShowElementCombinator;
+        directive += isShow ? ' show ' : ' hide ';
+        directive += d.combinators
+            .map((c) {
+              if (c is ShowElementCombinator) {
+                return c.shownNames;
+              }
+              if (c is HideElementCombinator) {
+                return c.hiddenNames;
+              }
+              return const [];
+            })
+            .expand((i) => i)
+            .join(', ');
+      }
+      buffer.writeln('$directive;');
     }
   }
 

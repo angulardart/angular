@@ -12,8 +12,6 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'events.dart' as _user;
 
 // Required for "type inference" (scoping).
-import 'dart:async';
-import 'package:angular/angular.dart';
 
 // For @Component class UsesNativeEvents.
 external List<dynamic> get styles$UsesNativeEvents;
