@@ -32,7 +32,7 @@ templates that maximize the performance of your app.
     *   [PREFER `ngAfterChanges` to
         `ngOnChanges`](#prefer-implementing-afterchanges-to-onchanges)
     *   [PREFER setters to
-        `ngAfterXChecked`](#prefer-settings-to-ngafterxchecked)
+        `ngAfterXChecked`](#prefer-setters-to-ngafterxchecked)
     *   [PREFER `bool` setters to using
         `getBool`](#prefer-bool-setters-to-using-getbool)
     *   [PREFER using `OnPush` where
@@ -42,7 +42,7 @@ templates that maximize the performance of your app.
 
 ### AVOID expensive bindings
 
-Change detection is run on every tick for every component in the app. One 
+Change detection is run on every tick for every component in the app. One
 expensive template binding can bring the entire app to a crawl. Performing
 expensive computations in your template bindings is always a bad idea.
 
@@ -283,8 +283,8 @@ class MyComponent implements DoCheck {
   @Input()
   List<String> names;
   String _firstName;
-  bool _firstNameUpdated = false; 
-  
+  bool _firstNameUpdated = false;
+
   @override
   void ngDoCheck() {
     _firstNameUpdated = _firstName == names.first;
