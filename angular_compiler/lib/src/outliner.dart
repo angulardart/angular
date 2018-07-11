@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
@@ -104,10 +105,32 @@ class TemplateOutliner implements Builder {
         ..writeln("import '$userLandCode' as _user;")
         ..writeln();
     }
+
+    // TODO(matanl): Add this as a helper function in angular_compiler.
     output.writeln('// Required for "type inference" (scoping).');
-    for (final d in library.definingCompilationUnit.computeNode().directives) {
-      if (d is ImportDirective) {
-        output.writeln(d.toSource());
+    for (final d in library.imports) {
+      if (d is ImportDirective && !d.isDeferred && d.uri != null) {
+        var directive = "import '${d.uri}'";
+        if (d.prefix != null) {
+          directive += ' as ${d.prefix.name}';
+        }
+        if (d.combinators.isNotEmpty) {
+          final isShow = d.combinators.first is ShowElementCombinator;
+          directive += isShow ? ' show ' : ' hide ';
+          directive += d.combinators
+              .map((c) {
+                if (c is ShowElementCombinator) {
+                  return c.shownNames;
+                }
+                if (c is HideElementCombinator) {
+                  return c.hiddenNames;
+                }
+                return const [];
+              })
+              .expand((i) => i)
+              .join(', ');
+        }
+        output.writeln('$directive;');
       }
     }
     output.writeln();

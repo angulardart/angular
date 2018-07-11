@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:analyzer/dart/ast/ast.dart' as ast;
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular_compiler/cli.dart';
 import 'package:collection/collection.dart';
@@ -167,12 +166,13 @@ class ReflectableReader {
   }
 
   Future<List<String>> _resolveNeedsReflector(LibraryElement library) async {
-    final directives = library.definingCompilationUnit.computeNode().directives;
+    final directives = <UriReferencedElement>[]
+      ..addAll(library.imports)
+      ..addAll(library.exports);
     final results = <String>[];
     await Future.wait(directives.map((d) async {
-      if (d is! ast.PartDirective &&
-          await _needsInitReflector(d, library.source.uri.toString())) {
-        var uri = (d as ast.UriBasedDirective).uri.stringValue;
+      if (await _needsInitReflector(d, library.source.uri.toString())) {
+        var uri = d.uri ?? '';
         // Always link to the .template.dart file equivalent of a file.
         if (!uri.endsWith(outputExtension)) {
           uri = _withOutputExtension(uri);
@@ -185,38 +185,27 @@ class ReflectableReader {
 
   // Determines whether initReflector needs to link to [directive].
   Future<bool> _needsInitReflector(
-    ast.Directive directive,
+    UriReferencedElement directive,
     String sourceUri,
   ) async {
-    if (directive is ast.ExportDirective &&
-        directive.uri.stringValue.endsWith(outputExtension)) {
-      // Always link when manually exporting .template.dart files.
+    if (directive is ImportElement && directive.isDeferred) {
+      // Do not link to deferred code.
+      return false;
+    }
+    final uri = directive.uri ?? '';
+    if (uri.endsWith(outputExtension)) {
+      // Always link when manually importing/exporting .template.dart files.
       return true;
     }
-    if (directive is ast.ImportDirective) {
-      // Do not link to deferred code.
-      if (directive.deferredKeyword != null) {
-        return false;
-      }
-      // Always link when manually importing .template.dart files.
-      final uri = directive.uri.stringValue;
-      if (uri.endsWith(outputExtension)) {
-        return true;
-      }
-    }
     // Link if we are have or will have a .template.dart file.
-    if (directive is ast.UriBasedDirective) {
-      final uri = directive.uri.stringValue;
-      if (!uri.contains('.')) {
-        // Don't link imports that are missing an extension. These are either
-        // valid Dart SDK imports which don't need to be linked, or invalid
-        // imports which will be reported by the analyzer.
-        return false;
-      }
-      final outputUri = _withOutputExtension(uri);
-      return await isLibrary(outputUri) || await hasInput(uri);
+    if (!uri.contains('.')) {
+      // Don't link imports that are missing an extension. These are either
+      // valid Dart SDK imports which don't need to be linked, or invalid
+      // imports which will be reported by the analyzer.
+      return false;
     }
-    return false;
+    final outputUri = _withOutputExtension(uri);
+    return await isLibrary(outputUri) || await hasInput(uri);
   }
 
   bool _shouldRecordFactory(ClassElement element) =>

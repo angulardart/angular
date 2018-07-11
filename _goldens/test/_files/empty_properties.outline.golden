@@ -12,7 +12,6 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'empty_properties.dart' as _user;
 
 // Required for "type inference" (scoping).
-import 'package:angular/angular.dart';
 
 // For @Component class EmptyPropertiesComponent.
 external List<dynamic> get styles$EmptyPropertiesComponent;

@@ -12,8 +12,6 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'host.dart' as _user;
 
 // Required for "type inference" (scoping).
-import 'dart:async';
-import 'package:angular/angular.dart';
 
 // For @Component class HostComponentNewSyntax.
 external List<dynamic> get styles$HostComponentNewSyntax;
