@@ -113,22 +113,9 @@ class Provider<T> {
 
   /// Whether to treat this provider as a "multi" provider (multiple values).
   ///
-  /// A multi-provider collects all tokens, and returns a [List<T>] instead of
-  /// just a value [T] for given injection of [token]:
-  /// ```dart
-  /// const usPresidents = const OpaqueToken<String>('usPresidents');
-  ///
-  /// const presidentialProviders = const [
-  ///   const MultiProvider.ofTokenToValue(usPresidents, 'George Washington'),
-  ///   const MultiProvider.ofTokenToValue(usPresidents, 'Abraham Lincoln'),
-  /// ];
-  ///
-  /// // Later on, inside an Injector.
-  /// void printPresidents(Injector injector) {
-  ///   List<String> presidents = injector.get(usPresidents);
-  ///   print(presidents.join(', '));
-  /// }
-  /// ```
+  /// This flag is soft deprecated. The preferred replacement is using one
+  /// the typed provider variants, and [MultiToken], which guarantees that this
+  /// value is always `true` (use of [MultiToken] makes this flag ignored).
   final bool multi;
 
   /// Configures a [Provider] based on the arguments provided.
