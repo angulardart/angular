@@ -17,7 +17,7 @@ guide is meant to serve as a **development tool** and to help push **best
 practices** from the developers of the AngularDart framework.
 
 *   [Providers](#providers)
-    *   [DO use the "named" providers](#do-use-the-named-providers)
+    *   [DO use the "named" providers](#do-use-named-providers)
     *   [DO use factories for
         configuration](#do-use-factories-for-configuration)
     *   [AVOID `ValueProvider` for complex
@@ -44,7 +44,7 @@ practices** from the developers of the AngularDart framework.
 
 ## Providers
 
-### DO use the "named" providers
+### DO use "named" providers
 
 While not formally deprecated, `provide(...)` and `Provider(...)` require
 certain combinations of named optional parameters, and allow combinations that
@@ -206,8 +206,8 @@ void main() {
 
 ### DO use the `.forToken` constructor for tokens
 
-In alignment with [DO use typed `OpaqueToken<T>`](#...) and [DO use the "named"
-providers](#...), the `.forToken` constructor should be used in order for type
+In alignment with [DO use typed `OpaqueToken<T>`](#do-use-typed-opaquetokent) and
+[DO use "named" providers](#do-use-named-providers), the `.forToken` constructor should be used in order for type
 inference to determine the type of the provider.
 
 **BAD**:

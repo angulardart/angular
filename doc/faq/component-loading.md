@@ -58,7 +58,7 @@ void doSomething() {
 
 It's always the class _name_ with a suffix of `NgFactory`.
 
-See [migration](#Migration) below for how to migrate off using a `Type`.
+See [migration](#migration) below for how to migrate off using a `Type`.
 
 ## Overview
 
@@ -223,7 +223,7 @@ void ngOnInit() async {
     await example_1.loadLibrary();
     example_1.initReflector();
     component = example_1.Example1ComponentNgFactory;
-  } 
+  }
 }
 ```
 
