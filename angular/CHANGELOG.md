@@ -22,6 +22,13 @@
     </div>
     ```
 
+*   Added `package:angular/meta.dart`, a series of utilities for additional
+    static analysis checks and/or functions to retain semantics for migration
+    purposes, starting with `castCallback1ForDirective` and
+    `castCallback2ForDirective`. These methods are _only_ intended to be used
+    as stop-gaps for the lack of generic support in AngularDart directives and
+    components. Closes [#1489][].
+
 ## Bug fixes
 
 *   Fails the build immediately if an element in a component's `pipes` list is
@@ -53,6 +60,7 @@
 [#1295]: https://github.com/dart-lang/angular/issues/1295
 [#1455]: https://github.com/dart-lang/angular/issues/1455
 [#1484]: https://github.com/dart-lang/angular/issues/1484
+[#1849]: https://github.com/dart-lang/angular/issues/1489
 
 ## 5.0.0-beta
 
