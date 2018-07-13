@@ -172,7 +172,7 @@ class InjectorReader {
         }
       }
       if (dep.optional) {
-        return refer('injectOptional').call([
+        return refer('injectOptionalUntyped').call([
           _tokenToIdentifier(dep.token),
           literalNull,
         ]);

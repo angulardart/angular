@@ -94,7 +94,7 @@ void main() {
       test('should use orElse if provided', () {
         i = new Injector.empty();
         expect(i.get(ExampleService, 123), 123);
-        expect(i.injectOptional(ExampleService, 123), 123);
+        expect(i.injectOptionalUntyped(ExampleService, 123), 123);
         expect(i.injectFromSelfOptional(ExampleService, 123), 123);
         expect(i.injectFromAncestryOptional(ExampleService, 123), 123);
         expect(i.injectFromParentOptional(ExampleService, 123), 123);
@@ -584,10 +584,10 @@ class CaptureInjectInjector extends Injector {
   Object lastOrElse;
 
   @override
-  T inject<T>(Object token) => injectOptional(token);
+  T inject<T>(Object token) => injectOptionalUntyped(token);
 
   @override
-  Object injectOptional(Object token, [Object orElse]) {
+  Object injectOptionalUntyped(Object token, [Object orElse]) {
     lastToken = token;
     lastOrElse = orElse;
     return null;

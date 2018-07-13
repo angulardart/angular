@@ -24,7 +24,7 @@ class ElementInjector extends HierarchicalInjector {
   }
 
   @override
-  dynamic injectOptional(
+  dynamic injectOptionalUntyped(
     Object token, [
     Object orElse = throwIfNotFound,
   ]) =>

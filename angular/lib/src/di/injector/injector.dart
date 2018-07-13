@@ -85,7 +85,7 @@ abstract class Injector {
   @mustCallSuper
   dynamic get(Object token, [Object notFoundValue = throwIfNotFound]) {
     errors.debugInjectorEnter(token);
-    final result = injectOptional(token, notFoundValue);
+    final result = injectOptionalUntyped(token, notFoundValue);
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
@@ -109,7 +109,8 @@ abstract class Injector {
   /// Injects and returns an object representing [token].
   ///
   /// If the key was not found, returns [orElse] (default is `null`).
-  Object injectOptional(Object token, [Object orElse]);
+  @experimental
+  Object injectOptionalUntyped(Object token, [Object orElse]);
 }
 
 /// Annotates a method to generate an [Injector] factory at compile-time.

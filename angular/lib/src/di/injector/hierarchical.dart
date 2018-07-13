@@ -28,7 +28,7 @@ abstract class HierarchicalInjector extends Injector {
   @override
   T inject<T>(Object token) {
     errors.debugInjectorEnter(token);
-    final result = injectOptional(token);
+    final result = injectOptionalUntyped(token);
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
@@ -37,7 +37,7 @@ abstract class HierarchicalInjector extends Injector {
   }
 
   @override
-  Object injectOptional(
+  Object injectOptionalUntyped(
     Object token, [
     Object orElse = throwIfNotFound,
   ]) {
@@ -131,5 +131,5 @@ abstract class HierarchicalInjector extends Injector {
     Object token, [
     Object orElse = throwIfNotFound,
   ]) =>
-      parent.injectOptional(token, orElse);
+      parent.injectOptionalUntyped(token, orElse);
 }
