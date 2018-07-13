@@ -9004,11 +9004,11 @@
     "^": "",
     ElementInjector: {
       "^": "HierarchicalInjector;_view,_element$_nodeIndex,_parent,parent",
-      injectOptional$2: function(token, orElse) {
+      injectOptionalUntyped$2: function(token, orElse) {
         return this._view.injectorGet$3(token, this._element$_nodeIndex, orElse);
       },
-      injectOptional$1: function(token) {
-        return this.injectOptional$2(token, C.C_Object);
+      injectOptionalUntyped$1: function(token) {
+        return this.injectOptionalUntyped$2(token, C.C_Object);
       },
       injectFromAncestryOptional$2: function(token, orElse) {
         var t1 = this._view;
@@ -9041,7 +9041,7 @@
         var t1 = this.parent;
         if (t1 == null)
           return orElse;
-        return t1.injectOptional$2(token, orElse);
+        return t1.injectOptionalUntyped$2(token, orElse);
       }
     }
   }], ["", "package:angular/src/di/injector/hierarchical.dart",, E, {
@@ -9051,7 +9051,7 @@
       inject$1$1: function(token) {
         var result;
         A.debugInjectorEnter(token);
-        result = this.injectOptional$1(token);
+        result = this.injectOptionalUntyped$1(token);
         if (result === C.C_Object)
           return M.throwsNotFound(this, token);
         A.debugInjectorLeave(token);
@@ -9060,7 +9060,7 @@
       inject$1: function(token) {
         return this.inject$1$1(token, null);
       },
-      injectOptional$2: function(token, orElse) {
+      injectOptionalUntyped$2: function(token, orElse) {
         var result;
         A.debugInjectorEnter(token);
         result = this.injectFromSelfOptional$2(token, orElse);
@@ -9069,11 +9069,11 @@
         A.debugInjectorLeave(token);
         return result;
       },
-      injectOptional$1: function(token) {
-        return this.injectOptional$2(token, C.C_Object);
+      injectOptionalUntyped$1: function(token) {
+        return this.injectOptionalUntyped$2(token, C.C_Object);
       },
       injectFromAncestryOptional$2: function(token, orElse) {
-        return this.get$parent(this).injectOptional$2(token, orElse);
+        return this.get$parent(this).injectOptionalUntyped$2(token, orElse);
       }
     }
   }], ["", "package:angular/src/di/injector/injector.dart",, M, {
@@ -9086,7 +9086,7 @@
       $get$2: function(_, token, notFoundValue) {
         var result;
         A.debugInjectorEnter(token);
-        result = this.injectOptional$2(token, notFoundValue);
+        result = this.injectOptionalUntyped$2(token, notFoundValue);
         if (result === C.C_Object)
           return M.throwsNotFound(this, token);
         A.debugInjectorLeave(token);

@@ -233,7 +233,7 @@ class _RuntimeInjector extends HierarchicalInjector
     } else if (isHost) {
       result = injectFromParentOptional(token, orElse);
     } else {
-      result = injectOptional(token, orElse);
+      result = injectOptionalUntyped(token, orElse);
     }
     if (identical(result, throwIfNotFound)) {
       throwsNotFound(this, token);

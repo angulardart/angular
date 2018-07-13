@@ -37,6 +37,6 @@ class EmptyInjector extends HierarchicalInjector {
     if (parent == null) {
       return orElse;
     }
-    return parent.injectOptional(token, orElse);
+    return parent.injectOptionalUntyped(token, orElse);
   }
 }
