@@ -1,3 +1,7 @@
+## 2.0.0-beta+1
+
+*   Maintenence release; declare official support for the Dart2 SDK.
+
 ## 2.0.0-beta
 
 *   `NgZoneStabilizer` waits for the longest pending timer during `update()`.

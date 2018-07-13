@@ -1,3 +1,7 @@
+## 2.0.0-alpha+16
+
+*   Maintenence release; declare official support for the Dart2 SDK.
+
 ## 2.0.0-alpha+15
 
 ### Breaking changes

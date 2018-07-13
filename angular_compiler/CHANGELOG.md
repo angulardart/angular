@@ -1,3 +1,8 @@
+## 0.4.0-alpha+17
+
+*   Maintenance release.
+*   The minimum SDK version is now `sdk: ">=2.0.0-dev.64.2 <2.0.0"`.
+
 ## 0.4.0-alpha+16
 
 *   Added support for `void` and `Null` types to appear in tokens.
