@@ -1,3 +1,5 @@
+## 5.0.0-beta+1
+
 ### New features
 
 *   A warning is produced if the compiler removes any elements
