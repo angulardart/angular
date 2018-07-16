@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 
@@ -26,7 +24,7 @@ class FeedComponent implements OnActivate {
   FeedComponent(this._hackerNewsService);
 
   @override
-  Future<void> onActivate(_, RouterState current) {
+  void onActivate(_, RouterState current) {
     final routePath = current.routePath;
     final String feed = routePath.additionalData['feed'];
     final page = current.queryParameters['p'];
@@ -43,7 +41,7 @@ class FeedComponent implements OnActivate {
     }
 
     startingRank = itemsPerPage * (pageNumber - 1) + 1;
-    return _hackerNewsService.getFeed(feed, pageNumber).then((result) {
+    _hackerNewsService.getFeed(feed, pageNumber).then((result) {
       items = result;
     });
   }
