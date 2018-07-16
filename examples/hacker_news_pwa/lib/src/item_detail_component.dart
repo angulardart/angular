@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 
@@ -34,9 +32,10 @@ class ItemDetailComponent implements OnActivate {
   ItemDetailComponent(this._hackerNewsService);
 
   @override
-  Future<void> onActivate(_, RouterState current) {
+  void onActivate(_, RouterState current) {
     final id = current.parameters['id'];
-    return _hackerNewsService.getItem(id).then((item) {
+    _hackerNewsService.getItem(id).then((result) {
+      item = result;
       final List comments = item['comments'];
       for (final Map comment in comments) {
         countComments(comment);
