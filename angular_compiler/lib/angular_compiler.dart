@@ -20,6 +20,7 @@ export 'src/analyzer.dart'
         ReflectableReader,
         TokenElement,
         TokenReader,
+        TypedReader,
         TypeLink,
         TypeTokenElement,
         UseClassProviderElement,
@@ -42,6 +43,7 @@ export 'src/analyzer.dart'
         $Provider,
         $Self,
         $SkipSelf,
+        $Typed,
         $ViewChild,
         $ViewChildren;
 export 'src/asset.dart' show NgAssetReader;
