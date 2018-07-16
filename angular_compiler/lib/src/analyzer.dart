@@ -8,3 +8,4 @@ export 'analyzer/link.dart';
 export 'analyzer/reflector.dart';
 export 'analyzer/types.dart';
 export 'analyzer/view/directive.dart';
+export 'analyzer/view/typed_reader.dart';
