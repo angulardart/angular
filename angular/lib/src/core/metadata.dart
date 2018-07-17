@@ -425,10 +425,9 @@ abstract class _ViewQuery extends _Query {
 ///
 /// The annotation requires a [selector] argument:
 ///
-/// - If the argument is a [Type], directives or components with that exact type
-///   will be bound. A type that is _not_ a `class` annotated with either
-///   `@Directive` or `@Component` will not work, and may become a compile-time
-///   error.
+/// - If the argument is a [Type], directives or components with that exact
+///   type, or injectable services available on directives or components will
+///   be bound.
 /// - If the argument is a [String], the string is interpreted as a list of
 ///   comma-separated selectors.  For each selector, an element containing the
 ///   matching template variable (e.g. `#child`) will be bound.
