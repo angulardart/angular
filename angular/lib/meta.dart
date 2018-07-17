@@ -2,7 +2,7 @@
 @experimental
 library angular.meta;
 
-// This line is to force that `package:angular/meta.dart` is not used in the VM.
+// This import ensures that this library is not used in the VM.
 //
 // ignore: unused_import
 import 'dart:html';
