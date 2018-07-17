@@ -1,3 +1,23 @@
+### Bug fixes
+
+*   Changed the behavior of warnings around `@ViewChildren(...)`. It was more
+    difficult than originally thought to warn on incorrect selector usage due to
+    the semantics of components and dependency injection. In many cases false
+    positives were flagged. Now, any unknown type is just ignored (it may still
+    be invalid), and any invalid _value_ throws a build error. For example:
+
+    ```dart
+    class A {
+      // Might not be valid, but we no longer warn.
+      @ViewChildren(SomeArbitraryType)
+      List<SomeArbitraryType> someTypes;
+
+      // We throw a build error.
+      @ViewChildren(1234)
+      List thisDoesNotWork;
+    }
+    ```
+
 ## 5.0.0-beta+1
 
 ### New features

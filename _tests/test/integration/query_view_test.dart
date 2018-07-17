@@ -51,6 +51,13 @@ void main() {
         ['1', '2', '3', '4', '5', '6', '7'],
       );
     });
+
+    test('should work on type selectors that are not directives', () async {
+      final testBed = new NgTestBed<TestNonDirectiveChildSelector>();
+      final fixture = await testBed.create();
+      expect(fixture.assertOnlyInstance.children, hasLength(3));
+      expect(fixture.assertOnlyInstance.services, hasLength(3));
+    });
   });
 }
 
@@ -305,4 +312,39 @@ class TestNestedAndStaticNgForQueriesList {
 
   @ViewChildren('taggedDiv', read: Element)
   List<Element> taggedDivs;
+}
+
+abstract class Queryable {}
+
+@Directive(
+  selector: 'queryable-directive',
+  providers: [
+    ExistingProvider(Queryable, QueryableDirective),
+    ClassProvider(InjectableService),
+  ],
+)
+class QueryableDirective implements Queryable {}
+
+class InjectableService {}
+
+@Component(
+  selector: 'test-non-directive-child-selector',
+  directives: [
+    NgIf,
+    QueryableDirective,
+  ],
+  template: r'''
+    <queryable-directive></queryable-directive>
+    <queryable-directive></queryable-directive>
+    <queryable-directive *ngIf="showLastDirective"></queryable-directive>
+  ''',
+)
+class TestNonDirectiveChildSelector {
+  @ViewChildren(Queryable)
+  List<Queryable> children;
+
+  @ViewChildren(InjectableService)
+  List<InjectableService> services;
+
+  bool showLastDirective = true;
 }
