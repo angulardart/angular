@@ -64,6 +64,11 @@ void main() {
         var def1 = new RouteDefinition.redirect(path: '/1', redirectTo: null);
         expect(def1.assertValid, throwsStateError);
       });
+
+      test('should fail "assertValid" with unknown parameters', () {
+        var def1 = RouteDefinition.redirect(path: '/1', redirectTo: '/2/:id');
+        expect(def1.assertValid, throwsStateError);
+      });
     });
 
     group('toRepExp()', () {

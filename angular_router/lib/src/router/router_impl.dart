@@ -191,7 +191,8 @@ class RouterImpl extends Router {
     if (nextState.routes.isNotEmpty) {
       final leaf = nextState.routes.last;
       if (leaf is RedirectRouteDefinition) {
-        final newPath = _getAbsolutePath(leaf.redirectTo, nextState.build());
+        final newPath = _getAbsolutePath(
+            leaf.redirectToUrl(nextState.parameters), nextState.build());
         return _navigate(newPath, navigationParams, isRedirect: true);
       }
     }
