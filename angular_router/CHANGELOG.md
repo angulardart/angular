@@ -1,3 +1,7 @@
+### New features
+
+*   `RouteDefinition.redirect` now supports forwarding route parameters.
+
 ## 2.0.0-alpha+16
 
 *   Maintenence release; declare official support for the Dart2 SDK.

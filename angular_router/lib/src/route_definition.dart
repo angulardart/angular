@@ -263,6 +263,29 @@ class RedirectRouteDefinition extends RouteDefinition {
     if (redirectTo == path) {
       throw new StateError('Cannot redirect from `redirectTo` to `path');
     }
+    Iterable<String> pathParameters = parameters;
+    Iterable<String> unknownRedirectToParameters = _redirectToParameters.where(
+        (redirectToParameter) => !pathParameters.contains(redirectToParameter));
+    if (unknownRedirectToParameters.isNotEmpty) {
+      throw new StateError('Parameters in `redirectTo` are not in `path`: '
+          '$unknownRedirectToParameters');
+    }
     super.assertValid();
   }
+
+  /// Returns the redirectTo URL with [_redirectToParameters] filled in.
+  String redirectToUrl([Map<String, String> paramValues = const {}]) {
+    if (isDevMode && paramValues == null) {
+      throw new ArgumentError.notNull('paramValues');
+    }
+    var url = redirectTo;
+    for (final parameter in _redirectToParameters) {
+      url = url.replaceFirst(
+          ':$parameter', Uri.encodeComponent(paramValues[parameter]));
+    }
+    return url;
+  }
+
+  Iterable<String> get _redirectToParameters =>
+      RouteDefinition._findParameters.allMatches(redirectTo).map((m) => m[1]);
 }
