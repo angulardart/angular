@@ -2,13 +2,15 @@
 import 'package:angular/angular.dart';
 import 'package:angular_router/testing.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:examples.hacker_news_pwa/app_component.template.dart';
+import 'package:examples.hacker_news_pwa/app_component.dart';
+import 'package:examples.hacker_news_pwa/app_component.template.dart'
+    as app_template;
 import 'package:examples.hacker_news_pwa/hacker_news_service.dart';
 import 'package:pageloader/html.dart';
 import 'package:test/test.dart';
 
 import 'fake_hacker_news_service.dart';
-import 'hacker_news_pwa_test.template.dart' as ng;
+import 'hacker_news_pwa_test.template.dart' as test_template;
 import 'page_objects/app_po.dart';
 
 const service = FakeHackerNewsService();
@@ -17,14 +19,15 @@ const service = FakeHackerNewsService();
   ValueProvider(HackerNewsService, service),
   routerProvidersTest,
 ])
-final InjectorFactory testInjectorFactory = ng.testInjectorFactory$Injector;
+final InjectorFactory testInjectorFactory =
+    test_template.testInjectorFactory$Injector;
 
 void main() {
   AppPO appPO;
   NgTestFixture<AppComponent> testFixture;
 
   setUp(() async {
-    final testBed = NgTestBed.forComponent(AppComponentNgFactory)
+    final testBed = NgTestBed.forComponent(app_template.AppComponentNgFactory)
         .addInjector(testInjectorFactory);
     testFixture = await testBed.create();
     final rootElement = testFixture.rootElement;

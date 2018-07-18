@@ -13,6 +13,8 @@ analyzer:
   exclude:
     - .dart_tool/**
     - build/**
+    # TODO(https://github.com/dart-lang/angular/issues/1508)
+    - examples/hacker_news_pwa/test/**
 
 linter:
   rules:
