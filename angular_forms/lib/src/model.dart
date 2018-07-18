@@ -248,7 +248,7 @@ abstract class AbstractControl<T> {
   }
 
   void _emitEvent() {
-    _valueChanges.add(_value);
+    _valueChanges.add(value);
     _statusChanges.add(_status);
   }
 

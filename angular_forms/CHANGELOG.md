@@ -1,3 +1,8 @@
+### Breaking Changes
+
+*   Use value from AbstractControl for valueChanges event instead of internal
+    variable. Allows code to more easily subclass AbstractControl.
+
 ## 2.0.0-beta+1
 
 *   Maintenence release; declare official support for the Dart2 SDK.
