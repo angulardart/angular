@@ -43,7 +43,10 @@ final _unsafeCastFn = o.importExpr(Identifiers.unsafeCast);
 
 /// Returns `unsafeCast<{Cast}>(expression)`.
 o.Expression _unsafeCast(o.Expression expression, [o.OutputType cast]) {
-  return _unsafeCastFn.callFn([expression], cast != null ? [cast] : const []);
+  return _unsafeCastFn.callFn(
+    [expression],
+    typeArguments: cast != null ? [cast] : const [],
+  );
 }
 
 o.Expression getPropertyInView(
@@ -115,11 +118,11 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
         //
         // i.e. const OpaqueToken('literalValue')
         token.value != null ? [o.literal(token.value)] : const <o.Expression>[],
-        o.importType(token.identifier, [], [o.TypeModifier.Const]),
+        type: o.importType(token.identifier, [], [o.TypeModifier.Const]),
         // Add any generic types attached to the type.
         //
         // Only a value of `null` precisely means "no generic types", not [].
-        token.identifier.genericTypes.isNotEmpty
+        genericTypes: token.identifier.genericTypes.isNotEmpty
             ? token.identifier.genericTypes
             : null);
   } else if (token.value != null) {
@@ -135,7 +138,7 @@ o.Expression createDebugInfoTokenExpression(CompileTokenMetadata token) {
   } else if (token.identifierIsInstance) {
     return o
         .importExpr(token.identifier)
-        .instantiate([], o.importType(token.identifier, []));
+        .instantiate([], type: o.importType(token.identifier, []));
   } else {
     return o.importExpr(token.identifier);
   }

@@ -120,7 +120,7 @@ class OfflineCompiler {
               o.literal(compMeta.selector),
               o.variable(hostViewFactoryVar),
             ],
-            o.importType(
+            type: o.importType(
               Identifiers.ComponentFactory,
               factoryType,
               [o.TypeModifier.Const],

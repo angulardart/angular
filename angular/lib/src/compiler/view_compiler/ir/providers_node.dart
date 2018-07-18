@@ -251,7 +251,7 @@ class ClassProviderSource extends ProviderSource {
     for (ProviderSource s in _parameters) paramExpressions.add(s.build());
     return o
         .importExpr(_classType)
-        .instantiate(paramExpressions, o.importType(_classType));
+        .instantiate(paramExpressions, type: o.importType(_classType));
   }
 }
 

@@ -1,3 +1,15 @@
+### New features
+
+*   Added support for named arguments in function calls in templates:
+
+    ```html
+    <span>Hello {{getName(includeExclamationPoint: true)}}</span>
+    ```
+
+   **NOTE**: Because of the collision of syntax for both named arguments and
+   pipes, any pipes used as the _value_ of a named argument need to be wrapped
+   in parentheses: `func(namedArg: (pipeName | pipeVar:pipeVarValue))`.
+
 ### Bug fixes
 
 *   Changed the behavior of warnings around `@ViewChildren(...)`. It was more

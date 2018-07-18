@@ -253,6 +253,9 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   }
 
   @override
+  DartType visitNamedExpr(ast.NamedExpr ast, _) => _dynamicType;
+
+  @override
   DartType visitPipe(ast.BindingPipe ast, _) => _dynamicType;
 
   @override

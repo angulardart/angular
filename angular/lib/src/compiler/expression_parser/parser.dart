@@ -22,6 +22,7 @@ import 'ast.dart'
         LiteralMap,
         LiteralPrimitive,
         MethodCall,
+        NamedExpr,
         PrefixNot,
         PropertyRead,
         PropertyWrite,
@@ -217,9 +218,11 @@ class _ParseAST {
   final String location;
   final List<Token> tokens;
   final bool parseAction;
+
   Map<String, CompileIdentifierMetadata> exports;
   Map<String, Map<String, CompileIdentifierMetadata>> prefixes;
   int index = 0;
+  bool _parseCall = false;
 
   _ParseAST(this.input, this.location, this.tokens, this.parseAction,
       List<CompileIdentifierMetadata> exports) {
@@ -318,6 +321,8 @@ class _ParseAST {
     return new Chain(exprs);
   }
 
+  AST parseArgument() => parseExpression();
+
   AST parsePipe() {
     var result = parseExpression();
     if (optionalOperator('|')) {
@@ -345,6 +350,8 @@ class _ParseAST {
       var nullExp = parsePipe();
       return new IfNull(result, nullExp);
     } else if (optionalOperator('?')) {
+      var prevParseCall = _parseCall;
+      _parseCall = false;
       var yes = parsePipe();
       if (!optionalCharacter($COLON)) {
         var end = inputIndex;
@@ -352,6 +359,7 @@ class _ParseAST {
         error('Conditional expression $expression requires all 3 expressions');
       }
       var no = parsePipe();
+      _parseCall = prevParseCall;
       return new Conditional(result, yes, no);
     } else {
       return result;
@@ -470,10 +478,18 @@ class _ParseAST {
         } else {
           result = new KeyedRead(result, key);
         }
+      } else if (_parseCall && optionalCharacter($COLON)) {
+        _parseCall = false;
+        var expression = parseExpression();
+        _parseCall = true;
+        if (result is! PropertyRead) {
+          error('Expected previous token to be an identifier');
+        }
+        result = new NamedExpr((result as PropertyRead).name, expression);
       } else if (optionalCharacter($LPAREN)) {
         var args = parseCallArguments();
         expectCharacter($RPAREN);
-        result = new FunctionCall(result, args);
+        result = new FunctionCall(result, args.positional, args.named);
       } else {
         return result;
       }
@@ -572,8 +588,8 @@ class _ParseAST {
       var args = parseCallArguments();
       expectCharacter($RPAREN);
       return isSafe
-          ? new SafeMethodCall(receiver, id, args)
-          : new MethodCall(receiver, id, args);
+          ? new SafeMethodCall(receiver, id, args.positional, args.named)
+          : new MethodCall(receiver, id, args.positional, args.named);
     } else {
       if (isSafe) {
         if (optionalOperator('=')) {
@@ -596,13 +612,23 @@ class _ParseAST {
     return null;
   }
 
-  List<AST> parseCallArguments() {
-    if (next.isCharacter($RPAREN)) return [];
-    var positionals = <AST>[];
+  _CallArguments parseCallArguments() {
+    if (next.isCharacter($RPAREN)) {
+      return new _CallArguments([], []);
+    }
+    final positional = <AST>[];
+    final named = <NamedExpr>[];
     do {
-      positionals.add(parsePipe());
+      _parseCall = true;
+      final ast = parsePipe();
+      if (ast is NamedExpr) {
+        named.add(ast);
+      } else {
+        positional.add(ast);
+      }
     } while (optionalCharacter($COMMA));
-    return positionals;
+    _parseCall = false;
+    return new _CallArguments(positional, named);
   }
 
   AST parseBlockContent() {
@@ -755,6 +781,11 @@ class SimpleExpressionChecker implements AstVisitor {
   }
 
   @override
+  void visitNamedExpr(NamedExpr ast, dynamic context) {
+    ast.expression.visit(this);
+  }
+
+  @override
   void visitBinary(Binary ast, dynamic context) {
     simple = false;
   }
@@ -801,4 +832,11 @@ class SimpleExpressionChecker implements AstVisitor {
     }
     return res;
   }
+}
+
+class _CallArguments {
+  List<AST> positional;
+  List<NamedExpr> named;
+
+  _CallArguments(this.positional, this.named);
 }

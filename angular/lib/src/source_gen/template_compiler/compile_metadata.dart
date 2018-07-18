@@ -469,9 +469,10 @@ class CompileTypeMetadataVisitor
             '${id.name}.${invocation.constructor.name}');
       }
       return new o.InstantiateExpr(
-          type.prop(invocation.constructor.name), params, importType);
+          type.prop(invocation.constructor.name), params,
+          type: importType);
     }
-    return type.instantiate(params, importType);
+    return type.instantiate(params, type: importType);
   }
 
   CompileIdentifierMetadata _identifierForFunction(

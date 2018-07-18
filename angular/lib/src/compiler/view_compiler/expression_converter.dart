@@ -222,10 +222,11 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
 
   dynamic visitFunctionCall(compiler_ast.FunctionCall ast, _Mode mode) {
     _visitingRoot = false;
+    o.Expression e = ast.target.visit<dynamic, _Mode>(this, _Mode.Expression);
     return _convertToStatementIfNeeded(
         mode,
-        ast.target.visit<dynamic, _Mode>(this, _Mode.Expression).callFn(
-            _visitAll(ast.args, _Mode.Expression).cast<o.Expression>()));
+        e.callFn(_visitAll(ast.args, _Mode.Expression),
+            namedParams: _visitAll(ast.namedArgs, _Mode.Expression)));
   }
 
   dynamic visitIfNull(compiler_ast.IfNull ast, _Mode mode) {
@@ -355,19 +356,20 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
 
   dynamic visitMethodCall(compiler_ast.MethodCall ast, _Mode mode) {
     _visitingRoot = false;
-    var args = _visitAll(ast.args, _Mode.Expression).cast<o.Expression>();
+    var args = _visitAll<o.Expression>(ast.args, _Mode.Expression);
+    var namedArgs = _visitAll<o.NamedExpr>(ast.namedArgs, _Mode.Expression);
     o.Expression result;
     o.Expression receiver =
         ast.receiver.visit<dynamic, _Mode>(this, _Mode.Expression);
     if (identical(receiver, _implicitReceiverVal)) {
       var varExpr = _nameResolver.getLocal(ast.name);
       if (varExpr != null) {
-        result = varExpr.callFn(args);
+        result = varExpr.callFn(args, namedParams: namedArgs);
       } else {
         receiver = _getImplicitOrStaticReceiver(ast.name, isStaticMethod);
       }
     }
-    result ??= receiver.callMethod(ast.name, args);
+    result ??= receiver.callMethod(ast.name, args, namedParams: namedArgs);
     return _convertToStatementIfNeeded(mode, result);
   }
 
@@ -434,8 +436,13 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
         mode, o.importExpr(ast.id.identifier, isConst: true));
   }
 
-  List<dynamic> _visitAll(List<compiler_ast.AST> asts, _Mode mode) {
-    return asts.map((ast) => ast.visit<dynamic, _Mode>(this, mode)).toList();
+  dynamic visitNamedExpr(compiler_ast.NamedExpr ast, __) =>
+      new o.NamedExpr(ast.name, ast.expression.visit<dynamic, _Mode>(this));
+
+  List<R> _visitAll<R>(List<compiler_ast.AST> asts, _Mode mode) {
+    return asts
+        .map((ast) => ast.visit<dynamic, _Mode>(this, mode) as R)
+        .toList();
   }
 
   /// Returns the receiver necessary to access [memberName].

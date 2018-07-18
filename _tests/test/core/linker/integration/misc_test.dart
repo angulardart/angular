@@ -55,6 +55,12 @@ void main() {
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.querySelectorAll('script'), isEmpty);
   });
+
+  test('should support named arguments in function calls', () async {
+    final testBed = new NgTestBed<NamedArgComponent>();
+    final testFixture = await testBed.create();
+    expect(testFixture.text, 'Hello');
+  });
 }
 
 @Component(
@@ -185,3 +191,13 @@ class StaticAttributesComponent {
 </div>''',
 )
 class UnsafeComponent {}
+
+@Component(
+  selector: 'named-arg-component',
+  template: r'''
+    {{getName(name: 'Hello')}}
+  ''',
+)
+class NamedArgComponent {
+  String getName({String name}) => name;
+}
