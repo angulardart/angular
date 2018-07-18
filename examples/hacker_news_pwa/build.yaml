@@ -9,6 +9,6 @@ targets:
           - --dump-info
           - --fast-startup
           - --minify
-          - --trust-type-annotations
+          - --omit-implicit-checks
           - --trust-primitives
           - --no-source-maps
