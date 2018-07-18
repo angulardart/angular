@@ -111,7 +111,7 @@ void main() {
       });
 
       test("should not see a NaN value as a change (JS)", () {
-        m["foo"] = double.NAN;
+        m["foo"] = double.nan;
         differ.check(m);
         differ.check(m);
         expect(differ.toString(),

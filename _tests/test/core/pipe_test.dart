@@ -49,7 +49,7 @@ void main() {
 )
 class Example {
   // April 29, 2014, 6:04am.
-  final now = new DateTime(2014, DateTime.APRIL, 29, 6, 4);
+  final now = new DateTime(2014, DateTime.april, 29, 6, 4);
 }
 
 @Pipe('nop')

@@ -24,7 +24,7 @@ class HackerNewsService {
       return Future.value(_cacheFeedResult);
     }
     return HttpRequest.getString(url).then((response) {
-      final List<dynamic> decoded = JSON.decode(response);
+      final List<dynamic> decoded = json.decode(response);
       _cacheFeedKey = url;
       return _cacheFeedResult = List<Map>.from(decoded);
     });
@@ -33,7 +33,7 @@ class HackerNewsService {
   Future<Map> getItem(String id) {
     final url = '$_baseUrl/item/$id.json';
     return HttpRequest.getString(url).then((response) {
-      final Map decoded = JSON.decode(response);
+      final Map decoded = json.decode(response);
       return decoded;
     });
   }

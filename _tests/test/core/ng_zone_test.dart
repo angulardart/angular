@@ -186,7 +186,7 @@ void main() {
             log.add('--- subscription event: ${NgZone.isInAngularZone()} ---');
           });
         });
-        await new Future.delayed(Duration.ZERO);
+        await new Future.delayed(Duration.zero);
         expect(log, [
           'onTurnStart',
           '--- subscription event: true ---',
@@ -214,7 +214,7 @@ void main() {
 
           scheduleMicrotask(foo);
         });
-        await new Future.delayed(Duration.ZERO);
+        await new Future.delayed(Duration.zero);
         expect(errors.map((e) => e.toString()), [
           'Bad state: How did I end up here?',
         ]);
@@ -241,7 +241,7 @@ void main() {
 
           scheduleMicrotask(foo);
         });
-        await new Future.delayed(Duration.ZERO);
+        await new Future.delayed(Duration.zero);
         expect(errors.map((e) => e.toString()), [
           'Bad state: How did I end up here?',
         ]);
