@@ -689,7 +689,6 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
         hostElement.renderNode.toReadExpr(),
         hostElement.getComponent()
       ],
-      null,
     );
   } else {
     resultExpr = o.NULL_EXPR;

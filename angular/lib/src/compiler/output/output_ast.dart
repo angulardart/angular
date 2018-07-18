@@ -132,24 +132,36 @@ abstract class Expression {
   /// If [checked] is specified, the call will make a safe null check before
   /// calling using '?' operator.
   InvokeMethodExpr callMethod(
-      dynamic /* String | BuiltinMethod */ name, List<Expression> params,
-      {bool checked = false}) {
-    return new InvokeMethodExpr(this, name, params, checked: checked);
+    dynamic /* String | BuiltinMethod */ name,
+    List<Expression> params, {
+    bool checked = false,
+    List<NamedExpr> namedParams,
+  }) {
+    return new InvokeMethodExpr(this, name, params,
+        checked: checked, namedArgs: namedParams);
   }
 
   InvokeFunctionExpr callFn(
-    List<Expression> params, [
+    List<Expression> params, {
+    List<NamedExpr> namedParams,
     List<OutputType> typeArguments,
-  ]) {
-    return new InvokeFunctionExpr(this, params, typeArguments);
+  }) {
+    return new InvokeFunctionExpr(
+      this,
+      params,
+      typeArguments,
+      namedArgs: namedParams,
+    );
   }
 
   InstantiateExpr instantiate(
-    List<Expression> params, [
+    List<Expression> params, {
+    List<NamedExpr> namedParams,
     OutputType type,
     List<OutputType> genericTypes,
-  ]) {
-    return new InstantiateExpr(this, params, type, genericTypes);
+  }) {
+    return new InstantiateExpr(this, params,
+        type: type, typeArguments: genericTypes, namedArgs: namedParams);
   }
 
   ConditionalExpr conditional(Expression trueCase, [Expression falseCase]) {
@@ -384,18 +396,24 @@ enum BuiltinMethod { ConcatArray, SubscribeObservable }
 class InvokeMethodExpr extends Expression {
   final Expression receiver;
   final List<Expression> args;
+  final List<NamedExpr> namedArgs;
+
   String name;
   BuiltinMethod builtin;
   final bool checked;
 
   InvokeMethodExpr(
-      this.receiver, dynamic /* String | BuiltinMethod */ method, this.args,
-      {OutputType outputType, this.checked})
-      : super(outputType) {
+    this.receiver,
+    dynamic /* String | BuiltinMethod */ method,
+    this.args, {
+    OutputType outputType,
+    this.checked,
+    this.namedArgs = const [],
+  }) : super(outputType) {
     assert(() {
-      for (int len = args.length, i = 0; i < len; i++) {
-        if (args[i] == null) {
-          throw new ArgumentError('Expecting non-null arguments');
+      for (var arg in args) {
+        if (arg == null) {
+          throw new ArgumentError.notNull();
         }
       }
       return true;
@@ -417,9 +435,23 @@ class InvokeMethodExpr extends Expression {
 class InvokeMemberMethodExpr extends Expression {
   final List<Expression> args;
   final String methodName;
+  final List<NamedExpr> namedArgs;
 
-  InvokeMemberMethodExpr(this.methodName, this.args, {OutputType outputType})
-      : super(outputType);
+  InvokeMemberMethodExpr(
+    this.methodName,
+    this.args, {
+    OutputType outputType,
+    this.namedArgs,
+  }) : super(outputType) {
+    assert(() {
+      for (var arg in args) {
+        if (arg == null) {
+          throw new ArgumentError.notNull();
+        }
+      }
+      return true;
+    }());
+  }
 
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
@@ -431,9 +463,24 @@ class InvokeFunctionExpr extends Expression {
   final Expression fn;
   final List<Expression> args;
   final List<OutputType> typeArgs;
+  final List<NamedExpr> namedArgs;
 
-  InvokeFunctionExpr(this.fn, this.args, this.typeArgs, [OutputType type])
-      : super(type);
+  InvokeFunctionExpr(
+    this.fn,
+    this.args,
+    this.typeArgs, {
+    OutputType type,
+    this.namedArgs = const [],
+  }) : super(type) {
+    assert(() {
+      for (var arg in args) {
+        if (arg == null) {
+          throw new ArgumentError.notNull();
+        }
+      }
+      return true;
+    }());
+  }
 
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
@@ -444,10 +491,16 @@ class InvokeFunctionExpr extends Expression {
 class InstantiateExpr extends Expression {
   final Expression classExpr;
   final List<Expression> args;
-  final List<OutputType> types;
+  final List<OutputType> typeArguments;
+  final List<NamedExpr> namedArgs;
 
-  InstantiateExpr(this.classExpr, this.args, [OutputType type, this.types])
-      : super(type) {
+  InstantiateExpr(
+    this.classExpr,
+    this.args, {
+    OutputType type,
+    this.typeArguments,
+    this.namedArgs = const [],
+  }) : super(type) {
     assert(() {
       for (int len = args.length, i = 0; i < len; i++) {
         if (args[i] == null) {
@@ -966,23 +1019,33 @@ class _ExpressionTransformer<C>
   @override
   Expression visitInvokeMethodExpr(InvokeMethodExpr ast, C context) {
     var method = ast.builtin ?? ast.name;
-    return new InvokeMethodExpr(ast.receiver.visitExpression(this, context),
-        method, this.visitAllExpressions(ast.args, context),
-        outputType: ast.type, checked: ast.checked);
+    return new InvokeMethodExpr(
+      ast.receiver.visitExpression(this, context),
+      method,
+      this.visitAllExpressions(ast.args, context),
+      outputType: ast.type,
+      checked: ast.checked,
+    );
   }
 
   @override
   Expression visitInvokeMemberMethodExpr(
       InvokeMemberMethodExpr ast, C context) {
     return new InvokeMemberMethodExpr(
-        ast.methodName, this.visitAllExpressions(ast.args, context),
-        outputType: ast.type);
+      ast.methodName,
+      this.visitAllExpressions(ast.args, context),
+      outputType: ast.type,
+    );
   }
 
   @override
   Expression visitInvokeFunctionExpr(InvokeFunctionExpr ast, C context) {
-    return new InvokeFunctionExpr(ast.fn.visitExpression(this, context),
-        this.visitAllExpressions(ast.args, context), [], ast.type);
+    return new InvokeFunctionExpr(
+      ast.fn.visitExpression(this, context),
+      this.visitAllExpressions(ast.args, context),
+      [],
+      type: ast.type,
+    );
   }
 
   @override
@@ -990,8 +1053,8 @@ class _ExpressionTransformer<C>
     return new InstantiateExpr(
       ast.classExpr.visitExpression(this, context),
       this.visitAllExpressions(ast.args, context),
-      ast.type,
-      ast.types,
+      type: ast.type,
+      typeArguments: ast.typeArguments,
     );
   }
 

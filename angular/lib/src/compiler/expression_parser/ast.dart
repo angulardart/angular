@@ -10,6 +10,17 @@ class AST {
   String toString() => 'AST';
 }
 
+class NamedExpr extends AST {
+  final String name;
+  final AST expression;
+
+  NamedExpr(this.name, this.expression);
+
+  @override
+  R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
+      visitor.visitNamedExpr(this, context);
+}
+
 class EmptyExpr extends AST {
   @override
   R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
@@ -193,7 +204,13 @@ class MethodCall extends AST {
   AST receiver;
   String name;
   List<AST> args;
-  MethodCall(this.receiver, this.name, this.args);
+  List<NamedExpr> namedArgs;
+  MethodCall(
+    this.receiver,
+    this.name,
+    this.args, [
+    this.namedArgs = const [],
+  ]);
 
   @override
   R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
@@ -204,7 +221,13 @@ class SafeMethodCall extends AST {
   AST receiver;
   String name;
   List<AST> args;
-  SafeMethodCall(this.receiver, this.name, this.args);
+  List<NamedExpr> namedArgs;
+  SafeMethodCall(
+    this.receiver,
+    this.name,
+    this.args, [
+    this.namedArgs = const [],
+  ]);
 
   @override
   R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
@@ -214,7 +237,12 @@ class SafeMethodCall extends AST {
 class FunctionCall extends AST {
   AST target;
   List<AST> args;
-  FunctionCall(this.target, this.args);
+  List<NamedExpr> namedArgs;
+  FunctionCall(
+    this.target,
+    this.args, [
+    this.namedArgs = const [],
+  ]);
 
   @override
   R visit<R, C>(AstVisitor<R, C> visitor, [C context]) =>
@@ -259,6 +287,7 @@ abstract class AstVisitor<R, C> {
   R visitLiteralMap(LiteralMap ast, C context);
   R visitLiteralPrimitive(LiteralPrimitive ast, C context);
   R visitMethodCall(MethodCall ast, C context);
+  R visitNamedExpr(NamedExpr ast, C context);
   R visitPipe(BindingPipe ast, C context);
   R visitPrefixNot(PrefixNot ast, C context);
   R visitPropertyRead(PropertyRead ast, C context);
@@ -300,6 +329,12 @@ class RecursiveAstVisitor<C> implements AstVisitor<void, C> {
   void visitFunctionCall(FunctionCall ast, C context) {
     ast.target.visit(this, context);
     visitAll(ast.args, context);
+    visitAll(ast.namedArgs, context);
+  }
+
+  @override
+  void visitNamedExpr(NamedExpr ast, C context) {
+    ast.expression.visit(this, context);
   }
 
   @override
@@ -346,6 +381,7 @@ class RecursiveAstVisitor<C> implements AstVisitor<void, C> {
   void visitMethodCall(MethodCall ast, C context) {
     ast.receiver.visit(this, context);
     visitAll(ast.args, context);
+    visitAll(ast.namedArgs, context);
   }
 
   @override
@@ -373,6 +409,7 @@ class RecursiveAstVisitor<C> implements AstVisitor<void, C> {
   void visitSafeMethodCall(SafeMethodCall ast, C context) {
     ast.receiver.visit(this, context);
     visitAll(ast.args, context);
+    visitAll(ast.namedArgs, context);
   }
 
   @override
@@ -414,15 +451,24 @@ class AstTransformer implements AstVisitor<AST, Null> {
 
   @override
   AST visitMethodCall(MethodCall ast, _) => new MethodCall(
-      ast.receiver.visit(this), ast.name, this._visitAll(ast.args));
+      ast.receiver.visit(this),
+      ast.name,
+      _visitAll(ast.args),
+      _visitAll(ast.namedArgs));
 
   @override
   AST visitSafeMethodCall(SafeMethodCall ast, _) => new SafeMethodCall(
-      ast.receiver.visit(this), ast.name, this._visitAll(ast.args));
+      ast.receiver.visit(this),
+      ast.name,
+      _visitAll(ast.args),
+      _visitAll(ast.namedArgs));
 
   @override
-  AST visitFunctionCall(FunctionCall ast, _) =>
-      new FunctionCall(ast.target.visit(this), this._visitAll(ast.args));
+  AST visitFunctionCall(FunctionCall ast, _) => new FunctionCall(
+      ast.target.visit(this), _visitAll(ast.args), _visitAll(ast.namedArgs));
+
+  @override
+  AST visitNamedExpr(NamedExpr ast, _) => ast;
 
   @override
   AST visitLiteralArray(LiteralArray ast, _) =>
@@ -468,10 +514,12 @@ class AstTransformer implements AstVisitor<AST, Null> {
   @override
   AST visitEmptyExpr(EmptyExpr ast, _) => new EmptyExpr();
 
-  List<AST> _visitAll(List<AST> asts) {
-    var res = new List<AST>(asts.length);
+  List<R> _visitAll<R extends AST>(List<AST> asts) {
+    var res = new List<R>(asts.length);
     for (var i = 0; i < asts.length; ++i) {
-      res[i] = asts[i].visit(this);
+      final ast = asts[i];
+      final result = ast.visit(this);
+      res[i] = result as R;
     }
     return res;
   }

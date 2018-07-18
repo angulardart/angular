@@ -79,7 +79,18 @@ class Unparser implements AstVisitor {
       isFirst = false;
       _visit(arg);
     }
+    for (var namedArg in ast.namedArgs) {
+      if (!isFirst) sb.write(", ");
+      isFirst = false;
+      namedArg.visit(this);
+    }
     sb.write(")");
+  }
+
+  @override
+  void visitNamedExpr(NamedExpr ast, _) {
+    sb.write("${ast.name}: ");
+    ast.expression.visit(this);
   }
 
   @override
@@ -159,6 +170,11 @@ class Unparser implements AstVisitor {
       isFirst = false;
       _visit(arg);
     }
+    for (var namedArg in ast.namedArgs) {
+      if (!isFirst) sb.write(", ");
+      isFirst = false;
+      namedArg.visit(this);
+    }
     sb.write(")");
   }
 
@@ -183,6 +199,11 @@ class Unparser implements AstVisitor {
       if (!isFirst) sb.write(", ");
       isFirst = false;
       _visit(arg);
+    }
+    for (var namedArg in ast.namedArgs) {
+      if (!isFirst) sb.write(", ");
+      isFirst = false;
+      namedArg.visit(this);
     }
     sb.write(")");
   }
