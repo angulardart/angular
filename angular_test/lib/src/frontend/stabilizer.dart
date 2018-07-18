@@ -202,7 +202,7 @@ class NgZoneStabilizer extends NgTestStabilizer {
         _ngZone.onTurnDone.first, ngZoneErrorFuture);
 
     var longestPendingTimerDuration = longestPendingTimer(_ngZone);
-    if (longestPendingTimerDuration != Duration.ZERO) {
+    if (longestPendingTimerDuration != Duration.zero) {
       await _waitForFutureOrFailOnNgZoneError(
           new Future.delayed(longestPendingTimerDuration), ngZoneErrorFuture);
     }
