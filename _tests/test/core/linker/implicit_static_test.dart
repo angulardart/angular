@@ -37,6 +37,18 @@ void main() {
     });
     expect(testFixture.text, TestStaticSetter.valueToSet);
   });
+
+  test('should support calling an implicit static field', () async {
+    final testBed = NgTestBed.forComponent(ng.TestCallingStaticFieldNgFactory);
+    final testFixture = await testBed.create();
+    expect(testFixture.text, TestCallingStaticField.field());
+  });
+
+  test('should support binding an implicit static tear-off', () async {
+    final testBed = NgTestBed.forComponent(ng.TestStaticTearOffNgFactory);
+    final testFixture = await testBed.create();
+    expect(testFixture.text, TestStaticTearOff.method());
+  });
 }
 
 @Component(
@@ -78,4 +90,33 @@ class TestStaticSetter {
   static set setter(String value) {
     setValue = value;
   }
+}
+
+@Component(
+  selector: 'test',
+  template: '{{field()}}',
+)
+class TestCallingStaticField {
+  static String Function() field = () => 'static closure';
+}
+
+@Directive(selector: '[invoke]')
+class InvokeTearOff {
+  Element _host;
+
+  InvokeTearOff(this._host);
+
+  @Input()
+  set invoke(String Function() value) {
+    _host.text = value();
+  }
+}
+
+@Component(
+  selector: 'test',
+  template: '<div [invoke]="method"></div>',
+  directives: [InvokeTearOff],
+)
+class TestStaticTearOff {
+  static String method() => 'static tear-off';
 }

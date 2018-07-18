@@ -366,7 +366,8 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
       if (varExpr != null) {
         result = varExpr.callFn(args, namedParams: namedArgs);
       } else {
-        receiver = _getImplicitOrStaticReceiver(ast.name, isStaticMethod);
+        receiver =
+            _getImplicitOrStaticReceiver(ast.name, isStaticGetterOrMethod);
       }
     }
     result ??= receiver.callMethod(ast.name, args, namedParams: namedArgs);
@@ -387,7 +388,8 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
     if (identical(receiver, _implicitReceiverVal)) {
       result = _nameResolver.getLocal(ast.name);
       if (result == null) {
-        receiver = _getImplicitOrStaticReceiver(ast.name, isStaticGetter);
+        receiver =
+            _getImplicitOrStaticReceiver(ast.name, isStaticGetterOrMethod);
       }
     }
     result ??= receiver.prop(ast.name);

@@ -83,14 +83,10 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
   return false;
 }
 
-bool isStaticGetter(String name, AnalyzedClass analyzedClass) {
-  final getter = analyzedClass._classElement.getGetter(name);
-  return getter != null && getter.isStatic;
-}
-
-bool isStaticMethod(String name, AnalyzedClass analyzedClass) {
-  final method = analyzedClass._classElement.getMethod(name);
-  return method != null && method.isStatic;
+bool isStaticGetterOrMethod(String name, AnalyzedClass analyzedClass) {
+  final member = analyzedClass._classElement.getGetter(name) ??
+      analyzedClass._classElement.getMethod(name);
+  return member != null && member.isStatic;
 }
 
 bool isStaticSetter(String name, AnalyzedClass analyzedClass) {

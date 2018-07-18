@@ -30,6 +30,25 @@
     }
     ```
 
+*   Implicit static tear-offs and field invocations are now supported:
+
+    ```dart
+    @Component(
+      selector: 'example',
+      template: '''
+        <!-- Invoking an implicit static field. -->
+        <div>{{field()}}</div>
+
+        <!-- Binding an implicit static tear-off. -->
+        <div [invoke]="tearOff"></div>
+      ''',
+    )
+    class ExampleComponent {
+      static String Function() field = () => 'Hello world';
+      static String tearOff() => 'Hello world';
+    }
+    ```
+
 ## 5.0.0-beta+1
 
 ### New features
