@@ -9,7 +9,7 @@ import '../../src/compile.dart';
 import '../../src/resolve.dart';
 
 void main() {
-  // TODO(leonsenft): remove when `Typed` is exported by package:angular.
+  // TODO(leonsenft): remove when `Typed` is exported publicly.
   final typedImport =
       angular.replaceFirst('angular.dart', 'src/core/metadata/typed.dart');
 
