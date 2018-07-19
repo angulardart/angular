@@ -11,7 +11,7 @@ import '1435_void_token_type_test.template.dart' as ng;
 // void is treated separately from Null.
 void main() {
   test('should support void and Null in a @Component', () async {
-    final fixture = await NgTestBed.forComponent<ComponentInjector>(
+    final fixture = await NgTestBed.forComponent(
       ng.ComponentInjectorNgFactory,
     ).create();
     expect(

@@ -13,7 +13,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should correctly type an implicit Provider', () async {
-    testBed = NgTestBed.forComponent<CompProvidesImplicitTypes>(
+    testBed = NgTestBed.forComponent(
       ng_generated.CompProvidesImplicitTypesNgFactory,
     );
     fixture = await testBed.create();
@@ -27,7 +27,7 @@ void main() {
   });
 
   test('should correctly type an explicit provider', () async {
-    testBed = NgTestBed.forComponent<CompProvidesExplicitTypes>(
+    testBed = NgTestBed.forComponent(
       ng_generated.CompProvidesExplicitTypesNgFactory,
     );
     fixture = await testBed.create();
