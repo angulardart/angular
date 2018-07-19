@@ -1,3 +1,9 @@
+### New Features
+
+*   Add AbstractControlGroup and AbstractNgForm to allow infrastructure to
+    create their own form systems that can be backed by types such as a proto,
+    or have different control group logic.
+
 ### Breaking Changes
 
 *   Use value from AbstractControl for valueChanges event instead of internal

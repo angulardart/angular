@@ -87,7 +87,7 @@ import 'validators.dart' show ValidatorFn;
   exportAs: 'ngForm',
   visibility: Visibility.all,
 )
-class NgFormModel extends AbstractForm implements AfterChanges {
+class NgFormModel extends AbstractForm<ControlGroup> implements AfterChanges {
   final ValidatorFn _validator;
 
   bool _formChanged = false;

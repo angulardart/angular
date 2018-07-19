@@ -60,7 +60,8 @@ import 'validators.dart' show ValidatorFn;
   ],
   exportAs: 'ngForm',
 )
-class NgControlGroup extends ControlContainer implements OnInit, OnDestroy {
+class NgControlGroup extends ControlContainer<ControlGroup>
+    implements OnInit, OnDestroy {
   final ValidatorFn validator;
   final ControlContainer _parent;
 

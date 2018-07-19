@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
-import '../model.dart' show Control, ControlGroup;
+import '../model.dart' show Control, AbstractControlGroup;
 import '../validators.dart' show Validators;
 import 'abstract_control_directive.dart' show AbstractControlDirective;
 import 'checkbox_value_accessor.dart' show CheckboxControlValueAccessor;
@@ -43,7 +43,7 @@ void setUpControl(Control control, NgControl dir) {
   dir.valueAccessor.registerOnTouched(() => control.markAsTouched());
 }
 
-void setUpControlGroup(ControlGroup control, NgControlGroup dir) {
+void setUpControlGroup(AbstractControlGroup control, NgControlGroup dir) {
   if (control == null) _throwError(dir, 'Cannot find control');
   control.validator = Validators.compose([control.validator, dir.validator]);
 }

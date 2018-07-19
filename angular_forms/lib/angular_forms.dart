@@ -17,6 +17,7 @@ export 'src/directives.dart'
         setUpControlGroup,
         formDirectives,
         AbstractControlDirective,
+        AbstractNgForm,
         ChangeFunction,
         CheckboxControlValueAccessor,
         ControlContainer,
@@ -48,7 +49,12 @@ export 'src/directives.dart'
         ValidatorFn;
 export 'src/form_builder.dart' show FormBuilder;
 export 'src/model.dart'
-    show AbstractControl, Control, ControlGroup, ControlArray;
+    show
+        AbstractControl,
+        Control,
+        AbstractControlGroup,
+        ControlGroup,
+        ControlArray;
 export 'src/validators.dart' show NG_VALIDATORS, Validators;
 
 /// Shorthand set of providers used for building Angular forms.
