@@ -27,7 +27,7 @@ String _toExtension(
   if (uri.endsWith(toExtension)) return uri;
   for (var extension in fromExtensions) {
     if (uri.endsWith(extension)) {
-      return '${uri.substring(0, uri.length-extension.length)}'
+      return '${uri.substring(0, uri.length - extension.length)}'
           '$toExtension';
     }
   }

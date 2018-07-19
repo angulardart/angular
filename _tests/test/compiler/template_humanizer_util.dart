@@ -187,7 +187,7 @@ class TemplateContentProjectionHumanizer
 
   void visitBoundText(BoundTextAst ast, _) {
     result.add([
-      '''#text(${ expressionUnparser . unparse ( ast . value )})''',
+      '''#text(${expressionUnparser.unparse(ast.value)})''',
       ast.ngContentIndex
     ]);
   }

@@ -73,8 +73,8 @@ class Location {
 
   /// Given a string representing a URL, returns the normalized URL path without
   /// leading or trailing slashes
-  String normalize(String url) => Location
-      .stripTrailingSlash(_stripBaseHref(_baseHref, _stripIndexHtml(url)));
+  String normalize(String url) => Location.stripTrailingSlash(
+      _stripBaseHref(_baseHref, _stripIndexHtml(url)));
 
   /// Normalizes [path] for navigation.
   ///

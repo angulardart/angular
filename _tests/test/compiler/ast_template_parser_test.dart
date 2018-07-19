@@ -634,7 +634,7 @@ void main() {
               token: createToken(token),
               multi: multi,
               useClass: new CompileTypeMetadata(
-                  name: '''provider${ nextProviderId ++}'''),
+                  name: '''provider${nextProviderId++}'''),
               deps: deps.map(createDep).toList());
         }
 
@@ -1348,8 +1348,7 @@ void main() {
             selector: selector,
             metadataType: CompileDirectiveMetadataType.Component,
             type: new CompileTypeMetadata(
-                moduleUrl: someModuleUrl,
-                name: '''SomeComp${ compCounter ++}'''),
+                moduleUrl: someModuleUrl, name: '''SomeComp${compCounter++}'''),
             template: new CompileTemplateMetadata(
                 ngContentSelectors: ngContentSelectors));
       }
@@ -1358,8 +1357,7 @@ void main() {
         return createCompileDirectiveMetadata(
             selector: selector,
             type: new CompileTypeMetadata(
-                moduleUrl: someModuleUrl,
-                name: '''SomeDir${ compCounter ++}'''));
+                moduleUrl: someModuleUrl, name: '''SomeDir${compCounter++}'''));
       }
 
       group('project text nodes', () {

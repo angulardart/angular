@@ -129,8 +129,8 @@ void main() {
           s1 = CssSelector.parse('someTag.someClass[someAttr=someValue]'), 1);
       expect(
           matcher.match(
-              CssSelector
-                  .parse("someOtherTag.someOtherClass[someOtherAttr]")[0],
+              CssSelector.parse(
+                  "someOtherTag.someOtherClass[someOtherAttr]")[0],
               selectableCollector),
           false);
       expect(matched, []);
@@ -336,8 +336,8 @@ void main() {
     });
     test("should throw when nested :not", () {
       expect(() {
-        CssSelector
-            .parse("sometag:not(:not([attrname=attrvalue].someclass))")[0];
+        CssSelector.parse(
+            "sometag:not(:not([attrname=attrvalue].someclass))")[0];
       }, throwsWith("Nesting :not is not allowed in a selector"));
     });
     test("should throw when multiple selectors in :not", () {
@@ -358,8 +358,8 @@ void main() {
       expect(cssSelectors[2].element, "sometag");
     });
     test("should detect lists of selectors with :not", () {
-      var cssSelectors = CssSelector
-          .parse("input[type=text], :not(textarea), textbox:not(.special)");
+      var cssSelectors = CssSelector.parse(
+          "input[type=text], :not(textarea), textbox:not(.special)");
       expect(cssSelectors.length, 3);
       expect(cssSelectors[0].element, "input");
       expect(cssSelectors[0].attrs, hasLength(1));

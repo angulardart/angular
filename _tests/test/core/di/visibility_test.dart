@@ -70,15 +70,15 @@ void main() {
       });
 
       test('should support $FactoryProvider', () async {
-        final testBed = NgTestBed
-            .forComponent(ng_generated.ShouldSupportFactoryProviderNgFactory);
+        final testBed = NgTestBed.forComponent(
+            ng_generated.ShouldSupportFactoryProviderNgFactory);
         final testFixture = await testBed.create();
         expect(testFixture.assertOnlyInstance.child.interface, isNotNull);
       });
 
       test('should support $ClassProvider', () async {
-        final testBed = NgTestBed
-            .forComponent(ng_generated.ShouldSupportClassProviderNgFactory);
+        final testBed = NgTestBed.forComponent(
+            ng_generated.ShouldSupportClassProviderNgFactory);
         final testFixture = await testBed.create();
         expect(testFixture.assertOnlyInstance.child.interface, isNotNull);
       });

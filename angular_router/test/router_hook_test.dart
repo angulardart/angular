@@ -14,9 +14,9 @@ void main() {
     Router router;
 
     setUp(() async {
-      final testBed = NgTestBed
-          .forComponent<TestAppComponent>(ng.TestAppComponentNgFactory)
-          .addInjector(createInjector);
+      final testBed =
+          NgTestBed.forComponent<TestAppComponent>(ng.TestAppComponentNgFactory)
+              .addInjector(createInjector);
       final testFixture = await testBed.create();
       router = testFixture.assertOnlyInstance.router;
     });
