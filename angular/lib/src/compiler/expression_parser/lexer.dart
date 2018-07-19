@@ -371,7 +371,7 @@ class _Scanner {
         }
         hex = input.substring(start, index);
       }
-      final unescaped = int.parse(hex, radix: 16, onError: (_) => null);
+      final unescaped = int.tryParse(hex, radix: 16);
       if (unescaped == null || unescaped > 0x10FFFF) {
         error('Invalid unicode escape [\\u$hex]', escapeStart - index);
       }
