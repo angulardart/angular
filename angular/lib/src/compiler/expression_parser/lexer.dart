@@ -235,7 +235,7 @@ class _Scanner {
         while (isWhitespace(this.peek)) advance();
         return scanToken();
     }
-    error('Unexpected character [${ new String.fromCharCode(peek)}]', 0);
+    error('Unexpected character [${new String.fromCharCode(peek)}]', 0);
     return null;
   }
 

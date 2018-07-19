@@ -111,7 +111,7 @@ rm -rf **/build/\n
     }
     _stages.addAll([
       '    - stage: building',
-      '      script: ./tool/travis.sh build${release ? ':release': ''}',
+      '      script: ./tool/travis.sh build${release ? ':release' : ''}',
       '      env: PKG="$path"',
       '      cache:',
       '        directories:',
@@ -120,7 +120,7 @@ rm -rf **/build/\n
     ]);
     _presubmit.addAll([
       'echo "Building $path in ${release ? 'release' : 'debug'} mode..."',
-      'PKG=$path tool/travis.sh build${release ? ':release': ''}',
+      'PKG=$path tool/travis.sh build${release ? ':release' : ''}',
     ]);
   }
 
@@ -190,7 +190,7 @@ rm -rf **/build/\n
     ]);
     _presubmit.addAll([
       'echo "Running tests in $path in ${release ? 'release' : 'debug'} mode"',
-      'PKG=$path tool/travis.sh test${release ? ':release': ''}',
+      'PKG=$path tool/travis.sh test${release ? ':release' : ''}',
     ]);
     if (browser) {
       _stages.addAll(const [

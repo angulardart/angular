@@ -30,8 +30,7 @@ void main() {
   });
 
   test('redirect on outlet registration should replace URL', () async {
-    final testBed = NgTestBed
-        .forComponent<TestInitialRedirectComponent>(
+    final testBed = NgTestBed.forComponent<TestInitialRedirectComponent>(
             ng.TestInitialRedirectComponentNgFactory)
         .addInjector(injector);
     final testFixture = await testBed.create();
@@ -44,8 +43,8 @@ void main() {
 ///
 /// Returns any URL changes that occurred due to navigation.
 Future<List<String>> redirect([NavigationParams params]) async {
-  final testBed = NgTestBed
-      .forComponent<TestRedirectComponent>(ng.TestRedirectComponentNgFactory)
+  final testBed = NgTestBed.forComponent<TestRedirectComponent>(
+          ng.TestRedirectComponentNgFactory)
       .addInjector(injector);
   final testFixture = await testBed.create();
   final urlChanges = testFixture.assertOnlyInstance.locationStrategy.urlChanges;

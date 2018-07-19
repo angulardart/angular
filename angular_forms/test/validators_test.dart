@@ -88,8 +88,8 @@ void main() {
         expect(c(new Control('')), {'a': 2});
       });
       test('should return null when no errors', () {
-        var c = Validators
-            .compose([Validators.nullValidator, Validators.nullValidator]);
+        var c = Validators.compose(
+            [Validators.nullValidator, Validators.nullValidator]);
         expect(c(new Control('')), null);
       });
       test('should ignore nulls', () {

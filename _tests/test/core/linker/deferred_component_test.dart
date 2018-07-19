@@ -15,11 +15,9 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should load a @deferred component', () async {
-    final fixture = await NgTestBed
-        .forComponent<SimpleContainerTest>(
-          ng.SimpleContainerTestNgFactory,
-        )
-        .create();
+    final fixture = await NgTestBed.forComponent<SimpleContainerTest>(
+      ng.SimpleContainerTestNgFactory,
+    ).create();
 
     // We only test this in DDC so a new macro-task is sufficient.
     await new Future.delayed(Duration.zero);
@@ -29,11 +27,9 @@ void main() {
   });
 
   test('should load a @deferred component nested in an *ngIf', () async {
-    final fixture = await NgTestBed
-        .forComponent<NestedContainerTest>(
-          ng.NestedContainerTestNgFactory,
-        )
-        .create();
+    final fixture = await NgTestBed.forComponent<NestedContainerTest>(
+      ng.NestedContainerTestNgFactory,
+    ).create();
     Element view = fixture.rootElement.querySelector('my-deferred-view');
     expect(view, isNull);
 
@@ -43,20 +39,16 @@ void main() {
   });
 
   test('should pass property values to an @deferred component', () async {
-    final fixture = await NgTestBed
-        .forComponent<PropertyContainerTest>(
-          ng.PropertyContainerTestNgFactory,
-        )
-        .create();
+    final fixture = await NgTestBed.forComponent<PropertyContainerTest>(
+      ng.PropertyContainerTestNgFactory,
+    ).create();
     expect(fixture.text, contains('Title: Hello World'));
   });
 
   test('should listen to events from an @deferred component', () async {
-    final fixture = await NgTestBed
-        .forComponent<EventContainerTest>(
-          ng.EventContainerTestNgFactory,
-        )
-        .create();
+    final fixture = await NgTestBed.forComponent<EventContainerTest>(
+      ng.EventContainerTestNgFactory,
+    ).create();
     final div = fixture.rootElement.querySelector('my-deferred-view > button');
     expect(fixture.text, contains('Events: 0'));
     await fixture.update((_) {
@@ -66,11 +58,9 @@ void main() {
   });
 
   test('should be notified when a deferred component is loaded', () async {
-    final fixture = await NgTestBed
-        .forComponent<LoadNotifierTest>(
+    final fixture = await NgTestBed.forComponent<LoadNotifierTest>(
       ng.LoadNotifierTestNgFactory,
-    )
-        .create(beforeChangeDetection: expectAsync1((comp) {
+    ).create(beforeChangeDetection: expectAsync1((comp) {
       expect(comp.child1, isNull);
       expect(comp.child2, isNull);
       expect(comp.children, isNull);

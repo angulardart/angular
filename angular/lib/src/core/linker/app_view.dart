@@ -631,8 +631,8 @@ abstract class AppView<T> {
     TemplateRef templateRef, [
     void initializer(),
   ]) {
-    return Future
-        .wait([loadComponentFunction(), loadTemplateLibFunction()]).then((_) {
+    return Future.wait([loadComponentFunction(), loadTemplateLibFunction()])
+        .then((_) {
       if (initializer != null) {
         initializer();
       }
