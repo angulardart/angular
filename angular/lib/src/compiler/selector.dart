@@ -1,5 +1,3 @@
-import 'package:tuple/tuple.dart';
-
 import 'attribute_matcher.dart';
 import 'html_tags.dart' show getHtmlTagDefinition;
 
@@ -13,6 +11,12 @@ final _selectorRegExp = new RegExp(r'(:not\()|' + // ":not("
         r'(\))|' + // ")"
         r'(\s*,\s*)' // ","
     );
+
+class _MatcherTuple<T> {
+  final AttributeMatcher matcher;
+  final T value;
+  _MatcherTuple(this.matcher, this.value);
+}
 
 /// A css selector contains an element name,
 /// css classes and attribute/value pairs with the purpose
@@ -173,10 +177,8 @@ class SelectorMatcher {
   final _elementPartialMap = new Map<String, SelectorMatcher>();
   final _classMap = new Map<String, List<SelectorContext>>();
   final _classPartialMap = new Map<String, SelectorMatcher>();
-  final _attrMatchers =
-      <String, List<Tuple2<AttributeMatcher, SelectorContext>>>{};
-  final _attrPartialMatchers =
-      <String, List<Tuple2<AttributeMatcher, SelectorMatcher>>>{};
+  final _attrMatchers = <String, List<_MatcherTuple<SelectorContext>>>{};
+  final _attrPartialMatchers = <String, List<_MatcherTuple<SelectorMatcher>>>{};
   final _listContexts = <SelectorListContext>[];
 
   void addSelectables(List<CssSelector> cssSelectors, [dynamic callbackCtxt]) {
@@ -221,13 +223,11 @@ class SelectorMatcher {
     for (var attrMatcher in attrs) {
       if (identical(attrMatcher, attrs.last)) {
         final matchers = matcher._attrMatchers[attrMatcher.name] ??= [];
-        matchers.add(new Tuple2<AttributeMatcher, SelectorContext>(
-            attrMatcher, selectable));
+        matchers.add(new _MatcherTuple(attrMatcher, selectable));
       } else {
         final matchers = matcher._attrPartialMatchers[attrMatcher.name] ??= [];
         final newMatcher = new SelectorMatcher();
-        matchers.add(new Tuple2<AttributeMatcher, SelectorMatcher>(
-            attrMatcher, newMatcher));
+        matchers.add(new _MatcherTuple(attrMatcher, newMatcher));
         matcher = newMatcher;
       }
     }
@@ -281,17 +281,17 @@ class SelectorMatcher {
       final attrMatchers = _attrMatchers[attr.name];
       if (attrMatchers != null) {
         for (var pair in attrMatchers) {
-          if (pair.item1.matches(attr.value)) {
+          if (pair.matcher.matches(attr.value)) {
             result =
-                pair.item2.finalize(cssSelector, matchedCallback) || result;
+                pair.value.finalize(cssSelector, matchedCallback) || result;
           }
         }
       }
       final attrPartialMatchers = _attrPartialMatchers[attr.name];
       if (attrPartialMatchers != null) {
         for (var pair in attrPartialMatchers) {
-          if (pair.item1.matches(attr.value)) {
-            result = pair.item2.match(cssSelector, matchedCallback) || result;
+          if (pair.matcher.matches(attr.value)) {
+            result = pair.value.match(cssSelector, matchedCallback) || result;
           }
         }
       }
