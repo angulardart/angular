@@ -1,4 +1,3 @@
-import 'package:_benchmarks/di/create_20_bindings_directive.dart';
 import 'package:_benchmarks/di/create_20_bindings_directive.template.dart'
     as ng_generated;
 import 'package:angular_test/angular_test.dart';
@@ -8,7 +7,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should create 20 DI bindings (eager)', () async {
-    final testBed = NgTestBed.forComponent<Create20BindingsEagerBenchmark>(
+    final testBed = NgTestBed.forComponent(
       ng_generated.Create20BindingsEagerBenchmarkNgFactory,
     );
     final fixture = await testBed.create();
@@ -16,7 +15,7 @@ void main() {
   });
 
   test('should create 20 DI bindings (lazy)', () async {
-    final testBed = NgTestBed.forComponent<Create20BindingsLazyBenchmark>(
+    final testBed = NgTestBed.forComponent(
       ng_generated.Create20BindingsLazyBenchmarkNgFactory,
     );
     final fixture = await testBed.create();
