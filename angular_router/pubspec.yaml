@@ -2,7 +2,7 @@ name: angular_router
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Router for AngularDart.
-version: 2.0.0-alpha+16
+version: 2.0.0-alpha+17
 
 environment:
   sdk: ">=2.0.0-dev.64.2 <3.0.0"
