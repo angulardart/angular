@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:angular/angular.dart';
 
-import '../model.dart' show AbstractControl, ControlGroup, Control;
+import '../model.dart'
+    show AbstractControl, AbstractControlGroup, ControlGroup, Control;
 import '../validators.dart' show NG_VALIDATORS;
 import 'abstract_form.dart' show AbstractForm;
 import 'control_container.dart' show ControlContainer;
@@ -75,12 +76,23 @@ import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
   exportAs: 'ngForm',
   visibility: Visibility.all,
 )
-class NgForm extends AbstractForm {
-  ControlGroup form;
-
+class NgForm extends AbstractNgForm<ControlGroup> {
   NgForm(@Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic> validators) {
     form = new ControlGroup({}, composeValidators(validators));
   }
+
+  @override
+  ControlGroup createGroup(NgControlGroup _) => ControlGroup({});
+}
+
+/// Abstract class to easily create forms that are template driven.
+///
+/// This allows an implementing form to easily specify how to create control
+/// groups, and controls. Allowing for infrastructure to create form systems
+/// that are backed by different types such as protos.
+abstract class AbstractNgForm<T extends AbstractControlGroup>
+    extends AbstractForm<T> {
+  T form;
 
   @Input('ngDisabled')
   set disabled(bool isDisabled) {
@@ -89,10 +101,14 @@ class NgForm extends AbstractForm {
 
   Map<String, AbstractControl> get controls => form.controls;
 
+  T createGroup(NgControlGroup dir);
+  // This is separate to allow clients to override the logic if they wish.
+  Control createControl(NgControl _) => Control();
+
   @override
   void addControl(NgControl dir) {
     var container = findContainer(dir.path);
-    var ctrl = new Control();
+    var ctrl = createControl(dir);
     container.addControl(dir.name, ctrl);
     scheduleMicrotask(() {
       setUpControl(ctrl, dir);
@@ -114,7 +130,7 @@ class NgForm extends AbstractForm {
   @override
   void addControlGroup(NgControlGroup dir) {
     var container = findContainer(dir.path);
-    var group = new ControlGroup({});
+    var group = createGroup(dir);
     container.addControl(dir.name, group);
     scheduleMicrotask(() {
       setUpControlGroup(group, dir);
@@ -141,8 +157,8 @@ class NgForm extends AbstractForm {
   }
 
   @protected
-  ControlGroup findContainer(List<String> path) {
+  T findContainer(List<String> path) {
     path.removeLast();
-    return path.isEmpty ? form : (form.findPath(path) as ControlGroup);
+    return path.isEmpty ? form : (form.findPath(path) as T);
   }
 }

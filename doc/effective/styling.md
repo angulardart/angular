@@ -1,11 +1,5 @@
 # Effective AngularDart: Styling
 
-<!-- !g3-begin(G3DOC) -->
-go/effective-angular-dart/styling
-
-[TOC]
-<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
-<!-- !g3-end -->
 
 AngularDart offers a variety of methods for styling your application. This
 document is intended to help developers understand how and when to use these

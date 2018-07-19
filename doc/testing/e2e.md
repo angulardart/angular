@@ -1,10 +1,5 @@
 # End to End Testing
 
-<!-- !g3-begin(For internal use only) -->
-[TOC]
-
-<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
-<!-- !g3-end -->
 
 AngularDart does not currently have _direct_ support for integration/end-to-end
 testing, but instead has some Dart and JavaScript code for communicating with

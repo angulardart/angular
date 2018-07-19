@@ -1,11 +1,5 @@
 # Issue Labels
 
-<!-- !g3-begin(G3DOC) -->
-go/angulardart/developing/issue-labels
-
-[TOC]
-<!--* freshness: { owner: 'matanl' reviewed: '2018-06-21' } *-->
-<!-- !g3-end -->
 
 <!-- NOTE: We do not use 80 characters here, it is unreasonable to format. -->
 

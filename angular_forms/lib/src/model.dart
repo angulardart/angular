@@ -7,7 +7,7 @@ import 'directives/validators.dart' show ValidatorFn;
 AbstractControl _find(AbstractControl control, List<String> path) {
   if (path == null || path.isEmpty) return null;
   return path.fold(control, (v, name) {
-    if (v is ControlGroup) {
+    if (v is AbstractControlGroup) {
       return v.controls[name];
     } else if (v is ControlArray) {
       var index = int.parse(name);
@@ -474,27 +474,9 @@ class Control<T> extends AbstractControl<T> {
 /// `ControlGroup` is one of the three fundamental building blocks used to
 /// define forms in Angular, along with [Control] and [ControlArray].
 /// [ControlArray] can also contain other controls, but is of variable length.
-class ControlGroup extends AbstractControl<Map<String, dynamic>> {
-  final Map<String, AbstractControl> controls;
-
-  ControlGroup(this.controls, [ValidatorFn validator]) : super(validator) {
-    _setParentForControls(this, controls.values);
-  }
-
-  /// Add a control to this group.
-  void addControl(String name, AbstractControl control) {
-    controls[name] = control;
-    control.setParent(this);
-  }
-
-  /// Remove a control from this group.
-  void removeControl(String name) {
-    controls.remove(name);
-  }
-
-  /// Check whether there is a control with the given name in the group.
-  bool contains(String controlName) =>
-      controls.containsKey(controlName) && controls[controlName].enabled;
+class ControlGroup extends AbstractControlGroup<Map<String, dynamic>> {
+  ControlGroup(Map<String, AbstractControl> controls, [ValidatorFn validator])
+      : super(controls, validator);
 
   @override
   void updateValue(Map<String, dynamic> value,
@@ -518,6 +500,62 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
   void onUpdate() {
     _value = _reduceValue();
   }
+
+  Map<String, dynamic> _reduceValue() {
+    final res = <String, dynamic>{};
+    for (var name in controls.keys) {
+      if (included(name) || disabled) {
+        res[name] = controls[name].value;
+      }
+    }
+    return res;
+  }
+
+  void _checkAllValuesPresent(Map<String, dynamic> value) {
+    if (value == null) return;
+
+    assert(() {
+      for (var name in controls.keys) {
+        if (!value.containsKey(name)) {
+          throw new ArgumentError.value(
+              value, 'Must supply a value for form control with name: $name.');
+        }
+      }
+      for (var name in value.keys) {
+        if (!controls.containsKey(name)) {
+          throw new ArgumentError.value(
+              value, 'No form control found with name: $name.');
+        }
+      }
+      return true;
+    }());
+  }
+}
+
+/// Generic control group that allows creating your own group that is backed
+/// by a value that is not a Map.
+abstract class AbstractControlGroup<T> extends AbstractControl<T> {
+  final Map<String, AbstractControl> controls;
+
+  AbstractControlGroup(this.controls, [ValidatorFn validator])
+      : super(validator) {
+    _setParentForControls(this, controls.values);
+  }
+
+  /// Add a control to this group.
+  void addControl(String name, AbstractControl control) {
+    controls[name] = control;
+    control.setParent(this);
+  }
+
+  /// Remove a control from this group.
+  void removeControl(String name) {
+    controls.remove(name);
+  }
+
+  /// Check whether there is a control with the given name in the group.
+  bool contains(String controlName) =>
+      controls.containsKey(controlName) && controls[controlName].enabled;
 
   @override
   bool _anyControls(bool condition(AbstractControl c)) {
@@ -544,37 +582,8 @@ class ControlGroup extends AbstractControl<Map<String, dynamic>> {
     }
   }
 
-  Map<String, dynamic> _reduceValue() {
-    final res = <String, dynamic>{};
-    for (var name in controls.keys) {
-      if (_included(name) || disabled) {
-        res[name] = controls[name].value;
-      }
-    }
-    return res;
-  }
-
-  bool _included(String controlName) => controls[controlName]?.enabled ?? false;
-
-  void _checkAllValuesPresent(Map<String, dynamic> value) {
-    if (value == null) return;
-
-    assert(() {
-      for (var name in controls.keys) {
-        if (!value.containsKey(name)) {
-          throw new ArgumentError.value(
-              value, 'Must supply a value for form control with name: $name.');
-        }
-      }
-      for (var name in value.keys) {
-        if (!controls.containsKey(name)) {
-          throw new ArgumentError.value(
-              value, 'No form control found with name: $name.');
-        }
-      }
-      return true;
-    }());
-  }
+  @protected
+  bool included(String controlName) => controls[controlName]?.enabled ?? false;
 }
 
 /// Defines a part of a form, of variable length, that can contain other

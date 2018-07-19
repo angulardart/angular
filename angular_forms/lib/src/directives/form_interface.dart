@@ -1,4 +1,4 @@
-import '../model.dart' show Control, ControlGroup;
+import '../model.dart' show Control, AbstractControlGroup;
 import 'ng_control.dart' show NgControl;
 import 'ng_control_group.dart' show NgControlGroup;
 
@@ -21,8 +21,9 @@ abstract class Form {
   /// Remove a group of controls from this form.
   void removeControlGroup(NgControlGroup dir);
 
-  /// Look up the [ControlGroup] associated with a particular [NgControlGroup].
-  ControlGroup getControlGroup(NgControlGroup dir);
+  /// Look up the [AbstractControlGroup] associated with a particular
+  /// [NgControlGroup].
+  AbstractControlGroup getControlGroup(NgControlGroup dir);
 
   /// Update the model for a particular control with a new value.
   void updateModel(NgControl dir, dynamic value);
