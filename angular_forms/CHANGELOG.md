@@ -1,3 +1,5 @@
+## 2.0.0-beta+2
+
 ### New Features
 
 *   Add AbstractControlGroup and AbstractNgForm to allow infrastructure to

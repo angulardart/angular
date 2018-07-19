@@ -1,3 +1,5 @@
+## 0.4.0-alpha+18
+
 *   Added `$Typed`, a `TypeChecker` for `Typed`.
 *   Added `TypeReader` for parsing generic directive types.
 

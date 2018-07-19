@@ -1,3 +1,5 @@
+## 5.0.0-beta+2
+
 ### New features
 
 *   Added support for named arguments in function calls in templates:
