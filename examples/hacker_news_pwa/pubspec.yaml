@@ -4,14 +4,17 @@ environment:
   sdk: ">=2.0.0-dev.64.2 <3.0.0"
 
 dependencies:
-  angular: ^5.0.0-alpha
-  angular_router: ^2.0.0-alpha
+  angular:
+  angular_router:
   pwa: ^0.1.10
 
 dev_dependencies:
+  angular_test:
   build_runner: ^0.9.0
   build_test: ^0.10.2+5
   build_web_compilers: ^0.4.0+4
+  pageloader: ^3.0.0-beta
+  test: ^1.3.0
 
 # DO NOT REMOVE. We don't publish this package, it is just for testing.
 dependency_overrides:
@@ -23,3 +26,5 @@ dependency_overrides:
     path: ../../angular_compiler
   angular_router:
     path: ../../angular_router
+  angular_test:
+    path: ../../angular_test
