@@ -78,6 +78,13 @@ set -e
 rm -rf **/build/\n
 ''';
 
+  /// The Pub cache directory path.
+  ///
+  /// Note that any Travis build stage which defines its own cache will ignore
+  /// the global cache. So despite the Pub cache already being cached globally,
+  /// it must be respecified by any build stage that defines its own cache.
+  static const _pubCacheDirectory = r'$HOME/.pub-cache';
+
   String toPresubmitScript() {
     return _presubmitPreamble + _presubmit.join('\n');
   }
@@ -115,6 +122,7 @@ rm -rf **/build/\n
       '      env: PKG="$path"',
       '      cache:',
       '        directories:',
+      '          - $_pubCacheDirectory',
       '          - $path/.dart_tool',
       '',
     ]);
@@ -157,6 +165,7 @@ rm -rf **/build/\n
         '      env: PKG="$path"',
         '      cache:',
         '        directories:',
+        '          - $_pubCacheDirectory',
         '          - $path/.dart_tool',
         '',
       ]);
@@ -185,6 +194,7 @@ rm -rf **/build/\n
       '      env: PKG="$path"',
       '      cache:',
       '        directories:',
+      '          - $_pubCacheDirectory',
       '          - $path/.dart_tool',
       '',
     ]);
