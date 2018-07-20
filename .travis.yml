@@ -1,7 +1,7 @@
-# Automatically generated from dev/travis/config.dart.
+# Automatically generated from dev/bin/travis.dart.
 #
 # To re-generate, run from the root:
-# $ dart dev/travis/config.dart
+# $ pub run dev:travis
 language: dart
 
 # We currently are building against the Dart2 SDK.
@@ -70,6 +70,7 @@ jobs:
       env: PKG="_benchmarks"
       cache:
         directories:
+          - $HOME/.pub-cache
           - _benchmarks/.dart_tool
 
     - stage: testing
@@ -77,6 +78,7 @@ jobs:
       env: PKG="_benchmarks"
       cache:
         directories:
+          - $HOME/.pub-cache
           - _benchmarks/.dart_tool
 
       addons:
@@ -95,6 +97,7 @@ jobs:
       env: PKG="_goldens"
       cache:
         directories:
+          - $HOME/.pub-cache
           - _goldens/.dart_tool
 
     - stage: testing
@@ -104,6 +107,7 @@ jobs:
       env: PKG="_goldens"
       cache:
         directories:
+          - $HOME/.pub-cache
           - _goldens/.dart_tool
 
     - stage: presubmit
@@ -115,6 +119,7 @@ jobs:
       env: PKG="_tests"
       cache:
         directories:
+          - $HOME/.pub-cache
           - _tests/.dart_tool
 
     - stage: testing
@@ -122,6 +127,7 @@ jobs:
       env: PKG="_tests"
       cache:
         directories:
+          - $HOME/.pub-cache
           - _tests/.dart_tool
 
       addons:
@@ -144,6 +150,7 @@ jobs:
       env: PKG="angular_ast"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_ast/.dart_tool
 
     - stage: testing
@@ -151,6 +158,7 @@ jobs:
       env: PKG="angular_ast"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_ast/.dart_tool
 
     - stage: presubmit
@@ -162,6 +170,7 @@ jobs:
       env: PKG="angular_compiler"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_compiler/.dart_tool
 
     - stage: testing
@@ -169,6 +178,7 @@ jobs:
       env: PKG="angular_compiler"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_compiler/.dart_tool
 
     - stage: presubmit
@@ -180,6 +190,7 @@ jobs:
       env: PKG="angular_forms"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_forms/.dart_tool
 
     - stage: testing
@@ -187,6 +198,7 @@ jobs:
       env: PKG="angular_forms"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_forms/.dart_tool
 
       addons:
@@ -205,6 +217,7 @@ jobs:
       env: PKG="angular_router"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_router/.dart_tool
 
     - stage: testing
@@ -212,6 +225,7 @@ jobs:
       env: PKG="angular_router"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_router/.dart_tool
 
       addons:
@@ -230,6 +244,7 @@ jobs:
       env: PKG="angular_test"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_test/.dart_tool
 
     - stage: testing
@@ -237,6 +252,7 @@ jobs:
       env: PKG="angular_test"
       cache:
         directories:
+          - $HOME/.pub-cache
           - angular_test/.dart_tool
 
       addons:
@@ -263,6 +279,7 @@ jobs:
       env: PKG="examples/github_issues"
       cache:
         directories:
+          - $HOME/.pub-cache
           - examples/github_issues/.dart_tool
 
     - stage: testing
@@ -270,6 +287,7 @@ jobs:
       env: PKG="examples/github_issues"
       cache:
         directories:
+          - $HOME/.pub-cache
           - examples/github_issues/.dart_tool
 
       addons:
@@ -288,6 +306,7 @@ jobs:
       env: PKG="examples/hacker_news_pwa"
       cache:
         directories:
+          - $HOME/.pub-cache
           - examples/hacker_news_pwa/.dart_tool
 
     - stage: testing
@@ -295,6 +314,7 @@ jobs:
       env: PKG="examples/hacker_news_pwa"
       cache:
         directories:
+          - $HOME/.pub-cache
           - examples/hacker_news_pwa/.dart_tool
 
       addons:
@@ -313,6 +333,7 @@ jobs:
       env: PKG="examples/hello_world"
       cache:
         directories:
+          - $HOME/.pub-cache
           - examples/hello_world/.dart_tool
 
     - stage: presubmit
@@ -324,6 +345,7 @@ jobs:
       env: PKG="examples/registration_form"
       cache:
         directories:
+          - $HOME/.pub-cache
           - examples/registration_form/.dart_tool
 
     # Deploy the PWA application to Firebase.
@@ -333,6 +355,7 @@ jobs:
     #  env: PKG="examples/hacker_news_pwa"
     #  cache:
     #    directories:
+    #      - $HOME/.pub-cache
     #      - examples/hacker_news_pwa/.dart_tool
     #  before_deploy:
     #    - pushd examples/hacker_news_pwa
