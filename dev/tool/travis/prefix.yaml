@@ -1,7 +1,7 @@
-# Automatically generated from dev/travis/config.dart.
+# Automatically generated from dev/bin/travis.dart.
 #
 # To re-generate, run from the root:
-# $ dart dev/travis/config.dart
+# $ pub run dev:travis
 language: dart
 
 # We currently are building against the Dart2 SDK.

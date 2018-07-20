@@ -5,6 +5,7 @@
     #  env: PKG="examples/hacker_news_pwa"
     #  cache:
     #    directories:
+    #      - $HOME/.pub-cache
     #      - examples/hacker_news_pwa/.dart_tool
     #  before_deploy:
     #    - pushd examples/hacker_news_pwa
