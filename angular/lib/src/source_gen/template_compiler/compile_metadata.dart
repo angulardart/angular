@@ -108,7 +108,7 @@ class CompileTypeMetadataVisitor
     final providerTypeElement = providerType?.element;
     final providerTypeArgument = providerTypeElement is ClassElement
         ? _getCompileTypeMetadata(providerTypeElement,
-            genericTypes: providerType is ParameterizedType
+            typeArguments: providerType is ParameterizedType
                 ? providerType.typeArguments
                 : const [])
         : null;
@@ -192,7 +192,7 @@ class CompileTypeMetadataVisitor
   CompileTypeMetadata _getCompileTypeMetadata(
     ClassElement element, {
     bool enforceClassCanBeCreated = false,
-    List<DartType> genericTypes = const [],
+    List<DartType> typeArguments = const [],
   }) =>
       new CompileTypeMetadata(
         moduleUrl: moduleUrl(element),
@@ -203,7 +203,7 @@ class CompileTypeMetadataVisitor
               : [],
           element,
         ),
-        genericTypes: genericTypes.map(fromDartType).toList(),
+        typeArguments: typeArguments.map(fromDartType).toList(),
       );
 
   CompileTypeMetadata _getFunctionCompileTypeMetadata(
@@ -385,7 +385,7 @@ class CompileTypeMetadataVisitor
     final tokenId = new CompileIdentifierMetadata(
       name: token.classUrl.symbol,
       moduleUrl: linkToReference(token.classUrl, _library).url,
-      genericTypes: typeArgument != null ? [typeArgument] : const [],
+      typeArguments: typeArgument != null ? [typeArgument] : const [],
     );
     return new CompileTokenMetadata(
       value: token.identifier.isNotEmpty ? token.identifier : null,

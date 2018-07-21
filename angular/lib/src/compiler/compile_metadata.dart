@@ -27,7 +27,7 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
   // includes prefixes that aren't supposed to be emitted because it can't tell
   // if a prefix is a class name or a qualified import name.
   final bool emitPrefix;
-  final List<o.OutputType> genericTypes;
+  final List<o.OutputType> typeArguments;
   final String prefix;
 
   final String name;
@@ -42,7 +42,7 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
       this.moduleUrl,
       this.prefix,
       this.emitPrefix = false,
-      this.genericTypes = const [],
+      this.typeArguments = const [],
       this.value,
       this.analyzedClass});
 
@@ -141,7 +141,7 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata<Function> {
   Function value;
 
   @override
-  List<o.OutputType> get genericTypes => const [];
+  List<o.OutputType> get typeArguments => const [];
 
   List<CompileDiDependencyMetadata> diDeps;
 
@@ -183,7 +183,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
               '${identifier.moduleUrl}|'
               '$identifierIsInstance|'
               '$value|'
-              '${identifier.genericTypes.map(_typeAssetKey).join(',')}'
+              '${identifier.typeArguments.map(_typeAssetKey).join(',')}'
           : null;
     } else {
       return value;
@@ -192,8 +192,8 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
 
   static String _typeAssetKey(o.OutputType t) {
     if (t is o.ExternalType) {
-      final generics = t.value.genericTypes != null
-          ? t.value.genericTypes.map(_typeAssetKey).join(',')
+      final generics = t.value.typeArguments != null
+          ? t.value.typeArguments.map(_typeAssetKey).join(',')
           : '[]';
       return 'ExternalType {${t.value.moduleUrl}:${t.value.name}:$generics}';
     }
@@ -284,16 +284,17 @@ class CompileTypeMetadata
   List<CompileDiDependencyMetadata> diDeps;
 
   @override
-  final List<o.OutputType> genericTypes;
+  final List<o.OutputType> typeArguments;
 
-  CompileTypeMetadata(
-      {this.name,
-      this.moduleUrl,
-      this.prefix,
-      this.isHost = false,
-      this.value,
-      this.genericTypes = const [],
-      this.diDeps = const []});
+  CompileTypeMetadata({
+    this.name,
+    this.moduleUrl,
+    this.prefix,
+    this.isHost = false,
+    this.value,
+    this.typeArguments = const [],
+    this.diDeps = const [],
+  });
 
   @override
   CompileIdentifierMetadata<Type> get identifier => this;
@@ -327,7 +328,7 @@ class CompileTypeMetadata
       'isHost:$isHost,\n'
       'value:$value,\n'
       'diDeps:$diDeps,\n'
-      'genericTypes:$genericTypes\n'
+      'typeArguments:$typeArguments\n'
       '}';
 }
 

@@ -541,7 +541,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
         ? directive.inputTypes[input.directiveName]
         : null;
     var inputType = inputTypeMeta != null
-        ? o.importType(inputTypeMeta, inputTypeMeta.genericTypes)
+        ? o.importType(inputTypeMeta, inputTypeMeta.typeArguments)
         : null;
     if (isStatefulComp) {
       _bindToUpdateMethod(
