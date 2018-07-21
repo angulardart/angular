@@ -276,7 +276,7 @@ class _ComponentVisitor
               _inputTypes[element.displayName] = new CompileTypeMetadata(
                   moduleUrl: moduleUrl(element),
                   name: typeName,
-                  genericTypes: typeArguments);
+                  typeArguments: typeArguments);
             }
           }
         } else {

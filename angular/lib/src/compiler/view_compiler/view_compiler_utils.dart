@@ -122,8 +122,8 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
         // Add any generic types attached to the type.
         //
         // Only a value of `null` precisely means "no generic types", not [].
-        genericTypes: token.identifier.genericTypes.isNotEmpty
-            ? token.identifier.genericTypes
+        genericTypes: token.identifier.typeArguments.isNotEmpty
+            ? token.identifier.typeArguments
             : null);
   } else if (token.value != null) {
     return o.literal(token.value);

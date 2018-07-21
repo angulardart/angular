@@ -50,7 +50,7 @@ o.OutputType fromDartType(
       moduleUrl: moduleUrl(dartType.element),
       // Most o.ExternalTypes are not created, but those that are (like
       // OpaqueToken<...> need this generic type.
-      genericTypes: typeArguments,
+      typeArguments: typeArguments,
     ),
     typeArguments,
   );
@@ -74,7 +74,7 @@ o.OutputType fromTypeLink(TypeLink typeLink, LibraryReader library) {
     new CompileIdentifierMetadata(
       name: typeLink.symbol,
       moduleUrl: linkToReference(typeLink, library).url,
-      genericTypes: typeArguments,
+      typeArguments: typeArguments,
     ),
     typeArguments,
   );

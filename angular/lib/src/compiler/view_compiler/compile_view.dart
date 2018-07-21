@@ -975,7 +975,7 @@ class CompileView implements AppViewBuilder {
       type = new o.ArrayType(provider.typeArgument != null
           ? o.importType(
               provider.typeArgument,
-              provider.typeArgument.genericTypes,
+              provider.typeArgument.typeArguments,
             )
           : o.DYNAMIC_TYPE);
     } else {
@@ -983,7 +983,7 @@ class CompileView implements AppViewBuilder {
       if (provider.typeArgument != null) {
         type = o.importType(
           provider.typeArgument,
-          provider.typeArgument.genericTypes,
+          provider.typeArgument.typeArguments,
         );
       } else {
         type = resolvedProviderValueExpr.type;
