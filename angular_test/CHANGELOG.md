@@ -1,3 +1,5 @@
+*   Deleted an unnecessary `hostElement.append(componentRef.location)`.
+
 ## 2.0.0-beta+2
 
 *   Maintanence release: Stop using `SCREAMING_CAPS` consts from `dart:*`.
