@@ -69,7 +69,6 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
     ).then((ComponentRef<E> componentRef) async {
       // ComponentRef<E> is due to weirdness around type promotion:
       // https://github.com/dart-lang/sdk/issues/32284
-      hostElement.append(componentRef.location);
       await ngZone.onTurnDone.first;
       // Required to prevent onTurnDone to become re-entrant, as described in
       // the bug https://github.com/dart-lang/angular/issues/631. Without this
