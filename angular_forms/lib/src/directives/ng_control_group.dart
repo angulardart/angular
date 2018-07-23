@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 
-import '../model.dart' show ControlGroup;
+import '../model.dart' show AbstractControlGroup;
 import '../validators.dart' show NG_VALIDATORS;
 import 'control_container.dart' show ControlContainer;
 import 'form_interface.dart' show Form;
@@ -21,7 +21,7 @@ import 'validators.dart' show ValidatorFn;
 ///   directives: const [formDirectives],
 ///   template: '''
 ///     <div>
-///       <h2>Angular2 Control &amp; ControlGroup Example</h2>
+///       <h2>Angular2 Control &amp; AbstractControlGroup Example</h2>
 ///       <form #f="ngForm">
 ///         <div ngControlGroup="name" #cg-name="form">
 ///           <h3>Enter your name:</h3>
@@ -60,7 +60,7 @@ import 'validators.dart' show ValidatorFn;
   ],
   exportAs: 'ngForm',
 )
-class NgControlGroup extends ControlContainer<ControlGroup>
+class NgControlGroup extends ControlContainer<AbstractControlGroup>
     implements OnInit, OnDestroy {
   final ValidatorFn validator;
   final ControlContainer _parent;
@@ -105,9 +105,9 @@ class NgControlGroup extends ControlContainer<ControlGroup>
     formDirective.removeControlGroup(this);
   }
 
-  /// Get the [ControlGroup] backing this binding.
+  /// Get the [AbstractControlGroup] backing this binding.
   @override
-  ControlGroup get control => formDirective.getControlGroup(this);
+  AbstractControlGroup get control => formDirective.getControlGroup(this);
 
   /// Get the path to this control group.
   @override
