@@ -12,7 +12,10 @@ String moduleUrl(Element element) {
   if (element.kind == ElementKind.DYNAMIC) {
     return null;
   }
-
+  // Type parameters aren't imported, thus don't required a library URL.
+  if (element.kind == ElementKind.TYPE_PARAMETER) {
+    return null;
+  }
   var source = element.librarySource ?? element.source;
   var uri = source?.uri?.toString();
   if (uri == null) return null;

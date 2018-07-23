@@ -8,11 +8,17 @@ import 'output_ast.dart' as o;
 
 /// Creates an AST for code generation from [dartType].
 ///
+/// If [resolveBounds] is false, type parameters will not be resolved to their
+/// bound.
+///
 /// Note that private types aren't visible to generated code and will be
 /// replaced with dynamic.
-o.OutputType fromDartType(
-  DartType dartType,
-) {
+o.OutputType fromDartType(DartType dartType, {bool resolveBounds = true}) {
+  if (dartType == null) {
+    // Some analyzer APIs may return a null `DartType` to signify the absence of
+    // an explicit type, such as a generic type parameter bound.
+    return null;
+  }
   if (dartType.isVoid) {
     return o.VOID_TYPE;
   }
@@ -25,22 +31,27 @@ o.OutputType fromDartType(
   if (dartType is FunctionType) {
     return fromFunctionType(dartType);
   }
-  if (dartType is TypeParameterType) {
+  if (dartType is TypeParameterType && resolveBounds) {
     // Resolve generic type to its bound or dynamic if it has none.
     final dynamicType = dartType.element.context.typeProvider.dynamicType;
     dartType = dartType.resolveToBound(dynamicType);
+  }
+  // Note this check for dynamic should come after the check for a type
+  // parameter, since a type parameter could resolve to dynamic.
+  if (dartType.isDynamic) {
+    return o.DYNAMIC_TYPE;
   }
   List<o.OutputType> typeArguments;
   if (dartType is ParameterizedType) {
     typeArguments = [];
     for (final typeArgument in dartType.typeArguments) {
-      // Temporary hack to avoid a stack overflow for <T extends List<T>>.
-      //
-      // See https://github.com/dart-lang/angular/issues/1397.
-      if (typeArgument is TypeParameterType) {
+      if (typeArgument is TypeParameterType && resolveBounds) {
+        // Temporary hack to avoid a stack overflow for <T extends List<T>>.
+        //
+        // See https://github.com/dart-lang/angular/issues/1397.
         typeArguments.add(o.DYNAMIC_TYPE);
       } else {
-        typeArguments.add(fromDartType(typeArgument));
+        typeArguments.add(fromDartType(typeArgument, resolveBounds: false));
       }
     }
   }
