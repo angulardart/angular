@@ -4,8 +4,8 @@
 
 *   Add AbstractControlGroup and AbstractNgForm to allow infrastructure to
     create their own form systems that can be backed by types such as a proto,
-    or have different control group logic. Allow NgFormModel to work with
-    abstract group.
+    or have different control group logic. Allow NgFormModel and NgControlGroup
+    to work with abstract group.
 
 ### Breaking Changes
 
