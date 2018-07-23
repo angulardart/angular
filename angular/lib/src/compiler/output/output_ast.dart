@@ -609,13 +609,16 @@ class FunctionExpr extends Expression {
     return visitor.visitFunctionExpr(this, context);
   }
 
-  DeclareFunctionStmt toDeclStmt(String name, [List<StmtModifier> modifiers]) {
+  DeclareFunctionStmt toDeclStmt(
+    String name, {
+    List<TypeParameter> typeParameters = const [],
+  }) {
     return new DeclareFunctionStmt(
       name,
       this.params,
       this.statements,
-      this.type,
-      modifiers,
+      type: this.type,
+      typeParameters: typeParameters,
     );
   }
 
@@ -624,9 +627,8 @@ class FunctionExpr extends Expression {
       name,
       [],
       this.statements,
-      this.type,
-      [],
-      true,
+      type: this.type,
+      isGetter: true,
     );
   }
 }
@@ -782,6 +784,7 @@ class DeclareVarStmt extends Statement {
 
 class DeclareFunctionStmt extends Statement {
   final String name;
+  final List<TypeParameter> typeParameters;
   final List<FnParam> params;
   final List<Statement> statements;
   final OutputType type;
@@ -790,11 +793,11 @@ class DeclareFunctionStmt extends Statement {
   DeclareFunctionStmt(
     this.name,
     this.params,
-    this.statements, [
+    this.statements, {
     this.type,
-    List<StmtModifier> modifiers,
+    this.typeParameters = const [],
     this.isGetter = false,
-  ]) : super(modifiers);
+  });
 
   @override
   R visitStatement<R, C>(StatementVisitor<R, C> visitor, C context) {
@@ -882,17 +885,45 @@ class ClassGetter extends AbstractClassPart {
       : super(type, modifiers);
 }
 
+/// A generic type parameter.
+class TypeParameter {
+  /// This type parameters name.
+  ///
+  /// For example, this would be `T` in `class Foo<T> {}`.
+  final String name;
+
+  /// The type parameter's bound.
+  ///
+  /// For example, this would be `Bar` in `class Foo<T extends Bar> {}`. Note
+  /// that the bound itself may have generic type arguments.
+  ///
+  /// Null if this has no bound. Note that this is functionally equivalent to a
+  /// bound of dynamic.
+  final OutputType bound;
+
+  TypeParameter(this.name, {this.bound});
+}
+
 class ClassStmt extends Statement {
+  final List<TypeParameter> typeParameters;
+
   String name;
   Expression parent;
   List<ClassField> fields;
   List<ClassGetter> getters;
   ClassMethod constructorMethod;
   List<ClassMethod> methods;
-  ClassStmt(this.name, this.parent, this.fields, this.getters,
-      this.constructorMethod, this.methods,
-      [List<StmtModifier> modifiers])
-      : super(modifiers);
+
+  ClassStmt(
+    this.name,
+    this.parent,
+    this.fields,
+    this.getters,
+    this.constructorMethod,
+    this.methods, {
+    this.typeParameters = const [],
+  });
+
   @override
   R visitStatement<R, C>(StatementVisitor<R, C> visitor, C context) {
     return visitor.visitDeclareClassStmt(this, context);

@@ -142,6 +142,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   void visitDeclareClassStmt(o.ClassStmt stmt, EmitterVisitorContext context) {
     context.pushClass(stmt);
     context.print('class ${stmt.name}');
+    _visitTypeParameters(stmt.typeParameters, context);
     if (stmt.parent != null) {
       context.print(' extends ');
       stmt.parent.visitExpression(this, context);
@@ -248,6 +249,27 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     context.exitMethod();
   }
 
+  void _visitTypeParameters(
+    List<o.TypeParameter> typeParameters,
+    EmitterVisitorContext context,
+  ) {
+    if (typeParameters.isEmpty) {
+      return;
+    }
+    context.print('<');
+    visitAllObjects((o.TypeParameter typeParameter) {
+      context.print(typeParameter.name);
+      // Don't emit an explicit bound for dynamic, since bounds are implicitly
+      // dynamic.
+      if (typeParameter.bound != null &&
+          typeParameter.bound != o.DYNAMIC_TYPE) {
+        context.print(' extends ');
+        typeParameter.bound.visitType(this, context);
+      }
+    }, typeParameters, context, ', ');
+    context.print('>');
+  }
+
   @override
   void visitFunctionExpr(o.FunctionExpr ast, EmitterVisitorContext context) {
     context.print('(');
@@ -272,6 +294,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }
     context.print(' ${stmt.name}');
     if (!stmt.isGetter) {
+      _visitTypeParameters(stmt.typeParameters, context);
       context.print('(');
       _visitParams(stmt.params, context);
       context.println(') {');

@@ -174,12 +174,39 @@ void main() {
           ['void someFn() {', '}'].join('\n'));
       expect(
           emitStmt(new o.DeclareFunctionStmt(
-              'someFn', [], [new o.ReturnStatement(o.literal(1))], o.INT_TYPE)),
+              'someFn', [], [new o.ReturnStatement(o.literal(1))],
+              type: o.INT_TYPE)),
           ['int someFn() {', '  return 1;', '}'].join('\n'));
       expect(
           emitStmt(new o.DeclareFunctionStmt(
               'someFn', [new o.FnParam('param1', o.INT_TYPE)], [])),
           ['void someFn(int param1) {', '}'].join('\n'));
+    });
+    test('should support generic functions', () {
+      final t = o.importType(CompileIdentifierMetadata(name: 'T'));
+      final r = o.importType(CompileIdentifierMetadata(name: 'R'));
+      expect(
+        emitStmt(new o.DeclareFunctionStmt(
+          'genericFn',
+          [o.FnParam('t', t)],
+          [],
+          typeParameters: [o.TypeParameter('T', bound: o.NUMBER_TYPE)],
+        )),
+        ['void genericFn<T extends num>(T t) {', '}'].join('\n'),
+      );
+      expect(
+        emitStmt(new o.DeclareFunctionStmt(
+          'genericFn',
+          [o.FnParam('t', t)],
+          [],
+          type: r,
+          typeParameters: [
+            o.TypeParameter('T', bound: r),
+            o.TypeParameter('R')
+          ],
+        )),
+        ['R genericFn<T extends R, R>(T t) {', '}'].join('\n'),
+      );
     });
     test('should support comments', () {
       expect(emitStmt(new o.CommentStmt('a\nb')), ['// a', '// b'].join('\n'));
@@ -359,6 +386,39 @@ void main() {
               '  }',
               '}'
             ].join('\n'));
+      });
+      test('should support type parameters', () {
+        expect(
+          emitStmt(new o.ClassStmt('GenericClass', null, [], [], null, [],
+              typeParameters: [
+                o.TypeParameter(
+                  'T',
+                  bound: o.importType(
+                    CompileIdentifierMetadata(name: 'GenericBound'),
+                    [o.STRING_TYPE],
+                  ),
+                ),
+              ])),
+          [
+            'class GenericClass<T extends GenericBound<String>> {',
+            '}',
+          ].join('\n'),
+        );
+        expect(
+          emitStmt(new o.ClassStmt(
+            'GenericClass',
+            o.importExpr(
+              CompileIdentifierMetadata(name: 'GenericParent'),
+              typeParams: [o.importType(CompileIdentifierMetadata(name: 'T'))],
+            ),
+            [],
+            [],
+            null,
+            [],
+            typeParameters: [o.TypeParameter('T')],
+          )),
+          ['class GenericClass<T> extends GenericParent<T> {', '}'].join('\n'),
+        );
       });
     });
     test('should support builtin types', () {
