@@ -575,7 +575,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
                       .toList()))
             ])),
           factoryReturnType)
-      .toDeclStmt(view.viewFactory.name, [o.StmtModifier.Final]);
+      .toDeclStmt(view.viewFactory.name);
 }
 
 List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
