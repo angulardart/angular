@@ -273,7 +273,10 @@ class ProviderAst implements TemplateAst {
   /// Whether the provider is `multi: true`.
   final bool multiProvider;
 
-  /// May be non-null if [multiProvider] is `true`.
+  /// The type provided by this provider.
+  ///
+  /// Note this may be null, in which case the expected type is generally
+  /// available from a related expression or piece of metadata.
   final CompileTypeMetadata typeArgument;
 
   /// Whether provider should be eagerly created at build time.
