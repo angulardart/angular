@@ -48,6 +48,18 @@ void main() {
       ['OnChanges:name=Hello', 'OnInit'],
     );
   });
+
+  test(
+      'should invoke ngOnChanges with asynchronous beforeChangeDetection,'
+      ' then ngOnInit', () async {
+    final fixture = await new NgTestBed<NgOnChangesInitOrder>().create(
+      beforeChangeDetection: (root) async => root.name = 'Hello',
+    );
+    expect(
+      fixture.assertOnlyInstance.child.events,
+      ['OnChanges:name=Hello', 'OnInit'],
+    );
+  });
 }
 
 @Component(

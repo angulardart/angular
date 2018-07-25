@@ -39,7 +39,7 @@ Future<void> disposeAnyRunningTest() async => activeTest?.dispose();
 Future<NgTestFixture<T>> createDynamicFixture<T>(
   NgTestBed<T> bed,
   Type type, {
-  void Function(T componentInstance) beforeChangeDetection,
+  FutureOr<void> Function(T componentInstance) beforeChangeDetection,
 }) {
   return bed._createDynamic(type, beforeChangeDetection: beforeChangeDetection);
 }
@@ -259,7 +259,7 @@ class NgTestBed<T> {
   ///
   /// Returns a future that completes with a fixture around the component.
   Future<NgTestFixture<T>> create({
-    void Function(T instance) beforeChangeDetection,
+    FutureOr<void> Function(T instance) beforeChangeDetection,
   }) {
     return _createDynamic(
       T,

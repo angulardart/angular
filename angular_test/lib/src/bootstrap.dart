@@ -38,7 +38,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
   InjectorFactory userInjector, {
-  void Function(E) beforeChangeDetection,
+  FutureOr<void> Function(E) beforeChangeDetection,
 }) {
   if (componentFactory == null) {
     throw new ArgumentError.notNull('componentFactory');
@@ -95,7 +95,7 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
   Injector injector, {
-  void beforeChangeDetection(E componentInstance),
+  FutureOr<void> beforeChangeDetection(E componentInstance),
 }) {
   // TODO: Consider using hostElement instead.
   sharedStylesHost ??= new DomSharedStylesHost(document);
@@ -109,14 +109,25 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
         'Instead got ${(componentRef.hostView as ViewRefImpl).appView.cdMode} '
         'on component $E.');
   }
-  if (beforeChangeDetection != null) {
-    beforeChangeDetection(componentRef.instance);
+
+  Future<ComponentRef<E>> loadComponent() {
+    hostElement.append(componentRef.location);
+    appRef.registerChangeDetector(componentRef.changeDetectorRef);
+    componentRef.onDestroy(() {
+      appRef.unregisterChangeDetector(componentRef.changeDetectorRef);
+    });
+    appRef.tick();
+    return new Future.value(componentRef);
   }
-  hostElement.append(componentRef.location);
-  appRef.registerChangeDetector(componentRef.changeDetectorRef);
-  componentRef.onDestroy(() {
-    appRef.unregisterChangeDetector(componentRef.changeDetectorRef);
-  });
-  appRef.tick();
-  return new Future.value(componentRef);
+
+  FutureOr<void> beforeChangeDetectionReturn;
+  if (beforeChangeDetection != null) {
+    beforeChangeDetectionReturn = beforeChangeDetection(componentRef.instance);
+  }
+
+  if (beforeChangeDetectionReturn is Future) {
+    return beforeChangeDetectionReturn.then((_) => loadComponent());
+  } else {
+    return loadComponent();
+  }
 }

@@ -27,13 +27,25 @@ void main() {
     test.destroy();
   });
 
-  test('should call a handler before initial load', () async {
+  test('should call a synchronous handler before initial load', () async {
     final host = new Element.div();
     final test = await bootstrapForTest<BeforeChangeDetection>(
       ng_generated.BeforeChangeDetectionNgFactory,
       host,
       _noopInjector,
       beforeChangeDetection: (comp) => comp.users.add('Mati'),
+    );
+    expect(host.text, contains('Hello Mati!'));
+    test.destroy();
+  });
+
+  test('should call an asynchronous handler before initial load', () async {
+    final host = new Element.div();
+    final test = await bootstrapForTest<BeforeChangeDetection>(
+      ng_generated.BeforeChangeDetectionNgFactory,
+      host,
+      _noopInjector,
+      beforeChangeDetection: (comp) async => comp.users.add('Mati'),
     );
     expect(host.text, contains('Hello Mati!'));
     test.destroy();
