@@ -193,18 +193,32 @@ class CompileTypeMetadataVisitor
     ClassElement element, {
     bool enforceClassCanBeCreated = false,
     List<DartType> typeArguments = const [],
-  }) =>
-      new CompileTypeMetadata(
-        moduleUrl: moduleUrl(element),
-        name: element.name,
-        diDeps: _getCompileDiDependencyMetadata(
-          enforceClassCanBeCreated
-              ? unnamedConstructor(element)?.parameters ?? []
-              : [],
-          element,
-        ),
-        typeArguments: typeArguments.map(fromDartType).toList(),
-      );
+  }) {
+    final typeParameters = <o.TypeParameter>[];
+    for (final typeParameter in element.typeParameters) {
+      if (typeParameter.bound != null) {
+        // TODO(b/111800117): generics with bounds aren't yet supported.
+        typeParameters.clear();
+        logWarning(''
+            "Bounded generic type parameters aren't yet supported, ignoring "
+            'generics for "${element.name}"');
+        break;
+      }
+      typeParameters.add(o.TypeParameter(typeParameter.name));
+    }
+    return new CompileTypeMetadata(
+      moduleUrl: moduleUrl(element),
+      name: element.name,
+      diDeps: _getCompileDiDependencyMetadata(
+        enforceClassCanBeCreated
+            ? unnamedConstructor(element)?.parameters ?? []
+            : [],
+        element,
+      ),
+      typeArguments: typeArguments.map(fromDartType).toList(),
+      typeParameters: typeParameters,
+    );
+  }
 
   CompileTypeMetadata _getFunctionCompileTypeMetadata(
           FunctionElement element) =>

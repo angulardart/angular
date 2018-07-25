@@ -18,7 +18,8 @@ import '../compile_metadata.dart'
         CompileTokenMetadata,
         CompilePipeMetadata,
         CompileQueryMetadata,
-        CompileTokenMap;
+        CompileTokenMap,
+        CompileTypeMetadata;
 import '../compiler_utils.dart';
 import '../i18n/message.dart';
 import '../identifiers.dart';
@@ -270,6 +271,9 @@ class CompileView implements AppViewBuilder {
   final o.Expression styles;
   final Map<String, String> deferredModules;
 
+  /// Defines type arguments for generic directives in this view.
+  final List<CompileTypeMetadata> directiveTypes;
+
   /// Whether this is rendered by another view, rather than by its own class.
   ///
   /// Normally a unique class is generated to handle construction and change
@@ -341,15 +345,17 @@ class CompileView implements AppViewBuilder {
   var _i18nMessageCount = 0;
 
   CompileView(
-      this.component,
-      this.genConfig,
-      this.pipeMetas,
-      this.styles,
-      this.viewIndex,
-      this.declarationElement,
-      this.templateVariables,
-      this.deferredModules,
-      {this.isInlined = false}) {
+    this.component,
+    this.genConfig,
+    this.directiveTypes,
+    this.pipeMetas,
+    this.styles,
+    this.viewIndex,
+    this.declarationElement,
+    this.templateVariables,
+    this.deferredModules, {
+    this.isInlined = false,
+  }) {
     _createMethod = new CompileMethod(genDebugInfo);
     _injectorGetMethod = new CompileMethod(genDebugInfo);
     _updateContentQueriesMethod = new CompileMethod(genDebugInfo);
@@ -721,8 +727,11 @@ class CompileView implements AppViewBuilder {
     AppViewReference appViewRef = new AppViewReference(parent, nodeIndex);
 
     var appViewType = isDeferred
-        ? o.importType(Identifiers.AppView, null)
-        : o.importType(componentViewIdentifier);
+        ? o.importType(Identifiers.AppView)
+        : o.importType(
+            componentViewIdentifier,
+            _lookupTypeArgumentsOf(childComponent.type),
+          );
 
     storage.allocate(appViewRef._name, outputType: appViewType);
 
@@ -980,7 +989,14 @@ class CompileView implements AppViewBuilder {
           : o.DYNAMIC_TYPE);
     } else {
       resolvedProviderValueExpr = providerValueExpressions.first;
-      if (provider.typeArgument != null) {
+      if (directiveMetadata != null) {
+        // If the provider is backed by a directive, use the directive type
+        // alongside any specified type arguments to type the field.
+        type = o.importType(
+          directiveMetadata.originType,
+          _lookupTypeArgumentsOf(directiveMetadata.originType),
+        );
+      } else if (provider.typeArgument != null) {
         type = o.importType(
           provider.typeArgument,
           provider.typeArgument.typeArguments,
@@ -1355,6 +1371,21 @@ class CompileView implements AppViewBuilder {
           ? o.NULL_EXPR
           : parentElement.renderNode.toReadExpr();
     }
+  }
+
+  // TODO(leonsenft): support matching '@of' annotations.
+  /// Returns any generic type arguments specified for the [rawDirectiveType].
+  ///
+  /// Returns an empty list if no matching type arguments are found.
+  List<o.OutputType> _lookupTypeArgumentsOf(
+      CompileTypeMetadata rawDirectiveType) {
+    for (final directiveType in directiveTypes) {
+      if (directiveType.name == rawDirectiveType.name &&
+          directiveType.moduleUrl == rawDirectiveType.moduleUrl) {
+        return directiveType.typeArguments;
+      }
+    }
+    return [];
   }
 }
 

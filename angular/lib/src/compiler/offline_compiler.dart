@@ -3,7 +3,12 @@ import 'dart:convert';
 
 import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
-    show CompileDirectiveMetadata, CompilePipeMetadata, createHostComponentMeta;
+    show
+        CompileDirectiveMetadata,
+        CompileTypeMetadata,
+        CompilePipeMetadata,
+        createHostComponentMeta,
+        createHostDirectiveTypes;
 import 'compiler_utils.dart' show stylesModuleUrl, templateModuleUrl;
 import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
@@ -95,6 +100,8 @@ class OfflineCompiler {
       var compViewFactoryVar = _compileComponent(
           compMeta,
           componentWithDirs.directives,
+          // TODO(leonsenft): pass user-specified generic directive types.
+          [],
           componentWithDirs.pipes,
           statements,
           _deferredModules);
@@ -104,8 +111,15 @@ class OfflineCompiler {
       // runtime.
       var hostMeta = createHostComponentMeta(compMeta.type, compMeta.selector,
           compMeta.template.preserveWhitespace);
+      var hostDirectiveTypes = createHostDirectiveTypes(compMeta.type);
       var hostViewFactoryVar = _compileComponent(
-          hostMeta, [compMeta], [], statements, _deferredModules);
+        hostMeta,
+        [compMeta],
+        hostDirectiveTypes,
+        [],
+        statements,
+        _deferredModules,
+      );
       var compFactoryVar = '${compMeta.type.name}NgFactory';
       var factoryType = [o.importType(compMeta.type)];
 
@@ -175,14 +189,21 @@ class OfflineCompiler {
   String _compileComponent(
       CompileDirectiveMetadata compMeta,
       List<CompileDirectiveMetadata> directives,
+      List<CompileTypeMetadata> directiveTypes,
       List<CompilePipeMetadata> pipes,
       List<o.Statement> targetStatements,
       Map<String, String> deferredModules) {
     var styleResult = _styleCompiler.compileComponent(compMeta);
     List<TemplateAst> parsedTemplate = _templateParser.parse(compMeta,
         compMeta.template.template, directives, pipes, compMeta.type.name);
-    var viewResult = _viewCompiler.compileComponent(compMeta, parsedTemplate,
-        styleResult, o.variable(styleResult.stylesVar), pipes, deferredModules);
+    var viewResult = _viewCompiler.compileComponent(
+        compMeta,
+        parsedTemplate,
+        styleResult,
+        o.variable(styleResult.stylesVar),
+        directiveTypes,
+        pipes,
+        deferredModules);
     targetStatements.addAll(styleResult.statements);
     targetStatements.addAll(viewResult.statements);
     return viewResult.viewFactoryVar;
