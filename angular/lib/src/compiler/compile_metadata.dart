@@ -286,6 +286,12 @@ class CompileTypeMetadata
   @override
   final List<o.OutputType> typeArguments;
 
+  /// The type parameters on this type's definition.
+  ///
+  /// Note the distinction from [typeArguments], which represent the *type
+  /// arguments* of an instantiated type.
+  final List<o.TypeParameter> typeParameters;
+
   CompileTypeMetadata({
     this.name,
     this.moduleUrl,
@@ -293,6 +299,7 @@ class CompileTypeMetadata
     this.isHost = false,
     this.value,
     this.typeArguments = const [],
+    this.typeParameters = const [],
     this.diDeps = const [],
   });
 
@@ -560,6 +567,27 @@ CompileDirectiveMetadata createHostComponentMeta(
     metadataType: CompileDirectiveMetadataType.Component,
     selector: '*',
   );
+}
+
+/// Creates metadata necessary to flow types from a host view to its component.
+List<CompileTypeMetadata> createHostDirectiveTypes(
+    CompileTypeMetadata componentType) {
+  // If the component doesn't have any generic type parameters, there's no need
+  // to specify generic type arguments.
+  if (componentType.typeParameters.isEmpty) {
+    return [];
+  }
+  // Otherwise, the returned metadata flows each type parameter of the host view
+  // as a type argument to the component (and its associated views).
+  return [
+    CompileTypeMetadata(
+      name: componentType.name,
+      moduleUrl: componentType.moduleUrl,
+      typeArguments: componentType.typeParameters
+          .map((t) => o.importType(CompileIdentifierMetadata(name: t.name)))
+          .toList(),
+    )
+  ];
 }
 
 class CompilePipeMetadata implements CompileMetadataWithType {

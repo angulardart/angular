@@ -5,7 +5,7 @@ import 'package:angular_compiler/cli.dart';
 import 'package:source_span/source_span.dart';
 
 import '../compile_metadata.dart'
-    show CompileDirectiveMetadata, CompilePipeMetadata;
+    show CompileDirectiveMetadata, CompileTypeMetadata, CompilePipeMetadata;
 import '../expression_parser/parser.dart';
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
@@ -43,11 +43,12 @@ class ViewCompiler {
       List<TemplateAst> template,
       StylesCompileResult stylesCompileResult,
       o.Expression styles,
+      List<CompileTypeMetadata> directiveTypes,
       List<CompilePipeMetadata> pipes,
       Map<String, String> deferredModules) {
     var statements = <o.Statement>[];
-    var view = new CompileView(component, _genConfig, pipes, styles, 0,
-        new CompileElement.root(), [], deferredModules);
+    var view = new CompileView(component, _genConfig, directiveTypes, pipes,
+        styles, 0, new CompileElement.root(), [], deferredModules);
     buildView(view, template, stylesCompileResult);
     // Need to separate binding from creation to be able to refer to
     // variables that have been declared after usage.

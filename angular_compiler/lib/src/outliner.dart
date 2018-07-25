@@ -20,6 +20,18 @@ const _directiveChangeImport =
 const _analyzerIgnores =
     '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import,unused_shown_name';
 
+String _typeParametersOf(ClassElement element) {
+  // TODO(b/111800117): generics with bounds aren't yet supported.
+  if (element.typeParameters.isEmpty ||
+      element.typeParameters.any((t) => t.bound != null)) {
+    return '';
+  }
+  final buffer = StringBuffer('<')
+    ..writeAll(element.typeParameters.map((t) => t.name), ', ')
+    ..write('>');
+  return buffer.toString();
+}
+
 /// Generates an _outline_ of the public API of a `.template.dart` file.
 ///
 /// Used as part of some compile processes in order to speed up incremental
@@ -54,7 +66,7 @@ class TemplateOutliner implements Builder {
       return;
     }
     final library = await buildStep.inputLibrary;
-    final components = <String>[];
+    final components = <ClassElement>[];
     final directives = <String, DartObject>{};
     final injectors = <String>[];
     var units = [library.definingCompilationUnit]..addAll(library.parts);
@@ -66,7 +78,7 @@ class TemplateOutliner implements Builder {
         throwOnUnresolved: false,
       );
       if (component != null) {
-        components.add(clazz.name);
+        components.add(clazz);
       } else {
         final directive = $Directive.firstAnnotationOfExact(
           clazz,
@@ -136,17 +148,22 @@ class TemplateOutliner implements Builder {
     output.writeln();
     if (components.isNotEmpty) {
       for (final component in components) {
-        final name = '${component}NgFactory';
+        final name = component.name;
+        // Note that until type parameter bounds are supported, there's no
+        // difference between a type parameter and its use as a type argument,
+        // so we reuse the type parameters for both.
+        final typeParameters = _typeParametersOf(component);
         output
-          ..writeln('// For @Component class $component.')
-          ..writeln('external List<dynamic> get styles\$$component;')
-          ..writeln('external ComponentFactory<_user.$component> get $name;')
+          ..writeln('// For @Component class $name.')
+          ..writeln('external List<dynamic> get styles\$$name;')
           ..writeln(
-              'external $_appViewClass<_user.$component> viewFactory_${component}0($_appViewClass<dynamic> parentView, int parentIndex);')
+              'external ComponentFactory<_user.$name> get ${name}NgFactory;')
           ..writeln(
-              'class View${component}0 extends $_appViewClass<_user.$component> {')
+              'external $_appViewClass<_user.$name$typeParameters> viewFactory_${name}0$typeParameters($_appViewClass<dynamic> parentView, int parentIndex);')
           ..writeln(
-              '  external View${component}0($_appViewClass<dynamic> parentView, int parentIndex);')
+              'class View${name}0$typeParameters extends $_appViewClass<_user.$name$typeParameters> {')
+          ..writeln(
+              '  external View${name}0($_appViewClass<dynamic> parentView, int parentIndex);')
           ..writeln('}');
       }
     }

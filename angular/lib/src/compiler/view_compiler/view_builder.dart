@@ -6,7 +6,10 @@ import 'package:angular_compiler/cli.dart';
 import 'package:meta/meta.dart';
 
 import '../compile_metadata.dart'
-    show CompileDirectiveMetadata, CompileTypeMetadata;
+    show
+        CompileDirectiveMetadata,
+        CompileIdentifierMetadata,
+        CompileTypeMetadata;
 import '../expression_parser/ast.dart' as ast;
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
@@ -288,6 +291,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     var embeddedView = new CompileView(
         view.component,
         view.genConfig,
+        view.directiveTypes,
         view.pipeMetas,
         o.NULL_EXPR,
         view.viewIndex + nestedViewCount,
@@ -362,22 +366,14 @@ o.ClassStmt createViewClass(
 ) {
   var viewConstructor = _createViewClassConstructor(view);
   var viewMethods = <o.ClassMethod>[
-    new o.ClassMethod(
-        "build",
-        [],
-        _generateBuildMethod(view, parser),
-        o.importType(
-            Identifiers.ComponentRef,
+    new o.ClassMethod("build", [], _generateBuildMethod(view, parser),
+        o.importType(Identifiers.ComponentRef,
             // The 'HOST' view is the only implementation that actually returns
             // a ComponentRef, the rest statically declare they do but in
             // reality return `null`. There is no way to fix this without
             // creating new sub-class-able AppView types:
             // https://github.com/dart-lang/angular/issues/1421
-            view.component.originType != null
-                ? [o.importType(view.component.originType)]
-                : const []),
-        null,
-        ['override']),
+            [_getContextType(view)]), null, ['override']),
     view.writeInjectorGetMethod(),
     new o.ClassMethod("detectChangesInternal", [],
         view.writeChangeDetectionStatements(), null, null, ['override']),
@@ -393,14 +389,16 @@ o.ClassStmt createViewClass(
         view.detectHostChangesMethod.finish()));
   }
   var viewClass = new o.ClassStmt(
-      view.className,
-      o.importExpr(Identifiers.AppView, typeParams: [_getContextType(view)]),
-      view.storage.fields,
-      view.getters,
-      viewConstructor,
-      viewMethods
-          .where((method) => method.body != null && method.body.isNotEmpty)
-          .toList());
+    view.className,
+    o.importExpr(Identifiers.AppView, typeParams: [_getContextType(view)]),
+    view.storage.fields,
+    view.getters,
+    viewConstructor,
+    viewMethods
+        .where((method) => method.body != null && method.body.isNotEmpty)
+        .toList(),
+    typeParameters: view.component.originType.typeParameters,
+  );
   if (view.viewType != ViewType.host) {
     _addRenderTypeCtorInitialization(view, viewClass);
   }
@@ -559,10 +557,8 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
     // https://github.com/dart-lang/angular/issues/1421
     factoryReturnType = o.importType(Identifiers.AppView);
   } else {
-    factoryReturnType = o.importType(
-      Identifiers.AppView,
-      [o.importType(view.component.originType)],
-    );
+    factoryReturnType =
+        o.importType(Identifiers.AppView, [_getContextType(view)]);
   }
   return o
       .fn(
@@ -575,7 +571,10 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
                       .toList()))
             ])),
           factoryReturnType)
-      .toDeclStmt(view.viewFactory.name);
+      .toDeclStmt(
+        view.viewFactory.name,
+        typeParameters: viewClass.typeParameters,
+      );
 }
 
 List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
@@ -794,7 +793,12 @@ o.OutputType _getContextType(CompileView view) {
   // TODO(matanl): Cleanup in https://github.com/dart-lang/angular/issues/1421.
   final originType = view.component.originType;
   if (originType != null) {
-    return o.importType(originType);
+    return o.importType(
+      originType,
+      originType.typeParameters
+          .map((t) => o.importType(CompileIdentifierMetadata(name: t.name)))
+          .toList(),
+    );
   }
   return o.DYNAMIC_TYPE;
 }
