@@ -39,7 +39,7 @@ void main() {
     });
 
     test('should reexport new control properties', () async {
-      var newControl = new Control(null);
+      var newControl = Control(null);
 
       await fixture.update((cmp) {
         cmp.loginControl = newControl;
@@ -83,5 +83,5 @@ class NgFormControlTest {
   @ViewChild('input')
   InputElement inputElement;
 
-  Control loginControl = new Control(null);
+  Control loginControl = Control(null);
 }

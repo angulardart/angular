@@ -55,8 +55,8 @@ import 'validators.dart' show ValidatorFn;
 /// form.
 @Directive(
   selector: '[ngControlGroup]',
-  providers: const [
-    const ExistingProvider(ControlContainer, NgControlGroup),
+  providers: [
+    ExistingProvider(ControlContainer, NgControlGroup),
   ],
   exportAs: 'ngForm',
 )

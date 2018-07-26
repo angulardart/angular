@@ -49,7 +49,7 @@ class FormBuilder {
       Map<String, dynamic> controlsConfig,
       {ValidatorFn validator}) {
     var controls = _reduceControls(controlsConfig);
-    return new model_module.ControlGroup(controls, validator);
+    return model_module.ControlGroup(controls, validator);
   }
 
   /// Construct an array of [Control]s from the given [controlsConfig] array of
@@ -57,13 +57,13 @@ class FormBuilder {
   static model_module.ControlArray controlArray(List<dynamic> controlsConfig,
       [ValidatorFn validator]) {
     var controls = controlsConfig.map(_createControl).toList();
-    return new model_module.ControlArray(controls, validator);
+    return model_module.ControlArray(controls, validator);
   }
 
   static Map<String, model_module.AbstractControl> _reduceControls(
           Map<String, dynamic> controlsConfig) =>
       controlsConfig.map((controlName, controlConfig) =>
-          new MapEntry(controlName, _createControl(controlConfig)));
+          MapEntry(controlName, _createControl(controlConfig)));
 
   static model_module.AbstractControl _createControl(dynamic controlConfig) {
     if (controlConfig is model_module.AbstractControl) {
@@ -72,9 +72,9 @@ class FormBuilder {
       var value = controlConfig[0];
       ValidatorFn validator =
           controlConfig.length > 1 ? controlConfig[1] as ValidatorFn : null;
-      return new model_module.Control(value, validator);
+      return model_module.Control(value, validator);
     } else {
-      return new model_module.Control(controlConfig, null);
+      return model_module.Control(controlConfig, null);
     }
   }
 

@@ -58,7 +58,7 @@ void main() {
 
     test('should set up sync validator', () {
       var formValidator = (c) => ({'custom': true});
-      var f = new NgForm([formValidator]);
+      var f = NgForm([formValidator]);
       expect(f.form.errors, {'custom': true});
     });
 
@@ -109,7 +109,7 @@ class NgFormTest {
 }
 
 @Directive(selector: '[dummy]', providers: [
-  const ExistingProvider.forToken(
+  ExistingProvider.forToken(
     ngValueAccessor,
     DummyControlValueAccessor,
   )

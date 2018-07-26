@@ -31,13 +31,13 @@ class CustomValidatorDirective implements Validator {
 Matcher throwsWith(String s) =>
     throwsA(predicate((e) => e.toString().contains(s)));
 
-Future<Null> flushMicrotasks() async => await new Future.microtask(() => null);
+Future<Null> flushMicrotasks() async => await Future.microtask(() => null);
 
 void main() {
   group('Shared selectValueAccessor', () {
     DefaultValueAccessor defaultAccessor;
     setUp(() {
-      defaultAccessor = new DefaultValueAccessor(null);
+      defaultAccessor = DefaultValueAccessor(null);
     });
     test('should throw when given an empty array', () {
       expect(() => selectValueAccessor([]),
@@ -47,49 +47,49 @@ void main() {
       expect(selectValueAccessor([defaultAccessor]), defaultAccessor);
     });
     test('should return checkbox accessor when provided', () {
-      var checkboxAccessor = new CheckboxControlValueAccessor(null);
+      var checkboxAccessor = CheckboxControlValueAccessor(null);
       expect(selectValueAccessor([defaultAccessor, checkboxAccessor]),
           checkboxAccessor);
     });
     test('should return select accessor when provided', () {
-      var selectAccessor = new SelectControlValueAccessor(null);
+      var selectAccessor = SelectControlValueAccessor(null);
       expect(selectValueAccessor([defaultAccessor, selectAccessor]),
           selectAccessor);
     });
     test('should throw when more than one build-in accessor is provided', () {
-      var checkboxAccessor = new CheckboxControlValueAccessor(null);
-      var selectAccessor = new SelectControlValueAccessor(null);
+      var checkboxAccessor = CheckboxControlValueAccessor(null);
+      var selectAccessor = SelectControlValueAccessor(null);
       expect(() => selectValueAccessor([checkboxAccessor, selectAccessor]),
           throwsWith('More than one built-in value accessor matches'));
     });
     test('should return custom accessor when provided', () {
-      var customAccessor = new MockValueAccessor();
-      var checkboxAccessor = new CheckboxControlValueAccessor(null);
+      var customAccessor = MockValueAccessor();
+      var checkboxAccessor = CheckboxControlValueAccessor(null);
       expect(
           selectValueAccessor(
               [defaultAccessor, customAccessor, checkboxAccessor]),
           customAccessor);
     });
     test('should throw when more than one custom accessor is provided', () {
-      ControlValueAccessor customAccessor = new MockValueAccessor();
+      ControlValueAccessor customAccessor = MockValueAccessor();
       expect(() => selectValueAccessor([customAccessor, customAccessor]),
           throwsWith('More than one custom value accessor matches'));
     });
   });
   group('Shared composeValidators', () {
     setUp(() {
-      new DefaultValueAccessor(null);
+      DefaultValueAccessor(null);
     });
     test('should compose functions', () {
       var dummy1 = (_) => ({'dummy1': true});
       var dummy2 = (_) => ({'dummy2': true});
       var v = composeValidators([dummy1, dummy2]);
-      expect(v(new Control('')), {'dummy1': true, 'dummy2': true});
+      expect(v(Control('')), {'dummy1': true, 'dummy2': true});
     });
     test('should compose validator directives', () {
       var dummy1 = (_) => ({'dummy1': true});
-      var v = composeValidators([dummy1, new CustomValidatorDirective()]);
-      expect(v(new Control('')), {'dummy1': true, 'custom': true});
+      var v = composeValidators([dummy1, CustomValidatorDirective()]);
+      expect(v(Control('')), {'dummy1': true, 'custom': true});
     });
   });
 }

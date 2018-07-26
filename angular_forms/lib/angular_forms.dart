@@ -64,7 +64,7 @@ export 'src/validators.dart' show NG_VALIDATORS, Validators;
 /// ```dart
 /// bootstrap(MyApp, [FORM_PROVIDERS]);
 /// ````
-const List<Type> FORM_PROVIDERS = const [RadioControlRegistry];
+const List<Type> FORM_PROVIDERS = [RadioControlRegistry];
 
 /// See [FORM_PROVIDERS] instead.
 const FORM_BINDINGS = FORM_PROVIDERS;

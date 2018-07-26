@@ -71,7 +71,7 @@ class NgControlGroupTest {
   bool disabled = false;
 
   ControlGroup formModel = FormBuilder.controlGroup({
-    'group': FormBuilder.controlGroup({'login': new Control(null)})
+    'group': FormBuilder.controlGroup({'login': Control(null)})
   });
 
   ControlGroup get groupModel => formModel.controls['group'];
