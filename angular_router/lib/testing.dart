@@ -17,8 +17,8 @@ export 'src/location/testing/mock_location_strategy.dart';
 ///   routerProvidersTest,
 /// ]);
 /// ```
-const routerProvidersTest = const [
-  const Provider(LocationStrategy, useClass: MockLocationStrategy),
-  const Provider(Location),
-  const Provider(Router, useClass: RouterImpl),
+const routerProvidersTest = [
+  Provider(LocationStrategy, useClass: MockLocationStrategy),
+  Provider(Location),
+  Provider(Router, useClass: RouterImpl),
 ];

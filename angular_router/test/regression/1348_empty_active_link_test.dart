@@ -32,7 +32,7 @@ class IndexComponent {}
     <a [routerLink]="indexPath" [routerLinkActive]="activeClassName"></a>
     <router-outlet [routes]="routes"></router-outlet>
   ''',
-  directives: const [
+  directives: [
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
@@ -42,6 +42,6 @@ class AppComponent {
   static const activeClassName = 'active';
   static const indexPath = '/';
   static final routes = [
-    new RouteDefinition(path: indexPath, component: ng.IndexComponentNgFactory),
+    RouteDefinition(path: indexPath, component: ng.IndexComponentNgFactory),
   ];
 }

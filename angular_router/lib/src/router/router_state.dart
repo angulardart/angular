@@ -22,7 +22,7 @@ class RouterState extends Url {
 
   RoutePath _routePath;
   RoutePath get routePath {
-    return _routePath ??= new RoutePath.fromRoutes(routes);
+    return _routePath ??= RoutePath.fromRoutes(routes);
   }
 
   RouterState(
@@ -31,8 +31,8 @@ class RouterState extends Url {
     Map<String, String> parameters,
     String fragment = '',
     Map<String, String> queryParameters,
-  })  : this.parameters = new Map.unmodifiable(parameters ?? {}),
-        this.routes = new List.unmodifiable(routes ?? []),
+  })  : this.parameters = Map.unmodifiable(parameters ?? {}),
+        this.routes = List.unmodifiable(routes ?? []),
         super(path, queryParameters: queryParameters, fragment: fragment);
 
   @override
@@ -58,7 +58,7 @@ class MutableRouterState {
   MutableRouterState();
 
   RouterState build() {
-    return new RouterState(path, routes.toList(),
+    return RouterState(path, routes.toList(),
         fragment: fragment,
         queryParameters: queryParameters,
         parameters: parameters);

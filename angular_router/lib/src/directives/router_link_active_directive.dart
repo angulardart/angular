@@ -56,7 +56,7 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
     } else if (classes is List<String>) {
       _classes = classes;
     } else if (isDevMode) {
-      throw new ArgumentError(
+      throw ArgumentError(
         'Expected a string or list of strings. Got $classes.',
       );
     }

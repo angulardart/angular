@@ -39,7 +39,7 @@ class RoutePath {
         useAsDefault = routes.isNotEmpty ? routes.last.useAsDefault : false,
         additionalData = routes.isNotEmpty ? routes.last.additionalData : null,
         parent = routes.length > 1
-            ? new RoutePath.fromRoutes(routes.take(routes.length - 1))
+            ? RoutePath.fromRoutes(routes.take(routes.length - 1))
             : null;
 
   String toUrl({
@@ -56,7 +56,7 @@ class RoutePath {
         url = url.replaceFirst(':$key', Uri.encodeComponent(parameters[key]));
       }
     }
-    return new Url(url, queryParameters: queryParameters, fragment: fragment)
+    return Url(url, queryParameters: queryParameters, fragment: fragment)
         .toString();
   }
 }
