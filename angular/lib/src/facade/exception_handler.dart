@@ -35,7 +35,7 @@ class ExceptionHandler {
     stackTrace,
     String reason,
   ]) {
-    final buffer = new StringBuffer();
+    final buffer = StringBuffer();
     buffer.writeln('EXCEPTION: $exception');
     if (stackTrace != null) {
       buffer.writeln('STACKTRACE: ');

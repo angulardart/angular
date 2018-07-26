@@ -55,7 +55,7 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 class SlicePipe implements PipeTransform {
   dynamic transform(dynamic value, int start, [int end]) {
     if (!this.supports(value)) {
-      throw new InvalidPipeArgumentException(SlicePipe, value);
+      throw InvalidPipeArgumentException(SlicePipe, value);
     }
     if (value == null) return value;
     // This used to have JS behavior with TS-transpiled facades. To avoid a

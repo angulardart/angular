@@ -13,21 +13,21 @@ class HtmlTagDefinition {
 // see http://www.w3.org/TR/html51/syntax.html#optional-tags
 
 // This implementation does not fully conform to the HTML5 spec.
-const _tagDefinitions = const <String, HtmlTagDefinition>{
-  "base": const HtmlTagDefinition(isVoid: true),
-  "meta": const HtmlTagDefinition(isVoid: true),
-  "area": const HtmlTagDefinition(isVoid: true),
-  "embed": const HtmlTagDefinition(isVoid: true),
-  "link": const HtmlTagDefinition(isVoid: true),
-  "img": const HtmlTagDefinition(isVoid: true),
-  "input": const HtmlTagDefinition(isVoid: true),
-  "param": const HtmlTagDefinition(isVoid: true),
-  "hr": const HtmlTagDefinition(isVoid: true),
-  "br": const HtmlTagDefinition(isVoid: true),
-  "source": const HtmlTagDefinition(isVoid: true),
-  "track": const HtmlTagDefinition(isVoid: true),
-  "wbr": const HtmlTagDefinition(isVoid: true),
-  "col": const HtmlTagDefinition(isVoid: true),
-  "svg": const HtmlTagDefinition(implicitNamespacePrefix: "svg"),
-  "math": const HtmlTagDefinition(implicitNamespacePrefix: "math"),
+const _tagDefinitions = <String, HtmlTagDefinition>{
+  "base": HtmlTagDefinition(isVoid: true),
+  "meta": HtmlTagDefinition(isVoid: true),
+  "area": HtmlTagDefinition(isVoid: true),
+  "embed": HtmlTagDefinition(isVoid: true),
+  "link": HtmlTagDefinition(isVoid: true),
+  "img": HtmlTagDefinition(isVoid: true),
+  "input": HtmlTagDefinition(isVoid: true),
+  "param": HtmlTagDefinition(isVoid: true),
+  "hr": HtmlTagDefinition(isVoid: true),
+  "br": HtmlTagDefinition(isVoid: true),
+  "source": HtmlTagDefinition(isVoid: true),
+  "track": HtmlTagDefinition(isVoid: true),
+  "wbr": HtmlTagDefinition(isVoid: true),
+  "col": HtmlTagDefinition(isVoid: true),
+  "svg": HtmlTagDefinition(implicitNamespacePrefix: "svg"),
+  "math": HtmlTagDefinition(implicitNamespacePrefix: "math"),
 };

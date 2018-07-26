@@ -3,7 +3,7 @@ Set<String> _nativeEventSet;
 /// Returns true if event is an html event that is handled by DOM apis
 /// directly and doesn't need to go through plugin system.
 bool isNativeHtmlEvent(String eventName) {
-  const commonEvents = const <String>[
+  const commonEvents = <String>[
     'abort',
     'afterprint',
     'animationend',
@@ -78,6 +78,6 @@ bool isNativeHtmlEvent(String eventName) {
     'unload',
     'wheel'
   ];
-  _nativeEventSet ??= new Set<String>.from(commonEvents);
+  _nativeEventSet ??= Set<String>.from(commonEvents);
   return _nativeEventSet.contains(eventName);
 }

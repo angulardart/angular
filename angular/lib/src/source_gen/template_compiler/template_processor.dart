@@ -19,7 +19,7 @@ Future<TemplateCompilerOutputs> processTemplates(
 ) async {
   final templateCompiler = createTemplateCompiler(buildStep, flags);
   final resolver = buildStep.resolver;
-  final reflectables = await new ReflectableReader(
+  final reflectables = await ReflectableReader(
     recordInjectableFactories: flags.emitInjectableFactories,
     recordComponentFactories: flags.emitComponentFactories,
     // For a given import or export directive, return whether we have the
@@ -33,29 +33,29 @@ Future<TemplateCompilerOutputs> processTemplates(
     hasInput: (uri) async {
       if (flags.ignoreNgPlaceholderForGoldens) {
         return buildStep.canRead(
-          new AssetId.resolve(uri, from: buildStep.inputId),
+          AssetId.resolve(uri, from: buildStep.inputId),
         );
       }
       final placeholder = ''
           '${uri.substring(0, uri.length - '.dart'.length)}'
           '.ng_placeholder';
       return buildStep.canRead(
-        new AssetId.resolve(placeholder, from: buildStep.inputId),
+        AssetId.resolve(placeholder, from: buildStep.inputId),
       );
     },
     // For a given import or export directive, return whether a generated
     // .template.dart file already exists. If it does we will need to link
     // to it and call initReflector().
     isLibrary: (uri) =>
-        resolver.isLibrary(new AssetId.resolve(uri, from: buildStep.inputId)),
+        resolver.isLibrary(AssetId.resolve(uri, from: buildStep.inputId)),
   ).resolve(element);
   final AngularArtifacts compileComponentsData = logElapsedSync(
-      () => findComponentsAndDirectives(new LibraryReader(element)),
+      () => findComponentsAndDirectives(LibraryReader(element)),
       operationName: 'findComponents',
       assetId: buildStep.inputId,
       log: log);
   if (compileComponentsData.isEmpty) {
-    return new TemplateCompilerOutputs(
+    return TemplateCompilerOutputs(
       null,
       reflectables,
       InjectorReader.findInjectors(element),
@@ -78,7 +78,7 @@ Future<TemplateCompilerOutputs> processTemplates(
     return templateCompiler.compile(compileComponentsData);
   }, operationName: 'compile', assetId: buildStep.inputId, log: log);
 
-  return new TemplateCompilerOutputs(
+  return TemplateCompilerOutputs(
     compiledTemplates,
     reflectables,
     InjectorReader.findInjectors(element),

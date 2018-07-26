@@ -42,7 +42,7 @@ class ProviderViewContext {
 
   ProviderViewContext(this.component, this.sourceSpan) {
     viewQueries = _getViewQueries(component);
-    viewProviders = new CompileTokenMap<bool>();
+    viewProviders = CompileTokenMap<bool>();
     List<CompileProviderMetadata> normalizedViewProviders =
         _normalizeProviders(component.viewProviders, sourceSpan, errors);
     // Deduplicate providers by token.
@@ -62,8 +62,8 @@ class ProviderElementContext implements ElementProviderUsage {
   final List<DirectiveAst> _directiveAsts;
   SourceSpan _sourceSpan;
   CompileTokenMap<List<CompileQueryMetadata>> _contentQueries;
-  final _transformedProviders = new CompileTokenMap<ProviderAst>();
-  final _seenProviders = new CompileTokenMap<bool>();
+  final _transformedProviders = CompileTokenMap<ProviderAst>();
+  final _seenProviders = CompileTokenMap<bool>();
   CompileTokenMap<ProviderAst> _allProviders;
   Map<String, String> _attrs;
   bool _requiresViewContainer = false;
@@ -83,21 +83,20 @@ class ProviderElementContext implements ElementProviderUsage {
     final directivesMeta = _directiveMetadataFromAst(_directiveAsts);
     // Make a list of all providers required by union of all directives
     // including components themselves.
-    final resolver = new _ProviderResolver(directivesMeta, _sourceSpan);
+    final resolver = _ProviderResolver(directivesMeta, _sourceSpan);
     _allProviders = resolver.resolve();
     _rootProviderContext.errors.addAll(resolver.errors);
 
     // Get content queries since we need to eagerly create providers to serve
     // values for component @ContentChild/@ContentChildren at ngOnInit time.
     _contentQueries = _getContentQueries(directivesMeta);
-    var queriedTokens = new CompileTokenMap<bool>();
+    var queriedTokens = CompileTokenMap<bool>();
     for (var provider in _allProviders.values) {
       _addQueryReadsTo(provider.token, queriedTokens);
     }
     // For each #ref, add the read type as a token to queries.
     for (ReferenceAst refAst in refs) {
-      _addQueryReadsTo(
-          new CompileTokenMetadata(value: refAst.name), queriedTokens);
+      _addQueryReadsTo(CompileTokenMetadata(value: refAst.name), queriedTokens);
     }
     // If any content query asks to read ViewContainerRef, mark
     // ProviderElementContext to require view container.
@@ -140,7 +139,7 @@ class ProviderElementContext implements ElementProviderUsage {
     var sortedProviderTypes = _transformedProviders.values
         .map((provider) => provider.token.identifier)
         .toList();
-    var sortedDirectives = new List<DirectiveAst>.from(_directiveAsts);
+    var sortedDirectives = List<DirectiveAst>.from(_directiveAsts);
     sortedDirectives.sort((dir1, dir2) =>
         sortedProviderTypes.indexOf(dir1.directive.type) -
         sortedProviderTypes.indexOf(dir2.directive.type));
@@ -204,7 +203,7 @@ class ProviderElementContext implements ElementProviderUsage {
       return transformedProviderAst;
     }
     if (_seenProviders.get(token) != null) {
-      _rootProviderContext.errors.add(new ProviderError(
+      _rootProviderContext.errors.add(ProviderError(
           'Cannot instantiate cyclic dependency! ${token.name}',
           this._sourceSpan));
       return null;
@@ -219,10 +218,8 @@ class ProviderElementContext implements ElementProviderUsage {
       var transformedUseExisting = provider.useExisting;
       List<CompileDiDependencyMetadata> transformedDeps;
       if (provider.useExisting != null) {
-        var existingDiDep = _getDependency(
-            resolvedProvider.providerType,
-            new CompileDiDependencyMetadata(token: provider.useExisting),
-            eager);
+        var existingDiDep = _getDependency(resolvedProvider.providerType,
+            CompileDiDependencyMetadata(token: provider.useExisting), eager);
         if (existingDiDep.token != null) {
           transformedUseExisting = existingDiDep.token;
         } else {
@@ -262,7 +259,7 @@ class ProviderElementContext implements ElementProviderUsage {
       [bool eager]) {
     if (dep.isAttribute) {
       var attrValue = this._attrs[dep.token.value];
-      return new CompileDiDependencyMetadata(isValue: true, value: attrValue);
+      return CompileDiDependencyMetadata(isValue: true, value: attrValue);
     }
     if (dep.token != null) {
       // access built-ins
@@ -310,7 +307,7 @@ class ProviderElementContext implements ElementProviderUsage {
     }
     if (dep.isSelf) {
       if (dep.isOptional) {
-        result = new CompileDiDependencyMetadata(isValue: true, value: null);
+        result = CompileDiDependencyMetadata(isValue: true, value: null);
       }
     } else {
       // check parent elements
@@ -333,15 +330,14 @@ class ProviderElementContext implements ElementProviderUsage {
           result = dep;
         } else {
           result = dep.isOptional
-              ? result =
-                  new CompileDiDependencyMetadata(isValue: true, value: null)
+              ? result = CompileDiDependencyMetadata(isValue: true, value: null)
               : null;
         }
       }
     }
     if (result == null) {
-      _rootProviderContext.errors.add(new ProviderError(
-          'No provider for ${dep.token.name}', this._sourceSpan));
+      _rootProviderContext.errors.add(
+          ProviderError('No provider for ${dep.token.name}', this._sourceSpan));
     }
     return result;
   }
@@ -351,7 +347,7 @@ CompileProviderMetadata _transformProvider(CompileProviderMetadata provider,
     {CompileTokenMetadata useExisting,
     dynamic useValue,
     List<CompileDiDependencyMetadata> deps}) {
-  return new CompileProviderMetadata(
+  return CompileProviderMetadata(
     token: provider.token,
     useClass: provider.useClass,
     useExisting: useExisting,
@@ -367,7 +363,7 @@ CompileProviderMetadata _transformProvider(CompileProviderMetadata provider,
 /// of existing ProviderAst.
 ProviderAst _transformProviderAst(ProviderAst provider,
     {bool forceEager, List<CompileProviderMetadata> providers}) {
-  return new ProviderAst(
+  return ProviderAst(
     provider.token,
     provider.multiProvider,
     providers,
@@ -399,12 +395,12 @@ List<CompileProviderMetadata> _normalizeProviders(
         if (provider is CompileProviderMetadata) {
           normalizeProvider = provider;
         } else if (provider is CompileTypeMetadata) {
-          normalizeProvider = new CompileProviderMetadata(
-              token: new CompileTokenMetadata(identifier: provider),
+          normalizeProvider = CompileProviderMetadata(
+              token: CompileTokenMetadata(identifier: provider),
               useClass: provider);
         } else {
           targetErrors.add(
-              new ProviderError('Unknown provider type $provider', sourceSpan));
+              ProviderError('Unknown provider type $provider', sourceSpan));
         }
         if (normalizeProvider != null) {
           targetProviders.add(normalizeProvider);
@@ -429,10 +425,10 @@ class _ProviderResolver {
   _ProviderResolver(this.directives, this.sourceSpan);
 
   CompileTokenMap<ProviderAst> resolve() {
-    _providersByToken = new CompileTokenMap<ProviderAst>();
+    _providersByToken = CompileTokenMap<ProviderAst>();
     for (CompileDirectiveMetadata directive in directives) {
-      var dirProvider = new CompileProviderMetadata(
-          token: new CompileTokenMetadata(identifier: directive.type),
+      var dirProvider = CompileProviderMetadata(
+          token: CompileTokenMetadata(identifier: directive.type),
           useClass: directive.type,
           visibility: directive.visibility);
       final providerAstType =
@@ -472,13 +468,13 @@ class _ProviderResolver {
       var resolvedProvider = _providersByToken.get(provider.token);
       if (resolvedProvider != null &&
           !identical(resolvedProvider.multiProvider, provider.multi)) {
-        errors.add(new ProviderError(
+        errors.add(ProviderError(
             'Mixing multi and non multi provider is not possible for token '
             '${resolvedProvider.token.name}',
             sourceSpan));
       }
       if (resolvedProvider == null) {
-        resolvedProvider = new ProviderAst(
+        resolvedProvider = ProviderAst(
           provider.token,
           provider.multi,
           [provider],
@@ -502,7 +498,7 @@ class _ProviderResolver {
 
 CompileTokenMap<List<CompileQueryMetadata>> _getViewQueries(
     CompileDirectiveMetadata component) {
-  var viewQueries = new CompileTokenMap<List<CompileQueryMetadata>>();
+  var viewQueries = CompileTokenMap<List<CompileQueryMetadata>>();
   if (component.viewQueries == null) return viewQueries;
   for (CompileQueryMetadata query in component.viewQueries) {
     _addQueryToTokenMap(viewQueries, query);
@@ -512,7 +508,7 @@ CompileTokenMap<List<CompileQueryMetadata>> _getViewQueries(
 
 CompileTokenMap<List<CompileQueryMetadata>> _getContentQueries(
     List<CompileDirectiveMetadata> directives) {
-  var contentQueries = new CompileTokenMap<List<CompileQueryMetadata>>();
+  var contentQueries = CompileTokenMap<List<CompileQueryMetadata>>();
   for (var directive in directives) {
     if (directive.queries == null) continue;
     for (var query in directive.queries) {
@@ -545,7 +541,7 @@ ProviderAstType _providerAstTypeFromMetadataType(
     case CompileDirectiveMetadataType.FunctionalDirective:
       return ProviderAstType.FunctionalDirective;
   }
-  throw new ArgumentError("Can't create '$ProviderAstType' from '$type'");
+  throw ArgumentError("Can't create '$ProviderAstType' from '$type'");
 }
 
 final CompileTokenMetadata ngIfTokenMetadata =

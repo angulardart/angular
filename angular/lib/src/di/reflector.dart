@@ -33,7 +33,7 @@ Type _nullTypeProvider(Object _) {
       'This feature is no longer supported in AngularDart due to '
       'the effects it has on code-size for highly optimized/size sensitive '
       'applications.');
-  throw new UnsupportedError('');
+  throw UnsupportedError('');
 }
 
 /// Registers [component] as the static factory for [type].
@@ -48,7 +48,7 @@ void registerComponent(Type type, dynamic /*ComponentFactory*/ component) {
 /*ComponentFactory*/ dynamic getComponent(Type type) {
   final component = _components[type];
   if (isDevMode && component == null) {
-    throw new StateError('Could not find a component factory for $type.');
+    throw StateError('Could not find a component factory for $type.');
   }
   return component;
 }
@@ -68,7 +68,7 @@ Function getFactory(Type type) {
   final factory = _factories[type];
   if (isDevMode && factory == null) {
     if (_factories.isEmpty) {
-      throw new StateError(
+      throw StateError(
           'Could not find a factory for $type, there were no factories of any '
           'type found. The likely causes is that you are using the newer '
           'runApp() semantics, which does not support runtime lookups of '
@@ -77,7 +77,7 @@ Function getFactory(Type type) {
           'misconfiguration of Bazel or Build Runner or a missing invocation '
           'of `initReflector()` in your `main.dart`).');
     }
-    throw new StateError('Could not find a factory for $type. Either a provider'
+    throw StateError('Could not find a factory for $type. Either a provider'
         ' was not set, *or* AngularDart code generation was never invoked on '
         'the depending package (either due to a misconfiguration of Bazel or '
         'Build Runner).');

@@ -25,7 +25,7 @@ const _FN_ARGS = '\\([-0-9.%, a-zA-Z]+\\)';
 const _KEY = '([a-zA-Z-]+[ ]?\\:)';
 
 final RegExp _safeStyleValue =
-    new RegExp('^($_VALUES|($_KEY$_VALUES[ ;]?)|((?:$_TRANSFORMATION_FNS|'
+    RegExp('^($_VALUES|($_KEY$_VALUES[ ;]?)|((?:$_TRANSFORMATION_FNS|'
         '$_COLOR_FNS)$_FN_ARGS)[ ;]?)+\$');
 
 /// Matches a `url(...)` value with an arbitrary argument as long as it does
@@ -47,7 +47,7 @@ final RegExp _safeStyleValue =
 /// Given the common use case, low likelihood of attack vector, and low impact
 /// of an attack, this code is permissive and allows URLs that sanitize
 /// otherwise.
-final RegExp _urlRe = new RegExp(r'^url\([^)]+\)$');
+final RegExp _urlRe = RegExp(r'^url\([^)]+\)$');
 
 /// Checks that quotes (" and ') are properly balanced inside a string. Assumes
 /// that neither escape (\) nor any other character that could result in

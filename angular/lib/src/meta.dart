@@ -53,7 +53,7 @@ library angular.meta;
 ///   print(comp.fullName);
 /// }
 /// ```
-const visibleForTemplate = const _VisibleForTemplate();
+const visibleForTemplate = _VisibleForTemplate();
 
 class _VisibleForTemplate {
   const _VisibleForTemplate();

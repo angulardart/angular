@@ -88,7 +88,7 @@ class OfflineCompiler {
     } else if (artifacts.directives.isNotEmpty) {
       moduleUrl = templateModuleUrl(artifacts.directives.first.type);
     } else {
-      throw new StateError('No components nor injectorModules given');
+      throw StateError('No components nor injectorModules given');
     }
     var statements = <o.Statement>[];
     var exportedVars = <String>[];
@@ -148,7 +148,7 @@ class OfflineCompiler {
           [],
           // Statements.
           [
-            new o.ReturnStatement(new o.ReadVarExpr('_$compFactoryVar')),
+            o.ReturnStatement(o.ReadVarExpr('_$compFactoryVar')),
           ],
           o.importType(
             Identifiers.ComponentFactory,
@@ -162,7 +162,7 @@ class OfflineCompiler {
 
     for (CompileDirectiveMetadata directive in artifacts.directives) {
       if (!directive.requiresDirectiveChangeDetector) continue;
-      DirectiveCompiler comp = new DirectiveCompiler(directive,
+      DirectiveCompiler comp = DirectiveCompiler(directive,
           _templateParser.schemaRegistry, _viewCompiler.genDebugInfo);
       DirectiveCompileResult res = comp.compile();
       statements.addAll(res.statements);
@@ -216,13 +216,13 @@ class OfflineCompiler {
       Map<String, String> deferredModules) {
     String sourceCode = _outputEmitter.emitStatements(
         moduleUrl, statements, exportedVars, deferredModules);
-    return new SourceModule(moduleUrl, sourceCode, deferredModules);
+    return SourceModule(moduleUrl, sourceCode, deferredModules);
   }
 }
 
 void _assertComponent(CompileDirectiveMetadata meta) {
   if (!meta.isComponent) {
-    throw new StateError(
+    throw StateError(
         "Could not compile '${meta.type.name}' because it is not a component.");
   }
 }

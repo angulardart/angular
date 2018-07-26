@@ -31,12 +31,12 @@ import 'modules.template.dart' as ng;
 /// Adds support for runtime event plugins.
 ///
 /// This may eventually be excluded from the [minimalModule].
-const eventPluginModule = const <Object>[
-  const Provider(EventManager),
-  const Provider(
+const eventPluginModule = <Object>[
+  Provider(EventManager),
+  Provider(
     EVENT_MANAGER_PLUGINS,
     useFactory: createEventPlugins,
-    deps: const [],
+    deps: [],
   ),
 ];
 
@@ -45,8 +45,8 @@ List<EventManagerPlugin> createEventPlugins() {
   // Order here is very important, it is reversed before being registered, and
   // DomEventsPlugin is a catch-all so it *must* happen last.
   return [
-    new DomEventsPlugin(),
-    new KeyEventsPlugin(),
+    DomEventsPlugin(),
+    KeyEventsPlugin(),
   ];
 }
 
@@ -65,51 +65,51 @@ class ThrowingSlowComponentLoader implements SlowComponentLoader {
 
   @override
   load<T>(_, __) {
-    throw new UnsupportedError(_slowComponentLoaderWarning);
+    throw UnsupportedError(_slowComponentLoaderWarning);
   }
 
   @override
   loadNextToLocation<T>(_, __, [___]) {
-    throw new UnsupportedError(_slowComponentLoaderWarning);
+    throw UnsupportedError(_slowComponentLoaderWarning);
   }
 }
 
 /// Strict subset module of AngularDart functionality.
 ///
 /// Does not support any service that requires the `initReflector()`-based APIs.
-const bootstrapMinimalModule = const <Object>[
+const bootstrapMinimalModule = <Object>[
   // Custom events and fallback if the compiler does not detect an event.
   eventPluginModule,
 
   // HTML/DOM sanitization.
-  const Provider(ExceptionHandler, useClass: BrowserExceptionHandler),
-  const Provider(SanitizationService, useExisting: DomSanitizationService),
-  const Provider(DomSanitizationService, useClass: DomSanitizationServiceImpl),
+  Provider(ExceptionHandler, useClass: BrowserExceptionHandler),
+  Provider(SanitizationService, useExisting: DomSanitizationService),
+  Provider(DomSanitizationService, useClass: DomSanitizationServiceImpl),
 
   // Core components of the runtime.
-  const Provider(NgZone, useFactory: createNgZone, deps: const []),
-  const Provider(APP_ID, useFactory: createRandomAppId, deps: const []),
-  const Provider(ComponentLoader),
-  const Provider(SlowComponentLoader, useClass: ThrowingSlowComponentLoader),
+  Provider(NgZone, useFactory: createNgZone, deps: []),
+  Provider(APP_ID, useFactory: createRandomAppId, deps: []),
+  Provider(ComponentLoader),
+  Provider(SlowComponentLoader, useClass: ThrowingSlowComponentLoader),
 
   // Enable Testability.
-  const Provider(Testability, useClass: Testability),
+  Provider(Testability, useClass: Testability),
 ];
 
 /// An experimental application [Injector] that is statically generated.
-@GenerateInjector(const [bootstrapMinimalModule])
+@GenerateInjector([bootstrapMinimalModule])
 final InjectorFactory minimalApp = ng.minimalApp$Injector;
 
 /// Returns the current [Document] of the browser.
 HtmlDocument getDocument() => document;
 
 /// Creates an AngularDart zone, enabling async stack traces in developer mode.
-NgZone createNgZone() => new NgZone(enableLongStackTrace: isDevMode);
+NgZone createNgZone() => NgZone(enableLongStackTrace: isDevMode);
 
 /// Creates a random [APP_ID] for use in CSS encapsulation.
 String createRandomAppId() {
-  final random = new Random();
-  String char() => new String.fromCharCode(97 + random.nextInt(26));
+  final random = Random();
+  String char() => String.fromCharCode(97 + random.nextInt(26));
   return '${char()}${char()}${char()}';
 }
 
@@ -119,13 +119,13 @@ String createRandomAppId() {
 ///
 /// **WARNING**: This API is not considered part of the stable API.
 @experimental
-const bootstrapLegacyModule = const <Object>[
+const bootstrapLegacyModule = <Object>[
   bootstrapMinimalModule,
-  const Provider(
+  Provider(
     ApplicationRef,
     useFactory: internalCreateApplicationRef,
-    deps: const [NgZone, Injector],
+    deps: [NgZone, Injector],
   ),
-  const Provider(AppViewUtils),
-  const Provider(SlowComponentLoader),
+  Provider(AppViewUtils),
+  Provider(SlowComponentLoader),
 ];

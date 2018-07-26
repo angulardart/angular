@@ -13,7 +13,7 @@ var _debugModuleUrl = "asset://debug/lib";
 var _METADATA_MAP_VAR = '_METADATA';
 String debugOutputAstAsDart(
     dynamic /* o . Statement | o . Expression | o . Type | List < dynamic > */ ast) {
-  var converter = new _DartEmitterVisitor(_debugModuleUrl);
+  var converter = _DartEmitterVisitor(_debugModuleUrl);
   var ctx = EmitterVisitorContext.createRoot([], {});
   List<dynamic> asts;
   if (ast is! List) {
@@ -27,7 +27,7 @@ String debugOutputAstAsDart(
     } else if (ast is o.OutputType) {
       ast.visitType(converter, ctx);
     } else {
-      throw new StateError("Don't know how to print debug info for $ast");
+      throw StateError("Don't know how to print debug info for $ast");
     }
   }
   return ctx.toSource();
@@ -40,7 +40,7 @@ class DartEmitter implements OutputEmitter {
     var srcParts = [];
     // Note: We are not creating a library here as Dart does not need it.
     // Dart analyzer might complain about it though.
-    var converter = new _DartEmitterVisitor(moduleUrl);
+    var converter = _DartEmitterVisitor(moduleUrl);
     var ctx = EmitterVisitorContext.createRoot(exportedVars, deferredModules);
     converter.visitAllStatements(stmts, ctx);
     converter.importsWithPrefixes.forEach((importedModuleUrl, prefix) {
@@ -59,7 +59,7 @@ class DartEmitter implements OutputEmitter {
 class _DartEmitterVisitor extends AbstractEmitterVisitor
     implements o.TypeVisitor<void, EmitterVisitorContext> {
   // List of packages that are public api and can be imported without prefix.
-  static const List<String> whiteListedImports = const [
+  static const List<String> whiteListedImports = [
     'package:angular/angular.dart',
     'dart:core',
     // ElementRef.
@@ -87,7 +87,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   final String _moduleUrl;
 
-  var importsWithPrefixes = new Map<String, String>();
+  var importsWithPrefixes = Map<String, String>();
 
   _DartEmitterVisitor(this._moduleUrl) : super(true);
 
@@ -315,7 +315,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       case o.BuiltinMethod.SubscribeObservable:
         return "listen";
       default:
-        throw new StateError('Unknown builtin method: $method');
+        throw StateError('Unknown builtin method: $method');
     }
   }
 
@@ -504,7 +504,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         typeStr = "void";
         break;
       default:
-        throw new StateError('Unsupported builtin type ${type.name}');
+        throw StateError('Unsupported builtin type ${type.name}');
     }
     context.print(typeStr);
   }

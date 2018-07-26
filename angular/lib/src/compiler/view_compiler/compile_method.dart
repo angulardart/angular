@@ -6,7 +6,7 @@ import 'constants.dart';
 ///
 /// Use addStmt/addStmts to add statements at the current checkpoint.
 class CompileMethod {
-  static final _isFirstCheckIfBlock = new Expando<bool>();
+  static final _isFirstCheckIfBlock = Expando<bool>();
   final _bodyStatements = <o.Statement>[];
 
   // TODO: Remove this parameter, it is a no-op.
@@ -33,7 +33,7 @@ class CompileMethod {
     if (lastStmt is o.IfStmt && _isFirstCheckIfBlock[lastStmt] == true) {
       lastStmt.trueCase.addAll(stmts);
     } else {
-      final ifStmt = new o.IfStmt(DetectChangesVars.firstCheck, stmts);
+      final ifStmt = o.IfStmt(DetectChangesVars.firstCheck, stmts);
       _isFirstCheckIfBlock[ifStmt] = true;
       addStmt(ifStmt);
     }

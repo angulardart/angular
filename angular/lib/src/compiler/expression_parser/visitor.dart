@@ -18,7 +18,7 @@ class LegacyExpressionVisitor implements TemplateAstVisitor<Null, Null> {
     List<CompileIdentifierMetadata> exports = const [],
     legacy.Parser parser,
   })  : _exports = exports,
-        _parser = parser ?? new legacy.Parser(new legacy.Lexer());
+        _parser = parser ?? legacy.Parser(legacy.Lexer());
 
   // Nodes that do not have any expressions.
   // ---------------------------------------------------------------------------
@@ -125,7 +125,7 @@ class LegacyExpressionVisitor implements TemplateAstVisitor<Null, Null> {
       return null;
     }
     final parsed = _parser.parseAction(expression, '$offset', _exports);
-    return new ExpressionAst(parsed);
+    return ExpressionAst(parsed);
   }
 
   @override
@@ -154,7 +154,7 @@ class LegacyExpressionVisitor implements TemplateAstVisitor<Null, Null> {
       return null;
     }
     final parsed = _parser.parseInterpolation(expression, '$offset', _exports);
-    return new ExpressionAst(parsed);
+    return ExpressionAst(parsed);
   }
 
   @override
@@ -181,6 +181,6 @@ class LegacyExpressionVisitor implements TemplateAstVisitor<Null, Null> {
       return null;
     }
     final parsed = _parser.parseBinding(expression, '$offset', _exports);
-    return new ExpressionAst(parsed);
+    return ExpressionAst(parsed);
   }
 }

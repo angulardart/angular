@@ -18,15 +18,15 @@ Future<Map<AssetId, String>> processStylesheet(
   final sourceModules =
       templateCompiler.compileStylesheet(stylesheetUrl, cssText);
 
-  return new Map.fromIterable(sourceModules,
-      key: (module) => new AssetId.resolve((module as SourceModule).moduleUrl),
+  return Map.fromIterable(sourceModules,
+      key: (module) => AssetId.resolve((module as SourceModule).moduleUrl),
       value: (module) => _writeSourceModule(module as SourceModule));
 }
 
 /// Writes the full Dart code for the provided [SourceModule].
 String _writeSourceModule(SourceModule sourceModule, {String libraryName}) {
   if (sourceModule == null) return null;
-  var buf = new StringBuffer();
+  var buf = StringBuffer();
   libraryName = _sanitizeLibName(
       libraryName != null ? libraryName : sourceModule.moduleUrl);
   buf..writeln('library $libraryName;')..writeln();
@@ -36,7 +36,7 @@ String _writeSourceModule(SourceModule sourceModule, {String libraryName}) {
   return buf.toString();
 }
 
-final _unsafeCharsPattern = new RegExp(r'[^a-zA-Z0-9_\.]');
+final _unsafeCharsPattern = RegExp(r'[^a-zA-Z0-9_\.]');
 String _sanitizeLibName(String moduleUrl) {
   var sanitized =
       moduleUrl.replaceAll(_unsafeCharsPattern, '_').replaceAll('/', '.');

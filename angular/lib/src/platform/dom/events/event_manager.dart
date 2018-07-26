@@ -1,8 +1,7 @@
 import 'package:angular/src/core/di.dart' show Injectable, Inject, OpaqueToken;
 import 'package:angular/src/core/zone/ng_zone.dart' show NgZone;
 
-const OpaqueToken EVENT_MANAGER_PLUGINS =
-    const OpaqueToken('EventManagerPlugins');
+const OpaqueToken EVENT_MANAGER_PLUGINS = OpaqueToken('EventManagerPlugins');
 
 @Injectable()
 class EventManager {
@@ -39,7 +38,7 @@ class EventManager {
         return plugin;
       }
     }
-    throw new StateError('No event manager plugin found for event $eventName');
+    throw StateError('No event manager plugin found for event $eventName');
   }
 }
 
@@ -59,7 +58,7 @@ abstract class EventManagerPlugin {
     String eventName,
     void callback(event),
   ) =>
-      throw new UnsupportedError('Not supported');
+      throw UnsupportedError('Not supported');
 
   @Deprecated('No longer supported by the event plugin system')
   Function addGlobalEventListener(
@@ -67,5 +66,5 @@ abstract class EventManagerPlugin {
     String eventName,
     void callback(event),
   ) =>
-      throw new UnsupportedError('Not supported');
+      throw UnsupportedError('Not supported');
 }

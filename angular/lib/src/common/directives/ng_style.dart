@@ -69,7 +69,7 @@ class NgStyle implements DoCheck {
   set rawStyle(Map<String, String> v) {
     this._rawStyle = v;
     if (_differ == null && v != null) {
-      this._differ = new DefaultKeyValueDiffer();
+      this._differ = DefaultKeyValueDiffer();
     }
   }
 

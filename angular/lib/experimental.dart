@@ -39,9 +39,9 @@ Injector rootLegacyInjector(InjectorFactory userInjector) {
   // This includes services that will need to overwrite default services, such
   // as ExceptionHandler.
   return appInjector(([parent]) {
-    return new Injector.map({
+    return Injector.map({
       SlowComponentLoader: const SlowComponentLoader(
-        const ComponentLoader(),
+        ComponentLoader(),
       ),
     }, unsafeCast(userInjector(parent)));
   });

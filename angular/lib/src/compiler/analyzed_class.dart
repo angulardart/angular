@@ -4,7 +4,7 @@ import 'package:source_gen/src/type_checker.dart';
 
 import 'expression_parser/ast.dart' as ast;
 
-final _stringTypeChecker = new TypeChecker.fromRuntime(String);
+final _stringTypeChecker = TypeChecker.fromRuntime(String);
 
 /// A wrapper around [ClassElement] which exposes the functionality
 /// needed for the view compiler to find types for expressions.
@@ -28,7 +28,7 @@ class AnalyzedClass {
 ///
 /// Returns dynamic if [expression] can't be resolved.
 DartType getExpressionType(ast.AST expression, AnalyzedClass analyzedClass) {
-  final typeResolver = new _TypeResolver(analyzedClass._classElement);
+  final typeResolver = _TypeResolver(analyzedClass._classElement);
   return expression.visit(typeResolver);
 }
 
@@ -113,7 +113,7 @@ ast.AST rewriteInterpolate(ast.AST original, AnalyzedClass analyzedClass) {
       interpolation.strings[1].isEmpty) {
     ast.AST expression = interpolation.expressions.single;
     if (expression is ast.LiteralPrimitive) {
-      return new ast.LiteralPrimitive(
+      return ast.LiteralPrimitive(
           expression.value == null ? '' : '${expression.value}');
     }
     if (expression is ast.PropertyRead) {
@@ -126,7 +126,7 @@ ast.AST rewriteInterpolate(ast.AST original, AnalyzedClass analyzedClass) {
         var field = clazz._classElement.getField(expression.name);
         if (field != null) {
           if (_stringTypeChecker.isExactlyType(field.type)) {
-            return new ast.IfNull(expression, new ast.LiteralPrimitive(''));
+            return ast.IfNull(expression, ast.LiteralPrimitive(''));
           }
         }
       }
@@ -161,12 +161,12 @@ ast.AST rewriteTearoff(ast.AST original, AnalyzedClass analyzedClass) {
 }
 
 ast.AST _simpleMethodCall(ast.PropertyRead propertyRead) =>
-    new ast.MethodCall(propertyRead.receiver, propertyRead.name, []);
+    ast.MethodCall(propertyRead.receiver, propertyRead.name, []);
 
-final _eventArg = new ast.PropertyRead(new ast.ImplicitReceiver(), '\$event');
+final _eventArg = ast.PropertyRead(ast.ImplicitReceiver(), '\$event');
 
 ast.AST _complexMethodCall(ast.PropertyRead propertyRead) =>
-    new ast.MethodCall(propertyRead.receiver, propertyRead.name, [_eventArg]);
+    ast.MethodCall(propertyRead.receiver, propertyRead.name, [_eventArg]);
 
 /// Returns [true] if [expression] could be [null].
 bool canBeNull(ast.AST expression) {

@@ -229,14 +229,14 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
 }
 
 class CompileTokenMap<V> {
-  final _valueMap = new Map<dynamic, V>();
+  final _valueMap = Map<dynamic, V>();
   final List<V> _values = [];
   final List<CompileTokenMetadata> _tokens = [];
 
   void add(CompileTokenMetadata token, V value) {
     var existing = get(token);
     if (existing != null) {
-      throw new StateError(
+      throw StateError(
           'Add failed. Token already exists. Token: ${token.name}');
     }
     _tokens.add(token);
@@ -545,13 +545,13 @@ CompileDirectiveMetadata createHostComponentMeta(
     bool preserveWhitespace) {
   var template =
       CssSelector.parse(componentSelector)[0].getMatchingElementTemplate();
-  return new CompileDirectiveMetadata(
+  return CompileDirectiveMetadata(
     originType: componentType,
-    type: new CompileTypeMetadata(
+    type: CompileTypeMetadata(
         name: '${componentType.name}Host',
         moduleUrl: componentType.moduleUrl,
         isHost: true),
-    template: new CompileTemplateMetadata(
+    template: CompileTemplateMetadata(
         template: template,
         templateUrl: '',
         preserveWhitespace: preserveWhitespace,

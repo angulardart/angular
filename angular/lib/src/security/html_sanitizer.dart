@@ -5,13 +5,13 @@ Node _inertElement;
 Node _getInertElement() {
   if (_inertElement == null) {
     // Prefer using <template> element if supported.
-    TemplateElement templateEl = new TemplateElement();
+    TemplateElement templateEl = TemplateElement();
     if (templateEl != null) {
       // TODO: investigate template.children.clear and remove extra div.
       _inertElement = document.createElement('div');
       templateEl.append(_inertElement);
     } else {
-      _inertElement = new DocumentFragment();
+      _inertElement = DocumentFragment();
     }
   }
   return _inertElement;

@@ -4,7 +4,7 @@ enum TokenType { Character, Identifier, Keyword, String, Operator, Number }
 
 class Lexer {
   List<Token> tokenize(String text) {
-    var scanner = new _Scanner(text);
+    var scanner = _Scanner(text);
     var tokens = <Token>[];
     var token = scanner.scanToken();
     while (token != null) {
@@ -72,24 +72,23 @@ class Token {
 }
 
 Token newCharacterToken(int index, int code) =>
-    new Token(index, TokenType.Character, code, new String.fromCharCode(code));
+    Token(index, TokenType.Character, code, String.fromCharCode(code));
 
 Token newIdentifierToken(int index, String text) =>
-    new Token(index, TokenType.Identifier, 0, text);
+    Token(index, TokenType.Identifier, 0, text);
 
 Token newKeywordToken(int index, String text) =>
-    new Token(index, TokenType.Keyword, 0, text);
+    Token(index, TokenType.Keyword, 0, text);
 
 Token newOperatorToken(int index, String text) =>
-    new Token(index, TokenType.Operator, 0, text);
+    Token(index, TokenType.Operator, 0, text);
 
 Token newStringToken(int index, String text) =>
-    new Token(index, TokenType.String, 0, text);
+    Token(index, TokenType.String, 0, text);
 
-Token newNumberToken(int index, num n) =>
-    new Token(index, TokenType.Number, n, '');
+Token newNumberToken(int index, num n) => Token(index, TokenType.Number, n, '');
 
-final Token EOF = new Token(-1, TokenType.Character, 0, '');
+final Token EOF = Token(-1, TokenType.Character, 0, '');
 
 const int $EOF = 0;
 const int $TAB = 9;
@@ -216,17 +215,16 @@ class _Scanner {
       case $SLASH:
       case $PERCENT:
       case $CARET:
-        return scanOperator(start, new String.fromCharCode(peek));
+        return scanOperator(start, String.fromCharCode(peek));
       case $QUESTION:
         return scanComplexOperator(start, '?', $PERIOD, '.', $QUESTION, '?');
       case $LT:
       case $GT:
-        return scanComplexOperator(
-            start, new String.fromCharCode(peek), $EQ, '=');
+        return scanComplexOperator(start, String.fromCharCode(peek), $EQ, '=');
       case $BANG:
       case $EQ:
         return scanComplexOperator(
-            start, new String.fromCharCode(peek), $EQ, '=', $EQ, '=');
+            start, String.fromCharCode(peek), $EQ, '=', $EQ, '=');
       case $AMPERSAND:
         return scanComplexOperator(start, '&', $AMPERSAND, '&');
       case $BAR:
@@ -235,7 +233,7 @@ class _Scanner {
         while (isWhitespace(this.peek)) advance();
         return scanToken();
     }
-    error('Unexpected character [${new String.fromCharCode(peek)}]', 0);
+    error('Unexpected character [${String.fromCharCode(peek)}]', 0);
     return null;
   }
 
@@ -317,7 +315,7 @@ class _Scanner {
         advance(); // Consume closing quote.
         return newStringToken(start, value);
       } else if (peek == $BACKSLASH) {
-        buffer ??= new StringBuffer();
+        buffer ??= StringBuffer();
         buffer.write(input.substring(marker, index));
         buffer.writeCharCode(_consumeEscape());
         marker = index;
@@ -331,7 +329,7 @@ class _Scanner {
 
   void error(String message, int offset) {
     int position = this.index + offset;
-    throw new BuildError(
+    throw BuildError(
         'Lexer Error: $message at column $position in expression [$input]');
   }
 
@@ -395,7 +393,7 @@ bool isIdentifierStart(num code) =>
 
 bool isIdentifier(String input) {
   if (input.length == 0) return false;
-  var scanner = new _Scanner(input);
+  var scanner = _Scanner(input);
   if (!isIdentifierStart(scanner.peek)) return false;
   scanner.advance();
   while (!identical(scanner.peek, $EOF)) {
@@ -438,7 +436,7 @@ int unescape(int code) {
   }
 }
 
-final OPERATORS = new Set<String>.from(const [
+final OPERATORS = Set<String>.from(const [
   '+',
   '-',
   '*',
@@ -465,7 +463,7 @@ final OPERATORS = new Set<String>.from(const [
   '??',
 ]);
 
-final KEYWORDS = new Set<String>.from(const [
+final KEYWORDS = Set<String>.from(const [
   'var',
   'let',
   'null',

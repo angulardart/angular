@@ -45,12 +45,12 @@ Error noProviderError(Object token) {
   // Only in developer mode.
   // There are already users relying on an ArgumentError _always_ being thrown.
   if (isDevMode) {
-    final error = new NoProviderError._(token, _tokenStack);
+    final error = NoProviderError._(token, _tokenStack);
     // IMPORTANT: Clears the stack after reporting the error.
     _tokenStack = null;
     return error;
   }
-  return new ArgumentError(_noProviderError(token));
+  return ArgumentError(_noProviderError(token));
 }
 
 String _noProviderError(Object token) => 'No provider found for $token';
@@ -78,7 +78,7 @@ class NoProviderError extends InjectionError {
       return const [];
     }
     final output = [];
-    var lastElement = new Object();
+    var lastElement = Object();
     for (final element in input) {
       if (!identical(lastElement, element)) {
         output.add(lastElement = element);

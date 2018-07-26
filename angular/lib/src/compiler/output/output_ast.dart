@@ -78,15 +78,15 @@ class MapType extends OutputType {
       visitor.visitMapType(this, context);
 }
 
-const DYNAMIC_TYPE = const BuiltinType(BuiltinTypeName.Dynamic);
-const VOID_TYPE = const BuiltinType(BuiltinTypeName.Void);
-const NULL_TYPE = const BuiltinType(BuiltinTypeName.Null);
-const BOOL_TYPE = const BuiltinType(BuiltinTypeName.Bool);
-const INT_TYPE = const BuiltinType(BuiltinTypeName.Int);
-const DOUBLE_TYPE = const BuiltinType(BuiltinTypeName.Double);
-const NUMBER_TYPE = const BuiltinType(BuiltinTypeName.Number);
-const STRING_TYPE = const BuiltinType(BuiltinTypeName.String);
-const FUNCTION_TYPE = const BuiltinType(BuiltinTypeName.Function);
+const DYNAMIC_TYPE = BuiltinType(BuiltinTypeName.Dynamic);
+const VOID_TYPE = BuiltinType(BuiltinTypeName.Void);
+const NULL_TYPE = BuiltinType(BuiltinTypeName.Null);
+const BOOL_TYPE = BuiltinType(BuiltinTypeName.Bool);
+const INT_TYPE = BuiltinType(BuiltinTypeName.Int);
+const DOUBLE_TYPE = BuiltinType(BuiltinTypeName.Double);
+const NUMBER_TYPE = BuiltinType(BuiltinTypeName.Number);
+const STRING_TYPE = BuiltinType(BuiltinTypeName.String);
+const FUNCTION_TYPE = BuiltinType(BuiltinTypeName.Function);
 
 abstract class TypeVisitor<R, C> {
   R visitBuiltinType(BuiltinType type, C context);
@@ -120,11 +120,11 @@ abstract class Expression {
   Expression(this.type);
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context);
   ReadPropExpr prop(String name) {
-    return new ReadPropExpr(this, name);
+    return ReadPropExpr(this, name);
   }
 
   ReadKeyExpr key(Expression index, [OutputType type]) {
-    return new ReadKeyExpr(this, index, type);
+    return ReadKeyExpr(this, index, type);
   }
 
   /// Calls a method on an expression result.
@@ -137,7 +137,7 @@ abstract class Expression {
     bool checked = false,
     List<NamedExpr> namedParams,
   }) {
-    return new InvokeMethodExpr(this, name, params,
+    return InvokeMethodExpr(this, name, params,
         checked: checked, namedArgs: namedParams);
   }
 
@@ -146,7 +146,7 @@ abstract class Expression {
     List<NamedExpr> namedParams,
     List<OutputType> typeArguments,
   }) {
-    return new InvokeFunctionExpr(
+    return InvokeFunctionExpr(
       this,
       params,
       typeArguments,
@@ -160,76 +160,76 @@ abstract class Expression {
     OutputType type,
     List<OutputType> genericTypes,
   }) {
-    return new InstantiateExpr(this, params,
+    return InstantiateExpr(this, params,
         type: type, typeArguments: genericTypes, namedArgs: namedParams);
   }
 
   ConditionalExpr conditional(Expression trueCase, [Expression falseCase]) {
-    return new ConditionalExpr(this, trueCase, falseCase);
+    return ConditionalExpr(this, trueCase, falseCase);
   }
 
   IfNullExpr ifNull(Expression nullCase) {
-    return new IfNullExpr(this, nullCase);
+    return IfNullExpr(this, nullCase);
   }
 
   BinaryOperatorExpr equals(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Equals, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Equals, this, rhs);
   }
 
   BinaryOperatorExpr notEquals(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.NotEquals, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.NotEquals, this, rhs);
   }
 
   BinaryOperatorExpr identical(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Identical, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Identical, this, rhs);
   }
 
   BinaryOperatorExpr notIdentical(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.NotIdentical, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.NotIdentical, this, rhs);
   }
 
   BinaryOperatorExpr minus(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Minus, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Minus, this, rhs);
   }
 
   BinaryOperatorExpr plus(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Plus, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Plus, this, rhs);
   }
 
   BinaryOperatorExpr divide(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Divide, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Divide, this, rhs);
   }
 
   BinaryOperatorExpr multiply(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Multiply, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Multiply, this, rhs);
   }
 
   BinaryOperatorExpr modulo(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Modulo, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Modulo, this, rhs);
   }
 
   BinaryOperatorExpr and(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.And, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.And, this, rhs);
   }
 
   BinaryOperatorExpr or(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Or, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Or, this, rhs);
   }
 
   BinaryOperatorExpr lower(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Lower, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Lower, this, rhs);
   }
 
   BinaryOperatorExpr lowerEquals(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.LowerEquals, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.LowerEquals, this, rhs);
   }
 
   BinaryOperatorExpr bigger(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.Bigger, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.Bigger, this, rhs);
   }
 
   BinaryOperatorExpr biggerEquals(Expression rhs) {
-    return new BinaryOperatorExpr(BinaryOperator.BiggerEquals, this, rhs);
+    return BinaryOperatorExpr(BinaryOperator.BiggerEquals, this, rhs);
   }
 
   Expression isBlank() {
@@ -238,11 +238,11 @@ abstract class Expression {
   }
 
   Expression cast(OutputType type) {
-    return new CastExpr(this, type);
+    return CastExpr(this, type);
   }
 
   Statement toStmt() {
-    return new ExpressionStatement(this);
+    return ExpressionStatement(this);
   }
 }
 
@@ -279,7 +279,7 @@ class ReadVarExpr extends Expression {
   }
 
   WriteVarExpr set(Expression value) {
-    return new WriteVarExpr(this.name, value);
+    return WriteVarExpr(this.name, value);
   }
 }
 
@@ -305,7 +305,7 @@ class ReadClassMemberExpr extends Expression {
   }
 
   WriteClassMemberExpr set(Expression value) {
-    return new WriteClassMemberExpr(this.name, value);
+    return WriteClassMemberExpr(this.name, value);
   }
 
   @override
@@ -335,7 +335,7 @@ class WriteVarExpr extends Expression {
   }
 
   DeclareVarStmt toDeclStmt([OutputType type, List<StmtModifier> modifiers]) {
-    return new DeclareVarStmt(this.name, this.value, type, modifiers);
+    return DeclareVarStmt(this.name, this.value, type, modifiers);
   }
 }
 
@@ -413,7 +413,7 @@ class InvokeMethodExpr extends Expression {
     assert(() {
       for (var arg in args) {
         if (arg == null) {
-          throw new ArgumentError.notNull();
+          throw ArgumentError.notNull();
         }
       }
       return true;
@@ -446,7 +446,7 @@ class InvokeMemberMethodExpr extends Expression {
     assert(() {
       for (var arg in args) {
         if (arg == null) {
-          throw new ArgumentError.notNull();
+          throw ArgumentError.notNull();
         }
       }
       return true;
@@ -475,7 +475,7 @@ class InvokeFunctionExpr extends Expression {
     assert(() {
       for (var arg in args) {
         if (arg == null) {
-          throw new ArgumentError.notNull();
+          throw ArgumentError.notNull();
         }
       }
       return true;
@@ -504,7 +504,7 @@ class InstantiateExpr extends Expression {
     assert(() {
       for (int len = args.length, i = 0; i < len; i++) {
         if (args[i] == null) {
-          throw new ArgumentError('Expecting non-null arguments');
+          throw ArgumentError('Expecting non-null arguments');
         }
       }
       return true;
@@ -613,7 +613,7 @@ class FunctionExpr extends Expression {
     String name, {
     List<TypeParameter> typeParameters = const [],
   }) {
-    return new DeclareFunctionStmt(
+    return DeclareFunctionStmt(
       name,
       this.params,
       this.statements,
@@ -623,7 +623,7 @@ class FunctionExpr extends Expression {
   }
 
   DeclareFunctionStmt toGetter(String name) {
-    return new DeclareFunctionStmt(
+    return DeclareFunctionStmt(
       name,
       [],
       this.statements,
@@ -661,7 +661,7 @@ class ReadPropExpr extends Expression {
   }
 
   WritePropExpr set(Expression value) {
-    return new WritePropExpr(this.receiver, this.name, value);
+    return WritePropExpr(this.receiver, this.name, value);
   }
 }
 
@@ -677,7 +677,7 @@ class ReadKeyExpr extends Expression {
   }
 
   WriteKeyExpr set(Expression value) {
-    return new WriteKeyExpr(this.receiver, this.index, value);
+    return WriteKeyExpr(this.receiver, this.index, value);
   }
 }
 
@@ -748,11 +748,11 @@ abstract class ExpressionVisitor<R, C> {
   R visitNamedExpr(NamedExpr ast, C context);
 }
 
-var THIS_EXPR = new ReadVarExpr(BuiltinVar.This);
-var SUPER_EXPR = new ReadVarExpr(BuiltinVar.Super);
-var CATCH_ERROR_VAR = new ReadVarExpr(BuiltinVar.CatchError);
-var CATCH_STACK_VAR = new ReadVarExpr(BuiltinVar.CatchStack);
-var NULL_EXPR = new LiteralExpr(null, null);
+var THIS_EXPR = ReadVarExpr(BuiltinVar.This);
+var SUPER_EXPR = ReadVarExpr(BuiltinVar.Super);
+var CATCH_ERROR_VAR = ReadVarExpr(BuiltinVar.CatchError);
+var CATCH_STACK_VAR = ReadVarExpr(BuiltinVar.CatchStack);
+var NULL_EXPR = LiteralExpr(null, null);
 //// Statements
 enum StmtModifier { Const, Final, Private, Static }
 
@@ -863,7 +863,7 @@ class ClassMethod extends AbstractClassPart {
       [OutputType type, List<StmtModifier> modifiers, List<String> annotations])
       : super(type, modifiers, annotations) {
     if (params != null) {
-      paramNames = new Set<String>();
+      paramNames = Set<String>();
       for (FnParam param in params) {
         paramNames.add(param.name);
       }
@@ -991,7 +991,7 @@ class _ExpressionTransformer<C>
         ExpressionVisitor<Expression, C> {
   @override
   Expression visitNamedExpr(NamedExpr ast, C context) {
-    return new NamedExpr(ast.name, ast.expr.visitExpression(this, context));
+    return NamedExpr(ast.name, ast.expr.visitExpression(this, context));
   }
 
   @override
@@ -1008,16 +1008,15 @@ class _ExpressionTransformer<C>
   Expression visitWriteVarExpr(WriteVarExpr expr, C context,
       {bool checkForNull = false}) {
     if (checkForNull) {
-      return new WriteIfNullExpr(
+      return WriteIfNullExpr(
           expr.name, expr.value.visitExpression(this, context));
     }
-    return new WriteVarExpr(
-        expr.name, expr.value.visitExpression(this, context));
+    return WriteVarExpr(expr.name, expr.value.visitExpression(this, context));
   }
 
   @override
   Expression visitWriteStaticMemberExpr(WriteStaticMemberExpr expr, C context) {
-    return new WriteStaticMemberExpr(
+    return WriteStaticMemberExpr(
         expr.name, expr.value.visitExpression(this, context),
         type: expr.type, checkIfNull: expr.checkIfNull);
   }
@@ -1029,7 +1028,7 @@ class _ExpressionTransformer<C>
 
   @override
   Expression visitWriteKeyExpr(WriteKeyExpr expr, C context) {
-    return new WriteKeyExpr(
+    return WriteKeyExpr(
         expr.receiver.visitExpression(this, context),
         expr.index.visitExpression(this, context),
         expr.value.visitExpression(this, context));
@@ -1037,20 +1036,20 @@ class _ExpressionTransformer<C>
 
   @override
   Expression visitWritePropExpr(WritePropExpr expr, C context) {
-    return new WritePropExpr(expr.receiver.visitExpression(this, context),
+    return WritePropExpr(expr.receiver.visitExpression(this, context),
         expr.name, expr.value.visitExpression(this, context));
   }
 
   @override
   Expression visitWriteClassMemberExpr(WriteClassMemberExpr expr, C context) {
-    return new WriteClassMemberExpr(
+    return WriteClassMemberExpr(
         expr.name, expr.value.visitExpression(this, context));
   }
 
   @override
   Expression visitInvokeMethodExpr(InvokeMethodExpr ast, C context) {
     var method = ast.builtin ?? ast.name;
-    return new InvokeMethodExpr(
+    return InvokeMethodExpr(
       ast.receiver.visitExpression(this, context),
       method,
       this.visitAllExpressions(ast.args, context),
@@ -1062,7 +1061,7 @@ class _ExpressionTransformer<C>
   @override
   Expression visitInvokeMemberMethodExpr(
       InvokeMemberMethodExpr ast, C context) {
-    return new InvokeMemberMethodExpr(
+    return InvokeMemberMethodExpr(
       ast.methodName,
       this.visitAllExpressions(ast.args, context),
       outputType: ast.type,
@@ -1071,7 +1070,7 @@ class _ExpressionTransformer<C>
 
   @override
   Expression visitInvokeFunctionExpr(InvokeFunctionExpr ast, C context) {
-    return new InvokeFunctionExpr(
+    return InvokeFunctionExpr(
       ast.fn.visitExpression(this, context),
       this.visitAllExpressions(ast.args, context),
       [],
@@ -1081,7 +1080,7 @@ class _ExpressionTransformer<C>
 
   @override
   Expression visitInstantiateExpr(InstantiateExpr ast, C context) {
-    return new InstantiateExpr(
+    return InstantiateExpr(
       ast.classExpr.visitExpression(this, context),
       this.visitAllExpressions(ast.args, context),
       type: ast.type,
@@ -1101,7 +1100,7 @@ class _ExpressionTransformer<C>
 
   @override
   Expression visitConditionalExpr(ConditionalExpr ast, C context) {
-    return new ConditionalExpr(
+    return ConditionalExpr(
         ast.condition.visitExpression(this, context),
         ast.trueCase.visitExpression(this, context),
         ast.falseCase.visitExpression(this, context));
@@ -1109,18 +1108,18 @@ class _ExpressionTransformer<C>
 
   @override
   Expression visitIfNullExpr(IfNullExpr ast, C context) {
-    return new IfNullExpr(ast.condition.visitExpression(this, context),
+    return IfNullExpr(ast.condition.visitExpression(this, context),
         ast.nullCase.visitExpression(this, context));
   }
 
   @override
   Expression visitNotExpr(NotExpr ast, C context) {
-    return new NotExpr(ast.condition.visitExpression(this, context));
+    return NotExpr(ast.condition.visitExpression(this, context));
   }
 
   @override
   Expression visitCastExpr(CastExpr ast, C context) {
-    return new CastExpr(ast.value.visitExpression(this, context), null);
+    return CastExpr(ast.value.visitExpression(this, context), null);
   }
 
   @override
@@ -1131,7 +1130,7 @@ class _ExpressionTransformer<C>
 
   @override
   Expression visitBinaryOperatorExpr(BinaryOperatorExpr ast, C context) {
-    return new BinaryOperatorExpr(
+    return BinaryOperatorExpr(
         ast.operator,
         ast.lhs.visitExpression(this, context),
         ast.rhs.visitExpression(this, context),
@@ -1140,30 +1139,29 @@ class _ExpressionTransformer<C>
 
   @override
   Expression visitReadPropExpr(ReadPropExpr ast, C context) {
-    return new ReadPropExpr(
-        ast.receiver.visitExpression(this, context), ast.name,
+    return ReadPropExpr(ast.receiver.visitExpression(this, context), ast.name,
         outputType: ast.type);
   }
 
   @override
   Expression visitReadKeyExpr(ReadKeyExpr ast, C context) {
-    return new ReadKeyExpr(ast.receiver.visitExpression(this, context),
+    return ReadKeyExpr(ast.receiver.visitExpression(this, context),
         ast.index.visitExpression(this, context), ast.type);
   }
 
   @override
   Expression visitLiteralVargsExpr(LiteralVargsExpr ast, C context) {
-    return new LiteralVargsExpr(this.visitAllExpressions(ast.entries, context));
+    return LiteralVargsExpr(this.visitAllExpressions(ast.entries, context));
   }
 
   @override
   Expression visitLiteralArrayExpr(LiteralArrayExpr ast, C context) {
-    return new LiteralArrayExpr(this.visitAllExpressions(ast.entries, context));
+    return LiteralArrayExpr(this.visitAllExpressions(ast.entries, context));
   }
 
   @override
   Expression visitLiteralMapExpr(LiteralMapExpr ast, C context) {
-    return new LiteralMapExpr(ast.entries
+    return LiteralMapExpr(ast.entries
         .map((entry) => [
               entry[0],
               ((entry[1] as Expression)).visitExpression(this, context)
@@ -1177,8 +1175,8 @@ class _ExpressionTransformer<C>
 
   @override
   Statement visitDeclareVarStmt(DeclareVarStmt stmt, C context) {
-    return new DeclareVarStmt(stmt.name,
-        stmt.value?.visitExpression(this, context), stmt.type, stmt.modifiers);
+    return DeclareVarStmt(stmt.name, stmt.value?.visitExpression(this, context),
+        stmt.type, stmt.modifiers);
   }
 
   @override
@@ -1189,12 +1187,12 @@ class _ExpressionTransformer<C>
 
   @override
   Statement visitExpressionStmt(ExpressionStatement stmt, C context) {
-    return new ExpressionStatement(stmt.expr.visitExpression(this, context));
+    return ExpressionStatement(stmt.expr.visitExpression(this, context));
   }
 
   @override
   Statement visitReturnStmt(ReturnStatement stmt, C context) {
-    return new ReturnStatement(stmt.value?.visitExpression(this, context));
+    return ReturnStatement(stmt.value?.visitExpression(this, context));
   }
 
   @override
@@ -1205,7 +1203,7 @@ class _ExpressionTransformer<C>
 
   @override
   Statement visitIfStmt(IfStmt stmt, C context) {
-    return new IfStmt(
+    return IfStmt(
         stmt.condition.visitExpression(this, context),
         this.visitAllStatements(stmt.trueCase, context),
         this.visitAllStatements(stmt.falseCase, context));
@@ -1213,13 +1211,13 @@ class _ExpressionTransformer<C>
 
   @override
   Statement visitTryCatchStmt(TryCatchStmt stmt, C context) {
-    return new TryCatchStmt(this.visitAllStatements(stmt.bodyStmts, context),
+    return TryCatchStmt(this.visitAllStatements(stmt.bodyStmts, context),
         this.visitAllStatements(stmt.catchStmts, context));
   }
 
   @override
   Statement visitThrowStmt(ThrowStmt stmt, C context) {
-    return new ThrowStmt(stmt.error.visitExpression(this, context));
+    return ThrowStmt(stmt.error.visitExpression(this, context));
   }
 
   @override
@@ -1473,7 +1471,7 @@ class _RecursiveExpressionVisitor<C>
 
 Expression replaceReadClassMemberInExpression(
     Expression newValue, Expression expression) {
-  var transformer = new _ReplaceReadClassMemberTransformer(newValue);
+  var transformer = _ReplaceReadClassMemberTransformer(newValue);
   return expression.visitExpression(transformer, null);
 }
 
@@ -1483,12 +1481,12 @@ class _ReplaceReadClassMemberTransformer extends _ExpressionTransformer<Null> {
 
   @override
   Expression visitReadClassMemberExpr(ReadClassMemberExpr ast, _) =>
-      new ReadPropExpr(_newValue, ast.name);
+      ReadPropExpr(_newValue, ast.name);
 }
 
 Statement replaceVarInStatement(
     String varName, Expression newValue, Statement statement) {
-  var transformer = new _ReplaceVariableTransformer(varName, newValue);
+  var transformer = _ReplaceVariableTransformer(varName, newValue);
   return statement.visitStatement(transformer, null);
 }
 
@@ -1507,19 +1505,19 @@ class _ReplaceVariableTransformer extends _ExpressionTransformer<Null> {
 }
 
 Set<String> findReadVarNames(List<Statement> stmts) {
-  var finder = new _VariableReadFinder();
+  var finder = _VariableReadFinder();
   finder.visitAllStatements(stmts, null);
   return finder.varNames;
 }
 
 Set<String> findWriteVarNames(List<Statement> stmts) {
-  var finder = new _VariableWriteFinder();
+  var finder = _VariableWriteFinder();
   finder.visitAllStatements(stmts, null);
   return finder.varNames;
 }
 
 class _VariableReadFinder extends _RecursiveExpressionVisitor<Null> {
-  final varNames = new Set<String>();
+  final varNames = Set<String>();
 
   @override
   Expression visitReadVarExpr(ReadVarExpr ast, _) {
@@ -1529,7 +1527,7 @@ class _VariableReadFinder extends _RecursiveExpressionVisitor<Null> {
 }
 
 class _VariableWriteFinder extends _RecursiveExpressionVisitor<Null> {
-  final varNames = new Set<String>();
+  final varNames = Set<String>();
 
   @override
   Expression visitWriteVarExpr(WriteVarExpr ast, _, {bool checkForNull}) {
@@ -1539,22 +1537,22 @@ class _VariableWriteFinder extends _RecursiveExpressionVisitor<Null> {
 }
 
 ReadVarExpr variable(String name, [OutputType type]) {
-  return new ReadVarExpr(name, type);
+  return ReadVarExpr(name, type);
 }
 
 ExternalExpr importExpr(CompileIdentifierMetadata id,
     {List<OutputType> typeParams, bool isConst = false}) {
-  return new ExternalExpr(id, typeParams: typeParams);
+  return ExternalExpr(id, typeParams: typeParams);
 }
 
 ExternalExpr importDeferred(CompileIdentifierMetadata id,
     [List<OutputType> typeParams]) {
-  return new ExternalExpr(id, typeParams: typeParams, deferred: true);
+  return ExternalExpr(id, typeParams: typeParams, deferred: true);
 }
 
 ExternalType importType(CompileIdentifierMetadata id,
     [List<OutputType> typeParams, List<TypeModifier> typeModifiers]) {
-  return id != null ? new ExternalType(id, typeParams, typeModifiers) : null;
+  return id != null ? ExternalType(id, typeParams, typeModifiers) : null;
 }
 
 /// A literal string whose [value] has been manually escaped.
@@ -1568,30 +1566,30 @@ class EscapedString {
 }
 
 LiteralExpr escapedString(String value) {
-  return literal(new EscapedString(value), STRING_TYPE);
+  return literal(EscapedString(value), STRING_TYPE);
 }
 
 LiteralExpr literal(dynamic value, [OutputType type]) {
-  return new LiteralExpr(value, type);
+  return LiteralExpr(value, type);
 }
 
 LiteralArrayExpr literalArr(List<Expression> values, [OutputType type]) {
-  return new LiteralArrayExpr(values, type);
+  return LiteralArrayExpr(values, type);
 }
 
 LiteralVargsExpr literalVargs(List<Expression> values) {
-  return new LiteralVargsExpr(values);
+  return LiteralVargsExpr(values);
 }
 
 LiteralMapExpr literalMap(List<List<dynamic /* String | Expression */ >> values,
     [MapType type]) {
-  return new LiteralMapExpr(values, type);
+  return LiteralMapExpr(values, type);
 }
 
 NotExpr not(Expression expr) {
-  return new NotExpr(expr);
+  return NotExpr(expr);
 }
 
 FunctionExpr fn(List<FnParam> params, List<Statement> body, [OutputType type]) {
-  return new FunctionExpr(params, body, type);
+  return FunctionExpr(params, body, type);
 }

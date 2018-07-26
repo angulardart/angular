@@ -1,6 +1,6 @@
 import 'output_ast.dart' as o;
 
-final _singleQuoteEscape = new RegExp(r'' + "'" + r'|\\|\n|\r|\$');
+final _singleQuoteEscape = RegExp(r'' + "'" + r'|\\|\n|\r|\$');
 final catchErrorVar = o.variable('error');
 final catchStackVar = o.variable('stack');
 
@@ -30,11 +30,11 @@ class EmitterVisitorContext {
 
   static EmitterVisitorContext createRoot(
       List<String> exportedVars, Map<String, String> deferredModules) {
-    return new EmitterVisitorContext(exportedVars, 0, deferredModules);
+    return EmitterVisitorContext(exportedVars, 0, deferredModules);
   }
 
   EmitterVisitorContext(this._exportedVars, this._indent, this.deferredModules)
-      : this._lines = [new _EmittedLine(_indent)];
+      : this._lines = [_EmittedLine(_indent)];
 
   _EmittedLine get _currentLine {
     return _lines[_lines.length - 1];
@@ -60,7 +60,7 @@ class EmitterVisitorContext {
       _currentLine.parts.add(part);
     }
     if (newLine) {
-      _lines.add(new _EmittedLine(_indent));
+      _lines.add(_EmittedLine(_indent));
       _outputPos = 0;
     } else {
       _outputPos += part.length;
@@ -363,7 +363,7 @@ abstract class AbstractEmitterVisitor
           varName = 'null';
           break;
         default:
-          throw new StateError('Unknown builtin variable ${ast.builtin}');
+          throw StateError('Unknown builtin variable ${ast.builtin}');
       }
     }
     context.print(varName);
@@ -504,7 +504,7 @@ abstract class AbstractEmitterVisitor
         opStr = '>=';
         break;
       default:
-        throw new StateError('Unknown operator ${ast.operator}');
+        throw StateError('Unknown operator ${ast.operator}');
     }
     context.print('(');
     ast.lhs.visitExpression(this, context);

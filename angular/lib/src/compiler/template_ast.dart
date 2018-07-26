@@ -324,7 +324,7 @@ class ProviderAst implements TemplateAst {
   ///
   /// It is a signal to view builder to create a public field inside AppView
   /// to allow other AppView(s) or change detector access to this provider.
-  bool get hasNonLocalRequests => throw new UnimplementedError();
+  bool get hasNonLocalRequests => throw UnimplementedError();
 }
 
 enum ProviderAstType {

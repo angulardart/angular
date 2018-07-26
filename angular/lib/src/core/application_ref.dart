@@ -18,7 +18,7 @@ ApplicationRef internalCreateApplicationRef(
   NgZone ngZone,
   Injector injector,
 ) =>
-    new ApplicationRef._(
+    ApplicationRef._(
       ngZone,
       unsafeCast(injector.get(ExceptionHandler)),
       injector,
@@ -46,7 +46,7 @@ class ApplicationRef extends ChangeDetectionHost {
     _onErrorSub = _ngZone.onError.listen((e) {
       handleUncaughtException(
         e.error,
-        new StackTrace.fromString(e.stackTrace.join('\n')),
+        StackTrace.fromString(e.stackTrace.join('\n')),
       );
     });
     _onMicroSub = _ngZone.onMicrotaskEmpty.listen((_) {

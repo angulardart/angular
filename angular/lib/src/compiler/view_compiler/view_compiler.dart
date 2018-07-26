@@ -47,15 +47,15 @@ class ViewCompiler {
       List<CompilePipeMetadata> pipes,
       Map<String, String> deferredModules) {
     var statements = <o.Statement>[];
-    var view = new CompileView(component, _genConfig, directiveTypes, pipes,
-        styles, 0, new CompileElement.root(), [], deferredModules);
+    var view = CompileView(component, _genConfig, directiveTypes, pipes, styles,
+        0, CompileElement.root(), [], deferredModules);
     buildView(view, template, stylesCompileResult);
     // Need to separate binding from creation to be able to refer to
     // variables that have been declared after usage.
     bindView(view, template);
     bindHostProperties(view);
     finishView(view, statements);
-    return new ViewCompileResult(statements, view.viewFactory.name);
+    return ViewCompileResult(statements, view.viewFactory.name);
   }
 
   void bindHostProperties(CompileView view) {
@@ -73,7 +73,7 @@ class ViewCompiler {
   /// Builds the view and returns number of nested views generated.
   int buildView(CompileView view, List<TemplateAst> template,
       StylesCompileResult stylesCompileResult) {
-    var builderVisitor = new ViewBuilderVisitor(view, stylesCompileResult);
+    var builderVisitor = ViewBuilderVisitor(view, stylesCompileResult);
     templateVisitAll(builderVisitor, template,
         view.declarationElement.parent ?? view.declarationElement);
     return builderVisitor.nestedViewCount;

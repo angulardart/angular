@@ -24,17 +24,15 @@ String moduleUrl(Element element) {
 }
 
 String toAssetUri(AssetId assetId) {
-  if (assetId == null) throw new ArgumentError.notNull('assetId');
+  if (assetId == null) throw ArgumentError.notNull('assetId');
   return 'asset:${assetId.package}/${assetId.path}';
 }
 
 AssetId _fromUri(String assetUri) {
-  if (assetUri == null) throw new ArgumentError.notNull('assetUri');
-  if (assetUri.isEmpty)
-    throw new ArgumentError.value('(empty string)', 'assetUri');
+  if (assetUri == null) throw ArgumentError.notNull('assetUri');
+  if (assetUri.isEmpty) throw ArgumentError.value('(empty string)', 'assetUri');
   var uri = _toAssetScheme(Uri.parse(assetUri));
-  return new AssetId(
-      uri.pathSegments.first, uri.pathSegments.skip(1).join('/'));
+  return AssetId(uri.pathSegments.first, uri.pathSegments.skip(1).join('/'));
 }
 
 /// Returns the base file name for [AssetId].
@@ -49,15 +47,15 @@ String fileName(AssetId id) {
 /// The `scheme` of `absoluteUri` is expected to be either 'package' or
 /// 'asset'.
 Uri _toAssetScheme(Uri absoluteUri) {
-  if (absoluteUri == null) throw new ArgumentError.notNull('absoluteUri');
+  if (absoluteUri == null) throw ArgumentError.notNull('absoluteUri');
 
   if (!absoluteUri.isAbsolute) {
-    throw new ArgumentError.value(absoluteUri.toString(), 'absoluteUri',
+    throw ArgumentError.value(absoluteUri.toString(), 'absoluteUri',
         'Value passed must be an absolute uri');
   }
   if (absoluteUri.scheme == 'asset') {
     if (absoluteUri.pathSegments.length < 3) {
-      throw new FormatException(
+      throw FormatException(
           'An asset: URI must have at least 3 path '
           'segments, for example '
           'asset:<package-name>/<first-level-dir>/<path-to-dart-file>.',
@@ -71,7 +69,7 @@ Uri _toAssetScheme(Uri absoluteUri) {
   }
 
   if (absoluteUri.pathSegments.length < 2) {
-    throw new FormatException(
+    throw FormatException(
         'A package: URI must have at least 2 path '
         'segments, for example '
         'package:<package-name>/<path-to-dart-file>',
@@ -79,5 +77,5 @@ Uri _toAssetScheme(Uri absoluteUri) {
   }
 
   var pathSegments = absoluteUri.pathSegments.toList()..insert(1, 'lib');
-  return new Uri(scheme: 'asset', pathSegments: pathSegments);
+  return Uri(scheme: 'asset', pathSegments: pathSegments);
 }
