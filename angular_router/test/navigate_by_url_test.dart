@@ -17,8 +17,8 @@ void main() {
     Router router;
 
     setUp(() {
-      mockRouter = new MockRouter();
-      router = new DelegatingRouter(mockRouter);
+      mockRouter = MockRouter();
+      router = DelegatingRouter(mockRouter);
     });
 
     test('invokes navigate', () {
@@ -96,7 +96,7 @@ class DelegatingRouter extends RouterImpl {
   Router _delegate;
 
   DelegatingRouter(this._delegate)
-      : super(new Location(new MockLocationStrategy()), null);
+      : super(Location(MockLocationStrategy()), null);
 
   @override
   Future<NavigationResult> navigate(
@@ -112,7 +112,7 @@ Matcher navigationParams({
   bool reload = false,
   bool replace = false,
 }) =>
-    new NavigationParamsMatcher(new NavigationParams(
+    NavigationParamsMatcher(NavigationParams(
       queryParameters: queryParameters,
       fragment: fragment,
       reload: reload,

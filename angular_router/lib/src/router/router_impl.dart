@@ -25,7 +25,7 @@ import 'router_state.dart';
 @Injectable()
 class RouterImpl extends Router {
   final StreamController<RouterState> _onRouteActivated =
-      new StreamController<RouterState>.broadcast(sync: true);
+      StreamController<RouterState>.broadcast(sync: true);
   final Location _location;
   final RouterHook _routerHook;
   RouterState _activeState;
@@ -37,7 +37,7 @@ class RouterImpl extends Router {
   ///
   /// This is used to synchronize all navigation requests, so that they are run
   /// sequentially, rather than concurrently.
-  var _lastNavigation = new Future<void>.value();
+  var _lastNavigation = Future<void>.value();
 
   RouterImpl(this._location, @Optional() this._routerHook) {
     Url.isHashStrategy = _location.locationStrategy is HashLocationStrategy;
@@ -47,7 +47,7 @@ class RouterImpl extends Router {
       final fragment = Url.isHashStrategy
           ? url.fragment
           : Url.normalizeHash(_location.hash());
-      final navigationParams = new NavigationParams(
+      final navigationParams = NavigationParams(
           queryParameters: url.queryParameters,
           fragment: fragment,
           updateUrl: false);
@@ -65,7 +65,7 @@ class RouterImpl extends Router {
 
   @override
   Stream<String> get onNavigationStart {
-    _onNavigationStart ??= new StreamController<String>.broadcast(sync: true);
+    _onNavigationStart ??= StreamController<String>.broadcast(sync: true);
     return _onNavigationStart.stream;
   }
 
@@ -80,7 +80,7 @@ class RouterImpl extends Router {
       Url url = Url.parse(_location.path());
       _enqueueNavigation(
           url.path,
-          new NavigationParams(
+          NavigationParams(
               queryParameters: url.queryParameters,
               fragment: Url.isHashStrategy
                   ? url.fragment
@@ -118,7 +118,7 @@ class RouterImpl extends Router {
     final parsed = Url.parse(url);
     return navigate(
         parsed.path,
-        new NavigationParams(
+        NavigationParams(
           fragment: parsed.fragment,
           queryParameters: parsed.queryParameters,
           reload: reload,
@@ -132,7 +132,7 @@ class RouterImpl extends Router {
     NavigationParams navigationParams,
   ) {
     // This is used to forward the navigation result or error to the caller.
-    final navigationCompleter = new Completer<NavigationResult>.sync();
+    final navigationCompleter = Completer<NavigationResult>.sync();
     // Note how this does not await the result of the last navigation, but
     // rather the act of forwarding the result through a completer. This
     // indirection is an important distinction that allows enqueued navigation
@@ -256,7 +256,7 @@ class RouterImpl extends Router {
       RouterOutlet outlet, String path) async {
     if (outlet == null) {
       if (path == '') {
-        return new MutableRouterState();
+        return MutableRouterState();
       }
       return null;
     }
@@ -297,7 +297,7 @@ class RouterImpl extends Router {
             continue;
           }
 
-          routerState = new MutableRouterState();
+          routerState = MutableRouterState();
         }
 
         routerState.routes.insert(0, route);
@@ -321,7 +321,7 @@ class RouterImpl extends Router {
     }
 
     if (path == '') {
-      return new MutableRouterState();
+      return MutableRouterState();
     }
 
     return null;

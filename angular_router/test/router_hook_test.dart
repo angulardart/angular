@@ -66,26 +66,26 @@ void main() {
   });
 }
 
-@GenerateInjector(const [
+@GenerateInjector([
   routerProvidersTest,
-  const FactoryProvider(RouterHook, routerHookFactory),
+  FactoryProvider(RouterHook, routerHookFactory),
 ])
 final createInjector = ng.createInjector$Injector;
-final testRouterHook = new TestRouterHook();
+final testRouterHook = TestRouterHook();
 
 RouterHook routerHookFactory() => testRouterHook;
 
 @Component(
   selector: 'test-app',
   template: '<router-outlet [routes]="routes"></router-outlet>',
-  directives: const [RouterOutlet],
+  directives: [RouterOutlet],
 )
 class TestAppComponent {
   static final fooPath = '/foo';
   static final indexPath = '';
   static final routes = [
-    new RouteDefinition(path: fooPath, component: ng.FooComponentNgFactory),
-    new RouteDefinition(path: indexPath, component: ng.IndexComponentNgFactory),
+    RouteDefinition(path: fooPath, component: ng.FooComponentNgFactory),
+    RouteDefinition(path: indexPath, component: ng.IndexComponentNgFactory),
   ];
   final Router router;
 

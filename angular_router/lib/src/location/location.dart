@@ -51,7 +51,7 @@ import 'location_strategy.dart' show LocationStrategy;
 @Injectable()
 class Location {
   final LocationStrategy locationStrategy;
-  final _subject = new StreamController<dynamic>();
+  final _subject = StreamController<dynamic>();
   final String _baseHref;
 
   Location(this.locationStrategy)
