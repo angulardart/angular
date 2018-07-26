@@ -92,5 +92,5 @@ class SuperClick {
 
   Stream get clicks => _clicks.stream;
 
-  final StreamController _clicks = new StreamController();
+  final StreamController _clicks = StreamController();
 }

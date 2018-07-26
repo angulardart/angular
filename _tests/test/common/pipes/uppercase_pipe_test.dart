@@ -10,7 +10,7 @@ void main() {
     setUp(() {
       lower = "something";
       upper = "SOMETHING";
-      pipe = new UpperCasePipe();
+      pipe = UpperCasePipe();
     });
     group("transform", () {
       test("should return uppercase", () {
@@ -24,7 +24,7 @@ void main() {
         expect(val2, "WAT");
       });
       test("should not support other objects", () {
-        expect(() => pipe.transform(new Object()), throwsATypeError);
+        expect(() => pipe.transform(Object()), throwsATypeError);
       });
     });
   });

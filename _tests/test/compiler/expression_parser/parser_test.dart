@@ -13,7 +13,7 @@ throwsWithMatch(RegExp regExp) =>
 
 void main() {
   Parser createParser() {
-    return new Parser(new Lexer());
+    return Parser(Lexer());
   }
 
   dynamic parseAction(text, [location]) {
@@ -38,7 +38,7 @@ void main() {
   }
 
   String unparse(AST ast) {
-    return new Unparser().unparse(ast);
+    return Unparser().unparse(ast);
   }
 
   void checkInterpolation(String exp, [String expected]) {
@@ -183,7 +183,7 @@ void main() {
         test("should throw on incorrect ternary operator syntax", () {
           expectActionError(
               "true?1",
-              throwsWithMatch(new RegExp(
+              throwsWithMatch(RegExp(
                   "Parser Error: Conditional expression true\\?1 requires all 3 expressions")));
         });
       });
@@ -195,7 +195,7 @@ void main() {
         test("should throw on missing null case", () {
           expectActionError(
               "null ??",
-              throwsWithMatch(new RegExp(
+              throwsWithMatch(RegExp(
                   "Parser Error: Unexpected end of expression: null \\?\\?")));
         });
       });
@@ -237,12 +237,12 @@ void main() {
         expectActionError(
             ")",
             throwsWithMatch(
-                new RegExp("Unexpected token \\) at column 1 in \\[\\)\\]")));
+                RegExp("Unexpected token \\) at column 1 in \\[\\)\\]")));
       });
       test("should throw on missing expected token", () {
         expectActionError(
             "a(b",
-            throwsWithMatch(new RegExp(
+            throwsWithMatch(RegExp(
                 "Missing expected \\) at the end of the expression \\[a\\(b\\]")));
       });
       test("should not crash when encountering an invalid event", () {
@@ -431,7 +431,7 @@ void main() {
       test("should parse pipes", () {
         var bindings = parseTemplateBindings("key value|pipe");
         var ast = bindings[0].expression.ast;
-        expect(ast, new isInstanceOf<BindingPipe>());
+        expect(ast, isInstanceOf<BindingPipe>());
       });
     });
     group("parseInterpolation", () {
@@ -447,7 +447,7 @@ void main() {
       test("should parse prefix/suffix with multiple interpolation", () {
         var originalExp = "before {{ a }} middle {{ b }} after";
         var ast = parseInterpolation(originalExp).ast;
-        expect(new Unparser().unparse(ast), originalExp);
+        expect(Unparser().unparse(ast), originalExp);
       });
       test("should throw on empty interpolation expressions", () {
         expect(

@@ -13,119 +13,119 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support literals', () async {
-    await new _GetValue<TestLiterals>().runTest();
+    await _GetValue<TestLiterals>().runTest();
   });
 
   test('should strip quotes from literals', () async {
-    await new _GetValue<TestStripQuotes>().runTest();
+    await _GetValue<TestStripQuotes>().runTest();
   });
 
   test('should support newlines in literals', () async {
-    await new _GetValue<TestNewLines>().runTest();
+    await _GetValue<TestNewLines>().runTest();
   });
 
   test('should support + operations', () async {
-    await new _GetValue<TestAddOperation>().runTest();
+    await _GetValue<TestAddOperation>().runTest();
   });
 
   test('should support - operations', () async {
-    await new _GetValue<TestMinusOperation>().runTest();
+    await _GetValue<TestMinusOperation>().runTest();
   });
 
   test('should support * operations', () async {
-    await new _GetValue<TestMultiplyOperation>().runTest();
+    await _GetValue<TestMultiplyOperation>().runTest();
   });
 
   test('should support / operations', () async {
-    await new _GetValue<TestMultiplyOperation>().runTest();
+    await _GetValue<TestMultiplyOperation>().runTest();
   });
 
   test('should support % operations', () async {
-    await new _GetValue<TestModulusOperation>().runTest();
+    await _GetValue<TestModulusOperation>().runTest();
   });
 
   test('should support == operations', () async {
-    await new _GetValue<TestEqualityOperation>().runTest();
+    await _GetValue<TestEqualityOperation>().runTest();
   });
 
   test('should support != operations', () async {
-    await new _GetValue<TestNotEqualsOperation>().runTest();
+    await _GetValue<TestNotEqualsOperation>().runTest();
   });
 
   test('should support === operations', () async {
-    await new _GetValue<TestIdentityOperation>().runTest();
+    await _GetValue<TestIdentityOperation>().runTest();
   });
 
   test('should support !== operations', () async {
-    await new _GetValue<TestNotIdenticalOperation>().runTest();
+    await _GetValue<TestNotIdenticalOperation>().runTest();
   });
 
   test('should support > operations', () async {
-    await new _GetValue<TestGreaterThanOperation>().runTest();
+    await _GetValue<TestGreaterThanOperation>().runTest();
   });
 
   test('should support < operations', () async {
-    await new _GetValue<TestLessThanOperation>().runTest();
+    await _GetValue<TestLessThanOperation>().runTest();
   });
 
   test('should support >= operations', () async {
-    await new _GetValue<TestGreaterThanOrEqualsOperation>().runTest();
+    await _GetValue<TestGreaterThanOrEqualsOperation>().runTest();
   });
 
   test('should support <= operations', () async {
-    await new _GetValue<TestLessThanOrEqualsOperation>().runTest();
+    await _GetValue<TestLessThanOrEqualsOperation>().runTest();
   });
 
   test('should support && operations', () async {
-    await new _GetValue<TestAndOperation>().runTest();
+    await _GetValue<TestAndOperation>().runTest();
   });
 
   test('should support || operations', () async {
-    await new _GetValue<TestOrOperation>().runTest();
+    await _GetValue<TestOrOperation>().runTest();
   });
 
   test('should support ternary operations', () async {
-    await new _GetValue<TestTernaryOperation>().runTest();
+    await _GetValue<TestTernaryOperation>().runTest();
   });
 
   test('should support ! operations', () async {
-    await new _GetValue<TestNegateOperation>().runTest();
+    await _GetValue<TestNegateOperation>().runTest();
   });
 
   test('should support !! operations', () async {
-    await new _GetValue<TestDoubleNegationOperation>().runTest();
+    await _GetValue<TestDoubleNegationOperation>().runTest();
   });
 
   test('should support keyed access to a map', () async {
-    await new _GetValue<TestMapAccess>().runTest();
+    await _GetValue<TestMapAccess>().runTest();
   });
 
   test('should support keyed access to a list', () async {
-    await new _GetValue<TestListAccess>().runTest();
+    await _GetValue<TestListAccess>().runTest();
   });
 
   test('should support property access', () async {
-    await new _GetValue<TestPropertyAccess>().runTest();
+    await _GetValue<TestPropertyAccess>().runTest();
   });
 
   test('should support chained property access', () async {
-    await new _GetValue<TestChainedPropertyAccess>().runTest();
+    await _GetValue<TestChainedPropertyAccess>().runTest();
   });
 
   test('should support a function call', () async {
-    await new _GetValue<TestFunctionCall>().runTest();
+    await _GetValue<TestFunctionCall>().runTest();
   });
 
   test('should support assigning explicitly to null', () async {
-    await new _GetValue<TestAssignNull>().runTest();
+    await _GetValue<TestAssignNull>().runTest();
   });
 
   test('should support assigning explicitly to null', () async {
-    await new _GetValue<TestElvisOperation>().runTest();
+    await _GetValue<TestElvisOperation>().runTest();
   });
 
   test('should support assigning explicitly to null', () async {
-    await new _GetValue<TestNullAwareOperation>().runTest();
+    await _GetValue<TestNullAwareOperation>().runTest();
   });
 }
 
@@ -134,7 +134,7 @@ class _GetValue<T extends ValueTest> {
   const _GetValue();
 
   Future<Null> runTest() async {
-    final fixture = await new NgTestBed<T>().create();
+    final fixture = await NgTestBed<T>().create();
     await fixture.update(expectAsync1((ValueTest comp) {
       expect(comp.child.value, comp.expected);
     }));
@@ -158,7 +158,7 @@ abstract class ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'<child [value]="10"></child>',
 )
 class TestLiterals implements ValueTest {
@@ -172,7 +172,7 @@ class TestLiterals implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="'string'"></child>''',
 )
 class TestStripQuotes implements ValueTest {
@@ -186,7 +186,7 @@ class TestStripQuotes implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="\'a\n\nb\'"></child>',
 )
 class TestNewLines implements ValueTest {
@@ -200,7 +200,7 @@ class TestNewLines implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="10 + 2"></child>',
 )
 class TestAddOperation implements ValueTest {
@@ -214,7 +214,7 @@ class TestAddOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="10 - 2"></child>',
 )
 class TestMinusOperation implements ValueTest {
@@ -228,7 +228,7 @@ class TestMinusOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="10 * 2"></child>',
 )
 class TestMultiplyOperation implements ValueTest {
@@ -242,7 +242,7 @@ class TestMultiplyOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="10 / 2"></child>',
 )
 class TestDivisionOperation implements ValueTest {
@@ -256,7 +256,7 @@ class TestDivisionOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="11 % 2"></child>',
 )
 class TestModulusOperation implements ValueTest {
@@ -270,7 +270,7 @@ class TestModulusOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="1 == 1"></child>',
 )
 class TestEqualityOperation implements ValueTest {
@@ -284,7 +284,7 @@ class TestEqualityOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="1 != 1"></child>',
 )
 class TestNotEqualsOperation implements ValueTest {
@@ -298,7 +298,7 @@ class TestNotEqualsOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="1 === 1"></child>',
 )
 class TestIdentityOperation implements ValueTest {
@@ -312,7 +312,7 @@ class TestIdentityOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="1 !== 1"></child>',
 )
 class TestNotIdenticalOperation implements ValueTest {
@@ -326,7 +326,7 @@ class TestNotIdenticalOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="1 < 2"></child>',
 )
 class TestLessThanOperation implements ValueTest {
@@ -340,7 +340,7 @@ class TestLessThanOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="2 > 1"></child>',
 )
 class TestGreaterThanOperation implements ValueTest {
@@ -354,7 +354,7 @@ class TestGreaterThanOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="1 <= 2"></child>',
 )
 class TestLessThanOrEqualsOperation implements ValueTest {
@@ -368,7 +368,7 @@ class TestLessThanOrEqualsOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="2 >= 1"></child>',
 )
 class TestGreaterThanOrEqualsOperation implements ValueTest {
@@ -382,7 +382,7 @@ class TestGreaterThanOrEqualsOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="true && false"></child>',
 )
 class TestAndOperation implements ValueTest {
@@ -396,7 +396,7 @@ class TestAndOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="val1 || val2"></child>',
 )
 class TestOrOperation implements ValueTest {
@@ -414,7 +414,7 @@ class TestOrOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="!true"></child>',
 )
 class TestNegateOperation implements ValueTest {
@@ -428,7 +428,7 @@ class TestNegateOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="!!true"></child>',
 )
 class TestDoubleNegationOperation implements ValueTest {
@@ -442,7 +442,7 @@ class TestDoubleNegationOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="1 > 2 ? 'yes' : 'no'"></child>''',
 )
 class TestTernaryOperation implements ValueTest {
@@ -456,7 +456,7 @@ class TestTernaryOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="map['foo']"></child>''',
 )
 class TestMapAccess implements ValueTest {
@@ -472,7 +472,7 @@ class TestMapAccess implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="list[1]"></child>''',
 )
 class TestListAccess implements ValueTest {
@@ -488,7 +488,7 @@ class TestListAccess implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="list.length"></child>''',
 )
 class TestPropertyAccess implements ValueTest {
@@ -504,7 +504,7 @@ class TestPropertyAccess implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="list.length.isEven"></child>''',
 )
 class TestChainedPropertyAccess implements ValueTest {
@@ -520,7 +520,7 @@ class TestChainedPropertyAccess implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="list.toList().length.isEven"></child>''',
 )
 class TestFunctionCall implements ValueTest {
@@ -536,7 +536,7 @@ class TestFunctionCall implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="null"></child>''',
 )
 class TestAssignNull implements ValueTest {
@@ -550,7 +550,7 @@ class TestAssignNull implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="map?.keys"></child>''',
 )
 class TestElvisOperation implements ValueTest {
@@ -566,7 +566,7 @@ class TestElvisOperation implements ValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="map?.keys ?? 'Hello'"></child>''',
 )
 class TestNullAwareOperation implements ValueTest {

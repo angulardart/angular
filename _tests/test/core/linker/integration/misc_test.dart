@@ -14,20 +14,20 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should allow variables in for loops', () async {
-    final testBed = new NgTestBed<VarInLoopComponent>();
+    final testBed = NgTestBed<VarInLoopComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, '1-hello');
   });
 
   test('should support updating host element via host attribute', () async {
-    final testBed = new NgTestBed<HostAttributeFromDirectiveComponent>();
+    final testBed = NgTestBed<HostAttributeFromDirectiveComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.children.first;
     expect(div.attributes, containsPair('role', 'button'));
   });
 
   test('should support updating host element via host properties', () async {
-    final testBed = new NgTestBed<HostPropertyFromDirectiveComponent>();
+    final testBed = NgTestBed<HostPropertyFromDirectiveComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.children.first;
     expect(div.id, 'one');
@@ -36,13 +36,13 @@ void main() {
   });
 
   test('should allow ViewContainerRef at any bound location', () async {
-    final testBed = new NgTestBed<DynamicChildComponent>();
+    final testBed = NgTestBed<DynamicChildComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'dynamic greet');
   });
 
   test('should support static attributes', () async {
-    final testBed = new NgTestBed<StaticAttributesComponent>();
+    final testBed = NgTestBed<StaticAttributesComponent>();
     final testFixture = await testBed.create();
     final needsAttribute = testFixture.assertOnlyInstance.needsAttribute;
     expect(needsAttribute.typeAttribute, 'text');
@@ -51,13 +51,13 @@ void main() {
   });
 
   test('should remove script tags from templates', () async {
-    final testBed = new NgTestBed<UnsafeComponent>();
+    final testBed = NgTestBed<UnsafeComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.querySelectorAll('script'), isEmpty);
   });
 
   test('should support named arguments in function calls', () async {
-    final testBed = new NgTestBed<NamedArgComponent>();
+    final testBed = NgTestBed<NamedArgComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Hello');
   });
@@ -76,7 +76,7 @@ class ChildCompNoTemplate {
   template: '<template ngFor [ngForOf]="[1]" let-i>'
       '<child-cmp-no-template #cmp></child-cmp-no-template>'
       '{{i}}-{{cmp.ctxProp}}</template>',
-  directives: const [ChildCompNoTemplate, NgFor],
+  directives: [ChildCompNoTemplate, NgFor],
 )
 class VarInLoopComponent {}
 
@@ -91,7 +91,7 @@ class DirectiveUpdatingHostAttributes {
 @Component(
   selector: 'directive-host-attributes',
   template: '<div update-host-attributes></div>',
-  directives: const [DirectiveUpdatingHostAttributes],
+  directives: [DirectiveUpdatingHostAttributes],
 )
 class HostAttributeFromDirectiveComponent {}
 
@@ -106,7 +106,7 @@ class DirectiveUpdatingHostProperties {
 @Component(
   selector: 'directive-host-properties',
   template: '<div update-host-properties></div>',
-  directives: const [DirectiveUpdatingHostProperties],
+  directives: [DirectiveUpdatingHostProperties],
 )
 class HostPropertyFromDirectiveComponent {
   @ViewChild(DirectiveUpdatingHostProperties)
@@ -137,11 +137,11 @@ class DynamicViewport {
   Future<dynamic> done;
 
   DynamicViewport(ViewContainerRef vc) {
-    final myService = new MyService()..greeting = 'dynamic greet';
-    final injector = new Injector.map({
+    final myService = MyService()..greeting = 'dynamic greet';
+    final injector = Injector.map({
       MyService: myService,
     }, vc.injector);
-    final factoryFuture = new Future.value(
+    final factoryFuture = Future.value(
       ng_generated.ChildCompUsingServiceNgFactory,
     );
     done = factoryFuture.then((componentFactory) =>
@@ -152,7 +152,7 @@ class DynamicViewport {
 @Component(
   selector: 'dynamic-child-component',
   template: '<div><dynamic-vp></dynamic-vp></div>',
-  directives: const [
+  directives: [
     DynamicViewport,
   ],
 )
@@ -175,7 +175,7 @@ class NeedsAttribute {
 @Component(
   selector: 'static-attributes',
   template: '<input static type="text" title>',
-  directives: const [NeedsAttribute],
+  directives: [NeedsAttribute],
 )
 class StaticAttributesComponent {
   @ViewChild(NeedsAttribute)

@@ -11,15 +11,15 @@ import 'package:build_test/build_test.dart' hide testBuilder;
 import 'package:test/test.dart';
 
 /// A 'test' build process (similar to the normal one).
-final Builder _testAngularBuilder = new MultiplexingBuilder([
+final Builder _testAngularBuilder = MultiplexingBuilder([
   templateCompiler(
-    new BuilderOptions({}),
+    BuilderOptions({}),
     defaultFlags: const CompilerFlags(
       genDebugInfo: false,
       ignoreNgPlaceholderForGoldens: true,
     ),
   ),
-  stylesheetCompiler(new BuilderOptions({})),
+  stylesheetCompiler(BuilderOptions({})),
 ]);
 
 // Here to be configurable.
@@ -33,9 +33,9 @@ final Future<PackageAssetReader> _packageAssets = (() async {
   final root = const String.fromEnvironment('PKG_ANGULAR_ROOT');
   final path = '$runfiles/$root';
   if (!FileSystemEntity.isFileSync('$path/lib/angular.dart')) {
-    throw new StateError('Could not find $path/lib/angular.dart');
+    throw StateError('Could not find $path/lib/angular.dart');
   }
-  return new PackageAssetReader.forPackages({
+  return PackageAssetReader.forPackages({
     ngPackage: '$runfiles/$root',
   });
 })();
@@ -47,7 +47,7 @@ final Future<PackageAssetReader> _packageAssets = (() async {
 // externally and internally.
 const ngPackage = 'angular';
 const ngImport = 'package:$ngPackage/angular.dart';
-final _ngFiles = new Glob('lib/**.dart');
+final _ngFiles = Glob('lib/**.dart');
 
 /// Modeled after `package:build_test/build_test.dart#testBuilder`.
 Future<Null> _testBuilder(
@@ -57,20 +57,20 @@ Future<Null> _testBuilder(
   String rootPackage,
 }) async {
   // Setup the readers/writers for assets.
-  final sources = new InMemoryAssetReader(rootPackage: rootPackage);
+  final sources = InMemoryAssetReader(rootPackage: rootPackage);
   final packages = await _packageAssets;
-  final reader = new MultiAssetReader([
+  final reader = MultiAssetReader([
     sources,
     packages,
   ]);
 
   // Sanity check.
-  if (!await reader.canRead(new AssetId(ngPackage, 'lib/angular.dart'))) {
-    throw new StateError('Unable to read "$ngImport".');
+  if (!await reader.canRead(AssetId(ngPackage, 'lib/angular.dart'))) {
+    throw StateError('Unable to read "$ngImport".');
   }
 
   // Load user sources.
-  final writer = new InMemoryAssetWriter();
+  final writer = InMemoryAssetWriter();
   final inputIds = <AssetId>[];
   sourceAssets.forEach((serializedId, contents) {
     final id = makeAssetId(serializedId);
@@ -79,7 +79,7 @@ Future<Null> _testBuilder(
   });
 
   if (inputIds.isEmpty) {
-    throw new ArgumentError.value(sourceAssets, 'No inputs', 'sourceAssets');
+    throw ArgumentError.value(sourceAssets, 'No inputs', 'sourceAssets');
   }
 
   // Load framework sources.
@@ -89,7 +89,7 @@ Future<Null> _testBuilder(
     sources.cacheStringAsset(file, await packages.readAsString(file));
   }
 
-  final logger = new Logger('_testBuilder');
+  final logger = Logger('_testBuilder');
   final logSub = logger.onRecord.listen(onLog);
   await runBuildZoned(() {
     return runBuilder(
@@ -97,7 +97,7 @@ Future<Null> _testBuilder(
       inputIds,
       reader,
       writer,
-      new AnalyzerResolvers(),
+      AnalyzerResolvers(),
       logger: logger,
     );
   });
@@ -177,7 +177,7 @@ Future<Null> compilesExpecting(
   }
   if (outputs != null) {
     // TODO: Add an output verification or consider a golden file mechanism.
-    throw new UnimplementedError();
+    throw UnimplementedError();
   }
 }
 

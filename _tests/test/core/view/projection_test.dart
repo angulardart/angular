@@ -15,7 +15,7 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     test('should support simple html elements', () async {
-      var testBed = new NgTestBed<ContainerWithSimpleComponent>();
+      var testBed = NgTestBed<ContainerWithSimpleComponent>();
       var testFixture = await testBed.create();
       Element element = testFixture.rootElement;
       Element childElement = element.querySelector('simple');
@@ -25,7 +25,7 @@ void main() {
     test(
         'should support simple components with text interpolation projected'
         'into child', () async {
-      var testBed = new NgTestBed<ContainerWithProjectedInterpolation>();
+      var testBed = NgTestBed<ContainerWithProjectedInterpolation>();
       var testFixture = await testBed.create();
       Element element = testFixture.rootElement;
       expect(element, hasTextContent('START(SIMPLE(VALUE1))END'));
@@ -34,7 +34,7 @@ void main() {
     test(
         'should support simple components with text interpolation projected'
         'into child where ng-content is nested inside an element', () async {
-      var testBed = new NgTestBed<ContainerWithProjectedInterpolationNested>();
+      var testBed = NgTestBed<ContainerWithProjectedInterpolationNested>();
       var testFixture = await testBed.create();
       Element element = testFixture.rootElement;
       expect(element, hasTextContent('START(SIMPLE(VALUE2))END'));
@@ -43,14 +43,14 @@ void main() {
     test(
         'should support simple components with text interpolation projected'
         'into child with bindings following ng-content', () async {
-      var testBed = new NgTestBed<ContainerWithProjectedInterpolationBound>();
+      var testBed = NgTestBed<ContainerWithProjectedInterpolationBound>();
       var testFixture = await testBed.create();
       Element element = testFixture.rootElement;
       expect(element, hasTextContent('START(SIMPLE(VALUE3XY))END'));
     });
 
     test('should redistribute when the shadow dom changes', () async {
-      var testBed = new NgTestBed<ContainerABCWithConditionalComponent>();
+      var testBed = NgTestBed<ContainerABCWithConditionalComponent>();
       var testFixture = await testBed.create();
       Element element = testFixture.rootElement;
       expect(element, hasTextContent("(, BC)"));
@@ -68,7 +68,7 @@ void main() {
     });
 
     test("should support non emulated styles", () async {
-      var testBed = new NgTestBed<ContainerWithStyleNotEmulated>();
+      var testBed = NgTestBed<ContainerWithStyleNotEmulated>();
       var testFixture = await testBed.create();
       Element mainEl = testFixture.rootElement;
       Element div1 = mainEl.childNodes.first;
@@ -80,7 +80,7 @@ void main() {
     });
 
     test("should support emulated style encapsulation", () async {
-      var testBed = new NgTestBed<ContainerWithStyleEmulated>();
+      var testBed = NgTestBed<ContainerWithStyleEmulated>();
       var testFixture = await testBed.create();
       Element mainEl = testFixture.rootElement;
       Element div1 = mainEl.childNodes.first;
@@ -92,13 +92,13 @@ void main() {
     });
 
     test('should project ng-content using select query', () async {
-      var testBed = new NgTestBed<MyListUserProjectionTest>();
+      var testBed = NgTestBed<MyListUserProjectionTest>();
       var testFixture = await testBed.create();
       expect(testFixture.rootElement, hasTextContent('item1item2TheEnd'));
     });
 
     test('should support exact attribute selector', () async {
-      final testBed = new NgTestBed<SelectExactAttributeTestComponent>();
+      final testBed = NgTestBed<SelectExactAttributeTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -106,7 +106,7 @@ void main() {
     });
 
     test('should support hypen attribute selector', () async {
-      final testBed = new NgTestBed<SelectHyphenAttributeTestComponent>();
+      final testBed = NgTestBed<SelectHyphenAttributeTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -114,7 +114,7 @@ void main() {
     });
 
     test('should support list attribute selector', () async {
-      final testBed = new NgTestBed<SelectListAttributeTestComponent>();
+      final testBed = NgTestBed<SelectListAttributeTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -122,7 +122,7 @@ void main() {
     });
 
     test('should support prefix attribute selector', () async {
-      final testBed = new NgTestBed<SelectPrefixAttributeTestComponent>();
+      final testBed = NgTestBed<SelectPrefixAttributeTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -130,7 +130,7 @@ void main() {
     });
 
     test('should support set attribute selector', () async {
-      final testBed = new NgTestBed<SelectSetAttributeTestComponent>();
+      final testBed = NgTestBed<SelectSetAttributeTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -138,7 +138,7 @@ void main() {
     });
 
     test('should support substring attribute selector', () async {
-      final testBed = new NgTestBed<SelectSubstringAttributeTestComponent>();
+      final testBed = NgTestBed<SelectSubstringAttributeTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -146,7 +146,7 @@ void main() {
     });
 
     test('should support suffix attribute selector', () async {
-      final testBed = new NgTestBed<SelectSuffixAttributeTestComponent>();
+      final testBed = NgTestBed<SelectSuffixAttributeTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -154,7 +154,7 @@ void main() {
     });
 
     test('should support multiple levels with ngProjectAs', () async {
-      final testBed = new NgTestBed<NgProjectAsTestComponent>();
+      final testBed = NgTestBed<NgProjectAsTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -168,7 +168,7 @@ void main() {
   template: '<simple>'
       '<div>A</div>'
       '</simple>',
-  directives: const [SimpleComponent],
+  directives: [SimpleComponent],
 )
 class ContainerWithSimpleComponent {}
 
@@ -177,7 +177,7 @@ class ContainerWithSimpleComponent {}
   template: '{{\'START(\'}}<simple>'
       '{{testValue}}'
       '</simple>{{\')END\'}}',
-  directives: const [SimpleComponent],
+  directives: [SimpleComponent],
 )
 class ContainerWithProjectedInterpolation {
   String testValue = "VALUE1";
@@ -194,7 +194,7 @@ class SimpleComponent {}
   template: '{{\'START(\'}}<simple>'
       '{{testValue}}'
       '</simple>{{\')END\'}}',
-  directives: const [SimpleComponent2],
+  directives: [SimpleComponent2],
 )
 class ContainerWithProjectedInterpolationNested {
   String testValue = "VALUE2";
@@ -211,7 +211,7 @@ class SimpleComponent2 {}
   template: '{{\'START(\'}}<simple>'
       '{{testValue}}'
       '</simple>{{\')END\'}}',
-  directives: const [SimpleComponentWithBinding],
+  directives: [SimpleComponentWithBinding],
 )
 class ContainerWithProjectedInterpolationBound {
   String testValue = "VALUE3";
@@ -229,7 +229,7 @@ class SimpleComponentWithBinding {}
   template: '<conditional-content>'
       '<div class="left">A</div><div>B</div><div>C</div>'
       '</conditional-content>',
-  directives: const [ConditionalContentComponent],
+  directives: [ConditionalContentComponent],
 )
 class ContainerABCWithConditionalComponent {
   @ViewChild(ConditionalContentComponent)
@@ -240,7 +240,7 @@ class ContainerABCWithConditionalComponent {
   selector: "conditional-content",
   template: '<div>(<div *manual><ng-content select=".left"></ng-content></div>'
       ', <ng-content></ng-content>)</div>',
-  directives: const [ManualViewportDirective],
+  directives: [ManualViewportDirective],
 )
 class ConditionalContentComponent {
   @ViewChild(ManualViewportDirective)
@@ -267,18 +267,18 @@ class ManualViewportDirective {
 @Component(
   selector: 'container-with-style-emu',
   template: '<div class=\"blueStyle\"></div>',
-  styles: const [".blueStyle { color: blue}"],
+  styles: [".blueStyle { color: blue}"],
   encapsulation: ViewEncapsulation.Emulated,
-  directives: const [SimpleComponent],
+  directives: [SimpleComponent],
 )
 class ContainerWithStyleEmulated {}
 
 @Component(
   selector: 'container-with-style-not-emu',
   template: '<div class=\"redStyle\"></div>',
-  styles: const [".redStyle { color: red}"],
+  styles: [".redStyle { color: red}"],
   encapsulation: ViewEncapsulation.None,
-  directives: const [SimpleComponent],
+  directives: [SimpleComponent],
 )
 class ContainerWithStyleNotEmulated {}
 
@@ -288,7 +288,7 @@ class ContainerWithStyleNotEmulated {}
       '<span list-item>item1</span>'
       '<span list-item>item2</span>'
       '</mylist>',
-  directives: const [MyListComponent, MyListItemComponent],
+  directives: [MyListComponent, MyListItemComponent],
 )
 class MyListUserProjectionTest {}
 
@@ -298,7 +298,7 @@ class MyListUserProjectionTest {}
       '<ng-content select="[list-item]"></ng-content>'
       '</mylist-item>'
       '<div>TheEnd</div>',
-  directives: const [MyListItemComponent],
+  directives: [MyListItemComponent],
 )
 class MyListComponent {}
 
@@ -327,7 +327,7 @@ class SelectExactAttributeComponent {}
   <div id="food">Shouldn't be selected.</div>
   <div id="foo">Should be selected.</div>
 </select-exact-attribute>''',
-  directives: const [SelectExactAttributeComponent],
+  directives: [SelectExactAttributeComponent],
 )
 class SelectExactAttributeTestComponent {}
 
@@ -350,7 +350,7 @@ class SelectHyphenAttributeComponent {}
   <div id="food-bar-baz-qux">Shouldn't be selected.</div>
   <div id="foo-bar-baz-qux">Should be selected.</div>
 </select-hyphen-attribute>''',
-  directives: const [SelectHyphenAttributeComponent],
+  directives: [SelectHyphenAttributeComponent],
 )
 class SelectHyphenAttributeTestComponent {}
 
@@ -373,7 +373,7 @@ class SelectListAttributeComponent {}
   <div id="foobarbazqux">Shouldn't be selected.</div>
   <div id="foo bar baz qux">Should be selected.</div>
 </select-list-attribute>''',
-  directives: const [SelectListAttributeComponent],
+  directives: [SelectListAttributeComponent],
 )
 class SelectListAttributeTestComponent {}
 
@@ -396,7 +396,7 @@ class SelectPrefixAttributeComponent {}
   <div id="bar foo baz qux">Shouldn't be selected.</div>
   <div id="foo bar baz qux">Should be selected.</div>
 </select-prefix-attribute>''',
-  directives: const [SelectPrefixAttributeComponent],
+  directives: [SelectPrefixAttributeComponent],
 )
 class SelectPrefixAttributeTestComponent {}
 
@@ -419,7 +419,7 @@ class SelectSetAttributeComponent {}
   <div>Shouldn't be selected.</div>
   <div id="bar baz qux">Should be selected.</div>
 </select-set-attribute>''',
-  directives: const [SelectSetAttributeComponent],
+  directives: [SelectSetAttributeComponent],
 )
 class SelectSetAttributeTestComponent {}
 
@@ -442,7 +442,7 @@ class SelectSubstringAttributeComponent {}
   <div id ="foobazqux">Shouldn't be selected.</div>
   <div id="foobarbazqux">Should be selected.</div>
 </select-substring-attribute>''',
-  directives: const [SelectSubstringAttributeComponent],
+  directives: [SelectSubstringAttributeComponent],
 )
 class SelectSubstringAttributeTestComponent {}
 
@@ -465,7 +465,7 @@ class SelectSuffixAttributeComponent {}
   <div id="bar foo qux baz">Shouldn't be selected.</div>
   <div id="foo bar baz qux">Should be selected.</div>
 </select-suffix-attribute>''',
-  directives: const [SelectSuffixAttributeComponent],
+  directives: [SelectSuffixAttributeComponent],
 )
 class SelectSuffixAttributeTestComponent {}
 
@@ -490,7 +490,7 @@ class NgContentSelectComponent {}
     ngProjectAs="[id=ng][title=baz]"></ng-content>
   <ng-content></ng-content>
 </ng-content-select>''',
-  directives: const [NgContentSelectComponent],
+  directives: [NgContentSelectComponent],
 )
 class NgProjectAsComponent {}
 
@@ -501,6 +501,6 @@ class NgProjectAsComponent {}
   <div>Shouldn't be selected.</div>
   <div id="ng-id" title="foo bar baz qux">Should be selected.</div>
 </ng-project-as>''',
-  directives: const [NgProjectAsComponent],
+  directives: [NgProjectAsComponent],
 )
 class NgProjectAsTestComponent {}

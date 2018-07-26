@@ -13,7 +13,7 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     test('should support attaching component to tr tag', () async {
-      var testBed = new NgTestBed<TrTagTest>();
+      var testBed = NgTestBed<TrTagTest>();
       var testFixture = await testBed.create();
       var rows = testFixture.rootElement.querySelectorAll('tr[repaired-part]');
       expect(rows, hasLength(3));
@@ -21,7 +21,7 @@ void main() {
     });
 
     test('should support exact attribute selector', () async {
-      final testBed = new NgTestBed<ExactAttributeSelectorTestComponent>();
+      final testBed = NgTestBed<ExactAttributeSelectorTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('[foo]').text, isEmpty);
@@ -30,7 +30,7 @@ void main() {
     });
 
     test('should support hypen attribute selector', () async {
-      final testBed = new NgTestBed<HyphenAttributeSelectorTestComponent>();
+      final testBed = NgTestBed<HyphenAttributeSelectorTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('[foo=bar]').text, 'Matched!');
@@ -39,7 +39,7 @@ void main() {
     });
 
     test('should support list attribute selector', () async {
-      final testBed = new NgTestBed<ListAttributeSelectorTestComponent>();
+      final testBed = NgTestBed<ListAttributeSelectorTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('[foo=bar]').text, 'Matched!');
@@ -49,7 +49,7 @@ void main() {
     });
 
     test('should support prefix attribute selector', () async {
-      final testBed = new NgTestBed<PrefixAttributeSelectorTestComponent>();
+      final testBed = NgTestBed<PrefixAttributeSelectorTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('[foo=bar]').text, 'Matched!');
@@ -58,7 +58,7 @@ void main() {
     });
 
     test('should support set attribute selector', () async {
-      final testBed = new NgTestBed<SetAttributeSelectorTestComponent>();
+      final testBed = NgTestBed<SetAttributeSelectorTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('div').text, isEmpty);
@@ -68,7 +68,7 @@ void main() {
     });
 
     test('should support substring attribute selector', () async {
-      final testBed = new NgTestBed<SubstringAttributeSelectorTestComponent>();
+      final testBed = NgTestBed<SubstringAttributeSelectorTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('[foo=bar]').text, 'Matched!');
@@ -77,7 +77,7 @@ void main() {
     });
 
     test('should support suffix attribute selector', () async {
-      final testBed = new NgTestBed<SuffixAttributeSelectorTestComponent>();
+      final testBed = NgTestBed<SuffixAttributeSelectorTestComponent>();
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('[foo=bar]').text, 'Matched!');
@@ -98,7 +98,7 @@ void main() {
       '  </template>'
       '</tbody>'
       '</table>',
-  directives: const [NgFor, RepairedPartComponent],
+  directives: [NgFor, RepairedPartComponent],
 )
 class TrTagTest {
   List<Map<String, String>> repairs;
@@ -129,7 +129,7 @@ class ExactAttributeSelectorComponent {}
 <div foo></div>
 <div foo="bar"></div>
 <div foo="barbaz"></div>''',
-  directives: const [
+  directives: [
     ExactAttributeSelectorComponent,
   ],
 )
@@ -147,7 +147,7 @@ class HyphenAttributeSelectorComponent {}
 <div foo="bar"></div>
 <div foo="bar-baz"></div>
 <div foo="barbaz"></div>''',
-  directives: const [
+  directives: [
     HyphenAttributeSelectorComponent,
   ],
 )
@@ -166,7 +166,7 @@ class ListAttributeSelectorComponent {}
 <div foo="bar baz"></div>
 <div foo="baz bar qux"></div>
 <div foo="barbaz"></div>''',
-  directives: const [
+  directives: [
     ListAttributeSelectorComponent,
   ],
 )
@@ -184,7 +184,7 @@ class PrefixAttributeSelectorComponent {}
 <div foo="bar"></div>
 <div foo="barbaz"></div>
 <div foo="bazbar"></div>''',
-  directives: const [
+  directives: [
     PrefixAttributeSelectorComponent,
   ],
 )
@@ -203,7 +203,7 @@ class SetAttributeSelectorComponent {}
 <div foo></div>
 <div foo=""></div>
 <div foo="bar"></div>''',
-  directives: const [
+  directives: [
     SetAttributeSelectorComponent,
   ],
 )
@@ -222,7 +222,7 @@ class SubstringAttributeSelectorComponent {}
 <div foo="barbaz"></div>
 <div foo="bazbar"></div>
 <div foo="baz bar qux"></div>''',
-  directives: const [
+  directives: [
     SubstringAttributeSelectorComponent,
   ],
 )
@@ -240,7 +240,7 @@ class SuffixAttributeSelectorComponent {}
 <div foo="bar"></div>
 <div foo="barbaz"></div>
 <div foo="bazbar"></div>''',
-  directives: const [
+  directives: [
     SuffixAttributeSelectorComponent,
   ],
 )

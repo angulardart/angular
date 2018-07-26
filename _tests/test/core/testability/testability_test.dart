@@ -37,8 +37,8 @@ class TestZone extends NgZone {
   }
 
   TestZone() : super(enableLongStackTrace: false) {
-    _onUnstableStream = new StreamController.broadcast(sync: true);
-    _onStableStream = new StreamController.broadcast(sync: true);
+    _onUnstableStream = StreamController.broadcast(sync: true);
+    _onStableStream = StreamController.broadcast(sync: true);
   }
   void unstable() {
     this._onUnstableStream.add(null);
@@ -56,10 +56,10 @@ void main() {
     MockCallback callback2;
     TestZone ngZone;
     setUp(() {
-      ngZone = new TestZone();
-      testability = new Testability(ngZone);
-      callback = new MockCallback();
-      callback2 = new MockCallback();
+      ngZone = TestZone();
+      testability = Testability(ngZone);
+      callback = MockCallback();
+      callback2 = MockCallback();
     });
     group('Pending count logic', () {
       test('should start with a pending count of 0', () {

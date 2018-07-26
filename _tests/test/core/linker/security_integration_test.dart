@@ -15,7 +15,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should escape unsafe attributes', () async {
-    final testBed = new NgTestBed<UnsafeAttributeComponent>();
+    final testBed = NgTestBed<UnsafeAttributeComponent>();
     final testFixture = await testBed.create();
     final a = testFixture.rootElement.querySelector('a') as AnchorElement;
     expect(a.href, matches(r'.*/hello$'));
@@ -26,19 +26,19 @@ void main() {
   });
 
   test('should not escape values marked as trusted', () async {
-    final testBed = new NgTestBed<TrustedValueComponent>();
+    final testBed = NgTestBed<TrustedValueComponent>();
     final testFixture = await testBed.create();
     final a = testFixture.rootElement.querySelector('a') as AnchorElement;
     expect(a.href, 'javascript:alert(1)');
   });
 
   test('should throw error when using the wrong trusted value', () async {
-    final testBed = new NgTestBed<WrongTrustedValueComponent>();
+    final testBed = NgTestBed<WrongTrustedValueComponent>();
     expect(testBed.create(), throwsA(isUnsupportedError));
   });
 
   test('should escape unsafe styles', () async {
-    final testBed = new NgTestBed<UnsafeStyleComponent>();
+    final testBed = NgTestBed<UnsafeStyleComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.style.background, matches('red'));
@@ -49,7 +49,7 @@ void main() {
   });
 
   test('should escape unsafe HTML', () async {
-    final testBed = new NgTestBed<UnsafeHtmlComponent>();
+    final testBed = NgTestBed<UnsafeHtmlComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.querySelector('div');
     expect(div.innerHtml, 'some <p>text</p>');

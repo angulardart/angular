@@ -13,7 +13,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should be invoked once', () async {
-    final testBed = new NgTestBed<TestInvokeOnceComponent>();
+    final testBed = NgTestBed<TestInvokeOnceComponent>();
     final testFixture = await testBed.create();
     // Force a second change detection cycle to be certain the functional
     // directive is invoked once per view construction, and not once per change
@@ -24,12 +24,11 @@ void main() {
   });
 
   test('should support dependency injection', () async {
-    final attributeProvider = new AttributeProvider(const {
+    final attributeProvider = AttributeProvider(const {
       'foo': '1',
       'bar': '2',
     });
-    final testBed =
-        new NgTestBed<TestDependencyInjectionComponent>().addProviders([
+    final testBed = NgTestBed<TestDependencyInjectionComponent>().addProviders([
       provide(AttributeProvider, useValue: attributeProvider),
     ]);
     final testFixture = await testBed.create();
@@ -40,12 +39,12 @@ void main() {
   });
 
   test('should support dependency injection via token', () async {
-    const attributes = const {
+    const attributes = {
       'foo': '1',
       'bar': '2',
     };
     final testBed =
-        new NgTestBed<TestDependencyInjectionViaTokenComponent>().addProviders([
+        NgTestBed<TestDependencyInjectionViaTokenComponent>().addProviders([
       provide('attributesForToken', useValue: attributes),
     ]);
     final testFixture = await testBed.create();
@@ -56,18 +55,17 @@ void main() {
   });
 
   test('should support attribute injection', () async {
-    final testBed = new NgTestBed<TestAttributeInjectionComponent>();
+    final testBed = NgTestBed<TestAttributeInjectionComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, 'hello world');
   });
 
   test('should apply to projected content', () async {
-    final attributeProvider = new AttributeProvider({
+    final attributeProvider = AttributeProvider({
       'foo': '1',
       'bar': '2',
     });
-    final testBed =
-        new NgTestBed<TestContentProjectionComponent>().addProviders([
+    final testBed = NgTestBed<TestContentProjectionComponent>().addProviders([
       provide(AttributeProvider, useValue: attributeProvider),
     ]);
     final testFixture = await testBed.create();
@@ -78,42 +76,42 @@ void main() {
   });
 
   test('should support use as structural directive', () async {
-    final testBed = new NgTestBed<TestFunctionalStructuralDirectiveComponent>();
+    final testBed = NgTestBed<TestFunctionalStructuralDirectiveComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.querySelector('#first'), isNotNull);
     expect(testFixture.rootElement.querySelector('#second'), isNull);
   });
 
   test("should be invoked after creation of host element's subtree", () async {
-    final textRecorder = new TextRecorder();
-    final testBed = new NgTestBed<TestInvocationAfterSubtreeCreationComponent>()
+    final textRecorder = TextRecorder();
+    final testBed = NgTestBed<TestInvocationAfterSubtreeCreationComponent>()
         .addProviders([provide(TextRecorder, useValue: textRecorder)]);
     await testBed.create();
     expect(textRecorder.texts, containsAllInOrder(['Child', 'ParentChild']));
   });
 
   test('should provide service for injection by children', () async {
-    final testBed = new NgTestBed<TestProvidesServiceComponent>();
+    final testBed = NgTestBed<TestProvidesServiceComponent>();
     await testBed.create(); // Fails if directive doesn't provide service.
   });
 }
 
 @Directive(selector: '[addChildDiv]')
 void addChildDivDirective(Element element) {
-  element.append(new DivElement());
+  element.append(DivElement());
 }
 
 @Component(
   selector: 'test-invoke-once',
   template: '<div id="test" addChildDiv></div>',
-  directives: const [addChildDivDirective],
+  directives: [addChildDivDirective],
 )
 class TestInvokeOnceComponent {}
 
 @Component(
   selector: 'test-invoke-each-build',
   template: '<div id="test" *ngIf="visible" addChildDiv></div>',
-  directives: const [addChildDivDirective, NgIf],
+  directives: [addChildDivDirective, NgIf],
 )
 class TestInvokeEachBuildComponent {
   bool visible = true;
@@ -137,7 +135,7 @@ void addAttributesDirective(
 @Component(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes></div>',
-  directives: const [addAttributesDirective],
+  directives: [addAttributesDirective],
 )
 class TestDependencyInjectionComponent {}
 
@@ -152,7 +150,7 @@ void addAttributesForTokenDirective(
 @Component(
   selector: 'test-dependency-injection',
   template: '<div id="test" addAttributes></div>',
-  directives: const [addAttributesForTokenDirective],
+  directives: [addAttributesForTokenDirective],
 )
 class TestDependencyInjectionViaTokenComponent {}
 
@@ -164,7 +162,7 @@ void embedTextDirective(Element element, @Attribute('embedText') String text) {
 @Component(
   selector: 'test-attribute-injection',
   template: '<div embedText="hello world"></div>',
-  directives: const [embedTextDirective],
+  directives: [embedTextDirective],
 )
 class TestAttributeInjectionComponent {}
 
@@ -177,7 +175,7 @@ class ContentHostComponent {}
 @Component(
   selector: 'test-content-projection',
   template: '<content-host><div id="test" addAttributes></div></content-host>',
-  directives: const [addAttributesDirective, ContentHostComponent],
+  directives: [addAttributesDirective, ContentHostComponent],
 )
 class TestContentProjectionComponent {}
 
@@ -198,14 +196,14 @@ void ifDirective(
     <template if="true"><div id="first"></div></template>
     <template if="false"><div id="second"></div></template>
   ''',
-  directives: const [ifDirective],
+  directives: [ifDirective],
 )
 class TestFunctionalStructuralDirectiveComponent {}
 
 class TextRecorder {
   final _texts = <String>[];
 
-  List<String> get texts => new List<String>.unmodifiable(_texts);
+  List<String> get texts => List<String>.unmodifiable(_texts);
 
   void recordText(String text) => _texts.add(text);
 }
@@ -223,14 +221,14 @@ void recordTextDirective(HtmlElement element, TextRecorder textRecorder) {
       <div recordText>Child</div>
     </div>
   ''',
-  directives: const [recordTextDirective],
+  directives: [recordTextDirective],
 )
 class TestInvocationAfterSubtreeCreationComponent {}
 
 @Injectable()
 class Service {}
 
-@Directive(selector: '[serviceProvider]', providers: const [Service])
+@Directive(selector: '[serviceProvider]', providers: [Service])
 void serviceProviderDirective() {}
 
 @Component(
@@ -249,6 +247,6 @@ class ServiceConsumerComponent {
       <service-consumer></service-consumer>
     </div>
   ''',
-  directives: const [serviceProviderDirective, ServiceConsumerComponent],
+  directives: [serviceProviderDirective, ServiceConsumerComponent],
 )
 class TestProvidesServiceComponent {}

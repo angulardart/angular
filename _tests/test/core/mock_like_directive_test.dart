@@ -14,12 +14,12 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support null @Output if mock-like', () async {
-    final testBed = new NgTestBed<TestMockNotificationComponent>();
+    final testBed = NgTestBed<TestMockNotificationComponent>();
     await testBed.create();
   });
 
   test("shouldn't support null @Output if not mock-like", () async {
-    final testBed = new NgTestBed<TestFakeNotificationComponent>();
+    final testBed = NgTestBed<TestFakeNotificationComponent>();
     expect(testBed.create(), throwsA(const isInstanceOf<NoSuchMethodError>()));
   });
 }
@@ -30,7 +30,7 @@ void main() {
 )
 class NotifierComponent {
   final StreamController<String> _notificationsController =
-      new StreamController<String>();
+      StreamController<String>();
 
   @Output()
   Stream<String> get notifications => _notificationsController.stream;
@@ -49,7 +49,7 @@ class MockNotifierComponent implements NotifierComponent {
   template: '''
     <notifier (notifications)="notify(\$event)">'
     </notifier>''',
-  directives: const [MockNotifierComponent],
+  directives: [MockNotifierComponent],
 )
 class TestMockNotificationComponent {
   void notify(String notification) {}
@@ -68,7 +68,7 @@ class FakeNotifierComponent extends NotifierComponent {
   template: '''
     <notifier (notifications)="notify(\$event)">'
     </notifier>''',
-  directives: const [FakeNotifierComponent],
+  directives: [FakeNotifierComponent],
 )
 class TestFakeNotificationComponent {
   void notify(String notification) {}

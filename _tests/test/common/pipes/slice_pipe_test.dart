@@ -16,7 +16,7 @@ void main() {
     setUp(() {
       list = [1, 2, 3, 4, 5];
       str = 'tuvwxyz';
-      pipe = new SlicePipe();
+      pipe = SlicePipe();
     });
     group('supports', () {
       test('should support strings', () {
@@ -26,7 +26,7 @@ void main() {
         expect(pipe.supports(list), true);
       });
       test('should not support other objects', () {
-        expect(pipe.supports(new Object()), false);
+        expect(pipe.supports(Object()), false);
         expect(pipe.supports(null), false);
       });
     });
@@ -78,7 +78,7 @@ void main() {
     });
     group('integration', () {
       test('should work with mutable arrays', () async {
-        var testBed = new NgTestBed<TestComp>();
+        var testBed = NgTestBed<TestComp>();
         var testFixture = await testBed.create();
         var el = testFixture.rootElement;
         List<num> mutable = [1, 2];
@@ -98,7 +98,7 @@ void main() {
 @Component(
   selector: 'test-comp',
   template: '{{(data | slice:1).join(\',\') }}',
-  pipes: const [SlicePipe],
+  pipes: [SlicePipe],
 )
 class TestComp {
   dynamic data = [];

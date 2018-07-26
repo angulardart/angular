@@ -9,8 +9,8 @@ void main() {
       var differ;
       Map<dynamic, dynamic> m;
       setUp(() {
-        differ = new DefaultKeyValueDiffer();
-        m = new Map();
+        differ = DefaultKeyValueDiffer();
+        m = Map();
       });
       tearDown(() {
         differ = null;

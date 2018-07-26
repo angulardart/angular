@@ -25,13 +25,13 @@ void main() {
     expect(
       fixture.assertOnlyInstance.aListOfListOfNull,
       const [
-        const [null]
+        [null]
       ],
     );
     expect(
       fixture.assertOnlyInstance.aListOfListOfVoid,
       const [
-        const [2]
+        [2]
       ],
     );
   });
@@ -41,32 +41,32 @@ void main() {
     expect(injector.get(listOfNull), const [null]);
     expect(injector.get(listOfVoid), const [1]);
     expect(injector.get(listOfListOfNull), const [
-      const [null]
+      [null]
     ]);
     expect(injector.get(listOfListOfVoid), const [
-      const [2]
+      [2]
     ]);
   });
 }
 
-const listOfVoid = const OpaqueToken<List<void>>('listOfVoid');
-const listOfNull = const OpaqueToken<List<Null>>('listOfNull');
-const listOfListOfVoid = const MultiToken<List<void>>('listOfListOfVoid');
-const listOfListOfNull = const MultiToken<List<Null>>('listOfListOfNull');
+const listOfVoid = OpaqueToken<List<void>>('listOfVoid');
+const listOfNull = OpaqueToken<List<Null>>('listOfNull');
+const listOfListOfVoid = MultiToken<List<void>>('listOfListOfVoid');
+const listOfListOfNull = MultiToken<List<Null>>('listOfListOfNull');
 
-const _testProviders = const [
-  const ValueProvider.forToken(listOfVoid, const [1]),
-  const ValueProvider.forToken(listOfNull, const [null]),
-  const ValueProvider.forToken(listOfListOfVoid, const [2]),
-  const ValueProvider.forToken(listOfListOfNull, const [null]),
+const _testProviders = [
+  ValueProvider.forToken(listOfVoid, [1]),
+  ValueProvider.forToken(listOfNull, [null]),
+  ValueProvider.forToken(listOfListOfVoid, [2]),
+  ValueProvider.forToken(listOfListOfNull, [null]),
 ];
 
-@GenerateInjector(const [_testProviders])
+@GenerateInjector([_testProviders])
 final InjectorFactory generatedInjector = ng.generatedInjector$Injector;
 
 @Component(
   selector: 'comp',
-  providers: const [_testProviders],
+  providers: [_testProviders],
   template: '',
 )
 class ComponentInjector {

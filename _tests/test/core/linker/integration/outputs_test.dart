@@ -15,7 +15,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support directive outputs on regular elements', () async {
-    final testBed = new NgTestBed<ElementWithEventDirectivesComponent>();
+    final testBed = NgTestBed<ElementWithEventDirectivesComponent>();
     final testFixture = await testBed.create();
     final emitter = testFixture.assertOnlyInstance.emitter;
     final listener = testFixture.assertOnlyInstance.listener;
@@ -25,7 +25,7 @@ void main() {
   });
 
   test('should support directive outputs on template elements', () async {
-    final testBed = new NgTestBed<TemplateWithEventDirectivesComponent>();
+    final testBed = NgTestBed<TemplateWithEventDirectivesComponent>();
     final testFixture = await testBed.create();
     final component = testFixture.assertOnlyInstance;
     expect(component.msg, isNull);
@@ -36,7 +36,7 @@ void main() {
   });
 
   test('should support [()] syntax', () async {
-    final testBed = new NgTestBed<TwoWayBindingComponent>();
+    final testBed = NgTestBed<TwoWayBindingComponent>();
     final testFixture = await testBed.create();
     final component = testFixture.assertOnlyInstance;
     expect(component.directive.control, 'one');
@@ -46,21 +46,21 @@ void main() {
   });
 
   test('should support render events', () async {
-    final testBed = new NgTestBed<ElementWithDomEventComponent>();
+    final testBed = NgTestBed<ElementWithDomEventComponent>();
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.children.first;
     final listener = testFixture.assertOnlyInstance.listener;
-    await testFixture.update((_) => div.dispatchEvent(new Event('domEvent')));
+    await testFixture.update((_) => div.dispatchEvent(Event('domEvent')));
     expect(listener.eventTypes, ['domEvent']);
   });
 
   test('should support preventing default on render events', () async {
-    final testBed = new NgTestBed<TestPreventDefaultComponent>();
+    final testBed = NgTestBed<TestPreventDefaultComponent>();
     final testFixture = await testBed.create();
     final inputPrevent = testFixture.rootElement.children[0] as InputElement;
     final inputNoPrevent = testFixture.rootElement.children[1] as InputElement;
-    final clickPrevent = new MouseEvent('click');
-    final clickNoPrevent = new MouseEvent('click');
+    final clickPrevent = MouseEvent('click');
+    final clickNoPrevent = MouseEvent('click');
     inputPrevent.dispatchEvent(clickPrevent);
     inputNoPrevent.dispatchEvent(clickNoPrevent);
     await testFixture.update();
@@ -76,7 +76,7 @@ void main() {
 )
 class EventEmitterDirective {
   String msg;
-  final _streamController = new StreamController<String>();
+  final _streamController = StreamController<String>();
 
   @Output()
   Stream get event => _streamController.stream;
@@ -101,7 +101,7 @@ class EventListenerDirective {
 @Component(
   selector: 'event-directives',
   template: '<div emitter listener></div>',
-  directives: const [EventEmitterDirective, EventListenerDirective],
+  directives: [EventEmitterDirective, EventListenerDirective],
 )
 class ElementWithEventDirectivesComponent {
   @ViewChild(EventEmitterDirective)
@@ -114,7 +114,7 @@ class ElementWithEventDirectivesComponent {
 @Component(
   selector: 'template-event-directives',
   template: '<template emitter listener (event)="msg=\$event"></template>',
-  directives: const [EventEmitterDirective, EventListenerDirective],
+  directives: [EventEmitterDirective, EventListenerDirective],
 )
 class TemplateWithEventDirectivesComponent {
   String msg;
@@ -130,7 +130,7 @@ class TemplateWithEventDirectivesComponent {
   selector: '[two-way]',
 )
 class DirectiveWithTwoWayBinding {
-  final _streamController = new StreamController<String>();
+  final _streamController = StreamController<String>();
 
   @Input()
   var control;
@@ -146,7 +146,7 @@ class DirectiveWithTwoWayBinding {
 @Component(
   selector: 'two-way-binding',
   template: '<div [(control)]="ctxProp" two-way></div>',
-  directives: const [DirectiveWithTwoWayBinding],
+  directives: [DirectiveWithTwoWayBinding],
 )
 class TwoWayBindingComponent {
   String ctxProp = 'one';
@@ -161,7 +161,7 @@ class TwoWayBindingComponent {
 class DomEventListenerDirective {
   List<String> eventTypes = [];
 
-  @HostListener('domEvent', const [r'$event.type'])
+  @HostListener('domEvent', [r'$event.type'])
   onEvent(String eventType) {
     eventTypes.add(eventType);
   }
@@ -170,7 +170,7 @@ class DomEventListenerDirective {
 @Component(
   selector: 'element-with-dom-event',
   template: '<div listener></div>',
-  directives: const [DomEventListenerDirective],
+  directives: [DomEventListenerDirective],
 )
 class ElementWithDomEventComponent {
   @ViewChild(DomEventListenerDirective)
@@ -199,7 +199,7 @@ class DirectiveListeningDomEventNoPrevent {
   selector: 'test-prevent-default',
   template: '<input type="checkbox" listenerprevent>'
       '<input type="checkbox" listenernoprevent>',
-  directives: const [
+  directives: [
     DirectiveListeningDomEventNoPrevent,
     DirectiveListeningDomEventPrevent,
   ],

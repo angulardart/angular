@@ -58,14 +58,14 @@ class ArrayConsole {
 }
 
 void main() {
-  final console = new ArrayConsole();
+  final console = ArrayConsole();
   final ngIf = createCompileDirectiveMetadata(
       selector: '[ngIf]',
-      type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'NgIf'),
+      type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'NgIf'),
       inputs: ['ngIf']);
   final component = createCompileDirectiveMetadata(
       selector: 'root',
-      type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Root'),
+      type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Root'),
       metadataType: CompileDirectiveMetadataType.Component);
 
   ParseTemplate _parse;
@@ -82,12 +82,12 @@ void main() {
   }
 
   void setUpParser({ElementSchemaRegistry elementSchemaRegistry}) {
-    elementSchemaRegistry ??= new MockSchemaRegistry(
+    elementSchemaRegistry ??= MockSchemaRegistry(
         {'invalidProp': false}, {'mappedAttr': 'mappedProp'});
-    final parser = new AstTemplateParser(
+    final parser = AstTemplateParser(
       elementSchemaRegistry,
-      new Parser(new Lexer()),
-      new CompilerFlags(i18nEnabled: true),
+      Parser(Lexer()),
+      CompilerFlags(i18nEnabled: true),
     );
     _parse = (template, [directives, pipes]) => parser.parse(
         component, template, directives ?? [], pipes ?? [], 'TestComp');
@@ -366,8 +366,8 @@ void main() {
           var dirA = createCompileDirectiveMetadata(
               selector: 'template',
               outputs: ['e'],
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'));
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'));
           expect(
               humanizeTplAst(parse('<template (e)="f"></template>', [dirA])), [
             [EmbeddedTemplateAst],
@@ -419,16 +419,16 @@ void main() {
             'and match them only once', () {
           var dirA = createCompileDirectiveMetadata(
               selector: '[a]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'));
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'));
           var dirB = createCompileDirectiveMetadata(
               selector: '[b]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirB'));
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirB'));
           var dirC = createCompileDirectiveMetadata(
               selector: '[c]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirC'));
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirC'));
           expect(
               humanizeTplAst(parse(
                   '<div a c b [a]="foo" [b]="bar"></div>', [dirA, dirB, dirC])),
@@ -460,12 +460,12 @@ void main() {
         test('should locate directives in property bindings', () {
           var dirA = createCompileDirectiveMetadata(
               selector: '[a=b]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'));
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'));
           var dirB = createCompileDirectiveMetadata(
               selector: '[b]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirB'));
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirB'));
           expect(humanizeTplAst(parse('<div [a]="b"></div>', [dirA, dirB])), [
             [ElementAst, 'div'],
             [
@@ -482,8 +482,8 @@ void main() {
         test('should locate directives in event bindings', () {
           var dirA = createCompileDirectiveMetadata(
               selector: '[a]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirB'));
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirB'));
           expect(humanizeTplAst(parse('<div (a)="b"></div>', [dirA])), [
             [ElementAst, 'div'],
             [BoundEventAst, 'a', null, 'b'],
@@ -494,8 +494,7 @@ void main() {
         test('should parse directive properties', () {
           var dirA = createCompileDirectiveMetadata(
               selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
               inputs: ['aProp']);
           expect(humanizeTplAst(parse('<div [aProp]="expr"></div>', [dirA])), [
             [ElementAst, 'div'],
@@ -507,8 +506,7 @@ void main() {
         test('should parse renamed directive properties', () {
           var dirA = createCompileDirectiveMetadata(
               selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
               inputs: ['b:a']);
           expect(humanizeTplAst(parse('<div [a]="expr"></div>', [dirA])), [
             [ElementAst, 'div'],
@@ -520,8 +518,7 @@ void main() {
         test('should parse literal directive properties', () {
           var dirA = createCompileDirectiveMetadata(
               selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
               inputs: ['a']);
           expect(humanizeTplAst(parse('<div a="literal"></div>', [dirA])), [
             [ElementAst, 'div'],
@@ -535,8 +532,7 @@ void main() {
             () {
           var dirA = createCompileDirectiveMetadata(
               selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
               inputs: ['a']);
           expect(
               humanizeTplAst(
@@ -552,8 +548,7 @@ void main() {
         test('should parse directive properties with no value', () {
           var dirA = createCompileDirectiveMetadata(
               selector: '[a]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
               inputs: ['a', 'b']);
           expect(humanizeTplAst(parse('<div a [b]></div>', [dirA])), [
             [ElementAst, 'div'],
@@ -567,8 +562,7 @@ void main() {
         test('should support optional directive properties', () {
           var dirA = createCompileDirectiveMetadata(
               selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
               inputs: ['a']);
           expect(humanizeTplAst(parse('<div></div>', [dirA])), [
             [ElementAst, 'div'],
@@ -579,8 +573,7 @@ void main() {
         test('should sort inputs based on directive ordering', () {
           var dirA = createCompileDirectiveMetadata(
               selector: 'div',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
               inputs: ['a', 'b']);
           expect(humanizeTplAst(parse('<div [b]="b" [a]="a"></div>', [dirA])), [
             [ElementAst, 'div'],
@@ -596,11 +589,11 @@ void main() {
         CompileTokenMetadata createToken(String value) {
           var token;
           if (value.startsWith('type:')) {
-            token = new CompileTokenMetadata(
-                identifier: new CompileTypeMetadata(
+            token = CompileTokenMetadata(
+                identifier: CompileTypeMetadata(
                     moduleUrl: someModuleUrl, name: value.substring(5)));
           } else {
-            token = new CompileTokenMetadata(value: value);
+            token = CompileTokenMetadata(value: value);
           }
           return token;
         }
@@ -621,7 +614,7 @@ void main() {
             isHost = true;
             value = value.substring(5);
           }
-          return new CompileDiDependencyMetadata(
+          return CompileDiDependencyMetadata(
               token: createToken(value),
               isOptional: isOptional,
               isSelf: isSelf,
@@ -630,11 +623,11 @@ void main() {
 
         CompileProviderMetadata createProvider(String token,
             {bool multi = false, List<String> deps = const []}) {
-          return new CompileProviderMetadata(
+          return CompileProviderMetadata(
               token: createToken(token),
               multi: multi,
-              useClass: new CompileTypeMetadata(
-                  name: '''provider${nextProviderId++}'''),
+              useClass:
+                  CompileTypeMetadata(name: '''provider${nextProviderId++}'''),
               deps: deps.map(createDep).toList());
         }
 
@@ -646,19 +639,19 @@ void main() {
           var isComponent = !selector.startsWith('[');
           return createCompileDirectiveMetadata(
               selector: selector,
-              type: new CompileTypeMetadata(
+              type: CompileTypeMetadata(
                   moduleUrl: someModuleUrl,
                   name: selector,
                   diDeps: deps.map(createDep).toList()),
               metadataType: isComponent
                   ? CompileDirectiveMetadataType.Component
                   : CompileDirectiveMetadataType.Directive,
-              template: new CompileTemplateMetadata(ngContentSelectors: []),
+              template: CompileTemplateMetadata(ngContentSelectors: []),
               providers: providers,
               viewProviders: viewProviders,
               queries: queries
                   .map((value) =>
-                      new CompileQueryMetadata(selectors: [createToken(value)]))
+                      CompileQueryMetadata(selectors: [createToken(value)]))
                   .toList());
         }
 
@@ -1005,8 +998,7 @@ void main() {
         test('should assign references to directives via exportAs', () {
           var dirA = createCompileDirectiveMetadata(
               selector: '[a]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
               exportAs: 'dirA');
           expect(humanizeTplAst(parse('<div a #a="dirA"></div>', [dirA])), [
             [ElementAst, 'div'],
@@ -1049,10 +1041,9 @@ void main() {
           var dirA = createCompileDirectiveMetadata(
               selector: '[a]',
               metadataType: CompileDirectiveMetadataType.Component,
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'),
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
               exportAs: 'dirA',
-              template: new CompileTemplateMetadata(ngContentSelectors: []));
+              template: CompileTemplateMetadata(ngContentSelectors: []));
           expect(humanizeTplAst(parse('<div a #a></div>', [dirA])), [
             [ElementAst, 'div'],
             [AttrAst, 'a', ''],
@@ -1064,8 +1055,8 @@ void main() {
         test('should not locate directives in references', () {
           var dirA = createCompileDirectiveMetadata(
               selector: '[a]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'));
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'));
           expect(humanizeTplAst(parse('<div #a></div>', [dirA])), [
             [ElementAst, 'div'],
             [ReferenceAst, 'a', null]
@@ -1147,8 +1138,8 @@ void main() {
         test('should not locate directives in variables', () {
           var dirA = createCompileDirectiveMetadata(
               selector: '[a]',
-              type: new CompileTypeMetadata(
-                  moduleUrl: someModuleUrl, name: 'DirA'));
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'));
           expect(
               humanizeTplAst(parse('<template let-a="b"></template>', [dirA])),
               [
@@ -1192,12 +1183,12 @@ void main() {
           test('should locate directives in property bindings', () {
             var dirA = createCompileDirectiveMetadata(
                 selector: '[a=b]',
-                type: new CompileTypeMetadata(
-                    moduleUrl: someModuleUrl, name: 'DirA'),
+                type:
+                    CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
                 inputs: ['a']);
             var dirB = createCompileDirectiveMetadata(
                 selector: '[b]',
-                type: new CompileTypeMetadata(
+                type: CompileTypeMetadata(
                     moduleUrl: someModuleUrl, name: 'DirB'));
             expect(
                 humanizeTplAst(parse('<div *a="b" b></div>', [dirA, dirB])), [
@@ -1213,7 +1204,7 @@ void main() {
           test('should not locate directives in variables', () {
             var dirA = createCompileDirectiveMetadata(
                 selector: '[a]',
-                type: new CompileTypeMetadata(
+                type: CompileTypeMetadata(
                     moduleUrl: someModuleUrl, name: 'DirA'));
             expect(
                 humanizeTplAst(parse('<div *foo="let a=b"></div>', [dirA])), [
@@ -1347,16 +1338,16 @@ void main() {
         return createCompileDirectiveMetadata(
             selector: selector,
             metadataType: CompileDirectiveMetadataType.Component,
-            type: new CompileTypeMetadata(
+            type: CompileTypeMetadata(
                 moduleUrl: someModuleUrl, name: '''SomeComp${compCounter++}'''),
-            template: new CompileTemplateMetadata(
+            template: CompileTemplateMetadata(
                 ngContentSelectors: ngContentSelectors));
       }
 
       CompileDirectiveMetadata createDir(String selector) {
         return createCompileDirectiveMetadata(
             selector: selector,
-            type: new CompileTypeMetadata(
+            type: CompileTypeMetadata(
                 moduleUrl: someModuleUrl, name: '''SomeDir${compCounter++}'''));
       }
 
@@ -1623,8 +1614,7 @@ void main() {
           'used by a directive', () {
         var dirA = createCompileDirectiveMetadata(
             selector: 'div',
-            type:
-                new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
+            type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
             inputs: ['invalidProp']);
         // Should not throw:
         parse('<div [invalid-prop]></div>', [dirA]);
@@ -1634,15 +1624,13 @@ void main() {
         var dirA = createCompileDirectiveMetadata(
             selector: 'div',
             metadataType: CompileDirectiveMetadataType.Component,
-            type:
-                new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
-            template: new CompileTemplateMetadata(ngContentSelectors: []));
+            type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
+            template: CompileTemplateMetadata(ngContentSelectors: []));
         var dirB = createCompileDirectiveMetadata(
             selector: 'div',
             metadataType: CompileDirectiveMetadataType.Component,
-            type:
-                new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirB'),
-            template: new CompileTemplateMetadata(ngContentSelectors: []));
+            type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirB'),
+            template: CompileTemplateMetadata(ngContentSelectors: []));
         expect(
             () => parse('<div></div>', [dirB, dirA]),
             throwsWith('Template parse errors:\n'
@@ -1657,9 +1645,8 @@ void main() {
         var dirA = createCompileDirectiveMetadata(
             selector: '[a]',
             metadataType: CompileDirectiveMetadataType.Component,
-            type:
-                new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
-            template: new CompileTemplateMetadata(ngContentSelectors: []));
+            type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
+            template: CompileTemplateMetadata(ngContentSelectors: []));
         expect(
             () => parse('<template [a]="b" (e)="f"></template>', [dirA]),
             throwsWith('Template parse errors:\n'
@@ -1680,9 +1667,8 @@ void main() {
         var dirA = createCompileDirectiveMetadata(
             selector: '[a]',
             metadataType: CompileDirectiveMetadataType.Component,
-            type:
-                new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
-            template: new CompileTemplateMetadata(ngContentSelectors: []));
+            type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
+            template: CompileTemplateMetadata(ngContentSelectors: []));
         expect(
             () => parse('<div *a="b"></div>', [dirA]),
             throwsWith('Template parse errors:\n'
@@ -1709,7 +1695,7 @@ void main() {
       test('should prevent binding to unsafe SVG attributes', () async {
         // This test requires that DomElementSchemaRegistry is used instead
         // of a mock implementation of ElementSchemaRegistry.
-        setUpParser(elementSchemaRegistry: new DomElementSchemaRegistry());
+        setUpParser(elementSchemaRegistry: DomElementSchemaRegistry());
         final template = '<svg:circle [xlink:href]="url"></svg:circle>';
         expect(
             () => parse(template, []),
@@ -1973,14 +1959,12 @@ void main() {
       test('should support directive', () {
         var dirA = createCompileDirectiveMetadata(
             selector: '[a]',
-            type: new CompileTypeMetadata(
-                moduleUrl: someModuleUrl, name: 'DirA'));
+            type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'));
         var comp = createCompileDirectiveMetadata(
             selector: 'div',
             metadataType: CompileDirectiveMetadataType.Component,
-            type: new CompileTypeMetadata(
-                moduleUrl: someModuleUrl, name: 'ZComp'),
-            template: new CompileTemplateMetadata(ngContentSelectors: []));
+            type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'ZComp'),
+            template: CompileTemplateMetadata(ngContentSelectors: []));
         expect(
             humanizeTplAstSourceSpans(parse('<div a></div>', [dirA, comp])), [
           [ElementAst, 'div', '<div a>'],
@@ -1993,12 +1977,11 @@ void main() {
       test('should support directive in namespace', () {
         var tagSel = createCompileDirectiveMetadata(
             selector: 'circle',
-            type: new CompileTypeMetadata(
-                moduleUrl: someModuleUrl, name: 'elDir'));
+            type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'elDir'));
         var attrSel = createCompileDirectiveMetadata(
             selector: '[href]',
-            type: new CompileTypeMetadata(
-                moduleUrl: someModuleUrl, name: 'attrDir'));
+            type:
+                CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'attrDir'));
         expect(
             humanizeTplAstSourceSpans(parse(
                 '<svg><circle /><use xlink:href="Port" /></svg>',
@@ -2016,8 +1999,7 @@ void main() {
       test('should support directive property', () {
         var dirA = createCompileDirectiveMetadata(
             selector: 'div',
-            type:
-                new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
+            type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
             inputs: ['aProp']);
         expect(
             humanizeTplAstSourceSpans(
@@ -2032,10 +2014,10 @@ void main() {
 
     group('pipes', () {
       test('should allow pipes that have been defined as dependencies', () {
-        var testPipe = new CompilePipeMetadata(
+        var testPipe = CompilePipeMetadata(
           name: 'test',
-          transformType: new o.FunctionType(o.STRING_TYPE, [o.STRING_TYPE]),
-          type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
+          transformType: o.FunctionType(o.STRING_TYPE, [o.STRING_TYPE]),
+          type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
         );
         // Should not throw.
         parse('{{a | test}}', [], [testPipe]);
@@ -2053,10 +2035,10 @@ void main() {
       });
 
       test('should report error if invoked with too many arguments', () {
-        final testPipe = new CompilePipeMetadata(
+        final testPipe = CompilePipeMetadata(
           name: 'test',
-          transformType: new o.FunctionType(o.STRING_TYPE, [o.STRING_TYPE]),
-          type: new CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
+          transformType: o.FunctionType(o.STRING_TYPE, [o.STRING_TYPE]),
+          type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
         );
         expect(
             () => parse('{{a | test:12}}', [], [testPipe]),
@@ -2115,8 +2097,7 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
     final bindingParts = splitAtColon(inputName, [inputName, inputName]);
     inputsMap[bindingParts[0]] = bindingParts[1];
     if (inputParts.length > 1) {
-      inputTypeMap[bindingParts[0]] =
-          new CompileTypeMetadata(name: inputParts[1]);
+      inputTypeMap[bindingParts[0]] = CompileTypeMetadata(name: inputParts[1]);
     }
   });
 
@@ -2126,7 +2107,7 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
     outputsMap[bindingParts[0]] = bindingParts[1];
   });
 
-  return new CompileDirectiveMetadata(
+  return CompileDirectiveMetadata(
     type: type,
     metadataType: metadataType ?? CompileDirectiveMetadataType.Directive,
     selector: selector,
@@ -2140,6 +2121,6 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
     providers: providers,
     viewProviders: viewProviders,
     queries: queries,
-    template: template ?? new CompileTemplateMetadata(),
+    template: template ?? CompileTemplateMetadata(),
   );
 }
