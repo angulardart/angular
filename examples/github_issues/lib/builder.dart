@@ -14,4 +14,4 @@ import 'package:sass_builder/sass_builder.dart' as sass;
 Builder scssBuilder(BuilderOptions options) =>
     // See ignore above.
     // ignore: strong_mode_invalid_cast_new_expr, new_with_non_type
-    new sass.SassBuilder(outputExtension: '.scss.css');
+    sass.SassBuilder(outputExtension: '.scss.css');
