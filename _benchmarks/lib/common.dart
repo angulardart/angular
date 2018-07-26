@@ -5,13 +5,13 @@ import 'package:angular/angular.dart';
 import 'common.template.dart' as ng;
 
 /// A token representing the [ComponentFactory] to be loaded.
-const runBenchmarkOn = const OpaqueToken<ComponentFactory<Benchmark>>();
+const runBenchmarkOn = OpaqueToken<ComponentFactory<Benchmark>>();
 
 void runBenchmarkApp(ComponentFactory component) {
   runApp(
     ng.BenchmarkComponentNgFactory,
     createInjector: ([parent]) {
-      return new Injector.map({runBenchmarkOn: component}, parent);
+      return Injector.map({runBenchmarkOn: component}, parent);
     },
   );
 }

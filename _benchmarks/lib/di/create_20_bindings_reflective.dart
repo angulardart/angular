@@ -8,7 +8,7 @@ import 'src/flat_20_bindings.dart';
 /// All bindings are eagerly initialized (optimized by the compiler).
 @Component(
   selector: 'create-20-bindings-reflective-benchmark',
-  directives: const [
+  directives: [
     NgIf,
   ],
   template: '',

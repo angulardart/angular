@@ -4,38 +4,38 @@ const numberOfPages = 3;
 const numberOfTabs = 5;
 
 /// Represents application-level bindings for a simple tree-like application.
-const simpleTreeAppBindings = const [
+const simpleTreeAppBindings = [
   AppService,
   RpcService,
-  const Provider(Cache, useClass: InMemoryCache),
+  Provider(Cache, useClass: InMemoryCache),
   intlServices,
 ];
 
-const intlServices = const [
+const intlServices = [
   IntlService,
-  const Provider(
+  Provider(
     supportedLanguages,
-    useValue: const LanguageService('sq_AL'),
+    useValue: LanguageService('sq_AL'),
     multi: true,
   ),
-  const Provider(
+  Provider(
     supportedLanguages,
-    useValue: const LanguageService('ar_DZ'),
+    useValue: LanguageService('ar_DZ'),
     multi: true,
   ),
-  const Provider(
+  Provider(
     supportedLanguages,
-    useValue: const LanguageService('ar_BH'),
+    useValue: LanguageService('ar_BH'),
     multi: true,
   ),
-  const Provider(
+  Provider(
     supportedLanguages,
-    useValue: const LanguageService('ar_EG'),
+    useValue: LanguageService('ar_EG'),
     multi: true,
   ),
-  const Provider(
+  Provider(
     supportedLanguages,
-    useValue: const LanguageService('ar_IQ'),
+    useValue: LanguageService('ar_IQ'),
     multi: true,
   ),
 ];
@@ -60,7 +60,7 @@ class IntlService {
   IntlService(@Inject(supportedLanguages) List<dynamic> p1);
 }
 
-const supportedLanguages = const OpaqueToken('languages');
+const supportedLanguages = OpaqueToken('languages');
 
 class LanguageService {
   const LanguageService(String locale);
@@ -69,9 +69,9 @@ class LanguageService {
 /// Represents page-level bindings for a simple tree-like application.
 ///
 /// Pages may be nested (i.e pages within pages).
-const simpleTreePageBindings = const [
+const simpleTreePageBindings = [
   PageService,
-  const Provider(TabControllerService, useExisting: PageService),
+  Provider(TabControllerService, useExisting: PageService),
   BusinessService,
 ];
 
@@ -93,7 +93,7 @@ class BusinessService {
 abstract class TabControllerService {}
 
 /// Represents tab-panel-level bindings for a simple tree-like application.
-const simpleTreePanelBindings = const [
+const simpleTreePanelBindings = [
   PanelService,
 ];
 
@@ -103,7 +103,7 @@ class PanelService {
 }
 
 /// Represents tap-button-level bindings for a simple tree-like application.
-const simpleTreeTabBindings = const [
+const simpleTreeTabBindings = [
   TabService,
 ];
 

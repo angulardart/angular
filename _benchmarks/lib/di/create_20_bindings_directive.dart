@@ -8,7 +8,7 @@ import 'src/flat_20_bindings.dart';
 /// All bindings are eagerly initialized (optimized by the compiler).
 @Component(
   selector: 'create-20-bindings-benchmark',
-  directives: const [
+  directives: [
     Create20BindingsEagerComponent,
     NgIf,
   ],
@@ -29,7 +29,7 @@ class Create20BindingsEagerBenchmark extends Benchmark {
 
 @Component(
   selector: 'create-20-bindings-eager',
-  providers: const [
+  providers: [
     flat20Bindings,
   ],
   template: 'DONE',
@@ -64,7 +64,7 @@ class Create20BindingsEagerComponent {
 /// All bindings are lazily initialized (not optimized by the compiler).
 @Component(
   selector: 'create-20-bindings-benchmark',
-  directives: const [
+  directives: [
     Create20BindingsLazyComponent,
     NgIf,
   ],
@@ -85,7 +85,7 @@ class Create20BindingsLazyBenchmark implements Benchmark {
 
 @Component(
   selector: 'create-20-bindings-lazy',
-  providers: const [
+  providers: [
     flat20Bindings,
   ],
   template: 'DONE',
