@@ -25,7 +25,7 @@ class ExpressionAst<T> implements TemplateAst {
     @required String sourceUrl,
     ExceptionHandler exceptionHandler,
   }) {
-    return new ExpressionAst(null);
+    return ExpressionAst(null);
   }
 
   @override

@@ -18,7 +18,7 @@ class NgTokenReader<TokenType> {
   NgBaseToken _peek;
 
   factory NgTokenReader(SourceFile source, Iterable<NgBaseToken> tokens) {
-    return new NgTokenReader._(source, tokens.iterator);
+    return NgTokenReader._(source, tokens.iterator);
   }
 
   NgTokenReader._(SourceFile source, this._iterator);
@@ -67,13 +67,13 @@ class NgTokenReader<TokenType> {
 ///
 /// Compatible with Error Recovery.
 class NgTokenReversibleReader<TokenType> extends NgTokenReader<TokenType> {
-  final Queue<NgBaseToken> _seen = new Queue<NgBaseToken>();
+  final Queue<NgBaseToken> _seen = Queue<NgBaseToken>();
 
   factory NgTokenReversibleReader(
     SourceFile source,
     Iterable<NgBaseToken> tokens,
   ) {
-    return new NgTokenReversibleReader._(source, tokens.iterator);
+    return NgTokenReversibleReader._(source, tokens.iterator);
   }
 
   NgTokenReversibleReader._(
@@ -87,7 +87,7 @@ class NgTokenReversibleReader<TokenType> extends NgTokenReader<TokenType> {
   /// Returns `null` if there are no further types aside from ignoreType
   /// or iterator is empty.
   TokenType peekTypeIgnoringType(TokenType ignoreType) {
-    var buffer = new Queue<NgBaseToken>();
+    var buffer = Queue<NgBaseToken>();
 
     peek();
     while (_peek != null && _peek.type == ignoreType) {

@@ -15,7 +15,7 @@ class NgParser {
   // Elements that explicitly don't have a closing tag.
   //
   // https://www.w3.org/TR/html/syntax.html#void-elements
-  static const _voidElements = const <String>[
+  static const _voidElements = <String>[
     'area',
     'base',
     'br',
@@ -43,7 +43,7 @@ class NgParser {
   //
   // Some tags (a, script) overlap with HTML. Exclude those, to prefer correct
   // HTML semantics to correct SVG semantics.
-  static const _svgElements = const <String>[
+  static const _svgElements = <String>[
     // 'a', Exclude this because it's also HTML
     'altGlyph',
     'altGlyphDef',
@@ -163,8 +163,8 @@ class NgParser {
     ExceptionHandler exceptionHandler = const ThrowingExceptionHandler(),
   }) {
     var tokens = const NgLexer().tokenize(template, exceptionHandler);
-    var parser = new RecursiveAstParser(
-      new SourceFile.fromString(
+    var parser = RecursiveAstParser(
+      SourceFile.fromString(
         template,
         url: sourceUrl,
       ),
@@ -175,7 +175,7 @@ class NgParser {
     );
     var asts = parser.parse();
     if (desugar) {
-      var desugarVisitor = new DesugarVisitor(
+      var desugarVisitor = DesugarVisitor(
         toolFriendlyAstOrigin: _toolFriendlyAstOrigin,
         exceptionHandler: exceptionHandler,
       );

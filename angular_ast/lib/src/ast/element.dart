@@ -10,7 +10,7 @@ import '../hash.dart';
 import '../token/tokens.dart';
 import '../visitor.dart';
 
-const _listEquals = const ListEquality<dynamic>();
+const _listEquals = ListEquality<dynamic>();
 
 /// Represents a DOM element that was parsed, that could be upgraded.
 ///
@@ -135,7 +135,7 @@ abstract class ElementAst implements StandaloneTemplateAst {
 
   @override
   String toString() {
-    final buffer = new StringBuffer('$ElementAst <$name> { ');
+    final buffer = StringBuffer('$ElementAst <$name> { ');
     if (attributes.isNotEmpty) {
       buffer
         ..write('attributes=')

@@ -6,7 +6,7 @@ import '../hash.dart';
 import '../token/tokens.dart';
 import '../visitor.dart';
 
-const _listEquals = const ListEquality();
+const _listEquals = ListEquality();
 
 /// Represents an `<ng-container>` element.
 ///
@@ -71,7 +71,7 @@ abstract class ContainerAst implements StandaloneTemplateAst {
 
   @override
   String toString() {
-    final buffer = new StringBuffer('$ContainerAst { ');
+    final buffer = StringBuffer('$ContainerAst { ');
     if (stars.isNotEmpty) {
       buffer
         ..write('stars=')
@@ -124,14 +124,14 @@ class _SyntheticContainerAst extends SyntheticTemplateAst with ContainerAst {
     this.annotations = const [],
     this.childNodes = const [],
     this.stars = const [],
-  }) : closeComplement = new CloseElementAst('ng-container');
+  }) : closeComplement = CloseElementAst('ng-container');
 
   _SyntheticContainerAst.from(
     TemplateAst origin, {
     this.annotations = const [],
     this.childNodes = const [],
     this.stars = const [],
-  })  : closeComplement = new CloseElementAst('ng-container'),
+  })  : closeComplement = CloseElementAst('ng-container'),
         super.from(origin);
 
   @override

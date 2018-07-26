@@ -10,7 +10,7 @@ import '../hash.dart';
 import '../token/tokens.dart';
 import '../visitor.dart';
 
-const _listEquals = const ListEquality<dynamic>();
+const _listEquals = ListEquality<dynamic>();
 
 /// Represents a static attribute assignment (i.e. not bound to an expression).
 ///
