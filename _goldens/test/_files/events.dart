@@ -17,7 +17,7 @@ class UsesNativeEvents {
 
 @Component(
   selector: 'uses-angular-events',
-  directives: const [
+  directives: [
     HasAngularEvents,
   ],
   template: r'''

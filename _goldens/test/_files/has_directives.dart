@@ -7,7 +7,7 @@ import 'package:angular/angular.dart';
     A directive: <directive></directive>
     A component: <test-bar></test-bar>
   ''',
-  directives: const [TestDirective, TestSubComponent],
+  directives: [TestDirective, TestSubComponent],
 )
 class TestFooComponent {}
 

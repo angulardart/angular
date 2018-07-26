@@ -1,12 +1,12 @@
 import 'package:angular/angular.dart';
 
-const baseUrlToken = const OpaqueToken('baseUrlDescription');
+const baseUrlToken = OpaqueToken('baseUrlDescription');
 
 @Component(
   selector: 'has-opaque-tokens',
   template: '{{baseUrl}}',
-  providers: const [
-    const Provider(baseUrlToken, useValue: 'https://localhost'),
+  providers: [
+    Provider(baseUrlToken, useValue: 'https://localhost'),
   ],
 )
 class HasOpaqueTokens {
@@ -15,7 +15,7 @@ class HasOpaqueTokens {
   HasOpaqueTokens(@Inject(baseUrlToken) this.baseUrl);
 }
 
-const listOfDurationToken = const OpaqueToken<List<Duration>>('listOfDuration');
+const listOfDurationToken = OpaqueToken<List<Duration>>('listOfDuration');
 
 @Component(
   selector: 'contains-child-component',
@@ -26,7 +26,7 @@ const listOfDurationToken = const OpaqueToken<List<Duration>>('listOfDuration');
       </div>
     </div>
   ''',
-  directives: const [
+  directives: [
     InjectsTypedTokenFromSomeParent,
     NgIf,
   ],

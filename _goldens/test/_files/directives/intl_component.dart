@@ -55,6 +55,6 @@ class CompWithFinalStatic {
     <button>{{Messages.okMessage}}</button>
     <button>{{Messages.cancelMessage}}</button>
 ''',
-  exports: const [Messages],
+  exports: [Messages],
 )
 class CompWithExternalFinal {}
