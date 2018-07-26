@@ -20,7 +20,7 @@ abstract class Messages {
     String message = 'Was not resolved',
     @required String reason,
   }) {
-    final buffer = new StringBuffer(reason)..writeln()..writeln();
+    final buffer = StringBuffer(reason)..writeln()..writeln();
     for (final sourceSpans in sourceSpans) {
       buffer.writeln(sourceSpans.message(message));
     }

@@ -53,7 +53,7 @@ class DependencyReader {
     if (element is FunctionElement) {
       return _parseFunctionDependencies(element) as DependencyInvocation<E>;
     }
-    throw new ArgumentError('Invalid element: $element.');
+    throw ArgumentError('Invalid element: $element.');
   }
 
   /// Returns parsed dependencies for the provided [element].
@@ -66,7 +66,7 @@ class DependencyReader {
     final positional = <DependencyElement>[];
     for (final object in dependencies) {
       DartObject tokenObject = object;
-      final reader = new ConstantReader(object);
+      final reader = ConstantReader(object);
       List<DartObject> metadata = const [];
       if (reader.isList) {
         tokenObject = reader.listValue.first;
@@ -75,7 +75,7 @@ class DependencyReader {
       bool hasMeta(TypeChecker checker) =>
           metadata.any((m) => checker.isExactlyType(m.type));
       positional.add(
-        new DependencyElement(
+        DependencyElement(
           _tokenReader.parseTokenObject(tokenObject),
           host: hasMeta($Host),
           optional: hasMeta($Optional),
@@ -84,7 +84,7 @@ class DependencyReader {
         ),
       );
     }
-    return new DependencyInvocation(element, positional);
+    return DependencyInvocation(element, positional);
   }
 
   DependencyInvocation<E> _parseDependencies<E extends Element>(
@@ -106,7 +106,7 @@ class DependencyReader {
             $Inject.firstAnnotationOfExact(parameter) != null ||
             $OpaqueToken.firstAnnotationOf(parameter) != null;
         positional.add(
-          new DependencyElement(
+          DependencyElement(
             token,
             type: usesInject() ? _tokenReader.parseTokenType(parameter) : null,
             host: $Host.firstAnnotationOfExact(parameter) != null,
@@ -117,7 +117,7 @@ class DependencyReader {
         );
       }
     }
-    return new DependencyInvocation(bound, positional);
+    return DependencyInvocation(bound, positional);
   }
 
   DependencyInvocation<ConstructorElement> _parseClassDependencies(
@@ -126,7 +126,7 @@ class DependencyReader {
     final constructor = findConstructor(element);
     if (constructor == null) {
       // TODO(matanl): Log an exception instead of throwing.
-      throw new StateError('Could not find a valid constructor for $element.');
+      throw StateError('Could not find a valid constructor for $element.');
     }
     return _parseDependencies(constructor, constructor.parameters);
   }

@@ -86,9 +86,9 @@ void main() {
       final deps = reader.parseDependencies(function);
       expect(deps.bound, const isInstanceOf<FunctionElement>());
       expect(deps.positional, [
-        new DependencyElement(
-          new TypeTokenElement(
-            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+        DependencyElement(
+          TypeTokenElement(
+            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
         ),
       ]);
@@ -100,9 +100,9 @@ void main() {
       final deps = reader.parseDependencies(function);
       expect(deps.bound, const isInstanceOf<FunctionElement>());
       expect(deps.positional, [
-        new DependencyElement(
-          new TypeTokenElement(
-            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+        DependencyElement(
+          TypeTokenElement(
+            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
         ),
       ]);
@@ -113,9 +113,9 @@ void main() {
       final function = functionNamed('createExampleHost');
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
-        new DependencyElement(
-          new TypeTokenElement(
-            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+        DependencyElement(
+          TypeTokenElement(
+            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           host: true,
         ),
@@ -126,9 +126,9 @@ void main() {
       final function = functionNamed('createExampleOptional');
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
-        new DependencyElement(
-          new TypeTokenElement(
-            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+        DependencyElement(
+          TypeTokenElement(
+            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           optional: true,
         ),
@@ -139,9 +139,9 @@ void main() {
       final function = functionNamed('createExampleSelf');
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
-        new DependencyElement(
-          new TypeTokenElement(
-            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+        DependencyElement(
+          TypeTokenElement(
+            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           self: true,
         ),
@@ -152,9 +152,9 @@ void main() {
       final function = functionNamed('createExampleSkipSelf');
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
-        new DependencyElement(
-          new TypeTokenElement(
-            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+        DependencyElement(
+          TypeTokenElement(
+            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           skipSelf: true,
         ),
@@ -165,19 +165,19 @@ void main() {
       final function = functionNamed('createExampleInject');
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
-        new DependencyElement(
-          new OpaqueTokenElement(
+        DependencyElement(
+          OpaqueTokenElement(
             'someToken',
             isMultiToken: false,
-            classUrl: new TypeLink(
+            classUrl: TypeLink(
               'OpaqueToken',
               ''
                   'package:angular'
                   '/src/core/di/opaque_token.dart',
             ),
           ),
-          type: new TypeTokenElement(
-            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+          type: TypeTokenElement(
+            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
         ),
       ]);
@@ -187,19 +187,19 @@ void main() {
       final function = functionNamed('createExampleInjectToken');
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
-        new DependencyElement(
-          new OpaqueTokenElement(
+        DependencyElement(
+          OpaqueTokenElement(
             'someToken',
             isMultiToken: false,
-            classUrl: new TypeLink(
+            classUrl: TypeLink(
               'OpaqueToken',
               ''
                   'package:angular'
                   '/src/core/di/opaque_token.dart',
             ),
           ),
-          type: new TypeTokenElement(
-            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+          type: TypeTokenElement(
+            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
         ),
       ]);
@@ -209,9 +209,9 @@ void main() {
       final function = functionNamed('createExampleDynamic');
       final deps = reader.parseDependencies(function);
       expect(deps.positional, [
-        new DependencyElement(
-          new TypeTokenElement(
-            new TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+        DependencyElement(
+          TypeTokenElement(
+            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
           ),
           type: TypeTokenElement.$dynamic,
         ),

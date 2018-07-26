@@ -11,18 +11,18 @@ import 'package:test/test.dart';
 import '../src/resolve.dart';
 
 void main() {
-  final dartfmt = new DartFormatter().format;
+  final dartfmt = DartFormatter().format;
   final angular = 'package:angular';
   final libReflection = '$angular/src/core/reflection/reflection.dart';
 
   // We don't have a true "source" library to use in these tests. Its OK.
   //
   // (Normally this is used to determine relative import paths, etc)
-  final nullLibrary = new LibraryReader(null);
+  final nullLibrary = LibraryReader(null);
 
   test('should support a no-op', () {
-    final output = new ReflectableOutput();
-    final emitter = new ReflectableEmitter(output, nullLibrary);
+    final output = ReflectableOutput();
+    final emitter = ReflectableEmitter(output, nullLibrary);
     expect(emitter.emitImports(), isEmpty);
     expect(
       emitter.emitInitReflector(),
@@ -31,10 +31,10 @@ void main() {
   });
 
   test('should support linking', () {
-    final output = new ReflectableOutput(
+    final output = ReflectableOutput(
       urlsNeedingInitReflector: ['foo.template.dart'],
     );
-    final emitter = new ReflectableEmitter(output, nullLibrary);
+    final emitter = ReflectableEmitter(output, nullLibrary);
     expect(
       dartfmt(emitter.emitImports()),
       dartfmt(r'''
@@ -58,7 +58,7 @@ void main() {
   });
 
   test('should skip linking to deferred libraries', () {
-    final output = new ReflectableOutput(
+    final output = ReflectableOutput(
       urlsNeedingInitReflector: [
         // Relative file.
         'foo.template.dart',
@@ -67,7 +67,7 @@ void main() {
         'package:bar/bar.template.dart',
       ],
     );
-    final emitter = new ReflectableEmitter(
+    final emitter = ReflectableEmitter(
       output,
       nullLibrary,
       deferredModules: [
@@ -95,7 +95,7 @@ void main() {
   });
 
   test('should register constructors for injectable services', () async {
-    final reflector = new ReflectableReader.noLinking();
+    final reflector = ReflectableReader.noLinking();
     final output = await reflector.resolve(await resolveLibrary(r'''
       const someToken = const OpaqueToken('someToken');
       class A {}
@@ -125,7 +125,7 @@ void main() {
         ExampleServiceWithDynamicDeps2(@someToken a);
       }
     '''));
-    final emitter = new ReflectableEmitter(
+    final emitter = ReflectableEmitter(
       output,
       nullLibrary,
       reflectorSource: libReflection,
@@ -219,13 +219,13 @@ void main() {
           class B {}
         ''',
       },
-      (r) => r.libraryFor(new AssetId('a', 'test/a_test.dart')),
+      (r) => r.libraryFor(AssetId('a', 'test/a_test.dart')),
     );
-    final library = new LibraryReader(pkgATest);
-    final reflector = new ReflectableReader.noLinking();
+    final library = LibraryReader(pkgATest);
+    final reflector = ReflectableReader.noLinking();
     final output = await reflector.resolve(pkgATest);
-    final allocator = new Allocator.simplePrefixing();
-    final emitter = new ReflectableEmitter(
+    final allocator = Allocator.simplePrefixing();
+    final emitter = ReflectableEmitter(
       output,
       library,
       allocator: allocator,
@@ -261,10 +261,10 @@ void main() {
 
   group('should handle generic type parameters where', () {
     Future<String> initReflectorOf(String source) async {
-      final library = new LibraryReader(await resolveLibrary(source));
-      final reflector = new ReflectableReader.noLinking();
+      final library = LibraryReader(await resolveLibrary(source));
+      final reflector = ReflectableReader.noLinking();
       final output = await reflector.resolve(library.element);
-      final emitter = new ReflectableEmitter(output, library);
+      final emitter = ReflectableEmitter(output, library);
       return emitter.emitInitReflector();
     }
 
