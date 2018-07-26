@@ -1,6 +1,6 @@
 const String myConst = 'hello';
 
-const List<int> myList = const [1, 2, 3];
+const List<int> myList = [1, 2, 3];
 
 enum MyEnum { a, b, c }
 

@@ -15,7 +15,7 @@ void main() {
 
   group('ComponentState mixin', () {
     test('Should update bound properties when setState is called', () async {
-      var testBed = new NgTestBed<SingleBindingTest>();
+      var testBed = NgTestBed<SingleBindingTest>();
       var testRoot = await testBed.create();
       Element targetElement = testRoot.rootElement.querySelector('.target');
       expect(targetElement.text, '');
@@ -31,7 +31,7 @@ void main() {
     });
 
     test('Should update bound attribute with change detection', () async {
-      var testBed = new NgTestBed<DirectiveContainerTest>();
+      var testBed = NgTestBed<DirectiveContainerTest>();
       var testRoot = await testBed.create();
       Element targetElement = testRoot.rootElement.querySelector('.target1');
       expect(targetElement.attributes['data-msg'], 'Hello xyz');
@@ -93,7 +93,7 @@ class FastDirective extends ComponentState {
   selector: 'directive-container',
   template: r'<div class="target1" fastDirective [name]="finalName"></div>'
       '<div class="target2" fastDirective [name]="nonFinal"></div>',
-  directives: const [FastDirective],
+  directives: [FastDirective],
 )
 class DirectiveContainerTest {
   final String finalName = "xyz";

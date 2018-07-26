@@ -13,8 +13,8 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('Should normally run change detection', () async {
-    final valueService = new ValueService()..value = 'Hello';
-    final testBed = new NgTestBed<NoCrash>().addProviders([
+    final valueService = ValueService()..value = 'Hello';
+    final testBed = NgTestBed<NoCrash>().addProviders([
       provide(ValueService, useValue: valueService),
     ]);
     final fixture = await testBed.create();
@@ -30,8 +30,8 @@ void main() {
   });
 
   test('Should disable change detection on components that throw', () async {
-    final valueService = new ValueService()..value = '1';
-    final testBed = new NgTestBed<Crash>().addProviders([
+    final valueService = ValueService()..value = '1';
+    final testBed = NgTestBed<Crash>().addProviders([
       provide(ValueService, useValue: valueService),
     ]);
 
@@ -60,9 +60,9 @@ void main() {
   });
 
   test('Should disable change detection to avoid infinite ngOnInit', () async {
-    final valueService = new ValueService()..value = '1';
-    final rpcService = new RpcService();
-    final testBed = new NgTestBed<CrashOnInit>().addProviders([
+    final valueService = ValueService()..value = '1';
+    final rpcService = RpcService();
+    final testBed = NgTestBed<CrashOnInit>().addProviders([
       provide(ValueService, useValue: valueService),
       provide(RpcService, useValue: rpcService),
     ]);
@@ -108,7 +108,7 @@ class ValueService {
 @Component(
   selector: 'no-crash',
   template: '<child></child>',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
 )
 class NoCrash {}
 
@@ -129,7 +129,7 @@ class ChildComponent {
     <child></child>
     <error *ngIf="startCrashing"></error>
   ''',
-  directives: const [
+  directives: [
     ChildComponent,
     ErrorComponent,
     NgIf,
@@ -162,7 +162,7 @@ class RpcService {
 
 @Component(
   selector: 'crash-on-init',
-  directives: const [
+  directives: [
     ChildComponent,
     ErrorComponent,
     NgIf,

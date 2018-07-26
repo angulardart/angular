@@ -44,7 +44,7 @@ void main() {
       expect(didWork, isTrue);
 
       // TODO(matanl): As part of documenting Testability, figure this out.
-      new Future(expectAsync0(() {
+      Future(expectAsync0(() {
         verifyDomAndStyles(innerText: 'Hello Universe!');
       }));
     })));
@@ -52,8 +52,8 @@ void main() {
   }
 
   setUp(() {
-    rootDomContainer = new DivElement()..id = 'test-root-dom';
-    rootDomContainer.append(new Element.tag('hello-world'));
+    rootDomContainer = DivElement()..id = 'test-root-dom';
+    rootDomContainer.append(Element.tag('hello-world'));
     document.body.append(rootDomContainer);
     HelloWorldComponent.name = 'World';
   });
@@ -74,8 +74,8 @@ void main() {
     component = runApp(
       ng.HelloWorldComponentNgFactory,
       createInjector: ([parent]) {
-        return new Injector.map({
-          ExceptionHandler: new StubExceptionHandler(),
+        return Injector.map({
+          ExceptionHandler: StubExceptionHandler(),
         }, parent);
       },
     );
@@ -88,7 +88,7 @@ void main() {
     component = await runAppAsync(
       ng.HelloWorldComponentNgFactory,
       beforeComponentCreated: (_) {
-        return new Future(() {
+        return Future(() {
           HelloWorldComponent.name = 'Async World';
         });
       },
@@ -116,7 +116,7 @@ void main() {
 @Component(
   selector: 'hello-world',
   template: '<h1>Hello {{name}}!</h1>',
-  styles: const [
+  styles: [
     'h1 { height: 100px; }',
   ],
 )
@@ -131,7 +131,7 @@ class HelloWorldComponent {
 
   static void doAsyncTaskThatThrows() {
     scheduleMicrotask(() {
-      throw new IntentionalError();
+      throw IntentionalError();
     });
   }
 }

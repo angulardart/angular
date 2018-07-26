@@ -17,20 +17,20 @@ void main() {
   group('dispose should ', () {
     setUp(() {
       appRef = internalCreateApplicationRef(
-        new NgZone(enableLongStackTrace: true),
-        new Injector.map({
+        NgZone(enableLongStackTrace: true),
+        Injector.map({
           ExceptionHandler: const BrowserExceptionHandler(),
         }),
       );
 
       // Setup global variables that need to exist before using bootstrap.
       // TODO: Move this to a common place. It's duplicated all over.
-      appViewUtils = new AppViewUtils(
+      appViewUtils = AppViewUtils(
         'appId',
         null,
         null,
       );
-      sharedStylesHost ??= new DomSharedStylesHost(document);
+      sharedStylesHost ??= DomSharedStylesHost(document);
     });
 
     test('destroy bootstrapped components', () {
@@ -58,7 +58,7 @@ void main() {
 
   group('bootstrap should', () {
     test('replace an existing element if in the DOM', () {
-      final existing = new Element.tag('hello-component')..text = 'Loading...';
+      final existing = Element.tag('hello-component')..text = 'Loading...';
       document.body.append(existing);
       final comp = appRef.bootstrap<HelloComponent>(ng.HelloComponentNgFactory);
       expect(comp.location.text, 'Hello World');

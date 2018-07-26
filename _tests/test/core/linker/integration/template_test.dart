@@ -14,7 +14,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support template directives via <template> elements', () async {
-    final testBed = new NgTestBed<TemplateDirectiveComponent>();
+    final testBed = NgTestBed<TemplateDirectiveComponent>();
     final testFixture = await testBed.create();
     // 1 template + 2 copies.
     expect(testFixture.rootElement.childNodes, hasLength(3));
@@ -23,7 +23,7 @@ void main() {
   });
 
   test('should not detach views when parent is destroyed', () async {
-    final testBed = new NgTestBed<DestroyParentViewComponent>();
+    final testBed = NgTestBed<DestroyParentViewComponent>();
     final testFixture = await testBed.create();
     final ngIfElement = testFixture.rootElement.children.first;
     final someViewport = testFixture.assertOnlyInstance.viewport;
@@ -35,15 +35,15 @@ void main() {
   });
 
   test('should use a comment while stamping out <template> elements', () async {
-    final testBed = new NgTestBed<EmptyTemplateComponent>();
+    final testBed = NgTestBed<EmptyTemplateComponent>();
     final testFixture = await testBed.create();
     final childNodes = testFixture.rootElement.childNodes;
     expect(childNodes, hasLength(1));
-    expect(childNodes.first, new isInstanceOf<Comment>());
+    expect(childNodes.first, isInstanceOf<Comment>());
   });
 
   test('should transplant TemplateRef into another ViewContainer', () async {
-    final testBed = new NgTestBed<TemplateRefTransplantComponent>();
+    final testBed = NgTestBed<TemplateRefTransplantComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text,
         'From component,From toolbar,Component with an injected host');
@@ -66,7 +66,7 @@ class SomeViewport {
   selector: 'template-directive',
   template:
       '<template some-viewport let-x="some-tmpl"><div>{{x}}</div></template>',
-  directives: const [
+  directives: [
     SomeViewport,
   ],
 )
@@ -77,7 +77,7 @@ class TemplateDirectiveComponent {}
   template: '<div *ngIf="visible">'
       '<template some-viewport let-x="someTmpl"><span>{{x}}</span></template>'
       '</div>',
-  directives: const [
+  directives: [
     NgIf,
     SomeViewport,
   ],
@@ -122,7 +122,7 @@ class ToolbarViewContainer {
 @Component(
   selector: 'toolbar',
   template: '<div *ngFor="let part of query" [toolbarVc]="part"></div>',
-  directives: const [
+  directives: [
     NgFor,
     ToolbarViewContainer,
   ],
@@ -143,7 +143,7 @@ class SomeDirective {}
 @Component(
   selector: 'cmp-with-host',
   template: '<p>Component with an injected host</p>',
-  directives: const [SomeDirective],
+  directives: [SomeDirective],
 )
 class CompWithHost {
   SomeDirective myHost;
@@ -160,7 +160,7 @@ class CompWithHost {
       '{{prop}},{{toolbarProp}},<cmp-with-host></cmp-with-host>'
       '</template>'
       '</toolbar></some-directive>',
-  directives: const [
+  directives: [
     CompWithHost,
     SomeDirective,
     ToolbarComponent,

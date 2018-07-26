@@ -8,8 +8,8 @@ void main() {
     DateTime date;
     DatePipe pipe;
     setUp(() {
-      date = new DateTime(2015, 6, 15, 21, 43, 11);
-      pipe = new DatePipe();
+      date = DateTime(2015, 6, 15, 21, 43, 11);
+      pipe = DatePipe();
     });
     group('supports', () {
       test('should support date', () {
@@ -19,7 +19,7 @@ void main() {
         expect(pipe.supports(123456789), true);
       });
       test('should not support other objects', () {
-        expect(pipe.supports(new Object()), false);
+        expect(pipe.supports(Object()), false);
         expect(pipe.supports(null), false);
       });
     });

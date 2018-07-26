@@ -56,7 +56,7 @@ class AlwaysShowDirective {
 class NeverShowDirective {}
 
 /// Returns a [Matcher] that looks for [ValueDirective] in a [NgTestFixture].
-Matcher hasChildValues(List<int> values) => new _HasChildValues(values);
+Matcher hasChildValues(List<int> values) => _HasChildValues(values);
 
 class _HasChildValues extends Matcher {
   static final _equality = const IterableEquality();

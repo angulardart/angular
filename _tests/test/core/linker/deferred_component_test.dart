@@ -20,7 +20,7 @@ void main() {
     ).create();
 
     // We only test this in DDC so a new macro-task is sufficient.
-    await new Future.delayed(Duration.zero);
+    await Future.delayed(Duration.zero);
     final view = fixture.rootElement.querySelector('my-deferred-view');
     expect(view, isNotNull);
     expect(fixture.text, contains('Title:'));
@@ -66,7 +66,7 @@ void main() {
       expect(comp.children, isNull);
     }));
     // We only test this in DDC so a new macro-task is sufficient.
-    await new Future.delayed(Duration.zero);
+    await Future.delayed(Duration.zero);
     expect(fixture.assertOnlyInstance.child1, isNotNull);
     expect(fixture.assertOnlyInstance.child2, isNotNull);
     expect(fixture.assertOnlyInstance.children, [
@@ -78,7 +78,7 @@ void main() {
 
 @Component(
   selector: 'simple-container',
-  directives: const [DeferredChildComponent],
+  directives: [DeferredChildComponent],
   template: r'''
     <section>
       <my-deferred-view @deferred></my-deferred-view>

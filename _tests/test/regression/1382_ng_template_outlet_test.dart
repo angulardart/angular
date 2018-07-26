@@ -34,7 +34,7 @@ void main() {
     <template #greeting>Hello world!</template>
     <ng-container *ngTemplateOutlet="activeTemplate"></ng-container>
   ''',
-  directives: const [NgTemplateOutlet],
+  directives: [NgTemplateOutlet],
 )
 class TestComponent {
   @ViewChild('greeting')

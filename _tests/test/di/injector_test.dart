@@ -14,7 +14,7 @@ void main() {
 
   group('Injector', () {
     test('.get should delegate token to .inject', () {
-      final injector = new CaptureInjectInjector();
+      final injector = CaptureInjectInjector();
       injector.get(ExampleService);
       expect(injector.lastToken, ExampleService);
       expect(injector.lastOrElse, throwIfNotFound);
@@ -23,7 +23,7 @@ void main() {
     group('.get should delegate', () {
       CaptureInjectInjector injector;
 
-      setUp(() => injector = new CaptureInjectInjector());
+      setUp(() => injector = CaptureInjectInjector());
 
       test('token to .inject', () {
         injector.get(ExampleService);
@@ -42,7 +42,7 @@ void main() {
       HierarchicalInjector i;
 
       test('should throw by default', () {
-        i = new Injector.empty();
+        i = Injector.empty();
         expect(
           () => i.get(ExampleService),
           throwsNoProviderError,
@@ -67,7 +67,7 @@ void main() {
 
       test('should throw a readable message with injection fails', () {
         // Anything but injector.get(Injector) will fail here.
-        final injector = new Injector.empty();
+        final injector = Injector.empty();
         expect(
           () => injector.get(ExampleService),
           throwsA(
@@ -79,8 +79,8 @@ void main() {
       });
 
       test('should throw a readable message even with a parent injector', () {
-        final parent = new Injector.empty();
-        final child = new Injector.empty(parent);
+        final parent = Injector.empty();
+        final child = Injector.empty(parent);
         expect(
           () => child.get(ExampleService),
           throwsA(
@@ -92,7 +92,7 @@ void main() {
       });
 
       test('should use orElse if provided', () {
-        i = new Injector.empty();
+        i = Injector.empty();
         expect(i.get(ExampleService, 123), 123);
         expect(i.injectOptionalUntyped(ExampleService, 123), 123);
         expect(i.injectFromSelfOptional(ExampleService, 123), 123);
@@ -101,8 +101,8 @@ void main() {
       });
 
       test('should fallback to the parent injector if provided', () {
-        final parent = new Injector.map({ExampleService: 123});
-        i = new Injector.empty(parent);
+        final parent = Injector.map({ExampleService: 123});
+        i = Injector.empty(parent);
         expect(i.get(ExampleService), 123);
         expect(i.inject(ExampleService), 123);
         expect(
@@ -114,7 +114,7 @@ void main() {
       });
 
       test('should return itself if Injector is passed', () {
-        i = new Injector.empty();
+        i = Injector.empty();
         expect(i.get(Injector), i);
       });
     });
@@ -123,7 +123,7 @@ void main() {
       HierarchicalInjector i;
 
       test('should return a provided key-value pair', () {
-        i = new Injector.map({ExampleService: 123});
+        i = Injector.map({ExampleService: 123});
         expect(i.get(ExampleService), 123);
         expect(i.inject(ExampleService), 123);
         expect(i.injectFromSelf(ExampleService), 123);
@@ -142,7 +142,7 @@ void main() {
       });
 
       test('should throw a readable error message on a failure', () {
-        final injector = new Injector.map({});
+        final injector = Injector.map({});
         expect(
           () => injector.get(ExampleService),
           throwsA(
@@ -158,8 +158,8 @@ void main() {
       Injector i;
 
       setUpAll(() {
-        reflector.registerFactory(ExampleService, () => new ExampleService());
-        reflector.registerFactory(ExampleService2, () => new ExampleService2());
+        reflector.registerFactory(ExampleService, () => ExampleService());
+        reflector.registerFactory(ExampleService2, () => ExampleService2());
         reflector.registerDependencies(createListWith, [
           [String]
         ]);
@@ -172,83 +172,83 @@ void main() {
 
       test('should resolve a Provider', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(ExampleService),
+          Provider(ExampleService),
         ]);
         expect(i.get(ExampleService), const isInstanceOf<ExampleService>());
       });
 
       test('should resolve a Provider.useClass', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(ExampleService, useClass: ExampleService2),
+          Provider(ExampleService, useClass: ExampleService2),
         ]);
         expect(i.get(ExampleService), const isInstanceOf<ExampleService2>());
       });
 
       test('should resolve a Provider.useValue', () {
-        final serviceValue = new ExampleService();
+        final serviceValue = ExampleService();
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(ExampleService, useValue: serviceValue),
+          Provider(ExampleService, useValue: serviceValue),
         ]);
         expect(i.get(ExampleService), serviceValue);
       });
 
       test('should resolve a Provider.useFactory', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(ExampleService, useFactory: createExampleService),
+          Provider(ExampleService, useFactory: createExampleService),
         ]);
         expect(i.get(ExampleService), const isInstanceOf<ExampleService>());
       });
 
       test('should resolve a Provider.useFactory with deps', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(String, useValue: 'Hello World'),
-          new Provider(List, useFactory: createListWith),
+          Provider(String, useValue: 'Hello World'),
+          Provider(List, useFactory: createListWith),
         ]);
         expect(i.get(List), ['Hello World']);
       });
 
       test('should resolve a Provider.useFactory with manual deps', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(#fooBar, useValue: 'Hello World'),
-          new Provider(List, useFactory: createListWith, deps: [#fooBar]),
+          Provider(#fooBar, useValue: 'Hello World'),
+          Provider(List, useFactory: createListWith, deps: [#fooBar]),
         ]);
         expect(i.get(List), ['Hello World']);
       });
 
       test('should resolve a Provider.useExisting', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(ExampleService2),
-          new Provider(ExampleService, useExisting: ExampleService2),
+          Provider(ExampleService2),
+          Provider(ExampleService, useExisting: ExampleService2),
         ]);
         expect(i.get(ExampleService), i.get(ExampleService2));
       });
 
       test('should resolve a multi binding', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(#fooBar, useValue: 1, multi: true),
-          new Provider(#fooBar, useValue: 2, multi: true),
+          Provider(#fooBar, useValue: 1, multi: true),
+          Provider(#fooBar, useValue: 2, multi: true),
         ]);
         expect(i.get(#fooBar), [1, 2]);
       });
 
       test('should resolve @Optional', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(List, useFactory: createListWithOptional),
+          Provider(List, useFactory: createListWithOptional),
         ]);
         expect(i.get(List), [null]);
       });
 
       test('should inject things in order of most-recently added', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(#a, useValue: 1),
-          new Provider(#a, useValue: 2),
+          Provider(#a, useValue: 1),
+          Provider(#a, useValue: 2),
         ]);
         expect(i.get(#a), 2);
       });
 
       test('should return itself for "Injector"', () {
         i = ReflectiveInjector.resolveAndCreate([
-          new Provider(#theInjector, useFactory: (i) => [i], deps: [Injector]),
+          Provider(#theInjector, useFactory: (i) => [i], deps: [Injector]),
         ]);
         expect(i.get(#theInjector), [i]);
       });
@@ -259,21 +259,21 @@ void main() {
       });
 
       test('should support resolveAndCreateChild', () {
-        final oldC = new C('oldC');
+        final oldC = C('oldC');
         final parent = ReflectiveInjector.resolveAndCreate([
           A,
           B,
-          new Provider(C, useValue: oldC),
+          Provider(C, useValue: oldC),
         ]);
-        final newC = new C('newC');
+        final newC = C('newC');
         final child1 = parent.resolveAndCreateChild([
           B,
-          new Provider(C, useValue: newC),
+          Provider(C, useValue: newC),
         ]);
         final newB = child1.get(B);
         expect(newB.c, newC, reason: 'Expected a new "C" binding');
         final child2 = child1.resolveAndCreateChild([
-          new Provider(B, useValue: newB),
+          Provider(B, useValue: newB),
         ]);
         final newA = child2.get(A);
         expect(newA.b, isNot(newB), reason: 'Expected an old "B" binding');
@@ -281,7 +281,7 @@ void main() {
       });
 
       test('should reify a MultiProvider<T> in strong-mode runtimes', () {
-        const usPresidents = const OpaqueToken<String>('usPresidents');
+        const usPresidents = OpaqueToken<String>('usPresidents');
         final injector = ReflectiveInjector.resolveAndCreate([
           const Provider<String>(
             usPresidents,
@@ -298,7 +298,7 @@ void main() {
       });
 
       test('should support MultiToken instead of multi: true', () {
-        const usPresidentsMulti = const MultiToken<String>('usPresidents');
+        const usPresidentsMulti = MultiToken<String>('usPresidents');
         final injector = ReflectiveInjector.resolveAndCreate([
           const ValueProvider.forToken(usPresidentsMulti, 'George W.'),
           const ValueProvider.forToken(usPresidentsMulti, 'Abraham L.'),
@@ -360,7 +360,7 @@ void main() {
 
       test('should throw a readable error message on a 2-node failure', () {
         final injector = ReflectiveInjector.resolveAndCreate([
-          new Provider(
+          Provider(
             ExampleService,
             useFactory: (Null willNeverBeCalled) => null,
             deps: const [ExampleService2],
@@ -385,19 +385,19 @@ void main() {
         //
         // ... where ExampleService4 is missing.
         final injector = ReflectiveInjector.resolveAndCreate([
-          new Provider(
+          Provider(
             ExampleService,
             useFactory: (Null willNeverBeCalled) => null,
             deps: const [ExampleService2],
           ),
-          new Provider(
+          Provider(
             ExampleService2,
             useFactory: (Null willNeverBeCalled) => null,
             deps: const [ExampleService3, ExampleService4],
           ),
-          new Provider(
+          Provider(
             ExampleService3,
-            useValue: new ExampleService3(),
+            useValue: ExampleService3(),
           ),
         ]);
         expect(
@@ -423,7 +423,7 @@ void main() {
 
       test('should support a user type that extends OpaqueToken', () {
         final injector = ReflectiveInjector.resolveAndCreate([
-          const Provider(const XsrfToken(), useValue: 'ABC123'),
+          const Provider(XsrfToken(), useValue: 'ABC123'),
           InjectsXsrfToken,
         ]);
         expect(injector.get(const XsrfToken()), 'ABC123');
@@ -434,16 +434,16 @@ void main() {
       test('should support a Module class instead of a List', () {
         final injector = ReflectiveInjector.resolveAndCreate([
           const Module(
-            include: const [
-              const Module(
-                provide: const [
-                  const ValueProvider(ExampleService, const ExampleService()),
+            include: [
+              Module(
+                provide: [
+                  ValueProvider(ExampleService, ExampleService()),
                 ],
               ),
             ],
-            provide: const [
-              const ValueProvider(ExampleService2, const ExampleService2()),
-              const ExistingProvider(ExampleService, ExampleService2),
+            provide: [
+              ValueProvider(ExampleService2, ExampleService2()),
+              ExistingProvider(ExampleService, ExampleService2),
             ],
           ),
         ]);
@@ -608,21 +608,21 @@ class ExampleService4 {}
 
 class MissingService {}
 
-const stringToken = const OpaqueToken('stringToken');
-const numberToken = const OpaqueToken('numberToken');
-const booleanToken = const OpaqueToken('booleanToken');
-const simpleConstToken = const OpaqueToken('simpleConstToken');
-const multiStringToken = const MultiToken<String>('multiStringToken');
+const stringToken = OpaqueToken('stringToken');
+const numberToken = OpaqueToken('numberToken');
+const booleanToken = OpaqueToken('booleanToken');
+const simpleConstToken = OpaqueToken('simpleConstToken');
+const multiStringToken = MultiToken<String>('multiStringToken');
 
 // We are going to expect these are different bindings.
-const typedTokenOfDynamic = const OpaqueToken('typedToken');
-const typedTokenOfString = const OpaqueToken<String>('typedToken');
+const typedTokenOfDynamic = OpaqueToken('typedToken');
+const typedTokenOfString = OpaqueToken<String>('typedToken');
 
-const typedTokenOfListDynamic = const OpaqueToken<List>('typedToken');
-const typedTokenOfListString = const OpaqueToken<List<String>>('typedToken');
+const typedTokenOfListDynamic = OpaqueToken<List>('typedToken');
+const typedTokenOfListString = OpaqueToken<List<String>>('typedToken');
 
-const unnamedTokenOfDynamic = const OpaqueToken();
-const unnamedTokenOfString = const OpaqueToken<String>();
+const unnamedTokenOfDynamic = OpaqueToken();
+const unnamedTokenOfString = OpaqueToken<String>();
 
 Null willNeverBeCalled1(Object _) => null;
 Null willNeverBeCalled2(Object _, Object __) => null;
@@ -631,74 +631,74 @@ class CustomMultiString extends MultiToken<String> {
   const CustomMultiString();
 }
 
-@GenerateInjector(const [
-  const Provider(ExampleService, useClass: ExampleService2),
-  const Provider(ExampleService2),
-  const Provider(stringToken, useValue: 'Hello World'),
-  const Provider(numberToken, useValue: 1234),
-  const Provider(booleanToken, useValue: true),
-  const Provider(simpleConstToken, useValue: const ExampleService()),
+@GenerateInjector([
+  Provider(ExampleService, useClass: ExampleService2),
+  Provider(ExampleService2),
+  Provider(stringToken, useValue: 'Hello World'),
+  Provider(numberToken, useValue: 1234),
+  Provider(booleanToken, useValue: true),
+  Provider(simpleConstToken, useValue: ExampleService()),
 
   // Example of a runtime failure; MissingService
-  const Provider(
+  Provider(
     ExampleService3,
     useFactory: willNeverBeCalled1,
-    deps: const [MissingService],
+    deps: [MissingService],
   ),
 
   // Example of a runtime failure; ExampleService3 -> MissingService.
-  const Provider(
+  Provider(
     ExampleService4,
     useFactory: willNeverBeCalled2,
     // Will find ExampleService2, ExampleService3 will fail (see above).
-    deps: const [ExampleService2, ExampleService3],
+    deps: [ExampleService2, ExampleService3],
   ),
 
-  const ValueProvider.forToken(multiStringToken, 'A'),
-  const ValueProvider.forToken(multiStringToken, 'B'),
-  const ValueProvider.forToken(const CustomMultiString(), 'C'),
-  const ValueProvider.forToken(const CustomMultiString(), 'D'),
+  ValueProvider.forToken(multiStringToken, 'A'),
+  ValueProvider.forToken(multiStringToken, 'B'),
+  ValueProvider.forToken(CustomMultiString(), 'C'),
+  ValueProvider.forToken(CustomMultiString(), 'D'),
 
   // We are going to expect these are different bindings.
-  const Provider(typedTokenOfDynamic, useValue: 1),
-  const Provider(typedTokenOfString, useValue: 2),
+  Provider(typedTokenOfDynamic, useValue: 1),
+  Provider(typedTokenOfString, useValue: 2),
 
   // We are going to expect these are also different bindings.
-  const Provider(typedTokenOfListDynamic, useValue: 3),
-  const Provider(typedTokenOfListString, useValue: 4),
+  Provider(typedTokenOfListDynamic, useValue: 3),
+  Provider(typedTokenOfListString, useValue: 4),
 
   // We are going to expect these are also different bindings.
-  const Provider(unnamedTokenOfDynamic, useValue: 5),
-  const Provider(unnamedTokenOfString, useValue: 6),
+  Provider(unnamedTokenOfDynamic, useValue: 5),
+  Provider(unnamedTokenOfString, useValue: 6),
 
   // Tests that @Inject(baseUrl) === @baseUrl
-  const Provider(baseUrl, useValue: 'https://site.com/api/'),
+  Provider(baseUrl, useValue: 'https://site.com/api/'),
   InjectsBaseUrl,
 
   // Tests that class T extends OpaqueToken
-  const Provider(const XsrfToken(), useValue: 'ABC123'),
+  Provider(XsrfToken(), useValue: 'ABC123'),
   InjectsXsrfToken,
 ])
 final InjectorFactory exampleGenerated = ng.exampleGenerated$Injector;
 
-@GenerateInjector.fromModules(const [
-  const Module(
-    include: const [
-      const Module(
-        provide: const [
-          const ValueProvider(ExampleService, const ExampleService()),
+@GenerateInjector.fromModules([
+  Module(
+    include: [
+      Module(
+        provide: [
+          ValueProvider(ExampleService, ExampleService()),
         ],
       ),
     ],
-    provide: const [
-      const ValueProvider(ExampleService2, const ExampleService2()),
-      const ExistingProvider(ExampleService, ExampleService2),
+    provide: [
+      ValueProvider(ExampleService2, ExampleService2()),
+      ExistingProvider(ExampleService, ExampleService2),
     ],
   ),
 ])
 final InjectorFactory exampleFromModule = ng.exampleFromModule$Injector;
 
-ExampleService createExampleService() => new ExampleService();
+ExampleService createExampleService() => ExampleService();
 List createListWith(String item) => [item];
 
 @Injectable()
@@ -726,7 +726,7 @@ class C {
   String toString() => 'C: $debugMessage';
 }
 
-const baseUrl = const OpaqueToken<String>('baseUrl');
+const baseUrl = OpaqueToken<String>('baseUrl');
 
 @Injectable()
 class InjectsBaseUrl {

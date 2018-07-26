@@ -12,13 +12,13 @@ import '../resolve_util.dart';
 import 'template_humanizer_util.dart';
 
 void main() {
-  final expressionLexer = new Lexer();
-  final expressionParser = new Parser(expressionLexer);
-  final schemaRegistry = new DomElementSchemaRegistry();
-  final templateParser = new AstTemplateParser(
+  final expressionLexer = Lexer();
+  final expressionParser = Parser(expressionLexer);
+  final schemaRegistry = DomElementSchemaRegistry();
+  final templateParser = AstTemplateParser(
     schemaRegistry,
     expressionParser,
-    new CompilerFlags(),
+    CompilerFlags(),
   );
 
   List getHumanizedTemplate(

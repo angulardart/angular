@@ -7,8 +7,8 @@ void main() {
   // This is relied on by internal clients until we introduce a sharding API.
   test('rootLegacyInjector should allow overriding ExceptionHandler', () {
     final appInjector = rootLegacyInjector(([parent]) {
-      return new Injector.map({
-        ExceptionHandler: new _CustomExceptionHandler(),
+      return Injector.map({
+        ExceptionHandler: _CustomExceptionHandler(),
       }, parent);
     });
 
@@ -18,7 +18,7 @@ void main() {
     // ExceptionHandler (BrowserExceptionHandler), meaning the user-defined
     // handler was ignored.
     (appInjector.get(NgZone) as NgZone).runGuarded(() {
-      throw new _IntentionalError();
+      throw _IntentionalError();
     });
     expect(
       _CustomExceptionHandler.lastCaught,
@@ -28,13 +28,13 @@ void main() {
 
   test('rootLegacyInjector should provide a working SlowComponentLoader', () {
     final appInjector = rootLegacyInjector(([parent]) {
-      return new Injector.empty(parent);
+      return Injector.empty(parent);
     });
 
     // Easiest way to tell is make sure its the same const instance.
     expect(
       appInjector.get(SlowComponentLoader),
-      const SlowComponentLoader(const ComponentLoader()),
+      const SlowComponentLoader(ComponentLoader()),
     );
   });
 }

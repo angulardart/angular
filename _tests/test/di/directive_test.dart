@@ -13,7 +13,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should use the proper provider bindings in a hierarchy', () async {
-    final fixture = await new NgTestBed<TestParent>().create();
+    final fixture = await NgTestBed<TestParent>().create();
     B serviceB;
     A serviceA;
     await fixture.update((comp) {
@@ -33,7 +33,7 @@ void main() {
   });
 
   test('should consider Provider(T) as Provider(T, useClass: T)', () async {
-    final fixture = await new NgTestBed<SupportsImplicitClass>().create();
+    final fixture = await NgTestBed<SupportsImplicitClass>().create();
     final injector = fixture.assertOnlyInstance.injector;
     expect(
       injector.get(ExampleService),
@@ -42,7 +42,7 @@ void main() {
   });
 
   test('should use user-default value on ElementInjector.get', () async {
-    final fixture = await new NgTestBed<UsingElementInjector>().create();
+    final fixture = await NgTestBed<UsingElementInjector>().create();
     await fixture.update((comp) {
       final foo = comp.injector.get(#foo, 'someValue');
       expect(foo, 'someValue');
@@ -50,7 +50,7 @@ void main() {
   });
 
   test('should reify a typed OpaqueToken<T>', () async {
-    final fixture = await new NgTestBed<ReifiedMultiGenerics>().create();
+    final fixture = await NgTestBed<ReifiedMultiGenerics>().create();
     expect(
       fixture.assertOnlyInstance.usPresidents,
       const isInstanceOf<List<String>>(),
@@ -59,7 +59,7 @@ void main() {
   });
 
   test('should reify a typed OpaqueToken<T> for a directive', () async {
-    final fixture = await new NgTestBed<UsesTypedTokensComponent>().create();
+    final fixture = await NgTestBed<UsesTypedTokensComponent>().create();
     expect(
       fixture.assertOnlyInstance.directive.arbitrary,
       const isInstanceOf<List<Arbitrary>>(),
@@ -67,7 +67,7 @@ void main() {
   });
 
   test('should support typed tokens that are inferred', () async {
-    final fixture = await new NgTestBed<SupportsInferredProviders>().create();
+    final fixture = await NgTestBed<SupportsInferredProviders>().create();
     expect(
       fixture.assertOnlyInstance.arbitrary,
       const isInstanceOf<List<Arbitrary>>(),
@@ -75,7 +75,7 @@ void main() {
   });
 
   test('should support MultiToken instead of multi: true', () async {
-    final fixture = await new NgTestBed<SupportsMultiToken>().create();
+    final fixture = await NgTestBed<SupportsMultiToken>().create();
     expect(
       fixture.assertOnlyInstance.values,
       const isInstanceOf<List<String>>(),
@@ -83,7 +83,7 @@ void main() {
   });
 
   test('should support custom MultiToken', () async {
-    final fixture = await new NgTestBed<SupportsCustomMultiToken>().create();
+    final fixture = await NgTestBed<SupportsCustomMultiToken>().create();
     expect(
       fixture.assertOnlyInstance.values,
       const isInstanceOf<List<String>>(),
@@ -91,13 +91,13 @@ void main() {
   });
 
   test('should not consider Opaque/MultiToken the same token', () async {
-    final fixture = await new NgTestBed<NoClashTokens>().create();
+    final fixture = await NgTestBed<NoClashTokens>().create();
     expect(fixture.assertOnlyInstance.fooTokenFromOpaque, hasLength(1));
     expect(fixture.assertOnlyInstance.fooTokenFromMulti, hasLength(1));
   });
 
   test('should not consider tokens with different types the same', () async {
-    final fixture = await new NgTestBed<SupportsTypedToken>().create();
+    final fixture = await NgTestBed<SupportsTypedToken>().create();
     final value1 = fixture.assertOnlyInstance.injector.get(barTypedToken1);
     expect(value1, 1);
     final value2 = fixture.assertOnlyInstance.injector.get(barTypedToken2);
@@ -107,7 +107,7 @@ void main() {
   group('should support optional values', () {
     NgTestBed<UsingInjectAndOptional> testBed;
 
-    setUp(() => testBed = new NgTestBed<UsingInjectAndOptional>());
+    setUp(() => testBed = NgTestBed<UsingInjectAndOptional>());
 
     test('when provided', () async {
       testBed = testBed.addProviders([
@@ -130,30 +130,30 @@ void main() {
   });
 
   test('should treat tokens with different names as different', () async {
-    final fixture = await new NgTestBed<ProperTokenIdentity>().create();
+    final fixture = await NgTestBed<ProperTokenIdentity>().create();
     final injector = fixture.assertOnlyInstance.injector;
     expect(injector.get(aDynamicTokenNamedA), 'A');
     expect(injector.get(aDynamicTokenNamedB), 'B');
   });
 
   test('should treat unnamed tokens as acceptable', () async {
-    final fixture = await new NgTestBed<SupportsUnnamedToken>().create();
+    final fixture = await NgTestBed<SupportsUnnamedToken>().create();
     final injector = fixture.assertOnlyInstance.injector;
     expect(injector.get(unnamedTokenOfDynamic), 1);
     expect(injector.get(unnamedTokenOfString), 2);
   });
 
   test('should support nested views with typed tokens', () async {
-    var testBed = new NgTestBed<SupportsTypedTokenInNestedViews>();
+    var testBed = NgTestBed<SupportsTypedTokenInNestedViews>();
     testBed = testBed.addProviders([
-      new Provider(listOfStringToken, useValue: ['A', 'B', 'C']),
+      Provider(listOfStringToken, useValue: ['A', 'B', 'C']),
     ]);
     final fixture = await testBed.create();
     expect(fixture.assertOnlyInstance.childView.example, ['A', 'B', 'C']);
   });
 
   test('should throw a readable error message on a 1-node failure', () {
-    final testBed = new NgTestBed<WillFailInjecting1Node>();
+    final testBed = NgTestBed<WillFailInjecting1Node>();
     expect(
       () => testBed.create(),
       throwsA(
@@ -173,7 +173,7 @@ void main() {
     // generated code).
     //
     // If we end up doing this, we should modify the test accordingly.
-    final testBed = new NgTestBed<WillFailInjecting2Node>();
+    final testBed = NgTestBed<WillFailInjecting2Node>();
     expect(
       () => testBed.create(),
       throwsA(
@@ -188,8 +188,8 @@ void main() {
   test('should throw a readable erro message on a 2-node/parent failure', () {
     // Passes, unlike the missing error case, because the parent injector, in
     // this case a ReflectiveInjector, *does* trace the individual calls.
-    final testBed = new NgTestBed<WillFailInjecting2NodeParent>().addProviders([
-      new Provider(
+    final testBed = NgTestBed<WillFailInjecting2NodeParent>().addProviders([
+      Provider(
         InjectsMissingService,
         useFactory: (Object willNotBeCalled) => null,
         deps: const [
@@ -210,19 +210,19 @@ void main() {
   });
 
   test('should treat an OpaqueToken identical to @Inject', () async {
-    final fixture = await new NgTestBed<InjectsBaseUrl>().create();
+    final fixture = await NgTestBed<InjectsBaseUrl>().create();
     final InjectsBaseUrl service = fixture.assertOnlyInstance;
     expect(service.url, 'https://site.com/api/');
   });
 
   test('should support a custom OpaqueToken', () async {
-    final fixture = await new NgTestBed<InjectsXsrfToken>().create();
+    final fixture = await NgTestBed<InjectsXsrfToken>().create();
     final InjectsXsrfToken service = fixture.assertOnlyInstance;
     expect(service.token, 'ABC123');
   });
 
   test('should support modules in providers: const [ ... ]', () async {
-    final fixture = await new NgTestBed<SupportsModules>().create();
+    final fixture = await NgTestBed<SupportsModules>().create();
     final injector = fixture.assertOnlyInstance.injector;
     expect(injector.get(ExampleService), const isInstanceOf<ExampleService>());
     expect(injector.get(C), const C('Hello World'));
@@ -232,7 +232,7 @@ void main() {
 @Component(
   selector: 'test-parent',
   template: '<parent></parent>',
-  directives: const [
+  directives: [
     CompParent,
   ],
 )
@@ -244,13 +244,13 @@ class TestParent {
 @Component(
   selector: 'parent',
   template: '<child-1></child-1>',
-  directives: const [
+  directives: [
     CompChild1,
   ],
-  providers: const [
+  providers: [
     A,
     B,
-    const Provider(C, useValue: const C('oldC')),
+    Provider(C, useValue: C('oldC')),
   ],
 )
 class CompParent {
@@ -261,12 +261,12 @@ class CompParent {
 @Component(
   selector: 'child-1',
   template: '<child-2></child-2>',
-  directives: const [
+  directives: [
     CompChild2,
   ],
-  providers: const [
+  providers: [
     B,
-    const Provider(C, useValue: const C('newC')),
+    Provider(C, useValue: C('newC')),
   ],
 )
 class CompChild1 {
@@ -323,8 +323,8 @@ class UsingElementInjector {
 @Component(
   selector: 'using-inject-and-optional',
   template: '',
-  providers: const [
-    const Provider(ExampleServiceOptionals, useClass: ExampleServiceOptionals),
+  providers: [
+    Provider(ExampleServiceOptionals, useClass: ExampleServiceOptionals),
   ],
 )
 class UsingInjectAndOptional {
@@ -333,7 +333,7 @@ class UsingInjectAndOptional {
   UsingInjectAndOptional(this.service);
 }
 
-const urlToken = const OpaqueToken('urlToken');
+const urlToken = OpaqueToken('urlToken');
 
 class ExampleServiceOptionals {
   final String urlFromToken;
@@ -343,17 +343,17 @@ class ExampleServiceOptionals {
   );
 }
 
-const usPresidentsToken = const OpaqueToken<String>('usPresidents');
+const usPresidentsToken = OpaqueToken<String>('usPresidents');
 
 @Component(
   selector: 'reified-multi-generics',
-  providers: const [
-    const Provider<String>(
+  providers: [
+    Provider<String>(
       usPresidentsToken,
       useValue: 'George',
       multi: true,
     ),
-    const Provider<String>(
+    Provider<String>(
       usPresidentsToken,
       useValue: 'Abraham',
       multi: true,
@@ -373,20 +373,20 @@ class Arbitrary {
   const Arbitrary(this.value);
 }
 
-const arbitraryToken = const OpaqueToken<Arbitrary>('arbitrary');
+const arbitraryToken = OpaqueToken<Arbitrary>('arbitrary');
 
 @Component(
   selector: 'uses-typed-tokens',
-  directives: const [UsesTypedTokensDirective],
-  providers: const [
-    const Provider<Arbitrary>(
+  directives: [UsesTypedTokensDirective],
+  providers: [
+    Provider<Arbitrary>(
       arbitraryToken,
-      useValue: const Arbitrary(1),
+      useValue: Arbitrary(1),
       multi: true,
     ),
-    const Provider<Arbitrary>(
+    Provider<Arbitrary>(
       arbitraryToken,
-      useValue: const Arbitrary(2),
+      useValue: Arbitrary(2),
       multi: true,
     ),
   ],
@@ -408,10 +408,10 @@ class UsesTypedTokensDirective {
 
 @Component(
   selector: 'supports-inferred-providers',
-  providers: const [
-    const ValueProvider.forToken(
+  providers: [
+    ValueProvider.forToken(
       arbitraryToken,
-      const Arbitrary(1),
+      Arbitrary(1),
       multi: true,
     ),
   ],
@@ -423,13 +423,13 @@ class SupportsInferredProviders {
   SupportsInferredProviders(@Inject(arbitraryToken) this.arbitrary);
 }
 
-const usPresidentsMulti = const MultiToken<String>('usPresidents');
+const usPresidentsMulti = MultiToken<String>('usPresidents');
 
 @Component(
   selector: 'supports-multi-token',
-  providers: const [
-    const ValueProvider.forToken(usPresidentsMulti, 'George Washington'),
-    const ValueProvider.forToken(usPresidentsMulti, 'Abraham Lincoln'),
+  providers: [
+    ValueProvider.forToken(usPresidentsMulti, 'George Washington'),
+    ValueProvider.forToken(usPresidentsMulti, 'Abraham Lincoln'),
   ],
   template: '',
 )
@@ -445,9 +445,9 @@ class CustomMultiToken extends MultiToken<String> {
 
 @Component(
   selector: 'supports-multi-token',
-  providers: const [
-    const ValueProvider.forToken(const CustomMultiToken(), 'A'),
-    const ValueProvider.forToken(const CustomMultiToken(), 'B'),
+  providers: [
+    ValueProvider.forToken(CustomMultiToken(), 'A'),
+    ValueProvider.forToken(CustomMultiToken(), 'B'),
   ],
   template: '',
 )
@@ -457,14 +457,14 @@ class SupportsCustomMultiToken {
   SupportsCustomMultiToken(@Inject(const CustomMultiToken()) this.values);
 }
 
-const fooOpaqueToken = const OpaqueToken<String>('fooToken');
-const fooMultiToken = const MultiToken<String>('fooToken');
+const fooOpaqueToken = OpaqueToken<String>('fooToken');
+const fooMultiToken = MultiToken<String>('fooToken');
 
 @Component(
   selector: 'no-clash-tokens',
-  providers: const [
-    const ValueProvider.forToken(fooOpaqueToken, 'Hello', multi: true),
-    const ValueProvider.forToken(fooMultiToken, 'World'),
+  providers: [
+    ValueProvider.forToken(fooOpaqueToken, 'Hello', multi: true),
+    ValueProvider.forToken(fooMultiToken, 'World'),
   ],
   template: '',
 )
@@ -478,14 +478,14 @@ class NoClashTokens {
   );
 }
 
-const barTypedToken1 = const OpaqueToken<dynamic>('barTypedToken');
-const barTypedToken2 = const OpaqueToken<bool>('barTypedToken');
+const barTypedToken1 = OpaqueToken<dynamic>('barTypedToken');
+const barTypedToken2 = OpaqueToken<bool>('barTypedToken');
 
 @Component(
   selector: 'supports-typed-token',
-  providers: const [
-    const ValueProvider.forToken(barTypedToken1, 1),
-    const ValueProvider.forToken(barTypedToken2, true),
+  providers: [
+    ValueProvider.forToken(barTypedToken1, 1),
+    ValueProvider.forToken(barTypedToken2, true),
   ],
   template: '',
 )
@@ -495,14 +495,14 @@ class SupportsTypedToken {
   SupportsTypedToken(this.injector);
 }
 
-const aDynamicTokenNamedA = const OpaqueToken('A');
-const aDynamicTokenNamedB = const OpaqueToken('B');
+const aDynamicTokenNamedA = OpaqueToken('A');
+const aDynamicTokenNamedB = OpaqueToken('B');
 
 @Component(
   selector: 'proper-token-identity',
-  providers: const [
-    const Provider(aDynamicTokenNamedA, useValue: 'A'),
-    const Provider(aDynamicTokenNamedB, useValue: 'B'),
+  providers: [
+    Provider(aDynamicTokenNamedA, useValue: 'A'),
+    Provider(aDynamicTokenNamedB, useValue: 'B'),
   ],
   template: '',
 )
@@ -517,8 +517,8 @@ class ExampleService {}
 
 @Component(
   selector: 'supports-implicit-class',
-  providers: const [
-    const Provider(ExampleService),
+  providers: [
+    Provider(ExampleService),
   ],
   template: '',
 )
@@ -528,14 +528,14 @@ class SupportsImplicitClass {
   SupportsImplicitClass(this.injector);
 }
 
-const unnamedTokenOfDynamic = const OpaqueToken();
-const unnamedTokenOfString = const OpaqueToken<String>();
+const unnamedTokenOfDynamic = OpaqueToken();
+const unnamedTokenOfString = OpaqueToken<String>();
 
 @Component(
   selector: 'supports-unnamed-token',
-  providers: const [
-    const Provider(unnamedTokenOfDynamic, useValue: 1),
-    const Provider(unnamedTokenOfString, useValue: 2),
+  providers: [
+    Provider(unnamedTokenOfDynamic, useValue: 1),
+    Provider(unnamedTokenOfString, useValue: 2),
   ],
   template: '',
 )
@@ -545,7 +545,7 @@ class SupportsUnnamedToken {
   SupportsUnnamedToken(this.injector);
 }
 
-const listOfStringToken = const OpaqueToken<List<String>>('listOfString');
+const listOfStringToken = OpaqueToken<List<String>>('listOfString');
 
 @Component(
   selector: 'supports-typed-token-in-nested-views',
@@ -556,7 +556,7 @@ const listOfStringToken = const OpaqueToken<List<String>>('listOfString');
       </div>
     </div>
   ''',
-  directives: const [
+  directives: [
     ChildThatInjectsTypedToken,
     NgIf,
   ],
@@ -594,8 +594,8 @@ class InjectsMissingService {
 
 @Component(
   selector: 'will-fail-injecting-2-node',
-  providers: const [
-    const Provider(
+  providers: [
+    Provider(
       InjectsMissingService,
     ),
   ],
@@ -613,13 +613,13 @@ class WillFailInjecting2NodeParent {
   WillFailInjecting2NodeParent(InjectsMissingService _);
 }
 
-const baseUrl = const OpaqueToken<String>('baseUrl');
+const baseUrl = OpaqueToken<String>('baseUrl');
 
 @Component(
   selector: 'injects-base-url',
   template: '',
-  providers: const [
-    const Provider(baseUrl, useValue: 'https://site.com/api/'),
+  providers: [
+    Provider(baseUrl, useValue: 'https://site.com/api/'),
   ],
 )
 class InjectsBaseUrl {
@@ -637,8 +637,8 @@ class XsrfToken extends OpaqueToken<String> {
 @Component(
   selector: 'injects-xsrf-token',
   template: '',
-  providers: const [
-    const Provider(const XsrfToken(), useValue: 'ABC123'),
+  providers: [
+    Provider(XsrfToken(), useValue: 'ABC123'),
   ],
 )
 class InjectsXsrfToken {
@@ -650,17 +650,17 @@ class InjectsXsrfToken {
 @Component(
   selector: 'supports-modules',
   template: '',
-  providers: const [
-    const Module(
-      include: const [
-        const Module(
-          provide: const [
-            const ValueProvider(C, const C('Hello World')),
+  providers: [
+    Module(
+      include: [
+        Module(
+          provide: [
+            ValueProvider(C, C('Hello World')),
           ],
         ),
       ],
-      provide: const [
-        const ClassProvider(ExampleService),
+      provide: [
+        ClassProvider(ExampleService),
       ],
     ),
   ],

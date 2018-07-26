@@ -33,7 +33,7 @@ void main() {
     final testFixture = await testBed.create();
     expect(testFixture.text, isEmpty);
     await testFixture.update((_) {
-      testFixture.rootElement.firstChild.dispatchEvent(new CustomEvent('set'));
+      testFixture.rootElement.firstChild.dispatchEvent(CustomEvent('set'));
     });
     expect(testFixture.text, TestStaticSetter.valueToSet);
   });

@@ -8,7 +8,7 @@ import 'package:build_test/build_test.dart';
 import 'package:source_gen/source_gen.dart';
 
 Future<LibraryElement> resolve(String source) async {
-  final testAssetId = new AssetId('_tests', 'lib/resolve.dart');
+  final testAssetId = AssetId('_tests', 'lib/resolve.dart');
   return await resolveSource(
       source, (resolver) => resolver.libraryFor(testAssetId),
       inputId: testAssetId);
@@ -19,6 +19,6 @@ Future<NormalizedComponentWithViewDirectives> resolveAndFindComponent(
 ) async {
   final library = await resolve("import 'package:angular/angular.dart';"
       "$source");
-  final artifacts = findComponentsAndDirectives(new LibraryReader(library));
+  final artifacts = findComponentsAndDirectives(LibraryReader(library));
   return artifacts.components.first;
 }
