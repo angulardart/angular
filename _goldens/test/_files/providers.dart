@@ -3,52 +3,50 @@ import 'package:angular/angular.dart';
 @Component(
   selector: 'providers',
   template: 'Hello',
-  providers: const [
+  providers: [
     MyTypeAnnotation,
     MyInjectableTypeAnnotation,
-    const Provider(
+    Provider(
       MyUseFactory,
       useFactory: ProvidersComponent.createService,
     ),
-    const Provider(
+    Provider(
       MyUseClass,
       useClass: MyUseClass,
     ),
-    const Provider(
+    Provider(
       MyUseExisting,
       useExisting: MyUseClass,
     ),
-    const Provider(
+    Provider(
       MyUseExistingNested,
       useExisting: MyUseExisting,
     ),
-    const Provider(
+    Provider(
       MyUseValue,
-      useValue: const MyUseValue('Andrew'),
+      useValue: MyUseValue('Andrew'),
     ),
-    const Provider(
+    Provider(
       useValueString,
       useValue: 'foo',
     ),
-    const Provider(useValueList, useValue: const [
-      const MyUseValue('Andrew'),
-      const MyUseValue('Matan'),
-      const MyUseValue.named(optional: true)
+    Provider(useValueList, useValue: [
+      MyUseValue('Andrew'),
+      MyUseValue('Matan'),
+      MyUseValue.named(optional: true)
     ]),
-    const Provider(useValueMap, useValue: const {
-      'Andrew': const MyUseValue('Andrew'),
-      'Matan': const MyUseValue('Matan')
+    Provider(useValueMap, useValue: {
+      'Andrew': MyUseValue('Andrew'),
+      'Matan': MyUseValue('Matan')
     }),
-    const Provider(const OpaqueToken('useEnums'), useValue: MyEnum.first),
-    const Provider(const XsrfToken(), useValue: 'ABC123'),
+    Provider(OpaqueToken('useEnums'), useValue: MyEnum.first),
+    Provider(XsrfToken(), useValue: 'ABC123'),
   ],
-  viewProviders: const [
-    const Provider(MyUseValue, useValue: const MyUseValue('Matan'))
-  ],
+  viewProviders: [Provider(MyUseValue, useValue: MyUseValue('Matan'))],
 )
 class ProvidersComponent {
   static MyUseFactory createService(NgZone ngZone, {bool optional}) =>
-      new MyUseFactory();
+      MyUseFactory();
 }
 
 class MyTypeAnnotation {}
@@ -72,9 +70,9 @@ class MyUseValue {
 
 class MyMulti {}
 
-const useValueString = const OpaqueToken('useValueString');
-const useValueList = const OpaqueToken('useValueList');
-const useValueMap = const OpaqueToken('useValueMap');
+const useValueString = OpaqueToken('useValueString');
+const useValueList = OpaqueToken('useValueList');
+const useValueMap = OpaqueToken('useValueMap');
 
 enum MyEnum { first, second }
 

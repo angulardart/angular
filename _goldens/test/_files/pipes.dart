@@ -34,7 +34,7 @@ class TypesPipe implements PipeTransform {
 
 @Component(
   selector: 'comp',
-  pipes: const [
+  pipes: [
     PurePipe,
     DirtyPipe,
     LifecyclePipe,

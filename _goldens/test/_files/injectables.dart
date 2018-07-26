@@ -5,20 +5,20 @@ import 'package:angular/angular.dart';
 @Component(
   selector: 'test-injectables',
   template: '<div>Inject!</div>',
-  providers: const [
-    const Provider(testToken, useFactory: injectableFactory),
-    const Provider(
+  providers: [
+    Provider(testToken, useFactory: injectableFactory),
+    Provider(
       SomeDep,
       useFactory: createLinkedHashMap,
-      deps: const [testToken],
+      deps: [testToken],
     ),
-    const Provider(
+    Provider(
       BaseService,
       useFactory: createLinkedHashMap,
-      deps: const [
-        const [SomeDep, const Self()],
-        const [SomeDep, const SkipSelf()],
-        const [SomeDep, const Optional()],
+      deps: [
+        [SomeDep, Self()],
+        [SomeDep, SkipSelf()],
+        [SomeDep, Optional()],
       ],
     ),
   ],
@@ -42,7 +42,7 @@ class InjectableComponent {
   InjectableService get injectableService => _injectableService;
 }
 
-const Optional optional = const Optional();
+const Optional optional = Optional();
 
 @Injectable()
 class SomeDep {}
@@ -52,7 +52,7 @@ class BaseService {
   BaseService._();
 
   factory BaseService() {
-    return new BaseService._();
+    return BaseService._();
   }
 }
 
@@ -60,7 +60,7 @@ class BaseService {
 @Deprecated('Testing deprecation')
 class InjectableService {}
 
-const testToken = const OpaqueToken('test');
+const testToken = OpaqueToken('test');
 
 @Injectable()
 bool injectableFactory(html.Window value) => value != null;

@@ -29,19 +29,19 @@ void main() {
 ///
 /// This action is performed synchronously (blocking I/O).
 void _copyPathSync(String from, String to) {
-  new Directory(to).createSync(recursive: true);
-  for (final file in new Directory(from).listSync(recursive: true)) {
+  Directory(to).createSync(recursive: true);
+  for (final file in Directory(from).listSync(recursive: true)) {
     var copyTo = p.join(to, p.relative(file.path, from: from));
     if (file is Directory) {
-      new Directory(copyTo).createSync(recursive: true);
+      Directory(copyTo).createSync(recursive: true);
     } else if (file is File && p.extension(file.path) == '.check') {
       copyTo = copyTo.replaceFirst('.check', '.golden');
       stdout.writeln('Copying $copyTo...');
-      new File(copyTo).writeAsStringSync(
-        new File(file.path).readAsStringSync(),
+      File(copyTo).writeAsStringSync(
+        File(file.path).readAsStringSync(),
       );
     } else if (file is Link) {
-      new Link(copyTo).createSync(file.targetSync(), recursive: true);
+      Link(copyTo).createSync(file.targetSync(), recursive: true);
     }
   }
 }

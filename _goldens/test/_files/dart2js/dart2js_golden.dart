@@ -22,7 +22,7 @@ void main() {
 
 @Component(
   selector: 'root-component',
-  directives: const [
+  directives: [
     UsesDefaultChangeDetectionAndInput,
     InlinedNgIf,
     EmbeddedNgIf,
@@ -63,7 +63,7 @@ class DefaultChangeDetectionAndInput {
 
 @Component(
   selector: 'inlined-ng-if',
-  directives: const [
+  directives: [
     NgIf,
   ],
   template: r'''
@@ -76,7 +76,7 @@ class InlinedNgIf {
 
 @Component(
   selector: 'embedded-ng-if',
-  directives: const [
+  directives: [
     NgIf,
     NullComponent,
   ],
@@ -94,8 +94,8 @@ class EmbeddedNgIf {
 )
 class NullComponent {}
 
-const injectsUsPresidents = const MultiToken<String>('usPresidents');
-const injectsWhiteHouse = const MultiToken<String>('whiteHouse');
+const injectsUsPresidents = MultiToken<String>('usPresidents');
+const injectsWhiteHouse = MultiToken<String>('whiteHouse');
 
 class InjectableService {
   void printWashingtonDc(String whiteHouse, List<String> usPresidents) {

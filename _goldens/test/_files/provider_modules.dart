@@ -3,29 +3,29 @@ import 'package:angular/angular.dart';
 @Injectable()
 class FooService {}
 
-const fooProviders = const [
+const fooProviders = [
   FooService,
 ];
 
-const fooToken = const OpaqueToken('fooToken');
-const barToken = const OpaqueToken('barToken');
-const bazToken = const OpaqueToken('bazToken');
+const fooToken = OpaqueToken('fooToken');
+const barToken = OpaqueToken('barToken');
+const bazToken = OpaqueToken('bazToken');
 
-const List<String> someValues = const ['a', 'b', 'c'];
+const List<String> someValues = ['a', 'b', 'c'];
 
 @Injectable()
 List<String> getSomeValues() => someValues;
 
-const barProviders = const [
+const barProviders = [
   fooProviders,
-  const Provider(fooToken, useValue: const Duration(seconds: 500)),
-  const Provider(barToken, useValue: someValues),
-  const Provider(bazToken, useFactory: getSomeValues),
+  Provider(fooToken, useValue: Duration(seconds: 500)),
+  Provider(barToken, useValue: someValues),
+  Provider(bazToken, useFactory: getSomeValues),
 ];
 
 @Component(
   selector: 'provider-modules',
-  providers: const [barProviders],
+  providers: [barProviders],
   template: '',
 )
 class ProviderModulesComponent {}
