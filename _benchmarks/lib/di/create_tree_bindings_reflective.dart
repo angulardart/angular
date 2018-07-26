@@ -8,7 +8,7 @@ import 'src/tree_bindings.dart';
 /// Set [ready] to true to create the tree.
 @Component(
   selector: 'create-20-bindings-benchmark',
-  directives: const [
+  directives: [
     NgIf,
   ],
   template: r'',
