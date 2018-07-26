@@ -49,8 +49,8 @@ import 'shared.dart' show setUpControl;
 /// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngModel
 @Directive(
   selector: '[ngModel]:not([ngControl]):not([ngFormControl])',
-  providers: const [
-    const ExistingProvider(NgControl, NgModel),
+  providers: [
+    ExistingProvider(NgControl, NgModel),
   ],
   exportAs: 'ngForm',
   visibility: Visibility.all,
@@ -102,8 +102,8 @@ class NgModel extends NgControl
   // NgModel is constructed for majority of form components.
   @dart2js.noInline
   void _init(List<ControlValueAccessor> valueAccessors) {
-    _control = new Control();
-    _update = new StreamController.broadcast(sync: true);
+    _control = Control();
+    _update = StreamController.broadcast(sync: true);
     // ! Please don't remove, the multiple return paths prevent inlining.
   }
 

@@ -6,7 +6,7 @@ import 'package:angular/src/facade/lang.dart' show isPrimitive;
 import 'control_value_accessor.dart'
     show ChangeHandler, ControlValueAccessor, ngValueAccessor, TouchHandler;
 
-const SELECT_VALUE_ACCESSOR = const ExistingProvider.forToken(
+const SELECT_VALUE_ACCESSOR = ExistingProvider.forToken(
   ngValueAccessor,
   SelectControlValueAccessor,
 );
@@ -33,7 +33,7 @@ String _extractId(String valueString) => valueString.split(':')[0];
 /// https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/4660045
 @Directive(
   selector: 'select[ngControl],select[ngFormControl],select[ngModel]',
-  providers: const [SELECT_VALUE_ACCESSOR],
+  providers: [SELECT_VALUE_ACCESSOR],
   // SelectControlValueAccessor must be visible to NgSelectOption.
   visibility: Visibility.all,
 )
@@ -42,7 +42,7 @@ class SelectControlValueAccessor extends Object
     implements ControlValueAccessor {
   final SelectElement _element;
   dynamic value;
-  final Map<String, dynamic> _optionMap = new Map<String, dynamic>();
+  final Map<String, dynamic> _optionMap = Map<String, dynamic>();
   num _idCounter = 0;
 
   SelectControlValueAccessor(HtmlElement element)

@@ -15,8 +15,7 @@ void main() {
   ng.initReflector();
 
   group('NgFormModel', () {
-    final defaultAccessor =
-        new DefaultValueAccessor(document.createElement('div'));
+    final defaultAccessor = DefaultValueAccessor(document.createElement('div'));
     NgTestFixture<NgFormModelTest> fixture;
 
     tearDown(() => disposeAnyRunningTest());
@@ -44,7 +43,7 @@ void main() {
     group('addControl', () {
       test('should throw when no control found', () async {
         await fixture.update((cmp) {
-          var dir = new NgControlName(cmp.form, null, [defaultAccessor]);
+          var dir = NgControlName(cmp.form, null, [defaultAccessor]);
           dir.name = 'invalidName';
           expect(() => cmp.form.addControl(dir),
               throwsWith('Cannot find control (invalidName)'));
@@ -53,7 +52,7 @@ void main() {
 
       test('should throw when no value accessor', () async {
         await fixture.update((cmp) {
-          var dir = new NgControlName(cmp.form, null, null);
+          var dir = NgControlName(cmp.form, null, null);
           dir.name = 'login';
           expect(() => cmp.form.addControl(dir),
               throwsWith('No value accessor for (login)'));
@@ -147,7 +146,7 @@ void main() {
             () async => await fixture.update((cmp) {
                   cmp.formModel = null;
                 }),
-            throwsA(new isInstanceOf<StateError>()));
+            throwsA(isInstanceOf<StateError>()));
       });
     });
   });
@@ -183,15 +182,15 @@ class NgFormModelTest {
 
   bool needsLogin = true;
 
-  var formModel = new ControlGroup({
-    'login': new Control(),
-    'passwords': new ControlGroup(
-        {'password': new Control(), 'passwordConfirm': new Control()})
+  var formModel = ControlGroup({
+    'login': Control(),
+    'passwords':
+        ControlGroup({'password': Control(), 'passwordConfirm': Control()})
   });
 }
 
 @Directive(selector: '[dummy]', providers: [
-  const ExistingProvider.forToken(
+  ExistingProvider.forToken(
     ngValueAccessor,
     DummyControlValueAccessor,
   )
@@ -213,13 +212,13 @@ class DummyControlValueAccessor implements ControlValueAccessor {
 }
 
 @Directive(selector: '[matchingPasswords]', providers: [
-  const ValueProvider.forToken(
+  ValueProvider.forToken(
       NG_VALIDATORS, MatchingPasswordsValidator.matchingPasswordsValidator),
 ])
 class MatchingPasswordsValidator {
   static Map<String, dynamic> matchingPasswordsValidator(
       AbstractControl control) {
-    if (control is! ControlGroup) throw new StateError('Must be ControlGroup');
+    if (control is! ControlGroup) throw StateError('Must be ControlGroup');
     var group = control as ControlGroup;
     if (group.controls['password'].value !=
         group.controls['passwordConfirm'].value) {

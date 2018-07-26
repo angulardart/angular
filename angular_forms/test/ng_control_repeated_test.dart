@@ -15,7 +15,7 @@ void main() {
 
   // Regression test for https://github.com/dart-lang/angular2/issues/164.
   test('should update an NgForm without throwing an NPE', () async {
-    final testBed = new NgTestBed<AppComponent>();
+    final testBed = NgTestBed<AppComponent>();
     expect(
       (await testBed.create()).rootElement.innerHtml,
       contains(r'<input title="Input #0:true">'),
@@ -25,7 +25,7 @@ void main() {
 
 @Component(
   selector: 'root',
-  directives: const [
+  directives: [
     formDirectives,
     NgFor,
   ],
@@ -48,7 +48,7 @@ class AppComponent {
   }
 
   void _update() {
-    values = new List.from([b.toString()]);
+    values = List.from([b.toString()]);
     print(values);
     b = !b;
   }

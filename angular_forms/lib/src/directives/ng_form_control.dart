@@ -56,8 +56,8 @@ import 'shared.dart' show setUpControl;
 /// ```
 @Directive(
   selector: '[ngFormControl]',
-  providers: const [
-    const ExistingProvider(NgControl, NgFormControl),
+  providers: [
+    ExistingProvider(NgControl, NgFormControl),
   ],
   exportAs: 'ngForm',
 )
@@ -71,7 +71,7 @@ class NgFormControl extends NgControl implements AfterChanges {
   }
 
   Control get form => _form;
-  final _update = new StreamController.broadcast();
+  final _update = StreamController.broadcast();
   bool _modelChanged = false;
   dynamic _model;
   @Input('ngModel')

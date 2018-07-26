@@ -16,7 +16,7 @@ void main() {
     tearDown(disposeAnyRunningTest);
 
     test('should have error on invalid input', () async {
-      var testBed = new NgTestBed<AccessorTestComponent>();
+      var testBed = NgTestBed<AccessorTestComponent>();
       NgTestFixture<AccessorTestComponent> fixture = await testBed.create();
 
       await fixture.update((AccessorTestComponent c) {
@@ -30,7 +30,7 @@ void main() {
     });
 
     test('shouldn\'t have error on valid input', () async {
-      var testBed = new NgTestBed<AccessorTestComponent>();
+      var testBed = NgTestBed<AccessorTestComponent>();
       NgTestFixture<AccessorTestComponent> fixture = await testBed.create();
 
       await fixture.update((AccessorTestComponent c) {
@@ -49,7 +49,7 @@ void main() {
 @Component(
   selector: 'accessor-test',
   template: '<input type="text" integer [(ngModel)]="value">',
-  directives: const [IntValueAccessor, NgModel],
+  directives: [IntValueAccessor, NgModel],
 )
 class AccessorTestComponent {
   @ViewChild(NgModel)
@@ -61,9 +61,9 @@ typedef dynamic ChangeFunctionSimple(value);
 
 @Directive(
   selector: "input[integer]",
-  providers: const [
-    const ExistingProvider.forToken(ngValueAccessor, IntValueAccessor),
-    const ExistingProvider.forToken(NG_VALIDATORS, IntValueAccessor),
+  providers: [
+    ExistingProvider.forToken(ngValueAccessor, IntValueAccessor),
+    ExistingProvider.forToken(NG_VALIDATORS, IntValueAccessor),
   ],
 )
 class IntValueAccessor implements ControlValueAccessor, Validator {

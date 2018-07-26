@@ -23,7 +23,7 @@ void main() {
     });
     test('should use controls', () {
       var group = FormBuilder.controlGroup(
-          {'login': new Control('some value', _syncValidator)});
+          {'login': Control('some value', _syncValidator)});
       expect(group.controls['login'].value, 'some value');
       expect(group.controls['login'].validator == _syncValidator, true);
     });
@@ -33,7 +33,7 @@ void main() {
       expect(group.validator == _syncValidator, true);
     });
     test('should create control arrays', () {
-      var control = new Control('three');
+      var control = Control('three');
       var array = FormBuilder.controlArray([
         'one',
         ['two', _syncValidator],
