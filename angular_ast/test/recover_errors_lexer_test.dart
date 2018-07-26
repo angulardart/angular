@@ -8,10 +8,9 @@ import 'package:angular_ast/src/token/tokens.dart';
 import 'package:angular_ast/src/parser/reader.dart';
 import 'package:test/test.dart';
 
-ThrowingExceptionHandler throwingException = new ThrowingExceptionHandler();
-RecoveringExceptionHandler recoveringException =
-    new RecoveringExceptionHandler();
-RecoveryProtocol recoveryProtocol = new NgAnalyzerRecoveryProtocol();
+ThrowingExceptionHandler throwingException = ThrowingExceptionHandler();
+RecoveringExceptionHandler recoveringException = RecoveringExceptionHandler();
+RecoveryProtocol recoveryProtocol = NgAnalyzerRecoveryProtocol();
 
 Iterable<NgToken> tokenize(String html) {
   recoveringException.exceptions.clear();
@@ -27,7 +26,7 @@ void unwrapAll(Iterator<NgToken> it) {
 }
 
 String untokenize(Iterable<NgToken> tokens) => tokens
-    .fold(new StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+    .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
     .toString();
 
 void testRecoverySolution(
@@ -41,8 +40,8 @@ void testRecoverySolution(
   var recoveryOffset = baseHtml.length;
 
   for (NgSimpleTokenType type in encounteredTokens) {
-    var reader = new NgTokenReversibleReader(null, []);
-    var token = new NgSimpleToken(type, recoveryOffset);
+    var reader = NgTokenReversibleReader(null, []);
+    var token = NgSimpleToken(type, recoveryOffset);
 
     String errorString;
     if (type == NgSimpleTokenType.doubleQuote) {
@@ -60,7 +59,7 @@ void testRecoverySolution(
       var it = tokenizeThrow(errorHtml);
       expect(() {
         while (it.moveNext() != null) {}
-      }, throwsA(new isInstanceOf<AngularParserException>()));
+      }, throwsA(isInstanceOf<AngularParserException>()));
 
       var solution = recoveryProtocol.recover(startState, token, reader);
 
@@ -69,16 +68,15 @@ void testRecoverySolution(
         expectedSynthetic = null;
       } else if (expectedSyntheticType == NgTokenType.doubleQuote ||
           expectedSyntheticType == NgTokenType.singleQuote) {
-        var left = new NgToken.generateErrorSynthetic(
+        var left = NgToken.generateErrorSynthetic(
             recoveryOffset, expectedSyntheticType);
-        var value = new NgToken.generateErrorSynthetic(
+        var value = NgToken.generateErrorSynthetic(
             recoveryOffset, NgTokenType.elementDecoratorValue);
-        var right = new NgToken.generateErrorSynthetic(
+        var right = NgToken.generateErrorSynthetic(
             recoveryOffset, expectedSyntheticType);
-        expectedSynthetic =
-            new NgAttributeValueToken.generate(left, value, right);
+        expectedSynthetic = NgAttributeValueToken.generate(left, value, right);
       } else {
-        expectedSynthetic = new NgToken.generateErrorSynthetic(
+        expectedSynthetic = NgToken.generateErrorSynthetic(
           recoveryOffset,
           expectedSyntheticType,
           lexeme: syntheticLexeme,
@@ -127,10 +125,10 @@ void beforeInterpolation() {
     var html = '}} some text';
     var results = tokenize(html);
     expect(results, [
-      new NgToken.interpolationStart(0), // Synthetic
-      new NgToken.interpolationValue(0, ''), // Synthetic
-      new NgToken.interpolationEnd(0),
-      new NgToken.text(2, ' some text'),
+      NgToken.interpolationStart(0), // Synthetic
+      NgToken.interpolationValue(0, ''), // Synthetic
+      NgToken.interpolationEnd(0),
+      NgToken.text(2, ' some text'),
     ]);
     checkException(NgParserWarningCode.UNOPENED_MUSTACHE, 0, 2);
     expect(untokenize(results), '{{}} some text');
@@ -140,9 +138,9 @@ void beforeInterpolation() {
     var html = 'mustache text}}';
     var results = tokenize(html);
     expect(results, [
-      new NgToken.interpolationStart(0), // Synthetic
-      new NgToken.interpolationValue(0, 'mustache text'),
-      new NgToken.interpolationEnd(13),
+      NgToken.interpolationStart(0), // Synthetic
+      NgToken.interpolationValue(0, 'mustache text'),
+      NgToken.interpolationEnd(13),
     ]);
     checkException(NgParserWarningCode.UNOPENED_MUSTACHE, 13, 2);
     expect(untokenize(results), '{{mustache text}}');
@@ -156,9 +154,9 @@ void afterComment() {
     expect(
       results,
       [
-        new NgToken.commentStart(0),
-        new NgToken.commentValue(4, ' some comment '),
-        new NgToken.commentEnd(18),
+        NgToken.commentStart(0),
+        NgToken.commentValue(4, ' some comment '),
+        NgToken.commentEnd(18),
       ],
     );
     checkException(NgParserWarningCode.UNTERMINATED_COMMENT, 0, 18);
@@ -202,9 +200,9 @@ void comment() {
     expect(
       results,
       [
-        new NgToken.commentStart(0),
-        new NgToken.commentValue(4, ' some comment '),
-        new NgToken.commentEnd(18)
+        NgToken.commentStart(0),
+        NgToken.commentValue(4, ' some comment '),
+        NgToken.commentEnd(18)
       ],
     );
     checkException(NgParserWarningCode.UNTERMINATED_COMMENT, 0, 18);

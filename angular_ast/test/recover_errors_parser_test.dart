@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 import 'package:angular_ast/angular_ast.dart';
 
 RecoveringExceptionHandler recoveringExceptionHandler =
-    new RecoveringExceptionHandler();
+    RecoveringExceptionHandler();
 
 List<StandaloneTemplateAst> parse(
   String template, {
@@ -44,8 +44,8 @@ void main() {
     expect(asts.length, 1);
 
     var element = asts[0] as ElementAst;
-    expect(element, new ElementAst('div', new CloseElementAst('div')));
-    expect(element.closeComplement, new CloseElementAst('div'));
+    expect(element, ElementAst('div', CloseElementAst('div')));
+    expect(element.closeComplement, CloseElementAst('div'));
     expect(element.isSynthetic, false);
     expect(element.closeComplement.isSynthetic, true);
     expect(astsToString(asts), '<div></div>');
@@ -58,8 +58,8 @@ void main() {
     expect(asts.length, 1);
 
     var element = asts[0] as ElementAst;
-    expect(element, new ElementAst('div', new CloseElementAst('div')));
-    expect(element.closeComplement, new CloseElementAst('div'));
+    expect(element, ElementAst('div', CloseElementAst('div')));
+    expect(element.closeComplement, CloseElementAst('div'));
     expect(element.isSynthetic, true);
     expect(element.closeComplement.isSynthetic, false);
     expect(astsToString(asts), '<div></div>');
@@ -72,7 +72,7 @@ void main() {
     expect(asts.length, 1);
 
     var element = asts[0] as ElementAst;
-    expect(element, new ElementAst('hr', null));
+    expect(element, ElementAst('hr', null));
     expect(element.closeComplement, null);
   });
 
@@ -255,7 +255,7 @@ void main() {
     expect(div.childNodes.length, 1);
 
     var ngContent = div.childNodes[0];
-    expect(ngContent, new isInstanceOf<EmbeddedContentAst>());
+    expect(ngContent, isInstanceOf<EmbeddedContentAst>());
     expect(ngContent.isSynthetic, false);
     expect((ngContent as EmbeddedContentAst).closeComplement.isSynthetic, true);
 
@@ -273,7 +273,7 @@ void main() {
     expect(div.childNodes.length, 1);
 
     var ngContent = div.childNodes[0];
-    expect(ngContent, new isInstanceOf<EmbeddedContentAst>());
+    expect(ngContent, isInstanceOf<EmbeddedContentAst>());
     expect(ngContent.isSynthetic, true);
     expect(
         (ngContent as EmbeddedContentAst).closeComplement.isSynthetic, false);
@@ -295,9 +295,9 @@ void main() {
     expect(div.childNodes.length, 0);
     expect(ngcontent2.childNodes.length, 0);
 
-    expect(ngcontent1, new isInstanceOf<EmbeddedContentAst>());
-    expect(div, new isInstanceOf<ElementAst>());
-    expect(ngcontent2, new isInstanceOf<EmbeddedContentAst>());
+    expect(ngcontent1, isInstanceOf<EmbeddedContentAst>());
+    expect(div, isInstanceOf<ElementAst>());
+    expect(ngcontent2, isInstanceOf<EmbeddedContentAst>());
 
     expect(ngcontent1.isSynthetic, false);
     expect(
@@ -329,7 +329,7 @@ void main() {
     expect(asts.length, 1);
 
     var ngContent = asts[0];
-    expect(ngContent, new isInstanceOf<EmbeddedContentAst>());
+    expect(ngContent, isInstanceOf<EmbeddedContentAst>());
     expect(astsToString(asts), '<ng-content select="*"></ng-content>');
 
     checkException(NgParserWarningCode.NONVOID_ELEMENT_USING_VOID_END, 11, 2);
@@ -353,7 +353,7 @@ void main() {
     expect(div.childNodes.length, 1);
 
     var template = div.childNodes[0];
-    expect(template, new isInstanceOf<EmbeddedTemplateAst>());
+    expect(template, isInstanceOf<EmbeddedTemplateAst>());
     expect(template.isSynthetic, false);
     expect((template as EmbeddedTemplateAst).closeComplement.isSynthetic, true);
 
@@ -373,7 +373,7 @@ void main() {
     expect(div.childNodes.length, 1);
 
     var template = div.childNodes[0];
-    expect(template, new isInstanceOf<EmbeddedTemplateAst>());
+    expect(template, isInstanceOf<EmbeddedTemplateAst>());
     expect(template.isSynthetic, true);
     expect(
         (template as EmbeddedTemplateAst).closeComplement.isSynthetic, false);
@@ -388,7 +388,7 @@ void main() {
     expect(asts.length, 1);
 
     var ngContent = asts[0];
-    expect(ngContent, new isInstanceOf<EmbeddedTemplateAst>());
+    expect(ngContent, isInstanceOf<EmbeddedTemplateAst>());
     expect(
         astsToString(asts),
         '<template ngFor [ngForOf]="items" let-item let-i="index">'
@@ -501,7 +501,7 @@ void main() {
     var asts =
         parse('<div *ngFor="["></div>', desugar: true, parseExpression: true);
     expect(asts.length, 1);
-    expect(asts[0], new isInstanceOf<EmbeddedTemplateAst>());
+    expect(asts[0], isInstanceOf<EmbeddedTemplateAst>());
 
     var template = asts[0] as EmbeddedTemplateAst;
     expect(template.properties.length, 1);
@@ -521,7 +521,7 @@ void main() {
     expect(asts.length, 1);
     // Desugaring fails, so remains as [ElementAst]
     // instead of [EmbeddedTemplateAst].
-    expect(asts[0], new isInstanceOf<ElementAst>());
+    expect(asts[0], isInstanceOf<ElementAst>());
     var element = asts[0] as ElementAst;
     expect(element.properties.length, 0);
     expect(element.references.length, 0);

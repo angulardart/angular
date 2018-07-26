@@ -9,7 +9,7 @@ part of angular_ast.src.exceptions;
 /// and for the error message to explain what is wrong, and when appropriate,
 /// how the problem can be corrected.
 ///
-const List<NgParserWarningCode> angularAstWarningCodes = const [
+const List<NgParserWarningCode> angularAstWarningCodes = [
   NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE,
   NgParserWarningCode.DANGLING_CLOSE_ELEMENT,
   NgParserWarningCode.DUPLICATE_STAR_DIRECTIVE,
@@ -51,219 +51,209 @@ const List<NgParserWarningCode> angularAstWarningCodes = const [
 
 class NgParserWarningCode extends ErrorCode {
   static const NgParserWarningCode CANNOT_FIND_MATCHING_CLOSE =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'CANNOT_FIND_MATCHING_CLOSE',
     'Cannot find matching close element to this',
   );
 
-  static const NgParserWarningCode DANGLING_CLOSE_ELEMENT =
-      const NgParserWarningCode(
+  static const NgParserWarningCode DANGLING_CLOSE_ELEMENT = NgParserWarningCode(
     'DANGLING_CLOSE_ELEMENT',
     'Closing tag is dangling and no matching open tag can be found',
   );
 
   static const NgParserWarningCode DANGLING_DECORATOR_SUFFIX =
-      const NgParserWarningCode('DANGING_DECORATOR_SUFFIX',
+      NgParserWarningCode('DANGING_DECORATOR_SUFFIX',
           'Decorator suffix needs a matching prefix');
 
   static const NgParserWarningCode DUPLICATE_STAR_DIRECTIVE =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'DUPLICATE_STAR_DIRECTIVE',
     'Already found a *-directive, limit 1 per element.',
   );
 
   static const NgParserWarningCode DUPLICATE_SELECT_DECORATOR =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'DUPLICATE_SELECT_DECORATOR',
     "Only 1 'select' decorator can exist in <ng-content>, found duplicate",
   );
 
   static const NgParserWarningCode DUPLICATE_PROJECT_AS_DECORATOR =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'DUPLICATE_PROJECT_AS_DECORATOR',
     "Only 1 'ngProjectAs' decorator can exist in <ng-content>, found duplicate",
   );
 
-  static const NgParserWarningCode ELEMENT_DECORATOR =
-      const NgParserWarningCode(
+  static const NgParserWarningCode ELEMENT_DECORATOR = NgParserWarningCode(
     'ELEMENT_DECORATOR',
     'Expected element decorator after whitespace',
   );
 
   static const NgParserWarningCode ELEMENT_DECORATOR_AFTER_PREFIX =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'ELEMENT_DECORATOR_AFTER_PREFIX',
     'Expected element decorator identifier after prefix',
   );
 
   static const NgParserWarningCode ELEMENT_DECORATOR_SUFFIX_BEFORE_PREFIX =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'ELEMENT_DECORATOR',
     'Found special decorator suffix before prefix',
   );
 
   static const NgParserWarningCode ELEMENT_DECORATOR_VALUE =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'ELEMENT_DECORATOR_VALUE',
     "Expected quoted value following '='",
   );
 
   static const NgParserWarningCode ELEMENT_DECORATOR_VALUE_MISSING_QUOTES =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'ELEMENT_DECORATOR_VALUE_MISSING_QUOTES',
     'Decorator values must contain quotes',
   );
 
-  static const NgParserWarningCode ELEMENT_IDENTIFIER =
-      const NgParserWarningCode(
+  static const NgParserWarningCode ELEMENT_IDENTIFIER = NgParserWarningCode(
     'ELEMENT_IDENTIFIER',
     'Expected element tag name',
   );
 
   static const NgParserWarningCode EXPECTED_AFTER_ELEMENT_IDENTIFIER =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'EXPECTED_AFTER_ELEMENT_IDENTIFIER',
     'Expected either whitespace or close tag end after element identifier',
   );
 
-  static const NgParserWarningCode EXPECTED_EQUAL_SIGN =
-      const NgParserWarningCode(
+  static const NgParserWarningCode EXPECTED_EQUAL_SIGN = NgParserWarningCode(
     'EXPECTED_EQUAL_SIGN',
     "Expected '=' between decorator and value",
   );
 
-  static const NgParserWarningCode EXPECTED_STANDALONE =
-      const NgParserWarningCode(
+  static const NgParserWarningCode EXPECTED_STANDALONE = NgParserWarningCode(
     'EXPECTING_STANDALONE',
     'Expected standalone token',
   );
 
-  static const NgParserWarningCode EXPECTED_TAG_CLOSE =
-      const NgParserWarningCode(
+  static const NgParserWarningCode EXPECTED_TAG_CLOSE = NgParserWarningCode(
     'EXPECTED_TAG_CLOSE',
     "Expected tag close.",
   );
 
   // 'Catch-all' error code.
-  static const NgParserWarningCode UNEXPECTED_TOKEN = const NgParserWarningCode(
+  static const NgParserWarningCode UNEXPECTED_TOKEN = NgParserWarningCode(
     'UNEXPECTED_TOKEN',
     'Unexpected token',
   );
 
   static const NgParserWarningCode EXPECTED_WHITESPACE_BEFORE_NEW_DECORATOR =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'EXPECTED_WHITESPACE_BEFORE_DECORATOR',
     'Expected whitespace before a new decorator',
   );
 
-  static const NgParserWarningCode EMPTY_INTERPOLATION =
-      const NgParserWarningCode(
+  static const NgParserWarningCode EMPTY_INTERPOLATION = NgParserWarningCode(
     'EMPTY_INTERPOLATION',
     'Interpolation expression cannot be empty',
   );
 
   static const NgParserWarningCode EVENT_NAME_TOO_MANY_FIXES =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'EVENT_NAME_TOO_MANY_FIXES',
     "Event name can only be in format: 'name[.postfix]",
   );
 
   static const NgParserWarningCode INVALID_DECORATOR_IN_NGCONTAINER =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'INVALID_DECORATOR_IN_NGCONTAINER',
     "Only '*' bindings are supported on <ng-container>",
   );
 
   static const NgParserWarningCode INVALID_DECORATOR_IN_NGCONTENT =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'INVALID_DECORATOR_IN_NGCONTENT',
     "Only 'select' is a valid attribute/decorate in <ng-content>",
   );
 
   static const NgParserWarningCode INVALID_DECORATOR_IN_TEMPLATE =
-      const NgParserWarningCode('INVALID_DECORATOR_IN_TEMPLATE',
+      NgParserWarningCode('INVALID_DECORATOR_IN_TEMPLATE',
           "Invalid decorator in 'template' element");
 
   static const NgParserWarningCode INVALID_LET_BINDING_IN_NONTEMPLATE =
-      const NgParserWarningCode('INVALID_LET_BINDING_IN_NONTEMPLATE',
+      NgParserWarningCode('INVALID_LET_BINDING_IN_NONTEMPLATE',
           "'let-' binding can only be used in 'template' element");
 
   // TODO: Max: Split this error into more smaller, detailed messages.
   static const NgParserWarningCode INVALID_MICRO_EXPRESSION =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'INVALID_MICRO_EXPRESSION',
     'Failed parsing micro expression',
   );
 
   static const NgParserWarningCode NONVOID_ELEMENT_USING_VOID_END =
-      const NgParserWarningCode(
+      NgParserWarningCode(
           'NONVOID_ELEMENT_USING_VOID_END', 'Element is not a void-element');
 
   static const NgParserWarningCode NGCONTENT_MUST_CLOSE_IMMEDIATELY =
-      const NgParserWarningCode('NGCONTENT_MUST_CLOSE_IMMEDIATElY',
+      NgParserWarningCode('NGCONTENT_MUST_CLOSE_IMMEDIATElY',
           "'<ng-content ...>' must be followed immediately by close '</ng-content>'");
 
   static const NgParserWarningCode PIPE_INVALID_IDENTIFIER =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'PIPE_INVALID_IDENTIFIER',
     'Pipe must be a valid identifier',
   );
 
   static const NgParserWarningCode PROPERTY_NAME_TOO_MANY_FIXES =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'PROPERTY_NAME_TOO_MANY_FIXES',
     "Property name can only be in format: 'name[.postfix[.unit]]",
   );
 
-  static const NgParserWarningCode SUFFIX_BANANA = const NgParserWarningCode(
+  static const NgParserWarningCode SUFFIX_BANANA = NgParserWarningCode(
     'SUFFIX_BANANA',
     "Expected closing banana ')]'",
   );
 
-  static const NgParserWarningCode SUFFIX_EVENT = const NgParserWarningCode(
+  static const NgParserWarningCode SUFFIX_EVENT = NgParserWarningCode(
     'SUFFIX_EVENT',
     "Expected closing parenthesis ')'",
   );
 
-  static const NgParserWarningCode SUFFIX_PROPERTY = const NgParserWarningCode(
+  static const NgParserWarningCode SUFFIX_PROPERTY = NgParserWarningCode(
     'SUFFIX_PROPERTY',
     "Expected closing bracket ']'",
   );
 
-  static const NgParserWarningCode UNCLOSED_QUOTE = const NgParserWarningCode(
+  static const NgParserWarningCode UNCLOSED_QUOTE = NgParserWarningCode(
     'UNCLOSED_QUOTE',
     'Expected close quote for element decorator value',
   );
 
-  static const NgParserWarningCode UNOPENED_MUSTACHE =
-      const NgParserWarningCode(
+  static const NgParserWarningCode UNOPENED_MUSTACHE = NgParserWarningCode(
     'UNOPENED_MUSTACHE',
     'Unopened mustache',
   );
 
-  static const NgParserWarningCode UNTERMINATED_COMMENT =
-      const NgParserWarningCode(
+  static const NgParserWarningCode UNTERMINATED_COMMENT = NgParserWarningCode(
     'UNTERMINATED COMMENT',
     'Unterminated comment',
   );
 
-  static const NgParserWarningCode UNTERMINATED_MUSTACHE =
-      const NgParserWarningCode(
+  static const NgParserWarningCode UNTERMINATED_MUSTACHE = NgParserWarningCode(
     'UNTERMINATED_MUSTACHE',
     'Unterminated mustache',
   );
 
   static const NgParserWarningCode VOID_ELEMENT_IN_CLOSE_TAG =
-      const NgParserWarningCode(
+      NgParserWarningCode(
     'VOID_ELEMENT_IN_CLOSE_TAG',
     'Void element identifiers cannot be used in close element tag',
   );
 
   static const NgParserWarningCode VOID_CLOSE_IN_CLOSE_TAG =
-      const NgParserWarningCode('VOID_CLOSE_IN_CLOSE_TAG',
+      NgParserWarningCode('VOID_CLOSE_IN_CLOSE_TAG',
           "Void close '/>' cannot be used in a close element");
 
-  static const NgParserWarningCode WRONG_VISITOR = const NgParserWarningCode(
+  static const NgParserWarningCode WRONG_VISITOR = NgParserWarningCode(
       'WRONG_VISITOR',
       'Pure-Dart visitor was used in Angular-based Expression node.');
 

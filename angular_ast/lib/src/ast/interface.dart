@@ -78,7 +78,7 @@ abstract class StandaloneTemplateAst implements TemplateAst {}
 abstract class SyntheticTemplateAst implements TemplateAst {
   // Indicates that some fields/properties for this AST are not viewable.
   static Error _unsupported() {
-    return new UnsupportedError('Has no originating source code (synthetic)');
+    return UnsupportedError('Has no originating source code (synthetic)');
   }
 
   /// What AST node this node originated from (before transformation); optional.

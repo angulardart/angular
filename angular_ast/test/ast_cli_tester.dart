@@ -7,7 +7,7 @@ import 'dart:io';
 import 'package:angular_ast/angular_ast.dart';
 import 'package:path/path.dart' as p;
 
-RecoveringExceptionHandler exceptionHandler = new RecoveringExceptionHandler();
+RecoveringExceptionHandler exceptionHandler = RecoveringExceptionHandler();
 
 List<StandaloneTemplateAst> parse(String template) => const NgParser().parse(
       template,
@@ -23,7 +23,7 @@ void main() {
     exceptionHandler.exceptions.clear();
   }
   var fileDir = p.join('test', 'ast_cli_tester_source.html');
-  var file = new File(fileDir.toString());
+  var file = File(fileDir.toString());
   input = file.readAsStringSync();
   //input = stdin.readLineSync(encoding: UTF8);
   var ast = parse(input);

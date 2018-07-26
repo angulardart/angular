@@ -46,7 +46,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
       return astNode;
     }
     if (astNode.childNodes.isNotEmpty) {
-      astNode = new ContainerAst.from(
+      astNode = ContainerAst.from(
         astNode,
         annotations: astNode.annotations,
         childNodes: _visitRemovingWhitespace(astNode.childNodes),
@@ -62,7 +62,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
       return astNode;
     }
     if (astNode.childNodes.isNotEmpty) {
-      astNode = new ElementAst.from(
+      astNode = ElementAst.from(
         astNode,
         astNode.name,
         astNode.closeComplement,
@@ -85,7 +85,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
       return astNode;
     }
     if (astNode.childNodes.isNotEmpty) {
-      astNode = new EmbeddedTemplateAst.from(
+      astNode = EmbeddedTemplateAst.from(
         astNode,
         annotations: astNode.annotations,
         attributes: astNode.attributes,
@@ -102,7 +102,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
 
   @override
   TemplateAst visitText(TextAst astNode, [_]) {
-    return new TextAst.from(
+    return TextAst.from(
       astNode,
       astNode.value.replaceAll(_ngsp, ' '),
     );
@@ -128,10 +128,10 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     if (value.isEmpty) {
       return null;
     }
-    return new TextAst.from(text, value);
+    return TextAst.from(text, value);
   }
 
-  static final _allWhitespace = new RegExp(r'\s\s+', multiLine: true);
+  static final _allWhitespace = RegExp(r'\s\s+', multiLine: true);
   static const _nbsp = '\u00A0';
   static const _ngsp = '\uE500';
 
@@ -189,7 +189,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements
-  static final _commonInlineElements = new Set<String>.from([
+  static final _commonInlineElements = Set<String>.from([
     'a',
     'abbr',
     'acronym',

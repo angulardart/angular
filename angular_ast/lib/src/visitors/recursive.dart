@@ -41,7 +41,7 @@ class RecursiveTemplateAstVisitor<C>
   @override
   @mustCallSuper
   TemplateAst visitAttribute(AttributeAst astNode, [C context]) =>
-      new AttributeAst.from(
+      AttributeAst.from(
         astNode,
         astNode.name,
         astNode.value,
@@ -60,7 +60,7 @@ class RecursiveTemplateAstVisitor<C>
   @override
   @mustCallSuper
   TemplateAst visitContainer(ContainerAst astNode, [C context]) =>
-      new ContainerAst.from(
+      ContainerAst.from(
         astNode,
         annotations: visitAll(astNode.annotations, context),
         childNodes: visitAll(astNode.childNodes, context),
@@ -73,7 +73,7 @@ class RecursiveTemplateAstVisitor<C>
   @override
   @mustCallSuper
   TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [C context]) =>
-      new EmbeddedTemplateAst.from(
+      EmbeddedTemplateAst.from(
         astNode,
         annotations: visitAll(astNode.annotations, context),
         attributes: visitAll(astNode.attributes, context),
@@ -87,8 +87,7 @@ class RecursiveTemplateAstVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitElement(ElementAst astNode, [C context]) =>
-      new ElementAst.from(
+  TemplateAst visitElement(ElementAst astNode, [C context]) => ElementAst.from(
         astNode,
         astNode.name,
         visit(astNode.closeComplement),
@@ -104,7 +103,7 @@ class RecursiveTemplateAstVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitEvent(EventAst astNode, [C context]) => new EventAst.from(
+  TemplateAst visitEvent(EventAst astNode, [C context]) => EventAst.from(
         astNode,
         astNode.name,
         astNode.value,
@@ -118,7 +117,7 @@ class RecursiveTemplateAstVisitor<C>
   @override
   @mustCallSuper
   TemplateAst visitInterpolation(InterpolationAst astNode, [_]) =>
-      new InterpolationAst.from(
+      InterpolationAst.from(
         astNode,
         astNode.value,
         visit(astNode.expression),
@@ -129,7 +128,7 @@ class RecursiveTemplateAstVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitProperty(PropertyAst astNode, [_]) => new PropertyAst.from(
+  TemplateAst visitProperty(PropertyAst astNode, [_]) => PropertyAst.from(
         astNode,
         astNode.name,
         astNode.value,

@@ -18,7 +18,7 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
   DesugarVisitor({
     bool toolFriendlyAstOrigin = false,
     ExceptionHandler exceptionHandler,
-  })  : exceptionHandler = exceptionHandler ?? new ThrowingExceptionHandler(),
+  })  : exceptionHandler = exceptionHandler ?? ThrowingExceptionHandler(),
         _toolFriendlyAstOrigin = toolFriendlyAstOrigin;
 
   @override
@@ -34,14 +34,14 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
     var appendedValue = (flag == 'event') ? ' = \$event' : '';
     if (astNode.value != null) {
       if (flag == 'event') {
-        return new EventAst.from(
+        return EventAst.from(
           origin,
           astNode.name + 'Change',
           astNode.value + appendedValue,
         );
       }
       if (flag == 'property') {
-        return new PropertyAst.from(
+        return PropertyAst.from(
           origin,
           astNode.name,
           astNode.value,
@@ -93,7 +93,7 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
       if (i != -1) {
         final deferredAst = astNode.annotations.removeAt(i);
         final origin = _toolFriendlyAstOrigin ? deferredAst : null;
-        return new EmbeddedTemplateAst.from(
+        return EmbeddedTemplateAst.from(
           origin,
           childNodes: [astNode],
           hasDeferredComponent: true,
@@ -184,9 +184,9 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
       // property, add it as an attribute in case a directive selector
       // depends on it.
       if (!propertiesToAdd.any((p) => p.name == directiveName)) {
-        attributesToAdd.add(new AttributeAst.from(origin, directiveName));
+        attributesToAdd.add(AttributeAst.from(origin, directiveName));
       }
-      newAst = new EmbeddedTemplateAst.from(
+      newAst = EmbeddedTemplateAst.from(
         origin,
         childNodes: [
           astNode,
@@ -201,15 +201,15 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
         // as an attribute rather than a property. This allows matching a
         // directive with an attribute selector, but no input of the same
         // name.
-        attributesToAdd.add(new AttributeAst.from(origin, directiveName));
+        attributesToAdd.add(AttributeAst.from(origin, directiveName));
       } else {
-        propertiesToAdd.add(new PropertyAst.from(
+        propertiesToAdd.add(PropertyAst.from(
           origin,
           directiveName,
           starExpression,
         ));
       }
-      newAst = new EmbeddedTemplateAst.from(
+      newAst = EmbeddedTemplateAst.from(
         origin,
         childNodes: [
           astNode,
