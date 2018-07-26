@@ -22,8 +22,8 @@ void main() {
   });
 }
 
-@GenerateInjector(const [
-  const Provider(MathService),
+@GenerateInjector([
+  Provider(MathService),
 ])
 final InjectorFactory mathInjector = ng_generated.mathInjector$Injector;
 
