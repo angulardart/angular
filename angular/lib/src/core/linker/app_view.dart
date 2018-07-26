@@ -24,7 +24,7 @@ import 'view_type.dart' show ViewType;
 export 'package:angular/src/core/change_detection/component_state.dart';
 
 /// A comment to clone as an anchor for the view container of a `<template>`.
-final _viewContainerAnchor = new Comment();
+final _viewContainerAnchor = Comment();
 
 /// Creates a comment to anchor the view container of a `<template>`.
 ///
@@ -40,7 +40,7 @@ Comment createViewContainerAnchor() =>
 /// modified the DOM versus a no-op).
 bool domRootRendererIsDirty = false;
 
-const _UndefinedInjectorResult = const Object();
+const _UndefinedInjectorResult = Object();
 
 /// Shared app view members used to reduce polymorphic calls and
 /// dart2js code size of constructors.
@@ -93,12 +93,12 @@ class AppViewData<T> {
   int _cdState = ChangeDetectorState.NeverChecked;
 
   AppViewData._(AppView<T> appView, this._cdMode, this.type, this.parentIndex)
-      : ref = new ViewRefImpl(appView);
+      : ref = ViewRefImpl(appView);
 
   @dart2js.noInline
   factory AppViewData(
       AppView<T> appView, int cdMode, ViewType viewType, int parentIndex) {
-    return new AppViewData._(appView, cdMode, viewType, parentIndex);
+    return AppViewData._(appView, cdMode, viewType, parentIndex);
   }
 
   set cdMode(int value) {
@@ -183,7 +183,7 @@ abstract class AppView<T> {
     int parentIndex,
     int cdMode,
   ) {
-    viewData = new AppViewData(this, cdMode, type, parentIndex);
+    viewData = AppViewData(this, cdMode, type, parentIndex);
   }
 
   void setupComponentType(RenderComponentType renderType) {
@@ -326,7 +326,7 @@ abstract class AppView<T> {
     return notFoundResult;
   }
 
-  Injector injector(int nodeIndex) => new ElementInjector(this, nodeIndex);
+  Injector injector(int nodeIndex) => ElementInjector(this, nodeIndex);
 
   void detachAndDestroy() {
     var containerElement = viewData._viewContainerElement;
@@ -387,7 +387,7 @@ abstract class AppView<T> {
 
     // Sanity check in dev-mode that a destroyed view is not checked again.
     if (isDevMode && viewData.destroyed) {
-      throw new StateError('detectChanges');
+      throw StateError('detectChanges');
     }
 
     if (ChangeDetectionHost.checkForCrashes) {

@@ -58,7 +58,7 @@ class DefaultIterableDiffer {
       : _trackByFn = trackByFn ?? _trackByIdentity;
 
   DefaultIterableDiffer clone(TrackByFn trackByFn) {
-    var differ = new DefaultIterableDiffer(trackByFn);
+    var differ = DefaultIterableDiffer(trackByFn);
     return differ
       .._length = _length
       .._collection = _collection
@@ -196,7 +196,7 @@ class DefaultIterableDiffer {
   DefaultIterableDiffer diff(Iterable collection) {
     if (collection != null) {
       if (collection is! Iterable) {
-        throw new StateError("Error trying to diff '$collection'");
+        throw StateError("Error trying to diff '$collection'");
       }
     } else {
       collection = const [];
@@ -345,8 +345,8 @@ class DefaultIterableDiffer {
         this._reinsertAfter(record, previousRecord, index);
       } else {
         // It is a new item: add it.
-        record = this._addAfter(new CollectionChangeRecord(item, itemTrackBy),
-            previousRecord, index);
+        record = this._addAfter(
+            CollectionChangeRecord(item, itemTrackBy), previousRecord, index);
       }
     }
     return record;
@@ -505,7 +505,7 @@ class DefaultIterableDiffer {
     } else {
       prevRecord._next = record;
     }
-    _linkedRecords ??= new _DuplicateMap();
+    _linkedRecords ??= _DuplicateMap();
     _linkedRecords.put(record);
     record.currentIndex = index;
     return record;
@@ -560,7 +560,7 @@ class DefaultIterableDiffer {
   }
 
   CollectionChangeRecord _addToRemovals(CollectionChangeRecord record) {
-    _unlinkedRecords ??= new _DuplicateMap();
+    _unlinkedRecords ??= _DuplicateMap();
     _unlinkedRecords.put(record);
     record.currentIndex = null;
     record._nextRemoved = null;
@@ -739,14 +739,14 @@ class _DuplicateItemRecordList {
 
 class _DuplicateMap {
   final Map<dynamic, _DuplicateItemRecordList> _map;
-  _DuplicateMap() : _map = new Map.identity();
+  _DuplicateMap() : _map = Map.identity();
 
   void put(CollectionChangeRecord record) {
     // todo(vicb) handle corner cases
     var key = record.trackById;
     var duplicates = this._map[key];
     if (duplicates == null) {
-      duplicates = new _DuplicateItemRecordList();
+      duplicates = _DuplicateItemRecordList();
       this._map[key] = duplicates;
     }
     duplicates.add(record);

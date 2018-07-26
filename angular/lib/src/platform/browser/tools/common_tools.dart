@@ -14,7 +14,7 @@ class ChangeDetectionPerfRecord {
 /// global variable accessible in the dev console.
 class AngularTools {
   final AngularProfiler profiler;
-  AngularTools(ComponentRef ref) : profiler = new AngularProfiler(ref);
+  AngularTools(ComponentRef ref) : profiler = AngularProfiler(ref);
 }
 
 /// Entry point for all Angular profiling-related debug tools. This object
@@ -70,6 +70,6 @@ class AngularProfiler {
     var msPerTick = (end - start) / numTicks;
     print('ran $numTicks change detection cycles');
     print('${msPerTick.toStringAsFixed(2)} ms per check');
-    return new ChangeDetectionPerfRecord(msPerTick, numTicks);
+    return ChangeDetectionPerfRecord(msPerTick, numTicks);
   }
 }

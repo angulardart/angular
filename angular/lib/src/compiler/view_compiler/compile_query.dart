@@ -55,7 +55,7 @@ abstract class CompileQuery {
     @required int nodeIndex,
     @required int queryIndex,
   }) {
-    return new _ListCompileQuery(
+    return _ListCompileQuery(
       metadata,
       storage,
       queryRoot,
@@ -72,7 +72,7 @@ abstract class CompileQuery {
     @required ProviderSource boundDirective,
     @required int queryIndex,
   }) {
-    return new _ListCompileQuery(
+    return _ListCompileQuery(
       metadata,
       storage,
       queryRoot,
@@ -86,7 +86,7 @@ abstract class CompileQuery {
     this.metadata,
     this._queryRoot,
     this._boundDirective,
-  ) : _values = new _QueryValues(_queryRoot);
+  ) : _values = _QueryValues(_queryRoot);
 
   /// Whether this query requires "flattenNodes".
   ///
@@ -121,7 +121,7 @@ abstract class CompileQuery {
         viewValues = last;
       } else {
         assert(element.hasEmbeddedView);
-        final newViewValues = new _QueryValues(element.embeddedView);
+        final newViewValues = _QueryValues(element.embeddedView);
         valuesOrTemplates.add(newViewValues);
         viewValues = newViewValues;
       }
@@ -234,8 +234,8 @@ abstract class CompileQuery {
     // Invokes `appElementN.mapNestedView`.
     return appElementN.callMethod('mapNestedViews', [
       o.fn(
-        [new o.FnParam('nestedView', view.classType)],
-        [new o.ReturnStatement(o.literalVargs(adjustedExpressions))],
+        [o.FnParam('nestedView', view.classType)],
+        [o.ReturnStatement(o.literalVargs(adjustedExpressions))],
       ),
     ]);
   }
@@ -363,7 +363,7 @@ class _ListCompileQuery extends CompileQuery {
       ..addAll(_createUpdates())
       ..add(_storage.buildWriteExpr(_dirtyField, o.literal(false)).toStmt());
     return [
-      new o.IfStmt(
+      o.IfStmt(
         _storage.buildReadExpr(_dirtyField),
         statements,
       ),

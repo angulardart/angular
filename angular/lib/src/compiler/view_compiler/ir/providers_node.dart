@@ -13,20 +13,20 @@ class ProvidersNode {
   /// Maps from a provider token to expression that will return instance
   /// at runtime. Builtin(s) are populated eagerly, ProviderAst based
   /// instances are added on demand.
-  final _instances = new CompileTokenMap<ProviderSource>();
+  final _instances = CompileTokenMap<ProviderSource>();
 
   /// We track which providers are just 'useExisting' for another provider on
   /// this component. This way, we can detect when we don't need to generate
   /// a getter for them.
-  final _aliases = new CompileTokenMap<List<CompileTokenMetadata>>();
-  final _aliasedProviders = new CompileTokenMap<CompileTokenMetadata>();
+  final _aliases = CompileTokenMap<List<CompileTokenMetadata>>();
+  final _aliasedProviders = CompileTokenMap<CompileTokenMetadata>();
 
   /// Indicates that ProvidersNode is on a host AppView. Used to determine
   /// how to reach correct dynamic injector.
   final bool _isAppViewHost;
 
   final CompileTokenMap<ProviderAst> _resolvedProviders =
-      new CompileTokenMap<ProviderAst>();
+      CompileTokenMap<ProviderAst>();
 
   ProvidersNode(this._host, this._parent, this._isAppViewHost);
 
@@ -41,7 +41,7 @@ class ProvidersNode {
 
   /// Adds a builtin local provider for a template node.
   void add(CompileTokenMetadata token, o.Expression providerValue) {
-    _instances.add(token, new BuiltInSource(token, providerValue));
+    _instances.add(token, BuiltInSource(token, providerValue));
   }
 
   ProviderSource get(CompileTokenMetadata token) => _instances.get(token);
@@ -83,7 +83,7 @@ class ProvidersNode {
           // Given the token and visibility defined by providerType,
           // get value based on existing expression mapped to token.
           providerSource = _getDependency(
-              new CompileDiDependencyMetadata(token: provider.useExisting));
+              CompileDiDependencyMetadata(token: provider.useExisting));
           directiveMetadata = null;
         } else if (provider.useFactory != null) {
           providerSource =
@@ -102,7 +102,7 @@ class ProvidersNode {
             }
           }
         } else {
-          providerSource = new LiteralValueSource(
+          providerSource = LiteralValueSource(
               provider.token, convertValueToOutputAst(provider.useValue));
         }
         providerSources.add(providerSource);
@@ -138,7 +138,7 @@ class ProvidersNode {
     for (var paramDep in provider.deps ?? provider.useFactory.diDeps) {
       parameters.add(_getDependency(paramDep));
     }
-    return new FactoryProviderSource(
+    return FactoryProviderSource(
         provider.token, provider.useFactory, parameters);
   }
 
@@ -150,8 +150,7 @@ class ProvidersNode {
     for (var paramDep in paramDeps) {
       parameters.add(_getDependency(paramDep));
     }
-    return new ClassProviderSource(
-        provider.token, provider.useClass, parameters);
+    return ClassProviderSource(provider.token, provider.useClass, parameters);
   }
 
   ProviderSource _getLocalDependency(CompileTokenMetadata token) {
@@ -162,7 +161,7 @@ class ProvidersNode {
     ProvidersNode currProviders = this;
     ProviderSource result;
     if (dep.isValue) {
-      result = new LiteralValueSource(dep.token, o.literal(dep.value));
+      result = LiteralValueSource(dep.token, o.literal(dep.value));
     }
     if (result == null && !dep.isSkipSelf) {
       result = _getLocalDependency(dep.token);
@@ -187,7 +186,7 @@ class ProvidersNode {
     for (var dep in mainProvider.deps) {
       parameters.add(_getDependency(dep));
     }
-    return new FunctionalDirectiveSource(
+    return FunctionalDirectiveSource(
         mainProvider.token, mainProvider.useClass, parameters);
   }
 }
@@ -283,10 +282,10 @@ class DynamicProviderSource extends ProviderSource {
   @override
   o.Expression build() {
     o.Expression viewExpr =
-        _isAppViewHost ? o.THIS_EXPR : new o.ReadClassMemberExpr('parentView');
+        _isAppViewHost ? o.THIS_EXPR : o.ReadClassMemberExpr('parentView');
     var args = [
       createDiTokenExpression(token),
-      new o.ReadClassMemberExpr('viewData').prop('parentIndex')
+      o.ReadClassMemberExpr('viewData').prop('parentIndex')
     ];
     if (optional) {
       args.add(o.NULL_EXPR);

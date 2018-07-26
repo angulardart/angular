@@ -14,7 +14,7 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
     if (value == null) return null;
     if (value is SafeHtmlImpl) return value.changingThisWillBypassSecurityTrust;
     if (value is SafeValue)
-      throw new UnsupportedError(
+      throw UnsupportedError(
           'Unexpected SecurityContext $value, expecting html');
     return sanitizeHtmlInternal(unsafeCast(value));
   }
@@ -26,7 +26,7 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
       return value.changingThisWillBypassSecurityTrust;
     }
     if (value is SafeValue)
-      throw new UnsupportedError('Unexpected SecurityContext $value, '
+      throw UnsupportedError('Unexpected SecurityContext $value, '
           'expecting style');
     if (value == null) return null;
     return internalSanitizeStyle(value is String ? value : value.toString());
@@ -37,7 +37,7 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
     if (value == null) return null;
     if (value is SafeUrlImpl) return value.changingThisWillBypassSecurityTrust;
     if (value is SafeValue)
-      throw new UnsupportedError('Unexpected SecurityContext $value, '
+      throw UnsupportedError('Unexpected SecurityContext $value, '
           'expecting url');
     return internalSanitizeUrl(value.toString());
   }
@@ -49,26 +49,25 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
       return value.changingThisWillBypassSecurityTrust;
     }
     if (value is SafeValue)
-      throw new UnsupportedError('Unexpected SecurityContext $value, '
+      throw UnsupportedError('Unexpected SecurityContext $value, '
           'expecting resource url');
-    throw new UnsupportedError(
+    throw UnsupportedError(
         'Security violation in resource url. Create SafeValue');
   }
 
   @override
-  SafeHtml bypassSecurityTrustHtml(String value) =>
-      new SafeHtmlImpl(value ?? '');
+  SafeHtml bypassSecurityTrustHtml(String value) => SafeHtmlImpl(value ?? '');
 
   @override
   SafeStyle bypassSecurityTrustStyle(String value) =>
-      new SafeStyleImpl(value ?? '');
+      SafeStyleImpl(value ?? '');
 
   @override
-  SafeUrl bypassSecurityTrustUrl(String value) => new SafeUrlImpl(value ?? '');
+  SafeUrl bypassSecurityTrustUrl(String value) => SafeUrlImpl(value ?? '');
 
   @override
   SafeResourceUrl bypassSecurityTrustResourceUrl(String value) =>
-      new SafeResourceUrlImpl(value ?? '');
+      SafeResourceUrlImpl(value ?? '');
 }
 
 abstract class SafeValueImpl implements SafeValue {

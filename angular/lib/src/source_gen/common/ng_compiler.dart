@@ -15,16 +15,16 @@ OfflineCompiler createTemplateCompiler(
   BuildStep buildStep,
   CompilerFlags flags,
 ) {
-  final reader = new NgAssetReader.fromBuildStep(buildStep);
-  final parser = new ng.Parser(new ng.Lexer());
-  final schemaRegistry = new DomElementSchemaRegistry();
-  final templateParser = new AstTemplateParser(schemaRegistry, parser, flags);
-  return new OfflineCompiler(
-    new AstDirectiveNormalizer(reader),
+  final reader = NgAssetReader.fromBuildStep(buildStep);
+  final parser = ng.Parser(ng.Lexer());
+  final schemaRegistry = DomElementSchemaRegistry();
+  final templateParser = AstTemplateParser(schemaRegistry, parser, flags);
+  return OfflineCompiler(
+    AstDirectiveNormalizer(reader),
     templateParser,
-    new StyleCompiler(flags),
-    new ViewCompiler(flags, parser, schemaRegistry),
-    new DartEmitter(),
+    StyleCompiler(flags),
+    ViewCompiler(flags, parser, schemaRegistry),
+    DartEmitter(),
     {},
   );
 }

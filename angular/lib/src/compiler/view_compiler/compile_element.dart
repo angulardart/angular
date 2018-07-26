@@ -68,7 +68,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   o.Expression _compViewExpr;
 
   var _queryCount = 0;
-  final _queries = new CompileTokenMap<List<CompileQuery>>();
+  final _queries = CompileTokenMap<List<CompileQuery>>();
   ProvidersNode _providers;
 
   List<List<o.Expression>> contentNodesByNgContentIndex;
@@ -96,7 +96,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       this.isInlined = false,
       this.isDeferredComponent = false})
       : super(parent, view, nodeIndex, renderNode, sourceAst) {
-    _providers = new ProvidersNode(this, parent?._providers,
+    _providers = ProvidersNode(this, parent?._providers,
         view == null || view.viewType == ViewType.host);
     if (references.isNotEmpty) {
       referenceTokens = <String, CompileTokenMetadata>{};
@@ -115,7 +115,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     _providers.add(Identifiers.ElementToken, renderNode.toReadExpr());
     _providers.add(Identifiers.HtmlElementToken, renderNode.toReadExpr());
     var readInjectorExpr =
-        new o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
+        o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
     _providers.add(Identifiers.InjectorToken, readInjectorExpr);
 
     if ((hasViewContainer || hasEmbeddedView) && !isInlined) {
@@ -126,13 +126,13 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   }
 
   CompileElement.root()
-      : this(null, null, null, new NodeReference.appViewRoot(), null, null, [],
-            [], false, false, []);
+      : this(null, null, null, NodeReference.appViewRoot(), null, null, [], [],
+            false, false, []);
 
   set componentView(o.Expression componentViewExpr) {
     _compViewExpr = componentViewExpr;
     int indexCount = component.template.ngContentSelectors.length;
-    contentNodesByNgContentIndex = new List<List<o.Expression>>(indexCount);
+    contentNodesByNgContentIndex = List<List<o.Expression>>(indexCount);
     for (var i = 0; i < indexCount; i++) {
       contentNodesByNgContentIndex[i] = <o.Expression>[];
     }
@@ -144,10 +144,10 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   void setEmbeddedView(CompileView view) {
     if (!isInlined) {
       if (appViewContainer == null) {
-        throw new StateError('Expecting appView container to host view');
+        throw StateError('Expecting appView container to host view');
       }
       if (view.viewFactory == null) {
-        throw new StateError('Expecting viewFactory initialization before '
+        throw StateError('Expecting viewFactory initialization before '
             'embedding view');
       }
     }
@@ -157,7 +157,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
           .importExpr(Identifiers.TemplateRef)
           .instantiate([this.appViewContainer, view.viewFactory],
               type: o.importType(Identifiers.TemplateRef));
-      var provider = new CompileProviderMetadata(
+      var provider = CompileProviderMetadata(
           token: identifierToken(Identifiers.TemplateRef),
           useValue: createTemplateRefExpr);
 
@@ -170,7 +170,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       _resolvedProvidersArray
         ..insert(
             0,
-            new ProviderAst(
+            ProviderAst(
               provider.token,
               false,
               [provider],
@@ -202,7 +202,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
           Identifiers.ChangeDetectorRefToken, _compViewExpr.prop('ref'));
     } else {
       _providers.add(
-          Identifiers.ChangeDetectorRefToken, new o.ReadClassMemberExpr('ref'));
+          Identifiers.ChangeDetectorRefToken, o.ReadClassMemberExpr('ref'));
     }
 
     // ComponentLoader is currently just an alias for ViewContainerRef with
@@ -226,7 +226,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     for (var resolvedProvider in _resolvedProvidersArray) {
       var queriesForProvider = _getQueriesFor(resolvedProvider.token);
       queriesWithReads.addAll(queriesForProvider
-          .map((query) => new _QueryWithRead(query, resolvedProvider.token)));
+          .map((query) => _QueryWithRead(query, resolvedProvider.token)));
     }
 
     // For each reference token create CompileTokenMetadata to read query.
@@ -236,9 +236,9 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
             ? _providers.get(token).build()
             : renderNode.toReadExpr();
         view.nameResolver.addLocal(varName, varValue);
-        var varToken = new CompileTokenMetadata(value: varName);
+        var varToken = CompileTokenMetadata(value: varName);
         queriesWithReads.addAll(_getQueriesFor(varToken)
-            .map((query) => new _QueryWithRead(query, varToken)));
+            .map((query) => _QueryWithRead(query, varToken)));
       });
     }
 
@@ -337,9 +337,9 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
           embeddedView.deferredModules[toTemplateExtension(deferredModuleUrl)];
     }
 
-    CompileIdentifierMetadata prefixedId = new CompileIdentifierMetadata(
+    CompileIdentifierMetadata prefixedId = CompileIdentifierMetadata(
         name: 'loadLibrary', prefix: prefix, emitPrefix: true);
-    CompileIdentifierMetadata templatePrefixId = new CompileIdentifierMetadata(
+    CompileIdentifierMetadata templatePrefixId = CompileIdentifierMetadata(
         name: 'loadLibrary', prefix: templatePrefix, emitPrefix: true);
 
     var templateRefExpr = _providers.get(Identifiers.TemplateRefToken).build();
@@ -351,7 +351,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       templateRefExpr,
     ];
 
-    stmts.add(new o.InvokeMemberMethodExpr('loadDeferred', args).toStmt());
+    stmts.add(o.InvokeMemberMethodExpr('loadDeferred', args).toStmt());
   }
 
   void addContentNode(int ngContentIndex, o.Expression nodeExpr) {
@@ -384,7 +384,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
         forceDynamic:
             (resolvedProvider.providerType == ProviderAstType.Component) &&
                 isDeferredComponent);
-    return new LiteralValueSource(resolvedProvider.token, providerExpr);
+    return LiteralValueSource(resolvedProvider.token, providerExpr);
   }
 
   @override
@@ -402,7 +402,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     }
     var viewRelativeExpression =
         getPropertyInView(value, view, currElement.view);
-    return new LiteralValueSource(token, viewRelativeExpression);
+    return LiteralValueSource(token, viewRelativeExpression);
   }
 
   List<o.Expression> getProviderTokens() {
@@ -438,7 +438,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     CompileQueryMetadata metadata,
     ProviderSource directiveInstance,
   ) {
-    final query = new CompileQuery(
+    final query = CompileQuery(
       metadata: metadata,
       storage: view.storage,
       queryRoot: view,

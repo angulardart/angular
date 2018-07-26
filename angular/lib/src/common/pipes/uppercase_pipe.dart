@@ -8,7 +8,7 @@ class UpperCasePipe implements PipeTransform {
   String transform(String value) {
     if (value == null) return value;
     if (value is! String) {
-      throw new InvalidPipeArgumentException(UpperCasePipe, value);
+      throw InvalidPipeArgumentException(UpperCasePipe, value);
     }
     return value.toUpperCase();
   }

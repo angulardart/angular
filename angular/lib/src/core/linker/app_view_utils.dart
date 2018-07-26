@@ -48,7 +48,7 @@ class AppViewUtils {
       String templateUrl,
       ViewEncapsulation encapsulation,
       List<dynamic /* String | List < dynamic > */ > styles) {
-    return new RenderComponentType(
+    return RenderComponentType(
         '$_appId-${_nextCompTypeId++}', templateUrl, encapsulation, styles);
   }
 
@@ -80,7 +80,7 @@ class AppViewUtils {
 
 /// Creates a document fragment from [trustedHtml].
 DocumentFragment createTrustedHtml(String trustedHtml) {
-  return new DocumentFragment.html(
+  return DocumentFragment.html(
     trustedHtml,
     treeSanitizer: NodeTreeSanitizer.trusted,
   );
@@ -326,7 +326,7 @@ bool checkBinding(oldValue, newValue) {
   // It's set during the second "make-sure-nothing-changed" pass of tick().
   if (AppViewUtils.throwOnChanges) {
     if (!devModeEqual(oldValue, newValue)) {
-      throw new ExpressionChangedAfterItHasBeenCheckedException(
+      throw ExpressionChangedAfterItHasBeenCheckedException(
         oldValue,
         newValue,
         null,
@@ -337,8 +337,8 @@ bool checkBinding(oldValue, newValue) {
   return !identical(oldValue, newValue);
 }
 
-const EMPTY_ARRAY = const <Null>[];
-const EMPTY_MAP = const <Null, Null>{};
+const EMPTY_ARRAY = <Null>[];
+const EMPTY_MAP = <Null, Null>{};
 
 T Function(S0) pureProxy1<T, S0>(T Function(S0) fn) {
   T result;
@@ -644,7 +644,7 @@ T Function(S0, S1, S2, S3, S4, S5, S6, S7, S8, S9)
   };
 }
 
-var NS_PREFIX_RE = new RegExp(r'^@([^:]+):(.+)');
+var NS_PREFIX_RE = RegExp(r'^@([^:]+):(.+)');
 List<String> splitNamespace(String name) {
   if (name[0] != '@') {
     return [null, name];

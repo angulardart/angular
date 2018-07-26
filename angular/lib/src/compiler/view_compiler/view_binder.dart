@@ -38,7 +38,7 @@ import "property_binder.dart"
 /// Called by ViewCompiler for each top level CompileView and the
 /// ViewBinderVisitor recursively for each embedded template.
 void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
-  var visitor = new _ViewBinderVisitor(view);
+  var visitor = _ViewBinderVisitor(view);
   templateVisitAll(visitor, parsedTemplate);
   for (var pipe in view.pipes) {
     bindPipeDestroyLifecycleCallbacks(pipe.meta, pipe.instance, pipe.view);
@@ -72,7 +72,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
         compileElement, view.component.analyzedClass);
 
     // Collect directive output names.
-    final directiveOutputs = new Set<String>();
+    final directiveOutputs = Set<String>();
     for (var directiveAst in ast.directives) {
       directiveOutputs.addAll(directiveAst.directive.outputs.values);
     }
@@ -201,20 +201,20 @@ void bindViewHostProperties(CompileView view, Parser parser,
 
   List<BoundElementPropertyAst> hostProperties = <BoundElementPropertyAst>[];
 
-  var span = new SourceSpan(new SourceLocation(0), new SourceLocation(0), '');
+  var span = SourceSpan(SourceLocation(0), SourceLocation(0), '');
   hostProps.forEach((String propName, ast.AST expression) {
     var elementName = view.component.selector;
     hostProperties.add(createElementPropertyAst(elementName, propName,
         expression, span, schemaRegistry, errorCallback));
   });
 
-  final CompileMethod method = new CompileMethod(view.genDebugInfo);
+  final CompileMethod method = CompileMethod(view.genDebugInfo);
   var compileElement = view.componentView.declarationElement;
   var renderNode = view.componentView.declarationElement.renderNode;
   bindAndWriteToRenderer(
       hostProperties,
       o.THIS_EXPR,
-      new o.ReadClassMemberExpr('ctx'),
+      o.ReadClassMemberExpr('ctx'),
       view.component,
       renderNode.toReadExpr(),
       compileElement.isHtmlElement,

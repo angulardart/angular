@@ -24,7 +24,7 @@ class AstDirectiveNormalizer {
     ast.TemplateAst astNode,
     List<CompileIdentifierMetadata> exports,
   ) {
-    astNode.accept(new LegacyExpressionVisitor(exports: exports));
+    astNode.accept(LegacyExpressionVisitor(exports: exports));
   }
 
   Future<CompileDirectiveMetadata> normalizeDirective(
@@ -32,14 +32,14 @@ class AstDirectiveNormalizer {
   ) {
     // For non-components there is nothing to be normalized yet.
     if (!directive.isComponent) {
-      return new Future.value(directive);
+      return Future.value(directive);
     }
     return _normalizeTemplate(
       directive.type,
       directive.template,
       exports: directive.exports,
     ).then((result) {
-      return new CompileDirectiveMetadata(
+      return CompileDirectiveMetadata(
         type: directive.type,
         originType: directive.originType,
         metadataType: directive.metadataType,
@@ -69,7 +69,7 @@ class AstDirectiveNormalizer {
     CompileTemplateMetadata template, {
     List<CompileIdentifierMetadata> exports,
   }) async {
-    template ??= new CompileTemplateMetadata(template: '');
+    template ??= CompileTemplateMetadata(template: '');
     if (template.styles != null && template.styles.isNotEmpty) {
       await _validateStyleUrlsNotMeant(template.styles, directiveType);
     }
@@ -112,7 +112,7 @@ class AstDirectiveNormalizer {
   ) {
     // Short-circuit.
     if (styles.every((s) => s.contains('\n') || !s.endsWith('.css'))) {
-      return new Future.value();
+      return Future.value();
     }
     return Future.wait(
       styles.map((content) {
@@ -137,7 +137,7 @@ class AstDirectiveNormalizer {
   ) {
     // Short-circuit.
     if (content.contains('\n') || !content.endsWith('.html')) {
-      return new Future.value();
+      return Future.value();
     }
     return _reader
         .canRead(_reader.resolveUrl(directiveType.moduleUrl, content))
@@ -161,9 +161,8 @@ class AstDirectiveNormalizer {
     List<CompileIdentifierMetadata> exports = const [],
   }) {
     // Parse the template, and visit to find <style>/<link> and <ng-content>.
-    final visitor = new _TemplateNormalizerVisitor();
-    final exceptionHandler =
-        new AstExceptionHandler(template, directiveType.name);
+    final visitor = _TemplateNormalizerVisitor();
+    final exceptionHandler = AstExceptionHandler(template, directiveType.name);
     final parsedNodes = ast.parse(
       template,
       // TODO: Use the full-file path when possible.
@@ -209,7 +208,7 @@ class AstDirectiveNormalizer {
       encapsulation = ViewEncapsulation.None;
     }
 
-    return new CompileTemplateMetadata(
+    return CompileTemplateMetadata(
       encapsulation: encapsulation,
       template: template,
       templateUrl: templateAbsUrl,

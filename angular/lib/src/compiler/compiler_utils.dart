@@ -5,7 +5,7 @@ import 'compile_metadata.dart';
 const moduleSuffix = ".dart";
 
 List<String> splitAtColon(String input, List<String> defaultValues) {
-  var parts = jsSplit(input.trim(), (new RegExp(r'\s*:\s*')));
+  var parts = jsSplit(input.trim(), (RegExp(r'\s*:\s*')));
   if (parts.length > 1) {
     return parts;
   } else {
@@ -14,7 +14,7 @@ List<String> splitAtColon(String input, List<String> defaultValues) {
 }
 
 String sanitizeIdentifier(Object name) {
-  return name.toString().replaceAll(new RegExp(r'\W'), "_");
+  return name.toString().replaceAll(RegExp(r'\W'), "_");
 }
 
 String templateModuleUrl(CompileTypeMetadata type) {

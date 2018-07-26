@@ -37,7 +37,7 @@ import 'view_compiler_utils.dart'
 import 'view_name_resolver.dart';
 
 o.ReadClassMemberExpr _createBindFieldExpr(num exprIndex) =>
-    new o.ReadClassMemberExpr('_expr_$exprIndex');
+    o.ReadClassMemberExpr('_expr_$exprIndex');
 
 o.ReadVarExpr _createCurrValueExpr(num exprIndex) =>
     o.variable('currVal_$exprIndex');
@@ -104,9 +104,9 @@ void _bind(
   method.addStmt(currValExpr
       .set(checkExpression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
-  method.addStmt(new o.IfStmt(
+  method.addStmt(o.IfStmt(
       o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]),
-      new List.from(actions)
+      List.from(actions)
         ..addAll([
           storage.buildWriteExpr(previousValueField, currValExpr).toStmt()
         ])));
@@ -139,7 +139,7 @@ void _bindLiteral(
       // Replace all 'expr_X' with 'null'
       .map((stmt) => o.replaceVarInStatement(fieldName, o.NULL_EXPR, stmt));
   if (isNullable) {
-    method.addStmt(new o.IfStmt(
+    method.addStmt(o.IfStmt(
         checkExpression.notIdentical(o.NULL_EXPR), mappedActions.toList()));
   } else {
     method.addStmts(mappedActions.toList());
@@ -157,8 +157,8 @@ void bindRenderText(
   var currValExpr = _createCurrValueExpr(bindingIndex);
   // Expression that points to _expr_## stored value.
   var valueField = _createBindFieldExpr(bindingIndex);
-  var dynamicRenderMethod = new CompileMethod(view.genDebugInfo);
-  var constantRenderMethod = new CompileMethod(view.genDebugInfo);
+  var dynamicRenderMethod = CompileMethod(view.genDebugInfo);
+  var constantRenderMethod = CompileMethod(view.genDebugInfo);
   _bind(
       view.component,
       view.nameResolver,
@@ -211,8 +211,8 @@ void bindAndWriteToRenderer(
     bool genDebugInfo,
     {bool updatingHostAttribute = false,
     bool isHostComponent = false}) {
-  final dynamicPropertiesMethod = new CompileMethod(genDebugInfo);
-  final constantPropertiesMethod = new CompileMethod(genDebugInfo);
+  final dynamicPropertiesMethod = CompileMethod(genDebugInfo);
+  final constantPropertiesMethod = CompileMethod(genDebugInfo);
   for (var boundProp in boundProps) {
     // Add to view bindings collection.
     int bindingIndex = nameResolver.createUniqueBindIndex();
@@ -240,7 +240,7 @@ void bindAndWriteToRenderer(
           updateStmts.add(updateClassExpr.toStmt());
           fieldType = o.STRING_TYPE;
         } else {
-          updateStmts.add(new o.InvokeMemberMethodExpr('setProp',
+          updateStmts.add(o.InvokeMemberMethodExpr('setProp',
               [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         }
         break;
@@ -281,7 +281,7 @@ void bindAndWriteToRenderer(
             attrName,
             renderValue,
           );
-          updateStmts.add(new o.InvokeMemberMethodExpr(
+          updateStmts.add(o.InvokeMemberMethodExpr(
             attrNs == null ? 'setAttr' : 'setAttrNS',
             params,
           ).toStmt());
@@ -290,7 +290,7 @@ void bindAndWriteToRenderer(
       case PropertyBindingType.cssClass:
         fieldType = o.BOOL_TYPE;
         renderMethod = isHtmlElement ? 'updateClass' : 'updateElemClass';
-        updateStmts.add(new o.InvokeMemberMethodExpr(renderMethod,
+        updateStmts.add(o.InvokeMemberMethodExpr(renderMethod,
             [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
       case PropertyBindingType.style:
@@ -352,7 +352,7 @@ o.Expression _sanitizedValue(
       methodName = 'sanitizeResourceUrl';
       break;
     default:
-      throw new ArgumentError('internal error, unexpected '
+      throw ArgumentError('internal error, unexpected '
           'TemplateSecurityContext ${boundProp.securityContext}.');
   }
   var ctx = o.importExpr(Identifiers.appViewUtils).prop('sanitizer');
@@ -421,8 +421,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
 
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
-  var dynamicInputsMethod = new CompileMethod(view.genDebugInfo);
-  var constantInputsMethod = new CompileMethod(view.genDebugInfo);
+  var dynamicInputsMethod = CompileMethod(view.genDebugInfo);
+  var constantInputsMethod = CompileMethod(view.genDebugInfo);
   var lifecycleHooks = directive.lifecycleHooks;
   bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.onChanges);
   bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.afterChanges);
@@ -507,7 +507,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
       // component if value has changed.
       String updaterFunctionName = buildUpdaterFunctionName(
           directiveAst.directive.type.name, input.directiveName);
-      var updateFuncExpr = o.importExpr(new CompileIdentifierMetadata(
+      var updateFuncExpr = o.importExpr(CompileIdentifierMetadata(
           name: updaterFunctionName,
           moduleUrl: toTemplateExtension(directive.identifier.moduleUrl),
           prefix: directive.identifier.prefix));
@@ -521,10 +521,10 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           .toStmt());
     }
     if (calcChangesMap) {
-      statements.add(new o.WriteIfNullExpr(
+      statements.add(o.WriteIfNullExpr(
               DetectChangesVars.changes.name,
               o.literalMap(
-                  [], new o.MapType(o.importType(Identifiers.SimpleChange))))
+                  [], o.MapType(o.importType(Identifiers.SimpleChange))))
           .toStmt());
       statements.add(DetectChangesVars.changes
           .key(o.literal(input.directiveName))
@@ -581,8 +581,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
   }
   if (!isStatefulComp && isOnPushComp) {
-    detectChangesInInputsMethod.addStmt(new o.IfStmt(
-        DetectChangesVars.changed, [
+    detectChangesInInputsMethod.addStmt(o.IfStmt(DetectChangesVars.changed, [
       compileElement.componentView.callMethod('markAsCheckOnce', []).toStmt()
     ]));
   }
@@ -621,12 +620,11 @@ void _bindToUpdateMethod(
     method.addStmt(
         view.storage.buildWriteExpr(previousValueField, currValExpr).toStmt());
   } else {
-    method.addStmt(new o.IfStmt(
+    method.addStmt(o.IfStmt(
         o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]),
-        new List.from(actions)
-          ..addAll([
-            new o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()
-          ])));
+        List.from(actions)
+          ..addAll(
+              [o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()])));
   }
 }
 
@@ -635,8 +633,8 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       'Inlining a template that is not an NgIf');
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
-  var dynamicInputsMethod = new CompileMethod(view.genDebugInfo);
-  var constantInputsMethod = new CompileMethod(view.genDebugInfo);
+  var dynamicInputsMethod = CompileMethod(view.genDebugInfo);
+  var constantInputsMethod = CompileMethod(view.genDebugInfo);
 
   var input = directiveAst.inputs.single;
   var bindingIndex = view.nameResolver.createUniqueBindIndex();
@@ -657,10 +655,10 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
     destroyArgs.add(o.literal(true));
   }
   buildStmts
-      .add(new o.InvokeMemberMethodExpr('addInlinedNodes', buildArgs).toStmt());
+      .add(o.InvokeMemberMethodExpr('addInlinedNodes', buildArgs).toStmt());
 
   var destroyStmts = <o.Statement>[
-    new o.InvokeMemberMethodExpr('removeInlinedNodes', destroyArgs).toStmt(),
+    o.InvokeMemberMethodExpr('removeInlinedNodes', destroyArgs).toStmt(),
   ];
 
   List<o.Statement> statements;
@@ -670,16 +668,13 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
     // If the input is immutable, we don't need to handle the case where the
     // condition is false since in that case we simply do nothing.
     statements = <o.Statement>[
-      new o.IfStmt(currValExpr, buildStmts),
+      o.IfStmt(currValExpr, buildStmts),
     ];
     condition = input.value;
   } else {
-    statements = <o.Statement>[
-      new o.IfStmt(currValExpr, buildStmts, destroyStmts)
-    ];
+    statements = <o.Statement>[o.IfStmt(currValExpr, buildStmts, destroyStmts)];
     // This hack is to allow legacy NgIf behavior on null inputs
-    condition =
-        new ast.Binary('==', input.value, new ast.LiteralPrimitive(true));
+    condition = ast.Binary('==', input.value, ast.LiteralPrimitive(true));
   }
 
   _bind(

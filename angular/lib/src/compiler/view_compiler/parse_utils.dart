@@ -47,7 +47,7 @@ HandlerType handlerTypeFromExpression(AST handler) {
   }
 }
 
-final RegExp _eventNameRegExp = new RegExp(r'[^a-zA-Z0-9_]');
+final RegExp _eventNameRegExp = RegExp(r'[^a-zA-Z0-9_]');
 
 /// Sanitizes event name so it can be used to construct a class member
 /// handler method name.

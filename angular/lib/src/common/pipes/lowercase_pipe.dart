@@ -8,7 +8,7 @@ class LowerCasePipe implements PipeTransform {
   String transform(String value) {
     if (value == null) return value;
     if (value is! String) {
-      throw new InvalidPipeArgumentException(LowerCasePipe, value);
+      throw InvalidPipeArgumentException(LowerCasePipe, value);
     }
     return value.toLowerCase();
   }

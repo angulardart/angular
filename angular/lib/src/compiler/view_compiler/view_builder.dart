@@ -92,7 +92,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   void visitBoundText(BoundTextAst ast, CompileElement parent) {
     int nodeIndex = view.nodes.length;
     NodeReference renderNode = view.createBoundTextNode(parent, nodeIndex, ast);
-    var compileNode = new CompileNode(parent, view, nodeIndex, renderNode, ast);
+    var compileNode = CompileNode(parent, view, nodeIndex, renderNode, ast);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
   }
@@ -101,7 +101,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     int nodeIndex = view.nodes.length;
     NodeReference renderNode =
         view.createTextNode(parent, nodeIndex, o.literal(ast.value), ast);
-    var compileNode = new CompileNode(parent, view, nodeIndex, renderNode, ast);
+    var compileNode = CompileNode(parent, view, nodeIndex, renderNode, ast);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
   }
@@ -121,12 +121,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.host;
     NodeReference elementRef;
     if (isHostRootView) {
-      elementRef = new NodeReference.appViewRoot();
+      elementRef = NodeReference.appViewRoot();
     } else if (view.isInlined) {
-      elementRef = new NodeReference.inlinedNode(
+      elementRef = NodeReference.inlinedNode(
           parent, view.declarationElement.nodeIndex, nodeIndex);
     } else {
-      elementRef = new NodeReference(parent, nodeIndex);
+      elementRef = NodeReference(parent, nodeIndex);
     }
 
     var directives = <CompileDirectiveMetadata>[];
@@ -164,7 +164,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     view.shimCssForNode(elementRef, nodeIndex, Identifiers.HTML_HTML_ELEMENT);
 
-    var compileElement = new CompileElement(
+    var compileElement = CompileElement(
         parent,
         this.view,
         nodeIndex,
@@ -238,7 +238,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         : identifierFromTagName(ast.name);
     view.shimCssForNode(elementRef, nodeIndex, elementType);
 
-    var compileElement = new CompileElement(
+    var compileElement = CompileElement(
         parent,
         this.view,
         nodeIndex,
@@ -272,7 +272,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         view.createViewContainerAnchor(parent, nodeIndex, ast, isPureHtml);
     var directives =
         ast.directives.map((directiveAst) => directiveAst.directive).toList();
-    var compileElement = new CompileElement(
+    var compileElement = CompileElement(
         parent,
         this.view,
         nodeIndex,
@@ -288,7 +288,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         isInlined: isPureHtml);
     view.nodes.add(compileElement);
     nestedViewCount++;
-    var embeddedView = new CompileView(
+    var embeddedView = CompileView(
         view.component,
         view.genConfig,
         view.directiveTypes,
@@ -301,7 +301,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         isInlined: isPureHtml);
 
     // Create a visitor for embedded view and visit all nodes.
-    var embeddedViewVisitor = new ViewBuilderVisitor(
+    var embeddedViewVisitor = ViewBuilderVisitor(
         embeddedView, stylesCompileResult,
         isInlinedView: isPureHtml);
     templateVisitAll(
@@ -351,8 +351,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     final renderNode = ast.value.containsHtml
         ? view.createHtml(parent, nodeIndex, message)
         : view.createTextNode(parent, nodeIndex, message, ast);
-    final compileNode =
-        new CompileNode(parent, view, nodeIndex, renderNode, ast);
+    final compileNode = CompileNode(parent, view, nodeIndex, renderNode, ast);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
   }
@@ -366,7 +365,7 @@ o.ClassStmt createViewClass(
 ) {
   var viewConstructor = _createViewClassConstructor(view);
   var viewMethods = <o.ClassMethod>[
-    new o.ClassMethod("build", [], _generateBuildMethod(view, parser),
+    o.ClassMethod("build", [], _generateBuildMethod(view, parser),
         o.importType(Identifiers.ComponentRef,
             // The 'HOST' view is the only implementation that actually returns
             // a ComponentRef, the rest statically declare they do but in
@@ -375,20 +374,20 @@ o.ClassStmt createViewClass(
             // https://github.com/dart-lang/angular/issues/1421
             [_getContextType(view)]), null, ['override']),
     view.writeInjectorGetMethod(),
-    new o.ClassMethod("detectChangesInternal", [],
+    o.ClassMethod("detectChangesInternal", [],
         view.writeChangeDetectionStatements(), null, null, ['override']),
-    new o.ClassMethod("dirtyParentQueriesInternal", [],
+    o.ClassMethod("dirtyParentQueriesInternal", [],
         view.dirtyParentQueriesMethod.finish(), null, null, ['override']),
-    new o.ClassMethod("destroyInternal", [], _generateDestroyMethod(view), null,
+    o.ClassMethod("destroyInternal", [], _generateDestroyMethod(view), null,
         null, ['override'])
   ]..addAll(view.methods);
   if (view.detectHostChangesMethod != null) {
-    viewMethods.add(new o.ClassMethod(
+    viewMethods.add(o.ClassMethod(
         'detectHostChanges',
-        [new o.FnParam(DetectChangesVars.firstCheck.name, o.BOOL_TYPE)],
+        [o.FnParam(DetectChangesVars.firstCheck.name, o.BOOL_TYPE)],
         view.detectHostChangesMethod.finish()));
   }
-  var viewClass = new o.ClassStmt(
+  var viewClass = o.ClassStmt(
     view.className,
     o.importExpr(Identifiers.AppView, typeParams: [_getContextType(view)]),
     view.storage.fields,
@@ -410,9 +409,9 @@ o.ClassMethod _createViewClassConstructor(CompileView view) {
       .map((variable) => [variable.value, o.NULL_EXPR])
       .toList();
   var viewConstructorArgs = [
-    new o.FnParam(ViewConstructorVars.parentView.name,
+    o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
-    new o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE)
+    o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE)
   ];
   var superConstructorArgs = [
     createEnumExpression(Identifiers.ViewType, view.viewType),
@@ -421,7 +420,7 @@ o.ClassMethod _createViewClassConstructor(CompileView view) {
     ViewConstructorVars.parentIndex,
     changeDetectionStrategyToConst(_getChangeDetectionMode(view))
   ];
-  o.ClassMethod ctor = new o.ClassMethod(null, viewConstructorArgs,
+  o.ClassMethod ctor = o.ClassMethod(null, viewConstructorArgs,
       [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()]);
   if (view.viewType == ViewType.component && view.viewIndex == 0) {
     // No namespace just call [document.createElement].
@@ -435,9 +434,9 @@ o.ClassMethod _createViewClassConstructor(CompileView view) {
         .importExpr(Identifiers.HTML_DOCUMENT)
         .callMethod('createElement', [o.literal(tagName)]);
 
-    ctor.body.add(new o.WriteClassMemberExpr(
-            appViewRootElementName, createRootElementExpr)
-        .toStmt());
+    ctor.body.add(
+        o.WriteClassMemberExpr(appViewRootElementName, createRootElementExpr)
+            .toStmt());
 
     // Write literal attribute values on element.
     CompileDirectiveMetadata componentMeta = view.component;
@@ -482,12 +481,12 @@ void _addRenderTypeCtorInitialization(CompileView view, o.ClassStmt viewClass) {
   if (view.viewIndex == 0) {
     var renderTypeExpr = _constructRenderType(view, viewClass, viewConstructor);
     viewConstructor.body.add(
-        new o.InvokeMemberMethodExpr('setupComponentType', [renderTypeExpr])
+        o.InvokeMemberMethodExpr('setupComponentType', [renderTypeExpr])
             .toStmt());
   } else {
-    viewConstructor.body.add(new o.WriteClassMemberExpr(
+    viewConstructor.body.add(o.WriteClassMemberExpr(
             'componentType',
-            new o.ReadStaticMemberExpr('_renderType',
+            o.ReadStaticMemberExpr('_renderType',
                 sourceClass: view.componentView.classType))
         .toStmt());
   }
@@ -500,15 +499,14 @@ o.Expression _constructRenderType(
   final templateUrlInfo = view.component.type.moduleUrl;
   // renderType static to hold RenderComponentType instance.
   String renderTypeVarName = '_renderType';
-  o.Expression renderCompTypeVar =
-      new o.ReadStaticMemberExpr(renderTypeVarName);
+  o.Expression renderCompTypeVar = o.ReadStaticMemberExpr(renderTypeVarName);
 
-  o.Statement initRenderTypeStatement = new o.WriteStaticMemberExpr(
+  o.Statement initRenderTypeStatement = o.WriteStaticMemberExpr(
           renderTypeVarName,
           o
               .importExpr(Identifiers.appViewUtils)
               .callMethod("createRenderType", [
-            new o.ConditionalExpr(
+            o.ConditionalExpr(
               o.importExpr(Identifiers.isDevMode),
               o.literal(templateUrlInfo),
               o.NULL_EXPR,
@@ -524,7 +522,7 @@ o.Expression _constructRenderType(
 
   viewConstructor.body.add(initRenderTypeStatement);
 
-  viewClass.fields.add(new o.ClassField(renderTypeVarName,
+  viewClass.fields.add(o.ClassField(renderTypeVarName,
       modifiers: [o.StmtModifier.Static],
       outputType: o.importType(Identifiers.RenderComponentType)));
 
@@ -546,9 +544,9 @@ List<o.Statement> _generateDestroyMethod(CompileView view) {
 
 o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
   var viewFactoryArgs = [
-    new o.FnParam(ViewConstructorVars.parentView.name,
+    o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
-    new o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE),
+    o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE),
   ];
   var initRenderCompTypeStmts = [];
   o.OutputType factoryReturnType;
@@ -563,12 +561,12 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
   return o
       .fn(
           viewFactoryArgs,
-          (new List.from(initRenderCompTypeStmts)
+          (List.from(initRenderCompTypeStmts)
             ..addAll([
-              new o.ReturnStatement(o.variable(viewClass.name).instantiate(
-                  viewClass.constructorMethod.params
-                      .map((o.FnParam param) => o.variable(param.name))
-                      .toList()))
+              o.ReturnStatement(o.variable(viewClass.name).instantiate(viewClass
+                  .constructorMethod.params
+                  .map((o.FnParam param) => o.variable(param.name))
+                  .toList()))
             ])),
           factoryReturnType)
       .toDeclStmt(
@@ -585,10 +583,10 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   if (isComponent) {
     cachedRootEl = o.variable('_rootEl');
     parentRenderNodeStmts.add(cachedRootEl
-        .set(new o.ReadClassMemberExpr(appViewRootElementName))
+        .set(o.ReadClassMemberExpr(appViewRootElementName))
         .toDeclStmt(null, [o.StmtModifier.Final]));
     final nodeType = o.importType(Identifiers.HTML_HTML_ELEMENT);
-    final parentRenderNodeExpr = new o.InvokeMemberMethodExpr(
+    final parentRenderNodeExpr = o.InvokeMemberMethodExpr(
       "initViewRoot",
       [cachedRootEl],
     );
@@ -613,7 +611,7 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
         ? o.importType(view.component.type)
         : null;
     statements.add(DetectChangesVars.cachedCtx
-        .set(new o.ReadClassMemberExpr('ctx'))
+        .set(o.ReadClassMemberExpr('ctx'))
         .toDeclStmt(contextType, [o.StmtModifier.Final]));
   }
 
@@ -631,9 +629,9 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     // Mock-like directives may have null subscriptions which must be
     // filtered out to prevent an exception when they are later cancelled.
     final notNull = o.variable('notNull');
-    final notNullAssignment = notNull.set(new o.FunctionExpr(
-      [new o.FnParam('i')],
-      [new o.ReturnStatement(o.variable('i').notEquals(o.NULL_EXPR))],
+    final notNullAssignment = notNull.set(o.FunctionExpr(
+      [o.FnParam('i')],
+      [o.ReturnStatement(o.variable('i').notEquals(o.NULL_EXPR))],
     ));
     statements.add(notNullAssignment.toDeclStmt(null, [o.StmtModifier.Final]));
     final notNullSubscriptions =
@@ -651,10 +649,9 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
       rootElements.entries.length == 1 &&
       subscriptions == o.NULL_EXPR) {
     statements.add(
-        new o.InvokeMemberMethodExpr('init0', [rootElements.entries[0]])
-            .toStmt());
+        o.InvokeMemberMethodExpr('init0', [rootElements.entries[0]]).toStmt());
   } else {
-    statements.add(new o.InvokeMemberMethodExpr('init', initParams).toStmt());
+    statements.add(o.InvokeMemberMethodExpr('init', initParams).toStmt());
   }
 
   if (isComponentRoot) {
@@ -671,7 +668,7 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     // Connect ComponentState callback to view.
     statements.add((DetectChangesVars.cachedCtx
             .prop('stateChangeCallback')
-            .set(new o.ReadClassMemberExpr('markStateChanged')))
+            .set(o.ReadClassMemberExpr('markStateChanged')))
         .toStmt());
   }
 
@@ -695,14 +692,14 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   if (view.genConfig.profileFor == Profile.build) {
     genProfileBuildEnd(view, statements);
   }
-  statements.add(new o.ReturnStatement(resultExpr));
+  statements.add(o.ReturnStatement(resultExpr));
 
   var readVars = o.findReadVarNames(statements);
   if (readVars.contains(cachedParentIndexVarName)) {
     statements.insert(
         0,
-        new o.DeclareVarStmt(cachedParentIndexVarName,
-            new ReadClassMemberExpr('viewData').prop('parentIndex')));
+        o.DeclareVarStmt(cachedParentIndexVarName,
+            ReadClassMemberExpr('viewData').prop('parentIndex')));
   }
   return statements;
 }
@@ -723,7 +720,7 @@ void _writeComponentHostEventListeners(
     o.Expression handlerExpr;
     int numArgs;
     if (handlerType == HandlerType.notSimple) {
-      var context = new o.ReadClassMemberExpr('ctx');
+      var context = o.ReadClassMemberExpr('ctx');
       var actionStmts = convertCdStatementToIr(
         view.nameResolver,
         context,
@@ -735,17 +732,15 @@ void _writeComponentHostEventListeners(
         component,
       );
       var actionExpr = convertStmtIntoExpression(actionStmts.last);
-      List<o.Statement> stmts = <o.Statement>[
-        new o.ReturnStatement(actionExpr)
-      ];
+      List<o.Statement> stmts = <o.Statement>[o.ReturnStatement(actionExpr)];
       String methodName = '_handle_${sanitizeEventName(eventName)}__';
-      view.methods.add(new o.ClassMethod(
+      view.methods.add(o.ClassMethod(
           methodName,
-          [new o.FnParam(EventHandlerVars.event.name, o.importType(null))],
+          [o.FnParam(EventHandlerVars.event.name, o.importType(null))],
           stmts,
           o.BOOL_TYPE,
           [o.StmtModifier.Private]));
-      handlerExpr = new o.ReadClassMemberExpr(methodName);
+      handlerExpr = o.ReadClassMemberExpr(methodName);
       numArgs = 1;
     } else {
       var context = DetectChangesVars.cachedCtx;
@@ -762,11 +757,11 @@ void _writeComponentHostEventListeners(
       var actionExpr = convertStmtIntoExpression(actionStmts.last);
       assert(actionExpr is o.InvokeMethodExpr);
       var callExpr = actionExpr as o.InvokeMethodExpr;
-      handlerExpr = new o.ReadPropExpr(callExpr.receiver, callExpr.name);
+      handlerExpr = o.ReadPropExpr(callExpr.receiver, callExpr.name);
       numArgs = handlerType == HandlerType.simpleNoArgs ? 0 : 1;
     }
 
-    final wrappedHandlerExpr = new o.InvokeMemberMethodExpr(
+    final wrappedHandlerExpr = o.InvokeMemberMethodExpr(
       'eventHandler$numArgs',
       [handlerExpr],
     );
@@ -817,7 +812,7 @@ int _getChangeDetectionMode(CompileView view) {
 
 /// Writes proxy for setting an @Input property.
 void writeInputUpdaters(CompileView view, List<o.Statement> targetStatements) {
-  var writtenInputs = new Set<String>();
+  var writtenInputs = Set<String>();
   if (view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
     for (String input in view.component.inputs.keys) {
       if (!writtenInputs.contains(input)) {
@@ -836,16 +831,16 @@ void _writeInputUpdater(
       : null;
   var inputType = inputTypeMeta != null ? o.importType(inputTypeMeta) : null;
   var arguments = [
-    new o.FnParam('component', _getContextType(view)),
-    new o.FnParam(prevValueVarName, inputType),
-    new o.FnParam(inputName, inputType)
+    o.FnParam('component', _getContextType(view)),
+    o.FnParam(prevValueVarName, inputType),
+    o.FnParam(inputName, inputType)
   ];
   String name = buildUpdaterFunctionName(view.component.type.name, inputName);
   var statements = <o.Statement>[];
   const String changedBoolVarName = 'changed';
   o.Expression conditionExpr;
-  var prevValueExpr = new o.ReadVarExpr(prevValueVarName);
-  var newValueExpr = new o.ReadVarExpr(inputName);
+  var prevValueExpr = o.ReadVarExpr(prevValueVarName);
+  var newValueExpr = o.ReadVarExpr(inputName);
   if (view.genConfig.genDebugInfo) {
     // In debug mode call checkBinding so throwOnChanges is checked for
     // stabilization.
@@ -853,8 +848,8 @@ void _writeInputUpdater(
         .importExpr(Identifiers.checkBinding)
         .callFn([prevValueExpr, newValueExpr]);
   } else {
-    conditionExpr = new o.ReadVarExpr(prevValueVarName)
-        .notIdentical(new o.ReadVarExpr(inputName));
+    conditionExpr =
+        o.ReadVarExpr(prevValueVarName).notIdentical(o.ReadVarExpr(inputName));
   }
   // Generates: bool changed = !identical(prevValue, newValue);
   statements.add(o
@@ -866,21 +861,19 @@ void _writeInputUpdater(
   //               setState() //optional
   //            }
   var updateStatements = <o.Statement>[];
-  updateStatements.add(new o.ReadVarExpr('component')
-      .prop(inputName)
-      .set(newValueExpr)
-      .toStmt());
+  updateStatements.add(
+      o.ReadVarExpr('component').prop(inputName).set(newValueExpr).toStmt());
   o.Statement conditionalUpdateStatement =
-      new o.IfStmt(new o.ReadVarExpr(changedBoolVarName), updateStatements);
+      o.IfStmt(o.ReadVarExpr(changedBoolVarName), updateStatements);
   statements.add(conditionalUpdateStatement);
   // Generates: return changed;
-  statements.add(new o.ReturnStatement(new o.ReadVarExpr(changedBoolVarName)));
+  statements.add(o.ReturnStatement(o.ReadVarExpr(changedBoolVarName)));
   // Add function decl as top level statement.
   targetStatements
       .add(o.fn(arguments, statements, o.BOOL_TYPE).toDeclStmt(name));
 }
 
-final _pureHtmlVisitor = new IsPureHtmlVisitor();
+final _pureHtmlVisitor = IsPureHtmlVisitor();
 
 bool _isPureHtml(EmbeddedTemplateAst ast) {
   if (ast.directives.length != 1) return false;

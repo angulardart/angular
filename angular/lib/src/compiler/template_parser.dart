@@ -48,7 +48,7 @@ class TemplateContext {
   ]) {
     level ??= ParseErrorLevel.FATAL;
     exceptionHandler
-        .handleParseError(new TemplateParseError(message, sourceSpan, level));
+        .handleParseError(TemplateParseError(message, sourceSpan, level));
   }
 }
 
@@ -144,7 +144,7 @@ BoundElementPropertyAst createElementPropertyAst(
       securityContext = null;
     }
   }
-  return new BoundElementPropertyAst(
+  return BoundElementPropertyAst(
     boundPropertyName,
     bindingType,
     securityContext,
@@ -155,12 +155,12 @@ BoundElementPropertyAst createElementPropertyAst(
 }
 
 List<String> _splitClasses(String classAttrValue) {
-  return jsSplit(classAttrValue.trim(), (new RegExp(r'\s+')));
+  return jsSplit(classAttrValue.trim(), (RegExp(r'\s+')));
 }
 
 CssSelector createElementCssSelector(
     String elementName, List<List<String>> matchableAttrs) {
-  var cssSelector = new CssSelector();
+  var cssSelector = CssSelector();
   var elNameNoNs = _splitNsName(elementName)[1];
   cssSelector.setElement(elNameNoNs);
   for (var i = 0; i < matchableAttrs.length; i++) {
@@ -198,7 +198,7 @@ List<T> removeDuplicates<T>(List<T> items) {
         return rMeta.type.name == itemMeta.type.name &&
             rMeta.type.moduleUrl == itemMeta.type.moduleUrl;
       } else
-        throw new ArgumentError();
+        throw ArgumentError();
     }).isNotEmpty;
     if (!hasMatch) {
       res.add(item);
@@ -211,7 +211,7 @@ String mergeNsAndName(String prefix, String localName) {
   return prefix != null ? '@$prefix:$localName' : localName;
 }
 
-final _nsPrefixRegExp = new RegExp(r'^@([^:]+):(.+)');
+final _nsPrefixRegExp = RegExp(r'^@([^:]+):(.+)');
 List<String> _splitNsName(String elementName) {
   if (elementName[0] != "@") {
     return [null, elementName];

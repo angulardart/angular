@@ -14,7 +14,7 @@ class StylesheetCompiler implements Builder {
 
   @override
   final buildExtensions = const {
-    CSS_EXTENSION: const [
+    CSS_EXTENSION: [
       SHIMMED_STYLESHEET_EXTENSION,
       NON_SHIMMED_STYLESHEET_EXTENSION,
     ],

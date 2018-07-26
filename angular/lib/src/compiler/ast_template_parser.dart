@@ -58,7 +58,7 @@ class AstTemplateParser implements TemplateParser {
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
       String name) {
-    final exceptionHandler = new AstExceptionHandler(template, name);
+    final exceptionHandler = AstExceptionHandler(template, name);
 
     final parsedAst = _parseTemplate(template, name, exceptionHandler);
     exceptionHandler.maybeReportExceptions();
@@ -134,14 +134,13 @@ class AstTemplateParser implements TemplateParser {
 
   List<ast.TemplateAst> _filterElements(
       List<ast.TemplateAst> parsedAst, bool preserveWhitespace) {
-    var filteredElements = new _ElementFilter()
-        .visitAll<ast.StandaloneTemplateAst>(
-            parsedAst.cast<ast.StandaloneTemplateAst>());
+    var filteredElements = _ElementFilter().visitAll<ast.StandaloneTemplateAst>(
+        parsedAst.cast<ast.StandaloneTemplateAst>());
     // New preserveWhitespace: false semantics (and preserveWhitespace: false).
     if (!preserveWhitespace) {
-      return new ast.MinimizeWhitespaceVisitor().visitAllRoot(filteredElements);
+      return ast.MinimizeWhitespaceVisitor().visitAllRoot(filteredElements);
     }
-    return new _PreserveWhitespaceVisitor().visitAll(filteredElements);
+    return _PreserveWhitespaceVisitor().visitAll(filteredElements);
   }
 
   List<ng.TemplateAst> _bindDirectives(
@@ -149,8 +148,8 @@ class AstTemplateParser implements TemplateParser {
       CompileDirectiveMetadata compMeta,
       List<ast.TemplateAst> filteredAst,
       AstExceptionHandler exceptionHandler) {
-    final visitor = new _BindDirectivesVisitor(flags.i18nEnabled);
-    final context = new _ParseContext.forRoot(new TemplateContext(
+    final visitor = _BindDirectivesVisitor(flags.i18nEnabled);
+    final context = _ParseContext.forRoot(TemplateContext(
         parser: parser,
         schemaRegistry: schemaRegistry,
         directives: removeDuplicates(directives),
@@ -164,9 +163,9 @@ class AstTemplateParser implements TemplateParser {
       List<ng.TemplateAst> visitedAsts,
       SourceSpan sourceSpan,
       AstExceptionHandler exceptionHandler) {
-    var providerViewContext = new ProviderViewContext(compMeta, sourceSpan);
-    final providerVisitor = new _ProviderVisitor(providerViewContext);
-    final ProviderElementContext providerContext = new ProviderElementContext(
+    var providerViewContext = ProviderViewContext(compMeta, sourceSpan);
+    final providerVisitor = _ProviderVisitor(providerViewContext);
+    final ProviderElementContext providerContext = ProviderElementContext(
         providerViewContext, null, false, [], [], [], null);
     final providedAsts = providerVisitor.visitAll(visitedAsts, providerContext);
     exceptionHandler.handleAll(providerViewContext.errors);
@@ -175,21 +174,19 @@ class AstTemplateParser implements TemplateParser {
 
   List<ng.TemplateAst> _optimize(
           CompileDirectiveMetadata compMeta, List<ng.TemplateAst> asts) =>
-      new OptimizeTemplateAstVisitor(compMeta).visitAll(asts);
+      OptimizeTemplateAstVisitor(compMeta).visitAll(asts);
 
   List<ng.TemplateAst> _sortInputs(List<ng.TemplateAst> asts) =>
-      new _SortInputsVisitor().visitAll(asts);
+      _SortInputsVisitor().visitAll(asts);
 
   List<ast.TemplateAst> _applyImplicitNamespace(
           List<ast.TemplateAst> parsedAst) =>
-      parsedAst
-          .map((asNode) => asNode.accept(new _NamespaceVisitor()))
-          .toList();
+      parsedAst.map((asNode) => asNode.accept(_NamespaceVisitor())).toList();
 
   void _validatePipeNames(List<ng.TemplateAst> parsedAsts,
       List<CompilePipeMetadata> pipes, AstExceptionHandler exceptionHandler) {
     var pipeValidator =
-        new _PipeValidator(removeDuplicates(pipes), exceptionHandler);
+        _PipeValidator(removeDuplicates(pipes), exceptionHandler);
     for (final ast in parsedAsts) {
       ast.visit(pipeValidator, null);
     }
@@ -198,7 +195,7 @@ class AstTemplateParser implements TemplateParser {
   void _validateTemplate(
       List<ast.TemplateAst> parsedAst, AstExceptionHandler exceptionHandler) {
     for (final ast in parsedAst) {
-      ast.accept(new _TemplateValidator(exceptionHandler));
+      ast.accept(_TemplateValidator(exceptionHandler));
     }
   }
 }
@@ -224,7 +221,7 @@ class _BindDirectivesVisitor
   ng.TemplateAst visitElement(ast.ElementAst astNode,
       [_ParseContext parentContext]) {
     final elementContext =
-        new _ParseContext.forElement(astNode, parentContext.templateContext);
+        _ParseContext.forElement(astNode, parentContext.templateContext);
     final attributes = <ast.AttributeAst>[];
     final i18nAttributes = <ng.I18nAttrAst>[];
     final i18nAttributeAnnotations =
@@ -240,8 +237,8 @@ class _BindDirectivesVisitor
           // treat them as non-internationalized attributes.
           continue;
         }
-        final message = new I18nMessage(attribute.value, metadata);
-        i18nAttributes.add(new ng.I18nAttrAst(
+        final message = I18nMessage(attribute.value, metadata);
+        i18nAttributes.add(ng.I18nAttrAst(
           attribute.name,
           message,
           attribute.sourceSpan,
@@ -253,7 +250,7 @@ class _BindDirectivesVisitor
     // Note: We rely on the fact that attributes are visited before properties
     // in order to ensure that properties take precedence over attributes with
     // the same name.
-    return new ng.ElementAst(
+    return ng.ElementAst(
         astNode.name,
         _visitAll(attributes, elementContext),
         i18nAttributes,
@@ -318,17 +315,16 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitContainer(ast.ContainerAst astNode,
           [_ParseContext context]) =>
-      new ng.NgContainerAst(
-          _visitChildren(astNode, astNode.annotations, context),
+      ng.NgContainerAst(_visitChildren(astNode, astNode.annotations, context),
           astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
       [_ParseContext parentContext]) {
     final embeddedContext =
-        new _ParseContext.forTemplate(astNode, parentContext.templateContext);
+        _ParseContext.forTemplate(astNode, parentContext.templateContext);
     _visitProperties(astNode.properties, astNode.attributes, embeddedContext);
-    return new ng.EmbeddedTemplateAst(
+    return ng.EmbeddedTemplateAst(
         _visitAll(astNode.attributes, embeddedContext),
         _visitAll(astNode.events, embeddedContext),
         _visitAll(astNode.references, embeddedContext),
@@ -367,7 +363,7 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitEmbeddedContent(ast.EmbeddedContentAst astNode,
           [_ParseContext context]) =>
-      new ng.NgContentAst(
+      ng.NgContentAst(
           ngContentCount++,
           _findNgContentIndexForEmbeddedContent(context, astNode),
           astNode.sourceSpan);
@@ -388,7 +384,7 @@ class _BindDirectivesVisitor
     try {
       var value = context.templateContext.parser.parseAction(
           astNode.value, _location(astNode), context.templateContext.exports);
-      return new ng.BoundEventAst(
+      return ng.BoundEventAst(
           _getEventName(astNode), value, astNode.sourceSpan);
     } on ParseException catch (e) {
       context.templateContext.reportError(e.message, astNode.sourceSpan);
@@ -402,8 +398,7 @@ class _BindDirectivesVisitor
     // If there is interpolation, then we will handle this node elsewhere.
     if (astNode.mustaches?.isNotEmpty ?? false) return null;
     context.bindLiteralToDirective(astNode);
-    return new ng.AttrAst(
-        astNode.name, astNode.value ?? '', astNode.sourceSpan);
+    return ng.AttrAst(astNode.name, astNode.value ?? '', astNode.sourceSpan);
   }
 
   @override
@@ -451,20 +446,20 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitLetBinding(ast.LetBindingAst astNode,
           [_ParseContext _]) =>
-      new ng.VariableAst(astNode.name, astNode.value, astNode.sourceSpan);
+      ng.VariableAst(astNode.name, astNode.value, astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitReference(ast.ReferenceAst astNode,
           [_ParseContext context]) =>
-      new ng.ReferenceAst(
+      ng.ReferenceAst(
           astNode.variable,
           context.identifierForReference(astNode.identifier),
           astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitText(ast.TextAst astNode, [_ParseContext context]) =>
-      new ng.TextAst(astNode.value,
-          context.findNgContentIndex(_textCssSelector), astNode.sourceSpan);
+      ng.TextAst(astNode.value, context.findNgContentIndex(_textCssSelector),
+          astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitInterpolation(ast.InterpolationAst astNode,
@@ -474,7 +469,7 @@ class _BindDirectivesVisitor
           '{{${astNode.value}}}',
           _location(astNode),
           context.templateContext.exports);
-      return new ng.BoundTextAst(element,
+      return ng.BoundTextAst(element,
           context.findNgContentIndex(_textCssSelector), astNode.sourceSpan);
     } on ParseException catch (e) {
       context.templateContext.reportError(e.message, astNode.sourceSpan);
@@ -484,12 +479,12 @@ class _BindDirectivesVisitor
 
   @override
   ng.TemplateAst visitBanana(ast.BananaAst astNode, [_ParseContext _]) =>
-      throw new UnimplementedError('Don\'t know how to handle bananas');
+      throw UnimplementedError('Don\'t know how to handle bananas');
 
   @override
   ng.TemplateAst visitCloseElement(ast.CloseElementAst astNode,
           [_ParseContext _]) =>
-      throw new UnimplementedError('Don\'t know how to handle close elements');
+      throw UnimplementedError('Don\'t know how to handle close elements');
 
   @override
   ng.TemplateAst visitComment(ast.CommentAst astNode, [_ParseContext _]) =>
@@ -498,16 +493,16 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitExpression(ast.ExpressionAst astNode,
           [_ParseContext _]) =>
-      throw new UnimplementedError('Don\'t know how to handle expressions.');
+      throw UnimplementedError('Don\'t know how to handle expressions.');
 
   @override
   ng.TemplateAst visitStar(ast.StarAst astNode, [_ParseContext _]) =>
-      throw new UnimplementedError('Don\'t know how to handle stars.');
+      throw UnimplementedError('Don\'t know how to handle stars.');
 
   @override
   ng.TemplateAst visitAnnotation(ast.AnnotationAst astNode,
       [_ParseContext context]) {
-    throw new UnimplementedError('Don\'t know how to handle annotations.');
+    throw UnimplementedError('Don\'t know how to handle annotations.');
   }
 
   List<T> _visitAll<T extends ng.TemplateAst>(
@@ -586,7 +581,7 @@ class _ParseContext {
         _location(element),
         templateContext);
     var firstComponent = _firstComponent(boundDirectives);
-    return new _ParseContext._(
+    return _ParseContext._(
         templateContext,
         element.name,
         boundDirectives,
@@ -604,7 +599,7 @@ class _ParseContext {
         _location(template),
         templateContext);
     var firstComponent = _firstComponent(boundDirectives);
-    return new _ParseContext._(
+    return _ParseContext._(
         templateContext,
         _templateElement,
         boundDirectives,
@@ -627,7 +622,7 @@ class _ParseContext {
       boundDirectives,
       astNode.name,
       astNode.value == null
-          ? new EmptyExpr()
+          ? EmptyExpr()
           : templateContext.parser
               .wrapLiteralPrimitive(astNode.value, _location(astNode)),
       astNode.sourceSpan);
@@ -649,7 +644,7 @@ class _ParseContext {
         var templateName = directive.directive.inputs[directiveName];
         if (templateName == name) {
           _removeExisting(directive.inputs, templateName);
-          directive.inputs.add(new ng.BoundDirectivePropertyAst(
+          directive.inputs.add(ng.BoundDirectivePropertyAst(
               directiveName, templateName, value, sourceSpan));
           foundMatch = true;
           continue directive;
@@ -687,7 +682,7 @@ class _ParseContext {
           String location,
           TemplateContext templateContext) =>
       directiveMetas
-          .map((directive) => new ng.DirectiveAst(
+          .map((directive) => ng.DirectiveAst(
               directive,
               [] /* inputs */,
               _bindProperties(directive, sourceSpan, elementName, location,
@@ -709,7 +704,7 @@ class _ParseContext {
   static List<CompileDirectiveMetadata> _parseDirectives(
       List<CompileDirectiveMetadata> directives,
       CssSelector elementCssSelector) {
-    var matchedDirectives = new Set();
+    var matchedDirectives = Set();
     _selectorMatcher(directives).match(elementCssSelector,
         (selector, directive) {
       matchedDirectives.add(directive);
@@ -721,7 +716,7 @@ class _ParseContext {
 
   static SelectorMatcher _selectorMatcher(
       List<CompileDirectiveMetadata> directives) {
-    final SelectorMatcher selectorMatcher = new SelectorMatcher();
+    final SelectorMatcher selectorMatcher = SelectorMatcher();
     for (var directive in directives) {
       var selector = CssSelector.parse(directive.selector);
       selectorMatcher.addSelectables(selector, directive);
@@ -766,7 +761,7 @@ class _ParseContext {
         var expression = directive.hostListeners[eventName];
         var value = templateContext.parser
             .parseAction(expression, location, templateContext.exports);
-        result.add(new ng.BoundEventAst(eventName, value, sourceSpan));
+        result.add(ng.BoundEventAst(eventName, value, sourceSpan));
       } on ParseException catch (e) {
         templateContext.reportError(e.message, sourceSpan);
         continue;
@@ -777,7 +772,7 @@ class _ParseContext {
 
   static SelectorMatcher _createSelector(ng.DirectiveAst component) {
     if (component == null) return null;
-    var matcher = new SelectorMatcher();
+    var matcher = SelectorMatcher();
     var ngContextSelectors = component.directive.template.ngContentSelectors;
     for (var i = 0; i < ngContextSelectors.length; i++) {
       var selector = ngContextSelectors[i];
@@ -904,14 +899,14 @@ class _ProviderVisitor
   // ignore: MUST_CALL_SUPER
   ng.ElementAst visitElement(
       ng.ElementAst ast, ProviderElementContext context) {
-    var elementContext = new ProviderElementContext(_rootContext, context,
-        false, ast.directives, ast.attrs, ast.references, ast.sourceSpan);
+    var elementContext = ProviderElementContext(_rootContext, context, false,
+        ast.directives, ast.attrs, ast.references, ast.sourceSpan);
     var children = <ng.TemplateAst>[];
     for (var child in ast.children) {
       children.add(child.visit(this, elementContext));
     }
     elementContext.afterElement();
-    return new ng.ElementAst(
+    return ng.ElementAst(
         ast.name,
         ast.attrs,
         ast.i18nAttrs,
@@ -932,7 +927,7 @@ class _ProviderVisitor
   // ignore: MUST_CALL_SUPER
   ng.EmbeddedTemplateAst visitEmbeddedTemplate(
       ng.EmbeddedTemplateAst ast, ProviderElementContext context) {
-    var elementContext = new ProviderElementContext(_rootContext, context, true,
+    var elementContext = ProviderElementContext(_rootContext, context, true,
         ast.directives, ast.attrs, ast.references, ast.sourceSpan);
     var children = <ng.TemplateAst>[];
     for (var child in ast.children) {
@@ -940,7 +935,7 @@ class _ProviderVisitor
     }
     elementContext.afterElement();
     ast.providers.addAll(elementContext.transformProviders);
-    return new ng.EmbeddedTemplateAst(
+    return ng.EmbeddedTemplateAst(
         ast.attrs,
         ast.outputs,
         ast.references,
@@ -962,7 +957,7 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
   visitElement(ast.ElementAst element, [String parentPrefix]) {
     var prefix = _getNamespace(element.name) ?? parentPrefix;
     var visitedElement = super.visitElement(element, prefix) as ast.ElementAst;
-    return new ast.ElementAst.from(
+    return ast.ElementAst.from(
         visitedElement,
         mergeNsAndName(prefix, _getName(visitedElement.name)),
         visitedElement.closeComplement,
@@ -986,8 +981,8 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
     astNode = super.visitAttribute(astNode, parentPrefix) as ast.AttributeAst;
     if (_getNsPrefix(astNode.name) == null) return astNode;
     var names = astNode.name.split(':');
-    return new ast.AttributeAst.from(astNode,
-        mergeNsAndName(names[0], names[1]), astNode.value, astNode.mustaches);
+    return ast.AttributeAst.from(astNode, mergeNsAndName(names[0], names[1]),
+        astNode.value, astNode.mustaches);
   }
 
   String _getNsPrefix(String name) {
@@ -1095,7 +1090,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   }
 
   void _findDuplicateAttributes(List<ast.AttributeAst> attributes) {
-    final seenAttributes = new Set<String>();
+    final seenAttributes = Set<String>();
     for (final attribute in attributes) {
       if (seenAttributes.contains(attribute.name)) {
         _reportError(attribute,
@@ -1107,7 +1102,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   }
 
   void _findDuplicateProperties(List<ast.PropertyAst> properties) {
-    final seenProperties = new Set<String>();
+    final seenProperties = Set<String>();
     for (final property in properties) {
       final propertyName = _getPropertyName(property);
       if (seenProperties.contains(propertyName)) {
@@ -1120,7 +1115,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   }
 
   void _findDuplicateEvents(List<ast.EventAst> events) {
-    final seenEvents = new Set<String>();
+    final seenEvents = Set<String>();
     for (final event in events) {
       final eventName = _getEventName(event);
       if (seenEvents.contains(eventName)) {
@@ -1137,7 +1132,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   void _reportError(ast.TemplateAst astNode, String message,
       [ParseErrorLevel level = ParseErrorLevel.FATAL]) {
     exceptionHandler.handleParseError(
-        new TemplateParseError(message, astNode.sourceSpan, level));
+        TemplateParseError(message, astNode.sourceSpan, level));
   }
 }
 
@@ -1159,19 +1154,19 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
     for (var pipe in pipes) {
       pipesByName[pipe.name] = pipe;
     }
-    return new _PipeValidator._(pipesByName, exceptionHandler);
+    return _PipeValidator._(pipesByName, exceptionHandler);
   }
 
   _PipeValidator._(this._pipesByName, this._exceptionHandler);
 
   void _validatePipes(AST ast, SourceSpan sourceSpan) {
     if (ast == null) return;
-    var collector = new _PipeCollector();
+    var collector = _PipeCollector();
     ast.visit(collector);
     for (var pipeName in collector.pipeInvocations.keys) {
       final pipe = _pipesByName[pipeName];
       if (pipe == null) {
-        _exceptionHandler.handleParseError(new TemplateParseError(
+        _exceptionHandler.handleParseError(TemplateParseError(
             "The pipe '$pipeName' could not be found.",
             sourceSpan,
             ParseErrorLevel.FATAL));
@@ -1180,7 +1175,7 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
           // Don't include the required parameter to the left of the pipe name.
           final numParams = pipe.transformType.paramTypes.length - 1;
           if (numArgs > numParams) {
-            _exceptionHandler.handleParseError(new TemplateParseError(
+            _exceptionHandler.handleParseError(TemplateParseError(
                 "The pipe '$pipeName' was invoked with too many arguments: "
                 '$numParams expected, but $numArgs found.',
                 sourceSpan,
@@ -1275,7 +1270,7 @@ class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<void> {
     List<ast.TemplateAst> astNodes,
   ) {
     // TODO(matanl): Consider removing this case entirely.
-    return new ast.TextAst.from(node, replaceNgSpace(node.value));
+    return ast.TextAst.from(node, replaceNgSpace(node.value));
   }
 }
 

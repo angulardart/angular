@@ -49,7 +49,7 @@ class HyphenAttributeMatcher extends AttributeMatcher {
 ///
 /// https://www.w3.org/TR/selectors4/#attribute-representation
 class ListAttributeMatcher extends AttributeMatcher {
-  static final _whitespaceRe = new RegExp(r'\s+');
+  static final _whitespaceRe = RegExp(r'\s+');
 
   ListAttributeMatcher(String name, String item) : super(name, item);
 

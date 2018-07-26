@@ -82,10 +82,10 @@ class DatePipe implements PipeTransform {
   String transform(dynamic value, [String pattern = 'mediumDate']) {
     if (value == null) return null;
     if (!this.supports(value)) {
-      throw new InvalidPipeArgumentException(DatePipe, value);
+      throw InvalidPipeArgumentException(DatePipe, value);
     }
     if (value is num) {
-      value = new DateTime.fromMillisecondsSinceEpoch(unsafeCast(value));
+      value = DateTime.fromMillisecondsSinceEpoch(unsafeCast(value));
     }
     if (DatePipe._ALIASES.containsKey(pattern)) {
       pattern = DatePipe._ALIASES[pattern];
@@ -100,11 +100,11 @@ class DatePipe implements PipeTransform {
   const DatePipe();
 }
 
-final RegExp _multiPartRegExp = new RegExp(r'^([yMdE]+)([Hjms]+)$');
+final RegExp _multiPartRegExp = RegExp(r'^([yMdE]+)([Hjms]+)$');
 String _normalizeLocale(String locale) => locale?.replaceAll('-', '_');
 String _formatDate(DateTime date, String locale, String pattern) {
   locale = _normalizeLocale(locale);
-  var formatter = new DateFormat(null, locale);
+  var formatter = DateFormat(null, locale);
   var matches = _multiPartRegExp.firstMatch(pattern);
   if (matches != null) {
     // Support for patterns which have known date and time components.

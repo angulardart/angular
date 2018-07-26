@@ -92,7 +92,7 @@ T coerceEnum<T>(
   final enumValue =
       _findEnumByName(enumField, values) ?? _findEnumByIndex(enumField, values);
   if (enumValue == null) {
-    throw new ArgumentError(
+    throw ArgumentError(
       'Could not determine the enum of $enumField from $values',
     );
   }

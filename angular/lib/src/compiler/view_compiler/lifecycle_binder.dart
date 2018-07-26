@@ -18,8 +18,8 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
   var lifecycleHooks = directive.lifecycleHooks;
   if (lifecycleHooks.contains(LifecycleHooks.onChanges) &&
       directiveAst.inputs.isNotEmpty) {
-    detectChangesInInputsMethod.addStmt(
-        new o.IfStmt(DetectChangesVars.changes.notIdentical(o.NULL_EXPR), [
+    detectChangesInInputsMethod
+        .addStmt(o.IfStmt(DetectChangesVars.changes.notIdentical(o.NULL_EXPR), [
       directiveInstance
           .callMethod('ngOnChanges', [DetectChangesVars.changes]).toStmt()
     ]));
@@ -31,20 +31,19 @@ void bindDirectiveDetectChangesLifecycleCallbacks(DirectiveAst directiveAst,
       detectChangesInInputsMethod.addStmt(
           directiveInstance.callMethod('ngAfterChanges', const []).toStmt());
     } else {
-      detectChangesInInputsMethod.addStmt(new o.IfStmt(
-          DetectChangesVars.changed,
+      detectChangesInInputsMethod.addStmt(o.IfStmt(DetectChangesVars.changed,
           [directiveInstance.callMethod('ngAfterChanges', const []).toStmt()]));
     }
   }
   if (lifecycleHooks.contains(LifecycleHooks.onInit)) {
     // We don't re-use the existing IfStmt (.addStmtsIfFirstCheck), because we
     // require an additional condition (`notThrowOnChanges`).
-    detectChangesInInputsMethod.addStmt(new o.IfStmt(
+    detectChangesInInputsMethod.addStmt(o.IfStmt(
         notThrowOnChanges.and(DetectChangesVars.firstCheck),
         [directiveInstance.callMethod('ngOnInit', []).toStmt()]));
   }
   if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
-    detectChangesInInputsMethod.addStmt(new o.IfStmt(notThrowOnChanges,
+    detectChangesInInputsMethod.addStmt(o.IfStmt(notThrowOnChanges,
         [directiveInstance.callMethod('ngDoCheck', []).toStmt()]));
   }
 }
