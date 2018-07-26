@@ -14,7 +14,7 @@ class Compiler implements Generator {
   // Note: Use an absurdly long line width in order to speed up the formatter.
   // We still get a lot of other formatting, such as forced line breaks (after
   // semicolons for instance), spaces in argument lists, etc.
-  static final _formatter = new DartFormatter(pageWidth: 1000000);
+  static final _formatter = DartFormatter(pageWidth: 1000000);
 
   // Ideally this would be part of this generator, and not delegated to an
   // external function, but today much of the AngularDart compiler still lives
@@ -35,7 +35,7 @@ class Compiler implements Generator {
 
   /// Returns the compiler wrapped as a [Builder].
   Builder asBuilder({String extension = '.template.dart'}) {
-    return new LibraryBuilder(
+    return LibraryBuilder(
       this,
       formatOutput: (s) => _formatter.format(s),
       generatedExtension: extension,
@@ -60,7 +60,7 @@ class Placeholder implements Builder {
 
   @override
   final buildExtensions = const {
-    '.dart': const ['.ng_placeholder'],
+    '.dart': ['.ng_placeholder'],
   };
 
   @override

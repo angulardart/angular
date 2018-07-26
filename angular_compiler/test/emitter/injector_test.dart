@@ -4,19 +4,19 @@ import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final dartfmt = new DartFormatter();
+  final dartfmt = DartFormatter();
   EqualsDart.format = dartfmt.format;
 
   InjectorEmitter emitter;
 
   setUp(() {
-    emitter = new InjectorEmitter()..visitMeta('FooInjector', 'fooInjector');
+    emitter = InjectorEmitter()..visitMeta('FooInjector', 'fooInjector');
   });
 
   test('createFactory should return a factory function', () {
     emitter.visitMeta('FooInjector', 'fooInjector');
     expect(
-      new Library((b) => b.body.add(emitter.createFactory())),
+      Library((b) => b.body.add(emitter.createFactory())),
       equalsDart(r'''
         Injector fooInjector([Injector parent]) => new FooInjector._(parent);
       '''),
@@ -173,10 +173,10 @@ void main() {
     test('should support a MultiToken', () {
       // provide(someToken, useValue: 1, multi: true)
       // provide(someToken, useValue: 2, multi: true)
-      final someToken = new OpaqueTokenElement(
+      final someToken = OpaqueTokenElement(
         'someToken',
         isMultiToken: true,
-        classUrl: new TypeLink(
+        classUrl: TypeLink(
           'MultiToken',
           ''
               'package:angular'

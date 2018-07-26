@@ -46,7 +46,7 @@ DartType typeArgumentOf(DartObject object, [int index = 0]) {
 /// For example, `List` would be `'dart:core#List'`.
 Uri urlOf(Element element, [String name]) {
   if (element?.source == null) {
-    return new Uri(scheme: 'dart', path: 'core', fragment: 'dynamic');
+    return Uri(scheme: 'dart', path: 'core', fragment: 'dynamic');
   }
   name ??= element.name;
   // NOTE: element.source.uri might be a file that is not importable (i.e. is

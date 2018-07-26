@@ -84,10 +84,10 @@ class ReflectableEmitter {
       return false;
     }
     // Transforms the current source URL to an AssetId (canonical).
-    final module = new AssetId.resolve(deferredModuleSource);
+    final module = AssetId.resolve(deferredModuleSource);
     // Given the url, resolve what absolute path that is.
     // We might get a relative path, but we only deal with absolute URLs.
-    final asset = new AssetId.resolve(url, from: module);
+    final asset = AssetId.resolve(url, from: module);
     // The template compiler and package:build use a different asset: scheme.
     final assetUrl = 'asset:${asset.toString().replaceFirst('|', '/')}';
     return deferredModules.contains(assetUrl);
@@ -98,13 +98,13 @@ class ReflectableEmitter {
     String constructor,
     DependencyInvocation invocation,
   ) =>
-      new Method(
+      Method(
         (b) => b
           ..requiredParameters.addAll(
             _parameters(invocation.positional),
           )
           ..body = refer(constructor)
-              .newInstance(new Iterable<Expression>.generate(
+              .newInstance(Iterable<Expression>.generate(
                 invocation.positional.length,
                 (i) => refer('p$i'),
               ))
@@ -121,7 +121,7 @@ class ReflectableEmitter {
           type = token.link;
         }
       }
-      return new Parameter((b) => b
+      return Parameter((b) => b
         ..name = 'p${counter++}'
         ..type = linkToReference(type, _library));
     }).toList();
@@ -143,8 +143,8 @@ class ReflectableEmitter {
 
   void _produceDartCode() {
     if (_isNoop) {
-      _importBuffer = new StringBuffer();
-      _initReflectorBuffer = new StringBuffer(
+      _importBuffer = StringBuffer();
+      _initReflectorBuffer = StringBuffer(
         '// No initReflector() linking required.\nvoid initReflector(){}',
       );
       return;
@@ -156,20 +156,20 @@ class ReflectableEmitter {
     }
 
     // Prepare to write code.
-    _importBuffer = new StringBuffer();
-    _initReflectorBuffer = new StringBuffer();
-    _dartEmitter = new SplitDartEmitter(_importBuffer, _allocator);
-    _libraryBuilder = new LibraryBuilder();
+    _importBuffer = StringBuffer();
+    _initReflectorBuffer = StringBuffer();
+    _dartEmitter = SplitDartEmitter(_importBuffer, _allocator);
+    _libraryBuilder = LibraryBuilder();
 
     // Reference _ngRef if we do any registration.
     if (_registrationNeeded) {
       _libraryBuilder.directives.add(
-        new Directive.import(reflectorSource, as: '_ngRef'),
+        Directive.import(reflectorSource, as: '_ngRef'),
       );
     }
 
     // Create the initial (static) body of initReflector().
-    _initReflectorBody = new BlockBuilder()
+    _initReflectorBody = BlockBuilder()
       ..statements.add(
         const Code(
           ''
@@ -180,7 +180,7 @@ class ReflectableEmitter {
         ),
       );
 
-    final initReflector = new MethodBuilder()
+    final initReflector = MethodBuilder()
       ..name = 'initReflector'
       ..returns = refer('void');
 
@@ -230,7 +230,7 @@ class ReflectableEmitter {
       //   _refN.initReflector();
       // }
       final name = '_ref$counter';
-      _libraryBuilder.directives.add(new Directive.import(url, as: name));
+      _libraryBuilder.directives.add(Directive.import(url, as: name));
       _initReflectorBody.addExpression(
         refer(name).property('initReflector').call([]),
       );
@@ -314,7 +314,7 @@ class ReflectableEmitter {
     if (token is TypeTokenElement) {
       return linkToReference(token.link.withoutGenerics(), _library);
     }
-    throw new UnsupportedError('Invalid token type: $token.');
+    throw UnsupportedError('Invalid token type: $token.');
   }
 
   void _registerConstructor(DependencyInvocation<ConstructorElement> function) {

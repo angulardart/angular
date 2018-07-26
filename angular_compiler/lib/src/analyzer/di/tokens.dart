@@ -18,12 +18,12 @@ class TokenReader {
   ///
   /// Only a [DartType] or `OpaqueToken` are currently supported.
   TokenElement parseTokenObject(DartObject object, [ParameterElement element]) {
-    final constant = new ConstantReader(object);
+    final constant = ConstantReader(object);
     if (constant.isNull) {
-      throw new FormatException('Expected token, but got "null".');
+      throw FormatException('Expected token, but got "null".');
     }
     if (constant.isType) {
-      return new TypeTokenElement(linkTypeOf(constant.typeValue));
+      return TypeTokenElement(linkTypeOf(constant.typeValue));
     }
     if (constant.instanceOf($OpaqueToken)) {
       return _parseOpaqueToken(constant);
@@ -38,7 +38,7 @@ class TokenReader {
     if (element != null) {
       BuildError.throwForElement(element, error);
     }
-    throw new BuildError(error);
+    throw BuildError(error);
   }
 
   /// Returns [object] parsed into an [OpaqueTokenElement].
@@ -55,7 +55,7 @@ class TokenReader {
     } else {
       typeArgs = valueType.typeArguments;
     }
-    return new OpaqueTokenElement(
+    return OpaqueTokenElement(
       constant.read('_uniqueName').stringValue,
       isMultiToken: constant.instanceOf($MultiToken),
       classUrl: linkToOpaqueToken(constant.objectValue.type),
@@ -144,7 +144,7 @@ class TokenReader {
   }
 
   TypeTokenElement _parseType(DartType type) =>
-      new TypeTokenElement(linkTypeOf(type));
+      TypeTokenElement(linkTypeOf(type));
 }
 
 /// A statically parsed token used as an identifier for injection.
@@ -155,7 +155,7 @@ abstract class TokenElement {}
 /// A statically parsed `Type` used as an identifier for injection.
 class TypeTokenElement implements TokenElement {
   /// References the type `dynamic`.
-  static const TypeTokenElement $dynamic = const _DynamicTypeElement();
+  static const TypeTokenElement $dynamic = _DynamicTypeElement();
 
   /// Canonical URL of the source location and class name being referenced.
   final TypeLink link;
