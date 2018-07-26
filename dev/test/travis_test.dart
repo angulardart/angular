@@ -6,7 +6,7 @@ void main() {
   group('OutputWriter', () {
     OutputWriter writer;
 
-    setUp(() => writer = new OutputWriter('', ''));
+    setUp(() => writer = OutputWriter('', ''));
 
     test('writeAnalysisStep should analyze a package', () {
       writer.writeAnalysisStep(path: 'package_1');

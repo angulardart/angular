@@ -9,12 +9,12 @@ List<File> findRelevantPubspecs() => (_include.listSync().toList()
     .cast<File>();
 
 // Find all packages.
-final _include = new Glob('**/pubspec.yaml');
+final _include = Glob('**/pubspec.yaml');
 
 // ... But exclude ones not relevant here.
 // TODO: Perhaps just import .gitignore as well.
 final _exclude = [
-  new Glob('dev/**'),
-  new Glob('angular/tools/**'),
-  new Glob('**/build/**'),
+  Glob('dev/**'),
+  Glob('angular/tools/**'),
+  Glob('**/build/**'),
 ];

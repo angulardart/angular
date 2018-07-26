@@ -8,22 +8,22 @@ import 'package:yaml/yaml.dart';
 
 /// Verifies that non-dev dependency ranges for all packages are compatible.
 void main() {
-  final allDependencies = new SplayTreeMap<String, List<VersionConstraint>>();
+  final allDependencies = SplayTreeMap<String, List<VersionConstraint>>();
   for (final pubspec in findRelevantPubspecs()) {
     _dependenciesOf(pubspec).forEach((package, constraint) {
       allDependencies.putIfAbsent(package, () => []).add(constraint);
     });
   }
   stdout.writeln('All dependencies:');
-  stdout.writeln(new JsonEncoder.withIndent(
+  stdout.writeln(JsonEncoder.withIndent(
       '  ',
       (encodable) => encodable is VersionConstraint
           ? encodable.toString()
           : encodable.toJson()).convert(allDependencies));
 
-  final failingDeps = new List<String>();
+  final failingDeps = List<String>();
   allDependencies.forEach((package, versions) {
-    final intersection = new VersionConstraint.intersection(versions);
+    final intersection = VersionConstraint.intersection(versions);
     if (intersection.isEmpty) {
       failingDeps.add(package);
     }
@@ -46,10 +46,10 @@ void main() {
 Map<String, VersionConstraint> _dependenciesOf(File pubpsec) {
   final yamlDoc = loadYaml(pubpsec.readAsStringSync(), sourceUrl: pubpsec.uri);
   final deps = ((yamlDoc['dependencies'] ?? {}) as Map).cast<String, String>();
-  return deps.map((k, v) => new MapEntry(
+  return deps.map((k, v) => MapEntry(
         k,
         v == null || v.isEmpty
             ? VersionConstraint.any
-            : new VersionConstraint.parse(v),
+            : VersionConstraint.parse(v),
       ));
 }
