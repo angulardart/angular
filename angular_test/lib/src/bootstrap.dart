@@ -41,13 +41,13 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   FutureOr<void> Function(E) beforeChangeDetection,
 }) {
   if (componentFactory == null) {
-    throw new ArgumentError.notNull('componentFactory');
+    throw ArgumentError.notNull('componentFactory');
   }
   if (hostElement == null) {
-    throw new ArgumentError.notNull('hostElement');
+    throw ArgumentError.notNull('hostElement');
   }
   if (userInjector == null) {
-    throw new ArgumentError.notNull('userInjector');
+    throw ArgumentError.notNull('userInjector');
   }
   // This should be kept in sync with 'runApp' as much as possible.
   final injector = appInjector(userInjector);
@@ -77,12 +77,12 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
       //
       // Can be removed if NgZone.onTurnDone ever supports re-entry, either by
       // no longer using Streams or fixing dart:async.
-      await new Future.value();
+      await Future.value();
       onErrorSub.cancel();
       if (caughtError != null) {
-        return new Future.error(
+        return Future.error(
           caughtError.error,
-          new StackTrace.fromString(caughtError.stackTrace.join('\n')),
+          StackTrace.fromString(caughtError.stackTrace.join('\n')),
         );
       }
       return componentRef;
@@ -98,12 +98,12 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   FutureOr<void> beforeChangeDetection(E componentInstance),
 }) {
   // TODO: Consider using hostElement instead.
-  sharedStylesHost ??= new DomSharedStylesHost(document);
+  sharedStylesHost ??= DomSharedStylesHost(document);
   final componentRef = componentFactory.create(injector);
   final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
   if (!isDefaultChangeDetectionStrategy(cdMode) &&
       cdMode != ChangeDetectionStrategy.CheckAlways) {
-    throw new UnsupportedError(
+    throw UnsupportedError(
         'The root component in an Angular test or application must use the '
         'default form of change detection (ChangeDetectionStrategy.Default). '
         'Instead got ${(componentRef.hostView as ViewRefImpl).appView.cdMode} '
@@ -117,7 +117,7 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
       appRef.unregisterChangeDetector(componentRef.changeDetectorRef);
     });
     appRef.tick();
-    return new Future.value(componentRef);
+    return Future.value(componentRef);
   }
 
   FutureOr<void> beforeChangeDetectionReturn;

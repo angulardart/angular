@@ -15,26 +15,26 @@ void main() {
     NgZoneStabilizer ngZoneStabilizer;
 
     setUp(() {
-      ngZone = new NgZone();
-      ngZoneStabilizer = new NgZoneStabilizer(ngZone);
+      ngZone = NgZone();
+      ngZoneStabilizer = NgZoneStabilizer(ngZone);
     });
 
     test('should forward a synchronous error during update', () async {
       expect(ngZoneStabilizer.update(() {
-        throw new StateError('Test');
+        throw StateError('Test');
       }), throwsStateError);
     });
 
     test('should forward a synchronous error while stabilizng', () async {
       expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
-        throw new StateError('Test');
+        throw StateError('Test');
       }), throwsStateError);
     });
 
     test('should forward an asynchronous error during update', () async {
       expect(ngZoneStabilizer.update(() {
         scheduleMicrotask(() {
-          throw new StateError('Test');
+          throw StateError('Test');
         });
       }), throwsStateError);
     });
@@ -42,7 +42,7 @@ void main() {
     test('should forward an asynchronous error while stabilizing', () async {
       expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         scheduleMicrotask(() {
-          throw new StateError('Test');
+          throw StateError('Test');
         });
       }), throwsStateError);
     });
@@ -50,7 +50,7 @@ void main() {
     test('should forward an asynchronous error via timer', () async {
       expect(ngZoneStabilizer.update(() {
         Timer.run(() {
-          throw new StateError('Test');
+          throw StateError('Test');
         });
       }), throwsStateError);
     });
@@ -58,7 +58,7 @@ void main() {
     test('should forward an asynchronus error via timer stabilizing', () async {
       expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
         Timer.run(() {
-          throw new StateError('Test');
+          throw StateError('Test');
         });
       }), throwsStateError);
     });
@@ -66,8 +66,8 @@ void main() {
     test('should forward an asynchronus error via delayed future stabilizing',
         () async {
       expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () {
-        new Future.delayed(new Duration(milliseconds: 100), () {
-          throw new StateError('Test');
+        Future.delayed(Duration(milliseconds: 100), () {
+          throw StateError('Test');
         });
       }), throwsStateError);
     });
@@ -78,7 +78,7 @@ void main() {
           scheduleMicrotask(() {
             Timer.run(() {
               scheduleMicrotask(() {
-                throw new StateError('Test');
+                throw StateError('Test');
               });
             });
           });
@@ -89,10 +89,10 @@ void main() {
     test('should forward an asynchrnous error in the far future', () async {
       expect(ngZoneStabilizer.stabilize(runAndTrackSideEffects: () async {
         for (var i = 0; i < 20; i++) {
-          await new Future(() {});
-          await new Future.value();
+          await Future(() {});
+          await Future.value();
         }
-        throw new StateError('Test');
+        throw StateError('Test');
       }), throwsStateError);
     });
 
@@ -100,8 +100,8 @@ void main() {
       var asyncEventsCompleted = false;
       ngZone.run(() async {
         for (var i = 0; i < 20; i++) {
-          await new Future(() {});
-          await new Future.value();
+          await Future(() {});
+          await Future.value();
         }
         asyncEventsCompleted = true;
       });
@@ -135,7 +135,7 @@ void main() {
       expect(
         ngZoneStabilizer.stabilize(
             runAndTrackSideEffects: () async {
-              new Timer(const Duration(milliseconds: 100), () {});
+              Timer(const Duration(milliseconds: 100), () {});
             },
             threshold: 1),
         completion(isNull),
@@ -150,11 +150,11 @@ void main() {
     DelegatingNgTestStabilizer delegatingNgTestStabilizer;
 
     setUp(() {
-      final ngZone = new NgZone();
-      ngZoneStabilizer = new NgZoneStabilizerForTesting(ngZone);
-      fakeNgTestStabilizer = new FakeNgTestStabilizer(ngZone);
-      alwaysStableNgTestStabilizer = new AlwaysStableNgTestStabilizer();
-      delegatingNgTestStabilizer = new DelegatingNgTestStabilizer([
+      final ngZone = NgZone();
+      ngZoneStabilizer = NgZoneStabilizerForTesting(ngZone);
+      fakeNgTestStabilizer = FakeNgTestStabilizer(ngZone);
+      alwaysStableNgTestStabilizer = AlwaysStableNgTestStabilizer();
+      delegatingNgTestStabilizer = DelegatingNgTestStabilizer([
         ngZoneStabilizer,
         fakeNgTestStabilizer,
         alwaysStableNgTestStabilizer

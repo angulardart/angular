@@ -18,8 +18,8 @@ void main() {
   Element testRoot;
 
   setUp(() {
-    docRoot = new Element.tag('doc-root');
-    testRoot = new Element.tag('ng-test-bed-example-test');
+    docRoot = Element.tag('doc-root');
+    testRoot = Element.tag('ng-test-bed-example-test');
     docRoot.append(testRoot);
   });
 
@@ -29,7 +29,7 @@ void main() {
     // We are going to verify that the document root has a new node created (our
     // component), the node is updated (after change detection), and after
     // destroying the test the document root has been cleared.
-    final testBed = new NgTestBed<AngularLifecycle>(host: testRoot);
+    final testBed = NgTestBed<AngularLifecycle>(host: testRoot);
     final fixture = await testBed.create();
     expect(docRoot.text, isEmpty);
     await fixture.update((c) => c.value = 'New value');
@@ -40,7 +40,7 @@ void main() {
   });
 
   test('should invoke ngOnChanges, then ngOnInit', () async {
-    final fixture = await new NgTestBed<NgOnChangesInitOrder>().create(
+    final fixture = await NgTestBed<NgOnChangesInitOrder>().create(
       beforeChangeDetection: (root) => root.name = 'Hello',
     );
     expect(
@@ -52,7 +52,7 @@ void main() {
   test(
       'should invoke ngOnChanges with asynchronous beforeChangeDetection,'
       ' then ngOnInit', () async {
-    final fixture = await new NgTestBed<NgOnChangesInitOrder>().create(
+    final fixture = await NgTestBed<NgOnChangesInitOrder>().create(
       beforeChangeDetection: (root) async => root.name = 'Hello',
     );
     expect(
@@ -72,7 +72,7 @@ class AngularLifecycle {
 
 @Component(
   selector: 'test',
-  directives: const [ChildWithLifeCycles],
+  directives: [ChildWithLifeCycles],
   template: '<child [name]="name"></child>',
 )
 class NgOnChangesInitOrder {
