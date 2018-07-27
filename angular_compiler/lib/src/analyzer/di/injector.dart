@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart' show mapMap;
@@ -74,9 +75,14 @@ class InjectorReader {
   /// Providers that are part of the provided list of the annotation.
   Iterable<ProviderElement> get providers {
     if (_providers == null) {
-      final module = moduleReader.parseModule(
-        annotation.read('_providersOrModules').objectValue,
-      );
+      final providersOrModules = annotation.read('_providersOrModules');
+      if (providersOrModules.isNull) {
+        BuildError.throwForElement(
+          field,
+          'Unable to parse @GenerateInjector. You may have analysis errors',
+        );
+      }
+      final module = moduleReader.parseModule(providersOrModules.objectValue);
       _providers = moduleReader.deduplicateProviders(module.flatten());
     }
     return _providers;

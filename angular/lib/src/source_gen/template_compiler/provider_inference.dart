@@ -52,7 +52,8 @@ DartType inferProviderType(DartObject provider, DartObject token) {
     }
   }
   // Fallback and try to extract from OpaqueToken<T>.
-  if ($OpaqueToken.isAssignableFromType(tokenType) &&
+  if (tokenType != null &&
+      $OpaqueToken.isAssignableFromType(tokenType) &&
       // Only apply "auto inference" to "new-type" Providers like
       // Value, Class, Existing, FactoryProvider.
       !$Provider.isExactlyType(provider.type) &&
