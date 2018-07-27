@@ -20,7 +20,7 @@ String untokenize(Iterable<NgToken> tokens) => tokens
 void main() {
   String input;
   while (true) {
-    input = stdin.readLineSync(encoding: UTF8);
+    input = stdin.readLineSync(encoding: utf8);
     if (input == 'QUIT') {
       break;
     }
