@@ -1,3 +1,8 @@
+### Bug fixes
+
+*   `HashLocationStrategy` no longer drops query parameters (before the #) when
+    pushing or replacing an empty URL.
+
 ## 2.0.0-alpha+17
 
 ### New features
