@@ -54,6 +54,7 @@ import 'view_compiler_utils.dart'
         createDiTokenExpression,
         createSetAttributeStatement,
         cachedParentIndexVarName,
+        getViewFactory,
         getViewFactoryName,
         identifierFromTagName,
         injectFromViewParentInjector,
@@ -331,7 +332,8 @@ class CompileView implements AppViewBuilder {
   List<CompilePipe> pipes = [];
   String className;
   o.OutputType classType;
-  o.ReadVarExpr viewFactory;
+  o.Expression viewFactory;
+  String viewFactoryName;
   bool requiresOnChangesCall = false;
   bool requiresAfterChangesCall = false;
   var pipeCount = 0;
@@ -377,7 +379,8 @@ class CompileView implements AppViewBuilder {
     className = '${viewIndex == 0 && viewType != ViewType.host ? '' : '_'}'
         'View${component.type.name}$viewIndex';
     classType = o.importType(CompileIdentifierMetadata(name: className));
-    viewFactory = o.variable(getViewFactoryName(component, viewIndex));
+    viewFactoryName = getViewFactoryName(component, viewIndex);
+    viewFactory = getViewFactory(component, viewFactoryName);
     switch (viewType) {
       case ViewType.host:
       case ViewType.component:

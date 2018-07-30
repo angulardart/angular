@@ -9,6 +9,7 @@ import '../compile_metadata.dart'
         CompileIdentifierMetadata;
 import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart';
+import '../output/convert.dart' show typeArgumentsFrom;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show AttrAst;
 import 'compile_view.dart' show CompileView;
@@ -104,11 +105,37 @@ o.Expression injectFromViewParentInjector(
   return viewExpr.callMethod('injectorGet', args);
 }
 
-String getViewFactoryName(CompileDirectiveMetadata component,
-    [int embeddedTemplateIndex]) {
-  String indexPostFix =
-      embeddedTemplateIndex == null ? '' : embeddedTemplateIndex.toString();
-  return 'viewFactory_${component.type.name}$indexPostFix';
+/// Returns the name of a [component] view factory for [index].
+///
+/// Each generated view of [component], be it component, host, or embedded has
+/// an associated [index] that is used to distinguish between embedded views.
+String getViewFactoryName(CompileDirectiveMetadata component, int index) =>
+    'viewFactory_${component.type.name}$index';
+
+/// Returns a callable expression for the [component] view factory named [name].
+///
+/// If [component] is generic, the view factory will flow the type parameters of
+/// the parent view as type arguments to the embedded view.
+///
+/// **Note:** It's assumed that [name] originates from an invocation of
+/// [getViewFactoryName] with the same [component].
+o.Expression getViewFactory(
+  CompileDirectiveMetadata component,
+  String name,
+) {
+  final viewFactoryVar = o.variable(name);
+  if (component.originType.typeParameters.isEmpty) {
+    return viewFactoryVar;
+  }
+  final parameters = [o.FnParam('parentView'), o.FnParam('parentIndex')];
+  final arguments = parameters.map((p) => o.variable(p.name)).toList();
+  return o.FunctionExpr(parameters, [
+    o.ReturnStatement(o.InvokeFunctionExpr(
+      viewFactoryVar,
+      arguments,
+      typeArgumentsFrom(component.originType.typeParameters),
+    )),
+  ]);
 }
 
 o.Expression createDiTokenExpression(CompileTokenMetadata token) {

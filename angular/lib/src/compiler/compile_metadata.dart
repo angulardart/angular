@@ -8,6 +8,7 @@ import '../core/metadata/visibility.dart';
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';
 import 'expression_parser/ast.dart' as ast;
+import 'output/convert.dart' show typeArgumentsFrom;
 import 'output/output_ast.dart' as o;
 import 'selector.dart' show CssSelector;
 
@@ -583,9 +584,7 @@ List<CompileTypeMetadata> createHostDirectiveTypes(
     CompileTypeMetadata(
       name: componentType.name,
       moduleUrl: componentType.moduleUrl,
-      typeArguments: componentType.typeParameters
-          .map((t) => o.importType(CompileIdentifierMetadata(name: t.name)))
-          .toList(),
+      typeArguments: typeArgumentsFrom(componentType.typeParameters),
     )
   ];
 }
