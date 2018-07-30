@@ -5,7 +5,7 @@ import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
     show
         CompileDirectiveMetadata,
-        CompileTypeMetadata,
+        CompileTypedMetadata,
         CompilePipeMetadata,
         createHostComponentMeta,
         createHostDirectiveTypes;
@@ -33,7 +33,7 @@ class AngularArtifacts {
 class NormalizedComponentWithViewDirectives {
   CompileDirectiveMetadata component;
   List<CompileDirectiveMetadata> directives;
-  List<CompileTypeMetadata> directiveTypes;
+  List<CompileTypedMetadata> directiveTypes;
   List<CompilePipeMetadata> pipes;
 
   NormalizedComponentWithViewDirectives(
@@ -195,7 +195,7 @@ class OfflineCompiler {
   String _compileComponent(
       CompileDirectiveMetadata compMeta,
       List<CompileDirectiveMetadata> directives,
-      List<CompileTypeMetadata> directiveTypes,
+      List<CompileTypedMetadata> directiveTypes,
       List<CompilePipeMetadata> pipes,
       List<o.Statement> targetStatements,
       Map<String, String> deferredModules) {

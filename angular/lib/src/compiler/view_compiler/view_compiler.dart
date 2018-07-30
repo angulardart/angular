@@ -5,7 +5,7 @@ import 'package:angular_compiler/cli.dart';
 import 'package:source_span/source_span.dart';
 
 import '../compile_metadata.dart'
-    show CompileDirectiveMetadata, CompileTypeMetadata, CompilePipeMetadata;
+    show CompileDirectiveMetadata, CompileTypedMetadata, CompilePipeMetadata;
 import '../expression_parser/parser.dart';
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
@@ -43,7 +43,7 @@ class ViewCompiler {
       List<TemplateAst> template,
       StylesCompileResult stylesCompileResult,
       o.Expression styles,
-      List<CompileTypeMetadata> directiveTypes,
+      List<CompileTypedMetadata> directiveTypes,
       List<CompilePipeMetadata> pipes,
       Map<String, String> deferredModules) {
     var statements = <o.Statement>[];
