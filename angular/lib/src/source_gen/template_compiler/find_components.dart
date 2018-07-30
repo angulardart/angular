@@ -56,6 +56,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
         components.add(NormalizedComponentWithViewDirectives(
           directive,
           _visitDirectives(element),
+          _visitDirectiveTypes(element),
           _visitPipes(element),
         ));
       } else {
@@ -79,6 +80,16 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     return visitAll(values, (value) {
       return typeDeclarationOf(value)?.accept(_ComponentVisitor(_library));
     });
+  }
+
+  List<CompileTypeMetadata> _visitDirectiveTypes(ClassElement element) {
+    final values = _getResolvedArgumentsOrFail(element, 'directiveTypes');
+    final typedReader = TypedReader(element);
+    final directiveTypes = <CompileTypeMetadata>[];
+    for (final value in values) {
+      directiveTypes.add(_typeMetadataFrom(typedReader.parse(value)));
+    }
+    return directiveTypes;
   }
 
   List<CompilePipeMetadata> _visitPipes(ClassElement element) {
@@ -128,6 +139,18 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       }
     }
     return values;
+  }
+
+  CompileTypeMetadata _typeMetadataFrom(TypeLink typeLink) {
+    final typeArguments = <o.OutputType>[];
+    for (final generic in typeLink.generics) {
+      typeArguments.add(fromTypeLink(generic, _library));
+    }
+    return CompileTypeMetadata(
+      name: typeLink.symbol,
+      moduleUrl: typeLink.import,
+      typeArguments: typeArguments,
+    );
   }
 }
 
