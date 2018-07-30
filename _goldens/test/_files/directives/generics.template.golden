@@ -6,6 +6,7 @@
 import 'generics.dart';
 export 'generics.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/metadata/typed.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
@@ -17,8 +18,9 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'dart:core';
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import10;
+import 'package:angular/src/common/directives/ng_for.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
 
 final List<dynamic> styles$UntypedComp = const [];
@@ -224,8 +226,8 @@ final List<dynamic> styles$UsesGenericComp = const [];
 
 class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
   import5.Element _el_0;
-  ViewGenericComp0 _compView_0;
-  import1.GenericComp _GenericComp_0_5;
+  ViewGenericComp0<int> _compView_0;
+  import1.GenericComp<int> _GenericComp_0_5;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewUsesGenericComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -365,8 +367,8 @@ final List<dynamic> styles$UsesMappingComp1 = const [];
 
 class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
   import5.Element _el_0;
-  ViewMappingComp10 _compView_0;
-  import1.MappingComp1 _MappingComp1_0_5;
+  ViewMappingComp10<int, String> _compView_0;
+  import1.MappingComp1<int, String> _MappingComp1_0_5;
   var _expr_0;
   var _expr_1;
   static RenderComponentType _renderType;
@@ -512,8 +514,8 @@ final List<dynamic> styles$UsesMappingComp2 = const [];
 
 class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
   import5.Element _el_0;
-  ViewMappingComp20 _compView_0;
-  import1.MappingComp2 _MappingComp2_0_5;
+  ViewMappingComp20<int, String> _compView_0;
+  import1.MappingComp2<int, String> _MappingComp2_0_5;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewUsesMappingComp20(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1165,8 +1167,8 @@ final List<dynamic> styles$UsesFunctionTypeComp = const [];
 
 class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
   import5.Element _el_0;
-  ViewFunctionTypeComp0 _compView_0;
-  import1.FunctionTypeComp _FunctionTypeComp_0_5;
+  ViewFunctionTypeComp0<String> _compView_0;
+  import1.FunctionTypeComp<String> _FunctionTypeComp_0_5;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewUsesFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1248,13 +1250,13 @@ final List<dynamic> styles$NestedParentComp = const [];
 
 class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
   import5.Element _el_0;
-  ViewNestedChildComp0 _compView_0;
-  import1.NestedChildComp _NestedChildComp_0_5;
+  ViewNestedChildComp0<T> _compView_0;
+  import1.NestedChildComp<T> _NestedChildComp_0_5;
   import5.Element _el_1;
-  ViewNestedChildComp0 _compView_1;
-  import1.NestedChildComp _NestedChildComp_1_5;
+  ViewNestedChildComp0<T> _compView_1;
+  import1.NestedChildComp<T> _NestedChildComp_1_5;
   ViewContainer _appEl_2;
-  import10.NgFor _NgFor_2_9;
+  import11.NgFor _NgFor_2_9;
   var _expr_0;
   var _expr_1;
   var _expr_2;
@@ -1284,7 +1286,7 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
     TemplateRef _TemplateRef_2_8 = new TemplateRef(_appEl_2, (parentView, parentIndex) {
       return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
     });
-    _NgFor_2_9 = new import10.NgFor(_appEl_2, _TemplateRef_2_8);
+    _NgFor_2_9 = new import11.NgFor(_appEl_2, _TemplateRef_2_8);
     init(const [], null);
     return null;
   }
@@ -1329,8 +1331,8 @@ AppView<import1.NestedParentComp<T>> viewFactory_NestedParentComp0<T>(AppView<dy
 
 class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
   import5.Element _el_0;
-  ViewNestedChildComp0 _compView_0;
-  import1.NestedChildComp _NestedChildComp_0_5;
+  ViewNestedChildComp0<T> _compView_0;
+  import1.NestedChildComp<T> _NestedChildComp_0_5;
   var _expr_0;
   _ViewNestedParentComp1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedParentComp0._renderType;
@@ -1464,8 +1466,8 @@ final List<dynamic> styles$UsesNestedParentComp = const [];
 
 class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
   import5.Element _el_0;
-  ViewNestedParentComp0 _compView_0;
-  import1.NestedParentComp _NestedParentComp_0_5;
+  ViewNestedParentComp0<int> _compView_0;
+  import1.NestedParentComp<int> _NestedParentComp_0_5;
   var _expr_0;
   var _expr_1;
   var _expr_2;

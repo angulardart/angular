@@ -1,4 +1,6 @@
 import 'package:angular/angular.dart';
+// TODO(leonsenft): remove when `Typed` is exported publicly.
+import 'package:angular/src/core/metadata/typed.dart';
 
 /// A component with no generic type parameters.
 @Component(
@@ -38,6 +40,9 @@ class GenericComp<T> {
   directives: [
     GenericComp,
   ],
+  directiveTypes: [
+    Typed<GenericComp<int>>(),
+  ],
   template: '<comp [input]="binding"></comp>',
 )
 class UsesGenericComp {
@@ -63,6 +68,9 @@ class MappingComp1<K, V> {
   directives: [
     MappingComp1,
   ],
+  directiveTypes: [
+    Typed<MappingComp1<int, String>>(),
+  ],
   template: '<comp [key]="bindKey" [value]="bindValue"></comp>',
 )
 class UsesMappingComp1 {
@@ -85,6 +93,9 @@ class MappingComp2<K, V> {
   selector: 'comp',
   directives: [
     MappingComp2,
+  ],
+  directiveTypes: [
+    Typed<MappingComp2<int, String>>(),
   ],
   template: '<comp [input]="binding"></comp>',
 )
@@ -191,6 +202,9 @@ class FunctionTypeComp<F> {
   directives: [
     FunctionTypeComp,
   ],
+  directiveTypes: [
+    Typed<FunctionTypeComp<String>>(),
+  ],
   template: '<comp [input]="binding"></comp>',
 )
 class UsesFunctionTypeComp {
@@ -204,6 +218,9 @@ class UsesFunctionTypeComp {
   directives: [
     NestedChildComp,
     NgFor,
+  ],
+  directiveTypes: [
+    Typed<NestedChildComp>.of([#T]),
   ],
   template: r'''
     <child [input]="input1"></child>
@@ -236,6 +253,9 @@ class NestedChildComp<T> {
   selector: 'comp',
   directives: [
     NestedParentComp,
+  ],
+  directiveTypes: [
+    Typed<NestedParentComp<int>>(),
   ],
   template: r'''
     <parent

@@ -33,14 +33,21 @@ class AngularArtifacts {
 class NormalizedComponentWithViewDirectives {
   CompileDirectiveMetadata component;
   List<CompileDirectiveMetadata> directives;
+  List<CompileTypeMetadata> directiveTypes;
   List<CompilePipeMetadata> pipes;
+
   NormalizedComponentWithViewDirectives(
-      this.component, this.directives, this.pipes);
+    this.component,
+    this.directives,
+    this.directiveTypes,
+    this.pipes,
+  );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'class': 'NormalizedComponentWithViewDirectives',
         'component': component,
         'directives': directives,
+        'directiveTypes': directiveTypes,
         'pipes': pipes,
       };
 }
@@ -100,8 +107,7 @@ class OfflineCompiler {
       var compViewFactoryVar = _compileComponent(
           compMeta,
           componentWithDirs.directives,
-          // TODO(leonsenft): pass user-specified generic directive types.
-          [],
+          componentWithDirs.directiveTypes,
           componentWithDirs.pipes,
           statements,
           _deferredModules);

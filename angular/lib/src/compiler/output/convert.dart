@@ -81,10 +81,13 @@ o.OutputType fromTypeLink(TypeLink typeLink, LibraryReader library) {
     }
     typeArguments[i] = arg;
   }
+  // When `typeLink` represents a type parameter, it doesn't require an import.
+  final importUrl =
+      typeLink.import != null ? linkToReference(typeLink, library).url : null;
   return o.ExternalType(
     CompileIdentifierMetadata(
       name: typeLink.symbol,
-      moduleUrl: linkToReference(typeLink, library).url,
+      moduleUrl: importUrl,
       typeArguments: typeArguments,
     ),
     typeArguments,
