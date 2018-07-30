@@ -19,7 +19,8 @@ import '../compile_metadata.dart'
         CompilePipeMetadata,
         CompileQueryMetadata,
         CompileTokenMap,
-        CompileTypeMetadata;
+        CompileTypeMetadata,
+        CompileTypedMetadata;
 import '../compiler_utils.dart';
 import '../i18n/message.dart';
 import '../identifiers.dart';
@@ -273,7 +274,7 @@ class CompileView implements AppViewBuilder {
   final Map<String, String> deferredModules;
 
   /// Defines type arguments for generic directives in this view.
-  final List<CompileTypeMetadata> directiveTypes;
+  final List<CompileTypedMetadata> directiveTypes;
 
   /// Whether this is rendered by another view, rather than by its own class.
   ///

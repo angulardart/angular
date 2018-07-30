@@ -82,10 +82,10 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     });
   }
 
-  List<CompileTypeMetadata> _visitDirectiveTypes(ClassElement element) {
+  List<CompileTypedMetadata> _visitDirectiveTypes(ClassElement element) {
     final values = _getResolvedArgumentsOrFail(element, 'directiveTypes');
     final typedReader = TypedReader(element);
-    final directiveTypes = <CompileTypeMetadata>[];
+    final directiveTypes = <CompileTypedMetadata>[];
     for (final value in values) {
       directiveTypes.add(_typeMetadataFrom(typedReader.parse(value)));
     }
@@ -141,15 +141,16 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     return values;
   }
 
-  CompileTypeMetadata _typeMetadataFrom(TypeLink typeLink) {
+  CompileTypedMetadata _typeMetadataFrom(TypeLink typeLink) {
     final typeArguments = <o.OutputType>[];
     for (final generic in typeLink.generics) {
       typeArguments.add(fromTypeLink(generic, _library));
     }
-    return CompileTypeMetadata(
-      name: typeLink.symbol,
-      moduleUrl: typeLink.import,
-      typeArguments: typeArguments,
+    return CompileTypedMetadata(
+      typeLink.symbol,
+      typeLink.import,
+      typeArguments,
+      // TODO(leonsenft): forward 'on' once `TypedReader` supports it.
     );
   }
 }

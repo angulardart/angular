@@ -340,6 +340,28 @@ class CompileTypeMetadata
       '}';
 }
 
+/// Metadata used to type a generic directive.
+class CompileTypedMetadata {
+  /// The module URL of the directive this types.
+  final String moduleUrl;
+
+  /// The name of the directive this types.
+  final String name;
+
+  /// An optional identifier for matching specific instances of the directive.
+  final String on;
+
+  /// The generic type arguments to be used to instantiate the directive.
+  final List<o.OutputType> typeArguments;
+
+  CompileTypedMetadata(
+    this.name,
+    this.moduleUrl,
+    this.typeArguments, {
+    this.on,
+  });
+}
+
 /// Provides metadata for Query, ViewQuery, ViewChildren,
 /// ContentChild and ContentChildren decorators.
 class CompileQueryMetadata {
@@ -571,7 +593,7 @@ CompileDirectiveMetadata createHostComponentMeta(
 }
 
 /// Creates metadata necessary to flow types from a host view to its component.
-List<CompileTypeMetadata> createHostDirectiveTypes(
+List<CompileTypedMetadata> createHostDirectiveTypes(
     CompileTypeMetadata componentType) {
   // If the component doesn't have any generic type parameters, there's no need
   // to specify generic type arguments.
@@ -581,10 +603,10 @@ List<CompileTypeMetadata> createHostDirectiveTypes(
   // Otherwise, the returned metadata flows each type parameter of the host view
   // as a type argument to the component (and its associated views).
   return [
-    CompileTypeMetadata(
-      name: componentType.name,
-      moduleUrl: componentType.moduleUrl,
-      typeArguments: typeArgumentsFrom(componentType.typeParameters),
+    CompileTypedMetadata(
+      componentType.name,
+      componentType.moduleUrl,
+      typeArgumentsFrom(componentType.typeParameters),
     )
   ];
 }
