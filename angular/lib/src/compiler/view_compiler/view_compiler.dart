@@ -55,7 +55,7 @@ class ViewCompiler {
     bindView(view, template);
     bindHostProperties(view);
     finishView(view, statements);
-    return ViewCompileResult(statements, view.viewFactory.name);
+    return ViewCompileResult(statements, view.viewFactoryName);
   }
 
   void bindHostProperties(CompileView view) {

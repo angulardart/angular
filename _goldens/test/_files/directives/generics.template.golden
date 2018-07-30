@@ -1281,7 +1281,9 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
     final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
     _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
-    TemplateRef _TemplateRef_2_8 = new TemplateRef(_appEl_2, viewFactory_NestedParentComp1);
+    TemplateRef _TemplateRef_2_8 = new TemplateRef(_appEl_2, (parentView, parentIndex) {
+      return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
+    });
     _NgFor_2_9 = new import10.NgFor(_appEl_2, _TemplateRef_2_8);
     init(const [], null);
     return null;

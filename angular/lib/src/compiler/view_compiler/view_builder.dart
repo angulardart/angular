@@ -570,7 +570,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
             ])),
           factoryReturnType)
       .toDeclStmt(
-        view.viewFactory.name,
+        view.viewFactoryName,
         typeParameters: viewClass.typeParameters,
       );
 }

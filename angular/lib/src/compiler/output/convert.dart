@@ -100,3 +100,13 @@ o.FunctionType fromFunctionType(FunctionType functionType) {
   }
   return o.FunctionType(returnType, paramTypes);
 }
+
+/// Creates type argument ASTs to flow [typeParameters].
+List<o.OutputType> typeArgumentsFrom(List<o.TypeParameter> typeParameters) {
+  final typeArguments = <o.OutputType>[];
+  for (final typeParameter in typeParameters) {
+    typeArguments
+        .add(o.importType(CompileIdentifierMetadata(name: typeParameter.name)));
+  }
+  return typeArguments;
+}
