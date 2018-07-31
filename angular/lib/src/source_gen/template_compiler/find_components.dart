@@ -141,7 +141,8 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     return values;
   }
 
-  CompileTypedMetadata _typeMetadataFrom(TypeLink typeLink) {
+  CompileTypedMetadata _typeMetadataFrom(TypedElement typed) {
+    final typeLink = typed.typeLink;
     final typeArguments = <o.OutputType>[];
     for (final generic in typeLink.generics) {
       typeArguments.add(fromTypeLink(generic, _library));
@@ -150,7 +151,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       typeLink.symbol,
       typeLink.import,
       typeArguments,
-      // TODO(leonsenft): forward 'on' once `TypedReader` supports it.
+      on: typed.on,
     );
   }
 }
