@@ -7,7 +7,7 @@ import 'metadata.dart';
 /// Builds an internationalized message by visiting [TemplateAst] nodes.
 class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   final _args = <String, String>{};
-  final _messageBuffer = new StringBuffer();
+  final _messageBuffer = StringBuffer();
   final TemplateContext _templateContext;
 
   I18nBuilder(this._templateContext);
@@ -24,7 +24,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   /// message would not need translation.
   I18nMessage build(I18nMetadata metadata) {
     return _hasText
-        ? new I18nMessage(_messageBuffer.toString(), metadata, args: _args)
+        ? I18nMessage(_messageBuffer.toString(), metadata, args: _args)
         : null;
   }
 
@@ -62,12 +62,12 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
 
   @override
   void visitBanana(_, [__]) {
-    throw new UnimplementedError();
+    throw UnimplementedError();
   }
 
   @override
   void visitCloseElement(_, [__]) {
-    throw new UnimplementedError();
+    throw UnimplementedError();
   }
 
   @override
@@ -116,7 +116,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
 
   @override
   void visitExpression(_, [__]) {
-    throw new UnimplementedError();
+    throw UnimplementedError();
   }
 
   @override
@@ -126,7 +126,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
 
   @override
   void visitLetBinding(LetBindingAst astNode, [_]) {
-    throw new UnimplementedError();
+    throw UnimplementedError();
   }
 
   @override
@@ -141,7 +141,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
 
   @override
   void visitStar(StarAst starAst, [_]) {
-    throw new UnimplementedError();
+    throw UnimplementedError();
   }
 
   @override
@@ -164,7 +164,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
 
   /// Returns the start tag of [astNode]
   String _start(ElementAst astNode) {
-    final buffer = new StringBuffer('<${astNode.name}');
+    final buffer = StringBuffer('<${astNode.name}');
     visitAll(astNode.attributes, buffer);
     buffer.write('>');
     return buffer.toString();
@@ -178,7 +178,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   }
 }
 
-final _escapeRe = new RegExp(r"(\n)|(\r)|['$\\]");
+final _escapeRe = RegExp(r"(\n)|(\r)|['$\\]");
 
 // TODO(leonsenft): see if this can be shared across compiler.
 String _escape(String text) {

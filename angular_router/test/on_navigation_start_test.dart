@@ -19,7 +19,7 @@ void main() {
 
   group('Router.onNavigationStart', () {
     test('fires on navigation', () async {
-      final testBed = new NgTestBed<TestComponent>();
+      final testBed = NgTestBed<TestComponent>();
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
@@ -32,8 +32,8 @@ void main() {
     });
 
     test("doesn't fire when navigation is prohibited", () async {
-      final testBed = new NgTestBed<TestComponent>()
-          .addProviders([new Provider(canNavigateToken, useValue: false)]);
+      final testBed = NgTestBed<TestComponent>()
+          .addProviders([Provider(canNavigateToken, useValue: false)]);
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
@@ -43,8 +43,8 @@ void main() {
     });
 
     test('fires when deactivation is prohibited', () async {
-      final testBed = new NgTestBed<TestComponent>()
-          .addProviders([new Provider(canDeactivateToken, useValue: false)]);
+      final testBed = NgTestBed<TestComponent>()
+          .addProviders([Provider(canDeactivateToken, useValue: false)]);
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
@@ -57,7 +57,7 @@ void main() {
     });
 
     test('fires only once on redirect', () async {
-      final testBed = new NgTestBed<TestComponent>();
+      final testBed = NgTestBed<TestComponent>();
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
@@ -76,8 +76,8 @@ Stream navigate(Router router, String path) => StreamGroup.merge([
       router.navigate(path).asStream(),
     ]);
 
-const canDeactivateToken = const OpaqueToken<bool>('canDeactivateToken');
-const canNavigateToken = const OpaqueToken<bool>('canNavigateToken');
+const canDeactivateToken = OpaqueToken<bool>('canDeactivateToken');
+const canNavigateToken = OpaqueToken<bool>('canNavigateToken');
 
 @Component(
   selector: 'home',
@@ -94,10 +94,10 @@ class HomeComponent implements CanDeactivate, CanNavigate {
         _canNavigate = canNavigate ?? true;
 
   @override
-  Future<bool> canDeactivate(_, __) => new Future.value(_canDeactivate);
+  Future<bool> canDeactivate(_, __) => Future.value(_canDeactivate);
 
   @override
-  Future<bool> canNavigate() => new Future.value(_canNavigate);
+  Future<bool> canNavigate() => Future.value(_canNavigate);
 }
 
 @Component(
@@ -109,22 +109,22 @@ class DestinationComponent {}
 @Component(
   selector: 'test',
   template: '<router-outlet [routes]="routes"></router-outlet>',
-  directives: const [RouterOutlet],
-  providers: const [routerProvidersTest],
+  directives: [RouterOutlet],
+  providers: [routerProvidersTest],
 )
 class TestComponent {
   final Router router;
   final List<RouteDefinition> routes = [
-    new RouteDefinition(
+    RouteDefinition(
       path: 'home',
       component: ng.HomeComponentNgFactory,
       useAsDefault: true,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       path: 'destination',
       component: ng.DestinationComponentNgFactory,
     ),
-    new RouteDefinition.redirect(
+    RouteDefinition.redirect(
       path: 'redirection',
       redirectTo: 'destination',
     ),

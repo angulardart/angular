@@ -21,7 +21,7 @@ void main() {
     expect(
       parse('Hello World'),
       [
-        new TextAst('Hello World'),
+        TextAst('Hello World'),
       ],
     );
   });
@@ -30,7 +30,7 @@ void main() {
     expect(
       parse('<div></div  >'),
       [
-        new ElementAst('div', new CloseElementAst('div')),
+        ElementAst('div', CloseElementAst('div')),
       ],
     );
   });
@@ -39,20 +39,20 @@ void main() {
     expect(
       parse('<!--Hello World-->'),
       [
-        new CommentAst('Hello World'),
+        CommentAst('Hello World'),
       ],
     );
   });
 
   test('should parse multi-line comments', () {
     expect(parse('<!--Hello\nWorld-->'), [
-      new CommentAst('Hello\nWorld'),
+      CommentAst('Hello\nWorld'),
     ]);
 
     expect(
       parse('<!--\nHello\nWorld\n-->'),
       [
-        new CommentAst('\nHello\nWorld\n'),
+        CommentAst('\nHello\nWorld\n'),
       ],
     );
   });
@@ -64,14 +64,14 @@ void main() {
           '  <span>Hello World</span>\n'
           '</div>\n'),
       [
-        new ElementAst('div', new CloseElementAst('div'), childNodes: [
-          new TextAst('\n  '),
-          new ElementAst('span', new CloseElementAst('span'), childNodes: [
-            new TextAst('Hello World'),
+        ElementAst('div', CloseElementAst('div'), childNodes: [
+          TextAst('\n  '),
+          ElementAst('span', CloseElementAst('span'), childNodes: [
+            TextAst('Hello World'),
           ]),
-          new TextAst('\n'),
+          TextAst('\n'),
         ]),
-        new TextAst('\n'),
+        TextAst('\n'),
       ],
     );
   });
@@ -80,8 +80,8 @@ void main() {
     expect(
       parse('<button disabled ></button>'),
       [
-        new ElementAst('button', new CloseElementAst('button'), attributes: [
-          new AttributeAst('disabled'),
+        ElementAst('button', CloseElementAst('button'), attributes: [
+          AttributeAst('disabled'),
         ]),
       ],
     );
@@ -91,8 +91,8 @@ void main() {
     expect(
       parse('<button title="Submit"></button>'),
       [
-        new ElementAst('button', new CloseElementAst('button'), attributes: [
-          new AttributeAst('title', 'Submit', <InterpolationAst>[]),
+        ElementAst('button', CloseElementAst('button'), attributes: [
+          AttributeAst('title', 'Submit', <InterpolationAst>[]),
         ]),
       ],
     );
@@ -102,8 +102,8 @@ void main() {
     expect(
       parse('<button [value]></button>'),
       [
-        new ElementAst('button', new CloseElementAst('button'), properties: [
-          new PropertyAst('value'),
+        ElementAst('button', CloseElementAst('button'), properties: [
+          PropertyAst('value'),
         ]),
       ],
     );
@@ -113,8 +113,8 @@ void main() {
     expect(
       parse('<button #btnRef></button>'),
       [
-        new ElementAst('button', new CloseElementAst('button'), references: [
-          new ReferenceAst('btnRef'),
+        ElementAst('button', CloseElementAst('button'), references: [
+          ReferenceAst('btnRef'),
         ]),
       ],
     );
@@ -124,23 +124,22 @@ void main() {
     expect(
       parse('<mat-button #btnRef="mat-button"></mat-button>'),
       [
-        new ElementAst('mat-button', new CloseElementAst('mat-button'),
-            references: [
-              new ReferenceAst('btnRef', 'mat-button'),
-            ]),
+        ElementAst('mat-button', CloseElementAst('mat-button'), references: [
+          ReferenceAst('btnRef', 'mat-button'),
+        ]),
       ],
     );
   });
 
   test('should parse a container', () {
-    expect(parse('<ng-container></ng-container>'), [new ContainerAst()]);
+    expect(parse('<ng-container></ng-container>'), [ContainerAst()]);
   });
 
   test('should parse an embedded content directive', () {
     expect(
       parse('<ng-content></ng-content>'),
       [
-        new EmbeddedContentAst(),
+        EmbeddedContentAst(),
       ],
     );
   });
@@ -149,21 +148,21 @@ void main() {
     expect(
       parse('<ng-content select="tab"></ng-content>'),
       [
-        new EmbeddedContentAst('tab'),
+        EmbeddedContentAst('tab'),
       ],
     );
   });
 
   test('should parse an embedded content directive with an ngProjectAs', () {
     expect(parse('<ng-content select="foo" ngProjectAs="bar"></ng-content>'),
-        [new EmbeddedContentAst('foo', 'bar')]);
+        [EmbeddedContentAst('foo', 'bar')]);
   });
 
   test('should parse a <template> directive', () {
     expect(
       parse('<template></template>'),
       [
-        new EmbeddedTemplateAst(),
+        EmbeddedTemplateAst(),
       ],
     );
   });
@@ -172,11 +171,11 @@ void main() {
     expect(
       parse('<template ngFor let-item let-i="index"></template>'),
       [
-        new EmbeddedTemplateAst(attributes: [
-          new AttributeAst('ngFor'),
+        EmbeddedTemplateAst(attributes: [
+          AttributeAst('ngFor'),
         ], letBindings: [
-          new LetBindingAst('item'),
-          new LetBindingAst('i', 'index'),
+          LetBindingAst('item'),
+          LetBindingAst('i', 'index'),
         ]),
       ],
     );
@@ -186,11 +185,11 @@ void main() {
     expect(
       parse('<template let-foo="bar" let-baz #tempRef></template>'),
       [
-        new EmbeddedTemplateAst(references: [
-          new ReferenceAst('tempRef'),
+        EmbeddedTemplateAst(references: [
+          ReferenceAst('tempRef'),
         ], letBindings: [
-          new LetBindingAst('foo', 'bar'),
-          new LetBindingAst('baz'),
+          LetBindingAst('foo', 'bar'),
+          LetBindingAst('baz'),
         ]),
       ],
     );
@@ -200,9 +199,9 @@ void main() {
     expect(
       parse('<template #named ></template>'),
       [
-        new EmbeddedTemplateAst(
+        EmbeddedTemplateAst(
           references: [
-            new ReferenceAst('named'),
+            ReferenceAst('named'),
           ],
         ),
       ],
@@ -213,9 +212,9 @@ void main() {
     expect(
       parse('<template>Hello World</template>'),
       [
-        new EmbeddedTemplateAst(
+        EmbeddedTemplateAst(
           childNodes: [
-            new TextAst('Hello World'),
+            TextAst('Hello World'),
           ],
         ),
       ],
@@ -258,8 +257,8 @@ void main() {
     expect(
       parse('<input><div></div>'),
       [
-        new ElementAst('input', null),
-        new ElementAst('div', new CloseElementAst('div')),
+        ElementAst('input', null),
+        ElementAst('div', CloseElementAst('div')),
       ],
     );
   });
@@ -268,25 +267,25 @@ void main() {
     expect(
       parse('<path /><path></path>'),
       [
-        new ElementAst('path', null),
-        new ElementAst('path', new CloseElementAst('path')),
+        ElementAst('path', null),
+        ElementAst('path', CloseElementAst('path')),
       ],
     );
   });
 
   test('should parse and desugar @deferred', () {
     expect(parse('<div @deferred></div>'), [
-      new EmbeddedTemplateAst(
+      EmbeddedTemplateAst(
           hasDeferredComponent: true,
-          childNodes: [new ElementAst('div', new CloseElementAst('div'))])
+          childNodes: [ElementAst('div', CloseElementAst('div'))])
     ]);
   });
 
   test('should parse multiple annotations and desugar @deferred', () {
     expect(parse('<div @foo="bar" @deferred></div>'), [
-      new EmbeddedTemplateAst(hasDeferredComponent: true, childNodes: [
-        new ElementAst('div', new CloseElementAst('div'), annotations: [
-          new AnnotationAst('foo', 'bar'),
+      EmbeddedTemplateAst(hasDeferredComponent: true, childNodes: [
+        ElementAst('div', CloseElementAst('div'), annotations: [
+          AnnotationAst('foo', 'bar'),
         ])
       ]),
     ]);
@@ -294,24 +293,24 @@ void main() {
 
   test('should parse an annotation with a value', () {
     expect(parse('<div @foo="bar"></div>'), [
-      new ElementAst('div', new CloseElementAst('div'), annotations: [
-        new AnnotationAst('foo', 'bar'),
+      ElementAst('div', CloseElementAst('div'), annotations: [
+        AnnotationAst('foo', 'bar'),
       ]),
     ]);
   });
 
   test('should parse an annotation on a container', () {
     expect(parse('<ng-container @annotation></ng-container>'), [
-      new ContainerAst(annotations: [
-        new AnnotationAst('annotation'),
+      ContainerAst(annotations: [
+        AnnotationAst('annotation'),
       ])
     ]);
   });
 
   test('should parse an annotation on an embedded template', () {
     expect(parse('<template @annotation></template>'), [
-      new EmbeddedTemplateAst(annotations: [
-        new AnnotationAst('annotation'),
+      EmbeddedTemplateAst(annotations: [
+        AnnotationAst('annotation'),
       ])
     ]);
   });

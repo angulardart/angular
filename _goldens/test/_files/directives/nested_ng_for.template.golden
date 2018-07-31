@@ -40,9 +40,9 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
     final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
-    _NgFor_0_9 = new import3.NgFor(_appEl_0, _TemplateRef_0_8);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
+    _NgFor_0_9 = import3.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
     return null;
   }
@@ -68,7 +68,7 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
 }
 
 AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewNestedNgForComponent0(parentView, parentIndex);
+  return ViewNestedNgForComponent0(parentView, parentIndex);
 }
 
 class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
@@ -85,9 +85,9 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
     _el_0 = doc.createElement('span');
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
-    _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
-    TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
-    _NgFor_1_9 = new import3.NgFor(_appEl_1, _TemplateRef_1_8);
+    _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
+    TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
+    _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
     init0(_el_0);
     return null;
   }
@@ -113,7 +113,7 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
 }
 
 AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent1(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewNestedNgForComponent1(parentView, parentIndex);
+  return _ViewNestedNgForComponent1(parentView, parentIndex);
 }
 
 class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
@@ -127,7 +127,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   ComponentRef<import1.NestedNgForComponent> build() {
     var doc = import7.document;
     _el_0 = doc.createElement('div');
-    _text_1 = new import7.Text('');
+    _text_1 = import7.Text('');
     _el_0.append(_text_1);
     init0(_el_0);
     return null;
@@ -145,7 +145,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
 }
 
 AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewNestedNgForComponent2(parentView, parentIndex);
+  return _ViewNestedNgForComponent2(parentView, parentIndex);
 }
 
 final List<dynamic> styles$NestedNgForComponentHost = const [];
@@ -156,12 +156,12 @@ class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponen
   _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
-    _compView_0 = new ViewNestedNgForComponent0(this, 0);
+    _compView_0 = ViewNestedNgForComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _NestedNgForComponent_0_5 = new import1.NestedNgForComponent();
+    _NestedNgForComponent_0_5 = import1.NestedNgForComponent();
     _compView_0.create(_NestedNgForComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _NestedNgForComponent_0_5);
+    return ComponentRef(0, this, rootEl, _NestedNgForComponent_0_5);
   }
 
   @override
@@ -176,7 +176,7 @@ class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponen
 }
 
 AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewNestedNgForComponentHost0(parentView, parentIndex);
+  return _ViewNestedNgForComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.NestedNgForComponent> _NestedNgForComponentNgFactory = const ComponentFactory('nested-ng-for', viewFactory_NestedNgForComponentHost0);

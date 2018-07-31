@@ -37,7 +37,7 @@ Future<T> _recordLogs<T>(
   Future<T> Function() run,
   void Function(List<LogRecord>) onLog,
 ) {
-  final logger = new Logger('_recordLogs');
+  final logger = Logger('_recordLogs');
   final records = <LogRecord>[];
   final subscription = logger.onRecord.listen(records.add);
   return scopeLogAsync(() async {

@@ -21,13 +21,13 @@ void main() {
   FakeRouter fakeRouter;
 
   setUp(() {
-    fakeRouter = new FakeRouter();
+    fakeRouter = FakeRouter();
   });
 
   tearDown(disposeAnyRunningTest);
 
   test('should attempt to navigate to the provided link', () async {
-    final fixture = await new NgTestBed<TestRouterLink>().addProviders([
+    final fixture = await NgTestBed<TestRouterLink>().addProviders([
       ClassProvider(Location),
       ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
       ValueProvider(Router, fakeRouter),
@@ -42,7 +42,7 @@ void main() {
   });
 
   test('should attempt to navigate on Enter key press', () async {
-    final testBed = new NgTestBed<TestRouterLinkKeyPress>().addProviders([
+    final testBed = NgTestBed<TestRouterLinkKeyPress>().addProviders([
       ClassProvider(Location),
       ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
       ValueProvider(Router, fakeRouter),
@@ -56,7 +56,7 @@ void main() {
   });
 
   test('should parse out query params and fragment', () async {
-    final fixture = await new NgTestBed<TestRouterLink>().addProviders([
+    final fixture = await NgTestBed<TestRouterLink>().addProviders([
       ClassProvider(Location),
       ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
       ValueProvider(Router, fakeRouter),
@@ -75,8 +75,7 @@ void main() {
   });
 
   test('should not use the router when the target is not _self', () async {
-    final fixture =
-        await new NgTestBed<TestRouterLinkWithTarget>().addProviders([
+    final fixture = await NgTestBed<TestRouterLinkWithTarget>().addProviders([
       ClassProvider(Location),
       ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
       ValueProvider(Router, fakeRouter),
@@ -93,7 +92,7 @@ void main() {
 
 @Component(
   selector: 'test-router-link',
-  directives: const [
+  directives: [
     RouterLink,
   ],
   template: r'''
@@ -107,7 +106,7 @@ class TestRouterLink {
 @Component(
   selector: 'test-router-link-keypress',
   template: '<div [routerLink]="routerLink"></div>',
-  directives: const [RouterLink],
+  directives: [RouterLink],
 )
 class TestRouterLinkKeyPress {
   String routerLink = '/foo/bar';
@@ -115,7 +114,7 @@ class TestRouterLinkKeyPress {
 
 @Component(
   selector: 'test-router-link',
-  directives: const [
+  directives: [
     RouterLink,
   ],
   template: r'''

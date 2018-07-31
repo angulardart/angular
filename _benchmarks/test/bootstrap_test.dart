@@ -10,10 +10,10 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should start and stop a benchmark', () async {
-    final testBed = NgTestBed.forComponent<BenchmarkComponent>(
+    final testBed = NgTestBed.forComponent(
       common.BenchmarkComponentNgFactory,
       rootInjector: ([i]) {
-        return new Injector.map(
+        return Injector.map(
           {runBenchmarkOn: ng.ExampleBenchmarkNgFactory},
           i,
         );

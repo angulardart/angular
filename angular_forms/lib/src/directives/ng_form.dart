@@ -70,15 +70,15 @@ import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
 @Directive(
   selector: 'form:not([ngNoForm]):not([ngFormModel]):not([memorizedForm]),'
       'ngForm,[ngForm]',
-  providers: const [
-    const ExistingProvider(ControlContainer, NgForm),
+  providers: [
+    ExistingProvider(ControlContainer, NgForm),
   ],
   exportAs: 'ngForm',
   visibility: Visibility.all,
 )
 class NgForm extends AbstractNgForm<ControlGroup> {
   NgForm(@Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic> validators) {
-    form = new ControlGroup({}, composeValidators(validators));
+    form = ControlGroup({}, composeValidators(validators));
   }
 
   @override

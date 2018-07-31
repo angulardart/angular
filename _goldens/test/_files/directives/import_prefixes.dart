@@ -13,7 +13,7 @@ import 'import_prefixes.dart' as prefixed3 hide ChildComponent;
   template: '<child-comp [myType]="input"></child-comp>',
 )
 class ParentComponent {
-  final input = new prefixed.MyType();
+  final input = prefixed.MyType();
 }
 
 @angular.Component(

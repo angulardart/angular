@@ -48,8 +48,8 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
       throwFailure("Pipe has no 'transform' method: $element");
     }
     final value = annotation.computeConstantValue();
-    return new CompilePipeMetadata(
-      type: element.accept(new CompileTypeMetadataVisitor(_library)),
+    return CompilePipeMetadata(
+      type: element.accept(CompileTypeMetadataVisitor(_library)),
       transformType: fromFunctionType(transformType),
       name: coerceString(value, 'name'),
       pure: coerceBool(value, 'pure', defaultTo: true),

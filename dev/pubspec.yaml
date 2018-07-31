@@ -1,6 +1,9 @@
 # Development tools for working on the AngularDart repository.
 name: dev
 
+environment:
+  sdk: ">=2.0.0-dev.64.2 <3.0.0"
+
 dependencies:
   args: ^1.4.1
   glob: ^1.1.5

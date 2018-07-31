@@ -1,4 +1,3 @@
-import 'package:_benchmarks/di/create_20_bindings_reflective.dart';
 import 'package:_benchmarks/di/create_20_bindings_reflective.template.dart'
     as ng_comp;
 import 'package:angular_test/angular_test.dart';
@@ -13,7 +12,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should create 20 DI bindings (reflective)', () async {
-    final testBed = NgTestBed.forComponent<Create20BindingsReflectiveBenchmark>(
+    final testBed = NgTestBed.forComponent(
       ng_comp.Create20BindingsReflectiveBenchmarkNgFactory,
     );
     final fixture = await testBed.create();

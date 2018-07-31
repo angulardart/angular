@@ -3,7 +3,12 @@ import 'dart:convert';
 
 import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
-    show CompileDirectiveMetadata, CompilePipeMetadata, createHostComponentMeta;
+    show
+        CompileDirectiveMetadata,
+        CompileTypedMetadata,
+        CompilePipeMetadata,
+        createHostComponentMeta,
+        createHostDirectiveTypes;
 import 'compiler_utils.dart' show stylesModuleUrl, templateModuleUrl;
 import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
@@ -28,14 +33,21 @@ class AngularArtifacts {
 class NormalizedComponentWithViewDirectives {
   CompileDirectiveMetadata component;
   List<CompileDirectiveMetadata> directives;
+  List<CompileTypedMetadata> directiveTypes;
   List<CompilePipeMetadata> pipes;
+
   NormalizedComponentWithViewDirectives(
-      this.component, this.directives, this.pipes);
+    this.component,
+    this.directives,
+    this.directiveTypes,
+    this.pipes,
+  );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'class': 'NormalizedComponentWithViewDirectives',
         'component': component,
         'directives': directives,
+        'directiveTypes': directiveTypes,
         'pipes': pipes,
       };
 }
@@ -83,7 +95,7 @@ class OfflineCompiler {
     } else if (artifacts.directives.isNotEmpty) {
       moduleUrl = templateModuleUrl(artifacts.directives.first.type);
     } else {
-      throw new StateError('No components nor injectorModules given');
+      throw StateError('No components nor injectorModules given');
     }
     var statements = <o.Statement>[];
     var exportedVars = <String>[];
@@ -95,6 +107,7 @@ class OfflineCompiler {
       var compViewFactoryVar = _compileComponent(
           compMeta,
           componentWithDirs.directives,
+          componentWithDirs.directiveTypes,
           componentWithDirs.pipes,
           statements,
           _deferredModules);
@@ -104,8 +117,15 @@ class OfflineCompiler {
       // runtime.
       var hostMeta = createHostComponentMeta(compMeta.type, compMeta.selector,
           compMeta.template.preserveWhitespace);
+      var hostDirectiveTypes = createHostDirectiveTypes(compMeta.type);
       var hostViewFactoryVar = _compileComponent(
-          hostMeta, [compMeta], [], statements, _deferredModules);
+        hostMeta,
+        [compMeta],
+        hostDirectiveTypes,
+        [],
+        statements,
+        _deferredModules,
+      );
       var compFactoryVar = '${compMeta.type.name}NgFactory';
       var factoryType = [o.importType(compMeta.type)];
 
@@ -134,7 +154,7 @@ class OfflineCompiler {
           [],
           // Statements.
           [
-            new o.ReturnStatement(new o.ReadVarExpr('_$compFactoryVar')),
+            o.ReturnStatement(o.ReadVarExpr('_$compFactoryVar')),
           ],
           o.importType(
             Identifiers.ComponentFactory,
@@ -148,7 +168,7 @@ class OfflineCompiler {
 
     for (CompileDirectiveMetadata directive in artifacts.directives) {
       if (!directive.requiresDirectiveChangeDetector) continue;
-      DirectiveCompiler comp = new DirectiveCompiler(directive,
+      DirectiveCompiler comp = DirectiveCompiler(directive,
           _templateParser.schemaRegistry, _viewCompiler.genDebugInfo);
       DirectiveCompileResult res = comp.compile();
       statements.addAll(res.statements);
@@ -175,14 +195,21 @@ class OfflineCompiler {
   String _compileComponent(
       CompileDirectiveMetadata compMeta,
       List<CompileDirectiveMetadata> directives,
+      List<CompileTypedMetadata> directiveTypes,
       List<CompilePipeMetadata> pipes,
       List<o.Statement> targetStatements,
       Map<String, String> deferredModules) {
     var styleResult = _styleCompiler.compileComponent(compMeta);
     List<TemplateAst> parsedTemplate = _templateParser.parse(compMeta,
         compMeta.template.template, directives, pipes, compMeta.type.name);
-    var viewResult = _viewCompiler.compileComponent(compMeta, parsedTemplate,
-        styleResult, o.variable(styleResult.stylesVar), pipes, deferredModules);
+    var viewResult = _viewCompiler.compileComponent(
+        compMeta,
+        parsedTemplate,
+        styleResult,
+        o.variable(styleResult.stylesVar),
+        directiveTypes,
+        pipes,
+        deferredModules);
     targetStatements.addAll(styleResult.statements);
     targetStatements.addAll(viewResult.statements);
     return viewResult.viewFactoryVar;
@@ -195,13 +222,13 @@ class OfflineCompiler {
       Map<String, String> deferredModules) {
     String sourceCode = _outputEmitter.emitStatements(
         moduleUrl, statements, exportedVars, deferredModules);
-    return new SourceModule(moduleUrl, sourceCode, deferredModules);
+    return SourceModule(moduleUrl, sourceCode, deferredModules);
   }
 }
 
 void _assertComponent(CompileDirectiveMetadata meta) {
   if (!meta.isComponent) {
-    throw new StateError(
+    throw StateError(
         "Could not compile '${meta.type.name}' because it is not a component.");
   }
 }

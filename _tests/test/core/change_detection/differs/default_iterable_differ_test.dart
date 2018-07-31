@@ -11,10 +11,10 @@ void main() {
     group("DefaultIterableDiffer", () {
       DefaultIterableDiffer differ;
       setUp(() {
-        differ = new DefaultIterableDiffer();
+        differ = DefaultIterableDiffer();
       });
       test("should support iterables", () {
-        var l = new TestIterable();
+        var l = TestIterable();
         differ.check(l);
         expect(differ.toString(), iterableChangesAsString(collection: []));
         l.list = [1];
@@ -271,11 +271,11 @@ void main() {
       var trackByItemId = (int index, dynamic item) => item.id;
       var buildItemList = (List<String> list) {
         return list.map((val) {
-          return new ItemWithId(val);
+          return ItemWithId(val);
         }).toList();
       };
       setUp(() {
-        differ = new DefaultIterableDiffer(trackByItemId);
+        differ = DefaultIterableDiffer(trackByItemId);
       });
       test("should treat the collection as dirty if identity changes", () {
         differ.diff(buildItemList(["a"]));
@@ -305,9 +305,9 @@ void main() {
                 previous: ['''{id: a}''', '''{id: b}''', '''{id: c}''']));
       });
       test("should have updated properties in identity change collection", () {
-        var l = [new ComplexItem("a", "blue"), new ComplexItem("b", "yellow")];
+        var l = [ComplexItem("a", "blue"), ComplexItem("b", "yellow")];
         differ.check(l);
-        l = [new ComplexItem("a", "orange"), new ComplexItem("b", "red")];
+        l = [ComplexItem("a", "orange"), ComplexItem("b", "red")];
         differ.check(l);
         expect(
             differ.toString(),
@@ -376,7 +376,7 @@ void main() {
       var differ;
       var trackByIndex = (int index, Object item) => index;
       setUp(() {
-        differ = new DefaultIterableDiffer(trackByIndex);
+        differ = DefaultIterableDiffer(trackByIndex);
       });
       test("should track removals normally", () {
         differ.check(["a", "b", "c", "d"]);

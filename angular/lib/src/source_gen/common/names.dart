@@ -8,7 +8,7 @@ const _deferredExtension = '.dart.deferredCount';
 /// important. For example, putting '.dart' first in this list will cause
 /// incorrect behavior because it will (incompletely) match '.template.dart'
 /// files.
-const _allExtensions = const [
+const _allExtensions = [
   _deferredExtension,
   _templateExtension,
   '.ng_placeholder',
@@ -27,11 +27,11 @@ String _toExtension(
   if (uri.endsWith(toExtension)) return uri;
   for (var extension in fromExtensions) {
     if (uri.endsWith(extension)) {
-      return '${uri.substring(0, uri.length-extension.length)}'
+      return '${uri.substring(0, uri.length - extension.length)}'
           '$toExtension';
     }
   }
-  throw new ArgumentError.value(
+  throw ArgumentError.value(
       uri,
       'uri',
       'Provided value ends with an unexpected extension. '

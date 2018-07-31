@@ -12,28 +12,28 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support bindings', () async {
-    final testBed = new NgTestBed<ProvideConsumeInjectableComponent>();
+    final testBed = NgTestBed<ProvideConsumeInjectableComponent>();
     final testFixture = await testBed.create();
     final consumer = testFixture.assertOnlyInstance.consumer;
-    expect(consumer.injectable, new isInstanceOf<InjectableService>());
+    expect(consumer.injectable, isInstanceOf<InjectableService>());
   });
 
   test('should support viewProviders', () async {
-    final testBed = new NgTestBed<ProvidesInjectableInViewComponent>();
+    final testBed = NgTestBed<ProvidesInjectableInViewComponent>();
     final testFixture = await testBed.create();
     final consumer = testFixture.assertOnlyInstance.consumer;
-    expect(consumer.injectable, new isInstanceOf<InjectableService>());
+    expect(consumer.injectable, isInstanceOf<InjectableService>());
   });
 
   test('should support unbounded lookup', () async {
-    final testBed = new NgTestBed<ProvidesInjectableUnboundedComponent>();
+    final testBed = NgTestBed<ProvidesInjectableUnboundedComponent>();
     final testFixture = await testBed.create();
     final dir = testFixture.assertOnlyInstance.container;
-    expect(dir.directive.injectable, new isInstanceOf<InjectableService>());
+    expect(dir.directive.injectable, isInstanceOf<InjectableService>());
   });
 
   test('should support the event-bus scenario', () async {
-    final testBed = new NgTestBed<EventBusComponent>();
+    final testBed = NgTestBed<EventBusComponent>();
     final testFixture = await testBed.create();
     final grandParent = testFixture.assertOnlyInstance.grandParent;
     final parent = testFixture.assertOnlyInstance.parent;
@@ -45,7 +45,7 @@ void main() {
   });
 
   test('should instantiate bindings lazily', () async {
-    final testBed = new NgTestBed<LazyBindingsComponent>();
+    final testBed = NgTestBed<LazyBindingsComponent>();
     final testFixture = await testBed.create();
     final providing = testFixture.assertOnlyInstance.providing;
     expect(providing.created, false);
@@ -54,18 +54,18 @@ void main() {
   });
 
   test('should inject @Host', () async {
-    final testBed = new NgTestBed<InjectsHostComponent>();
+    final testBed = NgTestBed<InjectsHostComponent>();
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.compWithHost;
-    expect(cmp.myHost, new isInstanceOf<SomeDirective>());
+    expect(cmp.myHost, isInstanceOf<SomeDirective>());
   });
 
   test('should create a component that injects @Host through ViewContainer',
       () async {
-    final testBed = new NgTestBed<InjectsHostThroughViewContainer>();
+    final testBed = NgTestBed<InjectsHostThroughViewContainer>();
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.compWithHost;
-    expect(cmp.myHost, new isInstanceOf<SomeDirective>());
+    expect(cmp.myHost, isInstanceOf<SomeDirective>());
   });
 }
 
@@ -85,7 +85,7 @@ class DirectiveConsumingInjectable {
 
 @Directive(
   selector: 'directive-providing-injectable',
-  providers: const [InjectableService],
+  providers: [InjectableService],
 )
 class DirectiveProvidingInjectable {}
 
@@ -95,7 +95,7 @@ class DirectiveProvidingInjectable {}
 <directive-providing-injectable>
   <directive-consuming-injectable #consumer></directive-consuming-injectable>
 </directive-providing-injectable>''',
-  directives: const [
+  directives: [
     DirectiveConsumingInjectable,
     DirectiveProvidingInjectable,
   ],
@@ -110,8 +110,8 @@ class ProvideConsumeInjectableComponent {
   template: '''
 <directive-consuming-injectable #consumer>
 </directive-consuming-injectable>''',
-  directives: const [DirectiveConsumingInjectable],
-  viewProviders: const [InjectableService],
+  directives: [DirectiveConsumingInjectable],
+  viewProviders: [InjectableService],
 )
 class ProvidesInjectableInViewComponent {
   @ViewChild('consumer')
@@ -123,7 +123,7 @@ class ProvidesInjectableInViewComponent {
   template: '''
 <directive-consuming-injectable-unbounded>
 </directive-consuming-injectable-unbounded>''',
-  directives: const [DirectiveConsumingInjectableUnbounded],
+  directives: [DirectiveConsumingInjectableUnbounded],
   visibility: Visibility.all,
 )
 class DirectiveContainingDirectiveConsumingAnInjectable {
@@ -150,7 +150,7 @@ class DirectiveConsumingInjectableUnbounded {
   <directive-containing-directive-consuming-an-injectable #dir>
   </directive-containing-directive-consuming-an-injectable>
 </directive-providing-injectable>''',
-  directives: const [
+  directives: [
     DirectiveProvidingInjectable,
     DirectiveContainingDirectiveConsumingAnInjectable,
   ],
@@ -167,12 +167,12 @@ class EventBus {
   const EventBus(this.parentEventBus, this.name);
 }
 
-const grandParentBus = const EventBus(null, 'grandparent');
+const grandParentBus = EventBus(null, 'grandparent');
 
 @Directive(
   selector: 'grand-parent-providing-event-bus',
-  providers: const [
-    const Provider(EventBus, useValue: grandParentBus),
+  providers: [
+    Provider(EventBus, useValue: grandParentBus),
   ],
 )
 class GrandParentProvidingEventBus {
@@ -182,17 +182,17 @@ class GrandParentProvidingEventBus {
 }
 
 EventBus createParentBus(EventBus parentEventBus) {
-  return new EventBus(parentEventBus, 'parent');
+  return EventBus(parentEventBus, 'parent');
 }
 
 @Component(
   selector: 'parent-providing-event-bus',
-  providers: const [
-    const Provider(EventBus, useFactory: createParentBus, deps: const [
-      const [EventBus, const SkipSelf()]
+  providers: [
+    Provider(EventBus, useFactory: createParentBus, deps: [
+      [EventBus, SkipSelf()]
     ])
   ],
-  directives: const [ChildConsumingEventBus],
+  directives: [ChildConsumingEventBus],
   template: '<child-consuming-event-bus></child-consuming-event-bus>',
 )
 class ParentProvidingEventBus {
@@ -220,7 +220,7 @@ class ChildConsumingEventBus {
 <grand-parent-providing-event-bus>
   <parent-providing-event-bus></parent-providing-event-bus>
 </grand-parent-providing-event-bus>''',
-  directives: const [
+  directives: [
     GrandParentProvidingEventBus,
     ParentProvidingEventBus,
   ],
@@ -235,14 +235,14 @@ class EventBusComponent {
 
 InjectableService createInjectableWithLogging(Injector injector) {
   injector.get(ComponentProvidingLoggingInjectable).created = true;
-  return new InjectableService();
+  return InjectableService();
 }
 
 @Component(
   selector: 'component-providing-logging-injectable',
-  providers: const [
-    const Provider(InjectableService,
-        useFactory: createInjectableWithLogging, deps: const [Injector])
+  providers: [
+    Provider(InjectableService,
+        useFactory: createInjectableWithLogging, deps: [Injector])
   ],
   template: '',
   visibility: Visibility.all,
@@ -258,7 +258,7 @@ class ComponentProvidingLoggingInjectable {
   <directive-consuming-injectable *ngIf="visible">
   </directive-consuming-injectable>
 </component-providing-logging-injectable>''',
-  directives: const [
+  directives: [
     ComponentProvidingLoggingInjectable,
     DirectiveConsumingInjectable,
     NgIf,
@@ -280,7 +280,7 @@ class SomeDirective {}
 @Component(
   selector: 'cmp-with-host',
   template: '<p>Component with an injected host</p>',
-  directives: const [SomeDirective],
+  directives: [SomeDirective],
 )
 class CompWithHost {
   SomeDirective myHost;
@@ -294,7 +294,7 @@ class CompWithHost {
   selector: 'injects-host',
   template:
       '<some-directive><cmp-with-host #cmp></cmp-with-host></some-directive>',
-  directives: const [CompWithHost, SomeDirective],
+  directives: [CompWithHost, SomeDirective],
 )
 class InjectsHostComponent {
   @ViewChild('cmp')
@@ -309,7 +309,7 @@ class InjectsHostComponent {
     <cmp-with-host #cmp></cmp-with-host>
   </p>
 </some-directive>''',
-  directives: const [CompWithHost, NgIf, SomeDirective],
+  directives: [CompWithHost, NgIf, SomeDirective],
 )
 class InjectsHostThroughViewContainer {
   @ViewChild('cmp')

@@ -30,8 +30,8 @@ class ViewUsesUntypedComp0 extends AppView<_user.UsesUntypedComp> {
 // For @Component class GenericComp.
 external List<dynamic> get styles$GenericComp;
 external ComponentFactory<_user.GenericComp> get GenericCompNgFactory;
-external AppView<_user.GenericComp> viewFactory_GenericComp0(AppView<dynamic> parentView, int parentIndex);
-class ViewGenericComp0 extends AppView<_user.GenericComp> {
+external AppView<_user.GenericComp<T>> viewFactory_GenericComp0<T>(AppView<dynamic> parentView, int parentIndex);
+class ViewGenericComp0<T> extends AppView<_user.GenericComp<T>> {
   external ViewGenericComp0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesGenericComp.
@@ -44,8 +44,8 @@ class ViewUsesGenericComp0 extends AppView<_user.UsesGenericComp> {
 // For @Component class MappingComp1.
 external List<dynamic> get styles$MappingComp1;
 external ComponentFactory<_user.MappingComp1> get MappingComp1NgFactory;
-external AppView<_user.MappingComp1> viewFactory_MappingComp10(AppView<dynamic> parentView, int parentIndex);
-class ViewMappingComp10 extends AppView<_user.MappingComp1> {
+external AppView<_user.MappingComp1<K, V>> viewFactory_MappingComp10<K, V>(AppView<dynamic> parentView, int parentIndex);
+class ViewMappingComp10<K, V> extends AppView<_user.MappingComp1<K, V>> {
   external ViewMappingComp10(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesMappingComp1.
@@ -58,8 +58,8 @@ class ViewUsesMappingComp10 extends AppView<_user.UsesMappingComp1> {
 // For @Component class MappingComp2.
 external List<dynamic> get styles$MappingComp2;
 external ComponentFactory<_user.MappingComp2> get MappingComp2NgFactory;
-external AppView<_user.MappingComp2> viewFactory_MappingComp20(AppView<dynamic> parentView, int parentIndex);
-class ViewMappingComp20 extends AppView<_user.MappingComp2> {
+external AppView<_user.MappingComp2<K, V>> viewFactory_MappingComp20<K, V>(AppView<dynamic> parentView, int parentIndex);
+class ViewMappingComp20<K, V> extends AppView<_user.MappingComp2<K, V>> {
   external ViewMappingComp20(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesMappingComp2.
@@ -121,8 +121,8 @@ class ViewUsesRecursiveComp0 extends AppView<_user.UsesRecursiveComp> {
 // For @Component class FunctionTypeComp.
 external List<dynamic> get styles$FunctionTypeComp;
 external ComponentFactory<_user.FunctionTypeComp> get FunctionTypeCompNgFactory;
-external AppView<_user.FunctionTypeComp> viewFactory_FunctionTypeComp0(AppView<dynamic> parentView, int parentIndex);
-class ViewFunctionTypeComp0 extends AppView<_user.FunctionTypeComp> {
+external AppView<_user.FunctionTypeComp<F>> viewFactory_FunctionTypeComp0<F>(AppView<dynamic> parentView, int parentIndex);
+class ViewFunctionTypeComp0<F> extends AppView<_user.FunctionTypeComp<F>> {
   external ViewFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesFunctionTypeComp.
@@ -135,15 +135,15 @@ class ViewUsesFunctionTypeComp0 extends AppView<_user.UsesFunctionTypeComp> {
 // For @Component class NestedParentComp.
 external List<dynamic> get styles$NestedParentComp;
 external ComponentFactory<_user.NestedParentComp> get NestedParentCompNgFactory;
-external AppView<_user.NestedParentComp> viewFactory_NestedParentComp0(AppView<dynamic> parentView, int parentIndex);
-class ViewNestedParentComp0 extends AppView<_user.NestedParentComp> {
+external AppView<_user.NestedParentComp<T>> viewFactory_NestedParentComp0<T>(AppView<dynamic> parentView, int parentIndex);
+class ViewNestedParentComp0<T> extends AppView<_user.NestedParentComp<T>> {
   external ViewNestedParentComp0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class NestedChildComp.
 external List<dynamic> get styles$NestedChildComp;
 external ComponentFactory<_user.NestedChildComp> get NestedChildCompNgFactory;
-external AppView<_user.NestedChildComp> viewFactory_NestedChildComp0(AppView<dynamic> parentView, int parentIndex);
-class ViewNestedChildComp0 extends AppView<_user.NestedChildComp> {
+external AppView<_user.NestedChildComp<T>> viewFactory_NestedChildComp0<T>(AppView<dynamic> parentView, int parentIndex);
+class ViewNestedChildComp0<T> extends AppView<_user.NestedChildComp<T>> {
   external ViewNestedChildComp0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesNestedParentComp.

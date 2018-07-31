@@ -7,7 +7,7 @@ import '920_provider_type_inference_test.template.dart' as ng_generated;
 
 void main() {
   test('should use the provided type with component providers', () async {
-    final testBed = NgTestBed.forComponent<CompProvidesUsPresidents>(
+    final testBed = NgTestBed.forComponent(
       ng_generated.CompProvidesUsPresidentsNgFactory,
     );
     final fixture = await testBed.create();
@@ -22,15 +22,15 @@ void main() {
   });
 }
 
-const usPresidents = const OpaqueToken<List<String>>('usPresidents');
+const usPresidents = OpaqueToken<List<String>>('usPresidents');
 
 @Component(
   selector: 'comp',
-  directives: const [
+  directives: [
     ChildComp,
   ],
-  providers: const [
-    const Provider<List<String>>(usPresidents, useValue: const [
+  providers: [
+    Provider<List<String>>(usPresidents, useValue: [
       'George Washington',
       'Abraham Lincoln',
     ]),

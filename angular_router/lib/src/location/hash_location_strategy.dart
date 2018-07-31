@@ -79,15 +79,18 @@ class HashLocationStrategy extends LocationStrategy {
 
   String prepareExternalUrl(String internal) {
     var url = Location.joinWithSlash(_baseHref, internal);
-    return url.isEmpty ? url : '#$url';
+    // It's convention that if the hash path is empty, we omit the `#`; however,
+    // if the empty URL is pushed it won't replace any existing fragment. So
+    // when the hash path is empty, we instead return the location's path and
+    // query.
+    return url.isEmpty
+        ? '${_platformLocation.pathname}${_platformLocation.search}'
+        : '#$url';
   }
 
   void pushState(dynamic state, String title, String path, String queryParams) {
     var url =
         prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
-    if (url.isEmpty) {
-      url = _platformLocation.pathname;
-    }
     _platformLocation.pushState(state, title, url);
   }
 
@@ -95,9 +98,6 @@ class HashLocationStrategy extends LocationStrategy {
       dynamic state, String title, String path, String queryParams) {
     var url =
         prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
-    if (url.isEmpty) {
-      url = _platformLocation.pathname;
-    }
     _platformLocation.replaceState(state, title, url);
   }
 

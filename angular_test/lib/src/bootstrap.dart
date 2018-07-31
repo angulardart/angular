@@ -38,16 +38,16 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
   InjectorFactory userInjector, {
-  void Function(E) beforeChangeDetection,
+  FutureOr<void> Function(E) beforeChangeDetection,
 }) {
   if (componentFactory == null) {
-    throw new ArgumentError.notNull('componentFactory');
+    throw ArgumentError.notNull('componentFactory');
   }
   if (hostElement == null) {
-    throw new ArgumentError.notNull('hostElement');
+    throw ArgumentError.notNull('hostElement');
   }
   if (userInjector == null) {
-    throw new ArgumentError.notNull('userInjector');
+    throw ArgumentError.notNull('userInjector');
   }
   // This should be kept in sync with 'runApp' as much as possible.
   final injector = appInjector(userInjector);
@@ -69,7 +69,6 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
     ).then((ComponentRef<E> componentRef) async {
       // ComponentRef<E> is due to weirdness around type promotion:
       // https://github.com/dart-lang/sdk/issues/32284
-      hostElement.append(componentRef.location);
       await ngZone.onTurnDone.first;
       // Required to prevent onTurnDone to become re-entrant, as described in
       // the bug https://github.com/dart-lang/angular/issues/631. Without this
@@ -78,12 +77,12 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
       //
       // Can be removed if NgZone.onTurnDone ever supports re-entry, either by
       // no longer using Streams or fixing dart:async.
-      await new Future.value();
+      await Future.value();
       onErrorSub.cancel();
       if (caughtError != null) {
-        return new Future.error(
+        return Future.error(
           caughtError.error,
-          new StackTrace.fromString(caughtError.stackTrace.join('\n')),
+          StackTrace.fromString(caughtError.stackTrace.join('\n')),
         );
       }
       return componentRef;
@@ -96,28 +95,39 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
   Injector injector, {
-  void beforeChangeDetection(E componentInstance),
+  FutureOr<void> beforeChangeDetection(E componentInstance),
 }) {
   // TODO: Consider using hostElement instead.
-  sharedStylesHost ??= new DomSharedStylesHost(document);
+  sharedStylesHost ??= DomSharedStylesHost(document);
   final componentRef = componentFactory.create(injector);
   final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
   if (!isDefaultChangeDetectionStrategy(cdMode) &&
       cdMode != ChangeDetectionStrategy.CheckAlways) {
-    throw new UnsupportedError(
+    throw UnsupportedError(
         'The root component in an Angular test or application must use the '
         'default form of change detection (ChangeDetectionStrategy.Default). '
         'Instead got ${(componentRef.hostView as ViewRefImpl).appView.cdMode} '
         'on component $E.');
   }
-  if (beforeChangeDetection != null) {
-    beforeChangeDetection(componentRef.instance);
+
+  Future<ComponentRef<E>> loadComponent() {
+    hostElement.append(componentRef.location);
+    appRef.registerChangeDetector(componentRef.changeDetectorRef);
+    componentRef.onDestroy(() {
+      appRef.unregisterChangeDetector(componentRef.changeDetectorRef);
+    });
+    appRef.tick();
+    return Future.value(componentRef);
   }
-  hostElement.append(componentRef.location);
-  appRef.registerChangeDetector(componentRef.changeDetectorRef);
-  componentRef.onDestroy(() {
-    appRef.unregisterChangeDetector(componentRef.changeDetectorRef);
-  });
-  appRef.tick();
-  return new Future.value(componentRef);
+
+  FutureOr<void> beforeChangeDetectionReturn;
+  if (beforeChangeDetection != null) {
+    beforeChangeDetectionReturn = beforeChangeDetection(componentRef.instance);
+  }
+
+  if (beforeChangeDetectionReturn is Future) {
+    return beforeChangeDetectionReturn.then((_) => loadComponent());
+  } else {
+    return loadComponent();
+  }
 }

@@ -11,7 +11,7 @@ void main() {
   ng_generated.initReflector();
 
   test('should be able to compile templates with unicode', () async {
-    final testBed = new NgTestBed<App>();
+    final testBed = NgTestBed<App>();
     final fixture = await testBed.create();
     expect(
       fixture.text,

@@ -8,7 +8,7 @@ import 'package:angular/angular.dart';
       <span (click)="onClick(bar)">{{bar}}</span>
     </div>
     ''',
-  directives: const [NgIf, NgFor],
+  directives: [NgIf, NgFor],
 )
 class TestFooComponent {
   final bool foo = true;

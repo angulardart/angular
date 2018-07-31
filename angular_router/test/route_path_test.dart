@@ -9,8 +9,8 @@ import 'package:angular_router/angular_router.dart';
 void main() {
   group('$RoutePath', () {
     test('should set all properties', () {
-      RoutePath parent = new RoutePath();
-      RoutePath routePath = new RoutePath(
+      RoutePath parent = RoutePath();
+      RoutePath routePath = RoutePath(
           path: 'path',
           useAsDefault: true,
           additionalData: 'data',
@@ -23,8 +23,8 @@ void main() {
 
     group('fromRoutes', () {
       test('should set all properties from routes', () {
-        RoutePath routePath = new RoutePath.fromRoutes([
-          new RouteDefinition(
+        RoutePath routePath = RoutePath.fromRoutes([
+          RouteDefinition(
               path: 'path', useAsDefault: true, additionalData: 'data')
         ]);
         expect(routePath.path, 'path');
@@ -34,9 +34,9 @@ void main() {
       });
 
       test('should take properties from last route', () {
-        RoutePath routePath = new RoutePath.fromRoutes([
-          new RouteDefinition(),
-          new RouteDefinition(
+        RoutePath routePath = RoutePath.fromRoutes([
+          RouteDefinition(),
+          RouteDefinition(
               path: 'path', useAsDefault: true, additionalData: 'data')
         ]);
         expect(routePath.path, 'path');
@@ -46,7 +46,7 @@ void main() {
       });
 
       test('should construct with an empty list', () {
-        RoutePath routePath = new RoutePath.fromRoutes([]);
+        RoutePath routePath = RoutePath.fromRoutes([]);
         expect(routePath.path, '');
         expect(routePath.useAsDefault, false);
         expect(routePath.additionalData, isNull);
@@ -54,10 +54,10 @@ void main() {
       });
 
       test('should chain libraries', () {
-        RoutePath routePath = new RoutePath.fromRoutes([
-          new RouteDefinition(path: 'path1'),
-          new RouteDefinition(path: 'path2'),
-          new RouteDefinition(path: 'path3')
+        RoutePath routePath = RoutePath.fromRoutes([
+          RouteDefinition(path: 'path1'),
+          RouteDefinition(path: 'path2'),
+          RouteDefinition(path: 'path3')
         ]);
         expect(routePath.path, 'path3');
         expect(routePath.parent.path, 'path2');
@@ -68,10 +68,9 @@ void main() {
 
     group('path', () {
       test('should return a slash-trimmed version of the path', () {
-        RoutePath routePath = new RoutePath(path: '/path/');
+        RoutePath routePath = RoutePath(path: '/path/');
         expect(routePath.path, 'path');
-        routePath =
-            new RoutePath.fromRoutes([new RouteDefinition(path: '/path/')]);
+        routePath = RoutePath.fromRoutes([RouteDefinition(path: '/path/')]);
         expect(routePath.path, 'path');
       });
     });
@@ -80,10 +79,10 @@ void main() {
       RoutePath routePath;
 
       setUpAll(() {
-        RoutePath parentParentPath = new RoutePath(path: 'path1/:param1');
+        RoutePath parentParentPath = RoutePath(path: 'path1/:param1');
         RoutePath parentPath =
-            new RoutePath(path: 'path2/:param2', parent: parentParentPath);
-        routePath = new RoutePath(path: 'path3/:param3', parent: parentPath);
+            RoutePath(path: 'path2/:param2', parent: parentParentPath);
+        routePath = RoutePath(path: 'path3/:param3', parent: parentPath);
       });
 
       test('should join the parent paths and the last path', () {
@@ -124,10 +123,10 @@ void main() {
     });
 
     test('toUrl() should handle empty parent path', () {
-      final a = new RoutePath(path: '');
-      final b = new RoutePath(path: 'foo', parent: a);
-      final c = new RoutePath(path: '', parent: b);
-      final d = new RoutePath(path: 'bar', parent: c);
+      final a = RoutePath(path: '');
+      final b = RoutePath(path: 'foo', parent: a);
+      final c = RoutePath(path: '', parent: b);
+      final d = RoutePath(path: 'bar', parent: c);
       expect(d.toUrl(), '/foo/bar');
     });
   });

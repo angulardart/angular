@@ -32,7 +32,7 @@ void main() {
           '    }\n'
           '  }\n'
           '}';
-      pipe = new JsonPipe();
+      pipe = JsonPipe();
     });
 
     tearDown(() => disposeAnyRunningTest());
@@ -55,7 +55,7 @@ void main() {
     });
     group('integration', () {
       test('should work with mutable objects', () async {
-        var testBed = new NgTestBed<TestComp>();
+        var testBed = NgTestBed<TestComp>();
         var fixture = await testBed.create();
         List<num> mutable = [1];
         await fixture.update((TestComp component) {
@@ -73,7 +73,7 @@ void main() {
 @Component(
   selector: 'test-comp',
   template: '{{data | json}}',
-  pipes: const [JsonPipe],
+  pipes: [JsonPipe],
 )
 class TestComp {
   dynamic data;

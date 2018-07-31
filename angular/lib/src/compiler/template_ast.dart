@@ -273,7 +273,10 @@ class ProviderAst implements TemplateAst {
   /// Whether the provider is `multi: true`.
   final bool multiProvider;
 
-  /// May be non-null if [multiProvider] is `true`.
+  /// The type provided by this provider.
+  ///
+  /// Note this may be null, in which case the expected type is generally
+  /// available from a related expression or piece of metadata.
   final CompileTypeMetadata typeArgument;
 
   /// Whether provider should be eagerly created at build time.
@@ -321,7 +324,7 @@ class ProviderAst implements TemplateAst {
   ///
   /// It is a signal to view builder to create a public field inside AppView
   /// to allow other AppView(s) or change detector access to this provider.
-  bool get hasNonLocalRequests => throw new UnimplementedError();
+  bool get hasNonLocalRequests => throw UnimplementedError();
 }
 
 enum ProviderAstType {

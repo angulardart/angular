@@ -132,7 +132,7 @@ abstract class ChangeDetectionHost {
   /// rely on for the production application.
   void tick() {
     if (isDevMode && _runningTick) {
-      throw new StateError('Change detecion (tick) was called recursively');
+      throw StateError('Change detecion (tick) was called recursively');
     }
 
     // Checks all components for change detection errors.
@@ -243,7 +243,7 @@ abstract class ChangeDetectionHost {
     // required otherwise tests timeout - the completer needs to be created
     // outside as Dart swallows rejected futures outside the 'onError: '
     // callback for Future.
-    final completer = new Completer<R>();
+    final completer = Completer<R>();
     FutureOr<R> result;
     runInZone(() {
       try {

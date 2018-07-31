@@ -20,6 +20,7 @@ export 'src/analyzer.dart'
         ReflectableReader,
         TokenElement,
         TokenReader,
+        TypedElement,
         TypedReader,
         TypeLink,
         TypeTokenElement,

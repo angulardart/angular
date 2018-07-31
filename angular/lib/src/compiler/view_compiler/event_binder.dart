@@ -44,7 +44,7 @@ class CompileEventListener {
     for (var existingListener in targetEventListeners) {
       if (existingListener.eventName == eventName) return existingListener;
     }
-    var listener = new CompileEventListener(
+    var listener = CompileEventListener(
         compileElement, eventName, targetEventListeners.length);
     targetEventListeners.add(listener);
     return listener;
@@ -52,14 +52,13 @@ class CompileEventListener {
 
   CompileEventListener(this.compileElement, this.eventName, int listenerIndex)
       : _nameResolver = compileElement.view.nameResolver.scope() {
-    _method = new CompileMethod(compileElement.view.genDebugInfo);
+    _method = CompileMethod(compileElement.view.genDebugInfo);
     _methodName =
         '_handle_${sanitizeEventName(eventName)}_${compileElement.nodeIndex}_'
         '$listenerIndex';
     // TODO: type event param as Identifiers.HTML_EVENT if non-custom event or
     // stream.
-    _eventParam =
-        new o.FnParam(EventHandlerVars.event.name, o.importType(null));
+    _eventParam = o.FnParam(EventHandlerVars.event.name, o.importType(null));
   }
 
   void _addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
@@ -74,8 +73,7 @@ class CompileEventListener {
     if (directive != null && directive.isComponent) {
       _hasComponentHostListener = true;
     }
-    var context =
-        directiveInstance?.build() ?? new o.ReadClassMemberExpr('ctx');
+    var context = directiveInstance?.build() ?? o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(_nameResolver, context,
         hostEvent.handler, hostEvent.sourceSpan, compileElement.view.component);
     _method.addStmts(actionStmts);
@@ -90,7 +88,7 @@ class CompileEventListener {
     } else {
       // Declare variables for locals used in this event listener.
       stmts.insertAll(0, _nameResolver.getLocalDeclarations());
-      compileElement.view.methods.add(new o.ClassMethod(
+      compileElement.view.methods.add(o.ClassMethod(
           _methodName, [_eventParam], stmts, null, [o.StmtModifier.Private]));
     }
   }
@@ -125,7 +123,7 @@ class CompileEventListener {
       handlerExpr = _simpleHandler;
       numArgs = _handlerType == HandlerType.simpleNoArgs ? 0 : 1;
     } else {
-      handlerExpr = new o.ReadClassMemberExpr(_methodName);
+      handlerExpr = o.ReadClassMemberExpr(_methodName);
       numArgs = 1;
     }
 
@@ -134,7 +132,7 @@ class CompileEventListener {
       return compileElement.componentView
           .callMethod(wrapperName, [handlerExpr]);
     } else {
-      return new o.InvokeMemberMethodExpr(wrapperName, [handlerExpr]);
+      return o.InvokeMemberMethodExpr(wrapperName, [handlerExpr]);
     }
   }
 
@@ -142,8 +140,8 @@ class CompileEventListener {
       _handler(hostEvent) is PropertyRead;
 
   BoundEventAst _rewriteTearoff(BoundEventAst hostEvent, AnalyzedClass clazz) =>
-      new BoundEventAst(hostEvent.name,
-          rewriteTearoff(_handler(hostEvent), clazz), hostEvent.sourceSpan);
+      BoundEventAst(hostEvent.name, rewriteTearoff(_handler(hostEvent), clazz),
+          hostEvent.sourceSpan);
 
   AST _handler(BoundEventAst hostEvent) {
     var eventHandler = hostEvent.handler;
@@ -212,5 +210,5 @@ o.Expression convertStmtIntoExpression(o.Statement stmt) {
 o.Expression _extractFunction(o.Expression returnExpr) {
   assert(returnExpr is o.InvokeMethodExpr);
   var callExpr = returnExpr as o.InvokeMethodExpr;
-  return new o.ReadPropExpr(callExpr.receiver, callExpr.name);
+  return o.ReadPropExpr(callExpr.receiver, callExpr.name);
 }

@@ -19,7 +19,7 @@ import 'url.dart';
 /// - Defer/lazy load a component: [RouteDefinition.defer]
 /// - Redirect and resolve a new route: [RouteDefinition.redirect]
 abstract class RouteDefinition {
-  static final RegExp _findParameters = new RegExp(r':([\w-]+)');
+  static final RegExp _findParameters = RegExp(r':([\w-]+)');
 
   /// Logical name used for determining a route.
   final String path;
@@ -50,7 +50,7 @@ abstract class RouteDefinition {
       return;
     }
     if (path == null) {
-      throw new StateError('Must have a non-null `path` string');
+      throw StateError('Must have a non-null `path` string');
     }
   }
 
@@ -156,14 +156,14 @@ abstract class RouteDefinition {
   }
 
   /// Returns as a regular expression that matches this route.
-  RegExp toRegExp() => new RegExp('/?' +
+  RegExp toRegExp() => RegExp('/?' +
       path.replaceAll(_findParameters,
           r"((?:[\w'\.\-~!\$&\(\)\*\+,;=:@]|%[0-9a-fA-F]{2})+)"));
 
   /// Returns as a valid URL with [paramValues] filled into [parameters].
   String toUrl([Map<String, String> paramValues = const {}]) {
     if (isDevMode && paramValues == null) {
-      throw new ArgumentError.notNull('paramValues');
+      throw ArgumentError.notNull('paramValues');
     }
     var url = '/' + path;
     for (final parameter in parameters) {
@@ -200,7 +200,7 @@ class ComponentRouteDefinition extends RouteDefinition {
       return;
     }
     if (component is! Type && component is! ComponentFactory) {
-      throw new StateError(
+      throw StateError(
         'Must have a valid (non-null) `component` type (got $Component).',
       );
     }
@@ -230,7 +230,7 @@ class DeferredRouteDefinition extends RouteDefinition {
       return;
     }
     if (loader == null) {
-      throw new StateError('Must have a non-null `loader` function');
+      throw StateError('Must have a non-null `loader` function');
     }
     super.assertValid();
   }
@@ -258,16 +258,16 @@ class RedirectRouteDefinition extends RouteDefinition {
       return;
     }
     if (redirectTo == null) {
-      throw new StateError('Must have a non-null `redirectTo` string');
+      throw StateError('Must have a non-null `redirectTo` string');
     }
     if (redirectTo == path) {
-      throw new StateError('Cannot redirect from `redirectTo` to `path');
+      throw StateError('Cannot redirect from `redirectTo` to `path');
     }
     Iterable<String> pathParameters = parameters;
     Iterable<String> unknownRedirectToParameters = _redirectToParameters.where(
         (redirectToParameter) => !pathParameters.contains(redirectToParameter));
     if (unknownRedirectToParameters.isNotEmpty) {
-      throw new StateError('Parameters in `redirectTo` are not in `path`: '
+      throw StateError('Parameters in `redirectTo` are not in `path`: '
           '$unknownRedirectToParameters');
     }
     super.assertValid();
@@ -276,7 +276,7 @@ class RedirectRouteDefinition extends RouteDefinition {
   /// Returns the redirectTo URL with [_redirectToParameters] filled in.
   String redirectToUrl([Map<String, String> paramValues = const {}]) {
     if (isDevMode && paramValues == null) {
-      throw new ArgumentError.notNull('paramValues');
+      throw ArgumentError.notNull('paramValues');
     }
     var url = redirectTo;
     for (final parameter in _redirectToParameters) {

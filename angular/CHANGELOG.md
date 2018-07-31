@@ -1,3 +1,7 @@
+### Other improvements
+
+*   Removed dependency on `package:tuple`.
+
 ## 5.0.0-beta+2
 
 ### New features

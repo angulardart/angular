@@ -11,7 +11,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should *not* assign any values if the initial value is null', () async {
-    final fixture = await new NgTestBed<BoundValueTest>().create();
+    final fixture = await NgTestBed<BoundValueTest>().create();
     await fixture.update(expectAsync1((comp) {
       expect(comp.child.updates, 0, reason: 'No changes should have happened');
       expect(comp.child.value, isNull);
@@ -19,7 +19,7 @@ void main() {
   });
 
   test('should propagate null if the initial value is non-null', () async {
-    final fixture = await new NgTestBed<BoundValueTest>().create(
+    final fixture = await NgTestBed<BoundValueTest>().create(
       beforeChangeDetection: (comp) => comp.boundValue = 'Hello',
     );
     await fixture.update(expectAsync1((comp) {
@@ -35,7 +35,7 @@ void main() {
 
   test('should not recreate literal maps unless content changes', () async {
     Map boundMap;
-    final fixture = await new NgTestBed<BoundMapTest>().create(
+    final fixture = await NgTestBed<BoundMapTest>().create(
       beforeChangeDetection: (comp) {
         comp.value = 'bar';
       },
@@ -55,7 +55,7 @@ void main() {
 
   test('should not recreate literal lists unless content changes', () async {
     List boundList;
-    final fixture = await new NgTestBed<BoundListTest>().create(
+    final fixture = await NgTestBed<BoundListTest>().create(
       beforeChangeDetection: (comp) {
         comp.value = 'bar';
       },
@@ -74,14 +74,14 @@ void main() {
   });
 
   test('should support interpolation', () async {
-    final fixture = await new NgTestBed<BoundValueTest>().create(
+    final fixture = await NgTestBed<BoundValueTest>().create(
       beforeChangeDetection: (comp) => comp.boundValue = 'Hello World',
     );
     expect(fixture.text, 'Hello World');
   });
 
   test('should output empty for null values in interpolation', () async {
-    final fixture = await new NgTestBed<BoundValueTest>().create();
+    final fixture = await NgTestBed<BoundValueTest>().create();
     expect(fixture.text, isEmpty);
   });
 }
@@ -105,7 +105,7 @@ class ChildComponent {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: '<child [value]="boundValue"></child>',
 )
 class BoundValueTest {
@@ -117,7 +117,7 @@ class BoundValueTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="{'key': value}"></child>''',
 )
 class BoundMapTest {
@@ -129,7 +129,7 @@ class BoundMapTest {
 
 @Component(
   selector: 'test',
-  directives: const [ChildComponent],
+  directives: [ChildComponent],
   template: r'''<child [value]="[value]"></child>''',
 )
 class BoundListTest {

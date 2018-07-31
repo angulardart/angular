@@ -15,7 +15,7 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     test("should work in a template element", () async {
-      var testBed = new NgTestBed<NgIfInTemplateComponent>();
+      var testBed = NgTestBed<NgIfInTemplateComponent>();
       var testFixture = await testBed.create();
       Element element = testFixture.rootElement;
       expect(element.querySelectorAll("copy-me"), hasLength(1));
@@ -23,7 +23,7 @@ void main() {
     });
 
     test("should toggle node when condition changes", () async {
-      var testBed = new NgTestBed<NgIfToggleTestComponent>();
+      var testBed = NgTestBed<NgIfToggleTestComponent>();
       NgTestFixture<NgIfToggleTestComponent> testFixture =
           await testBed.create();
       Element element = testFixture.rootElement;
@@ -45,7 +45,7 @@ void main() {
     });
 
     test("should handle nested if correctly", () async {
-      var testBed = new NgTestBed<NgIfNestedTestComponent>();
+      var testBed = NgTestBed<NgIfNestedTestComponent>();
       NgTestFixture<NgIfNestedTestComponent> testFixture =
           await testBed.create();
       Element element = testFixture.rootElement;
@@ -82,7 +82,7 @@ void main() {
     });
 
     test("should update multiple bindings", () async {
-      var testBed = new NgTestBed<NgIfMultiUpdateTestComponent>();
+      var testBed = NgTestBed<NgIfMultiUpdateTestComponent>();
       NgTestFixture<NgIfMultiUpdateTestComponent> testFixture =
           await testBed.create();
       Element element = testFixture.rootElement;
@@ -108,7 +108,7 @@ void main() {
     });
 
     test('should throw during change detection if getter changes', () async {
-      var testBed = new NgTestBed<NgIfThrowsDuringChangeDetection>();
+      var testBed = NgTestBed<NgIfThrowsDuringChangeDetection>();
       var fixture = await testBed.create();
       expect(
         fixture.update((c) => c.startFailing = true),
@@ -119,13 +119,13 @@ void main() {
 }
 
 const isExpressionChanged =
-    const isInstanceOf<ExpressionChangedAfterItHasBeenCheckedException>();
+    isInstanceOf<ExpressionChangedAfterItHasBeenCheckedException>();
 
 @Component(
   selector: 'ngif-intemplate-test',
   template: '<div><template [ngIf]="booleanCondition">'
       '<copy-me>hello2</copy-me></template></div>',
-  directives: const [NgIf],
+  directives: [NgIf],
 )
 class NgIfInTemplateComponent {
   bool booleanCondition = true;
@@ -135,7 +135,7 @@ class NgIfInTemplateComponent {
   selector: 'ngif-toggle-test',
   template: '<div><copy-me *ngIf="booleanCondition">hello</copy-me>'
       '</div>',
-  directives: const [NgIf],
+  directives: [NgIf],
 )
 class NgIfToggleTestComponent {
   bool booleanCondition = true;
@@ -146,7 +146,7 @@ class NgIfToggleTestComponent {
   template: '<div><template [ngIf]="booleanCondition">'
       '<copy-me *ngIf="nestedBooleanCondition">hello</copy-me>'
       '</template></div>',
-  directives: const [NgIf],
+  directives: [NgIf],
 )
 class NgIfNestedTestComponent {
   bool booleanCondition = true;
@@ -160,7 +160,7 @@ class NgIfNestedTestComponent {
       '<copy-me *ngIf="stringCondition == \'foo\'">helloString</copy-me>'
       '<copy-me *ngIf="functionCondition(stringCondition, numberCondition)">helloFunction</copy-me>'
       '</div>',
-  directives: const [NgIf],
+  directives: [NgIf],
 )
 class NgIfMultiUpdateTestComponent {
   bool booleanCondition = true;
@@ -177,7 +177,7 @@ class NgIfMultiUpdateTestComponent {
       <div *ngIf="value">Hello</div>
     </template>
   ''',
-  directives: const [NgIf],
+  directives: [NgIf],
 )
 class NgIfThrowsDuringChangeDetection {
   bool _value = false;

@@ -1,6 +1,6 @@
 import 'package:angular/angular.dart';
 
-import '../model.dart' show ControlGroup;
+import '../model.dart' show AbstractControlGroup;
 import '../validators.dart' show Validators, NG_VALIDATORS;
 import 'abstract_form.dart' show AbstractForm;
 import 'control_container.dart' show ControlContainer;
@@ -81,22 +81,23 @@ import 'validators.dart' show ValidatorFn;
 /// ```
 @Directive(
   selector: '[ngFormModel]',
-  providers: const [
-    const ExistingProvider(ControlContainer, NgFormModel),
+  providers: [
+    ExistingProvider(ControlContainer, NgFormModel),
   ],
   exportAs: 'ngForm',
   visibility: Visibility.all,
 )
-class NgFormModel extends AbstractForm<ControlGroup> implements AfterChanges {
+class NgFormModel extends AbstractForm<AbstractControlGroup>
+    implements AfterChanges {
   final ValidatorFn _validator;
 
   bool _formChanged = false;
-  ControlGroup _form;
+  AbstractControlGroup _form;
 
-  ControlGroup get form => _form;
+  AbstractControlGroup get form => _form;
 
   @Input('ngFormModel')
-  set form(ControlGroup value) {
+  set form(AbstractControlGroup value) {
     _form = value;
     _formChanged = true;
   }
@@ -149,7 +150,7 @@ class NgFormModel extends AbstractForm<ControlGroup> implements AfterChanges {
 
   void _checkFormPresent() {
     if (form == null) {
-      throw new StateError(
+      throw StateError(
           'ngFormModel expects a form. Please pass one in. Example: '
           '<form [ngFormModel]="myCoolForm">');
     }

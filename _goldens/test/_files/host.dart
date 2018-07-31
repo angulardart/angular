@@ -13,7 +13,7 @@ class HostComponentNewSyntax {
 
 @Component(
   selector: 'uses-host',
-  directives: const [
+  directives: [
     HostComponent,
     ListensToFooEvent,
   ],
@@ -48,14 +48,14 @@ class HostComponent {
   @HostBinding('style.color')
   static const String hostStyleColor = 'red';
 
-  @HostListener('click', const [r'$event'])
+  @HostListener('click', [r'$event'])
   void onClick(event) {}
 
   @HostListener('keydown')
   void onKeyDown() {}
 
   @Output('onFoo')
-  final fooEvents = new StreamController<void>().stream;
+  final fooEvents = StreamController<void>().stream;
 }
 
 @Directive(

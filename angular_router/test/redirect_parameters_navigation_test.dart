@@ -26,8 +26,7 @@ void main() {
 /// Performs a navigation that should be redirected.
 /// Returns any URL changes that occurred due to navigation.
 Future<List<String>> redirect(String from) async {
-  final testBed = NgTestBed
-      .forComponent<TestRedirectComponent>(ng.TestRedirectComponentNgFactory)
+  final testBed = NgTestBed.forComponent(ng.TestRedirectComponentNgFactory)
       .addInjector(injector);
   final testFixture = await testBed.create();
   final urlChanges = testFixture.assertOnlyInstance.locationStrategy.urlChanges;
@@ -46,13 +45,13 @@ class ToComponent {}
 @Component(
   selector: 'test',
   template: '<router-outlet [routes]="routes"></router-outlet>',
-  directives: const [RouterOutlet],
+  directives: [RouterOutlet],
 )
 class TestRedirectComponent {
   static final routes = [
-    new RouteDefinition(path: '/to/:id', component: ng.ToComponentNgFactory),
-    new RouteDefinition.redirect(path: '/from/:id', redirectTo: '/to/:id'),
-    new RouteDefinition.redirect(path: '/from/:id/:id2', redirectTo: '/to/:id'),
+    RouteDefinition(path: '/to/:id', component: ng.ToComponentNgFactory),
+    RouteDefinition.redirect(path: '/from/:id', redirectTo: '/to/:id'),
+    RouteDefinition.redirect(path: '/from/:id/:id2', redirectTo: '/to/:id'),
   ];
 
   final MockLocationStrategy locationStrategy;

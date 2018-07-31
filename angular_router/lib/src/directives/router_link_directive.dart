@@ -57,7 +57,7 @@ class RouterLink implements OnDestroy {
   Url get url {
     if (_cachedUrl == null) {
       final parsedUrl = Url.parse(_routerLink);
-      _cachedUrl = new Url(
+      _cachedUrl = Url(
         _location.normalizePath(parsedUrl.path),
         fragment: parsedUrl.fragment,
         queryParameters: parsedUrl.queryParameters,
@@ -99,7 +99,7 @@ class RouterLink implements OnDestroy {
       event.preventDefault();
       _router.navigate(
           url.path,
-          new NavigationParams(
+          NavigationParams(
               queryParameters: url.queryParameters, fragment: url.fragment));
     }
   }

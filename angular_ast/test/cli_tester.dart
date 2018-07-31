@@ -7,20 +7,20 @@ import 'dart:io';
 
 import 'package:angular_ast/angular_ast.dart';
 
-RecoveringExceptionHandler exceptionHandler = new RecoveringExceptionHandler();
+RecoveringExceptionHandler exceptionHandler = RecoveringExceptionHandler();
 Iterable<NgToken> tokenize(String html) {
   exceptionHandler.exceptions.clear();
   return const NgLexer().tokenize(html, exceptionHandler);
 }
 
 String untokenize(Iterable<NgToken> tokens) => tokens
-    .fold(new StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+    .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
     .toString();
 
 void main() {
   String input;
   while (true) {
-    input = stdin.readLineSync(encoding: UTF8);
+    input = stdin.readLineSync(encoding: utf8);
     if (input == 'QUIT') {
       break;
     }

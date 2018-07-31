@@ -6,7 +6,7 @@ import 'repository.dart';
 class TravisGenerator {
   /// Analyzes and returns output files as part of scanning [repository].
   static TravisGenerator generate(Repository repository) {
-    final writer = new OutputWriter(
+    final writer = OutputWriter(
       repository.readTravisPrefix(),
       repository.readTravisPostfix(),
     );
@@ -29,7 +29,7 @@ class TravisGenerator {
         );
       }
     }
-    return new TravisGenerator._(
+    return TravisGenerator._(
       writer.toPresubmitScript(),
       writer.toTravisDotYaml(),
     );
@@ -78,6 +78,13 @@ set -e
 rm -rf **/build/\n
 ''';
 
+  /// The Pub cache directory path.
+  ///
+  /// Note that any Travis build stage which defines its own cache will ignore
+  /// the global cache. So despite the Pub cache already being cached globally,
+  /// it must be respecified by any build stage that defines its own cache.
+  static const _pubCacheDirectory = r'$HOME/.pub-cache';
+
   String toPresubmitScript() {
     return _presubmitPreamble + _presubmit.join('\n');
   }
@@ -111,16 +118,17 @@ rm -rf **/build/\n
     }
     _stages.addAll([
       '    - stage: building',
-      '      script: ./tool/travis.sh build${release ? ':release': ''}',
+      '      script: ./tool/travis.sh build${release ? ':release' : ''}',
       '      env: PKG="$path"',
       '      cache:',
       '        directories:',
+      '          - $_pubCacheDirectory',
       '          - $path/.dart_tool',
       '',
     ]);
     _presubmit.addAll([
       'echo "Building $path in ${release ? 'release' : 'debug'} mode..."',
-      'PKG=$path tool/travis.sh build${release ? ':release': ''}',
+      'PKG=$path tool/travis.sh build${release ? ':release' : ''}',
     ]);
   }
 
@@ -157,6 +165,7 @@ rm -rf **/build/\n
         '      env: PKG="$path"',
         '      cache:',
         '        directories:',
+        '          - $_pubCacheDirectory',
         '          - $path/.dart_tool',
         '',
       ]);
@@ -185,12 +194,13 @@ rm -rf **/build/\n
       '      env: PKG="$path"',
       '      cache:',
       '        directories:',
+      '          - $_pubCacheDirectory',
       '          - $path/.dart_tool',
       '',
     ]);
     _presubmit.addAll([
       'echo "Running tests in $path in ${release ? 'release' : 'debug'} mode"',
-      'PKG=$path tool/travis.sh test${release ? ':release': ''}',
+      'PKG=$path tool/travis.sh test${release ? ':release' : ''}',
     ]);
     if (browser) {
       _stages.addAll(const [

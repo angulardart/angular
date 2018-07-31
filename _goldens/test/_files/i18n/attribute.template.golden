@@ -43,7 +43,7 @@ class ViewI18nAttributeComponent0 extends AppView<import1.I18nAttributeComponent
 }
 
 AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewI18nAttributeComponent0(parentView, parentIndex);
+  return ViewI18nAttributeComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$I18nAttributeComponentHost = const [];
@@ -54,12 +54,12 @@ class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComp
   _ViewI18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.I18nAttributeComponent> build() {
-    _compView_0 = new ViewI18nAttributeComponent0(this, 0);
+    _compView_0 = ViewI18nAttributeComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _I18nAttributeComponent_0_5 = new import1.I18nAttributeComponent();
+    _I18nAttributeComponent_0_5 = import1.I18nAttributeComponent();
     _compView_0.create(_I18nAttributeComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _I18nAttributeComponent_0_5);
+    return ComponentRef(0, this, rootEl, _I18nAttributeComponent_0_5);
   }
 
   @override
@@ -74,7 +74,7 @@ class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComp
 }
 
 AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewI18nAttributeComponentHost0(parentView, parentIndex);
+  return _ViewI18nAttributeComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.I18nAttributeComponent> _I18nAttributeComponentNgFactory = const ComponentFactory('message', viewFactory_I18nAttributeComponentHost0);

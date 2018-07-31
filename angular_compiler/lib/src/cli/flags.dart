@@ -19,7 +19,7 @@ const _argNoEmitInjectableFactories = 'no-emit-injectable-factories';
 /// opinionated and allows anything to be set, but has reasonable defaults set
 /// with an option to use defaults set by bazel or pub's build systems.
 class CompilerFlags {
-  static final _argParser = new ArgParser()
+  static final _argParser = ArgParser()
     ..addFlag(
       _argLegacyStyle,
       defaultsTo: null,
@@ -126,7 +126,7 @@ class CompilerFlags {
     Level severity = Level.WARNING,
   }) {
     final results = _argParser.parse(args);
-    return new CompilerFlags.parseRaw(
+    return CompilerFlags.parseRaw(
       results,
       defaultTo,
       logger: logger,
@@ -168,7 +168,7 @@ class CompilerFlags {
             'You may be providing flags that are no longer valid or supported '
             'for AngularDart 5.x. See "compiler_flags.md" in the AngularDart '
             'repository for a list of supported flags.';
-        throw new ArgumentError(message);
+        throw ArgumentError(message);
       }
     }
 
@@ -179,7 +179,7 @@ class CompilerFlags {
     final noEmitComponentFactories = options[_argNoEmitComponentFactories];
     final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
 
-    return new CompilerFlags(
+    return CompilerFlags(
       genDebugInfo: false,
       i18nEnabled: i18nEnabled ?? defaultTo.i18nEnabled,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,

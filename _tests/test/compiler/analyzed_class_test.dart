@@ -18,7 +18,7 @@ void main() {
           final List<String> _names;
           List<String> getNames() => _names;
         }''');
-      final expression = new MethodCall(new ImplicitReceiver(), 'getNames', []);
+      final expression = MethodCall(ImplicitReceiver(), 'getNames', []);
       final type = getExpressionType(expression, analyzedClass);
       expect(type.toString(), 'List<String>');
     });
@@ -29,10 +29,10 @@ void main() {
         class AppComponent {
           final List<String> names;
         }''');
-      final namesExpr = new PropertyRead(new ImplicitReceiver(), 'names');
-      final rangeExpr = new MethodCall(namesExpr, 'getRange', [
-        new LiteralPrimitive(1),
-        new LiteralPrimitive(4),
+      final namesExpr = PropertyRead(ImplicitReceiver(), 'names');
+      final rangeExpr = MethodCall(namesExpr, 'getRange', [
+        LiteralPrimitive(1),
+        LiteralPrimitive(4),
       ]);
       final type = getExpressionType(rangeExpr, analyzedClass);
       expect(type.toString(), 'Iterable<String>');
@@ -43,7 +43,7 @@ void main() {
         class AppComponent {
           final List<int> values;
         }''');
-      final expression = new PropertyRead(new ImplicitReceiver(), 'values');
+      final expression = PropertyRead(ImplicitReceiver(), 'values');
       final type = getExpressionType(expression, analyzedClass);
       expect(type.toString(), 'List<int>');
     });
@@ -53,8 +53,8 @@ void main() {
         class AppComponent {
           final List<int> values;
         }''');
-      final valuesExpr = new PropertyRead(new ImplicitReceiver(), 'values');
-      final lengthExpr = new PropertyRead(valuesExpr, 'length');
+      final valuesExpr = PropertyRead(ImplicitReceiver(), 'values');
+      final lengthExpr = PropertyRead(valuesExpr, 'length');
       final type = getExpressionType(lengthExpr, analyzedClass);
       expect(type.toString(), 'int');
     });
@@ -63,14 +63,14 @@ void main() {
 
 Future<AnalyzedClass> analyzeClass(String source) async {
   final library = await resolve(source);
-  final visitor = new AnalyzedClassVisitor();
+  final visitor = AnalyzedClassVisitor();
   return library.accept(visitor);
 }
 
 class AnalyzedClassVisitor extends RecursiveElementVisitor<AnalyzedClass> {
   @override
   AnalyzedClass visitClassElement(ClassElement element) {
-    return new AnalyzedClass(element);
+    return AnalyzedClass(element);
   }
 
   @override

@@ -19,7 +19,7 @@ void main() {
   group('$RouteDefinition', () {
     group(':$ComponentRouteDefinition', () {
       test('should create a route to an `@Component` type', () {
-        ComponentRouteDefinition def = new RouteDefinition(
+        ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes',
           component: ng.HeroesComponentNgFactory,
         );
@@ -27,7 +27,7 @@ void main() {
       });
 
       test('should fail "assertValid" with a null or empty path', () {
-        final def1 = new RouteDefinition(
+        final def1 = RouteDefinition(
           path: null,
           component: ng.HeroesComponentNgFactory,
         );
@@ -35,33 +35,33 @@ void main() {
       });
 
       test('should fail "assertValid" with a null component factory', () {
-        var def1 = new RouteDefinition(path: '/1', component: null);
+        var def1 = RouteDefinition(path: '/1', component: null);
         expect(def1.assertValid, throwsStateError);
       });
     });
 
     group(':$DeferredRouteDefinition', () {
       test('should create a route to lazy-load a component type', () {
-        DeferredRouteDefinition def = new RouteDefinition.defer(
-            path: '/heroes', loader: loadHeroesComponent);
+        DeferredRouteDefinition def =
+            RouteDefinition.defer(path: '/heroes', loader: loadHeroesComponent);
         expect(def.loader, loadHeroesComponent);
       });
 
       test('should fail "assertValid" with a null loader function', () {
-        var def1 = new RouteDefinition.defer(path: '/1', loader: null);
+        var def1 = RouteDefinition.defer(path: '/1', loader: null);
         expect(def1.assertValid, throwsStateError);
       });
     });
 
     group(':$RedirectRouteDefinition', () {
       test('should create a route to redirect to another definition', () {
-        RedirectRouteDefinition def = new RouteDefinition.redirect(
-            path: '/good-guys', redirectTo: '/heroes');
+        RedirectRouteDefinition def =
+            RouteDefinition.redirect(path: '/good-guys', redirectTo: '/heroes');
         expect(def.redirectTo, '/heroes');
       });
 
       test('should fail "assertValid" with a null `to` path', () {
-        var def1 = new RouteDefinition.redirect(path: '/1', redirectTo: null);
+        var def1 = RouteDefinition.redirect(path: '/1', redirectTo: null);
         expect(def1.assertValid, throwsStateError);
       });
 
@@ -73,7 +73,7 @@ void main() {
 
     group('toRepExp()', () {
       test('should prefix match to only strings with same start', () {
-        ComponentRouteDefinition def = new RouteDefinition(
+        ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes',
           component: ng.HeroesComponentNgFactory,
         );
@@ -85,7 +85,7 @@ void main() {
       });
 
       test('should match url params', () {
-        ComponentRouteDefinition def = new RouteDefinition(
+        ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes/:heroName/:heroId',
           component: ng.HeroesComponentNgFactory,
         );
@@ -97,7 +97,7 @@ void main() {
       });
 
       test('should not match url params that are invalid url encodings', () {
-        ComponentRouteDefinition def = new RouteDefinition(
+        ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes/:heroName/:heroId',
           component: ng.HeroesComponentNgFactory,
         );
@@ -109,7 +109,7 @@ void main() {
 
     group('toUrl()', () {
       test('should throw if params values is null', () {
-        ComponentRouteDefinition def = new RouteDefinition(
+        ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes',
           component: ng.HeroesComponentNgFactory,
         );
@@ -117,7 +117,7 @@ void main() {
       });
 
       test('should return the path when there are no params', () {
-        ComponentRouteDefinition def = new RouteDefinition(
+        ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes',
           component: ng.HeroesComponentNgFactory,
         );
@@ -125,7 +125,7 @@ void main() {
       });
 
       test('should populate url params', () {
-        ComponentRouteDefinition def = new RouteDefinition(
+        ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes/:heroId/:heroName',
           component: ng.HeroesComponentNgFactory,
         );

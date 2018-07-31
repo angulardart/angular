@@ -6,6 +6,8 @@ targets:
           exclude:
             - "lib/builder.dart"
             - "lib/src/compiler/**"
+            # TODO(https://github.com/dart-lang/angular/issues/1530)
+            - "lib/src/core/metadata/typed.dart"
             - "lib/src/source_gen/**"
 
 builders:

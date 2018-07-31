@@ -33,7 +33,7 @@ class DirectiveCompiler {
   final bool hasAfterChangesLifecycle;
   final ElementSchemaRegistry _schemaRegistry;
   final viewMethods = <o.ClassMethod>[];
-  final CompileViewStorage _storage = new CompileViewStorage();
+  final CompileViewStorage _storage = CompileViewStorage();
 
   bool _hasChangeDetector = false;
   bool _implementsComponentState;
@@ -50,9 +50,9 @@ class DirectiveCompiler {
 
   DirectiveCompileResult compile() {
     assert(directive.requiresDirectiveChangeDetector);
-    _nameResolver = new DirectiveNameResolver();
+    _nameResolver = DirectiveNameResolver();
     var classStmt = _buildChangeDetector();
-    return new DirectiveCompileResult(classStmt);
+    return DirectiveCompileResult(classStmt);
   }
 
   o.ClassStmt _buildChangeDetector() {
@@ -65,7 +65,7 @@ class DirectiveCompiler {
         _hasChangeDetector) {
       superClassExpr = o.importExpr(Identifiers.DirectiveChangeDetector);
     }
-    var changeDetectorClass = new o.ClassStmt(
+    var changeDetectorClass = o.ClassStmt(
         changeDetectorClassName,
         // ignore: argument_type_not_assignable
         superClassExpr,
@@ -91,24 +91,22 @@ class DirectiveCompiler {
     );
     var statements = <o.Statement>[];
     if (hasOnChangesLifecycle || usesSetState) {
-      statements.add(new o.WriteClassMemberExpr(
-              'directive', _storage.buildReadExpr(instance))
-          .toStmt());
+      statements.add(
+          o.WriteClassMemberExpr('directive', _storage.buildReadExpr(instance))
+              .toStmt());
     }
-    var constructorArgs = [new o.FnParam('this.instance')];
+    var constructorArgs = [o.FnParam('this.instance')];
     if (usesSetState) {
+      constructorArgs.add(o.FnParam('v', o.importType(Identifiers.AppView)));
       constructorArgs
-          .add(new o.FnParam('v', o.importType(Identifiers.AppView)));
-      constructorArgs
-          .add(new o.FnParam('e', o.importType(Identifiers.HTML_ELEMENT)));
-      statements.add(
-          new o.WriteClassMemberExpr('view', new o.ReadVarExpr('v')).toStmt());
-      statements.add(
-          new o.WriteClassMemberExpr('el', new o.ReadVarExpr('e')).toStmt());
-      statements.add(new o.InvokeMemberMethodExpr('initCd', const []).toStmt());
+          .add(o.FnParam('e', o.importType(Identifiers.HTML_ELEMENT)));
+      statements
+          .add(o.WriteClassMemberExpr('view', o.ReadVarExpr('v')).toStmt());
+      statements.add(o.WriteClassMemberExpr('el', o.ReadVarExpr('e')).toStmt());
+      statements.add(o.InvokeMemberMethodExpr('initCd', const []).toStmt());
     }
     // ignore: argument_type_not_assignable
-    return new o.ClassMethod(null, constructorArgs, statements);
+    return o.ClassMethod(null, constructorArgs, statements);
   }
 
   void _buildDetectHostChanges() {
@@ -119,7 +117,7 @@ class DirectiveCompiler {
     // associated with directive itself. When an exception happens we
     // don't need to wrap including the call site template, the stack
     // trace will directly point to change detector.
-    final CompileMethod method = new CompileMethod(false);
+    final CompileMethod method = CompileMethod(false);
 
     List<BoundElementPropertyAst> hostProperties = <BoundElementPropertyAst>[];
 
@@ -132,7 +130,7 @@ class DirectiveCompiler {
       }
     };
 
-    var span = new SourceSpan(new SourceLocation(0), new SourceLocation(0), '');
+    var span = SourceSpan(SourceLocation(0), SourceLocation(0), '');
     hostProps.forEach((String propName, ast.AST expression) {
       const securityContextElementName = 'div';
       hostProperties.add(createElementPropertyAst(securityContextElementName,
@@ -144,7 +142,7 @@ class DirectiveCompiler {
     bindAndWriteToRenderer(
         hostProperties,
         o.variable('view'),
-        new o.ReadClassMemberExpr('instance'),
+        o.ReadClassMemberExpr('instance'),
         directive,
         o.variable('el'),
         false,
@@ -160,7 +158,7 @@ class DirectiveCompiler {
     if (readVars.contains(DetectChangesVars.firstCheck.name)) {
       statements.insert(
           0,
-          new o.DeclareVarStmt(
+          o.DeclareVarStmt(
               DetectChangesVars.firstCheck.name,
               o
                   .variable('view')
@@ -169,12 +167,12 @@ class DirectiveCompiler {
               o.BOOL_TYPE));
     }
 
-    viewMethods.add(new o.ClassMethod(
+    viewMethods.add(o.ClassMethod(
         'detectHostChanges',
         [
-          new o.FnParam(
+          o.FnParam(
               'view', o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
-          new o.FnParam('el', o.importType(Identifiers.HTML_ELEMENT)),
+          o.FnParam('el', o.importType(Identifiers.HTML_ELEMENT)),
         ],
         statements));
   }
@@ -188,7 +186,7 @@ class DirectiveNameResolver extends ViewNameResolver {
   DirectiveNameResolver() : super(null);
 
   void addLocal(String name, o.Expression e, [o.OutputType type]) {
-    throw new UnsupportedError('Locals are not supported in directives');
+    throw UnsupportedError('Locals are not supported in directives');
   }
 
   @override
@@ -202,6 +200,6 @@ class DirectiveNameResolver extends ViewNameResolver {
   @override
   o.Expression callPipe(
       String name, o.Expression input, List<o.Expression> args) {
-    throw new UnsupportedError('Pipes are not support in directives');
+    throw UnsupportedError('Pipes are not support in directives');
   }
 }

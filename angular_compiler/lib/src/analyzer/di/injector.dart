@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart' show mapMap;
@@ -18,7 +19,7 @@ import 'tokens.dart';
 class InjectorReader {
   static const _package = 'package:angular';
   static const _runtime = '$_package/src/di/injector/injector.dart';
-  static const _$Injector = const Reference('Injector', _runtime);
+  static const _$Injector = Reference('Injector', _runtime);
 
   static bool _shouldGenerateInjector(TopLevelVariableElement element) {
     return $GenerateInjector.hasAnnotationOfExact(element);
@@ -28,13 +29,13 @@ class InjectorReader {
   static List<InjectorReader> findInjectors(LibraryElement element) {
     final source = element.source.uri;
     if (source == null) {
-      throw new StateError('Expected a source for $element.');
+      throw StateError('Expected a source for $element.');
     }
     return element.definingCompilationUnit.topLevelVariables
         .where(_shouldGenerateInjector)
-        .map((field) => new InjectorReader(
+        .map((field) => InjectorReader(
               field,
-              new LibraryReader(element),
+              LibraryReader(element),
               doNotScope: source,
             ))
         .toList();
@@ -67,16 +68,21 @@ class InjectorReader {
     this.libraryReader, {
     this.moduleReader = const ModuleReader(),
     this.doNotScope,
-  }) : this.annotation = new ConstantReader(
+  }) : this.annotation = ConstantReader(
           $GenerateInjector.firstAnnotationOfExact(field),
         );
 
   /// Providers that are part of the provided list of the annotation.
   Iterable<ProviderElement> get providers {
     if (_providers == null) {
-      final module = moduleReader.parseModule(
-        annotation.read('_providersOrModules').objectValue,
-      );
+      final providersOrModules = annotation.read('_providersOrModules');
+      if (providersOrModules.isNull) {
+        BuildError.throwForElement(
+          field,
+          'Unable to parse @GenerateInjector. You may have analysis errors',
+        );
+      }
+      final module = moduleReader.parseModule(providersOrModules.objectValue);
       _providers = moduleReader.deduplicateProviders(module.flatten());
     }
     return _providers;
@@ -279,7 +285,7 @@ class InjectorReader {
   }
 
   Expression _reviveAny(UseValueProviderElement provider, DartObject object) {
-    final reader = new ConstantReader(object);
+    final reader = ConstantReader(object);
     if (reader.isNull) {
       return literalNull;
     }
@@ -296,7 +302,7 @@ class InjectorReader {
     if (revive != null) {
       return _revive(provider, revive);
     }
-    throw new UnsupportedError('Unexpected: $object');
+    throw UnsupportedError('Unexpected: $object');
   }
 
   Expression _reviveList(

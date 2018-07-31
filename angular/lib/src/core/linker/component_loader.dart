@@ -65,7 +65,7 @@ class ComponentLoader {
     ComponentFactory<T> component, {
     Injector injector,
   }) =>
-      throw new UnsupportedError('Not used within a structural directive');
+      throw UnsupportedError('Not used within a structural directive');
 
   /// Creates and loads a new instance of the component defined by [component].
   ///

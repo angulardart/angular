@@ -1,3 +1,8 @@
+### Bug fixes
+
+*   `HashLocationStrategy` no longer drops query parameters (before the #) when
+    pushing or replacing an empty URL.
+
 ## 2.0.0-alpha+17
 
 ### New features
@@ -6,7 +11,7 @@
 
 ## 2.0.0-alpha+16
 
-*   Maintenence release; declare official support for the Dart2 SDK.
+*   Maintanence release; declare official support for the Dart2 SDK.
 
 ## 2.0.0-alpha+15
 

@@ -16,14 +16,14 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support overriding providers', () async {
-    final fixture = await new NgTestBed<TestViewComponent>().create();
+    final fixture = await NgTestBed<TestViewComponent>().create();
     expect(fixture.text, 'Hello World');
   });
 }
 
 @Component(
   selector: 'view-comp',
-  providers: const [DataService],
+  providers: [DataService],
   template: '{{value}}',
 )
 class ViewComponent implements OnInit {
@@ -39,7 +39,7 @@ class ViewComponent implements OnInit {
 
 @Component(
   selector: 'test-view-comp',
-  directives: const [
+  directives: [
     OverrideDirective,
     ViewComponent,
   ],
@@ -49,15 +49,15 @@ class TestViewComponent {}
 
 @Directive(
   selector: '[override]',
-  providers: const [
-    const Provider(DataService, useClass: FakeDataService),
+  providers: [
+    Provider(DataService, useClass: FakeDataService),
   ],
 )
 class OverrideDirective {}
 
 @Injectable()
 class DataService {
-  Future<String> fetch() => throw new UnimplementedError();
+  Future<String> fetch() => throw UnimplementedError();
 }
 
 @Injectable()

@@ -11,20 +11,20 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support pipes with optional paramters', () async {
-    final fixture = await new NgTestBed<Example>().create();
+    final fixture = await NgTestBed<Example>().create();
     expect(fixture.text, contains('Unpiped: 2014-04-29 06:04:00.000'));
     expect(fixture.text, contains('Piped: Apr 29, 2014'));
   });
 
   test('should support type arguments on transform return and parameter types',
       () async {
-    final testBed = new NgTestBed<NopComponent>();
+    final testBed = NgTestBed<NopComponent>();
     final testFixture = await testBed.create();
     expect(testFixture.text, '[1, 2, 3]');
   });
 
   test('pure pipe should only be invoked when its input changes', () async {
-    final testBed = new NgTestBed<TestPurePipeComponent>();
+    final testBed = NgTestBed<TestPurePipeComponent>();
     final testFixture = await testBed.create();
     // Initial invocation.
     expect(PurePipe.singleton.invocations, equals(1));
@@ -43,13 +43,13 @@ void main() {
     Unpiped:&ngsp;{{now}}
     Piped:&ngsp;{{now | date}}
   ''',
-  pipes: const [
+  pipes: [
     DatePipe,
   ],
 )
 class Example {
   // April 29, 2014, 6:04am.
-  final now = new DateTime(2014, DateTime.april, 29, 6, 4);
+  final now = DateTime(2014, DateTime.april, 29, 6, 4);
 }
 
 @Pipe('nop')
@@ -60,7 +60,7 @@ class NopPipe implements PipeTransform {
 @Component(
   selector: 'nop',
   template: '{{values | nop}}',
-  pipes: const [NopPipe],
+  pipes: [NopPipe],
 )
 class NopComponent {
   final values = [1, 2, 3];
@@ -68,7 +68,7 @@ class NopComponent {
 
 @Pipe('pure')
 class PurePipe implements PipeTransform {
-  static PurePipe singleton = new PurePipe._();
+  static PurePipe singleton = PurePipe._();
 
   int _invocations = 0;
   int get invocations => _invocations;
@@ -86,7 +86,7 @@ class PurePipe implements PipeTransform {
 @Component(
   selector: 'test-pure-pipe',
   template: '{{value | pure}}',
-  pipes: const [PurePipe],
+  pipes: [PurePipe],
 )
 class TestPurePipeComponent {
   String value;

@@ -13,7 +13,7 @@ var _debugModuleUrl = "asset://debug/lib";
 var _METADATA_MAP_VAR = '_METADATA';
 String debugOutputAstAsDart(
     dynamic /* o . Statement | o . Expression | o . Type | List < dynamic > */ ast) {
-  var converter = new _DartEmitterVisitor(_debugModuleUrl);
+  var converter = _DartEmitterVisitor(_debugModuleUrl);
   var ctx = EmitterVisitorContext.createRoot([], {});
   List<dynamic> asts;
   if (ast is! List) {
@@ -27,7 +27,7 @@ String debugOutputAstAsDart(
     } else if (ast is o.OutputType) {
       ast.visitType(converter, ctx);
     } else {
-      throw new StateError("Don't know how to print debug info for $ast");
+      throw StateError("Don't know how to print debug info for $ast");
     }
   }
   return ctx.toSource();
@@ -40,7 +40,7 @@ class DartEmitter implements OutputEmitter {
     var srcParts = [];
     // Note: We are not creating a library here as Dart does not need it.
     // Dart analyzer might complain about it though.
-    var converter = new _DartEmitterVisitor(moduleUrl);
+    var converter = _DartEmitterVisitor(moduleUrl);
     var ctx = EmitterVisitorContext.createRoot(exportedVars, deferredModules);
     converter.visitAllStatements(stmts, ctx);
     converter.importsWithPrefixes.forEach((importedModuleUrl, prefix) {
@@ -59,7 +59,7 @@ class DartEmitter implements OutputEmitter {
 class _DartEmitterVisitor extends AbstractEmitterVisitor
     implements o.TypeVisitor<void, EmitterVisitorContext> {
   // List of packages that are public api and can be imported without prefix.
-  static const List<String> whiteListedImports = const [
+  static const List<String> whiteListedImports = [
     'package:angular/angular.dart',
     'dart:core',
     // ElementRef.
@@ -87,7 +87,10 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   final String _moduleUrl;
 
-  var importsWithPrefixes = new Map<String, String>();
+  var importsWithPrefixes = Map<String, String>();
+
+  /// Whether this is currently emitting a const expression.
+  var _inConstContext = false;
 
   _DartEmitterVisitor(this._moduleUrl) : super(true);
 
@@ -142,6 +145,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   void visitDeclareClassStmt(o.ClassStmt stmt, EmitterVisitorContext context) {
     context.pushClass(stmt);
     context.print('class ${stmt.name}');
+    _visitTypeParameters(stmt.typeParameters, context);
     if (stmt.parent != null) {
       context.print(' extends ');
       stmt.parent.visitExpression(this, context);
@@ -248,6 +252,27 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     context.exitMethod();
   }
 
+  void _visitTypeParameters(
+    List<o.TypeParameter> typeParameters,
+    EmitterVisitorContext context,
+  ) {
+    if (typeParameters.isEmpty) {
+      return;
+    }
+    context.print('<');
+    visitAllObjects((o.TypeParameter typeParameter) {
+      context.print(typeParameter.name);
+      // Don't emit an explicit bound for dynamic, since bounds are implicitly
+      // dynamic.
+      if (typeParameter.bound != null &&
+          typeParameter.bound != o.DYNAMIC_TYPE) {
+        context.print(' extends ');
+        typeParameter.bound.visitType(this, context);
+      }
+    }, typeParameters, context, ', ');
+    context.print('>');
+  }
+
   @override
   void visitFunctionExpr(o.FunctionExpr ast, EmitterVisitorContext context) {
     context.print('(');
@@ -272,6 +297,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }
     context.print(' ${stmt.name}');
     if (!stmt.isGetter) {
+      _visitTypeParameters(stmt.typeParameters, context);
       context.print('(');
       _visitParams(stmt.params, context);
       context.println(') {');
@@ -292,7 +318,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       case o.BuiltinMethod.SubscribeObservable:
         return "listen";
       default:
-        throw new StateError('Unknown builtin method: $method');
+        throw StateError('Unknown builtin method: $method');
     }
   }
 
@@ -382,27 +408,33 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   void visitLiteralArrayExpr(
       o.LiteralArrayExpr ast, EmitterVisitorContext context) {
-    if (_isConstType(ast.type)) {
+    final wasInConstContext = _inConstContext;
+    if (!wasInConstContext && _isConstType(ast.type)) {
       context.print('const ');
+      _inConstContext = true;
     }
     if (ast.type == o.DYNAMIC_TYPE) {
       context.print('<dynamic>');
     }
-    return super.visitLiteralArrayExpr(ast, context);
+    super.visitLiteralArrayExpr(ast, context);
+    _inConstContext = wasInConstContext;
   }
 
   @override
   void visitLiteralMapExpr(
       o.LiteralMapExpr ast, EmitterVisitorContext context) {
-    if (_isConstType(ast.type)) {
+    final wasInConstContext = _inConstContext;
+    if (!wasInConstContext && _isConstType(ast.type)) {
       context.print('const ');
+      _inConstContext = true;
     }
     if (ast.valueType != null) {
       context.print('<String, ');
       ast.valueType.visitType(this, context);
       context.print('>');
     }
-    return super.visitLiteralMapExpr(ast, context);
+    super.visitLiteralMapExpr(ast, context);
+    _inConstContext = wasInConstContext;
   }
 
   @override
@@ -430,8 +462,11 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   void visitInstantiateExpr(
       o.InstantiateExpr ast, EmitterVisitorContext context) {
-    context.print(_isConstType(ast.type) ? 'const' : 'new');
-    context.print(" ");
+    final wasInConstContext = _inConstContext;
+    if (!wasInConstContext && _isConstType(ast.type)) {
+      context.print('const ');
+      _inConstContext = true;
+    }
     ast.classExpr.visitExpression(this, context);
     var types = ast.typeArguments;
     if (types != null) {
@@ -447,6 +482,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     context.print('(');
     visitAllExpressions(ast.args, context, ',');
     context.print(')');
+    _inConstContext = wasInConstContext;
   }
 
   @override
@@ -481,7 +517,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         typeStr = "void";
         break;
       default:
-        throw new StateError('Unsupported builtin type ${type.name}');
+        throw StateError('Unsupported builtin type ${type.name}');
     }
     context.print(typeStr);
   }

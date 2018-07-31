@@ -4,7 +4,8 @@
 
 *   Add AbstractControlGroup and AbstractNgForm to allow infrastructure to
     create their own form systems that can be backed by types such as a proto,
-    or have different control group logic.
+    or have different control group logic. Allow NgFormModel and NgControlGroup
+    to work with abstract group.
 
 ### Breaking Changes
 
@@ -13,11 +14,11 @@
 
 ## 2.0.0-beta+1
 
-*   Maintenence release; declare official support for the Dart2 SDK.
+*   Maintanence release; declare official support for the Dart2 SDK.
 
 ## 2.0.0-beta
 
-*   Maintenence release to bring into sync with `angular 5.0.0-beta`.
+*   Maintanence release to bring into sync with `angular 5.0.0-beta`.
 
 ## 2.0.0-alpha+7
 
@@ -40,12 +41,12 @@
 
 ## 2.0.0-alpha+6
 
-*   Maintenence release.
+*   Maintanence release.
 *   The minimum SDK version is now `sdk: ">=2.0.0-dev.56.0 <2.0.0"`.
 
 ## 2.0.0-alpha+5
 
-*   Maintenence release.
+*   Maintanence release.
 *   The minimum SDK version is now `sdk: ">=2.0.0-dev.55.0 <2.0.0"`.
 
 ## 2.0.0-alpha+4

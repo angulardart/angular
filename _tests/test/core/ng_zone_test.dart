@@ -19,7 +19,7 @@ void main() {
     List<StreamSubscription> subs;
 
     void createNgZone({@required bool enableLongStackTrace}) {
-      zone = new NgZone(enableLongStackTrace: enableLongStackTrace);
+      zone = NgZone(enableLongStackTrace: enableLongStackTrace);
       subs = <StreamSubscription>[
         zone.onError.listen((e) {
           errors.add(e.error);
@@ -54,7 +54,7 @@ void main() {
       });
 
       test('should be true when a microtask is queued', () async {
-        final onCompleter = new Completer<Null>();
+        final onCompleter = Completer<Null>();
         zone.run(() {
           log.add('--- entered zone ---');
           scheduleMicrotask(() {
@@ -84,7 +84,7 @@ void main() {
       });
 
       test('should be true when a timer is queued', () async {
-        final onCompleter = new Completer<Null>();
+        final onCompleter = Completer<Null>();
         zone.run(() {
           log.add('--- entered zone ---');
           Timer.run(() {
@@ -132,7 +132,7 @@ void main() {
       setUp(() {
         createNgZone(enableLongStackTrace: false);
         zone.run(() {
-          nestedZone = new NgZone();
+          nestedZone = NgZone();
         });
         log = <String>[];
         subs.addAll([
@@ -145,7 +145,7 @@ void main() {
       });
 
       test('should have all events contained within parent zone', () async {
-        final onCompleter = new Completer<Null>();
+        final onCompleter = Completer<Null>();
         nestedZone.run(() {
           log.add('--- entered zone ---');
           scheduleMicrotask(() {
@@ -180,13 +180,13 @@ void main() {
       });
 
       test('should run subscriber listeners inside the zone', () async {
-        final someEvents = new Stream.fromIterable([1, 2, 3]);
+        final someEvents = Stream.fromIterable([1, 2, 3]);
         zone.run(() {
           someEvents.listen((_) {
             log.add('--- subscription event: ${NgZone.isInAngularZone()} ---');
           });
         });
-        await new Future.delayed(Duration.zero);
+        await Future.delayed(Duration.zero);
         expect(log, [
           'onTurnStart',
           '--- subscription event: true ---',
@@ -205,7 +205,7 @@ void main() {
       test('should capture an error and stack trace', () async {
         zone.runGuarded(() {
           void bar() {
-            throw new StateError('How did I end up here?');
+            throw StateError('How did I end up here?');
           }
 
           void foo() {
@@ -214,7 +214,7 @@ void main() {
 
           scheduleMicrotask(foo);
         });
-        await new Future.delayed(Duration.zero);
+        await Future.delayed(Duration.zero);
         expect(errors.map((e) => e.toString()), [
           'Bad state: How did I end up here?',
         ]);
@@ -222,7 +222,7 @@ void main() {
         expect(fullStackTrace, contains('bar'));
         expect(fullStackTrace, isNot(contains('foo')));
       }, onPlatform: {
-        'firefox': new Skip('Strack trace appears differently'),
+        'firefox': Skip('Strack trace appears differently'),
       });
     });
 
@@ -232,7 +232,7 @@ void main() {
       test('should capture an error and a long stack trace', () async {
         zone.runGuarded(() {
           void bar() {
-            throw new StateError('How did I end up here?');
+            throw StateError('How did I end up here?');
           }
 
           void foo() {
@@ -241,7 +241,7 @@ void main() {
 
           scheduleMicrotask(foo);
         });
-        await new Future.delayed(Duration.zero);
+        await Future.delayed(Duration.zero);
         expect(errors.map((e) => e.toString()), [
           'Bad state: How did I end up here?',
         ]);
@@ -257,7 +257,7 @@ void main() {
           expect(fullStackTrace, contains('foo'));
         }
       }, onPlatform: {
-        'firefox': new Skip('Strack trace appears differently'),
+        'firefox': Skip('Strack trace appears differently'),
       });
     });
   });

@@ -8,7 +8,7 @@ import 'src/tree_bindings.dart';
 /// Set [ready] to true to create the tree.
 @Component(
   selector: 'create-20-bindings-benchmark',
-  directives: const [
+  directives: [
     CreateTreeBindingsAppComponent,
     NgIf,
   ],
@@ -29,10 +29,10 @@ class CreateTreeBindingsBenchmark implements Benchmark {
 
 @Component(
   selector: 'create-tree-bindings-app',
-  providers: const [
+  providers: [
     simpleTreeAppBindings,
   ],
-  directives: const [
+  directives: [
     CreateTreeBindingsPageComponent,
     NgFor,
   ],
@@ -43,15 +43,15 @@ class CreateTreeBindingsBenchmark implements Benchmark {
   ''',
 )
 class CreateTreeBindingsAppComponent {
-  final pages = new List<Null>(numberOfPages);
+  final pages = List<Null>(numberOfPages);
 }
 
 @Component(
   selector: 'create-tree-bindings-page',
-  providers: const [
+  providers: [
     simpleTreePageBindings,
   ],
-  directives: const [
+  directives: [
     CreateTreeBindingsPageComponent,
     CreateTreeBindingsPanelComponent,
     NgIf,
@@ -70,10 +70,10 @@ class CreateTreeBindingsPageComponent {
 
 @Component(
   selector: 'create-tree-bindings-panel',
-  providers: const [
+  providers: [
     simpleTreePanelBindings,
   ],
-  directives: const [
+  directives: [
     CreateTreeBindingsTabComponent,
     NgFor,
   ],
@@ -84,12 +84,12 @@ class CreateTreeBindingsPageComponent {
   ''',
 )
 class CreateTreeBindingsPanelComponent {
-  final tabs = new List<Null>(numberOfTabs);
+  final tabs = List<Null>(numberOfTabs);
 }
 
 @Component(
   selector: 'create-tree-bindings-tab',
-  providers: const [
+  providers: [
     simpleTreeTabBindings,
   ],
   template: '[TAB]',

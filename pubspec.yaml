@@ -4,6 +4,9 @@
 #   pub run dev:<command>
 name: repository
 
+environment:
+  sdk: ">=2.0.0-dev.64.2 <3.0.0"
+
 dev_dependencies:
   dev:
     path: dev

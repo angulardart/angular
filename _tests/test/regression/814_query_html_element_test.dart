@@ -12,22 +12,22 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support @ViewChild with Element', () async {
-    final fixture = await new NgTestBed<UsesElement>().create();
+    final fixture = await NgTestBed<UsesElement>().create();
     expect(fixture.assertOnlyInstance.element.text, '1');
   });
 
   test('should support @ViewChild with HtmlElement', () async {
-    final fixture = await new NgTestBed<UsesHtmlElement>().create();
+    final fixture = await NgTestBed<UsesHtmlElement>().create();
     expect(fixture.assertOnlyInstance.element.text, '2');
   });
 
   test('should support @ViewChildren with Element', () async {
-    final fixture = await new NgTestBed<UsesListOfElement>().create();
+    final fixture = await NgTestBed<UsesListOfElement>().create();
     expect(fixture.assertOnlyInstance.elements.map((e) => e.text), ['1', '2']);
   });
 
   test('should support @ViewChildren with HtmlElement', () async {
-    final fixture = await new NgTestBed<UsesListOfHtmlElement>().create();
+    final fixture = await NgTestBed<UsesListOfHtmlElement>().create();
     expect(fixture.assertOnlyInstance.elements.map((e) => e.text), ['1', '2']);
   });
 }

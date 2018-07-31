@@ -12,12 +12,12 @@ o.Expression createEnumExpression(
   if (value == null) return o.NULL_EXPR;
   String enumStr = value.toString();
   var name = enumStr.substring(enumStr.lastIndexOf('.') + 1);
-  return o.importExpr(new CompileIdentifierMetadata(
+  return o.importExpr(CompileIdentifierMetadata(
       name: '${classIdentifier.name}.$name',
       moduleUrl: classIdentifier.moduleUrl));
 }
 
-const List<String> _changeDetectionStrategies = const [
+const List<String> _changeDetectionStrategies = [
   'Default',
   'CheckOnce',
   'Checked',
@@ -31,7 +31,7 @@ const List<String> _changeDetectionStrategies = const [
 // to make generated code more readable.
 o.Expression changeDetectionStrategyToConst(int value) {
   String name = _changeDetectionStrategies[value];
-  return o.importExpr(new CompileIdentifierMetadata(
+  return o.importExpr(CompileIdentifierMetadata(
       name: 'ChangeDetectionStrategy.$name',
       moduleUrl: Identifiers.ChangeDetectionStrategy.moduleUrl));
 }
@@ -42,7 +42,7 @@ class ViewConstructorVars {
 }
 
 class ViewProperties {
-  static final projectableNodes = new o.ReadClassMemberExpr('projectableNodes');
+  static final projectableNodes = o.ReadClassMemberExpr('projectableNodes');
 }
 
 class EventHandlerVars {

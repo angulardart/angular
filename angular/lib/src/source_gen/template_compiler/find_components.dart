@@ -28,14 +28,14 @@ import 'dart_object_utils.dart';
 import 'pipe_visitor.dart';
 
 const String _visibilityProperty = 'visibility';
-const _statefulDirectiveFields = const [
+const _statefulDirectiveFields = [
   'exportAs',
 ];
 
 AngularArtifacts findComponentsAndDirectives(LibraryReader library) {
-  var componentVisitor = new _NormalizedComponentVisitor(library);
+  var componentVisitor = _NormalizedComponentVisitor(library);
   library.element.accept(componentVisitor);
-  return new AngularArtifacts(
+  return AngularArtifacts(
     componentVisitor.components,
     componentVisitor.directives,
   );
@@ -50,12 +50,13 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   @override
   Null visitClassElement(ClassElement element) {
-    final directive = element.accept(new _ComponentVisitor(_library));
+    final directive = element.accept(_ComponentVisitor(_library));
     if (directive != null) {
       if (directive.isComponent) {
-        components.add(new NormalizedComponentWithViewDirectives(
+        components.add(NormalizedComponentWithViewDirectives(
           directive,
           _visitDirectives(element),
+          _visitDirectiveTypes(element),
           _visitPipes(element),
         ));
       } else {
@@ -67,7 +68,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   @override
   Null visitFunctionElement(FunctionElement element) {
-    final directive = element.accept(new _ComponentVisitor(_library));
+    final directive = element.accept(_ComponentVisitor(_library));
     if (directive != null) {
       directives.add(directive);
     }
@@ -79,6 +80,16 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     return visitAll(values, (value) {
       return typeDeclarationOf(value)?.accept(_ComponentVisitor(_library));
     });
+  }
+
+  List<CompileTypedMetadata> _visitDirectiveTypes(ClassElement element) {
+    final values = _getResolvedArgumentsOrFail(element, 'directiveTypes');
+    final typedReader = TypedReader(element);
+    final directiveTypes = <CompileTypedMetadata>[];
+    for (final value in values) {
+      directiveTypes.add(_typeMetadataFrom(typedReader.parse(value)));
+    }
+    return directiveTypes;
   }
 
   List<CompilePipeMetadata> _visitPipes(ClassElement element) {
@@ -128,6 +139,20 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       }
     }
     return values;
+  }
+
+  CompileTypedMetadata _typeMetadataFrom(TypedElement typed) {
+    final typeLink = typed.typeLink;
+    final typeArguments = <o.OutputType>[];
+    for (final generic in typeLink.generics) {
+      typeArguments.add(fromTypeLink(generic, _library));
+    }
+    return CompileTypedMetadata(
+      typeLink.symbol,
+      typeLink.import,
+      typeArguments,
+      on: typed.on,
+    );
   }
 }
 
@@ -202,9 +227,9 @@ class _ComponentVisitor
       invalid = true;
     }
     if (invalid) return null;
-    final type = element.accept(new CompileTypeMetadataVisitor(_library));
+    final type = element.accept(CompileTypeMetadataVisitor(_library));
     final selector = coerceString(annotationValue, 'selector');
-    return new CompileDirectiveMetadata(
+    return CompileDirectiveMetadata(
       type: type,
       originType: type,
       metadataType: CompileDirectiveMetadataType.FunctionalDirective,
@@ -265,7 +290,7 @@ class _ComponentVisitor
           if (typeName != null) {
             if (isPrimitiveTypeName(typeName)) {
               _inputTypes[element.displayName] =
-                  new CompileTypeMetadata(name: typeName);
+                  CompileTypeMetadata(name: typeName);
             } else {
               // Convert any generic type parameters from the input's type to
               // our internal output AST.
@@ -273,10 +298,10 @@ class _ComponentVisitor
                   resolvedType is ParameterizedType
                       ? resolvedType.typeArguments.map(fromDartType).toList()
                       : const [];
-              _inputTypes[element.displayName] = new CompileTypeMetadata(
+              _inputTypes[element.displayName] = CompileTypeMetadata(
                   moduleUrl: moduleUrl(element),
                   name: typeName,
-                  genericTypes: typeArguments);
+                  typeArguments: typeArguments);
             }
           }
         } else {
@@ -349,7 +374,7 @@ class _ComponentVisitor
     if (selectorString != null) {
       return selectorString
           .split(',')
-          .map((s) => new CompileTokenMetadata(value: s))
+          .map((s) => CompileTokenMetadata(value: s))
           .toList();
     }
     var selectorType = selector.toTypeValue();
@@ -359,8 +384,8 @@ class _ComponentVisitor
           'supported');
     }
     return [
-      new CompileTokenMetadata(
-        identifier: new CompileIdentifierMetadata(
+      CompileTokenMetadata(
+        identifier: CompileIdentifierMetadata(
           name: selectorType.name,
           moduleUrl: moduleUrl(selectorType.element),
         ),
@@ -368,8 +393,8 @@ class _ComponentVisitor
     ];
   }
 
-  static final _coreIterable = new TypeChecker.fromUrl('dart:core#Iterable');
-  static final _htmlElement = new TypeChecker.fromUrl('dart:html#Element');
+  static final _coreIterable = TypeChecker.fromUrl('dart:core#Iterable');
+  static final _htmlElement = TypeChecker.fromUrl('dart:html#Element');
 
   CompileQueryMetadata _getQuery(
     ElementAnnotation annotation,
@@ -378,7 +403,7 @@ class _ComponentVisitor
   ) {
     final value = annotation.computeConstantValue();
     final readType = getField(value, 'read')?.toTypeValue();
-    return new CompileQueryMetadata(
+    return CompileQueryMetadata(
       selectors: _getSelectors(annotation, value),
       descendants: coerceBool(value, 'descendants', defaultTo: false),
       first: coerceBool(value, 'first', defaultTo: false),
@@ -391,8 +416,8 @@ class _ComponentVisitor
               _htmlElement
                   .isAssignableFromType(propertyType.typeArguments.first),
       read: readType != null
-          ? new CompileTokenMetadata(
-              identifier: new CompileIdentifierMetadata(
+          ? CompileTokenMetadata(
+              identifier: CompileIdentifierMetadata(
                 name: readType.displayName,
                 moduleUrl: moduleUrl(readType.element),
               ),
@@ -413,7 +438,7 @@ class _ComponentVisitor
     //   @HostBinding('title')
     //   static const title = 'Hello';
     // }
-    var bindTo = new ast.PropertyRead(new ast.ImplicitReceiver(), element.name);
+    var bindTo = ast.PropertyRead(ast.ImplicitReceiver(), element.name);
     if (element is PropertyAccessorElement && element.isStatic ||
         element is FieldElement && element.isStatic) {
       if (element.enclosingElement != _directiveClassElement) {
@@ -421,11 +446,11 @@ class _ComponentVisitor
         // https://github.com/dart-lang/angular/issues/1272
         return;
       }
-      var classId = new CompileIdentifierMetadata(
+      var classId = CompileIdentifierMetadata(
           name: _directiveClassElement.name,
           moduleUrl: moduleUrl(_directiveClassElement.library),
-          analyzedClass: new AnalyzedClass(_directiveClassElement));
-      bindTo = new ast.PropertyRead(new ast.StaticRead(classId), element.name);
+          analyzedClass: AnalyzedClass(_directiveClassElement));
+      bindTo = ast.PropertyRead(ast.StaticRead(classId), element.name);
     }
     _hostBindings[property] = bindTo;
   }
@@ -498,7 +523,7 @@ class _ComponentVisitor
     ClassElement element,
   ) {
     _directiveClassElement = element;
-    new DirectiveVisitor(
+    DirectiveVisitor(
       onHostBinding: _addHostBinding,
       onHostListener: _addHostListener,
     ).visitDirective(element);
@@ -508,12 +533,12 @@ class _ComponentVisitor
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     CompileTypeMetadata componentType =
-        element.accept(new CompileTypeMetadataVisitor(_library));
+        element.accept(CompileTypeMetadataVisitor(_library));
     final template = isComp
         ? _createTemplateMetadata(annotationValue, componentType)
-        : new CompileTemplateMetadata();
+        : CompileTemplateMetadata();
     final analyzedClass =
-        new AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
+        AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
     final lifecycleHooks = extractLifecycleHooks(element);
     if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
       final ngDoCheck = element.getMethod('ngDoCheck') ??
@@ -535,7 +560,7 @@ class _ComponentVisitor
             'invoked with values. Consider "AfterChanges" instead.');
       }
     }
-    return new CompileDirectiveMetadata(
+    return CompileDirectiveMetadata(
       type: componentType,
       originType: componentType,
       metadataType: isComp
@@ -579,7 +604,7 @@ class _ComponentVisitor
           'Component "${componentType.name}" in\n  ${componentType.moduleUrl}:\n'
           '  Cannot supply both "template" and "templateUrl"');
     }
-    return new CompileTemplateMetadata(
+    return CompileTemplateMetadata(
       encapsulation: _encapsulation(template),
       template: templateContent,
       templateUrl: templateUrl,
@@ -618,17 +643,17 @@ class _ComponentVisitor
       visitAll(
           const ModuleReader()
               .extractProviderObjects(getField(component, providerField)),
-          new CompileTypeMetadataVisitor(_library).createProviderMetadata);
+          CompileTypeMetadataVisitor(_library).createProviderMetadata);
 
   List<CompileIdentifierMetadata> _extractExports(
       ElementAnnotationImpl annotation, ClassElement element) {
     var exports = <CompileIdentifierMetadata>[];
 
     // There is an implicit "export" for the directive class itself
-    exports.add(new CompileIdentifierMetadata(
+    exports.add(CompileIdentifierMetadata(
         name: element.name,
         moduleUrl: moduleUrl(element.library),
-        analyzedClass: new AnalyzedClass(element)));
+        analyzedClass: AnalyzedClass(element)));
 
     var arguments = annotation.annotationAst.arguments.arguments;
     NamedExpression exportsArg = arguments.firstWhere(
@@ -664,14 +689,14 @@ class _ComponentVisitor
 
       final staticElement = id.staticElement;
       if (staticElement is ClassElement) {
-        analyzedClass = new AnalyzedClass(staticElement);
+        analyzedClass = AnalyzedClass(staticElement);
       } else if (staticElement == null) {
         unresolvedExports.add(id);
         continue;
       }
 
       // TODO(het): Also store the `DartType` since we know it statically.
-      exports.add(new CompileIdentifierMetadata(
+      exports.add(CompileIdentifierMetadata(
         name: name,
         prefix: prefix,
         moduleUrl: moduleUrl(staticElement.library),
@@ -687,19 +712,17 @@ class _ComponentVisitor
 }
 
 List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
-  const hooks = const <TypeChecker, LifecycleHooks>{
-    const TypeChecker.fromRuntime(OnInit): LifecycleHooks.onInit,
-    const TypeChecker.fromRuntime(OnDestroy): LifecycleHooks.onDestroy,
-    const TypeChecker.fromRuntime(DoCheck): LifecycleHooks.doCheck,
-    const TypeChecker.fromRuntime(OnChanges): LifecycleHooks.onChanges,
-    const TypeChecker.fromRuntime(AfterChanges): LifecycleHooks.afterChanges,
-    const TypeChecker.fromRuntime(AfterContentInit):
-        LifecycleHooks.afterContentInit,
-    const TypeChecker.fromRuntime(AfterContentChecked):
+  const hooks = <TypeChecker, LifecycleHooks>{
+    TypeChecker.fromRuntime(OnInit): LifecycleHooks.onInit,
+    TypeChecker.fromRuntime(OnDestroy): LifecycleHooks.onDestroy,
+    TypeChecker.fromRuntime(DoCheck): LifecycleHooks.doCheck,
+    TypeChecker.fromRuntime(OnChanges): LifecycleHooks.onChanges,
+    TypeChecker.fromRuntime(AfterChanges): LifecycleHooks.afterChanges,
+    TypeChecker.fromRuntime(AfterContentInit): LifecycleHooks.afterContentInit,
+    TypeChecker.fromRuntime(AfterContentChecked):
         LifecycleHooks.afterContentChecked,
-    const TypeChecker.fromRuntime(AfterViewInit): LifecycleHooks.afterViewInit,
-    const TypeChecker.fromRuntime(AfterViewChecked):
-        LifecycleHooks.afterViewChecked,
+    TypeChecker.fromRuntime(AfterViewInit): LifecycleHooks.afterViewInit,
+    TypeChecker.fromRuntime(AfterViewChecked): LifecycleHooks.afterViewChecked,
   };
   return hooks.keys
       .where((hook) => hook.isAssignableFrom(clazz))
@@ -712,12 +735,12 @@ void _failFastOnUnresolvedExpressions(
   ClassElement componentType,
 ) {
   final sourceUrl = componentType.source.uri;
-  throw new BuildError(
+  throw BuildError(
     messages.unresolvedSource(
       expressions.map((e) {
-        return new SourceSpan(
-          new SourceLocation(e.offset, sourceUrl: sourceUrl),
-          new SourceLocation(e.offset + e.length, sourceUrl: sourceUrl),
+        return SourceSpan(
+          SourceLocation(e.offset, sourceUrl: sourceUrl),
+          SourceLocation(e.offset + e.length, sourceUrl: sourceUrl),
           e.toSource(),
         );
       }),

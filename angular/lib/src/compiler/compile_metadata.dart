@@ -8,6 +8,7 @@ import '../core/metadata/visibility.dart';
 import 'analyzed_class.dart';
 import 'compiler_utils.dart';
 import 'expression_parser/ast.dart' as ast;
+import 'output/convert.dart' show typeArgumentsFrom;
 import 'output/output_ast.dart' as o;
 import 'selector.dart' show CssSelector;
 
@@ -27,7 +28,7 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
   // includes prefixes that aren't supposed to be emitted because it can't tell
   // if a prefix is a class name or a qualified import name.
   final bool emitPrefix;
-  final List<o.OutputType> genericTypes;
+  final List<o.OutputType> typeArguments;
   final String prefix;
 
   final String name;
@@ -42,7 +43,7 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
       this.moduleUrl,
       this.prefix,
       this.emitPrefix = false,
-      this.genericTypes = const [],
+      this.typeArguments = const [],
       this.value,
       this.analyzedClass});
 
@@ -141,7 +142,7 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata<Function> {
   Function value;
 
   @override
-  List<o.OutputType> get genericTypes => const [];
+  List<o.OutputType> get typeArguments => const [];
 
   List<CompileDiDependencyMetadata> diDeps;
 
@@ -183,7 +184,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
               '${identifier.moduleUrl}|'
               '$identifierIsInstance|'
               '$value|'
-              '${identifier.genericTypes.map(_typeAssetKey).join(',')}'
+              '${identifier.typeArguments.map(_typeAssetKey).join(',')}'
           : null;
     } else {
       return value;
@@ -192,8 +193,8 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
 
   static String _typeAssetKey(o.OutputType t) {
     if (t is o.ExternalType) {
-      final generics = t.value.genericTypes != null
-          ? t.value.genericTypes.map(_typeAssetKey).join(',')
+      final generics = t.value.typeArguments != null
+          ? t.value.typeArguments.map(_typeAssetKey).join(',')
           : '[]';
       return 'ExternalType {${t.value.moduleUrl}:${t.value.name}:$generics}';
     }
@@ -229,14 +230,14 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
 }
 
 class CompileTokenMap<V> {
-  final _valueMap = new Map<dynamic, V>();
+  final _valueMap = Map<dynamic, V>();
   final List<V> _values = [];
   final List<CompileTokenMetadata> _tokens = [];
 
   void add(CompileTokenMetadata token, V value) {
     var existing = get(token);
     if (existing != null) {
-      throw new StateError(
+      throw StateError(
           'Add failed. Token already exists. Token: ${token.name}');
     }
     _tokens.add(token);
@@ -284,16 +285,24 @@ class CompileTypeMetadata
   List<CompileDiDependencyMetadata> diDeps;
 
   @override
-  final List<o.OutputType> genericTypes;
+  final List<o.OutputType> typeArguments;
 
-  CompileTypeMetadata(
-      {this.name,
-      this.moduleUrl,
-      this.prefix,
-      this.isHost = false,
-      this.value,
-      this.genericTypes = const [],
-      this.diDeps = const []});
+  /// The type parameters on this type's definition.
+  ///
+  /// Note the distinction from [typeArguments], which represent the *type
+  /// arguments* of an instantiated type.
+  final List<o.TypeParameter> typeParameters;
+
+  CompileTypeMetadata({
+    this.name,
+    this.moduleUrl,
+    this.prefix,
+    this.isHost = false,
+    this.value,
+    this.typeArguments = const [],
+    this.typeParameters = const [],
+    this.diDeps = const [],
+  });
 
   @override
   CompileIdentifierMetadata<Type> get identifier => this;
@@ -327,8 +336,30 @@ class CompileTypeMetadata
       'isHost:$isHost,\n'
       'value:$value,\n'
       'diDeps:$diDeps,\n'
-      'genericTypes:$genericTypes\n'
+      'typeArguments:$typeArguments\n'
       '}';
+}
+
+/// Metadata used to type a generic directive.
+class CompileTypedMetadata {
+  /// The module URL of the directive this types.
+  final String moduleUrl;
+
+  /// The name of the directive this types.
+  final String name;
+
+  /// An optional identifier for matching specific instances of the directive.
+  final String on;
+
+  /// The generic type arguments to be used to instantiate the directive.
+  final List<o.OutputType> typeArguments;
+
+  CompileTypedMetadata(
+    this.name,
+    this.moduleUrl,
+    this.typeArguments, {
+    this.on,
+  });
 }
 
 /// Provides metadata for Query, ViewQuery, ViewChildren,
@@ -537,13 +568,13 @@ CompileDirectiveMetadata createHostComponentMeta(
     bool preserveWhitespace) {
   var template =
       CssSelector.parse(componentSelector)[0].getMatchingElementTemplate();
-  return new CompileDirectiveMetadata(
+  return CompileDirectiveMetadata(
     originType: componentType,
-    type: new CompileTypeMetadata(
+    type: CompileTypeMetadata(
         name: '${componentType.name}Host',
         moduleUrl: componentType.moduleUrl,
         isHost: true),
-    template: new CompileTemplateMetadata(
+    template: CompileTemplateMetadata(
         template: template,
         templateUrl: '',
         preserveWhitespace: preserveWhitespace,
@@ -559,6 +590,25 @@ CompileDirectiveMetadata createHostComponentMeta(
     metadataType: CompileDirectiveMetadataType.Component,
     selector: '*',
   );
+}
+
+/// Creates metadata necessary to flow types from a host view to its component.
+List<CompileTypedMetadata> createHostDirectiveTypes(
+    CompileTypeMetadata componentType) {
+  // If the component doesn't have any generic type parameters, there's no need
+  // to specify generic type arguments.
+  if (componentType.typeParameters.isEmpty) {
+    return [];
+  }
+  // Otherwise, the returned metadata flows each type parameter of the host view
+  // as a type argument to the component (and its associated views).
+  return [
+    CompileTypedMetadata(
+      componentType.name,
+      componentType.moduleUrl,
+      typeArgumentsFrom(componentType.typeParameters),
+    )
+  ];
 }
 
 class CompilePipeMetadata implements CompileMetadataWithType {

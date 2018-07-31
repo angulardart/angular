@@ -5,7 +5,7 @@ import 'package:angular/src/compiler/expression_parser/lexer.dart'
     show Lexer, Token;
 
 List<Token> lex(String text) {
-  return new Lexer().tokenize(text);
+  return Lexer().tokenize(text);
 }
 
 void expectToken(token, index) {

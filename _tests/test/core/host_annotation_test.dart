@@ -13,7 +13,7 @@ void main() {
 
   /// Returns the root [Element] created by initializing [component].
   Future<Element> rootElementOf<T>(ComponentFactory<T> component) {
-    final testBed = NgTestBed.forComponent<T>(component);
+    final testBed = NgTestBed.forComponent(component);
     return testBed.create().then((fixture) => fixture.rootElement);
   }
 
@@ -83,7 +83,7 @@ void main() {
     });
 
     test('should support conditional attributes', () async {
-      final testBed = NgTestBed.forComponent<HostBindingConditionalAttribute>(
+      final testBed = NgTestBed.forComponent(
         ng.HostBindingConditionalAttributeNgFactory,
       );
       final fixture = await testBed.create();
@@ -101,7 +101,7 @@ void main() {
     });
 
     test('should support conditional attributes on static members', () async {
-      final testBed = NgTestBed.forComponent<HostBindingConditionalStatics>(
+      final testBed = NgTestBed.forComponent(
         ng.HostBindingConditionalStaticsNgFactory,
       );
       final fixture = await testBed.create();
@@ -111,7 +111,7 @@ void main() {
     });
 
     test('should support conditional classes', () async {
-      final testBed = NgTestBed.forComponent<HostBindingConditionalClass>(
+      final testBed = NgTestBed.forComponent(
         ng.HostBindingConditionalClassNgFactory,
       );
       final fixture = await testBed.create();
@@ -134,7 +134,7 @@ void main() {
 
   group('@HostListener', () {
     test('should support click', () async {
-      final testBed = NgTestBed.forComponent<HostListenerClick>(
+      final testBed = NgTestBed.forComponent(
         ng.HostListenerClickNgFactory,
       );
       final fixture = await testBed.create();
@@ -143,7 +143,7 @@ void main() {
     });
 
     test('should support click through inheritance', () async {
-      final testBed = NgTestBed.forComponent<HostListenerInheritedClick>(
+      final testBed = NgTestBed.forComponent(
         ng.HostListenerInheritedClickNgFactory,
       );
       final fixture = await testBed.create();
@@ -152,7 +152,7 @@ void main() {
     });
 
     test('should support multiple annotations on a single field', () async {
-      final testBed = NgTestBed.forComponent<HostListenerMulti>(
+      final testBed = NgTestBed.forComponent(
         ng.HostListenerMultiNgFactory,
       );
       final fixture = await testBed.create();
@@ -161,10 +161,10 @@ void main() {
         count: 2,
       );
       await fixture.update((_) {
-        fixture.rootElement.dispatchEvent(new FocusEvent('focus'));
+        fixture.rootElement.dispatchEvent(FocusEvent('focus'));
       });
       await fixture.update((_) {
-        fixture.rootElement.dispatchEvent(new FocusEvent('blur'));
+        fixture.rootElement.dispatchEvent(FocusEvent('blur'));
       });
     });
   });
@@ -291,7 +291,7 @@ class HostListenerClick {
   void onClick() => clickHandler();
 
   /// To be provided in test cases.
-  void Function() clickHandler = () => throw new UnimplementedError();
+  void Function() clickHandler = () => throw UnimplementedError();
 }
 
 @Component(
@@ -310,5 +310,5 @@ class HostListenerMulti {
   void onBlurOrFocus() => blurOrFocusHandler();
 
   /// To be provided in test cases.
-  void Function() blurOrFocusHandler = () => throw new UnimplementedError();
+  void Function() blurOrFocusHandler = () => throw UnimplementedError();
 }

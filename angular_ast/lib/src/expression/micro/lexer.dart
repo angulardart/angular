@@ -17,7 +17,7 @@ class NgMicroLexer {
 
   /// Return a series of tokens by incrementally scanning [template].
   Iterable<NgMicroToken> tokenize(String template) sync* {
-    var scanner = new NgMicroScanner(template);
+    var scanner = NgMicroScanner(template);
     var token = scanner.scan();
     while (token != null) {
       yield token;

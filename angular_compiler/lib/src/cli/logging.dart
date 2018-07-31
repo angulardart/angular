@@ -19,7 +19,7 @@ Future<T> runBuildZoned<T>(
   Future<T> Function() fn, {
   bool showInternalTraces = false,
 }) {
-  final completer = new Completer<T>.sync();
+  final completer = Completer<T>.sync();
   runZoned(
     () {
       fn().then((result) {
@@ -38,7 +38,7 @@ Future<T> runBuildZoned<T>(
       } else if (e is UnresolvedAnnotationException) {
         final elementSpan = spanForElement(e.annotatedElement);
         final annotation = e.annotationSource.text;
-        final buffer = new StringBuffer()
+        final buffer = StringBuffer()
           ..writeln(elementSpan.message('Could not resolve "$annotation"'))
           ..writeln(messages.analysisFailureReasons);
         build.log.severe(buffer, null, showInternalTraces ? s : null);
@@ -54,7 +54,7 @@ Future<T> runBuildZoned<T>(
         completer.complete();
       }
     },
-    zoneSpecification: new ZoneSpecification(
+    zoneSpecification: ZoneSpecification(
       print: (_, __, ___, line) => build.log.fine(line),
     ),
   );
@@ -75,7 +75,7 @@ class BuildError extends Error {
   final Trace stackTrace;
 
   BuildError([this.message, Trace trace])
-      : stackTrace = trace ?? new Trace.current();
+      : stackTrace = trace ?? Trace.current();
 
   // TODO: Remove internal API once ElementAnnotation has source information.
   // https://github.com/dart-lang/sdk/issues/32454
@@ -85,9 +85,9 @@ class BuildError extends Error {
     final contents = annotation.source.contents.data;
     final start = astNode.offset;
     final end = start + astNode.length;
-    return new SourceSpan(
-      new SourceLocation(start, sourceUrl: annotation.source.uri),
-      new SourceLocation(end, sourceUrl: annotation.source.uri),
+    return SourceSpan(
+      SourceLocation(start, sourceUrl: annotation.source.uri),
+      SourceLocation(end, sourceUrl: annotation.source.uri),
       contents.substring(start, end),
     );
   }
@@ -100,7 +100,7 @@ class BuildError extends Error {
     Trace trace,
   ]) {
     final sourceSpan = _getSourceSpanFrom(annotation);
-    throw new BuildError(sourceSpan.message(message), trace);
+    throw BuildError(sourceSpan.message(message), trace);
   }
 
   /// Throws a [BuildError] caused by analyzing the provided [element].
@@ -115,11 +115,11 @@ class BuildError extends Error {
     final source = element.source;
     if (source == null || source.contents.data.isEmpty) {
       logWarning('Could not find source $element: the next error may be terse');
-      throw new BuildError(message, trace);
+      throw BuildError(message, trace);
     }
     final sourceUrl = source.uri;
     final sourceContents = source.contents.data;
-    final sourceFile = new SourceFile.fromString(
+    final sourceFile = SourceFile.fromString(
       sourceContents,
       url: sourceUrl,
     );
@@ -127,7 +127,7 @@ class BuildError extends Error {
       element.nameOffset,
       element.nameLength + element.nameOffset,
     );
-    throw new BuildError(sourceSpan.message(message), trace);
+    throw BuildError(sourceSpan.message(message), trace);
   }
 
   @override
@@ -171,5 +171,5 @@ void logWarning(String message) => build.log.warning(message);
 /// May optionally wrap a caught stack [trace].
 @alwaysThrows
 void throwFailure(String message, [StackTrace trace]) {
-  throw new BuildError(message, trace != null ? new Trace.from(trace) : null);
+  throw BuildError(message, trace != null ? Trace.from(trace) : null);
 }

@@ -84,24 +84,24 @@ class NgZone {
 
   static void assertInAngularZone() {
     if (!isInAngularZone()) {
-      throw new Exception("Expected to be in Angular Zone, but it is not!");
+      throw Exception("Expected to be in Angular Zone, but it is not!");
     }
   }
 
   static void assertNotInAngularZone() {
     if (isInAngularZone()) {
-      throw new Exception("Expected to not be in Angular Zone, but it is!");
+      throw Exception("Expected to not be in Angular Zone, but it is!");
     }
   }
 
   final StreamController<void> _onTurnStart =
-      new StreamController.broadcast(sync: true);
+      StreamController.broadcast(sync: true);
   final StreamController<void> _onMicrotaskEmpty =
-      new StreamController.broadcast(sync: true);
+      StreamController.broadcast(sync: true);
   final StreamController<void> _onTurnDone =
-      new StreamController.broadcast(sync: true);
+      StreamController.broadcast(sync: true);
   final StreamController<NgZoneError> _onError =
-      new StreamController.broadcast(sync: true);
+      StreamController.broadcast(sync: true);
 
   Zone _outerZone;
   Zone _innerZone;
@@ -141,7 +141,7 @@ class NgZone {
       {void handleUncaughtError(
           Zone _, ZoneDelegate __, Zone ___, Object ____, StackTrace s)}) {
     return zone.fork(
-        specification: new ZoneSpecification(
+        specification: ZoneSpecification(
             scheduleMicrotask: _scheduleMicrotask,
             run: _run,
             runUnary: _runUnary,
@@ -225,13 +225,13 @@ class NgZone {
   // Called by Chain.capture() on errors when long stack traces are enabled
   void _onErrorWithLongStackTrace(error, Chain chain) {
     final traces = chain.terse.traces.map((t) => t.toString()).toList();
-    _onError.add(new NgZoneError(error, traces));
+    _onError.add(NgZoneError(error, traces));
   }
 
   // Outer zone handleUnchaughtError when long stack traces are not used
   void _onErrorWithoutLongStackTrace(
       Zone self, ZoneDelegate parent, Zone zone, error, StackTrace trace) {
-    _onError.add(new NgZoneError(error, [trace.toString()]));
+    _onError.add(NgZoneError(error, [trace.toString()]));
   }
 
   Timer _createTimer(
@@ -254,7 +254,7 @@ class NgZone {
       }
     };
     Timer timer = parent.createTimer(zone, duration, callback);
-    wrappedTimer = new _WrappedTimer(timer, duration, onDone);
+    wrappedTimer = _WrappedTimer(timer, duration, onDone);
     _pendingTimers.add(wrappedTimer);
     _setMacrotask(true);
     return wrappedTimer;

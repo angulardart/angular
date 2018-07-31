@@ -13,7 +13,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should correctly type an implicit Provider', () async {
-    testBed = NgTestBed.forComponent<CompProvidesImplicitTypes>(
+    testBed = NgTestBed.forComponent(
       ng_generated.CompProvidesImplicitTypesNgFactory,
     );
     fixture = await testBed.create();
@@ -27,7 +27,7 @@ void main() {
   });
 
   test('should correctly type an explicit provider', () async {
-    testBed = NgTestBed.forComponent<CompProvidesExplicitTypes>(
+    testBed = NgTestBed.forComponent(
       ng_generated.CompProvidesExplicitTypesNgFactory,
     );
     fixture = await testBed.create();
@@ -41,8 +41,8 @@ void main() {
   });
 }
 
-const isTypedList = const isInstanceOf<List<SomeInterface>>();
-const someInterfaces = const MultiToken<SomeInterface>('someInterfaces');
+const isTypedList = isInstanceOf<List<SomeInterface>>();
+const someInterfaces = MultiToken<SomeInterface>('someInterfaces');
 
 abstract class SomeInterface {
   Injector get injector;
@@ -50,8 +50,8 @@ abstract class SomeInterface {
 
 @Component(
   selector: 'comp-provides-implicit-types',
-  providers: const [
-    const ExistingProvider /* IMPLICIT: <SomeInterface> */ .forToken(
+  providers: [
+    ExistingProvider /* IMPLICIT: <SomeInterface> */ .forToken(
       someInterfaces,
       CompProvidesImplicitTypes,
     ),
@@ -67,8 +67,8 @@ class CompProvidesImplicitTypes implements SomeInterface {
 
 @Component(
   selector: 'comp-provides-explicit-types',
-  providers: const [
-    const ExistingProvider<List<SomeInterface>>.forToken(
+  providers: [
+    ExistingProvider<List<SomeInterface>>.forToken(
       someInterfaces,
       CompProvidesExplicitTypes,
     ),

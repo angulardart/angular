@@ -19,52 +19,51 @@ void main() {
   FakeRouter fakeRouter;
 
   setUp(() {
-    fakeRouter = new FakeRouter();
+    fakeRouter = FakeRouter();
   });
 
   tearDown(disposeAnyRunningTest);
 
   test('should add/remove a CSS class as a route is activated', () async {
-    final fixture = await new NgTestBed<TestRouterLinkActive>().addProviders([
+    final fixture = await NgTestBed<TestRouterLinkActive>().addProviders([
       ClassProvider(Location),
       ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
       ValueProvider(Router, fakeRouter),
     ]).create(beforeChangeDetection: (component) {
       component.link = '/user/bob';
-      fakeRouter.current = new RouterState('/user/jill', const []);
+      fakeRouter.current = RouterState('/user/jill', const []);
     });
     final anchor = fixture.rootElement.querySelector('a');
     expect(anchor.classes, isEmpty);
     await fixture.update((_) {
-      fakeRouter.current = new RouterState('/user/bob', const []);
+      fakeRouter.current = RouterState('/user/bob', const []);
     });
     expect(anchor.classes, contains('active-link'));
   });
 
   test('should validate queryParams and fragment', () async {
-    final fixture = await new NgTestBed<TestRouterLinkActive>().addProviders([
+    final fixture = await NgTestBed<TestRouterLinkActive>().addProviders([
       ClassProvider(Location),
       ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
       ValueProvider(Router, fakeRouter),
     ]).create(beforeChangeDetection: (component) {
       component.link = '/user/bob?param=1#frag';
-      fakeRouter.current = new RouterState('/user/bob', const []);
+      fakeRouter.current = RouterState('/user/bob', const []);
     });
     final anchor = fixture.rootElement.querySelector('a');
     expect(anchor.classes, isEmpty);
     await fixture.update((_) {
-      fakeRouter.current = new RouterState('/user/bob', const [],
-          queryParameters: {'param': '1'});
+      fakeRouter.current =
+          RouterState('/user/bob', const [], queryParameters: {'param': '1'});
     });
     expect(anchor.classes, isEmpty);
     await fixture.update((_) {
-      fakeRouter.current =
-          new RouterState('/user/bob', const [], fragment: 'frag');
+      fakeRouter.current = RouterState('/user/bob', const [], fragment: 'frag');
     });
     expect(anchor.classes, isEmpty);
 
     await fixture.update((_) {
-      fakeRouter.current = new RouterState('/user/bob', const [],
+      fakeRouter.current = RouterState('/user/bob', const [],
           queryParameters: {'param': '1'}, fragment: 'frag');
     });
     expect(anchor.classes, contains('active-link'));
@@ -73,13 +72,13 @@ void main() {
   test(
       'should ignore the current urls queryParams and fragment if not '
       'specified in the routerLinks', () async {
-    final fixture = await new NgTestBed<TestRouterLinkActive>().addProviders([
+    final fixture = await NgTestBed<TestRouterLinkActive>().addProviders([
       ClassProvider(Location),
       ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
       ValueProvider(Router, fakeRouter),
     ]).create(beforeChangeDetection: (component) {
       component.link = '/user/bob';
-      fakeRouter.current = new RouterState('/user/bob', const [],
+      fakeRouter.current = RouterState('/user/bob', const [],
           queryParameters: {'param': '1'}, fragment: 'frag');
     });
     final anchor = fixture.rootElement.querySelector('a');
@@ -89,7 +88,7 @@ void main() {
 
 @Component(
   selector: 'test-router-link-active',
-  directives: const [
+  directives: [
     RouterLink,
     RouterLinkActive,
   ],
@@ -102,8 +101,7 @@ class TestRouterLinkActive {
 }
 
 class FakeRouter implements Router {
-  final _streamController =
-      new StreamController<RouterState>.broadcast(sync: true);
+  final _streamController = StreamController<RouterState>.broadcast(sync: true);
 
   RouterState _current;
 

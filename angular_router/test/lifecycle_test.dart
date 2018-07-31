@@ -313,7 +313,7 @@ void main() {
       '$FirstChildComponent[0].onActivate',
     ]);
     log.clear();
-    expect(await router.navigate('/', new NavigationParams(reload: true)),
+    expect(await router.navigate('/', NavigationParams(reload: true)),
         NavigationResult.SUCCESS);
     expect(log, [
       '$FirstChildComponent[0].canNavigate',
@@ -368,13 +368,13 @@ void main() {
   });
 }
 
-const instanceIdsToken = const OpaqueToken<Map<String, int>>();
-const lifecycleLogToken = const OpaqueToken<List<String>>();
+const instanceIdsToken = OpaqueToken<Map<String, int>>();
+const lifecycleLogToken = OpaqueToken<List<String>>();
 
 Future<NgTestFixture<T>> setup<T>() async {
-  final testBed = new NgTestBed<T>().addProviders([
-    new ValueProvider.forToken(lifecycleLogToken, <String>[]),
-    new ValueProvider.forToken(instanceIdsToken, <String, int>{}),
+  final testBed = NgTestBed<T>().addProviders([
+    ValueProvider.forToken(lifecycleLogToken, <String>[]),
+    ValueProvider.forToken(instanceIdsToken, <String, int>{}),
     routerProvidersTest,
   ]);
   return testBed.create();
@@ -457,7 +457,7 @@ abstract class RouterLifecycleLogger
   template: '',
 )
 class FirstChildComponent extends RouterLifecycleLogger {
-  static final RouteDefinition routeDefinition = new RouteDefinition(
+  static final RouteDefinition routeDefinition = RouteDefinition(
     path: 'first-child',
     component: ng.FirstChildComponentNgFactory,
     useAsDefault: true,
@@ -474,7 +474,7 @@ class FirstChildComponent extends RouterLifecycleLogger {
   template: '',
 )
 class SecondChildComponent extends RouterLifecycleLogger {
-  static final RouteDefinition routeDefinition = new RouteDefinition(
+  static final RouteDefinition routeDefinition = RouteDefinition(
     path: 'second-child',
     component: ng.SecondChildComponentNgFactory,
   );
@@ -490,7 +490,7 @@ class SecondChildComponent extends RouterLifecycleLogger {
   template: '',
 )
 class FirstReusableChildComponent extends RouterLifecycleLogger {
-  static final RouteDefinition routeDefinition = new RouteDefinition(
+  static final RouteDefinition routeDefinition = RouteDefinition(
     path: 'first-reusable-child',
     component: ng.FirstReusableChildComponentNgFactory,
     useAsDefault: true,
@@ -513,7 +513,7 @@ class FirstReusableChildComponent extends RouterLifecycleLogger {
   template: '',
 )
 class CantNavigateChildComponent extends RouterLifecycleLogger {
-  static final RouteDefinition routeDefinition = new RouteDefinition(
+  static final RouteDefinition routeDefinition = RouteDefinition(
     path: 'cant-navigate-child',
     component: ng.CantNavigateChildComponentNgFactory,
     useAsDefault: true,
@@ -531,7 +531,7 @@ class CantNavigateChildComponent extends RouterLifecycleLogger {
   }
 }
 
-const testDirectives = const [RouterOutlet];
+const testDirectives = [RouterOutlet];
 const testTemplate = '<router-outlet [routes]="routes"></router-outlet>';
 
 @Component(
@@ -540,7 +540,7 @@ const testTemplate = '<router-outlet [routes]="routes"></router-outlet>';
   directives: testDirectives,
 )
 class ParentComponent extends RouterLifecycleLogger {
-  static final RouteDefinition routeDefinition = new RouteDefinition(
+  static final RouteDefinition routeDefinition = RouteDefinition(
     path: 'parent',
     component: ng.ParentComponentNgFactory,
     useAsDefault: true,
@@ -563,7 +563,7 @@ class ParentComponent extends RouterLifecycleLogger {
   directives: testDirectives,
 )
 class ReusableParentComponent extends RouterLifecycleLogger {
-  static final RouteDefinition routeDefinition = new RouteDefinition(
+  static final RouteDefinition routeDefinition = RouteDefinition(
     path: 'reusable-parent',
     component: ng.ReusableParentComponentNgFactory,
     useAsDefault: true,
@@ -592,7 +592,7 @@ class ReusableParentComponent extends RouterLifecycleLogger {
   directives: testDirectives,
 )
 class FirstParentComponent extends RouterLifecycleLogger {
-  static final RouteDefinition routeDefinition = new RouteDefinition(
+  static final RouteDefinition routeDefinition = RouteDefinition(
     path: 'first-parent',
     component: ng.FirstParentComponentNgFactory,
     useAsDefault: true,
@@ -614,7 +614,7 @@ class FirstParentComponent extends RouterLifecycleLogger {
   directives: testDirectives,
 )
 class SecondParentComponent extends RouterLifecycleLogger {
-  static final RouteDefinition routeDefinition = new RouteDefinition(
+  static final RouteDefinition routeDefinition = RouteDefinition(
     path: 'second-parent',
     component: ng.SecondParentComponentNgFactory,
   );
@@ -635,7 +635,7 @@ class SecondParentComponent extends RouterLifecycleLogger {
   directives: testDirectives,
 )
 class FirstReusableParentComponent extends RouterLifecycleLogger {
-  static final RouteDefinition routeDefinition = new RouteDefinition(
+  static final RouteDefinition routeDefinition = RouteDefinition(
     path: 'first-reusable-parent',
     component: ng.FirstReusableParentComponentNgFactory,
     useAsDefault: true,
@@ -765,12 +765,12 @@ class TestNavigateBetweenNestedRoutesWithSameReusableParent {
   final List<String> lifecycleLog;
   final Router router;
   final List<RouteDefinition> routes = [
-    new RouteDefinition(
+    RouteDefinition(
       path: 'first-reusable-parent',
       component: ng.ReusableParentComponentNgFactory,
       useAsDefault: true,
     ),
-    new RouteDefinition(
+    RouteDefinition(
       path: 'second-reusable-parent',
       component: ng.ReusableParentComponentNgFactory,
     ),
@@ -807,7 +807,7 @@ class TestRedirectToSibling {
   final List<RouteDefinition> routes = [
     FirstChildComponent.routeDefinition,
     SecondChildComponent.routeDefinition,
-    new RouteDefinition.redirect(
+    RouteDefinition.redirect(
       path: '.+',
       redirectTo: SecondChildComponent.routeDefinition.path,
     ),

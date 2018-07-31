@@ -48,10 +48,10 @@ class NavigationParams {
       return;
     }
     if (fragment == null) {
-      throw new StateError('Must have a non-null `fragment` type');
+      throw StateError('Must have a non-null `fragment` type');
     }
     if (queryParameters == null) {
-      throw new StateError('Must have a non-null `query` type');
+      throw StateError('Must have a non-null `query` type');
     }
   }
 }

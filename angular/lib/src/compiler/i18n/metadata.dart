@@ -73,7 +73,7 @@ I18nMetadata parseI18nMetadata(
     return null;
   }
   if (index == -1) {
-    return new I18nMetadata(description);
+    return I18nMetadata(description);
   }
   final meaning = value.substring(0, index).trim();
   if (meaning.isEmpty) {
@@ -82,7 +82,7 @@ I18nMetadata parseI18nMetadata(
       annotation.sourceSpan,
       ParseErrorLevel.WARNING,
     );
-    return new I18nMetadata(description);
+    return I18nMetadata(description);
   }
-  return new I18nMetadata(description, meaning: meaning);
+  return I18nMetadata(description, meaning: meaning);
 }

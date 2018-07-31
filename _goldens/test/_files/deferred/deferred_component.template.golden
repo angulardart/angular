@@ -34,7 +34,7 @@ class ViewDeferredChildComponent0 extends AppView<import1.DeferredChildComponent
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = new import2.Text('Child');
+    import2.Text _text_1 = import2.Text('Child');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
@@ -42,7 +42,7 @@ class ViewDeferredChildComponent0 extends AppView<import1.DeferredChildComponent
 }
 
 AppView<import1.DeferredChildComponent> viewFactory_DeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewDeferredChildComponent0(parentView, parentIndex);
+  return ViewDeferredChildComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DeferredChildComponentHost = const [];
@@ -53,12 +53,12 @@ class _ViewDeferredChildComponentHost0 extends AppView<import1.DeferredChildComp
   _ViewDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DeferredChildComponent> build() {
-    _compView_0 = new ViewDeferredChildComponent0(this, 0);
+    _compView_0 = ViewDeferredChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DeferredChildComponent_0_5 = new import1.DeferredChildComponent();
+    _DeferredChildComponent_0_5 = import1.DeferredChildComponent();
     _compView_0.create(_DeferredChildComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _DeferredChildComponent_0_5);
+    return ComponentRef(0, this, rootEl, _DeferredChildComponent_0_5);
   }
 
   @override
@@ -73,7 +73,7 @@ class _ViewDeferredChildComponentHost0 extends AppView<import1.DeferredChildComp
 }
 
 AppView<import1.DeferredChildComponent> viewFactory_DeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewDeferredChildComponentHost0(parentView, parentIndex);
+  return _ViewDeferredChildComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.DeferredChildComponent> _DeferredChildComponentNgFactory = const ComponentFactory('deferred-component', viewFactory_DeferredChildComponentHost0);

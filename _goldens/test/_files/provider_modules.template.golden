@@ -39,7 +39,7 @@ class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesCompo
 }
 
 AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewProviderModulesComponent0(parentView, parentIndex);
+  return ViewProviderModulesComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$ProviderModulesComponentHost = const [];
@@ -54,7 +54,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
   _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.FooService get _FooService_0_6 {
     if ((this.__FooService_0_6 == null)) {
-      (__FooService_0_6 = new import1.FooService());
+      (__FooService_0_6 = import1.FooService());
     }
     return this.__FooService_0_6;
   }
@@ -82,12 +82,12 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
 
   @override
   ComponentRef<import1.ProviderModulesComponent> build() {
-    _compView_0 = new ViewProviderModulesComponent0(this, 0);
+    _compView_0 = ViewProviderModulesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ProviderModulesComponent_0_5 = new import1.ProviderModulesComponent();
+    _ProviderModulesComponent_0_5 = import1.ProviderModulesComponent();
     _compView_0.create(_ProviderModulesComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_5);
+    return ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_5);
   }
 
   @override
@@ -119,7 +119,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
 }
 
 AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewProviderModulesComponentHost0(parentView, parentIndex);
+  return _ViewProviderModulesComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.ProviderModulesComponent> _ProviderModulesComponentNgFactory = const ComponentFactory('provider-modules', viewFactory_ProviderModulesComponentHost0);

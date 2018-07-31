@@ -10,7 +10,7 @@ import '../hash.dart';
 import '../token/tokens.dart';
 import '../visitor.dart';
 
-const _listEquals = const ListEquality<dynamic>();
+const _listEquals = ListEquality<dynamic>();
 
 /// Represents an embedded template (i.e. is not directly rendered in DOM).
 ///
@@ -132,7 +132,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
 
   @override
   String toString() {
-    final buffer = new StringBuffer('$EmbeddedTemplateAst{ ');
+    final buffer = StringBuffer('$EmbeddedTemplateAst{ ');
     if (annotations.isNotEmpty) {
       buffer
         ..write('annotations=')
@@ -240,7 +240,7 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     this.references = const [],
     this.letBindings = const [],
     this.hasDeferredComponent = false,
-  }) : closeComplement = new CloseElementAst('template');
+  }) : closeComplement = CloseElementAst('template');
 
   _SyntheticEmbeddedTemplateAst.from(
     TemplateAst origin, {
@@ -252,7 +252,7 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
     this.references = const [],
     this.letBindings = const [],
     this.hasDeferredComponent = false,
-  })  : closeComplement = new CloseElementAst('template'),
+  })  : closeComplement = CloseElementAst('template'),
         super.from(origin);
 
   @override

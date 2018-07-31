@@ -11,35 +11,35 @@ const _token = '$_angular/src/core/di/opaque_token.dart';
 const _typed = '$_angular/src/core/metadata/typed.dart';
 
 // Class metadata.
-const $Directive = const TypeChecker.fromUrl('$_meta#Directive');
-const $Component = const TypeChecker.fromUrl('$_meta#Component');
-const $Pipe = const TypeChecker.fromUrl('$_meta#Pipe');
-const $Injectable = const TypeChecker.fromUrl('$_di#Injectable');
+const $Directive = TypeChecker.fromUrl('$_meta#Directive');
+const $Component = TypeChecker.fromUrl('$_meta#Component');
+const $Pipe = TypeChecker.fromUrl('$_meta#Pipe');
+const $Injectable = TypeChecker.fromUrl('$_di#Injectable');
 
 // Parameter metadata.
-const $Attribute = const TypeChecker.fromUrl('$_meta#Attribute');
-const $Inject = const TypeChecker.fromUrl('$_di#Inject');
-const $Optional = const TypeChecker.fromUrl('$_di#Optional');
-const $Self = const TypeChecker.fromUrl('$_di#Self');
-const $SkipSelf = const TypeChecker.fromUrl('$_di#SkipSelf');
-const $Host = const TypeChecker.fromUrl('$_di#Host');
+const $Attribute = TypeChecker.fromUrl('$_meta#Attribute');
+const $Inject = TypeChecker.fromUrl('$_di#Inject');
+const $Optional = TypeChecker.fromUrl('$_di#Optional');
+const $Self = TypeChecker.fromUrl('$_di#Self');
+const $SkipSelf = TypeChecker.fromUrl('$_di#SkipSelf');
+const $Host = TypeChecker.fromUrl('$_di#Host');
 
 // Field metadata.
-const $ContentChildren = const TypeChecker.fromUrl('$_meta#ContentChildren');
-const $ContentChild = const TypeChecker.fromUrl('$_meta#ContentChild');
-const $ViewChildren = const TypeChecker.fromUrl('$_meta#ViewChildren');
-const $ViewChild = const TypeChecker.fromUrl('$_meta#ViewChild');
-const $Input = const TypeChecker.fromUrl('$_meta#Input');
-const $Output = const TypeChecker.fromUrl('$_meta#Output');
-const $HostBinding = const TypeChecker.fromUrl('$_meta#HostBinding');
-const $HostListener = const TypeChecker.fromUrl('$_meta#HostListener');
+const $ContentChildren = TypeChecker.fromUrl('$_meta#ContentChildren');
+const $ContentChild = TypeChecker.fromUrl('$_meta#ContentChild');
+const $ViewChildren = TypeChecker.fromUrl('$_meta#ViewChildren');
+const $ViewChild = TypeChecker.fromUrl('$_meta#ViewChild');
+const $Input = TypeChecker.fromUrl('$_meta#Input');
+const $Output = TypeChecker.fromUrl('$_meta#Output');
+const $HostBinding = TypeChecker.fromUrl('$_meta#HostBinding');
+const $HostListener = TypeChecker.fromUrl('$_meta#HostListener');
 
 // Class types.
-const $GenerateInjector = const TypeChecker.fromUrl(
+const $GenerateInjector = TypeChecker.fromUrl(
   '$_injector#GenerateInjector',
 );
-const $Module = const TypeChecker.fromUrl('$_module#Module');
-const $Provider = const TypeChecker.fromUrl('$_provider#Provider');
-const $OpaqueToken = const TypeChecker.fromUrl('$_token#OpaqueToken');
-const $MultiToken = const TypeChecker.fromUrl('$_token#MultiToken');
-const $Typed = const TypeChecker.fromUrl('$_typed#Typed');
+const $Module = TypeChecker.fromUrl('$_module#Module');
+const $Provider = TypeChecker.fromUrl('$_provider#Provider');
+const $OpaqueToken = TypeChecker.fromUrl('$_token#OpaqueToken');
+const $MultiToken = TypeChecker.fromUrl('$_token#MultiToken');
+const $Typed = TypeChecker.fromUrl('$_typed#Typed');

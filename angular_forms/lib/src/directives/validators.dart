@@ -63,8 +63,8 @@ typedef Map<String, dynamic> ValidatorFn(AbstractControl c);
       '[required][ngControl],'
       '[required][ngFormControl],'
       '[required][ngModel]',
-  providers: const [
-    const ExistingProvider.forToken(NG_VALIDATORS, RequiredValidator),
+  providers: [
+    ExistingProvider.forToken(NG_VALIDATORS, RequiredValidator),
   ],
 )
 class RequiredValidator implements Validator {
@@ -86,8 +86,8 @@ class RequiredValidator implements Validator {
       '[minlength][ngControl],'
       '[minlength][ngFormControl],'
       '[minlength][ngModel]',
-  providers: const [
-    const ExistingProvider.forToken(NG_VALIDATORS, MinLengthValidator),
+  providers: [
+    ExistingProvider.forToken(NG_VALIDATORS, MinLengthValidator),
   ],
 )
 class MinLengthValidator implements Validator {
@@ -125,8 +125,8 @@ class MinLengthValidator implements Validator {
       '[maxlength][ngControl],'
       '[maxlength][ngFormControl],'
       '[maxlength][ngModel]',
-  providers: const [
-    const ExistingProvider.forToken(NG_VALIDATORS, MaxLengthValidator),
+  providers: [
+    ExistingProvider.forToken(NG_VALIDATORS, MaxLengthValidator),
   ],
 )
 class MaxLengthValidator implements Validator {
@@ -167,8 +167,8 @@ class MaxLengthValidator implements Validator {
       '[pattern][ngControl],'
       '[pattern][ngFormControl],'
       '[pattern][ngModel]',
-  providers: const [
-    const ExistingProvider.forToken(NG_VALIDATORS, PatternValidator),
+  providers: [
+    ExistingProvider.forToken(NG_VALIDATORS, PatternValidator),
   ],
 )
 class PatternValidator implements Validator {

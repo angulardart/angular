@@ -13,8 +13,8 @@ void main() {
 
   group('List', () {
     testContentChildren(
-      contentChildren: new TestCase(
-        new NgTestBed<TestContentChildrenList>(),
+      contentChildren: TestCase(
+        NgTestBed<TestContentChildrenList>(),
         [1, 2, 3],
       ),
     );
@@ -43,7 +43,7 @@ class ContentChildComponent extends HasChild<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     ContentChildrenComponent,
     ValueDirective,
   ],
@@ -65,7 +65,7 @@ class TestContentChildren extends HasChildren<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     ContentChildComponent,
     ValueDirective,
   ],
@@ -95,7 +95,7 @@ class ContentChildrenComponentList extends HasChildren<ValueDirective> {
 
 @Component(
   selector: 'test',
-  directives: const [
+  directives: [
     ContentChildrenComponentList,
     ValueDirective,
   ],

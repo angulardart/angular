@@ -60,7 +60,7 @@ o.Expression convertCdExpressionToIr(
 ) {
   assert(nameResolver != null);
   final visitor =
-      new _AstToIrVisitor(nameResolver, implicitReceiver, metadata, boundType);
+      _AstToIrVisitor(nameResolver, implicitReceiver, metadata, boundType);
   return _visit(expression, visitor, _Mode.Expression, expressionSourceSpan);
 }
 
@@ -73,7 +73,7 @@ List<o.Statement> convertCdStatementToIr(
 ) {
   assert(nameResolver != null);
   final visitor =
-      new _AstToIrVisitor(nameResolver, implicitReceiver, metadata, null);
+      _AstToIrVisitor(nameResolver, implicitReceiver, metadata, null);
   final result = _visit(stmt, visitor, _Mode.Statement, stmtSourceSpan);
   final statements = <o.Statement>[];
   _flattenStatements(result, statements);
@@ -180,7 +180,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
     }
     return _convertToStatementIfNeeded(
         mode,
-        new o.BinaryOperatorExpr(
+        o.BinaryOperatorExpr(
             op,
             ast.left.visit<dynamic, _Mode>(this, _Mode.Expression)
                 as o.Expression,
@@ -207,8 +207,8 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
 
   dynamic visitEmptyExpr(compiler_ast.EmptyExpr ast, _Mode mode) {
     final value = _isBoolType(_boundType)
-        ? new o.LiteralExpr(true, o.BOOL_TYPE)
-        : new o.LiteralExpr('', o.STRING_TYPE);
+        ? o.LiteralExpr(true, o.BOOL_TYPE)
+        : o.LiteralExpr('', o.STRING_TYPE);
     return _convertToStatementIfNeeded(mode, value);
   }
 
@@ -439,7 +439,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
   }
 
   dynamic visitNamedExpr(compiler_ast.NamedExpr ast, __) =>
-      new o.NamedExpr(ast.name, ast.expression.visit<dynamic, _Mode>(this));
+      o.NamedExpr(ast.name, ast.expression.visit<dynamic, _Mode>(this));
 
   List<R> _visitAll<R>(List<compiler_ast.AST> asts, _Mode mode) {
     return asts

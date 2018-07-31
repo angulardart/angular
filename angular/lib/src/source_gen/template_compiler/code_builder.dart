@@ -6,7 +6,7 @@ import 'package:code_builder/code_builder.dart';
 
 import 'template_compiler_outputs.dart';
 
-const _ignoredProblems = const <String>[
+const _ignoredProblems = <String>[
   'cancel_subscriptions',
   'constant_identifier_names',
   'duplicate_import',
@@ -23,7 +23,7 @@ String buildGeneratedCode(
   String libraryName,
   CompilerFlags flags,
 ) {
-  final buffer = new StringBuffer();
+  final buffer = StringBuffer();
 
   // Avoid strong-mode warnings that are not solvable quite yet.
   if (_ignoredProblems.isNotEmpty) {
@@ -32,11 +32,11 @@ String buildGeneratedCode(
   }
 
   // Generated code.
-  final allocator = new Allocator.simplePrefixing();
+  final allocator = Allocator.simplePrefixing();
   final compilerOutput = outputs.templatesSource?.source ?? '';
-  final reflectableOutput = new ReflectableEmitter(
+  final reflectableOutput = ReflectableEmitter(
     outputs.reflectableOutput,
-    new LibraryReader(element),
+    LibraryReader(element),
     allocator: allocator,
     deferredModules: outputs.templatesSource != null
         ? outputs.templatesSource.deferredModules.keys.toList()
@@ -82,13 +82,13 @@ String buildGeneratedCode(
   buffer.writeln(reflectableOutput.emitImports());
 
   if (outputs.injectorsOutput.isNotEmpty) {
-    final imports = new StringBuffer();
-    final body = new StringBuffer();
-    final file = new LibraryBuilder();
-    final dart = new SplitDartEmitter(imports, allocator);
+    final imports = StringBuffer();
+    final body = StringBuffer();
+    final file = LibraryBuilder();
+    final dart = SplitDartEmitter(imports, allocator);
 
     for (final injector in outputs.injectorsOutput) {
-      final emitter = new InjectorEmitter();
+      final emitter = InjectorEmitter();
       injector.accept(emitter);
       file.body.addAll([
         emitter.createFactory(),

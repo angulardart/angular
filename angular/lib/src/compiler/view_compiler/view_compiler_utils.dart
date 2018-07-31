@@ -9,13 +9,14 @@ import '../compile_metadata.dart'
         CompileIdentifierMetadata;
 import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart';
+import '../output/convert.dart' show typeArgumentsFrom;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show AttrAst;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart';
 
 // List of supported namespaces.
-const namespaceUris = const {
+const namespaceUris = {
   'xlink': 'http://www.w3.org/1999/xlink',
   'svg': 'http://www.w3.org/2000/svg',
   'xhtml': 'http://www.w3.org/1999/xhtml'
@@ -64,11 +65,11 @@ o.Expression getPropertyInView(
         currView.declarationElement.view != null) {
       currView = currView.declarationElement.view;
       viewProp = viewProp == null
-          ? new o.ReadClassMemberExpr('parentView')
+          ? o.ReadClassMemberExpr('parentView')
           : viewProp.prop('parentView');
     }
     if (!identical(currView, definedView)) {
-      throw new StateError('Internal error: Could not calculate a property '
+      throw StateError('Internal error: Could not calculate a property '
           'in a parent view: $property');
     }
 
@@ -93,10 +94,10 @@ o.Expression injectFromViewParentInjector(
     CompileView view, CompileTokenMetadata token, bool optional) {
   o.Expression viewExpr = (view.viewType == ViewType.host)
       ? o.THIS_EXPR
-      : new o.ReadClassMemberExpr('parentView');
+      : o.ReadClassMemberExpr('parentView');
   var args = [
     createDiTokenExpression(token),
-    new o.ReadClassMemberExpr('viewData').prop('parentIndex')
+    o.ReadClassMemberExpr('viewData').prop('parentIndex')
   ];
   if (optional) {
     args.add(o.NULL_EXPR);
@@ -104,11 +105,37 @@ o.Expression injectFromViewParentInjector(
   return viewExpr.callMethod('injectorGet', args);
 }
 
-String getViewFactoryName(CompileDirectiveMetadata component,
-    [int embeddedTemplateIndex]) {
-  String indexPostFix =
-      embeddedTemplateIndex == null ? '' : embeddedTemplateIndex.toString();
-  return 'viewFactory_${component.type.name}$indexPostFix';
+/// Returns the name of a [component] view factory for [index].
+///
+/// Each generated view of [component], be it component, host, or embedded has
+/// an associated [index] that is used to distinguish between embedded views.
+String getViewFactoryName(CompileDirectiveMetadata component, int index) =>
+    'viewFactory_${component.type.name}$index';
+
+/// Returns a callable expression for the [component] view factory named [name].
+///
+/// If [component] is generic, the view factory will flow the type parameters of
+/// the parent view as type arguments to the embedded view.
+///
+/// **Note:** It's assumed that [name] originates from an invocation of
+/// [getViewFactoryName] with the same [component].
+o.Expression getViewFactory(
+  CompileDirectiveMetadata component,
+  String name,
+) {
+  final viewFactoryVar = o.variable(name);
+  if (component.originType.typeParameters.isEmpty) {
+    return viewFactoryVar;
+  }
+  final parameters = [o.FnParam('parentView'), o.FnParam('parentIndex')];
+  final arguments = parameters.map((p) => o.variable(p.name)).toList();
+  return o.FunctionExpr(parameters, [
+    o.ReturnStatement(o.InvokeFunctionExpr(
+      viewFactoryVar,
+      arguments,
+      typeArgumentsFrom(component.originType.typeParameters),
+    )),
+  ]);
 }
 
 o.Expression createDiTokenExpression(CompileTokenMetadata token) {
@@ -122,8 +149,8 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
         // Add any generic types attached to the type.
         //
         // Only a value of `null` precisely means "no generic types", not [].
-        genericTypes: token.identifier.genericTypes.isNotEmpty
-            ? token.identifier.genericTypes
+        genericTypes: token.identifier.typeArguments.isNotEmpty
+            ? token.identifier.typeArguments
             : null);
   } else if (token.value != null) {
     return o.literal(token.value);
@@ -150,7 +177,7 @@ o.Expression createFlatArray(List<o.Expression> expressions,
   if (expressions.isEmpty) {
     return o.literalArr(
       const [],
-      new o.ArrayType(
+      o.ArrayType(
           null, constForEmpty ? const [o.TypeModifier.Const] : const []),
     );
   }
@@ -267,8 +294,7 @@ ast.AST _mergeAttributeValue(
     // constructing the interpolation here.
     if (attrValue1 is ast.LiteralPrimitive &&
         attrValue2 is ast.LiteralPrimitive) {
-      return new ast.LiteralPrimitive(
-          '${attrValue1.value} ${attrValue2.value}');
+      return ast.LiteralPrimitive('${attrValue1.value} ${attrValue2.value}');
     } else if (attrValue1 is ast.Interpolation) {
       if (attrValue2 is ast.LiteralPrimitive) {
         attrValue1.strings.last += ' ${attrValue2.value}';
@@ -279,7 +305,7 @@ ast.AST _mergeAttributeValue(
         return attrValue1;
       }
     } else {
-      return new ast.Interpolation(['', ' ', ''], [attrValue1, attrValue2]);
+      return ast.Interpolation(['', ' ', ''], [attrValue1, attrValue2]);
     }
   } else {
     return attrValue2;
@@ -342,13 +368,13 @@ o.Statement createSetAttributeStatement(String astNodeName,
   }
   var params =
       createSetAttributeParams(renderNode, attrNs, attrName, attrValue);
-  return new o.InvokeMemberMethodExpr(
+  return o.InvokeMemberMethodExpr(
           attrNs == null ? "createAttr" : "setAttrNS", params)
       .toStmt();
 }
 
 Map<String, ast.AST> _toSortedMap(Map<String, ast.AST> data) {
-  var result = new SplayTreeMap<String, ast.AST>();
+  var result = SplayTreeMap<String, ast.AST>();
   return result..addAll(data);
 }
 
@@ -360,7 +386,7 @@ Map<String, ast.AST> mergeHtmlAndDirectiveAttrs(
   var result = <String, ast.AST>{};
   var mergeCount = <String, int>{};
   declaredHtmlAttrs.forEach((name, attrAst) {
-    result[name] = new ast.LiteralPrimitive(attrAst.value);
+    result[name] = ast.LiteralPrimitive(attrAst.value);
     if (mergeCount.containsKey(name)) {
       mergeCount[name]++;
     } else {
@@ -437,7 +463,7 @@ Set<String> _tagNameSet;
 /// Should not generate false positives but returning false when unknown is
 /// fine since code will fallback to general Element case.
 bool detectHtmlElementFromTagName(String tagName) {
-  const htmlTagNames = const <String>[
+  const htmlTagNames = <String>[
     'a',
     'abbr',
     'acronym',
@@ -564,7 +590,7 @@ bool detectHtmlElementFromTagName(String tagName) {
     'wbr'
   ];
   if (_tagNameSet == null) {
-    _tagNameSet = new Set<String>();
+    _tagNameSet = Set<String>();
     for (String name in htmlTagNames) {
       _tagNameSet.add(name);
     }

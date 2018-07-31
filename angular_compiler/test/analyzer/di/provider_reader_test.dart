@@ -8,7 +8,7 @@ import '../../src/resolve.dart';
 void main() {
   group('should parse provider from', () {
     List<DartObject> providers;
-    const reader = const ProviderReader();
+    const reader = ProviderReader();
 
     ClassElement $Example;
     ClassElement $ExamplePrime;
@@ -89,11 +89,11 @@ void main() {
     test('a type (implicit provider)', () {
       expect(
         reader.parseProvider(providers[0]),
-        new UseClassProviderElement(
-          new TypeTokenElement(linkTypeOf($Example.type)),
+        UseClassProviderElement(
+          TypeTokenElement(linkTypeOf($Example.type)),
           null,
           linkTypeOf($Example.type),
-          dependencies: new DependencyInvocation(
+          dependencies: DependencyInvocation(
             $Example.unnamedConstructor,
             const [],
           ),
@@ -104,11 +104,11 @@ void main() {
     test('a type (explicit provider)', () {
       expect(
         reader.parseProvider(providers[1]),
-        new UseClassProviderElement(
-          new TypeTokenElement(linkTypeOf($Example.type)),
+        UseClassProviderElement(
+          TypeTokenElement(linkTypeOf($Example.type)),
           null,
           linkTypeOf($Example.type),
-          dependencies: new DependencyInvocation(
+          dependencies: DependencyInvocation(
             $Example.unnamedConstructor,
             const [],
           ),
@@ -119,11 +119,11 @@ void main() {
     test('using useClass: ... to define the invocation', () {
       expect(
         reader.parseProvider(providers[2]),
-        new UseClassProviderElement(
-          new TypeTokenElement(linkTypeOf($Example.type)),
+        UseClassProviderElement(
+          TypeTokenElement(linkTypeOf($Example.type)),
           null,
           linkTypeOf($ExamplePrime.type),
-          dependencies: new DependencyInvocation(
+          dependencies: DependencyInvocation(
             $ExamplePrime.unnamedConstructor,
             const [],
           ),
@@ -134,15 +134,15 @@ void main() {
     test('using useFactory: ... to define the invocation', () {
       expect(
         reader.parseProvider(providers[3]),
-        new UseFactoryProviderElement(
-          new TypeTokenElement(linkTypeOf($Example.type)),
+        UseFactoryProviderElement(
+          TypeTokenElement(linkTypeOf($Example.type)),
           null,
           urlOf($createExample),
-          dependencies: new DependencyInvocation(
+          dependencies: DependencyInvocation(
             $createExample,
             [
-              new DependencyElement(
-                new TypeTokenElement(linkTypeOf($DependencyA.type)),
+              DependencyElement(
+                TypeTokenElement(linkTypeOf($DependencyA.type)),
               ),
             ],
           ),
@@ -153,15 +153,15 @@ void main() {
     test('using useFactory: ... to define the invocation with deps: ...', () {
       expect(
         reader.parseProvider(providers[4]),
-        new UseFactoryProviderElement(
-          new TypeTokenElement(linkTypeOf($Example.type)),
+        UseFactoryProviderElement(
+          TypeTokenElement(linkTypeOf($Example.type)),
           null,
           urlOf($createExample),
-          dependencies: new DependencyInvocation(
+          dependencies: DependencyInvocation(
             $createExample,
             [
-              new DependencyElement(
-                new TypeTokenElement(linkTypeOf($DependencyB.type)),
+              DependencyElement(
+                TypeTokenElement(linkTypeOf($DependencyB.type)),
               ),
             ],
           ),
@@ -175,7 +175,7 @@ void main() {
       ) as UseValueProviderElement;
       expect(
         useValue.token,
-        new TypeTokenElement(const TypeLink('Duration', 'dart:core')),
+        TypeTokenElement(const TypeLink('Duration', 'dart:core')),
       );
       expect(useValue.useValue.type.name, 'Duration');
     });
@@ -197,11 +197,11 @@ void main() {
     test('using an OpaqueToken instead of a Type', () {
       expect(
         reader.parseProvider(providers[6]),
-        new UseClassProviderElement(
-          new OpaqueTokenElement(
+        UseClassProviderElement(
+          OpaqueTokenElement(
             'exampleToken',
             isMultiToken: false,
-            classUrl: new TypeLink(
+            classUrl: TypeLink(
               'OpaqueToken',
               ''
                   'package:angular'
@@ -210,7 +210,7 @@ void main() {
           ),
           null,
           linkTypeOf($Example.type),
-          dependencies: new DependencyInvocation(
+          dependencies: DependencyInvocation(
             $Example.unnamedConstructor,
             const [],
           ),
@@ -227,7 +227,7 @@ void main() {
 
     test('using an explicit Provider type <T>', () {
       final UseValueProviderElement value = reader.parseProvider(providers[10]);
-      expect(value.providerType, new TypeLink('String', 'dart:core'));
+      expect(value.providerType, TypeLink('String', 'dart:core'));
     });
   });
 }

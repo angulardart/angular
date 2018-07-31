@@ -10,8 +10,8 @@ void main(List<String> args) {
   final dryRun = isDryRun(args);
   final repository = Repository.current;
   final generator = TravisGenerator.generate(repository);
-  final travisDotYaml = new File('.travis.yml');
-  final presubmitDotSh = new File(p.join('tool', 'presubmit.sh'));
+  final travisDotYaml = File('.travis.yml');
+  final presubmitDotSh = File(p.join('tool', 'presubmit.sh'));
 
   if (dryRun) {
     if (travisDotYaml.readAsStringSync().trim() == generator.travisConfig ||

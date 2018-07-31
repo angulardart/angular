@@ -54,7 +54,7 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
 }
 
 AppView<import1.ParentComponent> viewFactory_ParentComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewParentComponent0(parentView, parentIndex);
+  return ViewParentComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$ParentComponentHost = const [];
@@ -65,12 +65,12 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ParentComponent> build() {
-    _compView_0 = new ViewParentComponent0(this, 0);
+    _compView_0 = ViewParentComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ParentComponent_0_5 = new import1.ParentComponent();
+    _ParentComponent_0_5 = import1.ParentComponent();
     _compView_0.create(_ParentComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _ParentComponent_0_5);
+    return ComponentRef(0, this, rootEl, _ParentComponent_0_5);
   }
 
   @override
@@ -85,7 +85,7 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
 }
 
 AppView<import1.ParentComponent> viewFactory_ParentComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewParentComponentHost0(parentView, parentIndex);
+  return _ViewParentComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.ParentComponent> _ParentComponentNgFactory = const ComponentFactory('parent-comp', viewFactory_ParentComponentHost0);
@@ -108,7 +108,7 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
   ComponentRef<import1.ChildComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = new import2.Text('');
+    _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
     init(const [], null);
     return null;
@@ -126,7 +126,7 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
 }
 
 AppView<import1.ChildComponent> viewFactory_ChildComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewChildComponent0(parentView, parentIndex);
+  return ViewChildComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$ChildComponentHost = const [];
@@ -137,12 +137,12 @@ class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
   _ViewChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ChildComponent> build() {
-    _compView_0 = new ViewChildComponent0(this, 0);
+    _compView_0 = ViewChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ChildComponent_0_5 = new import1.ChildComponent();
+    _ChildComponent_0_5 = import1.ChildComponent();
     _compView_0.create(_ChildComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _ChildComponent_0_5);
+    return ComponentRef(0, this, rootEl, _ChildComponent_0_5);
   }
 
   @override
@@ -157,7 +157,7 @@ class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
 }
 
 AppView<import1.ChildComponent> viewFactory_ChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewChildComponentHost0(parentView, parentIndex);
+  return _ViewChildComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.ChildComponent> _ChildComponentNgFactory = const ComponentFactory('child-cmp', viewFactory_ChildComponentHost0);

@@ -1,5 +1,5 @@
 class DefaultKeyValueDiffer {
-  final _records = new Map<dynamic, KeyValueChangeRecord>();
+  final _records = Map<dynamic, KeyValueChangeRecord>();
   KeyValueChangeRecord _mapHead;
 
   KeyValueChangeRecord _appendAfter;
@@ -47,7 +47,7 @@ class DefaultKeyValueDiffer {
   DefaultKeyValueDiffer diff(Map map) {
     map ??= {};
     if (map is! Map) {
-      throw new StateError("Error trying to diff '$map'");
+      throw StateError("Error trying to diff '$map'");
     }
     if (this.check(map)) {
       return this;
@@ -65,7 +65,7 @@ class DefaultKeyValueDiffer {
     if (_mapHead == null) {
       // Optimize initial add.
       map.forEach((key, value) {
-        var record = new KeyValueChangeRecord(key)..currentValue = value;
+        var record = KeyValueChangeRecord(key)..currentValue = value;
         _records[key] = record;
         _addToAdditions(record);
 
@@ -157,7 +157,7 @@ class DefaultKeyValueDiffer {
       return record;
     }
 
-    var record = new KeyValueChangeRecord(key)..currentValue = value;
+    var record = KeyValueChangeRecord(key)..currentValue = value;
     _records[key] = record;
     _addToAdditions(record);
     return record;

@@ -14,10 +14,10 @@ import 'bootstrap_test.template.dart' as ng_generated;
 void main() {
   ng_generated.initReflector();
 
-  Injector _noopInjector([Injector i]) => new Injector.empty(i);
+  Injector _noopInjector([Injector i]) => Injector.empty(i);
 
   test('should create a new component in the DOM', () async {
-    final host = new Element.div();
+    final host = Element.div();
     final test = await bootstrapForTest(
       ng_generated.NewComponentInDomNgFactory,
       host,
@@ -27,8 +27,8 @@ void main() {
     test.destroy();
   });
 
-  test('should call a handler before initial load', () async {
-    final host = new Element.div();
+  test('should call a synchronous handler before initial load', () async {
+    final host = Element.div();
     final test = await bootstrapForTest<BeforeChangeDetection>(
       ng_generated.BeforeChangeDetectionNgFactory,
       host,
@@ -39,12 +39,24 @@ void main() {
     test.destroy();
   });
 
+  test('should call an asynchronous handler before initial load', () async {
+    final host = Element.div();
+    final test = await bootstrapForTest<BeforeChangeDetection>(
+      ng_generated.BeforeChangeDetectionNgFactory,
+      host,
+      _noopInjector,
+      beforeChangeDetection: (comp) async => comp.users.add('Mati'),
+    );
+    expect(host.text, contains('Hello Mati!'));
+    test.destroy();
+  });
+
   test('should include user-specified providers', () async {
-    final host = new Element.div();
+    final host = Element.div();
     final test = await bootstrapForTest(
       ng_generated.AddProvidersNgFactory,
       host,
-      ([i]) => new Injector.map({TestService: new TestService()}, i),
+      ([i]) => Injector.map({TestService: TestService()}, i),
     );
     AddProviders instance = test.instance;
     expect(instance._testService, isNotNull);
@@ -55,7 +67,7 @@ void main() {
     expect(
       bootstrapForTest(
         ng_generated.OnPushComponentNgFactory,
-        new DivElement(),
+        DivElement(),
         _noopInjector,
       ),
       throwsUnsupportedError,

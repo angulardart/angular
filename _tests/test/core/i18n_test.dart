@@ -39,23 +39,23 @@ void main() {
   });
 
   test('should render message with escaped Dart characters', () async {
-    final testBed = NgTestBed
-        .forComponent(ng.TestI18nNodeWithEscapedDartCharactersNgFactory);
+    final testBed = NgTestBed.forComponent(
+        ng.TestI18nNodeWithEscapedDartCharactersNgFactory);
     final testFixture = await testBed.create();
     expect(testFixture.text, contains('Escape\nnewline.'));
     expect(testFixture.text, contains('This is not an \$interpolation.'));
   });
 
   test('should render message with escaped HTML characters', () async {
-    final testBed = NgTestBed
-        .forComponent(ng.TestI18nNodeWithEscapedHtmlCharactersNgFactory);
+    final testBed = NgTestBed.forComponent(
+        ng.TestI18nNodeWithEscapedHtmlCharactersNgFactory);
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Not <i>italic</i>.');
   });
 
   test('should render message with HTML and escaped HTML characters', () async {
-    final testBed = NgTestBed
-        .forComponent(ng.TestI18nNodeWithHtmlAndEscapedHtmlCharactersNgFactory);
+    final testBed = NgTestBed.forComponent(
+        ng.TestI18nNodeWithHtmlAndEscapedHtmlCharactersNgFactory);
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Italic, not <i>italic</i>.');
     final italicElement = testFixture.rootElement.querySelector('i');

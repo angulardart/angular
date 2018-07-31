@@ -22,7 +22,7 @@ List<ng.TemplateAst> internationalize(
   int ngContentIndex,
   TemplateContext context,
 ) {
-  final i18nBuilder = new I18nBuilder(context)..visitAll(parent.childNodes);
+  final i18nBuilder = I18nBuilder(context)..visitAll(parent.childNodes);
   final i18nMessage = i18nBuilder.build(metadata);
   if (i18nMessage == null) {
     context.reportError(
@@ -32,7 +32,7 @@ List<ng.TemplateAst> internationalize(
     return [];
   }
   return [
-    new ng.I18nTextAst(
+    ng.I18nTextAst(
       i18nMessage,
       ngContentIndex,
       _spanWithin(parent),
@@ -47,5 +47,5 @@ SourceSpan _spanWithin(ast.StandaloneTemplateAst parent) {
   if (firstSpan is FileSpan && lastSpan is FileSpan) {
     return firstSpan.expand(lastSpan);
   }
-  throw new UnimplementedError();
+  throw UnimplementedError();
 }

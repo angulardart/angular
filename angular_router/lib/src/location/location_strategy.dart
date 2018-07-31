@@ -35,4 +35,4 @@ abstract class LocationStrategy {
 /// ```dart
 /// const ValueProvider.forToken(appBaseHref, '/my/app');
 /// ```
-const appBaseHref = const OpaqueToken<String>('appBaseHref');
+const appBaseHref = OpaqueToken<String>('appBaseHref');

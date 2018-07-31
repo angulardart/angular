@@ -29,10 +29,10 @@ Injector _platformInjectorCache;
 /// **INTERNAL ONLY**: Creates a new injector for platform-level services.
 Injector platformInjector() {
   if (_platformInjectorCache == null) {
-    final testabilityRegistry = new TestabilityRegistry();
-    sharedStylesHost ??= new DomSharedStylesHost(document);
+    final testabilityRegistry = TestabilityRegistry();
+    sharedStylesHost ??= DomSharedStylesHost(document);
     initTestability(testabilityRegistry);
-    _platformInjectorCache = new Injector.map({
+    _platformInjectorCache = Injector.map({
       TestabilityRegistry: testabilityRegistry,
     });
   }
@@ -51,7 +51,7 @@ Injector appInjector(InjectorFactory userProvidedInjector) {
 
   // Lazily initialized later on once we have the user injector.
   ApplicationRef applicationRef;
-  final Injector appGlobalInjector = new _LazyInjector({
+  final Injector appGlobalInjector = _LazyInjector({
     ApplicationRef: () => applicationRef,
     AppViewUtils: () => appViewUtils,
   }, unsafeCast(minimalInjector));
@@ -73,7 +73,7 @@ Injector appInjector(InjectorFactory userProvidedInjector) {
       ngZone,
       userInjector,
     );
-    appViewUtils = new AppViewUtils(
+    appViewUtils = AppViewUtils(
       unsafeCast(userInjector.get(APP_ID)),
       unsafeCast(userInjector.get(SanitizationService)),
       unsafeCast(minimalInjector.get(EventManager)),
@@ -181,7 +181,7 @@ ComponentRef<T> runApp<T>(
   InjectorFactory createInjector = _identityInjector,
 }) {
   if (isDevMode && componentFactory == null) {
-    throw new ArgumentError.notNull('componentFactory');
+    throw ArgumentError.notNull('componentFactory');
   }
   final injector = appInjector(createInjector);
   final ApplicationRef appRef = unsafeCast(injector.get(ApplicationRef));
@@ -203,10 +203,10 @@ Future<ComponentRef<T>> runAppAsync<T>(
 }) {
   if (isDevMode) {
     if (componentFactory == null) {
-      throw new ArgumentError.notNull('componentFactory');
+      throw ArgumentError.notNull('componentFactory');
     }
     if (beforeComponentCreated == null) {
-      throw new ArgumentError.notNull('beforeComponentCreated');
+      throw ArgumentError.notNull('beforeComponentCreated');
     }
   }
   final injector = appInjector(createInjector);
@@ -238,13 +238,13 @@ ComponentRef<T> runAppLegacy<T>(
   }
   if (isDevMode) {
     if (componentType == null) {
-      throw new ArgumentError.notNull('componentType');
+      throw ArgumentError.notNull('componentType');
     }
     if (initReflector == null) {
       try {
         typeToFactory(componentType);
       } on StateError catch (_) {
-        throw new ArgumentError(
+        throw ArgumentError(
           'Could not bootstrap $componentType: provide "initReflector".',
         );
       }
@@ -279,13 +279,13 @@ Future<ComponentRef<T>> runAppLegacyAsync<T>(
   }
   if (isDevMode) {
     if (componentType == null) {
-      throw new ArgumentError.notNull('componentType');
+      throw ArgumentError.notNull('componentType');
     }
     if (initReflector == null) {
       try {
         typeToFactory(componentType);
       } on StateError catch (_) {
-        throw new ArgumentError(
+        throw ArgumentError(
           'Could not bootstrap $componentType: provide "initReflector".',
         );
       }
@@ -315,7 +315,7 @@ Future<ComponentRef<T>> bootstrapStatic<T>(
   List<Object> providers = const [],
   void Function() initReflector,
 ]) =>
-    new Future.microtask(
+    Future.microtask(
       () => runAppLegacy(
             componentType,
             createInjectorFromProviders: providers,

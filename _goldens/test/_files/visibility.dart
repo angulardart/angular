@@ -13,9 +13,9 @@ class Dependent {
 @Component(
   selector: 'dependency-with-dependent-in-view',
   template: '<dependent></dependent>',
-  directives: const [Dependent],
-  providers: const [
-    const Provider(Dependency, useExisting: DependencyWithDependentInView),
+  directives: [Dependent],
+  providers: [
+    Provider(Dependency, useExisting: DependencyWithDependentInView),
   ],
 )
 class DependencyWithDependentInView implements Dependency {}
@@ -23,8 +23,8 @@ class DependencyWithDependentInView implements Dependency {}
 @Component(
   selector: 'dependency-with-content',
   template: '<ng-content></ng-content>',
-  providers: const [
-    const Provider(Dependency, useExisting: DependencyWithContent),
+  providers: [
+    Provider(Dependency, useExisting: DependencyWithContent),
   ],
 )
 class DependencyWithContent implements Dependency {}
@@ -36,7 +36,7 @@ class DependencyWithContent implements Dependency {}
       <dependent></dependent>
     </dependency>
   ''',
-  directives: const [Dependency, Dependent],
+  directives: [Dependency, Dependent],
 )
 class DependencyAndDependentInView {}
 

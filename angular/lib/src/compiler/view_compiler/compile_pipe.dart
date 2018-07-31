@@ -26,21 +26,20 @@ class CompilePipe {
       // pure pipes live on the component view
       pipe = compView.purePipes[name];
       if (pipe == null) {
-        pipe = new CompilePipe(compView, meta);
+        pipe = CompilePipe(compView, meta);
         compView.purePipes[name] = pipe;
         compView.pipes.add(pipe);
       }
     } else {
       // Non pure pipes live on the view that called it
-      pipe = new CompilePipe(view, meta);
+      pipe = CompilePipe(view, meta);
       view.pipes.add(pipe);
     }
     return pipe._call(view, [input]..addAll(args));
   }
 
   CompilePipe(this.view, this.meta) {
-    instance =
-        new o.ReadClassMemberExpr('_pipe_${meta.name}_${view.pipeCount++}');
+    instance = o.ReadClassMemberExpr('_pipe_${meta.name}_${view.pipeCount++}');
   }
 
   void create() {
@@ -52,7 +51,7 @@ class CompilePipe {
       // number of optional arguments. However, each call site will always
       // invoke the transform method with a fixed number of arguments, so we
       // can use a pure proxy with the same number of required arguments.
-      final pureProxyType = new o.FunctionType(
+      final pureProxyType = o.FunctionType(
         meta.transformType.returnType,
         meta.transformType.paramTypes.sublist(0, purePipeProxy.argCount),
       );
@@ -68,10 +67,9 @@ class CompilePipe {
   o.Expression _call(CompileView callingView, List<o.Expression> args) {
     if (meta.pure) {
       // PurePipeProxies live on the view that called them.
-      final purePipeProxy = new _PurePipeProxy(
+      final purePipeProxy = _PurePipeProxy(
           callingView,
-          new o.ReadClassMemberExpr(
-              '${instance.name}_${_purePipeProxies.length}'),
+          o.ReadClassMemberExpr('${instance.name}_${_purePipeProxies.length}'),
           args.length);
       _purePipeProxies.add(purePipeProxy);
       return purePipeProxy.instance.callFn(args);
@@ -92,7 +90,7 @@ CompilePipeMetadata _findPipeMeta(CompileView view, String name) {
     }
   }
   if (pipeMeta == null) {
-    throw new StateError('Illegal state: Could not find pipe $name '
+    throw StateError('Illegal state: Could not find pipe $name '
         'although the parser should have detected this error!');
   }
   return pipeMeta;

@@ -1,7 +1,10 @@
+*   Added `TypedElement` to represent a statically parsed `Typed`.
+*   `TypedReader.parse()` now returns a `TypedElement`.
+
 ## 0.4.0-alpha+18
 
 *   Added `$Typed`, a `TypeChecker` for `Typed`.
-*   Added `TypeReader` for parsing generic directive types.
+*   Added `TypedReader` for parsing generic directive types.
 
 ## 0.4.0-alpha+17
 

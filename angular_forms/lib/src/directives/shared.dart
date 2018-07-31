@@ -52,13 +52,13 @@ void _throwError(AbstractControlDirective dir, String message) {
   if (dir?.path != null) {
     message = "$message (${dir.path.join(" -> ")})";
   }
-  throw new ArgumentError(message);
+  throw ArgumentError(message);
 }
 
 ValidatorFn composeValidators(List<dynamic> validators) {
   return validators != null
-      ? Validators
-          .compose(validators.map<ValidatorFn>(normalizeValidator).toList())
+      ? Validators.compose(
+          validators.map<ValidatorFn>(normalizeValidator).toList())
       : null;
 }
 

@@ -6,21 +6,21 @@ void main() {
   group('ReflectiveInjector.resolveStaticAndCreate', () {
     test('should allow ValueProvider', () {
       final injector = ReflectiveInjector.resolveStaticAndCreate([
-        new ValueProvider(String, 'Hello World'),
+        ValueProvider(String, 'Hello World'),
       ]);
       expect(injector.get(String), 'Hello World');
     });
 
     test('should allow Provider(useValue: ...)', () {
       final injector = ReflectiveInjector.resolveStaticAndCreate([
-        new Provider(String, useValue: 'Hello World'),
+        Provider(String, useValue: 'Hello World'),
       ]);
       expect(injector.get(String), 'Hello World');
     });
 
     test('should allow FactoryProvider', () {
       final injector = ReflectiveInjector.resolveStaticAndCreate([
-        new FactoryProvider(String, () => 'Hello World', deps: const []),
+        FactoryProvider(String, () => 'Hello World', deps: const []),
       ]);
       expect(injector.get(String), 'Hello World');
     });
@@ -28,13 +28,13 @@ void main() {
     test('should allow FactoryProvider with non-empty deps', () {
       final injector = ReflectiveInjector.resolveStaticAndCreate(
         [
-          new FactoryProvider(
+          FactoryProvider(
             String,
             (Object o) => 'Hello $o',
             deps: const [Object],
           ),
         ],
-        new Injector.map(
+        Injector.map(
           {
             Object: 'World',
           },
@@ -45,7 +45,7 @@ void main() {
 
     test('should allow Provider(useFactory: ...)', () {
       final injector = ReflectiveInjector.resolveStaticAndCreate([
-        new Provider(String, useFactory: () => 'Hello World', deps: const []),
+        Provider(String, useFactory: () => 'Hello World', deps: const []),
       ]);
       expect(injector.get(String), 'Hello World');
     });
@@ -53,9 +53,9 @@ void main() {
     test('should allow ExistingProvider', () {
       final injector = ReflectiveInjector.resolveStaticAndCreate(
         [
-          new ExistingProvider(Object, String),
+          ExistingProvider(Object, String),
         ],
-        new Injector.map(
+        Injector.map(
           {
             String: 'Hello World',
           },
@@ -67,12 +67,12 @@ void main() {
     test('should allow Provider(useExisting: ...)', () {
       final injector = ReflectiveInjector.resolveStaticAndCreate(
         [
-          new Provider(
+          Provider(
             Object,
             useExisting: String,
           ),
         ],
-        new Injector.map(
+        Injector.map(
           {
             String: 'Hello World',
           },
@@ -85,7 +85,7 @@ void main() {
       expect(
         () {
           ReflectiveInjector.resolveStaticAndCreate([
-            new FactoryProvider(String, (Duration d) => '$d'),
+            FactoryProvider(String, (Duration d) => '$d'),
           ]);
         },
         throwsUnsupportedError,
@@ -96,7 +96,7 @@ void main() {
       expect(
         () {
           ReflectiveInjector.resolveStaticAndCreate([
-            new ClassProvider(InjectableService),
+            ClassProvider(InjectableService),
           ]);
         },
         throwsUnsupportedError,

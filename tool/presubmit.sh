@@ -77,6 +77,8 @@ echo "Analyzing examples/hacker_news_pwa..."
 PKG=examples/hacker_news_pwa tool/travis.sh analyze
 echo "Building examples/hacker_news_pwa in debug mode..."
 PKG=examples/hacker_news_pwa tool/travis.sh build
+echo "Running tests in examples/hacker_news_pwa in debug mode"
+PKG=examples/hacker_news_pwa tool/travis.sh test
 echo "Analyzing examples/hello_world..."
 PKG=examples/hello_world tool/travis.sh analyze
 echo "Building examples/hello_world in debug mode..."

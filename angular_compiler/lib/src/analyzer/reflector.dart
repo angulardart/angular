@@ -116,7 +116,7 @@ class ReflectableReader {
       urlsNeedingInitReflector = await _resolveNeedsReflector(library);
     }
 
-    return new ReflectableOutput(
+    return ReflectableOutput(
       urlsNeedingInitReflector: urlsNeedingInitReflector,
       registerClasses: registerClasses,
       registerFunctions: registerFunctions,
@@ -128,7 +128,7 @@ class ReflectableReader {
     if (_shouldRecordFactory(element) && recordInjectableFactories) {
       if (element.isPrivate) {
         // TODO(matanl): Make this a better error message.
-        throw new BuildError('Cannot access private class ${element.name}');
+        throw BuildError('Cannot access private class ${element.name}');
       }
       factory = dependencyReader.parseDependencies(element);
     }
@@ -136,7 +136,7 @@ class ReflectableReader {
     if (factory == null && !isComponent) {
       return null;
     }
-    return new ReflectableClass(
+    return ReflectableClass(
       element: element,
       factory: factory,
       name: element.name,
@@ -154,7 +154,7 @@ class ReflectableReader {
     for (final annotation in element.metadata) {
       final object = annotation.computeConstantValue();
       if (object?.type?.name == 'RouteConfig') {
-        return new ConstantReader(object);
+        return ConstantReader(object);
       }
     }
     return null;
@@ -229,7 +229,7 @@ class ReflectableOutput {
     this.registerFunctions = const [],
   });
 
-  static const _list = const ListEquality<Object>();
+  static const _list = ListEquality<Object>();
 
   @override
   bool operator ==(Object o) =>

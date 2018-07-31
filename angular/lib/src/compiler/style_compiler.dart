@@ -66,11 +66,11 @@ class StyleCompiler {
 
     /// Add URLs from @import statements first.
     for (final url in styleUrls) {
-      final identifier = new CompileIdentifierMetadata(
+      final identifier = CompileIdentifierMetadata(
         name: _getStylesVarName(),
         moduleUrl: stylesModuleUrl(url, shim),
       );
-      styleExpressions.add(new o.ExternalExpr(identifier));
+      styleExpressions.add(o.ExternalExpr(identifier));
     }
 
     /// Add contents of style sheet after @import statements. This allows an
@@ -86,7 +86,7 @@ class StyleCompiler {
         .variable(stylesVar)
         .set(o.literalArr(
             styleExpressions,
-            new o.ArrayType(
+            o.ArrayType(
               o.DYNAMIC_TYPE,
               listShouldBeConst ? [o.TypeModifier.Const] : const [],
             )))
@@ -94,7 +94,7 @@ class StyleCompiler {
       null,
       [o.StmtModifier.Final],
     );
-    return new StylesCompileResult(
+    return StylesCompileResult(
       [statement],
       stylesVar,
       usesHostAttribute,

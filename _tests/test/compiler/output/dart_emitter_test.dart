@@ -7,9 +7,9 @@ import 'package:angular/src/compiler/output/output_ast.dart' as o;
 
 var someModuleUrl = 'asset:somePackage/lib/somePath';
 var anotherModuleUrl = 'asset:somePackage/lib/someOtherPath';
-var sameModuleIdentifier = new CompileIdentifierMetadata<dynamic>(
+var sameModuleIdentifier = CompileIdentifierMetadata<dynamic>(
     name: 'someLocalId', moduleUrl: someModuleUrl);
-var externalModuleIdentifier = new CompileIdentifierMetadata<dynamic>(
+var externalModuleIdentifier = CompileIdentifierMetadata<dynamic>(
     name: 'someExternalId', moduleUrl: anotherModuleUrl);
 
 void main() {
@@ -23,7 +23,7 @@ void main() {
     DartEmitter emitter;
     o.ReadVarExpr someVar;
     setUp(() {
-      emitter = new DartEmitter();
+      emitter = DartEmitter();
       someVar = o.variable('someVar');
     });
     String emitStmt(o.Statement stmt, [List<String> exportedVars]) {
@@ -46,10 +46,8 @@ void main() {
           'static var someVar = 1;');
       expect(
           emitStmt(someVar
-              .set(o.literal(
-                  1,
-                  new o.BuiltinType(
-                      o.BuiltinTypeName.Int, [o.TypeModifier.Const])))
+              .set(o.literal(1,
+                  o.BuiltinType(o.BuiltinTypeName.Int, [o.TypeModifier.Const])))
               .toDeclStmt(null, [o.StmtModifier.Final])),
           'final int someVar = 1;');
       expect(emitStmt(someVar.set(o.literal(1)).toDeclStmt(), ['someVar']),
@@ -100,7 +98,33 @@ void main() {
       expect(
           emitStmt(
               o.variable('SomeClass').instantiate([o.literal(1)]).toStmt()),
-          'new SomeClass(1);');
+          'SomeClass(1);');
+    });
+    test('should omit optional const', () {
+      expect(
+        emitStmt(o.variable('SomeClass').instantiate(
+          [
+            o.literalMap(
+              [
+                [
+                  'a',
+                  o.literalArr(
+                    [o.literal(1)],
+                    o.ArrayType(o.INT_TYPE, [o.TypeModifier.Const]),
+                  )
+                ],
+              ],
+              o.MapType(o.ArrayType(o.INT_TYPE), [o.TypeModifier.Const]),
+            ),
+          ],
+          type: o.importType(
+            CompileIdentifierMetadata(name: 'SomeClass'),
+            [],
+            [o.TypeModifier.Const],
+          ),
+        ).toStmt()),
+        "const SomeClass(<String, List<int>>{'a': [1]});",
+      );
     });
     test('should support builtin methods', () {
       expect(
@@ -127,7 +151,7 @@ void main() {
       expect(
           emitStmt(o.literalMap([
             ['someKey', o.literal(1)]
-          ], new o.MapType(o.NUMBER_TYPE)).toStmt()),
+          ], o.MapType(o.NUMBER_TYPE)).toStmt()),
           '<String, num>{\'someKey\': 1};');
     });
     test('should support external identifiers', () {
@@ -166,31 +190,58 @@ void main() {
     });
     test('should support function expressions', () {
       expect(emitStmt(o.fn([], []).toStmt()), ['() {', '};'].join('\n'));
-      expect(emitStmt(o.fn([new o.FnParam('param1', o.INT_TYPE)], []).toStmt()),
+      expect(emitStmt(o.fn([o.FnParam('param1', o.INT_TYPE)], []).toStmt()),
           ['(int param1) {', '};'].join('\n'));
     });
     test('should support function statements', () {
-      expect(emitStmt(new o.DeclareFunctionStmt('someFn', [], [])),
+      expect(emitStmt(o.DeclareFunctionStmt('someFn', [], [])),
           ['void someFn() {', '}'].join('\n'));
       expect(
-          emitStmt(new o.DeclareFunctionStmt(
-              'someFn', [], [new o.ReturnStatement(o.literal(1))], o.INT_TYPE)),
+          emitStmt(o.DeclareFunctionStmt(
+              'someFn', [], [o.ReturnStatement(o.literal(1))],
+              type: o.INT_TYPE)),
           ['int someFn() {', '  return 1;', '}'].join('\n'));
       expect(
-          emitStmt(new o.DeclareFunctionStmt(
-              'someFn', [new o.FnParam('param1', o.INT_TYPE)], [])),
+          emitStmt(o.DeclareFunctionStmt(
+              'someFn', [o.FnParam('param1', o.INT_TYPE)], [])),
           ['void someFn(int param1) {', '}'].join('\n'));
     });
+    test('should support generic functions', () {
+      final t = o.importType(CompileIdentifierMetadata(name: 'T'));
+      final r = o.importType(CompileIdentifierMetadata(name: 'R'));
+      expect(
+        emitStmt(o.DeclareFunctionStmt(
+          'genericFn',
+          [o.FnParam('t', t)],
+          [],
+          typeParameters: [o.TypeParameter('T', bound: o.NUMBER_TYPE)],
+        )),
+        ['void genericFn<T extends num>(T t) {', '}'].join('\n'),
+      );
+      expect(
+        emitStmt(o.DeclareFunctionStmt(
+          'genericFn',
+          [o.FnParam('t', t)],
+          [],
+          type: r,
+          typeParameters: [
+            o.TypeParameter('T', bound: r),
+            o.TypeParameter('R')
+          ],
+        )),
+        ['R genericFn<T extends R, R>(T t) {', '}'].join('\n'),
+      );
+    });
     test('should support comments', () {
-      expect(emitStmt(new o.CommentStmt('a\nb')), ['// a', '// b'].join('\n'));
+      expect(emitStmt(o.CommentStmt('a\nb')), ['// a', '// b'].join('\n'));
     });
     test('should support if stmt', () {
       var trueCase = o.variable('trueCase').callFn([]).toStmt();
       var falseCase = o.variable('falseCase').callFn([]).toStmt();
-      expect(emitStmt(new o.IfStmt(o.variable('cond'), [trueCase])),
+      expect(emitStmt(o.IfStmt(o.variable('cond'), [trueCase])),
           ['if (cond) { trueCase(); }'].join('\n'));
       expect(
-          emitStmt(new o.IfStmt(o.variable('cond'), [trueCase], [falseCase])),
+          emitStmt(o.IfStmt(o.variable('cond'), [trueCase], [falseCase])),
           ['if (cond) {', '  trueCase();', '} else {', '  falseCase();', '}']
               .join('\n'));
     });
@@ -200,7 +251,7 @@ void main() {
           .variable('catchFn')
           .callFn([o.CATCH_ERROR_VAR, o.CATCH_STACK_VAR]).toStmt();
       expect(
-          emitStmt(new o.TryCatchStmt([bodyStmt], [catchStmt])),
+          emitStmt(o.TryCatchStmt([bodyStmt], [catchStmt])),
           [
             'try {',
             '  body();',
@@ -210,7 +261,7 @@ void main() {
           ].join('\n'));
     });
     test('should support support throwing', () {
-      expect(emitStmt(new o.ThrowStmt(someVar)), 'throw someVar;');
+      expect(emitStmt(o.ThrowStmt(someVar)), 'throw someVar;');
     });
     group('classes', () {
       o.Statement callSomeMethod;
@@ -218,38 +269,37 @@ void main() {
         callSomeMethod = o.THIS_EXPR.callMethod('someMethod', []).toStmt();
       });
       test('should support declaring classes', () {
-        expect(emitStmt(new o.ClassStmt('SomeClass', null, [], [], null, [])),
+        expect(emitStmt(o.ClassStmt('SomeClass', null, [], [], null, [])),
             ['class SomeClass {', '}'].join('\n'));
         expect(
-            emitStmt(new o.ClassStmt(
+            emitStmt(o.ClassStmt(
                 'SomeClass', o.variable('SomeSuperClass'), [], [], null, [])),
             ['class SomeClass extends SomeSuperClass {', '}'].join('\n'));
       });
       test('should support declaring constructors', () {
         var superCall = o.SUPER_EXPR.callFn([o.variable('someParam')]).toStmt();
         expect(
-            emitStmt(new o.ClassStmt('SomeClass', null, [], [],
-                new o.ClassMethod(null, [], []), [])),
+            emitStmt(o.ClassStmt(
+                'SomeClass', null, [], [], o.ClassMethod(null, [], []), [])),
             ['class SomeClass {', '  SomeClass();', '}'].join('\n'));
         expect(
-            emitStmt(new o.ClassStmt(
+            emitStmt(o.ClassStmt(
                 'SomeClass',
                 null,
                 [],
                 [],
-                new o.ClassMethod(
-                    null, [new o.FnParam('someParam', o.INT_TYPE)], []),
+                o.ClassMethod(null, [o.FnParam('someParam', o.INT_TYPE)], []),
                 [])),
             ['class SomeClass {', '  SomeClass(int someParam);', '}']
                 .join('\n'));
         expect(
-            emitStmt(new o.ClassStmt('SomeClass', null, [], [],
-                new o.ClassMethod(null, [], [superCall]), [])),
+            emitStmt(o.ClassStmt('SomeClass', null, [], [],
+                o.ClassMethod(null, [], [superCall]), [])),
             ['class SomeClass {', '  SomeClass(): super(someParam);', '}']
                 .join('\n'));
         expect(
-            emitStmt(new o.ClassStmt('SomeClass', null, [], [],
-                new o.ClassMethod(null, [], [callSomeMethod]), [])),
+            emitStmt(o.ClassStmt('SomeClass', null, [], [],
+                o.ClassMethod(null, [], [callSomeMethod]), [])),
             [
               'class SomeClass {',
               '  SomeClass() {',
@@ -260,24 +310,24 @@ void main() {
       });
       test('should support declaring fields', () {
         expect(
-            emitStmt(new o.ClassStmt('SomeClass', null,
-                [new o.ClassField('someField')], [], null, [])),
+            emitStmt(o.ClassStmt(
+                'SomeClass', null, [o.ClassField('someField')], [], null, [])),
             ['class SomeClass {', '  var someField;', '}'].join('\n'));
         expect(
-            emitStmt(new o.ClassStmt(
+            emitStmt(o.ClassStmt(
                 'SomeClass',
                 null,
-                [new o.ClassField('someField', outputType: o.INT_TYPE)],
+                [o.ClassField('someField', outputType: o.INT_TYPE)],
                 [],
                 null,
                 [])),
             ['class SomeClass {', '  int someField;', '}'].join('\n'));
         expect(
-            emitStmt(new o.ClassStmt(
+            emitStmt(o.ClassStmt(
                 'SomeClass',
                 null,
                 [
-                  new o.ClassField('someField',
+                  o.ClassField('someField',
                       outputType: o.INT_TYPE,
                       modifiers: const [o.StmtModifier.Final])
                 ],
@@ -288,21 +338,21 @@ void main() {
       });
       test('should support declaring getters', () {
         expect(
-            emitStmt(new o.ClassStmt('SomeClass', null, [],
-                [new o.ClassGetter('someGetter', [])], null, [])),
+            emitStmt(o.ClassStmt('SomeClass', null, [],
+                [o.ClassGetter('someGetter', [])], null, [])),
             ['class SomeClass {', '  get someGetter {', '  }', '}'].join('\n'));
         expect(
-            emitStmt(new o.ClassStmt('SomeClass', null, [],
-                [new o.ClassGetter('someGetter', [], o.INT_TYPE)], null, [])),
+            emitStmt(o.ClassStmt('SomeClass', null, [],
+                [o.ClassGetter('someGetter', [], o.INT_TYPE)], null, [])),
             ['class SomeClass {', '  int get someGetter {', '  }', '}']
                 .join('\n'));
         expect(
-            emitStmt(new o.ClassStmt(
+            emitStmt(o.ClassStmt(
                 'SomeClass',
                 null,
                 [],
                 [
-                  new o.ClassGetter('someGetter', [callSomeMethod])
+                  o.ClassGetter('someGetter', [callSomeMethod])
                 ],
                 null,
                 [])),
@@ -316,25 +366,25 @@ void main() {
       });
       test('should support methods', () {
         expect(
-            emitStmt(new o.ClassStmt('SomeClass', null, [], [], null,
-                [new o.ClassMethod('someMethod', [], [])])),
+            emitStmt(o.ClassStmt('SomeClass', null, [], [], null,
+                [o.ClassMethod('someMethod', [], [])])),
             ['class SomeClass {', '  void someMethod() {', '  }', '}']
                 .join('\n'));
         expect(
-            emitStmt(new o.ClassStmt('SomeClass', null, [], [], null,
-                [new o.ClassMethod('someMethod', [], [], o.INT_TYPE)])),
+            emitStmt(o.ClassStmt('SomeClass', null, [], [], null,
+                [o.ClassMethod('someMethod', [], [], o.INT_TYPE)])),
             ['class SomeClass {', '  int someMethod() {', '  }', '}']
                 .join('\n'));
         expect(
-            emitStmt(new o.ClassStmt(
+            emitStmt(o.ClassStmt(
                 'SomeClass',
                 null,
                 [],
                 [],
                 null,
                 [
-                  new o.ClassMethod('someMethod',
-                      [new o.FnParam('someParam', o.INT_TYPE)], [])
+                  o.ClassMethod(
+                      'someMethod', [o.FnParam('someParam', o.INT_TYPE)], [])
                 ])),
             [
               'class SomeClass {',
@@ -343,14 +393,14 @@ void main() {
               '}'
             ].join('\n'));
         expect(
-            emitStmt(new o.ClassStmt(
+            emitStmt(o.ClassStmt(
                 'SomeClass',
                 null,
                 [],
                 [],
                 null,
                 [
-                  new o.ClassMethod('someMethod', [], [callSomeMethod])
+                  o.ClassMethod('someMethod', [], [callSomeMethod])
                 ])),
             [
               'class SomeClass {',
@@ -359,6 +409,39 @@ void main() {
               '  }',
               '}'
             ].join('\n'));
+      });
+      test('should support type parameters', () {
+        expect(
+          emitStmt(o.ClassStmt('GenericClass', null, [], [], null, [],
+              typeParameters: [
+                o.TypeParameter(
+                  'T',
+                  bound: o.importType(
+                    CompileIdentifierMetadata(name: 'GenericBound'),
+                    [o.STRING_TYPE],
+                  ),
+                ),
+              ])),
+          [
+            'class GenericClass<T extends GenericBound<String>> {',
+            '}',
+          ].join('\n'),
+        );
+        expect(
+          emitStmt(o.ClassStmt(
+            'GenericClass',
+            o.importExpr(
+              CompileIdentifierMetadata(name: 'GenericParent'),
+              typeParams: [o.importType(CompileIdentifierMetadata(name: 'T'))],
+            ),
+            [],
+            [],
+            null,
+            [],
+            typeParameters: [o.TypeParameter('T')],
+          )),
+          ['class GenericClass<T> extends GenericParent<T> {', '}'].join('\n'),
+        );
       });
     });
     test('should support builtin types', () {
@@ -388,13 +471,13 @@ void main() {
     });
     test('should support combined types', () {
       var writeVarExpr = o.variable('a').set(o.NULL_EXPR);
-      expect(emitStmt(writeVarExpr.toDeclStmt(new o.ArrayType(null))),
+      expect(emitStmt(writeVarExpr.toDeclStmt(o.ArrayType(null))),
           'List<dynamic> a = null;');
-      expect(emitStmt(writeVarExpr.toDeclStmt(new o.ArrayType(o.INT_TYPE))),
+      expect(emitStmt(writeVarExpr.toDeclStmt(o.ArrayType(o.INT_TYPE))),
           'List<int> a = null;');
-      expect(emitStmt(writeVarExpr.toDeclStmt(new o.MapType(null))),
+      expect(emitStmt(writeVarExpr.toDeclStmt(o.MapType(null))),
           'Map<String, dynamic> a = null;');
-      expect(emitStmt(writeVarExpr.toDeclStmt(new o.MapType(o.INT_TYPE))),
+      expect(emitStmt(writeVarExpr.toDeclStmt(o.MapType(o.INT_TYPE))),
           'Map<String, int> a = null;');
     });
   });

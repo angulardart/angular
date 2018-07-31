@@ -37,9 +37,9 @@ abstract class AbstractControl<T> {
 
   ValidatorFn validator;
   T _value;
-  final _valueChanges = new StreamController<T>.broadcast();
-  final _statusChanges = new StreamController<String>.broadcast();
-  final _disabledChanges = new StreamController<bool>.broadcast();
+  final _valueChanges = StreamController<T>.broadcast();
+  final _statusChanges = StreamController<String>.broadcast();
+  final _disabledChanges = StreamController<bool>.broadcast();
   String _status;
   Map<String, dynamic> _errors;
   bool _pristine = true;
@@ -517,13 +517,13 @@ class ControlGroup extends AbstractControlGroup<Map<String, dynamic>> {
     assert(() {
       for (var name in controls.keys) {
         if (!value.containsKey(name)) {
-          throw new ArgumentError.value(
+          throw ArgumentError.value(
               value, 'Must supply a value for form control with name: $name.');
         }
       }
       for (var name in value.keys) {
         if (!controls.containsKey(name)) {
-          throw new ArgumentError.value(
+          throw ArgumentError.value(
               value, 'No form control found with name: $name.');
         }
       }
@@ -697,7 +697,7 @@ class ControlArray extends AbstractControl<List> {
 
     assert(() {
       if (value.length != controls.length) {
-        throw new ArgumentError.value(
+        throw ArgumentError.value(
             value,
             'ControlArray has ${controls.length} controls, but received a list '
             'of ${value.length} values.');

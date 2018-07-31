@@ -2,10 +2,9 @@ import 'package:angular/builder.dart' as angular;
 import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 
-BuilderOptions _withoutExtensions(BuilderOptions options) =>
-    new BuilderOptions({}
-      ..addAll(options.config)
-      ..remove('extensions'));
+BuilderOptions _withoutExtensions(BuilderOptions options) => BuilderOptions({}
+  ..addAll(options.config)
+  ..remove('extensions'));
 
 /// Returns a [Builder] to generate (release) template files for comparison.
 ///

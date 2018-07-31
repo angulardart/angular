@@ -11,7 +11,7 @@ void main() {
   ng_generated.initReflector();
 
   test('$ViewChild#nativeElement should be accessible', () async {
-    final fixture = await new NgTestBed<ViewChildTest>().create();
+    final fixture = await NgTestBed<ViewChildTest>().create();
     await fixture.update((component) {
       expect(component.portalElement, isNull);
       component.showChildHost = true;
@@ -34,7 +34,7 @@ void main() {
     </div>
     <div #marker></div>
   ''',
-  directives: const [
+  directives: [
     ChildHostDirective,
     NgIf,
   ],

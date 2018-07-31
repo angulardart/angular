@@ -3,7 +3,7 @@ import 'package:angular/di.dart' show PipeTransform, Pipe;
 
 import 'invalid_pipe_argument_exception.dart';
 
-final RegExp _re = new RegExp("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
+final RegExp _re = RegExp("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
 
 /// Internal base class for numeric pipes.
 class _NumberPipe {
@@ -11,13 +11,13 @@ class _NumberPipe {
       [String currency, bool currencyAsSymbol = false]) {
     if (value == null) return null;
     if (value is! num) {
-      throw new InvalidPipeArgumentException(_NumberPipe, value);
+      throw InvalidPipeArgumentException(_NumberPipe, value);
     }
     var minInt = 1, minFraction = 0, maxFraction = 3;
     if (digits != null) {
       var parts = _re.firstMatch(digits);
       if (parts == null) {
-        throw new FormatException(
+        throw FormatException(
           '$digits is not a valid digit info for number pipes',
         );
       }
@@ -143,17 +143,16 @@ String _formatNumber(
   NumberFormat formatter;
   switch (style) {
     case _NumberFormatStyle.Decimal:
-      formatter = new NumberFormat.decimalPattern(locale);
+      formatter = NumberFormat.decimalPattern(locale);
       break;
     case _NumberFormatStyle.Percent:
-      formatter = new NumberFormat.percentPattern(locale);
+      formatter = NumberFormat.percentPattern(locale);
       break;
     case _NumberFormatStyle.Currency:
       if (currencyAsSymbol) {
-        formatter =
-            new NumberFormat.simpleCurrency(locale: locale, name: currency);
+        formatter = NumberFormat.simpleCurrency(locale: locale, name: currency);
       } else {
-        formatter = new NumberFormat.currency(locale: locale, name: currency);
+        formatter = NumberFormat.currency(locale: locale, name: currency);
       }
       break;
   }
