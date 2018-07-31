@@ -39,7 +39,7 @@ enum LifecycleHooks {
 ///
 /// <?code-excerpt "docs/lifecycle-hooks/lib/src/on_changes_component.dart (ng-on-changes)"?>
 /// ```dart
-/// ngOnChanges(Map<String, SimpleChange> changes) {
+/// void ngOnChanges(Map<String, SimpleChange> changes) {
 ///   changes.forEach((String propName, SimpleChange change) {
 ///     String cur = JSON.encode(change.currentValue);
 ///     String prev = change.previousValue == null
@@ -92,7 +92,7 @@ abstract class AfterChanges {
 ///   UserPanel(this._rpcService);
 ///
 ///   @override
-///   ngOnInit() async {
+///   void ngOnInit() async {
 ///     users = await _rpcService.getUsers();
 ///   }
 /// }
@@ -130,12 +130,12 @@ abstract class OnInit {
 ///   int count = 0;
 ///
 ///   @override
-///   ngOnInit() {
+///   void ngOnInit() {
 ///     _onlineUserSub = onlineUsers.listen((count) => this.count = count);
 ///   }
 ///
 ///   @override
-///   ngOnDestroy() {
+///   void ngOnDestroy() {
 ///     _onlineUserSub.cancel();
 ///   }
 /// }
@@ -183,7 +183,7 @@ abstract class OnDestroy {
 ///
 /// <?code-excerpt "docs/lifecycle-hooks/lib/src/do_check_component.dart (ng-do-check)"?>
 /// ```dart
-/// ngDoCheck() {
+/// void ngDoCheck() {
 ///   if (hero.name != oldHeroName) {
 ///     changeDetected = true;
 ///     changeLog.add(
@@ -250,13 +250,15 @@ abstract class DoCheck {
 ///   @ContentChild(ChildComponent)
 ///   ChildComponent contentChild;
 ///
-///   ngAfterContentInit() {
+///   @override
+///   void ngAfterContentInit() {
 ///     // contentChild is set after the content has been initialized
 ///     _logIt('AfterContentInit');
 ///     _doSomething();
 ///   }
 ///
-///   ngAfterContentChecked() {
+///   @override
+///   void ngAfterContentChecked() {
 ///     // contentChild is updated after the content has been checked
 ///     if (_prevHero == contentChild?.hero) {
 ///       _logIt('AfterContentChecked (no change)');
@@ -304,13 +306,15 @@ abstract class AfterContentInit {
 ///   @ContentChild(ChildComponent)
 ///   ChildComponent contentChild;
 ///
-///   ngAfterContentInit() {
+///   @override
+///   void ngAfterContentInit() {
 ///     // contentChild is set after the content has been initialized
 ///     _logIt('AfterContentInit');
 ///     _doSomething();
 ///   }
 ///
-///   ngAfterContentChecked() {
+///   @override
+///   void ngAfterContentChecked() {
 ///     // contentChild is updated after the content has been checked
 ///     if (_prevHero == contentChild?.hero) {
 ///       _logIt('AfterContentChecked (no change)');
@@ -356,13 +360,15 @@ abstract class AfterContentChecked {
 ///   @ViewChild(ChildViewComponent)
 ///   ChildViewComponent viewChild;
 ///
-///   ngAfterViewInit() {
+///   @override
+///   void ngAfterViewInit() {
 ///     // viewChild is set after the view has been initialized
 ///     _logIt('AfterViewInit');
 ///     _doSomething();
 ///   }
 ///
-///   ngAfterViewChecked() {
+///   @override
+///   void ngAfterViewChecked() {
 ///     // viewChild is updated after the view has been checked
 ///     if (_prevHero == viewChild.hero) {
 ///       _logIt('AfterViewChecked (no change)');
@@ -407,13 +413,15 @@ abstract class AfterViewInit {
 ///   @ViewChild(ChildViewComponent)
 ///   ChildViewComponent viewChild;
 ///
-///   ngAfterViewInit() {
+///   @override
+///   void ngAfterViewInit() {
 ///     // viewChild is set after the view has been initialized
 ///     _logIt('AfterViewInit');
 ///     _doSomething();
 ///   }
 ///
-///   ngAfterViewChecked() {
+///   @override
+///   void ngAfterViewChecked() {
 ///     // viewChild is updated after the view has been checked
 ///     if (_prevHero == viewChild.hero) {
 ///       _logIt('AfterViewChecked (no change)');
