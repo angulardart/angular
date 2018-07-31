@@ -44,7 +44,7 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
 }
 
 AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEvents0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewUsesNativeEvents0(parentView, parentIndex);
+  return ViewUsesNativeEvents0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesNativeEventsHost = const [];
@@ -55,12 +55,12 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
   _ViewUsesNativeEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesNativeEvents> build() {
-    _compView_0 = new ViewUsesNativeEvents0(this, 0);
+    _compView_0 = ViewUsesNativeEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesNativeEvents_0_5 = new import1.UsesNativeEvents();
+    _UsesNativeEvents_0_5 = import1.UsesNativeEvents();
     _compView_0.create(_UsesNativeEvents_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _UsesNativeEvents_0_5);
+    return ComponentRef(0, this, rootEl, _UsesNativeEvents_0_5);
   }
 
   @override
@@ -75,7 +75,7 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
 }
 
 AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEventsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewUsesNativeEventsHost0(parentView, parentIndex);
+  return _ViewUsesNativeEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.UsesNativeEvents> _UsesNativeEventsNgFactory = const ComponentFactory('uses-native-events', viewFactory_UsesNativeEventsHost0);
@@ -99,10 +99,10 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   ComponentRef<import1.UsesAngularEvents> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _compView_0 = new ViewHasAngularEvents0(this, 0);
+    _compView_0 = ViewHasAngularEvents0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _HasAngularEvents_0_5 = new import1.HasAngularEvents();
+    _HasAngularEvents_0_5 = import1.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_5, []);
     final subscription_0 = _HasAngularEvents_0_5.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0]);
@@ -121,7 +121,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
 }
 
 AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEvents0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewUsesAngularEvents0(parentView, parentIndex);
+  return ViewUsesAngularEvents0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesAngularEventsHost = const [];
@@ -132,12 +132,12 @@ class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
   _ViewUsesAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesAngularEvents> build() {
-    _compView_0 = new ViewUsesAngularEvents0(this, 0);
+    _compView_0 = ViewUsesAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesAngularEvents_0_5 = new import1.UsesAngularEvents();
+    _UsesAngularEvents_0_5 = import1.UsesAngularEvents();
     _compView_0.create(_UsesAngularEvents_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _UsesAngularEvents_0_5);
+    return ComponentRef(0, this, rootEl, _UsesAngularEvents_0_5);
   }
 
   @override
@@ -152,7 +152,7 @@ class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
 }
 
 AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewUsesAngularEventsHost0(parentView, parentIndex);
+  return _ViewUsesAngularEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.UsesAngularEvents> _UsesAngularEventsNgFactory = const ComponentFactory('uses-angular-events', viewFactory_UsesAngularEventsHost0);
@@ -179,7 +179,7 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
 }
 
 AppView<import1.HasAngularEvents> viewFactory_HasAngularEvents0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewHasAngularEvents0(parentView, parentIndex);
+  return ViewHasAngularEvents0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HasAngularEventsHost = const [];
@@ -190,12 +190,12 @@ class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
   _ViewHasAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasAngularEvents> build() {
-    _compView_0 = new ViewHasAngularEvents0(this, 0);
+    _compView_0 = ViewHasAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasAngularEvents_0_5 = new import1.HasAngularEvents();
+    _HasAngularEvents_0_5 = import1.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _HasAngularEvents_0_5);
+    return ComponentRef(0, this, rootEl, _HasAngularEvents_0_5);
   }
 
   @override
@@ -210,7 +210,7 @@ class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
 }
 
 AppView<import1.HasAngularEvents> viewFactory_HasAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewHasAngularEventsHost0(parentView, parentIndex);
+  return _ViewHasAngularEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.HasAngularEvents> _HasAngularEventsNgFactory = const ComponentFactory('has-angular-events', viewFactory_HasAngularEventsHost0);
@@ -244,7 +244,7 @@ class ViewHasManyNativeHostEvents0 extends AppView<import1.HasManyNativeHostEven
 }
 
 AppView<import1.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEvents0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewHasManyNativeHostEvents0(parentView, parentIndex);
+  return ViewHasManyNativeHostEvents0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HasManyNativeHostEventsHost = const [];
@@ -255,12 +255,12 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
   _ViewHasManyNativeHostEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasManyNativeHostEvents> build() {
-    _compView_0 = new ViewHasManyNativeHostEvents0(this, 0);
+    _compView_0 = ViewHasManyNativeHostEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasManyNativeHostEvents_0_5 = new import1.HasManyNativeHostEvents();
+    _HasManyNativeHostEvents_0_5 = import1.HasManyNativeHostEvents();
     _compView_0.create(_HasManyNativeHostEvents_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _HasManyNativeHostEvents_0_5);
+    return ComponentRef(0, this, rootEl, _HasManyNativeHostEvents_0_5);
   }
 
   @override
@@ -275,7 +275,7 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
 }
 
 AppView<import1.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEventsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewHasManyNativeHostEventsHost0(parentView, parentIndex);
+  return _ViewHasManyNativeHostEventsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.HasManyNativeHostEvents> _HasManyNativeHostEventsNgFactory = const ComponentFactory('material-button-like', viewFactory_HasManyNativeHostEventsHost0);

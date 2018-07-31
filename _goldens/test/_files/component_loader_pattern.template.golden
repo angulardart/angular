@@ -41,7 +41,7 @@ class ViewTestComponent0 extends AppView<import1.TestComponent> {
 }
 
 AppView<import1.TestComponent> viewFactory_TestComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewTestComponent0(parentView, parentIndex);
+  return ViewTestComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$TestComponentHost = const [];
@@ -52,12 +52,12 @@ class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
   _ViewTestComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.TestComponent> build() {
-    _compView_0 = new ViewTestComponent0(this, 0);
+    _compView_0 = ViewTestComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestComponent_0_5 = new import1.TestComponent();
+    _TestComponent_0_5 = import1.TestComponent();
     _compView_0.create(_TestComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _TestComponent_0_5);
+    return ComponentRef(0, this, rootEl, _TestComponent_0_5);
   }
 
   @override
@@ -72,7 +72,7 @@ class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
 }
 
 AppView<import1.TestComponent> viewFactory_TestComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewTestComponentHost0(parentView, parentIndex);
+  return _ViewTestComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.TestComponent> _TestComponentNgFactory = const ComponentFactory('test', viewFactory_TestComponentHost0);

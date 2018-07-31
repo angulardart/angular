@@ -37,17 +37,17 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   ComponentRef<import1.InterpolationComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import2.Text _text_0 = new import2.Text('    ');
+    import2.Text _text_0 = import2.Text('    ');
     parentRenderNode.append(_text_0);
     var doc = import2.document;
     _el_1 = createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_2 = new import2.Text('\n      ');
+    import2.Text _text_2 = import2.Text('\n      ');
     _el_1.append(_text_2);
-    _text_3 = new import2.Text('');
+    _text_3 = import2.Text('');
     _el_1.append(_text_3);
-    import2.Text _text_4 = new import2.Text('\n    ');
+    import2.Text _text_4 = import2.Text('\n    ');
     _el_1.append(_text_4);
-    import2.Text _text_5 = new import2.Text('\n  ');
+    import2.Text _text_5 = import2.Text('\n  ');
     parentRenderNode.append(_text_5);
     init(const [], null);
     return null;
@@ -65,7 +65,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
 }
 
 AppView<import1.InterpolationComponent> viewFactory_InterpolationComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInterpolationComponent0(parentView, parentIndex);
+  return ViewInterpolationComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationComponentHost = const [];
@@ -76,12 +76,12 @@ class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComp
   _ViewInterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InterpolationComponent> build() {
-    _compView_0 = new ViewInterpolationComponent0(this, 0);
+    _compView_0 = ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponent_0_5 = new import1.InterpolationComponent();
+    _InterpolationComponent_0_5 = import1.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InterpolationComponent_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationComponent_0_5);
   }
 
   @override
@@ -96,7 +96,7 @@ class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComp
 }
 
 AppView<import1.InterpolationComponent> viewFactory_InterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInterpolationComponentHost0(parentView, parentIndex);
+  return _ViewInterpolationComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationComponent> _InterpolationComponentNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationComponentHost0);
@@ -122,7 +122,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _text_1 = new import2.Text('');
+    _text_1 = import2.Text('');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
@@ -140,7 +140,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
 }
 
 AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInterpolationComponentNoWhitespace0(parentView, parentIndex);
+  return ViewInterpolationComponentNoWhitespace0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
@@ -151,12 +151,12 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.Inter
   _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
-    _compView_0 = new ViewInterpolationComponentNoWhitespace0(this, 0);
+    _compView_0 = ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponentNoWhitespace_0_5 = new import1.InterpolationComponentNoWhitespace();
+    _InterpolationComponentNoWhitespace_0_5 = import1.InterpolationComponentNoWhitespace();
     _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
   }
 
   @override
@@ -171,7 +171,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.Inter
 }
 
 AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInterpolationComponentNoWhitespaceHost0(parentView, parentIndex);
+  return _ViewInterpolationComponentNoWhitespaceHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationComponentNoWhitespace> _InterpolationComponentNoWhitespaceNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationComponentNoWhitespaceHost0);
@@ -199,13 +199,13 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _text_1 = new import2.Text('');
+    _text_1 = import2.Text('');
     _el_0.append(_text_1);
-    import2.Text _text_2 = new import2.Text(' ');
+    import2.Text _text_2 = import2.Text(' ');
     _el_0.append(_text_2);
-    _text_3 = new import2.Text('');
+    _text_3 = import2.Text('');
     _el_0.append(_text_3);
-    import2.Text _text_4 = new import2.Text('!');
+    import2.Text _text_4 = import2.Text('!');
     _el_0.append(_text_4);
     init(const [], null);
     return null;
@@ -228,7 +228,7 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
 }
 
 AppView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInterpolationTwoAdjacent0(parentView, parentIndex);
+  return ViewInterpolationTwoAdjacent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationTwoAdjacentHost = const [];
@@ -239,12 +239,12 @@ class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTw
   _ViewInterpolationTwoAdjacentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InterpolationTwoAdjacent> build() {
-    _compView_0 = new ViewInterpolationTwoAdjacent0(this, 0);
+    _compView_0 = ViewInterpolationTwoAdjacent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationTwoAdjacent_0_5 = new import1.InterpolationTwoAdjacent();
+    _InterpolationTwoAdjacent_0_5 = import1.InterpolationTwoAdjacent();
     _compView_0.create(_InterpolationTwoAdjacent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InterpolationTwoAdjacent_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationTwoAdjacent_0_5);
   }
 
   @override
@@ -259,7 +259,7 @@ class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTw
 }
 
 AppView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInterpolationTwoAdjacentHost0(parentView, parentIndex);
+  return _ViewInterpolationTwoAdjacentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationTwoAdjacent> _InterpolationTwoAdjacentNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationTwoAdjacentHost0);
@@ -289,19 +289,19 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = new import2.Text('Welcome ');
+    import2.Text _text_1 = import2.Text('Welcome ');
     _el_0.append(_text_1);
-    _text_2 = new import2.Text('');
+    _text_2 = import2.Text('');
     _el_0.append(_text_2);
-    import2.Text _text_3 = new import2.Text(' to the ');
+    import2.Text _text_3 = import2.Text(' to the ');
     _el_0.append(_text_3);
-    _text_4 = new import2.Text('');
+    _text_4 = import2.Text('');
     _el_0.append(_text_4);
-    import2.Text _text_5 = new import2.Text(' of ');
+    import2.Text _text_5 = import2.Text(' of ');
     _el_0.append(_text_5);
-    _text_6 = new import2.Text('');
+    _text_6 = import2.Text('');
     _el_0.append(_text_6);
-    import2.Text _text_7 = new import2.Text('!');
+    import2.Text _text_7 = import2.Text('!');
     _el_0.append(_text_7);
     init(const [], null);
     return null;
@@ -329,7 +329,7 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
 }
 
 AppView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInterpolationLongerSentence0(parentView, parentIndex);
+  return ViewInterpolationLongerSentence0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationLongerSentenceHost = const [];
@@ -340,12 +340,12 @@ class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.Interpolatio
   _ViewInterpolationLongerSentenceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InterpolationLongerSentence> build() {
-    _compView_0 = new ViewInterpolationLongerSentence0(this, 0);
+    _compView_0 = ViewInterpolationLongerSentence0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationLongerSentence_0_5 = new import1.InterpolationLongerSentence();
+    _InterpolationLongerSentence_0_5 = import1.InterpolationLongerSentence();
     _compView_0.create(_InterpolationLongerSentence_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InterpolationLongerSentence_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationLongerSentence_0_5);
   }
 
   @override
@@ -360,7 +360,7 @@ class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.Interpolatio
 }
 
 AppView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSentenceHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInterpolationLongerSentenceHost0(parentView, parentIndex);
+  return _ViewInterpolationLongerSentenceHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationLongerSentence> _InterpolationLongerSentenceNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationLongerSentenceHost0);
@@ -386,13 +386,13 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _text_1 = new import2.Text('Welcome');
+    _text_1 = import2.Text('Welcome');
     _el_0.append(_text_1);
-    import2.Text _text_2 = new import2.Text(' ');
+    import2.Text _text_2 = import2.Text(' ');
     _el_0.append(_text_2);
-    _text_3 = new import2.Text('Home');
+    _text_3 = import2.Text('Home');
     _el_0.append(_text_3);
-    import2.Text _text_4 = new import2.Text('!');
+    import2.Text _text_4 = import2.Text('!');
     _el_0.append(_text_4);
     init(const [], null);
     return null;
@@ -400,7 +400,7 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
 }
 
 AppView<import1.InterpolationLiterals> viewFactory_InterpolationLiterals0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInterpolationLiterals0(parentView, parentIndex);
+  return ViewInterpolationLiterals0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationLiteralsHost = const [];
@@ -411,12 +411,12 @@ class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiter
   _ViewInterpolationLiteralsHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InterpolationLiterals> build() {
-    _compView_0 = new ViewInterpolationLiterals0(this, 0);
+    _compView_0 = ViewInterpolationLiterals0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationLiterals_0_5 = new import1.InterpolationLiterals();
+    _InterpolationLiterals_0_5 = import1.InterpolationLiterals();
     _compView_0.create(_InterpolationLiterals_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InterpolationLiterals_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationLiterals_0_5);
   }
 
   @override
@@ -431,7 +431,7 @@ class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiter
 }
 
 AppView<import1.InterpolationLiterals> viewFactory_InterpolationLiteralsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInterpolationLiteralsHost0(parentView, parentIndex);
+  return _ViewInterpolationLiteralsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationLiterals> _InterpolationLiteralsNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationLiteralsHost0);
@@ -457,9 +457,9 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
-    _NgFor_0_9 = new import10.NgFor(_appEl_0, _TemplateRef_0_8);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
+    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
     return null;
   }
@@ -485,7 +485,7 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
 }
 
 AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInterpolationLocals0(parentView, parentIndex);
+  return ViewInterpolationLocals0(parentView, parentIndex);
 }
 
 class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
@@ -498,9 +498,9 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
   @override
   ComponentRef<import1.InterpolationLocals> build() {
     final _anchor_0 = createViewContainerAnchor();
-    _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
-    _NgFor_0_9 = new import10.NgFor(_appEl_0, _TemplateRef_0_8);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
+    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
     init0(_appEl_0);
     return null;
   }
@@ -526,7 +526,7 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
 }
 
 AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals1(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInterpolationLocals1(parentView, parentIndex);
+  return _ViewInterpolationLocals1(parentView, parentIndex);
 }
 
 class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
@@ -539,11 +539,11 @@ class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
   }
   @override
   ComponentRef<import1.InterpolationLocals> build() {
-    import2.Text _text_0 = new import2.Text('Hello ');
-    _text_1 = new import2.Text('');
-    import2.Text _text_2 = new import2.Text(': ');
-    _text_3 = new import2.Text('');
-    import2.Text _text_4 = new import2.Text('!');
+    import2.Text _text_0 = import2.Text('Hello ');
+    _text_1 = import2.Text('');
+    import2.Text _text_2 = import2.Text(': ');
+    _text_3 = import2.Text('');
+    import2.Text _text_4 = import2.Text('!');
     init([_text_0, _text_1, _text_2, _text_3, _text_4], null);
     return null;
   }
@@ -567,7 +567,7 @@ class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
 }
 
 AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals2(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInterpolationLocals2(parentView, parentIndex);
+  return _ViewInterpolationLocals2(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationLocalsHost = const [];
@@ -578,12 +578,12 @@ class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals>
   _ViewInterpolationLocalsHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InterpolationLocals> build() {
-    _compView_0 = new ViewInterpolationLocals0(this, 0);
+    _compView_0 = ViewInterpolationLocals0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationLocals_0_5 = new import1.InterpolationLocals();
+    _InterpolationLocals_0_5 = import1.InterpolationLocals();
     _compView_0.create(_InterpolationLocals_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InterpolationLocals_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationLocals_0_5);
   }
 
   @override
@@ -598,7 +598,7 @@ class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals>
 }
 
 AppView<import1.InterpolationLocals> viewFactory_InterpolationLocalsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInterpolationLocalsHost0(parentView, parentIndex);
+  return _ViewInterpolationLocalsHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationLocals> _InterpolationLocalsNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationLocalsHost0);

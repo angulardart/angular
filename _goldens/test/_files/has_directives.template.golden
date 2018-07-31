@@ -39,18 +39,18 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = new import2.Text('My own template');
+    import2.Text _text_1 = import2.Text('My own template');
     _el_0.append(_text_1);
-    import2.Text _text_2 = new import2.Text('A directive:');
+    import2.Text _text_2 = import2.Text('A directive:');
     parentRenderNode.append(_text_2);
     _el_3 = createAndAppend(doc, 'directive', parentRenderNode);
-    _TestDirective_3_5 = new import1.TestDirective();
-    import2.Text _text_4 = new import2.Text('A component:');
+    _TestDirective_3_5 = import1.TestDirective();
+    import2.Text _text_4 = import2.Text('A component:');
     parentRenderNode.append(_text_4);
-    _compView_5 = new ViewTestSubComponent0(this, 5);
+    _compView_5 = ViewTestSubComponent0(this, 5);
     _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
-    _TestSubComponent_5_5 = new import1.TestSubComponent();
+    _TestSubComponent_5_5 = import1.TestSubComponent();
     _compView_5.create(_TestSubComponent_5_5, []);
     init(const [], null);
     return null;
@@ -68,7 +68,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
 }
 
 AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewTestFooComponent0(parentView, parentIndex);
+  return ViewTestFooComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$TestFooComponentHost = const [];
@@ -79,12 +79,12 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
   _ViewTestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.TestFooComponent> build() {
-    _compView_0 = new ViewTestFooComponent0(this, 0);
+    _compView_0 = ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestFooComponent_0_5 = new import1.TestFooComponent();
+    _TestFooComponent_0_5 = import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _TestFooComponent_0_5);
+    return ComponentRef(0, this, rootEl, _TestFooComponent_0_5);
   }
 
   @override
@@ -99,7 +99,7 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
 }
 
 AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewTestFooComponentHost0(parentView, parentIndex);
+  return _ViewTestFooComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.TestFooComponent> _TestFooComponentNgFactory = const ComponentFactory('test-foo', viewFactory_TestFooComponentHost0);
@@ -123,7 +123,7 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = new import2.Text('Bar');
+    import2.Text _text_1 = import2.Text('Bar');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
@@ -131,7 +131,7 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
 }
 
 AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewTestSubComponent0(parentView, parentIndex);
+  return ViewTestSubComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$TestSubComponentHost = const [];
@@ -142,12 +142,12 @@ class _ViewTestSubComponentHost0 extends AppView<import1.TestSubComponent> {
   _ViewTestSubComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.TestSubComponent> build() {
-    _compView_0 = new ViewTestSubComponent0(this, 0);
+    _compView_0 = ViewTestSubComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestSubComponent_0_5 = new import1.TestSubComponent();
+    _TestSubComponent_0_5 = import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _TestSubComponent_0_5);
+    return ComponentRef(0, this, rootEl, _TestSubComponent_0_5);
   }
 
   @override
@@ -162,7 +162,7 @@ class _ViewTestSubComponentHost0 extends AppView<import1.TestSubComponent> {
 }
 
 AppView<import1.TestSubComponent> viewFactory_TestSubComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewTestSubComponentHost0(parentView, parentIndex);
+  return _ViewTestSubComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.TestSubComponent> _TestSubComponentNgFactory = const ComponentFactory('test-bar', viewFactory_TestSubComponentHost0);

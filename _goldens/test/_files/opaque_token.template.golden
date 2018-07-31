@@ -37,7 +37,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   ComponentRef<import1.HasOpaqueTokens> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = new import2.Text((ctx.baseUrl ?? ''));
+    _text_0 = import2.Text((ctx.baseUrl ?? ''));
     parentRenderNode.append(_text_0);
     init(const [], null);
     return null;
@@ -45,7 +45,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
 }
 
 AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewHasOpaqueTokens0(parentView, parentIndex);
+  return ViewHasOpaqueTokens0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HasOpaqueTokensHost = const [];
@@ -57,13 +57,13 @@ class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
   _ViewHasOpaqueTokensHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasOpaqueTokens> build() {
-    _compView_0 = new ViewHasOpaqueTokens0(this, 0);
+    _compView_0 = ViewHasOpaqueTokens0(this, 0);
     rootEl = _compView_0.rootEl;
     _baseUrlDescription_0_5 = 'https://localhost';
-    _HasOpaqueTokens_0_6 = new import1.HasOpaqueTokens(_baseUrlDescription_0_5);
+    _HasOpaqueTokens_0_6 = import1.HasOpaqueTokens(_baseUrlDescription_0_5);
     _compView_0.create(_HasOpaqueTokens_0_6, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_6);
+    return ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_6);
   }
 
   @override
@@ -86,7 +86,7 @@ class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
 }
 
 AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokensHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewHasOpaqueTokensHost0(parentView, parentIndex);
+  return _ViewHasOpaqueTokensHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.HasOpaqueTokens> _HasOpaqueTokensNgFactory = const ComponentFactory('has-opaque-tokens', viewFactory_HasOpaqueTokensHost0);
@@ -111,9 +111,9 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
-    _NgIf_0_9 = new NgIf(_appEl_0, _TemplateRef_0_8);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
+    _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
     return null;
   }
@@ -132,7 +132,7 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
 }
 
 AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewContainsChildComponent0(parentView, parentIndex);
+  return ViewContainsChildComponent0(parentView, parentIndex);
 }
 
 class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponent> {
@@ -148,9 +148,9 @@ class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponen
     _el_0 = doc.createElement('div');
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
-    _appEl_1 = new ViewContainer(1, 0, this, _anchor_1);
-    TemplateRef _TemplateRef_1_8 = new TemplateRef(_appEl_1, viewFactory_ContainsChildComponent2);
-    _NgIf_1_9 = new NgIf(_appEl_1, _TemplateRef_1_8);
+    _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
+    TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_ContainsChildComponent2);
+    _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
     init0(_el_0);
     return null;
   }
@@ -169,7 +169,7 @@ class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponen
 }
 
 AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent1(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewContainsChildComponent1(parentView, parentIndex);
+  return _ViewContainsChildComponent1(parentView, parentIndex);
 }
 
 class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponent> {
@@ -184,10 +184,10 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
   ComponentRef<import1.ContainsChildComponent> build() {
     var doc = import2.document;
     _el_0 = doc.createElement('div');
-    _compView_1 = new ViewInjectsTypedTokenFromSomeParent0(this, 1);
+    _compView_1 = ViewInjectsTypedTokenFromSomeParent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
-    _InjectsTypedTokenFromSomeParent_1_5 = new import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
+    _InjectsTypedTokenFromSomeParent_1_5 = import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
     _compView_1.create(_InjectsTypedTokenFromSomeParent_1_5, []);
     init0(_el_0);
     return null;
@@ -205,7 +205,7 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
 }
 
 AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent2(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewContainsChildComponent2(parentView, parentIndex);
+  return _ViewContainsChildComponent2(parentView, parentIndex);
 }
 
 final List<dynamic> styles$ContainsChildComponentHost = const [];
@@ -216,12 +216,12 @@ class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComp
   _ViewContainsChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ContainsChildComponent> build() {
-    _compView_0 = new ViewContainsChildComponent0(this, 0);
+    _compView_0 = ViewContainsChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ContainsChildComponent_0_5 = new import1.ContainsChildComponent();
+    _ContainsChildComponent_0_5 = import1.ContainsChildComponent();
     _compView_0.create(_ContainsChildComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _ContainsChildComponent_0_5);
+    return ComponentRef(0, this, rootEl, _ContainsChildComponent_0_5);
   }
 
   @override
@@ -236,7 +236,7 @@ class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComp
 }
 
 AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewContainsChildComponentHost0(parentView, parentIndex);
+  return _ViewContainsChildComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.ContainsChildComponent> _ContainsChildComponentNgFactory = const ComponentFactory('contains-child-component', viewFactory_ContainsChildComponentHost0);
@@ -263,7 +263,7 @@ class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedT
 }
 
 AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInjectsTypedTokenFromSomeParent0(parentView, parentIndex);
+  return ViewInjectsTypedTokenFromSomeParent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InjectsTypedTokenFromSomeParentHost = const [];
@@ -274,12 +274,12 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
   _ViewInjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InjectsTypedTokenFromSomeParent> build() {
-    _compView_0 = new ViewInjectsTypedTokenFromSomeParent0(this, 0);
+    _compView_0 = ViewInjectsTypedTokenFromSomeParent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InjectsTypedTokenFromSomeParent_0_5 = new import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
+    _InjectsTypedTokenFromSomeParent_0_5 = import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
     _compView_0.create(_InjectsTypedTokenFromSomeParent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_5);
+    return ComponentRef(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_5);
   }
 
   @override
@@ -294,7 +294,7 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
 }
 
 AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInjectsTypedTokenFromSomeParentHost0(parentView, parentIndex);
+  return _ViewInjectsTypedTokenFromSomeParentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InjectsTypedTokenFromSomeParent> _InjectsTypedTokenFromSomeParentNgFactory = const ComponentFactory('injects-typed-token-from-parent', viewFactory_InjectsTypedTokenFromSomeParentHost0);

@@ -41,17 +41,17 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   ComponentRef<import1.TestContainerComponent> build() {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import6.Text _text_0 = new import6.Text('\'');
+    import6.Text _text_0 = import6.Text('\'');
     parentRenderNode.append(_text_0);
     final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
-    _appEl_1 = new ViewContainer(1, null, this, _anchor_1);
-    TemplateRef _TemplateRef_1_7 = new TemplateRef(_appEl_1, viewFactory_TestContainerComponent1);
+    _appEl_1 = ViewContainer(1, null, this, _anchor_1);
+    TemplateRef _TemplateRef_1_7 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent1);
     loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_7);
     final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
-    _appEl_2 = new ViewContainer(2, null, this, _anchor_2);
-    TemplateRef _TemplateRef_2_7 = new TemplateRef(_appEl_2, viewFactory_TestContainerComponent2);
+    _appEl_2 = ViewContainer(2, null, this, _anchor_2);
+    TemplateRef _TemplateRef_2_7 = TemplateRef(_appEl_2, viewFactory_TestContainerComponent2);
     loadDeferred(deflib2.loadLibrary, deflib3.loadLibrary, _appEl_2, _TemplateRef_2_7);
     init(const [], null);
     return null;
@@ -65,7 +65,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
 }
 
 AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewTestContainerComponent0(parentView, parentIndex);
+  return ViewTestContainerComponent0(parentView, parentIndex);
 }
 
 class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponent> {
@@ -79,8 +79,8 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = deflib1.viewFactory_DeferredChildComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChildComponent_0_5 = new deflib0.DeferredChildComponent();
-    import6.Text _text_1 = new import6.Text('Foo');
+    _DeferredChildComponent_0_5 = deflib0.DeferredChildComponent();
+    import6.Text _text_1 = import6.Text('Foo');
     _compView_0.create(_DeferredChildComponent_0_5, []);
     init0(_el_0);
     return null;
@@ -98,7 +98,7 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
 }
 
 AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent1(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewTestContainerComponent1(parentView, parentIndex);
+  return _ViewTestContainerComponent1(parentView, parentIndex);
 }
 
 class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponent> {
@@ -112,7 +112,7 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = deflib3.viewFactory_SampleComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _SampleComponent_0_5 = new deflib2.SampleComponent();
+    _SampleComponent_0_5 = deflib2.SampleComponent();
     _compView_0.create(_SampleComponent_0_5, []);
     init0(_el_0);
     return null;
@@ -130,7 +130,7 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
 }
 
 AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewTestContainerComponent2(parentView, parentIndex);
+  return _ViewTestContainerComponent2(parentView, parentIndex);
 }
 
 final List<dynamic> styles$TestContainerComponentHost = const [];
@@ -141,12 +141,12 @@ class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComp
   _ViewTestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    _compView_0 = new ViewTestContainerComponent0(this, 0);
+    _compView_0 = ViewTestContainerComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestContainerComponent_0_5 = new import1.TestContainerComponent();
+    _TestContainerComponent_0_5 = import1.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _TestContainerComponent_0_5);
+    return ComponentRef(0, this, rootEl, _TestContainerComponent_0_5);
   }
 
   @override
@@ -161,7 +161,7 @@ class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComp
 }
 
 AppView<import1.TestContainerComponent> viewFactory_TestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewTestContainerComponentHost0(parentView, parentIndex);
+  return _ViewTestContainerComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.TestContainerComponent> _TestContainerComponentNgFactory = const ComponentFactory('test-container', viewFactory_TestContainerComponentHost0);

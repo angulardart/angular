@@ -39,12 +39,12 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_1 = new import2.Text('');
+    _text_1 = import2.Text('');
     _el_0.append(_text_1);
-    import2.Text _text_2 = new import2.Text(' ');
+    import2.Text _text_2 = import2.Text(' ');
     parentRenderNode.append(_text_2);
     _el_3 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_4 = new import2.Text('');
+    _text_4 = import2.Text('');
     _el_3.append(_text_4);
     init(const [], null);
     return null;
@@ -67,7 +67,7 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
 }
 
 AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinal0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewCompWithoutFinal0(parentView, parentIndex);
+  return ViewCompWithoutFinal0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CompWithoutFinalHost = const [];
@@ -78,12 +78,12 @@ class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
   _ViewCompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithoutFinal> build() {
-    _compView_0 = new ViewCompWithoutFinal0(this, 0);
+    _compView_0 = ViewCompWithoutFinal0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CompWithoutFinal_0_5 = new import1.CompWithoutFinal();
+    _CompWithoutFinal_0_5 = import1.CompWithoutFinal();
     _compView_0.create(_CompWithoutFinal_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _CompWithoutFinal_0_5);
+    return ComponentRef(0, this, rootEl, _CompWithoutFinal_0_5);
   }
 
   @override
@@ -98,7 +98,7 @@ class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
 }
 
 AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewCompWithoutFinalHost0(parentView, parentIndex);
+  return _ViewCompWithoutFinalHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.CompWithoutFinal> _CompWithoutFinalNgFactory = const ComponentFactory('comp-without-final', viewFactory_CompWithoutFinalHost0);
@@ -125,12 +125,12 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_1 = new import2.Text((ctx.okMessage ?? ''));
+    _text_1 = import2.Text((ctx.okMessage ?? ''));
     _el_0.append(_text_1);
-    import2.Text _text_2 = new import2.Text(' ');
+    import2.Text _text_2 = import2.Text(' ');
     parentRenderNode.append(_text_2);
     _el_3 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_4 = new import2.Text((ctx.cancelMessage ?? ''));
+    _text_4 = import2.Text((ctx.cancelMessage ?? ''));
     _el_3.append(_text_4);
     init(const [], null);
     return null;
@@ -138,7 +138,7 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
 }
 
 AppView<import1.CompWithFinal> viewFactory_CompWithFinal0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewCompWithFinal0(parentView, parentIndex);
+  return ViewCompWithFinal0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CompWithFinalHost = const [];
@@ -149,12 +149,12 @@ class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
   _ViewCompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithFinal> build() {
-    _compView_0 = new ViewCompWithFinal0(this, 0);
+    _compView_0 = ViewCompWithFinal0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CompWithFinal_0_5 = new import1.CompWithFinal();
+    _CompWithFinal_0_5 = import1.CompWithFinal();
     _compView_0.create(_CompWithFinal_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _CompWithFinal_0_5);
+    return ComponentRef(0, this, rootEl, _CompWithFinal_0_5);
   }
 
   @override
@@ -169,7 +169,7 @@ class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
 }
 
 AppView<import1.CompWithFinal> viewFactory_CompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewCompWithFinalHost0(parentView, parentIndex);
+  return _ViewCompWithFinalHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.CompWithFinal> _CompWithFinalNgFactory = const ComponentFactory('comp-with-final', viewFactory_CompWithFinalHost0);
@@ -196,12 +196,12 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_1 = new import2.Text((import1.CompWithFinalStatic.okMessage ?? ''));
+    _text_1 = import2.Text((import1.CompWithFinalStatic.okMessage ?? ''));
     _el_0.append(_text_1);
-    import2.Text _text_2 = new import2.Text(' ');
+    import2.Text _text_2 = import2.Text(' ');
     parentRenderNode.append(_text_2);
     _el_3 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_4 = new import2.Text((import1.CompWithFinalStatic.cancelMessage ?? ''));
+    _text_4 = import2.Text((import1.CompWithFinalStatic.cancelMessage ?? ''));
     _el_3.append(_text_4);
     init(const [], null);
     return null;
@@ -209,7 +209,7 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
 }
 
 AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewCompWithFinalStatic0(parentView, parentIndex);
+  return ViewCompWithFinalStatic0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CompWithFinalStaticHost = const [];
@@ -220,12 +220,12 @@ class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic>
   _ViewCompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithFinalStatic> build() {
-    _compView_0 = new ViewCompWithFinalStatic0(this, 0);
+    _compView_0 = ViewCompWithFinalStatic0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CompWithFinalStatic_0_5 = new import1.CompWithFinalStatic();
+    _CompWithFinalStatic_0_5 = import1.CompWithFinalStatic();
     _compView_0.create(_CompWithFinalStatic_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _CompWithFinalStatic_0_5);
+    return ComponentRef(0, this, rootEl, _CompWithFinalStatic_0_5);
   }
 
   @override
@@ -240,7 +240,7 @@ class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic>
 }
 
 AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewCompWithFinalStaticHost0(parentView, parentIndex);
+  return _ViewCompWithFinalStaticHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.CompWithFinalStatic> _CompWithFinalStaticNgFactory = const ComponentFactory('comp-with-final-static', viewFactory_CompWithFinalStaticHost0);
@@ -267,12 +267,12 @@ class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> 
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_1 = new import2.Text((import1.Messages.okMessage ?? ''));
+    _text_1 = import2.Text((import1.Messages.okMessage ?? ''));
     _el_0.append(_text_1);
-    import2.Text _text_2 = new import2.Text(' ');
+    import2.Text _text_2 = import2.Text(' ');
     parentRenderNode.append(_text_2);
     _el_3 = createAndAppend(doc, 'button', parentRenderNode);
-    _text_4 = new import2.Text((import1.Messages.cancelMessage ?? ''));
+    _text_4 = import2.Text((import1.Messages.cancelMessage ?? ''));
     _el_3.append(_text_4);
     init(const [], null);
     return null;
@@ -280,7 +280,7 @@ class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> 
 }
 
 AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewCompWithExternalFinal0(parentView, parentIndex);
+  return ViewCompWithExternalFinal0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CompWithExternalFinalHost = const [];
@@ -291,12 +291,12 @@ class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFi
   _ViewCompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithExternalFinal> build() {
-    _compView_0 = new ViewCompWithExternalFinal0(this, 0);
+    _compView_0 = ViewCompWithExternalFinal0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CompWithExternalFinal_0_5 = new import1.CompWithExternalFinal();
+    _CompWithExternalFinal_0_5 = import1.CompWithExternalFinal();
     _compView_0.create(_CompWithExternalFinal_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _CompWithExternalFinal_0_5);
+    return ComponentRef(0, this, rootEl, _CompWithExternalFinal_0_5);
   }
 
   @override
@@ -311,7 +311,7 @@ class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFi
 }
 
 AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewCompWithExternalFinalHost0(parentView, parentIndex);
+  return _ViewCompWithExternalFinalHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.CompWithExternalFinal> _CompWithExternalFinalNgFactory = const ComponentFactory('comp-with-external-final', viewFactory_CompWithExternalFinalHost0);

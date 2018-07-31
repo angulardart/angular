@@ -47,26 +47,26 @@ class ViewComp0 extends AppView<import1.Comp> {
   ComponentRef<import1.Comp> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = new import2.Text('');
+    _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
-    import2.Text _text_1 = new import2.Text(' ');
+    import2.Text _text_1 = import2.Text(' ');
     parentRenderNode.append(_text_1);
-    _text_2 = new import2.Text('');
+    _text_2 = import2.Text('');
     parentRenderNode.append(_text_2);
-    import2.Text _text_3 = new import2.Text(' ');
+    import2.Text _text_3 = import2.Text(' ');
     parentRenderNode.append(_text_3);
-    _text_4 = new import2.Text('');
+    _text_4 = import2.Text('');
     parentRenderNode.append(_text_4);
-    import2.Text _text_5 = new import2.Text(' ');
+    import2.Text _text_5 = import2.Text(' ');
     parentRenderNode.append(_text_5);
-    _text_6 = new import2.Text('');
+    _text_6 = import2.Text('');
     parentRenderNode.append(_text_6);
-    _pipe_pure_0 = new import1.PurePipe();
+    _pipe_pure_0 = import1.PurePipe();
     _pipe_pure_0_0 = import7.pureProxy1(_pipe_pure_0.transform);
-    _pipe_dirty_1 = new import1.DirtyPipe();
-    _pipe_lifecycle_2 = new import1.LifecyclePipe();
+    _pipe_dirty_1 = import1.DirtyPipe();
+    _pipe_lifecycle_2 = import1.LifecyclePipe();
     _pipe_lifecycle_2_0 = import7.pureProxy1(_pipe_lifecycle_2.transform);
-    _pipe_types_3 = new import1.TypesPipe();
+    _pipe_types_3 = import1.TypesPipe();
     _pipe_types_3_0 = import7.pureProxy5(_pipe_types_3.transform);
     init(const [], null);
     return null;
@@ -104,7 +104,7 @@ class ViewComp0 extends AppView<import1.Comp> {
 }
 
 AppView<import1.Comp> viewFactory_Comp0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewComp0(parentView, parentIndex);
+  return ViewComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CompHost = const [];
@@ -115,12 +115,12 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
   _ViewCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.Comp> build() {
-    _compView_0 = new ViewComp0(this, 0);
+    _compView_0 = ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
-    _Comp_0_5 = new import1.Comp();
+    _Comp_0_5 = import1.Comp();
     _compView_0.create(_Comp_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _Comp_0_5);
+    return ComponentRef(0, this, rootEl, _Comp_0_5);
   }
 
   @override
@@ -135,7 +135,7 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
 }
 
 AppView<import1.Comp> viewFactory_CompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewCompHost0(parentView, parentIndex);
+  return _ViewCompHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.Comp> _CompNgFactory = const ComponentFactory('comp', viewFactory_CompHost0);

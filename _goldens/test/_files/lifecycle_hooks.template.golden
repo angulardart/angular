@@ -37,7 +37,7 @@ class ViewLifecycleHooksComponent0 extends AppView<import1.LifecycleHooksCompone
 }
 
 AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewLifecycleHooksComponent0(parentView, parentIndex);
+  return ViewLifecycleHooksComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$LifecycleHooksComponentHost = const [];
@@ -48,12 +48,12 @@ class _ViewLifecycleHooksComponentHost0 extends AppView<import1.LifecycleHooksCo
   _ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.LifecycleHooksComponent> build() {
-    _compView_0 = new ViewLifecycleHooksComponent0(this, 0);
+    _compView_0 = ViewLifecycleHooksComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _LifecycleHooksComponent_0_5 = new import1.LifecycleHooksComponent();
+    _LifecycleHooksComponent_0_5 = import1.LifecycleHooksComponent();
     _compView_0.create(_LifecycleHooksComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_5);
+    return ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_5);
   }
 
   @override
@@ -88,7 +88,7 @@ class _ViewLifecycleHooksComponentHost0 extends AppView<import1.LifecycleHooksCo
 }
 
 AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewLifecycleHooksComponentHost0(parentView, parentIndex);
+  return _ViewLifecycleHooksComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.LifecycleHooksComponent> _LifecycleHooksComponentNgFactory = const ComponentFactory('lifecycle-hooks', viewFactory_LifecycleHooksComponentHost0);
