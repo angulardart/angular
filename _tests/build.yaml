@@ -1,6 +1,9 @@
 targets:
   $default:
     builders:
+      build_modules|modules:
+        options:
+          strategy: coarse
       build_web_compilers|entrypoint:
         generate_for:
           include:
@@ -12,7 +15,15 @@ targets:
           - test/core/di/provider_test.dart*
           - test/regression/906_incorrect_injectable_warning_test.dart*
           - test/regression/519_missing_query_selector_test.dart*
-
+      build_vm_compilers|entrypoint:
+        generate_for:
+          include:
+          - test/compiler/**.vm_test.dart
+          - test/compiler_integration/**.vm_test.dart
+          - test/source_gen/**.vm_test.dart
+          - test/core/di/provider_test.dart.vm_test.dart
+          - test/regression/906_incorrect_injectable_warning_test.dart.vm_test.dart
+          - test/regression/519_missing_query_selector_test.dart.vm_test.dart
       angular:
         options:
           i18n: True
