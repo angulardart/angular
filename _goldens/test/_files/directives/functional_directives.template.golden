@@ -45,7 +45,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 }
 
 AppView<import1.AppComponent> viewFactory_AppComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewAppComponent0(parentView, parentIndex);
+  return ViewAppComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$AppComponentHost = const [];
@@ -57,19 +57,19 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.TextService get _TextService_0_6 {
     if ((this.__TextService_0_6 == null)) {
-      (__TextService_0_6 = new import1.TextService());
+      (__TextService_0_6 = import1.TextService());
     }
     return this.__TextService_0_6;
   }
 
   @override
   ComponentRef<import1.AppComponent> build() {
-    _compView_0 = new ViewAppComponent0(this, 0);
+    _compView_0 = ViewAppComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _AppComponent_0_5 = new import1.AppComponent();
+    _AppComponent_0_5 = import1.AppComponent();
     _compView_0.create(_AppComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _AppComponent_0_5);
+    return ComponentRef(0, this, rootEl, _AppComponent_0_5);
   }
 
   @override
@@ -92,7 +92,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
 }
 
 AppView<import1.AppComponent> viewFactory_AppComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewAppComponentHost0(parentView, parentIndex);
+  return _ViewAppComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.AppComponent> _AppComponentNgFactory = const ComponentFactory('app', viewFactory_AppComponentHost0);

@@ -89,6 +89,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   var importsWithPrefixes = Map<String, String>();
 
+  /// Whether this is currently emitting a const expression.
+  var _inConstContext = false;
+
   _DartEmitterVisitor(this._moduleUrl) : super(true);
 
   @override
@@ -405,27 +408,33 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   void visitLiteralArrayExpr(
       o.LiteralArrayExpr ast, EmitterVisitorContext context) {
-    if (_isConstType(ast.type)) {
+    final wasInConstContext = _inConstContext;
+    if (!wasInConstContext && _isConstType(ast.type)) {
       context.print('const ');
+      _inConstContext = true;
     }
     if (ast.type == o.DYNAMIC_TYPE) {
       context.print('<dynamic>');
     }
-    return super.visitLiteralArrayExpr(ast, context);
+    super.visitLiteralArrayExpr(ast, context);
+    _inConstContext = wasInConstContext;
   }
 
   @override
   void visitLiteralMapExpr(
       o.LiteralMapExpr ast, EmitterVisitorContext context) {
-    if (_isConstType(ast.type)) {
+    final wasInConstContext = _inConstContext;
+    if (!wasInConstContext && _isConstType(ast.type)) {
       context.print('const ');
+      _inConstContext = true;
     }
     if (ast.valueType != null) {
       context.print('<String, ');
       ast.valueType.visitType(this, context);
       context.print('>');
     }
-    return super.visitLiteralMapExpr(ast, context);
+    super.visitLiteralMapExpr(ast, context);
+    _inConstContext = wasInConstContext;
   }
 
   @override
@@ -453,8 +462,11 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   void visitInstantiateExpr(
       o.InstantiateExpr ast, EmitterVisitorContext context) {
-    context.print(_isConstType(ast.type) ? 'const' : 'new');
-    context.print(" ");
+    final wasInConstContext = _inConstContext;
+    if (!wasInConstContext && _isConstType(ast.type)) {
+      context.print('const ');
+      _inConstContext = true;
+    }
     ast.classExpr.visitExpression(this, context);
     var types = ast.typeArguments;
     if (types != null) {
@@ -470,6 +482,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     context.print('(');
     visitAllExpressions(ast.args, context, ',');
     context.print(')');
+    _inConstContext = wasInConstContext;
   }
 
   @override

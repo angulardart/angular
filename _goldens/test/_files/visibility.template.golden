@@ -37,7 +37,7 @@ class ViewDependent0 extends AppView<import1.Dependent> {
 }
 
 AppView<import1.Dependent> viewFactory_Dependent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewDependent0(parentView, parentIndex);
+  return ViewDependent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DependentHost = const [];
@@ -48,12 +48,12 @@ class _ViewDependentHost0 extends AppView<import1.Dependent> {
   _ViewDependentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.Dependent> build() {
-    _compView_0 = new ViewDependent0(this, 0);
+    _compView_0 = ViewDependent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _Dependent_0_5 = new import1.Dependent(this.injectorGet(import1.Dependency, viewData.parentIndex));
+    _Dependent_0_5 = import1.Dependent(this.injectorGet(import1.Dependency, viewData.parentIndex));
     _compView_0.create(_Dependent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _Dependent_0_5);
+    return ComponentRef(0, this, rootEl, _Dependent_0_5);
   }
 
   @override
@@ -68,7 +68,7 @@ class _ViewDependentHost0 extends AppView<import1.Dependent> {
 }
 
 AppView<import1.Dependent> viewFactory_DependentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewDependentHost0(parentView, parentIndex);
+  return _ViewDependentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.Dependent> _DependentNgFactory = const ComponentFactory('dependent', viewFactory_DependentHost0);
@@ -92,10 +92,10 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
   ComponentRef<import1.DependencyWithDependentInView> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _compView_0 = new ViewDependent0(this, 0);
+    _compView_0 = ViewDependent0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _Dependent_0_5 = new import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
+    _Dependent_0_5 = import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
     _compView_0.create(_Dependent_0_5, []);
     init(const [], null);
     return null;
@@ -113,7 +113,7 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
 }
 
 AppView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewDependencyWithDependentInView0(parentView, parentIndex);
+  return ViewDependencyWithDependentInView0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DependencyWithDependentInViewHost = const [];
@@ -124,12 +124,12 @@ class _ViewDependencyWithDependentInViewHost0 extends AppView<import1.Dependency
   _ViewDependencyWithDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DependencyWithDependentInView> build() {
-    _compView_0 = new ViewDependencyWithDependentInView0(this, 0);
+    _compView_0 = ViewDependencyWithDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DependencyWithDependentInView_0_5 = new import1.DependencyWithDependentInView();
+    _DependencyWithDependentInView_0_5 = import1.DependencyWithDependentInView();
     _compView_0.create(_DependencyWithDependentInView_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _DependencyWithDependentInView_0_5);
+    return ComponentRef(0, this, rootEl, _DependencyWithDependentInView_0_5);
   }
 
   @override
@@ -152,7 +152,7 @@ class _ViewDependencyWithDependentInViewHost0 extends AppView<import1.Dependency
 }
 
 AppView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewDependencyWithDependentInViewHost0(parentView, parentIndex);
+  return _ViewDependencyWithDependentInViewHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.DependencyWithDependentInView> _DependencyWithDependentInViewNgFactory = const ComponentFactory('dependency-with-dependent-in-view', viewFactory_DependencyWithDependentInViewHost0);
@@ -180,7 +180,7 @@ class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> 
 }
 
 AppView<import1.DependencyWithContent> viewFactory_DependencyWithContent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewDependencyWithContent0(parentView, parentIndex);
+  return ViewDependencyWithContent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DependencyWithContentHost = const [];
@@ -191,12 +191,12 @@ class _ViewDependencyWithContentHost0 extends AppView<import1.DependencyWithCont
   _ViewDependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DependencyWithContent> build() {
-    _compView_0 = new ViewDependencyWithContent0(this, 0);
+    _compView_0 = ViewDependencyWithContent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DependencyWithContent_0_5 = new import1.DependencyWithContent();
+    _DependencyWithContent_0_5 = import1.DependencyWithContent();
     _compView_0.create(_DependencyWithContent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _DependencyWithContent_0_5);
+    return ComponentRef(0, this, rootEl, _DependencyWithContent_0_5);
   }
 
   @override
@@ -219,7 +219,7 @@ class _ViewDependencyWithContentHost0 extends AppView<import1.DependencyWithCont
 }
 
 AppView<import1.DependencyWithContent> viewFactory_DependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewDependencyWithContentHost0(parentView, parentIndex);
+  return _ViewDependencyWithContentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.DependencyWithContent> _DependencyWithContentNgFactory = const ComponentFactory('dependency-with-content', viewFactory_DependencyWithContentHost0);
@@ -246,10 +246,10 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
     _el_0 = createAndAppend(doc, 'dependency', parentRenderNode);
-    _compView_1 = new ViewDependent0(this, 1);
+    _compView_1 = ViewDependent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
-    _Dependent_1_5 = new import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
+    _Dependent_1_5 = import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
     _compView_1.create(_Dependent_1_5, []);
     init(const [], null);
     return null;
@@ -267,7 +267,7 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
 }
 
 AppView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewDependencyAndDependentInView0(parentView, parentIndex);
+  return ViewDependencyAndDependentInView0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DependencyAndDependentInViewHost = const [];
@@ -278,12 +278,12 @@ class _ViewDependencyAndDependentInViewHost0 extends AppView<import1.DependencyA
   _ViewDependencyAndDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DependencyAndDependentInView> build() {
-    _compView_0 = new ViewDependencyAndDependentInView0(this, 0);
+    _compView_0 = ViewDependencyAndDependentInView0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DependencyAndDependentInView_0_5 = new import1.DependencyAndDependentInView();
+    _DependencyAndDependentInView_0_5 = import1.DependencyAndDependentInView();
     _compView_0.create(_DependencyAndDependentInView_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _DependencyAndDependentInView_0_5);
+    return ComponentRef(0, this, rootEl, _DependencyAndDependentInView_0_5);
   }
 
   @override
@@ -298,7 +298,7 @@ class _ViewDependencyAndDependentInViewHost0 extends AppView<import1.DependencyA
 }
 
 AppView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewDependencyAndDependentInViewHost0(parentView, parentIndex);
+  return _ViewDependencyAndDependentInViewHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.DependencyAndDependentInView> _DependencyAndDependentInViewNgFactory = const ComponentFactory('dependency-and-dependent-in-view', viewFactory_DependencyAndDependentInViewHost0);
@@ -325,7 +325,7 @@ class ViewHasVisibilityAll0 extends AppView<import1.HasVisibilityAll> {
 }
 
 AppView<import1.HasVisibilityAll> viewFactory_HasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewHasVisibilityAll0(parentView, parentIndex);
+  return ViewHasVisibilityAll0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HasVisibilityAllHost = const [];
@@ -336,12 +336,12 @@ class _ViewHasVisibilityAllHost0 extends AppView<import1.HasVisibilityAll> {
   _ViewHasVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasVisibilityAll> build() {
-    _compView_0 = new ViewHasVisibilityAll0(this, 0);
+    _compView_0 = ViewHasVisibilityAll0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasVisibilityAll_0_5 = new import1.HasVisibilityAll();
+    _HasVisibilityAll_0_5 = import1.HasVisibilityAll();
     _compView_0.create(_HasVisibilityAll_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _HasVisibilityAll_0_5);
+    return ComponentRef(0, this, rootEl, _HasVisibilityAll_0_5);
   }
 
   @override
@@ -364,7 +364,7 @@ class _ViewHasVisibilityAllHost0 extends AppView<import1.HasVisibilityAll> {
 }
 
 AppView<import1.HasVisibilityAll> viewFactory_HasVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewHasVisibilityAllHost0(parentView, parentIndex);
+  return _ViewHasVisibilityAllHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.HasVisibilityAll> _HasVisibilityAllNgFactory = const ComponentFactory('has-visibility-all', viewFactory_HasVisibilityAllHost0);
@@ -391,7 +391,7 @@ class ViewHasVisibilityLocal0 extends AppView<import1.HasVisibilityLocal> {
 }
 
 AppView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewHasVisibilityLocal0(parentView, parentIndex);
+  return ViewHasVisibilityLocal0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HasVisibilityLocalHost = const [];
@@ -402,12 +402,12 @@ class _ViewHasVisibilityLocalHost0 extends AppView<import1.HasVisibilityLocal> {
   _ViewHasVisibilityLocalHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasVisibilityLocal> build() {
-    _compView_0 = new ViewHasVisibilityLocal0(this, 0);
+    _compView_0 = ViewHasVisibilityLocal0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasVisibilityLocal_0_5 = new import1.HasVisibilityLocal();
+    _HasVisibilityLocal_0_5 = import1.HasVisibilityLocal();
     _compView_0.create(_HasVisibilityLocal_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _HasVisibilityLocal_0_5);
+    return ComponentRef(0, this, rootEl, _HasVisibilityLocal_0_5);
   }
 
   @override
@@ -422,7 +422,7 @@ class _ViewHasVisibilityLocalHost0 extends AppView<import1.HasVisibilityLocal> {
 }
 
 AppView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocalHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewHasVisibilityLocalHost0(parentView, parentIndex);
+  return _ViewHasVisibilityLocalHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.HasVisibilityLocal> _HasVisibilityLocalNgFactory = const ComponentFactory('has-visibility-local', viewFactory_HasVisibilityLocalHost0);

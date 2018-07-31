@@ -50,25 +50,25 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   ComponentRef<import1.RootComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _compView_0 = new ViewUsesDefaultChangeDetectionAndInput0(this, 0);
+    _compView_0 = ViewUsesDefaultChangeDetectionAndInput0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _UsesDefaultChangeDetectionAndInput_0_5 = new import1.UsesDefaultChangeDetectionAndInput();
+    _UsesDefaultChangeDetectionAndInput_0_5 = import1.UsesDefaultChangeDetectionAndInput();
     _compView_0.create(_UsesDefaultChangeDetectionAndInput_0_5, []);
-    _compView_1 = new ViewInlinedNgIf0(this, 1);
+    _compView_1 = ViewInlinedNgIf0(this, 1);
     _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
-    _InlinedNgIf_1_5 = new import1.InlinedNgIf();
+    _InlinedNgIf_1_5 = import1.InlinedNgIf();
     _compView_1.create(_InlinedNgIf_1_5, []);
-    _compView_2 = new ViewEmbeddedNgIf0(this, 2);
+    _compView_2 = ViewEmbeddedNgIf0(this, 2);
     _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
-    _EmbeddedNgIf_2_5 = new import1.EmbeddedNgIf();
+    _EmbeddedNgIf_2_5 = import1.EmbeddedNgIf();
     _compView_2.create(_EmbeddedNgIf_2_5, []);
-    _compView_3 = new ViewInjectsFromArbitraryParent0(this, 3);
+    _compView_3 = ViewInjectsFromArbitraryParent0(this, 3);
     _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
-    _InjectsFromArbitraryParent_3_5 = new import1.InjectsFromArbitraryParent(parentView.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex));
+    _InjectsFromArbitraryParent_3_5 = import1.InjectsFromArbitraryParent(parentView.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex));
     _compView_3.create(_InjectsFromArbitraryParent_3_5, []);
     init(const [], null);
     return null;
@@ -92,7 +92,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
 }
 
 AppView<import1.RootComponent> viewFactory_RootComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewRootComponent0(parentView, parentIndex);
+  return ViewRootComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$RootComponentHost = const [];
@@ -103,12 +103,12 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
   _ViewRootComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.RootComponent> build() {
-    _compView_0 = new ViewRootComponent0(this, 0);
+    _compView_0 = ViewRootComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _RootComponent_0_5 = new import1.RootComponent();
+    _RootComponent_0_5 = import1.RootComponent();
     _compView_0.create(_RootComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _RootComponent_0_5);
+    return ComponentRef(0, this, rootEl, _RootComponent_0_5);
   }
 
   @override
@@ -123,7 +123,7 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
 }
 
 AppView<import1.RootComponent> viewFactory_RootComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewRootComponentHost0(parentView, parentIndex);
+  return _ViewRootComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.RootComponent> _RootComponentNgFactory = const ComponentFactory('root-component', viewFactory_RootComponentHost0);
@@ -164,7 +164,7 @@ class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaul
 }
 
 AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewUsesDefaultChangeDetectionAndInput0(parentView, parentIndex);
+  return ViewUsesDefaultChangeDetectionAndInput0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesDefaultChangeDetectionAndInputHost = const [];
@@ -175,12 +175,12 @@ class _ViewUsesDefaultChangeDetectionAndInputHost0 extends AppView<import1.UsesD
   _ViewUsesDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesDefaultChangeDetectionAndInput> build() {
-    _compView_0 = new ViewUsesDefaultChangeDetectionAndInput0(this, 0);
+    _compView_0 = ViewUsesDefaultChangeDetectionAndInput0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesDefaultChangeDetectionAndInput_0_5 = new import1.UsesDefaultChangeDetectionAndInput();
+    _UsesDefaultChangeDetectionAndInput_0_5 = import1.UsesDefaultChangeDetectionAndInput();
     _compView_0.create(_UsesDefaultChangeDetectionAndInput_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _UsesDefaultChangeDetectionAndInput_0_5);
+    return ComponentRef(0, this, rootEl, _UsesDefaultChangeDetectionAndInput_0_5);
   }
 
   @override
@@ -195,7 +195,7 @@ class _ViewUsesDefaultChangeDetectionAndInputHost0 extends AppView<import1.UsesD
 }
 
 AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewUsesDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
+  return _ViewUsesDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> _UsesDefaultChangeDetectionAndInputNgFactory = const ComponentFactory('uses-default-change-detection-and-input', viewFactory_UsesDefaultChangeDetectionAndInputHost0);
@@ -218,9 +218,9 @@ class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeD
   ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import2.Text _text_0 = new import2.Text('Hello ');
+    import2.Text _text_0 = import2.Text('Hello ');
     parentRenderNode.append(_text_0);
-    _text_1 = new import2.Text('');
+    _text_1 = import2.Text('');
     parentRenderNode.append(_text_1);
     init(const [], null);
     return null;
@@ -238,7 +238,7 @@ class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeD
 }
 
 AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewDefaultChangeDetectionAndInput0(parentView, parentIndex);
+  return ViewDefaultChangeDetectionAndInput0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DefaultChangeDetectionAndInputHost = const [];
@@ -249,12 +249,12 @@ class _ViewDefaultChangeDetectionAndInputHost0 extends AppView<import1.DefaultCh
   _ViewDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
-    _compView_0 = new ViewDefaultChangeDetectionAndInput0(this, 0);
+    _compView_0 = ViewDefaultChangeDetectionAndInput0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DefaultChangeDetectionAndInput_0_5 = new import1.DefaultChangeDetectionAndInput();
+    _DefaultChangeDetectionAndInput_0_5 = import1.DefaultChangeDetectionAndInput();
     _compView_0.create(_DefaultChangeDetectionAndInput_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _DefaultChangeDetectionAndInput_0_5);
+    return ComponentRef(0, this, rootEl, _DefaultChangeDetectionAndInput_0_5);
   }
 
   @override
@@ -269,7 +269,7 @@ class _ViewDefaultChangeDetectionAndInputHost0 extends AppView<import1.DefaultCh
 }
 
 AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
+  return _ViewDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.DefaultChangeDetectionAndInput> _DefaultChangeDetectionAndInputNgFactory = const ComponentFactory('default-change-detection-and-input', viewFactory_DefaultChangeDetectionAndInputHost0);
@@ -308,7 +308,7 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
       if (currVal_0) {
         var doc = import2.document;
         _el_0_0 = doc.createElement('div');
-        _text_0_1 = new import2.Text('Hello World');
+        _text_0_1 = import2.Text('Hello World');
         _el_0_0.append(_text_0_1);
         addInlinedNodes(_anchor_0, [_el_0_0], true);
       } else {
@@ -320,7 +320,7 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
 }
 
 AppView<import1.InlinedNgIf> viewFactory_InlinedNgIf0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInlinedNgIf0(parentView, parentIndex);
+  return ViewInlinedNgIf0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InlinedNgIfHost = const [];
@@ -331,12 +331,12 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
   _ViewInlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InlinedNgIf> build() {
-    _compView_0 = new ViewInlinedNgIf0(this, 0);
+    _compView_0 = ViewInlinedNgIf0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InlinedNgIf_0_5 = new import1.InlinedNgIf();
+    _InlinedNgIf_0_5 = import1.InlinedNgIf();
     _compView_0.create(_InlinedNgIf_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InlinedNgIf_0_5);
+    return ComponentRef(0, this, rootEl, _InlinedNgIf_0_5);
   }
 
   @override
@@ -351,7 +351,7 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
 }
 
 AppView<import1.InlinedNgIf> viewFactory_InlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInlinedNgIfHost0(parentView, parentIndex);
+  return _ViewInlinedNgIfHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InlinedNgIf> _InlinedNgIfNgFactory = const ComponentFactory('inlined-ng-if', viewFactory_InlinedNgIfHost0);
@@ -376,9 +376,9 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    _appEl_0 = new ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = new TemplateRef(_appEl_0, viewFactory_EmbeddedNgIf1);
-    _NgIf_0_9 = new NgIf(_appEl_0, _TemplateRef_0_8);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_EmbeddedNgIf1);
+    _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
     return null;
   }
@@ -397,7 +397,7 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
 }
 
 AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewEmbeddedNgIf0(parentView, parentIndex);
+  return ViewEmbeddedNgIf0(parentView, parentIndex);
 }
 
 class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
@@ -409,9 +409,9 @@ class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
   }
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
-    _compView_0 = new ViewNullComponent0(this, 0);
+    _compView_0 = ViewNullComponent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _NullComponent_0_5 = new import1.NullComponent();
+    _NullComponent_0_5 = import1.NullComponent();
     _compView_0.create(_NullComponent_0_5, []);
     init0(_el_0);
     return null;
@@ -429,7 +429,7 @@ class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
 }
 
 AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIf1(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewEmbeddedNgIf1(parentView, parentIndex);
+  return _ViewEmbeddedNgIf1(parentView, parentIndex);
 }
 
 final List<dynamic> styles$EmbeddedNgIfHost = const [];
@@ -440,12 +440,12 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
   _ViewEmbeddedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
-    _compView_0 = new ViewEmbeddedNgIf0(this, 0);
+    _compView_0 = ViewEmbeddedNgIf0(this, 0);
     rootEl = _compView_0.rootEl;
-    _EmbeddedNgIf_0_5 = new import1.EmbeddedNgIf();
+    _EmbeddedNgIf_0_5 = import1.EmbeddedNgIf();
     _compView_0.create(_EmbeddedNgIf_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _EmbeddedNgIf_0_5);
+    return ComponentRef(0, this, rootEl, _EmbeddedNgIf_0_5);
   }
 
   @override
@@ -460,7 +460,7 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
 }
 
 AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIfHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewEmbeddedNgIfHost0(parentView, parentIndex);
+  return _ViewEmbeddedNgIfHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.EmbeddedNgIf> _EmbeddedNgIfNgFactory = const ComponentFactory('embedded-ng-if', viewFactory_EmbeddedNgIfHost0);
@@ -487,7 +487,7 @@ class ViewNullComponent0 extends AppView<import1.NullComponent> {
 }
 
 AppView<import1.NullComponent> viewFactory_NullComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewNullComponent0(parentView, parentIndex);
+  return ViewNullComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$NullComponentHost = const [];
@@ -498,12 +498,12 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
   _ViewNullComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.NullComponent> build() {
-    _compView_0 = new ViewNullComponent0(this, 0);
+    _compView_0 = ViewNullComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _NullComponent_0_5 = new import1.NullComponent();
+    _NullComponent_0_5 = import1.NullComponent();
     _compView_0.create(_NullComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _NullComponent_0_5);
+    return ComponentRef(0, this, rootEl, _NullComponent_0_5);
   }
 
   @override
@@ -518,7 +518,7 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
 }
 
 AppView<import1.NullComponent> viewFactory_NullComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewNullComponentHost0(parentView, parentIndex);
+  return _ViewNullComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.NullComponent> _NullComponentNgFactory = const ComponentFactory('null', viewFactory_NullComponentHost0);
@@ -545,7 +545,7 @@ class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitra
 }
 
 AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInjectsFromArbitraryParent0(parentView, parentIndex);
+  return ViewInjectsFromArbitraryParent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InjectsFromArbitraryParentHost = const [];
@@ -556,12 +556,12 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
   _ViewInjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
-    _compView_0 = new ViewInjectsFromArbitraryParent0(this, 0);
+    _compView_0 = ViewInjectsFromArbitraryParent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InjectsFromArbitraryParent_0_5 = new import1.InjectsFromArbitraryParent(this.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex));
+    _InjectsFromArbitraryParent_0_5 = import1.InjectsFromArbitraryParent(this.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex));
     _compView_0.create(_InjectsFromArbitraryParent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InjectsFromArbitraryParent_0_5);
+    return ComponentRef(0, this, rootEl, _InjectsFromArbitraryParent_0_5);
   }
 
   @override
@@ -576,7 +576,7 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
 }
 
 AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInjectsFromArbitraryParentHost0(parentView, parentIndex);
+  return _ViewInjectsFromArbitraryParentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InjectsFromArbitraryParent> _InjectsFromArbitraryParentNgFactory = const ComponentFactory('injects-from-arbitrary-parent', viewFactory_InjectsFromArbitraryParentHost0);

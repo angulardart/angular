@@ -98,7 +98,33 @@ void main() {
       expect(
           emitStmt(
               o.variable('SomeClass').instantiate([o.literal(1)]).toStmt()),
-          'new SomeClass(1);');
+          'SomeClass(1);');
+    });
+    test('should omit optional const', () {
+      expect(
+        emitStmt(o.variable('SomeClass').instantiate(
+          [
+            o.literalMap(
+              [
+                [
+                  'a',
+                  o.literalArr(
+                    [o.literal(1)],
+                    o.ArrayType(o.INT_TYPE, [o.TypeModifier.Const]),
+                  )
+                ],
+              ],
+              o.MapType(o.ArrayType(o.INT_TYPE), [o.TypeModifier.Const]),
+            ),
+          ],
+          type: o.importType(
+            CompileIdentifierMetadata(name: 'SomeClass'),
+            [],
+            [o.TypeModifier.Const],
+          ),
+        ).toStmt()),
+        "const SomeClass(<String, List<int>>{'a': [1]});",
+      );
     });
     test('should support builtin methods', () {
       expect(

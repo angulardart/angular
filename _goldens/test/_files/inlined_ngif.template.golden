@@ -49,7 +49,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
       if (currVal_0) {
         var doc = import2.document;
         _el_0_0 = doc.createElement('div');
-        _text_0_1 = new import2.Text('Hello World!');
+        _text_0_1 = import2.Text('Hello World!');
         _el_0_0.append(_text_0_1);
         addInlinedNodes(_anchor_0, [_el_0_0], true);
       } else {
@@ -61,7 +61,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
 }
 
 AppView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInlinedNgIfComponent0(parentView, parentIndex);
+  return ViewInlinedNgIfComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InlinedNgIfComponentHost = const [];
@@ -72,12 +72,12 @@ class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponen
   _ViewInlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InlinedNgIfComponent> build() {
-    _compView_0 = new ViewInlinedNgIfComponent0(this, 0);
+    _compView_0 = ViewInlinedNgIfComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InlinedNgIfComponent_0_5 = new import1.InlinedNgIfComponent();
+    _InlinedNgIfComponent_0_5 = import1.InlinedNgIfComponent();
     _compView_0.create(_InlinedNgIfComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InlinedNgIfComponent_0_5);
+    return ComponentRef(0, this, rootEl, _InlinedNgIfComponent_0_5);
   }
 
   @override
@@ -92,7 +92,7 @@ class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponen
 }
 
 AppView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInlinedNgIfComponentHost0(parentView, parentIndex);
+  return _ViewInlinedNgIfComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InlinedNgIfComponent> _InlinedNgIfComponentNgFactory = const ComponentFactory('inlined-ngif', viewFactory_InlinedNgIfComponentHost0);
@@ -131,7 +131,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
         if (_ctx.foo) {
           var doc = import2.document;
           _el_0_0 = doc.createElement('div');
-          _text_0_1 = new import2.Text('Hello World!');
+          _text_0_1 = import2.Text('Hello World!');
           _el_0_0.append(_text_0_1);
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }
@@ -141,7 +141,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
 }
 
 AppView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedNgIfWithImmutableConditionComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return new ViewInlinedNgIfWithImmutableConditionComponent0(parentView, parentIndex);
+  return ViewInlinedNgIfWithImmutableConditionComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponentHost = const [];
@@ -152,12 +152,12 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<impor
   _ViewInlinedNgIfWithImmutableConditionComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
-    _compView_0 = new ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);
+    _compView_0 = ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InlinedNgIfWithImmutableConditionComponent_0_5 = new import1.InlinedNgIfWithImmutableConditionComponent();
+    _InlinedNgIfWithImmutableConditionComponent_0_5 = import1.InlinedNgIfWithImmutableConditionComponent();
     _compView_0.create(_InlinedNgIfWithImmutableConditionComponent_0_5, projectableNodes);
     init0(rootEl);
-    return new ComponentRef(0, this, rootEl, _InlinedNgIfWithImmutableConditionComponent_0_5);
+    return ComponentRef(0, this, rootEl, _InlinedNgIfWithImmutableConditionComponent_0_5);
   }
 
   @override
@@ -172,7 +172,7 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<impor
 }
 
 AppView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedNgIfWithImmutableConditionComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return new _ViewInlinedNgIfWithImmutableConditionComponentHost0(parentView, parentIndex);
+  return _ViewInlinedNgIfWithImmutableConditionComponentHost0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent> _InlinedNgIfWithImmutableConditionComponentNgFactory = const ComponentFactory('inlined-ngif-with-immutable-condition', viewFactory_InlinedNgIfWithImmutableConditionComponentHost0);
