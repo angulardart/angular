@@ -8,42 +8,44 @@ import 'package:test/test.dart';
 import '../../src/compile.dart';
 import '../../src/resolve.dart';
 
-void main() {
-  // TODO(leonsenft): remove when `Typed` is exported publicly.
-  final typedImport =
-      angular.replaceFirst('angular.dart', 'src/core/metadata/typed.dart');
+// TODO(leonsenft): remove when `Typed` is exported publicly.
+final typedImport =
+    angular.replaceFirst('angular.dart', 'src/core/metadata/typed.dart');
 
+Future<TypeLink> parse(String source) async {
+  final amendedSource = 'import "$typedImport";\n$source';
+  final element = await resolveClass(amendedSource);
+  final typedReader = TypedReader(element);
+  final typedValue = element.metadata.first.computeConstantValue();
+  return typedReader.parse(typedValue);
+}
+
+void main() {
   group('parses', () {
     group('Typed()', () {
       test('with single concrete type argument', () async {
-        final example = await resolveClass('''
-          import '$typedImport';
+        final typeLink = await parse('''
           const typed = Typed<List<String>>();
 
           @typed
           class Example {}
         ''');
-        final typedReader = TypedReader(example);
-        final typedValue = example.metadata.first.computeConstantValue();
         expect(
-          typedReader.parse(typedValue),
+          typeLink,
           TypeLink('List', 'dart:core', [
             TypeLink('String', 'dart:core'),
           ]),
         );
       });
       test('with multiple concrete type arguments', () async {
-        final example = await resolveClass('''
-          import '$typedImport';
+        final typeLink = await parse('''
           const typed = Typed<Map<String, Object>>();
 
           @typed
           class Example {}
         ''');
-        final typedReader = TypedReader(example);
-        final typedValue = example.metadata.first.computeConstantValue();
         expect(
-          typedReader.parse(typedValue),
+          typeLink,
           TypeLink('Map', 'dart:core', [
             TypeLink('String', 'dart:core'),
             TypeLink('Object', 'dart:core'),
@@ -51,17 +53,14 @@ void main() {
         );
       });
       test('with nested concrete type arguments', () async {
-        final example = await resolveClass('''
-          import '$typedImport';
+        final typeLink = await parse('''
           const typed = Typed<List<List<String>>>();
 
           @typed
           class Example {}
         ''');
-        final typedReader = TypedReader(example);
-        final typedValue = example.metadata.first.computeConstantValue();
         expect(
-          typedReader.parse(typedValue),
+          typeLink,
           TypeLink('List', 'dart:core', [
             TypeLink('List', 'dart:core', [
               TypeLink('String', 'dart:core'),
@@ -73,51 +72,42 @@ void main() {
 
     group('Typed.of()', () {
       test('with single Symbol argument', () async {
-        final example = await resolveClass('''
-          import '$typedImport';
+        final typeLink = await parse('''
           const typed = Typed<List>.of([#X]);
 
           @typed
           class Example<X> {}
         ''');
-        final typedReader = TypedReader(example);
-        final typedValue = example.metadata.first.computeConstantValue();
         expect(
-          typedReader.parse(typedValue),
+          typeLink,
           TypeLink('List', 'dart:core', [
             TypeLink('X', null),
           ]),
         );
       });
       test('with single Type argument', () async {
-        final example = await resolveClass('''
-          import '$typedImport';
+        final typeLink = await parse('''
           const typed = Typed<List>.of([int]);
 
           @typed
           class Example {}
         ''');
-        final typedReader = TypedReader(example);
-        final typedValue = example.metadata.first.computeConstantValue();
         expect(
-          typedReader.parse(typedValue),
+          typeLink,
           TypeLink('List', 'dart:core', [
             TypeLink('int', 'dart:core'),
           ]),
         );
       });
       test('with single Typed argument', () async {
-        final example = await resolveClass('''
-          import '$typedImport';
+        final typeLink = await parse('''
           const typed = Typed<List>.of([Typed<List<int>>()]);
 
           @typed
           class Example {}
         ''');
-        final typedReader = TypedReader(example);
-        final typedValue = example.metadata.first.computeConstantValue();
         expect(
-          typedReader.parse(typedValue),
+          typeLink,
           TypeLink('List', 'dart:core', [
             TypeLink('List', 'dart:core', [
               TypeLink('int', 'dart:core'),
@@ -126,17 +116,14 @@ void main() {
         );
       });
       test('with nested Typed argument', () async {
-        final example = await resolveClass('''
-          import '$typedImport';
+        final typeLink = await parse('''
           const typed = Typed<List>.of([Typed<Map>.of([String, #X])]);
 
           @typed
           class Example<X> {}
         ''');
-        final typedReader = TypedReader(example);
-        final typedValue = example.metadata.first.computeConstantValue();
         expect(
-          typedReader.parse(typedValue),
+          typeLink,
           TypeLink('List', 'dart:core', [
             TypeLink('Map', 'dart:core', [
               TypeLink('String', 'dart:core'),
