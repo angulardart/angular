@@ -1,9 +1,6 @@
 targets:
   $default:
     builders:
-      build_modules|modules:
-        options:
-          strategy: coarse
       build_web_compilers|entrypoint:
         generate_for:
           include:
