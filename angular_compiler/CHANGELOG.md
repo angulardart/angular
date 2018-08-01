@@ -1,3 +1,5 @@
+## 0.4.0-alpha+19
+
 *   Added `TypedElement` to represent a statically parsed `Typed`.
 *   `TypedReader.parse()` now returns a `TypedElement`.
 
