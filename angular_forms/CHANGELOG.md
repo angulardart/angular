@@ -1,3 +1,7 @@
+## 2.0.0-beta+3
+
+* Maintenance release to bring into sync with `angular 5.0.0-beta+3`.
+
 ## 2.0.0-beta+2
 
 ### New Features

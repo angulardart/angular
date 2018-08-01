@@ -1,3 +1,5 @@
+## 2.0.0-alpha+18
+
 ### Bug fixes
 
 *   `HashLocationStrategy` no longer drops query parameters (before the #) when
