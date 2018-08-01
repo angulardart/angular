@@ -27,18 +27,13 @@ import 'package:angular/src/common/directives/ng_for.dart' as import13;
 final List<dynamic> styles$QueriesComponent = const [];
 
 class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
-  bool _query_q2_1_0_isDirty = true;
-  bool _query_q2_1_1_isDirty = true;
-  bool _query_q2_1_2_isDirty = true;
-  bool _query_q2_1_3_isDirty = true;
-  bool _query_q2_1_4_isDirty = true;
-  bool _query_AnotherDirective_1_5_isDirty = true;
-  bool _query_q3_1_6_isDirty = true;
   import2.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_5;
   import2.Element _el_1;
   import1.AnotherDirective _AnotherDirective_1_5;
   ViewContainer _appEl_2;
+  bool _query_AnotherDirective_1_5_isDirty = true;
+  bool _query_q3_1_6_isDirty = true;
   NgIf _NgIf_2_9;
   static RenderComponentType _renderType;
   ViewQueriesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -136,8 +131,6 @@ final List<dynamic> styles$QueriesComponentHost = const [];
 class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_5;
-  bool _query_AnotherDirective_0_0_isDirty = true;
-  bool _query_AnotherDirective_0_1_isDirty = true;
   _ViewQueriesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.QueriesComponent> build() {
@@ -173,10 +166,10 @@ ComponentFactory<import1.QueriesComponent> get QueriesComponentNgFactory {
 final List<dynamic> styles$EmbeddedQueries = const [];
 
 class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
-  bool _query_AnotherDirective_1_0_isDirty = true;
   import2.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_5;
   ViewContainer _appEl_1;
+  bool _query_AnotherDirective_1_0_isDirty = true;
   ViewContainer _appEl_2;
   static RenderComponentType _renderType;
   ViewEmbeddedQueries0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -315,10 +308,10 @@ ComponentFactory<import1.EmbeddedQueries> get EmbeddedQueriesNgFactory {
 final List<dynamic> styles$EmbeddedQueriesList = const [];
 
 class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
-  bool _query_AnotherDirective_1_0_isDirty = true;
   import2.Element _el_0;
   import1.AnotherDirective _AnotherDirective_0_5;
   ViewContainer _appEl_1;
+  bool _query_AnotherDirective_1_0_isDirty = true;
   ViewContainer _appEl_2;
   static RenderComponentType _renderType;
   ViewEmbeddedQueriesList0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -457,8 +450,8 @@ ComponentFactory<import1.EmbeddedQueriesList> get EmbeddedQueriesListNgFactory {
 final List<dynamic> styles$NestedNgForQueriesList = const [];
 
 class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList> {
-  bool _query_taggedItem_1_0_isDirty = true;
   ViewContainer _appEl_0;
+  bool _query_taggedItem_1_0_isDirty = true;
   NgIf _NgIf_0_9;
   static RenderComponentType _renderType;
   ViewNestedNgForQueriesList0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
