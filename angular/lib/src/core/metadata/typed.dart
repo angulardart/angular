@@ -12,17 +12,17 @@
 ///
 /// See documentation of each constructor for more details.
 class Typed<T> {
-  /// An optional identifier for targeting specific instances within a template.
+  /// An optional reference for targeting specific instances within a template.
   ///
   /// This field is only valid when this is the root instance of a directive
   /// type (i.e. not a nested type argument).
   ///
   /// By default, this types all directives of [T]'s raw type. However, if this
-  /// field is non-null, only those whose host elements have a matching `@of`
-  /// annotation are typed.
+  /// field is non-null, only those whose host elements have a matching
+  /// reference name are typed.
   ///
   /// A [Typed] declaration that specifies this field takes precedence over one
-  /// that doesn't when the host element has a matching `@of` annotation.
+  /// that doesn't when the host element has a matching reference.
   ///
   /// ```
   /// @Component(
@@ -30,8 +30,8 @@ class Typed<T> {
   ///   template: '''
   ///     <!-- Defaults to GenericComponent<String> -->
   ///     <generic></generic>
-  ///     <!-- The annotation marks this as GenericComponent<int> -->
-  ///     <generic @of="indexed"></generic>
+  ///     <!-- The reference marks this as GenericComponent<int> -->
+  ///     <generic #indexed></generic>
   ///   ''',
   ///   directives: [
   ///     GenericComponent,
@@ -39,16 +39,15 @@ class Typed<T> {
   ///   directiveTypes: [
   ///     // Applies to <generic> by default.
   ///     Typed<GenericComponent<String>>(),
-  ///     // Applies to <generic @of="indexed"> only.
+  ///     // Applies to <generic #indexed> only.
   ///     Typed<GenericComponent<int>>(on: 'indexed'),
   ///   ],
   /// )
   /// class ExampleComponent {}
   /// ```
   ///
-  /// An element may have at most one `@of` annotation to avoid ambiguities.
-  /// Similiarly, this field must be distinct between two [Typed] declarations
-  /// for the same directive of [T]'s raw type in the same view.
+  /// This field must be distinct between two [Typed] declarations for the same
+  /// directive of [T]'s raw type in the same view.
   final String on;
 
   /// The generic type arguments of [T], if not fully specified by [T] itself.
@@ -90,7 +89,7 @@ class Typed<T> {
 
   /// A constructor for a type with any type parameters as type arguments.
   ///
-  /// This should be used when you wish to flow a type paramter from the host
+  /// This should be used when you wish to flow a type parameter from the host
   /// component to a child directive.
   ///
   /// The following example demonstrates how `ParentComponent`'s type parameter

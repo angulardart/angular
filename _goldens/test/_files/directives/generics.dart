@@ -183,7 +183,7 @@ class RecursiveComp<T extends Comparable<T>> {
   template: '<comp [input]="binding"></comp>',
 )
 class UsesRecursiveComp {
-  var input = 5;
+  var binding = 5;
 }
 
 /// A component that uses function type signatures.
@@ -269,4 +269,23 @@ class UsesNestedParentComp {
   var binding1 = 1;
   var binding2 = 2;
   var moreBindings = [3, 4, 5];
+}
+
+@Component(
+  selector: 'comp',
+  directives: [
+    GenericComp,
+  ],
+  directiveTypes: [
+    Typed<GenericComp<int>>(on: 'indexed'),
+    Typed<GenericComp<String>>(),
+  ],
+  template: '''
+    <comp [input]="name"></comp>
+    <comp [input]="index" #indexed></comp>
+  ''',
+)
+class UsesMultipleTypesComp {
+  var name = 'foo';
+  var index = 2;
 }
