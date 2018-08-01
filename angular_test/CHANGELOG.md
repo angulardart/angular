@@ -1,3 +1,5 @@
+## 2.0.0-beta+3
+
 *   Deleted an unnecessary `hostElement.append(componentRef.location)`.
 
 *   Supported `FutureOr<void>` for `beforeChangeDetection`.
