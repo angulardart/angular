@@ -153,5 +153,12 @@ external AppView<_user.UsesNestedParentComp> viewFactory_UsesNestedParentComp0(A
 class ViewUsesNestedParentComp0 extends AppView<_user.UsesNestedParentComp> {
   external ViewUsesNestedParentComp0(AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesMultipleTypesComp.
+external List<dynamic> get styles$UsesMultipleTypesComp;
+external ComponentFactory<_user.UsesMultipleTypesComp> get UsesMultipleTypesCompNgFactory;
+external AppView<_user.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesComp0(AppView<dynamic> parentView, int parentIndex);
+class ViewUsesMultipleTypesComp0 extends AppView<_user.UsesMultipleTypesComp> {
+  external ViewUsesMultipleTypesComp0(AppView<dynamic> parentView, int parentIndex);
+}
 
 external void initReflector();

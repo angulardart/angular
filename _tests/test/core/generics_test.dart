@@ -45,6 +45,16 @@ void main() {
       expect(testFixture.assertOnlyInstance.child.child,
           const TypeMatcher<SingleGenericComponent<String>>());
     });
+
+    test('should distinctly type unique instances of same component', () async {
+      final testBed =
+          NgTestBed.forComponent(ng.TestDistinctlyTypedDirectivesNgFactory);
+      final testFixture = await testBed.create();
+      expect(testFixture.assertOnlyInstance.children, [
+        const TypeMatcher<SingleGenericComponent<int>>(),
+        const TypeMatcher<SingleGenericComponent<String>>(),
+      ]);
+    });
   });
 
   group('directives', () {
@@ -166,6 +176,29 @@ class TestFlowTypeArgument {
   FlowTypeArgumentComponent child;
 
   var value = 'a';
+}
+
+@Component(
+  selector: 'test',
+  template: ''',
+    <generic [input]="index" (output)="handleIndex" #indexed></generic>
+    <generic [input]="name" (output)="handleName"></generic>
+  ''',
+  directives: [SingleGenericComponent],
+  directiveTypes: [
+    Typed<SingleGenericComponent<String>>(),
+    Typed<SingleGenericComponent<int>>(on: 'indexed'),
+  ],
+)
+class TestDistinctlyTypedDirectives {
+  @ViewChildren(SingleGenericComponent)
+  List<SingleGenericComponent> children;
+
+  var index = 2;
+  var name = 'a';
+
+  void handleIndex(int output) {}
+  void handleName(String output) {}
 }
 
 @Directive(selector: '[generic]')

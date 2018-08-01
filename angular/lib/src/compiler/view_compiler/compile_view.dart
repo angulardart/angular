@@ -30,9 +30,11 @@ import '../template_ast.dart'
         AttrAst,
         BoundTextAst,
         ElementAst,
+        EmbeddedTemplateAst,
         NgContentAst,
         ProviderAst,
         ProviderAstType,
+        ReferenceAst,
         TemplateAst,
         VariableAst;
 import 'compile_element.dart' show CompileElement, CompileNode;
@@ -733,7 +735,7 @@ class CompileView implements AppViewBuilder {
         ? o.importType(Identifiers.AppView)
         : o.importType(
             componentViewIdentifier,
-            _lookupTypeArgumentsOf(childComponent.type),
+            _lookupTypeArgumentsOf(childComponent.type, ast),
           );
 
     storage.allocate(appViewRef._name, outputType: appViewType);
@@ -997,7 +999,10 @@ class CompileView implements AppViewBuilder {
         // alongside any specified type arguments to type the field.
         type = o.importType(
           directiveMetadata.originType,
-          _lookupTypeArgumentsOf(directiveMetadata.originType),
+          _lookupTypeArgumentsOf(
+            directiveMetadata.originType,
+            compileElement.sourceAst,
+          ),
         );
       } else if (provider.typeArgument != null) {
         type = o.importType(
@@ -1374,19 +1379,55 @@ class CompileView implements AppViewBuilder {
     }
   }
 
-  // TODO(leonsenft): support matching '@of' annotations.
-  /// Returns any generic type arguments specified for the [rawDirectiveType].
+  /// Returns any type arguments specified for [rawDirectiveType] on [hostAst].
   ///
   /// Returns an empty list if no matching type arguments are found.
   List<o.OutputType> _lookupTypeArgumentsOf(
-      CompileTypeMetadata rawDirectiveType) {
+    CompileTypeMetadata rawDirectiveType,
+    TemplateAst hostAst,
+  ) {
+    if (rawDirectiveType.typeParameters.isEmpty) {
+      return [];
+    }
+    var references = <ReferenceAst>[];
+    if (hostAst is ElementAst) {
+      references = hostAst.references;
+    } else if (hostAst is EmbeddedTemplateAst) {
+      references = hostAst.references;
+    }
+    // Given two `Typed` configurations that match the same directive:
+    //  * One that specifies `on` takes precedence over one that doesn't.
+    //  * Otherwise the first match takes precedence over any others.
+    List<o.OutputType> firstMatchingTypeArguments;
     for (final directiveType in directiveTypes) {
       if (directiveType.name == rawDirectiveType.name &&
           directiveType.moduleUrl == rawDirectiveType.moduleUrl) {
-        return directiveType.typeArguments;
+        if (directiveType.on != null) {
+          // If `on` is specified, the type arguments only apply if the
+          // directive's host element has a matching reference name.
+          for (final reference in references) {
+            if (directiveType.on == reference.name) {
+              return directiveType.typeArguments;
+            }
+          }
+        } else if (firstMatchingTypeArguments == null) {
+          // Otherwise the type arguments apply to all instances of the
+          // directive in the view.
+          if (references.isEmpty) {
+            // If the directive's host element has no references, it's not
+            // possible for more specific type arguments to be applied, so we
+            // return the first match.
+            return directiveType.typeArguments;
+          } else {
+            // Otherwise we remember the first matching type arguments so that
+            // they may be applied if reference matching type arguments aren't
+            // later specified.
+            firstMatchingTypeArguments = directiveType.typeArguments;
+          }
+        }
       }
     }
-    return [];
+    return firstMatchingTypeArguments ?? [];
   }
 }
 
