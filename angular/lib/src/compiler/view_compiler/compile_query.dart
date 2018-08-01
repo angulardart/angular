@@ -88,11 +88,6 @@ abstract class CompileQuery {
     this._boundDirective,
   ) : _values = _QueryValues(_queryRoot);
 
-  /// Whether this query requires "flattenNodes".
-  ///
-  /// The older-style `QueryList` does this implicitly (with `reset`).
-  bool get _needsFlattening;
-
   /// Whether the query is entirely static, i.e. there are no `<template>`s.
   bool get _isStatic => !_values.hasNestedViews;
 
@@ -134,9 +129,7 @@ abstract class CompileQuery {
     // change in an embedded view needs to invalidate the state of the previous
     // query.
     if (elementPath.isNotEmpty) {
-      _setParentQueryAsDirty(
-        origin,
-      );
+      _setParentQueryAsDirty(origin);
     }
   }
 
@@ -200,13 +193,7 @@ abstract class CompileQuery {
       return expressions.first;
     }
 
-    // For users of List<T>, not QueryList<T>, they do not rely on the ".reset"
-    // function doing an (expensive) flattening, so we need to do it for them.
-    if (_needsFlattening) {
-      return _flattenNodes(o.literalArr(expressions));
-    }
-
-    return recursive ? o.literalArr(expressions) : o.literalVargs(expressions);
+    return _flattenNodes(o.literalArr(expressions));
   }
 
   /// Returns an expression that invokes `appElementN.mapNestedViews`.
@@ -290,33 +277,36 @@ abstract class CompileQuery {
 }
 
 class _ListCompileQuery extends CompileQuery {
-  ViewStorageItem _dirtyField;
-  ViewStorage _storage;
+  final ViewStorage _storage;
+  final int _nodeIndex;
+  final int _queryIndex;
 
   _ListCompileQuery(
     CompileQueryMetadata metadata,
-    ViewStorage storage,
+    this._storage,
     CompileView queryRoot,
     ProviderSource boundDirective, {
     @required int nodeIndex,
     @required int queryIndex,
-  }) : super._base(metadata, queryRoot, boundDirective) {
-    _storage = storage;
-    _dirtyField = _createQueryDirtyField(
+  })  : _nodeIndex = nodeIndex,
+        _queryIndex = queryIndex,
+        super._base(metadata, queryRoot, boundDirective);
+
+  ViewStorageItem _dirtyFieldIfNeeded;
+
+  ViewStorageItem get _dirtyField {
+    return _dirtyFieldIfNeeded ??= _createQueryDirtyField(
       metadata: metadata,
-      storage: storage,
-      nodeIndex: nodeIndex,
-      queryIndex: queryIndex,
+      storage: _storage,
+      nodeIndex: _nodeIndex,
+      queryIndex: _queryIndex,
     );
   }
-
-  @override
-  final _needsFlattening = true;
 
   /// Inserts a `bool {property}` field in the generated view.
   ///
   /// Returns an expression pointing to that field.
-  ViewStorageItem _createQueryDirtyField({
+  static ViewStorageItem _createQueryDirtyField({
     @required CompileQueryMetadata metadata,
     @required ViewStorage storage,
     @required int nodeIndex,
@@ -335,15 +325,20 @@ class _ListCompileQuery extends CompileQuery {
       property = '_query_${selector}_${nodeIndex}_${queryIndex}_isDirty';
     }
     // bool _query_foo_0_0_isDirty = true;
-    ViewStorageItem field = storage.allocate(property,
-        outputType: o.BOOL_TYPE,
-        modifiers: [o.StmtModifier.Private],
-        initializer: o.literal(true));
-    return field;
+    return storage.allocate(
+      property,
+      outputType: o.BOOL_TYPE,
+      modifiers: [o.StmtModifier.Private],
+      initializer: o.literal(true),
+    );
   }
 
   @override
   void _setParentQueryAsDirty(CompileView origin) {
+    // We do not need a dirty field for queries that never change.
+    if (_isStatic) {
+      return;
+    }
     final o.ReadPropExpr queryDirtyField = getPropertyInView(
       _storage.buildReadExpr(_dirtyField),
       origin,
