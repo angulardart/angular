@@ -160,5 +160,19 @@ external AppView<_user.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesComp0
 class ViewUsesMultipleTypesComp0 extends AppView<_user.UsesMultipleTypesComp> {
   external ViewUsesMultipleTypesComp0(AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesGenericChangeDetector.
+external List<dynamic> get styles$UsesGenericChangeDetector;
+external ComponentFactory<_user.UsesGenericChangeDetector> get UsesGenericChangeDetectorNgFactory;
+external AppView<_user.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetector0(AppView<dynamic> parentView, int parentIndex);
+class ViewUsesGenericChangeDetector0 extends AppView<_user.UsesGenericChangeDetector> {
+  external ViewUsesGenericChangeDetector0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Directive class GenericDirective.
+class GenericDirectiveNgCd<T> extends DirectiveChangeDetector {
+  external _user.GenericDirective<T> get instance;
+  external void deliverChanges();
+  external GenericDirectiveNgCd(_user.GenericDirective<T> instance);
+  external void detectHostChanges(AppView view, Element node);
+}
 
 external void initReflector();

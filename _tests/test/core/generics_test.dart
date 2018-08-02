@@ -71,7 +71,7 @@ void main() {
       final testFixture = await testBed.create();
       expect(testFixture.assertOnlyInstance.directive,
           const TypeMatcher<GenericDirectiveWithChangeDetector<String>>());
-    }, skip: 'Not yet supported');
+    });
   });
 }
 
