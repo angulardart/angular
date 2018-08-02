@@ -69,6 +69,18 @@ void main() {
     expect(inputPrevent.checked, false);
     expect(inputNoPrevent.checked, true);
   });
+
+  test('should provide helpful error for incorrectly typed handler', () async {
+    final testBed = NgTestBed<TestMismatchedHandler>();
+    expect(
+      testBed.create,
+      throwsA(const TypeMatcher<AssertionError>().having(
+        (a) => a.message,
+        'message',
+        contains("isn't assignable to expected type"),
+      )),
+    );
+  });
 }
 
 @Directive(
@@ -205,3 +217,21 @@ class DirectiveListeningDomEventNoPrevent {
   ],
 )
 class TestPreventDefaultComponent {}
+
+@Component(
+  selector: 'output',
+  template: '',
+)
+class OutputComponent {
+  @Output()
+  Stream<String> output = new Stream.empty();
+}
+
+@Component(
+  selector: 'test',
+  template: '<output (output)="handle"></output>',
+  directives: [OutputComponent],
+)
+class TestMismatchedHandler {
+  void handle(int value) {}
+}

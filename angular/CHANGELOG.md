@@ -3,6 +3,10 @@
 ### Other improvements
 
 *   Removed dependency on `package:tuple`.
+*   Improved error message for binding incorrectly typed event handlers. This
+    moves the check from event dispatch time, to event subscription time,
+    meaning it *may* be a breaking change if you had an incorrectly typed event
+    handler bound to a output that never fired.
 
 ## 5.0.0-beta+2
 

@@ -612,6 +612,10 @@ abstract class AppView<T> {
   // from EventTarget.addEventListener() can then be safely coerced back to its
   // known type.
   void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
+    assert(
+        E == Null || F != Null,
+        "Event handler '$handler' isn't assignable to expected type "
+        "'($E) => void'");
     return (E event) {
       markPathToRootAsCheckOnce();
       appViewUtils.eventManager
