@@ -1028,7 +1028,13 @@ class CompileView implements AppViewBuilder {
           name: directiveMetadata.identifier.name + 'NgCd',
           moduleUrl:
               toTemplateExtension(directiveMetadata.identifier.moduleUrl));
-      changeDetectorType = o.importType(changeDetectorClass);
+      changeDetectorType = o.importType(
+        changeDetectorClass,
+        _lookupTypeArgumentsOf(
+          directiveMetadata.originType,
+          compileElement.sourceAst,
+        ),
+      );
     }
 
     List<o.Expression> changeDetectorParams;

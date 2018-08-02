@@ -22,6 +22,7 @@ import 'dart:core';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import13;
 
 final List<dynamic> styles$UntypedComp = const [];
 
@@ -1656,6 +1657,95 @@ ComponentFactory<import1.UsesMultipleTypesComp> get UsesMultipleTypesCompNgFacto
   return _UsesMultipleTypesCompNgFactory;
 }
 
+final List<dynamic> styles$UsesGenericChangeDetector = const [];
+
+class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDetector> {
+  import5.DivElement _el_0;
+  GenericDirectiveNgCd<String> _GenericDirective_0_5;
+  var _expr_0;
+  static RenderComponentType _renderType;
+  ViewUsesGenericChangeDetector0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('comp');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesGenericChangeDetector);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesGenericChangeDetector> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import5.document;
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    createAttr(_el_0, 'generic', '');
+    _GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
+    init(const [], null);
+    return null;
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesGenericChangeDetector _ctx = ctx;
+    final currVal_0 = _ctx.value;
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      _GenericDirective_0_5.instance.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    _GenericDirective_0_5.detectHostChanges(this, _el_0);
+  }
+}
+
+AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetector0(AppView<dynamic> parentView, int parentIndex) {
+  return ViewUsesGenericChangeDetector0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesGenericChangeDetectorHost = const [];
+
+class _ViewUsesGenericChangeDetectorHost0 extends AppView<import1.UsesGenericChangeDetector> {
+  ViewUsesGenericChangeDetector0 _compView_0;
+  import1.UsesGenericChangeDetector _UsesGenericChangeDetector_0_5;
+  _ViewUsesGenericChangeDetectorHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.UsesGenericChangeDetector> build() {
+    _compView_0 = ViewUsesGenericChangeDetector0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesGenericChangeDetector_0_5 = import1.UsesGenericChangeDetector();
+    _compView_0.create(_UsesGenericChangeDetector_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _UsesGenericChangeDetector_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetectorHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewUsesGenericChangeDetectorHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesGenericChangeDetector> _UsesGenericChangeDetectorNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericChangeDetectorHost0);
+ComponentFactory<import1.UsesGenericChangeDetector> get UsesGenericChangeDetectorNgFactory {
+  return _UsesGenericChangeDetectorNgFactory;
+}
+
+class GenericDirectiveNgCd<T> extends import13.DirectiveChangeDetector {
+  final import1.GenericDirective<T> instance;
+  var _expr_0;
+  GenericDirectiveNgCd(this.instance);
+  void detectHostChanges(AppView<dynamic> view, import5.Element el) {
+    final currVal_0 = instance.input;
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      setAttr(el, 'a', currVal_0?.toString());
+      _expr_0 = currVal_0;
+    }
+  }
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -1684,5 +1774,6 @@ void initReflector() {
   _ngRef.registerComponent(NestedChildComp, NestedChildCompNgFactory);
   _ngRef.registerComponent(UsesNestedParentComp, UsesNestedParentCompNgFactory);
   _ngRef.registerComponent(UsesMultipleTypesComp, UsesMultipleTypesCompNgFactory);
+  _ngRef.registerComponent(UsesGenericChangeDetector, UsesGenericChangeDetectorNgFactory);
   _ref0.initReflector();
 }

@@ -7,6 +7,7 @@ import 'package:angular_compiler/cli.dart';
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart';
+import '../output/convert.dart' show typeArgumentsFrom;
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart' show ElementSchemaRegistry;
@@ -72,7 +73,8 @@ class DirectiveCompiler {
         _storage.fields ?? const [],
         const [],
         ctor,
-        viewMethods);
+        viewMethods,
+        typeParameters: directive.originType.typeParameters);
     return changeDetectorClass;
   }
 
@@ -81,7 +83,10 @@ class DirectiveCompiler {
 
   o.ClassMethod _createChangeDetectorConstructor(
       CompileDirectiveMetadata meta) {
-    var instanceType = o.importType(meta.type.identifier);
+    var instanceType = o.importType(
+      meta.type.identifier,
+      typeArgumentsFrom(directive.originType.typeParameters),
+    );
     ViewStorageItem instance = _storage.allocate(
       'instance',
       outputType: instanceType,

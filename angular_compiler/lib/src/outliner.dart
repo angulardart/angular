@@ -67,7 +67,7 @@ class TemplateOutliner implements Builder {
     }
     final library = await buildStep.inputLibrary;
     final components = <ClassElement>[];
-    final directives = <String, DartObject>{};
+    final directives = <ClassElement>[];
     final injectors = <String>[];
     var units = [library.definingCompilationUnit]..addAll(library.parts);
     var types = units.expand((unit) => unit.types);
@@ -85,7 +85,7 @@ class TemplateOutliner implements Builder {
           throwOnUnresolved: false,
         );
         if (directive != null) {
-          directives[clazz.name] = directive;
+          directives.add(clazz);
         }
       }
     }
@@ -148,38 +148,45 @@ class TemplateOutliner implements Builder {
     output.writeln();
     if (components.isNotEmpty) {
       for (final component in components) {
-        final name = component.name;
+        final componentName = component.name;
         // Note that until type parameter bounds are supported, there's no
         // difference between a type parameter and its use as a type argument,
         // so we reuse the type parameters for both.
         final typeParameters = _typeParametersOf(component);
-        output
-          ..writeln('// For @Component class $name.')
-          ..writeln('external List<dynamic> get styles\$$name;')
-          ..writeln(
-              'external ComponentFactory<_user.$name> get ${name}NgFactory;')
-          ..writeln(
-              'external $_appViewClass<_user.$name$typeParameters> viewFactory_${name}0$typeParameters($_appViewClass<dynamic> parentView, int parentIndex);')
-          ..writeln(
-              'class View${name}0$typeParameters extends $_appViewClass<_user.$name$typeParameters> {')
-          ..writeln(
-              '  external View${name}0($_appViewClass<dynamic> parentView, int parentIndex);')
-          ..writeln('}');
+        final componentType = '_user.$componentName$typeParameters';
+        final baseType = '$_appViewClass<$componentType>';
+        final viewArgs = '$_appViewClass<dynamic> parentView, int parentIndex';
+        final viewName = 'View${componentName}0';
+        output.write('''
+// For @Component class $componentName.
+external List<dynamic> get styles\$$componentName;
+external ComponentFactory<_user.$componentName> get ${componentName}NgFactory;
+external $baseType viewFactory_${componentName}0$typeParameters($viewArgs);
+class $viewName$typeParameters extends $baseType {
+  external $viewName($viewArgs);
+}
+''');
       }
     }
     if (directives.isNotEmpty) {
-      directives.forEach((directive, annotation) {
-        final name = '${directive}NgCd';
-        output
-          ..writeln('// For @Directive class $directive.')
-          ..writeln('class $name extends DirectiveChangeDetector {')
-          ..writeln('  external _user.$directive get instance;')
-          ..writeln('  external void deliverChanges();')
-          ..writeln('  external $name(_user.$directive instance);')
-          ..writeln('  external void detectHostChanges(AppView view, '
-              'Element node);');
-        output.writeln('}');
-      });
+      for (final directive in directives) {
+        final directiveName = directive.name;
+        final changeDetectorName = '${directiveName}NgCd';
+        // Note that until type parameter bounds are supported, there's no
+        // difference between a type parameter and its use as a type argument,
+        // so we reuse the type parameters for both.
+        final typeParameters = _typeParametersOf(directive);
+        final directiveType = '_user.$directiveName$typeParameters';
+        output.write('''
+// For @Directive class $directiveName.
+class $changeDetectorName$typeParameters extends DirectiveChangeDetector {
+  external $directiveType get instance;
+  external void deliverChanges();
+  external $changeDetectorName($directiveType instance);
+  external void detectHostChanges(AppView view, Element node);
+}
+''');
+      }
     }
     if (injectors.isNotEmpty) {
       for (final injector in injectors) {

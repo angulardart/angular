@@ -289,3 +289,24 @@ class UsesMultipleTypesComp {
   var name = 'foo';
   var index = 2;
 }
+
+@Directive(selector: '[generic]')
+class GenericDirective<T> {
+  @Input()
+  @HostBinding('attr.a')
+  T input;
+}
+
+@Component(
+  selector: 'comp',
+  directives: [
+    GenericDirective,
+  ],
+  directiveTypes: [
+    Typed<GenericDirective<String>>(),
+  ],
+  template: '<div generic [input]="value"></div>',
+)
+class UsesGenericChangeDetector {
+  var value = 'a';
+}
