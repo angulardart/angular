@@ -7,6 +7,7 @@ import 'package:angular/src/core/metadata/typed.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
+import 'generic_component.dart';
 import 'generics_test.template.dart' as ng;
 
 void main() {
@@ -54,6 +55,14 @@ void main() {
         const TypeMatcher<SingleGenericComponent<int>>(),
         const TypeMatcher<SingleGenericComponent<String>>(),
       ]);
+    });
+
+    test('should support generics when @deferred', () async {
+      final testBed =
+          NgTestBed.forComponent(ng.TestDeferredGenericComponentNgFactory);
+      final testFixture = await testBed.create();
+      expect(testFixture.assertOnlyInstance.child,
+          const TypeMatcher<GenericComponent<String>>());
     });
   });
 
@@ -244,6 +253,20 @@ class TestGenericDirectiveWithChangeDetector {
   @ViewChild(GenericDirectiveWithChangeDetector)
   GenericDirectiveWithChangeDetector directive;
 
+  var value = 'a';
+
+  void handle(String output) {}
+}
+
+@Component(
+  selector: 'test',
+  template: '<generic @deferred [input]="value" (output)="handle"></generic>',
+  directives: [GenericComponent],
+  directiveTypes: [Typed<GenericComponent<String>>()],
+)
+class TestDeferredGenericComponent {
+  @ViewChild(GenericComponent)
+  var child;
   var value = 'a';
 
   void handle(String output) {}

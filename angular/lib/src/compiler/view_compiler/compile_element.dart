@@ -211,7 +211,25 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     if (appViewContainer != null) {
       _providers.add(Identifiers.ComponentLoaderToken, appViewContainer);
     }
-    _providers.addDirectiveProviders(_resolvedProvidersArray, _directives);
+
+    // If this element represents a deferred generic component and its type
+    // arguments are specified, forward the type arguments to be used to
+    // instantiate the provider. Normally we rely on the field type of the
+    // provider to specify type arguments, but the field type of deferred
+    // components must be dynamic since the component type is deferred.
+    final deferredComponentTypeArguments = isDeferredComponent
+        ? view.lookupTypeArgumentsOf(component.originType, sourceAst)
+        : [];
+    if (deferredComponentTypeArguments.isNotEmpty) {
+      _providers.addDirectiveProviders(
+        _resolvedProvidersArray,
+        _directives,
+        deferredComponent: component.identifier,
+        deferredComponentTypeArguments: deferredComponentTypeArguments,
+      );
+    } else {
+      _providers.addDirectiveProviders(_resolvedProvidersArray, _directives);
+    }
 
     directiveInstances = <ProviderSource>[];
     for (var directive in _directives) {

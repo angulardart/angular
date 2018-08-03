@@ -469,7 +469,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }
     ast.classExpr.visitExpression(this, context);
     var types = ast.typeArguments;
-    if (types != null) {
+    if (types != null && types.isNotEmpty) {
       context.print('<');
       for (var i = 0; i < types.length; i++) {
         types[i].visitType(this, context);

@@ -50,8 +50,19 @@ class ProvidersNode {
   /// each directive at this node. Code generators that want to build
   /// instances can handle the createProviderInstance callback on the
   /// host interface.
-  void addDirectiveProviders(final List<ProviderAst> providerList,
-      final List<CompileDirectiveMetadata> directives) {
+  ///
+  /// If [deferredComponent] is non-null, this node represents a deferred
+  /// generic component with type arguments. In such a case, the
+  /// [deferredComponentTypeArguments] should be used to instantiate the
+  /// component provider with explicit type arguments. For non-deferred generic
+  /// components we can really on the provider's field type to specify type
+  /// arguments, but for deferred components the field type is dynamic.
+  void addDirectiveProviders(
+    final List<ProviderAst> providerList,
+    final List<CompileDirectiveMetadata> directives, {
+    CompileIdentifierMetadata deferredComponent,
+    List<o.OutputType> deferredComponentTypeArguments,
+  }) {
     // Create a lookup map from token to provider.
     for (ProviderAst provider in providerList) {
       _resolvedProviders.add(provider.token, provider);
@@ -89,9 +100,21 @@ class ProvidersNode {
           providerSource =
               _addFactoryProvider(provider, resolvedProvider.providerType);
         } else if (provider.useClass != null) {
-          providerSource =
-              _addClassProvider(provider, resolvedProvider.providerType);
           var classType = provider.useClass.identifier;
+          if (classType == deferredComponent) {
+            // This provider represents a deferred generic component. Since the
+            // field type of deferred components is always dynamic, we must
+            // explicitly type the component constructor when creating this
+            // provider instance.
+            providerSource = _addClassProvider(
+              provider,
+              resolvedProvider.providerType,
+              typeArguments: deferredComponentTypeArguments,
+            );
+          } else {
+            providerSource =
+                _addClassProvider(provider, resolvedProvider.providerType);
+          }
           // Check if class is a directive and keep track of directiveMetadata
           // for the directive so we can determine if the provider has
           // an associated change detector class.
@@ -143,14 +166,22 @@ class ProvidersNode {
   }
 
   ProviderSource _addClassProvider(
-      CompileProviderMetadata provider, ProviderAstType providerType) {
+    CompileProviderMetadata provider,
+    ProviderAstType providerType, {
+    List<o.OutputType> typeArguments,
+  }) {
     var paramDeps = provider.deps ?? provider.useClass.diDeps;
     // Resolve constructor parameters for class.
     var parameters = <ProviderSource>[];
     for (var paramDep in paramDeps) {
       parameters.add(_getDependency(paramDep));
     }
-    return ClassProviderSource(provider.token, provider.useClass, parameters);
+    return ClassProviderSource(
+      provider.token,
+      provider.useClass,
+      parameters,
+      typeArguments: typeArguments,
+    );
   }
 
   ProviderSource _getLocalDependency(CompileTokenMetadata token) {
@@ -240,17 +271,22 @@ class FactoryProviderSource extends ProviderSource {
 class ClassProviderSource extends ProviderSource {
   CompileTypeMetadata _classType;
   List<ProviderSource> _parameters;
+  List<o.OutputType> _typeArguments;
+
   ClassProviderSource(
-      CompileTokenMetadata token, this._classType, this._parameters)
-      : super(token);
+    CompileTokenMetadata token,
+    this._classType,
+    this._parameters, {
+    List<o.OutputType> typeArguments,
+  })  : _typeArguments = typeArguments,
+        super(token);
 
   @override
   o.Expression build() {
     List<o.Expression> paramExpressions = [];
     for (ProviderSource s in _parameters) paramExpressions.add(s.build());
-    return o
-        .importExpr(_classType)
-        .instantiate(paramExpressions, type: o.importType(_classType));
+    return o.importExpr(_classType).instantiate(paramExpressions,
+        type: o.importType(_classType), genericTypes: _typeArguments);
   }
 }
 
