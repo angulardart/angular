@@ -731,12 +731,15 @@ class CompileView implements AppViewBuilder {
 
     AppViewReference appViewRef = AppViewReference(parent, nodeIndex);
 
-    var appViewType = isDeferred
+    // For non-deferred generic components, these type arguments (if any) can be
+    // applied to the field that stores the view. However, for deferred
+    // components, the field can't be explicitly typed so these type arguments
+    // are instead applied to the constructor invocation.
+    final appViewTypeArguments =
+        lookupTypeArgumentsOf(childComponent.type, ast);
+    final appViewType = isDeferred
         ? o.importType(Identifiers.AppView)
-        : o.importType(
-            componentViewIdentifier,
-            _lookupTypeArgumentsOf(childComponent.type, ast),
-          );
+        : o.importType(componentViewIdentifier, appViewTypeArguments);
 
     storage.allocate(appViewRef._name, outputType: appViewType);
 
@@ -750,8 +753,12 @@ class CompileView implements AppViewBuilder {
               moduleUrl: templateModuleUrl(childComponent.type));
 
       var importExpr = o.importExpr(nestedComponentIdentifier);
-      _createMethod.addStmt(o.WriteClassMemberExpr(appViewRef._name,
-          importExpr.callFn([o.THIS_EXPR, o.literal(nodeIndex)])).toStmt());
+      _createMethod.addStmt(o.WriteClassMemberExpr(
+          appViewRef._name,
+          importExpr.callFn(
+            [o.THIS_EXPR, o.literal(nodeIndex)],
+            typeArguments: appViewTypeArguments,
+          )).toStmt());
     } else {
       // Create instance of component using ViewSomeComponent0 AppView.
       var createComponentInstanceExpr = o
@@ -999,7 +1006,7 @@ class CompileView implements AppViewBuilder {
         // alongside any specified type arguments to type the field.
         type = o.importType(
           directiveMetadata.originType,
-          _lookupTypeArgumentsOf(
+          lookupTypeArgumentsOf(
             directiveMetadata.originType,
             compileElement.sourceAst,
           ),
@@ -1030,7 +1037,7 @@ class CompileView implements AppViewBuilder {
               toTemplateExtension(directiveMetadata.identifier.moduleUrl));
       changeDetectorType = o.importType(
         changeDetectorClass,
-        _lookupTypeArgumentsOf(
+        lookupTypeArgumentsOf(
           directiveMetadata.originType,
           compileElement.sourceAst,
         ),
@@ -1388,7 +1395,7 @@ class CompileView implements AppViewBuilder {
   /// Returns any type arguments specified for [rawDirectiveType] on [hostAst].
   ///
   /// Returns an empty list if no matching type arguments are found.
-  List<o.OutputType> _lookupTypeArgumentsOf(
+  List<o.OutputType> lookupTypeArgumentsOf(
     CompileTypeMetadata rawDirectiveType,
     TemplateAst hostAst,
   ) {
