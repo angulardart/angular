@@ -1,38 +1,47 @@
-## 2.0.0-beta+3
+## 2.0.0
 
-*   Deleted an unnecessary `hostElement.append(componentRef.location)`.
+### New Features
 
 *   Supported `FutureOr<void>` for `beforeChangeDetection`.
 
-## 2.0.0-beta+2
-
-*   Maintanence release: Stop using `SCREAMING_CAPS` consts from `dart:*`.
-
-## 2.0.0-beta+1
-
-*   Maintanence release; declare official support for the Dart2 SDK.
-
-## 2.0.0-beta
-
 *   `NgZoneStabilizer` waits for the longest pending timer during `update()`.
 
-## 2.0.0-alpha+13
+*   Added `isStable` API to `NgTestStabilizer`.
 
-*   Removed `throwsInAngular` (was a no-op since `alpha+8`). Use `throwsA`.
+*   Made `NgTestStabilizerFactory` public.
+
+### Breaking Changes
+
+*   Removed `throwsInAngular`. Use `throwsA`.
 
 *   Removed `NgTestFixture#query/queryAll`, as debug-mode is being turned down.
-
-*   Added `isStable` API to `NgTestStabilizer`.
 
 *   Run `DelegatingNgTestStabilizer` stabilizers one by one instead of run all
     at once. `update()` for each stabilizers will be run at least once. After
     that, it will only be run if the current stabilizer is not stable.
 
-## 2.0.0-alpha+12
+*   `pub run angular_test` was entirely removed. Similar functionality is
+    supported out of the box by `build_runner`:
 
-*   Made `NgTestStabilizerFactory` public.
+```bash
+$ pub run build_runner test
+```
 
-## 2.0.0-alpha+11
+*   Removed built-in support for `package:pageloader`. The current version of
+    `pageloader` relies on `dart:mirrors`, which is being removed from the web
+    compilers (dart2js, dartdevc). There is a new version of `pageloader` in
+    development that uses code generation. We'll consider re-adding support once
+    available or through another package (i.e. `angular_pageloader` or similar).
+
+*   Adding stabilizers to `NgTestBed` now takes a factory function of type
+    `NgTestStabilizer Function(Injector)`, which is aliased as
+    `NgTestStabilizerFactory`. This allows using `NgTestBed` without any dynamic
+    reflective factories (i.e. `initReflector()`) and doesn't have impact to
+    most users.
+
+### Bug Fixes
+
+*   Deleted an unnecessary `hostElement.append(componentRef.location)`.
 
 *   Fixed a bug where a `WillNeverStabilizeError` was thrown whenever there was
     a non-zero length `Timer` being executed. This was due to a bug in how the
@@ -42,89 +51,11 @@
 *   Fixed a bug where stabilizers are considered stable even when some of them
     are not.
 
-## 2.0.0-alpha+10
-
 *   Fixed a bug where `_createDynamic` does not preserve `rootInjector`.
-
-## 2.0.0-alpha+9
-
-*   `pub run angular_test` was entirely removed. This hasn't worked since
-    `2.0.0-alpha+3`, but instead threw an error message reminding users it was
-    no longer supported.
-
-## 2.0.0-alpha+8
-
-*   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
-
-*   **DEPRECATED**: `throwsInAngular` is now a no-op, and can be removed.
-
-## 2.0.0-alpha+7
-
-*   Maintenance release, supporting newer package versions.
-
-## 2.0.0-alpha+6
-
-*   Maintenance release, supporting newer package versions.
-
-## 2.0.0-alpha+5
-
-*   Maintenance release, supporting newer package versions.
-
-## 2.0.0-alpha+4
-
-*   Removed built-in support for `package:pageloader`. The current version of
-    `pageloader` relies on `dart:mirrors`, which is being removed from the web
-    compilers (dart2js, dartdevc). There is a new (internal-only, right now)
-    version of `pageloader` in development that uses code generation, but it is
-    not available externally yet. We'll consider re-adding support once
-    available or through another package (i.e. `angular_pageloader` or similar).
 
 *   Added `NgTestBed.forComponent`, which takes a `ComponentFactory<T>`, and
     optionally an `InjectorFactory`. This allows writing tests entirely free of
     any invocations of `initReflector()`.
-
-*   **BREAKING CHANGE**: Adding stabilizers to `NgTestBed` now takes a factory
-    function of type `NgTestStabilizer Function(Injector)`, which is aliased as
-    `NgTestStabilizerFactory`. This allows using `NgTestBed` without any dynamic
-    reflective factories (i.e. `initReflector()`) and doesn't have impact to
-    most users.
-
-## 2.0.0-alpha+3
-
-*   Removed support for `pub run angular_test`. This is no longer strictly
-    needed, as it was just a convenience for running both the build system and
-    test runner. Similar functionality is supported out of the box by
-    `build_runner`:
-
-```bash
-$ pub run build_runner test
-```
-
-## 2.0.0-alpha+2
-
-_Maintenance release, to support the latest package:angular alpha._
-
-## 2.0.0-alpha+1
-
-*   Added support for `build.yaml`.
-
-## 2.0.0-alpha
-
-> **NOTE**: This was previously `1.0.2-alpha+1`, but since this has major
-> breaking changes that make it incompatible with the `1.x.x` releases in order
-> to support `angular 5.x.x`, this will now be the `2.0.0` alpha release.
-
-*   Add support for the use of an externally launched `pub serve` by using
-    "none" as the value of `--experimental-serve-script`.
-
-## 1.0.2-alpha+1
-
-*   Use the new generic function syntax, stop using `package:func`.
-*   Support breaking changes and deprecations in angular 5.0.0-alpha+1.
-
-## 1.0.2-alpha
-
-*   Support breaking changes in angular 5.0.0-alpha
 
 ## 1.0.1
 
