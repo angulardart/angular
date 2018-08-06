@@ -1,113 +1,58 @@
-## 0.4.0-alpha+19
+## 0.4.0
+
+### New Features
 
 *   Added `TypedElement` to represent a statically parsed `Typed`.
+
 *   `TypedReader.parse()` now returns a `TypedElement`.
 
-## 0.4.0-alpha+18
-
 *   Added `$Typed`, a `TypeChecker` for `Typed`.
+
 *   Added `TypedReader` for parsing generic directive types.
-
-## 0.4.0-alpha+17
-
-*   Maintenance release.
-*   The minimum SDK version is now `sdk: ">=2.0.0-dev.64.2 <2.0.0"`.
-
-## 0.4.0-alpha+16
 
 *   Added support for `void` and `Null` types to appear in tokens.
 
-## 0.4.0-alpha+15
+*   Added `DirectiveVisitor`, and removed `$HostBinding` and `$HostListener`.
+
+*   Added `ModuleReader.extractProviderObjects` to use in the view compiler.
+
+*   Added `logFine` as a new top-level API.
+
+*   Added an internal `cli.dart` library. See `lib/cli.dart` for details.
+
+*   Added `SplitDartEmitter` for internal use.
+
+*   Added `$QueryList` as a `TypeChecker`.
+
+*   Expose the `$Provider` `TypeChecker`.
+
+*   Added `typeArgumentOf` helper method.
+
+*   Added support for recognizing the `MultiToken` type.
+
+*   `CompilerFlags` now supports as a `fast_boot` argument; default is `true`.
+
+*   `ReflectorEmitter` now takes an optional `deferredModules{Source}`.
+
+*   Started adding experimental support for a new `Module` syntax.
+
+### Breaking Changes
 
 *   `CompilerFlags` no longer parses and supports the `'debug'` option and
     `genDebugInfo` is always `false`, and is deprecated pending removal in a
     future version.
 
-## 0.4.0-alpha+14
-
-*   Maintenance release.
-*   The minimum SDK version is now `sdk: ">=2.0.0-dev.56.0 <2.0.0"`.
-
-## 0.4.0-alpha+13
-
-*   Maintenance release.
-*   The minimum SDK version is now `sdk: ">=2.0.0-dev.55.0 <2.0.0"`.
-
-## 0.4.0-alpha+12
-
 *   Removes unused APIs of `ComponentReader`.
-*   Added `DirectiveVisitor`, and removed `$HostBinding` and `$HostListener`.
-
-## 0.4.0-alpha+11
-
-*   Added `ModuleReader.extractProviderObjects` to use in the view compiler.
-*   Added `logFine` as a new top-level API.
-
-## 0.4.0-alpha+10
-
-*   Maintenance release.
-*   The minimum SDK version is now `sdk: ">=2.0.0-dev.46.0 <2.0.0"`.
-
-## 0.4.0-alpha+9
-
-### Breaking changes
 
 *   `TokenReader` no longer supports arbitrary const objects or literals.
 
-### Bug Fixes
-
-*   Fixed a bug where the compiler crashed after resolving a bound type failed.
-
-## 0.4.0-alpha+8
-
-### Breaking changes
-
 *   Removed `use_new_template_parser` flag. The old parser was removed.
-*   Requires `source_gen >= 0.7.6`.
-*   Removed support for parsing arbitrary objects or literal values as a
-    provider token from `TokenReader`. In a future version of the compiler
-    these arguments will be completely removed.
+
 *   Removed `$QueryList`.
 
-### Bug Fixes
-
-*   Misspelled or otherwise erroneous annotations on classes now produce a more
-    understandable error message, including the element that was annotated and
-    the annotation that was not resolved.
-*   Fix a bug where `throwFailure` hit an NPE without a stack trace.
-
-## 0.4.0-alpha+7
-
-*   Maintenance release.
-
-## 0.4.0-alpha+6
-
-### New features
-
-*   Added an internal `cli.dart` library. See `lib/cli.dart` for details.
-*   Added `SplitDartEmitter` for internal use.
-*   Added `$QueryList` as a `TypeChecker`.
-*   Expose the `$Provider` `TypeChecker`.
-
-### Bug fixes
-
-*   Removed all remaining (invalid) references to `package:barback`.
-
-### Breaking changes
-
 *   Added `canRead` to `NgAssetReader`.
+
 *   Moved `CompilerFlags` and `Profile` to `cli.dart`.
-
-## 0.4.0-alpha+5
-
-### Bug fixes
-
-*   `linkTypeOf` correctly resolves bound types (i.e. `<T>`) in most cases, and
-    can fallback to `dynamic` otherwise.
-
-### Breaking changes
-
-*   Requires `source_gen ^0.7.4+2` (was previously `^0.7.0`).
 
 *   `linkToReference` now requires a second parameter, a `LibraryReader`, and
     treats private types (i.e. prefixed with `_`) as `dynamic` as the compiler
@@ -120,64 +65,11 @@
 
 *   Removed a number of internal flags that were no longer strictly required.
 
-## 0.4.0-alpha+4
-
-### Breaking changes
-
 *   `ModuleReader.deduplicateProviders` now returns a `List` not a `Set`, and
     providers that are _multi_ are not removed, as it is a feature of the DI
     system to have multiple of them with the same token.
 
 *   Add the `TypeLink` class, and replace uses of `Uri`.
-
-*   Require `code_builder ^3.0.0`.
-
-### New features
-
-*   Added `typeArgumentOf` helper method.
-
-*   Added `ReflectableEmitter.useCodeBuilder`, which uses `package:code_builder`
-    instead of an ad-hoc string-based output for Dart code. Once this passes the
-    same suite of tests the original strategy will be removed.
-
-### Bug fixes
-
-*   Prevented a `RangeError` that occurred when an invalid import lacked an
-    extension.
-
-*   `ReflectorEmitter` now supports `MultiToken` and generic-typed tokens, with
-    some known limitations. See https://github.com/dart-lang/angular/issues/782.
-
-## 0.4.0-alpha+3
-
-*   Added support for recognizing the `MultiToken` type.
-
-## 0.4.0-alpha+2
-
-*   `CompilerFlags` now supports as a `fast_boot` argument; default is `true`.
-*   `ReflectorEmitter` now takes an optional `deferredModules{Source}`.
-
-## 0.4.0-alpha+1
-
-*   Now using `code_builder: '>=2.0.0-beta <3.0.0'`.
-
-### Bug fixes
-
-*   Correctly depend on `analyzer: ^0.31.0-alpha.1`.
-
-## 0.4.0-alpha
-
-While _technically_ a breaking change from `0.3.0`, it will likely be safe for
-most users to set bound constraints that include `0.4.0`; this will allow users
-of the `4.0.0` AngularDart release to utilize the new `generator_inputs`
-optimization.
-
-```yaml
-dependencies:
-  angular_compiler: '>=0.3.0 <0.5.0'
-```
-
-### Breaking changes
 
 *   `@Component` and `@Directive` annotated classes are no longer `@Injectable`.
     In practice this means they can no loger be provided as an implicit `const
@@ -185,46 +77,26 @@ dependencies:
     refactoring your code. We found this didn't really affect users, and most
     uses of components and directives in these lists were accidental.
 
-### New features
+### Bug Fixes
 
-*   Add `generator_inputs` flag support to `CompilerFlags`, to speed up builds
-    that use `barback` (i.e. pub transformers). By default in `pub` it assumed
-    that all files relative to the same package have the AngularDart transformer
-    run on them:
+*   Fixed a bug where the compiler crashed after resolving a bound type failed.
 
-```
-lib/
-  foo.dart
-  bar.dart
-```
+*   Misspelled or otherwise erroneous annotations on classes now produce a more
+    understandable error message, including the element that was annotated and
+    the annotation that was not resolved.
 
-This used to asynchronously block and wait for generation to complete, but at
-`0.3.1` will instead infer that a relative import _will_ eventually have a
-generated file:
+*   Fix a bug where `throwFailure` hit an NPE without a stack trace.
 
-```dart
-// foo.dart
-import 'bar.dart';
-```
+*   `linkTypeOf` correctly resolves bound types (i.e. `<T>`) in most cases, and
+    can fallback to `dynamic` otherwise.
 
-While this could be considered a **breaking change**, in practice it should be
-breaking only if the `$include` or `$exclude` flags are being used to control
-what files have the AngularDart generator run on them. In that case, the flag
-can be controlled:
+*   Removed all remaining (invalid) references to `package:barback`.
 
-```yaml
-transformers:
-  - angular:
-      $include:
-        - lib/foo.dart
-      generator_inputs:
-        - lib/foo.dart      # Only foo.dart, not bar.dart.
-        - lib/src/**.dart   # But include everything else.
-```
+*   Prevented a `RangeError` that occurred when an invalid import lacked an
+    extension.
 
-*   Started adding experimental support for a new `Module` syntax.
-
-### Bug fixes
+*   `ReflectorEmitter` now supports `MultiToken` and generic-typed tokens, with
+    some known limitations. See https://github.com/dart-lang/angular/issues/782.
 
 *   Fix a bug in the _outliner_ that did not the correct output extension.
 
