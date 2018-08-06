@@ -219,7 +219,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     // components must be dynamic since the component type is deferred.
     final deferredComponentTypeArguments = isDeferredComponent
         ? view.lookupTypeArgumentsOf(component.originType, sourceAst)
-        : [];
+        : <o.OutputType>[];
     if (deferredComponentTypeArguments.isNotEmpty) {
       _providers.addDirectiveProviders(
         _resolvedProvidersArray,
