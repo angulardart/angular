@@ -11,7 +11,7 @@ dependencies:
   angular: ^5.0.0
   collection: ^1.14.5
   js: ^0.6.0
-  meta: ^1.1.2
+  meta: ^1.1.4
 
 dev_dependencies:
   async: ^2.0.3
