@@ -1,3 +1,7 @@
+## 0.5.6
+
+* Maintence release to support `dart 2.0 stable`.
+
 ## 0.5.5
 
 *   Maintenance release for `-dev.68`.

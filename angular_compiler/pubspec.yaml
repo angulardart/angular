@@ -2,10 +2,10 @@ name: angular_compiler
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/angular
 description: Compiler for AngularDart.
-version: 0.4.0-alpha+19
+version: 0.4.0
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
   analyzer: '>=0.32.4 <0.33.0'
