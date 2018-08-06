@@ -1,139 +1,7 @@
-## 5.0.0-beta+3
+## 5.0.0
 
-### Other improvements
-
-*   Removed dependency on `package:tuple`.
-*   Improved error message for binding incorrectly typed event handlers. This
-    moves the check from event dispatch time, to event subscription time,
-    meaning it *may* be a breaking change if you had an incorrectly typed event
-    handler bound to a output that never fired.
-
-## 5.0.0-beta+2
-
-### New features
-
-*   Added support for named arguments in function calls in templates:
-
-    ```html
-    <span>Hello {{getName(includeExclamationPoint: true)}}</span>
-    ```
-
-   **NOTE**: Because of the collision of syntax for both named arguments and
-   pipes, any pipes used as the _value_ of a named argument need to be wrapped
-   in parentheses: `func(namedArg: (pipeName | pipeVar:pipeVarValue))`.
-
-### Bug fixes
-
-*   Changed the behavior of warnings around `@ViewChildren(...)`. It was more
-    difficult than originally thought to warn on incorrect selector usage due to
-    the semantics of components and dependency injection. In many cases false
-    positives were flagged. Now, any unknown type is just ignored (it may still
-    be invalid), and any invalid _value_ throws a build error. For example:
-
-    ```dart
-    class A {
-      // Might not be valid, but we no longer warn.
-      @ViewChildren(SomeArbitraryType)
-      List<SomeArbitraryType> someTypes;
-
-      // We throw a build error.
-      @ViewChildren(1234)
-      List thisDoesNotWork;
-    }
-    ```
-
-*   Implicit static tear-offs and field invocations are now supported:
-
-    ```dart
-    @Component(
-      selector: 'example',
-      template: '''
-        <!-- Invoking an implicit static field. -->
-        <div>{{field()}}</div>
-
-        <!-- Binding an implicit static tear-off. -->
-        <div [invoke]="tearOff"></div>
-      ''',
-    )
-    class ExampleComponent {
-      static String Function() field = () => 'Hello world';
-      static String tearOff() => 'Hello world';
-    }
-    ```
-
-## 5.0.0-beta+1
-
-### New features
-
-*   A warning is produced if the compiler removes any elements
-    (such as `<script>`) from your template. This may become an error in future
-    versions of AngularDart. [Closes #1280][#1280].
-
-*   A warning is produced if the selector provided to a query (such as
-   `@ViewChildren(...)`) is invalid and will not produce any elements at
-    runtime. This may become an error in future versions of AngularDart.
-    [Closes #1220][#1220].
-
-*   It is now possible to annotate parts of a template with
-    `@preserveWhitespace` _instead_ of opting into preserving whitespace for the
-    entire template. [Closes #1295][#1295]:
-
-    ```html
-    <div>
-      <div class="whitespace-sensitive" @preserveWhitespace>
-        Hello
-        World!
-      </div>
-    </div>
-    ```
-
-*   Added `package:angular/meta.dart`, a series of utilities for additional
-    static analysis checks and/or functions to retain semantics for migration
-    purposes, starting with `castCallback1ForDirective` and
-    `castCallback2ForDirective`. These methods are _only_ intended to be used
-    as stop-gaps for the lack of generic support in AngularDart directives and
-    components. Closes [#1489][].
-
-## Bug fixes
-
-*   Fails the build immediately if an element in a component's `pipes` list is
-    unresolved.
-
-*   Support inherited method tear-offs in event listeners. Previously, we only
-    considered methods in the Component class itself. Closes [#506][].
-
-*   Fixed a bug where `[attr.name.if]` did not work on a static `@HostBinding`.
-    [Closes #1484][#1484].
-
-### Other improvements
-
-*   Fixed a bug where many queries (`@ViewChildren()` and the like) generated
-    additional runtime casts in production mode. Now in Dart2JS with
-    `--omit-implicit-checks` the casts are removed.
-
-*   Emits more optimized code when there are multiple data bindings in a row
-    that are checked only once (such as `final` strings). Previously we
-    generated redundant code.
-
-*   Fixed an optimization issue when `@ViewChild()` or `@ContentChild()` was
-    used on a nested element (i.e. inside a `<template>`). The code that was
-    produced accidentally created two queries instead of one.
-    [Closes #1455][#1455].
-
-[#506]: https://github.com/dart-lang/angular/issues/506
-[#1220]: https://github.com/dart-lang/angular/issues/1220
-[#1280]: https://github.com/dart-lang/angular/issues/1280
-[#1295]: https://github.com/dart-lang/angular/issues/1295
-[#1455]: https://github.com/dart-lang/angular/issues/1455
-[#1484]: https://github.com/dart-lang/angular/issues/1484
-[#1489]: https://github.com/dart-lang/angular/issues/1489
-
-## 5.0.0-beta
-
-Welcome to the first release candidate of AngularDart v5.0.0, with full support
-for Dart 2. Please note that an up-to-date copy of `dev` channel Dart SDK is
-required (at least `2.0.0-dev.65` as of this writing) to use this version of
-AngularDart. Additionally:
+Welcome to AngularDart v5.0.0, with full support for Dart 2. Please note that
+this release is not compatible with older versions of Dart 1.XX. Additionally:
 
 *   _Dartium_ is no longer supported. Instead, use the new
     [DartDevCompiler](https://webdev.dartlang.org/tools/dartdevc)
@@ -142,13 +10,9 @@ AngularDart. Additionally:
     users, the [build_runner](https://pub.dartlang.org/packages/build_runner)
     CLI.
 
-More details of [changes to Dart 2 for web
-users](https://webdev.dartlang.org/dart-2) are available on our webiste.
-
-_We are no longer expecting further breaking changes as we get closer to a final
-release (which itself is pending a final release of the Dart 2 SDK). Please
-continue to report stability issues, bugs, or requests for small non-breaking
-enhancements._
+More details of
+[changes to Dart 2 for web users](https://webdev.dartlang.org/dart-2) are
+available on our webiste.
 
 **Thanks**, and enjoy AngularDart!
 
@@ -322,7 +186,7 @@ everyone).
         FactoryProvider.forToken(xsrfToken, useFactory: readXsrfToken),
       ],
     );
-    ````
+    ```
 
     The advantages here are numerous:
 
@@ -560,6 +424,50 @@ everyone).
 
     **AFTER**: `<button (onClick)="clickHandler">`
 
+*   It is now possible to annotate parts of a template with
+    `@preserveWhitespace` _instead_ of opting into preserving whitespace for the
+    entire template. [Closes #1295][#1295]:
+
+    ```html
+    <div>
+      <div class="whitespace-sensitive" @preserveWhitespace>
+        Hello
+        World!
+      </div>
+    </div>
+    ```
+
+*   A warning is produced if the compiler removes any elements (such as
+    `<script>`) from your template. This may become an error in future versions
+    of AngularDart.
+
+*   A warning is produced if the selector provided to a query (such as
+    `@ViewChildren(...)`) is invalid and will not produce any elements at
+    runtime. **NOTE**: any unknown type is just ignored (it may still be
+    invalid), and any invalid _value_ throws a build error. For example:
+
+    ```dart
+    class A {
+      // Might not be valid, but no warning.
+      @ViewChildren(SomeArbitraryType)
+      List<SomeArbitraryType> someTypes;
+
+      // We throw a build error.
+      @ViewChildren(1234)
+      List thisDoesNotWork;
+    }
+    ```
+
+*   Added support for named arguments in function calls in templates:
+
+    ```html
+    <span>Hello {{getName(includeExclamationPoint: true)}}</span>
+    ```
+
+    **NOTE**: Because of the collision of syntax for both named arguments and
+    pipes, any pipes used as the _value_ of a named argument need to be wrapped
+    in parentheses: `func(namedArg: (pipeName | pipeVar:pipeVarValue))`.
+
 #### Breaking changes
 
 *   We now have a new, more stricter template parser, which strictly requires
@@ -745,6 +653,30 @@ everyone).
     would cause a stack overflow. We don't support generic type arguments yet
     (the reified type is always `dynamic`), but the compiler no longer crashes.
 
+*   Fails the build immediately if an element in a component's `pipes` list is
+    unresolved.
+
+*   Fixed a bug where `[attr.name.if]` did not work on a static `@HostBinding`.
+
+*   Implicit static tear-offs and field invocations are now supported:
+
+    ```dart
+    @Component(
+      selector: 'example',
+      template: '''
+        <!-- Invoking an implicit static field. -->
+        <div>{{field()}}</div>
+
+        <!-- Binding an implicit static tear-off. -->
+        <div [invoke]="tearOff"></div>
+      ''',
+    )
+    class ExampleComponent {
+      static String Function() field = () => 'Hello world';
+      static String tearOff() => 'Hello world';
+    }
+    ```
+
 #### Other improvements
 
 *   Types bound from generics are now properly resolved in a component when
@@ -790,16 +722,33 @@ everyone).
     analyzer changes that make 'dynamic' a member of 'dart:core'. These should
     not have user-visible effects.
 
+*   Fixed a bug where many queries (`@ViewChildren()` and the like) generated
+    additional runtime casts in production mode. Now in Dart2JS with
+    `--omit-implicit-checks` the casts are removed.
+
+*   Emits more optimized code when there are multiple data bindings in a row
+    that are checked only once (such as `final` strings). Previously we
+    generated redundant code.
+
+*   Fixed an optimization issue when `@ViewChild()` or `@ContentChild()` was
+    used on a nested element (i.e. inside a `<template>`). The code that was
+    produced accidentally created two queries instead of one.
+
+*   Improved error message for binding incorrectly typed event handlers. This
+    moves the check from event dispatch time, to event subscription time,
+    meaning it *may* be a breaking change if you had an incorrectly typed event
+    handler bound to a output that never fired.
+
 ### Application Bootstrap
 
 #### New features
 
 *   The process for starting your AngularDart application changed significantly:
 
-    *   For most applications, we now strongly recommend using the new
-        `runApp` function. Instead of starting your application by passing the
-        `Type` of an `@Component`-annotated `class`, you now pass a
-        `ComponentFactory`, the generated code for a component:
+    *   For most applications, we now strongly recommend using the new `runApp`
+        function. Instead of starting your application by passing the `Type` of
+        an `@Component`-annotated `class`, you now pass a `ComponentFactory`,
+        the generated code for a component:
 
     ```dart
     import 'package:angular/angular.dart';
@@ -893,6 +842,15 @@ everyone).
 *   `PlatformRef` and `PlatformRefImpl` were removed.
 
 ### Misc
+
+#### New features
+
+*   Added `package:angular/meta.dart`, a series of utilities for additional
+    static analysis checks and/or functions to retain semantics for migration
+    purposes, starting with `castCallback1ForDirective` and
+    `castCallback2ForDirective`. These methods are _only_ intended to be used as
+    stop-gaps for the lack of generic support in AngularDart directives and
+    components.
 
 #### Breaking changes
 
@@ -1292,8 +1250,7 @@ class MyComp {}
 
 *   Remove redundant calls to `dbg(...)` in dev-mode. This reduces the amount of
     work done and speeds up developer runtimes, such as those using the
-    [DartDevCompiler
-    (DDC)](https://github.com/dart-lang/sdk/tree/master/pkg/dev_compiler).
+    [DartDevCompiler (DDC)](https://github.com/dart-lang/sdk/tree/master/pkg/dev_compiler).
 
 *   Some change detection code that was duplicated across all generated
     templates were moved internally to a new `AppView#detectHostChanges` method.
