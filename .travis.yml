@@ -4,9 +4,8 @@
 # $ pub run dev:travis
 language: dart
 
-# We currently are building against the Dart2 SDK.
 dart:
-  - dev
+  - stable
 
 # Gives more resources on Travis (8GB Ram, 2CPUs).
 # Do not remove without verifying w/ Travis.
@@ -48,6 +47,7 @@ jobs:
   # See https://github.com/dart-lang/angular/issues/1114.
   allow_failures:
     - env: PKG="examples/github_issues"
+    - env: PKG="examples/hacker_news_pwa"
     - env: PKG="examples/registration_form"
 
   include:
