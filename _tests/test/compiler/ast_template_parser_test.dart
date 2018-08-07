@@ -1324,23 +1324,6 @@ void main() {
             [I18nAttrAst, 'bar', 'bar message', 'bar description'],
           ]);
         });
-
-        test('should support "@i18n-", but warn that syntax has changed', () {
-          final ast = parse('<p foo="message" @i18n-foo="description"></p>');
-          final humanizedAst = humanizeTplAst(ast);
-          expect(humanizedAst, [
-            [ElementAst, 'p'],
-            [I18nAttrAst, 'foo', 'message', 'description'],
-          ]);
-          expect(console.warnings, [
-            'Template parse warnings:\n'
-                'line 1, column 18 of TestComp: ParseErrorLevel.WARNING: '
-                'The prefix for internationalizing attributes has changed from '
-                '"@i18n-" to "@i18n:"\n'
-                '<p foo="message" @i18n-foo="description"></p>\n'
-                '                 ^^^^^^^^^^^^^^^^^^^^^^^'
-          ]);
-        });
       });
     });
 
@@ -1830,6 +1813,17 @@ void main() {
                 'Internationalized messages must contain text\n'
                 '<p @i18n="description"></p>\n'
                 '^^^^^^^^^^^^^^^^^^^^^^^'));
+      });
+
+      test('should report error for deprecated "@i18n-" syntax', () {
+        expect(
+            () => parse('<p foo="message" @i18n-foo="description"></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 18 of TestComp: ParseErrorLevel.FATAL: '
+                'The prefix for internationalizing attributes has changed from '
+                '"@i18n-" to "@i18n:"\n'
+                '<p foo="message" @i18n-foo="description"></p>\n'
+                '                 ^^^^^^^^^^^^^^^^^^^^^^^'));
       });
     });
 

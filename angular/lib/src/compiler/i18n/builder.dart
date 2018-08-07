@@ -37,8 +37,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   @override
   void visitAnnotation(AnnotationAst astNode, [_]) {
     if (astNode.name == i18nAnnotationName ||
-        astNode.name.startsWith(i18nAnnotationPrefix) ||
-        astNode.name.startsWith(i18nAnnotationPrefixDeprecated)) {
+        astNode.name.startsWith(i18nAnnotationPrefix)) {
       _templateContext.reportError(
         "Internationalized messages can't be nested",
         astNode.sourceSpan,

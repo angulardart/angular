@@ -47,8 +47,7 @@ Map<String, AnnotationAst> i18nAttributeAnnotationsFrom(
 ) {
   final results = <String, AnnotationAst>{};
   for (final annotation in annotations) {
-    if (annotation.name.startsWith(i18nAnnotationPrefix) ||
-        annotation.name.startsWith(i18nAnnotationPrefixDeprecated)) {
+    if (annotation.name.startsWith(i18nAnnotationPrefix)) {
       final name = annotation.name.substring(i18nAnnotationPrefix.length);
       results[name] = annotation;
     }
