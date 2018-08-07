@@ -47,7 +47,6 @@ jobs:
   # See https://github.com/dart-lang/angular/issues/1114.
   allow_failures:
     - env: PKG="examples/github_issues"
-    - env: PKG="examples/hacker_news_pwa"
     - env: PKG="examples/registration_form"
 
   include:
