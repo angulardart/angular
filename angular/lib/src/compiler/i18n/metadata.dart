@@ -1,12 +1,57 @@
 import 'package:angular_ast/angular_ast.dart';
 
-import '../parse_util.dart' show ParseErrorLevel;
 import '../template_parser.dart' show TemplateContext;
 
-const i18nAnnotationName = 'i18n';
-const i18nAnnotationPrefix = '$i18nAnnotationName:';
+const i18nDescription = 'i18n';
+const i18nDescriptionPrefix = '$i18nDescription:';
 // TODO(leonsenft): remove before i18n is officially launched.
-const i18nAnnotationPrefixDeprecated = '$i18nAnnotationName-';
+const i18nDescriptionPrefixDeprecated = '$i18nDescription-';
+const i18nMeaning = 'i18nMeaning';
+const i18nMeaningPrefix = '$i18nMeaning:';
+
+const _i18nIndexForMeaning = 1;
+const _i18nIndexForAttribute = 2;
+final _i18nRegExp = RegExp(
+    // Matches i18n prefix.
+    'i18n'
+    // Captures optional i18n parameter name.
+    '(Meaning)?'
+    // Captures attribute name, or matches end of input.
+    r'(?::(.+)|$)');
+
+/// Parses all internationalization metadata from a node's [annotations].
+I18nMetadataBundle parseI18nMetadata(
+  List<AnnotationAst> annotations,
+  TemplateContext context,
+) {
+  if (annotations.isEmpty) {
+    return I18nMetadataBundle.empty();
+  }
+  // Map metadata builders by attribute name, except for the children metadata
+  // builder which has a null key.
+  final builders = <String, _I18nMetadataBuilder>{};
+  for (final annotation in annotations) {
+    final match = _i18nRegExp.matchAsPrefix(annotation.name);
+    if (match == null) {
+      continue;
+    }
+    // If `annotation` doesn't specify an attribute name, `attribute` is null
+    // which indicates this metadata internationalizes children.
+    final attribute = match[_i18nIndexForAttribute];
+    final builder = builders[attribute] ??= _I18nMetadataBuilder(context);
+    if (match[_i18nIndexForMeaning] != null) {
+      builder.meaning = annotation;
+    } else {
+      builder.description = annotation;
+    }
+  }
+  final childrenMetadata = builders.remove(null)?.build();
+  final attributeMetadata = <String, I18nMetadata>{};
+  for (final attribute in builders.keys) {
+    attributeMetadata[attribute] = builders[attribute].build();
+  }
+  return I18nMetadataBundle(childrenMetadata, attributeMetadata);
+}
 
 /// Metadata used to internationalize a message.
 class I18nMetadata {
@@ -31,60 +76,41 @@ class I18nMetadata {
   });
 }
 
-/// Returns the first `@i18n` annotation in [annotations], or null.
-AnnotationAst i18nAnnotationFrom(List<AnnotationAst> annotations) {
-  for (final annotation in annotations) {
-    if (annotation.name == i18nAnnotationName) {
-      return annotation;
-    }
-  }
-  return null;
+/// Internationalization metadata for a node's attributes and content.
+class I18nMetadataBundle {
+  /// Internationalization metadata for the node's attributes.
+  ///
+  /// Metadata is keyed by attribute name.
+  final Map<String, I18nMetadata> forAttributes;
+
+  /// Internationalization metadata for the node's children.
+  ///
+  /// Null if the node has no internationalized children.
+  final I18nMetadata forChildren;
+
+  I18nMetadataBundle(this.forChildren, this.forAttributes);
+  I18nMetadataBundle.empty() : this(null, const {});
 }
 
-/// Returns all `@i18n:<attr>` annotations in [annotations] by attribute name.
-Map<String, AnnotationAst> i18nAttributeAnnotationsFrom(
-  List<AnnotationAst> annotations,
-) {
-  final results = <String, AnnotationAst>{};
-  for (final annotation in annotations) {
-    if (annotation.name.startsWith(i18nAnnotationPrefix)) {
-      final name = annotation.name.substring(i18nAnnotationPrefix.length);
-      results[name] = annotation;
-    }
-  }
-  return results;
-}
+/// A builder for incrementally constructing and validating i18n metadata.
+class _I18nMetadataBuilder {
+  final TemplateContext _context;
 
-/// Parses internationalization metadata from an [annotation].
-///
-/// Grammar: [ <meaning> '|' ] <description>
-///
-/// Expects a description, with an optional meaning delimited by a `|`.
-I18nMetadata parseI18nMetadata(
-  AnnotationAst annotation,
-  TemplateContext context,
-) {
-  final value = annotation.value;
-  final index = value.indexOf('|');
-  final description = value.substring(index + 1).trim();
-  if (description.isEmpty) {
-    context.reportError(
-      'Requires a non-empty message description to help translators',
-      annotation.sourceSpan,
+  AnnotationAst description;
+  AnnotationAst meaning;
+
+  _I18nMetadataBuilder(this._context);
+
+  I18nMetadata build() {
+    if (description == null) {
+      _context.reportError(
+          'A corresponding message description (@i18n) is required',
+          meaning.sourceSpan);
+      return null;
+    }
+    return I18nMetadata(
+      description.value.trim(),
+      meaning: meaning?.value?.trim(),
     );
-    return null;
   }
-  if (index == -1) {
-    return I18nMetadata(description);
-  }
-  final meaning = value.substring(0, index).trim();
-  if (meaning.isEmpty) {
-    context.reportError(
-      'Expected a non-empty message meaning before "|"',
-      annotation.sourceSpan,
-      ParseErrorLevel.WARNING,
-    );
-    return I18nMetadata(description);
-  }
-  return I18nMetadata(description, meaning: meaning);
 }
