@@ -73,7 +73,7 @@ class TestI18nNode {}
 
 @Component(
   selector: 'test',
-  template: '<img alt="A puppy!" @i18n-alt="description">',
+  template: '<img alt="A puppy!" @i18n:alt="description">',
 )
 class TestI18nAttribute {}
 
