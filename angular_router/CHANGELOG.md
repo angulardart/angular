@@ -1,3 +1,7 @@
+## 2.0.0-alpha+19
+
+* Maintence release to support Angular 5.0.
+
 ## 2.0.0-alpha+18
 
 ### Bug fixes
