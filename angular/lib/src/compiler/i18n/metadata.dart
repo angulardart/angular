@@ -4,7 +4,9 @@ import '../parse_util.dart' show ParseErrorLevel;
 import '../template_parser.dart' show TemplateContext;
 
 const i18nAnnotationName = 'i18n';
-const i18nAnnotationPrefix = '$i18nAnnotationName-';
+const i18nAnnotationPrefix = '$i18nAnnotationName:';
+// TODO(leonsenft): remove before i18n is officially launched.
+const i18nAnnotationPrefixDeprecated = '$i18nAnnotationName-';
 
 /// Metadata used to internationalize a message.
 class I18nMetadata {
@@ -39,13 +41,14 @@ AnnotationAst i18nAnnotationFrom(List<AnnotationAst> annotations) {
   return null;
 }
 
-/// Returns all `@i18n-<attr>` annotations in [annotations] by attribute name.
+/// Returns all `@i18n:<attr>` annotations in [annotations] by attribute name.
 Map<String, AnnotationAst> i18nAttributeAnnotationsFrom(
   List<AnnotationAst> annotations,
 ) {
   final results = <String, AnnotationAst>{};
   for (final annotation in annotations) {
-    if (annotation.name.startsWith(i18nAnnotationPrefix)) {
+    if (annotation.name.startsWith(i18nAnnotationPrefix) ||
+        annotation.name.startsWith(i18nAnnotationPrefixDeprecated)) {
       final name = annotation.name.substring(i18nAnnotationPrefix.length);
       results[name] = annotation;
     }

@@ -1286,13 +1286,13 @@ void main() {
         });
       });
 
-      group('@i18n-<attr>', () {
+      group('@i18n:<attr>', () {
         test('should internationalize attribute', () {
           final ast = parse('''
             <img
                 src="puppy.gif"
                 alt="message"
-                @i18n-alt="meaning | description" />
+                @i18n:alt="meaning | description" />
           ''');
           final humanizedAst = humanizeTplAst(ast);
           expect(humanizedAst, [
@@ -1306,9 +1306,9 @@ void main() {
           final ast = parse('''
             <div
                 foo="foo message"
-                @i18n-foo="foo meaning|foo description"
+                @i18n:foo="foo meaning|foo description"
                 bar="bar message"
-                @i18n-bar="bar description">
+                @i18n:bar="bar description">
             </div>
           ''');
           final humanizedAst = humanizeTplAst(ast);
@@ -1322,6 +1322,23 @@ void main() {
               'foo meaning'
             ],
             [I18nAttrAst, 'bar', 'bar message', 'bar description'],
+          ]);
+        });
+
+        test('should support "@i18n-", but warn that syntax has changed', () {
+          final ast = parse('<p foo="message" @i18n-foo="description"></p>');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'p'],
+            [I18nAttrAst, 'foo', 'message', 'description'],
+          ]);
+          expect(console.warnings, [
+            'Template parse warnings:\n'
+                'line 1, column 18 of TestComp: ParseErrorLevel.WARNING: '
+                'The prefix for internationalizing attributes has changed from '
+                '"@i18n-" to "@i18n:"\n'
+                '<p foo="message" @i18n-foo="description"></p>\n'
+                '                 ^^^^^^^^^^^^^^^^^^^^^^^'
           ]);
         });
       });
