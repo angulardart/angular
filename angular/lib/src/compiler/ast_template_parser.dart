@@ -1025,8 +1025,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
       _reportError(
           astNode,
           'The prefix for internationalizing attributes has changed from '
-          '"@$i18nAnnotationPrefixDeprecated" to "@$i18nAnnotationPrefix"',
-          ParseErrorLevel.WARNING);
+          '"@$i18nAnnotationPrefixDeprecated" to "@$i18nAnnotationPrefix"');
     }
     if ((astNode.name == i18nAnnotationName ||
             astNode.name.startsWith(i18nAnnotationPrefix) ||
