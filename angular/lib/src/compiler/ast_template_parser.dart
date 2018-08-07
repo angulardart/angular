@@ -222,21 +222,13 @@ class _BindDirectivesVisitor
       [_ParseContext parentContext]) {
     final elementContext =
         _ParseContext.forElement(astNode, parentContext.templateContext);
+    final i18nMetadata =
+        _parseI18nMetadata(astNode.annotations, parentContext.templateContext);
     final attributes = <ast.AttributeAst>[];
     final i18nAttributes = <ng.I18nAttrAst>[];
-    final i18nAttributeAnnotations =
-        i18nAttributeAnnotationsFrom(astNode.annotations);
     for (final attribute in astNode.attributes) {
-      if (i18nAttributeAnnotations.containsKey(attribute.name)) {
-        final annotation = i18nAttributeAnnotations[attribute.name];
-        final metadata =
-            parseI18nMetadata(annotation, elementContext.templateContext);
-        if (metadata == null) {
-          // Drop any attributes with invalid i18n metadata. We can't
-          // internationalize them with invalid metadata, nor do we want to
-          // treat them as non-internationalized attributes.
-          continue;
-        }
+      if (i18nMetadata.forAttributes.containsKey(attribute.name)) {
+        final metadata = i18nMetadata.forAttributes[attribute.name];
         final message = I18nMessage(attribute.value, metadata);
         i18nAttributes.add(ng.I18nAttrAst(
           attribute.name,
@@ -260,7 +252,7 @@ class _BindDirectivesVisitor
         elementContext.boundDirectives,
         [] /* providers */,
         null /* elementProviderUsage */,
-        _visitChildren(astNode, astNode.annotations, elementContext),
+        _visitChildren(astNode, i18nMetadata.forChildren, elementContext),
         _findNgContentIndexForElement(astNode, parentContext),
         astNode.sourceSpan);
   }
@@ -314,9 +306,14 @@ class _BindDirectivesVisitor
 
   @override
   ng.TemplateAst visitContainer(ast.ContainerAst astNode,
-          [_ParseContext context]) =>
-      ng.NgContainerAst(_visitChildren(astNode, astNode.annotations, context),
-          astNode.sourceSpan);
+      [_ParseContext context]) {
+    final i18nMetadata =
+        _parseI18nMetadata(astNode.annotations, context.templateContext);
+    return ng.NgContainerAst(
+      _visitChildren(astNode, i18nMetadata.forChildren, context),
+      astNode.sourceSpan,
+    );
+  }
 
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
@@ -505,6 +502,17 @@ class _BindDirectivesVisitor
     throw UnimplementedError('Don\'t know how to handle annotations.');
   }
 
+  /// A helper to handle conditionally parsing i18n metadata.
+  ///
+  /// Returns empty metadata when i18n is disabled.
+  I18nMetadataBundle _parseI18nMetadata(
+    List<ast.AnnotationAst> annotations,
+    TemplateContext context,
+  ) =>
+      i18nEnabled
+          ? parseI18nMetadata(annotations, context)
+          : I18nMetadataBundle.empty();
+
   List<T> _visitAll<T extends ng.TemplateAst>(
       List<ast.TemplateAst> astNodes, _ParseContext context) {
     final results = <T>[];
@@ -519,31 +527,20 @@ class _BindDirectivesVisitor
 
   /// Visits [children], converting them for internationalization if necessary.
   ///
-  /// The [children] are internationalized if their parent's [annotations]
-  /// contain a valid `@i18n` annotation.
+  /// The [children] are internationalized if their parent's [i18nMetadata] is
+  /// non-null.
   List<ng.TemplateAst> _visitChildren(
     ast.StandaloneTemplateAst parent,
-    List<ast.AnnotationAst> annotations,
+    I18nMetadata i18nMetadata,
     _ParseContext context,
   ) {
-    if (i18nEnabled) {
-      final i18nAnnotation = i18nAnnotationFrom(annotations);
-      if (i18nAnnotation != null) {
-        final i18nMetadata =
-            parseI18nMetadata(i18nAnnotation, context.templateContext);
-        if (i18nMetadata == null) {
-          // Drop the child nodes of an AST with invalid i18n metadata. We can't
-          // internationalize them with invalid metadata, nor do we want to
-          // treat them as non-internationalized nodes.
-          return [];
-        }
-        return internationalize(
-          parent,
-          i18nMetadata,
-          context.findNgContentIndex(_textCssSelector),
-          context.templateContext,
-        );
-      }
+    if (i18nMetadata != null) {
+      return internationalize(
+        parent,
+        i18nMetadata,
+        context.findNgContentIndex(_textCssSelector),
+        context.templateContext,
+      );
     }
     return _visitAll(parent.childNodes, context);
   }
@@ -1021,18 +1018,26 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
 
   @override
   ast.TemplateAst visitAnnotation(ast.AnnotationAst astNode, [_]) {
-    if ((astNode.name.startsWith(i18nAnnotationPrefixDeprecated))) {
+    if ((astNode.name.startsWith(i18nDescriptionPrefixDeprecated))) {
       _reportError(
           astNode,
           'The prefix for internationalizing attributes has changed from '
-          '"@$i18nAnnotationPrefixDeprecated" to "@$i18nAnnotationPrefix"');
+          '"@$i18nDescriptionPrefixDeprecated" to "@$i18nDescriptionPrefix"');
     }
-    if ((astNode.name == i18nAnnotationName ||
-            astNode.name.startsWith(i18nAnnotationPrefix) ||
-            astNode.name.startsWith(i18nAnnotationPrefixDeprecated)) &&
-        astNode.value == null) {
+    if ((astNode.name == i18nDescription ||
+            astNode.name.startsWith(i18nDescriptionPrefix) ||
+            astNode.name.startsWith(i18nDescriptionPrefixDeprecated)) &&
+        (astNode.value == null || astNode.value.trim().isEmpty)) {
       _reportError(astNode,
           'Requires a value describing the message to help translators');
+    }
+    if ((astNode.name == i18nMeaning ||
+            astNode.name.startsWith(i18nMeaningPrefix)) &&
+        (astNode.value == null || astNode.value.trim().isEmpty)) {
+      _reportError(
+          astNode,
+          'While optional, when specified the meaning must be non-empty to '
+          'disambiguate from other equivalent messages');
     }
     return super.visitAnnotation(astNode);
   }

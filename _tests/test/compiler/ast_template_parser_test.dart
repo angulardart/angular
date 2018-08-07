@@ -1259,7 +1259,11 @@ void main() {
         });
 
         test('should support optional meaning', () {
-          final ast = parse('<p @i18n="meaning | description">message</p>');
+          final ast = parse('''
+            <p @i18n="description" @i18nMeaning="meaning">
+              message
+            </p>
+          ''');
           final humanizedAst = humanizeTplAst(ast);
           expect(humanizedAst, [
             [ElementAst, 'p'],
@@ -1292,7 +1296,8 @@ void main() {
             <img
                 src="puppy.gif"
                 alt="message"
-                @i18n:alt="meaning | description" />
+                @i18n:alt="description"
+                @i18nMeaning:alt="meaning" />
           ''');
           final humanizedAst = humanizeTplAst(ast);
           expect(humanizedAst, [
@@ -1306,7 +1311,8 @@ void main() {
           final ast = parse('''
             <div
                 foo="foo message"
-                @i18n:foo="foo meaning|foo description"
+                @i18n:foo="foo description"
+                @i18nMeaning:foo="foo meaning"
                 bar="bar message"
                 @i18n:bar="bar description">
             </div>
@@ -1779,32 +1785,6 @@ void main() {
                 '   ^^^^^'));
       });
 
-      test('should report error for empty description', () {
-        expect(
-            () => parse(
-                '<p @i18n="">message</p>\n<p @i18n="meaning | ">message</p>'),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: '
-                'Requires a non-empty message description to help translators\n'
-                '<p @i18n="">message</p>\n'
-                '   ^^^^^^^^\n'
-                'line 2, column 4 of TestComp: ParseErrorLevel.FATAL: '
-                'Requires a non-empty message description to help translators\n'
-                '<p @i18n="meaning | ">message</p>\n'
-                '   ^^^^^^^^^^^^^^^^^^'));
-      });
-
-      test('should report warning for empty meaning before "|"', () {
-        parse('<p @i18n=" | description">message</p>');
-        expect(console.warnings, [
-          'Template parse warnings:\n'
-              'line 1, column 4 of TestComp: ParseErrorLevel.WARNING: '
-              'Expected a non-empty message meaning before "|"\n'
-              '<p @i18n=" | description">message</p>\n'
-              '   ^^^^^^^^^^^^^^^^^^^^^^'
-        ]);
-      });
-
       test('should prevent an empty @i18n message', () {
         expect(
             () => parse('<p @i18n="description"></p>'),
@@ -1824,6 +1804,27 @@ void main() {
                 '"@i18n-" to "@i18n:"\n'
                 '<p foo="message" @i18n-foo="description"></p>\n'
                 '                 ^^^^^^^^^^^^^^^^^^^^^^^'));
+      });
+
+      test('should report error for "@i18nMeaning" without description', () {
+        expect(
+            () => parse('<p @i18nMeaning="meaning"></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: '
+                'A corresponding message description (@i18n) is required\n'
+                '<p @i18nMeaning="meaning"></p>\n'
+                '   ^^^^^^^^^^^^^^^^^^^^^^'));
+      });
+
+      test('should report error for empty "@i18nMeaning"', () {
+        expect(
+            () => parse('<p @i18n="description" @i18nMeaning=" "></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 24 of TestComp: ParseErrorLevel.FATAL: '
+                'While optional, when specified the meaning must be non-empty '
+                'to disambiguate from other equivalent messages\n'
+                '<p @i18n="description" @i18nMeaning=" "></p>\n'
+                '                       ^^^^^^^^^^^^^^^^'));
       });
     });
 
