@@ -23,6 +23,7 @@ void main() {
 @Component(
   selector: 'root-component',
   directives: [
+    ComponentConditionalFeatures,
     UsesDefaultChangeDetectionAndInput,
     InlinedNgIf,
     EmbeddedNgIf,
@@ -37,6 +38,8 @@ void main() {
     </embedded-ng-if>
     <injects-from-arbitrary-parent>
     </injects-from-arbitrary-parent>
+    <component-conditional-features [useFeatureA]="true" [useFeatureB]="false">
+    </component-conditional-features>
   ''',
 )
 class RootComponent {}
@@ -116,3 +119,35 @@ class InjectsFromArbitraryParent {
     service.printWashingtonDc(whiteHouse, usPresidents);
   }
 }
+
+@Component(
+  selector: 'component-conditional-features',
+  directives: [
+    FeatureA,
+    FeatureB,
+    NgIf,
+  ],
+  template: r'''
+    <feature-a *ngIf="useFeatureA"></feature-a>
+    <feature-b *ngIf="useFeatureB"></feature-b>
+  ''',
+)
+class ComponentConditionalFeatures {
+  @Input()
+  bool useFeatureA = false;
+
+  @Input()
+  bool useFeatureB = false;
+}
+
+@Component(
+  selector: 'feature-a',
+  template: 'I am Feature A',
+)
+class FeatureA {}
+
+@Component(
+  selector: 'feature-b',
+  template: 'I am Feature B',
+)
+class FeatureB {}
