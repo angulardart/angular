@@ -199,9 +199,6 @@ class CompileTypeMetadataVisitor
       if (typeParameter.bound != null) {
         // TODO(b/111800117): generics with bounds aren't yet supported.
         typeParameters.clear();
-        logWarning(''
-            "Bounded generic type parameters aren't yet supported, ignoring "
-            'generics for "${element.name}"');
         break;
       }
       typeParameters.add(o.TypeParameter(typeParameter.name));
