@@ -97,8 +97,13 @@ class TypedReader {
   TypedElement _parseTyped(DartObject typedObject, {bool root = false}) {
     final type = typeArgumentOf(typedObject);
     if (type is ParameterizedType && type.typeParameters.isNotEmpty) {
-      // TODO(b/111800117): generics with bounds aren't yet supported.
       if (root) {
+        if (!$Directive.hasAnnotationOf(type.element)) {
+          throwFailure(''
+              'Expected a "Typed" expression with a "Component" or "Directive" '
+              'annotated type, but got "Typed<${type.name}>"');
+        }
+        // TODO(b/111800117): generics with bounds aren't yet supported.
         // Generics aren't supported for components and directives with bounded
         // type parameters. However, it's fine for a *nested* `Typed` expression
         // used as a type argument to apply type arguments to a type with
