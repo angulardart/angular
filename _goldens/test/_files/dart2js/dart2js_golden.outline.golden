@@ -62,5 +62,26 @@ external AppView<_user.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitr
 class ViewInjectsFromArbitraryParent0 extends AppView<_user.InjectsFromArbitraryParent> {
   external ViewInjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class ComponentConditionalFeatures.
+external List<dynamic> get styles$ComponentConditionalFeatures;
+external ComponentFactory<_user.ComponentConditionalFeatures> get ComponentConditionalFeaturesNgFactory;
+external AppView<_user.ComponentConditionalFeatures> viewFactory_ComponentConditionalFeatures0(AppView<dynamic> parentView, int parentIndex);
+class ViewComponentConditionalFeatures0 extends AppView<_user.ComponentConditionalFeatures> {
+  external ViewComponentConditionalFeatures0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class FeatureA.
+external List<dynamic> get styles$FeatureA;
+external ComponentFactory<_user.FeatureA> get FeatureANgFactory;
+external AppView<_user.FeatureA> viewFactory_FeatureA0(AppView<dynamic> parentView, int parentIndex);
+class ViewFeatureA0 extends AppView<_user.FeatureA> {
+  external ViewFeatureA0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class FeatureB.
+external List<dynamic> get styles$FeatureB;
+external ComponentFactory<_user.FeatureB> get FeatureBNgFactory;
+external AppView<_user.FeatureB> viewFactory_FeatureB0(AppView<dynamic> parentView, int parentIndex);
+class ViewFeatureB0 extends AppView<_user.FeatureB> {
+  external ViewFeatureB0(AppView<dynamic> parentView, int parentIndex);
+}
 
 external void initReflector();
