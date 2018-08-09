@@ -5,10 +5,34 @@ import 'deferred_component.dart';
 
 @Component(
   selector: 'test-container',
-  template: r''''
-      <deferred-component @deferred>Foo</deferred-component>
-      <sample-component @deferred></sample-component>
+  template: r'''
+    <deferred-child-1 @deferred></deferred-child-1>
+    <template [ngIf]="showDeferredChild">
+      <deferred-child-2 @deferred></deferred-child-2>
+    </template>
+    <div *ngIf="showDeferredChild">
+      <deferred-child-3 @deferred #queryMe></deferred-child-3>
+    </div>
+    <deferred-child-without-ng-content @deferred>
+      Hello World
+    </deferred-child-without-ng-content>
+    <deferred-child-with-ng-content @deferred>
+      Hello World
+    </deferred-child-with-ng-content>
   ''',
-  directives: [DeferredChildComponent, SampleComponent],
+  directives: [
+    DeferredChild1Component,
+    DeferredChild2Component,
+    DeferredChild3Component,
+    DeferredChildComponentWithoutNgContent,
+    DeferredChildComponentWithNgContent,
+    NgIf,
+    SampleComponent,
+  ],
 )
-class TestContainerComponent {}
+class TestContainerComponent {
+  bool showDeferredChild = true;
+
+  @ViewChild('queryMe')
+  DeferredChild3Component queryDeferredChild;
+}
