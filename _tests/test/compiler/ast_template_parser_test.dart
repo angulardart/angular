@@ -1260,7 +1260,7 @@ void main() {
 
         test('should support optional meaning', () {
           final ast = parse('''
-            <p @i18n="description" @i18nMeaning="meaning">
+            <p @i18n="description" @i18n.meaning="meaning">
               message
             </p>
           ''');
@@ -1297,7 +1297,7 @@ void main() {
                 src="puppy.gif"
                 alt="message"
                 @i18n:alt="description"
-                @i18nMeaning:alt="meaning" />
+                @i18n.meaning:alt="meaning" />
           ''');
           final humanizedAst = humanizeTplAst(ast);
           expect(humanizedAst, [
@@ -1312,7 +1312,7 @@ void main() {
             <div
                 foo="foo message"
                 @i18n:foo="foo description"
-                @i18nMeaning:foo="foo meaning"
+                @i18n.meaning:foo="foo meaning"
                 bar="bar message"
                 @i18n:bar="bar description">
             </div>
@@ -1806,25 +1806,25 @@ void main() {
                 '                 ^^^^^^^^^^^^^^^^^^^^^^^'));
       });
 
-      test('should report error for "@i18nMeaning" without description', () {
+      test('should report error for "@i18n.meaning" without description', () {
         expect(
-            () => parse('<p @i18nMeaning="meaning"></p>'),
+            () => parse('<p @i18n.meaning="meaning"></p>'),
             throwsWith('Template parse errors:\n'
                 'line 1, column 4 of TestComp: ParseErrorLevel.FATAL: '
                 'A corresponding message description (@i18n) is required\n'
-                '<p @i18nMeaning="meaning"></p>\n'
-                '   ^^^^^^^^^^^^^^^^^^^^^^'));
+                '<p @i18n.meaning="meaning"></p>\n'
+                '   ^^^^^^^^^^^^^^^^^^^^^^^'));
       });
 
-      test('should report error for empty "@i18nMeaning"', () {
+      test('should report error for empty "@i18n.meaning"', () {
         expect(
-            () => parse('<p @i18n="description" @i18nMeaning=" "></p>'),
+            () => parse('<p @i18n="description" @i18n.meaning=" "></p>'),
             throwsWith('Template parse errors:\n'
                 'line 1, column 24 of TestComp: ParseErrorLevel.FATAL: '
                 'While optional, when specified the meaning must be non-empty '
                 'to disambiguate from other equivalent messages\n'
-                '<p @i18n="description" @i18nMeaning=" "></p>\n'
-                '                       ^^^^^^^^^^^^^^^^'));
+                '<p @i18n="description" @i18n.meaning=" "></p>\n'
+                '                       ^^^^^^^^^^^^^^^^^'));
       });
     });
 
