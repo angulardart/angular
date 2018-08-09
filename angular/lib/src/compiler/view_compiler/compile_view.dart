@@ -469,6 +469,9 @@ class CompileView implements AppViewBuilder {
     if (message.metadata.meaning != null) {
       args.add(o.NamedExpr('meaning', o.literal(message.metadata.meaning)));
     }
+    if (message.metadata.skip) {
+      args.add(o.NamedExpr('skip', o.literal(true)));
+    }
     final i18n = o.importExpr(Identifiers.Intl);
     final name = '_message_${_i18nMessageCount++}';
     if (message.containsHtml) {

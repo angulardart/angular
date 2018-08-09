@@ -61,6 +61,15 @@ void main() {
     final italicElement = testFixture.rootElement.querySelector('i');
     expect(italicElement.text, 'Italic');
   });
+
+  // This test ensures none of our Intl.message() parameters are invalid.
+  test('should render message with i18n parameters', () async {
+    final testBed = NgTestBed.forComponent(ng.TestI18nParametersNgFactory);
+    final testFixture = await testBed.create();
+    expect(testFixture.text, 'A paragraph.');
+    final imgElement = testFixture.rootElement.querySelector('img');
+    expect(imgElement.getAttribute('alt'), 'An image.');
+  });
 }
 
 const issuesLink = 'https://github.com/dart-lang/angular/issues';
@@ -125,3 +134,19 @@ class TestI18nNodeWithEscapedHtmlCharacters {}
   ''',
 )
 class TestI18nNodeWithHtmlAndEscapedHtmlCharacters {}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <p
+        @i18n="description" @i18n.meaning="meaning" @i18n.skip>
+      A paragraph.
+    </p>
+    <img
+        alt="An image."
+        @i18n:alt="description"
+        @i18n.meaning:alt="meaning"
+        @i18n.skip:alt />
+  ''',
+)
+class TestI18nParameters {}

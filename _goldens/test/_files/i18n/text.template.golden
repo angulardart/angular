@@ -23,7 +23,7 @@ final List<dynamic> styles$I18nTextComponent = const [];
 
 class ViewI18nTextComponent0 extends AppView<import1.I18nTextComponent> {
   import2.Element _el_0;
-  static final String _message_0 = import3.Intl.message('message', desc: 'description', meaning: 'meaning');
+  static final String _message_0 = import3.Intl.message('message', desc: 'description', meaning: 'meaning', skip: true);
   static RenderComponentType _renderType;
   ViewI18nTextComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('message');
