@@ -6,7 +6,7 @@ const i18nDescription = 'i18n';
 const i18nDescriptionPrefix = '$i18nDescription:';
 // TODO(leonsenft): remove before i18n is officially launched.
 const i18nDescriptionPrefixDeprecated = '$i18nDescription-';
-const i18nMeaning = 'i18nMeaning';
+const i18nMeaning = '$i18nDescription.meaning';
 const i18nMeaningPrefix = '$i18nMeaning:';
 
 const _i18nIndexForMeaning = 1;
@@ -15,7 +15,7 @@ final _i18nRegExp = RegExp(
     // Matches i18n prefix.
     'i18n'
     // Captures optional i18n parameter name.
-    '(Meaning)?'
+    r'(?:\.(meaning))?'
     // Captures attribute name, or matches end of input.
     r'(?::(.+)|$)');
 
