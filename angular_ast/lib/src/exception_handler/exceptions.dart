@@ -177,6 +177,17 @@ class NgParserWarningCode extends ErrorCode {
       NgParserWarningCode('INVALID_DECORATOR_IN_TEMPLATE',
           "Invalid decorator in 'template' element");
 
+  static const NgParserWarningCode INVALID_DEFERRED_ON_TEMPLATE =
+      NgParserWarningCode(
+          'INVALID_DEFERRED_ON_TEMPLATE',
+          "Invalid @deferred annotation on 'template' element",
+          "The @deferred annotation cannot be placed on an element with "
+          "a structural directive (such as *ngIf) or on a <template> tag. "
+          "Consider moving the structural directive as the parent, such as:\n\n"
+          "  <ng-container *ngIf=\"someCondition\">\n"
+          "    <expensive-comp @defered></expensive-comp>\n"
+          "  </ng-container>");
+
   static const NgParserWarningCode INVALID_LET_BINDING_IN_NONTEMPLATE =
       NgParserWarningCode('INVALID_LET_BINDING_IN_NONTEMPLATE',
           "'let-' binding can only be used in 'template' element");
