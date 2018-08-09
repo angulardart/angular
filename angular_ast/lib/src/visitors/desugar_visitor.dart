@@ -84,14 +84,19 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
       astNode.bananas.clear();
     }
 
-    if (astNode.stars.isNotEmpty) {
-      return _desugarStar(astNode, astNode.stars);
-    }
-
     if (astNode.annotations.isNotEmpty) {
       final i = astNode.annotations.indexWhere((ast) => ast.name == 'deferred');
       if (i != -1) {
         final deferredAst = astNode.annotations.removeAt(i);
+        // Fail on invalid use (i.e. on a <template> tag):
+        // (https://github.com/dart-lang/angular/issues/1538)
+        if (astNode.stars.isNotEmpty) {
+          exceptionHandler.handle(AngularParserException(
+            NgParserWarningCode.INVALID_DEFERRED_ON_TEMPLATE,
+            deferredAst.sourceSpan.start.offset,
+            deferredAst.sourceSpan.length,
+          ));
+        }
         final origin = _toolFriendlyAstOrigin ? deferredAst : null;
         return EmbeddedTemplateAst.from(
           origin,
@@ -99,6 +104,10 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
           hasDeferredComponent: true,
         );
       }
+    }
+
+    if (astNode.stars.isNotEmpty) {
+      return _desugarStar(astNode, astNode.stars);
     }
 
     return astNode;
@@ -119,6 +128,19 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
 
   @override
   TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [_]) {
+    if (astNode.annotations.isNotEmpty) {
+      final i = astNode.annotations.indexWhere((ast) => ast.name == 'deferred');
+      if (i != -1) {
+        final deferredAst = astNode.annotations.removeAt(i);
+        // Fail on invalid use (i.e. on a <template> tag):
+        // (https://github.com/dart-lang/angular/issues/1538)
+        exceptionHandler.handle(AngularParserException(
+          NgParserWarningCode.INVALID_DEFERRED_ON_TEMPLATE,
+          deferredAst.sourceSpan.start.offset,
+          deferredAst.sourceSpan.length,
+        ));
+      }
+    }
     _visitChildren(astNode);
     return astNode;
   }

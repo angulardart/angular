@@ -1,5 +1,8 @@
 *   Annotations may now have compound names (for example `@foo.bar`).
 
+*   It is now an error to use `@deferred` on a `<template>` tag or combined with
+    a structural (i.e. `*ngIf`) directive.
+
 ## 0.5.6
 
 *   Maintenance release to support Dart 2.0 stable.

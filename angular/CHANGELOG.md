@@ -1,3 +1,31 @@
+### Bug fixes
+
+*   [#1538]() A compile-time error is reported if the `@deferred` template
+    annotation is present on a `<template>` element or is a sibling to a
+    structural directive (such as `*ngIf`). Before we would silently drop/ignore
+    the annotation, so this might be considered a breaking change of an
+    incorrect program. The fix is just to move the annotation, such as:
+
+    ```html
+    <!-- Before (Both are identical) -->
+    <template @deferred [ngIf]="showArea>
+      <expensive-comp></expensive-comp>
+    </template>
+
+    <expensive-comp *ngIf="showArea" @deferred></expensive-comp>
+
+    <!-- After (Both are identical) -->
+    <template [ngIf]="showArea">
+      <expensive-comp @deferred></expensive-comp>
+    </template>
+
+    <ng-container *ngIf="showArea">
+      <expensive-comp @deferred></expensive-comp>
+    </ng-container>
+    ```
+
+[#1538]: https://github.com/dart-lang/angular/issues/153
+
 ## 5.0.0
 
 Welcome to AngularDart v5.0.0, with full support for Dart 2. Please note that
