@@ -28,7 +28,7 @@ void main() {
     test('should properly render markdown', () async {
       var stream = StreamController<GithubIssue>();
       var service = MockGithubService();
-      when(service.getIssues()).thenReturn(stream.stream);
+      when(service.getIssues()).thenAnswer((_) => stream.stream);
       var testBed = NgTestBed<ComplexTestComponent>().addProviders([
         provide(GithubService, useValue: service),
       ]);
