@@ -121,6 +121,9 @@ class NgScanner {
         case NgScannerState.scanSimpleElementDecorator:
           returnToken = scanSimpleElementDecorator();
           break;
+        case NgScannerState.scanSpecialAnnotationDecorator:
+          returnToken = scanSpecialAnnotationDecorator();
+          break;
         case NgScannerState.scanSpecialBananaDecorator:
           returnToken = scanSpecialBananaDecorator();
           break;
@@ -539,7 +542,7 @@ class NgScanner {
       return NgToken.templatePrefix(offset);
     }
     if (type == NgSimpleTokenType.atSign) {
-      _state = NgScannerState.scanSimpleElementDecorator;
+      _state = NgScannerState.scanSpecialAnnotationDecorator;
       _lastDecoratorPrefix = _current;
       return NgToken.annotationPrefix(offset);
     }
@@ -873,6 +876,37 @@ class NgScanner {
   }
 
   @protected
+  NgToken scanSpecialAnnotationDecorator() {
+    var type = _current.type;
+    if (type == NgSimpleTokenType.period ||
+        type == NgSimpleTokenType.identifier) {
+      _state = NgScannerState.scanAfterElementDecorator;
+      return _scanCompoundDecorator();
+    }
+
+    if (_current == _lastErrorToken) {
+      return handleError(null, null, null);
+    }
+
+    if (type == NgSimpleTokenType.bang ||
+        type == NgSimpleTokenType.dash ||
+        type == NgSimpleTokenType.forwardSlash ||
+        type == NgSimpleTokenType.unexpectedChar) {
+      return handleError(
+        NgParserWarningCode.UNEXPECTED_TOKEN,
+        _current.offset,
+        _current.length,
+      );
+    }
+
+    return handleError(
+      NgParserWarningCode.ELEMENT_DECORATOR_AFTER_PREFIX,
+      _lastDecoratorPrefix.offset,
+      _lastDecoratorPrefix.length,
+    );
+  }
+
+  @protected
   NgToken scanSpecialBananaDecorator() {
     var type = _current.type;
     if (type == NgSimpleTokenType.period ||
@@ -1159,6 +1193,7 @@ enum NgScannerState {
   scanElementStart,
   scanInterpolation,
   scanSimpleElementDecorator,
+  scanSpecialAnnotationDecorator,
   scanSpecialBananaDecorator,
   scanSpecialEventDecorator,
   scanSpecialPropertyDecorator,
