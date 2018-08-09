@@ -26,40 +26,32 @@ $ webdev serve --release
 
 ## Deploy to Firebase
 
-1. Install and setup [Firebase CLI](https://github.com/firebase/firebase-tools/).
+1. Install and setup [Firebase CLI][firebase-cli].
 
-2. Create a new [Firebase project](https://console.firebase.google.com/).
+2. Create a new [Firebase project][firebase-project].
 
-3. Build a release version of hacker_news_pwa:
+3. Select your new Firebase project:
 
-4. Select your new Firebase project:
+    ```console
+    $ firebase use --add
+    ```
 
-  ```console
-  $ firebase use --add
-  ```
+    This will create a `.firebaserc` file to store your project configuration.
 
-  This will create a `.firebaserc` file to store your project configuration.
+4. Update the offline URL cache [timestamp][offline-urls-timestamp] to the
+   current date. Automation of this step has temporarily been disabled due to
+   [#1369][issue-1369].
 
-5. Build and deploy:
+5. Deploy:
 
-  The `firebase.json` file has the build command configured via the `predeploy`
-  setting, so you just have to run `deploy`.
+    The `firebase.json` file has the build command configured via the `predeploy`
+    setting, so you just have to run `deploy`.
 
-  ```console
-  $ firebase deploy
-  ```
+    ```console
+    $ firebase deploy
+    ```
 
-<!--
-Add back details about updating the cached assets once
-https://github.com/isoos/pwa/issues/21 is fixed
-
-## Updating service worker cached assets
-
-Run the following commands to update the list of assets the service worker will
-cache to be accessible offline.
-
-```shell
-$ webdev build
-$ pub run pwa --exclude "packages/**,.packages,*.dart,*.js.deps,*.js.info.json,*.js.map,*.js.tar.gz,*.module"
-```
--->
+[firebase-cli]: https://github.com/firebase/firebase-tools
+[firebase-project]: https://console.firebase.google.com
+[issue-1369]: https://github.com/dart-lang/angular/issues/1369
+[offline-urls-timestamp]: https://github.com/dart-lang/angular/blob/master/examples/hacker_news_pwa/lib/pwa/offline_urls.g.dart#L11
