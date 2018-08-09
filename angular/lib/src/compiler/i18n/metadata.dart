@@ -10,12 +10,13 @@ const i18nMeaning = '$i18nDescription.meaning';
 const i18nMeaningPrefix = '$i18nMeaning:';
 
 const _i18nIndexForMeaning = 1;
-const _i18nIndexForAttribute = 2;
+const _i18nIndexForSkip = 2;
+const _i18nIndexForAttribute = 3;
 final _i18nRegExp = RegExp(
     // Matches i18n prefix.
     'i18n'
     // Captures optional i18n parameter name.
-    r'(?:\.(meaning))?'
+    r'(?:\.(?:(meaning)|(skip)))?'
     // Captures attribute name, or matches end of input.
     r'(?::(.+)|$)');
 
@@ -41,6 +42,8 @@ I18nMetadataBundle parseI18nMetadata(
     final builder = builders[attribute] ??= _I18nMetadataBuilder(context);
     if (match[_i18nIndexForMeaning] != null) {
       builder.meaning = annotation;
+    } else if (match[_i18nIndexForSkip] != null) {
+      builder.skip = annotation;
     } else {
       builder.description = annotation;
     }
@@ -69,10 +72,18 @@ class I18nMetadata {
   /// This value is optional, and may be null if omitted.
   final String meaning;
 
+  /// Whether this message should be skipped for internationalization.
+  ///
+  /// When true, this message is still be validated and rendered, but it isn't
+  /// extracted for translation. This is useful for placeholder messages during
+  /// development that haven't yet been finalized.
+  final bool skip;
+
   /// Creates metadata from [description] with optional [meaning].
   I18nMetadata(
     this.description, {
     this.meaning,
+    this.skip = false,
   });
 }
 
@@ -98,19 +109,28 @@ class _I18nMetadataBuilder {
 
   AnnotationAst description;
   AnnotationAst meaning;
+  AnnotationAst skip;
 
   _I18nMetadataBuilder(this._context);
 
   I18nMetadata build() {
     if (description == null) {
-      _context.reportError(
-          'A corresponding message description (@i18n) is required',
-          meaning.sourceSpan);
+      _reportMissingDescriptionFor(meaning);
+      _reportMissingDescriptionFor(skip);
       return null;
     }
     return I18nMetadata(
       description.value.trim(),
       meaning: meaning?.value?.trim(),
+      skip: skip != null,
     );
+  }
+
+  void _reportMissingDescriptionFor(AnnotationAst annotation) {
+    if (annotation != null) {
+      _context.reportError(
+          'A corresponding message description (@i18n) is required',
+          meaning.sourceSpan);
+    }
   }
 }
