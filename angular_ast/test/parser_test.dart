@@ -322,4 +322,12 @@ void main() {
     final annotation = ast.annotations.single;
     expect(annotation.sourceSpan.text, source);
   });
+
+  test('should parse an annotation with a compound name', () {
+    expect(parse('<div @foo.bar></div>'), [
+      ElementAst('div', CloseElementAst('div'), annotations: [
+        AnnotationAst('foo.bar'),
+      ])
+    ]);
+  });
 }

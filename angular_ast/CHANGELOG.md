@@ -1,6 +1,8 @@
+*   Annotations may now have compound names (for example `@foo.bar`).
+
 ## 0.5.6
 
-* Maintence release to support `dart 2.0 stable`.
+*   Maintenance release to support Dart 2.0 stable.
 
 ## 0.5.5
 

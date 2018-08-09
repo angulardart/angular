@@ -53,6 +53,8 @@ abstract class RecoveryProtocol {
         return scanElementStart(current, reader);
       case NgScannerState.scanSimpleElementDecorator:
         return scanSimpleElementDecorator(current, reader);
+      case NgScannerState.scanSpecialAnnotationDecorator:
+        return scanSpecialAnnotationDecorator(current, reader);
       case NgScannerState.scanSpecialBananaDecorator:
         return scanSpecialBananaDecorator(current, reader);
       case NgScannerState.scanSpecialEventDecorator:
@@ -154,6 +156,10 @@ abstract class RecoveryProtocol {
       RecoverySolution.skip();
 
   RecoverySolution scanSimpleElementDecorator(
+          NgSimpleToken current, NgTokenReversibleReader reader) =>
+      RecoverySolution.skip();
+
+  RecoverySolution scanSpecialAnnotationDecorator(
           NgSimpleToken current, NgTokenReversibleReader reader) =>
       RecoverySolution.skip();
 
