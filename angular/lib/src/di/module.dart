@@ -4,9 +4,7 @@ import 'providers.dart';
 
 /// Encapsulates a reusable set of dependency injection configurations.
 ///
-/// **WARNING**: This is an experimental API and not yet usable.
-///
-/// One ore more modules can be used to create an [Injector], or a runtime
+/// One or more modules can be used to create an [Injector], or a runtime
 /// representation of dependency injection. Modules can also be used to add
 /// dependency injection to `@Directive` or `@Component`-annotated classes.
 ///
@@ -42,7 +40,6 @@ import 'providers.dart';
 ///   ],
 /// );
 /// ```
-@experimental
 class Module {
   final List<Module> include;
   final List<Provider<Object>> provide;
