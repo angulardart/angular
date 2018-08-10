@@ -94,12 +94,9 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     _NgIf_1_9.ngIf = _ctx.showDeferredChild;
     _NgIf_2_9.ngIf = _ctx.showDeferredChild;
     _appEl_0.detectChangesInNestedViews();
-    _appEl_0.detectChangesInNestedViews();
     _appEl_1.detectChangesInNestedViews();
     _appEl_2.detectChangesInNestedViews();
     _appEl_3.detectChangesInNestedViews();
-    _appEl_3.detectChangesInNestedViews();
-    _appEl_4.detectChangesInNestedViews();
     _appEl_4.detectChangesInNestedViews();
     if (!import10.AppViewUtils.throwOnChanges) {
       if (_query_queryMe_1_0_isDirty) {
@@ -117,12 +114,9 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   @override
   void destroyInternal() {
     _appEl_0?.destroyNestedViews();
-    _appEl_0?.destroyNestedViews();
     _appEl_1?.destroyNestedViews();
     _appEl_2?.destroyNestedViews();
     _appEl_3?.destroyNestedViews();
-    _appEl_3?.destroyNestedViews();
-    _appEl_4?.destroyNestedViews();
     _appEl_4?.destroyNestedViews();
     _compView_5?.destroy();
     _cancelDeferredLoad0();
@@ -186,12 +180,10 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
   @override
   void detectChangesInternal() {
     _appEl_0.detectChangesInNestedViews();
-    _appEl_0.detectChangesInNestedViews();
   }
 
   @override
   void destroyInternal() {
-    _appEl_0?.destroyNestedViews();
     _appEl_0?.destroyNestedViews();
     _cancelDeferredLoad0();
   }
@@ -256,12 +248,10 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
   @override
   void detectChangesInternal() {
     _appEl_1.detectChangesInNestedViews();
-    _appEl_1.detectChangesInNestedViews();
   }
 
   @override
   void destroyInternal() {
-    _appEl_1?.destroyNestedViews();
     _appEl_1?.destroyNestedViews();
     _cancelDeferredLoad1();
   }

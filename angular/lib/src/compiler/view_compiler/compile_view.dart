@@ -1236,7 +1236,6 @@ class CompileView implements AppViewBuilder {
       cancelHandlerName,
       outputType: new o.FunctionType(o.VOID_TYPE, []),
     );
-    viewContainers.add(targetElement.appViewContainer);
     _createMethod.addStmt(
       o.ReadClassMemberExpr(cancelHandlerName).set(deferredLoadExpr).toStmt(),
     );
