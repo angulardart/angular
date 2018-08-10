@@ -19,6 +19,12 @@ class DeferredChild2Component {}
 class DeferredChild3Component {}
 
 @Component(
+  selector: 'not-deferred-child',
+  template: '',
+)
+class NotDeferredChildComponent {}
+
+@Component(
   selector: 'deferred-child-without-ng-content',
   template: '<div>Child</div>',
 )
