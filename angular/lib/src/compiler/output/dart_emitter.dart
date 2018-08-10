@@ -597,7 +597,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       var prefix = importsWithPrefixes[moduleUrl];
       if (prefix == null) {
         if (_whiteListedImports.contains(moduleUrl)) {
-          prefix = 'import${importsWithPrefixes.length}';
+          prefix = '';
         } else {
           prefix = 'import${importsWithPrefixes.length}';
         }

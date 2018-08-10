@@ -8,30 +8,30 @@ export 'providers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/app_view.dart';
 import 'providers.dart' as import1;
-import 'package:angular/src/core/render/api.dart' as import2 /*WHITELISTED*/;
+import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import3;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import4 /*WHITELISTED*/;
+import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
-import 'package:angular/angular.dart' as import8 /*WHITELISTED*/;
+import 'package:angular/angular.dart';
 import 'package:angular/src/core/zone/ng_zone.dart' as import9;
 import 'package:angular/src/core/di/opaque_token.dart' as import10;
 import 'providers.dart' as import11;
 
 final List<dynamic> styles$ProvidersComponent = const [];
 
-class ViewProvidersComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.ProvidersComponent> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewProvidersComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
+  static RenderComponentType _renderType;
+  ViewProvidersComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('providers');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/providers.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$ProvidersComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/providers.dart' : null), ViewEncapsulation.None, styles$ProvidersComponent);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.ProvidersComponent> build() {
+  ComponentRef<import1.ProvidersComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     import5.Text _text_0 = import5.Text('Hello');
@@ -41,13 +41,13 @@ class ViewProvidersComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.P
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.ProvidersComponent> viewFactory_ProvidersComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.ProvidersComponent> viewFactory_ProvidersComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewProvidersComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$ProvidersComponentHost = const [];
 
-class _ViewProvidersComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.ProvidersComponent> {
+class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
   ViewProvidersComponent0 _compView_0;
   import1.ProvidersComponent _ProvidersComponent_0_5;
   import1.MyTypeAnnotation __MyTypeAnnotation_0_6;
@@ -60,7 +60,7 @@ class _ViewProvidersComponentHost0 extends import0 /*WHITELISTED*/ .AppView<impo
   Map<String, dynamic> __useValueMap_0_15;
   dynamic __useEnums_0_16;
   String __XsrfToken_0_17;
-  _ViewProvidersComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewProvidersComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.MyTypeAnnotation get _MyTypeAnnotation_0_6 {
     if ((this.__MyTypeAnnotation_0_6 == null)) {
       (__MyTypeAnnotation_0_6 = import1.MyTypeAnnotation());
@@ -132,13 +132,13 @@ class _ViewProvidersComponentHost0 extends import0 /*WHITELISTED*/ .AppView<impo
   }
 
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.ProvidersComponent> build() {
+  ComponentRef<import1.ProvidersComponent> build() {
     _compView_0 = ViewProvidersComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ProvidersComponent_0_5 = import1.ProvidersComponent();
     _compView_0.create(_ProvidersComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _ProvidersComponent_0_5);
+    return ComponentRef(0, this, rootEl, _ProvidersComponent_0_5);
   }
 
   @override
@@ -187,12 +187,12 @@ class _ViewProvidersComponentHost0 extends import0 /*WHITELISTED*/ .AppView<impo
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.ProvidersComponent> viewFactory_ProvidersComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.ProvidersComponent> viewFactory_ProvidersComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewProvidersComponentHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.ProvidersComponent> _ProvidersComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('providers', viewFactory_ProvidersComponentHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.ProvidersComponent> get ProvidersComponentNgFactory {
+const ComponentFactory<import1.ProvidersComponent> _ProvidersComponentNgFactory = const ComponentFactory('providers', viewFactory_ProvidersComponentHost0);
+ComponentFactory<import1.ProvidersComponent> get ProvidersComponentNgFactory {
   return _ProvidersComponentNgFactory;
 }
 

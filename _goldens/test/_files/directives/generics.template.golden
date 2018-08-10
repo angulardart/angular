@@ -9,32 +9,32 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/metadata/typed.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/app_view.dart';
 import 'generics.dart' as import1;
-import 'package:angular/src/core/render/api.dart' as import2 /*WHITELISTED*/;
+import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import3;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import4 /*WHITELISTED*/;
+import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
-import 'package:angular/angular.dart' as import8 /*WHITELISTED*/;
-import 'dart:core' as import9 /*WHITELISTED*/;
-import 'package:angular/src/core/linker/view_container.dart' as import10 /*WHITELISTED*/;
+import 'package:angular/angular.dart';
+import 'dart:core';
+import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import11;
-import 'package:angular/src/core/linker/template_ref.dart' as import12 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import13;
 
 final List<dynamic> styles$UntypedComp = const [];
 
-class ViewUntypedComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UntypedComp> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUntypedComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
+  static RenderComponentType _renderType;
+  ViewUntypedComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UntypedComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UntypedComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UntypedComp> build() {
+  ComponentRef<import1.UntypedComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -42,24 +42,24 @@ class ViewUntypedComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UntypedC
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UntypedComp> viewFactory_UntypedComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UntypedComp> viewFactory_UntypedComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUntypedComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UntypedCompHost = const [];
 
-class _ViewUntypedCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UntypedComp> {
+class _ViewUntypedCompHost0 extends AppView<import1.UntypedComp> {
   ViewUntypedComp0 _compView_0;
   import1.UntypedComp _UntypedComp_0_5;
-  _ViewUntypedCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UntypedComp> build() {
+  ComponentRef<import1.UntypedComp> build() {
     _compView_0 = ViewUntypedComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _UntypedComp_0_5 = import1.UntypedComp();
     _compView_0.create(_UntypedComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UntypedComp_0_5);
+    return ComponentRef(0, this, rootEl, _UntypedComp_0_5);
   }
 
   @override
@@ -73,30 +73,30 @@ class _ViewUntypedCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.Unt
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UntypedComp> viewFactory_UntypedCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UntypedComp> viewFactory_UntypedCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUntypedCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UntypedComp> _UntypedCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UntypedCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UntypedComp> get UntypedCompNgFactory {
+const ComponentFactory<import1.UntypedComp> _UntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UntypedCompHost0);
+ComponentFactory<import1.UntypedComp> get UntypedCompNgFactory {
   return _UntypedCompNgFactory;
 }
 
 final List<dynamic> styles$UsesUntypedComp = const [];
 
-class ViewUsesUntypedComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesUntypedComp> {
+class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
   import5.Element _el_0;
   ViewUntypedComp0 _compView_0;
   import1.UntypedComp _UntypedComp_0_5;
   var _expr_0;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesUntypedComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesUntypedComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesUntypedComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesUntypedComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesUntypedComp> build() {
+  ComponentRef<import1.UsesUntypedComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewUntypedComp0(this, 0);
@@ -125,24 +125,24 @@ class ViewUsesUntypedComp0 extends import0 /*WHITELISTED*/ .AppView<import1.Uses
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesUntypedComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesUntypedCompHost = const [];
 
-class _ViewUsesUntypedCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesUntypedComp> {
+class _ViewUsesUntypedCompHost0 extends AppView<import1.UsesUntypedComp> {
   ViewUsesUntypedComp0 _compView_0;
   import1.UsesUntypedComp _UsesUntypedComp_0_5;
-  _ViewUsesUntypedCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesUntypedComp> build() {
+  ComponentRef<import1.UsesUntypedComp> build() {
     _compView_0 = ViewUsesUntypedComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesUntypedComp_0_5 = import1.UsesUntypedComp();
     _compView_0.create(_UsesUntypedComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesUntypedComp_0_5);
+    return ComponentRef(0, this, rootEl, _UsesUntypedComp_0_5);
   }
 
   @override
@@ -156,26 +156,26 @@ class _ViewUsesUntypedCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesUntypedCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesUntypedComp> _UsesUntypedCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesUntypedCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesUntypedComp> get UsesUntypedCompNgFactory {
+const ComponentFactory<import1.UsesUntypedComp> _UsesUntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UsesUntypedCompHost0);
+ComponentFactory<import1.UsesUntypedComp> get UsesUntypedCompNgFactory {
   return _UsesUntypedCompNgFactory;
 }
 
 final List<dynamic> styles$GenericComp = const [];
 
-class ViewGenericComp0<T> extends import0 /*WHITELISTED*/ .AppView<import1.GenericComp<T>> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewGenericComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
+  static RenderComponentType _renderType;
+  ViewGenericComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$GenericComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$GenericComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.GenericComp<T>> build() {
+  ComponentRef<import1.GenericComp<T>> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -183,24 +183,24 @@ class ViewGenericComp0<T> extends import0 /*WHITELISTED*/ .AppView<import1.Gener
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.GenericComp<T>> viewFactory_GenericComp0<T>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.GenericComp<T>> viewFactory_GenericComp0<T>(AppView<dynamic> parentView, int parentIndex) {
   return ViewGenericComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$GenericCompHost = const [];
 
-class _ViewGenericCompHost0<T> extends import0 /*WHITELISTED*/ .AppView<import1.GenericComp<T>> {
+class _ViewGenericCompHost0<T> extends AppView<import1.GenericComp<T>> {
   ViewGenericComp0<T> _compView_0;
   import1.GenericComp<T> _GenericComp_0_5;
-  _ViewGenericCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewGenericCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.GenericComp<T>> build() {
+  ComponentRef<import1.GenericComp<T>> build() {
     _compView_0 = ViewGenericComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _GenericComp_0_5 = import1.GenericComp();
     _compView_0.create(_GenericComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _GenericComp_0_5);
+    return ComponentRef(0, this, rootEl, _GenericComp_0_5);
   }
 
   @override
@@ -214,30 +214,30 @@ class _ViewGenericCompHost0<T> extends import0 /*WHITELISTED*/ .AppView<import1.
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewGenericCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.GenericComp> _GenericCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_GenericCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.GenericComp> get GenericCompNgFactory {
+const ComponentFactory<import1.GenericComp> _GenericCompNgFactory = const ComponentFactory('comp', viewFactory_GenericCompHost0);
+ComponentFactory<import1.GenericComp> get GenericCompNgFactory {
   return _GenericCompNgFactory;
 }
 
 final List<dynamic> styles$UsesGenericComp = const [];
 
-class ViewUsesGenericComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesGenericComp> {
+class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
   import5.Element _el_0;
-  ViewGenericComp0<import9 /*WHITELISTED*/ .int> _compView_0;
-  import1.GenericComp<import9 /*WHITELISTED*/ .int> _GenericComp_0_5;
+  ViewGenericComp0<int> _compView_0;
+  import1.GenericComp<int> _GenericComp_0_5;
   var _expr_0;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesGenericComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesGenericComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesGenericComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesGenericComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesGenericComp> build() {
+  ComponentRef<import1.UsesGenericComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewGenericComp0(this, 0);
@@ -266,24 +266,24 @@ class ViewUsesGenericComp0 extends import0 /*WHITELISTED*/ .AppView<import1.Uses
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesGenericComp> viewFactory_UsesGenericComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesGenericComp> viewFactory_UsesGenericComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesGenericComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesGenericCompHost = const [];
 
-class _ViewUsesGenericCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesGenericComp> {
+class _ViewUsesGenericCompHost0 extends AppView<import1.UsesGenericComp> {
   ViewUsesGenericComp0 _compView_0;
   import1.UsesGenericComp _UsesGenericComp_0_5;
-  _ViewUsesGenericCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesGenericCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesGenericComp> build() {
+  ComponentRef<import1.UsesGenericComp> build() {
     _compView_0 = ViewUsesGenericComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesGenericComp_0_5 = import1.UsesGenericComp();
     _compView_0.create(_UsesGenericComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesGenericComp_0_5);
+    return ComponentRef(0, this, rootEl, _UsesGenericComp_0_5);
   }
 
   @override
@@ -297,26 +297,26 @@ class _ViewUsesGenericCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesGenericCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesGenericComp> _UsesGenericCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesGenericCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesGenericComp> get UsesGenericCompNgFactory {
+const ComponentFactory<import1.UsesGenericComp> _UsesGenericCompNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericCompHost0);
+ComponentFactory<import1.UsesGenericComp> get UsesGenericCompNgFactory {
   return _UsesGenericCompNgFactory;
 }
 
 final List<dynamic> styles$MappingComp1 = const [];
 
-class ViewMappingComp10<K, V> extends import0 /*WHITELISTED*/ .AppView<import1.MappingComp1<K, V>> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewMappingComp10(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
+  static RenderComponentType _renderType;
+  ViewMappingComp10(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$MappingComp1);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$MappingComp1);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.MappingComp1<K, V>> build() {
+  ComponentRef<import1.MappingComp1<K, V>> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -324,24 +324,24 @@ class ViewMappingComp10<K, V> extends import0 /*WHITELISTED*/ .AppView<import1.M
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp10<K, V>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp10<K, V>(AppView<dynamic> parentView, int parentIndex) {
   return ViewMappingComp10(parentView, parentIndex);
 }
 
 final List<dynamic> styles$MappingComp1Host = const [];
 
-class _ViewMappingComp1Host0<K, V> extends import0 /*WHITELISTED*/ .AppView<import1.MappingComp1<K, V>> {
+class _ViewMappingComp1Host0<K, V> extends AppView<import1.MappingComp1<K, V>> {
   ViewMappingComp10<K, V> _compView_0;
   import1.MappingComp1<K, V> _MappingComp1_0_5;
-  _ViewMappingComp1Host0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.MappingComp1<K, V>> build() {
+  ComponentRef<import1.MappingComp1<K, V>> build() {
     _compView_0 = ViewMappingComp10(this, 0);
     rootEl = _compView_0.rootEl;
     _MappingComp1_0_5 = import1.MappingComp1();
     _compView_0.create(_MappingComp1_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _MappingComp1_0_5);
+    return ComponentRef(0, this, rootEl, _MappingComp1_0_5);
   }
 
   @override
@@ -355,31 +355,31 @@ class _ViewMappingComp1Host0<K, V> extends import0 /*WHITELISTED*/ .AppView<impo
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewMappingComp1Host0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.MappingComp1> _MappingComp1NgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_MappingComp1Host0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.MappingComp1> get MappingComp1NgFactory {
+const ComponentFactory<import1.MappingComp1> _MappingComp1NgFactory = const ComponentFactory('comp', viewFactory_MappingComp1Host0);
+ComponentFactory<import1.MappingComp1> get MappingComp1NgFactory {
   return _MappingComp1NgFactory;
 }
 
 final List<dynamic> styles$UsesMappingComp1 = const [];
 
-class ViewUsesMappingComp10 extends import0 /*WHITELISTED*/ .AppView<import1.UsesMappingComp1> {
+class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
   import5.Element _el_0;
-  ViewMappingComp10<import9 /*WHITELISTED*/ .int, import9 /*WHITELISTED*/ .String> _compView_0;
-  import1.MappingComp1<import9 /*WHITELISTED*/ .int, import9 /*WHITELISTED*/ .String> _MappingComp1_0_5;
+  ViewMappingComp10<int, String> _compView_0;
+  import1.MappingComp1<int, String> _MappingComp1_0_5;
   var _expr_0;
   var _expr_1;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesMappingComp10(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesMappingComp10(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesMappingComp1);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesMappingComp1);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesMappingComp1> build() {
+  ComponentRef<import1.UsesMappingComp1> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewMappingComp10(this, 0);
@@ -413,24 +413,24 @@ class ViewUsesMappingComp10 extends import0 /*WHITELISTED*/ .AppView<import1.Use
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp10(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp10(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesMappingComp10(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesMappingComp1Host = const [];
 
-class _ViewUsesMappingComp1Host0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesMappingComp1> {
+class _ViewUsesMappingComp1Host0 extends AppView<import1.UsesMappingComp1> {
   ViewUsesMappingComp10 _compView_0;
   import1.UsesMappingComp1 _UsesMappingComp1_0_5;
-  _ViewUsesMappingComp1Host0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesMappingComp1> build() {
+  ComponentRef<import1.UsesMappingComp1> build() {
     _compView_0 = ViewUsesMappingComp10(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesMappingComp1_0_5 = import1.UsesMappingComp1();
     _compView_0.create(_UsesMappingComp1_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesMappingComp1_0_5);
+    return ComponentRef(0, this, rootEl, _UsesMappingComp1_0_5);
   }
 
   @override
@@ -444,26 +444,26 @@ class _ViewUsesMappingComp1Host0 extends import0 /*WHITELISTED*/ .AppView<import
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesMappingComp1Host0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesMappingComp1> _UsesMappingComp1NgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesMappingComp1Host0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesMappingComp1> get UsesMappingComp1NgFactory {
+const ComponentFactory<import1.UsesMappingComp1> _UsesMappingComp1NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp1Host0);
+ComponentFactory<import1.UsesMappingComp1> get UsesMappingComp1NgFactory {
   return _UsesMappingComp1NgFactory;
 }
 
 final List<dynamic> styles$MappingComp2 = const [];
 
-class ViewMappingComp20<K, V> extends import0 /*WHITELISTED*/ .AppView<import1.MappingComp2<K, V>> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewMappingComp20(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
+  static RenderComponentType _renderType;
+  ViewMappingComp20(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$MappingComp2);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$MappingComp2);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.MappingComp2<K, V>> build() {
+  ComponentRef<import1.MappingComp2<K, V>> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -471,24 +471,24 @@ class ViewMappingComp20<K, V> extends import0 /*WHITELISTED*/ .AppView<import1.M
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp20<K, V>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp20<K, V>(AppView<dynamic> parentView, int parentIndex) {
   return ViewMappingComp20(parentView, parentIndex);
 }
 
 final List<dynamic> styles$MappingComp2Host = const [];
 
-class _ViewMappingComp2Host0<K, V> extends import0 /*WHITELISTED*/ .AppView<import1.MappingComp2<K, V>> {
+class _ViewMappingComp2Host0<K, V> extends AppView<import1.MappingComp2<K, V>> {
   ViewMappingComp20<K, V> _compView_0;
   import1.MappingComp2<K, V> _MappingComp2_0_5;
-  _ViewMappingComp2Host0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.MappingComp2<K, V>> build() {
+  ComponentRef<import1.MappingComp2<K, V>> build() {
     _compView_0 = ViewMappingComp20(this, 0);
     rootEl = _compView_0.rootEl;
     _MappingComp2_0_5 = import1.MappingComp2();
     _compView_0.create(_MappingComp2_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _MappingComp2_0_5);
+    return ComponentRef(0, this, rootEl, _MappingComp2_0_5);
   }
 
   @override
@@ -502,30 +502,30 @@ class _ViewMappingComp2Host0<K, V> extends import0 /*WHITELISTED*/ .AppView<impo
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewMappingComp2Host0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.MappingComp2> _MappingComp2NgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_MappingComp2Host0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.MappingComp2> get MappingComp2NgFactory {
+const ComponentFactory<import1.MappingComp2> _MappingComp2NgFactory = const ComponentFactory('comp', viewFactory_MappingComp2Host0);
+ComponentFactory<import1.MappingComp2> get MappingComp2NgFactory {
   return _MappingComp2NgFactory;
 }
 
 final List<dynamic> styles$UsesMappingComp2 = const [];
 
-class ViewUsesMappingComp20 extends import0 /*WHITELISTED*/ .AppView<import1.UsesMappingComp2> {
+class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
   import5.Element _el_0;
-  ViewMappingComp20<import9 /*WHITELISTED*/ .int, import9 /*WHITELISTED*/ .String> _compView_0;
-  import1.MappingComp2<import9 /*WHITELISTED*/ .int, import9 /*WHITELISTED*/ .String> _MappingComp2_0_5;
+  ViewMappingComp20<int, String> _compView_0;
+  import1.MappingComp2<int, String> _MappingComp2_0_5;
   var _expr_0;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesMappingComp20(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesMappingComp20(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesMappingComp2);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesMappingComp2);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesMappingComp2> build() {
+  ComponentRef<import1.UsesMappingComp2> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewMappingComp20(this, 0);
@@ -554,24 +554,24 @@ class ViewUsesMappingComp20 extends import0 /*WHITELISTED*/ .AppView<import1.Use
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp20(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp20(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesMappingComp20(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesMappingComp2Host = const [];
 
-class _ViewUsesMappingComp2Host0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesMappingComp2> {
+class _ViewUsesMappingComp2Host0 extends AppView<import1.UsesMappingComp2> {
   ViewUsesMappingComp20 _compView_0;
   import1.UsesMappingComp2 _UsesMappingComp2_0_5;
-  _ViewUsesMappingComp2Host0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesMappingComp2> build() {
+  ComponentRef<import1.UsesMappingComp2> build() {
     _compView_0 = ViewUsesMappingComp20(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesMappingComp2_0_5 = import1.UsesMappingComp2();
     _compView_0.create(_UsesMappingComp2_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesMappingComp2_0_5);
+    return ComponentRef(0, this, rootEl, _UsesMappingComp2_0_5);
   }
 
   @override
@@ -585,26 +585,26 @@ class _ViewUsesMappingComp2Host0 extends import0 /*WHITELISTED*/ .AppView<import
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesMappingComp2Host0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesMappingComp2> _UsesMappingComp2NgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesMappingComp2Host0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesMappingComp2> get UsesMappingComp2NgFactory {
+const ComponentFactory<import1.UsesMappingComp2> _UsesMappingComp2NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp2Host0);
+ComponentFactory<import1.UsesMappingComp2> get UsesMappingComp2NgFactory {
   return _UsesMappingComp2NgFactory;
 }
 
 final List<dynamic> styles$BoundComp = const [];
 
-class ViewBoundComp0 extends import0 /*WHITELISTED*/ .AppView<import1.BoundComp> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewBoundComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewBoundComp0 extends AppView<import1.BoundComp> {
+  static RenderComponentType _renderType;
+  ViewBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$BoundComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$BoundComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.BoundComp> build() {
+  ComponentRef<import1.BoundComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -612,24 +612,24 @@ class ViewBoundComp0 extends import0 /*WHITELISTED*/ .AppView<import1.BoundComp>
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.BoundComp> viewFactory_BoundComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.BoundComp> viewFactory_BoundComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewBoundComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$BoundCompHost = const [];
 
-class _ViewBoundCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.BoundComp> {
+class _ViewBoundCompHost0 extends AppView<import1.BoundComp> {
   ViewBoundComp0 _compView_0;
   import1.BoundComp _BoundComp_0_5;
-  _ViewBoundCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.BoundComp> build() {
+  ComponentRef<import1.BoundComp> build() {
     _compView_0 = ViewBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _BoundComp_0_5 = import1.BoundComp();
     _compView_0.create(_BoundComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _BoundComp_0_5);
+    return ComponentRef(0, this, rootEl, _BoundComp_0_5);
   }
 
   @override
@@ -643,30 +643,30 @@ class _ViewBoundCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.Bound
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.BoundComp> viewFactory_BoundCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.BoundComp> viewFactory_BoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewBoundCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.BoundComp> _BoundCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_BoundCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.BoundComp> get BoundCompNgFactory {
+const ComponentFactory<import1.BoundComp> _BoundCompNgFactory = const ComponentFactory('comp', viewFactory_BoundCompHost0);
+ComponentFactory<import1.BoundComp> get BoundCompNgFactory {
   return _BoundCompNgFactory;
 }
 
 final List<dynamic> styles$UsesBoundCompWithBounds = const [];
 
-class ViewUsesBoundCompWithBounds0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesBoundCompWithBounds> {
+class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBounds> {
   import5.Element _el_0;
   ViewBoundComp0 _compView_0;
   import1.BoundComp _BoundComp_0_5;
   num _expr_0;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesBoundCompWithBounds0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesBoundCompWithBounds0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesBoundCompWithBounds);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesBoundCompWithBounds);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesBoundCompWithBounds> build() {
+  ComponentRef<import1.UsesBoundCompWithBounds> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewBoundComp0(this, 0);
@@ -695,24 +695,24 @@ class ViewUsesBoundCompWithBounds0 extends import0 /*WHITELISTED*/ .AppView<impo
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBounds0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBounds0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesBoundCompWithBounds0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesBoundCompWithBoundsHost = const [];
 
-class _ViewUsesBoundCompWithBoundsHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesBoundCompWithBounds> {
+class _ViewUsesBoundCompWithBoundsHost0 extends AppView<import1.UsesBoundCompWithBounds> {
   ViewUsesBoundCompWithBounds0 _compView_0;
   import1.UsesBoundCompWithBounds _UsesBoundCompWithBounds_0_5;
-  _ViewUsesBoundCompWithBoundsHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesBoundCompWithBoundsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesBoundCompWithBounds> build() {
+  ComponentRef<import1.UsesBoundCompWithBounds> build() {
     _compView_0 = ViewUsesBoundCompWithBounds0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesBoundCompWithBounds_0_5 = import1.UsesBoundCompWithBounds();
     _compView_0.create(_UsesBoundCompWithBounds_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesBoundCompWithBounds_0_5);
+    return ComponentRef(0, this, rootEl, _UsesBoundCompWithBounds_0_5);
   }
 
   @override
@@ -726,30 +726,30 @@ class _ViewUsesBoundCompWithBoundsHost0 extends import0 /*WHITELISTED*/ .AppView
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesBoundCompWithBoundsHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesBoundCompWithBounds> _UsesBoundCompWithBoundsNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesBoundCompWithBoundsHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesBoundCompWithBounds> get UsesBoundCompWithBoundsNgFactory {
+const ComponentFactory<import1.UsesBoundCompWithBounds> _UsesBoundCompWithBoundsNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompWithBoundsHost0);
+ComponentFactory<import1.UsesBoundCompWithBounds> get UsesBoundCompWithBoundsNgFactory {
   return _UsesBoundCompWithBoundsNgFactory;
 }
 
 final List<dynamic> styles$UsesBoundComp = const [];
 
-class ViewUsesBoundComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesBoundComp> {
+class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
   import5.Element _el_0;
   ViewBoundComp0 _compView_0;
   import1.BoundComp _BoundComp_0_5;
   num _expr_0;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesBoundComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesBoundComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesBoundComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesBoundComp> build() {
+  ComponentRef<import1.UsesBoundComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewBoundComp0(this, 0);
@@ -778,24 +778,24 @@ class ViewUsesBoundComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesBo
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesBoundComp> viewFactory_UsesBoundComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesBoundComp> viewFactory_UsesBoundComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesBoundComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesBoundCompHost = const [];
 
-class _ViewUsesBoundCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesBoundComp> {
+class _ViewUsesBoundCompHost0 extends AppView<import1.UsesBoundComp> {
   ViewUsesBoundComp0 _compView_0;
   import1.UsesBoundComp _UsesBoundComp_0_5;
-  _ViewUsesBoundCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesBoundComp> build() {
+  ComponentRef<import1.UsesBoundComp> build() {
     _compView_0 = ViewUsesBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesBoundComp_0_5 = import1.UsesBoundComp();
     _compView_0.create(_UsesBoundComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesBoundComp_0_5);
+    return ComponentRef(0, this, rootEl, _UsesBoundComp_0_5);
   }
 
   @override
@@ -809,26 +809,26 @@ class _ViewUsesBoundCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.U
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesBoundCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesBoundComp> _UsesBoundCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesBoundCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesBoundComp> get UsesBoundCompNgFactory {
+const ComponentFactory<import1.UsesBoundComp> _UsesBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompHost0);
+ComponentFactory<import1.UsesBoundComp> get UsesBoundCompNgFactory {
   return _UsesBoundCompNgFactory;
 }
 
 final List<dynamic> styles$SelfBoundComp = const [];
 
-class ViewSelfBoundComp0 extends import0 /*WHITELISTED*/ .AppView<import1.SelfBoundComp> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewSelfBoundComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewSelfBoundComp0 extends AppView<import1.SelfBoundComp> {
+  static RenderComponentType _renderType;
+  ViewSelfBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$SelfBoundComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$SelfBoundComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.SelfBoundComp> build() {
+  ComponentRef<import1.SelfBoundComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -836,24 +836,24 @@ class ViewSelfBoundComp0 extends import0 /*WHITELISTED*/ .AppView<import1.SelfBo
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.SelfBoundComp> viewFactory_SelfBoundComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.SelfBoundComp> viewFactory_SelfBoundComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewSelfBoundComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$SelfBoundCompHost = const [];
 
-class _ViewSelfBoundCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.SelfBoundComp> {
+class _ViewSelfBoundCompHost0 extends AppView<import1.SelfBoundComp> {
   ViewSelfBoundComp0 _compView_0;
   import1.SelfBoundComp _SelfBoundComp_0_5;
-  _ViewSelfBoundCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewSelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.SelfBoundComp> build() {
+  ComponentRef<import1.SelfBoundComp> build() {
     _compView_0 = ViewSelfBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _SelfBoundComp_0_5 = import1.SelfBoundComp();
     _compView_0.create(_SelfBoundComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _SelfBoundComp_0_5);
+    return ComponentRef(0, this, rootEl, _SelfBoundComp_0_5);
   }
 
   @override
@@ -867,31 +867,31 @@ class _ViewSelfBoundCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.S
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.SelfBoundComp> viewFactory_SelfBoundCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.SelfBoundComp> viewFactory_SelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewSelfBoundCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.SelfBoundComp> _SelfBoundCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_SelfBoundCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.SelfBoundComp> get SelfBoundCompNgFactory {
+const ComponentFactory<import1.SelfBoundComp> _SelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_SelfBoundCompHost0);
+ComponentFactory<import1.SelfBoundComp> get SelfBoundCompNgFactory {
   return _SelfBoundCompNgFactory;
 }
 
 final List<dynamic> styles$UsesSelfBoundComp = const [];
 
-class ViewUsesSelfBoundComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesSelfBoundComp> {
+class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
   import5.Element _el_0;
   ViewSelfBoundComp0 _compView_0;
   import1.SelfBoundComp _SelfBoundComp_0_5;
   var _expr_0;
   var _expr_1;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesSelfBoundComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesSelfBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesSelfBoundComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesSelfBoundComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesSelfBoundComp> build() {
+  ComponentRef<import1.UsesSelfBoundComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewSelfBoundComp0(this, 0);
@@ -925,24 +925,24 @@ class ViewUsesSelfBoundComp0 extends import0 /*WHITELISTED*/ .AppView<import1.Us
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesSelfBoundComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesSelfBoundCompHost = const [];
 
-class _ViewUsesSelfBoundCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesSelfBoundComp> {
+class _ViewUsesSelfBoundCompHost0 extends AppView<import1.UsesSelfBoundComp> {
   ViewUsesSelfBoundComp0 _compView_0;
   import1.UsesSelfBoundComp _UsesSelfBoundComp_0_5;
-  _ViewUsesSelfBoundCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesSelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesSelfBoundComp> build() {
+  ComponentRef<import1.UsesSelfBoundComp> build() {
     _compView_0 = ViewUsesSelfBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesSelfBoundComp_0_5 = import1.UsesSelfBoundComp();
     _compView_0.create(_UsesSelfBoundComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesSelfBoundComp_0_5);
+    return ComponentRef(0, this, rootEl, _UsesSelfBoundComp_0_5);
   }
 
   @override
@@ -956,26 +956,26 @@ class _ViewUsesSelfBoundCompHost0 extends import0 /*WHITELISTED*/ .AppView<impor
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesSelfBoundCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesSelfBoundComp> _UsesSelfBoundCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesSelfBoundCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesSelfBoundComp> get UsesSelfBoundCompNgFactory {
+const ComponentFactory<import1.UsesSelfBoundComp> _UsesSelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesSelfBoundCompHost0);
+ComponentFactory<import1.UsesSelfBoundComp> get UsesSelfBoundCompNgFactory {
   return _UsesSelfBoundCompNgFactory;
 }
 
 final List<dynamic> styles$RecursiveComp = const [];
 
-class ViewRecursiveComp0 extends import0 /*WHITELISTED*/ .AppView<import1.RecursiveComp> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewRecursiveComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewRecursiveComp0 extends AppView<import1.RecursiveComp> {
+  static RenderComponentType _renderType;
+  ViewRecursiveComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$RecursiveComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$RecursiveComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.RecursiveComp> build() {
+  ComponentRef<import1.RecursiveComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -983,24 +983,24 @@ class ViewRecursiveComp0 extends import0 /*WHITELISTED*/ .AppView<import1.Recurs
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.RecursiveComp> viewFactory_RecursiveComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.RecursiveComp> viewFactory_RecursiveComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewRecursiveComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$RecursiveCompHost = const [];
 
-class _ViewRecursiveCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.RecursiveComp> {
+class _ViewRecursiveCompHost0 extends AppView<import1.RecursiveComp> {
   ViewRecursiveComp0 _compView_0;
   import1.RecursiveComp _RecursiveComp_0_5;
-  _ViewRecursiveCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewRecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.RecursiveComp> build() {
+  ComponentRef<import1.RecursiveComp> build() {
     _compView_0 = ViewRecursiveComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _RecursiveComp_0_5 = import1.RecursiveComp();
     _compView_0.create(_RecursiveComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _RecursiveComp_0_5);
+    return ComponentRef(0, this, rootEl, _RecursiveComp_0_5);
   }
 
   @override
@@ -1014,30 +1014,30 @@ class _ViewRecursiveCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.R
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.RecursiveComp> viewFactory_RecursiveCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.RecursiveComp> viewFactory_RecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewRecursiveCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.RecursiveComp> _RecursiveCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_RecursiveCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.RecursiveComp> get RecursiveCompNgFactory {
+const ComponentFactory<import1.RecursiveComp> _RecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_RecursiveCompHost0);
+ComponentFactory<import1.RecursiveComp> get RecursiveCompNgFactory {
   return _RecursiveCompNgFactory;
 }
 
 final List<dynamic> styles$UsesRecursiveComp = const [];
 
-class ViewUsesRecursiveComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesRecursiveComp> {
+class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
   import5.Element _el_0;
   ViewRecursiveComp0 _compView_0;
   import1.RecursiveComp _RecursiveComp_0_5;
   var _expr_0;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesRecursiveComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesRecursiveComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesRecursiveComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesRecursiveComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesRecursiveComp> build() {
+  ComponentRef<import1.UsesRecursiveComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewRecursiveComp0(this, 0);
@@ -1066,24 +1066,24 @@ class ViewUsesRecursiveComp0 extends import0 /*WHITELISTED*/ .AppView<import1.Us
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesRecursiveComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesRecursiveCompHost = const [];
 
-class _ViewUsesRecursiveCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesRecursiveComp> {
+class _ViewUsesRecursiveCompHost0 extends AppView<import1.UsesRecursiveComp> {
   ViewUsesRecursiveComp0 _compView_0;
   import1.UsesRecursiveComp _UsesRecursiveComp_0_5;
-  _ViewUsesRecursiveCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesRecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesRecursiveComp> build() {
+  ComponentRef<import1.UsesRecursiveComp> build() {
     _compView_0 = ViewUsesRecursiveComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesRecursiveComp_0_5 = import1.UsesRecursiveComp();
     _compView_0.create(_UsesRecursiveComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesRecursiveComp_0_5);
+    return ComponentRef(0, this, rootEl, _UsesRecursiveComp_0_5);
   }
 
   @override
@@ -1097,26 +1097,26 @@ class _ViewUsesRecursiveCompHost0 extends import0 /*WHITELISTED*/ .AppView<impor
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesRecursiveCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesRecursiveComp> _UsesRecursiveCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesRecursiveCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesRecursiveComp> get UsesRecursiveCompNgFactory {
+const ComponentFactory<import1.UsesRecursiveComp> _UsesRecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_UsesRecursiveCompHost0);
+ComponentFactory<import1.UsesRecursiveComp> get UsesRecursiveCompNgFactory {
   return _UsesRecursiveCompNgFactory;
 }
 
 final List<dynamic> styles$FunctionTypeComp = const [];
 
-class ViewFunctionTypeComp0<F> extends import0 /*WHITELISTED*/ .AppView<import1.FunctionTypeComp<F>> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewFunctionTypeComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
+  static RenderComponentType _renderType;
+  ViewFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$FunctionTypeComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$FunctionTypeComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.FunctionTypeComp<F>> build() {
+  ComponentRef<import1.FunctionTypeComp<F>> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -1124,24 +1124,24 @@ class ViewFunctionTypeComp0<F> extends import0 /*WHITELISTED*/ .AppView<import1.
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeComp0<F>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeComp0<F>(AppView<dynamic> parentView, int parentIndex) {
   return ViewFunctionTypeComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$FunctionTypeCompHost = const [];
 
-class _ViewFunctionTypeCompHost0<F> extends import0 /*WHITELISTED*/ .AppView<import1.FunctionTypeComp<F>> {
+class _ViewFunctionTypeCompHost0<F> extends AppView<import1.FunctionTypeComp<F>> {
   ViewFunctionTypeComp0<F> _compView_0;
   import1.FunctionTypeComp<F> _FunctionTypeComp_0_5;
-  _ViewFunctionTypeCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.FunctionTypeComp<F>> build() {
+  ComponentRef<import1.FunctionTypeComp<F>> build() {
     _compView_0 = ViewFunctionTypeComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _FunctionTypeComp_0_5 = import1.FunctionTypeComp();
     _compView_0.create(_FunctionTypeComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _FunctionTypeComp_0_5);
+    return ComponentRef(0, this, rootEl, _FunctionTypeComp_0_5);
   }
 
   @override
@@ -1155,30 +1155,30 @@ class _ViewFunctionTypeCompHost0<F> extends import0 /*WHITELISTED*/ .AppView<imp
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewFunctionTypeCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.FunctionTypeComp> _FunctionTypeCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_FunctionTypeCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.FunctionTypeComp> get FunctionTypeCompNgFactory {
+const ComponentFactory<import1.FunctionTypeComp> _FunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_FunctionTypeCompHost0);
+ComponentFactory<import1.FunctionTypeComp> get FunctionTypeCompNgFactory {
   return _FunctionTypeCompNgFactory;
 }
 
 final List<dynamic> styles$UsesFunctionTypeComp = const [];
 
-class ViewUsesFunctionTypeComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesFunctionTypeComp> {
+class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
   import5.Element _el_0;
-  ViewFunctionTypeComp0<import9 /*WHITELISTED*/ .String> _compView_0;
-  import1.FunctionTypeComp<import9 /*WHITELISTED*/ .String> _FunctionTypeComp_0_5;
+  ViewFunctionTypeComp0<String> _compView_0;
+  import1.FunctionTypeComp<String> _FunctionTypeComp_0_5;
   var _expr_0;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesFunctionTypeComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesFunctionTypeComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesFunctionTypeComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesFunctionTypeComp> build() {
+  ComponentRef<import1.UsesFunctionTypeComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewFunctionTypeComp0(this, 0);
@@ -1207,24 +1207,24 @@ class ViewUsesFunctionTypeComp0 extends import0 /*WHITELISTED*/ .AppView<import1
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesFunctionTypeComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesFunctionTypeCompHost = const [];
 
-class _ViewUsesFunctionTypeCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesFunctionTypeComp> {
+class _ViewUsesFunctionTypeCompHost0 extends AppView<import1.UsesFunctionTypeComp> {
   ViewUsesFunctionTypeComp0 _compView_0;
   import1.UsesFunctionTypeComp _UsesFunctionTypeComp_0_5;
-  _ViewUsesFunctionTypeCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesFunctionTypeComp> build() {
+  ComponentRef<import1.UsesFunctionTypeComp> build() {
     _compView_0 = ViewUsesFunctionTypeComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesFunctionTypeComp_0_5 = import1.UsesFunctionTypeComp();
     _compView_0.create(_UsesFunctionTypeComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesFunctionTypeComp_0_5);
+    return ComponentRef(0, this, rootEl, _UsesFunctionTypeComp_0_5);
   }
 
   @override
@@ -1238,37 +1238,37 @@ class _ViewUsesFunctionTypeCompHost0 extends import0 /*WHITELISTED*/ .AppView<im
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesFunctionTypeCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesFunctionTypeComp> _UsesFunctionTypeCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesFunctionTypeCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesFunctionTypeComp> get UsesFunctionTypeCompNgFactory {
+const ComponentFactory<import1.UsesFunctionTypeComp> _UsesFunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_UsesFunctionTypeCompHost0);
+ComponentFactory<import1.UsesFunctionTypeComp> get UsesFunctionTypeCompNgFactory {
   return _UsesFunctionTypeCompNgFactory;
 }
 
 final List<dynamic> styles$NestedParentComp = const [];
 
-class ViewNestedParentComp0<T> extends import0 /*WHITELISTED*/ .AppView<import1.NestedParentComp<T>> {
+class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
   import5.Element _el_0;
   ViewNestedChildComp0<T> _compView_0;
   import1.NestedChildComp<T> _NestedChildComp_0_5;
   import5.Element _el_1;
   ViewNestedChildComp0<T> _compView_1;
   import1.NestedChildComp<T> _NestedChildComp_1_5;
-  import10 /*WHITELISTED*/ .ViewContainer _appEl_2;
+  ViewContainer _appEl_2;
   import11.NgFor _NgFor_2_9;
   var _expr_0;
   var _expr_1;
   var _expr_2;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewNestedParentComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewNestedParentComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('parent');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$NestedParentComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$NestedParentComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.NestedParentComp<T>> build() {
+  ComponentRef<import1.NestedParentComp<T>> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewNestedChildComp0(this, 0);
@@ -1281,10 +1281,10 @@ class ViewNestedParentComp0<T> extends import0 /*WHITELISTED*/ .AppView<import1.
     parentRenderNode.append(_el_1);
     _NestedChildComp_1_5 = import1.NestedChildComp();
     _compView_1.create(_NestedChildComp_1_5, []);
-    final _anchor_2 = import0 /*WHITELISTED*/ .createViewContainerAnchor();
+    final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
-    _appEl_2 = import10 /*WHITELISTED*/ .ViewContainer(2, null, this, _anchor_2);
-    import12 /*WHITELISTED*/ .TemplateRef _TemplateRef_2_8 = import12 /*WHITELISTED*/ .TemplateRef(_appEl_2, (parentView, parentIndex) {
+    _appEl_2 = ViewContainer(2, null, this, _anchor_2);
+    TemplateRef _TemplateRef_2_8 = TemplateRef(_appEl_2, (parentView, parentIndex) {
       return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
     });
     _NgFor_2_9 = import11.NgFor(_appEl_2, _TemplateRef_2_8);
@@ -1326,20 +1326,20 @@ class ViewNestedParentComp0<T> extends import0 /*WHITELISTED*/ .AppView<import1.
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.NestedParentComp<T>> viewFactory_NestedParentComp0<T>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.NestedParentComp<T>> viewFactory_NestedParentComp0<T>(AppView<dynamic> parentView, int parentIndex) {
   return ViewNestedParentComp0(parentView, parentIndex);
 }
 
-class _ViewNestedParentComp1<T> extends import0 /*WHITELISTED*/ .AppView<import1.NestedParentComp<T>> {
+class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
   import5.Element _el_0;
   ViewNestedChildComp0<T> _compView_0;
   import1.NestedChildComp<T> _NestedChildComp_0_5;
   var _expr_0;
-  _ViewNestedParentComp1(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  _ViewNestedParentComp1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedParentComp0._renderType;
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.NestedParentComp<T>> build() {
+  ComponentRef<import1.NestedParentComp<T>> build() {
     _compView_0 = ViewNestedChildComp0(this, 0);
     _el_0 = _compView_0.rootEl;
     _NestedChildComp_0_5 = import1.NestedChildComp();
@@ -1365,24 +1365,24 @@ class _ViewNestedParentComp1<T> extends import0 /*WHITELISTED*/ .AppView<import1
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.NestedParentComp<T>> viewFactory_NestedParentComp1<T>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.NestedParentComp<T>> viewFactory_NestedParentComp1<T>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedParentComp1(parentView, parentIndex);
 }
 
 final List<dynamic> styles$NestedParentCompHost = const [];
 
-class _ViewNestedParentCompHost0<T> extends import0 /*WHITELISTED*/ .AppView<import1.NestedParentComp<T>> {
+class _ViewNestedParentCompHost0<T> extends AppView<import1.NestedParentComp<T>> {
   ViewNestedParentComp0<T> _compView_0;
   import1.NestedParentComp<T> _NestedParentComp_0_5;
-  _ViewNestedParentCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.NestedParentComp<T>> build() {
+  ComponentRef<import1.NestedParentComp<T>> build() {
     _compView_0 = ViewNestedParentComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _NestedParentComp_0_5 = import1.NestedParentComp();
     _compView_0.create(_NestedParentComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _NestedParentComp_0_5);
+    return ComponentRef(0, this, rootEl, _NestedParentComp_0_5);
   }
 
   @override
@@ -1396,26 +1396,26 @@ class _ViewNestedParentCompHost0<T> extends import0 /*WHITELISTED*/ .AppView<imp
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.NestedParentComp<T>> viewFactory_NestedParentCompHost0<T>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.NestedParentComp<T>> viewFactory_NestedParentCompHost0<T>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedParentCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.NestedParentComp> _NestedParentCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('parent', viewFactory_NestedParentCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.NestedParentComp> get NestedParentCompNgFactory {
+const ComponentFactory<import1.NestedParentComp> _NestedParentCompNgFactory = const ComponentFactory('parent', viewFactory_NestedParentCompHost0);
+ComponentFactory<import1.NestedParentComp> get NestedParentCompNgFactory {
   return _NestedParentCompNgFactory;
 }
 
 final List<dynamic> styles$NestedChildComp = const [];
 
-class ViewNestedChildComp0<T> extends import0 /*WHITELISTED*/ .AppView<import1.NestedChildComp<T>> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewNestedChildComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
+  static RenderComponentType _renderType;
+  ViewNestedChildComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('child');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$NestedChildComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$NestedChildComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.NestedChildComp<T>> build() {
+  ComponentRef<import1.NestedChildComp<T>> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -1423,24 +1423,24 @@ class ViewNestedChildComp0<T> extends import0 /*WHITELISTED*/ .AppView<import1.N
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.NestedChildComp<T>> viewFactory_NestedChildComp0<T>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.NestedChildComp<T>> viewFactory_NestedChildComp0<T>(AppView<dynamic> parentView, int parentIndex) {
   return ViewNestedChildComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$NestedChildCompHost = const [];
 
-class _ViewNestedChildCompHost0<T> extends import0 /*WHITELISTED*/ .AppView<import1.NestedChildComp<T>> {
+class _ViewNestedChildCompHost0<T> extends AppView<import1.NestedChildComp<T>> {
   ViewNestedChildComp0<T> _compView_0;
   import1.NestedChildComp<T> _NestedChildComp_0_5;
-  _ViewNestedChildCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewNestedChildCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.NestedChildComp<T>> build() {
+  ComponentRef<import1.NestedChildComp<T>> build() {
     _compView_0 = ViewNestedChildComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _NestedChildComp_0_5 = import1.NestedChildComp();
     _compView_0.create(_NestedChildComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _NestedChildComp_0_5);
+    return ComponentRef(0, this, rootEl, _NestedChildComp_0_5);
   }
 
   @override
@@ -1454,32 +1454,32 @@ class _ViewNestedChildCompHost0<T> extends import0 /*WHITELISTED*/ .AppView<impo
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedChildCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.NestedChildComp> _NestedChildCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('child', viewFactory_NestedChildCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.NestedChildComp> get NestedChildCompNgFactory {
+const ComponentFactory<import1.NestedChildComp> _NestedChildCompNgFactory = const ComponentFactory('child', viewFactory_NestedChildCompHost0);
+ComponentFactory<import1.NestedChildComp> get NestedChildCompNgFactory {
   return _NestedChildCompNgFactory;
 }
 
 final List<dynamic> styles$UsesNestedParentComp = const [];
 
-class ViewUsesNestedParentComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesNestedParentComp> {
+class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
   import5.Element _el_0;
-  ViewNestedParentComp0<import9 /*WHITELISTED*/ .int> _compView_0;
-  import1.NestedParentComp<import9 /*WHITELISTED*/ .int> _NestedParentComp_0_5;
+  ViewNestedParentComp0<int> _compView_0;
+  import1.NestedParentComp<int> _NestedParentComp_0_5;
   var _expr_0;
   var _expr_1;
   var _expr_2;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesNestedParentComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesNestedParentComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesNestedParentComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesNestedParentComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesNestedParentComp> build() {
+  ComponentRef<import1.UsesNestedParentComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewNestedParentComp0(this, 0);
@@ -1518,24 +1518,24 @@ class ViewUsesNestedParentComp0 extends import0 /*WHITELISTED*/ .AppView<import1
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesNestedParentComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesNestedParentCompHost = const [];
 
-class _ViewUsesNestedParentCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesNestedParentComp> {
+class _ViewUsesNestedParentCompHost0 extends AppView<import1.UsesNestedParentComp> {
   ViewUsesNestedParentComp0 _compView_0;
   import1.UsesNestedParentComp _UsesNestedParentComp_0_5;
-  _ViewUsesNestedParentCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesNestedParentComp> build() {
+  ComponentRef<import1.UsesNestedParentComp> build() {
     _compView_0 = ViewUsesNestedParentComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesNestedParentComp_0_5 = import1.UsesNestedParentComp();
     _compView_0.create(_UsesNestedParentComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesNestedParentComp_0_5);
+    return ComponentRef(0, this, rootEl, _UsesNestedParentComp_0_5);
   }
 
   @override
@@ -1549,34 +1549,34 @@ class _ViewUsesNestedParentCompHost0 extends import0 /*WHITELISTED*/ .AppView<im
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesNestedParentCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesNestedParentComp> _UsesNestedParentCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesNestedParentCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesNestedParentComp> get UsesNestedParentCompNgFactory {
+const ComponentFactory<import1.UsesNestedParentComp> _UsesNestedParentCompNgFactory = const ComponentFactory('comp', viewFactory_UsesNestedParentCompHost0);
+ComponentFactory<import1.UsesNestedParentComp> get UsesNestedParentCompNgFactory {
   return _UsesNestedParentCompNgFactory;
 }
 
 final List<dynamic> styles$UsesMultipleTypesComp = const [];
 
-class ViewUsesMultipleTypesComp0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesMultipleTypesComp> {
+class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> {
   import5.Element _el_0;
-  ViewGenericComp0<import9 /*WHITELISTED*/ .String> _compView_0;
-  import1.GenericComp<import9 /*WHITELISTED*/ .String> _GenericComp_0_5;
+  ViewGenericComp0<String> _compView_0;
+  import1.GenericComp<String> _GenericComp_0_5;
   import5.Element _el_1;
-  ViewGenericComp0<import9 /*WHITELISTED*/ .int> _compView_1;
-  import1.GenericComp<import9 /*WHITELISTED*/ .int> _GenericComp_1_5;
+  ViewGenericComp0<int> _compView_1;
+  import1.GenericComp<int> _GenericComp_1_5;
   var _expr_0;
   var _expr_1;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesMultipleTypesComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesMultipleTypesComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesMultipleTypesComp);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesMultipleTypesComp);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesMultipleTypesComp> build() {
+  ComponentRef<import1.UsesMultipleTypesComp> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewGenericComp0(this, 0);
@@ -1617,24 +1617,24 @@ class ViewUsesMultipleTypesComp0 extends import0 /*WHITELISTED*/ .AppView<import
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesComp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesMultipleTypesComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesMultipleTypesCompHost = const [];
 
-class _ViewUsesMultipleTypesCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesMultipleTypesComp> {
+class _ViewUsesMultipleTypesCompHost0 extends AppView<import1.UsesMultipleTypesComp> {
   ViewUsesMultipleTypesComp0 _compView_0;
   import1.UsesMultipleTypesComp _UsesMultipleTypesComp_0_5;
-  _ViewUsesMultipleTypesCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesMultipleTypesCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesMultipleTypesComp> build() {
+  ComponentRef<import1.UsesMultipleTypesComp> build() {
     _compView_0 = ViewUsesMultipleTypesComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesMultipleTypesComp_0_5 = import1.UsesMultipleTypesComp();
     _compView_0.create(_UsesMultipleTypesComp_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesMultipleTypesComp_0_5);
+    return ComponentRef(0, this, rootEl, _UsesMultipleTypesComp_0_5);
   }
 
   @override
@@ -1648,33 +1648,33 @@ class _ViewUsesMultipleTypesCompHost0 extends import0 /*WHITELISTED*/ .AppView<i
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesMultipleTypesCompHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesMultipleTypesComp> _UsesMultipleTypesCompNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesMultipleTypesCompHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesMultipleTypesComp> get UsesMultipleTypesCompNgFactory {
+const ComponentFactory<import1.UsesMultipleTypesComp> _UsesMultipleTypesCompNgFactory = const ComponentFactory('comp', viewFactory_UsesMultipleTypesCompHost0);
+ComponentFactory<import1.UsesMultipleTypesComp> get UsesMultipleTypesCompNgFactory {
   return _UsesMultipleTypesCompNgFactory;
 }
 
 final List<dynamic> styles$UsesGenericChangeDetector = const [];
 
-class ViewUsesGenericChangeDetector0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesGenericChangeDetector> {
+class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDetector> {
   import5.DivElement _el_0;
-  GenericDirectiveNgCd<import9 /*WHITELISTED*/ .String> _GenericDirective_0_5;
+  GenericDirectiveNgCd<String> _GenericDirective_0_5;
   var _expr_0;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesGenericChangeDetector0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesGenericChangeDetector0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesGenericChangeDetector);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null), ViewEncapsulation.None, styles$UsesGenericChangeDetector);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesGenericChangeDetector> build() {
+  ComponentRef<import1.UsesGenericChangeDetector> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
-    _el_0 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, parentRenderNode);
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
     createAttr(_el_0, 'generic', '');
     _GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
     init(const [], null);
@@ -1693,24 +1693,24 @@ class ViewUsesGenericChangeDetector0 extends import0 /*WHITELISTED*/ .AppView<im
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetector0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetector0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesGenericChangeDetector0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesGenericChangeDetectorHost = const [];
 
-class _ViewUsesGenericChangeDetectorHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesGenericChangeDetector> {
+class _ViewUsesGenericChangeDetectorHost0 extends AppView<import1.UsesGenericChangeDetector> {
   ViewUsesGenericChangeDetector0 _compView_0;
   import1.UsesGenericChangeDetector _UsesGenericChangeDetector_0_5;
-  _ViewUsesGenericChangeDetectorHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesGenericChangeDetectorHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesGenericChangeDetector> build() {
+  ComponentRef<import1.UsesGenericChangeDetector> build() {
     _compView_0 = ViewUsesGenericChangeDetector0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesGenericChangeDetector_0_5 = import1.UsesGenericChangeDetector();
     _compView_0.create(_UsesGenericChangeDetector_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesGenericChangeDetector_0_5);
+    return ComponentRef(0, this, rootEl, _UsesGenericChangeDetector_0_5);
   }
 
   @override
@@ -1724,12 +1724,12 @@ class _ViewUsesGenericChangeDetectorHost0 extends import0 /*WHITELISTED*/ .AppVi
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetectorHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetectorHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesGenericChangeDetectorHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesGenericChangeDetector> _UsesGenericChangeDetectorNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_UsesGenericChangeDetectorHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesGenericChangeDetector> get UsesGenericChangeDetectorNgFactory {
+const ComponentFactory<import1.UsesGenericChangeDetector> _UsesGenericChangeDetectorNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericChangeDetectorHost0);
+ComponentFactory<import1.UsesGenericChangeDetector> get UsesGenericChangeDetectorNgFactory {
   return _UsesGenericChangeDetectorNgFactory;
 }
 
@@ -1737,7 +1737,7 @@ class GenericDirectiveNgCd<T> extends import13.DirectiveChangeDetector {
   final import1.GenericDirective<T> instance;
   var _expr_0;
   GenericDirectiveNgCd(this.instance);
-  void detectHostChanges(import0 /*WHITELISTED*/ .AppView<dynamic> view, import5.Element el) {
+  void detectHostChanges(AppView<dynamic> view, import5.Element el) {
     final currVal_0 = instance.input;
     if (import6.checkBinding(_expr_0, currVal_0)) {
       setAttr(el, 'a', currVal_0?.toString());

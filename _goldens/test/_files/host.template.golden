@@ -9,28 +9,28 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/app_view.dart';
 import 'host.dart' as import1;
-import 'package:angular/src/core/render/api.dart' as import2 /*WHITELISTED*/;
+import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import3;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import4 /*WHITELISTED*/;
+import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
-import 'package:angular/angular.dart' as import8 /*WHITELISTED*/;
+import 'package:angular/angular.dart';
 
 final List<dynamic> styles$HostComponentNewSyntax = const [];
 
-class ViewHostComponentNewSyntax0 extends import0 /*WHITELISTED*/ .AppView<import1.HostComponentNewSyntax> {
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewHostComponentNewSyntax0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+class ViewHostComponentNewSyntax0 extends AppView<import1.HostComponentNewSyntax> {
+  static RenderComponentType _renderType;
+  ViewHostComponentNewSyntax0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('host');
     rootEl.className = import1.HostComponentNewSyntax.hostClass;
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$HostComponentNewSyntax);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null), ViewEncapsulation.None, styles$HostComponentNewSyntax);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.HostComponentNewSyntax> build() {
+  ComponentRef<import1.HostComponentNewSyntax> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -38,24 +38,24 @@ class ViewHostComponentNewSyntax0 extends import0 /*WHITELISTED*/ .AppView<impor
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntax0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntax0(AppView<dynamic> parentView, int parentIndex) {
   return ViewHostComponentNewSyntax0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HostComponentNewSyntaxHost = const [];
 
-class _ViewHostComponentNewSyntaxHost0 extends import0 /*WHITELISTED*/ .AppView<import1.HostComponentNewSyntax> {
+class _ViewHostComponentNewSyntaxHost0 extends AppView<import1.HostComponentNewSyntax> {
   ViewHostComponentNewSyntax0 _compView_0;
   import1.HostComponentNewSyntax _HostComponentNewSyntax_0_5;
-  _ViewHostComponentNewSyntaxHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewHostComponentNewSyntaxHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.HostComponentNewSyntax> build() {
+  ComponentRef<import1.HostComponentNewSyntax> build() {
     _compView_0 = ViewHostComponentNewSyntax0(this, 0);
     rootEl = _compView_0.rootEl;
     _HostComponentNewSyntax_0_5 = import1.HostComponentNewSyntax();
     _compView_0.create(_HostComponentNewSyntax_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _HostComponentNewSyntax_0_5);
+    return ComponentRef(0, this, rootEl, _HostComponentNewSyntax_0_5);
   }
 
   @override
@@ -69,30 +69,30 @@ class _ViewHostComponentNewSyntaxHost0 extends import0 /*WHITELISTED*/ .AppView<
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewHostComponentNewSyntaxHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.HostComponentNewSyntax> _HostComponentNewSyntaxNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('host', viewFactory_HostComponentNewSyntaxHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.HostComponentNewSyntax> get HostComponentNewSyntaxNgFactory {
+const ComponentFactory<import1.HostComponentNewSyntax> _HostComponentNewSyntaxNgFactory = const ComponentFactory('host', viewFactory_HostComponentNewSyntaxHost0);
+ComponentFactory<import1.HostComponentNewSyntax> get HostComponentNewSyntaxNgFactory {
   return _HostComponentNewSyntaxNgFactory;
 }
 
 final List<dynamic> styles$UsesHostComponentWithDirective = const [];
 
-class ViewUsesHostComponentWithDirective0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesHostComponentWithDirective> {
+class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostComponentWithDirective> {
   import5.Element _el_0;
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_5;
   import1.ListensToFooEvent _ListensToFooEvent_0_6;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewUsesHostComponentWithDirective0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewUsesHostComponentWithDirective0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('uses-host');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesHostComponentWithDirective);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null), ViewEncapsulation.None, styles$UsesHostComponentWithDirective);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesHostComponentWithDirective> build() {
+  ComponentRef<import1.UsesHostComponentWithDirective> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewHostComponent0(this, 0);
@@ -120,24 +120,24 @@ class ViewUsesHostComponentWithDirective0 extends import0 /*WHITELISTED*/ .AppVi
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirective0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirective0(AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesHostComponentWithDirective0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesHostComponentWithDirectiveHost = const [];
 
-class _ViewUsesHostComponentWithDirectiveHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesHostComponentWithDirective> {
+class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostComponentWithDirective> {
   ViewUsesHostComponentWithDirective0 _compView_0;
   import1.UsesHostComponentWithDirective _UsesHostComponentWithDirective_0_5;
-  _ViewUsesHostComponentWithDirectiveHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesHostComponentWithDirectiveHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesHostComponentWithDirective> build() {
+  ComponentRef<import1.UsesHostComponentWithDirective> build() {
     _compView_0 = ViewUsesHostComponentWithDirective0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesHostComponentWithDirective_0_5 = import1.UsesHostComponentWithDirective();
     _compView_0.create(_UsesHostComponentWithDirective_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesHostComponentWithDirective_0_5);
+    return ComponentRef(0, this, rootEl, _UsesHostComponentWithDirective_0_5);
   }
 
   @override
@@ -151,32 +151,32 @@ class _ViewUsesHostComponentWithDirectiveHost0 extends import0 /*WHITELISTED*/ .
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirectiveHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirectiveHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesHostComponentWithDirectiveHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesHostComponentWithDirective> _UsesHostComponentWithDirectiveNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('uses-host', viewFactory_UsesHostComponentWithDirectiveHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesHostComponentWithDirective> get UsesHostComponentWithDirectiveNgFactory {
+const ComponentFactory<import1.UsesHostComponentWithDirective> _UsesHostComponentWithDirectiveNgFactory = const ComponentFactory('uses-host', viewFactory_UsesHostComponentWithDirectiveHost0);
+ComponentFactory<import1.UsesHostComponentWithDirective> get UsesHostComponentWithDirectiveNgFactory {
   return _UsesHostComponentWithDirectiveNgFactory;
 }
 
 final List<dynamic> styles$HostComponent = const [];
 
-class ViewHostComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.HostComponent> {
+class ViewHostComponent0 extends AppView<import1.HostComponent> {
   var _expr_0;
   var _expr_1;
   var _expr_2;
   var _expr_3;
   bool _expr_4;
-  static import2 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewHostComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  static RenderComponentType _renderType;
+  ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('host');
     createAttr(rootEl, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$HostComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null), ViewEncapsulation.None, styles$HostComponent);
     setupComponentType(_renderType);
   }
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.HostComponent> build() {
+  ComponentRef<import1.HostComponent> build() {
     final import1.HostComponent _ctx = ctx;
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
@@ -223,24 +223,24 @@ class ViewHostComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.HostCo
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.HostComponent> viewFactory_HostComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.HostComponent> viewFactory_HostComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewHostComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HostComponentHost = const [];
 
-class _ViewHostComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.HostComponent> {
+class _ViewHostComponentHost0 extends AppView<import1.HostComponent> {
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_5;
-  _ViewHostComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewHostComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8 /*WHITELISTED*/ .ComponentRef<import1.HostComponent> build() {
+  ComponentRef<import1.HostComponent> build() {
     _compView_0 = ViewHostComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _HostComponent_0_5 = import1.HostComponent();
     _compView_0.create(_HostComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _HostComponent_0_5);
+    return ComponentRef(0, this, rootEl, _HostComponent_0_5);
   }
 
   @override
@@ -256,12 +256,12 @@ class _ViewHostComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.H
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.HostComponent> viewFactory_HostComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.HostComponent> viewFactory_HostComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewHostComponentHost0(parentView, parentIndex);
 }
 
-const import8 /*WHITELISTED*/ .ComponentFactory<import1.HostComponent> _HostComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('host', viewFactory_HostComponentHost0);
-import8 /*WHITELISTED*/ .ComponentFactory<import1.HostComponent> get HostComponentNgFactory {
+const ComponentFactory<import1.HostComponent> _HostComponentNgFactory = const ComponentFactory('host', viewFactory_HostComponentHost0);
+ComponentFactory<import1.HostComponent> get HostComponentNgFactory {
   return _HostComponentNgFactory;
 }
 

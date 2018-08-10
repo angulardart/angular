@@ -8,20 +8,20 @@ export 'pipes.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/app_view.dart';
 import 'pipes.dart' as import1;
 import 'dart:html' as import2;
-import 'dart:core' as import3 /*WHITELISTED*/;
-import 'package:angular/src/core/render/api.dart' as import4 /*WHITELISTED*/;
+import 'dart:core';
+import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import5;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import6 /*WHITELISTED*/;
+import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/src/runtime.dart' as import8;
-import 'package:angular/angular.dart' as import9 /*WHITELISTED*/;
+import 'package:angular/angular.dart';
 
 final List<dynamic> styles$Comp = const [];
 
-class ViewComp0 extends import0 /*WHITELISTED*/ .AppView<import1.Comp> {
+class ViewComp0 extends AppView<import1.Comp> {
   import2.Text _text_0;
   import2.Text _text_2;
   import2.Text _text_4;
@@ -36,15 +36,15 @@ class ViewComp0 extends import0 /*WHITELISTED*/ .AppView<import1.Comp> {
   import1.LifecyclePipe _pipe_lifecycle_2;
   dynamic Function(dynamic) _pipe_lifecycle_2_0;
   import1.TypesPipe _pipe_types_3;
-  import3 /*WHITELISTED*/ .String Function(import3 /*WHITELISTED*/ .String, import3 /*WHITELISTED*/ .int, dynamic, import1.C, void Function(import3 /*WHITELISTED*/ .String)) _pipe_types_3_0;
-  static import4 /*WHITELISTED*/ .RenderComponentType _renderType;
-  ViewComp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, import6 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+  String Function(String, int, dynamic, import1.C, void Function(String)) _pipe_types_3_0;
+  static RenderComponentType _renderType;
+  ViewComp0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp');
-    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/pipes.dart' : null), import9 /*WHITELISTED*/ .ViewEncapsulation.None, styles$Comp);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/pipes.dart' : null), ViewEncapsulation.None, styles$Comp);
     setupComponentType(_renderType);
   }
   @override
-  import9 /*WHITELISTED*/ .ComponentRef<import1.Comp> build() {
+  ComponentRef<import1.Comp> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _text_0 = import2.Text('');
@@ -103,24 +103,24 @@ class ViewComp0 extends import0 /*WHITELISTED*/ .AppView<import1.Comp> {
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.Comp> viewFactory_Comp0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.Comp> viewFactory_Comp0(AppView<dynamic> parentView, int parentIndex) {
   return ViewComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CompHost = const [];
 
-class _ViewCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.Comp> {
+class _ViewCompHost0 extends AppView<import1.Comp> {
   ViewComp0 _compView_0;
   import1.Comp _Comp_0_5;
-  _ViewCompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, import6 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  _ViewCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import9 /*WHITELISTED*/ .ComponentRef<import1.Comp> build() {
+  ComponentRef<import1.Comp> build() {
     _compView_0 = ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp_0_5 = import1.Comp();
     _compView_0.create(_Comp_0_5, projectableNodes);
     init0(rootEl);
-    return import9 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _Comp_0_5);
+    return ComponentRef(0, this, rootEl, _Comp_0_5);
   }
 
   @override
@@ -134,12 +134,12 @@ class _ViewCompHost0 extends import0 /*WHITELISTED*/ .AppView<import1.Comp> {
   }
 }
 
-import0 /*WHITELISTED*/ .AppView<import1.Comp> viewFactory_CompHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.Comp> viewFactory_CompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewCompHost0(parentView, parentIndex);
 }
 
-const import9 /*WHITELISTED*/ .ComponentFactory<import1.Comp> _CompNgFactory = const import9 /*WHITELISTED*/ .ComponentFactory('comp', viewFactory_CompHost0);
-import9 /*WHITELISTED*/ .ComponentFactory<import1.Comp> get CompNgFactory {
+const ComponentFactory<import1.Comp> _CompNgFactory = const ComponentFactory('comp', viewFactory_CompHost0);
+ComponentFactory<import1.Comp> get CompNgFactory {
   return _CompNgFactory;
 }
 
