@@ -30,7 +30,21 @@
     generate invalid Dart code that would fail analysis/compilation to JS.
     Correct code is now emitted, allowing the described scenario to work.
 
-[#1538]: https://github.com/dart-lang/angular/issues/153
+*   [#1539][]: Fixed a bug where components that were `@deferred` as the direct
+    child of another `<template>` tag had phantom DOM left behind even after the
+    parent template was destroyed. For example:
+
+    ```html
+    <template [ngIf]="showComponent">
+      <expensive-comp @deferred></expensive-comp>
+    </template>
+    ```
+
+    ... additionally, a check for a race condition of the deferred component
+    being loaded _after_ the parent view was already destroyed was added.
+
+[#1538]: https://github.com/dart-lang/angular/issues/1538
+[#1539]: https://github.com/dart-lang/angular/issues/1539
 [#1558]: https://github.com/dart-lang/angular/issues/1558
 
 ## 5.0.0

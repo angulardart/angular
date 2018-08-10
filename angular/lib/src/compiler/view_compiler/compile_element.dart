@@ -38,7 +38,12 @@ class CompileNode {
   final TemplateAst sourceAst;
 
   CompileNode(
-      this.parent, this.view, this.nodeIndex, this.renderNode, this.sourceAst);
+    this.parent,
+    this.view,
+    this.nodeIndex,
+    this.renderNode,
+    this.sourceAst,
+  );
 
   /// Whether node is the root of the view.
   bool get isRootElement => view != parent.view;
@@ -119,8 +124,12 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     _providers.add(Identifiers.InjectorToken, readInjectorExpr);
 
     if ((hasViewContainer || hasEmbeddedView) && !isInlined) {
-      appViewContainer = view.createViewContainer(renderNode, nodeIndex,
-          !hasViewContainer, isRootElement ? null : parent.nodeIndex);
+      appViewContainer = view.createViewContainer(
+        renderNode,
+        nodeIndex,
+        !hasViewContainer,
+        isRootElement ? null : parent.nodeIndex,
+      );
       _providers.add(Identifiers.ViewContainerToken, appViewContainer);
     }
   }
@@ -333,8 +342,11 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     }
   }
 
-  void writeDeferredLoader(CompileView embeddedView,
-      o.Expression viewContainerExpr, List<o.Statement> stmts) {
+  /// Returns code that performs defer loading (i.e. invokes `loadDeferred(..)`.
+  o.Expression writeDeferredLoader(
+    CompileView embeddedView,
+    o.Expression viewContainerExpr,
+  ) {
     CompileElement deferredElement = embeddedView.nodes[0] as CompileElement;
     CompileDirectiveMetadata deferredMeta = deferredElement.component;
     if (deferredMeta == null) {
@@ -369,7 +381,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       templateRefExpr,
     ];
 
-    stmts.add(o.InvokeMemberMethodExpr('loadDeferred', args).toStmt());
+    return o.InvokeMemberMethodExpr('loadDeferred', args);
   }
 
   void addContentNode(int ngContentIndex, o.Expression nodeExpr) {
