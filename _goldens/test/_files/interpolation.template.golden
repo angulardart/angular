@@ -8,46 +8,40 @@ export 'interpolation.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0;
-import 'interpolation.dart' as import1;
-import 'dart:html' as import2;
-import 'package:angular/src/core/render/api.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
-import 'package:angular/angular.dart' as import8;
-import 'package:angular/src/core/linker/view_container.dart' as import9;
-import 'package:angular/src/common/directives/ng_for.dart' as import10;
-import 'package:angular/src/core/linker/template_ref.dart' as import11;
+import 'interpolation.dart' as import0;
+import 'dart:html' as import1;
+import 'package:angular/src/core/linker/view_type.dart' as import2;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import3;
+import 'package:angular/src/runtime.dart' as import4;
+import 'package:angular/src/common/directives/ng_for.dart' as import5;
 
 final List<dynamic> styles$InterpolationComponent = const [];
 
-class ViewInterpolationComponent0 extends import0.AppView<import1.InterpolationComponent> {
-  import2.DivElement _el_1;
-  import2.Text _text_3;
+class ViewInterpolationComponent0 extends AppView<import0.InterpolationComponent> {
+  import1.DivElement _el_1;
+  import1.Text _text_3;
   var _expr_0;
-  static import3.RenderComponentType _renderType;
-  ViewInterpolationComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('interpolation');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), import8.ViewEncapsulation.None, styles$InterpolationComponent);
+  static RenderComponentType _renderType;
+  ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('interpolation');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), ViewEncapsulation.None, styles$InterpolationComponent);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.InterpolationComponent> build() {
+  ComponentRef<import0.InterpolationComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import2.Text _text_0 = import2.Text('    ');
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    import1.Text _text_0 = import1.Text('    ');
     parentRenderNode.append(_text_0);
-    var doc = import2.document;
-    _el_1 = import0.createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_2 = import2.Text('\n      ');
+    var doc = import1.document;
+    _el_1 = createDivAndAppend(doc, parentRenderNode);
+    import1.Text _text_2 = import1.Text('\n      ');
     _el_1.append(_text_2);
-    _text_3 = import2.Text('');
+    _text_3 = import1.Text('');
     _el_1.append(_text_3);
-    import2.Text _text_4 = import2.Text('\n    ');
+    import1.Text _text_4 = import1.Text('\n    ');
     _el_1.append(_text_4);
-    import2.Text _text_5 = import2.Text('\n  ');
+    import1.Text _text_5 = import1.Text('\n  ');
     parentRenderNode.append(_text_5);
     init(const [], null);
     return null;
@@ -55,33 +49,33 @@ class ViewInterpolationComponent0 extends import0.AppView<import1.InterpolationC
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationComponent _ctx = ctx;
+    final import0.InterpolationComponent _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    if (import3.checkBinding(_expr_0, currVal_0)) {
       _text_3.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }
 }
 
-import0.AppView<import1.InterpolationComponent> viewFactory_InterpolationComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationComponent> viewFactory_InterpolationComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewInterpolationComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationComponentHost = const [];
 
-class _ViewInterpolationComponentHost0 extends import0.AppView<import1.InterpolationComponent> {
+class _ViewInterpolationComponentHost0 extends AppView<import0.InterpolationComponent> {
   ViewInterpolationComponent0 _compView_0;
-  import1.InterpolationComponent _InterpolationComponent_0_5;
-  _ViewInterpolationComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.InterpolationComponent _InterpolationComponent_0_5;
+  _ViewInterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.InterpolationComponent> build() {
+  ComponentRef<import0.InterpolationComponent> build() {
     _compView_0 = ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponent_0_5 = import1.InterpolationComponent();
+    _InterpolationComponent_0_5 = import0.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _InterpolationComponent_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationComponent_0_5);
   }
 
   @override
@@ -95,34 +89,34 @@ class _ViewInterpolationComponentHost0 extends import0.AppView<import1.Interpola
   }
 }
 
-import0.AppView<import1.InterpolationComponent> viewFactory_InterpolationComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationComponent> viewFactory_InterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationComponentHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.InterpolationComponent> _InterpolationComponentNgFactory = const import8.ComponentFactory('interpolation', viewFactory_InterpolationComponentHost0);
-import8.ComponentFactory<import1.InterpolationComponent> get InterpolationComponentNgFactory {
+const ComponentFactory<import0.InterpolationComponent> _InterpolationComponentNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationComponentHost0);
+ComponentFactory<import0.InterpolationComponent> get InterpolationComponentNgFactory {
   return _InterpolationComponentNgFactory;
 }
 
 final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
-class ViewInterpolationComponentNoWhitespace0 extends import0.AppView<import1.InterpolationComponentNoWhitespace> {
-  import2.DivElement _el_0;
-  import2.Text _text_1;
+class ViewInterpolationComponentNoWhitespace0 extends AppView<import0.InterpolationComponentNoWhitespace> {
+  import1.DivElement _el_0;
+  import1.Text _text_1;
   var _expr_0;
-  static import3.RenderComponentType _renderType;
-  ViewInterpolationComponentNoWhitespace0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('interpolation');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), import8.ViewEncapsulation.None, styles$InterpolationComponentNoWhitespace);
+  static RenderComponentType _renderType;
+  ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('interpolation');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), ViewEncapsulation.None, styles$InterpolationComponentNoWhitespace);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
+  ComponentRef<import0.InterpolationComponentNoWhitespace> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = import0.createDivAndAppend(doc, parentRenderNode);
-    _text_1 = import2.Text('');
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import1.document;
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    _text_1 = import1.Text('');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
@@ -130,33 +124,33 @@ class ViewInterpolationComponentNoWhitespace0 extends import0.AppView<import1.In
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationComponentNoWhitespace _ctx = ctx;
+    final import0.InterpolationComponentNoWhitespace _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    if (import3.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }
 }
 
-import0.AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespace0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) {
   return ViewInterpolationComponentNoWhitespace0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 
-class _ViewInterpolationComponentNoWhitespaceHost0 extends import0.AppView<import1.InterpolationComponentNoWhitespace> {
+class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import0.InterpolationComponentNoWhitespace> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
-  import1.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
-  _ViewInterpolationComponentNoWhitespaceHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
+  _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
+  ComponentRef<import0.InterpolationComponentNoWhitespace> build() {
     _compView_0 = ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponentNoWhitespace_0_5 = import1.InterpolationComponentNoWhitespace();
+    _InterpolationComponentNoWhitespace_0_5 = import0.InterpolationComponentNoWhitespace();
     _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
   }
 
   @override
@@ -170,42 +164,42 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends import0.AppView<impor
   }
 }
 
-import0.AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespaceHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationComponentNoWhitespaceHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.InterpolationComponentNoWhitespace> _InterpolationComponentNoWhitespaceNgFactory = const import8.ComponentFactory('interpolation', viewFactory_InterpolationComponentNoWhitespaceHost0);
-import8.ComponentFactory<import1.InterpolationComponentNoWhitespace> get InterpolationComponentNoWhitespaceNgFactory {
+const ComponentFactory<import0.InterpolationComponentNoWhitespace> _InterpolationComponentNoWhitespaceNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationComponentNoWhitespaceHost0);
+ComponentFactory<import0.InterpolationComponentNoWhitespace> get InterpolationComponentNoWhitespaceNgFactory {
   return _InterpolationComponentNoWhitespaceNgFactory;
 }
 
 final List<dynamic> styles$InterpolationTwoAdjacent = const [];
 
-class ViewInterpolationTwoAdjacent0 extends import0.AppView<import1.InterpolationTwoAdjacent> {
-  import2.DivElement _el_0;
-  import2.Text _text_1;
-  import2.Text _text_3;
+class ViewInterpolationTwoAdjacent0 extends AppView<import0.InterpolationTwoAdjacent> {
+  import1.DivElement _el_0;
+  import1.Text _text_1;
+  import1.Text _text_3;
   var _expr_0;
   var _expr_1;
-  static import3.RenderComponentType _renderType;
-  ViewInterpolationTwoAdjacent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('interpolation');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), import8.ViewEncapsulation.None, styles$InterpolationTwoAdjacent);
+  static RenderComponentType _renderType;
+  ViewInterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('interpolation');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), ViewEncapsulation.None, styles$InterpolationTwoAdjacent);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.InterpolationTwoAdjacent> build() {
+  ComponentRef<import0.InterpolationTwoAdjacent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = import0.createDivAndAppend(doc, parentRenderNode);
-    _text_1 = import2.Text('');
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import1.document;
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    _text_1 = import1.Text('');
     _el_0.append(_text_1);
-    import2.Text _text_2 = import2.Text(' ');
+    import1.Text _text_2 = import1.Text(' ');
     _el_0.append(_text_2);
-    _text_3 = import2.Text('');
+    _text_3 = import1.Text('');
     _el_0.append(_text_3);
-    import2.Text _text_4 = import2.Text('!');
+    import1.Text _text_4 = import1.Text('!');
     _el_0.append(_text_4);
     init(const [], null);
     return null;
@@ -213,38 +207,38 @@ class ViewInterpolationTwoAdjacent0 extends import0.AppView<import1.Interpolatio
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationTwoAdjacent _ctx = ctx;
+    final import0.InterpolationTwoAdjacent _ctx = ctx;
     final currVal_0 = (_ctx.greeting ?? '');
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    if (import3.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = (_ctx.noun ?? '');
-    if (import6.checkBinding(_expr_1, currVal_1)) {
+    if (import3.checkBinding(_expr_1, currVal_1)) {
       _text_3.text = currVal_1;
       _expr_1 = currVal_1;
     }
   }
 }
 
-import0.AppView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacent0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewInterpolationTwoAdjacent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationTwoAdjacentHost = const [];
 
-class _ViewInterpolationTwoAdjacentHost0 extends import0.AppView<import1.InterpolationTwoAdjacent> {
+class _ViewInterpolationTwoAdjacentHost0 extends AppView<import0.InterpolationTwoAdjacent> {
   ViewInterpolationTwoAdjacent0 _compView_0;
-  import1.InterpolationTwoAdjacent _InterpolationTwoAdjacent_0_5;
-  _ViewInterpolationTwoAdjacentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.InterpolationTwoAdjacent _InterpolationTwoAdjacent_0_5;
+  _ViewInterpolationTwoAdjacentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.InterpolationTwoAdjacent> build() {
+  ComponentRef<import0.InterpolationTwoAdjacent> build() {
     _compView_0 = ViewInterpolationTwoAdjacent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationTwoAdjacent_0_5 = import1.InterpolationTwoAdjacent();
+    _InterpolationTwoAdjacent_0_5 = import0.InterpolationTwoAdjacent();
     _compView_0.create(_InterpolationTwoAdjacent_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _InterpolationTwoAdjacent_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationTwoAdjacent_0_5);
   }
 
   @override
@@ -258,50 +252,50 @@ class _ViewInterpolationTwoAdjacentHost0 extends import0.AppView<import1.Interpo
   }
 }
 
-import0.AppView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationTwoAdjacentHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.InterpolationTwoAdjacent> _InterpolationTwoAdjacentNgFactory = const import8.ComponentFactory('interpolation', viewFactory_InterpolationTwoAdjacentHost0);
-import8.ComponentFactory<import1.InterpolationTwoAdjacent> get InterpolationTwoAdjacentNgFactory {
+const ComponentFactory<import0.InterpolationTwoAdjacent> _InterpolationTwoAdjacentNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationTwoAdjacentHost0);
+ComponentFactory<import0.InterpolationTwoAdjacent> get InterpolationTwoAdjacentNgFactory {
   return _InterpolationTwoAdjacentNgFactory;
 }
 
 final List<dynamic> styles$InterpolationLongerSentence = const [];
 
-class ViewInterpolationLongerSentence0 extends import0.AppView<import1.InterpolationLongerSentence> {
-  import2.DivElement _el_0;
-  import2.Text _text_2;
-  import2.Text _text_4;
-  import2.Text _text_6;
+class ViewInterpolationLongerSentence0 extends AppView<import0.InterpolationLongerSentence> {
+  import1.DivElement _el_0;
+  import1.Text _text_2;
+  import1.Text _text_4;
+  import1.Text _text_6;
   var _expr_0;
   var _expr_1;
   var _expr_2;
-  static import3.RenderComponentType _renderType;
-  ViewInterpolationLongerSentence0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('interpolation');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), import8.ViewEncapsulation.None, styles$InterpolationLongerSentence);
+  static RenderComponentType _renderType;
+  ViewInterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('interpolation');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), ViewEncapsulation.None, styles$InterpolationLongerSentence);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.InterpolationLongerSentence> build() {
+  ComponentRef<import0.InterpolationLongerSentence> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = import0.createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = import2.Text('Welcome ');
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import1.document;
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    import1.Text _text_1 = import1.Text('Welcome ');
     _el_0.append(_text_1);
-    _text_2 = import2.Text('');
+    _text_2 = import1.Text('');
     _el_0.append(_text_2);
-    import2.Text _text_3 = import2.Text(' to the ');
+    import1.Text _text_3 = import1.Text(' to the ');
     _el_0.append(_text_3);
-    _text_4 = import2.Text('');
+    _text_4 = import1.Text('');
     _el_0.append(_text_4);
-    import2.Text _text_5 = import2.Text(' of ');
+    import1.Text _text_5 = import1.Text(' of ');
     _el_0.append(_text_5);
-    _text_6 = import2.Text('');
+    _text_6 = import1.Text('');
     _el_0.append(_text_6);
-    import2.Text _text_7 = import2.Text('!');
+    import1.Text _text_7 = import1.Text('!');
     _el_0.append(_text_7);
     init(const [], null);
     return null;
@@ -309,43 +303,43 @@ class ViewInterpolationLongerSentence0 extends import0.AppView<import1.Interpola
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationLongerSentence _ctx = ctx;
+    final import0.InterpolationLongerSentence _ctx = ctx;
     final currVal_0 = (_ctx.name ?? '');
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    if (import3.checkBinding(_expr_0, currVal_0)) {
       _text_2.text = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = (_ctx.business ?? '');
-    if (import6.checkBinding(_expr_1, currVal_1)) {
+    if (import3.checkBinding(_expr_1, currVal_1)) {
       _text_4.text = currVal_1;
       _expr_1 = currVal_1;
     }
     final currVal_2 = (_ctx.location ?? '');
-    if (import6.checkBinding(_expr_2, currVal_2)) {
+    if (import3.checkBinding(_expr_2, currVal_2)) {
       _text_6.text = currVal_2;
       _expr_2 = currVal_2;
     }
   }
 }
 
-import0.AppView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSentence0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationLongerSentence> viewFactory_InterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex) {
   return ViewInterpolationLongerSentence0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationLongerSentenceHost = const [];
 
-class _ViewInterpolationLongerSentenceHost0 extends import0.AppView<import1.InterpolationLongerSentence> {
+class _ViewInterpolationLongerSentenceHost0 extends AppView<import0.InterpolationLongerSentence> {
   ViewInterpolationLongerSentence0 _compView_0;
-  import1.InterpolationLongerSentence _InterpolationLongerSentence_0_5;
-  _ViewInterpolationLongerSentenceHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.InterpolationLongerSentence _InterpolationLongerSentence_0_5;
+  _ViewInterpolationLongerSentenceHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.InterpolationLongerSentence> build() {
+  ComponentRef<import0.InterpolationLongerSentence> build() {
     _compView_0 = ViewInterpolationLongerSentence0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationLongerSentence_0_5 = import1.InterpolationLongerSentence();
+    _InterpolationLongerSentence_0_5 = import0.InterpolationLongerSentence();
     _compView_0.create(_InterpolationLongerSentence_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _InterpolationLongerSentence_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationLongerSentence_0_5);
   }
 
   @override
@@ -359,64 +353,64 @@ class _ViewInterpolationLongerSentenceHost0 extends import0.AppView<import1.Inte
   }
 }
 
-import0.AppView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSentenceHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationLongerSentence> viewFactory_InterpolationLongerSentenceHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationLongerSentenceHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.InterpolationLongerSentence> _InterpolationLongerSentenceNgFactory = const import8.ComponentFactory('interpolation', viewFactory_InterpolationLongerSentenceHost0);
-import8.ComponentFactory<import1.InterpolationLongerSentence> get InterpolationLongerSentenceNgFactory {
+const ComponentFactory<import0.InterpolationLongerSentence> _InterpolationLongerSentenceNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationLongerSentenceHost0);
+ComponentFactory<import0.InterpolationLongerSentence> get InterpolationLongerSentenceNgFactory {
   return _InterpolationLongerSentenceNgFactory;
 }
 
 final List<dynamic> styles$InterpolationLiterals = const [];
 
-class ViewInterpolationLiterals0 extends import0.AppView<import1.InterpolationLiterals> {
-  import2.DivElement _el_0;
-  import2.Text _text_1;
-  import2.Text _text_3;
-  static import3.RenderComponentType _renderType;
-  ViewInterpolationLiterals0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('interpolation');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), import8.ViewEncapsulation.None, styles$InterpolationLiterals);
+class ViewInterpolationLiterals0 extends AppView<import0.InterpolationLiterals> {
+  import1.DivElement _el_0;
+  import1.Text _text_1;
+  import1.Text _text_3;
+  static RenderComponentType _renderType;
+  ViewInterpolationLiterals0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('interpolation');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), ViewEncapsulation.None, styles$InterpolationLiterals);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.InterpolationLiterals> build() {
+  ComponentRef<import0.InterpolationLiterals> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = import0.createDivAndAppend(doc, parentRenderNode);
-    _text_1 = import2.Text('Welcome');
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import1.document;
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    _text_1 = import1.Text('Welcome');
     _el_0.append(_text_1);
-    import2.Text _text_2 = import2.Text(' ');
+    import1.Text _text_2 = import1.Text(' ');
     _el_0.append(_text_2);
-    _text_3 = import2.Text('Home');
+    _text_3 = import1.Text('Home');
     _el_0.append(_text_3);
-    import2.Text _text_4 = import2.Text('!');
+    import1.Text _text_4 = import1.Text('!');
     _el_0.append(_text_4);
     init(const [], null);
     return null;
   }
 }
 
-import0.AppView<import1.InterpolationLiterals> viewFactory_InterpolationLiterals0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationLiterals> viewFactory_InterpolationLiterals0(AppView<dynamic> parentView, int parentIndex) {
   return ViewInterpolationLiterals0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationLiteralsHost = const [];
 
-class _ViewInterpolationLiteralsHost0 extends import0.AppView<import1.InterpolationLiterals> {
+class _ViewInterpolationLiteralsHost0 extends AppView<import0.InterpolationLiterals> {
   ViewInterpolationLiterals0 _compView_0;
-  import1.InterpolationLiterals _InterpolationLiterals_0_5;
-  _ViewInterpolationLiteralsHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.InterpolationLiterals _InterpolationLiterals_0_5;
+  _ViewInterpolationLiteralsHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.InterpolationLiterals> build() {
+  ComponentRef<import0.InterpolationLiterals> build() {
     _compView_0 = ViewInterpolationLiterals0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationLiterals_0_5 = import1.InterpolationLiterals();
+    _InterpolationLiterals_0_5 = import0.InterpolationLiterals();
     _compView_0.create(_InterpolationLiterals_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _InterpolationLiterals_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationLiterals_0_5);
   }
 
   @override
@@ -430,49 +424,49 @@ class _ViewInterpolationLiteralsHost0 extends import0.AppView<import1.Interpolat
   }
 }
 
-import0.AppView<import1.InterpolationLiterals> viewFactory_InterpolationLiteralsHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationLiterals> viewFactory_InterpolationLiteralsHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationLiteralsHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.InterpolationLiterals> _InterpolationLiteralsNgFactory = const import8.ComponentFactory('interpolation', viewFactory_InterpolationLiteralsHost0);
-import8.ComponentFactory<import1.InterpolationLiterals> get InterpolationLiteralsNgFactory {
+const ComponentFactory<import0.InterpolationLiterals> _InterpolationLiteralsNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationLiteralsHost0);
+ComponentFactory<import0.InterpolationLiterals> get InterpolationLiteralsNgFactory {
   return _InterpolationLiteralsNgFactory;
 }
 
 final List<dynamic> styles$InterpolationLocals = const [];
 
-class ViewInterpolationLocals0 extends import0.AppView<import1.InterpolationLocals> {
-  import9.ViewContainer _appEl_0;
-  import10.NgFor _NgFor_0_9;
+class ViewInterpolationLocals0 extends AppView<import0.InterpolationLocals> {
+  ViewContainer _appEl_0;
+  import5.NgFor _NgFor_0_9;
   var _expr_0;
-  static import3.RenderComponentType _renderType;
-  ViewInterpolationLocals0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('interpolation');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), import8.ViewEncapsulation.None, styles$InterpolationLocals);
+  static RenderComponentType _renderType;
+  ViewInterpolationLocals0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('interpolation');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null), ViewEncapsulation.None, styles$InterpolationLocals);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.InterpolationLocals> build() {
+  ComponentRef<import0.InterpolationLocals> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = import0.createViewContainerAnchor();
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    _appEl_0 = import9.ViewContainer(0, null, this, _anchor_0);
-    import11.TemplateRef _TemplateRef_0_8 = import11.TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
-    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
+    _NgFor_0_9 = import5.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
     return null;
   }
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationLocals _ctx = ctx;
+    final import0.InterpolationLocals _ctx = ctx;
     final currVal_0 = _ctx.bars;
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    if (import3.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import6.AppViewUtils.throwOnChanges) {
+    if (!import3.AppViewUtils.throwOnChanges) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -484,23 +478,23 @@ class ViewInterpolationLocals0 extends import0.AppView<import1.InterpolationLoca
   }
 }
 
-import0.AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationLocals> viewFactory_InterpolationLocals0(AppView<dynamic> parentView, int parentIndex) {
   return ViewInterpolationLocals0(parentView, parentIndex);
 }
 
-class _ViewInterpolationLocals1 extends import0.AppView<import1.InterpolationLocals> {
-  import9.ViewContainer _appEl_0;
-  import10.NgFor _NgFor_0_9;
+class _ViewInterpolationLocals1 extends AppView<import0.InterpolationLocals> {
+  ViewContainer _appEl_0;
+  import5.NgFor _NgFor_0_9;
   var _expr_0;
-  _ViewInterpolationLocals1(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationLocals1(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewInterpolationLocals0._renderType;
   }
   @override
-  import8.ComponentRef<import1.InterpolationLocals> build() {
-    final _anchor_0 = import0.createViewContainerAnchor();
-    _appEl_0 = import9.ViewContainer(0, null, this, _anchor_0);
-    import11.TemplateRef _TemplateRef_0_8 = import11.TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
-    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
+  ComponentRef<import0.InterpolationLocals> build() {
+    final _anchor_0 = createViewContainerAnchor();
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
+    _NgFor_0_9 = import5.NgFor(_appEl_0, _TemplateRef_0_8);
     init0(_appEl_0);
     return null;
   }
@@ -509,11 +503,11 @@ class _ViewInterpolationLocals1 extends import0.AppView<import1.InterpolationLoc
   void detectChangesInternal() {
     final local_bar = locals['\$implicit'];
     final currVal_0 = local_bar;
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    if (import3.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import6.AppViewUtils.throwOnChanges) {
+    if (!import3.AppViewUtils.throwOnChanges) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -525,65 +519,65 @@ class _ViewInterpolationLocals1 extends import0.AppView<import1.InterpolationLoc
   }
 }
 
-import0.AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals1(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationLocals> viewFactory_InterpolationLocals1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationLocals1(parentView, parentIndex);
 }
 
-class _ViewInterpolationLocals2 extends import0.AppView<import1.InterpolationLocals> {
-  import2.Text _text_1;
-  import2.Text _text_3;
+class _ViewInterpolationLocals2 extends AppView<import0.InterpolationLocals> {
+  import1.Text _text_1;
+  import1.Text _text_3;
   var _expr_0;
   var _expr_1;
-  _ViewInterpolationLocals2(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationLocals2(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewInterpolationLocals0._renderType;
   }
   @override
-  import8.ComponentRef<import1.InterpolationLocals> build() {
-    import2.Text _text_0 = import2.Text('Hello ');
-    _text_1 = import2.Text('');
-    import2.Text _text_2 = import2.Text(': ');
-    _text_3 = import2.Text('');
-    import2.Text _text_4 = import2.Text('!');
+  ComponentRef<import0.InterpolationLocals> build() {
+    import1.Text _text_0 = import1.Text('Hello ');
+    _text_1 = import1.Text('');
+    import1.Text _text_2 = import1.Text(': ');
+    _text_3 = import1.Text('');
+    import1.Text _text_4 = import1.Text('!');
     init([_text_0, _text_1, _text_2, _text_3, _text_4], null);
     return null;
   }
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationLocals _ctx = ctx;
+    final import0.InterpolationLocals _ctx = ctx;
     final local_bar = parentView.locals['\$implicit'];
     final local_foo = locals['\$implicit'];
-    final currVal_0 = import6.interpolate0(_ctx.callMethod(local_bar));
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import3.interpolate0(_ctx.callMethod(local_bar));
+    if (import3.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
-    final currVal_1 = import6.interpolate0(local_foo);
-    if (import6.checkBinding(_expr_1, currVal_1)) {
+    final currVal_1 = import3.interpolate0(local_foo);
+    if (import3.checkBinding(_expr_1, currVal_1)) {
       _text_3.text = currVal_1;
       _expr_1 = currVal_1;
     }
   }
 }
 
-import0.AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals2(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationLocals> viewFactory_InterpolationLocals2(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationLocals2(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InterpolationLocalsHost = const [];
 
-class _ViewInterpolationLocalsHost0 extends import0.AppView<import1.InterpolationLocals> {
+class _ViewInterpolationLocalsHost0 extends AppView<import0.InterpolationLocals> {
   ViewInterpolationLocals0 _compView_0;
-  import1.InterpolationLocals _InterpolationLocals_0_5;
-  _ViewInterpolationLocalsHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.InterpolationLocals _InterpolationLocals_0_5;
+  _ViewInterpolationLocalsHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.InterpolationLocals> build() {
+  ComponentRef<import0.InterpolationLocals> build() {
     _compView_0 = ViewInterpolationLocals0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationLocals_0_5 = import1.InterpolationLocals();
+    _InterpolationLocals_0_5 = import0.InterpolationLocals();
     _compView_0.create(_InterpolationLocals_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _InterpolationLocals_0_5);
+    return ComponentRef(0, this, rootEl, _InterpolationLocals_0_5);
   }
 
   @override
@@ -597,12 +591,12 @@ class _ViewInterpolationLocalsHost0 extends import0.AppView<import1.Interpolatio
   }
 }
 
-import0.AppView<import1.InterpolationLocals> viewFactory_InterpolationLocalsHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.InterpolationLocals> viewFactory_InterpolationLocalsHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationLocalsHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.InterpolationLocals> _InterpolationLocalsNgFactory = const import8.ComponentFactory('interpolation', viewFactory_InterpolationLocalsHost0);
-import8.ComponentFactory<import1.InterpolationLocals> get InterpolationLocalsNgFactory {
+const ComponentFactory<import0.InterpolationLocals> _InterpolationLocalsNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationLocalsHost0);
+ComponentFactory<import0.InterpolationLocals> get InterpolationLocalsNgFactory {
   return _InterpolationLocalsNgFactory;
 }
 

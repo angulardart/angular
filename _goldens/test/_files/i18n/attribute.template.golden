@@ -8,58 +8,54 @@ export 'attribute.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0;
-import 'attribute.dart' as import1;
-import 'dart:html' as import2;
-import 'package:intl/intl.dart' as import3;
-import 'package:angular/src/core/render/api.dart' as import4;
-import 'package:angular/src/core/linker/view_type.dart' as import5;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import6;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
-import 'package:angular/src/runtime.dart' as import8;
-import 'package:angular/angular.dart' as import9;
+import 'attribute.dart' as import0;
+import 'dart:html' as import1;
+import 'package:intl/intl.dart' as import2;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import4;
+import 'package:angular/src/runtime.dart' as import5;
 
 final List<dynamic> styles$I18nAttributeComponent = const [];
 
-class ViewI18nAttributeComponent0 extends import0.AppView<import1.I18nAttributeComponent> {
-  import2.Element _el_0;
-  static final String _message_0 = import3.Intl.message('message', desc: 'description');
-  static import4.RenderComponentType _renderType;
-  ViewI18nAttributeComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, import6.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('message');
-    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/i18n/attribute.dart' : null), import9.ViewEncapsulation.None, styles$I18nAttributeComponent);
+class ViewI18nAttributeComponent0 extends AppView<import0.I18nAttributeComponent> {
+  import1.Element _el_0;
+  static final String _message_0 = import2.Intl.message('message', desc: 'description');
+  static RenderComponentType _renderType;
+  ViewI18nAttributeComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('message');
+    _renderType ??= import4.appViewUtils.createRenderType((import5.isDevMode ? 'asset:_goldens/test/_files/i18n/attribute.dart' : null), ViewEncapsulation.None, styles$I18nAttributeComponent);
     setupComponentType(_renderType);
   }
   @override
-  import9.ComponentRef<import1.I18nAttributeComponent> build() {
+  ComponentRef<import0.I18nAttributeComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = import0.createAndAppend(doc, 'img', parentRenderNode);
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import1.document;
+    _el_0 = createAndAppend(doc, 'img', parentRenderNode);
     createAttr(_el_0, 'alt', _message_0);
     init(const [], null);
     return null;
   }
 }
 
-import0.AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.I18nAttributeComponent> viewFactory_I18nAttributeComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewI18nAttributeComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$I18nAttributeComponentHost = const [];
 
-class _ViewI18nAttributeComponentHost0 extends import0.AppView<import1.I18nAttributeComponent> {
+class _ViewI18nAttributeComponentHost0 extends AppView<import0.I18nAttributeComponent> {
   ViewI18nAttributeComponent0 _compView_0;
-  import1.I18nAttributeComponent _I18nAttributeComponent_0_5;
-  _ViewI18nAttributeComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, import6.ChangeDetectionStrategy.CheckAlways);
+  import0.I18nAttributeComponent _I18nAttributeComponent_0_5;
+  _ViewI18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import9.ComponentRef<import1.I18nAttributeComponent> build() {
+  ComponentRef<import0.I18nAttributeComponent> build() {
     _compView_0 = ViewI18nAttributeComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _I18nAttributeComponent_0_5 = import1.I18nAttributeComponent();
+    _I18nAttributeComponent_0_5 = import0.I18nAttributeComponent();
     _compView_0.create(_I18nAttributeComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import9.ComponentRef(0, this, rootEl, _I18nAttributeComponent_0_5);
+    return ComponentRef(0, this, rootEl, _I18nAttributeComponent_0_5);
   }
 
   @override
@@ -73,12 +69,12 @@ class _ViewI18nAttributeComponentHost0 extends import0.AppView<import1.I18nAttri
   }
 }
 
-import0.AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.I18nAttributeComponent> viewFactory_I18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewI18nAttributeComponentHost0(parentView, parentIndex);
 }
 
-const import9.ComponentFactory<import1.I18nAttributeComponent> _I18nAttributeComponentNgFactory = const import9.ComponentFactory('message', viewFactory_I18nAttributeComponentHost0);
-import9.ComponentFactory<import1.I18nAttributeComponent> get I18nAttributeComponentNgFactory {
+const ComponentFactory<import0.I18nAttributeComponent> _I18nAttributeComponentNgFactory = const ComponentFactory('message', viewFactory_I18nAttributeComponentHost0);
+ComponentFactory<import0.I18nAttributeComponent> get I18nAttributeComponentNgFactory {
   return _I18nAttributeComponentNgFactory;
 }
 

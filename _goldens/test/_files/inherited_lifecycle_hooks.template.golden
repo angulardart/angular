@@ -8,71 +8,67 @@ export 'inherited_lifecycle_hooks.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0;
-import 'inherited_lifecycle_hooks.dart' as import1;
-import 'package:angular/src/core/render/api.dart' as import2;
-import 'package:angular/src/core/linker/view_type.dart' as import3;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import4;
-import 'dart:html' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
-import 'package:angular/angular.dart' as import8;
+import 'inherited_lifecycle_hooks.dart' as import0;
+import 'package:angular/src/core/linker/view_type.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import3;
+import 'package:angular/src/runtime.dart' as import4;
 
 final List<dynamic> styles$LifecycleHooksComponent = const [];
 
-class ViewLifecycleHooksComponent0 extends import0.AppView<import1.LifecycleHooksComponent> {
-  static import2.RenderComponentType _renderType;
-  ViewLifecycleHooksComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('lifecycle-hooks');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/inherited_lifecycle_hooks.dart' : null), import8.ViewEncapsulation.None, styles$LifecycleHooksComponent);
+class ViewLifecycleHooksComponent0 extends AppView<import0.LifecycleHooksComponent> {
+  static RenderComponentType _renderType;
+  ViewLifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) : super(import1.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('lifecycle-hooks');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/inherited_lifecycle_hooks.dart' : null), ViewEncapsulation.None, styles$LifecycleHooksComponent);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.LifecycleHooksComponent> build() {
+  ComponentRef<import0.LifecycleHooksComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
     return null;
   }
 }
 
-import0.AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewLifecycleHooksComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$LifecycleHooksComponentHost = const [];
 
-class _ViewLifecycleHooksComponentHost0 extends import0.AppView<import1.LifecycleHooksComponent> {
+class _ViewLifecycleHooksComponentHost0 extends AppView<import0.LifecycleHooksComponent> {
   ViewLifecycleHooksComponent0 _compView_0;
-  import1.LifecycleHooksComponent _LifecycleHooksComponent_0_5;
-  _ViewLifecycleHooksComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4.ChangeDetectionStrategy.CheckAlways);
+  import0.LifecycleHooksComponent _LifecycleHooksComponent_0_5;
+  _ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import1.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.LifecycleHooksComponent> build() {
+  ComponentRef<import0.LifecycleHooksComponent> build() {
     _compView_0 = ViewLifecycleHooksComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _LifecycleHooksComponent_0_5 = import1.LifecycleHooksComponent();
+    _LifecycleHooksComponent_0_5 = import0.LifecycleHooksComponent();
     _compView_0.create(_LifecycleHooksComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_5);
+    return ComponentRef(0, this, rootEl, _LifecycleHooksComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
-    if ((!import6.AppViewUtils.throwOnChanges && firstCheck)) {
+    if ((!import3.AppViewUtils.throwOnChanges && firstCheck)) {
       _LifecycleHooksComponent_0_5.ngOnInit();
     }
-    if (!import6.AppViewUtils.throwOnChanges) {
+    if (!import3.AppViewUtils.throwOnChanges) {
       _LifecycleHooksComponent_0_5.ngDoCheck();
     }
-    if (!import6.AppViewUtils.throwOnChanges) {
+    if (!import3.AppViewUtils.throwOnChanges) {
       if (firstCheck) {
         _LifecycleHooksComponent_0_5.ngAfterContentInit();
       }
       _LifecycleHooksComponent_0_5.ngAfterContentChecked();
     }
     _compView_0.detectChanges();
-    if (!import6.AppViewUtils.throwOnChanges) {
+    if (!import3.AppViewUtils.throwOnChanges) {
       if (firstCheck) {
         _LifecycleHooksComponent_0_5.ngAfterViewInit();
       }
@@ -87,12 +83,12 @@ class _ViewLifecycleHooksComponentHost0 extends import0.AppView<import1.Lifecycl
   }
 }
 
-import0.AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.LifecycleHooksComponent> viewFactory_LifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewLifecycleHooksComponentHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.LifecycleHooksComponent> _LifecycleHooksComponentNgFactory = const import8.ComponentFactory('lifecycle-hooks', viewFactory_LifecycleHooksComponentHost0);
-import8.ComponentFactory<import1.LifecycleHooksComponent> get LifecycleHooksComponentNgFactory {
+const ComponentFactory<import0.LifecycleHooksComponent> _LifecycleHooksComponentNgFactory = const ComponentFactory('lifecycle-hooks', viewFactory_LifecycleHooksComponentHost0);
+ComponentFactory<import0.LifecycleHooksComponent> get LifecycleHooksComponentNgFactory {
   return _LifecycleHooksComponentNgFactory;
 }
 

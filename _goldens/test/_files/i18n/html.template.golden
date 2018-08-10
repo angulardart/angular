@@ -8,62 +8,58 @@ export 'html.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0;
-import 'html.dart' as import1;
-import 'dart:html' as import2;
-import 'package:angular/src/core/render/api.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
-import 'package:angular/angular.dart' as import8;
-import 'package:intl/intl.dart' as import9;
+import 'html.dart' as import0;
+import 'dart:html' as import1;
+import 'package:angular/src/core/linker/view_type.dart' as import2;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import3;
+import 'package:angular/src/runtime.dart' as import4;
+import 'package:intl/intl.dart' as import5;
 
 final List<dynamic> styles$I18nHtmlComponent = const [];
 
-class ViewI18nHtmlComponent0 extends import0.AppView<import1.I18nHtmlComponent> {
-  import2.Element _el_0;
-  static import3.RenderComponentType _renderType;
-  ViewI18nHtmlComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('message');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null), import8.ViewEncapsulation.None, styles$I18nHtmlComponent);
+class ViewI18nHtmlComponent0 extends AppView<import0.I18nHtmlComponent> {
+  import1.Element _el_0;
+  static RenderComponentType _renderType;
+  ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('message');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null), ViewEncapsulation.None, styles$I18nHtmlComponent);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.I18nHtmlComponent> build() {
+  ComponentRef<import0.I18nHtmlComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = import0.createAndAppend(doc, 'p', parentRenderNode);
-    import2.DocumentFragment _html_1 = import6.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import1.document;
+    _el_0 = createAndAppend(doc, 'p', parentRenderNode);
+    import1.DocumentFragment _html_1 = import3.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_html_1);
     init(const [], null);
     return null;
   }
 
   static String _message_0(String startTag0, String startTag1, String endTag1, String endTag0) {
-    return import9.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0__message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
+    return import5.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0__message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
   }
 }
 
-import0.AppView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.I18nHtmlComponent> viewFactory_I18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewI18nHtmlComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$I18nHtmlComponentHost = const [];
 
-class _ViewI18nHtmlComponentHost0 extends import0.AppView<import1.I18nHtmlComponent> {
+class _ViewI18nHtmlComponentHost0 extends AppView<import0.I18nHtmlComponent> {
   ViewI18nHtmlComponent0 _compView_0;
-  import1.I18nHtmlComponent _I18nHtmlComponent_0_5;
-  _ViewI18nHtmlComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.I18nHtmlComponent _I18nHtmlComponent_0_5;
+  _ViewI18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.I18nHtmlComponent> build() {
+  ComponentRef<import0.I18nHtmlComponent> build() {
     _compView_0 = ViewI18nHtmlComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _I18nHtmlComponent_0_5 = import1.I18nHtmlComponent();
+    _I18nHtmlComponent_0_5 = import0.I18nHtmlComponent();
     _compView_0.create(_I18nHtmlComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _I18nHtmlComponent_0_5);
+    return ComponentRef(0, this, rootEl, _I18nHtmlComponent_0_5);
   }
 
   @override
@@ -77,12 +73,12 @@ class _ViewI18nHtmlComponentHost0 extends import0.AppView<import1.I18nHtmlCompon
   }
 }
 
-import0.AppView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewI18nHtmlComponentHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.I18nHtmlComponent> _I18nHtmlComponentNgFactory = const import8.ComponentFactory('message', viewFactory_I18nHtmlComponentHost0);
-import8.ComponentFactory<import1.I18nHtmlComponent> get I18nHtmlComponentNgFactory {
+const ComponentFactory<import0.I18nHtmlComponent> _I18nHtmlComponentNgFactory = const ComponentFactory('message', viewFactory_I18nHtmlComponentHost0);
+ComponentFactory<import0.I18nHtmlComponent> get I18nHtmlComponentNgFactory {
   return _I18nHtmlComponentNgFactory;
 }
 

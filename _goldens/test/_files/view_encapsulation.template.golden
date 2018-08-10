@@ -8,57 +8,53 @@ export 'view_encapsulation.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0;
-import 'view_encapsulation.dart' as import1;
-import 'dart:html' as import2;
-import 'package:angular/src/core/render/api.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
-import 'package:angular/angular.dart' as import8;
+import 'view_encapsulation.dart' as import0;
+import 'dart:html' as import1;
+import 'package:angular/src/core/linker/view_type.dart' as import2;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import3;
+import 'package:angular/src/runtime.dart' as import4;
 
 final List<dynamic> styles$EmulatedComponent = const [];
 
-class ViewEmulatedComponent0 extends import0.AppView<import1.EmulatedComponent> {
-  import2.DivElement _el_0;
-  static import3.RenderComponentType _renderType;
-  ViewEmulatedComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('Emulated');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/view_encapsulation.dart' : null), import8.ViewEncapsulation.None, styles$EmulatedComponent);
+class ViewEmulatedComponent0 extends AppView<import0.EmulatedComponent> {
+  import1.DivElement _el_0;
+  static RenderComponentType _renderType;
+  ViewEmulatedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('Emulated');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/view_encapsulation.dart' : null), ViewEncapsulation.None, styles$EmulatedComponent);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.EmulatedComponent> build() {
+  ComponentRef<import0.EmulatedComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = import0.createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = import2.Text('Emulated');
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import1.document;
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    import1.Text _text_1 = import1.Text('Emulated');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
   }
 }
 
-import0.AppView<import1.EmulatedComponent> viewFactory_EmulatedComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.EmulatedComponent> viewFactory_EmulatedComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewEmulatedComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$EmulatedComponentHost = const [];
 
-class _ViewEmulatedComponentHost0 extends import0.AppView<import1.EmulatedComponent> {
+class _ViewEmulatedComponentHost0 extends AppView<import0.EmulatedComponent> {
   ViewEmulatedComponent0 _compView_0;
-  import1.EmulatedComponent _EmulatedComponent_0_5;
-  _ViewEmulatedComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.EmulatedComponent _EmulatedComponent_0_5;
+  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.EmulatedComponent> build() {
+  ComponentRef<import0.EmulatedComponent> build() {
     _compView_0 = ViewEmulatedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _EmulatedComponent_0_5 = import1.EmulatedComponent();
+    _EmulatedComponent_0_5 = import0.EmulatedComponent();
     _compView_0.create(_EmulatedComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _EmulatedComponent_0_5);
+    return ComponentRef(0, this, rootEl, _EmulatedComponent_0_5);
   }
 
   @override
@@ -72,56 +68,56 @@ class _ViewEmulatedComponentHost0 extends import0.AppView<import1.EmulatedCompon
   }
 }
 
-import0.AppView<import1.EmulatedComponent> viewFactory_EmulatedComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.EmulatedComponent> viewFactory_EmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewEmulatedComponentHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.EmulatedComponent> _EmulatedComponentNgFactory = const import8.ComponentFactory('Emulated', viewFactory_EmulatedComponentHost0);
-import8.ComponentFactory<import1.EmulatedComponent> get EmulatedComponentNgFactory {
+const ComponentFactory<import0.EmulatedComponent> _EmulatedComponentNgFactory = const ComponentFactory('Emulated', viewFactory_EmulatedComponentHost0);
+ComponentFactory<import0.EmulatedComponent> get EmulatedComponentNgFactory {
   return _EmulatedComponentNgFactory;
 }
 
 final List<dynamic> styles$NoneComponent = const [];
 
-class ViewNoneComponent0 extends import0.AppView<import1.NoneComponent> {
-  import2.DivElement _el_0;
-  static import3.RenderComponentType _renderType;
-  ViewNoneComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('None');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/view_encapsulation.dart' : null), import8.ViewEncapsulation.None, styles$NoneComponent);
+class ViewNoneComponent0 extends AppView<import0.NoneComponent> {
+  import1.DivElement _el_0;
+  static RenderComponentType _renderType;
+  ViewNoneComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('None');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/view_encapsulation.dart' : null), ViewEncapsulation.None, styles$NoneComponent);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.NoneComponent> build() {
+  ComponentRef<import0.NoneComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = import0.createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = import2.Text('None');
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import1.document;
+    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    import1.Text _text_1 = import1.Text('None');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
   }
 }
 
-import0.AppView<import1.NoneComponent> viewFactory_NoneComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.NoneComponent> viewFactory_NoneComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewNoneComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$NoneComponentHost = const [];
 
-class _ViewNoneComponentHost0 extends import0.AppView<import1.NoneComponent> {
+class _ViewNoneComponentHost0 extends AppView<import0.NoneComponent> {
   ViewNoneComponent0 _compView_0;
-  import1.NoneComponent _NoneComponent_0_5;
-  _ViewNoneComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.NoneComponent _NoneComponent_0_5;
+  _ViewNoneComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.NoneComponent> build() {
+  ComponentRef<import0.NoneComponent> build() {
     _compView_0 = ViewNoneComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _NoneComponent_0_5 = import1.NoneComponent();
+    _NoneComponent_0_5 = import0.NoneComponent();
     _compView_0.create(_NoneComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _NoneComponent_0_5);
+    return ComponentRef(0, this, rootEl, _NoneComponent_0_5);
   }
 
   @override
@@ -135,12 +131,12 @@ class _ViewNoneComponentHost0 extends import0.AppView<import1.NoneComponent> {
   }
 }
 
-import0.AppView<import1.NoneComponent> viewFactory_NoneComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.NoneComponent> viewFactory_NoneComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNoneComponentHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.NoneComponent> _NoneComponentNgFactory = const import8.ComponentFactory('None', viewFactory_NoneComponentHost0);
-import8.ComponentFactory<import1.NoneComponent> get NoneComponentNgFactory {
+const ComponentFactory<import0.NoneComponent> _NoneComponentNgFactory = const ComponentFactory('None', viewFactory_NoneComponentHost0);
+ComponentFactory<import0.NoneComponent> get NoneComponentNgFactory {
   return _NoneComponentNgFactory;
 }
 

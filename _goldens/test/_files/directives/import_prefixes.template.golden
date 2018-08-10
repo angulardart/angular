@@ -11,39 +11,35 @@ import 'import_prefixes.dart' as prefixed2 show ChildComponent;
 import 'import_prefixes.dart' as prefixed3 hide ChildComponent;
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart' as import0;
-import 'import_prefixes.dart' as import1;
-import 'dart:html' as import2;
-import 'package:angular/src/core/render/api.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
-import 'package:angular/src/core/change_detection/change_detection.dart' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
-import 'package:angular/angular.dart' as import8;
+import 'import_prefixes.dart' as import0;
+import 'dart:html' as import1;
+import 'package:angular/src/core/linker/view_type.dart' as import2;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import3;
+import 'package:angular/src/runtime.dart' as import4;
 
 final List<dynamic> styles$ParentComponent = const [];
 
-class ViewParentComponent0 extends import0.AppView<import1.ParentComponent> {
-  import2.Element _el_0;
-  static import3.RenderComponentType _renderType;
-  ViewParentComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('parent-comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null), import8.ViewEncapsulation.None, styles$ParentComponent);
+class ViewParentComponent0 extends AppView<import0.ParentComponent> {
+  import1.Element _el_0;
+  static RenderComponentType _renderType;
+  ViewParentComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('parent-comp');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null), ViewEncapsulation.None, styles$ParentComponent);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.ParentComponent> build() {
+  ComponentRef<import0.ParentComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = import0.createAndAppend(doc, 'child-comp', parentRenderNode);
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import1.document;
+    _el_0 = createAndAppend(doc, 'child-comp', parentRenderNode);
     init(const [], null);
     return null;
   }
 
   @override
   void detectChangesInternal() {
-    final import1.ParentComponent _ctx = ctx;
+    final import0.ParentComponent _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
       if (!identical(_ctx.input, null)) {
@@ -53,24 +49,24 @@ class ViewParentComponent0 extends import0.AppView<import1.ParentComponent> {
   }
 }
 
-import0.AppView<import1.ParentComponent> viewFactory_ParentComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.ParentComponent> viewFactory_ParentComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewParentComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$ParentComponentHost = const [];
 
-class _ViewParentComponentHost0 extends import0.AppView<import1.ParentComponent> {
+class _ViewParentComponentHost0 extends AppView<import0.ParentComponent> {
   ViewParentComponent0 _compView_0;
-  import1.ParentComponent _ParentComponent_0_5;
-  _ViewParentComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.ParentComponent _ParentComponent_0_5;
+  _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.ParentComponent> build() {
+  ComponentRef<import0.ParentComponent> build() {
     _compView_0 = ViewParentComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ParentComponent_0_5 = import1.ParentComponent();
+    _ParentComponent_0_5 = import0.ParentComponent();
     _compView_0.create(_ParentComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _ParentComponent_0_5);
+    return ComponentRef(0, this, rootEl, _ParentComponent_0_5);
   }
 
   @override
@@ -84,31 +80,31 @@ class _ViewParentComponentHost0 extends import0.AppView<import1.ParentComponent>
   }
 }
 
-import0.AppView<import1.ParentComponent> viewFactory_ParentComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.ParentComponent> viewFactory_ParentComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewParentComponentHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.ParentComponent> _ParentComponentNgFactory = const import8.ComponentFactory('parent-comp', viewFactory_ParentComponentHost0);
-import8.ComponentFactory<import1.ParentComponent> get ParentComponentNgFactory {
+const ComponentFactory<import0.ParentComponent> _ParentComponentNgFactory = const ComponentFactory('parent-comp', viewFactory_ParentComponentHost0);
+ComponentFactory<import0.ParentComponent> get ParentComponentNgFactory {
   return _ParentComponentNgFactory;
 }
 
 final List<dynamic> styles$ChildComponent = const [];
 
-class ViewChildComponent0 extends import0.AppView<import1.ChildComponent> {
-  import2.Text _text_0;
+class ViewChildComponent0 extends AppView<import0.ChildComponent> {
+  import1.Text _text_0;
   var _expr_0;
-  static import3.RenderComponentType _renderType;
-  ViewChildComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('child-cmp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null), import8.ViewEncapsulation.None, styles$ChildComponent);
+  static RenderComponentType _renderType;
+  ViewChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import1.document.createElement('child-cmp');
+    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null), ViewEncapsulation.None, styles$ChildComponent);
     setupComponentType(_renderType);
   }
   @override
-  import8.ComponentRef<import1.ChildComponent> build() {
+  ComponentRef<import0.ChildComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = import2.Text('');
+    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _text_0 = import1.Text('');
     parentRenderNode.append(_text_0);
     init(const [], null);
     return null;
@@ -116,33 +112,33 @@ class ViewChildComponent0 extends import0.AppView<import1.ChildComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.ChildComponent _ctx = ctx;
-    final currVal_0 = import6.interpolate0(_ctx.myType);
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final import0.ChildComponent _ctx = ctx;
+    final currVal_0 = import3.interpolate0(_ctx.myType);
+    if (import3.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
   }
 }
 
-import0.AppView<import1.ChildComponent> viewFactory_ChildComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.ChildComponent> viewFactory_ChildComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewChildComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$ChildComponentHost = const [];
 
-class _ViewChildComponentHost0 extends import0.AppView<import1.ChildComponent> {
+class _ViewChildComponentHost0 extends AppView<import0.ChildComponent> {
   ViewChildComponent0 _compView_0;
-  import1.ChildComponent _ChildComponent_0_5;
-  _ViewChildComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5.ChangeDetectionStrategy.CheckAlways);
+  import0.ChildComponent _ChildComponent_0_5;
+  _ViewChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  import8.ComponentRef<import1.ChildComponent> build() {
+  ComponentRef<import0.ChildComponent> build() {
     _compView_0 = ViewChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ChildComponent_0_5 = import1.ChildComponent();
+    _ChildComponent_0_5 = import0.ChildComponent();
     _compView_0.create(_ChildComponent_0_5, projectableNodes);
     init0(rootEl);
-    return import8.ComponentRef(0, this, rootEl, _ChildComponent_0_5);
+    return ComponentRef(0, this, rootEl, _ChildComponent_0_5);
   }
 
   @override
@@ -156,12 +152,12 @@ class _ViewChildComponentHost0 extends import0.AppView<import1.ChildComponent> {
   }
 }
 
-import0.AppView<import1.ChildComponent> viewFactory_ChildComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
+AppView<import0.ChildComponent> viewFactory_ChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewChildComponentHost0(parentView, parentIndex);
 }
 
-const import8.ComponentFactory<import1.ChildComponent> _ChildComponentNgFactory = const import8.ComponentFactory('child-cmp', viewFactory_ChildComponentHost0);
-import8.ComponentFactory<import1.ChildComponent> get ChildComponentNgFactory {
+const ComponentFactory<import0.ChildComponent> _ChildComponentNgFactory = const ComponentFactory('child-cmp', viewFactory_ChildComponentHost0);
+ComponentFactory<import0.ChildComponent> get ChildComponentNgFactory {
   return _ChildComponentNgFactory;
 }
 

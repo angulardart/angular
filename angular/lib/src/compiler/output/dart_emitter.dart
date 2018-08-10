@@ -60,6 +60,32 @@ class DartEmitter implements OutputEmitter {
 
 class _DartEmitterVisitor extends AbstractEmitterVisitor
     implements o.TypeVisitor<void, EmitterVisitorContext> {
+  static const List<String> _whiteListedImports = [
+    'package:angular/angular.dart',
+    'dart:core',
+    // ElementRef.
+    'asset:angular/lib/src/core/linker/element_ref.dart',
+    'package:angular/src/core/linker/element_ref.dart',
+    // ViewContainer.
+    'asset:angular/lib/src/core/linker/view_container.dart',
+    'package:angular/src/core/linker/view_container.dart',
+    // TemplateRef.
+    'asset:angular/lib/src/core/linker/template_ref.dart',
+    'package:angular/src/core/linker/template_ref.dart',
+    // ChangeDetectionStrategy, Differs*
+    'asset:angular/lib/src/core/change_detection/change_detection.dart',
+    'package:angular/src/core/change_detection/change_detection.dart',
+    // NgIf.
+    'asset:angular/lib/src/common/directives/ng_if.dart',
+    'package:angular/src/common/directives/ng_if.dart',
+    // AppView.
+    'asset:angular/lib/src/core/linker/app_view.dart',
+    'package:angular/src/core/linker/app_view.dart',
+    // RenderComponentType.
+    'asset:angular/lib/src/core/render/api.dart',
+    'package:angular/src/core/render/api.dart',
+  ];
+
   final String _moduleUrl;
 
   final importsWithPrefixes = <String, String>{};
@@ -569,7 +595,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (value.emitPrefix) {
       return value.prefix ?? '';
     }
-    if (moduleUrl == null || moduleUrl == 'dart:core') {
+    if (moduleUrl == null || _whiteListedImports.contains(moduleUrl)) {
       return '';
     }
     if (moduleUrl != _moduleUrl) {
