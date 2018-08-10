@@ -67,7 +67,7 @@ void main() {
 
     tearDown(() => disposeAnyRunningTest());
 
-    Future<void> updateRequired({String pattern}) async {
+    Future<void> updatePattern({String pattern}) async {
       await fixture.update((cmp) => cmp.pattern = pattern);
       // We have to do this in a separate turn, so that new required value has
       // propagated.
@@ -81,15 +81,23 @@ void main() {
     test('can be triggered dynamically', () async {
       expect(dynamicControlValid(), true);
 
-      await updateRequired(pattern: '[A-Za-z]*');
+      await updatePattern(pattern: '[A-Za-z]*');
 
       expect(dynamicControlValid(), true);
+
+      await fixture.update((cmp) => cmp.value = '123');
+
+      expect(dynamicControlValid(), false);
 
       await fixture.update((cmp) => cmp.value = 'abc');
 
       expect(dynamicControlValid(), true);
 
-      await updateRequired(pattern: '[a-z]*');
+      await updatePattern(pattern: '[1-9]*');
+
+      expect(dynamicControlValid(), false);
+
+      await updatePattern(pattern: '[a-z]*');
 
       expect(dynamicControlValid(), true);
 
