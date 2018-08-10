@@ -231,7 +231,15 @@ class EmbeddedTemplateAst implements TemplateAst {
       this.sourceSpan,
       {this.hasDeferredComponent = false});
 
-  bool get hasViewContainer => elementProviderUsage.requiresViewContainer;
+  bool get hasViewContainer =>
+      elementProviderUsage.requiresViewContainer ||
+      // The view compiler tries to optimize when it sees a `<template>` tag
+      // without `ViewContainerRef` being accessed (i.e. either via a query or
+      // via injection in a directive). This behaves badly with `@deferred`,
+      // which is more or less a compiler-based directive.
+      //
+      // See https://github.com/dart-lang/angular/issues/1539.
+      hasDeferredComponent;
 
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
       visitor.visitEmbeddedTemplate(this, context);

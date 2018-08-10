@@ -1224,13 +1224,24 @@ class CompileView implements AppViewBuilder {
 
   @override
   void deferLoadEmbeddedTemplate(
-      CompileView deferredView, CompileElement targetElement) {
-    var statements = <o.Statement>[];
-    targetElement.writeDeferredLoader(
-        deferredView, targetElement.appViewContainer, statements);
-    _createMethod.addStmts(statements);
-    detectChangesRenderPropertiesMethod.addStmt(targetElement.appViewContainer
-        .callMethod('detectChangesInNestedViews', const []).toStmt());
+    CompileView deferredView,
+    CompileElement targetElement,
+  ) {
+    final deferredLoadExpr = targetElement.writeDeferredLoader(
+      deferredView,
+      targetElement.appViewContainer,
+    );
+    final cancelHandlerName = '_cancelDeferredLoad${targetElement.nodeIndex}';
+    storage.allocate(
+      cancelHandlerName,
+      outputType: new o.FunctionType(o.VOID_TYPE, []),
+    );
+    _createMethod.addStmt(
+      o.ReadClassMemberExpr(cancelHandlerName).set(deferredLoadExpr).toStmt(),
+    );
+    destroyMethod.addStmt(
+      o.ReadClassMemberExpr(cancelHandlerName).callFn([]).toStmt(),
+    );
   }
 
   @override

@@ -18,7 +18,7 @@ import 'app_view_utils.dart';
 import 'component_factory.dart';
 import 'template_ref.dart';
 import 'view_container.dart';
-import 'view_ref.dart' show ViewRefImpl;
+import 'view_ref.dart' show EmbeddedViewRef, ViewRefImpl;
 import 'view_type.dart' show ViewType;
 
 export 'package:angular/src/core/change_detection/component_state.dart';
@@ -628,21 +628,34 @@ abstract class AppView<T> {
     js_util.setProperty(element, name, value);
   }
 
-  Future<void> loadDeferred(
-    Future loadComponentFunction(),
-    Future loadTemplateLibFunction(),
+  /// Loads dart code used in [templateRef] lazily.
+  ///
+  /// Returns a function, than when executed, cancels the creation of the view
+  /// if it has not occurred, or destroys the view if it has already been
+  /// created.
+  void Function() loadDeferred(
+    Future<void> Function() loadComponent,
+    Future<void> Function() loadTemplateLib,
     ViewContainer viewContainer,
     TemplateRef templateRef, [
-    void initializer(),
+    void Function() initializer,
   ]) {
-    return Future.wait([loadComponentFunction(), loadTemplateLibFunction()])
-        .then((_) {
+    var cancelled = false;
+    EmbeddedViewRef viewRef;
+    Future.wait([loadComponent(), loadTemplateLib()]).then((_) {
+      if (cancelled) {
+        return;
+      }
       if (initializer != null) {
         initializer();
       }
-      viewContainer.createEmbeddedView(templateRef);
+      viewRef = viewContainer.createEmbeddedView(templateRef);
       viewContainer.detectChangesInNestedViews();
     });
+    return () {
+      cancelled = true;
+      // viewRef?.destroy();
+    };
   }
 }
 
