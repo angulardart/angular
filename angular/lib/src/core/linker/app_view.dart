@@ -628,21 +628,30 @@ abstract class AppView<T> {
     js_util.setProperty(element, name, value);
   }
 
-  Future<void> loadDeferred(
-    Future loadComponentFunction(),
-    Future loadTemplateLibFunction(),
+  /// Loads dart code used in [templateRef] lazily.
+  ///
+  /// Returns a function, than when executed, cancels the creation of the view.
+  void Function() loadDeferred(
+    Future<void> Function() loadComponent,
+    Future<void> Function() loadTemplateLib,
     ViewContainer viewContainer,
     TemplateRef templateRef, [
-    void initializer(),
+    void Function() initializer,
   ]) {
-    return Future.wait([loadComponentFunction(), loadTemplateLibFunction()])
-        .then((_) {
+    var cancelled = false;
+    Future.wait([loadComponent(), loadTemplateLib()]).then((_) {
+      if (cancelled) {
+        return;
+      }
       if (initializer != null) {
         initializer();
       }
       viewContainer.createEmbeddedView(templateRef);
       viewContainer.detectChangesInNestedViews();
     });
+    return () {
+      cancelled = true;
+    };
   }
 }
 

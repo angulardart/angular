@@ -31,13 +31,16 @@ final List<dynamic> styles$TestContainerComponent = const [];
 
 class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent> {
   ViewContainer _appEl_0;
+  void Function() _cancelDeferredLoad0;
   ViewContainer _appEl_1;
   NgIf _NgIf_1_9;
   ViewContainer _appEl_2;
   bool _query_queryMe_1_0_isDirty = true;
   NgIf _NgIf_2_9;
   ViewContainer _appEl_3;
+  void Function() _cancelDeferredLoad3;
   ViewContainer _appEl_4;
+  void Function() _cancelDeferredLoad4;
   import4.Element _el_5;
   import5.ViewNotDeferredChildComponent0 _compView_5;
   import6.NotDeferredChildComponent _NotDeferredChildComponent_5_5;
@@ -54,8 +57,8 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_7 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);
-    loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_7);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);
+    _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
     final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
@@ -69,13 +72,13 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     final _anchor_3 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_3);
     _appEl_3 = ViewContainer(3, null, this, _anchor_3);
-    TemplateRef _TemplateRef_3_7 = TemplateRef(_appEl_3, viewFactory_TestContainerComponent6);
-    loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_3, _TemplateRef_3_7);
+    TemplateRef _TemplateRef_3_8 = TemplateRef(_appEl_3, viewFactory_TestContainerComponent6);
+    _cancelDeferredLoad3 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_3, _TemplateRef_3_8);
     final _anchor_4 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_4);
     _appEl_4 = ViewContainer(4, null, this, _anchor_4);
-    TemplateRef _TemplateRef_4_7 = TemplateRef(_appEl_4, viewFactory_TestContainerComponent7);
-    loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_4, _TemplateRef_4_7);
+    TemplateRef _TemplateRef_4_8 = TemplateRef(_appEl_4, viewFactory_TestContainerComponent7);
+    _cancelDeferredLoad4 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_4, _TemplateRef_4_8);
     _compView_5 = import5.ViewNotDeferredChildComponent0(this, 5);
     _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
@@ -90,8 +93,11 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     final import1.TestContainerComponent _ctx = ctx;
     _NgIf_1_9.ngIf = _ctx.showDeferredChild;
     _NgIf_2_9.ngIf = _ctx.showDeferredChild;
+    _appEl_0.detectChangesInNestedViews();
     _appEl_1.detectChangesInNestedViews();
     _appEl_2.detectChangesInNestedViews();
+    _appEl_3.detectChangesInNestedViews();
+    _appEl_4.detectChangesInNestedViews();
     if (!import10.AppViewUtils.throwOnChanges) {
       if (_query_queryMe_1_0_isDirty) {
         ctx.queryDeferredChild = import10.firstOrNull(_appEl_2.mapNestedViews((_ViewTestContainerComponent4 nestedView) {
@@ -102,17 +108,20 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
         _query_queryMe_1_0_isDirty = false;
       }
     }
-    _appEl_0.detectChangesInNestedViews();
-    _appEl_3.detectChangesInNestedViews();
-    _appEl_4.detectChangesInNestedViews();
     _compView_5.detectChanges();
   }
 
   @override
   void destroyInternal() {
+    _appEl_0?.destroyNestedViews();
     _appEl_1?.destroyNestedViews();
     _appEl_2?.destroyNestedViews();
+    _appEl_3?.destroyNestedViews();
+    _appEl_4?.destroyNestedViews();
     _compView_5?.destroy();
+    _cancelDeferredLoad0();
+    _cancelDeferredLoad3();
+    _cancelDeferredLoad4();
   }
 }
 
@@ -154,6 +163,7 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent1(AppV
 
 class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponent> {
   ViewContainer _appEl_0;
+  void Function() _cancelDeferredLoad0;
   _ViewTestContainerComponent2(AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
@@ -161,15 +171,21 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     final _anchor_0 = createViewContainerAnchor();
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_7 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent3);
-    loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_7);
-    init0(_anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent3);
+    _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
+    init0(_appEl_0);
     return null;
   }
 
   @override
   void detectChangesInternal() {
     _appEl_0.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_0?.destroyNestedViews();
+    _cancelDeferredLoad0();
   }
 }
 
@@ -212,6 +228,7 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent3(AppV
 class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponent> {
   import4.DivElement _el_0;
   ViewContainer _appEl_1;
+  void Function() _cancelDeferredLoad1;
   _ViewTestContainerComponent4(AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
@@ -222,8 +239,8 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
-    TemplateRef _TemplateRef_1_7 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent5);
-    loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_7);
+    TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent5);
+    _cancelDeferredLoad1 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_8);
     init0(_el_0);
     return null;
   }
@@ -231,6 +248,12 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
   @override
   void detectChangesInternal() {
     _appEl_1.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_1?.destroyNestedViews();
+    _cancelDeferredLoad1();
   }
 }
 
