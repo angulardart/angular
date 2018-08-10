@@ -198,6 +198,64 @@ ComponentFactory<import1.DeferredChild3Component> get DeferredChild3ComponentNgF
   return _DeferredChild3ComponentNgFactory;
 }
 
+final List<dynamic> styles$NotDeferredChildComponent = const [];
+
+class ViewNotDeferredChildComponent0 extends AppView<import1.NotDeferredChildComponent> {
+  static RenderComponentType _renderType;
+  ViewNotDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('not-deferred-child');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null), ViewEncapsulation.None, styles$NotDeferredChildComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.NotDeferredChildComponent> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+    return null;
+  }
+}
+
+AppView<import1.NotDeferredChildComponent> viewFactory_NotDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) {
+  return ViewNotDeferredChildComponent0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$NotDeferredChildComponentHost = const [];
+
+class _ViewNotDeferredChildComponentHost0 extends AppView<import1.NotDeferredChildComponent> {
+  ViewNotDeferredChildComponent0 _compView_0;
+  import1.NotDeferredChildComponent _NotDeferredChildComponent_0_5;
+  _ViewNotDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.NotDeferredChildComponent> build() {
+    _compView_0 = ViewNotDeferredChildComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _NotDeferredChildComponent_0_5 = import1.NotDeferredChildComponent();
+    _compView_0.create(_NotDeferredChildComponent_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _NotDeferredChildComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.NotDeferredChildComponent> viewFactory_NotDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewNotDeferredChildComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.NotDeferredChildComponent> _NotDeferredChildComponentNgFactory = const ComponentFactory('not-deferred-child', viewFactory_NotDeferredChildComponentHost0);
+ComponentFactory<import1.NotDeferredChildComponent> get NotDeferredChildComponentNgFactory {
+  return _NotDeferredChildComponentNgFactory;
+}
+
 final List<dynamic> styles$DeferredChildComponentWithoutNgContent = const [];
 
 class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.DeferredChildComponentWithoutNgContent> {
@@ -333,6 +391,7 @@ void initReflector() {
   _ngRef.registerComponent(DeferredChild1Component, DeferredChild1ComponentNgFactory);
   _ngRef.registerComponent(DeferredChild2Component, DeferredChild2ComponentNgFactory);
   _ngRef.registerComponent(DeferredChild3Component, DeferredChild3ComponentNgFactory);
+  _ngRef.registerComponent(NotDeferredChildComponent, NotDeferredChildComponentNgFactory);
   _ngRef.registerComponent(DeferredChildComponentWithoutNgContent, DeferredChildComponentWithoutNgContentNgFactory);
   _ngRef.registerComponent(DeferredChildComponentWithNgContent, DeferredChildComponentWithNgContentNgFactory);
   _ref0.initReflector();

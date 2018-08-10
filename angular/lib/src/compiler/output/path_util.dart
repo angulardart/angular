@@ -14,6 +14,10 @@ String getImportModulePath(String moduleUrlStr, String importedUrlStr) {
   if (importedUrl == null) {
     return importedUrlStr;
   }
+  // Import self.
+  if (moduleUrlStr == importedUrlStr) {
+    return importedUrl.modulePath.split(_PATH_SEP).last;
+  }
   // Try to create a relative path first
   if (moduleUrl.firstLevelDir == importedUrl.firstLevelDir &&
       moduleUrl.packageName == importedUrl.packageName) {

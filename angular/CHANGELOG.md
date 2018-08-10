@@ -1,6 +1,6 @@
 ### Bug fixes
 
-*   [#1538]() A compile-time error is reported if the `@deferred` template
+*   [#1538][]: A compile-time error is reported if the `@deferred` template
     annotation is present on a `<template>` element or is a sibling to a
     structural directive (such as `*ngIf`). Before we would silently drop/ignore
     the annotation, so this might be considered a breaking change of an
@@ -24,7 +24,14 @@
     </ng-container>
     ```
 
+*   [#1558][]: When importing a `library.dart` that has two or more components
+    (i.e. `Comp1` and `Comp2`), and at least one component is used `@deferred`
+    and at least one component is used _without_ `@deferred`, the compiler would
+    generate invalid Dart code that would fail analysis/compilation to JS.
+    Correct code is now emitted, allowing the described scenario to work.
+
 [#1538]: https://github.com/dart-lang/angular/issues/153
+[#1558]: https://github.com/dart-lang/angular/issues/1558
 
 ## 5.0.0
 
