@@ -10,69 +10,76 @@ import 'package:_goldens/component.dart';
 import 'deferred_component.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'container_component.dart' as import0;
-import 'dart:html' as import1;
-import 'deferred_component.template.dart' as import2;
-import 'deferred_component.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import5;
-import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/src/core/linker/app_view.dart' as import0 /*WHITELISTED*/;
+import 'container_component.dart' as import1;
+import 'package:angular/src/core/linker/view_container.dart' as import2 /*WHITELISTED*/;
+import 'package:angular/src/common/directives/ng_if.dart' as import3 /*WHITELISTED*/;
+import 'dart:html' as import4;
+import 'deferred_component.template.dart' as import5;
+import 'deferred_component.dart' as import6;
+import 'package:angular/src/core/render/api.dart' as import7 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/view_type.dart' as import8;
+import 'package:angular/src/core/change_detection/change_detection.dart' as import9 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
+import 'package:angular/src/runtime.dart' as import11;
+import 'package:angular/angular.dart' as import12 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/template_ref.dart' as import13 /*WHITELISTED*/;
 import 'deferred_component.dart' deferred as deflib0;
 import 'deferred_component.template.dart' deferred as deflib1;
 
 final List<dynamic> styles$TestContainerComponent = const [];
 
-class ViewTestContainerComponent0 extends AppView<import0.TestContainerComponent> {
-  ViewContainer _appEl_0;
-  ViewContainer _appEl_1;
-  NgIf _NgIf_1_9;
-  ViewContainer _appEl_2;
+class ViewTestContainerComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> {
+  import2 /*WHITELISTED*/ .ViewContainer _appEl_0;
+  import2 /*WHITELISTED*/ .ViewContainer _appEl_1;
+  import3 /*WHITELISTED*/ .NgIf _NgIf_1_9;
+  import2 /*WHITELISTED*/ .ViewContainer _appEl_2;
   bool _query_queryMe_1_0_isDirty = true;
-  NgIf _NgIf_2_9;
-  ViewContainer _appEl_3;
-  ViewContainer _appEl_4;
-  import1.Element _el_5;
-  import2.ViewNotDeferredChildComponent0 _compView_5;
-  import3.NotDeferredChildComponent _NotDeferredChildComponent_5_5;
-  static RenderComponentType _renderType;
-  ViewTestContainerComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import1.document.createElement('test-container');
-    _renderType ??= import5.appViewUtils.createRenderType((import6.isDevMode ? 'asset:_goldens/test/_files/deferred/container_component.dart' : null), ViewEncapsulation.None, styles$TestContainerComponent);
+  import3 /*WHITELISTED*/ .NgIf _NgIf_2_9;
+  import2 /*WHITELISTED*/ .ViewContainer _appEl_3;
+  import2 /*WHITELISTED*/ .ViewContainer _appEl_4;
+  import4.Element _el_5;
+  import5.ViewNotDeferredChildComponent0 _compView_5;
+  import6.NotDeferredChildComponent _NotDeferredChildComponent_5_5;
+  static import7 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewTestContainerComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.component, {}, parentView, parentIndex, import9 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import4.document.createElement('test-container');
+    _renderType ??= import10.appViewUtils.createRenderType((import11.isDevMode ? 'asset:_goldens/test/_files/deferred/container_component.dart' : null), import12 /*WHITELISTED*/ .ViewEncapsulation.None, styles$TestContainerComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.TestContainerComponent> build() {
+  import12 /*WHITELISTED*/ .ComponentRef<import1.TestContainerComponent> build() {
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = createViewContainerAnchor();
+    final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _anchor_0 = import0 /*WHITELISTED*/ .createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_7 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);
+    _appEl_0 = import2 /*WHITELISTED*/ .ViewContainer(0, null, this, _anchor_0);
+    import13 /*WHITELISTED*/ .TemplateRef _TemplateRef_0_7 = import13 /*WHITELISTED*/ .TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);
     loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_7);
-    final _anchor_1 = createViewContainerAnchor();
+    final _anchor_1 = import0 /*WHITELISTED*/ .createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
-    _appEl_1 = ViewContainer(1, null, this, _anchor_1);
-    TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent2);
-    _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
-    final _anchor_2 = createViewContainerAnchor();
+    _appEl_1 = import2 /*WHITELISTED*/ .ViewContainer(1, null, this, _anchor_1);
+    import13 /*WHITELISTED*/ .TemplateRef _TemplateRef_1_8 = import13 /*WHITELISTED*/ .TemplateRef(_appEl_1, viewFactory_TestContainerComponent2);
+    _NgIf_1_9 = import3 /*WHITELISTED*/ .NgIf(_appEl_1, _TemplateRef_1_8);
+    final _anchor_2 = import0 /*WHITELISTED*/ .createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
-    _appEl_2 = ViewContainer(2, null, this, _anchor_2);
-    TemplateRef _TemplateRef_2_8 = TemplateRef(_appEl_2, viewFactory_TestContainerComponent4);
-    _NgIf_2_9 = NgIf(_appEl_2, _TemplateRef_2_8);
-    final _anchor_3 = createViewContainerAnchor();
+    _appEl_2 = import2 /*WHITELISTED*/ .ViewContainer(2, null, this, _anchor_2);
+    import13 /*WHITELISTED*/ .TemplateRef _TemplateRef_2_8 = import13 /*WHITELISTED*/ .TemplateRef(_appEl_2, viewFactory_TestContainerComponent4);
+    _NgIf_2_9 = import3 /*WHITELISTED*/ .NgIf(_appEl_2, _TemplateRef_2_8);
+    final _anchor_3 = import0 /*WHITELISTED*/ .createViewContainerAnchor();
     parentRenderNode.append(_anchor_3);
-    _appEl_3 = ViewContainer(3, null, this, _anchor_3);
-    TemplateRef _TemplateRef_3_7 = TemplateRef(_appEl_3, viewFactory_TestContainerComponent6);
+    _appEl_3 = import2 /*WHITELISTED*/ .ViewContainer(3, null, this, _anchor_3);
+    import13 /*WHITELISTED*/ .TemplateRef _TemplateRef_3_7 = import13 /*WHITELISTED*/ .TemplateRef(_appEl_3, viewFactory_TestContainerComponent6);
     loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_3, _TemplateRef_3_7);
-    final _anchor_4 = createViewContainerAnchor();
+    final _anchor_4 = import0 /*WHITELISTED*/ .createViewContainerAnchor();
     parentRenderNode.append(_anchor_4);
-    _appEl_4 = ViewContainer(4, null, this, _anchor_4);
-    TemplateRef _TemplateRef_4_7 = TemplateRef(_appEl_4, viewFactory_TestContainerComponent7);
+    _appEl_4 = import2 /*WHITELISTED*/ .ViewContainer(4, null, this, _anchor_4);
+    import13 /*WHITELISTED*/ .TemplateRef _TemplateRef_4_7 = import13 /*WHITELISTED*/ .TemplateRef(_appEl_4, viewFactory_TestContainerComponent7);
     loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_4, _TemplateRef_4_7);
-    _compView_5 = import2.ViewNotDeferredChildComponent0(this, 5);
+    _compView_5 = import5.ViewNotDeferredChildComponent0(this, 5);
     _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
-    _NotDeferredChildComponent_5_5 = import3.NotDeferredChildComponent();
+    _NotDeferredChildComponent_5_5 = import6.NotDeferredChildComponent();
     _compView_5.create(_NotDeferredChildComponent_5_5, []);
     init(const [], null);
     return null;
@@ -80,14 +87,14 @@ class ViewTestContainerComponent0 extends AppView<import0.TestContainerComponent
 
   @override
   void detectChangesInternal() {
-    final import0.TestContainerComponent _ctx = ctx;
+    final import1.TestContainerComponent _ctx = ctx;
     _NgIf_1_9.ngIf = _ctx.showDeferredChild;
     _NgIf_2_9.ngIf = _ctx.showDeferredChild;
     _appEl_1.detectChangesInNestedViews();
     _appEl_2.detectChangesInNestedViews();
-    if (!import5.AppViewUtils.throwOnChanges) {
+    if (!import10.AppViewUtils.throwOnChanges) {
       if (_query_queryMe_1_0_isDirty) {
-        ctx.queryDeferredChild = import5.firstOrNull(_appEl_2.mapNestedViews((_ViewTestContainerComponent4 nestedView) {
+        ctx.queryDeferredChild = import10.firstOrNull(_appEl_2.mapNestedViews((_ViewTestContainerComponent4 nestedView) {
           return nestedView._appEl_1.mapNestedViews((_ViewTestContainerComponent5 nestedView) {
             return [nestedView._DeferredChild3Component_0_5];
           });
@@ -109,22 +116,22 @@ class ViewTestContainerComponent0 extends AppView<import0.TestContainerComponent
   }
 }
 
-AppView<import0.TestContainerComponent> viewFactory_TestContainerComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewTestContainerComponent0(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent1 extends AppView<import0.TestContainerComponent> {
-  import1.Element _el_0;
-  AppView _compView_0;
+class _ViewTestContainerComponent1 extends import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> {
+  import4.Element _el_0;
+  import0 /*WHITELISTED*/ .AppView _compView_0;
   dynamic _DeferredChild1Component_0_5;
-  _ViewTestContainerComponent1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent1(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, import9 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
-  ComponentRef<import0.TestContainerComponent> build() {
-    _compView_0 = import2.viewFactory_DeferredChild1Component0(this, 0);
+  import12 /*WHITELISTED*/ .ComponentRef<import1.TestContainerComponent> build() {
+    _compView_0 = import5.viewFactory_DeferredChild1Component0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChild1Component_0_5 = import3.DeferredChild1Component();
+    _DeferredChild1Component_0_5 = import6.DeferredChild1Component();
     _compView_0.create(_DeferredChild1Component_0_5, []);
     init0(_el_0);
     return null;
@@ -141,20 +148,20 @@ class _ViewTestContainerComponent1 extends AppView<import0.TestContainerComponen
   }
 }
 
-AppView<import0.TestContainerComponent> viewFactory_TestContainerComponent1(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent1(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent1(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent2 extends AppView<import0.TestContainerComponent> {
-  ViewContainer _appEl_0;
-  _ViewTestContainerComponent2(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+class _ViewTestContainerComponent2 extends import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> {
+  import2 /*WHITELISTED*/ .ViewContainer _appEl_0;
+  _ViewTestContainerComponent2(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, import9 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
-  ComponentRef<import0.TestContainerComponent> build() {
-    final _anchor_0 = createViewContainerAnchor();
-    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_7 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent3);
+  import12 /*WHITELISTED*/ .ComponentRef<import1.TestContainerComponent> build() {
+    final _anchor_0 = import0 /*WHITELISTED*/ .createViewContainerAnchor();
+    _appEl_0 = import2 /*WHITELISTED*/ .ViewContainer(0, null, this, _anchor_0);
+    import13 /*WHITELISTED*/ .TemplateRef _TemplateRef_0_7 = import13 /*WHITELISTED*/ .TemplateRef(_appEl_0, viewFactory_TestContainerComponent3);
     loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_7);
     init0(_anchor_0);
     return null;
@@ -166,22 +173,22 @@ class _ViewTestContainerComponent2 extends AppView<import0.TestContainerComponen
   }
 }
 
-AppView<import0.TestContainerComponent> viewFactory_TestContainerComponent2(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent2(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent3 extends AppView<import0.TestContainerComponent> {
-  import1.Element _el_0;
-  AppView _compView_0;
+class _ViewTestContainerComponent3 extends import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> {
+  import4.Element _el_0;
+  import0 /*WHITELISTED*/ .AppView _compView_0;
   dynamic _DeferredChild2Component_0_5;
-  _ViewTestContainerComponent3(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent3(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, import9 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
-  ComponentRef<import0.TestContainerComponent> build() {
-    _compView_0 = import2.viewFactory_DeferredChild2Component0(this, 0);
+  import12 /*WHITELISTED*/ .ComponentRef<import1.TestContainerComponent> build() {
+    _compView_0 = import5.viewFactory_DeferredChild2Component0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChild2Component_0_5 = import3.DeferredChild2Component();
+    _DeferredChild2Component_0_5 = import6.DeferredChild2Component();
     _compView_0.create(_DeferredChild2Component_0_5, []);
     init0(_el_0);
     return null;
@@ -198,24 +205,24 @@ class _ViewTestContainerComponent3 extends AppView<import0.TestContainerComponen
   }
 }
 
-AppView<import0.TestContainerComponent> viewFactory_TestContainerComponent3(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent3(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent3(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent4 extends AppView<import0.TestContainerComponent> {
-  import1.DivElement _el_0;
-  ViewContainer _appEl_1;
-  _ViewTestContainerComponent4(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+class _ViewTestContainerComponent4 extends import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> {
+  import4.DivElement _el_0;
+  import2 /*WHITELISTED*/ .ViewContainer _appEl_1;
+  _ViewTestContainerComponent4(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, import9 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
-  ComponentRef<import0.TestContainerComponent> build() {
-    var doc = import1.document;
+  import12 /*WHITELISTED*/ .ComponentRef<import1.TestContainerComponent> build() {
+    var doc = import4.document;
     _el_0 = doc.createElement('div');
-    final _anchor_1 = createViewContainerAnchor();
+    final _anchor_1 = import0 /*WHITELISTED*/ .createViewContainerAnchor();
     _el_0.append(_anchor_1);
-    _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
-    TemplateRef _TemplateRef_1_7 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent5);
+    _appEl_1 = import2 /*WHITELISTED*/ .ViewContainer(1, 0, this, _anchor_1);
+    import13 /*WHITELISTED*/ .TemplateRef _TemplateRef_1_7 = import13 /*WHITELISTED*/ .TemplateRef(_appEl_1, viewFactory_TestContainerComponent5);
     loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_7);
     init0(_el_0);
     return null;
@@ -227,22 +234,22 @@ class _ViewTestContainerComponent4 extends AppView<import0.TestContainerComponen
   }
 }
 
-AppView<import0.TestContainerComponent> viewFactory_TestContainerComponent4(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent4(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent4(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent5 extends AppView<import0.TestContainerComponent> {
-  import1.Element _el_0;
-  AppView _compView_0;
+class _ViewTestContainerComponent5 extends import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> {
+  import4.Element _el_0;
+  import0 /*WHITELISTED*/ .AppView _compView_0;
   dynamic _DeferredChild3Component_0_5;
-  _ViewTestContainerComponent5(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent5(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, import9 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
-  ComponentRef<import0.TestContainerComponent> build() {
-    _compView_0 = import2.viewFactory_DeferredChild3Component0(this, 0);
+  import12 /*WHITELISTED*/ .ComponentRef<import1.TestContainerComponent> build() {
+    _compView_0 = import5.viewFactory_DeferredChild3Component0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChild3Component_0_5 = import3.DeferredChild3Component();
+    _DeferredChild3Component_0_5 = import6.DeferredChild3Component();
     _compView_0.create(_DeferredChild3Component_0_5, []);
     init0(_el_0);
     return null;
@@ -255,7 +262,7 @@ class _ViewTestContainerComponent5 extends AppView<import0.TestContainerComponen
 
   @override
   void dirtyParentQueriesInternal() {
-    import6.unsafeCast<ViewTestContainerComponent0>(parentView.parentView)._query_queryMe_1_0_isDirty = true;
+    import11.unsafeCast<ViewTestContainerComponent0>(parentView.parentView)._query_queryMe_1_0_isDirty = true;
   }
 
   @override
@@ -264,23 +271,23 @@ class _ViewTestContainerComponent5 extends AppView<import0.TestContainerComponen
   }
 }
 
-AppView<import0.TestContainerComponent> viewFactory_TestContainerComponent5(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent5(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent5(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent6 extends AppView<import0.TestContainerComponent> {
-  import1.Element _el_0;
-  AppView _compView_0;
+class _ViewTestContainerComponent6 extends import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> {
+  import4.Element _el_0;
+  import0 /*WHITELISTED*/ .AppView _compView_0;
   dynamic _DeferredChildComponentWithoutNgContent_0_5;
-  _ViewTestContainerComponent6(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent6(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, import9 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
-  ComponentRef<import0.TestContainerComponent> build() {
-    _compView_0 = import2.viewFactory_DeferredChildComponentWithoutNgContent0(this, 0);
+  import12 /*WHITELISTED*/ .ComponentRef<import1.TestContainerComponent> build() {
+    _compView_0 = import5.viewFactory_DeferredChildComponentWithoutNgContent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChildComponentWithoutNgContent_0_5 = import3.DeferredChildComponentWithoutNgContent();
-    import1.Text _text_1 = import1.Text('Hello World');
+    _DeferredChildComponentWithoutNgContent_0_5 = import6.DeferredChildComponentWithoutNgContent();
+    import4.Text _text_1 = import4.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithoutNgContent_0_5, []);
     init0(_el_0);
     return null;
@@ -297,23 +304,23 @@ class _ViewTestContainerComponent6 extends AppView<import0.TestContainerComponen
   }
 }
 
-AppView<import0.TestContainerComponent> viewFactory_TestContainerComponent6(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent6(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent6(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent7 extends AppView<import0.TestContainerComponent> {
-  import1.Element _el_0;
-  AppView _compView_0;
+class _ViewTestContainerComponent7 extends import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> {
+  import4.Element _el_0;
+  import0 /*WHITELISTED*/ .AppView _compView_0;
   dynamic _DeferredChildComponentWithNgContent_0_5;
-  _ViewTestContainerComponent7(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent7(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, import9 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
   @override
-  ComponentRef<import0.TestContainerComponent> build() {
-    _compView_0 = import2.viewFactory_DeferredChildComponentWithNgContent0(this, 0);
+  import12 /*WHITELISTED*/ .ComponentRef<import1.TestContainerComponent> build() {
+    _compView_0 = import5.viewFactory_DeferredChildComponentWithNgContent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChildComponentWithNgContent_0_5 = import3.DeferredChildComponentWithNgContent();
-    import1.Text _text_1 = import1.Text('Hello World');
+    _DeferredChildComponentWithNgContent_0_5 = import6.DeferredChildComponentWithNgContent();
+    import4.Text _text_1 = import4.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithNgContent_0_5, [
       [_text_1]
     ]);
@@ -332,24 +339,24 @@ class _ViewTestContainerComponent7 extends AppView<import0.TestContainerComponen
   }
 }
 
-AppView<import0.TestContainerComponent> viewFactory_TestContainerComponent7(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent7(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent7(parentView, parentIndex);
 }
 
 final List<dynamic> styles$TestContainerComponentHost = const [];
 
-class _ViewTestContainerComponentHost0 extends AppView<import0.TestContainerComponent> {
+class _ViewTestContainerComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> {
   ViewTestContainerComponent0 _compView_0;
-  import0.TestContainerComponent _TestContainerComponent_0_5;
-  _ViewTestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.TestContainerComponent _TestContainerComponent_0_5;
+  _ViewTestContainerComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.host, {}, parentView, parentIndex, import9 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import0.TestContainerComponent> build() {
+  import12 /*WHITELISTED*/ .ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = ViewTestContainerComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestContainerComponent_0_5 = import0.TestContainerComponent();
+    _TestContainerComponent_0_5 = import1.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _TestContainerComponent_0_5);
+    return import12 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _TestContainerComponent_0_5);
   }
 
   @override
@@ -363,12 +370,12 @@ class _ViewTestContainerComponentHost0 extends AppView<import0.TestContainerComp
   }
 }
 
-AppView<import0.TestContainerComponent> viewFactory_TestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.TestContainerComponent> viewFactory_TestContainerComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.TestContainerComponent> _TestContainerComponentNgFactory = const ComponentFactory('test-container', viewFactory_TestContainerComponentHost0);
-ComponentFactory<import0.TestContainerComponent> get TestContainerComponentNgFactory {
+const import12 /*WHITELISTED*/ .ComponentFactory<import1.TestContainerComponent> _TestContainerComponentNgFactory = const import12 /*WHITELISTED*/ .ComponentFactory('test-container', viewFactory_TestContainerComponentHost0);
+import12 /*WHITELISTED*/ .ComponentFactory<import1.TestContainerComponent> get TestContainerComponentNgFactory {
   return _TestContainerComponentNgFactory;
 }
 

@@ -8,30 +8,34 @@ export 'change_detection.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'change_detection.dart' as import0;
-import 'dart:html' as import1;
-import 'package:angular/src/core/linker/view_type.dart' as import2;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import3;
-import 'package:angular/src/runtime.dart' as import4;
+import 'package:angular/src/core/linker/app_view.dart' as import0 /*WHITELISTED*/;
+import 'change_detection.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/render/api.dart' as import3 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart' as import5 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/angular.dart' as import8 /*WHITELISTED*/;
 
 final List<dynamic> styles$CheckOnceComponent = const [];
 
-class ViewCheckOnceComponent0 extends AppView<import0.CheckOnceComponent> {
-  import1.DivElement _el_0;
+class ViewCheckOnceComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.CheckOnceComponent> {
+  import2.DivElement _el_0;
   var _expr_0;
-  static RenderComponentType _renderType;
-  ViewCheckOnceComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import1.document.createElement('CheckOnce');
-    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$CheckOnceComponent);
+  static import3 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewCheckOnceComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckOnce) {
+    rootEl = import2.document.createElement('CheckOnce');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$CheckOnceComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.CheckOnceComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.CheckOnceComponent> build() {
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import1.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import1.Text _text_1 = import1.Text('CheckOnce');
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, parentRenderNode);
+    import2.Text _text_1 = import2.Text('CheckOnce');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
@@ -39,31 +43,31 @@ class ViewCheckOnceComponent0 extends AppView<import0.CheckOnceComponent> {
 
   void detectHostChanges(bool firstCheck) {
     final currVal_0 = ctx.id;
-    if (import3.checkBinding(_expr_0, currVal_0)) {
+    if (import6.checkBinding(_expr_0, currVal_0)) {
       setProp(rootEl, 'id', currVal_0);
       _expr_0 = currVal_0;
     }
   }
 }
 
-AppView<import0.CheckOnceComponent> viewFactory_CheckOnceComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.CheckOnceComponent> viewFactory_CheckOnceComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewCheckOnceComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CheckOnceComponentHost = const [];
 
-class _ViewCheckOnceComponentHost0 extends AppView<import0.CheckOnceComponent> {
+class _ViewCheckOnceComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.CheckOnceComponent> {
   ViewCheckOnceComponent0 _compView_0;
-  import0.CheckOnceComponent _CheckOnceComponent_0_5;
-  _ViewCheckOnceComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.CheckOnceComponent _CheckOnceComponent_0_5;
+  _ViewCheckOnceComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import0.CheckOnceComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.CheckOnceComponent> build() {
     _compView_0 = ViewCheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CheckOnceComponent_0_5 = import0.CheckOnceComponent();
+    _CheckOnceComponent_0_5 = import1.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _CheckOnceComponent_0_5);
+    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _CheckOnceComponent_0_5);
   }
 
   @override
@@ -79,56 +83,56 @@ class _ViewCheckOnceComponentHost0 extends AppView<import0.CheckOnceComponent> {
   }
 }
 
-AppView<import0.CheckOnceComponent> viewFactory_CheckOnceComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.CheckOnceComponent> viewFactory_CheckOnceComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewCheckOnceComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.CheckOnceComponent> _CheckOnceComponentNgFactory = const ComponentFactory('CheckOnce', viewFactory_CheckOnceComponentHost0);
-ComponentFactory<import0.CheckOnceComponent> get CheckOnceComponentNgFactory {
+const import8 /*WHITELISTED*/ .ComponentFactory<import1.CheckOnceComponent> _CheckOnceComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('CheckOnce', viewFactory_CheckOnceComponentHost0);
+import8 /*WHITELISTED*/ .ComponentFactory<import1.CheckOnceComponent> get CheckOnceComponentNgFactory {
   return _CheckOnceComponentNgFactory;
 }
 
 final List<dynamic> styles$CheckedComponent = const [];
 
-class ViewCheckedComponent0 extends AppView<import0.CheckedComponent> {
-  import1.DivElement _el_0;
-  static RenderComponentType _renderType;
-  ViewCheckedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import1.document.createElement('Checked');
-    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$CheckedComponent);
+class ViewCheckedComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.CheckedComponent> {
+  import2.DivElement _el_0;
+  static import3 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewCheckedComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckOnce) {
+    rootEl = import2.document.createElement('Checked');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$CheckedComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.CheckedComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.CheckedComponent> build() {
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import1.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import1.Text _text_1 = import1.Text('Checked');
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, parentRenderNode);
+    import2.Text _text_1 = import2.Text('Checked');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
   }
 }
 
-AppView<import0.CheckedComponent> viewFactory_CheckedComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.CheckedComponent> viewFactory_CheckedComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewCheckedComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CheckedComponentHost = const [];
 
-class _ViewCheckedComponentHost0 extends AppView<import0.CheckedComponent> {
+class _ViewCheckedComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.CheckedComponent> {
   ViewCheckedComponent0 _compView_0;
-  import0.CheckedComponent _CheckedComponent_0_5;
-  _ViewCheckedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.CheckedComponent _CheckedComponent_0_5;
+  _ViewCheckedComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import0.CheckedComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.CheckedComponent> build() {
     _compView_0 = ViewCheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CheckedComponent_0_5 = import0.CheckedComponent();
+    _CheckedComponent_0_5 = import1.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _CheckedComponent_0_5);
+    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _CheckedComponent_0_5);
   }
 
   @override
@@ -142,56 +146,56 @@ class _ViewCheckedComponentHost0 extends AppView<import0.CheckedComponent> {
   }
 }
 
-AppView<import0.CheckedComponent> viewFactory_CheckedComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.CheckedComponent> viewFactory_CheckedComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewCheckedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.CheckedComponent> _CheckedComponentNgFactory = const ComponentFactory('Checked', viewFactory_CheckedComponentHost0);
-ComponentFactory<import0.CheckedComponent> get CheckedComponentNgFactory {
+const import8 /*WHITELISTED*/ .ComponentFactory<import1.CheckedComponent> _CheckedComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('Checked', viewFactory_CheckedComponentHost0);
+import8 /*WHITELISTED*/ .ComponentFactory<import1.CheckedComponent> get CheckedComponentNgFactory {
   return _CheckedComponentNgFactory;
 }
 
 final List<dynamic> styles$CheckAlwaysComponent = const [];
 
-class ViewCheckAlwaysComponent0 extends AppView<import0.CheckAlwaysComponent> {
-  import1.DivElement _el_0;
-  static RenderComponentType _renderType;
-  ViewCheckAlwaysComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import1.document.createElement('CheckAlways');
-    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$CheckAlwaysComponent);
+class ViewCheckAlwaysComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.CheckAlwaysComponent> {
+  import2.DivElement _el_0;
+  static import3 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewCheckAlwaysComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckOnce) {
+    rootEl = import2.document.createElement('CheckAlways');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$CheckAlwaysComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.CheckAlwaysComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.CheckAlwaysComponent> build() {
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import1.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import1.Text _text_1 = import1.Text('CheckAlways');
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, parentRenderNode);
+    import2.Text _text_1 = import2.Text('CheckAlways');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
   }
 }
 
-AppView<import0.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewCheckAlwaysComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$CheckAlwaysComponentHost = const [];
 
-class _ViewCheckAlwaysComponentHost0 extends AppView<import0.CheckAlwaysComponent> {
+class _ViewCheckAlwaysComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.CheckAlwaysComponent> {
   ViewCheckAlwaysComponent0 _compView_0;
-  import0.CheckAlwaysComponent _CheckAlwaysComponent_0_5;
-  _ViewCheckAlwaysComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.CheckAlwaysComponent _CheckAlwaysComponent_0_5;
+  _ViewCheckAlwaysComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import0.CheckAlwaysComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.CheckAlwaysComponent> build() {
     _compView_0 = ViewCheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CheckAlwaysComponent_0_5 = import0.CheckAlwaysComponent();
+    _CheckAlwaysComponent_0_5 = import1.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_5);
+    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_5);
   }
 
   @override
@@ -205,56 +209,56 @@ class _ViewCheckAlwaysComponentHost0 extends AppView<import0.CheckAlwaysComponen
   }
 }
 
-AppView<import0.CheckAlwaysComponent> viewFactory_CheckAlwaysComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.CheckAlwaysComponent> viewFactory_CheckAlwaysComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewCheckAlwaysComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.CheckAlwaysComponent> _CheckAlwaysComponentNgFactory = const ComponentFactory('CheckAlways', viewFactory_CheckAlwaysComponentHost0);
-ComponentFactory<import0.CheckAlwaysComponent> get CheckAlwaysComponentNgFactory {
+const import8 /*WHITELISTED*/ .ComponentFactory<import1.CheckAlwaysComponent> _CheckAlwaysComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('CheckAlways', viewFactory_CheckAlwaysComponentHost0);
+import8 /*WHITELISTED*/ .ComponentFactory<import1.CheckAlwaysComponent> get CheckAlwaysComponentNgFactory {
   return _CheckAlwaysComponentNgFactory;
 }
 
 final List<dynamic> styles$DetachedComponent = const [];
 
-class ViewDetachedComponent0 extends AppView<import0.DetachedComponent> {
-  import1.DivElement _el_0;
-  static RenderComponentType _renderType;
-  ViewDetachedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import1.document.createElement('Detached');
-    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$DetachedComponent);
+class ViewDetachedComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.DetachedComponent> {
+  import2.DivElement _el_0;
+  static import3 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewDetachedComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckOnce) {
+    rootEl = import2.document.createElement('Detached');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$DetachedComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.DetachedComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.DetachedComponent> build() {
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import1.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import1.Text _text_1 = import1.Text('Detached');
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, parentRenderNode);
+    import2.Text _text_1 = import2.Text('Detached');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
   }
 }
 
-AppView<import0.DetachedComponent> viewFactory_DetachedComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.DetachedComponent> viewFactory_DetachedComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewDetachedComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DetachedComponentHost = const [];
 
-class _ViewDetachedComponentHost0 extends AppView<import0.DetachedComponent> {
+class _ViewDetachedComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.DetachedComponent> {
   ViewDetachedComponent0 _compView_0;
-  import0.DetachedComponent _DetachedComponent_0_5;
-  _ViewDetachedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.DetachedComponent _DetachedComponent_0_5;
+  _ViewDetachedComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import0.DetachedComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.DetachedComponent> build() {
     _compView_0 = ViewDetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DetachedComponent_0_5 = import0.DetachedComponent();
+    _DetachedComponent_0_5 = import1.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _DetachedComponent_0_5);
+    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _DetachedComponent_0_5);
   }
 
   @override
@@ -268,56 +272,56 @@ class _ViewDetachedComponentHost0 extends AppView<import0.DetachedComponent> {
   }
 }
 
-AppView<import0.DetachedComponent> viewFactory_DetachedComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.DetachedComponent> viewFactory_DetachedComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewDetachedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.DetachedComponent> _DetachedComponentNgFactory = const ComponentFactory('Detached', viewFactory_DetachedComponentHost0);
-ComponentFactory<import0.DetachedComponent> get DetachedComponentNgFactory {
+const import8 /*WHITELISTED*/ .ComponentFactory<import1.DetachedComponent> _DetachedComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('Detached', viewFactory_DetachedComponentHost0);
+import8 /*WHITELISTED*/ .ComponentFactory<import1.DetachedComponent> get DetachedComponentNgFactory {
   return _DetachedComponentNgFactory;
 }
 
 final List<dynamic> styles$OnPushComponent = const [];
 
-class ViewOnPushComponent0 extends AppView<import0.OnPushComponent> {
-  import1.DivElement _el_0;
-  static RenderComponentType _renderType;
-  ViewOnPushComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import1.document.createElement('OnPush');
-    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$OnPushComponent);
+class ViewOnPushComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.OnPushComponent> {
+  import2.DivElement _el_0;
+  static import3 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewOnPushComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckOnce) {
+    rootEl = import2.document.createElement('OnPush');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$OnPushComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.OnPushComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.OnPushComponent> build() {
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import1.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import1.Text _text_1 = import1.Text('OnPush');
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, parentRenderNode);
+    import2.Text _text_1 = import2.Text('OnPush');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
   }
 }
 
-AppView<import0.OnPushComponent> viewFactory_OnPushComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.OnPushComponent> viewFactory_OnPushComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewOnPushComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$OnPushComponentHost = const [];
 
-class _ViewOnPushComponentHost0 extends AppView<import0.OnPushComponent> {
+class _ViewOnPushComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.OnPushComponent> {
   ViewOnPushComponent0 _compView_0;
-  import0.OnPushComponent _OnPushComponent_0_5;
-  _ViewOnPushComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.OnPushComponent _OnPushComponent_0_5;
+  _ViewOnPushComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import0.OnPushComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.OnPushComponent> build() {
     _compView_0 = ViewOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _OnPushComponent_0_5 = import0.OnPushComponent();
+    _OnPushComponent_0_5 = import1.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _OnPushComponent_0_5);
+    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _OnPushComponent_0_5);
   }
 
   @override
@@ -331,33 +335,33 @@ class _ViewOnPushComponentHost0 extends AppView<import0.OnPushComponent> {
   }
 }
 
-AppView<import0.OnPushComponent> viewFactory_OnPushComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.OnPushComponent> viewFactory_OnPushComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewOnPushComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.OnPushComponent> _OnPushComponentNgFactory = const ComponentFactory('OnPush', viewFactory_OnPushComponentHost0);
-ComponentFactory<import0.OnPushComponent> get OnPushComponentNgFactory {
+const import8 /*WHITELISTED*/ .ComponentFactory<import1.OnPushComponent> _OnPushComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('OnPush', viewFactory_OnPushComponentHost0);
+import8 /*WHITELISTED*/ .ComponentFactory<import1.OnPushComponent> get OnPushComponentNgFactory {
   return _OnPushComponentNgFactory;
 }
 
 final List<dynamic> styles$StatefulComponent = const [];
 
-class ViewStatefulComponent0 extends AppView<import0.StatefulComponent> {
-  import1.DivElement _el_0;
-  static RenderComponentType _renderType;
-  ViewStatefulComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import1.document.createElement('Stateful');
-    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$StatefulComponent);
+class ViewStatefulComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.StatefulComponent> {
+  import2.DivElement _el_0;
+  static import3 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewStatefulComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckOnce) {
+    rootEl = import2.document.createElement('Stateful');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$StatefulComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.StatefulComponent> build() {
-    final import0.StatefulComponent _ctx = ctx;
+  import8 /*WHITELISTED*/ .ComponentRef<import1.StatefulComponent> build() {
+    final import1.StatefulComponent _ctx = ctx;
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import1.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import1.Text _text_1 = import1.Text('Stateful');
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, parentRenderNode);
+    import2.Text _text_1 = import2.Text('Stateful');
     _el_0.append(_text_1);
     init(const [], null);
     _ctx.stateChangeCallback = markStateChanged;
@@ -365,24 +369,24 @@ class ViewStatefulComponent0 extends AppView<import0.StatefulComponent> {
   }
 }
 
-AppView<import0.StatefulComponent> viewFactory_StatefulComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.StatefulComponent> viewFactory_StatefulComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewStatefulComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$StatefulComponentHost = const [];
 
-class _ViewStatefulComponentHost0 extends AppView<import0.StatefulComponent> {
+class _ViewStatefulComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.StatefulComponent> {
   ViewStatefulComponent0 _compView_0;
-  import0.StatefulComponent _StatefulComponent_0_5;
-  _ViewStatefulComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.StatefulComponent _StatefulComponent_0_5;
+  _ViewStatefulComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import0.StatefulComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.StatefulComponent> build() {
     _compView_0 = ViewStatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _StatefulComponent_0_5 = import0.StatefulComponent();
+    _StatefulComponent_0_5 = import1.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _StatefulComponent_0_5);
+    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _StatefulComponent_0_5);
   }
 
   @override
@@ -396,56 +400,56 @@ class _ViewStatefulComponentHost0 extends AppView<import0.StatefulComponent> {
   }
 }
 
-AppView<import0.StatefulComponent> viewFactory_StatefulComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.StatefulComponent> viewFactory_StatefulComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewStatefulComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.StatefulComponent> _StatefulComponentNgFactory = const ComponentFactory('Stateful', viewFactory_StatefulComponentHost0);
-ComponentFactory<import0.StatefulComponent> get StatefulComponentNgFactory {
+const import8 /*WHITELISTED*/ .ComponentFactory<import1.StatefulComponent> _StatefulComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('Stateful', viewFactory_StatefulComponentHost0);
+import8 /*WHITELISTED*/ .ComponentFactory<import1.StatefulComponent> get StatefulComponentNgFactory {
   return _StatefulComponentNgFactory;
 }
 
 final List<dynamic> styles$DefaultComponent = const [];
 
-class ViewDefaultComponent0 extends AppView<import0.DefaultComponent> {
-  import1.DivElement _el_0;
-  static RenderComponentType _renderType;
-  ViewDefaultComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import1.document.createElement('Default');
-    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$DefaultComponent);
+class ViewDefaultComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.DefaultComponent> {
+  import2.DivElement _el_0;
+  static import3 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewDefaultComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('Default');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$DefaultComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.DefaultComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.DefaultComponent> build() {
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import1.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import1.Text _text_1 = import1.Text('Default');
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, parentRenderNode);
+    import2.Text _text_1 = import2.Text('Default');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
   }
 }
 
-AppView<import0.DefaultComponent> viewFactory_DefaultComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.DefaultComponent> viewFactory_DefaultComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewDefaultComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$DefaultComponentHost = const [];
 
-class _ViewDefaultComponentHost0 extends AppView<import0.DefaultComponent> {
+class _ViewDefaultComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.DefaultComponent> {
   ViewDefaultComponent0 _compView_0;
-  import0.DefaultComponent _DefaultComponent_0_5;
-  _ViewDefaultComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.DefaultComponent _DefaultComponent_0_5;
+  _ViewDefaultComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import0.DefaultComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.DefaultComponent> build() {
     _compView_0 = ViewDefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DefaultComponent_0_5 = import0.DefaultComponent();
+    _DefaultComponent_0_5 = import1.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _DefaultComponent_0_5);
+    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _DefaultComponent_0_5);
   }
 
   @override
@@ -459,12 +463,12 @@ class _ViewDefaultComponentHost0 extends AppView<import0.DefaultComponent> {
   }
 }
 
-AppView<import0.DefaultComponent> viewFactory_DefaultComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.DefaultComponent> viewFactory_DefaultComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewDefaultComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.DefaultComponent> _DefaultComponentNgFactory = const ComponentFactory('Default', viewFactory_DefaultComponentHost0);
-ComponentFactory<import0.DefaultComponent> get DefaultComponentNgFactory {
+const import8 /*WHITELISTED*/ .ComponentFactory<import1.DefaultComponent> _DefaultComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('Default', viewFactory_DefaultComponentHost0);
+import8 /*WHITELISTED*/ .ComponentFactory<import1.DefaultComponent> get DefaultComponentNgFactory {
   return _DefaultComponentNgFactory;
 }
 

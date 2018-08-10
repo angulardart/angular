@@ -8,28 +8,32 @@ export 'event_tearoff.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'event_tearoff.dart' as import0;
-import 'dart:html' as import1;
-import 'package:angular/src/core/linker/view_type.dart' as import2;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import3;
-import 'package:angular/src/runtime.dart' as import4;
+import 'package:angular/src/core/linker/app_view.dart' as import0 /*WHITELISTED*/;
+import 'event_tearoff.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/render/api.dart' as import3 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart' as import5 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/angular.dart' as import8 /*WHITELISTED*/;
 
 final List<dynamic> styles$UsesEventTearoff = const [];
 
-class ViewUsesEventTearoff0 extends AppView<import0.UsesEventTearoff> {
-  import1.ButtonElement _el_0;
-  static RenderComponentType _renderType;
-  ViewUsesEventTearoff0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import1.document.createElement('uses-event-tearoff');
-    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/event_tearoff.dart' : null), ViewEncapsulation.None, styles$UsesEventTearoff);
+class ViewUsesEventTearoff0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesEventTearoff> {
+  import2.ButtonElement _el_0;
+  static import3 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewUsesEventTearoff0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('uses-event-tearoff');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/event_tearoff.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$UsesEventTearoff);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.UsesEventTearoff> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesEventTearoff> build() {
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import1.document;
-    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = import0 /*WHITELISTED*/ .createAndAppend(doc, 'button', parentRenderNode);
     _el_0.addEventListener('click', eventHandler1(ctx.onClick));
     _el_0.addEventListener('blur', eventHandler0(ctx.onBlur));
     init(const [], null);
@@ -37,24 +41,24 @@ class ViewUsesEventTearoff0 extends AppView<import0.UsesEventTearoff> {
   }
 }
 
-AppView<import0.UsesEventTearoff> viewFactory_UsesEventTearoff0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.UsesEventTearoff> viewFactory_UsesEventTearoff0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewUsesEventTearoff0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$UsesEventTearoffHost = const [];
 
-class _ViewUsesEventTearoffHost0 extends AppView<import0.UsesEventTearoff> {
+class _ViewUsesEventTearoffHost0 extends import0 /*WHITELISTED*/ .AppView<import1.UsesEventTearoff> {
   ViewUsesEventTearoff0 _compView_0;
-  import0.UsesEventTearoff _UsesEventTearoff_0_5;
-  _ViewUsesEventTearoffHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import1.UsesEventTearoff _UsesEventTearoff_0_5;
+  _ViewUsesEventTearoffHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import0.UsesEventTearoff> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.UsesEventTearoff> build() {
     _compView_0 = ViewUsesEventTearoff0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesEventTearoff_0_5 = import0.UsesEventTearoff();
+    _UsesEventTearoff_0_5 = import1.UsesEventTearoff();
     _compView_0.create(_UsesEventTearoff_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _UsesEventTearoff_0_5);
+    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _UsesEventTearoff_0_5);
   }
 
   @override
@@ -68,12 +72,12 @@ class _ViewUsesEventTearoffHost0 extends AppView<import0.UsesEventTearoff> {
   }
 }
 
-AppView<import0.UsesEventTearoff> viewFactory_UsesEventTearoffHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.UsesEventTearoff> viewFactory_UsesEventTearoffHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesEventTearoffHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.UsesEventTearoff> _UsesEventTearoffNgFactory = const ComponentFactory('uses-event-tearoff', viewFactory_UsesEventTearoffHost0);
-ComponentFactory<import0.UsesEventTearoff> get UsesEventTearoffNgFactory {
+const import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesEventTearoff> _UsesEventTearoffNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('uses-event-tearoff', viewFactory_UsesEventTearoffHost0);
+import8 /*WHITELISTED*/ .ComponentFactory<import1.UsesEventTearoff> get UsesEventTearoffNgFactory {
   return _UsesEventTearoffNgFactory;
 }
 

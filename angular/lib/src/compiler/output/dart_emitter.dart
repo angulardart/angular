@@ -60,7 +60,8 @@ class DartEmitter implements OutputEmitter {
 
 class _DartEmitterVisitor extends AbstractEmitterVisitor
     implements o.TypeVisitor<void, EmitterVisitorContext> {
-  static const List<String> _whiteListedImports = [
+  // List of packages that are public api and can be imported without prefix.
+  static const _whiteListedImports = [
     'package:angular/angular.dart',
     'dart:core',
     // ElementRef.
@@ -592,19 +593,20 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     bool isDeferred,
   ) {
     final moduleUrl = value.moduleUrl;
-    if (value.emitPrefix) {
-      return value.prefix ?? '';
-    }
-    if (moduleUrl == null || _whiteListedImports.contains(moduleUrl)) {
-      return '';
-    }
-    if (moduleUrl != _moduleUrl) {
+    if (moduleUrl != null && moduleUrl != _moduleUrl) {
       var prefix = importsWithPrefixes[moduleUrl];
       if (prefix == null) {
-        prefix = 'import${importsWithPrefixes.length}';
+        if (_whiteListedImports.contains(moduleUrl)) {
+          prefix = 'import${importsWithPrefixes.length}';
+        } else {
+          prefix = 'import${importsWithPrefixes.length}';
+        }
         importsWithPrefixes[moduleUrl] = prefix;
       }
       return prefix;
+    }
+    if (value.emitPrefix) {
+      return value.prefix ?? '';
     }
     return '';
   }

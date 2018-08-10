@@ -9,68 +9,72 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'functional_directives.dart' as import0;
-import 'dart:html' as import1;
-import 'package:angular/src/core/linker/view_type.dart' as import2;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import3;
-import 'package:angular/src/runtime.dart' as import4;
+import 'package:angular/src/core/linker/app_view.dart' as import0 /*WHITELISTED*/;
+import 'functional_directives.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/render/api.dart' as import3 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart' as import5 /*WHITELISTED*/;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/angular.dart' as import8 /*WHITELISTED*/;
 
 final List<dynamic> styles$AppComponent = const [];
 
-class ViewAppComponent0 extends AppView<import0.AppComponent> {
-  import1.DivElement _el_0;
-  import1.DivElement _el_1;
-  static RenderComponentType _renderType;
-  ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import1.document.createElement('app');
-    _renderType ??= import3.appViewUtils.createRenderType((import4.isDevMode ? 'asset:_goldens/test/_files/directives/functional_directives.dart' : null), ViewEncapsulation.None, styles$AppComponent);
+class ViewAppComponent0 extends import0 /*WHITELISTED*/ .AppView<import1.AppComponent> {
+  import2.DivElement _el_0;
+  import2.DivElement _el_1;
+  static import3 /*WHITELISTED*/ .RenderComponentType _renderType;
+  ViewAppComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('app');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/functional_directives.dart' : null), import8 /*WHITELISTED*/ .ViewEncapsulation.None, styles$AppComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import0.AppComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.AppComponent> build() {
     final _rootEl = rootEl;
-    final import1.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import1.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    _el_0 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, parentRenderNode);
     createAttr(_el_0, 'generateText', '');
-    _el_1 = createDivAndAppend(doc, _el_0);
-    import0.generateTextDirective(_el_0, parentView.injectorGet(import0.TextService, viewData.parentIndex));
+    _el_1 = import0 /*WHITELISTED*/ .createDivAndAppend(doc, _el_0);
+    import1.generateTextDirective(_el_0, parentView.injectorGet(import1.TextService, viewData.parentIndex));
     init(const [], null);
     return null;
   }
 }
 
-AppView<import0.AppComponent> viewFactory_AppComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.AppComponent> viewFactory_AppComponent0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return ViewAppComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$AppComponentHost = const [];
 
-class _ViewAppComponentHost0 extends AppView<import0.AppComponent> {
+class _ViewAppComponentHost0 extends import0 /*WHITELISTED*/ .AppView<import1.AppComponent> {
   ViewAppComponent0 _compView_0;
-  import0.AppComponent _AppComponent_0_5;
-  import0.TextService __TextService_0_6;
-  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import2.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
-  import0.TextService get _TextService_0_6 {
+  import1.AppComponent _AppComponent_0_5;
+  import1.TextService __TextService_0_6;
+  _ViewAppComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, import5 /*WHITELISTED*/ .ChangeDetectionStrategy.CheckAlways);
+  import1.TextService get _TextService_0_6 {
     if ((this.__TextService_0_6 == null)) {
-      (__TextService_0_6 = import0.TextService());
+      (__TextService_0_6 = import1.TextService());
     }
     return this.__TextService_0_6;
   }
 
   @override
-  ComponentRef<import0.AppComponent> build() {
+  import8 /*WHITELISTED*/ .ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _AppComponent_0_5 = import0.AppComponent();
+    _AppComponent_0_5 = import1.AppComponent();
     _compView_0.create(_AppComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _AppComponent_0_5);
+    return import8 /*WHITELISTED*/ .ComponentRef(0, this, rootEl, _AppComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import0.TextService) && (0 == nodeIndex))) {
+    if ((identical(token, import1.TextService) && (0 == nodeIndex))) {
       return _TextService_0_6;
     }
     return notFoundResult;
@@ -87,12 +91,12 @@ class _ViewAppComponentHost0 extends AppView<import0.AppComponent> {
   }
 }
 
-AppView<import0.AppComponent> viewFactory_AppComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0 /*WHITELISTED*/ .AppView<import1.AppComponent> viewFactory_AppComponentHost0(import0 /*WHITELISTED*/ .AppView<dynamic> parentView, int parentIndex) {
   return _ViewAppComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import0.AppComponent> _AppComponentNgFactory = const ComponentFactory('app', viewFactory_AppComponentHost0);
-ComponentFactory<import0.AppComponent> get AppComponentNgFactory {
+const import8 /*WHITELISTED*/ .ComponentFactory<import1.AppComponent> _AppComponentNgFactory = const import8 /*WHITELISTED*/ .ComponentFactory('app', viewFactory_AppComponentHost0);
+import8 /*WHITELISTED*/ .ComponentFactory<import1.AppComponent> get AppComponentNgFactory {
   return _AppComponentNgFactory;
 }
 
