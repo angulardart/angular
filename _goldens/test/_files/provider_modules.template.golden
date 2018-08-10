@@ -8,29 +8,28 @@ export 'provider_modules.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/app_view.dart' as import0;
 import 'provider_modules.dart' as import1;
-import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/render/api.dart' as import2;
 import 'package:angular/src/core/linker/view_type.dart' as import3;
-import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/change_detection/change_detection.dart' as import4;
 import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
-import 'package:angular/angular.dart';
-import 'dart:core';
-import 'package:angular/src/core/di/opaque_token.dart' as import10;
+import 'package:angular/angular.dart' as import8;
+import 'package:angular/src/core/di/opaque_token.dart' as import9;
 
 final List<dynamic> styles$ProviderModulesComponent = const [];
 
-class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesComponent> {
-  static RenderComponentType _renderType;
-  ViewProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+class ViewProviderModulesComponent0 extends import0.AppView<import1.ProviderModulesComponent> {
+  static import2.RenderComponentType _renderType;
+  ViewProviderModulesComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, import4.ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('provider-modules');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/provider_modules.dart' : null), ViewEncapsulation.None, styles$ProviderModulesComponent);
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/provider_modules.dart' : null), import8.ViewEncapsulation.None, styles$ProviderModulesComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import1.ProviderModulesComponent> build() {
+  import8.ComponentRef<import1.ProviderModulesComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
@@ -38,20 +37,20 @@ class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesCompo
   }
 }
 
-AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0.AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
   return ViewProviderModulesComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$ProviderModulesComponentHost = const [];
 
-class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModulesComponent> {
+class _ViewProviderModulesComponentHost0 extends import0.AppView<import1.ProviderModulesComponent> {
   ViewProviderModulesComponent0 _compView_0;
   import1.ProviderModulesComponent _ProviderModulesComponent_0_5;
   import1.FooService __FooService_0_6;
   Duration __fooToken_0_7;
   List<dynamic> __barToken_0_8;
   dynamic __bazToken_0_9;
-  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewProviderModulesComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, import4.ChangeDetectionStrategy.CheckAlways);
   import1.FooService get _FooService_0_6 {
     if ((this.__FooService_0_6 == null)) {
       (__FooService_0_6 = import1.FooService());
@@ -75,19 +74,19 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
 
   dynamic get _bazToken_0_9 {
     if ((this.__bazToken_0_9 == null)) {
-      (__bazToken_0_9 = import1.getSomeValues());
+      (__bazToken_0_9 = getSomeValues());
     }
     return this.__bazToken_0_9;
   }
 
   @override
-  ComponentRef<import1.ProviderModulesComponent> build() {
+  import8.ComponentRef<import1.ProviderModulesComponent> build() {
     _compView_0 = ViewProviderModulesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ProviderModulesComponent_0_5 = import1.ProviderModulesComponent();
     _compView_0.create(_ProviderModulesComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_5);
+    return import8.ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_5);
   }
 
   @override
@@ -95,13 +94,13 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
     if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
       return _FooService_0_6;
     }
-    if ((identical(token, const import10.OpaqueToken('fooToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken('fooToken')) && (0 == nodeIndex))) {
       return _fooToken_0_7;
     }
-    if ((identical(token, const import10.OpaqueToken('barToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken('barToken')) && (0 == nodeIndex))) {
       return _barToken_0_8;
     }
-    if ((identical(token, const import10.OpaqueToken('bazToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken('bazToken')) && (0 == nodeIndex))) {
       return _bazToken_0_9;
     }
     return notFoundResult;
@@ -118,12 +117,12 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
   }
 }
 
-AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0.AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
   return _ViewProviderModulesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.ProviderModulesComponent> _ProviderModulesComponentNgFactory = const ComponentFactory('provider-modules', viewFactory_ProviderModulesComponentHost0);
-ComponentFactory<import1.ProviderModulesComponent> get ProviderModulesComponentNgFactory {
+const import8.ComponentFactory<import1.ProviderModulesComponent> _ProviderModulesComponentNgFactory = const import8.ComponentFactory('provider-modules', viewFactory_ProviderModulesComponentHost0);
+import8.ComponentFactory<import1.ProviderModulesComponent> get ProviderModulesComponentNgFactory {
   return _ProviderModulesComponentNgFactory;
 }
 

@@ -8,44 +8,43 @@ export 'core_directives.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/app_view.dart' as import0;
 import 'core_directives.dart' as import1;
 import 'dart:html' as import2;
-import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/core/linker/view_container.dart' as import3;
 import 'package:angular/src/common/directives/ng_for.dart' as import4;
-import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/render/api.dart' as import5;
 import 'package:angular/src/core/linker/view_type.dart' as import6;
-import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/change_detection/change_detection.dart' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/src/runtime.dart' as import9;
-import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/template_ref.dart';
-import 'dart:core';
+import 'package:angular/angular.dart' as import10;
+import 'package:angular/src/core/linker/template_ref.dart' as import11;
 
 final List<dynamic> styles$TestFooComponent = const [];
 
-class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
+class ViewTestFooComponent0 extends import0.AppView<import1.TestFooComponent> {
   import2.Comment _anchor_0;
   import2.DivElement _el_0_0;
   import2.Text _text_0_1;
-  ViewContainer _appEl_1;
+  import3.ViewContainer _appEl_1;
   import4.NgFor _NgFor_1_9;
-  static RenderComponentType _renderType;
-  ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  static import5.RenderComponentType _renderType;
+  ViewTestFooComponent0(import0.AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, import7.ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-foo');
-    _renderType ??= import8.appViewUtils.createRenderType((import9.isDevMode ? 'asset:_goldens/test/_files/core_directives.dart' : null), ViewEncapsulation.None, styles$TestFooComponent);
+    _renderType ??= import8.appViewUtils.createRenderType((import9.isDevMode ? 'asset:_goldens/test/_files/core_directives.dart' : null), import10.ViewEncapsulation.None, styles$TestFooComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import1.TestFooComponent> build() {
+  import10.ComponentRef<import1.TestFooComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = createViewContainerAnchor();
+    _anchor_0 = import0.createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
-    final _anchor_1 = createViewContainerAnchor();
+    final _anchor_1 = import0.createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
-    _appEl_1 = ViewContainer(1, null, this, _anchor_1);
-    TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
+    _appEl_1 = import3.ViewContainer(1, null, this, _anchor_1);
+    import11.TemplateRef _TemplateRef_1_8 = import11.TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
     _NgFor_1_9 = import4.NgFor(_appEl_1, _TemplateRef_1_8);
     init([], null);
     return null;
@@ -81,23 +80,23 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   }
 }
 
-AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, int parentIndex) {
+import0.AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(import0.AppView<dynamic> parentView, int parentIndex) {
   return ViewTestFooComponent0(parentView, parentIndex);
 }
 
-class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
+class _ViewTestFooComponent2 extends import0.AppView<import1.TestFooComponent> {
   import2.DivElement _el_0;
   import2.Element _el_1;
   import2.Text _text_2;
   var _expr_0;
-  _ViewTestFooComponent2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestFooComponent2(import0.AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, import7.ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestFooComponent0._renderType;
   }
   @override
-  ComponentRef<import1.TestFooComponent> build() {
+  import10.ComponentRef<import1.TestFooComponent> build() {
     var doc = import2.document;
     _el_0 = doc.createElement('div');
-    _el_1 = createSpanAndAppend(doc, _el_0);
+    _el_1 = import0.createSpanAndAppend(doc, _el_0);
     _text_2 = import2.Text('');
     _el_1.append(_text_2);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
@@ -121,24 +120,24 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   }
 }
 
-AppView<import1.TestFooComponent> viewFactory_TestFooComponent2(AppView<dynamic> parentView, int parentIndex) {
+import0.AppView<import1.TestFooComponent> viewFactory_TestFooComponent2(import0.AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestFooComponent2(parentView, parentIndex);
 }
 
 final List<dynamic> styles$TestFooComponentHost = const [];
 
-class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
+class _ViewTestFooComponentHost0 extends import0.AppView<import1.TestFooComponent> {
   ViewTestFooComponent0 _compView_0;
   import1.TestFooComponent _TestFooComponent_0_5;
-  _ViewTestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewTestFooComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.host, {}, parentView, parentIndex, import7.ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import1.TestFooComponent> build() {
+  import10.ComponentRef<import1.TestFooComponent> build() {
     _compView_0 = ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_5 = import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _TestFooComponent_0_5);
+    return import10.ComponentRef(0, this, rootEl, _TestFooComponent_0_5);
   }
 
   @override
@@ -152,12 +151,12 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
   }
 }
 
-AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import0.AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0(import0.AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestFooComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.TestFooComponent> _TestFooComponentNgFactory = const ComponentFactory('test-foo', viewFactory_TestFooComponentHost0);
-ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
+const import10.ComponentFactory<import1.TestFooComponent> _TestFooComponentNgFactory = const import10.ComponentFactory('test-foo', viewFactory_TestFooComponentHost0);
+import10.ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
   return _TestFooComponentNgFactory;
 }
 

@@ -34,6 +34,13 @@ external AppView<_user.DeferredChild3Component> viewFactory_DeferredChild3Compon
 class ViewDeferredChild3Component0 extends AppView<_user.DeferredChild3Component> {
   external ViewDeferredChild3Component0(AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class NotDeferredChildComponent.
+external List<dynamic> get styles$NotDeferredChildComponent;
+external ComponentFactory<_user.NotDeferredChildComponent> get NotDeferredChildComponentNgFactory;
+external AppView<_user.NotDeferredChildComponent> viewFactory_NotDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex);
+class ViewNotDeferredChildComponent0 extends AppView<_user.NotDeferredChildComponent> {
+  external ViewNotDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex);
+}
 // For @Component class DeferredChildComponentWithoutNgContent.
 external List<dynamic> get styles$DeferredChildComponentWithoutNgContent;
 external ComponentFactory<_user.DeferredChildComponentWithoutNgContent> get DeferredChildComponentWithoutNgContentNgFactory;

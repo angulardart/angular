@@ -9,32 +9,32 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'has_template_file.css.shim.dart' as import0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/app_view.dart' as import1;
 import 'has_template_file.dart' as import2;
 import 'dart:html' as import3;
-import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/render/api.dart' as import4;
 import 'package:angular/src/core/linker/view_type.dart' as import5;
-import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/change_detection/change_detection.dart' as import6;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/src/runtime.dart' as import8;
-import 'package:angular/angular.dart';
+import 'package:angular/angular.dart' as import9;
 
 final List<dynamic> styles$HasTemplateFileComponent = [import0.styles];
 
-class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileComponent> {
+class ViewHasTemplateFileComponent0 extends import1.AppView<import2.HasTemplateFileComponent> {
   import3.DivElement _el_0;
-  static RenderComponentType _renderType;
-  ViewHasTemplateFileComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  static import4.RenderComponentType _renderType;
+  ViewHasTemplateFileComponent0(import1.AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, import6.ChangeDetectionStrategy.CheckAlways) {
     rootEl = import3.document.createElement('has-template-file');
-    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/has_template_file.dart' : null), ViewEncapsulation.Emulated, styles$HasTemplateFileComponent);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/has_template_file.dart' : null), import9.ViewEncapsulation.Emulated, styles$HasTemplateFileComponent);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import2.HasTemplateFileComponent> build() {
+  import9.ComponentRef<import2.HasTemplateFileComponent> build() {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import3.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    _el_0 = import1.createDivAndAppend(doc, parentRenderNode);
     addShimC(_el_0);
     import3.Text _text_1 = import3.Text('Has Template File!');
     _el_0.append(_text_1);
@@ -43,24 +43,24 @@ class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileCompo
   }
 }
 
-AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(AppView<dynamic> parentView, int parentIndex) {
+import1.AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(import1.AppView<dynamic> parentView, int parentIndex) {
   return ViewHasTemplateFileComponent0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$HasTemplateFileComponentHost = const [];
 
-class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFileComponent> {
+class _ViewHasTemplateFileComponentHost0 extends import1.AppView<import2.HasTemplateFileComponent> {
   ViewHasTemplateFileComponent0 _compView_0;
   import2.HasTemplateFileComponent _HasTemplateFileComponent_0_5;
-  _ViewHasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewHasTemplateFileComponentHost0(import1.AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, import6.ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import2.HasTemplateFileComponent> build() {
+  import9.ComponentRef<import2.HasTemplateFileComponent> build() {
     _compView_0 = ViewHasTemplateFileComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _HasTemplateFileComponent_0_5 = import2.HasTemplateFileComponent();
     _compView_0.create(_HasTemplateFileComponent_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_5);
+    return import9.ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_5);
   }
 
   @override
@@ -74,12 +74,12 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFile
   }
 }
 
-AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+import1.AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponentHost0(import1.AppView<dynamic> parentView, int parentIndex) {
   return _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import2.HasTemplateFileComponent> _HasTemplateFileComponentNgFactory = const ComponentFactory('has-template-file', viewFactory_HasTemplateFileComponentHost0);
-ComponentFactory<import2.HasTemplateFileComponent> get HasTemplateFileComponentNgFactory {
+const import9.ComponentFactory<import2.HasTemplateFileComponent> _HasTemplateFileComponentNgFactory = const import9.ComponentFactory('has-template-file', viewFactory_HasTemplateFileComponentHost0);
+import9.ComponentFactory<import2.HasTemplateFileComponent> get HasTemplateFileComponentNgFactory {
   return _HasTemplateFileComponentNgFactory;
 }
 

@@ -37,19 +37,21 @@ class DartEmitter implements OutputEmitter {
   @override
   String emitStatements(String moduleUrl, List<o.Statement> stmts,
       List<String> exportedVars, Map<String, String> deferredModules) {
-    var srcParts = [];
+    final srcParts = <String>[];
     // Note: We are not creating a library here as Dart does not need it.
     // Dart analyzer might complain about it though.
-    var converter = _DartEmitterVisitor(moduleUrl);
-    var ctx = EmitterVisitorContext.createRoot(exportedVars, deferredModules);
+    final converter = _DartEmitterVisitor(moduleUrl);
+    final ctx = EmitterVisitorContext.createRoot(exportedVars, deferredModules);
     converter.visitAllStatements(stmts, ctx);
     converter.importsWithPrefixes.forEach((importedModuleUrl, prefix) {
       String importPath = getImportModulePath(moduleUrl, importedModuleUrl);
       srcParts.add(prefix.isEmpty
           ? "import '$importPath';"
-          : (deferredModules.containsKey(importedModuleUrl)
-              ? "import '$importPath' deferred as $prefix;"
-              : "import '$importPath' as $prefix;"));
+          : "import '$importPath' as $prefix;");
+    });
+    deferredModules.forEach((importedModuleUrl, prefix) {
+      String importPath = getImportModulePath(moduleUrl, importedModuleUrl);
+      srcParts.add("import '$importPath' deferred as $prefix;");
     });
     srcParts.add(ctx.toSource());
     return srcParts.join("\n");
@@ -58,36 +60,9 @@ class DartEmitter implements OutputEmitter {
 
 class _DartEmitterVisitor extends AbstractEmitterVisitor
     implements o.TypeVisitor<void, EmitterVisitorContext> {
-  // List of packages that are public api and can be imported without prefix.
-  static const List<String> whiteListedImports = [
-    'package:angular/angular.dart',
-    'dart:core',
-    // ElementRef.
-    'asset:angular/lib/src/core/linker/element_ref.dart',
-    'package:angular/src/core/linker/element_ref.dart',
-    // ViewContainer.
-    'asset:angular/lib/src/core/linker/view_container.dart',
-    'package:angular/src/core/linker/view_container.dart',
-    // TemplateRef.
-    'asset:angular/lib/src/core/linker/template_ref.dart',
-    'package:angular/src/core/linker/template_ref.dart',
-    // ChangeDetectionStrategy, Differs*
-    'asset:angular/lib/src/core/change_detection/change_detection.dart',
-    'package:angular/src/core/change_detection/change_detection.dart',
-    // NgIf.
-    'asset:angular/lib/src/common/directives/ng_if.dart',
-    'package:angular/src/common/directives/ng_if.dart',
-    // AppView.
-    'asset:angular/lib/src/core/linker/app_view.dart',
-    'package:angular/src/core/linker/app_view.dart',
-    // RenderComponentType.
-    'asset:angular/lib/src/core/render/api.dart',
-    'package:angular/src/core/render/api.dart',
-  ];
-
   final String _moduleUrl;
 
-  var importsWithPrefixes = Map<String, String>();
+  final importsWithPrefixes = <String, String>{};
 
   /// Whether this is currently emitting a const expression.
   var _inConstContext = false;
@@ -573,44 +548,60 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }, params, context, ",");
   }
 
-  void _visitIdentifier(CompileIdentifierMetadata value,
-      List<o.OutputType> typeParams, EmitterVisitorContext context) {
-    String prefix = '';
-    bool isDeferred = false;
-    if (value.moduleUrl != null && value.moduleUrl != _moduleUrl) {
-      prefix = importsWithPrefixes[value.moduleUrl];
+  void _visitIdentifier(
+    CompileIdentifierMetadata value,
+    List<o.OutputType> typeParams,
+    EmitterVisitorContext context,
+  ) {
+    final moduleUrl = value.moduleUrl;
+    final isDeferred = context.deferredModules.containsKey(moduleUrl);
+    final prefix = _computeModulePrefix(value, context, isDeferred);
+    _emitIdentifier(value.name, typeParams, context, prefix);
+  }
+
+  /// Determines the import prefix for accessing symbols for [value].
+  String _computeModulePrefix(
+    CompileIdentifierMetadata value,
+    EmitterVisitorContext context,
+    bool isDeferred,
+  ) {
+    final moduleUrl = value.moduleUrl;
+    if (value.emitPrefix) {
+      return value.prefix ?? '';
+    }
+    if (moduleUrl == null || moduleUrl == 'dart:core') {
+      return '';
+    }
+    if (moduleUrl != _moduleUrl) {
+      var prefix = importsWithPrefixes[moduleUrl];
       if (prefix == null) {
-        if (whiteListedImports.contains(value.moduleUrl)) {
-          prefix = '';
-        } else {
-          prefix = 'import${importsWithPrefixes.length}';
-          if (context.deferredModules.containsKey(value.moduleUrl)) {
-            isDeferred = true;
-            prefix = context.deferredModules[value.moduleUrl];
-          }
-        }
-        importsWithPrefixes[value.moduleUrl] = prefix;
+        prefix = 'import${importsWithPrefixes.length}';
+        importsWithPrefixes[moduleUrl] = prefix;
       }
-    } else if (value.emitPrefix) {
-      prefix = value.prefix ?? '';
+      return prefix;
     }
-    if (isDeferred) {
-      if (prefix.isNotEmpty) {
-        context.print(value.name.isEmpty ? prefix : '$prefix.');
-      }
-    } else {
-      if (value.moduleUrl != null && value.moduleUrl != _moduleUrl) {
-        context.print(prefix.isEmpty ? '' : '$prefix.');
-      }
-      if (value.emitPrefix && value.prefix != null && value.prefix.isNotEmpty) {
-        context.print('${value.prefix}.');
-      }
+    return '';
+  }
+
+  /// Handles actually emitting the [identifier], with a [prefix], if needed.
+  void _emitIdentifier(
+    String identifier,
+    List<o.OutputType> typeParams,
+    EmitterVisitorContext context, [
+    String prefix,
+  ]) {
+    if (prefix?.isNotEmpty == true) {
+      context.print(identifier.isEmpty ? prefix : '$prefix.');
     }
-    context.print(value.name);
-    if (typeParams != null && typeParams.length > 0) {
+    context.print(identifier);
+    if (typeParams?.isNotEmpty == true) {
       context.print('<');
-      visitAllObjects<o.OutputType>(
-          (type) => type.visitType(this, context), typeParams, context, ',');
+      visitAllObjects(
+        (o.OutputType t) => t.visitType(this, context),
+        typeParams,
+        context,
+        ',',
+      );
       context.print('>');
     }
   }
