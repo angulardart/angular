@@ -40,12 +40,13 @@ List<ng.TemplateAst> internationalize(
   ];
 }
 
-// TODO(leonsenft): verify if we can rely on file spans.
 SourceSpan _spanWithin(ast.StandaloneTemplateAst parent) {
-  var firstSpan = parent.childNodes.first.sourceSpan;
-  var lastSpan = parent.childNodes.last.sourceSpan;
+  final firstSpan = parent.childNodes.first.sourceSpan;
+  final lastSpan = parent.childNodes.last.sourceSpan;
   if (firstSpan is FileSpan && lastSpan is FileSpan) {
     return firstSpan.expand(lastSpan);
   }
-  throw UnimplementedError();
+  // We shouldn't ever reach this state, but if we do somehow, we want it
+  // reported as a compiler bug with an explicit error message.
+  throw StateError("Couldn't compute source span of internationalized node");
 }
