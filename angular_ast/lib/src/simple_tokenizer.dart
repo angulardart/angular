@@ -375,6 +375,8 @@ class NgSimpleScanner {
       if (matchesGroup(match, 3)) {
         return NAMED_ENTITIES[match.group(3)] ?? match.group(3);
       }
+
+      return '';
     });
   }
 }
