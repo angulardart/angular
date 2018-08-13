@@ -45,6 +45,11 @@
     a result, [#1540][] has also been fixed (view and content queries were not
     getting reset as the `@deferred` node was destroyed).
 
+*   [#880][]: Fixed a bug where an extraneous space in `*ngFor` micro expression
+    caused the directive to no longer be functional
+    (`*ngFor="let x; let i = $index "`, for example).
+
+[#880]: https://github.com/dart-lang/angular/issues/880
 [#1538]: https://github.com/dart-lang/angular/issues/1538
 [#1539]: https://github.com/dart-lang/angular/issues/1539
 [#1540]: https://github.com/dart-lang/angular/issues/1540

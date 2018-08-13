@@ -55,6 +55,19 @@ void main() {
     );
   });
 
+  test('should parse a simple let and a let assignment with extra spaces', () {
+    expect(
+      parse('ngThing', 'let baz; let foo = bar ', 0),
+      NgMicroAst(
+        letBindings: [
+          LetBindingAst('baz'),
+          LetBindingAst('foo', 'bar'),
+        ],
+        properties: [],
+      ),
+    );
+  });
+
   test('should parse a let with a full Dart expression', () {
     expect(
       parse('ngFor', 'let x of items.where(filter)', 0),

@@ -3,6 +3,8 @@
 *   It is now an error to use `@deferred` on a `<template>` tag or combined with
     a structural (i.e. `*ngIf`) directive.
 
+*   Ignores right-trailing spaces when parsing micro expression let-assignments.
+
 ## 0.5.6
 
 *   Maintenance release to support Dart 2.0 stable.
