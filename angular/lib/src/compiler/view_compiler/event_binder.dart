@@ -61,8 +61,12 @@ class CompileEventListener {
     _eventParam = o.FnParam(EventHandlerVars.event.name, o.importType(null));
   }
 
-  void _addAction(BoundEventAst hostEvent, CompileDirectiveMetadata directive,
-      ProviderSource directiveInstance, AnalyzedClass clazz) {
+  void _addAction(
+    BoundEventAst hostEvent,
+    CompileDirectiveMetadata directive,
+    ProviderSource directiveInstance,
+    AnalyzedClass clazz,
+  ) {
     if (_isTearoff(hostEvent)) {
       hostEvent = _rewriteTearoff(hostEvent, clazz);
     }

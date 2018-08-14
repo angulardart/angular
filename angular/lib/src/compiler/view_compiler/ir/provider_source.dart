@@ -10,7 +10,17 @@ abstract class ProviderSource {
   final CompileTokenMetadata token;
   final bool eager;
   final bool multiProvider;
+
   ProviderSource(this.token, {this.eager, this.multiProvider});
 
   o.Expression build();
+
+  /// Whether a dynamic `injectorGet(...)` is required to resolve this provider.
+  ///
+  /// For example:
+  /// ```dart
+  ///   // DependencyService is dynamically required to resolve MyService.
+  ///   _MyService = MyService(injectorGet(DependencyService));
+  /// ```
+  bool get hasDynamicDependencies;
 }

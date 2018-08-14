@@ -227,6 +227,27 @@ void main() {
     );
   }, solo: true);
 
+  test('should throw a readable error message in an embedded template', () {
+    // NOTE: In an ideal scenario, this would throw a better error, i.e.
+    //   InjectsMissingService -> MissingService
+    //
+    // ... but this would require enter() and leave() wrapping around the
+    // successful cases in AppView-local injection (and changes to the
+    // generated code).
+    //
+    // If we end up doing this, we should modify the test accordingly.
+    final testBed = NgTestBed<WillFailQueryingServiceInTemplate>();
+    expect(
+          () => testBed.create(),
+      throwsA(
+        predicate(
+              (e) => '$e'.endsWith('No provider found for $MissingService'),
+        ),
+      ),
+      reason: 'View compiler does not trace local injections (#434)',
+    );
+  }, solo: true);
+
   test('should throw a readable error message on a 2-node/parent failure', () {
     // Passes, unlike the missing error case, because the parent injector, in
     // this case a ReflectiveInjector, *does* trace the individual calls.
@@ -677,6 +698,28 @@ class WillFailCreatingChild {}
 class WillFailCreatingChildInTemplate {
   var showChild = true;
 }
+
+@Component(
+  selector: 'will-fail-querying-service',
+  template: r'''
+    <lazy-provides-missing-service></lazy-provides-missing-service>
+  ''',
+  directives: [
+    LazilyProvidesMissingService,
+  ],
+)
+class WillFailQueryingServiceInTemplate {
+  @ViewChild(LazilyProvidesMissingService, read: InjectsMissingService)
+  InjectsMissingService willFailDuringQuery;
+}
+
+@Directive(
+  selector: 'lazy-provides-missing-service',
+  providers: [
+    InjectsMissingService,
+  ]
+)
+class LazilyProvidesMissingService {}
 
 const baseUrl = OpaqueToken<String>('baseUrl');
 

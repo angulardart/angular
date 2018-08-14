@@ -394,6 +394,10 @@ class _ListCompileQuery extends CompileQuery {
       }
       result = _createUpdatesStaticOnly(queryValueExpressions);
     }
+    final results = <o.Statement>[];
+    if (_boundDirective.hasDynamicDependencies) {
+      results.add(null);
+    }
     return [
       _boundDirective.build().prop(metadata.propertyName).set(result).toStmt()
     ];

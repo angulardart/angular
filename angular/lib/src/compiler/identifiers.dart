@@ -13,6 +13,7 @@ final ngForUrl = "asset:angular/lib/src/common/directives/ng_for.dart";
 final profileRuntimeModuleUrl =
     "asset:angular/lib/src/debug/profile_runtime.dart";
 final runtimeUtilsModuleUrl = "asset:angular/lib/src/runtime.dart";
+final debugInjectorModuleUrl = 'asset:angular/lib/src/di/errors.dart';
 
 class Identifiers {
   static final appViewUtils = CompileIdentifierMetadata<dynamic>(

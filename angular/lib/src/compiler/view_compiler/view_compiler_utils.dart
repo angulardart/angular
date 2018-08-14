@@ -91,7 +91,10 @@ o.Expression getPropertyInView(
 }
 
 o.Expression injectFromViewParentInjector(
-    CompileView view, CompileTokenMetadata token, bool optional) {
+  CompileView view,
+  CompileTokenMetadata token,
+  bool optional,
+) {
   o.Expression viewExpr = (view.viewType == ViewType.host)
       ? o.THIS_EXPR
       : o.ReadClassMemberExpr('parentView');
