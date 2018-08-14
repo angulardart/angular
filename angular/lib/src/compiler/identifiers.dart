@@ -2,7 +2,6 @@ import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileTokenMetadata;
 
 final appViewModuleUrl = "asset:angular/lib/src/core/linker/app_view.dart";
-final debugAppViewModuleUrl = "asset:angular/lib/src/debug/debug_app_view.dart";
 final appViewUtilsModuleUrl =
     "asset:angular/lib/src/core/linker/app_view_utils.dart";
 final cdModuleUrl =
@@ -13,6 +12,7 @@ final ngForUrl = "asset:angular/lib/src/common/directives/ng_for.dart";
 final profileRuntimeModuleUrl =
     "asset:angular/lib/src/debug/profile_runtime.dart";
 final runtimeUtilsModuleUrl = "asset:angular/lib/src/runtime.dart";
+final debugInjectorModuleUrl = 'asset:angular/lib/src/di/errors.dart';
 
 class Identifiers {
   static final appViewUtils = CompileIdentifierMetadata<dynamic>(
@@ -106,6 +106,10 @@ class Identifiers {
       name: "isDevMode", moduleUrl: runtimeUtilsModuleUrl);
   static final unsafeCast = CompileIdentifierMetadata<dynamic>(
       name: "unsafeCast", moduleUrl: runtimeUtilsModuleUrl);
+  static final debugInjectorEnter = CompileIdentifierMetadata<dynamic>(
+      name: "debugInjectorEnter", moduleUrl: debugInjectorModuleUrl);
+  static final debugInjectorLeave = CompileIdentifierMetadata<dynamic>(
+      name: "debugInjectorLeave", moduleUrl: debugInjectorModuleUrl);
 
   static final interpolate = <CompileIdentifierMetadata>[
     CompileIdentifierMetadata<dynamic>(
