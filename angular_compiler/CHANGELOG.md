@@ -1,3 +1,5 @@
+*   Catches an (invalid) `null` token of a provider and throws a better error.
+
 ## 0.4.0
 
 ### New Features

@@ -48,9 +48,11 @@ class ProviderReader {
 
   ProviderElement _parseProvider(DartObject o) {
     final reader = ConstantReader(o);
-    final token = _tokenReader.parseTokenObject(
-      reader.read('token').objectValue,
-    );
+    final value = reader.read('token');
+    if (value.isNull) {
+      throw new NullTokenException(o);
+    }
+    final token = _tokenReader.parseTokenObject(value.objectValue);
     final useClass = reader.read('useClass');
     if (!useClass.isNull) {
       return _parseUseClass(token, o, useClass.typeValue.element);
@@ -327,4 +329,12 @@ class UseValueProviderElement extends ProviderElement {
     this.useValue, {
     bool multi = false,
   }) : super._(e, providerType, multi);
+}
+
+/// Thrown when a value of `null` is read for a provider token.
+class NullTokenException implements Exception {
+  /// Constant whose `.token` property was resolved to `null`.
+  final DartObject constant;
+
+  const NullTokenException(this.constant);
 }
