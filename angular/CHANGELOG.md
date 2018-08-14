@@ -55,6 +55,10 @@
 [#1540]: https://github.com/dart-lang/angular/issues/1540
 [#1558]: https://github.com/dart-lang/angular/issues/1558
 
+### Other improvements
+
+*   Error messages for misconfigured pipes now display their source location.
+
 ## 5.0.0
 
 Welcome to AngularDart v5.0.0, with full support for Dart 2. Please note that

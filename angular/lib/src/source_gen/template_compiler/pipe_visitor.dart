@@ -21,7 +21,7 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
     final annotation = element.metadata.firstWhere(isPipe, orElse: () => null);
     if (annotation == null) return null;
     if (element.isPrivate) {
-      throwFailure('Pipes must be public: $element');
+      BuildError.throwForElement(element, 'Pipes must be public');
     }
     return _createPipeMetadata(annotation, element);
   }
@@ -45,7 +45,8 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
       }
     }
     if (transformType == null) {
-      throwFailure("Pipe has no 'transform' method: $element");
+      BuildError.throwForElement(
+          element, 'Pipes must implement a "transform" method');
     }
     final value = annotation.computeConstantValue();
     return CompilePipeMetadata(
