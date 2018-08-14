@@ -238,24 +238,42 @@ abstract class ProvidersNodeHost {
 }
 
 class BuiltInSource extends ProviderSource {
-  o.Expression _value;
+  final o.Expression _value;
 
   BuiltInSource(CompileTokenMetadata token, this._value) : super(token);
+
   @override
   o.Expression build() => _value;
+
+  @override
+  final hasDynamicDependencies = false;
 }
 
 class LiteralValueSource extends ProviderSource {
-  o.Expression _value;
+  final o.Expression _value;
 
   LiteralValueSource(CompileTokenMetadata token, this._value) : super(token);
+
   @override
   o.Expression build() => _value;
+
+  @override
+  final hasDynamicDependencies = false;
+}
+
+bool _hasDynamicDependencies(Iterable<ProviderSource> sources) {
+  for (final source in sources) {
+    if (source is DynamicProviderSource || source.hasDynamicDependencies) {
+      return true;
+    }
+  }
+  return false;
 }
 
 class FactoryProviderSource extends ProviderSource {
-  CompileFactoryMetadata _factory;
-  List<ProviderSource> _parameters;
+  final CompileFactoryMetadata _factory;
+  final List<ProviderSource> _parameters;
+
   FactoryProviderSource(
       CompileTokenMetadata token, this._factory, this._parameters)
       : super(token);
@@ -266,12 +284,15 @@ class FactoryProviderSource extends ProviderSource {
     for (ProviderSource s in _parameters) paramExpressions.add(s.build());
     return o.importExpr(_factory).callFn(paramExpressions);
   }
+
+  @override
+  bool get hasDynamicDependencies => _hasDynamicDependencies(_parameters);
 }
 
 class ClassProviderSource extends ProviderSource {
-  CompileTypeMetadata _classType;
-  List<ProviderSource> _parameters;
-  List<o.OutputType> _typeArguments;
+  final CompileTypeMetadata _classType;
+  final List<ProviderSource> _parameters;
+  final List<o.OutputType> _typeArguments;
 
   ClassProviderSource(
     CompileTokenMetadata token,
@@ -288,11 +309,15 @@ class ClassProviderSource extends ProviderSource {
     return o.importExpr(_classType).instantiate(paramExpressions,
         type: o.importType(_classType), genericTypes: _typeArguments);
   }
+
+  @override
+  bool get hasDynamicDependencies => _hasDynamicDependencies(_parameters);
 }
 
 class FunctionalDirectiveSource extends ProviderSource {
-  CompileTypeMetadata _classType;
-  List<ProviderSource> _parameters;
+  final CompileTypeMetadata _classType;
+  final List<ProviderSource> _parameters;
+
   FunctionalDirectiveSource(
       CompileTokenMetadata token, this._classType, this._parameters)
       : super(token);
@@ -303,14 +328,18 @@ class FunctionalDirectiveSource extends ProviderSource {
     for (ProviderSource s in _parameters) paramExpressions.add(s.build());
     return o.importExpr(_classType).callFn(paramExpressions);
   }
+
+  @override
+  bool get hasDynamicDependencies => _hasDynamicDependencies(_parameters);
 }
 
 /// Source for injectable values that are resolved by
 /// dynamic lookup (injectorGet).
 class DynamicProviderSource extends ProviderSource {
-  ProvidersNode parentProviders;
+  final ProvidersNode parentProviders;
   final bool optional;
   final bool _isAppViewHost;
+
   DynamicProviderSource(this.parentProviders, CompileTokenMetadata token,
       this.optional, this._isAppViewHost)
       : super(token);
@@ -328,4 +357,8 @@ class DynamicProviderSource extends ProviderSource {
     }
     return viewExpr.callMethod('injectorGet', args);
   }
+
+  // It *might*, but we don't know.
+  @override
+  final hasDynamicDependencies = false;
 }
