@@ -320,6 +320,10 @@ class _BindDirectivesVisitor
       [_ParseContext parentContext]) {
     final embeddedContext =
         _ParseContext.forTemplate(astNode, parentContext.templateContext);
+    // Template validation ensures there are no internationalized attributes, so
+    // we don't bother checking for them here.
+    final i18nMetadata =
+        _parseI18nMetadata(astNode.annotations, parentContext.templateContext);
     _visitProperties(astNode.properties, astNode.attributes, embeddedContext);
     return ng.EmbeddedTemplateAst(
         _visitAll(astNode.attributes, embeddedContext),
@@ -329,7 +333,7 @@ class _BindDirectivesVisitor
         embeddedContext.boundDirectives,
         [] /* providers */,
         null /* elementProviderUsage */,
-        _visitAll(astNode.childNodes, embeddedContext),
+        _visitChildren(astNode, i18nMetadata.forChildren, embeddedContext),
         _findNgContentIndexForTemplate(astNode, parentContext),
         astNode.sourceSpan,
         hasDeferredComponent: astNode.hasDeferredComponent);
@@ -1013,6 +1017,15 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
     _findDuplicateAttributes(astNode.attributes);
     _findDuplicateProperties(astNode.properties);
     _findDuplicateEvents(astNode.events);
+    for (final annotation in astNode.annotations) {
+      if (annotation.name.startsWith(i18nDescriptionPrefix) ||
+          annotation.name.startsWith(i18nDescriptionPrefixDeprecated)) {
+        _reportError(
+            annotation,
+            'Internationalizing attributes is not supported on <template> '
+            'elements');
+      }
+    }
     return super.visitEmbeddedTemplate(astNode);
   }
 
