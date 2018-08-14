@@ -1,5 +1,4 @@
 import 'package:angular/src/runtime.dart';
-import 'package:meta/meta.dart';
 
 /// Current stack of tokens being requested for an injection.
 List<Object> _tokenStack;
@@ -33,10 +32,6 @@ void debugInjectorLeave(Object token) {
   if (!isDevMode) {
     return;
   }
-  // Don't affect performance (as much) when this feature isn't enabled.
-  if (!InjectionError.enableBetterErrors) {
-    return;
-  }
   _tokenStack.removeLast();
 }
 
@@ -61,12 +56,6 @@ String _noProviderError(Object token) => 'No provider found for $token';
 /// builds may be swapped out for less informative errors that cannot be caught;
 /// do not rely on being able to catch an [InjectionError] at runtime.
 abstract class InjectionError extends AssertionError {
-  /// May be set to `true` in order to get more debuggable error messages.
-  ///
-  /// **NOTE**: When assertions are disabled changing this does nothing.
-  @experimental
-  static bool enableBetterErrors = true;
-
   InjectionError._();
 }
 
