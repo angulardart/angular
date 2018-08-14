@@ -49,11 +49,16 @@
     caused the directive to no longer be functional
     (`*ngFor="let x; let i = $index "`, for example).
 
+*   [#1570][]: When a provider's `token` for `@GeneratedInjector(...)` is read
+    as `null` (either intentionally, or due to analysis errors/imports missing)
+    a better error message is now thrown with the context of the error.
+
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#1538]: https://github.com/dart-lang/angular/issues/1538
 [#1539]: https://github.com/dart-lang/angular/issues/1539
 [#1540]: https://github.com/dart-lang/angular/issues/1540
 [#1558]: https://github.com/dart-lang/angular/issues/1558
+[#1570]: https://github.com/dart-lang/angular/issues/1570
 
 ### Other improvements
 
