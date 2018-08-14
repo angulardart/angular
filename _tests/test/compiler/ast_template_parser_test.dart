@@ -1826,6 +1826,15 @@ void main() {
                 '<p @i18n="description" @i18n.meaning=" "></p>\n'
                 '                       ^^^^^^^^^^^^^^^^^'));
       });
+
+      test('should report error for "@i18n:" on <template>', () {
+        expect(
+            () => parse('<template @i18n:foo="description"></template>'),
+            throwsWith('Internationalizing attributes is not supported on '
+                '<template> elements\n'
+                '<template @i18n:foo="description"></template>\n'
+                '          ^^^^^^^^^^^^^^^^^^^^^^^'));
+      });
     });
 
     group('ignore elements', () {

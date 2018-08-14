@@ -70,6 +70,16 @@ void main() {
     final imgElement = testFixture.rootElement.querySelector('img');
     expect(imgElement.getAttribute('alt'), 'An image.');
   });
+
+  test('should render a message from a template', () async {
+    final testBed = NgTestBed.forComponent(ng.TestI18nTemplateNgFactory);
+    final testFixture = await testBed.create();
+    expect(testFixture.text, isEmpty);
+    await testFixture.update((component) {
+      component.viewContainer.createEmbeddedView(component.messageTemplate);
+    });
+    expect(testFixture.text, 'A message in a template!');
+  });
 }
 
 const issuesLink = 'https://github.com/dart-lang/angular/issues';
@@ -150,3 +160,21 @@ class TestI18nNodeWithHtmlAndEscapedHtmlCharacters {}
   ''',
 )
 class TestI18nParameters {}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <template #message @i18n="Template message description">
+      A message in a <i>template</i>!
+    </template>
+
+    <div #container></div>
+  ''',
+)
+class TestI18nTemplate {
+  @ViewChild('message')
+  TemplateRef messageTemplate;
+
+  @ViewChild('container', read: ViewContainerRef)
+  ViewContainerRef viewContainer;
+}
