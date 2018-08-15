@@ -22,11 +22,6 @@ const namespaceUris = {
   'xhtml': 'http://www.w3.org/1999/xhtml'
 };
 
-/// Creating outlines for faster builds is preventing auto input change
-/// detection for now. The following flag should be removed to reenable in the
-/// future.
-const bool outlinerDeprecated = false;
-
 /// Variable name used to read viewData.parentIndex in build functions.
 const String cachedParentIndexVarName = 'parentIdx';
 
