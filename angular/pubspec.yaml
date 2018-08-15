@@ -27,7 +27,7 @@ dependencies:
   build: ^0.12.7
   build_config: '>=0.2.6 <0.4.0' # Runtime dependency with no import
   code_builder: '^3.0.1'
-  csslib: ^0.14.4
+  csslib: ^0.14.5
   path: ^1.6.1
   source_gen: ">=0.8.0 <0.10.0"
   source_span: ^1.4.0
