@@ -57,6 +57,8 @@ import 'view_compiler_utils.dart'
         createDiTokenExpression,
         createSetAttributeStatement,
         cachedParentIndexVarName,
+        debugInjectorEnter,
+        debugInjectorLeave,
         getViewFactory,
         getViewFactoryName,
         identifierFromTagName,
@@ -1142,20 +1144,33 @@ class CompileView implements AppViewBuilder {
 
   @override
   void createPipeInstance(String name, CompilePipeMetadata pipeMeta) {
-    var deps = pipeMeta.type.diDeps.map((diDep) {
+    var usesInjectorGet = false;
+    final deps = pipeMeta.type.diDeps.map((diDep) {
       if (diDep.token
           .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
         return o.ReadClassMemberExpr('ref');
       }
+      usesInjectorGet = true;
       return injectFromViewParentInjector(this, diDep.token, false);
     }).toList();
-    ViewStorageItem pipeInstance = storage.allocate(name,
-        outputType: o.importType(pipeMeta.type),
-        modifiers: [o.StmtModifier.Private]);
+    final pipeInstance = storage.allocate(
+      name,
+      outputType: o.importType(pipeMeta.type),
+      modifiers: [o.StmtModifier.Private],
+    );
+    final typeExpression = o.importExpr(pipeMeta.type);
+    if (usesInjectorGet) {
+      _createMethod.addStmt(debugInjectorEnter(typeExpression));
+    }
     _createMethod.addStmt(storage
         .buildWriteExpr(
-            pipeInstance, o.importExpr(pipeMeta.type).instantiate(deps))
+          pipeInstance,
+          typeExpression.instantiate(deps),
+        )
         .toStmt());
+    if (usesInjectorGet) {
+      _createMethod.addStmt(debugInjectorLeave(typeExpression));
+    }
   }
 
   @override

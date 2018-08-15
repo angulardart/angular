@@ -108,6 +108,18 @@ o.Expression injectFromViewParentInjector(
   return viewExpr.callMethod('injectorGet', args);
 }
 
+o.Statement debugInjectorEnter(o.Expression identifier) {
+  return o.importExpr(Identifiers.debugInjectorEnter).callFn([
+    identifier,
+  ]).toStmt();
+}
+
+o.Statement debugInjectorLeave(o.Expression identifier) {
+  return o.importExpr(Identifiers.debugInjectorLeave).callFn([
+    identifier,
+  ]).toStmt();
+}
+
 /// Returns the name of a [component] view factory for [index].
 ///
 /// Each generated view of [component], be it component, host, or embedded has
