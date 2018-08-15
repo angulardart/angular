@@ -17,7 +17,6 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import9;
 
 final List<dynamic> styles$CompWithoutFinal = const [];
 
@@ -81,11 +80,7 @@ class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
   ComponentRef<import1.CompWithoutFinal> build() {
     _compView_0 = ViewCompWithoutFinal0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CompWithoutFinal_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.CompWithoutFinal, () {
-            return import1.CompWithoutFinal();
-          })
-        : import1.CompWithoutFinal());
+    _CompWithoutFinal_0_5 = import1.CompWithoutFinal();
     _compView_0.create(_CompWithoutFinal_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _CompWithoutFinal_0_5);
@@ -156,11 +151,7 @@ class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
   ComponentRef<import1.CompWithFinal> build() {
     _compView_0 = ViewCompWithFinal0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CompWithFinal_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.CompWithFinal, () {
-            return import1.CompWithFinal();
-          })
-        : import1.CompWithFinal());
+    _CompWithFinal_0_5 = import1.CompWithFinal();
     _compView_0.create(_CompWithFinal_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _CompWithFinal_0_5);
@@ -231,11 +222,7 @@ class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic>
   ComponentRef<import1.CompWithFinalStatic> build() {
     _compView_0 = ViewCompWithFinalStatic0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CompWithFinalStatic_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.CompWithFinalStatic, () {
-            return import1.CompWithFinalStatic();
-          })
-        : import1.CompWithFinalStatic());
+    _CompWithFinalStatic_0_5 = import1.CompWithFinalStatic();
     _compView_0.create(_CompWithFinalStatic_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _CompWithFinalStatic_0_5);
@@ -306,11 +293,7 @@ class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFi
   ComponentRef<import1.CompWithExternalFinal> build() {
     _compView_0 = ViewCompWithExternalFinal0(this, 0);
     rootEl = _compView_0.rootEl;
-    _CompWithExternalFinal_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.CompWithExternalFinal, () {
-            return import1.CompWithExternalFinal();
-          })
-        : import1.CompWithExternalFinal());
+    _CompWithExternalFinal_0_5 = import1.CompWithExternalFinal();
     _compView_0.create(_CompWithExternalFinal_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _CompWithExternalFinal_0_5);

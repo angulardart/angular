@@ -19,9 +19,8 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import9;
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import11;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import10;
 
 final List<dynamic> styles$TestFooComponent = ['div._ngcontent-%ID%{font-size:10px;}'];
 
@@ -46,16 +45,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     createAttr(_el_0, 'role', import1.ChildDirective.hostRole);
     createAttr(_el_0, 'some-child-directive', '');
     addShimC(_el_0);
-    _ChildDirective_0_5 = ChildDirectiveNgCd((import7.isDevMode
-        ? import9.debugInjectorWrap(import1.ChildDirective, () {
-            return import1.ChildDirective(_el_0, ElementRef(_el_0));
-          })
-        : import1.ChildDirective(_el_0, ElementRef(_el_0))));
-    _DirectiveWithOutput_0_6 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.DirectiveWithOutput, () {
-            return import1.DirectiveWithOutput();
-          })
-        : import1.DirectiveWithOutput());
+    _ChildDirective_0_5 = ChildDirectiveNgCd(import1.ChildDirective(_el_0, ElementRef(_el_0)));
+    _DirectiveWithOutput_0_6 = import1.DirectiveWithOutput();
     import2.Text _text_1 = import2.Text('Foo');
     _el_0.append(_text_1);
     _el_0.addEventListener('click', eventHandler1(_ChildDirective_0_5.instance.handleClick));
@@ -92,11 +83,7 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     _compView_0 = ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestFooComponent_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.TestFooComponent, () {
-            return import1.TestFooComponent();
-          })
-        : import1.TestFooComponent());
+    _TestFooComponent_0_5 = import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _TestFooComponent_0_5);
@@ -143,25 +130,11 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     _el_0.className = 'target1';
     createAttr(_el_0, 'fastDirective', '');
-    _FastDirective_0_5 = FastDirectiveNgCd(
-        (import7.isDevMode
-            ? import9.debugInjectorWrap(import1.FastDirective, () {
-                return import1.FastDirective(_el_0);
-              })
-            : import1.FastDirective(_el_0)),
-        this,
-        _el_0);
+    _FastDirective_0_5 = FastDirectiveNgCd(import1.FastDirective(_el_0), this, _el_0);
     _el_1 = createDivAndAppend(doc, parentRenderNode);
     _el_1.className = 'target2';
     createAttr(_el_1, 'fastDirective', '');
-    _FastDirective_1_5 = FastDirectiveNgCd(
-        (import7.isDevMode
-            ? import9.debugInjectorWrap(import1.FastDirective, () {
-                return import1.FastDirective(_el_1);
-              })
-            : import1.FastDirective(_el_1)),
-        this,
-        _el_1);
+    _FastDirective_1_5 = FastDirectiveNgCd(import1.FastDirective(_el_1), this, _el_1);
     init(const [], null);
     return null;
   }
@@ -191,11 +164,7 @@ class _ViewDirectiveContainerTestHost0 extends AppView<import1.DirectiveContaine
   ComponentRef<import1.DirectiveContainerTest> build() {
     _compView_0 = ViewDirectiveContainerTest0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DirectiveContainerTest_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.DirectiveContainerTest, () {
-            return import1.DirectiveContainerTest();
-          })
-        : import1.DirectiveContainerTest());
+    _DirectiveContainerTest_0_5 = import1.DirectiveContainerTest();
     _compView_0.create(_DirectiveContainerTest_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DirectiveContainerTest_0_5);
@@ -221,7 +190,7 @@ ComponentFactory<import1.DirectiveContainerTest> get DirectiveContainerTestNgFac
   return _DirectiveContainerTestNgFactory;
 }
 
-class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
+class ChildDirectiveNgCd extends import10.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
   var _expr_1;
@@ -246,7 +215,7 @@ class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
   }
 }
 
-class FastDirectiveNgCd extends import11.DirectiveChangeDetector {
+class FastDirectiveNgCd extends import10.DirectiveChangeDetector {
   final import1.FastDirective instance;
   var _expr_0;
   FastDirectiveNgCd(this.instance, AppView v, import2.Element e) {

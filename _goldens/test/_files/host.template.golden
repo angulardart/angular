@@ -18,7 +18,6 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import9;
 
 final List<dynamic> styles$HostComponentNewSyntax = const [];
 
@@ -53,11 +52,7 @@ class _ViewHostComponentNewSyntaxHost0 extends AppView<import1.HostComponentNewS
   ComponentRef<import1.HostComponentNewSyntax> build() {
     _compView_0 = ViewHostComponentNewSyntax0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HostComponentNewSyntax_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.HostComponentNewSyntax, () {
-            return import1.HostComponentNewSyntax();
-          })
-        : import1.HostComponentNewSyntax());
+    _HostComponentNewSyntax_0_5 = import1.HostComponentNewSyntax();
     _compView_0.create(_HostComponentNewSyntax_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HostComponentNewSyntax_0_5);
@@ -104,16 +99,8 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     createAttr(_el_0, 'listens-to-foo', '');
-    _HostComponent_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.HostComponent, () {
-            return import1.HostComponent();
-          })
-        : import1.HostComponent());
-    _ListensToFooEvent_0_6 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.ListensToFooEvent, () {
-            return import1.ListensToFooEvent();
-          })
-        : import1.ListensToFooEvent());
+    _HostComponent_0_5 = import1.HostComponent();
+    _ListensToFooEvent_0_6 = import1.ListensToFooEvent();
     _compView_0.create(_HostComponent_0_5, []);
     final subscription_0 = _HostComponent_0_5.fooEvents.listen(eventHandler0(_ListensToFooEvent_0_6.onOutputFoo));
     init(const [], [subscription_0]);
@@ -147,11 +134,7 @@ class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostC
   ComponentRef<import1.UsesHostComponentWithDirective> build() {
     _compView_0 = ViewUsesHostComponentWithDirective0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesHostComponentWithDirective_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.UsesHostComponentWithDirective, () {
-            return import1.UsesHostComponentWithDirective();
-          })
-        : import1.UsesHostComponentWithDirective());
+    _UsesHostComponentWithDirective_0_5 = import1.UsesHostComponentWithDirective();
     _compView_0.create(_UsesHostComponentWithDirective_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesHostComponentWithDirective_0_5);
@@ -254,11 +237,7 @@ class _ViewHostComponentHost0 extends AppView<import1.HostComponent> {
   ComponentRef<import1.HostComponent> build() {
     _compView_0 = ViewHostComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HostComponent_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.HostComponent, () {
-            return import1.HostComponent();
-          })
-        : import1.HostComponent());
+    _HostComponent_0_5 = import1.HostComponent();
     _compView_0.create(_HostComponent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HostComponent_0_5);

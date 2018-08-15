@@ -252,13 +252,17 @@ class BuiltInSource extends ProviderSource {
 class LiteralValueSource extends ProviderSource {
   final o.Expression _value;
 
-  LiteralValueSource(CompileTokenMetadata token, this._value) : super(token);
+  LiteralValueSource(
+    CompileTokenMetadata token,
+    this._value, {
+    this.hasDynamicDependencies = false,
+  }) : super(token);
 
   @override
   o.Expression build() => _value;
 
   @override
-  final hasDynamicDependencies = false;
+  final bool hasDynamicDependencies;
 }
 
 bool _hasDynamicDependencies(Iterable<ProviderSource> sources) {
@@ -312,7 +316,7 @@ class ClassProviderSource extends ProviderSource {
       type: o.importType(_classType),
       genericTypes: _typeArguments,
     );
-    if (paramExpressions.isNotEmpty) {
+    if (hasDynamicDependencies) {
       return debugInjectorWrap(clazz, create);
     }
     return create;

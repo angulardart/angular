@@ -24,7 +24,6 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
 import 'package:angular/src/runtime.dart' as import11;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/di/errors.dart' as import14;
 import 'deferred_component.dart' deferred as deflib0;
 import 'deferred_component.template.dart' deferred as deflib1;
 
@@ -64,20 +63,12 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     parentRenderNode.append(_anchor_1);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent2);
-    _NgIf_1_9 = (import11.isDevMode
-        ? import14.debugInjectorWrap(NgIf, () {
-            return NgIf(_appEl_1, _TemplateRef_1_8);
-          })
-        : NgIf(_appEl_1, _TemplateRef_1_8));
+    _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
     final _anchor_2 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_2);
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_8 = TemplateRef(_appEl_2, viewFactory_TestContainerComponent4);
-    _NgIf_2_9 = (import11.isDevMode
-        ? import14.debugInjectorWrap(NgIf, () {
-            return NgIf(_appEl_2, _TemplateRef_2_8);
-          })
-        : NgIf(_appEl_2, _TemplateRef_2_8));
+    _NgIf_2_9 = NgIf(_appEl_2, _TemplateRef_2_8);
     final _anchor_3 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_3);
     _appEl_3 = ViewContainer(3, null, this, _anchor_3);
@@ -91,11 +82,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     _compView_5 = import5.ViewNotDeferredChildComponent0(this, 5);
     _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
-    _NotDeferredChildComponent_5_5 = (import11.isDevMode
-        ? import14.debugInjectorWrap(import6.NotDeferredChildComponent, () {
-            return import6.NotDeferredChildComponent();
-          })
-        : import6.NotDeferredChildComponent());
+    _NotDeferredChildComponent_5_5 = import6.NotDeferredChildComponent();
     _compView_5.create(_NotDeferredChildComponent_5_5, []);
     init(const [], null);
     return null;
@@ -153,11 +140,7 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = import5.viewFactory_DeferredChild1Component0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChild1Component_0_5 = (import11.isDevMode
-        ? import14.debugInjectorWrap(import6.DeferredChild1Component, () {
-            return import6.DeferredChild1Component();
-          })
-        : import6.DeferredChild1Component());
+    _DeferredChild1Component_0_5 = import6.DeferredChild1Component();
     _compView_0.create(_DeferredChild1Component_0_5, []);
     init0(_el_0);
     return null;
@@ -221,11 +204,7 @@ class _ViewTestContainerComponent3 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = import5.viewFactory_DeferredChild2Component0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChild2Component_0_5 = (import11.isDevMode
-        ? import14.debugInjectorWrap(import6.DeferredChild2Component, () {
-            return import6.DeferredChild2Component();
-          })
-        : import6.DeferredChild2Component());
+    _DeferredChild2Component_0_5 = import6.DeferredChild2Component();
     _compView_0.create(_DeferredChild2Component_0_5, []);
     init0(_el_0);
     return null;
@@ -293,11 +272,7 @@ class _ViewTestContainerComponent5 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = import5.viewFactory_DeferredChild3Component0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChild3Component_0_5 = (import11.isDevMode
-        ? import14.debugInjectorWrap(import6.DeferredChild3Component, () {
-            return import6.DeferredChild3Component();
-          })
-        : import6.DeferredChild3Component());
+    _DeferredChild3Component_0_5 = import6.DeferredChild3Component();
     _compView_0.create(_DeferredChild3Component_0_5, []);
     init0(_el_0);
     return null;
@@ -334,11 +309,7 @@ class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = import5.viewFactory_DeferredChildComponentWithoutNgContent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChildComponentWithoutNgContent_0_5 = (import11.isDevMode
-        ? import14.debugInjectorWrap(import6.DeferredChildComponentWithoutNgContent, () {
-            return import6.DeferredChildComponentWithoutNgContent();
-          })
-        : import6.DeferredChildComponentWithoutNgContent());
+    _DeferredChildComponentWithoutNgContent_0_5 = import6.DeferredChildComponentWithoutNgContent();
     import4.Text _text_1 = import4.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithoutNgContent_0_5, []);
     init0(_el_0);
@@ -371,11 +342,7 @@ class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = import5.viewFactory_DeferredChildComponentWithNgContent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChildComponentWithNgContent_0_5 = (import11.isDevMode
-        ? import14.debugInjectorWrap(import6.DeferredChildComponentWithNgContent, () {
-            return import6.DeferredChildComponentWithNgContent();
-          })
-        : import6.DeferredChildComponentWithNgContent());
+    _DeferredChildComponentWithNgContent_0_5 = import6.DeferredChildComponentWithNgContent();
     import4.Text _text_1 = import4.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithNgContent_0_5, [
       [_text_1]
@@ -409,11 +376,7 @@ class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComp
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = ViewTestContainerComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestContainerComponent_0_5 = (import11.isDevMode
-        ? import14.debugInjectorWrap(import1.TestContainerComponent, () {
-            return import1.TestContainerComponent();
-          })
-        : import1.TestContainerComponent());
+    _TestContainerComponent_0_5 = import1.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _TestContainerComponent_0_5);

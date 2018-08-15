@@ -17,9 +17,8 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import9;
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import11;
+import 'package:angular/src/common/directives/ng_for.dart' as import10;
 import 'package:angular/src/core/linker/template_ref.dart';
 
 final List<dynamic> styles$InterpolationComponent = const [];
@@ -79,11 +78,7 @@ class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComp
   ComponentRef<import1.InterpolationComponent> build() {
     _compView_0 = ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponent_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.InterpolationComponent, () {
-            return import1.InterpolationComponent();
-          })
-        : import1.InterpolationComponent());
+    _InterpolationComponent_0_5 = import1.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationComponent_0_5);
@@ -158,11 +153,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.Inter
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
     _compView_0 = ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationComponentNoWhitespace_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.InterpolationComponentNoWhitespace, () {
-            return import1.InterpolationComponentNoWhitespace();
-          })
-        : import1.InterpolationComponentNoWhitespace());
+    _InterpolationComponentNoWhitespace_0_5 = import1.InterpolationComponentNoWhitespace();
     _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
@@ -250,11 +241,7 @@ class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTw
   ComponentRef<import1.InterpolationTwoAdjacent> build() {
     _compView_0 = ViewInterpolationTwoAdjacent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationTwoAdjacent_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.InterpolationTwoAdjacent, () {
-            return import1.InterpolationTwoAdjacent();
-          })
-        : import1.InterpolationTwoAdjacent());
+    _InterpolationTwoAdjacent_0_5 = import1.InterpolationTwoAdjacent();
     _compView_0.create(_InterpolationTwoAdjacent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationTwoAdjacent_0_5);
@@ -355,11 +342,7 @@ class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.Interpolatio
   ComponentRef<import1.InterpolationLongerSentence> build() {
     _compView_0 = ViewInterpolationLongerSentence0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationLongerSentence_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.InterpolationLongerSentence, () {
-            return import1.InterpolationLongerSentence();
-          })
-        : import1.InterpolationLongerSentence());
+    _InterpolationLongerSentence_0_5 = import1.InterpolationLongerSentence();
     _compView_0.create(_InterpolationLongerSentence_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationLongerSentence_0_5);
@@ -430,11 +413,7 @@ class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiter
   ComponentRef<import1.InterpolationLiterals> build() {
     _compView_0 = ViewInterpolationLiterals0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationLiterals_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.InterpolationLiterals, () {
-            return import1.InterpolationLiterals();
-          })
-        : import1.InterpolationLiterals());
+    _InterpolationLiterals_0_5 = import1.InterpolationLiterals();
     _compView_0.create(_InterpolationLiterals_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationLiterals_0_5);
@@ -464,7 +443,7 @@ final List<dynamic> styles$InterpolationLocals = const [];
 
 class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
-  import11.NgFor _NgFor_0_9;
+  import10.NgFor _NgFor_0_9;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewInterpolationLocals0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -480,11 +459,7 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
     parentRenderNode.append(_anchor_0);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
-    _NgFor_0_9 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import11.NgFor, () {
-            return import11.NgFor(_appEl_0, _TemplateRef_0_8);
-          })
-        : import11.NgFor(_appEl_0, _TemplateRef_0_8));
+    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
     return null;
   }
@@ -515,7 +490,7 @@ AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals0(AppView<dy
 
 class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
-  import11.NgFor _NgFor_0_9;
+  import10.NgFor _NgFor_0_9;
   var _expr_0;
   _ViewInterpolationLocals1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewInterpolationLocals0._renderType;
@@ -525,11 +500,7 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
     final _anchor_0 = createViewContainerAnchor();
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
-    _NgFor_0_9 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import11.NgFor, () {
-            return import11.NgFor(_appEl_0, _TemplateRef_0_8);
-          })
-        : import11.NgFor(_appEl_0, _TemplateRef_0_8));
+    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
     init0(_appEl_0);
     return null;
   }
@@ -609,11 +580,7 @@ class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals>
   ComponentRef<import1.InterpolationLocals> build() {
     _compView_0 = ViewInterpolationLocals0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InterpolationLocals_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.InterpolationLocals, () {
-            return import1.InterpolationLocals();
-          })
-        : import1.InterpolationLocals());
+    _InterpolationLocals_0_5 = import1.InterpolationLocals();
     _compView_0.create(_InterpolationLocals_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationLocals_0_5);

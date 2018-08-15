@@ -18,7 +18,6 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import9;
 
 final List<dynamic> styles$UsesNativeEvents = const [];
 
@@ -58,11 +57,7 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
   ComponentRef<import1.UsesNativeEvents> build() {
     _compView_0 = ViewUsesNativeEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesNativeEvents_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.UsesNativeEvents, () {
-            return import1.UsesNativeEvents();
-          })
-        : import1.UsesNativeEvents());
+    _UsesNativeEvents_0_5 = import1.UsesNativeEvents();
     _compView_0.create(_UsesNativeEvents_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesNativeEvents_0_5);
@@ -107,11 +102,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     _compView_0 = ViewHasAngularEvents0(this, 0);
     _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _HasAngularEvents_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.HasAngularEvents, () {
-            return import1.HasAngularEvents();
-          })
-        : import1.HasAngularEvents());
+    _HasAngularEvents_0_5 = import1.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_5, []);
     final subscription_0 = _HasAngularEvents_0_5.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0]);
@@ -143,11 +134,7 @@ class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
   ComponentRef<import1.UsesAngularEvents> build() {
     _compView_0 = ViewUsesAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesAngularEvents_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.UsesAngularEvents, () {
-            return import1.UsesAngularEvents();
-          })
-        : import1.UsesAngularEvents());
+    _UsesAngularEvents_0_5 = import1.UsesAngularEvents();
     _compView_0.create(_UsesAngularEvents_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesAngularEvents_0_5);
@@ -205,11 +192,7 @@ class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
   ComponentRef<import1.HasAngularEvents> build() {
     _compView_0 = ViewHasAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasAngularEvents_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.HasAngularEvents, () {
-            return import1.HasAngularEvents();
-          })
-        : import1.HasAngularEvents());
+    _HasAngularEvents_0_5 = import1.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HasAngularEvents_0_5);
@@ -274,11 +257,7 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
   ComponentRef<import1.HasManyNativeHostEvents> build() {
     _compView_0 = ViewHasManyNativeHostEvents0(this, 0);
     rootEl = _compView_0.rootEl;
-    _HasManyNativeHostEvents_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.HasManyNativeHostEvents, () {
-            return import1.HasManyNativeHostEvents();
-          })
-        : import1.HasManyNativeHostEvents());
+    _HasManyNativeHostEvents_0_5 = import1.HasManyNativeHostEvents();
     _compView_0.create(_HasManyNativeHostEvents_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HasManyNativeHostEvents_0_5);

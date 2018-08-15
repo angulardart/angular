@@ -17,7 +17,6 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import9;
 
 final List<dynamic> styles$UsesEventTearoff = const [];
 
@@ -56,11 +55,7 @@ class _ViewUsesEventTearoffHost0 extends AppView<import1.UsesEventTearoff> {
   ComponentRef<import1.UsesEventTearoff> build() {
     _compView_0 = ViewUsesEventTearoff0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesEventTearoff_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.UsesEventTearoff, () {
-            return import1.UsesEventTearoff();
-          })
-        : import1.UsesEventTearoff());
+    _UsesEventTearoff_0_5 = import1.UsesEventTearoff();
     _compView_0.create(_UsesEventTearoff_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesEventTearoff_0_5);

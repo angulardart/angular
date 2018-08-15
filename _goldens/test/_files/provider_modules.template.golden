@@ -18,8 +18,7 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'dart:core';
-import 'package:angular/src/di/errors.dart' as import10;
-import 'package:angular/src/core/di/opaque_token.dart' as import11;
+import 'package:angular/src/core/di/opaque_token.dart' as import10;
 
 final List<dynamic> styles$ProviderModulesComponent = const [];
 
@@ -48,18 +47,14 @@ final List<dynamic> styles$ProviderModulesComponentHost = const [];
 class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModulesComponent> {
   ViewProviderModulesComponent0 _compView_0;
   import1.ProviderModulesComponent _ProviderModulesComponent_0_5;
-  dynamic __FooService_0_6;
+  import1.FooService __FooService_0_6;
   Duration __fooToken_0_7;
   List<dynamic> __barToken_0_8;
   dynamic __bazToken_0_9;
   _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
-  dynamic get _FooService_0_6 {
+  import1.FooService get _FooService_0_6 {
     if ((this.__FooService_0_6 == null)) {
-      (__FooService_0_6 = (import7.isDevMode
-          ? import10.debugInjectorWrap(import1.FooService, () {
-              return import1.FooService();
-            })
-          : import1.FooService()));
+      (__FooService_0_6 = import1.FooService());
     }
     return this.__FooService_0_6;
   }
@@ -89,11 +84,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
   ComponentRef<import1.ProviderModulesComponent> build() {
     _compView_0 = ViewProviderModulesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ProviderModulesComponent_0_5 = (import7.isDevMode
-        ? import10.debugInjectorWrap(import1.ProviderModulesComponent, () {
-            return import1.ProviderModulesComponent();
-          })
-        : import1.ProviderModulesComponent());
+    _ProviderModulesComponent_0_5 = import1.ProviderModulesComponent();
     _compView_0.create(_ProviderModulesComponent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_5);
@@ -104,13 +95,13 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
     if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
       return _FooService_0_6;
     }
-    if ((identical(token, const import11.OpaqueToken('fooToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken('fooToken')) && (0 == nodeIndex))) {
       return _fooToken_0_7;
     }
-    if ((identical(token, const import11.OpaqueToken('barToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken('barToken')) && (0 == nodeIndex))) {
       return _barToken_0_8;
     }
-    if ((identical(token, const import11.OpaqueToken('bazToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken('bazToken')) && (0 == nodeIndex))) {
       return _bazToken_0_9;
     }
     return notFoundResult;

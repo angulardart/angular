@@ -18,7 +18,6 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:intl/intl.dart' as import9;
-import 'package:angular/src/di/errors.dart' as import10;
 
 final List<dynamic> styles$I18nHtmlComponent = const [];
 
@@ -61,11 +60,7 @@ class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
   ComponentRef<import1.I18nHtmlComponent> build() {
     _compView_0 = ViewI18nHtmlComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _I18nHtmlComponent_0_5 = (import7.isDevMode
-        ? import10.debugInjectorWrap(import1.I18nHtmlComponent, () {
-            return import1.I18nHtmlComponent();
-          })
-        : import1.I18nHtmlComponent());
+    _I18nHtmlComponent_0_5 = import1.I18nHtmlComponent();
     _compView_0.create(_I18nHtmlComponent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _I18nHtmlComponent_0_5);

@@ -18,7 +18,6 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import9;
 
 final List<dynamic> styles$AppComponent = const [];
 
@@ -54,15 +53,11 @@ final List<dynamic> styles$AppComponentHost = const [];
 class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_5;
-  dynamic __TextService_0_6;
+  import1.TextService __TextService_0_6;
   _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
-  dynamic get _TextService_0_6 {
+  import1.TextService get _TextService_0_6 {
     if ((this.__TextService_0_6 == null)) {
-      (__TextService_0_6 = (import7.isDevMode
-          ? import9.debugInjectorWrap(import1.TextService, () {
-              return import1.TextService();
-            })
-          : import1.TextService()));
+      (__TextService_0_6 = import1.TextService());
     }
     return this.__TextService_0_6;
   }
@@ -71,11 +66,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _AppComponent_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.AppComponent, () {
-            return import1.AppComponent();
-          })
-        : import1.AppComponent());
+    _AppComponent_0_5 = import1.AppComponent();
     _compView_0.create(_AppComponent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _AppComponent_0_5);
