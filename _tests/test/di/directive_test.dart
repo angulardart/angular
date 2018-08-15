@@ -158,99 +158,65 @@ void main() {
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.endsWith('No provider found for $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService'),
         ),
       ),
     );
   });
 
   test('should throw a readable error message on a 2-node failure', () {
-    // NOTE: In an ideal scenario, this would throw a better error, i.e.
-    //   InjectsMissingService -> MissingService
-    //
-    // ... but this would require enter() and leave() wrapping around the
-    // successful cases in AppView-local injection (and changes to the
-    // generated code).
-    //
-    // If we end up doing this, we should modify the test accordingly.
     final testBed = NgTestBed<WillFailInjecting2Node>();
     expect(
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.endsWith('No provider found for $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService: '
+              '$InjectsMissingService -> $MissingService'),
         ),
       ),
-      reason: 'View compiler does not trace local injections (#434)',
     );
   });
 
   test('should throw a readable error message on a child directive', () {
-    // NOTE: In an ideal scenario, this would throw a better error, i.e.
-    //   WillFailInjecting1NodeParent -> MissingService
-    //
-    // ... but this would require enter() and leave() wrapping around the
-    // successful cases in AppView-local injection (and changes to the
-    // generated code).
-    //
-    // If we end up doing this, we should modify the test accordingly.
     final testBed = NgTestBed<WillFailCreatingChild>();
     expect(
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.endsWith('No provider found for $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService: '
+              '$WillFailInjecting1Node -> $MissingService'),
         ),
       ),
-      reason: 'View compiler does not trace local injections (#434)',
     );
   });
 
   test('should throw a readable error message in an embedded template', () {
-    // NOTE: In an ideal scenario, this would throw a better error, i.e.
-    //   WillFailInjecting1NodeParent -> MissingService
-    //
-    // ... but this would require enter() and leave() wrapping around the
-    // successful cases in AppView-local injection (and changes to the
-    // generated code).
-    //
-    // If we end up doing this, we should modify the test accordingly.
     final testBed = NgTestBed<WillFailCreatingChildInTemplate>();
     expect(
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.endsWith('No provider found for $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService: '
+              '$WillFailInjecting1Node -> $MissingService'),
         ),
       ),
-      reason: 'View compiler does not trace local injections (#434)',
     );
   });
 
   test('should throw a readable error message when quering a child', () {
-    // NOTE: In an ideal scenario, this would throw a better error, i.e.
-    //   InjectsMissingService -> MissingService
-    //
-    // ... but this would require enter() and leave() wrapping around the
-    // successful cases in AppView-local injection (and changes to the
-    // generated code).
-    //
-    // If we end up doing this, we should modify the test accordingly.
     final testBed = NgTestBed<WillFailQueryingServiceInTemplate>();
     expect(
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.endsWith('No provider found for $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService: '
+              '$InjectsMissingService -> $MissingService'),
         ),
       ),
-      reason: 'View compiler does not trace local injections (#434)',
     );
   });
 
   test('should throw a readable error message on a 2-node/parent failure', () {
-    // Passes, unlike the missing error case, because the parent injector, in
-    // this case a ReflectiveInjector, *does* trace the individual calls.
     final testBed = NgTestBed<WillFailInjecting2NodeParent>().addProviders([
       Provider(
         InjectsMissingService,
@@ -266,7 +232,8 @@ void main() {
         predicate(
           (e) => '$e'.contains(''
               'No provider found for $MissingService: '
-              '$InjectsMissingService -> $MissingService.'),
+              '$WillFailInjecting2NodeParent -> $InjectsMissingService -> '
+              '$MissingService.'),
         ),
       ),
     );

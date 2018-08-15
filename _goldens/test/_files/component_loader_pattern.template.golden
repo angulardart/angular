@@ -21,6 +21,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/di/errors.dart' as import9;
 
 final List<dynamic> styles$TestComponent = const [];
 
@@ -54,7 +55,11 @@ class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
   ComponentRef<import1.TestComponent> build() {
     _compView_0 = ViewTestComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _TestComponent_0_5 = import1.TestComponent();
+    _TestComponent_0_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.TestComponent, () {
+            return import1.TestComponent();
+          })
+        : import1.TestComponent());
     _compView_0.create(_TestComponent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _TestComponent_0_5);

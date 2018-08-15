@@ -306,8 +306,16 @@ class ClassProviderSource extends ProviderSource {
   o.Expression build() {
     List<o.Expression> paramExpressions = [];
     for (ProviderSource s in _parameters) paramExpressions.add(s.build());
-    return o.importExpr(_classType).instantiate(paramExpressions,
-        type: o.importType(_classType), genericTypes: _typeArguments);
+    final clazz = o.importExpr(_classType);
+    final create = clazz.instantiate(
+      paramExpressions,
+      type: o.importType(_classType),
+      genericTypes: _typeArguments,
+    );
+    if (paramExpressions.isNotEmpty) {
+      return debugInjectorWrap(clazz, create);
+    }
+    return create;
   }
 
   @override
@@ -358,7 +366,6 @@ class DynamicProviderSource extends ProviderSource {
     return viewExpr.callMethod('injectorGet', args);
   }
 
-  // It *might*, but we don't know.
   @override
-  final hasDynamicDependencies = false;
+  final hasDynamicDependencies = true;
 }

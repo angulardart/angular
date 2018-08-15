@@ -17,6 +17,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/di/errors.dart' as import9;
 
 final List<dynamic> styles$DeferredChild1Component = const [];
 
@@ -52,7 +53,11 @@ class _ViewDeferredChild1ComponentHost0 extends AppView<import1.DeferredChild1Co
   ComponentRef<import1.DeferredChild1Component> build() {
     _compView_0 = ViewDeferredChild1Component0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DeferredChild1Component_0_5 = import1.DeferredChild1Component();
+    _DeferredChild1Component_0_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.DeferredChild1Component, () {
+            return import1.DeferredChild1Component();
+          })
+        : import1.DeferredChild1Component());
     _compView_0.create(_DeferredChild1Component_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DeferredChild1Component_0_5);
@@ -112,7 +117,11 @@ class _ViewDeferredChild2ComponentHost0 extends AppView<import1.DeferredChild2Co
   ComponentRef<import1.DeferredChild2Component> build() {
     _compView_0 = ViewDeferredChild2Component0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DeferredChild2Component_0_5 = import1.DeferredChild2Component();
+    _DeferredChild2Component_0_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.DeferredChild2Component, () {
+            return import1.DeferredChild2Component();
+          })
+        : import1.DeferredChild2Component());
     _compView_0.create(_DeferredChild2Component_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DeferredChild2Component_0_5);
@@ -172,7 +181,11 @@ class _ViewDeferredChild3ComponentHost0 extends AppView<import1.DeferredChild3Co
   ComponentRef<import1.DeferredChild3Component> build() {
     _compView_0 = ViewDeferredChild3Component0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DeferredChild3Component_0_5 = import1.DeferredChild3Component();
+    _DeferredChild3Component_0_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.DeferredChild3Component, () {
+            return import1.DeferredChild3Component();
+          })
+        : import1.DeferredChild3Component());
     _compView_0.create(_DeferredChild3Component_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DeferredChild3Component_0_5);
@@ -230,7 +243,11 @@ class _ViewNotDeferredChildComponentHost0 extends AppView<import1.NotDeferredChi
   ComponentRef<import1.NotDeferredChildComponent> build() {
     _compView_0 = ViewNotDeferredChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _NotDeferredChildComponent_0_5 = import1.NotDeferredChildComponent();
+    _NotDeferredChildComponent_0_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.NotDeferredChildComponent, () {
+            return import1.NotDeferredChildComponent();
+          })
+        : import1.NotDeferredChildComponent());
     _compView_0.create(_NotDeferredChildComponent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _NotDeferredChildComponent_0_5);
@@ -293,7 +310,11 @@ class _ViewDeferredChildComponentWithoutNgContentHost0 extends AppView<import1.D
   ComponentRef<import1.DeferredChildComponentWithoutNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithoutNgContent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DeferredChildComponentWithoutNgContent_0_5 = import1.DeferredChildComponentWithoutNgContent();
+    _DeferredChildComponentWithoutNgContent_0_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.DeferredChildComponentWithoutNgContent, () {
+            return import1.DeferredChildComponentWithoutNgContent();
+          })
+        : import1.DeferredChildComponentWithoutNgContent());
     _compView_0.create(_DeferredChildComponentWithoutNgContent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DeferredChildComponentWithoutNgContent_0_5);
@@ -355,7 +376,11 @@ class _ViewDeferredChildComponentWithNgContentHost0 extends AppView<import1.Defe
   ComponentRef<import1.DeferredChildComponentWithNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithNgContent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DeferredChildComponentWithNgContent_0_5 = import1.DeferredChildComponentWithNgContent();
+    _DeferredChildComponentWithNgContent_0_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.DeferredChildComponentWithNgContent, () {
+            return import1.DeferredChildComponentWithNgContent();
+          })
+        : import1.DeferredChildComponentWithNgContent());
     _compView_0.create(_DeferredChildComponentWithNgContent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DeferredChildComponentWithNgContent_0_5);
