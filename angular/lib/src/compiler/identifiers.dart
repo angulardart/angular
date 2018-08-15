@@ -110,6 +110,8 @@ class Identifiers {
       name: "debugInjectorEnter", moduleUrl: debugInjectorModuleUrl);
   static final debugInjectorLeave = CompileIdentifierMetadata<dynamic>(
       name: "debugInjectorLeave", moduleUrl: debugInjectorModuleUrl);
+  static final debugInjectorWrap = CompileIdentifierMetadata<dynamic>(
+      name: "debugInjectorWrap", moduleUrl: debugInjectorModuleUrl);
 
   static final interpolate = <CompileIdentifierMetadata>[
     CompileIdentifierMetadata<dynamic>(

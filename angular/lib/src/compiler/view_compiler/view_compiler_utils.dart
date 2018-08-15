@@ -103,17 +103,26 @@ o.Expression injectFromViewParentInjector(
   return viewExpr.callMethod('injectorGet', args);
 }
 
-o.Statement debugInjectorEnter(o.Expression identifier) {
-  return o.importExpr(Identifiers.debugInjectorEnter).callFn([
-    identifier,
-  ]).toStmt();
-}
+o.Statement debugInjectorEnter(o.Expression identifier) =>
+    o.importExpr(Identifiers.debugInjectorEnter).callFn([
+      identifier,
+    ]).toStmt();
 
-o.Statement debugInjectorLeave(o.Expression identifier) {
-  return o.importExpr(Identifiers.debugInjectorLeave).callFn([
-    identifier,
-  ]).toStmt();
-}
+o.Statement debugInjectorLeave(o.Expression identifier) =>
+    o.importExpr(Identifiers.debugInjectorLeave).callFn([
+      identifier,
+    ]).toStmt();
+
+o.Expression debugInjectorWrap(o.Expression identifier, o.Expression wrap) =>
+    o.importExpr(Identifiers.isDevMode).conditional(
+          o.importExpr(Identifiers.debugInjectorWrap).callFn([
+            identifier,
+            o.fn([], [
+              o.ReturnStatement(wrap),
+            ])
+          ]),
+          wrap,
+        );
 
 /// Returns the name of a [component] view factory for [index].
 ///

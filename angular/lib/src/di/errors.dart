@@ -36,6 +36,14 @@ void debugInjectorLeave(Object token) {
   assert(identical(removed, token));
 }
 
+/// Wraps invoking [wrap] with [debugInjectorEnter] and [debugInjectorLeave].
+T debugInjectorWrap<T>(Object token, T Function() wrap) {
+  debugInjectorEnter(token);
+  final result = wrap();
+  debugInjectorLeave(token);
+  return result;
+}
+
 /// Returns an error describing that [token] was not found as a provider.
 Error noProviderError(Object token) {
   // Only in developer mode.
