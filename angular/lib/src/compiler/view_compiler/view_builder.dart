@@ -6,10 +6,7 @@ import 'package:angular_compiler/cli.dart';
 import 'package:meta/meta.dart';
 
 import '../compile_metadata.dart'
-    show
-        CompileDirectiveMetadata,
-        CompileIdentifierMetadata,
-        CompileTypeMetadata;
+    show CompileDirectiveMetadata, CompileIdentifierMetadata;
 import '../expression_parser/ast.dart' as ast;
 import '../expression_parser/parser.dart' show Parser;
 import '../html_events.dart';
@@ -808,69 +805,6 @@ int _getChangeDetectionMode(CompileView view) {
     mode = ChangeDetectionStrategy.CheckAlways;
   }
   return mode;
-}
-
-/// Writes proxy for setting an @Input property.
-void writeInputUpdaters(CompileView view, List<o.Statement> targetStatements) {
-  var writtenInputs = Set<String>();
-  if (view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
-    for (String input in view.component.inputs.keys) {
-      if (!writtenInputs.contains(input)) {
-        writtenInputs.add(input);
-        _writeInputUpdater(view, input, targetStatements);
-      }
-    }
-  }
-}
-
-void _writeInputUpdater(
-    CompileView view, String inputName, List<o.Statement> targetStatements) {
-  var prevValueVarName = 'prev$inputName';
-  CompileTypeMetadata inputTypeMeta = view.component.inputTypes != null
-      ? view.component.inputTypes[inputName]
-      : null;
-  var inputType = inputTypeMeta != null ? o.importType(inputTypeMeta) : null;
-  var arguments = [
-    o.FnParam('component', _getContextType(view)),
-    o.FnParam(prevValueVarName, inputType),
-    o.FnParam(inputName, inputType)
-  ];
-  String name = buildUpdaterFunctionName(view.component.type.name, inputName);
-  var statements = <o.Statement>[];
-  const String changedBoolVarName = 'changed';
-  o.Expression conditionExpr;
-  var prevValueExpr = o.ReadVarExpr(prevValueVarName);
-  var newValueExpr = o.ReadVarExpr(inputName);
-  if (view.genConfig.genDebugInfo) {
-    // In debug mode call checkBinding so throwOnChanges is checked for
-    // stabilization.
-    conditionExpr = o
-        .importExpr(Identifiers.checkBinding)
-        .callFn([prevValueExpr, newValueExpr]);
-  } else {
-    conditionExpr =
-        o.ReadVarExpr(prevValueVarName).notIdentical(o.ReadVarExpr(inputName));
-  }
-  // Generates: bool changed = !identical(prevValue, newValue);
-  statements.add(o
-      .variable(changedBoolVarName, o.BOOL_TYPE)
-      .set(conditionExpr)
-      .toDeclStmt(o.BOOL_TYPE));
-  // Generates: if (changed) {
-  //               component.property = newValue;
-  //               setState() //optional
-  //            }
-  var updateStatements = <o.Statement>[];
-  updateStatements.add(
-      o.ReadVarExpr('component').prop(inputName).set(newValueExpr).toStmt());
-  o.Statement conditionalUpdateStatement =
-      o.IfStmt(o.ReadVarExpr(changedBoolVarName), updateStatements);
-  statements.add(conditionalUpdateStatement);
-  // Generates: return changed;
-  statements.add(o.ReturnStatement(o.ReadVarExpr(changedBoolVarName)));
-  // Add function decl as top level statement.
-  targetStatements
-      .add(o.fn(arguments, statements, o.BOOL_TYPE).toDeclStmt(name));
 }
 
 final _pureHtmlVisitor = IsPureHtmlVisitor();

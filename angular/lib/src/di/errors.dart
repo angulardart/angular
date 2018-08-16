@@ -32,7 +32,16 @@ void debugInjectorLeave(Object token) {
   if (!isDevMode) {
     return;
   }
-  _tokenStack.removeLast();
+  final removed = _tokenStack.removeLast();
+  assert(identical(removed, token));
+}
+
+/// Wraps invoking [wrap] with [debugInjectorEnter] and [debugInjectorLeave].
+T debugInjectorWrap<T>(Object token, T Function() wrap) {
+  debugInjectorEnter(token);
+  final result = wrap();
+  debugInjectorLeave(token);
+  return result;
 }
 
 /// Returns an error describing that [token] was not found as a provider.

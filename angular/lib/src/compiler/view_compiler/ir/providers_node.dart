@@ -252,13 +252,17 @@ class BuiltInSource extends ProviderSource {
 class LiteralValueSource extends ProviderSource {
   final o.Expression _value;
 
-  LiteralValueSource(CompileTokenMetadata token, this._value) : super(token);
+  LiteralValueSource(
+    CompileTokenMetadata token,
+    this._value, {
+    this.hasDynamicDependencies = false,
+  }) : super(token);
 
   @override
   o.Expression build() => _value;
 
   @override
-  final hasDynamicDependencies = false;
+  final bool hasDynamicDependencies;
 }
 
 bool _hasDynamicDependencies(Iterable<ProviderSource> sources) {
@@ -306,8 +310,16 @@ class ClassProviderSource extends ProviderSource {
   o.Expression build() {
     List<o.Expression> paramExpressions = [];
     for (ProviderSource s in _parameters) paramExpressions.add(s.build());
-    return o.importExpr(_classType).instantiate(paramExpressions,
-        type: o.importType(_classType), genericTypes: _typeArguments);
+    final clazz = o.importExpr(_classType);
+    final create = clazz.instantiate(
+      paramExpressions,
+      type: o.importType(_classType),
+      genericTypes: _typeArguments,
+    );
+    if (hasDynamicDependencies) {
+      return debugInjectorWrap(clazz, create);
+    }
+    return create;
   }
 
   @override
@@ -358,7 +370,6 @@ class DynamicProviderSource extends ProviderSource {
     return viewExpr.callMethod('injectorGet', args);
   }
 
-  // It *might*, but we don't know.
   @override
   final hasDynamicDependencies = false;
 }

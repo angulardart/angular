@@ -1,5 +1,3 @@
-import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy;
 import 'package:angular_compiler/cli.dart';
 
 import 'package:source_span/source_span.dart';
@@ -16,7 +14,6 @@ import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
 import 'view_binder.dart' show bindView, bindViewHostProperties;
 import 'view_builder.dart';
-import 'view_compiler_utils.dart' show outlinerDeprecated;
 
 class ViewCompileResult {
   List<o.Statement> statements;
@@ -97,22 +94,11 @@ class ViewCompiler {
   }
 
   void createViewTopLevelStmts(
-      CompileView view, List<o.Statement> targetStatements) {
-    // If we are compiling root view, create a render type for the component.
-    // Example: RenderComponentType renderType_MaterialButtonComponent;
-    bool creatingMainView = view.viewIndex == 0;
-
-    o.ClassStmt viewClass = createViewClass(view, parser);
-    targetStatements.add(viewClass);
-
-    targetStatements.add(createViewFactory(view, viewClass));
-
-    if (creatingMainView &&
-        view.component.inputs != null &&
-        view.component.changeDetection == ChangeDetectionStrategy.Stateful &&
-        outlinerDeprecated) {
-      writeInputUpdaters(view, targetStatements);
-    }
+    CompileView view,
+    List<o.Statement> targetStatements,
+  ) {
+    final viewClass = createViewClass(view, parser);
+    targetStatements..add(viewClass)..add(createViewFactory(view, viewClass));
   }
 
   bool get genDebugInfo => _genConfig.genDebugInfo;

@@ -53,6 +53,13 @@
     as `null` (either intentionally, or due to analysis errors/imports missing)
     a better error message is now thrown with the context of the error.
 
+*   [#434][]: In development mode, creating a component or service `C` that
+    attempts to inject a missing dynamic dependency `D` will now throw an error
+    message containing `Could not find provider for D: C -> D`. Previously the
+    message was only `Could not find provider for D` in these cases, which was
+    often not enough information to debug easily.
+
+[#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#1538]: https://github.com/dart-lang/angular/issues/1538
 [#1539]: https://github.com/dart-lang/angular/issues/1539
