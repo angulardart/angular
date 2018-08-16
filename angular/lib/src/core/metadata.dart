@@ -238,6 +238,7 @@ class Component extends Directive {
   /// Declares generic type arguments for any generic [directives].
   ///
   /// See [Typed] for details.
+  @experimental
   final List<Typed> directiveTypes;
 
   final List<Object> pipes;
