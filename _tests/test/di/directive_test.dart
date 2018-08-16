@@ -216,6 +216,32 @@ void main() {
     );
   });
 
+  test('should throw a readable error message following a factory', () {
+    final testBed = NgTestBed<WillFailFollowingFactoryProvider>();
+    expect(
+      () => testBed.create(),
+      throwsA(
+        predicate(
+          (e) => '$e'.contains('No provider found for $MissingService: '
+              '$InjectsMissingService -> $MissingService'),
+        ),
+      ),
+    );
+  });
+
+  test('should throw a readable error message following $ExistingProvider', () {
+    final testBed = NgTestBed<WillFailFollowingExistingProvider>();
+    expect(
+      () => testBed.create(),
+      throwsA(
+        predicate(
+          (e) => '$e'.contains('No provider found for $MissingService: '
+              '$PrimeInjectsMissingService -> $MissingService'),
+        ),
+      ),
+    );
+  });
+
   test('should throw a readable error message on a 2-node/parent failure', () {
     final testBed = NgTestBed<WillFailInjecting2NodeParent>().addProviders([
       Provider(
@@ -680,10 +706,46 @@ class WillFailQueryingServiceInTemplate {
   InjectsMissingService willFailDuringQuery;
 }
 
-@Directive(selector: 'lazy-provides-missing-service', providers: [
-  InjectsMissingService,
-])
+@Directive(
+  selector: 'lazy-provides-missing-service',
+  providers: [
+    InjectsMissingService,
+  ],
+)
 class LazilyProvidesMissingService {}
+
+@Component(
+  selector: 'will-fail-following-factory-provider',
+  template: '',
+  providers: [
+    FactoryProvider(
+      InjectsMissingService,
+      WillFailFollowingFactoryProvider.aFactory,
+    )
+  ],
+)
+class WillFailFollowingFactoryProvider {
+  static InjectsMissingService aFactory(MissingService d) =>
+      InjectsMissingService(d);
+
+  WillFailFollowingFactoryProvider(InjectsMissingService _);
+}
+
+@Component(
+  selector: 'will-fail-following-factory-provider',
+  template: '',
+  providers: [
+    ClassProvider(PrimeInjectsMissingService),
+    ExistingProvider(InjectsMissingService, PrimeInjectsMissingService)
+  ],
+)
+class WillFailFollowingExistingProvider {
+  WillFailFollowingExistingProvider(InjectsMissingService _);
+}
+
+class PrimeInjectsMissingService extends InjectsMissingService {
+  PrimeInjectsMissingService(MissingService d) : super(d);
+}
 
 const baseUrl = OpaqueToken<String>('baseUrl');
 
