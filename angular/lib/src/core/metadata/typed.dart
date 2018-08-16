@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// Declares a typed directive or defines type argument of type [T].
 ///
 /// Example uses include:
@@ -11,6 +13,7 @@
 ///     * `Typed<Qux>.of([String, Typed<List>.of([#T])`
 ///
 /// See documentation of each constructor for more details.
+@experimental
 class Typed<T> {
   /// An optional reference for targeting specific instances within a template.
   ///
