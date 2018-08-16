@@ -22,11 +22,6 @@ const namespaceUris = {
   'xhtml': 'http://www.w3.org/1999/xhtml'
 };
 
-/// Creating outlines for faster builds is preventing auto input change
-/// detection for now. The following flag should be removed to reenable in the
-/// future.
-const bool outlinerDeprecated = false;
-
 /// Variable name used to read viewData.parentIndex in build functions.
 const String cachedParentIndexVarName = 'parentIdx';
 
@@ -107,6 +102,27 @@ o.Expression injectFromViewParentInjector(
   }
   return viewExpr.callMethod('injectorGet', args);
 }
+
+o.Statement debugInjectorEnter(o.Expression identifier) =>
+    o.importExpr(Identifiers.debugInjectorEnter).callFn([
+      identifier,
+    ]).toStmt();
+
+o.Statement debugInjectorLeave(o.Expression identifier) =>
+    o.importExpr(Identifiers.debugInjectorLeave).callFn([
+      identifier,
+    ]).toStmt();
+
+o.Expression debugInjectorWrap(o.Expression identifier, o.Expression wrap) =>
+    o.importExpr(Identifiers.isDevMode).conditional(
+          o.importExpr(Identifiers.debugInjectorWrap).callFn([
+            identifier,
+            o.fn([], [
+              o.ReturnStatement(wrap),
+            ])
+          ]),
+          wrap,
+        );
 
 /// Returns the name of a [component] view factory for [index].
 ///

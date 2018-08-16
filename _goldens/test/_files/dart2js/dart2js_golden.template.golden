@@ -19,7 +19,8 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/di/opaque_token.dart' as import9;
+import 'package:angular/src/di/errors.dart' as import9;
+import 'package:angular/src/core/di/opaque_token.dart' as import10;
 import 'dart:core';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
@@ -71,7 +72,11 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_3 = ViewInjectsFromArbitraryParent0(this, 3);
     _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
-    _InjectsFromArbitraryParent_3_5 = import1.InjectsFromArbitraryParent(parentView.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex));
+    _InjectsFromArbitraryParent_3_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.InjectsFromArbitraryParent, () {
+            return import1.InjectsFromArbitraryParent(parentView.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex));
+          })
+        : import1.InjectsFromArbitraryParent(parentView.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex)));
     _compView_3.create(_InjectsFromArbitraryParent_3_5, []);
     _compView_4 = ViewComponentConditionalFeatures0(this, 4);
     _el_4 = _compView_4.rootEl;
@@ -573,7 +578,11 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
     _compView_0 = ViewInjectsFromArbitraryParent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InjectsFromArbitraryParent_0_5 = import1.InjectsFromArbitraryParent(this.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex));
+    _InjectsFromArbitraryParent_0_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.InjectsFromArbitraryParent, () {
+            return import1.InjectsFromArbitraryParent(this.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex));
+          })
+        : import1.InjectsFromArbitraryParent(this.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex)));
     _compView_0.create(_InjectsFromArbitraryParent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InjectsFromArbitraryParent_0_5);

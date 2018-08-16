@@ -9419,10 +9419,12 @@
         t2 = this.parentView;
         t4 = t2.injectorGet$2(C.MultiToken_usPresidents, this.viewData.parentIndex);
         t5 = t2.injectorGet$2(C.MultiToken_whiteHouse, this.viewData.parentIndex);
+        t2 = t2.injectorGet$2(C.Type_InjectableService_AmT, this.viewData.parentIndex);
         t6 = new E.InjectsFromArbitraryParent();
-        t2.injectorGet$2(C.Type_InjectableService_AmT, this.viewData.parentIndex).printWashingtonDc$2(t5, t4);
-        this._InjectsFromArbitraryParent_3_5 = t6;
-        this._compView_3.create$2(0, t6, []);
+        t2.printWashingtonDc$2(t5, t4);
+        t2 = t6;
+        this._InjectsFromArbitraryParent_3_5 = t2;
+        this._compView_3.create$2(0, t2, []);
         t1 = new N.ViewComponentConditionalFeatures0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
         t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 4);
         t2 = t3.createElement("component-conditional-features");

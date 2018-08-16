@@ -418,13 +418,21 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   }
 
   @override
-  ProviderSource createDynamicInjectionSource(ProvidersNode providersNode,
-      ProviderSource source, CompileTokenMetadata token, bool optional) {
+  ProviderSource createDynamicInjectionSource(
+    ProvidersNode providersNode,
+    ProviderSource source,
+    CompileTokenMetadata token,
+    bool optional,
+  ) {
     // If request was made on a service resolving to a private directive,
     // use requested dependency to call injectorGet instead of directive
     // that redirects using useExisting type provider.
     var value = source?.build();
-    value ??= injectFromViewParentInjector(view, token, optional);
+    var hasDynamicDependencies = false;
+    if (value == null) {
+      value = injectFromViewParentInjector(view, token, optional);
+      hasDynamicDependencies = true;
+    }
     CompileElement currElement = this;
     while (currElement != null) {
       if (currElement._providers == providersNode) break;
@@ -432,7 +440,11 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     }
     var viewRelativeExpression =
         getPropertyInView(value, view, currElement.view);
-    return LiteralValueSource(token, viewRelativeExpression);
+    return LiteralValueSource(
+      token,
+      viewRelativeExpression,
+      hasDynamicDependencies: hasDynamicDependencies,
+    );
   }
 
   List<o.Expression> getProviderTokens() {
