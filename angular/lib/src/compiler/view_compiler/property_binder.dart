@@ -5,8 +5,6 @@ import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';
-import 'package:angular/src/source_gen/common/names.dart'
-    show toTemplateExtension;
 import 'package:source_span/source_span.dart';
 
 import "../compile_metadata.dart";
@@ -25,13 +23,11 @@ import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'ir/view_storage.dart';
-import 'view_builder.dart' show buildUpdaterFunctionName;
 import 'view_compiler_utils.dart'
     show
         createFlatArray,
         createSetAttributeParams,
         namespaceUris,
-        outlinerDeprecated,
         unwrapDirective,
         unwrapDirectiveInstance;
 import 'view_name_resolver.dart';
@@ -500,19 +496,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
             .toStmt());
       }
       continue;
-    } else if (isStatefulComp && outlinerDeprecated) {
-      // Write code for components that extend ComponentState:
-      // Since we are not going to call markAsCheckOnce anymore we need to
-      // generate a call to property updater that will invoke setState() on the
-      // component if value has changed.
-      String updaterFunctionName = buildUpdaterFunctionName(
-          directiveAst.directive.type.name, input.directiveName);
-      var updateFuncExpr = o.importExpr(CompileIdentifierMetadata(
-          name: updaterFunctionName,
-          moduleUrl: toTemplateExtension(directive.identifier.moduleUrl),
-          prefix: directive.identifier.prefix));
-      statements.add(updateFuncExpr
-          .callFn([directiveInstance, fieldExpr, currValExpr]).toStmt());
     } else {
       // Set property on directiveInstance to new value.
       statements.add(directiveInstance
