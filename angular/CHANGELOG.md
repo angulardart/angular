@@ -8,7 +8,7 @@
 
     ```html
     <!-- Before (Both are identical) -->
-    <template @deferred [ngIf]="showArea>
+    <template @deferred [ngIf]="showArea">
       <expensive-comp></expensive-comp>
     </template>
 
