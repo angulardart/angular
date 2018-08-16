@@ -286,7 +286,11 @@ class FactoryProviderSource extends ProviderSource {
   o.Expression build() {
     List<o.Expression> paramExpressions = [];
     for (ProviderSource s in _parameters) paramExpressions.add(s.build());
-    return o.importExpr(_factory).callFn(paramExpressions);
+    final create = o.importExpr(_factory).callFn(paramExpressions);
+    if (hasDynamicDependencies) {
+      return debugInjectorWrap(createDiTokenExpression(token), create);
+    }
+    return create;
   }
 
   @override
@@ -317,7 +321,7 @@ class ClassProviderSource extends ProviderSource {
       genericTypes: _typeArguments,
     );
     if (hasDynamicDependencies) {
-      return debugInjectorWrap(clazz, create);
+      return debugInjectorWrap(createDiTokenExpression(token), create);
     }
     return create;
   }
