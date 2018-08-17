@@ -196,7 +196,11 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, String> {
         );
       } catch (e) {
         exceptionHandler.handle(e);
-        return astNode;
+        if (astNode is EmbeddedTemplateAst) {
+          return astNode;
+        }
+        // We parsed this as something unexpected, and should not continue.
+        rethrow;
       }
       if (micro != null) {
         propertiesToAdd.addAll(micro.properties);
