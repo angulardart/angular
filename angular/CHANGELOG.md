@@ -63,8 +63,12 @@
     `*ngFor="let item of items;"` - note the trailing `;`), throws a proper
     unexpected token error instead of a confusing type error during recovery.
 
+*   [#1500][]: Configuring a provider with `FactoryProvider(Foo, null)` is now
+    a compile-time error, instead of a misleading runtime error.
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
+[#1500]: https://github.com/dart-lang/angular/issues/1500
 [#1502]: https://github.com/dart-lang/angular/issues/1502
 [#1538]: https://github.com/dart-lang/angular/issues/1538
 [#1539]: https://github.com/dart-lang/angular/issues/1539
