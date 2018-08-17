@@ -55,6 +55,60 @@ void main() {
       expect(fixture.assertOnlyInstance.staticControl.valid, false);
     });
   });
+
+  group('PatternValidator', () {
+    NgTestFixture<DynamicPatternComponent> fixture;
+
+    setUp(() async {
+      var testBed = NgTestBed.forComponent(ng.DynamicPatternComponentNgFactory);
+      fixture = await testBed.create();
+    });
+
+    tearDown(() => disposeAnyRunningTest());
+
+    Future<void> updatePattern({String pattern}) async {
+      await fixture.update((cmp) => cmp.pattern = pattern);
+      // We have to do this in a separate turn, so that new required value has
+      // propagated.
+      await fixture
+          .update((cmp) => cmp.dynamicControl.control.updateValueAndValidity());
+    }
+
+    bool dynamicControlValid() =>
+        fixture.assertOnlyInstance.dynamicControl.valid;
+
+    test('can be triggered dynamically', () async {
+      expect(dynamicControlValid(), true);
+
+      await updatePattern(pattern: '[A-Za-z]*');
+
+      expect(dynamicControlValid(), true);
+
+      await fixture.update((cmp) => cmp.value = '123');
+
+      expect(dynamicControlValid(), false);
+
+      await fixture.update((cmp) => cmp.value = 'abc');
+
+      expect(dynamicControlValid(), true);
+
+      await updatePattern(pattern: '[1-9]*');
+
+      expect(dynamicControlValid(), false);
+
+      await updatePattern(pattern: '[a-z]*');
+
+      expect(dynamicControlValid(), true);
+
+      await fixture.update((cmp) => cmp.value = '123');
+
+      expect(dynamicControlValid(), false);
+    });
+
+    test('can be set statically', () {
+      expect(fixture.assertOnlyInstance.staticControl.valid, true);
+    });
+  });
 }
 
 @Component(
@@ -78,6 +132,31 @@ void main() {
 class DynamicRequiredComponent {
   String value = '';
   bool required = false;
+
+  @ViewChild('dynamicControl')
+  NgControl dynamicControl;
+
+  @ViewChild('staticControl')
+  NgControl staticControl;
+}
+
+@Component(selector: 'dynamic-pattern', template: '''
+<form ngForm>
+  <input
+      [(ngModel)]="value"
+      ngControl="dynamic"
+      #dynamicControl="ngForm"
+      [pattern]="pattern" />
+  <input
+      [(ngModel)]="value"
+      ngControl="static"
+      #staticControl="ngForm"
+      pattern="[A-Za-z]" />
+</form>
+''', directives: [formDirectives])
+class DynamicPatternComponent {
+  String value = '';
+  String pattern = '';
 
   @ViewChild('dynamicControl')
   NgControl dynamicControl;
