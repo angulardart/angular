@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:angular_ast/angular_ast.dart';
 import 'package:angular_ast/src/ast.dart';
 import 'package:angular_ast/src/expression/micro/ast.dart';
 import 'package:angular_ast/src/expression/micro/parser.dart';
@@ -122,6 +123,13 @@ void main() {
           ),
         ],
       ),
+    );
+  });
+
+  test('should throw a parser error on trailing semi-colon', () {
+    expect(
+      () => parse('ngFor', 'let item of items;', 0),
+      throwsA(TypeMatcher<AngularParserException>()),
     );
   });
 }

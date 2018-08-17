@@ -5,6 +5,8 @@
 
 *   Ignores right-trailing spaces when parsing micro expression let-assignments.
 
+*   When parsing a failed micro expression (i.e. `*ngFor`), avoids a type error.
+
 ## 0.5.6
 
 *   Maintenance release to support Dart 2.0 stable.
