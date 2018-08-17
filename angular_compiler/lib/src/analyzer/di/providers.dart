@@ -36,7 +36,6 @@ class ProviderReader {
     }
     if (isType(o)) {
       // Represents "Foo", which is supported short-hand for "Provider(Foo)".
-      // TODO(matanl): Validate that Foo has @Injectable() when flag is set.
       return _parseType(o);
     }
     if (!isProvider(o)) {
@@ -50,7 +49,7 @@ class ProviderReader {
     final reader = ConstantReader(o);
     final value = reader.read('token');
     if (value.isNull) {
-      throw new NullTokenException(o);
+      throw NullTokenException(o);
     }
     final token = _tokenReader.parseTokenObject(value.objectValue);
     final useClass = reader.read('useClass');
@@ -81,6 +80,11 @@ class ProviderReader {
     }
     // Base case: const Provider(Foo) with no fields set.
     if (token is TypeTokenElement) {
+      // Ensure this isn't a FactoryProvider with a null function:
+      // https://github.com/dart-lang/angular/issues/1500
+      if (!$Provider.isExactlyType(o.type)) {
+        throw NullFactoryException(o);
+      }
       return _parseUseClass(token, o, reader.read('token').typeValue.element);
     }
     throw UnsupportedError('Could not parse provider: $o.');
@@ -337,4 +341,12 @@ class NullTokenException implements Exception {
   final DartObject constant;
 
   const NullTokenException(this.constant);
+}
+
+/// Thrown when a value of `null` is read for `FactoryProvider`.
+class NullFactoryException implements Exception {
+  /// Constant whose `.token` property was resolved to `null`.
+  final DartObject constant;
+
+  const NullFactoryException(this.constant);
 }
