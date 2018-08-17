@@ -4,7 +4,6 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../../../cli.dart';
 import '../common.dart';
 import '../link.dart';
 import '../types.dart';
