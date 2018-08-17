@@ -21,7 +21,9 @@ abstract class View<T> {
 
   /// Destroys this view and disposes of any resources or child views.
   @mustCallSuper
-  void destroy() {}
+  void destroy() {
+
+  }
 }
 
 /// Base generated view for views that have a parent [ComponentView].
@@ -63,13 +65,13 @@ abstract class ComponentView<T> extends ChildView<T> {
   @mustCallSuper
   @override
   void destroy() {
-    destroyChildViews();
+    destroyViewChildren();
     super.destroy();
   }
 
   @mustCallSuper
   @protected
-  void destroyChildViews() {
+  void destroyViewChildren() {
     for (final childView in childViews) {
       childView.destroy();
     }
