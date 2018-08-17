@@ -92,7 +92,14 @@ class CompileTypeMetadataVisitor
             'found $provider');
         return null;
       }
-      var metadata = visitClassElement(element as ClassElement);
+      final clazz = element as ClassElement;
+      if (clazz.isAbstract) {
+        BuildError.throwForElement(
+          clazz,
+          'Cannot create a new instance of an abstract class',
+        );
+      }
+      final metadata = visitClassElement(clazz);
       if (metadata == null) {
         // Was skipped.
         return null;
@@ -134,20 +141,34 @@ class CompileTypeMetadataVisitor
     if (!dart_objects.isNull(maybeUseClass)) {
       var type = maybeUseClass.toTypeValue();
       if (type is InterfaceType) {
+        if (type.element.isAbstract) {
+          BuildError.throwForElement(
+            type.element,
+            'Cannot create a new instance of an abstract class',
+          );
+        }
         return _getCompileTypeMetadata(
           type.element,
           enforceClassCanBeCreated: true,
         );
       } else {
-        throwFailure(
-            'Provider.useClass can only be used with a class, but found '
-            '${type.element}');
+        BuildError.throwForElement(
+          type.element,
+          'Provider.useClass can only be used with a class',
+        );
       }
     } else if (_hasNoUseValue(provider) && _notAnythingElse(provider)) {
       final typeValue = token.toTypeValue();
       if (typeValue != null && !typeValue.isDartCoreNull) {
+        final clazz = typeValue.element as ClassElement;
+        if (clazz.isAbstract) {
+          BuildError.throwForElement(
+            clazz,
+            'Cannot create a new instance of an abstract class',
+          );
+        }
         return _getCompileTypeMetadata(
-          typeValue.element as ClassElement,
+          clazz,
           enforceClassCanBeCreated: true,
         );
       }
