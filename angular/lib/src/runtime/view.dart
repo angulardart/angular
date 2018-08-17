@@ -9,6 +9,8 @@ import 'dart:html' show HtmlElement;
 
 import 'package:meta/meta.dart' show mustCallSuper, protected;
 
+import '../core/linker/view_container.dart';
+import '../di/injector/injector.dart';
 import 'optimizations.dart';
 
 /// Base generated view for components and templates.
@@ -16,6 +18,10 @@ abstract class View<T> {
   /// Runs change detection, updating the view and children based on context.
   @mustCallSuper
   void detectChanges() {}
+
+  /// Destroys this view and disposes of any resources or child views.
+  @mustCallSuper
+  void destroy() {}
 }
 
 /// Base generated view for views that have a parent [ComponentView].
@@ -40,14 +46,34 @@ abstract class ChildView<T> extends View<T> {
 /// class _ComponentView$A extends ComponentView<A> {}
 /// ```
 abstract class ComponentView<T> extends ChildView<T> {
+  /// Child views (embedded or components).
+  @protected
+  final List<View<void>> childViews;
+
   /// Root element used as the root element for the component view.
   @protected
   final HtmlElement rootElement;
 
   ComponentView(
     T context,
+    this.childViews,
     this.rootElement,
   ) : super(context);
+
+  @mustCallSuper
+  @override
+  void destroy() {
+    destroyChildViews();
+    super.destroy();
+  }
+
+  @mustCallSuper
+  @protected
+  void destroyChildViews() {
+    for (final childView in childViews) {
+      childView.destroy();
+    }
+  }
 }
 
 /// Nested embedded view for `<template>` views inside of a component [T].
@@ -80,7 +106,9 @@ abstract class EmbeddedView<T> extends ChildView<T> {
   EmbeddedView(
     T context,
     this.componentView,
-  ) : super(context);
+  ) : super(
+          context,
+        );
 
   /// Gets access to the locally declared variable [name].
   @protected
@@ -89,6 +117,28 @@ abstract class EmbeddedView<T> extends ChildView<T> {
   /// Sets the locally declared variable [name] to [value].
   @protected
   void setLocal<S>(String name, S value) => _locals[name] = value;
+}
+
+/// Nested [EmbeddedView] that also contains a [ViewContainer].
+abstract class ContainerView<T> extends EmbeddedView<T> {
+  @protected
+  final ViewContainer viewContainer;
+
+  ContainerView(
+    T context,
+    ComponentView<T> componentView,
+    this.viewContainer,
+  ) : super(
+          context,
+          componentView,
+        );
+
+  @mustCallSuper
+  @override
+  void destroy() {
+    viewContainer.destroyNestedViews();
+    super.destroy();
+  }
 }
 
 /// Root application view for dynamically creating a component class [T].
@@ -113,7 +163,12 @@ abstract class HostView<T> extends View<T> {
   @protected
   final ComponentView<T> componentView;
 
+  /// Context where the hosted view was created within.
+  @protected
+  final Injector hostInjector;
+
   HostView(
     this.componentView,
+    this.hostInjector,
   );
 }
