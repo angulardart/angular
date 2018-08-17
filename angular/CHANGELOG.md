@@ -59,8 +59,13 @@
     message was only `Could not find provider for D` in these cases, which was
     often not enough information to debug easily.
 
+*   [#1502][]: When parsing an invalid template micro expression (i.e.
+    `*ngFor="let item of items;"` - note the trailing `;`), throws a proper
+    unexpected token error instead of a confusing type error during recovery.
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
+[#1502]: https://github.com/dart-lang/angular/issues/1502
 [#1538]: https://github.com/dart-lang/angular/issues/1538
 [#1539]: https://github.com/dart-lang/angular/issues/1539
 [#1540]: https://github.com/dart-lang/angular/issues/1540
