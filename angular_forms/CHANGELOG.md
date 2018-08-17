@@ -1,3 +1,9 @@
+### New Features
+
+*   `PatternValidator` now has a `pattern` input. This allows the `pattern`
+    property to be set dynamically. Previously, this could only be specified
+    statically at compile time.
+
 ## 2.0.0
 
 ### New Features

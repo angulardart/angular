@@ -172,11 +172,11 @@ class MaxLengthValidator implements Validator {
   ],
 )
 class PatternValidator implements Validator {
-  final ValidatorFn _validator;
-
-  PatternValidator(@Attribute('pattern') String pattern)
-      : _validator = Validators.pattern(pattern);
+  @HostBinding('attr.pattern')
+  @Input()
+  String pattern;
 
   @override
-  Map<String, dynamic> validate(AbstractControl c) => _validator(c);
+  Map<String, dynamic> validate(AbstractControl c) =>
+      Validators.pattern(pattern)(c);
 }
