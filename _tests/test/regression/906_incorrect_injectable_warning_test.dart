@@ -2,22 +2,22 @@
 import 'package:_tests/compiler.dart';
 import 'package:test/test.dart';
 
+// See https://github.com/dart-lang/angular/issues/906.
 void main() {
   test('should not warn about @Injectable for classes not injected', () async {
-    // See https://github.com/dart-lang/angular/issues/906.
     await compilesNormally("""
       import '$ngImport';
 
       abstract class JustAnInterface {}
 
-      const providesAnInterface = const ExistingProvider<JustAnInterface>(
+      const providesAnInterface = ExistingProvider<JustAnInterface>(
         JustAnInterface,
         ConcreteClass,
       );
 
       @Component(
         selector: 'comp',
-        providers: const [
+        providers: [
           providesAnInterface,
         ],
         template: '',
@@ -31,7 +31,7 @@ void main() {
     """);
   });
 
-  test('should still warn when useClass: is used with an interface', () async {
+  test('should still fail when useClass: is used with an interface', () async {
     await compilesExpecting("""
       import '$ngImport';
 
@@ -39,18 +39,18 @@ void main() {
 
       @Component(
         selector: 'comp',
-        provides: const [
-          const Provider(JustAnInterface, useClass: JustAnInterface),
+        providers: [
+          ClassProvider(JustAnInterface, JustAnInterface),
         ],
         template: '',
       )
       class Comp {}
-    """, warnings: [
-      contains('Found a constructor for an abstract class JustAnInterface'),
+    """, errors: [
+      contains('Cannot create a new instance of an abstract class'),
     ]);
-  }, skip: 'This fails both before AND after the fix for #906. Fixing after.');
+  });
 
-  test('should still warn when using a type implicitly as useClass:', () async {
+  test('should still fail when using a type implicitly as useClass:', () async {
     await compilesExpecting("""
       import '$ngImport';
 
@@ -58,14 +58,14 @@ void main() {
 
       @Component(
         selector: 'comp',
-        provides: const [
+        providers: [
           JustAnInterface,
         ],
         template: '',
       )
       class Comp {}
-    """, warnings: [
-      contains('Found a constructor for an abstract class JustAnInterface'),
+    """, errors: [
+      contains('Cannot create a new instance of an abstract class'),
     ]);
-  }, skip: 'This fails both before AND after the fix for #906. Fixing after.');
+  });
 }

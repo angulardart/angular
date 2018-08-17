@@ -66,6 +66,23 @@ class DirectiveVisitor {
     BuildError.throwForElement(element, message);
   }
 
+  static void _assertValidArgs(Element element, DartObject annotation) {
+    const message = '@HostListener supports a maximum of one required argument';
+    if (element is MethodElement) {
+      if (element.parameters
+              .where((p) => p.isPositional && !p.isOptional)
+              .length >
+          1) {
+        BuildError.throwForElement(element, message);
+      }
+      final args = annotation.getField('args');
+      final length = args != null ? args.toListValue().length : 0;
+      if (length > 1) {
+        BuildError.throwForElement(element, message);
+      }
+    }
+  }
+
   /// Visits an `@Directive`-annotated class [element].
   ///
   /// For class members that are annotated, calls, in kind:
@@ -109,8 +126,9 @@ class DirectiveVisitor {
 
   void _visitHostListener(Element member, DartObject annotation) {
     _assertPublic(member, '@HostListener must be on a public member');
-    _assertMethod(member, '@HostListener must be on a method');
-    _assertInstance(member, '@HostListener must be on a non-static member');
+    _assertMethod(member, '@HostListener must be on an instance method');
+    _assertInstance(member, '@HostListener must be on an instance method');
+    _assertValidArgs(member, annotation);
     onHostListener(member, annotation);
   }
 }

@@ -17,7 +17,7 @@ void main() {
           String methodNotValid() => '...';
         }
       """, errors: [
-        contains('@HostBinding must be used on a getter or field'),
+        contains('@HostBinding must be on a field or getter'),
       ]);
     });
 
@@ -34,10 +34,10 @@ void main() {
           set setterNotValid(_) {}
         }
       """, errors: [
-        contains('@HostBinding must be used on a getter or field'),
+        contains('@HostBinding must be on a field or getter'),
       ]);
     });
-  }, skip: 'Not yet supported');
+  });
 
   group('should fail on @HostListener', () {
     test('on a getter', () {
@@ -53,7 +53,7 @@ void main() {
           String get onClick => '';
         }
       """, errors: [
-        contains('@HostListener must be used on an instance method'),
+        contains('@HostListener must be on an instance method'),
       ]);
     });
 
@@ -70,7 +70,7 @@ void main() {
           set onClick(_) {}
         }
       """, errors: [
-        contains('@HostListener must be used on an instance method'),
+        contains('@HostListener must be on an instance method'),
       ]);
     });
 
@@ -87,7 +87,7 @@ void main() {
           static void onClick() {}
         }
       """, errors: [
-        contains('@HostListener must be used on an instance method'),
+        contains('@HostListener must be on an instance method'),
       ]);
     });
 
@@ -104,7 +104,7 @@ void main() {
           void onClick(arg1, arg2) {}
         }
       """, errors: [
-        contains('@HostListener can only infer a single argument, but 2 found'),
+        contains('@HostListener supports a maximum of one required argument'),
       ]);
     });
 
@@ -121,8 +121,8 @@ void main() {
           void onClick(arg1) {}
         }
       """, errors: [
-        contains('@HostListener expected 2 arguments, but 1 found'),
+        contains('@HostListener supports a maximum of one required argument'),
       ]);
     });
-  }, skip: 'Not yet supported');
+  });
 }
