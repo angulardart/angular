@@ -22,16 +22,16 @@ class _Injector$doGenerate extends _i2.HierarchicalInjector {
   _i3.Example _field0;
 
   _i3.Example _getExample$0() => _field0 ??= new _i3.Example();
-  String _getString$1() => 'dynamic';
-  String _getString$2() => 'String';
+  String _getString$1() => r'dynamic';
+  String _getString$2() => r'String';
   dynamic _getdynamic$3() => const _i3.Example();
   dynamic _getdynamic$4() => _i3.instanceOfExamplePrime;
   dynamic _getdynamic$5() => _i3.ExampleTheta.instance;
   dynamic _getdynamic$6() => const [const _i3.Example(), _i3.instanceOfExamplePrime, _i3.ExampleTheta.instance];
-  dynamic _getdynamic$7() => const {'instanceOfExample': const _i3.Example(), _i3.instanceOfExamplePrime: 'instanceOfExamplePrime'};
-  dynamic _getdynamic$8() => 'ABC123';
-  String _getString$9() => 'A';
-  String _getString$10() => 'B';
+  dynamic _getdynamic$7() => const {r'instanceOfExample': const _i3.Example(), _i3.instanceOfExamplePrime: r'instanceOfExamplePrime'};
+  dynamic _getdynamic$8() => r'ABC123';
+  String _getString$9() => r'A';
+  String _getString$10() => r'B';
   _i1.Injector _getInjector$11() => this;
   @override
   Object injectFromSelfOptional(Object token, [Object orElse = _i1.throwIfNotFound]) {
