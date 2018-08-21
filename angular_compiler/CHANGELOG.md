@@ -2,6 +2,8 @@
 
 *   Catches an (invalid) `null` value of the function for `FactoryProvider`.
 
+*   Emits all strings for `@GeneratedInjector` as raw (`r'$5.00'`).
+
 ## 0.4.0
 
 ### New Features

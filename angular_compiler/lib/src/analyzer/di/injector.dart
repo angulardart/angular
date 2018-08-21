@@ -319,6 +319,11 @@ class InjectorReader {
       return _reviveMap(provider, reader.mapValue);
     }
     if (reader.isLiteral) {
+      // Always emit strings as raw in order to emit valid code.
+      // See https://github.com/dart-lang/angular/issues/1591.
+      if (reader.isString) {
+        return literalString(reader.literalValue, raw: true);
+      }
       return literal(reader.literalValue);
     }
     final revive = reader.revive();
