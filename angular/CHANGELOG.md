@@ -66,6 +66,10 @@
 *   [#1500][]: Configuring a provider with `FactoryProvider(Foo, null)` is now
     a compile-time error, instead of a misleading runtime error.
 
+*   [#1592][]: Using `@GeneratedInjector` with a `ValueProvider` bound to a
+    `String` instance that expects a _raw_ string (i.e `r'$5.00'`) no longer
+    generates invalid code. Now _all_ strings are emitted as _raw_.
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#1500]: https://github.com/dart-lang/angular/issues/1500
@@ -75,6 +79,7 @@
 [#1540]: https://github.com/dart-lang/angular/issues/1540
 [#1558]: https://github.com/dart-lang/angular/issues/1558
 [#1570]: https://github.com/dart-lang/angular/issues/1570
+[#1592]: https://github.com/dart-lang/angular/pull/1592
 
 ### Other improvements
 
