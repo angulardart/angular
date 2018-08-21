@@ -64,6 +64,11 @@ void main() {
       StringIdentityFn fn = injector.get(stringIdentityToken);
       expect(fn('a'), 'a');
     });
+
+    test('raw string', () {
+      String raw = injector.get(stringRawToken);
+      expect(raw, r'$5.00 USD');
+    });
   });
 }
 
@@ -106,6 +111,10 @@ const stringIdentityToken = OpaqueToken<StringIdentityFn>();
     stringIdentityToken,
     StaticClass.staticMethod,
   ),
+  ValueProvider.forToken(
+    stringRawToken,
+    r'$5.00 USD',
+  )
 ])
 final InjectorFactory example = ng.example$Injector;
 
@@ -154,3 +163,5 @@ int topLevelMethod(int a) => a;
 class StaticClass {
   static String staticMethod(String a) => a;
 }
+
+const stringRawToken = OpaqueToken<String>('stringRawToken');
