@@ -148,13 +148,15 @@ class AstTemplateParser implements TemplateParser {
       CompileDirectiveMetadata compMeta,
       List<ast.TemplateAst> filteredAst,
       AstExceptionHandler exceptionHandler) {
-    final visitor = _BindDirectivesVisitor(flags.i18nEnabled);
-    final context = _ParseContext.forRoot(TemplateContext(
-        parser: parser,
-        schemaRegistry: schemaRegistry,
-        directives: removeDuplicates(directives),
-        exports: compMeta.exports,
-        exceptionHandler: exceptionHandler));
+    final visitor = _BindDirectivesVisitor();
+    final templateContext = TemplateContext(
+      parser: parser,
+      schemaRegistry: schemaRegistry,
+      directives: removeDuplicates(directives),
+      exports: compMeta.exports,
+      exceptionHandler: exceptionHandler,
+    );
+    final context = _ParseContext.forRoot(templateContext, flags.i18nEnabled);
     return visitor._visitAll(filteredAst, context);
   }
 
@@ -206,26 +208,19 @@ class AstTemplateParser implements TemplateParser {
 /// compiler types, which includes transformation of internationalized nodes.
 class _BindDirectivesVisitor
     implements ast.TemplateAstVisitor<ng.TemplateAst, _ParseContext> {
-  /// Whether internationalization of `@i18n`-annotated nodes is supported.
-  final bool i18nEnabled;
-
   /// A count of how many <ng-content> elements have been seen so far.
   ///
   /// This is necessary so that we can assign a unique index to each one as we
   /// visit it.
   int ngContentCount = 0;
 
-  _BindDirectivesVisitor(this.i18nEnabled);
-
   @override
   ng.TemplateAst visitElement(ast.ElementAst astNode,
       [_ParseContext parentContext]) {
-    final elementContext =
-        _ParseContext.forElement(astNode, parentContext.templateContext);
-    final i18nMetadata =
-        _parseI18nMetadata(astNode.annotations, parentContext.templateContext);
+    final elementContext = _ParseContext.forElement(astNode, parentContext);
     final attributes = <ast.AttributeAst>[];
     final i18nAttributes = <ng.I18nAttrAst>[];
+    final i18nMetadata = elementContext.i18nMetadata;
     for (final attribute in astNode.attributes) {
       if (i18nMetadata.forAttributes.containsKey(attribute.name)) {
         final metadata = i18nMetadata.forAttributes[attribute.name];
@@ -252,7 +247,7 @@ class _BindDirectivesVisitor
         elementContext.boundDirectives,
         [] /* providers */,
         null /* elementProviderUsage */,
-        _visitChildren(astNode, i18nMetadata.forChildren, elementContext),
+        _visitChildren(astNode, elementContext),
         _findNgContentIndexForElement(astNode, parentContext),
         astNode.sourceSpan);
   }
@@ -306,11 +301,10 @@ class _BindDirectivesVisitor
 
   @override
   ng.TemplateAst visitContainer(ast.ContainerAst astNode,
-      [_ParseContext context]) {
-    final i18nMetadata =
-        _parseI18nMetadata(astNode.annotations, context.templateContext);
+      [_ParseContext parentContext]) {
+    final containerContext = _ParseContext.forContainer(astNode, parentContext);
     return ng.NgContainerAst(
-      _visitChildren(astNode, i18nMetadata.forChildren, context),
+      _visitChildren(astNode, containerContext),
       astNode.sourceSpan,
     );
   }
@@ -318,12 +312,7 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitEmbeddedTemplate(ast.EmbeddedTemplateAst astNode,
       [_ParseContext parentContext]) {
-    final embeddedContext =
-        _ParseContext.forTemplate(astNode, parentContext.templateContext);
-    // Template validation ensures there are no internationalized attributes, so
-    // we don't bother checking for them here.
-    final i18nMetadata =
-        _parseI18nMetadata(astNode.annotations, parentContext.templateContext);
+    final embeddedContext = _ParseContext.forTemplate(astNode, parentContext);
     _visitProperties(astNode.properties, astNode.attributes, embeddedContext);
     return ng.EmbeddedTemplateAst(
         _visitAll(astNode.attributes, embeddedContext),
@@ -333,7 +322,7 @@ class _BindDirectivesVisitor
         embeddedContext.boundDirectives,
         [] /* providers */,
         null /* elementProviderUsage */,
-        _visitChildren(astNode, i18nMetadata.forChildren, embeddedContext),
+        _visitChildren(astNode, embeddedContext),
         _findNgContentIndexForTemplate(astNode, parentContext),
         astNode.sourceSpan,
         hasDeferredComponent: astNode.hasDeferredComponent);
@@ -506,17 +495,6 @@ class _BindDirectivesVisitor
     throw UnimplementedError('Don\'t know how to handle annotations.');
   }
 
-  /// A helper to handle conditionally parsing i18n metadata.
-  ///
-  /// Returns empty metadata when i18n is disabled.
-  I18nMetadataBundle _parseI18nMetadata(
-    List<ast.AnnotationAst> annotations,
-    TemplateContext context,
-  ) =>
-      i18nEnabled
-          ? parseI18nMetadata(annotations, context)
-          : I18nMetadataBundle.empty();
-
   List<T> _visitAll<T extends ng.TemplateAst>(
       List<ast.TemplateAst> astNodes, _ParseContext context) {
     final results = <T>[];
@@ -530,18 +508,14 @@ class _BindDirectivesVisitor
   }
 
   /// Visits [children], converting them for internationalization if necessary.
-  ///
-  /// The [children] are internationalized if their parent's [i18nMetadata] is
-  /// non-null.
   List<ng.TemplateAst> _visitChildren(
     ast.StandaloneTemplateAst parent,
-    I18nMetadata i18nMetadata,
     _ParseContext context,
   ) {
-    if (i18nMetadata != null) {
+    if (context.i18nMetadata.forChildren != null) {
       return internationalize(
         parent,
-        i18nMetadata,
+        context.i18nMetadata.forChildren,
         context.findNgContentIndex(_textCssSelector),
         context.templateContext,
       );
@@ -554,6 +528,9 @@ class _ParseContext {
   final TemplateContext templateContext;
   final String elementName;
   final List<ng.DirectiveAst> boundDirectives;
+  // TODO(leonsenft): remove when @i18n is enabled by default.
+  final bool i18nEnabled;
+  final I18nMetadataBundle i18nMetadata;
   final bool isTemplate;
   final SelectorMatcher _ngContentIndexMatcher;
   final int _wildcardNgContentIndex;
@@ -562,19 +539,36 @@ class _ParseContext {
       this.templateContext,
       this.elementName,
       this.boundDirectives,
+      this.i18nEnabled,
+      this.i18nMetadata,
       this.isTemplate,
       this._ngContentIndexMatcher,
       this._wildcardNgContentIndex);
 
-  _ParseContext.forRoot(this.templateContext)
+  _ParseContext.forRoot(this.templateContext, this.i18nEnabled)
       : elementName = '',
         boundDirectives = const [],
+        i18nMetadata = null,
         isTemplate = false,
         _ngContentIndexMatcher = null,
         _wildcardNgContentIndex = null;
 
+  factory _ParseContext.forContainer(
+      ast.ContainerAst element, _ParseContext parent) {
+    return _ParseContext._(
+        parent.templateContext,
+        '',
+        const [],
+        parent.i18nEnabled,
+        _maybeParseI18nMetadata(element.annotations, parent),
+        false,
+        parent._ngContentIndexMatcher,
+        parent._wildcardNgContentIndex);
+  }
+
   factory _ParseContext.forElement(
-      ast.ElementAst element, TemplateContext templateContext) {
+      ast.ElementAst element, _ParseContext parent) {
+    var templateContext = parent.templateContext;
     var boundDirectives = _toAst(
         _matchElementDirectives(templateContext.directives, element),
         element.sourceSpan,
@@ -586,13 +580,16 @@ class _ParseContext {
         templateContext,
         element.name,
         boundDirectives,
+        parent.i18nEnabled,
+        _maybeParseI18nMetadata(element.annotations, parent),
         false,
         _createSelector(firstComponent),
         _findWildcardIndex(firstComponent));
   }
 
   factory _ParseContext.forTemplate(
-      ast.EmbeddedTemplateAst template, TemplateContext templateContext) {
+      ast.EmbeddedTemplateAst template, _ParseContext parent) {
+    var templateContext = parent.templateContext;
     var boundDirectives = _toAst(
         _matchTemplateDirectives(templateContext.directives, template),
         template.sourceSpan,
@@ -604,6 +601,8 @@ class _ParseContext {
         templateContext,
         _templateElement,
         boundDirectives,
+        parent.i18nEnabled,
+        _maybeParseI18nMetadata(template.annotations, parent),
         true,
         _createSelector(firstComponent),
         _findWildcardIndex(firstComponent));
@@ -713,6 +712,17 @@ class _ParseContext {
     // We return the directives in the same order that they are present in the
     // Component, not the order that they match in the html.
     return directives.where(matchedDirectives.contains).toList();
+  }
+
+  // TODO(leonsenft): remove when @i18n is enabled by default.
+  /// A helper to handle conditionally parsing i18n metadata.
+  ///
+  /// Returns empty metadata when i18n is disabled.
+  static I18nMetadataBundle _maybeParseI18nMetadata(
+      List<ast.AnnotationAst> annotations, _ParseContext parent) {
+    return parent.i18nEnabled
+        ? parseI18nMetadata(annotations, parent.templateContext)
+        : I18nMetadataBundle.empty();
   }
 
   static SelectorMatcher _selectorMatcher(
