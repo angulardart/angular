@@ -47,7 +47,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     addShimC(_el_0);
     _ChildDirective_0_5 = ChildDirectiveNgCd(import1.ChildDirective(_el_0, ElementRef(_el_0)));
     _DirectiveWithOutput_0_6 = import1.DirectiveWithOutput();
-    import2.Text _text_1 = import2.Text('Foo');
+    final _text_1 = import2.Text('Foo');
     _el_0.append(_text_1);
     _el_0.addEventListener('click', eventHandler1(_ChildDirective_0_5.instance.handleClick));
     _el_0.addEventListener('keypress', eventHandler1(_ChildDirective_0_5.instance.handleKeyPress));

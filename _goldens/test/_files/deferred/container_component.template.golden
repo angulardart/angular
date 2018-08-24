@@ -226,7 +226,6 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent3(AppV
 }
 
 class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponent> {
-  import4.DivElement _el_0;
   ViewContainer _appEl_1;
   void Function() _cancelDeferredLoad1;
   _ViewTestContainerComponent4(AppView<dynamic> parentView, int parentIndex) : super(import8.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -235,7 +234,7 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
   @override
   ComponentRef<import1.TestContainerComponent> build() {
     var doc = import4.document;
-    _el_0 = doc.createElement('div');
+    final _el_0 = doc.createElement('div');
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
@@ -310,7 +309,7 @@ class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponen
     _compView_0 = import5.viewFactory_DeferredChildComponentWithoutNgContent0(this, 0);
     _el_0 = _compView_0.rootEl;
     _DeferredChildComponentWithoutNgContent_0_5 = import6.DeferredChildComponentWithoutNgContent();
-    import4.Text _text_1 = import4.Text('Hello World');
+    final _text_1 = import4.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithoutNgContent_0_5, []);
     init0(_el_0);
     return null;
@@ -343,7 +342,7 @@ class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponen
     _compView_0 = import5.viewFactory_DeferredChildComponentWithNgContent0(this, 0);
     _el_0 = _compView_0.rootEl;
     _DeferredChildComponentWithNgContent_0_5 = import6.DeferredChildComponentWithNgContent();
-    import4.Text _text_1 = import4.Text('Hello World');
+    final _text_1 = import4.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithNgContent_0_5, [
       [_text_1]
     ]);

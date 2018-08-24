@@ -49,15 +49,15 @@ class ViewComp0 extends AppView<import1.Comp> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
-    import2.Text _text_1 = import2.Text(' ');
+    final _text_1 = import2.Text(' ');
     parentRenderNode.append(_text_1);
     _text_2 = import2.Text('');
     parentRenderNode.append(_text_2);
-    import2.Text _text_3 = import2.Text(' ');
+    final _text_3 = import2.Text(' ');
     parentRenderNode.append(_text_3);
     _text_4 = import2.Text('');
     parentRenderNode.append(_text_4);
-    import2.Text _text_5 = import2.Text(' ');
+    final _text_5 = import2.Text(' ');
     parentRenderNode.append(_text_5);
     _text_6 = import2.Text('');
     parentRenderNode.append(_text_6);
