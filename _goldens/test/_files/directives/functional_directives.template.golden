@@ -23,7 +23,6 @@ final List<dynamic> styles$AppComponent = const [];
 
 class ViewAppComponent0 extends AppView<import1.AppComponent> {
   import2.DivElement _el_0;
-  import2.DivElement _el_1;
   static RenderComponentType _renderType;
   ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('app');
@@ -37,7 +36,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
     createAttr(_el_0, 'generateText', '');
-    _el_1 = createDivAndAppend(doc, _el_0);
+    final _el_1 = createDivAndAppend(doc, _el_0);
     import1.generateTextDirective(_el_0, parentView.injectorGet(import1.TextService, viewData.parentIndex));
     init(const [], null);
     return null;

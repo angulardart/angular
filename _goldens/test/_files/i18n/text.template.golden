@@ -10,11 +10,11 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'text.dart' as import1;
-import 'dart:html' as import2;
-import 'package:intl/intl.dart' as import3;
+import 'package:intl/intl.dart' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import5;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import6;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
@@ -22,21 +22,20 @@ import 'package:angular/angular.dart';
 final List<dynamic> styles$I18nTextComponent = const [];
 
 class ViewI18nTextComponent0 extends AppView<import1.I18nTextComponent> {
-  import2.Element _el_0;
-  static final String _message_0 = import3.Intl.message('message', desc: 'description', meaning: 'meaning', skip: true);
+  static final String _message_0 = import2.Intl.message('message', desc: 'description', meaning: 'meaning', skip: true);
   static RenderComponentType _renderType;
-  ViewI18nTextComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('message');
+  ViewI18nTextComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import6.document.createElement('message');
     _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/i18n/text.dart' : null), ViewEncapsulation.None, styles$I18nTextComponent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.I18nTextComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'p', parentRenderNode);
-    import2.Text _text_1 = import2.Text(_message_0);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import6.document;
+    final _el_0 = createAndAppend(doc, 'p', parentRenderNode);
+    final _text_1 = import6.Text(_message_0);
     _el_0.append(_text_1);
     init(const [], null);
     return null;
@@ -52,7 +51,7 @@ final List<dynamic> styles$I18nTextComponentHost = const [];
 class _ViewI18nTextComponentHost0 extends AppView<import1.I18nTextComponent> {
   ViewI18nTextComponent0 _compView_0;
   import1.I18nTextComponent _I18nTextComponent_0_5;
-  _ViewI18nTextComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewI18nTextComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.I18nTextComponent> build() {
     _compView_0 = ViewI18nTextComponent0(this, 0);

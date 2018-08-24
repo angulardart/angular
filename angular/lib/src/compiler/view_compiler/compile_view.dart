@@ -114,10 +114,17 @@ class NodeReference {
         : o.variable(_name);
   }
 
-  o.Expression toWriteExpr(o.Expression value) {
+  o.Statement toWriteStmt(o.Expression value) {
     return _visibility == NodeReferenceVisibility.classPublic
-        ? o.WriteClassMemberExpr(_name, value)
-        : o.variable(_name).set(value);
+        ? o.WriteClassMemberExpr(_name, value).toStmt()
+        : o.variable(_name).set(value).toDeclStmt(null, [o.StmtModifier.Final]);
+  }
+
+  void allocate(CompileViewStorage storage,
+      {o.OutputType outputType, List<o.StmtModifier> modifiers}) {
+    if (_visibility == NodeReferenceVisibility.classPublic) {
+      storage.allocate(_name, outputType: outputType, modifiers: modifiers);
+    }
   }
 }
 
@@ -134,8 +141,13 @@ class AppViewReference {
     return o.ReadClassMemberExpr(_name);
   }
 
-  o.Expression toWriteExpr(o.Expression value) {
-    return o.WriteClassMemberExpr(_name, value);
+  o.Statement toWriteStmt(o.Expression value) {
+    return o.WriteClassMemberExpr(_name, value).toStmt();
+  }
+
+  void allocate(CompileViewStorage storage,
+      {o.OutputType outputType, List<o.StmtModifier> modifiers}) {
+    storage.allocate(_name, outputType: outputType, modifiers: modifiers);
   }
 }
 
@@ -559,20 +571,16 @@ class CompileView implements AppViewBuilder {
     if (isInlined) {
       renderNode = NodeReference.inlinedTextNode(
           parent, declarationElement.nodeIndex, nodeIndex);
-      storage.allocate(renderNode._name,
+      renderNode.allocate(storage,
           outputType: o.importType(Identifiers.HTML_TEXT_NODE),
           modifiers: const [o.StmtModifier.Private]);
-      _createMethod.addStmt(renderNode
-          .toWriteExpr(
-              o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text]))
-          .toStmt());
+      _createMethod.addStmt(renderNode.toWriteStmt(
+          o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text])));
     } else {
       renderNode = NodeReference.textNode(parent, nodeIndex);
       renderNode.lockVisibility(NodeReferenceVisibility.build);
-      _createMethod.addStmt(o.DeclareVarStmt(
-          renderNode._name,
-          o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text]),
-          o.importType(Identifiers.HTML_TEXT_NODE)));
+      _createMethod.addStmt(renderNode.toWriteStmt(
+          o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text])));
     }
     var parentRenderNodeExpr = _getParentRenderNode(parent);
     if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
@@ -589,7 +597,7 @@ class CompileView implements AppViewBuilder {
     // If Text field is bound, we need access to the renderNode beyond
     // build method and write reference to class member.
     NodeReference renderNode = NodeReference.textNode(parent, nodeIndex);
-    ViewStorageItem renderNodeItem = storage.allocate(renderNode._name,
+    renderNode.allocate(storage,
         outputType: o.importType(Identifiers.HTML_TEXT_NODE),
         modifiers: const [o.StmtModifier.Private]);
 
@@ -607,9 +615,8 @@ class CompileView implements AppViewBuilder {
         o.STRING_TYPE,
       );
     }
-    var createRenderNodeExpr = storage.buildWriteExpr(renderNodeItem,
-        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([initialText]));
-    _createMethod.addStmt(createRenderNodeExpr.toStmt());
+    _createMethod.addStmt(renderNode.toWriteStmt(
+        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([initialText])));
 
     if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
       // Write append code.
@@ -626,8 +633,7 @@ class CompileView implements AppViewBuilder {
     final generateDebugInfo = genConfig.genDebugInfo;
 
     if (!_isRootNodeOfHost(nodeIndex)) {
-      String name = (elementRef.toReadExpr() as o.ReadClassMemberExpr).name;
-      storage.allocate(name,
+      elementRef.allocate(storage,
           outputType: o.importType(identifierFromTagName(tagName)),
           modifiers: const [o.StmtModifier.Private]);
     }
@@ -667,13 +673,12 @@ class CompileView implements AppViewBuilder {
       }
       createParams.add(parent);
       createExpr = o.importExpr(createAndAppendMethod).callFn(createParams);
-      _createMethod.addStmt(elementRef.toWriteExpr(createExpr).toStmt());
+      _createMethod.addStmt(elementRef.toWriteStmt(createExpr));
     } else {
       // No parent node, just create element and assign.
       var createRenderNodeExpr = o.ReadVarExpr(docVarName)
           .callMethod('createElement', [o.literal(tagName)]);
-      _createMethod
-          .addStmt(elementRef.toWriteExpr(createRenderNodeExpr).toStmt());
+      _createMethod.addStmt(elementRef.toWriteStmt(createRenderNodeExpr));
     }
   }
 
@@ -692,16 +697,14 @@ class CompileView implements AppViewBuilder {
     }
 
     if (!_isRootNodeOfHost(nodeIndex)) {
-      String name = (elementRef.toReadExpr() as o.ReadClassMemberExpr).name;
-      storage.allocate(name,
+      elementRef.allocate(storage,
           outputType: o.importType(identifierFromTagName('$ns:$tagName')),
           modifiers: const [o.StmtModifier.Private]);
     }
     var createRenderNodeExpr = o
         .variable(docVarName)
         .callMethod('createElementNS', [o.literal(ns), o.literal(tagName)]);
-    _createMethod
-        .addStmt(elementRef.toWriteExpr(createRenderNodeExpr).toStmt());
+    _createMethod.addStmt(elementRef.toWriteStmt(createRenderNodeExpr));
     if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
       // Write code to append to parent node.
       _createMethod.addStmt(parentRenderNodeExpr
@@ -729,7 +732,7 @@ class CompileView implements AppViewBuilder {
         : identifierFromTagName(ast.name);
 
     if (!isHostRootView) {
-      storage.allocate(elementRef._name,
+      elementRef.allocate(storage,
           outputType: o.importType(elementType),
           modifiers: const [o.StmtModifier.Private]);
     }
@@ -746,7 +749,7 @@ class CompileView implements AppViewBuilder {
         ? o.importType(Identifiers.AppView)
         : o.importType(componentViewIdentifier, appViewTypeArguments);
 
-    storage.allocate(appViewRef._name, outputType: appViewType);
+    appViewRef.allocate(storage, outputType: appViewType);
 
     if (isDeferred) {
       // When deferred, we use AppView<dynamic> as type to store instance
@@ -790,22 +793,11 @@ class CompileView implements AppViewBuilder {
         : NodeReferenceVisibility.build;
     NodeReference renderNode =
         NodeReference.anchor(parent, nodeIndex, visibility);
-    if (topLevel) {
-      storage.allocate(renderNode._name,
-          outputType: o.importType(Identifiers.HTML_COMMENT_NODE));
-    }
+    renderNode.allocate(storage,
+        outputType: o.importType(Identifiers.HTML_COMMENT_NODE));
     o.Expression createAnchor =
         o.importExpr(Identifiers.createViewContainerAnchor).callFn([]);
-    o.Expression assignCloneAnchorNodeExpr =
-        renderNode.toWriteExpr(createAnchor);
-    o.Statement assignCloneAnchorStmt;
-    if (topLevel) {
-      assignCloneAnchorStmt = assignCloneAnchorNodeExpr.toStmt();
-    } else {
-      assignCloneAnchorStmt = (assignCloneAnchorNodeExpr as o.WriteVarExpr)
-          .toDeclStmt(null, [o.StmtModifier.Final]);
-    }
-    _createMethod.addStmt(assignCloneAnchorStmt);
+    _createMethod.addStmt(renderNode.toWriteStmt(createAnchor));
     var parentNode = _getParentRenderNode(parent);
     if (parentNode != o.NULL_EXPR) {
       var addCommentStmt =
@@ -858,16 +850,12 @@ class CompileView implements AppViewBuilder {
 
     if (_isRootNodeOfHost(nodeIndex)) {
       // Assign root element created by viewfactory call to our own root.
-      _createMethod.addStmt(elementRef
-          .toWriteExpr(
-              compAppViewExpr.toReadExpr().prop(appViewRootElementName))
-          .toStmt());
+      _createMethod.addStmt(elementRef.toWriteStmt(
+          compAppViewExpr.toReadExpr().prop(appViewRootElementName)));
     } else {
       var parentRenderNodeExpr = _getParentRenderNode(parent);
-      _createMethod.addStmt(elementRef
-          .toWriteExpr(
-              compAppViewExpr.toReadExpr().prop(appViewRootElementName))
-          .toStmt());
+      _createMethod.addStmt(elementRef.toWriteStmt(
+          compAppViewExpr.toReadExpr().prop(appViewRootElementName)));
       if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
         // Write code to append to parent node.
         _createMethod.addStmt(parentRenderNodeExpr

@@ -137,7 +137,6 @@ AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent0(AppV
 }
 
 class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponent> {
-  import2.DivElement _el_0;
   ViewContainer _appEl_1;
   NgIf _NgIf_1_9;
   _ViewContainsChildComponent1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -146,7 +145,7 @@ class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponen
   @override
   ComponentRef<import1.ContainsChildComponent> build() {
     var doc = import2.document;
-    _el_0 = doc.createElement('div');
+    final _el_0 = doc.createElement('div');
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
@@ -174,7 +173,6 @@ AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent1(AppV
 }
 
 class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponent> {
-  import2.DivElement _el_0;
   import2.Element _el_1;
   ViewInjectsTypedTokenFromSomeParent0 _compView_1;
   import1.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_1_5;
@@ -184,7 +182,7 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
   @override
   ComponentRef<import1.ContainsChildComponent> build() {
     var doc = import2.document;
-    _el_0 = doc.createElement('div');
+    final _el_0 = doc.createElement('div');
     _compView_1 = ViewInjectsTypedTokenFromSomeParent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);

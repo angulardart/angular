@@ -21,7 +21,6 @@ import 'package:angular/angular.dart';
 final List<dynamic> styles$TestFooComponent = const [];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
-  import2.DivElement _el_0;
   import2.Element _el_3;
   import1.TestDirective _TestDirective_3_5;
   import2.Element _el_5;
@@ -38,14 +37,14 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = import2.Text('My own template');
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final _text_1 = import2.Text('My own template');
     _el_0.append(_text_1);
-    import2.Text _text_2 = import2.Text('A directive:');
+    final _text_2 = import2.Text('A directive:');
     parentRenderNode.append(_text_2);
     _el_3 = createAndAppend(doc, 'directive', parentRenderNode);
     _TestDirective_3_5 = import1.TestDirective();
-    import2.Text _text_4 = import2.Text('A component:');
+    final _text_4 = import2.Text('A component:');
     parentRenderNode.append(_text_4);
     _compView_5 = ViewTestSubComponent0(this, 5);
     _el_5 = _compView_5.rootEl;
@@ -110,7 +109,6 @@ ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
 final List<dynamic> styles$TestSubComponent = const [];
 
 class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
-  import2.DivElement _el_0;
   static RenderComponentType _renderType;
   ViewTestSubComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('test-bar');
@@ -122,8 +120,8 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = import2.Text('Bar');
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final _text_1 = import2.Text('Bar');
     _el_0.append(_text_1);
     init(const [], null);
     return null;

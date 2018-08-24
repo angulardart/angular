@@ -238,7 +238,7 @@ class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeD
   ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import2.Text _text_0 = import2.Text('Hello ');
+    final _text_0 = import2.Text('Hello ');
     parentRenderNode.append(_text_0);
     _text_1 = import2.Text('');
     parentRenderNode.append(_text_1);
@@ -772,7 +772,7 @@ class ViewFeatureA0 extends AppView<import1.FeatureA> {
   ComponentRef<import1.FeatureA> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import2.Text _text_0 = import2.Text('I am Feature A');
+    final _text_0 = import2.Text('I am Feature A');
     parentRenderNode.append(_text_0);
     init(const [], null);
     return null;
@@ -832,7 +832,7 @@ class ViewFeatureB0 extends AppView<import1.FeatureB> {
   ComponentRef<import1.FeatureB> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import2.Text _text_0 = import2.Text('I am Feature B');
+    final _text_0 = import2.Text('I am Feature B');
     parentRenderNode.append(_text_0);
     init(const [], null);
     return null;
