@@ -502,7 +502,6 @@ AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList0(AppV
 }
 
 class _ViewNestedNgForQueriesList1 extends AppView<import1.NestedNgForQueriesList> {
-  import2.DivElement _el_0;
   ViewContainer _appEl_1;
   NgIf _NgIf_1_9;
   _ViewNestedNgForQueriesList1(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -511,7 +510,7 @@ class _ViewNestedNgForQueriesList1 extends AppView<import1.NestedNgForQueriesLis
   @override
   ComponentRef<import1.NestedNgForQueriesList> build() {
     var doc = import2.document;
-    _el_0 = doc.createElement('div');
+    final _el_0 = doc.createElement('div');
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
@@ -539,7 +538,6 @@ AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList1(AppV
 }
 
 class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesList> {
-  import2.DivElement _el_0;
   ViewContainer _appEl_1;
   import13.NgFor _NgFor_1_9;
   _ViewNestedNgForQueriesList2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -548,7 +546,7 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
   @override
   ComponentRef<import1.NestedNgForQueriesList> build() {
     var doc = import2.document;
-    _el_0 = doc.createElement('div');
+    final _el_0 = doc.createElement('div');
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);

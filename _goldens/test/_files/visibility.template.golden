@@ -239,7 +239,6 @@ ComponentFactory<import1.DependencyWithContent> get DependencyWithContentNgFacto
 final List<dynamic> styles$DependencyAndDependentInView = const [];
 
 class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDependentInView> {
-  import5.Element _el_0;
   import5.Element _el_1;
   ViewDependent0 _compView_1;
   import1.Dependent _Dependent_1_5;
@@ -254,7 +253,7 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
-    _el_0 = createAndAppend(doc, 'dependency', parentRenderNode);
+    final _el_0 = createAndAppend(doc, 'dependency', parentRenderNode);
     _compView_1 = ViewDependent0(this, 1);
     _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);

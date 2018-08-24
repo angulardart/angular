@@ -24,7 +24,6 @@ import 'package:angular/src/core/linker/template_ref.dart';
 final List<dynamic> styles$InterpolationComponent = const [];
 
 class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent> {
-  import2.DivElement _el_1;
   import2.Text _text_3;
   var _expr_0;
   static RenderComponentType _renderType;
@@ -37,17 +36,17 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   ComponentRef<import1.InterpolationComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import2.Text _text_0 = import2.Text('    ');
+    final _text_0 = import2.Text('    ');
     parentRenderNode.append(_text_0);
     var doc = import2.document;
-    _el_1 = createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_2 = import2.Text('\n      ');
+    final _el_1 = createDivAndAppend(doc, parentRenderNode);
+    final _text_2 = import2.Text('\n      ');
     _el_1.append(_text_2);
     _text_3 = import2.Text('');
     _el_1.append(_text_3);
-    import2.Text _text_4 = import2.Text('\n    ');
+    final _text_4 = import2.Text('\n    ');
     _el_1.append(_text_4);
-    import2.Text _text_5 = import2.Text('\n  ');
+    final _text_5 = import2.Text('\n  ');
     parentRenderNode.append(_text_5);
     init(const [], null);
     return null;
@@ -107,7 +106,6 @@ ComponentFactory<import1.InterpolationComponent> get InterpolationComponentNgFac
 final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
 class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.InterpolationComponentNoWhitespace> {
-  import2.DivElement _el_0;
   import2.Text _text_1;
   var _expr_0;
   static RenderComponentType _renderType;
@@ -121,7 +119,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
     _text_1 = import2.Text('');
     _el_0.append(_text_1);
     init(const [], null);
@@ -182,7 +180,6 @@ ComponentFactory<import1.InterpolationComponentNoWhitespace> get InterpolationCo
 final List<dynamic> styles$InterpolationTwoAdjacent = const [];
 
 class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdjacent> {
-  import2.DivElement _el_0;
   import2.Text _text_1;
   import2.Text _text_3;
   var _expr_0;
@@ -198,14 +195,14 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
     _text_1 = import2.Text('');
     _el_0.append(_text_1);
-    import2.Text _text_2 = import2.Text(' ');
+    final _text_2 = import2.Text(' ');
     _el_0.append(_text_2);
     _text_3 = import2.Text('');
     _el_0.append(_text_3);
-    import2.Text _text_4 = import2.Text('!');
+    final _text_4 = import2.Text('!');
     _el_0.append(_text_4);
     init(const [], null);
     return null;
@@ -270,7 +267,6 @@ ComponentFactory<import1.InterpolationTwoAdjacent> get InterpolationTwoAdjacentN
 final List<dynamic> styles$InterpolationLongerSentence = const [];
 
 class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLongerSentence> {
-  import2.DivElement _el_0;
   import2.Text _text_2;
   import2.Text _text_4;
   import2.Text _text_6;
@@ -288,20 +284,20 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import2.Text _text_1 = import2.Text('Welcome ');
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final _text_1 = import2.Text('Welcome ');
     _el_0.append(_text_1);
     _text_2 = import2.Text('');
     _el_0.append(_text_2);
-    import2.Text _text_3 = import2.Text(' to the ');
+    final _text_3 = import2.Text(' to the ');
     _el_0.append(_text_3);
     _text_4 = import2.Text('');
     _el_0.append(_text_4);
-    import2.Text _text_5 = import2.Text(' of ');
+    final _text_5 = import2.Text(' of ');
     _el_0.append(_text_5);
     _text_6 = import2.Text('');
     _el_0.append(_text_6);
-    import2.Text _text_7 = import2.Text('!');
+    final _text_7 = import2.Text('!');
     _el_0.append(_text_7);
     init(const [], null);
     return null;
@@ -371,7 +367,6 @@ ComponentFactory<import1.InterpolationLongerSentence> get InterpolationLongerSen
 final List<dynamic> styles$InterpolationLiterals = const [];
 
 class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> {
-  import2.DivElement _el_0;
   import2.Text _text_1;
   import2.Text _text_3;
   static RenderComponentType _renderType;
@@ -385,14 +380,14 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
     _text_1 = import2.Text('Welcome');
     _el_0.append(_text_1);
-    import2.Text _text_2 = import2.Text(' ');
+    final _text_2 = import2.Text(' ');
     _el_0.append(_text_2);
     _text_3 = import2.Text('Home');
     _el_0.append(_text_3);
-    import2.Text _text_4 = import2.Text('!');
+    final _text_4 = import2.Text('!');
     _el_0.append(_text_4);
     init(const [], null);
     return null;
@@ -539,11 +534,11 @@ class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
   }
   @override
   ComponentRef<import1.InterpolationLocals> build() {
-    import2.Text _text_0 = import2.Text('Hello ');
+    final _text_0 = import2.Text('Hello ');
     _text_1 = import2.Text('');
-    import2.Text _text_2 = import2.Text(': ');
+    final _text_2 = import2.Text(': ');
     _text_3 = import2.Text('');
-    import2.Text _text_4 = import2.Text('!');
+    final _text_4 = import2.Text('!');
     init([_text_0, _text_1, _text_2, _text_3, _text_4], null);
     return null;
   }

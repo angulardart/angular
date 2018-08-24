@@ -31,7 +31,7 @@ class ViewDeferredChild1Component0 extends AppView<import1.DeferredChild1Compone
   ComponentRef<import1.DeferredChild1Component> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import5.Text _text_0 = import5.Text('Deferred Child 1');
+    final _text_0 = import5.Text('Deferred Child 1');
     parentRenderNode.append(_text_0);
     init(const [], null);
     return null;
@@ -91,7 +91,7 @@ class ViewDeferredChild2Component0 extends AppView<import1.DeferredChild2Compone
   ComponentRef<import1.DeferredChild2Component> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import5.Text _text_0 = import5.Text('Deferred Child 2');
+    final _text_0 = import5.Text('Deferred Child 2');
     parentRenderNode.append(_text_0);
     init(const [], null);
     return null;
@@ -151,7 +151,7 @@ class ViewDeferredChild3Component0 extends AppView<import1.DeferredChild3Compone
   ComponentRef<import1.DeferredChild3Component> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    import5.Text _text_0 = import5.Text('Deferred Child 3');
+    final _text_0 = import5.Text('Deferred Child 3');
     parentRenderNode.append(_text_0);
     init(const [], null);
     return null;
@@ -259,7 +259,6 @@ ComponentFactory<import1.NotDeferredChildComponent> get NotDeferredChildComponen
 final List<dynamic> styles$DeferredChildComponentWithoutNgContent = const [];
 
 class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.DeferredChildComponentWithoutNgContent> {
-  import5.DivElement _el_0;
   static RenderComponentType _renderType;
   ViewDeferredChildComponentWithoutNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-without-ng-content');
@@ -271,8 +270,8 @@ class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.Deferr
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import5.Text _text_1 = import5.Text('Child');
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final _text_1 = import5.Text('Child');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
@@ -322,7 +321,6 @@ ComponentFactory<import1.DeferredChildComponentWithoutNgContent> get DeferredChi
 final List<dynamic> styles$DeferredChildComponentWithNgContent = const [];
 
 class ViewDeferredChildComponentWithNgContent0 extends AppView<import1.DeferredChildComponentWithNgContent> {
-  import5.DivElement _el_0;
   static RenderComponentType _renderType;
   ViewDeferredChildComponentWithNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-with-ng-content');
@@ -334,7 +332,7 @@ class ViewDeferredChildComponentWithNgContent0 extends AppView<import1.DeferredC
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
     project(_el_0, 0);
     init(const [], null);
     return null;

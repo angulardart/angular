@@ -72,7 +72,6 @@ AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent0(AppView<
 }
 
 class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
-  import7.Element _el_0;
   ViewContainer _appEl_1;
   import3.NgFor _NgFor_1_9;
   var _expr_0;
@@ -82,7 +81,7 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
     var doc = import7.document;
-    _el_0 = doc.createElement('span');
+    final _el_0 = doc.createElement('span');
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
@@ -117,7 +116,6 @@ AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent1(AppView<
 }
 
 class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
-  import7.DivElement _el_0;
   import7.Text _text_1;
   var _expr_0;
   _ViewNestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -126,7 +124,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
     var doc = import7.document;
-    _el_0 = doc.createElement('div');
+    final _el_0 = doc.createElement('div');
     _text_1 = import7.Text('');
     _el_0.append(_text_1);
     init0(_el_0);
