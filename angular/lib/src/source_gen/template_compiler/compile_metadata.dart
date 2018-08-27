@@ -320,13 +320,14 @@ class CompileTypeMetadataVisitor
       } else {
         name = id.name;
       }
+      return CompileTokenMetadata(
+        identifier: CompileIdentifierMetadata(
+          name: name,
+          moduleUrl: moduleUrl(id.staticElement.library),
+        ),
+      );
     }
-    return CompileTokenMetadata(
-      identifier: CompileIdentifierMetadata(
-        name: name,
-        moduleUrl: moduleUrl((id as Identifier).staticElement.library),
-      ),
-    );
+    BuildError.throwForAnnotation(annotation, 'Could not read token');
   }
 
   CompileTokenMetadata _token(
