@@ -10,7 +10,7 @@
 
 <!-- Loaded items view -->
 <template [ngIf]="items != null && items.isNotEmpty">
-<article *ngFor="let item of items; let i = index">
+<article *ngForIdentity="let item of items; let i = index">
   <span class="rank">{{i + startingRank}}</span>
   <item [item]="item"></item>
 </article>

@@ -1,11 +1,16 @@
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 import 'package:angular/security.dart';
 
 @Component(
   selector: 'comment',
   templateUrl: 'comment_component.html',
   styleUrls: ['comment_component.css'],
-  directives: [CommentComponent, NgFor, NgIf],
+  directives: [
+    CommentComponent,
+    NgForIdentity,
+    NgIf,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
 class CommentComponent {

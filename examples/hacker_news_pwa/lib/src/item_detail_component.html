@@ -6,7 +6,7 @@
   <item [item]="item"></item>
   <div *ngIf="item['comments'].isEmpty">There are no comments yet.</div>
   <comment
-      *ngFor="let comment of item['comments']"
+      *ngForIdentity="let comment of item['comments']"
       [comment]="comment">
   </comment>
 </template>

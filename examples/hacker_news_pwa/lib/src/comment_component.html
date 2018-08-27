@@ -7,7 +7,7 @@
 <div [hidden]="hidden">
   <div class="content" [innerHtml]="content"></div>
   <comment
-      *ngFor="let comment of comment['comments']"
+      *ngForIdentity="let comment of comment['comments']"
       [comment]="comment">
   </comment>
 </div>
