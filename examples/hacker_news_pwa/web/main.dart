@@ -3,7 +3,7 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
-import 'package:pwa/client.dart' as pwa;
+import 'package:examples.hacker_news_pwa/pwa/shim_client.dart';
 
 // We are ignoring files that will be generated at compile-time.
 // ignore: uri_has_not_been_generated
@@ -43,8 +43,7 @@ void main() {
     future = _service.getFeed(feed, 1);
   }
 
-  // Install service worker.
-  pwa.Client();
+  installServiceWorker();
 
   // Start app after fetched.
   future.then((_) {
