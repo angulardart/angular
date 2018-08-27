@@ -9,9 +9,6 @@ class CompileMethod {
   static final _isFirstCheckIfBlock = Expando<bool>();
   final _bodyStatements = <o.Statement>[];
 
-  // TODO: Remove this parameter, it is a no-op.
-  CompileMethod(@deprecated bool genDebugInfo);
-
   void addStmt(o.Statement stmt) {
     _bodyStatements.add(stmt);
   }

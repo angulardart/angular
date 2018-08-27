@@ -29,7 +29,6 @@ class DirectiveCompileResult {
 
 class DirectiveCompiler {
   final CompileDirectiveMetadata directive;
-  final bool genDebugInfo;
   final bool hasOnChangesLifecycle;
   final bool hasAfterChangesLifecycle;
   final ElementSchemaRegistry _schemaRegistry;
@@ -40,7 +39,7 @@ class DirectiveCompiler {
   bool _implementsComponentState;
   ViewNameResolver _nameResolver;
 
-  DirectiveCompiler(this.directive, this._schemaRegistry, this.genDebugInfo)
+  DirectiveCompiler(this.directive, this._schemaRegistry)
       : hasOnChangesLifecycle =
             directive.lifecycleHooks.contains(LifecycleHooks.onChanges),
         hasAfterChangesLifecycle =
@@ -117,12 +116,7 @@ class DirectiveCompiler {
   void _buildDetectHostChanges() {
     final hostProps = directive.hostProperties;
     if (hostProps.isEmpty) return;
-    // Create method with debug info turned off since we are no longer
-    // generating directive bindings at call sites and it is directly
-    // associated with directive itself. When an exception happens we
-    // don't need to wrap including the call site template, the stack
-    // trace will directly point to change detector.
-    final CompileMethod method = CompileMethod(false);
+    final CompileMethod method = CompileMethod();
 
     List<BoundElementPropertyAst> hostProperties = <BoundElementPropertyAst>[];
 
@@ -154,7 +148,6 @@ class DirectiveCompiler {
         _nameResolver,
         _storage,
         method,
-        genDebugInfo,
         updatingHostAttribute: true);
 
     var statements = method.finish();

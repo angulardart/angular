@@ -65,7 +65,6 @@ void _bind(
     List<o.Statement> actions,
     CompileMethod method,
     CompileMethod literalMethod,
-    bool genDebugInfo,
     {o.OutputType fieldType,
     bool isHostComponent = false,
     o.Expression fieldExprInitializer}) {
@@ -153,27 +152,23 @@ void bindRenderText(
   var currValExpr = _createCurrValueExpr(bindingIndex);
   // Expression that points to _expr_## stored value.
   var valueField = _createBindFieldExpr(bindingIndex);
-  var dynamicRenderMethod = CompileMethod(view.genDebugInfo);
-  var constantRenderMethod = CompileMethod(view.genDebugInfo);
+  var dynamicRenderMethod = CompileMethod();
+  var constantRenderMethod = CompileMethod();
   _bind(
-      view.component,
-      view.nameResolver,
-      view.storage,
-      currValExpr,
-      valueField,
-      boundText.value,
-      boundText.sourceSpan,
-      DetectChangesVars.cachedCtx,
-      [
-        compileNode.renderNode
-            .toReadExpr()
-            .prop('text')
-            .set(currValExpr)
-            .toStmt()
-      ],
-      dynamicRenderMethod,
-      constantRenderMethod,
-      view.genDebugInfo);
+    view.component,
+    view.nameResolver,
+    view.storage,
+    currValExpr,
+    valueField,
+    boundText.value,
+    boundText.sourceSpan,
+    DetectChangesVars.cachedCtx,
+    [
+      compileNode.renderNode.toReadExpr().prop('text').set(currValExpr).toStmt()
+    ],
+    dynamicRenderMethod,
+    constantRenderMethod,
+  );
   if (constantRenderMethod.isNotEmpty) {
     view.detectChangesRenderPropertiesMethod.addStmtsIfFirstCheck(
       constantRenderMethod.finish(),
@@ -195,20 +190,20 @@ void bindRenderText(
 ///       this._expr_1 = currVal_1;
 ///     }
 void bindAndWriteToRenderer(
-    List<BoundElementPropertyAst> boundProps,
-    o.Expression appViewInstance,
-    o.Expression context,
-    CompileDirectiveMetadata directiveMeta,
-    o.Expression renderNode,
-    bool isHtmlElement,
-    ViewNameResolver nameResolver,
-    ViewStorage storage,
-    CompileMethod targetMethod,
-    bool genDebugInfo,
-    {bool updatingHostAttribute = false,
-    bool isHostComponent = false}) {
-  final dynamicPropertiesMethod = CompileMethod(genDebugInfo);
-  final constantPropertiesMethod = CompileMethod(genDebugInfo);
+  List<BoundElementPropertyAst> boundProps,
+  o.Expression appViewInstance,
+  o.Expression context,
+  CompileDirectiveMetadata directiveMeta,
+  o.Expression renderNode,
+  bool isHtmlElement,
+  ViewNameResolver nameResolver,
+  ViewStorage storage,
+  CompileMethod targetMethod, {
+  bool updatingHostAttribute = false,
+  bool isHostComponent = false,
+}) {
+  final dynamicPropertiesMethod = CompileMethod();
+  final constantPropertiesMethod = CompileMethod();
   for (var boundProp in boundProps) {
     // Add to view bindings collection.
     int bindingIndex = nameResolver.createUniqueBindIndex();
@@ -317,7 +312,6 @@ void bindAndWriteToRenderer(
         updateStmts,
         dynamicPropertiesMethod,
         constantPropertiesMethod,
-        genDebugInfo,
         fieldType: fieldType,
         isHostComponent: isHostComponent);
   }
@@ -363,16 +357,16 @@ void bindRenderInputs(
   var renderNode = compileElement.renderNode;
   var view = compileElement.view;
   bindAndWriteToRenderer(
-      boundProps,
-      appViewInstance,
-      DetectChangesVars.cachedCtx,
-      view.component,
-      renderNode.toReadExpr(),
-      compileElement.isHtmlElement,
-      view.nameResolver,
-      view.storage,
-      view.detectChangesRenderPropertiesMethod,
-      view.genDebugInfo);
+    boundProps,
+    appViewInstance,
+    DetectChangesVars.cachedCtx,
+    view.component,
+    renderNode.toReadExpr(),
+    compileElement.isHtmlElement,
+    view.nameResolver,
+    view.storage,
+    view.detectChangesRenderPropertiesMethod,
+  );
 }
 
 // Component or directive level host properties are change detected inside
@@ -417,8 +411,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
 
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
-  var dynamicInputsMethod = CompileMethod(view.genDebugInfo);
-  var constantInputsMethod = CompileMethod(view.genDebugInfo);
+  var dynamicInputsMethod = CompileMethod();
+  var constantInputsMethod = CompileMethod();
   var lifecycleHooks = directive.lifecycleHooks;
   bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.onChanges);
   bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.afterChanges);
@@ -550,7 +544,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           statements,
           dynamicInputsMethod,
           constantInputsMethod,
-          view.genDebugInfo,
           fieldType: inputType,
           isHostComponent: isHostComponent);
     }
@@ -616,8 +609,8 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       'Inlining a template that is not an NgIf');
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
-  var dynamicInputsMethod = CompileMethod(view.genDebugInfo);
-  var constantInputsMethod = CompileMethod(view.genDebugInfo);
+  var dynamicInputsMethod = CompileMethod();
+  var constantInputsMethod = CompileMethod();
 
   var input = directiveAst.inputs.single;
   var bindingIndex = view.nameResolver.createUniqueBindIndex();
@@ -672,7 +665,6 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       statements,
       dynamicInputsMethod,
       constantInputsMethod,
-      view.genDebugInfo,
       fieldType: o.BOOL_TYPE,
       isHostComponent: false,
       fieldExprInitializer: o.literal(false));

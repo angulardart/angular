@@ -100,6 +100,4 @@ class ViewCompiler {
     final viewClass = createViewClass(view, parser);
     targetStatements..add(viewClass)..add(createViewFactory(view, viewClass));
   }
-
-  bool get genDebugInfo => _genConfig.genDebugInfo;
 }

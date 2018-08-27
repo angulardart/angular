@@ -52,7 +52,7 @@ class CompileEventListener {
 
   CompileEventListener(this.compileElement, this.eventName, int listenerIndex)
       : _nameResolver = compileElement.view.nameResolver.scope() {
-    _method = CompileMethod(compileElement.view.genDebugInfo);
+    _method = CompileMethod();
     _methodName =
         '_handle_${sanitizeEventName(eventName)}_${compileElement.nodeIndex}_'
         '$listenerIndex';
