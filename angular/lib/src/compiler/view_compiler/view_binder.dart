@@ -208,7 +208,7 @@ void bindViewHostProperties(CompileView view, Parser parser,
         expression, span, schemaRegistry, errorCallback));
   });
 
-  final CompileMethod method = CompileMethod(view.genDebugInfo);
+  final CompileMethod method = CompileMethod();
   var compileElement = view.componentView.declarationElement;
   var renderNode = view.componentView.declarationElement.renderNode;
   bindAndWriteToRenderer(
@@ -221,7 +221,6 @@ void bindViewHostProperties(CompileView view, Parser parser,
       view.nameResolver,
       view.storage,
       method,
-      view.genDebugInfo,
       updatingHostAttribute: true);
   if (method.isNotEmpty) {
     view.detectHostChangesMethod = method;

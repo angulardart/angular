@@ -324,17 +324,18 @@ class CompileView implements AppViewBuilder {
   /// and child components.
   List<o.Expression> viewContainers = [];
   List<o.Statement> classStatements = [];
-  CompileMethod _createMethod;
-  CompileMethod _injectorGetMethod;
-  CompileMethod _updateContentQueriesMethod;
-  CompileMethod _updateViewQueriesMethod;
-  CompileMethod dirtyParentQueriesMethod;
-  CompileMethod detectChangesInInputsMethod;
-  CompileMethod detectChangesRenderPropertiesMethod;
+
+  final _createMethod = CompileMethod();
+  final _injectorGetMethod = CompileMethod();
+  final _updateContentQueriesMethod = CompileMethod();
+  final _updateViewQueriesMethod = CompileMethod();
+  final dirtyParentQueriesMethod = CompileMethod();
+  final detectChangesInInputsMethod = CompileMethod();
+  final detectChangesRenderPropertiesMethod = CompileMethod();
   CompileMethod detectHostChangesMethod;
-  CompileMethod afterContentLifecycleCallbacksMethod;
-  CompileMethod afterViewLifecycleCallbacksMethod;
-  CompileMethod destroyMethod;
+  final afterContentLifecycleCallbacksMethod = CompileMethod();
+  final afterViewLifecycleCallbacksMethod = CompileMethod();
+  final destroyMethod = CompileMethod();
 
   /// Methods generated during view compilation.
   ///
@@ -375,16 +376,6 @@ class CompileView implements AppViewBuilder {
     this.deferredModules, {
     this.isInlined = false,
   }) {
-    _createMethod = CompileMethod(genDebugInfo);
-    _injectorGetMethod = CompileMethod(genDebugInfo);
-    _updateContentQueriesMethod = CompileMethod(genDebugInfo);
-    dirtyParentQueriesMethod = CompileMethod(genDebugInfo);
-    _updateViewQueriesMethod = CompileMethod(genDebugInfo);
-    detectChangesInInputsMethod = CompileMethod(genDebugInfo);
-    detectChangesRenderPropertiesMethod = CompileMethod(genDebugInfo);
-    afterContentLifecycleCallbacksMethod = CompileMethod(genDebugInfo);
-    afterViewLifecycleCallbacksMethod = CompileMethod(genDebugInfo);
-    destroyMethod = CompileMethod(genDebugInfo);
     if (isInlined) {
       nameResolver = declarationElement.view.nameResolver;
       storage = declarationElement.view.storage;
@@ -1093,7 +1084,7 @@ class CompileView implements AppViewBuilder {
               ? o.DYNAMIC_TYPE
               : (providerHasChangeDetector ? changeDetectorType : type),
           modifiers: const [o.StmtModifier.Private]);
-      var getter = CompileMethod(genDebugInfo);
+      var getter = CompileMethod();
 
       if (providerHasChangeDetector) {
         resolvedProviderValueExpr =
