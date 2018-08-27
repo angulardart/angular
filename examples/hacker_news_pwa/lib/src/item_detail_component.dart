@@ -1,4 +1,5 @@
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 import 'package:angular_router/angular_router.dart';
 
 import '../hacker_news_service.dart';
@@ -22,7 +23,12 @@ int countComments(Map comment) {
   selector: 'item-detail',
   templateUrl: 'item_detail_component.html',
   styleUrls: ['item_detail_component.css'],
-  directives: [CommentComponent, ItemComponent, NgFor, NgIf],
+  directives: [
+    CommentComponent,
+    ItemComponent,
+    NgForIdentity,
+    NgIf,
+  ],
 )
 class ItemDetailComponent implements OnActivate {
   final HackerNewsService _hackerNewsService;

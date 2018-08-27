@@ -1,4 +1,5 @@
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 import 'package:angular_router/angular_router.dart';
 
 import '../hacker_news_service.dart';
@@ -10,7 +11,12 @@ const itemsPerPage = 30;
   selector: 'feed',
   templateUrl: 'feed_component.html',
   styleUrls: ['feed_component.css'],
-  directives: [ItemComponent, NgFor, NgIf, routerDirectives],
+  directives: [
+    ItemComponent,
+    NgForIdentity,
+    NgIf,
+    routerDirectives,
+  ],
   encapsulation: ViewEncapsulation.None,
 )
 class FeedComponent implements OnActivate {
