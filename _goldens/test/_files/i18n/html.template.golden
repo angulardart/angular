@@ -10,10 +10,10 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'html.dart' as import1;
-import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
@@ -22,20 +22,19 @@ import 'package:intl/intl.dart' as import9;
 final List<dynamic> styles$I18nHtmlComponent = const [];
 
 class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
-  import2.Element _el_0;
   static RenderComponentType _renderType;
-  ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('message');
+  ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('message');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null), ViewEncapsulation.None, styles$I18nHtmlComponent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.I18nHtmlComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'p', parentRenderNode);
-    import2.DocumentFragment _html_1 = import6.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import5.document;
+    final _el_0 = createAndAppend(doc, 'p', parentRenderNode);
+    import5.DocumentFragment _html_1 = import6.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_html_1);
     init(const [], null);
     return null;
@@ -55,7 +54,7 @@ final List<dynamic> styles$I18nHtmlComponentHost = const [];
 class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
   ViewI18nHtmlComponent0 _compView_0;
   import1.I18nHtmlComponent _I18nHtmlComponent_0_5;
-  _ViewI18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewI18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.I18nHtmlComponent> build() {
     _compView_0 = ViewI18nHtmlComponent0(this, 0);

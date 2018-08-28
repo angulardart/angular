@@ -11,10 +11,10 @@ import 'package:angular/angular.template.dart' as _ref0;
 import 'has_template_file.css.shim.dart' as import0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'has_template_file.dart' as import2;
-import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import5;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import6;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
@@ -22,21 +22,20 @@ import 'package:angular/angular.dart';
 final List<dynamic> styles$HasTemplateFileComponent = [import0.styles];
 
 class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileComponent> {
-  import3.DivElement _el_0;
   static RenderComponentType _renderType;
-  ViewHasTemplateFileComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import3.document.createElement('has-template-file');
+  ViewHasTemplateFileComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import6.document.createElement('has-template-file');
     _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/has_template_file.dart' : null), ViewEncapsulation.Emulated, styles$HasTemplateFileComponent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import2.HasTemplateFileComponent> build() {
     final _rootEl = rootEl;
-    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import3.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import6.document;
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
     addShimC(_el_0);
-    import3.Text _text_1 = import3.Text('Has Template File!');
+    final _text_1 = import6.Text('Has Template File!');
     _el_0.append(_text_1);
     init(const [], null);
     return null;
@@ -52,7 +51,7 @@ final List<dynamic> styles$HasTemplateFileComponentHost = const [];
 class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFileComponent> {
   ViewHasTemplateFileComponent0 _compView_0;
   import2.HasTemplateFileComponent _HasTemplateFileComponent_0_5;
-  _ViewHasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewHasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import2.HasTemplateFileComponent> build() {
     _compView_0 = ViewHasTemplateFileComponent0(this, 0);
