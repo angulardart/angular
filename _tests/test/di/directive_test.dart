@@ -283,6 +283,19 @@ void main() {
     expect(injector.get(ExampleService), const isInstanceOf<ExampleService>());
     expect(injector.get(C), const C('Hello World'));
   });
+
+  test('should support arbitrary const values in ValueProvider', () async {
+    final testBed = NgTestBed<SupportsValueProviderWithArbitraryConst>();
+    final fixture = await testBed.create();
+    final component = fixture.assertOnlyInstance;
+    expect(component.c1, isNotNull);
+    expect(component.c2, isNotNull);
+    expect(component.c2.name, '$TestConstPositionalArgs');
+    expect(component.c3, isNotNull);
+    expect(component.c3.name, '$TestConstNamedArgs');
+    expect(component.c4, isNotNull);
+    expect(component.c4.name, '$TestConstNamedArgs2');
+  });
 }
 
 @Component(
@@ -803,4 +816,59 @@ class SupportsModules {
   final Injector injector;
 
   SupportsModules(this.injector);
+}
+
+class TestConstNoArgs {
+  const TestConstNoArgs();
+}
+
+class TestConstPositionalArgs {
+  final String name;
+  const TestConstPositionalArgs(this.name);
+}
+
+class TestConstNamedArgs {
+  final String name;
+  const TestConstNamedArgs({this.name});
+}
+
+class TestConstNamedArgs2 {
+  final String name;
+  const TestConstNamedArgs2({this.name});
+}
+
+const topLevelValue = TestConstNamedArgs2(name: 'TestConstNamedArgs2');
+const topLevelProvider = ValueProvider(TestConstNamedArgs2, topLevelValue);
+
+@Component(
+  selector: 'supports-value-provider',
+  template: '',
+  providers: [
+    ValueProvider(
+      TestConstNoArgs,
+      TestConstNoArgs(),
+    ),
+    ValueProvider(
+      TestConstPositionalArgs,
+      TestConstPositionalArgs('TestConstPositionalArgs'),
+    ),
+    ValueProvider(
+      TestConstNamedArgs,
+      TestConstNamedArgs(name: 'TestConstNamedArgs'),
+    ),
+    topLevelProvider,
+  ],
+)
+class SupportsValueProviderWithArbitraryConst {
+  final TestConstNoArgs c1;
+  final TestConstPositionalArgs c2;
+  final TestConstNamedArgs c3;
+  final TestConstNamedArgs2 c4;
+
+  SupportsValueProviderWithArbitraryConst(
+    this.c1,
+    this.c2,
+    this.c3,
+    this.c4,
+  );
 }

@@ -4,6 +4,8 @@
 
 *   Emits all strings for `@GeneratedInjector` as raw (`r'$5.00'`).
 
+*   Supports named arguments for `ValueProvider` and `@GeneratedInjector`.
+
 ## 0.4.0
 
 ### New Features
