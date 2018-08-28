@@ -305,24 +305,17 @@ Map<String, AttrAst> astAttribListToMap(List<AttrAst> attrs) {
 ast.AST _mergeAttributeValue(
     String attrName, ast.AST attrValue1, ast.AST attrValue2) {
   if (attrName == classAttrName || attrName == styleAttrName) {
-    // attrValue1 can be a literal string, an expression, or an interpolation
-    // attrValue2 can be a literal string or an expression, it CANNOT be an
-    // interpolate because attrValue2 represents the "new" attribute value
-    // we need to merge in, which must always be a literal or property access.
-    // Only the "previous" attrValue can be an interpolation because we are
-    // constructing the interpolation here.
-    if (attrValue1 is ast.LiteralPrimitive &&
-        attrValue2 is ast.LiteralPrimitive) {
-      return ast.LiteralPrimitive('${attrValue1.value} ${attrValue2.value}');
-    } else if (attrValue1 is ast.Interpolation) {
-      if (attrValue2 is ast.LiteralPrimitive) {
-        attrValue1.strings.last += ' ${attrValue2.value}';
-        return attrValue1;
-      } else {
-        attrValue1.expressions.add(attrValue2);
-        attrValue1.strings.add(' ');
-        return attrValue1;
-      }
+    // attrValue1 can be a literal string (from an HTML attribute), an
+    // expression (from a host attribute), or an interpolation (from a previous
+    // merge). attrValue2 can only be an expression (from a host attribute), it
+    // CANNOT be an interpolate because attrValue2 represents the "new"
+    // attribute value we need to merge in, which must always be a property
+    // access. Only the "previous" attrValue can be an interpolation because we
+    // are constructing the interpolation here.
+    if (attrValue1 is ast.Interpolation) {
+      attrValue1.expressions.add(attrValue2);
+      attrValue1.strings.add(' ');
+      return attrValue1;
     } else {
       return ast.Interpolation(['', ' ', ''], [attrValue1, attrValue2]);
     }
