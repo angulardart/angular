@@ -574,6 +574,21 @@ void main() {
           const isInstanceOf<ExampleService2>(),
         );
       });
+
+      test('should support arbitrary const values in ValueProvider', () async {
+        final injector = valueProviderExamples();
+        TestConstNoArgs c1 = injector.get(TestConstNoArgs);
+        TestConstPositionalArgs c2 = injector.get(TestConstPositionalArgs);
+        TestConstNamedArgs c3 = injector.get(TestConstNamedArgs);
+        TestConstNamedArgs2 c4 = injector.get(ng.TestConstNamedArgs2);
+        expect(c1, isNotNull);
+        expect(c2, isNotNull);
+        expect(c2.name, '$TestConstPositionalArgs');
+        expect(c3, isNotNull);
+        expect(c3.name, '$TestConstNamedArgs');
+        expect(c4, isNotNull);
+        expect(c4.name, '$TestConstNamedArgs2');
+      });
     });
   });
 }
@@ -746,3 +761,42 @@ class InjectsXsrfToken {
 
   InjectsXsrfToken(@XsrfToken() this.token);
 }
+
+class TestConstNoArgs {
+  const TestConstNoArgs();
+}
+
+class TestConstPositionalArgs {
+  final String name;
+  const TestConstPositionalArgs(this.name);
+}
+
+class TestConstNamedArgs {
+  final String name;
+  const TestConstNamedArgs({this.name});
+}
+
+class TestConstNamedArgs2 {
+  final String name;
+  const TestConstNamedArgs2({this.name});
+}
+
+const topLevelValue = TestConstNamedArgs2(name: 'TestConstNamedArgs2');
+const topLevelProvider = ValueProvider(TestConstNamedArgs2, topLevelValue);
+
+@GenerateInjector([
+  ValueProvider(
+    TestConstNoArgs,
+    TestConstNoArgs(),
+  ),
+  ValueProvider(
+    TestConstPositionalArgs,
+    TestConstPositionalArgs('TestConstPositionalArgs'),
+  ),
+  ValueProvider(
+    TestConstNamedArgs,
+    TestConstNamedArgs(name: 'TestConstNamedArgs'),
+  ),
+  topLevelProvider,
+])
+final InjectorFactory valueProviderExamples = ng.valueProviderExamples$Injector;

@@ -293,14 +293,20 @@ class InjectorReader {
     if (invocation.source.fragment.isNotEmpty) {
       // We can create this invocation by calling `const ...`.
       final name = invocation.source.fragment;
-      final args = invocation.positionalArguments
+      final positionalArgs = invocation.positionalArguments
           .map((a) => _reviveAny(provider, a))
           .toList();
+      final namedArgs = invocation.namedArguments
+          .map((name, a) => new MapEntry(name, _reviveAny(provider, a)));
       final clazz = refer(name, '$import');
       if (invocation.accessor.isNotEmpty) {
-        return clazz.constInstanceNamed(invocation.accessor, args);
+        return clazz.constInstanceNamed(
+          invocation.accessor,
+          positionalArgs,
+          namedArgs,
+        );
       }
-      return clazz.constInstance(args);
+      return clazz.constInstance(positionalArgs, namedArgs);
     }
     // We can create this invocation by referring to a const field.
     final name = invocation.accessor;
