@@ -1,4 +1,8 @@
+import 'package:collection/collection.dart';
+
 import 'metadata.dart';
+
+const _map = MapEquality<String, String>();
 
 /// An internationalized message.
 class I18nMessage {
@@ -25,4 +29,14 @@ class I18nMessage {
 
   /// Whether this message contains nested HTML.
   bool get containsHtml => args.isNotEmpty;
+
+  @override
+  int get hashCode => metadata.hashCode ^ text.hashCode ^ _map.hash(args);
+
+  @override
+  bool operator ==(dynamic other) =>
+      other is I18nMessage &&
+      other.metadata == metadata &&
+      other.text == text &&
+      _map.equals(other.args, args);
 }
