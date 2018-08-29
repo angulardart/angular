@@ -292,6 +292,12 @@ class CompileView implements AppViewBuilder {
   /// Defines type arguments for generic directives in this view.
   final List<CompileTypedMetadata> directiveTypes;
 
+  /// Internationalized messages declared in this view.
+  ///
+  /// Message expressions are keyed by their metadata and contents, so that any
+  /// duplicate messages will use the same generated message.
+  final _i18nMessages = <I18nMessage, o.Expression>{};
+
   /// Whether this is rendered by another view, rather than by its own class.
   ///
   /// Normally a unique class is generated to handle construction and change
@@ -360,9 +366,6 @@ class CompileView implements AppViewBuilder {
 
   /// Local variable name used to refer to document. null if not created yet.
   String docVarName;
-
-  /// The number of internationalized messages in this view.
-  var _i18nMessageCount = 0;
 
   CompileView(
     this.component,
@@ -456,8 +459,13 @@ class CompileView implements AppViewBuilder {
 
   /// Generates code to internationalize [message].
   ///
-  /// Returns an expression that evaluates to the internationalized message.
+  /// Returns an expression that evaluates to the internationalized message. May
+  /// reuse an existing generated expression if a duplicate [message] has
+  /// already been created.
   o.Expression createI18nMessage(I18nMessage message) {
+    if (_i18nMessages.containsKey(message)) {
+      return _i18nMessages[message];
+    }
     var text = message.text;
     if (message.containsHtml) {
       // If the message contains HTML, it will be parsed into a document
@@ -478,7 +486,8 @@ class CompileView implements AppViewBuilder {
       args.add(o.NamedExpr('skip', o.literal(true)));
     }
     final i18n = o.importExpr(Identifiers.Intl);
-    final name = '_message_${_i18nMessageCount++}';
+    final name = '_message_${_i18nMessages.length}';
+    o.Expression messageExpression;
     if (message.containsHtml) {
       // A message with arguments is generated as a static method.
       // These are passed to `args` in `Intl.message()`.
@@ -513,7 +522,7 @@ class CompileView implements AppViewBuilder {
         [o.StmtModifier.Static, o.StmtModifier.Private],
       );
       methods.add(method);
-      return o.InvokeMemberMethodExpr(
+      messageExpression = o.InvokeMemberMethodExpr(
         name,
         methodArgs,
         outputType: o.STRING_TYPE,
@@ -531,8 +540,9 @@ class CompileView implements AppViewBuilder {
           o.StmtModifier.Private,
         ],
       );
-      return storage.buildReadExpr(item);
+      messageExpression = storage.buildReadExpr(item);
     }
+    return _i18nMessages[message] = messageExpression;
   }
 
   @override

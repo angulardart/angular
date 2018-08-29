@@ -85,6 +85,16 @@ class I18nMetadata {
     this.meaning,
     this.skip = false,
   });
+
+  @override
+  int get hashCode => description.hashCode ^ meaning.hashCode ^ skip.hashCode;
+
+  @override
+  bool operator ==(dynamic other) =>
+      other is I18nMetadata &&
+      other.description == description &&
+      other.meaning == meaning &&
+      other.skip == skip;
 }
 
 /// Internationalization metadata for a node's attributes and content.
