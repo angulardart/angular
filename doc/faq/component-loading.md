@@ -222,7 +222,7 @@ void ngOnInit() async {
 }
 ```
 
-Another option, for simple templates, is using `@deffered`:
+Another option, for simple templates, is using `@deferred`:
 
 ```html
 <ng-container *ngIf="showAds">
