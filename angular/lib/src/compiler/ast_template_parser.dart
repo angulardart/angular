@@ -8,6 +8,7 @@ import 'expression_parser/ast.dart';
 import 'expression_parser/parser.dart';
 import 'html_tags.dart';
 import 'i18n.dart';
+import 'i18n/property_visitor.dart';
 import 'identifiers.dart';
 import 'parse_util.dart';
 import 'provider_parser.dart';
@@ -640,14 +641,30 @@ class _ParseContext {
         var templateName = directive.directive.inputs[directiveName];
         if (templateName == name) {
           _removeExisting(directive.inputs, templateName);
+          var boundValue = _createBoundValue(templateName, value, sourceSpan);
           directive.inputs.add(ng.BoundDirectivePropertyAst(
-              directiveName, templateName, value, sourceSpan));
+              directiveName, templateName, boundValue, sourceSpan));
           foundMatch = true;
           continue directive;
         }
       }
     }
     return foundMatch;
+  }
+
+  ng.BoundValue _createBoundValue(
+    String name,
+    AST value,
+    SourceSpan sourceSpan,
+  ) {
+    if (i18nMetadata.forAttributes.containsKey(name)) {
+      final metadata = i18nMetadata.forAttributes[name];
+      final message = i18nMessageFromPropertyBinding(
+          value, metadata, sourceSpan, templateContext);
+      return ng.BoundI18nMessage(message);
+    } else {
+      return ng.BoundExpression(value);
+    }
   }
 
   void _removeExisting(
@@ -1227,7 +1244,10 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
 
   @override
   ng.TemplateAst visitDirectiveProperty(ng.BoundDirectivePropertyAst ast, _) {
-    _validatePipes(ast.value, ast.sourceSpan);
+    final value = ast.value;
+    if (value is ng.BoundExpression) {
+      _validatePipes(value.expression, ast.sourceSpan);
+    }
     return super.visitDirectiveProperty(ast, null);
   }
 

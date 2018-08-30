@@ -116,12 +116,26 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   }
 
   void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {
-    var res = [
+    final humanizedAst = [
       BoundDirectivePropertyAst,
       ast.directiveName,
-      expressionUnparser.unparse(ast.value)
     ];
-    result.add(_appendContext(ast, res));
+    final value = ast.value;
+    // Theses `BoundValue` types may eventually extend `TemplateAst` so that
+    // this logic could be handled in a visit method; however, for now there are
+    // so few cases where this would be beneficially that the cost of having to
+    // implement these methods everywhere else outweighs the benefit here.
+    if (value is BoundExpression) {
+      humanizedAst.add(expressionUnparser.unparse(value.expression));
+    } else if (value is BoundI18nMessage) {
+      humanizedAst
+        ..add(value.message.text)
+        ..add(value.message.metadata.description);
+      if (value.message.metadata.meaning != null) {
+        humanizedAst.add(value.message.metadata.meaning);
+      }
+    }
+    result.add(_appendContext(ast, humanizedAst));
   }
 
   void visitProvider(ProviderAst ast, _) {}

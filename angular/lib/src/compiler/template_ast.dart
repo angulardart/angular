@@ -251,16 +251,59 @@ class EmbeddedTemplateAst implements TemplateAst {
       visitor.visitEmbeddedTemplate(this, context);
 }
 
-/// A directive property with a bound value (e.g. *ngIf='condition').
+/// An abstract bound value.
+abstract class BoundValue {}
+
+/// A bound expression.
+class BoundExpression implements BoundValue {
+  final AST expression;
+
+  BoundExpression(this.expression);
+}
+
+/// A bound internationalized message.
+class BoundI18nMessage implements BoundValue {
+  final I18nMessage message;
+
+  BoundI18nMessage(this.message);
+}
+
+/// A directive property binding.
 class BoundDirectivePropertyAst implements TemplateAst {
+  /// The name of the property declared on the directive class.
+  ///
+  /// For example, "name" in
+  ///
+  /// ```
+  /// class User {
+  ///   @Input('userName')
+  ///   String name;
+  /// }
+  /// ```
   final String directiveName;
+
+  /// The name of the input, optionally declared by an input annotation.
+  ///
+  /// For example, "userName" in
+  ///
+  /// class User {
+  ///   @Input('userName')
+  ///   String name;
+  /// }
+  ///
+  /// If no binding name is specified, this defaults to [directiveName].
   final String templateName;
-  final AST value;
+  final BoundValue value;
   final SourceSpan sourceSpan;
 
   BoundDirectivePropertyAst(
-      this.directiveName, this.templateName, this.value, this.sourceSpan);
+    this.directiveName,
+    this.templateName,
+    this.value,
+    this.sourceSpan,
+  );
 
+  @override
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
       visitor.visitDirectiveProperty(this, context);
 }
