@@ -36,7 +36,6 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     var res = [ElementAst, ast.name];
     result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.attrs);
-    templateVisitAll(this, ast.i18nAttrs);
     templateVisitAll(this, ast.inputs);
     templateVisitAll(this, ast.outputs);
     templateVisitAll(this, ast.references);
@@ -79,7 +78,22 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   }
 
   void visitAttr(AttrAst ast, _) {
-    var res = [AttrAst, ast.name, ast.value];
+    var res = [AttrAst, ast.name];
+    var attributeValue = ast.value;
+    // Theses `AttributeValue` types may eventually extend `TemplateAst` so that
+    // this logic could be handled in a visit method; however, for now there are
+    // so few cases where this would be beneficially that the cost of having to
+    // implement these methods everywhere else outweighs the benefit here.
+    if (attributeValue is I18nAttributeValue) {
+      res
+        ..add(attributeValue.value.text)
+        ..add(attributeValue.value.metadata.description);
+      if (attributeValue.value.metadata.meaning != null) {
+        res.add(attributeValue.value.metadata.meaning);
+      }
+    } else if (attributeValue is LiteralAttributeValue) {
+      res.add(attributeValue.value);
+    }
     result.add(_appendContext(ast, res));
   }
 
@@ -111,19 +125,6 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   }
 
   void visitProvider(ProviderAst ast, _) {}
-
-  void visitI18nAttr(I18nAttrAst ast, _) {
-    var res = [
-      I18nAttrAst,
-      ast.name,
-      ast.value.text,
-      ast.value.metadata.description,
-    ];
-    if (ast.value.metadata.meaning != null) {
-      res.add(ast.value.metadata.meaning);
-    }
-    result.add(_appendContext(ast, res));
-  }
 
   void visitI18nText(I18nTextAst ast, _) {
     var res = [I18nTextAst, ast.value.text, ast.value.metadata.description];
@@ -201,8 +202,6 @@ class TemplateContentProjectionHumanizer
   void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {}
 
   void visitProvider(ProviderAst ast, _) {}
-
-  void visitI18nAttr(I18nAttrAst ast, _) {}
 
   void visitI18nText(I18nTextAst ast, _) {}
 }

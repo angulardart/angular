@@ -1,4 +1,5 @@
 import '../../compile_metadata.dart';
+import '../../i18n/message.dart';
 import '../../output/output_ast.dart' as o;
 import '../../template_ast.dart';
 import '../../view_compiler/view_compiler_utils.dart';
@@ -192,7 +193,18 @@ class ProvidersNode {
     ProvidersNode currProviders = this;
     ProviderSource result;
     if (dep.isValue) {
-      result = LiteralValueSource(dep.token, o.literal(dep.value));
+      final value = dep.value;
+      // This is a bit of a hack, but it's much simpler than refactoring the
+      // entire compiler to expect `CompileDiDependencyMetadata.value` already
+      // be an `o.Expression` (and it's already dynamic).
+      if (value is I18nMessage) {
+        // Value is an injected `@i18n:` attribute value.
+        final message = _host.createI18nMessage(value);
+        result = LiteralValueSource(dep.token, message);
+      } else {
+        // Value is a literal primitive, such as an injected attribute value.
+        result = LiteralValueSource(dep.token, o.literal(dep.value));
+      }
     }
     if (result == null && !dep.isSkipSelf) {
       result = _getLocalDependency(dep.token);
@@ -235,6 +247,9 @@ abstract class ProvidersNodeHost {
   /// source NodeProviders.
   ProviderSource createDynamicInjectionSource(ProvidersNode source,
       ProviderSource value, CompileTokenMetadata token, bool optional);
+
+  /// Creates an expression that returns the internationalized [message].
+  o.Expression createI18nMessage(I18nMessage message);
 }
 
 class BuiltInSource extends ProviderSource {

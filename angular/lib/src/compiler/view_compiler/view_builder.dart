@@ -345,9 +345,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   void visitProvider(ProviderAst ast, CompileElement parent) {}
 
   @override
-  void visitI18nAttr(I18nAttrAst ast, CompileElement parent) {}
-
-  @override
   void visitI18nText(I18nTextAst ast, CompileElement parent) {
     final nodeIndex = view.nodes.length;
     final message = view.createI18nMessage(ast.value);

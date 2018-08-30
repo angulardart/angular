@@ -1303,7 +1303,7 @@ void main() {
           expect(humanizedAst, [
             [ElementAst, 'img'],
             [AttrAst, 'src', 'puppy.gif'],
-            [I18nAttrAst, 'alt', 'message', 'description', 'meaning'],
+            [AttrAst, 'alt', 'message', 'description', 'meaning'],
           ]);
         });
 
@@ -1320,14 +1320,8 @@ void main() {
           final humanizedAst = humanizeTplAst(ast);
           expect(humanizedAst, [
             [ElementAst, 'div'],
-            [
-              I18nAttrAst,
-              'foo',
-              'foo message',
-              'foo description',
-              'foo meaning'
-            ],
-            [I18nAttrAst, 'bar', 'bar message', 'bar description'],
+            [AttrAst, 'foo', 'foo message', 'foo description', 'foo meaning'],
+            [AttrAst, 'bar', 'bar message', 'bar description'],
           ]);
         });
       });
