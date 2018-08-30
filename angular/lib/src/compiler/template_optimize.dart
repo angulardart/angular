@@ -38,11 +38,22 @@ void _typeNgForLocals(
           Identifiers.NG_FOR_DIRECTIVE.moduleUrl,
       orElse: () => null);
   if (ngFor == null) return; // No `NgFor` to optimize.
-  final ngForOf = ngFor.inputs.firstWhere(
-      (input) => input.templateName == 'ngForOf',
-      orElse: () => null);
-  if (ngForOf == null) return; // No [ngForOf] binding from which to get type.
-  final ngForOfType = getExpressionType(ngForOf.value, component.analyzedClass);
+  BoundExpression ngForOfValue;
+  for (final input in ngFor.inputs) {
+    if (input.templateName == 'ngForOf') {
+      final boundValue = input.value;
+      if (boundValue is BoundExpression) {
+        ngForOfValue = boundValue;
+      }
+      break;
+    }
+  }
+  if (ngForOfValue == null) {
+    // No [ngForOf] binding from which to get type.
+    return;
+  }
+  final ngForOfType =
+      getExpressionType(ngForOfValue.expression, component.analyzedClass);
   // Augment locals set by `NgFor` with type information.
   for (var variable in variables) {
     switch (variable.value) {

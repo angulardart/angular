@@ -5,6 +5,7 @@ import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';
+import 'package:angular_compiler/cli.dart';
 import 'package:source_span/source_span.dart';
 
 import "../compile_metadata.dart";
@@ -16,6 +17,7 @@ import '../template_ast.dart'
         BoundTextAst,
         BoundElementPropertyAst,
         DirectiveAst,
+        BoundExpression,
         PropertyBindingType;
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
@@ -23,6 +25,7 @@ import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'ir/view_storage.dart';
+import 'property_utils.dart' as property;
 import 'view_compiler_utils.dart'
     show
         createFlatArray,
@@ -38,52 +41,77 @@ o.ReadClassMemberExpr _createBindFieldExpr(num exprIndex) =>
 o.ReadVarExpr _createCurrValueExpr(num exprIndex) =>
     o.variable('currVal_$exprIndex');
 
-/// Generates code to bind template expression.
+/// A wrapper that converts [parsedExpression] and forwards to [_bind].
 ///
-/// Called from:
-///   bindRenderInputs, bindDirectiveHostProps
-///       bindAndWriteToRenderer
-///   Element/EmbeddedTemplate visitor
-///       bindDirectiveInputs
-///   ViewBinderVisitor
-///       bindRenderText
-///
-/// If expression result is a literal/const/final code
-/// is added to literalMethod as output to be executed only
-/// once when component is created.
-/// Otherwise statements are added to method to be executed on
-/// each change detection cycle.
-void _bind(
-    CompileDirectiveMetadata viewDirective,
-    ViewNameResolver nameResolver,
-    ViewStorage storage,
-    o.ReadVarExpr currValExpr,
-    o.ReadClassMemberExpr fieldExpr,
-    ast.AST parsedExpression,
-    SourceSpan parsedExpressionSourceSpan,
-    o.Expression context,
-    List<o.Statement> actions,
-    CompileMethod method,
-    CompileMethod literalMethod,
-    {o.OutputType fieldType,
-    bool isHostComponent = false,
-    o.Expression fieldExprInitializer}) {
+/// Historically [_bind] accepted a parsed AST; however, this detail was
+/// abstracted away so that [_bind] could be invoked on synthesized expressions
+/// with no parsed AST. This method acts an adapter between the old interface
+/// and the new.
+void _bindAst(
+  CompileDirectiveMetadata viewDirective,
+  ViewNameResolver nameResolver,
+  ViewStorage storage,
+  o.ReadVarExpr currValExpr,
+  o.ReadClassMemberExpr fieldExpr,
+  ast.AST parsedExpression,
+  SourceSpan parsedExpressionSourceSpan,
+  o.Expression context,
+  List<o.Statement> actions,
+  CompileMethod method,
+  CompileMethod literalMethod, {
+  o.OutputType fieldType,
+  bool isHostComponent = false,
+  o.Expression fieldExprInitializer,
+}) {
   parsedExpression =
       rewriteInterpolate(parsedExpression, viewDirective.analyzedClass);
-  var checkExpression = convertCdExpressionToIr(
-    nameResolver,
-    context,
-    parsedExpression,
-    parsedExpressionSourceSpan,
+  var checkExpression = convertCdExpressionToIr(nameResolver, context,
+      parsedExpression, parsedExpressionSourceSpan, viewDirective, fieldType);
+  _bind(
     viewDirective,
-    fieldType,
+    nameResolver,
+    storage,
+    currValExpr,
+    fieldExpr,
+    checkExpression,
+    isImmutable(parsedExpression, viewDirective.analyzedClass),
+    canBeNull(parsedExpression),
+    actions,
+    method,
+    literalMethod,
+    fieldType: fieldType,
+    isHostComponent: isHostComponent,
+    fieldExprInitializer: fieldExprInitializer,
   );
-  if (isImmutable(parsedExpression, viewDirective.analyzedClass)) {
-    // If the expression is a literal, it will never change, so we can run it
+}
+
+/// Generates code to bind template expression.
+///
+/// If [checkExpression] is immutable, code is added to [literalMethod] to be
+/// executed once when the component is created. Otherwise statements are added
+/// to [method] to be executed on each change detection cycle.
+void _bind(
+  CompileDirectiveMetadata viewDirective,
+  ViewNameResolver nameResolver,
+  ViewStorage storage,
+  o.ReadVarExpr currValExpr,
+  o.ReadClassMemberExpr fieldExpr,
+  o.Expression checkExpression,
+  bool isImmutable,
+  bool isNullable,
+  List<o.Statement> actions,
+  CompileMethod method,
+  CompileMethod literalMethod, {
+  o.OutputType fieldType,
+  bool isHostComponent = false,
+  o.Expression fieldExprInitializer,
+}) {
+  if (isImmutable) {
+    // If the expression is immutable, it will never change, so we can run it
     // once on the first change detection.
     if (!isHostComponent) {
       _bindLiteral(checkExpression, actions, currValExpr.name, fieldExpr.name,
-          literalMethod, canBeNull(parsedExpression));
+          literalMethod, isNullable);
     }
     return;
   }
@@ -154,7 +182,7 @@ void bindRenderText(
   var valueField = _createBindFieldExpr(bindingIndex);
   var dynamicRenderMethod = CompileMethod();
   var constantRenderMethod = CompileMethod();
-  _bind(
+  _bindAst(
     view.component,
     view.nameResolver,
     view.storage,
@@ -183,7 +211,6 @@ void bindRenderText(
 /// For each bound property, creates code to update the binding.
 ///
 /// Example:
-///     this.debug(4,2,5);
 ///     final currVal_1 = this.context.someBoolValue;
 ///     if (import6.checkBinding(this._expr_1,currVal_1)) {
 ///       this.renderer.setElementClass(this._el_4,'disabled',currVal_1);
@@ -300,7 +327,7 @@ void bindAndWriteToRenderer(
         break;
     }
 
-    _bind(
+    _bindAst(
         directiveMeta,
         nameResolver,
         storage,
@@ -456,13 +483,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     // change detection we can directly update it's input.
     // TODO: generalize to SingleInputDirective mixin.
     if (directive.identifier.name == 'NgIf' && input.directiveName == 'ngIf') {
-      var checkExpression = convertCdExpressionToIr(
-          view.nameResolver,
-          DetectChangesVars.cachedCtx,
-          input.value,
-          input.sourceSpan,
-          view.component,
-          o.BOOL_TYPE);
+      var checkExpression = property.expressionForValue(
+          input.value, input.sourceSpan, view, o.BOOL_TYPE);
       dynamicInputsMethod.addStmt(directiveInstance
           .prop(input.directiveName)
           .set(checkExpression)
@@ -471,14 +493,9 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     }
     if (isStatefulDirective) {
       var fieldType = o.importType(directive.inputTypes[input.directiveName]);
-      var checkExpression = convertCdExpressionToIr(
-          view.nameResolver,
-          DetectChangesVars.cachedCtx,
-          input.value,
-          input.sourceSpan,
-          view.component,
-          fieldType);
-      if (isImmutable(input.value, view.component.analyzedClass)) {
+      var checkExpression = property.expressionForValue(
+          input.value, input.sourceSpan, view, fieldType);
+      if (property.isImmutable(input.value, view)) {
         constantInputsMethod.addStmt(directiveInstance
             .prop(input.directiveName)
             .set(checkExpression)
@@ -520,32 +537,34 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     var inputType = inputTypeMeta != null
         ? o.importType(inputTypeMeta, inputTypeMeta.typeArguments)
         : null;
+    var expression = property.expressionForValue(
+        input.value, input.sourceSpan, view, inputType);
     if (isStatefulComp) {
       _bindToUpdateMethod(
-          view,
-          currValExpr,
-          fieldExpr,
-          input.value,
-          input.sourceSpan,
-          DetectChangesVars.cachedCtx,
-          statements,
-          dynamicInputsMethod,
-          fieldType: inputType);
+        view,
+        currValExpr,
+        fieldExpr,
+        expression,
+        statements,
+        dynamicInputsMethod,
+        fieldType: inputType,
+      );
     } else {
       _bind(
-          view.component,
-          view.nameResolver,
-          view.storage,
-          currValExpr,
-          fieldExpr,
-          input.value,
-          input.sourceSpan,
-          DetectChangesVars.cachedCtx,
-          statements,
-          dynamicInputsMethod,
-          constantInputsMethod,
-          fieldType: inputType,
-          isHostComponent: isHostComponent);
+        view.component,
+        view.nameResolver,
+        view.storage,
+        currValExpr,
+        fieldExpr,
+        expression,
+        property.isImmutable(input.value, view),
+        property.isNullable(input.value),
+        statements,
+        dynamicInputsMethod,
+        constantInputsMethod,
+        fieldType: inputType,
+        isHostComponent: isHostComponent,
+      );
     }
   }
   if (constantInputsMethod.isNotEmpty) {
@@ -564,17 +583,14 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
 }
 
 void _bindToUpdateMethod(
-    CompileView view,
-    o.ReadVarExpr currValExpr,
-    o.ReadClassMemberExpr fieldExpr,
-    ast.AST parsedExpression,
-    SourceSpan parseExpressionSourceSpan,
-    o.Expression context,
-    List<o.Statement> actions,
-    CompileMethod method,
-    {o.OutputType fieldType}) {
-  var checkExpression = convertCdExpressionToIr(view.nameResolver, context,
-      parsedExpression, parseExpressionSourceSpan, view.component, fieldType);
+  CompileView view,
+  o.ReadVarExpr currValExpr,
+  o.ReadClassMemberExpr fieldExpr,
+  o.Expression checkExpression,
+  List<o.Statement> actions,
+  CompileMethod method, {
+  o.OutputType fieldType,
+}) {
   if (checkExpression == null) {
     // e.g. an empty expression was given
     return;
@@ -637,23 +653,33 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
     o.InvokeMemberMethodExpr('removeInlinedNodes', destroyArgs).toStmt(),
   ];
 
+  ast.AST inputAst;
+  var inputValue = input.value;
+  if (inputValue is BoundExpression) {
+    // This promotion is require to support the legacy hack in the following if.
+    inputAst = inputValue.expression;
+  } else {
+    // This state is reached if an @i18n message is bound to an *ngIf, which we
+    // know isn't a boolean expression.
+    throwFailure(input.sourceSpan.message('Expected a boolean expression'));
+  }
+
   List<o.Statement> statements;
   ast.AST condition;
-
-  if (isImmutable(input.value, view.component.analyzedClass)) {
+  if (property.isImmutable(input.value, view)) {
     // If the input is immutable, we don't need to handle the case where the
     // condition is false since in that case we simply do nothing.
     statements = <o.Statement>[
       o.IfStmt(currValExpr, buildStmts),
     ];
-    condition = input.value;
+    condition = inputAst;
   } else {
     statements = <o.Statement>[o.IfStmt(currValExpr, buildStmts, destroyStmts)];
     // This hack is to allow legacy NgIf behavior on null inputs
-    condition = ast.Binary('==', input.value, ast.LiteralPrimitive(true));
+    condition = ast.Binary('==', inputAst, ast.LiteralPrimitive(true));
   }
 
-  _bind(
+  _bindAst(
       view.component,
       view.nameResolver,
       view.storage,

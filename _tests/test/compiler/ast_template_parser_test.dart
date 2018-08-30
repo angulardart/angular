@@ -1324,6 +1324,27 @@ void main() {
             [AttrAst, 'bar', 'bar message', 'bar description'],
           ]);
         });
+
+        test('should internationalize directive property', () {
+          final directive = createCompileDirectiveMetadata(
+            selector: 'test',
+            inputs: ['input'],
+          );
+          final ast = parse('''
+            <test [input]="'A message.'" @i18n:input="A description."></test>
+          ''', [directive]);
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'test'],
+            [DirectiveAst, directive],
+            [
+              BoundDirectivePropertyAst,
+              'input',
+              'A message.',
+              'A description.'
+            ],
+          ]);
+        });
       });
     });
 
@@ -1828,6 +1849,22 @@ void main() {
                 '<template> elements\n'
                 '<template @i18n:foo="description"></template>\n'
                 '          ^^^^^^^^^^^^^^^^^^^^^^^'));
+      });
+
+      test('should report error for invalid internationalized expression', () {
+        final directive = createCompileDirectiveMetadata(
+          selector: 'test',
+          inputs: ['input'],
+        );
+        expect(
+          () => parse(
+              '<test [input]="1 + 2" @i18n:input="A description."></test>',
+              [directive]),
+          throwsWith('Internationalized property bindings only support string '
+              'literals\n'
+              '<test [input]="1 + 2" @i18n:input="A description."></test>\n'
+              '      ^^^^^^^^^^^^^^^'),
+        );
       });
     });
 
