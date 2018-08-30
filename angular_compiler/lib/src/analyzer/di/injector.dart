@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular_compiler/cli.dart';
-import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart' show mapMap;
 import 'package:meta/meta.dart' hide literal;
@@ -278,16 +277,20 @@ class InjectorReader {
   /// Returns a revivable `const` invocation as a code_builder [Expression].
   Expression _revive(UseValueProviderElement provider, Revivable invocation) {
     if (invocation.isPrivate) {
-      log.severe(''
-          'While attempting to resolve the "useValue:" for ${provider.token} '
-          '(${invocation.source}), there was no public constructor to use. '
-          'While it is syntatically valid to write this expression: \n'
-          '  const Provider(Foo, useValue: const Foo._())\n\n'
-          '... it is not supported for code generation. Consider either making '
-          'the constructor public, create a static (or top-level) public field '
-          'that invokes the constructor, or using "useFactory" instead to '
-          'create the instance.');
-      return literalNull;
+      final privateReference = invocation.accessor?.isNotEmpty == true
+          ? '${invocation.source}::${invocation.accessor}'
+          : '${invocation.source}';
+      throw BuildError(''
+          'While attempting to resolve a constant value for a provider '
+          '(token = ${provider.token}), there was no way to access '
+          '$privateReference.\n\n'
+          'While it is synactically valid to write the expression, we are '
+          'not able to refer to private references that are inaccessible from '
+          'another library.\n\n'
+          'Consider either making constructor(s) public, creating a static '
+          '(or top-level) public field that references the private one, or use '
+          'a factory provider instead of a value provider to create the '
+          'instance.');
     }
     final import = libraryReader.pathToUrl(invocation.source.removeFragment());
     if (invocation.source.fragment.isNotEmpty) {
@@ -336,7 +339,9 @@ class InjectorReader {
     if (revive != null) {
       return _revive(provider, revive);
     }
-    throw UnsupportedError('Unexpected: $object');
+    // TODO(matanl): Make the error actionable after source_gen#374.
+    // https://github.com/dart-lang/source_gen/issues/374
+    throw BuildError('Could not reference const object ($object)');
   }
 
   Expression _reviveList(
