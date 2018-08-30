@@ -80,6 +80,13 @@ void main() {
     });
     expect(testFixture.text, 'A message in a template!');
   });
+
+  test('should inject an i18n attribute', () async {
+    final testBed = NgTestBed.forComponent(ng.TestInjectI18nAttributeNgFactory);
+    final testFixture = await testBed.create();
+    expect(testFixture.assertOnlyInstance.injectsMessage.message,
+        'An internationalized message.');
+  });
 }
 
 const issuesLink = 'https://github.com/dart-lang/angular/issues';
@@ -177,4 +184,29 @@ class TestI18nTemplate {
 
   @ViewChild('container', read: ViewContainerRef)
   ViewContainerRef viewContainer;
+}
+
+@Component(
+  selector: 'injects-message',
+  template: '',
+)
+class InjectsMessage {
+  final String message;
+
+  InjectsMessage(@Attribute('message') this.message);
+}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <injects-message
+        message="An internationalized message."
+        @i18n:message="A description">
+    </injects-message>
+  ''',
+  directives: [InjectsMessage],
+)
+class TestInjectI18nAttribute {
+  @ViewChild(InjectsMessage)
+  InjectsMessage injectsMessage;
 }

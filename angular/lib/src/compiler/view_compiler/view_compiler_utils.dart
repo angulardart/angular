@@ -11,7 +11,7 @@ import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart';
 import '../output/convert.dart' show typeArgumentsFrom;
 import '../output/output_ast.dart' as o;
-import '../template_ast.dart' show AttrAst;
+import '../template_ast.dart' show AttrAst, LiteralAttributeValue;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart';
 
@@ -390,19 +390,40 @@ Map<String, ast.AST> _toSortedMap(Map<String, ast.AST> data) {
   return result..addAll(data);
 }
 
-// Reads hostAttributes from each directive and merges with declaredHtmlAttrs
-// to return a single map from name to value(expression).
+/// Merges host attributes from [directives] with [declaredHtmlAttrs].
+///
+/// Note that only values for `class` and `style` attributes are actually merged
+/// together. For all other attributes, any collisions are overridden in the
+/// following priority (lowest to highest).
+///
+///   1. Component host attributes.
+///   2. HTML attributes.
+///   3. Directive host attributes.
+///
+/// Note that internationalized (`@i18n:`) attributes are skipped, and handled
+/// separately at the call site. These should be treated with the same priority
+/// as HTML attributes (2), meaning that any merged attribute returned by this
+/// function takes priority over an internationalized attribute of the same name
+/// (since it must have originated from a directive). There's currently a subtle
+/// but where the priority isn't entirely respected, since this logic actually
+/// puts component host attributes ahead of `@i18n` HTML attributes. See
+/// https://github.com/dart-lang/angular/issues/1600.
 Map<String, ast.AST> mergeHtmlAndDirectiveAttrs(
     Map<String, AttrAst> declaredHtmlAttrs,
     List<CompileDirectiveMetadata> directives) {
   var result = <String, ast.AST>{};
   var mergeCount = <String, int>{};
-  declaredHtmlAttrs.forEach((name, attrAst) {
-    result[name] = ast.LiteralPrimitive(attrAst.value);
-    if (mergeCount.containsKey(name)) {
-      mergeCount[name]++;
-    } else {
-      mergeCount[name] = 1;
+  declaredHtmlAttrs.forEach((name, value) {
+    final attributeValue = value.value;
+    // Only HTML attributes with literal values are merged here.
+    // Internationalized attributes are handled separately.
+    if (attributeValue is LiteralAttributeValue) {
+      result[name] = ast.LiteralPrimitive(attributeValue.value);
+      if (mergeCount.containsKey(name)) {
+        mergeCount[name]++;
+      } else {
+        mergeCount[name] = 1;
+      }
     }
   });
   for (CompileDirectiveMetadata directiveMeta in directives) {

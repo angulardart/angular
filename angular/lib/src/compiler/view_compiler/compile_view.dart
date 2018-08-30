@@ -31,6 +31,7 @@ import '../template_ast.dart'
         BoundTextAst,
         ElementAst,
         EmbeddedTemplateAst,
+        I18nAttributeValue,
         NgContentAst,
         ProviderAst,
         ProviderAstType,
@@ -1195,6 +1196,8 @@ class CompileView implements AppViewBuilder {
     List<AttrAst> attrs = elementAst.attrs;
     var htmlAttrs = astAttribListToMap(attrs);
     // Create statements to initialize literal attribute values.
+    // Internationalized attributes are handled separately below, see the
+    // documentation of `mergeHtmlAndDirectiveAttrs` for more information.
     // For example, a directive may have hostAttributes setting class name.
     var attrNameAndValues = mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);
     attrNameAndValues.forEach((name, value) {
@@ -1214,13 +1217,17 @@ class CompileView implements AppViewBuilder {
           elementAst.name, nodeReference.toReadExpr(), name, expression);
       _createMethod.addStmt(stmt);
     });
-    for (final i18nAttr in elementAst.i18nAttrs) {
-      // Don't set any internationalized attributes that were overriden by a
-      // directive host binding.
-      if (!attrNameAndValues.containsKey(i18nAttr.name)) {
-        final message = createI18nMessage(i18nAttr.value);
-        final stmt = createSetAttributeStatement(elementAst.name,
-            nodeReference.toReadExpr(), i18nAttr.name, message);
+    // Handle internationalized (`@i18n:`) attributes.
+    for (final attribute in attrs) {
+      final name = attribute.name;
+      final value = attribute.value;
+      // Don't set any internationalized attributes that were overridden by a
+      // directive host binding above. This implementation has a subtle bug
+      // describe by https://github.com/dart-lang/angular/issues/1600.
+      if (value is I18nAttributeValue && !attrNameAndValues.containsKey(name)) {
+        final message = createI18nMessage(value.value);
+        final stmt = createSetAttributeStatement(
+            elementAst.name, nodeReference.toReadExpr(), name, message);
         _createMethod.addStmt(stmt);
       }
     }

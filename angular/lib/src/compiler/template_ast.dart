@@ -59,10 +59,31 @@ class I18nTextAst implements TemplateAst {
       visitor.visitI18nText(this, context);
 }
 
+/// An abstract attribute value.
+abstract class AttributeValue<T> {
+  T get value;
+}
+
+/// An internationalized attribute value.
+class I18nAttributeValue implements AttributeValue<I18nMessage> {
+  @override
+  I18nMessage value;
+
+  I18nAttributeValue(this.value);
+}
+
+/// A literal attribute value.
+class LiteralAttributeValue implements AttributeValue<String> {
+  @override
+  final String value;
+
+  LiteralAttributeValue(this.value);
+}
+
 /// A plain attribute on an element.
 class AttrAst implements TemplateAst {
   final String name;
-  final String value;
+  final AttributeValue value;
   final SourceSpan sourceSpan;
 
   AttrAst(this.name, this.value, this.sourceSpan);
@@ -85,19 +106,6 @@ class BoundElementPropertyAst implements TemplateAst {
 
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
       visitor.visitElementProperty(this, context);
-}
-
-/// An internationalized attribute on an element.
-class I18nAttrAst implements TemplateAst {
-  final String name;
-  final I18nMessage value;
-  final SourceSpan sourceSpan;
-
-  I18nAttrAst(this.name, this.value, this.sourceSpan);
-
-  @override
-  R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
-      visitor.visitI18nAttr(this, context);
 }
 
 /// Public part of ProviderElementContext passed to
@@ -160,7 +168,6 @@ class VariableAst implements TemplateAst {
 class ElementAst implements TemplateAst {
   final String name;
   final List<AttrAst> attrs;
-  final List<I18nAttrAst> i18nAttrs;
   final List<BoundElementPropertyAst> inputs;
   final List<BoundEventAst> outputs;
   final List<ReferenceAst> references;
@@ -174,7 +181,6 @@ class ElementAst implements TemplateAst {
   ElementAst(
       this.name,
       this.attrs,
-      this.i18nAttrs,
       this.inputs,
       this.outputs,
       this.references,
@@ -400,7 +406,6 @@ abstract class TemplateAstVisitor<R, C> {
   R visitDirective(DirectiveAst ast, C context);
   R visitDirectiveProperty(BoundDirectivePropertyAst ast, C context);
   R visitProvider(ProviderAst providerAst, C context);
-  R visitI18nAttr(I18nAttrAst ast, C context);
   R visitI18nText(I18nTextAst ast, C context);
 }
 

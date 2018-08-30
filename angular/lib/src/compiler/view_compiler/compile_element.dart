@@ -9,6 +9,7 @@ import '../compile_metadata.dart'
         CompileTokenMetadata,
         CompileQueryMetadata,
         CompileProviderMetadata;
+import '../i18n/message.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
@@ -446,6 +447,10 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       hasDynamicDependencies: hasDynamicDependencies,
     );
   }
+
+  @override
+  o.Expression createI18nMessage(I18nMessage message) =>
+      view.createI18nMessage(message);
 
   List<o.Expression> getProviderTokens() {
     return _resolvedProvidersArray

@@ -186,8 +186,6 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
 
   void visitProvider(ProviderAst ast, dynamic context) {}
 
-  void visitI18nAttr(I18nAttrAst ast, dynamic context) {}
-
   void visitI18nText(I18nTextAst ast, dynamic context) {
     _nodeIndex++;
   }

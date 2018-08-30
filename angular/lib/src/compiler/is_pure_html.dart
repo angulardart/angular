@@ -60,8 +60,5 @@ class IsPureHtmlVisitor extends TemplateAstVisitor<bool, Null> {
   bool visitVariable(VariableAst ast, _) => false;
 
   @override
-  bool visitI18nAttr(I18nAttrAst ast, _) => false;
-
-  @override
   bool visitI18nText(I18nTextAst ast, _) => false;
 }

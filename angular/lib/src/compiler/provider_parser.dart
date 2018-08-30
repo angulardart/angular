@@ -17,6 +17,7 @@ import 'template_ast.dart'
     show
         ReferenceAst,
         AttrAst,
+        AttributeValue,
         DirectiveAst,
         ProviderAst,
         ProviderAstType,
@@ -65,7 +66,7 @@ class ProviderElementContext implements ElementProviderUsage {
   final _transformedProviders = CompileTokenMap<ProviderAst>();
   final _seenProviders = CompileTokenMap<bool>();
   CompileTokenMap<ProviderAst> _allProviders;
-  Map<String, String> _attrs;
+  final _attrs = <String, AttributeValue>{};
   bool _requiresViewContainer = false;
 
   ProviderElementContext(
@@ -76,7 +77,6 @@ class ProviderElementContext implements ElementProviderUsage {
       List<AttrAst> attrs,
       List<ReferenceAst> refs,
       this._sourceSpan) {
-    this._attrs = {};
     for (var attrAst in attrs) {
       _attrs[attrAst.name] = attrAst.value;
     }
@@ -258,8 +258,10 @@ class ProviderElementContext implements ElementProviderUsage {
       ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep,
       [bool eager]) {
     if (dep.isAttribute) {
-      var attrValue = this._attrs[dep.token.value];
-      return CompileDiDependencyMetadata(isValue: true, value: attrValue);
+      // Could be a literal attribute (String), internationalized attribute
+      // (I18nMessage), or null if there was no matching attribute.
+      final attributeValue = _attrs[dep.token.value]?.value;
+      return CompileDiDependencyMetadata(isValue: true, value: attributeValue);
     }
     if (dep.token != null) {
       // access built-ins
