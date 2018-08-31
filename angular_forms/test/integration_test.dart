@@ -774,7 +774,7 @@ void main() {
   ],
 )
 class WrappedAccessor implements ControlValueAccessor {
-  @HostBinding('value')
+  @HostBinding('attr.value')
   var value;
 
   Function onChange;
