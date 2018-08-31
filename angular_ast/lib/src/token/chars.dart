@@ -244,6 +244,7 @@ const NAMED_ENTITIES = {
   "upsilon": "υ",
   "Uuml": "Ü",
   "uuml": "ü",
+  "vellip": "⋮",
   "weierp": "℘",
   "Xi": "Ξ",
   "xi": "ξ",
