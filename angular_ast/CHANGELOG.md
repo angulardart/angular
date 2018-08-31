@@ -7,6 +7,8 @@
 
 *   When parsing a failed micro expression (i.e. `*ngFor`), avoids a type error.
 
+*   `vellip` is now a recognized char.
+
 ## 0.5.6
 
 *   Maintenance release to support Dart 2.0 stable.
