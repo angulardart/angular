@@ -1,4 +1,3 @@
-import 'package:angular/src/core/di.dart' show Injector;
 import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular/src/runtime.dart';
 
@@ -86,16 +85,4 @@ class RenderComponentType {
     }
     return target;
   }
-}
-
-abstract class RenderDebugInfo {
-  Injector get injector;
-
-  dynamic get component;
-
-  List<dynamic> get providerTokens;
-
-  Map<String, dynamic> get locals;
-
-  String get source;
 }
