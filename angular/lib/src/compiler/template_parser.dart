@@ -7,13 +7,12 @@ import 'compile_metadata.dart'
         CompileDirectiveMetadata,
         CompileIdentifierMetadata,
         CompilePipeMetadata;
-import 'expression_parser/ast.dart';
 import 'expression_parser/parser.dart' show Parser;
 import 'parse_util.dart';
 import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import 'selector.dart' show CssSelector;
 import 'template_ast.dart'
-    show BoundElementPropertyAst, PropertyBindingType, TemplateAst;
+    show BoundElementPropertyAst, BoundValue, PropertyBindingType, TemplateAst;
 
 const _classAttribute = 'class';
 const _propertyPartsSeparator = '.';
@@ -77,7 +76,7 @@ typedef void ErrorCallback(String message, SourceSpan sourceSpan,
 BoundElementPropertyAst createElementPropertyAst(
     String elementName,
     String name,
-    AST valueExpr,
+    BoundValue value,
     SourceSpan sourceSpan,
     ElementSchemaRegistry schemaRegistry,
     ErrorCallback reportError) {
@@ -148,7 +147,7 @@ BoundElementPropertyAst createElementPropertyAst(
     boundPropertyName,
     bindingType,
     securityContext,
-    valueExpr,
+    value,
     unit,
     sourceSpan,
   );

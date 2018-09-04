@@ -68,8 +68,6 @@ void _bindAst(
   var checkExpression = convertCdExpressionToIr(nameResolver, context,
       parsedExpression, parsedExpressionSourceSpan, viewDirective, fieldType);
   _bind(
-    viewDirective,
-    nameResolver,
     storage,
     currValExpr,
     fieldExpr,
@@ -91,8 +89,6 @@ void _bindAst(
 /// executed once when the component is created. Otherwise statements are added
 /// to [method] to be executed on each change detection cycle.
 void _bind(
-  CompileDirectiveMetadata viewDirective,
-  ViewNameResolver nameResolver,
   ViewStorage storage,
   o.ReadVarExpr currValExpr,
   o.ReadClassMemberExpr fieldExpr,
@@ -326,21 +322,30 @@ void bindAndWriteToRenderer(
         updateStmts.add(updateStyleExpr.toStmt());
         break;
     }
-
-    _bindAst(
-        directiveMeta,
-        nameResolver,
-        storage,
-        currValExpr,
-        fieldExpr,
-        boundProp.value,
-        boundProp.sourceSpan,
-        context,
-        updateStmts,
-        dynamicPropertiesMethod,
-        constantPropertiesMethod,
-        fieldType: fieldType,
-        isHostComponent: isHostComponent);
+    final checkExpression = property.expressionForValue(
+      boundProp.value,
+      boundProp.sourceSpan,
+      directiveMeta,
+      nameResolver,
+      fieldType,
+      // Explicitly provide the implicit receiver since this could be binding a
+      // host property in a directive change detector which has no reference to
+      // the host component typically used as implicit receiver.
+      implicitReceiver: context,
+    );
+    _bind(
+      storage,
+      currValExpr,
+      fieldExpr,
+      checkExpression,
+      property.isImmutable(boundProp.value, directiveMeta),
+      property.isNullable(boundProp.value),
+      updateStmts,
+      dynamicPropertiesMethod,
+      constantPropertiesMethod,
+      fieldType: fieldType,
+      isHostComponent: isHostComponent,
+    );
   }
   if (constantPropertiesMethod.isNotEmpty) {
     targetMethod.addStmtsIfFirstCheck(constantPropertiesMethod.finish());
@@ -483,8 +488,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     // change detection we can directly update it's input.
     // TODO: generalize to SingleInputDirective mixin.
     if (directive.identifier.name == 'NgIf' && input.directiveName == 'ngIf') {
-      var checkExpression = property.expressionForValue(
-          input.value, input.sourceSpan, view, o.BOOL_TYPE);
+      var checkExpression = property.expressionForValue(input.value,
+          input.sourceSpan, view.component, view.nameResolver, o.BOOL_TYPE);
       dynamicInputsMethod.addStmt(directiveInstance
           .prop(input.directiveName)
           .set(checkExpression)
@@ -493,9 +498,9 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     }
     if (isStatefulDirective) {
       var fieldType = o.importType(directive.inputTypes[input.directiveName]);
-      var checkExpression = property.expressionForValue(
-          input.value, input.sourceSpan, view, fieldType);
-      if (property.isImmutable(input.value, view)) {
+      var checkExpression = property.expressionForValue(input.value,
+          input.sourceSpan, view.component, view.nameResolver, fieldType);
+      if (property.isImmutable(input.value, view.component)) {
         constantInputsMethod.addStmt(directiveInstance
             .prop(input.directiveName)
             .set(checkExpression)
@@ -537,8 +542,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     var inputType = inputTypeMeta != null
         ? o.importType(inputTypeMeta, inputTypeMeta.typeArguments)
         : null;
-    var expression = property.expressionForValue(
-        input.value, input.sourceSpan, view, inputType);
+    var expression = property.expressionForValue(input.value, input.sourceSpan,
+        view.component, view.nameResolver, inputType);
     if (isStatefulComp) {
       _bindToUpdateMethod(
         view,
@@ -551,13 +556,11 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
       );
     } else {
       _bind(
-        view.component,
-        view.nameResolver,
         view.storage,
         currValExpr,
         fieldExpr,
         expression,
-        property.isImmutable(input.value, view),
+        property.isImmutable(input.value, view.component),
         property.isNullable(input.value),
         statements,
         dynamicInputsMethod,
@@ -666,7 +669,7 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
 
   List<o.Statement> statements;
   ast.AST condition;
-  if (property.isImmutable(input.value, view)) {
+  if (property.isImmutable(input.value, view.component)) {
     // If the input is immutable, we don't need to handle the case where the
     // condition is false since in that case we simply do nothing.
     statements = <o.Statement>[

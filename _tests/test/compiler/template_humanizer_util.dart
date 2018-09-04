@@ -67,13 +67,9 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   }
 
   void visitElementProperty(BoundElementPropertyAst ast, _) {
-    var res = [
-      BoundElementPropertyAst,
-      ast.type,
-      ast.name,
-      expressionUnparser.unparse(ast.value),
-      ast.unit
-    ];
+    var res = [BoundElementPropertyAst, ast.type, ast.name]
+      ..addAll(_humanizeBoundValue(ast.value))
+      ..add(ast.unit);
     result.add(_appendContext(ast, res));
   }
 
@@ -116,26 +112,9 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   }
 
   void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {
-    final humanizedAst = [
-      BoundDirectivePropertyAst,
-      ast.directiveName,
-    ];
-    final value = ast.value;
-    // Theses `BoundValue` types may eventually extend `TemplateAst` so that
-    // this logic could be handled in a visit method; however, for now there are
-    // so few cases where this would be beneficially that the cost of having to
-    // implement these methods everywhere else outweighs the benefit here.
-    if (value is BoundExpression) {
-      humanizedAst.add(expressionUnparser.unparse(value.expression));
-    } else if (value is BoundI18nMessage) {
-      humanizedAst
-        ..add(value.message.text)
-        ..add(value.message.metadata.description);
-      if (value.message.metadata.meaning != null) {
-        humanizedAst.add(value.message.metadata.meaning);
-      }
-    }
-    result.add(_appendContext(ast, humanizedAst));
+    final res = [BoundDirectivePropertyAst, ast.directiveName]
+      ..addAll(_humanizeBoundValue(ast.value));
+    result.add(_appendContext(ast, res));
   }
 
   void visitProvider(ProviderAst ast, _) {}
@@ -155,6 +134,23 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     if (!includeSourceSpan) return input;
     input.add(ast.sourceSpan.text);
     return input;
+  }
+
+  // Theses `BoundValue` types may eventually extend `TemplateAst` so that
+  // this logic could be handled in a visit method; however, for now there are
+  // so few cases where this would be beneficially that the cost of having to
+  // implement these methods everywhere else outweighs the benefit here.
+  List<dynamic> _humanizeBoundValue(BoundValue value) {
+    final res = <dynamic>[];
+    if (value is BoundExpression) {
+      res.add(expressionUnparser.unparse(value.expression));
+    } else if (value is BoundI18nMessage) {
+      res..add(value.message.text)..add(value.message.metadata.description);
+      if (value.message.metadata.meaning != null) {
+        res.add(value.message.metadata.meaning);
+      }
+    }
+    return res;
   }
 }
 

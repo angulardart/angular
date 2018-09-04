@@ -2,28 +2,43 @@ import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 
 import '../analyzed_class.dart' as analyzer;
+import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart';
-import 'compile_view.dart';
 import 'constants.dart';
-import 'expression_converter.dart';
+import 'expression_converter.dart' show convertCdExpressionToIr, NameResolver;
 
-/// Returns the expression of [type] that binds [value] in [view].
+/// Returns an expression that binds a [value] of [type].
+///
+/// The [sourceSpan] of [value] is used for reporting any errors that may occur
+/// during expression conversion.
+///
+/// The directive [metadata] provides compile-time information about the context
+/// in which [value] is evaluated at run-time.
+///
+/// The [nameResolver] is used to resolve any references in the resulting
+/// expression.
+///
+/// The [implicitReceiver], which is the receiver on which bound expressions are
+/// evaluated at run-time, defaults to the host component instance, but can be
+/// overridden if necessary.
 o.Expression expressionForValue(
   BoundValue value,
   SourceSpan sourceSpan,
-  CompileView view,
-  o.OutputType type,
-) {
+  CompileDirectiveMetadata metadata,
+  NameResolver nameResolver,
+  o.OutputType type, {
+  o.Expression implicitReceiver,
+}) {
   if (value is BoundExpression) {
-    final rewrittenAst = analyzer.rewriteInterpolate(
-        value.expression, view.component.analyzedClass);
+    final rewrittenAst =
+        analyzer.rewriteInterpolate(value.expression, metadata.analyzedClass);
     return convertCdExpressionToIr(
-      view.nameResolver,
-      DetectChangesVars.cachedCtx,
+      nameResolver,
+      implicitReceiver ?? DetectChangesVars.cachedCtx,
       rewrittenAst,
       sourceSpan,
-      view.component,
+      metadata,
       type,
     );
   } else if (value is BoundI18nMessage) {
@@ -32,10 +47,13 @@ o.Expression expressionForValue(
   _throwUnrecognized(value);
 }
 
-/// Returns whether [value] bound in [view] can change during its lifetime.
-bool isImmutable(BoundValue value, CompileView view) {
+/// Returns whether [value] can change during its lifetime.
+///
+/// The directive [metadata] provides compile-time information about the context
+/// in which [value] is evaluated at run-time.
+bool isImmutable(BoundValue value, CompileDirectiveMetadata metadata) {
   if (value is BoundExpression) {
-    return analyzer.isImmutable(value.expression, view.component.analyzedClass);
+    return analyzer.isImmutable(value.expression, metadata.analyzedClass);
   } else if (value is BoundI18nMessage) {
     return true;
   }

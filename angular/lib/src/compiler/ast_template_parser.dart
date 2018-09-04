@@ -261,14 +261,15 @@ class _BindDirectivesVisitor
       var parsedInterpolation = elementContext.templateContext.parser
           .parseInterpolation(attribute.value, _location(attribute),
               elementContext.templateContext.exports);
-      if (elementContext.bindInterpolationToDirective(
-          attribute, parsedInterpolation)) {
+      var boundValue = elementContext.createBoundValue(
+          attribute.name, parsedInterpolation, attribute.sourceSpan);
+      if (elementContext.bindInterpolationToDirective(attribute, boundValue)) {
         return null;
       }
       return createElementPropertyAst(
           elementContext.elementName,
           attribute.name,
-          parsedInterpolation,
+          boundValue,
           attribute.sourceSpan,
           elementContext.templateContext.schemaRegistry,
           elementContext.templateContext.reportError);
@@ -392,13 +393,15 @@ class _BindDirectivesVisitor
   ng.TemplateAst visitProperty(ast.PropertyAst astNode,
       [_ParseContext context]) {
     try {
-      var value = context.templateContext.parser.parseBinding(
+      var parsedValue = context.templateContext.parser.parseBinding(
           astNode.value ?? '',
           _location(astNode),
           context.templateContext.exports);
+      var boundValue = context.createBoundValue(
+          astNode.name, parsedValue, astNode.sourceSpan);
 
       // Attempt binding to a directive input.
-      if (context.bindPropertyToDirective(astNode, value)) return null;
+      if (context.bindPropertyToDirective(astNode, boundValue)) return null;
 
       // Properties on a <template> must be bound to directive inputs since
       // <template> is not an HTML element.
@@ -415,12 +418,11 @@ class _BindDirectivesVisitor
         context.templateContext.reportError(message, astNode.sourceSpan);
         return null;
       }
-
       // Attempt binding to an HTML element property.
       return createElementPropertyAst(
           context.elementName,
           _getPropertyName(astNode),
-          value,
+          boundValue,
           astNode.sourceSpan,
           context.templateContext.schemaRegistry,
           context.templateContext.reportError);
@@ -615,25 +617,28 @@ class _ParseContext {
     return isTemplate ? identifierToken(Identifiers.TemplateRef) : null;
   }
 
-  void bindLiteralToDirective(ast.AttributeAst astNode) => _bindToDirective(
-      boundDirectives,
-      astNode.name,
-      astNode.value == null
-          ? EmptyExpr()
-          : templateContext.parser
-              .wrapLiteralPrimitive(astNode.value, _location(astNode)),
-      astNode.sourceSpan);
+  void bindLiteralToDirective(ast.AttributeAst astNode) {
+    final parsedValue = astNode.value == null
+        ? EmptyExpr()
+        : templateContext.parser
+            .wrapLiteralPrimitive(astNode.value, _location(astNode));
+    final boundValue =
+        createBoundValue(astNode.name, parsedValue, astNode.sourceSpan);
+    _bindToDirective(
+        boundDirectives, astNode.name, boundValue, astNode.sourceSpan);
+  }
 
-  bool bindPropertyToDirective(ast.PropertyAst astNode, AST value) =>
+  bool bindPropertyToDirective(ast.PropertyAst astNode, ng.BoundValue value) =>
       _bindToDirective(boundDirectives, _getPropertyName(astNode), value,
           astNode.sourceSpan);
 
-  bool bindInterpolationToDirective(ast.AttributeAst astNode, AST value) =>
+  bool bindInterpolationToDirective(
+          ast.AttributeAst astNode, ng.BoundValue value) =>
       _bindToDirective(
           boundDirectives, astNode.name, value, astNode.sourceSpan);
 
   bool _bindToDirective(List<ng.DirectiveAst> directives, String name,
-      AST value, SourceSpan sourceSpan) {
+      ng.BoundValue value, SourceSpan sourceSpan) {
     bool foundMatch = false;
     directive:
     for (var directive in directives) {
@@ -641,9 +646,8 @@ class _ParseContext {
         var templateName = directive.directive.inputs[directiveName];
         if (templateName == name) {
           _removeExisting(directive.inputs, templateName);
-          var boundValue = _createBoundValue(templateName, value, sourceSpan);
           directive.inputs.add(ng.BoundDirectivePropertyAst(
-              directiveName, templateName, boundValue, sourceSpan));
+              directiveName, templateName, value, sourceSpan));
           foundMatch = true;
           continue directive;
         }
@@ -652,7 +656,7 @@ class _ParseContext {
     return foundMatch;
   }
 
-  ng.BoundValue _createBoundValue(
+  ng.BoundValue createBoundValue(
     String name,
     AST value,
     SourceSpan sourceSpan,
@@ -764,7 +768,7 @@ class _ParseContext {
         result.add(createElementPropertyAst(
             elementName,
             propName,
-            expression,
+            ng.BoundExpression(expression),
             sourceSpan,
             templateContext.schemaRegistry,
             templateContext.reportError));
@@ -1253,7 +1257,10 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
 
   @override
   ng.TemplateAst visitElementProperty(ng.BoundElementPropertyAst ast, _) {
-    _validatePipes(ast.value, ast.sourceSpan);
+    final boundValue = ast.value;
+    if (boundValue is ng.BoundExpression) {
+      _validatePipes(boundValue.expression, ast.sourceSpan);
+    }
     return super.visitElementProperty(ast, null);
   }
 

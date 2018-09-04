@@ -1345,6 +1345,28 @@ void main() {
             ],
           ]);
         });
+
+        // Note there's no reason you'd actually write this over using `alt` as
+        // an attribute directly, however this tests the code path that will be
+        // used when interpolations inside internationalized attribute bindings
+        // are supported.
+        test('should internationalize element property', () {
+          final ast = parse('''
+            <img [alt]="'A message.'" @i18n:alt="A description.">
+          ''');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'img'],
+            [
+              BoundElementPropertyAst,
+              PropertyBindingType.property,
+              'alt',
+              'A message.',
+              'A description.',
+              null, // unit
+            ],
+          ]);
+        });
       });
     });
 
