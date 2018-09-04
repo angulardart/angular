@@ -203,7 +203,7 @@ void bindViewHostProperties(CompileView view, Parser parser,
   hostProps.forEach((String propName, ast.AST expression) {
     var elementName = view.component.selector;
     hostProperties.add(createElementPropertyAst(elementName, propName,
-        expression, span, schemaRegistry, errorCallback));
+        BoundExpression(expression), span, schemaRegistry, errorCallback));
   });
 
   final CompileMethod method = CompileMethod();

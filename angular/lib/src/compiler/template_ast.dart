@@ -96,7 +96,7 @@ class AttrAst implements TemplateAst {
 class BoundElementPropertyAst implements TemplateAst {
   final String name;
   final PropertyBindingType type;
-  final AST value;
+  final BoundValue value;
   final String unit;
   final SourceSpan sourceSpan;
   final TemplateSecurityContext securityContext;

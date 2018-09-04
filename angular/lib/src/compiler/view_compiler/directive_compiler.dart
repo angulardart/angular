@@ -11,7 +11,7 @@ import '../output/convert.dart' show typeArgumentsFrom;
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart' show ElementSchemaRegistry;
-import "../template_ast.dart" show BoundElementPropertyAst;
+import "../template_ast.dart" show BoundElementPropertyAst, BoundExpression;
 import '../template_parser.dart';
 import 'compile_method.dart';
 import 'compile_view.dart' show CompileViewStorage;
@@ -132,8 +132,13 @@ class DirectiveCompiler {
     var span = SourceSpan(SourceLocation(0), SourceLocation(0), '');
     hostProps.forEach((String propName, ast.AST expression) {
       const securityContextElementName = 'div';
-      hostProperties.add(createElementPropertyAst(securityContextElementName,
-          propName, expression, span, _schemaRegistry, errorHandler));
+      hostProperties.add(createElementPropertyAst(
+          securityContextElementName,
+          propName,
+          BoundExpression(expression),
+          span,
+          _schemaRegistry,
+          errorHandler));
     });
 
     _hasChangeDetector = true;
