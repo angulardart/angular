@@ -1,3 +1,43 @@
+### New features
+
+*   Added support for generic components and directives.
+
+    Type arguments can now be specified for any generic components and
+    directives via `Typed` instances passed to the `Component` annotation's
+    `directiveTypes` parameter.
+
+    ```dart
+    @Component(
+      selector: 'generic',
+      template: '{{value}}',
+    )
+    class GenericComponent<T> {
+      @Input()
+      T value;
+    }
+
+    @Component(
+      selector: 'example',
+      template: '''
+        <generic [value]="value"></generic>
+      ''',
+      directives: [
+        GenericComponent,
+      ],
+      directiveTypes: [
+        Typed<GenericComponent<String>>(),
+      ],
+    )
+    class ExampleComponent {
+      var value = 'Hello generics!';
+    }
+    ```
+
+    The `Typed` class also has support for typing specific component and
+    directive instances by `#`-reference, and flowing generic type parameters
+    from the annotated component as type arguments to its children. See its
+    documentation for details.
+
 ### Bug fixes
 
 *   [#1538][]: A compile-time error is reported if the `@deferred` template
