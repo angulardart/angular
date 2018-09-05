@@ -1,6 +1,4 @@
 import 'package:angular/angular.dart';
-// TODO(leonsenft): remove when `Typed` is exported publicly.
-import 'package:angular/src/core/metadata/typed.dart';
 
 /// A component with no generic type parameters.
 @Component(

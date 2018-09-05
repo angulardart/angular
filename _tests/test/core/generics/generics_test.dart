@@ -2,8 +2,6 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart';
-// TODO(https://github.com/dart-lang/angular/issues/1530):
-import 'package:angular/src/core/metadata/typed.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 

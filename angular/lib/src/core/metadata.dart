@@ -17,8 +17,7 @@ export 'metadata/lifecycle_hooks.dart'
         OnDestroy,
         OnInit,
         DoCheck;
-// TODO(leonsenft): export when support for generics is complete.
-// export 'metadata/typed.dart';
+export 'metadata/typed.dart';
 export 'metadata/view.dart';
 export 'metadata/visibility.dart';
 

@@ -9,14 +9,9 @@ import '../../src/compile.dart';
 import '../../src/resolve.dart';
 
 const testImport = 'asset:test_lib/lib/test_lib.dart';
-// TODO(leonsenft): remove when `Typed` is exported publicly.
-final typedImport =
-    angular.replaceFirst('angular.dart', 'src/core/metadata/typed.dart');
 
 Future<TypedElement> parse(String source) async {
   final amendedSource = '''
-    import "$typedImport";
-
     @Component()
     class GenericComponent<T> {}
 
@@ -223,7 +218,6 @@ void main() {
     test('if a concrete type is used as a type argument of "Typed"', () async {
       await compilesExpecting(
         '''
-        import '$typedImport';
         @Directive()
         class ConcreteDirective {}
         const typed = Typed<ConcreteDirective>();
@@ -243,7 +237,6 @@ void main() {
     test('if a non-existent type parameter is flowed', () async {
       await compilesExpecting(
         '''
-        import '$typedImport';
         @Component()
         class GenericComponent<T> {}
         const typed = Typed<GenericComponent>.of([#X]);
@@ -263,7 +256,6 @@ void main() {
     test("if a type argument isn't a supported type", () async {
       await compilesExpecting(
         '''
-        import '$typedImport';
         @Component()
         class GenericComponent<T> {}
         const typed = Typed<GenericComponent>.of([12]);
@@ -283,7 +275,6 @@ void main() {
     test('if "Typed.on" is specified anywhere other than the root', () async {
       await compilesExpecting(
         '''
-        import '$typedImport';
         @Component()
         class GenericComponent<T> {}
         const typed = Typed<GenericComponent>.of([
@@ -305,7 +296,6 @@ void main() {
     test('if a directive with bounded type parameters is typed', () async {
       await compilesExpecting(
         '''
-        import '$typedImport';
         @Component()
         class GenericComponent<T extends num> {}
         const typed = Typed<GenericComponent<int>>();
@@ -324,7 +314,6 @@ void main() {
     test('if "Typed" isn\'t applied to a directive', () async {
       await compilesExpecting(
         '''
-        import '$typedImport';
         const typed = Typed<List<int>>();
 
         @typed
