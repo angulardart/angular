@@ -38,7 +38,6 @@ class ViewI18nTextComponent0 extends AppView<import1.I18nTextComponent> {
     final _text_1 = import6.Text(_message_0);
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 

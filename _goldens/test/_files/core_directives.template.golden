@@ -48,7 +48,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
     _NgFor_1_9 = import4.NgFor(_appEl_1, _TemplateRef_1_8);
     init([], null);
-    return null;
   }
 
   @override
@@ -101,7 +100,6 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     _el_1.append(_text_2);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
     init0(_el_0);
-    return null;
   }
 
   @override

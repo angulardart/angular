@@ -39,7 +39,6 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     final _el_1 = createDivAndAppend(doc, _el_0);
     import1.generateTextDirective(_el_0, parentView.injectorGet(import1.TextService, viewData.parentIndex));
     init(const [], null);
-    return null;
   }
 }
 

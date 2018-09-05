@@ -38,7 +38,6 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
     final _text_0 = import5.Text('Hello');
     parentRenderNode.append(_text_0);
     init(const [], null);
-    return null;
   }
 }
 

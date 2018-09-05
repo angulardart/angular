@@ -36,7 +36,6 @@ class ViewTestComponent0 extends AppView<import1.TestComponent> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 

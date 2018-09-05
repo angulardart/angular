@@ -38,7 +38,6 @@ class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -105,7 +104,6 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
     _UntypedComp_0_5 = import1.UntypedComp();
     _compView_0.create(_UntypedComp_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -179,7 +177,6 @@ class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -246,7 +243,6 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
     _GenericComp_0_5 = import1.GenericComp();
     _compView_0.create(_GenericComp_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -320,7 +316,6 @@ class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -388,7 +383,6 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
     _MappingComp1_0_5 = import1.MappingComp1();
     _compView_0.create(_MappingComp1_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -467,7 +461,6 @@ class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -534,7 +527,6 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
     _MappingComp2_0_5 = import1.MappingComp2();
     _compView_0.create(_MappingComp2_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -608,7 +600,6 @@ class ViewBoundComp0 extends AppView<import1.BoundComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -675,7 +666,6 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
     _BoundComp_0_5 = import1.BoundComp();
     _compView_0.create(_BoundComp_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -758,7 +748,6 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
     _BoundComp_0_5 = import1.BoundComp();
     _compView_0.create(_BoundComp_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -832,7 +821,6 @@ class ViewSelfBoundComp0 extends AppView<import1.SelfBoundComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -900,7 +888,6 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
     _SelfBoundComp_0_5 = import1.SelfBoundComp();
     _compView_0.create(_SelfBoundComp_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -979,7 +966,6 @@ class ViewRecursiveComp0 extends AppView<import1.RecursiveComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -1046,7 +1032,6 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
     _RecursiveComp_0_5 = import1.RecursiveComp();
     _compView_0.create(_RecursiveComp_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -1120,7 +1105,6 @@ class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -1187,7 +1171,6 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
     _FunctionTypeComp_0_5 = import1.FunctionTypeComp();
     _compView_0.create(_FunctionTypeComp_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -1289,7 +1272,6 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
     });
     _NgFor_2_9 = import11.NgFor(_appEl_2, _TemplateRef_2_8);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -1345,7 +1327,6 @@ class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
     _NestedChildComp_0_5 = import1.NestedChildComp();
     _compView_0.create(_NestedChildComp_0_5, []);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -1419,7 +1400,6 @@ class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -1488,7 +1468,6 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
     _NestedParentComp_0_5 = import1.NestedParentComp();
     _compView_0.create(_NestedParentComp_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -1590,7 +1569,6 @@ class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> 
     _GenericComp_1_5 = import1.GenericComp();
     _compView_1.create(_GenericComp_1_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -1678,7 +1656,6 @@ class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDe
     createAttr(_el_0, 'generic', '');
     _GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
     init(const [], null);
-    return null;
   }
 
   @override

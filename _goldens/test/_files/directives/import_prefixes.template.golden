@@ -38,7 +38,6 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'child-comp', parentRenderNode);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -111,7 +110,6 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
     _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
     init(const [], null);
-    return null;
   }
 
   @override

@@ -37,7 +37,6 @@ class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
     _el_0.addEventListener('click', eventHandler1(ctx.onClick));
     _el_0.addEventListener('blur', eventHandler0(ctx.onBlur));
     init(const [], null);
-    return null;
   }
 }
 

@@ -44,7 +44,6 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
     _NgFor_0_9 = import3.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -88,7 +87,6 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
     _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -128,7 +126,6 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
     _text_1 = import7.Text('');
     _el_0.append(_text_1);
     init0(_el_0);
-    return null;
   }
 
   @override

@@ -62,7 +62,6 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     ctx.readDIFromElement = _el_1;
     ctx.readDIFromHtmlElement = _el_1;
     init(const [], null);
-    return null;
   }
 
   @override
@@ -112,7 +111,6 @@ class _ViewQueriesComponent1 extends AppView<import1.QueriesComponent> {
     _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -193,7 +191,6 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_7 = TemplateRef(_appEl_2, viewFactory_EmbeddedQueries2);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -231,7 +228,6 @@ class _ViewEmbeddedQueries1 extends AppView<import1.EmbeddedQueries> {
     _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -256,7 +252,6 @@ class _ViewEmbeddedQueries2 extends AppView<import1.EmbeddedQueries> {
     _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -335,7 +330,6 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_7 = TemplateRef(_appEl_2, viewFactory_EmbeddedQueriesList2);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -373,7 +367,6 @@ class _ViewEmbeddedQueriesList1 extends AppView<import1.EmbeddedQueriesList> {
     _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -398,7 +391,6 @@ class _ViewEmbeddedQueriesList2 extends AppView<import1.EmbeddedQueriesList> {
     _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -469,7 +461,6 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_NestedNgForQueriesList1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -517,7 +508,6 @@ class _ViewNestedNgForQueriesList1 extends AppView<import1.NestedNgForQueriesLis
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -553,7 +543,6 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList3);
     _NgFor_1_9 = import13.NgFor(_appEl_1, _TemplateRef_1_8);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -595,7 +584,6 @@ class _ViewNestedNgForQueriesList3 extends AppView<import1.NestedNgForQueriesLis
     _el_1 = createAndAppend(doc, 'another', _el_0);
     _AnotherDirective_1_5 = import1.AnotherDirective();
     init0(_el_0);
-    return null;
   }
 
   @override

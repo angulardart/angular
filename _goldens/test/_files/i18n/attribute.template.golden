@@ -37,7 +37,6 @@ class ViewI18nAttributeComponent0 extends AppView<import1.I18nAttributeComponent
     final _el_0 = createAndAppend(doc, 'img', parentRenderNode);
     createAttr(_el_0, 'alt', _message_0);
     init(const [], null);
-    return null;
   }
 }
 

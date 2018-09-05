@@ -37,7 +37,6 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
     final _text_1 = import5.Text('CheckOnce');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 
   void detectHostChanges(bool firstCheck) {
@@ -109,7 +108,6 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
     final _text_1 = import5.Text('Checked');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 
@@ -171,7 +169,6 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
     final _text_1 = import5.Text('CheckAlways');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 
@@ -233,7 +230,6 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
     final _text_1 = import5.Text('Detached');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 
@@ -295,7 +291,6 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
     final _text_1 = import5.Text('OnPush');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 
@@ -359,7 +354,6 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     _el_0.append(_text_1);
     init(const [], null);
     _ctx.stateChangeCallback = markStateChanged;
-    return null;
   }
 }
 
@@ -421,7 +415,6 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
     final _text_1 = import5.Text('Default');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 

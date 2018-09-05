@@ -49,7 +49,6 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
     final _text_5 = import2.Text('\n  ');
     parentRenderNode.append(_text_5);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -123,7 +122,6 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
     _text_1 = import2.Text('');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -205,7 +203,6 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
     final _text_4 = import2.Text('!');
     _el_0.append(_text_4);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -300,7 +297,6 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
     final _text_7 = import2.Text('!');
     _el_0.append(_text_7);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -390,7 +386,6 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
     final _text_4 = import2.Text('!');
     _el_0.append(_text_4);
     init(const [], null);
-    return null;
   }
 }
 
@@ -456,7 +451,6 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
     _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -497,7 +491,6 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
     _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
     init0(_appEl_0);
-    return null;
   }
 
   @override
@@ -540,7 +533,6 @@ class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
     _text_3 = import2.Text('');
     final _text_4 = import2.Text('!');
     init([_text_0, _text_1, _text_2, _text_3, _text_4], null);
-    return null;
   }
 
   @override

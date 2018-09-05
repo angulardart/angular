@@ -52,7 +52,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _TestSubComponent_5_5 = import1.TestSubComponent();
     _compView_5.create(_TestSubComponent_5_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -124,7 +123,6 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     final _text_1 = import2.Text('Bar');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 

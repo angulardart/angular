@@ -45,7 +45,6 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
     _text_4 = import2.Text('');
     _el_3.append(_text_4);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -129,7 +128,6 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
     _text_4 = import2.Text((ctx.cancelMessage ?? ''));
     _el_3.append(_text_4);
     init(const [], null);
-    return null;
   }
 }
 
@@ -198,7 +196,6 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
     _text_4 = import2.Text((import1.CompWithFinalStatic.cancelMessage ?? ''));
     _el_3.append(_text_4);
     init(const [], null);
-    return null;
   }
 }
 
@@ -267,7 +264,6 @@ class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> 
     _text_4 = import2.Text((import1.Messages.cancelMessage ?? ''));
     _el_3.append(_text_4);
     init(const [], null);
-    return null;
   }
 }
 
