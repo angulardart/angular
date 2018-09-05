@@ -672,27 +672,27 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
         .toStmt());
   }
 
-  o.Expression resultExpr;
+  if (view.genConfig.profileFor == Profile.build) {
+    genProfileBuildEnd(view, statements);
+  }
+
   if (identical(view.viewType, ViewType.host)) {
     if (view.nodes.isEmpty) {
       throwFailure('Template parser has crashed for ${view.className}');
     }
     var hostElement = view.nodes[0] as CompileElement;
-    resultExpr = o.importExpr(Identifiers.ComponentRef).instantiate(
+    statements.add(
+        o.ReturnStatement(o.importExpr(Identifiers.ComponentRef).instantiate(
       [
         o.literal(hostElement.nodeIndex),
         o.THIS_EXPR,
         hostElement.renderNode.toReadExpr(),
         hostElement.getComponent()
       ],
-    );
-  } else {
-    resultExpr = o.NULL_EXPR;
+    )));
+    // Rely on the implicit `return null` for non host views. This reduces the
+    // size of output from dart2js.
   }
-  if (view.genConfig.profileFor == Profile.build) {
-    genProfileBuildEnd(view, statements);
-  }
-  statements.add(o.ReturnStatement(resultExpr));
 
   var readVars = o.findReadVarNames(statements);
   if (readVars.contains(cachedParentIndexVarName)) {

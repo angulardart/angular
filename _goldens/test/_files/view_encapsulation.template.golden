@@ -36,7 +36,6 @@ class ViewEmulatedComponent0 extends AppView<import1.EmulatedComponent> {
     final _text_1 = import5.Text('Emulated');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 
@@ -98,7 +97,6 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
     final _text_1 = import5.Text('None');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 

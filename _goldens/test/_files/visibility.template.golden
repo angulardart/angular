@@ -33,7 +33,6 @@ class ViewDependent0 extends AppView<import1.Dependent> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -107,7 +106,6 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
         : import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex)));
     _compView_0.create(_Dependent_0_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -184,7 +182,6 @@ class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> 
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     project(parentRenderNode, 0);
     init(const [], null);
-    return null;
   }
 }
 
@@ -264,7 +261,6 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
         : import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex)));
     _compView_1.create(_Dependent_1_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -332,7 +328,6 @@ class ViewHasVisibilityAll0 extends AppView<import1.HasVisibilityAll> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -398,7 +393,6 @@ class ViewHasVisibilityLocal0 extends AppView<import1.HasVisibilityLocal> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 

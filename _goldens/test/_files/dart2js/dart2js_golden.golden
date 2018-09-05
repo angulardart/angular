@@ -9441,7 +9441,6 @@
         this._ComponentConditionalFeatures_4_5 = t1;
         this._compView_4.create$2(0, t1, []);
         this.init$2(C.List_empty, null);
-        return;
       },
       detectChangesInternal$0: function() {
         if (this.viewData._cdState === 0) {
@@ -9517,7 +9516,6 @@
         var parentRenderNode = this.initViewRoot$1(this.rootEl);
         this._el_0 = S.createAndAppend(document, "default-change-detection-and-input", parentRenderNode);
         this.init$2(C.List_empty, null);
-        return;
       },
       detectChangesInternal$0: function() {
         this.ctx.name;
@@ -9535,7 +9533,6 @@
         this._anchor_0 = t1;
         parentRenderNode.appendChild(t1);
         this.init$2([], null);
-        return;
       },
       detectChangesInternal$0: function() {
         this.ctx.showDiv;
@@ -9560,7 +9557,6 @@
         this._appEl_0 = t1;
         this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure()), t1, false);
         this.init$2(C.List_empty, null);
-        return;
       },
       detectChangesInternal$0: function() {
         var _ctx = this.ctx;
@@ -9597,7 +9593,6 @@
         this._NullComponent_0_5 = t2;
         t1.create$2(0, t2, []);
         this.init0$1(this._el_0);
-        return;
       },
       detectChangesInternal$0: function() {
         this._compView_0.detectChanges$0();
@@ -9616,7 +9611,6 @@
       build$0: function() {
         this.initViewRoot$1(this.rootEl);
         this.init$2(C.List_empty, null);
-        return;
       },
       $asAppView: function() {
         return [E.NullComponent];
@@ -9627,7 +9621,6 @@
       build$0: function() {
         this.initViewRoot$1(this.rootEl);
         this.init$2(C.List_empty, null);
-        return;
       },
       $asAppView: function() {
         return [E.InjectsFromArbitraryParent];
@@ -9650,7 +9643,6 @@
         this._appEl_1 = t1;
         this._NgIf_1_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_ComponentConditionalFeatures2$closure()), t1, false);
         this.init$2(C.List_empty, null);
-        return;
       },
       detectChangesInternal$0: function() {
         var _ctx, t1;
@@ -9695,7 +9687,6 @@
         this._FeatureA_0_5 = t2;
         t1.create$2(0, t2, []);
         this.init0$1(this._el_0);
-        return;
       },
       detectChangesInternal$0: function() {
         this._compView_0.detectChanges$0();
@@ -9730,7 +9721,6 @@
         this._FeatureB_0_5 = t2;
         t1.create$2(0, t2, []);
         this.init0$1(this._el_0);
-        return;
       },
       detectChangesInternal$0: function() {
         this._compView_0.detectChanges$0();
@@ -9749,7 +9739,6 @@
       build$0: function() {
         this.initViewRoot$1(this.rootEl).appendChild(document.createTextNode("I am Feature A"));
         this.init$2(C.List_empty, null);
-        return;
       },
       $asAppView: function() {
         return [E.FeatureA];
@@ -9760,7 +9749,6 @@
       build$0: function() {
         this.initViewRoot$1(this.rootEl).appendChild(document.createTextNode("I am Feature B"));
         this.init$2(C.List_empty, null);
-        return;
       },
       $asAppView: function() {
         return [E.FeatureB];

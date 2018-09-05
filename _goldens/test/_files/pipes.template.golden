@@ -69,7 +69,6 @@ class ViewComp0 extends AppView<import1.Comp> {
     _pipe_types_3 = import1.TypesPipe();
     _pipe_types_3_0 = import7.pureProxy5(_pipe_types_3.transform);
     init(const [], null);
-    return null;
   }
 
   @override

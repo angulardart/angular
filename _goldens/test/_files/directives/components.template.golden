@@ -36,7 +36,6 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     final _text_1 = import5.Text('Bar');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 

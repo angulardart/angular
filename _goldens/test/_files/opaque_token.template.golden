@@ -41,7 +41,6 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
     _text_0 = import2.Text((ctx.baseUrl ?? ''));
     parentRenderNode.append(_text_0);
     init(const [], null);
-    return null;
   }
 }
 
@@ -116,7 +115,6 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -152,7 +150,6 @@ class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponen
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_ContainsChildComponent2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -193,7 +190,6 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
         : import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex)));
     _compView_1.create(_InjectsTypedTokenFromSomeParent_1_5, []);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -261,7 +257,6 @@ class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedT
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 

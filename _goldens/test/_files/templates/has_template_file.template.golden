@@ -38,7 +38,6 @@ class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileCompo
     final _text_1 = import6.Text('Has Template File!');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 

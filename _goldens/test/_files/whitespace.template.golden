@@ -45,7 +45,6 @@ class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
     final _text_6 = import5.Text('\n  ');
     parentRenderNode.append(_text_6);
     init(const [], null);
-    return null;
   }
 }
 
@@ -112,7 +111,6 @@ class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
     final _text_4 = import5.Text(' Park!');
     _el_0.append(_text_4);
     init(const [], null);
-    return null;
   }
 }
 

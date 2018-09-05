@@ -84,7 +84,6 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _ComponentConditionalFeatures_4_5 = import1.ComponentConditionalFeatures();
     _compView_4.create(_ComponentConditionalFeatures_4_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -169,7 +168,6 @@ class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaul
     var doc = import2.document;
     _el_0 = createAndAppend(doc, 'default-change-detection-and-input', parentRenderNode);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -243,7 +241,6 @@ class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeD
     _text_1 = import2.Text('');
     parentRenderNode.append(_text_1);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -317,7 +314,6 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
     _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     init([], null);
-    return null;
   }
 
   @override
@@ -400,7 +396,6 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_EmbeddedNgIf1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -434,7 +429,6 @@ class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
     _NullComponent_0_5 = import1.NullComponent();
     _compView_0.create(_NullComponent_0_5, []);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -502,7 +496,6 @@ class ViewNullComponent0 extends AppView<import1.NullComponent> {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -560,7 +553,6 @@ class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitra
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -636,7 +628,6 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_ComponentConditionalFeatures2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -673,7 +664,6 @@ class _ViewComponentConditionalFeatures1 extends AppView<import1.ComponentCondit
     _FeatureA_0_5 = import1.FeatureA();
     _compView_0.create(_FeatureA_0_5, []);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -705,7 +695,6 @@ class _ViewComponentConditionalFeatures2 extends AppView<import1.ComponentCondit
     _FeatureB_0_5 = import1.FeatureB();
     _compView_0.create(_FeatureB_0_5, []);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -775,7 +764,6 @@ class ViewFeatureA0 extends AppView<import1.FeatureA> {
     final _text_0 = import2.Text('I am Feature A');
     parentRenderNode.append(_text_0);
     init(const [], null);
-    return null;
   }
 }
 
@@ -835,7 +823,6 @@ class ViewFeatureB0 extends AppView<import1.FeatureB> {
     final _text_0 = import2.Text('I am Feature B');
     parentRenderNode.append(_text_0);
     init(const [], null);
-    return null;
   }
 }
 

@@ -85,7 +85,6 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     _NotDeferredChildComponent_5_5 = import6.NotDeferredChildComponent();
     _compView_5.create(_NotDeferredChildComponent_5_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
@@ -143,7 +142,6 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
     _DeferredChild1Component_0_5 = import6.DeferredChild1Component();
     _compView_0.create(_DeferredChild1Component_0_5, []);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -174,7 +172,6 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent3);
     _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
     init0(_appEl_0);
-    return null;
   }
 
   @override
@@ -207,7 +204,6 @@ class _ViewTestContainerComponent3 extends AppView<import1.TestContainerComponen
     _DeferredChild2Component_0_5 = import6.DeferredChild2Component();
     _compView_0.create(_DeferredChild2Component_0_5, []);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -241,7 +237,6 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent5);
     _cancelDeferredLoad1 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_8);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -274,7 +269,6 @@ class _ViewTestContainerComponent5 extends AppView<import1.TestContainerComponen
     _DeferredChild3Component_0_5 = import6.DeferredChild3Component();
     _compView_0.create(_DeferredChild3Component_0_5, []);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -312,7 +306,6 @@ class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponen
     final _text_1 = import4.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithoutNgContent_0_5, []);
     init0(_el_0);
-    return null;
   }
 
   @override
@@ -347,7 +340,6 @@ class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponen
       [_text_1]
     ]);
     init0(_el_0);
-    return null;
   }
 
   @override

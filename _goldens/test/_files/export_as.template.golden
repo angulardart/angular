@@ -36,7 +36,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final _text_1 = import5.Text('Foo');
     _el_0.append(_text_1);
     init(const [], null);
-    return null;
   }
 }
 

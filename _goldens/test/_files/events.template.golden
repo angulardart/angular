@@ -39,7 +39,6 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
     _el_0.addEventListener('click', eventHandler0(ctx.onClick));
     init(const [], null);
     _rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
-    return null;
   }
 }
 
@@ -106,7 +105,6 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     _compView_0.create(_HasAngularEvents_0_5, []);
     final subscription_0 = _HasAngularEvents_0_5.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0]);
-    return null;
   }
 
   @override
@@ -174,7 +172,6 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
-    return null;
   }
 }
 
@@ -239,7 +236,6 @@ class ViewHasManyNativeHostEvents0 extends AppView<import1.HasManyNativeHostEven
     _rootEl.addEventListener('keypress', eventHandler1(_ctx.onKeyPress));
     _rootEl.addEventListener('focus', eventHandler1(_ctx.onFocus));
     _rootEl.addEventListener('blur', eventHandler1(_ctx.onBlur));
-    return null;
   }
 }
 

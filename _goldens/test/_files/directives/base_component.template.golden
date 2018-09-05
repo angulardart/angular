@@ -48,7 +48,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _TestSubComponent_2_5 = import4.TestSubComponent();
     _compView_2.create(_TestSubComponent_2_5, []);
     init(const [], null);
-    return null;
   }
 
   @override
