@@ -599,7 +599,7 @@ abstract class AppView<T> {
   void Function(E) eventHandler0<E>(void Function() handler) {
     return (E event) {
       markPathToRootAsCheckOnce();
-      appViewUtils.eventManager.getZone().runGuarded(handler);
+      appViewUtils.eventManager.zone.runGuarded(handler);
     };
   }
 
@@ -618,8 +618,7 @@ abstract class AppView<T> {
         "'($E) => void'");
     return (E event) {
       markPathToRootAsCheckOnce();
-      appViewUtils.eventManager
-          .getZone()
+      appViewUtils.eventManager.zone
           .runGuarded(() => handler(unsafeCast<F>(event)));
     };
   }

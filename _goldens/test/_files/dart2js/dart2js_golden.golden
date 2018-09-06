@@ -9216,18 +9216,16 @@
   }], ["", "package:angular/src/platform/dom/events/event_manager.dart",, N, {
     "^": "",
     EventManager: {
-      "^": "Object;_event_manager$_zone,0_plugins,0_eventToPlugin",
-      EventManager$2: function(plugins, _zone) {
-        var t1, len, i;
-        for (t1 = J.getInterceptor$asx(plugins), len = t1.get$length(plugins), i = 0; i < len; ++i)
-          t1.$index(plugins, i).set$manager(this);
-        this._plugins = plugins;
-        this._eventToPlugin = P.LinkedHashMap_LinkedHashMap$_empty(P.String, N.EventManagerPlugin);
+      "^": "Object;zone,_plugins,_eventToPlugin",
+      EventManager$2: function(_plugins, zone) {
+        var t1, t2, len, i;
+        for (t1 = this._plugins, t2 = J.getInterceptor$asx(t1), len = t2.get$length(t1), i = 0; i < len; ++i)
+          t2.$index(t1, i).set$manager(this);
       },
       static: {
-        EventManager$: function(plugins, _zone) {
-          var t1 = new N.EventManager(_zone);
-          t1.EventManager$2(plugins, _zone);
+        EventManager$: function(_plugins, zone) {
+          var t1 = new N.EventManager(zone, _plugins, P.LinkedHashMap_LinkedHashMap$_empty(P.String, N.EventManagerPlugin));
+          t1.EventManager$2(_plugins, zone);
           return t1;
         }
       }
