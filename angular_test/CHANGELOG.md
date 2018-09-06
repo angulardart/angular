@@ -1,3 +1,20 @@
+*   Supported `beforeComponentCreated(Injector)` when creating fixture to allow
+    using `injector` to set up prerequisite data for testing from DI.
+
+    This is useful when an object (that is already injected to the app) is
+    difficult to create otherwise. For example:
+
+    ```dart
+    // ComplexDataLayer is difficult to instantiate in test, but it is needed
+    // to set up some fake data before the component is loaded and used.
+    final fixture = await testBed.create(
+      beforeComponentCreated: (i) {
+        var dataLayer = i.get(ComplexDataLayer) as ComplexDataLayer;
+        dataLayer.setUpMockDataForTesting();
+      },
+    );
+    ```
+
 ## 2.0.0
 
 ### New Features

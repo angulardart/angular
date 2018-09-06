@@ -39,9 +39,12 @@ Future<void> disposeAnyRunningTest() async => activeTest?.dispose();
 Future<NgTestFixture<T>> createDynamicFixture<T>(
   NgTestBed<T> bed,
   Type type, {
-  FutureOr<void> Function(T componentInstance) beforeChangeDetection,
+  FutureOr<void> Function(Injector) beforeComponentCreated,
+  FutureOr<void> Function(T) beforeChangeDetection,
 }) {
-  return bed._createDynamic(type, beforeChangeDetection: beforeChangeDetection);
+  return bed._createDynamic(type,
+      beforeComponentCreated: beforeComponentCreated,
+      beforeChangeDetection: beforeChangeDetection);
 }
 
 /// An alternative factory for [NgTestBed] that allows not typing `T`.
@@ -259,10 +262,12 @@ class NgTestBed<T> {
   ///
   /// Returns a future that completes with a fixture around the component.
   Future<NgTestFixture<T>> create({
+    FutureOr<void> Function(Injector) beforeComponentCreated,
     FutureOr<void> Function(T instance) beforeChangeDetection,
   }) {
     return _createDynamic(
       T,
+      beforeComponentCreated: beforeComponentCreated,
       beforeChangeDetection: beforeChangeDetection,
     );
   }
@@ -270,7 +275,8 @@ class NgTestBed<T> {
   // Used for compatibility only. See `create` for public API.
   Future<NgTestFixture<T>> _createDynamic(
     Type type, {
-    void Function(T instance) beforeChangeDetection,
+    FutureOr<void> Function(Injector) beforeComponentCreated,
+    FutureOr<void> Function(T instance) beforeChangeDetection,
   }) {
     // We *purposefully* do not use async/await here - that always adds an
     // additional micro-task - we want this to fail fast without entering an
@@ -295,6 +301,7 @@ class NgTestBed<T> {
         _componentFactory ?? typeToFactory(type),
         _host ?? _defaultHost(),
         rootInjector,
+        beforeComponentCreated: beforeComponentCreated,
         beforeChangeDetection: beforeChangeDetection,
       ).then((componentRef) async {
         _checkForActiveTest();

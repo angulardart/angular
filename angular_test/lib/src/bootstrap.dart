@@ -38,8 +38,9 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
   InjectorFactory userInjector, {
+  FutureOr<void> Function(Injector) beforeComponentCreated,
   FutureOr<void> Function(E) beforeChangeDetection,
-}) {
+}) async {
   if (componentFactory == null) {
     throw ArgumentError.notNull('componentFactory');
   }
@@ -57,6 +58,14 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   final onErrorSub = ngZone.onError.listen((e) {
     caughtError = e;
   });
+
+  if (beforeComponentCreated != null) {
+    var completer = Completer<void>();
+    ngZone.runGuarded(() => new Future(() {})
+        .then((_) => beforeComponentCreated(injector))
+        .then((_) => completer.complete(), onError: completer.completeError));
+    await completer.future;
+  }
   // Code works improperly when .run is typed to return FutureOr:
   // https://github.com/dart-lang/sdk/issues/32285.
   return appRef.run<ComponentRef<E>>(() {
