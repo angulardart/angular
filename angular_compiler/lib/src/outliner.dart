@@ -59,7 +59,7 @@ class TemplateOutliner implements Builder {
   @override
   Future<Null> build(BuildStep buildStep) async {
     if (!await buildStep.resolver.isLibrary(buildStep.inputId)) {
-      buildStep.writeAsString(
+      await buildStep.writeAsString(
         buildStep.inputId.changeExtension(_extension),
         'external void initReflector();',
       );
@@ -194,7 +194,7 @@ class $changeDetectorName$typeParameters extends DirectiveChangeDetector {
       }
     }
     output..writeln()..writeln('external void initReflector();');
-    buildStep.writeAsString(
+    await buildStep.writeAsString(
       buildStep.inputId.changeExtension(_extension),
       output.toString(),
     );
