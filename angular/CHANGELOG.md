@@ -130,6 +130,9 @@
 ### Other improvements
 
 *   Error messages for misconfigured pipes now display their source location.
+*   Assertion added for ensuring different SanitizationServices aren't used when
+    calling runApp multiple times. SanitizationService is a static resource so
+    different instances would not work as expected.
 
 ## 5.0.0
 
