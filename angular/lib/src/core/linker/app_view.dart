@@ -254,13 +254,6 @@ abstract class AppView<T> {
     }
   }
 
-  /// Specialized init when component has a single root node.
-  @dart2js.noInline
-  void init0WithSub(dynamic e, List subscriptions) {
-    viewData.subscriptions = subscriptions;
-    init0(e);
-  }
-
   /// Called by build once all dom nodes are available.
   @dart2js.noInline
   void init(List rootNodesOrViewContainers, List subscriptions) {
