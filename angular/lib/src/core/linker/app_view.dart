@@ -540,12 +540,6 @@ abstract class AppView<T> {
     }
   }
 
-  // Marks DOM dirty so that end of zone turn we can detect if DOM was updated
-  // for sharded apps support.
-  void setDomDirty() {
-    domRootRendererIsDirty = true;
-  }
-
   /// Projects projectableNodes at specified index. We don't use helper
   /// functions to flatten the tree since it allocates list that are not
   /// required in most cases.
