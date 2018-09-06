@@ -1,17 +1,15 @@
-import "dart:html";
+import 'dart:html' show KeyboardEvent;
 
-import "package:angular/src/core/di.dart" show Injectable;
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/core/di.dart' show Injectable;
+import 'package:angular/src/runtime.dart' show unsafeCast;
 
-import "event_manager.dart" show EventManagerPlugin;
+import 'event_manager.dart' show EventManagerPlugin;
 
-typedef _KeyboardEventPredicate = bool Function(KeyboardEvent);
-
-final _modifierKeyGetters = <String, _KeyboardEventPredicate>{
-  "alt": (KeyboardEvent event) => event.altKey,
-  "control": (KeyboardEvent event) => event.ctrlKey,
-  "meta": (KeyboardEvent event) => event.metaKey,
-  "shift": (KeyboardEvent event) => event.shiftKey
+final _modifierKeyGetters = <String, bool Function(KeyboardEvent)>{
+  'alt': (KeyboardEvent event) => event.altKey,
+  'control': (KeyboardEvent event) => event.ctrlKey,
+  'meta': (KeyboardEvent event) => event.metaKey,
+  'shift': (KeyboardEvent event) => event.shiftKey
 };
 
 final _keyCodeToKeyMap = const {
@@ -99,58 +97,64 @@ final _keyCodeToKeyMap = const {
 class KeyEventsPlugin extends EventManagerPlugin {
   @override
   bool supports(String eventName) {
-    return KeyEventsPlugin.parseEventName(eventName) != null;
+    return _parseEventName(eventName) != null;
   }
 
   @override
   Function addEventListener(
       dynamic element, String eventName, Function handler) {
-    var parsedEvent = KeyEventsPlugin.parseEventName(eventName);
-    var outsideHandler =
-        KeyEventsPlugin.eventCallback(element, parsedEvent['fullKey'], handler);
-    return unsafeCast(this.manager.getZone().runOutsideAngular(() {
-      return element.on[parsedEvent['domEventName']]
-          .listen(outsideHandler)
-          .cancel;
+    var parsedEvent = _parseEventName(eventName);
+    var outsideHandler = _eventCallback(element, parsedEvent.fullKey, handler);
+    return unsafeCast(manager.zone.runOutsideAngular(() {
+      return element.on[parsedEvent.domEventName].listen(outsideHandler).cancel;
     }));
   }
 
-  static Map<String, String> parseEventName(String eventName) {
-    List<String> parts = eventName.toLowerCase().split(".");
+  static _ParsedEventName _parseEventName(String eventName) {
+    List<String> parts = eventName.toLowerCase().split('.');
     var domEventName = parts.removeAt(0);
-    if ((identical(parts.length, 0)) ||
-        !(domEventName == "keydown" || domEventName == "keyup")) {
+    if (parts.isEmpty ||
+        !(domEventName == 'keydown' || domEventName == 'keyup')) {
       return null;
     }
-    var key = KeyEventsPlugin._normalizeKey(parts.removeLast());
-    var fullKey = "";
+    var key = _normalizeKey(parts.removeLast());
+    var fullKey = '';
     for (var modifierName in _modifierKeyGetters.keys) {
       if (parts.remove(modifierName)) {
-        fullKey += modifierName + ".";
+        fullKey += modifierName + '.';
       }
     }
     fullKey += key;
-    if (parts.length != 0 || identical(key.length, 0)) {
+    if (parts.isNotEmpty || key.isEmpty) {
       // returning null instead of throwing to let another plugin process the event
       return null;
     }
-    return <String, String>{'domEventName': domEventName, 'fullKey': fullKey};
+    return _ParsedEventName(domEventName, fullKey);
   }
 
-  static String getEventFullKey(KeyboardEvent event) {
-    var fullKey = "";
-    var key = getEventKey(event);
+  static Function _eventCallback(
+      dynamic element, String fullKey, Function handler) {
+    return (event) {
+      if (_getEventFullKey(event as KeyboardEvent) == fullKey) {
+        handler(event);
+      }
+    };
+  }
+
+  static String _getEventFullKey(KeyboardEvent event) {
+    var fullKey = '';
+    var key = _getEventKey(event);
     key = key.toLowerCase();
-    if (key == " ") {
-      key = "space";
-    } else if (key == ".") {
-      key = "dot";
+    if (key == ' ') {
+      key = 'space';
+    } else if (key == '.') {
+      key = 'dot';
     }
     for (var modifierName in _modifierKeyGetters.keys) {
       if (modifierName != key) {
         var modifierGetter = _modifierKeyGetters[modifierName];
-        if (modifierGetter(event) == true) {
-          fullKey += modifierName + ".";
+        if (modifierGetter(event)) {
+          fullKey += modifierName + '.';
         }
       }
     }
@@ -158,30 +162,27 @@ class KeyEventsPlugin extends EventManagerPlugin {
     return fullKey;
   }
 
-  static String getEventKey(e) {
-    KeyboardEvent event = e;
+  static String _getEventKey(KeyboardEvent event) {
     int keyCode = event.keyCode;
     return _keyCodeToKeyMap.containsKey(keyCode)
         ? _keyCodeToKeyMap[keyCode]
         : 'Unidentified';
   }
 
-  static Function eventCallback(
-      dynamic element, dynamic fullKey, Function handler) {
-    return (event) {
-      if (KeyEventsPlugin.getEventFullKey(event as KeyboardEvent) == fullKey) {
-        handler(event);
-      }
-    };
-  }
-
   static String _normalizeKey(String keyName) {
     // TODO: switch to a StringMap if the mapping grows too much
     switch (keyName) {
-      case "esc":
-        return "escape";
+      case 'esc':
+        return 'escape';
       default:
         return keyName;
     }
   }
+}
+
+class _ParsedEventName {
+  final String domEventName;
+  final String fullKey;
+
+  _ParsedEventName(this.domEventName, this.fullKey);
 }
