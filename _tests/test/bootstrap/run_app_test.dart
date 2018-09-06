@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/security.dart';
 import 'package:js/js.dart';
 import 'package:test/test.dart';
 
@@ -68,6 +69,22 @@ void main() {
     component = runApp(ng.HelloWorldComponentNgFactory);
     verifyDomAndStyles();
     verifyTestability();
+  });
+
+  test('runApp should not allow different SanitizerService instances',
+      () async {
+    component = runApp(ng.HelloWorldComponentNgFactory);
+
+    expect(
+        () =>
+            runApp(ng.HelloWorldComponentNgFactory, createInjector: ([parent]) {
+              return Injector.map({
+                SanitizationService: StubSanitizationService(),
+              }, parent);
+            }),
+        throwsA(predicate(
+          (e) => e is AssertionError,
+        )));
   });
 
   test('runApp should allow overriding ExceptionHandler', () async {
@@ -158,6 +175,20 @@ class StubExceptionHandler implements ExceptionHandler {
   void call(exception, [stackTrace, String reason]) {
     lastCaughtException = exception;
   }
+}
+
+class StubSanitizationService implements SanitizationService {
+  @override
+  String sanitizeHtml(value) => '';
+
+  @override
+  String sanitizeStyle(value) => '';
+
+  @override
+  String sanitizeUrl(value) => '';
+
+  @override
+  String sanitizeResourceUrl(value) => '';
 }
 
 // TODO(matanl): Refactor testability, and re-use a JS interface.

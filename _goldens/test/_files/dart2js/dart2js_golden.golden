@@ -7939,7 +7939,11 @@
         if (token === C.Type_DomSanitizationService_cKo) {
           t1 = this._field2;
           if (t1 == null) {
-            t1 = new R.DomSanitizationServiceImpl();
+            t1 = $.DomSanitizationServiceImpl__instance;
+            if (t1 == null) {
+              t1 = new R.DomSanitizationServiceImpl();
+              $.DomSanitizationServiceImpl__instance = t1;
+            }
             this._field2 = t1;
           }
           return t1;
@@ -10098,6 +10102,7 @@
   $.appViewUtils = null;
   $.AppViewUtils__nextCompTypeId = 0;
   $.sharedStylesHost = null;
+  $.DomSanitizationServiceImpl__instance = null;
   $.ViewRootComponent0__renderType = null;
   $.ViewUsesDefaultChangeDetectionAndInput0__renderType = null;
   $.ViewInlinedNgIf0__renderType = null;

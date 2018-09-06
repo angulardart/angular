@@ -9,6 +9,19 @@ import 'url_sanitizer.dart';
 
 @Injectable()
 class DomSanitizationServiceImpl implements DomSanitizationService {
+  static DomSanitizationServiceImpl _instance;
+
+  // Force a global static singleton across DDC instances for this service. In
+  // angular currently it is already a single instance across all instances for
+  // performance reasons. This allows a check to occur that this is really the
+  // same sanitizer is used.
+  factory DomSanitizationServiceImpl() {
+    _instance ??= new DomSanitizationServiceImpl._();
+    return _instance;
+  }
+
+  DomSanitizationServiceImpl._() {}
+
   @override
   String sanitizeHtml(value) {
     if (value == null) return null;

@@ -73,6 +73,13 @@ Injector appInjector(InjectorFactory userProvidedInjector) {
       ngZone,
       userInjector,
     );
+    assert(
+        _checkSanitizationService(appViewUtils, userInjector),
+        'You are trying to use multiple SanitizationServices but it is a global'
+        ' resource where only one can be specified across the global page'
+        ' context (even across DDC instances.) Fix by only using one type and'
+        ' ensure that class is using a factory providing to provide only one'
+        ' static instance.');
     appViewUtils = AppViewUtils(
       unsafeCast(userInjector.get(APP_ID)),
       unsafeCast(userInjector.get(SanitizationService)),
@@ -80,6 +87,24 @@ Injector appInjector(InjectorFactory userProvidedInjector) {
     );
     return userInjector;
   });
+}
+
+// Ensure that the `SanitizationService` used is what the user expects. The
+// service is used in a static fashion which is invisible to the user. Meaning
+// that while they think they are changing the service only for one app or
+// context they are in fact changing all usages of it from that point forward.
+// This check can be removed in the future if appViewUtils is no longer
+// static.
+bool _checkSanitizationService(
+    AppViewUtils appViewUtils, Injector userInjector) {
+  if (appViewUtils == null) return true;
+  final service = unsafeCast(userInjector.get(SanitizationService));
+  // Make sure it is the same instance of the sanitizer.
+  // Note since DDC uses the same static values across apps in the same web
+  // page it isn't enough to just rely on injection to ensure this is the same
+  // instance. The sanitizer itself should use a factory pattern to provide
+  // a static singleton.
+  return identical(service, appViewUtils.sanitizer);
 }
 
 /// An implementation of [Injector] that invokes closures.
