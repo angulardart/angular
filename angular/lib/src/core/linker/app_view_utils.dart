@@ -22,7 +22,8 @@ AppViewUtils appViewUtils;
 @Injectable()
 class AppViewUtils {
   final String _appId;
-  EventManager eventManager;
+  final EventManager eventManager;
+  final SanitizationService sanitizer;
   static int _nextCompTypeId = 0;
 
   /// Whether change detection should throw an exception when a change is
@@ -30,11 +31,8 @@ class AppViewUtils {
   ///
   /// Latency sensitive! Used by checkBinding during change detection.
   static bool get throwOnChanges => isDevMode && _throwOnChanges;
-  static set throwOnChanges(bool value) => _throwOnChanges = value;
   static bool _throwOnChanges = false;
   static int _throwOnChangesCounter = 0;
-
-  SanitizationService sanitizer;
 
   AppViewUtils(@Inject(APP_ID) this._appId, this.sanitizer, this.eventManager);
 
@@ -56,7 +54,7 @@ class AppViewUtils {
   /// stable.
   static void enterThrowOnChanges() {
     _throwOnChangesCounter++;
-    throwOnChanges = true;
+    _throwOnChanges = true;
   }
 
   /// Exits change detection check mode.
@@ -65,13 +63,13 @@ class AppViewUtils {
   /// stable.
   static void exitThrowOnChanges() {
     _throwOnChangesCounter--;
-    throwOnChanges = _throwOnChangesCounter != 0;
+    _throwOnChanges = _throwOnChangesCounter != 0;
   }
 
   /// Used in tests that cause exceptions on purpose.
   static void resetChangeDetection() {
     _throwOnChangesCounter = 0;
-    throwOnChanges = false;
+    _throwOnChanges = false;
   }
 }
 
