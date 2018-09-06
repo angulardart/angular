@@ -639,11 +639,11 @@ T Function(S0, S1, S2, S3, S4, S5, S6, S7, S8, S9)
   };
 }
 
-var NS_PREFIX_RE = RegExp(r'^@([^:]+):(.+)');
+final _findNamespacePrefix = RegExp(r'^@([^:]+):(.+)');
 List<String> splitNamespace(String name) {
   if (name[0] != '@') {
     return [null, name];
   }
-  var match = NS_PREFIX_RE.firstMatch(name);
+  final match = _findNamespacePrefix.firstMatch(name);
   return [match[1], match[2]];
 }
