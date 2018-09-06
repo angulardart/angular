@@ -5,7 +5,6 @@ import 'package:angular/src/di/reflector.dart' show runtimeTypeProvider;
 
 import '../change_detection/change_detection.dart' show ChangeDetectorRef;
 import 'app_view.dart';
-import 'app_view_utils.dart' show OnDestroyCallback;
 import 'view_ref.dart' show ViewRef;
 
 /// Represents an instance of a Component created via a [ComponentFactory].
@@ -51,9 +50,8 @@ class ComponentRef<C> {
     _parentView.detachAndDestroy();
   }
 
-  /// Allows to register a callback that will be called when the component is
-  /// destroyed.
-  void onDestroy(OnDestroyCallback callback) {
+  /// Register a callback that will be called when the component is destroyed.
+  void onDestroy(void Function() callback) {
     hostView.onDestroy(callback);
   }
 }

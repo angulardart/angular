@@ -64,7 +64,7 @@ class AppViewData<T> {
 
   List subscriptions;
 
-  List<OnDestroyCallback> _onDestroyCallbacks;
+  List<void Function()> _onDestroyCallbacks;
 
   /// Tracks the root DOM elements or view containers (for `<template>`).
   ///
@@ -142,8 +142,8 @@ class AppViewData<T> {
     }
   }
 
-  void addDestroyCallback(OnDestroyCallback callback) {
-    _onDestroyCallbacks ??= <OnDestroyCallback>[];
+  void addDestroyCallback(void Function() callback) {
+    _onDestroyCallbacks ??= [];
     _onDestroyCallbacks.add(callback);
   }
 }
@@ -339,7 +339,7 @@ abstract class AppView<T> {
     dirtyParentQueriesInternal();
   }
 
-  void addOnDestroyCallback(OnDestroyCallback callback) {
+  void addOnDestroyCallback(void Function() callback) {
     viewData.addDestroyCallback(callback);
   }
 

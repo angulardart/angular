@@ -14,9 +14,6 @@ import 'package:meta/dart2js.dart' as dart2js;
 
 import 'exceptions.dart' show ExpressionChangedAfterItHasBeenCheckedException;
 
-/// Function called when a view is destroyed.
-typedef void OnDestroyCallback();
-
 /// Application wide view utilities.
 AppViewUtils appViewUtils;
 
