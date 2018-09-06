@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 @TestOn('browser')
+import 'dart:async';
 import 'dart:html';
 
 import 'package:test/test.dart';
@@ -63,6 +64,49 @@ void main() {
     test.destroy();
   });
 
+  test('should be able to call injector before component creation', () async {
+    final host = Element.div();
+    TestService testService;
+    final test = await bootstrapForTest(ng_generated.AddProvidersNgFactory,
+        host, ([i]) => Injector.map({TestService: TestService()}, i),
+        beforeComponentCreated: (injector) {
+      testService = injector.get(TestService);
+      testService.count++;
+    }, beforeChangeDetection: (_) {
+      if (testService == null) {
+        fail('`beforeComponentCreated` should be invoked before'
+            ' `beforeChangeDetection`, `testService` should not be null.');
+      }
+    });
+    AddProviders instance = test.instance;
+    expect(testService, instance._testService);
+    expect(testService.count, 1);
+    test.destroy();
+  });
+
+  test('should be able to call asynchronous injector before component creation',
+      () async {
+    final host = Element.div();
+    TestService testService;
+    final test = await bootstrapForTest(ng_generated.AddProvidersNgFactory,
+        host, ([i]) => Injector.map({TestService: TestService()}, i),
+        beforeComponentCreated: (injector) =>
+            new Future.delayed(Duration(milliseconds: 200), () {}).then((_) {
+              testService = injector.get(TestService);
+              testService.count++;
+            }),
+        beforeChangeDetection: (_) {
+          if (testService == null) {
+            fail('`beforeComponentCreated` should be invoked before'
+                ' `beforeChangeDetection`, `testService` should not be null.');
+          }
+        });
+    AddProviders instance = test.instance;
+    expect(testService, instance._testService);
+    expect(testService.count, 1);
+    test.destroy();
+  });
+
   test('should throw if the root component is OnPush', () async {
     expect(
       bootstrapForTest(
@@ -101,7 +145,9 @@ class AddProviders {
 }
 
 @Injectable()
-class TestService {}
+class TestService {
+  int count = 0;
+}
 
 @Component(
   selector: 'test',
