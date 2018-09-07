@@ -87,6 +87,22 @@ void main() {
     expect(testFixture.assertOnlyInstance.injectsMessage.message,
         'An internationalized message.');
   });
+
+  group('should set internationalized property', () {
+    test('explicitly', () async {
+      final testBed = NgTestBed.forComponent(ng.TestExplicitI18nInputNgFactory);
+      final testFixture = await testBed.create();
+      expect(testFixture.assertOnlyInstance.greeting.message,
+          'An internationalized property');
+    });
+
+    test('implicitly', () async {
+      final testBed = NgTestBed.forComponent(ng.TestImplicitI18nInputNgFactory);
+      final testFixture = await testBed.create();
+      expect(testFixture.assertOnlyInstance.greeting.message,
+          'An internationalized property');
+    });
+  });
 }
 
 const issuesLink = 'https://github.com/dart-lang/angular/issues';
@@ -209,4 +225,43 @@ class InjectsMessage {
 class TestInjectI18nAttribute {
   @ViewChild(InjectsMessage)
   InjectsMessage injectsMessage;
+}
+
+@Component(
+  selector: 'greeting',
+  template: '',
+)
+class GreetingComponent {
+  @Input()
+  String message;
+}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <greeting
+        [message]="'An internationalized property'"
+        @i18n:message="A description">
+    </greeting>
+  ''',
+  directives: [GreetingComponent],
+)
+class TestExplicitI18nInput {
+  @ViewChild(GreetingComponent)
+  GreetingComponent greeting;
+}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <greeting
+        message="An internationalized property"
+        @i18n:message="A description">
+    </greeting>
+  ''',
+  directives: [GreetingComponent],
+)
+class TestImplicitI18nInput {
+  @ViewChild(GreetingComponent)
+  GreetingComponent greeting;
 }

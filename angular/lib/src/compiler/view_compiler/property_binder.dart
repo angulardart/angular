@@ -19,13 +19,13 @@ import '../template_ast.dart'
         DirectiveAst,
         BoundExpression,
         PropertyBindingType;
+import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'ir/view_storage.dart';
-import 'property_utils.dart' as property;
 import 'view_compiler_utils.dart'
     show
         createFlatArray,
@@ -214,9 +214,8 @@ void bindRenderText(
 ///     }
 void bindAndWriteToRenderer(
   List<BoundElementPropertyAst> boundProps,
+  BoundValueConverter converter,
   o.Expression appViewInstance,
-  o.Expression context,
-  CompileDirectiveMetadata directiveMeta,
   o.Expression renderNode,
   bool isHtmlElement,
   ViewNameResolver nameResolver,
@@ -321,24 +320,15 @@ void bindAndWriteToRenderer(
         updateStmts.add(updateStyleExpr.toStmt());
         break;
     }
-    final checkExpression = property.expressionForValue(
-      boundProp.value,
-      boundProp.sourceSpan,
-      directiveMeta,
-      nameResolver,
-      fieldType,
-      // Explicitly provide the implicit receiver since this could be binding a
-      // host property in a directive change detector which has no reference to
-      // the host component typically used as implicit receiver.
-      implicitReceiver: context,
-    );
+    final checkExpression = converter.convertToExpression(
+        boundProp.value, boundProp.sourceSpan, fieldType);
     _bind(
       storage,
       currValExpr,
       fieldExpr,
       checkExpression,
-      property.isImmutable(boundProp.value, directiveMeta),
-      property.isNullable(boundProp.value),
+      converter.isImmutable(boundProp.value),
+      converter.isNullable(boundProp.value),
       updateStmts,
       dynamicPropertiesMethod,
       constantPropertiesMethod,
@@ -387,11 +377,12 @@ void bindRenderInputs(
       : compileElement.componentView;
   var renderNode = compileElement.renderNode;
   var view = compileElement.view;
+  var implicitReceiver = DetectChangesVars.cachedCtx;
+  var converter = BoundValueConverter.forView(view, implicitReceiver);
   bindAndWriteToRenderer(
     boundProps,
+    converter,
     appViewInstance,
-    DetectChangesVars.cachedCtx,
-    view.component,
     renderNode.toReadExpr(),
     compileElement.isHtmlElement,
     view.nameResolver,
@@ -441,6 +432,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   }
 
   var view = compileElement.view;
+  var implicitReceiver = DetectChangesVars.cachedCtx;
+  var converter = BoundValueConverter.forView(view, implicitReceiver);
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var dynamicInputsMethod = CompileMethod();
   var constantInputsMethod = CompileMethod();
@@ -487,8 +480,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     // change detection we can directly update it's input.
     // TODO: generalize to SingleInputDirective mixin.
     if (directive.identifier.name == 'NgIf' && input.directiveName == 'ngIf') {
-      var checkExpression = property.expressionForValue(input.value,
-          input.sourceSpan, view.component, view.nameResolver, o.BOOL_TYPE);
+      var checkExpression = converter.convertToExpression(
+          input.value, input.sourceSpan, o.BOOL_TYPE);
       dynamicInputsMethod.addStmt(directiveInstance
           .prop(input.directiveName)
           .set(checkExpression)
@@ -497,9 +490,9 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     }
     if (isStatefulDirective) {
       var fieldType = o.importType(directive.inputTypes[input.directiveName]);
-      var checkExpression = property.expressionForValue(input.value,
-          input.sourceSpan, view.component, view.nameResolver, fieldType);
-      if (property.isImmutable(input.value, view.component)) {
+      var checkExpression = converter.convertToExpression(
+          input.value, input.sourceSpan, fieldType);
+      if (converter.isImmutable(input.value)) {
         constantInputsMethod.addStmt(directiveInstance
             .prop(input.directiveName)
             .set(checkExpression)
@@ -541,8 +534,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     var inputType = inputTypeMeta != null
         ? o.importType(inputTypeMeta, inputTypeMeta.typeArguments)
         : null;
-    var expression = property.expressionForValue(input.value, input.sourceSpan,
-        view.component, view.nameResolver, inputType);
+    var expression =
+        converter.convertToExpression(input.value, input.sourceSpan, inputType);
     if (isStatefulComp) {
       _bindToUpdateMethod(
         view,
@@ -559,8 +552,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
         currValExpr,
         fieldExpr,
         expression,
-        property.isImmutable(input.value, view.component),
-        property.isNullable(input.value),
+        converter.isImmutable(input.value),
+        converter.isNullable(input.value),
         statements,
         dynamicInputsMethod,
         constantInputsMethod,
@@ -668,7 +661,9 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
 
   List<o.Statement> statements;
   ast.AST condition;
-  if (property.isImmutable(input.value, view.component)) {
+  final implicitReceiver = DetectChangesVars.cachedCtx;
+  final converter = BoundValueConverter.forView(view, implicitReceiver);
+  if (converter.isImmutable(input.value)) {
     // If the input is immutable, we don't need to handle the case where the
     // condition is false since in that case we simply do nothing.
     statements = <o.Statement>[
@@ -689,7 +684,7 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       fieldExpr,
       condition,
       input.sourceSpan,
-      DetectChangesVars.cachedCtx,
+      implicitReceiver,
       statements,
       dynamicInputsMethod,
       constantInputsMethod,

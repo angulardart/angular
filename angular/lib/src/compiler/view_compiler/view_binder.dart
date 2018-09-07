@@ -7,6 +7,7 @@ import '../output/output_ast.dart' as o;
 import '../schema/element_schema_registry.dart';
 import '../template_ast.dart';
 import '../template_parser.dart';
+import 'bound_value_converter.dart';
 import "compile_element.dart" show CompileElement;
 import "compile_method.dart" show CompileMethod;
 import "compile_view.dart" show CompileView;
@@ -206,14 +207,15 @@ void bindViewHostProperties(CompileView view, Parser parser,
         BoundExpression(expression), span, schemaRegistry, errorCallback));
   });
 
-  final CompileMethod method = CompileMethod();
-  var compileElement = view.componentView.declarationElement;
-  var renderNode = view.componentView.declarationElement.renderNode;
+  final method = CompileMethod();
+  final compileElement = view.componentView.declarationElement;
+  final renderNode = view.componentView.declarationElement.renderNode;
+  final implicitReceiver = o.ReadClassMemberExpr('ctx');
+  final converter = BoundValueConverter.forView(view, implicitReceiver);
   bindAndWriteToRenderer(
     hostProperties,
+    converter,
     o.THIS_EXPR,
-    o.ReadClassMemberExpr('ctx'),
-    view.component,
     renderNode.toReadExpr(),
     compileElement.isHtmlElement,
     view.nameResolver,

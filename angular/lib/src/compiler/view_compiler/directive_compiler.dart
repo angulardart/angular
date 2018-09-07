@@ -13,6 +13,7 @@ import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import "../template_ast.dart" show BoundElementPropertyAst, BoundExpression;
 import '../template_parser.dart';
+import 'bound_value_converter.dart';
 import 'compile_method.dart';
 import 'compile_view.dart' show CompileViewStorage;
 import 'constants.dart' show DetectChangesVars, EventHandlerVars;
@@ -143,11 +144,13 @@ class DirectiveCompiler {
 
     _hasChangeDetector = true;
 
+    final implicitReceiver = o.ReadClassMemberExpr('instance');
+    final converter = BoundValueConverter.forDirective(
+        directive, implicitReceiver, _nameResolver);
     bindAndWriteToRenderer(
       hostProperties,
+      converter,
       o.variable('view'),
-      o.ReadClassMemberExpr('instance'),
-      directive,
       o.variable('el'),
       false,
       _nameResolver,
