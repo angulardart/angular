@@ -222,7 +222,6 @@ void bindAndWriteToRenderer(
   ViewNameResolver nameResolver,
   ViewStorage storage,
   CompileMethod targetMethod, {
-  bool updatingHostAttribute = false,
   bool isHostComponent = false,
 }) {
   final dynamicPropertiesMethod = CompileMethod();

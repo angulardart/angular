@@ -144,16 +144,16 @@ class DirectiveCompiler {
     _hasChangeDetector = true;
 
     bindAndWriteToRenderer(
-        hostProperties,
-        o.variable('view'),
-        o.ReadClassMemberExpr('instance'),
-        directive,
-        o.variable('el'),
-        false,
-        _nameResolver,
-        _storage,
-        method,
-        updatingHostAttribute: true);
+      hostProperties,
+      o.variable('view'),
+      o.ReadClassMemberExpr('instance'),
+      directive,
+      o.variable('el'),
+      false,
+      _nameResolver,
+      _storage,
+      method,
+    );
 
     var statements = method.finish();
     var readVars = method.findReadVarNames();
