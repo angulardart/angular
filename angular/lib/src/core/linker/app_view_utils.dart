@@ -315,20 +315,28 @@ String _toStringWithNull(dynamic v) => v == null ? '' : '$v';
 /// In _dev-mode_ it throws if a second-pass change-detection is being made to
 /// ensure that values are not changing during change detection (illegal).
 @dart2js.tryInline
-bool checkBinding(oldValue, newValue) {
-  // This is only ever possibly true when assertions are enabled.
-  //
-  // It's set during the second "make-sure-nothing-changed" pass of tick().
-  if (AppViewUtils.throwOnChanges) {
-    if (!devModeEqual(oldValue, newValue)) {
-      throw ExpressionChangedAfterItHasBeenCheckedException(
-        oldValue,
-        newValue,
-        null,
-      );
-    }
-    return false;
+bool checkBinding(oldValue, newValue) =>
+    // This is only ever possibly true when assertions are enabled.
+    //
+    // It's set during the second "make-sure-nothing-changed" pass of tick().
+    AppViewUtils.throwOnChanges
+        ? _checkBindingDebug(oldValue, newValue)
+        : _checkBindingRelease(oldValue, newValue);
+
+@dart2js.noInline
+bool _checkBindingDebug(oldValue, newValue) {
+  if (!devModeEqual(oldValue, newValue)) {
+    throw ExpressionChangedAfterItHasBeenCheckedException(
+      oldValue,
+      newValue,
+      null,
+    );
   }
+  return false;
+}
+
+@dart2js.tryInline
+bool _checkBindingRelease(oldValue, newValue) {
   return !identical(oldValue, newValue);
 }
 

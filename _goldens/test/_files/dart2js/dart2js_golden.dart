@@ -1,11 +1,16 @@
+@JS()
+library dart2js_golden;
+
 import 'package:angular/angular.dart';
+import 'package:js/js.dart';
 
 import 'dart2js_golden.template.dart' as ng;
 
 // Helps defeat tree-shaking in components below.
 //
 // This avoids something like `String x = 'Hello'` being aggressively inlined.
-final _emptyMap = <Object, Object>{};
+@JS()
+external T defeatDart2JsOptimizations<T>(Object any);
 
 /// This file entirely exists as synthetic AngularDart application.
 ///
@@ -52,7 +57,7 @@ class RootComponent {}
   ''',
 )
 class UsesDefaultChangeDetectionAndInput {
-  String name = _emptyMap['String'];
+  String name = defeatDart2JsOptimizations('name');
 }
 
 @Component(
@@ -74,7 +79,7 @@ class DefaultChangeDetectionAndInput {
   ''',
 )
 class InlinedNgIf {
-  bool showDiv = _emptyMap['bool'];
+  bool showDiv = defeatDart2JsOptimizations('showDiv');
 }
 
 @Component(
@@ -88,7 +93,7 @@ class InlinedNgIf {
   ''',
 )
 class EmbeddedNgIf {
-  bool showNull = _emptyMap['bool'];
+  bool showNull = defeatDart2JsOptimizations('showNull');
 }
 
 @Component(

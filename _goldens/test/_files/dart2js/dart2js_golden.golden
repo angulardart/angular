@@ -8062,7 +8062,8 @@
       set$ngIf: function(newCondition) {
         var t1, t2, t3, parentView, view;
         newCondition = newCondition === true;
-        if (!Q.checkBinding(this._prevCondition, newCondition))
+        t1 = this._prevCondition;
+        if (t1 === newCondition)
           return;
         t1 = this._viewContainer;
         if (newCondition) {
@@ -8514,9 +8515,6 @@
     }
   }], ["", "package:angular/src/core/linker/app_view_utils.dart",, Q, {
     "^": "",
-    checkBinding: function(oldValue, newValue) {
-      return oldValue == null ? newValue != null : oldValue !== newValue;
-    },
     AppViewUtils: {
       "^": "Object;_appId,eventManager,sanitizer",
       createRenderType$3: function(templateUrl, encapsulation, styles) {
@@ -9259,10 +9257,10 @@
       "^": "JavaScriptObject;",
       "%": ""
     }
-  }], ["", "/bazel-root/third_party/dart_src/angular/_goldens/test/_files/dart2js/dart2js_golden.dart",, E, {
+  }], ["dart2js_golden", "/bazel-root/third_party/dart_src/angular/_goldens/test/_files/dart2js/dart2js_golden.dart",, O, {
     "^": "",
     main: function() {
-      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(C.ComponentFactory_2Vk, E.RootComponent);
+      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(C.ComponentFactory_2Vk, O.RootComponent);
     },
     RootComponent: {
       "^": "Object;"
@@ -9341,44 +9339,43 @@
         t2 = t2.rootEl;
         this._el_0 = t2;
         parentRenderNode.appendChild(t2);
-        t2 = $.$get$_emptyMap();
-        t4 = new E.UsesDefaultChangeDetectionAndInput(t2.$index(0, "String"));
-        this._UsesDefaultChangeDetectionAndInput_0_5 = t4;
-        this._compView_0.create$2(0, t4, []);
-        t4 = new N.ViewInlinedNgIf0(false, P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
-        t4.viewData = S.AppViewData_AppViewData(t4, 3, C.ViewType_1, 1);
-        t5 = t3.createElement("inlined-ng-if");
-        t4.rootEl = t5;
-        t5 = $.ViewInlinedNgIf0__renderType;
-        if (t5 == null) {
-          t5 = $.appViewUtils;
-          t5 = t5.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty);
-          $.ViewInlinedNgIf0__renderType = t5;
+        t2 = new O.UsesDefaultChangeDetectionAndInput(self.defeatDart2JsOptimizations("name"));
+        this._UsesDefaultChangeDetectionAndInput_0_5 = t2;
+        this._compView_0.create$2(0, t2, []);
+        t2 = new N.ViewInlinedNgIf0(false, P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
+        t2.viewData = S.AppViewData_AppViewData(t2, 3, C.ViewType_1, 1);
+        t4 = t3.createElement("inlined-ng-if");
+        t2.rootEl = t4;
+        t4 = $.ViewInlinedNgIf0__renderType;
+        if (t4 == null) {
+          t4 = $.appViewUtils;
+          t4 = t4.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty);
+          $.ViewInlinedNgIf0__renderType = t4;
         }
-        t4.setupComponentType$1(t5);
-        this._compView_1 = t4;
-        t4 = t4.rootEl;
-        this._el_1 = t4;
-        parentRenderNode.appendChild(t4);
-        t4 = new E.InlinedNgIf(t2.$index(0, "bool"));
-        this._InlinedNgIf_1_5 = t4;
-        this._compView_1.create$2(0, t4, []);
-        t4 = new N.ViewEmbeddedNgIf0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
-        t4.viewData = S.AppViewData_AppViewData(t4, 3, C.ViewType_1, 2);
-        t5 = t3.createElement("embedded-ng-if");
-        t4.rootEl = t5;
-        t5 = $.ViewEmbeddedNgIf0__renderType;
-        if (t5 == null) {
-          t5 = $.appViewUtils;
-          t5 = t5.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty);
-          $.ViewEmbeddedNgIf0__renderType = t5;
+        t2.setupComponentType$1(t4);
+        this._compView_1 = t2;
+        t2 = t2.rootEl;
+        this._el_1 = t2;
+        parentRenderNode.appendChild(t2);
+        t2 = new O.InlinedNgIf(self.defeatDart2JsOptimizations("showDiv"));
+        this._InlinedNgIf_1_5 = t2;
+        this._compView_1.create$2(0, t2, []);
+        t2 = new N.ViewEmbeddedNgIf0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
+        t2.viewData = S.AppViewData_AppViewData(t2, 3, C.ViewType_1, 2);
+        t4 = t3.createElement("embedded-ng-if");
+        t2.rootEl = t4;
+        t4 = $.ViewEmbeddedNgIf0__renderType;
+        if (t4 == null) {
+          t4 = $.appViewUtils;
+          t4 = t4.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty);
+          $.ViewEmbeddedNgIf0__renderType = t4;
         }
-        t4.setupComponentType$1(t5);
-        this._compView_2 = t4;
-        t4 = t4.rootEl;
-        this._el_2 = t4;
-        parentRenderNode.appendChild(t4);
-        t2 = new E.EmbeddedNgIf(t2.$index(0, "bool"));
+        t2.setupComponentType$1(t4);
+        this._compView_2 = t2;
+        t2 = t2.rootEl;
+        this._el_2 = t2;
+        parentRenderNode.appendChild(t2);
+        t2 = new O.EmbeddedNgIf(self.defeatDart2JsOptimizations("showNull"));
         this._EmbeddedNgIf_2_5 = t2;
         this._compView_2.create$2(0, t2, []);
         t2 = new N.ViewInjectsFromArbitraryParent0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
@@ -9400,7 +9397,7 @@
         t4 = t2.injectorGet$2(C.MultiToken_usPresidents, this.viewData.parentIndex);
         t5 = t2.injectorGet$2(C.MultiToken_whiteHouse, this.viewData.parentIndex);
         t2 = t2.injectorGet$2(C.Type_InjectableService_AmT, this.viewData.parentIndex);
-        t6 = new E.InjectsFromArbitraryParent();
+        t6 = new O.InjectsFromArbitraryParent();
         t2.printWashingtonDc$2(t5, t4);
         t2 = t6;
         this._InjectsFromArbitraryParent_3_5 = t2;
@@ -9420,7 +9417,7 @@
         t1 = t1.rootEl;
         this._el_4 = t1;
         parentRenderNode.appendChild(t1);
-        t1 = new E.ComponentConditionalFeatures(false, false);
+        t1 = new O.ComponentConditionalFeatures(false, false);
         this._ComponentConditionalFeatures_4_5 = t1;
         this._compView_4.create$2(0, t1, []);
         this.init$2(C.List_empty, null);
@@ -9455,7 +9452,7 @@
           t1.destroy$0();
       },
       $asAppView: function() {
-        return [E.RootComponent];
+        return [O.RootComponent];
       }
     },
     _ViewRootComponentHost0: {
@@ -9475,7 +9472,7 @@
         t1.setupComponentType$1(t2);
         this._compView_0 = t1;
         this.rootEl = t1.rootEl;
-        t2 = new E.RootComponent();
+        t2 = new O.RootComponent();
         this._RootComponent_0_5 = t2;
         t1.create$2(0, t2, this.viewData.projectableNodes);
         this.init0$1(this.rootEl);
@@ -9490,7 +9487,7 @@
           t1.destroy$0();
       },
       $asAppView: function() {
-        return [E.RootComponent];
+        return [O.RootComponent];
       }
     },
     ViewUsesDefaultChangeDetectionAndInput0: {
@@ -9501,14 +9498,16 @@
         this.init$2(C.List_empty, null);
       },
       detectChangesInternal$0: function() {
-        var currVal_0 = this.ctx.name;
-        if (Q.checkBinding(this._expr_0, currVal_0)) {
+        var currVal_0, t1;
+        currVal_0 = this.ctx.name;
+        t1 = this._expr_0;
+        if (t1 == null ? currVal_0 != null : t1 !== currVal_0) {
           this._el_0.name = currVal_0;
           this._expr_0 = currVal_0;
         }
       },
       $asAppView: function() {
-        return [E.UsesDefaultChangeDetectionAndInput];
+        return [O.UsesDefaultChangeDetectionAndInput];
       }
     },
     ViewInlinedNgIf0: {
@@ -9522,14 +9521,29 @@
         this.init$2([], null);
       },
       detectChangesInternal$0: function() {
-        this.ctx.showDiv;
-        if (Q.checkBinding(this._expr_0, false)) {
-          this.removeInlinedNodes$2(H.setRuntimeTypeInfo([this._el_0_0], [W.Node]), true);
-          this._expr_0 = false;
+        var currVal_0, t1, doc, t2;
+        currVal_0 = this.ctx.showDiv === true;
+        t1 = this._expr_0;
+        if (t1 !== currVal_0) {
+          if (currVal_0) {
+            doc = document;
+            t1 = doc.createElement("div");
+            this._el_0_0 = t1;
+            t2 = doc.createTextNode("Hello World");
+            this._text_0_1 = t2;
+            t1.appendChild(t2);
+            t2 = this._anchor_0;
+            t1 = H.setRuntimeTypeInfo([this._el_0_0], [W.Node]);
+            S._moveNodesAfterSibling(t2, t1);
+            t2 = this.viewData.rootNodesOrViewContainers;
+            (t2 && C.JSArray_methods).addAll$1(t2, t1);
+          } else
+            this.removeInlinedNodes$2(H.setRuntimeTypeInfo([this._el_0_0], [W.Node]), true);
+          this._expr_0 = currVal_0;
         }
       },
       $asAppView: function() {
-        return [E.InlinedNgIf];
+        return [O.InlinedNgIf];
       }
     },
     ViewEmbeddedNgIf0: {
@@ -9555,7 +9569,7 @@
           t1.destroyNestedViews$0();
       },
       $asAppView: function() {
-        return [E.EmbeddedNgIf];
+        return [O.EmbeddedNgIf];
       }
     },
     _ViewEmbeddedNgIf1: {
@@ -9575,7 +9589,7 @@
         t1.setupComponentType$1(t2);
         this._compView_0 = t1;
         this._el_0 = t1.rootEl;
-        t2 = new E.NullComponent();
+        t2 = new O.NullComponent();
         this._NullComponent_0_5 = t2;
         t1.create$2(0, t2, []);
         this.init0$1(this._el_0);
@@ -9589,7 +9603,7 @@
           t1.destroy$0();
       },
       $asAppView: function() {
-        return [E.EmbeddedNgIf];
+        return [O.EmbeddedNgIf];
       }
     },
     ViewNullComponent0: {
@@ -9599,7 +9613,7 @@
         this.init$2(C.List_empty, null);
       },
       $asAppView: function() {
-        return [E.NullComponent];
+        return [O.NullComponent];
       }
     },
     ViewInjectsFromArbitraryParent0: {
@@ -9609,7 +9623,7 @@
         this.init$2(C.List_empty, null);
       },
       $asAppView: function() {
-        return [E.InjectsFromArbitraryParent];
+        return [O.InjectsFromArbitraryParent];
       }
     },
     ViewComponentConditionalFeatures0: {
@@ -9649,7 +9663,7 @@
           t1.destroyNestedViews$0();
       },
       $asAppView: function() {
-        return [E.ComponentConditionalFeatures];
+        return [O.ComponentConditionalFeatures];
       }
     },
     _ViewComponentConditionalFeatures1: {
@@ -9669,7 +9683,7 @@
         t1.setupComponentType$1(t2);
         this._compView_0 = t1;
         this._el_0 = t1.rootEl;
-        t2 = new E.FeatureA();
+        t2 = new O.FeatureA();
         this._FeatureA_0_5 = t2;
         t1.create$2(0, t2, []);
         this.init0$1(this._el_0);
@@ -9683,7 +9697,7 @@
           t1.destroy$0();
       },
       $asAppView: function() {
-        return [E.ComponentConditionalFeatures];
+        return [O.ComponentConditionalFeatures];
       }
     },
     _ViewComponentConditionalFeatures2: {
@@ -9703,7 +9717,7 @@
         t1.setupComponentType$1(t2);
         this._compView_0 = t1;
         this._el_0 = t1.rootEl;
-        t2 = new E.FeatureB();
+        t2 = new O.FeatureB();
         this._FeatureB_0_5 = t2;
         t1.create$2(0, t2, []);
         this.init0$1(this._el_0);
@@ -9717,7 +9731,7 @@
           t1.destroy$0();
       },
       $asAppView: function() {
-        return [E.ComponentConditionalFeatures];
+        return [O.ComponentConditionalFeatures];
       }
     },
     ViewFeatureA0: {
@@ -9727,7 +9741,7 @@
         this.init$2(C.List_empty, null);
       },
       $asAppView: function() {
-        return [E.FeatureA];
+        return [O.FeatureA];
       }
     },
     ViewFeatureB0: {
@@ -9737,7 +9751,7 @@
         this.init$2(C.List_empty, null);
       },
       $asAppView: function() {
-        return [E.FeatureB];
+        return [O.FeatureB];
       }
     }
   }]];
@@ -9897,7 +9911,7 @@
   C.C_Object = new P.Object();
   C.C__JSRandom = new P._JSRandom();
   C.C__RootZone = new P._RootZone();
-  C.ComponentFactory_2Vk = new D.ComponentFactory("root-component", N.dart2js_golden_template__viewFactory_RootComponentHost0$closure(), [E.RootComponent]);
+  C.ComponentFactory_2Vk = new D.ComponentFactory("root-component", N.dart2js_golden_template__viewFactory_RootComponentHost0$closure(), [O.RootComponent]);
   C.Duration_0 = new P.Duration(0);
   C.EmptyInjector_null = new R.EmptyInjector(null);
   C.JS_CONST_0 = function(hooks) {
@@ -10034,7 +10048,7 @@
   C.Type_DomSanitizationService_cKo = H.createRuntimeType(Z.DomSanitizationService);
   C.Type_EventManager_hsx = H.createRuntimeType(N.EventManager);
   C.Type_ExceptionHandler_qBE = H.createRuntimeType(U.ExceptionHandler);
-  C.Type_InjectableService_AmT = H.createRuntimeType(E.InjectableService);
+  C.Type_InjectableService_AmT = H.createRuntimeType(O.InjectableService);
   C.Type_Injector_aJC = H.createRuntimeType(M.Injector);
   C.Type_NgZone_6ty = H.createRuntimeType(Y.NgZone);
   C.Type_SanitizationService_bRS = H.createRuntimeType(E.SanitizationService);
@@ -10192,14 +10206,11 @@
   }, "CssStyleDeclaration__propertyCache", "_viewContainerAnchor", "$get$_viewContainerAnchor", function() {
     var t1 = W.document();
     return t1.createComment("");
-  }, "_viewContainerAnchor", "_emptyMap", "$get$_emptyMap", function() {
-    var t1 = P.Object;
-    return P.LinkedHashMap_LinkedHashMap$_empty(t1, t1);
-  }, "_emptyMap"]);
+  }, "_viewContainerAnchor"]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = ["_", "self", "parent", "zone", "error", "arg", "arg1", "arg2", null, "stackTrace", "f", "e", "result", "callback", "value", "index", "closure", "numberOfArguments", "arg3", "arg4", "each", "specification", "zoneValues", "s", "trace", true, "elem", "findInAncestors", "didWork_", "element", "t", "arguments"];
-  init.types = [{func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.String,,]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: [S.AppView, E.ComponentConditionalFeatures], args: [[S.AppView,,], P.int]}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: P.Null, args: [P.Symbol0,,]}, {func: 1, ret: -1, args: [P.String, P.String]}, {func: 1, ret: P.Null, args: [P.String,,]}, {func: 1, args: [, P.String]}, {func: 1, ret: P.bool}, {func: 1, ret: -1, args: [P.Function]}, {func: 1, args: [,,]}, {func: 1, args: [W.Element], opt: [P.bool]}, {func: 1, ret: -1, args: [P.Object]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: [S.AppView, E.RootComponent], args: [[S.AppView,,], P.int]}, {func: 1, ret: [S.AppView, E.EmbeddedNgIf], args: [[S.AppView,,], P.int]}, {func: 1, ret: [P._Future,,], args: [,]}];
+  init.types = [{func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.String,,]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: [S.AppView, O.ComponentConditionalFeatures], args: [[S.AppView,,], P.int]}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: P.Null, args: [P.Symbol0,,]}, {func: 1, ret: -1, args: [P.String, P.String]}, {func: 1, ret: P.Null, args: [P.String,,]}, {func: 1, args: [, P.String]}, {func: 1, ret: P.bool}, {func: 1, ret: -1, args: [P.Function]}, {func: 1, args: [,,]}, {func: 1, args: [W.Element], opt: [P.bool]}, {func: 1, ret: -1, args: [P.Object]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: [S.AppView, O.RootComponent], args: [[S.AppView,,], P.int]}, {func: 1, ret: [S.AppView, O.EmbeddedNgIf], args: [[S.AppView,,], P.int]}, {func: 1, ret: [P._Future,,], args: [,]}];
   function convertToFastObject(properties) {
     function MyClass() {
     }
@@ -10348,9 +10359,9 @@
   })(function(currentScript) {
     init.currentScript = currentScript;
     if (typeof dartMainRunner === "function")
-      dartMainRunner(E.main, []);
+      dartMainRunner(O.main, []);
     else
-      E.main([]);
+      O.main([]);
   });
   // END invoke [main].
 })();
