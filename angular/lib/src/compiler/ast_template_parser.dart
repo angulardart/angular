@@ -1046,15 +1046,6 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
     _findDuplicateAttributes(astNode.attributes);
     _findDuplicateProperties(astNode.properties);
     _findDuplicateEvents(astNode.events);
-    for (final annotation in astNode.annotations) {
-      if (annotation.name.startsWith(i18nDescriptionPrefix) ||
-          annotation.name.startsWith(i18nDescriptionPrefixDeprecated)) {
-        _reportError(
-            annotation,
-            'Internationalizing attributes is not supported on <template> '
-            'elements');
-      }
-    }
     return super.visitEmbeddedTemplate(astNode);
   }
 

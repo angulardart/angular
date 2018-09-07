@@ -103,6 +103,13 @@ void main() {
           'An internationalized property');
     });
   });
+
+  test('should support internationalized property on <template>', () async {
+    final testBed = NgTestBed.forComponent(ng.TestI18nInputOnTemplateNgFactory);
+    final testFixture = await testBed.create();
+    expect(testFixture.assertOnlyInstance.message.message,
+        'An internationalized property');
+  });
 }
 
 const issuesLink = 'https://github.com/dart-lang/angular/issues';
@@ -264,4 +271,29 @@ class TestExplicitI18nInput {
 class TestImplicitI18nInput {
   @ViewChild(GreetingComponent)
   GreetingComponent greeting;
+}
+
+@Directive(selector: '[message]')
+class MessageDirective {
+  MessageDirective(TemplateRef templateRef, ViewContainerRef viewContainerRef) {
+    viewContainerRef.createEmbeddedView(templateRef);
+  }
+
+  @Input()
+  String message;
+}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <template
+        message="An internationalized property"
+        @i18n:message="A description">
+    </template>
+  ''',
+  directives: [MessageDirective],
+)
+class TestI18nInputOnTemplate {
+  @ViewChild(MessageDirective)
+  MessageDirective message;
 }
