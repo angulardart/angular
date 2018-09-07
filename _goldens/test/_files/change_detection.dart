@@ -32,11 +32,33 @@ class CheckAlwaysComponent {}
 class DetachedComponent {}
 
 @Component(
-  selector: 'OnPush',
-  template: '<div>OnPush</div>',
+  selector: 'uses-cd-on-push',
+  template: '<cd-on-push [name]="name"></cd-on-push>',
+)
+class UsesOnPushComponent {
+  String name;
+}
+
+@Component(
+  selector: 'cd-on-push',
+  template: '<cd-on-push-child [name]="name"></cd-on-push-child>',
+  directives: [OnPushChildComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
-class OnPushComponent {}
+class OnPushComponent {
+  @Input()
+  String name;
+}
+
+@Component(
+  selector: 'cd-on-push-child',
+  template: '<div>OnPushChild: {{name}}</div>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+)
+class OnPushChildComponent {
+  @Input()
+  String name;
+}
 
 @Component(
   selector: 'Stateful',

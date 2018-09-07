@@ -41,12 +41,26 @@ external AppView<_user.DetachedComponent> viewFactory_DetachedComponent0(AppView
 class ViewDetachedComponent0 extends AppView<_user.DetachedComponent> {
   external ViewDetachedComponent0(AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesOnPushComponent.
+external List<dynamic> get styles$UsesOnPushComponent;
+external ComponentFactory<_user.UsesOnPushComponent> get UsesOnPushComponentNgFactory;
+external AppView<_user.UsesOnPushComponent> viewFactory_UsesOnPushComponent0(AppView<dynamic> parentView, int parentIndex);
+class ViewUsesOnPushComponent0 extends AppView<_user.UsesOnPushComponent> {
+  external ViewUsesOnPushComponent0(AppView<dynamic> parentView, int parentIndex);
+}
 // For @Component class OnPushComponent.
 external List<dynamic> get styles$OnPushComponent;
 external ComponentFactory<_user.OnPushComponent> get OnPushComponentNgFactory;
 external AppView<_user.OnPushComponent> viewFactory_OnPushComponent0(AppView<dynamic> parentView, int parentIndex);
 class ViewOnPushComponent0 extends AppView<_user.OnPushComponent> {
   external ViewOnPushComponent0(AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class OnPushChildComponent.
+external List<dynamic> get styles$OnPushChildComponent;
+external ComponentFactory<_user.OnPushChildComponent> get OnPushChildComponentNgFactory;
+external AppView<_user.OnPushChildComponent> viewFactory_OnPushChildComponent0(AppView<dynamic> parentView, int parentIndex);
+class ViewOnPushChildComponent0 extends AppView<_user.OnPushChildComponent> {
+  external ViewOnPushChildComponent0(AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class StatefulComponent.
 external List<dynamic> get styles$StatefulComponent;

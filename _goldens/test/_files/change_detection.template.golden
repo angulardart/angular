@@ -273,12 +273,87 @@ ComponentFactory<import1.DetachedComponent> get DetachedComponentNgFactory {
   return _DetachedComponentNgFactory;
 }
 
+final List<dynamic> styles$UsesOnPushComponent = const [];
+
+class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
+  import5.Element _el_0;
+  var _expr_0;
+  static RenderComponentType _renderType;
+  ViewUsesOnPushComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('uses-cd-on-push');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$UsesOnPushComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesOnPushComponent> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import5.document;
+    _el_0 = createAndAppend(doc, 'cd-on-push', parentRenderNode);
+    init(const [], null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.UsesOnPushComponent _ctx = ctx;
+    final currVal_0 = _ctx.name;
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      setProp(_el_0, 'name', currVal_0);
+      _expr_0 = currVal_0;
+    }
+  }
+}
+
+AppView<import1.UsesOnPushComponent> viewFactory_UsesOnPushComponent0(AppView<dynamic> parentView, int parentIndex) {
+  return ViewUsesOnPushComponent0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$UsesOnPushComponentHost = const [];
+
+class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent> {
+  ViewUsesOnPushComponent0 _compView_0;
+  import1.UsesOnPushComponent _UsesOnPushComponent_0_5;
+  _ViewUsesOnPushComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.UsesOnPushComponent> build() {
+    _compView_0 = ViewUsesOnPushComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesOnPushComponent_0_5 = import1.UsesOnPushComponent();
+    _compView_0.create(_UsesOnPushComponent_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _UsesOnPushComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.UsesOnPushComponent> viewFactory_UsesOnPushComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewUsesOnPushComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesOnPushComponent> _UsesOnPushComponentNgFactory = const ComponentFactory('uses-cd-on-push', viewFactory_UsesOnPushComponentHost0);
+ComponentFactory<import1.UsesOnPushComponent> get UsesOnPushComponentNgFactory {
+  return _UsesOnPushComponentNgFactory;
+}
+
 final List<dynamic> styles$OnPushComponent = const [];
 
 class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
+  import5.Element _el_0;
+  ViewOnPushChildComponent0 _compView_0;
+  import1.OnPushChildComponent _OnPushChildComponent_0_5;
+  String _expr_0;
   static RenderComponentType _renderType;
   ViewOnPushComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import5.document.createElement('OnPush');
+    rootEl = import5.document.createElement('cd-on-push');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$OnPushComponent);
     setupComponentType(_renderType);
   }
@@ -286,11 +361,34 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
   ComponentRef<import1.OnPushComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
-    final _text_1 = import5.Text('OnPush');
-    _el_0.append(_text_1);
+    _compView_0 = ViewOnPushChildComponent0(this, 0);
+    _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _OnPushChildComponent_0_5 = import1.OnPushChildComponent();
+    _compView_0.create(_OnPushChildComponent_0_5, []);
     init(const [], null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.OnPushComponent _ctx = ctx;
+    bool changed = false;
+    changed = false;
+    final currVal_0 = _ctx.name;
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      _OnPushChildComponent_0_5.name = currVal_0;
+      changed = true;
+      _expr_0 = currVal_0;
+    }
+    if (changed) {
+      _compView_0.markAsCheckOnce();
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
   }
 }
 
@@ -316,6 +414,10 @@ class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
 
   @override
   void detectChangesInternal() {
+    bool changed = false;
+    if (changed) {
+      _compView_0.markAsCheckOnce();
+    }
     _compView_0.detectChanges();
   }
 
@@ -329,9 +431,88 @@ AppView<import1.OnPushComponent> viewFactory_OnPushComponentHost0(AppView<dynami
   return _ViewOnPushComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.OnPushComponent> _OnPushComponentNgFactory = const ComponentFactory('OnPush', viewFactory_OnPushComponentHost0);
+const ComponentFactory<import1.OnPushComponent> _OnPushComponentNgFactory = const ComponentFactory('cd-on-push', viewFactory_OnPushComponentHost0);
 ComponentFactory<import1.OnPushComponent> get OnPushComponentNgFactory {
   return _OnPushComponentNgFactory;
+}
+
+final List<dynamic> styles$OnPushChildComponent = const [];
+
+class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
+  import5.Text _text_2;
+  var _expr_0;
+  static RenderComponentType _renderType;
+  ViewOnPushChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    rootEl = import5.document.createElement('cd-on-push-child');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null), ViewEncapsulation.None, styles$OnPushChildComponent);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.OnPushChildComponent> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import5.document;
+    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final _text_1 = import5.Text('OnPushChild: ');
+    _el_0.append(_text_1);
+    _text_2 = import5.Text('');
+    _el_0.append(_text_2);
+    init(const [], null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final import1.OnPushChildComponent _ctx = ctx;
+    final currVal_0 = (_ctx.name ?? '');
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      _text_2.text = currVal_0;
+      _expr_0 = currVal_0;
+    }
+  }
+}
+
+AppView<import1.OnPushChildComponent> viewFactory_OnPushChildComponent0(AppView<dynamic> parentView, int parentIndex) {
+  return ViewOnPushChildComponent0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$OnPushChildComponentHost = const [];
+
+class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponent> {
+  ViewOnPushChildComponent0 _compView_0;
+  import1.OnPushChildComponent _OnPushChildComponent_0_5;
+  _ViewOnPushChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.OnPushChildComponent> build() {
+    _compView_0 = ViewOnPushChildComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _OnPushChildComponent_0_5 = import1.OnPushChildComponent();
+    _compView_0.create(_OnPushChildComponent_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _OnPushChildComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool changed = false;
+    if (changed) {
+      _compView_0.markAsCheckOnce();
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.OnPushChildComponent> viewFactory_OnPushChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewOnPushChildComponentHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.OnPushChildComponent> _OnPushChildComponentNgFactory = const ComponentFactory('cd-on-push-child', viewFactory_OnPushChildComponentHost0);
+ComponentFactory<import1.OnPushChildComponent> get OnPushChildComponentNgFactory {
+  return _OnPushChildComponentNgFactory;
 }
 
 final List<dynamic> styles$StatefulComponent = const [];
@@ -469,7 +650,9 @@ void initReflector() {
   _ngRef.registerComponent(CheckedComponent, CheckedComponentNgFactory);
   _ngRef.registerComponent(CheckAlwaysComponent, CheckAlwaysComponentNgFactory);
   _ngRef.registerComponent(DetachedComponent, DetachedComponentNgFactory);
+  _ngRef.registerComponent(UsesOnPushComponent, UsesOnPushComponentNgFactory);
   _ngRef.registerComponent(OnPushComponent, OnPushComponentNgFactory);
+  _ngRef.registerComponent(OnPushChildComponent, OnPushChildComponentNgFactory);
   _ngRef.registerComponent(StatefulComponent, StatefulComponentNgFactory);
   _ngRef.registerComponent(DefaultComponent, DefaultComponentNgFactory);
   _ref0.initReflector();
