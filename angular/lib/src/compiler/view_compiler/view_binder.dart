@@ -210,16 +210,16 @@ void bindViewHostProperties(CompileView view, Parser parser,
   var compileElement = view.componentView.declarationElement;
   var renderNode = view.componentView.declarationElement.renderNode;
   bindAndWriteToRenderer(
-      hostProperties,
-      o.THIS_EXPR,
-      o.ReadClassMemberExpr('ctx'),
-      view.component,
-      renderNode.toReadExpr(),
-      compileElement.isHtmlElement,
-      view.nameResolver,
-      view.storage,
-      method,
-      updatingHostAttribute: true);
+    hostProperties,
+    o.THIS_EXPR,
+    o.ReadClassMemberExpr('ctx'),
+    view.component,
+    renderNode.toReadExpr(),
+    compileElement.isHtmlElement,
+    view.nameResolver,
+    view.storage,
+    method,
+  );
   if (method.isNotEmpty) {
     view.detectHostChangesMethod = method;
   }
