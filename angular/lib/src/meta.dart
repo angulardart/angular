@@ -1,13 +1,6 @@
 // **DO NOT CHANGE**. The analyzer looks for this _specific name_.
 library angular.meta;
 
-// Work in progress.
-//
-// - https://github.com/dart-lang/angular/issues/930
-// - https://github.com/dart-lang/sdk/issues/33353
-//
-// Once this is enabled we will export it from `angular.dart`.
-
 /// Used to annotate a class, field, or method that is public for template use.
 ///
 /// An annotated element may be referenced in the _same_ Dart library, or in

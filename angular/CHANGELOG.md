@@ -38,6 +38,46 @@
     from the annotated component as type arguments to its children. See its
     documentation for details.
 
+*   [#930][]: Added `@visibleForTemplate` to `package:angular/meta.dart`. This
+    is an _optional_ annotation that may be used to annotate elements that
+    should _only_ be used from within generated code (i.e. a `.template.dart`).
+    It is a compile-time _hint_, which may be treated as a failing build, to use
+    annotated elements outside of the component or template.
+
+    This annotation is intended to give component authors more control in
+    specifying the public API of their component(s), especially coupled with the
+    fact that AngularDart requires all members to be public to be reachable from
+    generated code. For example, `c` and `ngAfterChanges` are only accessible
+    from `CalculatorComponent` (or its template) in the following:
+
+    ```dart
+    import 'package:angular/angular.dart';
+    import 'package:angular/meta.dart';
+
+    @Component(
+      selector: 'calculator-comp',
+      template: '{{a}} + {{b}} = {{c}}',
+    )
+    class CalculatorComponent implements AfterChanges {
+      @Input()
+      num a = 0;
+
+      @Input()
+      num b = 0;
+
+      @visibleForTemplate
+      num c = 0;
+
+      @override
+      @visibleForTemplate
+      void ngAfterChanges() {
+        c = a + b;
+      }
+    }
+    ```
+
+    **NOTE**: This feature is only _enforced_ in SDK: `>=2.1.0-dev.3.1`.
+
 ### Bug fixes
 
 *   [#1538][]: A compile-time error is reported if the `@deferred` template
@@ -117,6 +157,7 @@
 
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
+[#930]: https://github.com/dart-lang/angular/issues/930
 [#1500]: https://github.com/dart-lang/angular/issues/1500
 [#1502]: https://github.com/dart-lang/angular/issues/1502
 [#1538]: https://github.com/dart-lang/angular/issues/1538
