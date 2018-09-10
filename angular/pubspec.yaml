@@ -29,7 +29,7 @@ dependencies:
   code_builder: '^3.0.1'
   csslib: ^0.14.5
   path: ^1.6.1
-  source_gen: ">=0.8.0 <0.10.0"
+  source_gen: ">=0.9.1 <0.10.0"
   source_span: ^1.4.0
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===

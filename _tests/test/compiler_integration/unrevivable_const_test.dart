@@ -17,9 +17,7 @@ void main() {
       final InjectorFactory example = null;
     ''', errors: [
       allOf([
-        // TODO(matanl): Improve after source_gen#374.
-        // https://github.com/dart-lang/source_gen/issues/374
-        contains('Could not reference const object'),
+        contains('While attempting to resolve a constant value for a provider'),
         contains('TestClass'),
       ]),
     ]);
