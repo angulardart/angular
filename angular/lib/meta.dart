@@ -8,6 +8,7 @@ library angular.meta;
 import 'dart:html';
 
 import 'package:meta/meta.dart';
+export 'src/meta.dart' show visibleForTemplate;
 
 /// Wraps a typed [callback] with a single parameter of type [A].
 ///
