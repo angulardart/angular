@@ -124,10 +124,9 @@ class AppViewData<T> {
   }
 
   void updateSkipChangeDetectionFlag() {
-    _skipChangeDetection =
-        identical(_cdMode, ChangeDetectionStrategy.Detached) ||
-            identical(_cdMode, ChangeDetectionStrategy.Checked) ||
-            _cdState == ChangeDetectorState.Errored;
+    _skipChangeDetection = _cdMode == ChangeDetectionStrategy.Detached ||
+        _cdMode == ChangeDetectionStrategy.Checked ||
+        _cdState == ChangeDetectorState.Errored;
   }
 
   void destroy() {
