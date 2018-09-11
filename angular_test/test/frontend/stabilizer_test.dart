@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:pedantic/pedantic.dart';
 import 'package:test/test.dart';
 import 'package:angular/di.dart';
 import 'package:angular_test/src/errors.dart';
@@ -98,13 +99,13 @@ void main() {
 
     test('should stabilize existing events', () async {
       var asyncEventsCompleted = false;
-      ngZone.run(() async {
+      unawaited(ngZone.run(() async {
         for (var i = 0; i < 20; i++) {
           await Future(() {});
           await Future.value();
         }
         asyncEventsCompleted = true;
-      });
+      }));
       expect(asyncEventsCompleted, isFalse);
       await ngZoneStabilizer.stabilize();
       expect(asyncEventsCompleted, isTrue);
