@@ -26,11 +26,6 @@ Ramp up quickly with our docs, codelabs, and examples:
 * Go to [Get Started][get_started] for a quick introduction to
   creating and running AngularDart web apps.
 
-* Try the [material design codelab][codelab1], which uses the
-  [`angular_components`][webdev_components]
-  package for production-quality material design widgets built and used by
-  Google.
-
 * Follow the [AngularDart tutorial][tutorial] to build a
   fully working application that includes routing, HTTP networking, and more.
 
