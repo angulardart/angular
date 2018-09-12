@@ -5,6 +5,7 @@ import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/testing.dart';
 import 'package:angular_test/angular_test.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:test/test.dart';
 
 // ignore: uri_has_not_been_generated
@@ -36,9 +37,9 @@ void main() {
     final router = testFixture.assertOnlyInstance.router;
     final requests = router.onRouteActivated.map((state) => state.path);
 
-    router.navigate('/first');
-    router.navigate('/second');
-    router.navigate('/third');
+    unawaited(router.navigate('/first'));
+    unawaited(router.navigate('/second'));
+    unawaited(router.navigate('/third'));
 
     // Expect navigation to complete in order requested.
     expect(requests, emitsInOrder(['/first', '/second', '/third']));
@@ -49,8 +50,8 @@ void main() {
     // activations are permitted in the same event loop, the pending awaited
     // activation guards will execute in the original order.
     thirdCompleter.complete();
-    Future(secondCompleter.complete);
-    Future(firstCompleter.complete);
+    unawaited(Future(secondCompleter.complete));
+    unawaited(Future(firstCompleter.complete));
   });
 }
 
