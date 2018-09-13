@@ -1,0 +1,35 @@
+{
+  "@@locale": "en_US",
+  "@@last_modified": "2018-09-12T17:43:33.734599",
+  "Add": "Add",
+  "@Add": {
+    "description": "Text on button that adds an item to the grocery list.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "Groceries": "Groceries",
+  "@Groceries": {
+    "description": "The title of the grocery list.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "Item": "Item",
+  "@Item": {
+    "description": "Placeholder text on input for adding an item.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "ViewAppComponent0__message_1": "Add items to the grocery list {startTag0}below{endTag0}.",
+  "@ViewAppComponent0__message_1": {
+    "description": "A description of how to add items to the grocery list.",
+    "type": "text",
+    "placeholders": {
+      "startTag0": {
+        "example": "<b>"
+      },
+      "endTag0": {
+        "example": "</b>"
+      }
+    }
+  }
+}
