@@ -1,0 +1,28 @@
+<!-- Internationalize plain text. -->
+<h1 @i18n="The title of the grocery list.">Groceries</h1>
+
+<!-- Internationalize text with nested markup. -->
+<div @i18n="A description of how to add items to the grocery list.">
+  Add items to the grocery list <b>below</b>.
+</div>
+
+<!-- Internationalize attribute. -->
+<input
+    #input
+    type="text"
+    placeholder="Item"
+    @i18n:placeholder="Placeholder text on input for adding an item.">
+
+<!-- Bind a common message declared in Dart so it can be shared across app. -->
+<button (click)="add">{{Messages.add}}</button>
+
+<ul>
+  <li *ngFor="let item of items">{{item}}</li>
+</ul>
+
+<!-- Skip an internationalized message. -->
+<div
+    @i18n="A description of how to order groceries."
+    @i18n.skip>
+  This message is a draft and will be skipped for translation.
+</div>
