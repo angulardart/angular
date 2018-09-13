@@ -5,8 +5,6 @@ targets:
         options:
           i18n: True
       build_web_compilers|entrypoint:
-        generate_for:
-           - web/main.dart
         release_options:
           dart2js_args:
             - --fast-startup

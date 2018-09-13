@@ -337,6 +337,33 @@ jobs:
 
     - stage: presubmit
       script: ./tool/travis.sh analyze
+      env: PKG="examples/i18n"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="examples/i18n"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - examples/i18n/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="examples/i18n"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - examples/i18n/.dart_tool
+
+      addons:
+        chrome: stable
+      before_install:
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
       env: PKG="examples/registration_form"
 
     - stage: building

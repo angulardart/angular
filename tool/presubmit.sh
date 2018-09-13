@@ -83,6 +83,12 @@ echo "Analyzing examples/hello_world..."
 PKG=examples/hello_world tool/travis.sh analyze
 echo "Building examples/hello_world in debug mode..."
 PKG=examples/hello_world tool/travis.sh build
+echo "Analyzing examples/i18n..."
+PKG=examples/i18n tool/travis.sh analyze
+echo "Building examples/i18n in debug mode..."
+PKG=examples/i18n tool/travis.sh build
+echo "Running tests in examples/i18n in debug mode"
+PKG=examples/i18n tool/travis.sh test
 echo "Analyzing examples/registration_form..."
 PKG=examples/registration_form tool/travis.sh analyze
 echo "Building examples/registration_form in debug mode..."
