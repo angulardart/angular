@@ -1,9 +1,6 @@
 targets:
   $default:
     builders:
-      angular:
-        options:
-          i18n: True
       build_web_compilers|entrypoint:
         release_options:
           dart2js_args:

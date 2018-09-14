@@ -87,7 +87,7 @@ void main() {
     final parser = AstTemplateParser(
       elementSchemaRegistry,
       Parser(Lexer()),
-      CompilerFlags(i18nEnabled: true),
+      CompilerFlags(),
     );
     _parse = (template, [directives, pipes]) => parser.parse(
         component, template, directives ?? [], pipes ?? [], 'TestComp');

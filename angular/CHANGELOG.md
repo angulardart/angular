@@ -78,6 +78,36 @@
 
     **NOTE**: This feature is only _enforced_ in SDK: `>=2.1.0-dev.3.1`.
 
+*   Added support for internationalization in templates.
+
+    The `@i18n` annotation marks content in document fragments or attributes for
+    internationalization via integration with [`package:intl`][intl].
+
+    A document fragment can be internationalized by applying the `@i18n`
+    annotation to its parent element:
+
+    ```html
+    <div @i18n="A description of the message.">
+      A message to be <i>translated</i>!
+    </div>
+    ```
+
+    An attribute, property, or input `<name>` can be internationalized by
+    applying the `@i18n:<name>` annotation to its host element:
+
+    ```html
+    <input
+        placeholder="A message to be translated"
+        @i18n:placeholder="A description of the message.">
+    ```
+
+    Note that internationalization in templates currently only supports messages
+    with static text and HTML. See the [example][i18n_example] for more details.
+
+[intl]: https://pub.dartlang.org/packages/intl
+[i18n_example]: https://github.com/dart-lang/angular/blob/master/examples/i18n
+
+
 ### Bug fixes
 
 *   [#1538][]: A compile-time error is reported if the `@deferred` template

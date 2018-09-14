@@ -157,7 +157,7 @@ class AstTemplateParser implements TemplateParser {
       exports: compMeta.exports,
       exceptionHandler: exceptionHandler,
     );
-    final context = _ParseContext.forRoot(templateContext, flags.i18nEnabled);
+    final context = _ParseContext.forRoot(templateContext);
     return visitor._visitAll(filteredAst, context);
   }
 
@@ -527,8 +527,6 @@ class _ParseContext {
   final TemplateContext templateContext;
   final String elementName;
   final List<ng.DirectiveAst> boundDirectives;
-  // TODO(leonsenft): remove when @i18n is enabled by default.
-  final bool i18nEnabled;
   final I18nMetadataBundle i18nMetadata;
   final bool isTemplate;
   final SelectorMatcher _ngContentIndexMatcher;
@@ -538,13 +536,12 @@ class _ParseContext {
       this.templateContext,
       this.elementName,
       this.boundDirectives,
-      this.i18nEnabled,
       this.i18nMetadata,
       this.isTemplate,
       this._ngContentIndexMatcher,
       this._wildcardNgContentIndex);
 
-  _ParseContext.forRoot(this.templateContext, this.i18nEnabled)
+  _ParseContext.forRoot(this.templateContext)
       : elementName = '',
         boundDirectives = const [],
         i18nMetadata = null,
@@ -558,8 +555,7 @@ class _ParseContext {
         parent.templateContext,
         '',
         const [],
-        parent.i18nEnabled,
-        _maybeParseI18nMetadata(element.annotations, parent),
+        parseI18nMetadata(element.annotations, parent.templateContext),
         false,
         parent._ngContentIndexMatcher,
         parent._wildcardNgContentIndex);
@@ -579,8 +575,7 @@ class _ParseContext {
         templateContext,
         element.name,
         boundDirectives,
-        parent.i18nEnabled,
-        _maybeParseI18nMetadata(element.annotations, parent),
+        parseI18nMetadata(element.annotations, parent.templateContext),
         false,
         _createSelector(firstComponent),
         _findWildcardIndex(firstComponent));
@@ -600,8 +595,7 @@ class _ParseContext {
         templateContext,
         _templateElement,
         boundDirectives,
-        parent.i18nEnabled,
-        _maybeParseI18nMetadata(template.annotations, parent),
+        parseI18nMetadata(template.annotations, parent.templateContext),
         true,
         _createSelector(firstComponent),
         _findWildcardIndex(firstComponent));
@@ -732,17 +726,6 @@ class _ParseContext {
     // We return the directives in the same order that they are present in the
     // Component, not the order that they match in the html.
     return directives.where(matchedDirectives.contains).toList();
-  }
-
-  // TODO(leonsenft): remove when @i18n is enabled by default.
-  /// A helper to handle conditionally parsing i18n metadata.
-  ///
-  /// Returns empty metadata when i18n is disabled.
-  static I18nMetadataBundle _maybeParseI18nMetadata(
-      List<ast.AnnotationAst> annotations, _ParseContext parent) {
-    return parent.i18nEnabled
-        ? parseI18nMetadata(annotations, parent.templateContext)
-        : I18nMetadataBundle.empty();
   }
 
   static SelectorMatcher _selectorMatcher(
