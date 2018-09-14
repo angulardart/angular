@@ -185,6 +185,11 @@
     correctly. Before, all named arguments were skipped (left to default values,
     which was often `null`).
 
+*   `@GenerateInjector(...)` now correctly solves duplicate tokens by having
+    the _last_, not _first_, provider win. This aligns the semantics with how
+    the other injector implementations work. For `MultiToken`, the order stays
+    the same.
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#930]: https://github.com/dart-lang/angular/issues/930

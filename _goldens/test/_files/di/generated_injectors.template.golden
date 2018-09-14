@@ -19,48 +19,48 @@ _i1.Injector doGenerate$Injector([_i1.Injector parent]) => new _Injector$doGener
 class _Injector$doGenerate extends _i2.HierarchicalInjector {
   _Injector$doGenerate._([_i1.Injector parent]) : super(parent);
 
-  _i3.Example _field0;
+  _i3.Example _field8;
 
-  _i3.Example _getExample$0() => _field0 ??= new _i3.Example();
-  String _getString$1() => r'dynamic';
-  String _getString$2() => r'String';
-  dynamic _getdynamic$3() => const _i3.Example();
+  dynamic _getdynamic$0() => r'ABC123';
+  dynamic _getdynamic$1() => const {r'instanceOfExample': const _i3.Example(), _i3.instanceOfExamplePrime: r'instanceOfExamplePrime'};
+  dynamic _getdynamic$2() => const [const _i3.Example(), _i3.instanceOfExamplePrime, _i3.ExampleTheta.instance];
+  dynamic _getdynamic$3() => _i3.ExampleTheta.instance;
   dynamic _getdynamic$4() => _i3.instanceOfExamplePrime;
-  dynamic _getdynamic$5() => _i3.ExampleTheta.instance;
-  dynamic _getdynamic$6() => const [const _i3.Example(), _i3.instanceOfExamplePrime, _i3.ExampleTheta.instance];
-  dynamic _getdynamic$7() => const {r'instanceOfExample': const _i3.Example(), _i3.instanceOfExamplePrime: r'instanceOfExamplePrime'};
-  dynamic _getdynamic$8() => r'ABC123';
+  dynamic _getdynamic$5() => const _i3.Example();
+  String _getString$6() => r'String';
+  String _getString$7() => r'dynamic';
+  _i3.Example _getExample$8() => _field8 ??= new _i3.Example();
   String _getString$9() => r'A';
   String _getString$10() => r'B';
   _i1.Injector _getInjector$11() => this;
   @override
   Object injectFromSelfOptional(Object token, [Object orElse = _i1.throwIfNotFound]) {
-    if (identical(token, _i3.Example)) {
-      return _getExample$0();
+    if (identical(token, const _i3.XsrfToken())) {
+      return _getdynamic$0();
     }
-    if (identical(token, const _i4.OpaqueToken<dynamic>('someToken'))) {
-      return _getString$1();
+    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken5'))) {
+      return _getdynamic$1();
     }
-    if (identical(token, const _i4.OpaqueToken<String>('someToken'))) {
-      return _getString$2();
+    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken4'))) {
+      return _getdynamic$2();
     }
-    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken1'))) {
+    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken3'))) {
       return _getdynamic$3();
     }
     if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken2'))) {
       return _getdynamic$4();
     }
-    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken3'))) {
+    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken1'))) {
       return _getdynamic$5();
     }
-    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken4'))) {
-      return _getdynamic$6();
+    if (identical(token, const _i4.OpaqueToken<String>('someToken'))) {
+      return _getString$6();
     }
-    if (identical(token, const _i4.OpaqueToken<dynamic>('arbitraryToken5'))) {
-      return _getdynamic$7();
+    if (identical(token, const _i4.OpaqueToken<dynamic>('someToken'))) {
+      return _getString$7();
     }
-    if (identical(token, const _i3.XsrfToken())) {
-      return _getdynamic$8();
+    if (identical(token, _i3.Example)) {
+      return _getExample$8();
     }
     if (identical(token, _i1.Injector)) {
       return _getInjector$11();

@@ -575,7 +575,7 @@ void main() {
         );
       });
 
-      test('should support arbitrary const values in ValueProvider', () async {
+      test('should support arbitrary const values in ValueProvider', () {
         final injector = valueProviderExamples();
         TestConstNoArgs c1 = injector.get(TestConstNoArgs);
         TestConstPositionalArgs c2 = injector.get(TestConstPositionalArgs);
@@ -589,6 +589,12 @@ void main() {
         expect(c4, isNotNull);
         expect(c4.name, '$TestConstNamedArgs2');
       });
+    });
+
+    test('should de-duplicate tokens preferring the last provider', () {
+      final injector = tokenOrdering();
+      expect(injector.get(duplicateToken), 'B');
+      expect(injector.get(duplicateMulti), ['A', 'B']);
     });
   });
 }
@@ -800,3 +806,14 @@ const topLevelProvider = ValueProvider(TestConstNamedArgs2, topLevelValue);
   topLevelProvider,
 ])
 final InjectorFactory valueProviderExamples = ng.valueProviderExamples$Injector;
+
+const duplicateToken = const OpaqueToken<String>('duplicateToken');
+const duplicateMulti = const MultiToken<String>('duplicateMulti');
+
+@GenerateInjector([
+  ValueProvider.forToken(duplicateToken, 'A'),
+  ValueProvider.forToken(duplicateToken, 'B'),
+  ValueProvider.forToken(duplicateMulti, 'A'),
+  ValueProvider.forToken(duplicateMulti, 'B'),
+])
+final InjectorFactory tokenOrdering = ng.tokenOrdering$Injector;
