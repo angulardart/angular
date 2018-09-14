@@ -73,13 +73,6 @@ class CompilerFlags {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
-  /// Whether internationalization of templates is supported.
-  ///
-  /// This flag is currently used to disable support while the feature is
-  /// developed.
-  @experimental
-  final bool i18nEnabled;
-
   /// Whether to look for a file to determine if `.template.dart` will exist.
   ///
   /// **NOTE**: This is an _internal_ flag that is currently only supported for
@@ -106,7 +99,6 @@ class CompilerFlags {
 
   const CompilerFlags({
     this.genDebugInfo = false,
-    this.i18nEnabled = false,
     this.ignoreNgPlaceholderForGoldens = false,
     this.profileFor = Profile.none,
     this.useLegacyStyleEncapsulation = false,
@@ -172,7 +164,11 @@ class CompilerFlags {
       }
     }
 
-    final i18nEnabled = options[_argI18nEnabled];
+    if (options[_argI18nEnabled] != null) {
+      log('The "i18n" flag is no longer necessary as internationalization in '
+          'templates is enabled by default.');
+    }
+
     final profileFor = options[_argProfileFor];
     final useLegacyStyle = options[_argLegacyStyle];
     final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
@@ -181,7 +177,6 @@ class CompilerFlags {
 
     return CompilerFlags(
       genDebugInfo: false,
-      i18nEnabled: i18nEnabled ?? defaultTo.i18nEnabled,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,

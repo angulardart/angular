@@ -18,7 +18,6 @@ Builder releaseBuilder(BuilderOptions options) {
     _withoutExtensions(options),
     defaultFlags: const CompilerFlags(
       genDebugInfo: false,
-      i18nEnabled: true,
       ignoreNgPlaceholderForGoldens: true,
     ),
     templateExtension: options.config['extensions']['template'],
@@ -37,7 +36,6 @@ Builder outlineBuilder(BuilderOptions options) {
     _withoutExtensions(options),
     defaultFlags: const CompilerFlags(
       genDebugInfo: false,
-      i18nEnabled: true,
       ignoreNgPlaceholderForGoldens: true,
     ),
     extension: options.config['extensions']['outline'],

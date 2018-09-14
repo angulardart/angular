@@ -20,7 +20,7 @@ class DomSanitizationServiceImpl implements DomSanitizationService {
     return _instance;
   }
 
-  DomSanitizationServiceImpl._() {}
+  DomSanitizationServiceImpl._();
 
   @override
   String sanitizeHtml(value) {
