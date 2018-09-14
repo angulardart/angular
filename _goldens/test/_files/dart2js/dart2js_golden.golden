@@ -3334,7 +3334,7 @@
       "^": "_ControllerStream;_controller,$ti"
     },
     _BroadcastSubscription: {
-      "^": "_ControllerSubscription;_eventState,0_async$_next,0_async$_previous,_controller,0_onData,0_onError,0_onDone,_zone,_state,0_cancelFuture,0_pending,$ti",
+      "^": "_ControllerSubscription;_eventState,0_async$_next,0_async$_previous,_controller,0_onData,0_async$_onError,0_onDone,_zone,_state,0_cancelFuture,0_pending,$ti",
       _onPause$0: function() {
       },
       _onResume$0: function() {
@@ -3978,9 +3978,9 @@
         this._onData = t1.registerUnaryCallback$2$1(handleData, null, H.getRuntimeTypeArgument(this, "_BufferingStreamSubscription", 0));
         handleError = onError == null ? P.async___nullErrorHandler$closure() : onError;
         if (H.functionTypeTest(handleError, {func: 1, ret: -1, args: [P.Object, P.StackTrace]}))
-          this._onError = t1.registerBinaryCallback$3$1(handleError, null, P.Object, P.StackTrace);
+          this._async$_onError = t1.registerBinaryCallback$3$1(handleError, null, P.Object, P.StackTrace);
         else if (H.functionTypeTest(handleError, {func: 1, ret: -1, args: [P.Object]}))
-          this._onError = t1.registerUnaryCallback$2$1(handleError, null, P.Object);
+          this._async$_onError = t1.registerUnaryCallback$2$1(handleError, null, P.Object);
         else
           H.throwExpression(P.ArgumentError$("handleError callback must take either an Object (the error), or both an Object (the error) and a StackTrace."));
         this._onDone = t1.registerCallback$1(onDone == null ? P.async___nullDoneHandler$closure() : onDone);
@@ -7902,84 +7902,84 @@
       return Y.minimalApp$Injector(null);
     }, "call$1", "call$0", "modules_template__minimalApp$Injector$closure", 0, 2, 16],
     _Injector$minimalApp: {
-      "^": "HierarchicalInjector;0_field0,0_field2,0_field3,0_field4,0_field5,0_field6,0_field7,0_field8,0_field9,parent",
+      "^": "HierarchicalInjector;0_field0,0_field1,0_field2,0_field3,0_field4,0_field5,0_field7,0_field8,0_field9,parent",
       injectFromSelfOptional$2: function(token, orElse) {
         var t1;
-        if (token === C.Type_ExceptionHandler_qBE) {
+        if (token === C.Type_Testability_h8g) {
           t1 = this._field0;
           if (t1 == null) {
-            t1 = new T.BrowserExceptionHandler();
+            t1 = new D.Testability(this.inject$1(C.Type_NgZone_6ty), 0, true, false, H.setRuntimeTypeInfo([], [P.Function]));
+            t1._watchAngularEvents$0();
             this._field0 = t1;
           }
           return t1;
         }
-        if (token === C.Type_SanitizationService_bRS)
-          return this.inject$1(C.Type_DomSanitizationService_cKo);
-        if (token === C.Type_DomSanitizationService_cKo) {
+        if (token === C.Type_SlowComponentLoader_qxe) {
+          t1 = this._field1;
+          if (t1 == null) {
+            t1 = new G.ThrowingSlowComponentLoader();
+            this._field1 = t1;
+          }
+          return t1;
+        }
+        if (token === C.Type_ComponentLoader_7xV) {
           t1 = this._field2;
+          if (t1 == null) {
+            t1 = new M.ComponentLoader();
+            this._field2 = t1;
+          }
+          return t1;
+        }
+        if (token === C.OpaqueToken_APP_ID) {
+          t1 = this._field3;
+          if (t1 == null) {
+            t1 = G.createRandomAppId();
+            this._field3 = t1;
+          }
+          return t1;
+        }
+        if (token === C.Type_NgZone_6ty) {
+          t1 = this._field4;
+          if (t1 == null) {
+            t1 = Y.NgZone$(false);
+            this._field4 = t1;
+          }
+          return t1;
+        }
+        if (token === C.Type_DomSanitizationService_cKo) {
+          t1 = this._field5;
           if (t1 == null) {
             t1 = $.DomSanitizationServiceImpl__instance;
             if (t1 == null) {
               t1 = new R.DomSanitizationServiceImpl();
               $.DomSanitizationServiceImpl__instance = t1;
             }
-            this._field2 = t1;
-          }
-          return t1;
-        }
-        if (token === C.Type_NgZone_6ty) {
-          t1 = this._field3;
-          if (t1 == null) {
-            t1 = Y.NgZone$(false);
-            this._field3 = t1;
-          }
-          return t1;
-        }
-        if (token === C.OpaqueToken_APP_ID) {
-          t1 = this._field4;
-          if (t1 == null) {
-            t1 = G.createRandomAppId();
-            this._field4 = t1;
-          }
-          return t1;
-        }
-        if (token === C.Type_ComponentLoader_7xV) {
-          t1 = this._field5;
-          if (t1 == null) {
-            t1 = new M.ComponentLoader();
             this._field5 = t1;
           }
           return t1;
         }
-        if (token === C.Type_SlowComponentLoader_qxe) {
-          t1 = this._field6;
-          if (t1 == null) {
-            t1 = new G.ThrowingSlowComponentLoader();
-            this._field6 = t1;
-          }
-          return t1;
-        }
-        if (token === C.Type_Testability_h8g) {
+        if (token === C.Type_SanitizationService_bRS)
+          return this.inject$1(C.Type_DomSanitizationService_cKo);
+        if (token === C.Type_ExceptionHandler_qBE) {
           t1 = this._field7;
           if (t1 == null) {
-            t1 = new D.Testability(this.inject$1(C.Type_NgZone_6ty), 0, true, false, H.setRuntimeTypeInfo([], [P.Function]));
-            t1._watchAngularEvents$0();
+            t1 = new T.BrowserExceptionHandler();
             this._field7 = t1;
           }
           return t1;
         }
-        if (token === C.Type_EventManager_hsx) {
+        if (token === C.OpaqueToken_EventManagerPlugins) {
           t1 = this._field8;
           if (t1 == null) {
-            t1 = N.EventManager$(this.inject$1(C.OpaqueToken_EventManagerPlugins), this.inject$1(C.Type_NgZone_6ty));
+            t1 = H.setRuntimeTypeInfo([new L.DomEventsPlugin(), new N.KeyEventsPlugin()], [N.EventManagerPlugin]);
             this._field8 = t1;
           }
           return t1;
         }
-        if (token === C.OpaqueToken_EventManagerPlugins) {
+        if (token === C.Type_EventManager_hsx) {
           t1 = this._field9;
           if (t1 == null) {
-            t1 = H.setRuntimeTypeInfo([new L.DomEventsPlugin(), new N.KeyEventsPlugin()], [N.EventManagerPlugin]);
+            t1 = N.EventManager$(this.inject$1(C.OpaqueToken_EventManagerPlugins), this.inject$1(C.Type_NgZone_6ty));
             this._field9 = t1;
           }
           return t1;
@@ -8086,7 +8086,7 @@
       ApplicationRef$_$3: function(_ngZone, _exceptionHandler, _injector) {
         var t1, t2;
         t1 = this._ngZone;
-        t2 = t1._ng_zone$_onError;
+        t2 = t1._onError;
         this._onErrorSub = new P._BroadcastStream(t2, [H.getTypeArgumentByIndex(t2, 0)]).listen$1(new Y.ApplicationRef$__closure(this));
         t1 = t1._onMicrotaskEmpty;
         this._onMicroSub = new P._BroadcastStream(t1, [H.getTypeArgumentByIndex(t1, 0)]).listen$1(new Y.ApplicationRef$__closure0(this));
@@ -8734,7 +8734,7 @@
   }], ["", "package:angular/src/core/zone/ng_zone.dart",, Y, {
     "^": "",
     NgZone: {
-      "^": "Object;_onTurnStart,_onMicrotaskEmpty,_onTurnDone,_ng_zone$_onError,0_outerZone,0_innerZone,_hasPendingMicrotasks,_hasPendingMacrotasks,_isStable,_nesting,_isRunning,_disposed,_pendingMicrotasks,_pendingTimers",
+      "^": "Object;_onTurnStart,_onMicrotaskEmpty,_onTurnDone,_onError,0_outerZone,0_innerZone,_hasPendingMicrotasks,_hasPendingMacrotasks,_isStable,_nesting,_isRunning,_disposed,_pendingMicrotasks,_pendingTimers",
       NgZone$1$enableLongStackTrace: function(enableLongStackTrace) {
         var t1 = $.Zone__current;
         this._outerZone = t1;
@@ -8789,7 +8789,7 @@
         this._checkStable$0();
       },
       _onErrorWithoutLongStackTrace$5: [function($self, $parent, zone, error, trace) {
-        this._ng_zone$_onError.add$1(0, new Y.NgZoneError(error, [J.toString$0$(trace)]));
+        this._onError.add$1(0, new Y.NgZoneError(error, [J.toString$0$(trace)]));
       }, "call$5", "get$_onErrorWithoutLongStackTrace", 20, 0, 13, 1, 2, 3, 4, 24],
       _createTimer$5: [function($self, $parent, zone, duration, fn) {
         var t1, onDone, implementation, implZone, wrappedTimer;

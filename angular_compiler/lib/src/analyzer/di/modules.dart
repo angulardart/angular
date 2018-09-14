@@ -85,7 +85,7 @@ class ModuleReader {
       equals: (a, b) => a.token == b.token,
       hashCode: (e) => e.token.hashCode,
       isValidKey: (e) => e is ProviderElement,
-    )..addAll(providers.where((e) => !e.isMulti));
+    )..addAll(providers.where((e) => !e.isMulti).toList().reversed);
     return soloProviders.toList()..addAll(providers.where((e) => e.isMulti));
   }
 
@@ -147,8 +147,8 @@ class ModuleElement {
   }
 
   Iterable<ProviderElement> _flatten() sync* {
-    yield* provide;
     yield* include.map((m) => m._flatten()).expand((i) => i);
+    yield* provide;
   }
 
   @override
