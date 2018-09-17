@@ -4,8 +4,6 @@ import '../template_parser.dart' show TemplateContext;
 
 const i18nDescription = 'i18n';
 const i18nDescriptionPrefix = '$i18nDescription:';
-// TODO(leonsenft): remove before i18n is officially launched.
-const i18nDescriptionPrefixDeprecated = '$i18nDescription-';
 const i18nMeaning = '$i18nDescription.meaning';
 const i18nMeaningPrefix = '$i18nMeaning:';
 

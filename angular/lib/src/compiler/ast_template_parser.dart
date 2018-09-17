@@ -1034,15 +1034,8 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
 
   @override
   ast.TemplateAst visitAnnotation(ast.AnnotationAst astNode, [_]) {
-    if ((astNode.name.startsWith(i18nDescriptionPrefixDeprecated))) {
-      _reportError(
-          astNode,
-          'The prefix for internationalizing attributes has changed from '
-          '"@$i18nDescriptionPrefixDeprecated" to "@$i18nDescriptionPrefix"');
-    }
     if ((astNode.name == i18nDescription ||
-            astNode.name.startsWith(i18nDescriptionPrefix) ||
-            astNode.name.startsWith(i18nDescriptionPrefixDeprecated)) &&
+            astNode.name.startsWith(i18nDescriptionPrefix)) &&
         (astNode.value == null || astNode.value.trim().isEmpty)) {
       _reportError(astNode,
           'Requires a value describing the message to help translators');
