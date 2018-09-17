@@ -190,6 +190,8 @@
     the other injector implementations work. For `MultiToken`, the order stays
     the same.
 
+*   Clarified that `Injector.map({...})` doesn't support `null` as values.
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#930]: https://github.com/dart-lang/angular/issues/930

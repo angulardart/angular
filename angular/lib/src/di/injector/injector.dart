@@ -2,7 +2,6 @@ import 'package:meta/meta.dart';
 
 import '../errors.dart' as errors;
 import '../module.dart';
-
 import 'empty.dart';
 import 'hierarchical.dart';
 import 'map.dart';
@@ -65,7 +64,8 @@ abstract class Injector {
   ///
   /// Optionally specify the [parent] injector.
   ///
-  /// It is considered _unsupported_ to provide `null` or `Injector` as a key.
+  /// It is considered _unsupported_ to provide `Injector` with `null` as either
+  /// a key or a value, and assertion may be thrown in development mode.
   const factory Injector.map(
     Map<Object, Object> providers, [
     HierarchicalInjector parent,

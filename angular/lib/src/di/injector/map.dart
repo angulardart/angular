@@ -23,6 +23,8 @@ class MapInjector extends HierarchicalInjector {
   ]) {
     var result = _providers[token];
     if (result == null) {
+      assert(!_providers.containsKey(token),
+          'Value for $token should not be null for Injector.map');
       if (identical(token, Injector)) {
         return this;
       }
