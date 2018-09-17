@@ -1832,17 +1832,6 @@ void main() {
                 '^^^^^^^^^^^^^^^^^^^^^^^'));
       });
 
-      test('should report error for deprecated "@i18n-" syntax', () {
-        expect(
-            () => parse('<p foo="message" @i18n-foo="description"></p>'),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 18 of TestComp: ParseErrorLevel.FATAL: '
-                'The prefix for internationalizing attributes has changed from '
-                '"@i18n-" to "@i18n:"\n'
-                '<p foo="message" @i18n-foo="description"></p>\n'
-                '                 ^^^^^^^^^^^^^^^^^^^^^^^'));
-      });
-
       test('should report error for "@i18n.meaning" without description', () {
         expect(
             () => parse('<p @i18n.meaning="meaning"></p>'),
