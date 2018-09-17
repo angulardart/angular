@@ -41,7 +41,7 @@ practices** from the developers of the AngularDart framework.
 ### DO use "named" providers
 
 While not formally deprecated, `provide(...)` and `Provider(...)` require
-certain combinations of named optional parameters, and allow combinations that
+certain combinations of named optional parameters and allow combinations that
 otherwise will not compile or perform as intended. For example:
 
 **BAD**:
@@ -75,7 +75,7 @@ const ValueProvider(Foo, null);
 
 As part of [avoiding runtime configured providers](#do-use-const-providers), you
 may have or desire patterns where dependency injection varies based on some
-runtime information, or information that is otherwise not expressable as a
+runtime information or information that is otherwise not expressable as a
 constant. Use `FactoryProvider` instead.
 
 **BAD**:
@@ -282,7 +282,7 @@ const appBaseHref = const OpaqueToken<String>('appBaseHref');
 
 **GOOD**: Use your own `class` that extends `OpaqueToken<T>`.
 
-Another option is to create your own "custom" token type. It's up to your and
+Another option is to create your own "custom" token type. It's up to you and
 your team whether this is more ergonomic/documenting/clarifying than relying on
 a string-based description (`'appBaseHref'`).
 
@@ -297,7 +297,7 @@ const appBaseHref = const AppBaseHref();
 // Can be used with .forToken now, for example:
 const ValueProvider.forToken(appBaseHref, '/');
 
-// Or as an parameter for injection:
+// Or as a parameter for injection:
 class Comp {
   Comp(@appBaseHref String href) { ... }
 }
@@ -390,7 +390,7 @@ a `List<dynamic>`.
 ### AVOID using `ReflectiveInjector`
 
 While not formally deprecated, `ReflectiveInjector` relies on importing `.dart`
-files having side-effects on your program, and negatively effecting tree-shaking
+files having side-effects on your program and negatively affecting tree-shaking
 by making all classes and functions annotated with `@Injectable` retained,
 regardless of use.
 
