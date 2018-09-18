@@ -51,7 +51,7 @@ configuration. The directory will contain the generated results of the
 `build_runner`.
 
 > Notice: When developing in Intellij/WebStorm it's currently also recommended
-> to mark the directory as excluded as itwill constantly change and cause
+> to mark the directory as excluded as it will constantly change and cause
 > Intellij to reanalyze the code frequently, which results in a loss of
 > performance.
 
