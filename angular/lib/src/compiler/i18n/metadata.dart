@@ -1,4 +1,5 @@
 import 'package:angular_ast/angular_ast.dart';
+import 'package:source_span/source_span.dart' show SourceSpan;
 
 import '../template_parser.dart' show TemplateContext;
 
@@ -15,8 +16,10 @@ final _i18nRegExp = RegExp(
     'i18n'
     // Captures optional i18n parameter name.
     r'(?:\.(?:(meaning)|(skip)))?'
-    // Captures attribute name, or matches end of input.
-    r'(?::(.+)|$)');
+    // Captures an attribute name following `:`, or matches end of input. This
+    // intentionally matches an empty attribute name so that it may be reported
+    // as an error when there's inevitably no matching attribute.
+    r'(?::(.*)|$)');
 
 /// Parses all internationalization metadata from a node's [annotations].
 I18nMetadataBundle parseI18nMetadata(
@@ -70,6 +73,12 @@ class I18nMetadata {
   /// This value is optional, and may be null if omitted.
   final String meaning;
 
+  /// The primary source span to which this metadata is attributed.
+  ///
+  /// This source span may be used to later report errors related to this
+  /// metadata.
+  final SourceSpan origin;
+
   /// Whether this message should be skipped for internationalization.
   ///
   /// When true, this message is still be validated and rendered, but it isn't
@@ -79,7 +88,8 @@ class I18nMetadata {
 
   /// Creates metadata from [description] with optional [meaning].
   I18nMetadata(
-    this.description, {
+    this.description,
+    this.origin, {
     this.meaning,
     this.skip = false,
   });
@@ -129,6 +139,7 @@ class _I18nMetadataBuilder {
     }
     return I18nMetadata(
       description.value.trim(),
+      description.sourceSpan,
       meaning: meaning?.value?.trim(),
       skip: skip != null,
     );

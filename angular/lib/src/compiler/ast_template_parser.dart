@@ -551,14 +551,18 @@ class _ParseContext {
 
   factory _ParseContext.forContainer(
       ast.ContainerAst element, _ParseContext parent) {
+    var templateContext = parent.templateContext;
+    var i18nMetadata = parseI18nMetadata(element.annotations, templateContext);
+    _reportMissingI18nAttributesOrProperties(i18nMetadata, templateContext);
     return _ParseContext._(
-        parent.templateContext,
-        '',
-        const [],
-        parseI18nMetadata(element.annotations, parent.templateContext),
-        false,
-        parent._ngContentIndexMatcher,
-        parent._wildcardNgContentIndex);
+      templateContext,
+      '',
+      const [],
+      i18nMetadata,
+      false,
+      parent._ngContentIndexMatcher,
+      parent._wildcardNgContentIndex,
+    );
   }
 
   factory _ParseContext.forElement(
@@ -571,11 +575,18 @@ class _ParseContext {
         _location(element),
         templateContext);
     var firstComponent = _firstComponent(boundDirectives);
+    var i18nMetadata = parseI18nMetadata(element.annotations, templateContext);
+    _reportMissingI18nAttributesOrProperties(
+      i18nMetadata,
+      templateContext,
+      attributes: element.attributes,
+      properties: element.properties,
+    );
     return _ParseContext._(
         templateContext,
         element.name,
         boundDirectives,
-        parseI18nMetadata(element.annotations, parent.templateContext),
+        i18nMetadata,
         false,
         _createSelector(firstComponent),
         _findWildcardIndex(firstComponent));
@@ -591,11 +602,18 @@ class _ParseContext {
         _location(template),
         templateContext);
     var firstComponent = _firstComponent(boundDirectives);
+    var i18nMetadata = parseI18nMetadata(template.annotations, templateContext);
+    _reportMissingI18nAttributesOrProperties(
+      i18nMetadata,
+      templateContext,
+      attributes: template.attributes,
+      properties: template.properties,
+    );
     return _ParseContext._(
         templateContext,
         _templateElement,
         boundDirectives,
-        parseI18nMetadata(template.annotations, parent.templateContext),
+        i18nMetadata,
         true,
         _createSelector(firstComponent),
         _findWildcardIndex(firstComponent));
@@ -811,6 +829,23 @@ class _ParseContext {
         (directive) => directive.directive.isComponent,
         orElse: () => null);
     return component;
+  }
+
+  static void _reportMissingI18nAttributesOrProperties(
+    I18nMetadataBundle i18nMetadata,
+    TemplateContext templateContext, {
+    Iterable<ast.AttributeAst> attributes = const [],
+    Iterable<ast.PropertyAst> properties = const [],
+  }) {
+    final unmatched = i18nMetadata.forAttributes.keys.toSet()
+      ..removeAll(attributes.map((a) => a.name))
+      ..removeAll(properties.map((p) => p.name));
+    for (final name in unmatched) {
+      templateContext.reportError(
+          'Attempted to internationalize "$name", but no matching attribute or '
+          'property found',
+          i18nMetadata.forAttributes[name].origin);
+    }
   }
 }
 

@@ -1868,6 +1868,35 @@ void main() {
               '      ^^^^^^^^^^^^^^^'),
         );
       });
+
+      group('should prevent unmatched attribute or property', () {
+        test('on container', () {
+          expect(
+              () => parse('<ng-container @i18n:="Description"></ng-container>'),
+              throwsWith('Attempted to internationalize "", but no matching '
+                  'attribute or property found\n'
+                  '<ng-container @i18n:="Description"></ng-container>\n'
+                  '              ^^^^^^^^^^^^^^^^^^^^'));
+        });
+
+        test('on element', () {
+          expect(
+              () => parse('<input @i18n:placeholder="Description">'),
+              throwsWith('Attempted to internationalize "placeholder", but no '
+                  'matching attribute or property found\n'
+                  '<input @i18n:placeholder="Description">\n'
+                  '       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'));
+        });
+
+        test('on template', () {
+          expect(
+              () => parse('<template @i18n:input="Description"></template>'),
+              throwsWith('Attempted to internationalize "input", but no '
+                  'matching attribute or property found\n'
+                  '<template @i18n:input="Description"></template>\n'
+                  '          ^^^^^^^^^^^^^^^^^^^^^^^^^'));
+        });
+      });
     });
 
     group('ignore elements', () {
