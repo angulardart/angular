@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:angular/angular.dart' show Injectable;
 
-import 'hash_location_strategy.dart';
 import 'location_strategy.dart' show LocationStrategy;
 
 /// `Location` is a service that applications can use to interact with a
@@ -82,14 +81,9 @@ class Location {
   /// history and exposed through router states.
   String normalizePath(String path) {
     if (path == null) return null;
-    // TODO(https://github.com/dart-lang/angular/issues/748): remove this case.
-    final hashStrategy = locationStrategy is HashLocationStrategy;
 
-    if (!hashStrategy && !path.startsWith('/')) {
+    if (!path.startsWith('/')) {
       path = '/$path';
-    }
-    if (hashStrategy && path.startsWith('/')) {
-      path = path.substring(1);
     }
 
     if (path.endsWith('/')) {
