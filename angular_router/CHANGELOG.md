@@ -1,6 +1,12 @@
+### Bug fixes
+
+*   Fixed a discrepancy between the href rendered by `RouterLinkDirective`, and
+    the browser location to which it would navigate upon being clicked when
+    using `routerProvidersHash`.
+
 ## 2.0.0-alpha+19
 
-* Maintenance release to support Angular 5.0.
+*   Maintenance release to support Angular 5.0.
 
 ## 2.0.0-alpha+18
 
