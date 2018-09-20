@@ -7949,12 +7949,8 @@
         if (token === C.Type_DomSanitizationService_cKo) {
           t1 = this._field5;
           if (t1 == null) {
-            t1 = $.DomSanitizationServiceImpl__instance;
-            if (t1 == null) {
-              t1 = new R.DomSanitizationServiceImpl();
-              $.DomSanitizationServiceImpl__instance = t1;
-            }
-            this._field5 = t1;
+            this._field5 = C.C_DomSanitizationServiceImpl;
+            t1 = C.C_DomSanitizationServiceImpl;
           }
           return t1;
         }
@@ -9908,6 +9904,7 @@
   C.JavaScriptFunction_methods = J.JavaScriptFunction.prototype;
   C.PlainJavaScriptObject_methods = J.PlainJavaScriptObject.prototype;
   C.UnknownJavaScriptObject_methods = J.UnknownJavaScriptObject.prototype;
+  C.C_DomSanitizationServiceImpl = new R.DomSanitizationServiceImpl();
   C.C_Object = new P.Object();
   C.C__JSRandom = new P._JSRandom();
   C.C__RootZone = new P._RootZone();
@@ -10100,7 +10097,6 @@
   $.appViewUtils = null;
   $.AppViewUtils__nextCompTypeId = 0;
   $.sharedStylesHost = null;
-  $.DomSanitizationServiceImpl__instance = null;
   $.ViewRootComponent0__renderType = null;
   $.ViewUsesDefaultChangeDetectionAndInput0__renderType = null;
   $.ViewInlinedNgIf0__renderType = null;
