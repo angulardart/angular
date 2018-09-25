@@ -42,7 +42,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.InlinedNgIfComponent _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = (_ctx.foo == true);
     if (import6.checkBinding(_expr_0, currVal_0)) {
       if (currVal_0) {
@@ -122,7 +122,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
 
   @override
   void detectChangesInternal() {
-    final import1.InlinedNgIfWithImmutableConditionComponent _ctx = ctx;
+    final _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
       if (!identical(_ctx.foo, null)) {

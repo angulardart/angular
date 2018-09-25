@@ -53,7 +53,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationComponent _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_3.text = currVal_0;
@@ -126,7 +126,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationComponentNoWhitespace _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = (_ctx.foo ?? '');
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
@@ -207,7 +207,7 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationTwoAdjacent _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = (_ctx.greeting ?? '');
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
@@ -301,7 +301,7 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationLongerSentence _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = (_ctx.name ?? '');
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_2.text = currVal_0;
@@ -455,7 +455,7 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationLocals _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = _ctx.bars;
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
@@ -537,7 +537,7 @@ class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
 
   @override
   void detectChangesInternal() {
-    final import1.InterpolationLocals _ctx = ctx;
+    final _ctx = ctx;
     final local_bar = parentView.locals['\$implicit'];
     final local_foo = locals['\$implicit'];
     final currVal_0 = import6.interpolate0(_ctx.callMethod(local_bar));

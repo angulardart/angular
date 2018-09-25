@@ -89,7 +89,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
 
   @override
   void detectChangesInternal() {
-    final import1.TestContainerComponent _ctx = ctx;
+    final _ctx = ctx;
     _NgIf_1_9.ngIf = _ctx.showDeferredChild;
     _NgIf_2_9.ngIf = _ctx.showDeferredChild;
     _appEl_0.detectChangesInNestedViews();

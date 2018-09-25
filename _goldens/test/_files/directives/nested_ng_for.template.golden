@@ -48,7 +48,7 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.NestedNgForComponent _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = _ctx.matrix;
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;

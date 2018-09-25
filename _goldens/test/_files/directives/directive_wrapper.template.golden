@@ -58,7 +58,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.TestFooComponent _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = _ctx.rowIndex;
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _ChildDirective_0_5.instance.gridRow = currVal_0;
@@ -139,7 +139,7 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
 
   @override
   void detectChangesInternal() {
-    final import1.DirectiveContainerTest _ctx = ctx;
+    final _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
       (_FastDirective_0_5.instance.name = _ctx.finalName);

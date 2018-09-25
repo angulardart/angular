@@ -295,7 +295,7 @@ class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.UsesOnPushComponent _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = _ctx.name;
     if (import6.checkBinding(_expr_0, currVal_0)) {
       setProp(_el_0, 'name', currVal_0);
@@ -371,7 +371,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.OnPushComponent _ctx = ctx;
+    final _ctx = ctx;
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
@@ -462,7 +462,7 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.OnPushChildComponent _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = (_ctx.name ?? '');
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_2.text = currVal_0;

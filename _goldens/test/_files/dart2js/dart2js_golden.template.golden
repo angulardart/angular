@@ -173,7 +173,7 @@ class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaul
 
   @override
   void detectChangesInternal() {
-    final import1.UsesDefaultChangeDetectionAndInput _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = _ctx.name;
     if (import6.checkBinding(_expr_0, currVal_0)) {
       setProp(_el_0, 'name', currVal_0);
@@ -246,7 +246,7 @@ class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeD
 
   @override
   void detectChangesInternal() {
-    final import1.DefaultChangeDetectionAndInput _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = (_ctx.name ?? '');
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
@@ -319,7 +319,7 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
 
   @override
   void detectChangesInternal() {
-    final import1.InlinedNgIf _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = (_ctx.showDiv == true);
     if (import6.checkBinding(_expr_0, currVal_0)) {
       if (currVal_0) {
@@ -401,7 +401,7 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
 
   @override
   void detectChangesInternal() {
-    final import1.EmbeddedNgIf _ctx = ctx;
+    final _ctx = ctx;
     _NgIf_0_9.ngIf = _ctx.showNull;
     _appEl_0.detectChangesInNestedViews();
   }
@@ -633,7 +633,7 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
 
   @override
   void detectChangesInternal() {
-    final import1.ComponentConditionalFeatures _ctx = ctx;
+    final _ctx = ctx;
     _NgIf_0_9.ngIf = _ctx.useFeatureA;
     _NgIf_1_9.ngIf = _ctx.useFeatureB;
     _appEl_0.detectChangesInNestedViews();
