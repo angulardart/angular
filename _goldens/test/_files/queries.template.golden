@@ -66,7 +66,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.QueriesComponent _ctx = ctx;
+    final _ctx = ctx;
     _NgIf_2_9.ngIf = _ctx.someValue;
     _appEl_2.detectChangesInNestedViews();
     if (!import8.AppViewUtils.throwOnChanges) {
@@ -465,7 +465,7 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
 
   @override
   void detectChangesInternal() {
-    final import1.NestedNgForQueriesList _ctx = ctx;
+    final _ctx = ctx;
     _NgIf_0_9.ngIf = _ctx.conditionA;
     _appEl_0.detectChangesInNestedViews();
     if (!import8.AppViewUtils.throwOnChanges) {
@@ -512,7 +512,7 @@ class _ViewNestedNgForQueriesList1 extends AppView<import1.NestedNgForQueriesLis
 
   @override
   void detectChangesInternal() {
-    final import1.NestedNgForQueriesList _ctx = ctx;
+    final _ctx = ctx;
     _NgIf_1_9.ngIf = _ctx.conditionB;
     _appEl_1.detectChangesInNestedViews();
   }
@@ -547,7 +547,7 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
 
   @override
   void detectChangesInternal() {
-    final import1.NestedNgForQueriesList _ctx = ctx;
+    final _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
       if (!identical(_ctx.items, null)) {

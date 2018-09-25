@@ -49,7 +49,7 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
 
   @override
   void detectChangesInternal() {
-    final import1.CompWithoutFinal _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = (_ctx.okMessage ?? '');
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;

@@ -1322,12 +1322,10 @@ class CompileView implements AppViewBuilder {
     if (readVars.contains(DetectChangesVars.cachedCtx.name)) {
       // Cache [ctx] class field member as typed [_ctx] local for change
       // detection code to consume.
-      var contextType =
-          viewType != ViewType.host ? o.importType(component.type) : null;
       varStmts.add(o
           .variable(DetectChangesVars.cachedCtx.name)
           .set(o.ReadClassMemberExpr('ctx'))
-          .toDeclStmt(contextType, [o.StmtModifier.Final]));
+          .toDeclStmt(null, [o.StmtModifier.Final]));
     }
     if (readVars.contains(DetectChangesVars.changed.name) ||
         writeVars.contains(DetectChangesVars.changed.name)) {

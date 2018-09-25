@@ -73,7 +73,7 @@ class ViewComp0 extends AppView<import1.Comp> {
 
   @override
   void detectChangesInternal() {
-    final import1.Comp _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = import7.interpolate0(_pipe_pure_0_0('foo'));
     if (import7.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;

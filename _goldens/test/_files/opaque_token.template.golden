@@ -119,7 +119,7 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
 
   @override
   void detectChangesInternal() {
-    final import1.ContainsChildComponent _ctx = ctx;
+    final _ctx = ctx;
     _NgIf_0_9.ngIf = _ctx.someValue;
     _appEl_0.detectChangesInNestedViews();
   }
@@ -154,7 +154,7 @@ class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponen
 
   @override
   void detectChangesInternal() {
-    final import1.ContainsChildComponent _ctx = ctx;
+    final _ctx = ctx;
     _NgIf_1_9.ngIf = _ctx.someValue;
     _appEl_1.detectChangesInNestedViews();
   }

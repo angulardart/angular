@@ -42,7 +42,7 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.ParentComponent _ctx = ctx;
+    final _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
       if (!identical(_ctx.input, null)) {
@@ -114,7 +114,7 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
 
   @override
   void detectChangesInternal() {
-    final import1.ChildComponent _ctx = ctx;
+    final _ctx = ctx;
     final currVal_0 = import6.interpolate0(_ctx.myType);
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;

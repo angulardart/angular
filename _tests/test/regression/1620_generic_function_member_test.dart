@@ -12,7 +12,7 @@ void main() {
     final testBed = NgTestBed.forComponent(TestComponentNgFactory);
     final testFixture = await testBed.create();
     expect(testFixture.text, 'foo');
-  }, skip: 'https://github.com/dart-lang/angular/issues/1620');
+  });
 }
 
 class Data {
