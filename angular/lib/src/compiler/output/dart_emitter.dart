@@ -254,6 +254,20 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     context.exitMethod();
   }
 
+  void _visitTypeArguments(
+    List<o.OutputType> typeArguments,
+    EmitterVisitorContext context,
+  ) {
+    if (typeArguments == null || typeArguments.isEmpty) {
+      return;
+    }
+    context.print('<');
+    visitAllObjects((o.OutputType typeArgument) {
+      typeArgument.visitType(this, context);
+    }, typeArguments, context, ',');
+    context.print('>');
+  }
+
   void _visitTypeParameters(
     List<o.TypeParameter> typeParameters,
     EmitterVisitorContext context,
@@ -445,17 +459,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     EmitterVisitorContext context,
   ) {
     expr.fn.visitExpression(this, context);
-    var types = expr.typeArgs;
-    if (types != null && types.isNotEmpty) {
-      context.print('<');
-      for (var i = 0; i < types.length; i++) {
-        types[i].visitType(this, context);
-        if (i < types.length - 1) {
-          context.print(', ');
-        }
-      }
-      context.print('>');
-    }
+    _visitTypeArguments(expr.typeArgs, context);
     context.print('(');
     visitAllExpressions(expr.args, context, ',');
     context.print(')');
@@ -470,17 +474,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       _inConstContext = true;
     }
     ast.classExpr.visitExpression(this, context);
-    var types = ast.typeArguments;
-    if (types != null && types.isNotEmpty) {
-      context.print('<');
-      for (var i = 0; i < types.length; i++) {
-        types[i].visitType(this, context);
-        if (i < types.length - 1) {
-          context.print(', ');
-        }
-      }
-      context.print('>');
-    }
+    _visitTypeArguments(ast.typeArguments, context);
     context.print('(');
     visitAllExpressions(ast.args, context, ',');
     context.print(')');
@@ -628,16 +622,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       context.print(identifier.isEmpty ? prefix : '$prefix.');
     }
     context.print(identifier);
-    if (typeParams?.isNotEmpty == true) {
-      context.print('<');
-      visitAllObjects(
-        (o.OutputType t) => t.visitType(this, context),
-        typeParams,
-        context,
-        ',',
-      );
-      context.print('>');
-    }
+    _visitTypeArguments(typeParams, context);
   }
 }
 
