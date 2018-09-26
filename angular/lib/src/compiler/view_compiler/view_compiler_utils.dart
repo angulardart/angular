@@ -48,9 +48,8 @@ o.Expression _unsafeCast(o.Expression expression, [o.OutputType cast]) {
 o.Expression getPropertyInView(
   o.Expression property,
   CompileView callingView,
-  CompileView definedView, {
-  bool forceCast = false,
-}) {
+  CompileView definedView,
+) {
   if (identical(callingView, definedView)) {
     return property;
   } else {
@@ -78,8 +77,6 @@ o.Expression getPropertyInView(
               .any((field) => field.name == readMemberExpr.name)) {
         viewProp = _unsafeCast(viewProp, definedView.classType);
       }
-    } else if (forceCast) {
-      viewProp = _unsafeCast(viewProp, definedView.classType);
     }
     return o.replaceReadClassMemberInExpression(viewProp, property);
   }
