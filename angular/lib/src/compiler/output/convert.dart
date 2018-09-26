@@ -70,16 +70,11 @@ o.OutputType fromDartType(DartType dartType, {bool resolveBounds = true}) {
 /// Creates an AST from code generation from [typeLink].
 o.OutputType fromTypeLink(TypeLink typeLink, LibraryReader library) {
   if (typeLink == null || typeLink.isDynamic || typeLink.isPrivate) {
-    return null;
+    return o.DYNAMIC_TYPE;
   }
   var typeArguments = List<o.OutputType>(typeLink.generics.length);
   for (var i = 0; i < typeArguments.length; i++) {
-    final arg = fromTypeLink(typeLink.generics[i], library);
-    if (arg == null) {
-      typeArguments = const [];
-      break;
-    }
-    typeArguments[i] = arg;
+    typeArguments[i] = fromTypeLink(typeLink.generics[i], library);
   }
   // When `typeLink` represents a type parameter, it doesn't require an import.
   final importUrl =

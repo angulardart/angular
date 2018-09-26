@@ -21,5 +21,5 @@ void main() {
       )
       class TestComponent {}
     ''');
-  }, skip: 'https://github.com/dart-lang/angular/issues/1622');
+  });
 }

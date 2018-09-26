@@ -94,13 +94,13 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
     if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
       return _FooService_0_6;
     }
-    if ((identical(token, const import10.OpaqueToken('fooToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken<dynamic>('fooToken')) && (0 == nodeIndex))) {
       return _fooToken_0_7;
     }
-    if ((identical(token, const import10.OpaqueToken('barToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken<dynamic>('barToken')) && (0 == nodeIndex))) {
       return _barToken_0_8;
     }
-    if ((identical(token, const import10.OpaqueToken('bazToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken<dynamic>('bazToken')) && (0 == nodeIndex))) {
       return _bazToken_0_9;
     }
     return notFoundResult;
