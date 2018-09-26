@@ -104,7 +104,7 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
 
   @override
   void detectChangesInternal() {
-    final String local_bar = locals['\$implicit'];
+    final local_bar = import9.unsafeCast<String>(locals['\$implicit']);
     final currVal_0 = import8.interpolate0(local_bar);
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_2.text = currVal_0;
@@ -113,7 +113,7 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   }
 
   void _handle_click_1_0($event) {
-    final String local_bar = locals['\$implicit'];
+    final local_bar = import9.unsafeCast<String>(locals['\$implicit']);
     ctx.onClick(local_bar);
   }
 }

@@ -1330,7 +1330,7 @@ class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
 
   @override
   void detectChangesInternal() {
-    final dynamic local_input = locals['\$implicit'];
+    final local_input = locals['\$implicit'];
     final currVal_0 = local_input;
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _NestedChildComp_0_5.input = currVal_0;

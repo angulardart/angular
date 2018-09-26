@@ -4,7 +4,7 @@ import 'compile_pipe.dart' show CompilePipe;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart';
-import "view_compiler_utils.dart" show getPropertyInView;
+import 'view_compiler_utils.dart' show getPropertyInView;
 
 /// State shared amongst all name resolvers of a view, regardless of scope.
 class _ViewNameResolverState {
@@ -57,14 +57,20 @@ class ViewNameResolver implements NameResolver {
         result = currView.nameResolver._state.locals[name];
       }
       if (result == null) return null; // No local for `name`.
-      final expression = getPropertyInView(result, _state.view, currView);
+      var expression = getPropertyInView(result, _state.view, currView);
       final type = currView.nameResolver._state.localTypes[name];
+      if (type != null && type != o.DYNAMIC_TYPE) {
+        // Cast expression to expected type.
+        expression = o
+            .importExpr(Identifiers.unsafeCast)
+            .callFn([expression], typeArguments: [type]);
+      }
       final modifiers = [o.StmtModifier.Final];
       // Cache in shared view state for reuse if requested in other scopes.
       // Since locals are view wide, the variable name is guaranteed to be
       // unique in any generated method.
       _state.localDeclarations[name] =
-          o.DeclareVarStmt('local_$name', expression, type, modifiers);
+          o.DeclareVarStmt('local_$name', expression, null, modifiers);
     }
     _localsInScope.add(name); // Cache local in this method scope.
     return o.ReadVarExpr(_state.localDeclarations[name].name);
