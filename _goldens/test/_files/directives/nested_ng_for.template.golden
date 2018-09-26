@@ -91,7 +91,7 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
 
   @override
   void detectChangesInternal() {
-    final List<int> local_row = locals['\$implicit'];
+    final local_row = import9.unsafeCast<List<int>>(locals['\$implicit']);
     final currVal_0 = local_row;
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _NgFor_1_9.ngForOf = currVal_0;
