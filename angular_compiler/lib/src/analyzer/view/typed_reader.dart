@@ -30,7 +30,6 @@ class TypedElement {
   }
 }
 
-// TODO(leonsenft): ensure failure messages have an actionable context.
 /// Parses types from compile-time constant `Typed` expressions.
 class TypedReader {
   final ClassElement _hostElement;
@@ -43,8 +42,6 @@ class TypedReader {
   TypedReader(this._hostElement);
 
   /// Parses the value of a compile-time constant `Typed` expression.
-  ///
-  /// Returns a [TypeLink] that represents the type defined by [typedObject].
   TypedElement parse(DartObject typedObject) {
     if (!$Typed.isExactlyType(typedObject.type)) {
       throwFailure(''
