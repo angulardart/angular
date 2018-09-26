@@ -81,7 +81,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
     _compView_0 = ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _test_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(const import10.OpaqueToken('test'), () {
+        ? import9.debugInjectorWrap(const import10.OpaqueToken<dynamic>('test'), () {
             return import1.injectableFactory(this.injectorGet(import5.Window, viewData.parentIndex));
           })
         : import1.injectableFactory(this.injectorGet(import5.Window, viewData.parentIndex)));
@@ -97,7 +97,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const import10.OpaqueToken('test')) && (0 == nodeIndex))) {
+    if ((identical(token, const import10.OpaqueToken<dynamic>('test')) && (0 == nodeIndex))) {
       return _test_0_5;
     }
     if ((identical(token, import1.SomeDep) && (0 == nodeIndex))) {
