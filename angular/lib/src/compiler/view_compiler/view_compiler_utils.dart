@@ -38,7 +38,7 @@ List<o.Expression> createSetAttributeParams(o.Expression renderNode,
 final _unsafeCastFn = o.importExpr(Identifiers.unsafeCast);
 
 /// Returns `unsafeCast<{Cast}>(expression)`.
-o.Expression _unsafeCast(o.Expression expression, [o.OutputType cast]) {
+o.Expression unsafeCast(o.Expression expression, [o.OutputType cast]) {
   return _unsafeCastFn.callFn(
     [expression],
     typeArguments: cast != null ? [cast] : const [],
@@ -75,7 +75,7 @@ o.Expression getPropertyInView(
               .any((field) => field.name == readMemberExpr.name) ||
           definedView.getters
               .any((field) => field.name == readMemberExpr.name)) {
-        viewProp = _unsafeCast(viewProp, definedView.classType);
+        viewProp = unsafeCast(viewProp, definedView.classType);
       }
     }
     return o.replaceReadClassMemberInExpression(viewProp, property);
