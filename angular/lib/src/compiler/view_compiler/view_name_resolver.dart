@@ -4,7 +4,7 @@ import 'compile_pipe.dart' show CompilePipe;
 import 'compile_view.dart' show CompileView;
 import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart';
-import 'view_compiler_utils.dart' show getPropertyInView;
+import 'view_compiler_utils.dart' show getPropertyInView, unsafeCast;
 
 /// State shared amongst all name resolvers of a view, regardless of scope.
 class _ViewNameResolverState {
@@ -60,10 +60,7 @@ class ViewNameResolver implements NameResolver {
       var expression = getPropertyInView(result, _state.view, currView);
       final type = currView.nameResolver._state.localTypes[name];
       if (type != null && type != o.DYNAMIC_TYPE) {
-        // Cast expression to expected type.
-        expression = o
-            .importExpr(Identifiers.unsafeCast)
-            .callFn([expression], typeArguments: [type]);
+        expression = unsafeCast(expression, type);
       }
       final modifiers = [o.StmtModifier.Final];
       // Cache in shared view state for reuse if requested in other scopes.
