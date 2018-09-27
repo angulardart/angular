@@ -192,6 +192,9 @@
 
 *   Clarified that `Injector.map({...})` doesn't support `null` as values.
 
+*   Named arguments are now supported for function calls in templates where the
+    function is an exported symbol (`Component(exports: [someFunction])`).
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#930]: https://github.com/dart-lang/angular/issues/930
