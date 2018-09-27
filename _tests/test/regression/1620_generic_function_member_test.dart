@@ -3,13 +3,13 @@ import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
-import '1620_generic_function_member_test.template.dart';
+import '1620_generic_function_member_test.template.dart' as ng;
 
 void main() {
   tearDown(disposeAnyRunningTest);
 
   test('generic function member should return normally', () async {
-    final testBed = NgTestBed.forComponent(TestComponentNgFactory);
+    final testBed = NgTestBed.forComponent(ng.TestComponentNgFactory);
     final testFixture = await testBed.create();
     expect(testFixture.text, 'foo');
   });
