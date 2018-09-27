@@ -24,7 +24,7 @@ dependencies:
   angular_compiler: 0.4.0
   ##########################################################################
 
-  build: ^0.12.7
+  build: '>=0.12.7 <2.0.0'
   build_config: '>=0.2.6 <0.4.0' # Runtime dependency with no import
   code_builder: '^3.0.1'
   csslib: ^0.14.5
