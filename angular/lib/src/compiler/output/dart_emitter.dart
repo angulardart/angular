@@ -462,6 +462,12 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     _visitTypeArguments(expr.typeArgs, context);
     context.print('(');
     visitAllExpressions(expr.args, context, ',');
+    visitAllNamedExpressions(
+      expr.namedArgs,
+      context,
+      ',',
+      alwaysAddSeperator: expr.args.isNotEmpty,
+    );
     context.print(')');
   }
 
@@ -477,6 +483,12 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     _visitTypeArguments(ast.typeArguments, context);
     context.print('(');
     visitAllExpressions(ast.args, context, ',');
+    visitAllNamedExpressions(
+      ast.namedArgs,
+      context,
+      ',',
+      alwaysAddSeperator: ast.args.isNotEmpty,
+    );
     context.print(')');
     _inConstContext = wasInConstContext;
   }
