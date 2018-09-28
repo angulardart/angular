@@ -1,6 +1,8 @@
 @TestOn('vm')
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
+import 'package:angular/src/compiler/compile_metadata.dart'
+    show CompileIdentifierMetadata;
 import 'package:angular/src/compiler/expression_parser/ast.dart'
     show BindingPipe, AST;
 import 'package:angular/src/compiler/expression_parser/lexer.dart' show Lexer;
@@ -167,6 +169,13 @@ void main() {
           checkAction("a.add(1, 2)");
           checkAction("fn().add(1, 2)");
           checkAction("fn(a: 1)");
+        });
+        test("should parse named argument that collides with an export", () {
+          final parser = createParser();
+          final text = "fn(a: 1)";
+          final export = CompileIdentifierMetadata(name: "a");
+          final ast = parser.parseAction(text, null, [export]);
+          expect(unparse(ast), text);
         });
       });
       group("functional calls", () {
