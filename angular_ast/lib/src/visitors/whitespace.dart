@@ -21,6 +21,10 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     if (astNode is ContainerAst) {
       annotations = astNode.annotations;
     } else if (astNode is ElementAst) {
+      if (astNode.name == 'pre') {
+        // Don't modify whitespace of preformatted text.
+        return true;
+      }
       annotations = astNode.annotations;
     } else if (astNode is EmbeddedTemplateAst) {
       annotations = astNode.annotations;

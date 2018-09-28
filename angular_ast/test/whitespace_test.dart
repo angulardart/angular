@@ -296,6 +296,21 @@ void main() {
       '<template @preserveWhitespace><div>  </div></template>',
     );
   });
+
+  test('should retain whitespace inside preformatted text', () {
+    expect(
+      _parseAndMinifiy('''
+        <pre>
+          Hello
+          world
+        </pre>
+      '''),
+      '''<pre>
+          Hello
+          world
+        </pre>''',
+    );
+  });
 }
 
 String _parseAndMinifiy(String template) {
