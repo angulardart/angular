@@ -480,10 +480,13 @@ class _ParseAST {
         _parseCall = false;
         var expression = parseExpression();
         _parseCall = true;
-        if (result is! PropertyRead) {
+        if (result is PropertyRead) {
+          result = NamedExpr((result as PropertyRead).name, expression);
+        } else if (result is StaticRead && result.id.prefix == null) {
+          result = NamedExpr((result as StaticRead).id.name, expression);
+        } else {
           error('Expected previous token to be an identifier');
         }
-        result = NamedExpr((result as PropertyRead).name, expression);
       } else if (optionalCharacter($LPAREN)) {
         var args = parseCallArguments();
         expectCharacter($RPAREN);

@@ -195,6 +195,10 @@
 *   Named arguments are now supported for function calls in templates where the
     function is an exported symbol (`Component(exports: [someFunction])`).
 
+*   [#1625][]: Named arguments in function calls in templates that collide with
+    an exported symbol (`Component(exports: [someExport])`) no longer cause a
+    parsing error.
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#930]: https://github.com/dart-lang/angular/issues/930
@@ -207,6 +211,7 @@
 [#1570]: https://github.com/dart-lang/angular/issues/1570
 [#1591]: https://github.com/dart-lang/angular/issues/1591
 [#1598]: https://github.com/dart-lang/angular/issues/1598
+[#1625]: https://github.com/dart-lang/angular/issues/1625
 
 ### Other improvements
 
