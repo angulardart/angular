@@ -9,6 +9,8 @@
 
 *   `vellip` is now a recognized char.
 
+*   Whitespace inside preformatted text (`<pre>` tags) is now always preserved.
+
 ## 0.5.6
 
 *   Maintenance release to support Dart 2.0 stable.
