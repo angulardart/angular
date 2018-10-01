@@ -202,7 +202,7 @@ class ChildDirectiveNgCd extends import10.DirectiveChangeDetector {
     }
     final currVal_1 = instance.disabledStr;
     if (import6.checkBinding(_expr_1, currVal_1)) {
-      setAttr(el, 'aria-disabled', currVal_1?.toString());
+      setAttr(el, 'aria-disabled', currVal_1);
       _expr_1 = currVal_1;
     }
     final currVal_2 = instance.disabled;
@@ -225,7 +225,7 @@ class FastDirectiveNgCd extends import10.DirectiveChangeDetector {
   void detectHostChanges(AppView<dynamic> view, import2.Element el) {
     final currVal_0 = instance.msg;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setAttr(el, 'data-msg', currVal_0?.toString());
+      setAttr(el, 'data-msg', currVal_0);
       _expr_0 = currVal_0;
     }
   }

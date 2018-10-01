@@ -39,6 +39,13 @@ DartType getIterableElementType(DartType dartType) => dartType is InterfaceType
     ? dartType.lookUpInheritedGetter('single')?.returnType
     : null;
 
+/// Returns whether the type [expression] is [String].
+bool isString(ast.AST expression, AnalyzedClass analyzedClass) {
+  final type = getExpressionType(expression, analyzedClass);
+  final string = analyzedClass._classElement.context.typeProvider.stringType;
+  return type.isEquivalentTo(string);
+}
+
 // TODO(het): Make this work with chained expressions.
 /// Returns [true] if [expression] is immutable.
 bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {

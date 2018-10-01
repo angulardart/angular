@@ -76,6 +76,16 @@ abstract class BoundValueConverter {
     }
     _throwUnrecognized(value);
   }
+
+  /// Returns whether [value] is a string.
+  bool isString(BoundValue value) {
+    if (value is BoundExpression) {
+      return analyzer.isString(value.expression, _analyzedClass);
+    } else if (value is BoundI18nMessage) {
+      return true;
+    }
+    _throwUnrecognized(value);
+  }
 }
 
 /// Converts values bound by a directive change detector.
