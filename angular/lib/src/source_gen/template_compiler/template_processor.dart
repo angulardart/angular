@@ -17,9 +17,54 @@ Future<TemplateCompilerOutputs> processTemplates(
   BuildStep buildStep,
   CompilerFlags flags,
 ) async {
+  final reflectables = await _resolveReflectables(flags, buildStep, element);
+  final injectors = InjectorReader.findInjectors(element);
+
+  final AngularArtifacts compileComponentsData = logElapsedSync(
+      () => findComponentsAndDirectives(LibraryReader(element)),
+      operationName: 'findComponents',
+      assetId: buildStep.inputId,
+      log: log);
+
+  if (compileComponentsData.isEmpty) {
+    return TemplateCompilerOutputs(
+      null,
+      reflectables,
+      injectors,
+    );
+  }
+
   final templateCompiler = createTemplateCompiler(buildStep, flags);
-  final resolver = buildStep.resolver;
-  final reflectables = await ReflectableReader(
+  // Normalize directive meta data for component and directives.
+  for (final component in compileComponentsData.components) {
+    await _normalizeComponent(templateCompiler, component);
+  }
+  final compiledTemplates = logElapsedSync(() {
+    return templateCompiler.compile(compileComponentsData);
+  }, operationName: 'compile', assetId: buildStep.inputId, log: log);
+
+  return TemplateCompilerOutputs(
+    compiledTemplates,
+    reflectables,
+    injectors,
+  );
+}
+
+Future<void> _normalizeComponent(OfflineCompiler templateCompiler,
+    NormalizedComponentWithViewDirectives component) async {
+  final normalizedComp = await templateCompiler.normalizeDirectiveMetadata(
+    component.component,
+  );
+  final normalizedDirs = await Future.wait(
+      component.directives.map(templateCompiler.normalizeDirectiveMetadata));
+  component
+    ..component = normalizedComp
+    ..directives = normalizedDirs;
+}
+
+Future<ReflectableOutput> _resolveReflectables(
+    CompilerFlags flags, BuildStep buildStep, LibraryElement element) {
+  final reader = ReflectableReader(
     recordInjectableFactories: flags.emitInjectableFactories,
     recordComponentFactories: flags.emitComponentFactories,
     // For a given import or export directive, return whether we have the
@@ -46,41 +91,9 @@ Future<TemplateCompilerOutputs> processTemplates(
     // For a given import or export directive, return whether a generated
     // .template.dart file already exists. If it does we will need to link
     // to it and call initReflector().
-    isLibrary: (uri) =>
-        resolver.isLibrary(AssetId.resolve(uri, from: buildStep.inputId)),
-  ).resolve(element);
-  final AngularArtifacts compileComponentsData = logElapsedSync(
-      () => findComponentsAndDirectives(LibraryReader(element)),
-      operationName: 'findComponents',
-      assetId: buildStep.inputId,
-      log: log);
-  if (compileComponentsData.isEmpty) {
-    return TemplateCompilerOutputs(
-      null,
-      reflectables,
-      InjectorReader.findInjectors(element),
-    );
-  }
-
-  // Normalize directive meta data for component and directives.
-  for (final component in compileComponentsData.components) {
-    final normalizedComp = await templateCompiler.normalizeDirectiveMetadata(
-      component.component,
-    );
-    final normalizedDirs = await Future.wait(component.directives.map((d) {
-      return templateCompiler.normalizeDirectiveMetadata(d);
-    }));
-    component
-      ..component = normalizedComp
-      ..directives = normalizedDirs;
-  }
-  final compiledTemplates = logElapsedSync(() {
-    return templateCompiler.compile(compileComponentsData);
-  }, operationName: 'compile', assetId: buildStep.inputId, log: log);
-
-  return TemplateCompilerOutputs(
-    compiledTemplates,
-    reflectables,
-    InjectorReader.findInjectors(element),
+    isLibrary: (uri) => buildStep.resolver
+        .isLibrary(AssetId.resolve(uri, from: buildStep.inputId)),
   );
+
+  return reader.resolve(element);
 }
