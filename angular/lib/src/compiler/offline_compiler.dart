@@ -82,24 +82,15 @@ class OfflineCompiler {
   }
 
   SourceModule compile(AngularArtifacts artifacts) {
-    List<NormalizedComponentWithViewDirectives> components =
-        artifacts.components;
     if (_DEBUG_PRINT_COMPILATION) {
-      print(components.map((comp) {
-        return const JsonEncoder.withIndent('  ').convert(comp.toJson());
-      }).join('\n'));
+      _printDebugCompilation(artifacts.components);
     }
-    String moduleUrl;
-    if (components.isNotEmpty) {
-      moduleUrl = templateModuleUrl(components[0].component.type);
-    } else if (artifacts.directives.isNotEmpty) {
-      moduleUrl = templateModuleUrl(artifacts.directives.first.type);
-    } else {
+    if (artifacts.isEmpty) {
       throw StateError('No components nor injectorModules given');
     }
     var statements = <o.Statement>[];
     var exportedVars = <String>[];
-    for (var componentWithDirs in components) {
+    for (var componentWithDirs in artifacts.components) {
       CompileDirectiveMetadata compMeta = componentWithDirs.component;
       _assertComponent(compMeta);
 
@@ -113,68 +104,20 @@ class OfflineCompiler {
           _deferredModules);
       exportedVars.add(compViewFactoryVar);
 
-      // Compile ComponentHost to be able to use dynamic component loader at
-      // runtime.
-      var hostMeta = createHostComponentMeta(compMeta.type, compMeta.selector,
-          compMeta.template.preserveWhitespace);
-      var hostDirectiveTypes = createHostDirectiveTypes(compMeta.type);
-      var hostViewFactoryVar = _compileComponent(
-        hostMeta,
-        [compMeta],
-        hostDirectiveTypes,
-        [],
-        statements,
-        _deferredModules,
-      );
-      var compFactoryVar = '${compMeta.type.name}NgFactory';
-      var factoryType = [o.importType(compMeta.type)];
+      String hostViewFactoryVar = _compileComponentHost(compMeta, statements);
 
-      // Adds const _FooNgFactory = const ComponentFactory<Foo>(...).
-      // ComponentFactory<Foo> FooNgFactory get _FooNgFactory;
-      //
-      // This is referenced in `initReflector/METADATA` and by user-code.
-      statements.add(o
-          .variable('_$compFactoryVar')
-          .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
-            <o.Expression>[
-              o.literal(compMeta.selector),
-              o.variable(hostViewFactoryVar),
-            ],
-            type: o.importType(
-              Identifiers.ComponentFactory,
-              factoryType,
-              [o.TypeModifier.Const],
-            ),
-          ))
-          .toDeclStmt(null, [o.StmtModifier.Const]));
-
-      statements.add(
-        o.fn(
-          // No parameters.
-          [],
-          // Statements.
-          [
-            o.ReturnStatement(o.ReadVarExpr('_$compFactoryVar')),
-          ],
-          o.importType(
-            Identifiers.ComponentFactory,
-            factoryType,
-          ),
-        ).toGetter('$compFactoryVar'),
-      );
-
+      var compFactoryVar =
+          _registerComponentFactory(statements, compMeta, hostViewFactoryVar);
       exportedVars.add(compFactoryVar);
     }
 
     for (CompileDirectiveMetadata directive in artifacts.directives) {
       if (!directive.requiresDirectiveChangeDetector) continue;
-      DirectiveCompiler comp =
-          DirectiveCompiler(directive, _templateParser.schemaRegistry);
-      DirectiveCompileResult res = comp.compile();
-      statements.addAll(res.statements);
-      exportedVars.add(comp.changeDetectorClassName);
+      var changeDetectorClassName = _compileDirective(directive, statements);
+      exportedVars.add(changeDetectorClassName);
     }
 
+    String moduleUrl = _moduleUrlFor(artifacts);
     return _createSourceModule(
         moduleUrl, statements, exportedVars, _deferredModules);
   }
@@ -215,6 +158,72 @@ class OfflineCompiler {
     return viewResult.viewFactoryVar;
   }
 
+  // Compile ComponentHost to be able to use dynamic component loader at
+  // runtime.
+  String _compileComponentHost(
+      CompileDirectiveMetadata compMeta, List<o.Statement> statements) {
+    var hostMeta = createHostComponentMeta(
+        compMeta.type, compMeta.selector, compMeta.template.preserveWhitespace);
+    var hostDirectiveTypes = createHostDirectiveTypes(compMeta.type);
+    return _compileComponent(
+      hostMeta,
+      [compMeta],
+      hostDirectiveTypes,
+      [],
+      statements,
+      _deferredModules,
+    );
+  }
+
+  // Adds const _FooNgFactory = const ComponentFactory<Foo>(...).
+  // ComponentFactory<Foo> FooNgFactory get _FooNgFactory;
+  //
+  // This is referenced in `initReflector/METADATA` and by user-code.
+  String _registerComponentFactory(List<o.Statement> statements,
+      CompileDirectiveMetadata compMeta, String hostViewFactoryVar) {
+    var compFactoryVar = '${compMeta.type.name}NgFactory';
+    var factoryType = [o.importType(compMeta.type)];
+    statements.add(o
+        .variable('_$compFactoryVar')
+        .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
+          <o.Expression>[
+            o.literal(compMeta.selector),
+            o.variable(hostViewFactoryVar),
+          ],
+          type: o.importType(
+            Identifiers.ComponentFactory,
+            factoryType,
+            [o.TypeModifier.Const],
+          ),
+        ))
+        .toDeclStmt(null, [o.StmtModifier.Const]));
+
+    statements.add(
+      o.fn(
+        // No parameters.
+        [],
+        // Statements.
+        [
+          o.ReturnStatement(o.ReadVarExpr('_$compFactoryVar')),
+        ],
+        o.importType(
+          Identifiers.ComponentFactory,
+          factoryType,
+        ),
+      ).toGetter('$compFactoryVar'),
+    );
+    return compFactoryVar;
+  }
+
+  String _compileDirective(
+      CompileDirectiveMetadata directive, List<o.Statement> statements) {
+    DirectiveCompiler comp =
+        DirectiveCompiler(directive, _templateParser.schemaRegistry);
+    DirectiveCompileResult res = comp.compile();
+    statements.addAll(res.statements);
+    return comp.changeDetectorClassName;
+  }
+
   SourceModule _createSourceModule(
       String moduleUrl,
       List<o.Statement> statements,
@@ -223,6 +232,23 @@ class OfflineCompiler {
     String sourceCode = _outputEmitter.emitStatements(
         moduleUrl, statements, exportedVars, deferredModules);
     return SourceModule(moduleUrl, sourceCode, deferredModules);
+  }
+
+  String _moduleUrlFor(AngularArtifacts artifacts) {
+    if (artifacts.components.isNotEmpty) {
+      return templateModuleUrl(artifacts.components.first.component.type);
+    } else if (artifacts.directives.isNotEmpty) {
+      return templateModuleUrl(artifacts.directives.first.type);
+    } else {
+      throw StateError('No components nor injectorModules given');
+    }
+  }
+
+  void _printDebugCompilation(
+      List<NormalizedComponentWithViewDirectives> components) {
+    print(components.map((comp) {
+      return const JsonEncoder.withIndent('  ').convert(comp.toJson());
+    }).join('\n'));
   }
 }
 
