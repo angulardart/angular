@@ -6,6 +6,9 @@
 
 *   Supports named arguments for `ValueProvider` and `@GeneratedInjector`.
 
+*   Prevents `InjectorReader.accept()` from crashing when given a dependency
+    with no type or token.
+
 ## 0.4.0
 
 ### New Features

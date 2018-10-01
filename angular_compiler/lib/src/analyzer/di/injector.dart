@@ -117,6 +117,10 @@ class InjectorReader {
   /// others cannot (i.e. those in a `test` directory), so we need to compute
   /// the relative path to them.
   Reference _referSafe(String symbol, String url) {
+    if (url == null) {
+      // The type dynamic has no URL.
+      return refer(symbol);
+    }
     final toUrl = Uri.parse(url);
     if (doNotScope != null && toUrl.scheme == 'asset') {
       return _referRelative(symbol, toUrl);
