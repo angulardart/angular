@@ -6,7 +6,6 @@ import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
 
 import 'compile_metadata.dart';
-import 'expression_parser/visitor.dart';
 import 'parse_util.dart';
 import 'style_url_resolver.dart' show extractStyleUrls, isStyleUrlResolvable;
 
@@ -19,13 +18,6 @@ import 'style_url_resolver.dart' show extractStyleUrls, isStyleUrlResolvable;
 class AstDirectiveNormalizer {
   final NgAssetReader _reader;
   const AstDirectiveNormalizer(this._reader);
-
-  void _parseExpressionsWithLegacyParser(
-    ast.TemplateAst astNode,
-    List<CompileIdentifierMetadata> exports,
-  ) {
-    astNode.accept(LegacyExpressionVisitor(exports: exports));
-  }
 
   Future<CompileDirectiveMetadata> normalizeDirective(
     CompileDirectiveMetadata directive,
@@ -174,7 +166,6 @@ class AstDirectiveNormalizer {
 
     for (final node in parsedNodes) {
       node.accept(visitor);
-      _parseExpressionsWithLegacyParser(node, exports);
     }
 
     final allInlineStyles = templateMeta.styles + visitor.inlineStyles;
