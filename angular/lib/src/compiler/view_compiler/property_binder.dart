@@ -279,13 +279,17 @@ void bindAndWriteToRenderer(
             // - it would be a non-breaking change to optimize further.
             renderValue = renderValue.conditional(o.literal(''), o.NULL_EXPR);
           } else {
-            // For attributes other than class convert value to a string.
-            // TODO: Skip toString() when we're sure we are binding to a String.
-            renderValue = renderValue.callMethod(
-              'toString',
-              const [],
-              checked: true,
-            );
+            // For attributes other than class convert to string if necessary.
+            // The sanitizer returns a string, so we only check if values that
+            // don't require sanitization need to be converted to a string.
+            if (boundProp.securityContext == TemplateSecurityContext.none &&
+                !converter.isString(boundProp.value)) {
+              renderValue = renderValue.callMethod(
+                'toString',
+                const [],
+                checked: converter.isNullable(boundProp.value),
+              );
+            }
           }
           var params = createSetAttributeParams(
             renderNode,
@@ -306,9 +310,11 @@ void bindAndWriteToRenderer(
             [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
       case PropertyBindingType.style:
-        // value = value?.toString().
-        o.Expression styleValueExpr =
-            currValExpr.callMethod('toString', [], checked: true);
+        // Convert to string if necessary.
+        o.Expression styleValueExpr = converter.isString(boundProp.value)
+            ? currValExpr
+            : currValExpr.callMethod('toString', [],
+                checked: converter.isNullable(boundProp.value));
         // Add units for style value if defined in template.
         if (boundProp.unit != null) {
           styleValueExpr = styleValueExpr.isBlank().conditional(
