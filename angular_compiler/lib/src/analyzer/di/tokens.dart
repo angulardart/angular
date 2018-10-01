@@ -155,7 +155,7 @@ abstract class TokenElement {}
 /// A statically parsed `Type` used as an identifier for injection.
 class TypeTokenElement implements TokenElement {
   /// References the type `dynamic`.
-  static const TypeTokenElement $dynamic = _DynamicTypeElement();
+  static const TypeTokenElement $dynamic = TypeTokenElement(TypeLink.$dynamic);
 
   /// Canonical URL of the source location and class name being referenced.
   final TypeLink link;
@@ -170,20 +170,10 @@ class TypeTokenElement implements TokenElement {
   int get hashCode => link.hashCode;
 
   /// Whether this is a considered the type `dynamic`.
-  bool get isDynamic => link == TypeLink.$dynamic;
+  bool get isDynamic => link.isDynamic;
 
   @override
   String toString() => 'TypeTokenElement {$link}';
-}
-
-class _DynamicTypeElement extends TypeTokenElement {
-  const _DynamicTypeElement() : super(null);
-
-  @override
-  TypeLink get link => TypeLink.$dynamic;
-
-  @override
-  bool get isDynamic => true;
 }
 
 /// A statically parsed `OpaqueToken` used as an identifier for injection.
