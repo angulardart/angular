@@ -67,6 +67,7 @@ class AppViewUtils {
   }
 
   /// Used in tests that cause exceptions on purpose.
+  @Deprecated('To be removed in 6.0.0')
   static void resetChangeDetection() {
     _throwOnChangesCounter = 0;
     _throwOnChanges = false;
