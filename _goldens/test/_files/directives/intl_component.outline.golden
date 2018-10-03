@@ -3,10 +3,10 @@
 export 'intl_component.dart';
 
 // Required for referencing runtime code.
-import 'dart:html';
-import 'package:angular/angular.dart';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart';
-import 'package:angular/src/core/linker/app_view.dart';
+import 'dart:html' as _html;
+import 'package:angular/angular.dart' as _ng;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
+import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'intl_component.dart' as _user;
@@ -15,31 +15,31 @@ import 'intl_component.dart' as _user;
 
 // For @Component class CompWithoutFinal.
 external List<dynamic> get styles$CompWithoutFinal;
-external ComponentFactory<_user.CompWithoutFinal> get CompWithoutFinalNgFactory;
-external AppView<_user.CompWithoutFinal> viewFactory_CompWithoutFinal0(AppView<dynamic> parentView, int parentIndex);
-class ViewCompWithoutFinal0 extends AppView<_user.CompWithoutFinal> {
-  external ViewCompWithoutFinal0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.CompWithoutFinal> get CompWithoutFinalNgFactory;
+external _ng.AppView<_user.CompWithoutFinal> viewFactory_CompWithoutFinal0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewCompWithoutFinal0 extends _ng.AppView<_user.CompWithoutFinal> {
+  external ViewCompWithoutFinal0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class CompWithFinal.
 external List<dynamic> get styles$CompWithFinal;
-external ComponentFactory<_user.CompWithFinal> get CompWithFinalNgFactory;
-external AppView<_user.CompWithFinal> viewFactory_CompWithFinal0(AppView<dynamic> parentView, int parentIndex);
-class ViewCompWithFinal0 extends AppView<_user.CompWithFinal> {
-  external ViewCompWithFinal0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.CompWithFinal> get CompWithFinalNgFactory;
+external _ng.AppView<_user.CompWithFinal> viewFactory_CompWithFinal0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewCompWithFinal0 extends _ng.AppView<_user.CompWithFinal> {
+  external ViewCompWithFinal0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class CompWithFinalStatic.
 external List<dynamic> get styles$CompWithFinalStatic;
-external ComponentFactory<_user.CompWithFinalStatic> get CompWithFinalStaticNgFactory;
-external AppView<_user.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex);
-class ViewCompWithFinalStatic0 extends AppView<_user.CompWithFinalStatic> {
-  external ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.CompWithFinalStatic> get CompWithFinalStaticNgFactory;
+external _ng.AppView<_user.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewCompWithFinalStatic0 extends _ng.AppView<_user.CompWithFinalStatic> {
+  external ViewCompWithFinalStatic0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class CompWithExternalFinal.
 external List<dynamic> get styles$CompWithExternalFinal;
-external ComponentFactory<_user.CompWithExternalFinal> get CompWithExternalFinalNgFactory;
-external AppView<_user.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex);
-class ViewCompWithExternalFinal0 extends AppView<_user.CompWithExternalFinal> {
-  external ViewCompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.CompWithExternalFinal> get CompWithExternalFinalNgFactory;
+external _ng.AppView<_user.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewCompWithExternalFinal0 extends _ng.AppView<_user.CompWithExternalFinal> {
+  external ViewCompWithExternalFinal0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

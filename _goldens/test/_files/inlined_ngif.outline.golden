@@ -3,10 +3,10 @@
 export 'inlined_ngif.dart';
 
 // Required for referencing runtime code.
-import 'dart:html';
-import 'package:angular/angular.dart';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart';
-import 'package:angular/src/core/linker/app_view.dart';
+import 'dart:html' as _html;
+import 'package:angular/angular.dart' as _ng;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
+import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'inlined_ngif.dart' as _user;
@@ -15,17 +15,17 @@ import 'inlined_ngif.dart' as _user;
 
 // For @Component class InlinedNgIfComponent.
 external List<dynamic> get styles$InlinedNgIfComponent;
-external ComponentFactory<_user.InlinedNgIfComponent> get InlinedNgIfComponentNgFactory;
-external AppView<_user.InlinedNgIfComponent> viewFactory_InlinedNgIfComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewInlinedNgIfComponent0 extends AppView<_user.InlinedNgIfComponent> {
-  external ViewInlinedNgIfComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.InlinedNgIfComponent> get InlinedNgIfComponentNgFactory;
+external _ng.AppView<_user.InlinedNgIfComponent> viewFactory_InlinedNgIfComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInlinedNgIfComponent0 extends _ng.AppView<_user.InlinedNgIfComponent> {
+  external ViewInlinedNgIfComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InlinedNgIfWithImmutableConditionComponent.
 external List<dynamic> get styles$InlinedNgIfWithImmutableConditionComponent;
-external ComponentFactory<_user.InlinedNgIfWithImmutableConditionComponent> get InlinedNgIfWithImmutableConditionComponentNgFactory;
-external AppView<_user.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedNgIfWithImmutableConditionComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<_user.InlinedNgIfWithImmutableConditionComponent> {
-  external ViewInlinedNgIfWithImmutableConditionComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.InlinedNgIfWithImmutableConditionComponent> get InlinedNgIfWithImmutableConditionComponentNgFactory;
+external _ng.AppView<_user.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedNgIfWithImmutableConditionComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInlinedNgIfWithImmutableConditionComponent0 extends _ng.AppView<_user.InlinedNgIfWithImmutableConditionComponent> {
+  external ViewInlinedNgIfWithImmutableConditionComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

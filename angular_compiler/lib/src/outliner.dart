@@ -10,12 +10,12 @@ import 'package:path/path.dart' as p;
 
 import 'analyzer.dart';
 
-const _htmlImport = "import 'dart:html';";
-const _angularImport = "import 'package:angular/angular.dart';";
+const _htmlImport = "import 'dart:html' as _html;";
+const _angularImport = "import 'package:angular/angular.dart' as _ng;";
 const _appViewImport =
-    "import 'package:angular/src/core/linker/app_view.dart';";
+    "import 'package:angular/src/core/linker/app_view.dart' as _ng;";
 const _directiveChangeImport =
-    "import 'package:angular/src/core/change_detection/directive_change_detector.dart';";
+    "import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;";
 
 const _analyzerIgnores =
     '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import,unused_shown_name';
@@ -43,8 +43,6 @@ class TemplateOutliner implements Builder {
   String get _angularImports {
     return '$_htmlImport\n$_angularImport\n$_directiveChangeImport\n$_appViewImport';
   }
-
-  String get _appViewClass => 'AppView';
 
   final bool exportUserCodeFromTemplate;
 
@@ -154,13 +152,13 @@ class TemplateOutliner implements Builder {
         // so we reuse the type parameters for both.
         final typeParameters = _typeParametersOf(component);
         final componentType = '_user.$componentName$typeParameters';
-        final baseType = '$_appViewClass<$componentType>';
-        final viewArgs = '$_appViewClass<dynamic> parentView, int parentIndex';
+        final baseType = '_ng.AppView<$componentType>';
+        final viewArgs = '_ng.AppView<dynamic> parentView, int parentIndex';
         final viewName = 'View${componentName}0';
         output.write('''
 // For @Component class $componentName.
 external List<dynamic> get styles\$$componentName;
-external ComponentFactory<_user.$componentName> get ${componentName}NgFactory;
+external _ng.ComponentFactory<_user.$componentName> get ${componentName}NgFactory;
 external $baseType viewFactory_${componentName}0$typeParameters($viewArgs);
 class $viewName$typeParameters extends $baseType {
   external $viewName($viewArgs);
@@ -179,18 +177,19 @@ class $viewName$typeParameters extends $baseType {
         final directiveType = '_user.$directiveName$typeParameters';
         output.write('''
 // For @Directive class $directiveName.
-class $changeDetectorName$typeParameters extends DirectiveChangeDetector {
+class $changeDetectorName$typeParameters extends _ng.DirectiveChangeDetector {
   external $directiveType get instance;
   external void deliverChanges();
   external $changeDetectorName($directiveType instance);
-  external void detectHostChanges(AppView view, Element node);
+  external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
 }
 ''');
       }
     }
     if (injectors.isNotEmpty) {
       for (final injector in injectors) {
-        output.writeln('external Injector $injector([Injector parent]);');
+        output
+            .writeln('external _ng.Injector $injector([_ng.Injector parent]);');
       }
     }
     output..writeln()..writeln('external void initReflector();');
