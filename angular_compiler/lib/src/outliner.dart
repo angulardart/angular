@@ -119,7 +119,7 @@ class TemplateOutliner implements Builder {
     // TODO(matanl): Add this as a helper function in angular_compiler.
     output.writeln('// Required for "type inference" (scoping).');
     for (final d in library.imports) {
-      if (d is ImportDirective && !d.isDeferred && d.uri != null) {
+      if (!d.isDeferred && d.uri != null) {
         var directive = "import '${d.uri}'";
         if (d.prefix != null) {
           directive += ' as ${d.prefix.name}';

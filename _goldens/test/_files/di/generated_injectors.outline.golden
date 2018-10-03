@@ -12,6 +12,8 @@ import 'package:angular/src/core/linker/app_view.dart' as _ng;
 import 'generated_injectors.dart' as _user;
 
 // Required for "type inference" (scoping).
+import 'package:angular/angular.dart';
+import 'generated_injectors.template.dart' as ng;
 
 external _ng.Injector doGenerate$Injector([_ng.Injector parent]);
 

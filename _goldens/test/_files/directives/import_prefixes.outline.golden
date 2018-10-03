@@ -12,6 +12,10 @@ import 'package:angular/src/core/linker/app_view.dart' as _ng;
 import 'import_prefixes.dart' as _user;
 
 // Required for "type inference" (scoping).
+import 'package:angular/angular.dart' as angular;
+import 'import_prefixes.dart' as prefixed;
+import 'import_prefixes.dart' as prefixed2 show ChildComponent;
+import 'import_prefixes.dart' as prefixed3 hide ChildComponent;
 
 // For @Component class ParentComponent.
 external List<dynamic> get styles$ParentComponent;

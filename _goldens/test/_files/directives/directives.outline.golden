@@ -12,6 +12,8 @@ import 'package:angular/src/core/linker/app_view.dart' as _ng;
 import 'directives.dart' as _user;
 
 // Required for "type inference" (scoping).
+import 'dart:collection' as collection_lib;
+import 'package:angular/angular.dart';
 
 // For @Directive class TestDirective.
 class TestDirectiveNgCd extends _ng.DirectiveChangeDetector {
