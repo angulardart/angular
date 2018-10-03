@@ -1288,6 +1288,30 @@ void main() {
             ],
           ]);
         });
+
+        test('should normalize whitespace in description and meaning', () {
+          final ast = parse('''
+              <div
+                  @i18n="  A long message description
+                    that wraps with   excess \n whitespace.
+                    "
+                  @i18n.meaning="
+                    A \t long   meaning  that wraps
+                    with \n excess whitespace.  ">
+                A message.
+              </div>
+            ''');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [ElementAst, 'div'],
+            [
+              I18nTextAst,
+              'A message.',
+              'A long message description that wraps with excess whitespace.',
+              'A long meaning that wraps with excess whitespace.',
+            ],
+          ]);
+        });
       });
 
       group('@i18n:<attr>', () {

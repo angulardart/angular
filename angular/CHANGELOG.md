@@ -199,6 +199,11 @@
     an exported symbol (`Component(exports: [someExport])`) no longer cause a
     parsing error.
 
+*   Whitespace in internationalized message descriptions and meanings is now
+    normalized so they're no longer affected by formatting changes. Identical
+    messages with meanings that are formatted differently will now properly be
+    treated as the same message.
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#930]: https://github.com/dart-lang/angular/issues/930

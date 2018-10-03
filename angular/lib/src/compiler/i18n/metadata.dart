@@ -21,6 +21,9 @@ final _i18nRegExp = RegExp(
     // as an error when there's inevitably no matching attribute.
     r'(?::(.*)|$)');
 
+/// Matches any adjacent whitespace.
+final _whitespaceRegExp = RegExp(r'\s+');
+
 /// Parses all internationalization metadata from a node's [annotations].
 I18nMetadataBundle parseI18nMetadata(
   List<AnnotationAst> annotations,
@@ -56,6 +59,10 @@ I18nMetadataBundle parseI18nMetadata(
   }
   return I18nMetadataBundle(childrenMetadata, attributeMetadata);
 }
+
+/// Trims [text] and collapses all adjacent whitespace to a single character.
+String _normalizeWhitespace(String text) =>
+    text.trim().replaceAll(_whitespaceRegExp, ' ');
 
 /// Metadata used to internationalize a message.
 class I18nMetadata {
@@ -137,10 +144,18 @@ class _I18nMetadataBuilder {
       _reportMissingDescriptionFor(skip);
       return null;
     }
+    // Normalize description and meaning so that they're unaffected by
+    // formatting. It's especially important to normalize the meaning so that
+    // formatting doesn't affect the message identity. Two identical messages
+    // whose meanings are formatted differently would be treated as distinct
+    // messages if the whitespace wasn't normalized.
+    final normalizedDescription = _normalizeWhitespace(description.value);
+    final normalizedMeaning =
+        meaning != null ? _normalizeWhitespace(meaning.value) : null;
     return I18nMetadata(
-      description.value.trim(),
+      normalizedDescription,
       description.sourceSpan,
-      meaning: meaning?.value?.trim(),
+      meaning: normalizedMeaning,
       skip: skip != null,
     );
   }
