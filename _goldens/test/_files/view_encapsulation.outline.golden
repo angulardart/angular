@@ -12,6 +12,7 @@ import 'package:angular/src/core/linker/app_view.dart' as _ng;
 import 'view_encapsulation.dart' as _user;
 
 // Required for "type inference" (scoping).
+import 'package:angular/angular.dart';
 
 // For @Component class EmulatedComponent.
 external List<dynamic> get styles$EmulatedComponent;
