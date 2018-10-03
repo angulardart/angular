@@ -3,10 +3,10 @@
 export 'change_detection.dart';
 
 // Required for referencing runtime code.
-import 'dart:html';
-import 'package:angular/angular.dart';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart';
-import 'package:angular/src/core/linker/app_view.dart';
+import 'dart:html' as _html;
+import 'package:angular/angular.dart' as _ng;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
+import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'change_detection.dart' as _user;
@@ -15,66 +15,66 @@ import 'change_detection.dart' as _user;
 
 // For @Component class CheckOnceComponent.
 external List<dynamic> get styles$CheckOnceComponent;
-external ComponentFactory<_user.CheckOnceComponent> get CheckOnceComponentNgFactory;
-external AppView<_user.CheckOnceComponent> viewFactory_CheckOnceComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewCheckOnceComponent0 extends AppView<_user.CheckOnceComponent> {
-  external ViewCheckOnceComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.CheckOnceComponent> get CheckOnceComponentNgFactory;
+external _ng.AppView<_user.CheckOnceComponent> viewFactory_CheckOnceComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewCheckOnceComponent0 extends _ng.AppView<_user.CheckOnceComponent> {
+  external ViewCheckOnceComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class CheckedComponent.
 external List<dynamic> get styles$CheckedComponent;
-external ComponentFactory<_user.CheckedComponent> get CheckedComponentNgFactory;
-external AppView<_user.CheckedComponent> viewFactory_CheckedComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewCheckedComponent0 extends AppView<_user.CheckedComponent> {
-  external ViewCheckedComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.CheckedComponent> get CheckedComponentNgFactory;
+external _ng.AppView<_user.CheckedComponent> viewFactory_CheckedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewCheckedComponent0 extends _ng.AppView<_user.CheckedComponent> {
+  external ViewCheckedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class CheckAlwaysComponent.
 external List<dynamic> get styles$CheckAlwaysComponent;
-external ComponentFactory<_user.CheckAlwaysComponent> get CheckAlwaysComponentNgFactory;
-external AppView<_user.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewCheckAlwaysComponent0 extends AppView<_user.CheckAlwaysComponent> {
-  external ViewCheckAlwaysComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.CheckAlwaysComponent> get CheckAlwaysComponentNgFactory;
+external _ng.AppView<_user.CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewCheckAlwaysComponent0 extends _ng.AppView<_user.CheckAlwaysComponent> {
+  external ViewCheckAlwaysComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class DetachedComponent.
 external List<dynamic> get styles$DetachedComponent;
-external ComponentFactory<_user.DetachedComponent> get DetachedComponentNgFactory;
-external AppView<_user.DetachedComponent> viewFactory_DetachedComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewDetachedComponent0 extends AppView<_user.DetachedComponent> {
-  external ViewDetachedComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.DetachedComponent> get DetachedComponentNgFactory;
+external _ng.AppView<_user.DetachedComponent> viewFactory_DetachedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewDetachedComponent0 extends _ng.AppView<_user.DetachedComponent> {
+  external ViewDetachedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesOnPushComponent.
 external List<dynamic> get styles$UsesOnPushComponent;
-external ComponentFactory<_user.UsesOnPushComponent> get UsesOnPushComponentNgFactory;
-external AppView<_user.UsesOnPushComponent> viewFactory_UsesOnPushComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewUsesOnPushComponent0 extends AppView<_user.UsesOnPushComponent> {
-  external ViewUsesOnPushComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.UsesOnPushComponent> get UsesOnPushComponentNgFactory;
+external _ng.AppView<_user.UsesOnPushComponent> viewFactory_UsesOnPushComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesOnPushComponent0 extends _ng.AppView<_user.UsesOnPushComponent> {
+  external ViewUsesOnPushComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class OnPushComponent.
 external List<dynamic> get styles$OnPushComponent;
-external ComponentFactory<_user.OnPushComponent> get OnPushComponentNgFactory;
-external AppView<_user.OnPushComponent> viewFactory_OnPushComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewOnPushComponent0 extends AppView<_user.OnPushComponent> {
-  external ViewOnPushComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.OnPushComponent> get OnPushComponentNgFactory;
+external _ng.AppView<_user.OnPushComponent> viewFactory_OnPushComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewOnPushComponent0 extends _ng.AppView<_user.OnPushComponent> {
+  external ViewOnPushComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class OnPushChildComponent.
 external List<dynamic> get styles$OnPushChildComponent;
-external ComponentFactory<_user.OnPushChildComponent> get OnPushChildComponentNgFactory;
-external AppView<_user.OnPushChildComponent> viewFactory_OnPushChildComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewOnPushChildComponent0 extends AppView<_user.OnPushChildComponent> {
-  external ViewOnPushChildComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.OnPushChildComponent> get OnPushChildComponentNgFactory;
+external _ng.AppView<_user.OnPushChildComponent> viewFactory_OnPushChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewOnPushChildComponent0 extends _ng.AppView<_user.OnPushChildComponent> {
+  external ViewOnPushChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class StatefulComponent.
 external List<dynamic> get styles$StatefulComponent;
-external ComponentFactory<_user.StatefulComponent> get StatefulComponentNgFactory;
-external AppView<_user.StatefulComponent> viewFactory_StatefulComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewStatefulComponent0 extends AppView<_user.StatefulComponent> {
-  external ViewStatefulComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.StatefulComponent> get StatefulComponentNgFactory;
+external _ng.AppView<_user.StatefulComponent> viewFactory_StatefulComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewStatefulComponent0 extends _ng.AppView<_user.StatefulComponent> {
+  external ViewStatefulComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class DefaultComponent.
 external List<dynamic> get styles$DefaultComponent;
-external ComponentFactory<_user.DefaultComponent> get DefaultComponentNgFactory;
-external AppView<_user.DefaultComponent> viewFactory_DefaultComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewDefaultComponent0 extends AppView<_user.DefaultComponent> {
-  external ViewDefaultComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.DefaultComponent> get DefaultComponentNgFactory;
+external _ng.AppView<_user.DefaultComponent> viewFactory_DefaultComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewDefaultComponent0 extends _ng.AppView<_user.DefaultComponent> {
+  external ViewDefaultComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();

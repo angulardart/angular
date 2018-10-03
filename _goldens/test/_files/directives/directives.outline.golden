@@ -3,10 +3,10 @@
 export 'directives.dart';
 
 // Required for referencing runtime code.
-import 'dart:html';
-import 'package:angular/angular.dart';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart';
-import 'package:angular/src/core/linker/app_view.dart';
+import 'dart:html' as _html;
+import 'package:angular/angular.dart' as _ng;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
+import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'directives.dart' as _user;
@@ -14,18 +14,18 @@ import 'directives.dart' as _user;
 // Required for "type inference" (scoping).
 
 // For @Directive class TestDirective.
-class TestDirectiveNgCd extends DirectiveChangeDetector {
+class TestDirectiveNgCd extends _ng.DirectiveChangeDetector {
   external _user.TestDirective get instance;
   external void deliverChanges();
   external TestDirectiveNgCd(_user.TestDirective instance);
-  external void detectHostChanges(AppView view, Element node);
+  external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
 }
 // For @Directive class TestDirectiveWithInputs.
-class TestDirectiveWithInputsNgCd extends DirectiveChangeDetector {
+class TestDirectiveWithInputsNgCd extends _ng.DirectiveChangeDetector {
   external _user.TestDirectiveWithInputs get instance;
   external void deliverChanges();
   external TestDirectiveWithInputsNgCd(_user.TestDirectiveWithInputs instance);
-  external void detectHostChanges(AppView view, Element node);
+  external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
 }
 
 external void initReflector();

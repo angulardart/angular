@@ -3,10 +3,10 @@
 export 'property.dart';
 
 // Required for referencing runtime code.
-import 'dart:html';
-import 'package:angular/angular.dart';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart';
-import 'package:angular/src/core/linker/app_view.dart';
+import 'dart:html' as _html;
+import 'package:angular/angular.dart' as _ng;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
+import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'property.dart' as _user;
@@ -15,17 +15,17 @@ import 'property.dart' as _user;
 
 // For @Component class I18nPropertyComponent.
 external List<dynamic> get styles$I18nPropertyComponent;
-external ComponentFactory<_user.I18nPropertyComponent> get I18nPropertyComponentNgFactory;
-external AppView<_user.I18nPropertyComponent> viewFactory_I18nPropertyComponent0(AppView<dynamic> parentView, int parentIndex);
-class ViewI18nPropertyComponent0 extends AppView<_user.I18nPropertyComponent> {
-  external ViewI18nPropertyComponent0(AppView<dynamic> parentView, int parentIndex);
+external _ng.ComponentFactory<_user.I18nPropertyComponent> get I18nPropertyComponentNgFactory;
+external _ng.AppView<_user.I18nPropertyComponent> viewFactory_I18nPropertyComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewI18nPropertyComponent0 extends _ng.AppView<_user.I18nPropertyComponent> {
+  external ViewI18nPropertyComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Directive class MessageDirective.
-class MessageDirectiveNgCd extends DirectiveChangeDetector {
+class MessageDirectiveNgCd extends _ng.DirectiveChangeDetector {
   external _user.MessageDirective get instance;
   external void deliverChanges();
   external MessageDirectiveNgCd(_user.MessageDirective instance);
-  external void detectHostChanges(AppView view, Element node);
+  external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
 }
 
 external void initReflector();
