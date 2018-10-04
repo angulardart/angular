@@ -2,7 +2,6 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:angular_compiler/cli.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:collection/collection.dart' show mapMap;
 import 'package:meta/meta.dart' hide literal;
 import 'package:path/path.dart' as p;
 import 'package:source_gen/source_gen.dart';
@@ -358,9 +357,8 @@ class InjectorReader {
     UseValueProviderElement provider,
     Map<DartObject, DartObject> map,
   ) =>
-      literalConstMap(mapMap(map,
-          key: (DartObject k, DartObject v) => _reviveAny(provider, k),
-          value: (DartObject k, DartObject v) => _reviveAny(provider, v)));
+      literalConstMap(map.map((k, v) =>
+          MapEntry(_reviveAny(provider, k), _reviveAny(provider, v))));
 }
 
 /// To be implemented by an emitter class to create a `GeneratedInjector`.
