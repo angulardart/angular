@@ -9,16 +9,16 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'attribute.dart' as _user;
+import 'attribute.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class I18nAttributeComponent.
 external List<dynamic> get styles$I18nAttributeComponent;
-external _ng.ComponentFactory<_user.I18nAttributeComponent> get I18nAttributeComponentNgFactory;
-external _ng.AppView<_user.I18nAttributeComponent> viewFactory_I18nAttributeComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewI18nAttributeComponent0 extends _ng.AppView<_user.I18nAttributeComponent> {
+external _ng.ComponentFactory<I18nAttributeComponent> get I18nAttributeComponentNgFactory;
+external _ng.AppView<I18nAttributeComponent> viewFactory_I18nAttributeComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewI18nAttributeComponent0 extends _ng.AppView<I18nAttributeComponent> {
   external ViewI18nAttributeComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

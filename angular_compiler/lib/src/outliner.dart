@@ -112,7 +112,7 @@ class TemplateOutliner implements Builder {
       final userLandCode = p.basename(buildStep.inputId.path);
       output
         ..writeln('// Required for specifically referencing user code.')
-        ..writeln("import '$userLandCode' as _user;")
+        ..writeln("import '$userLandCode';")
         ..writeln();
     }
 
@@ -151,14 +151,14 @@ class TemplateOutliner implements Builder {
         // difference between a type parameter and its use as a type argument,
         // so we reuse the type parameters for both.
         final typeParameters = _typeParametersOf(component);
-        final componentType = '_user.$componentName$typeParameters';
+        final componentType = '$componentName$typeParameters';
         final baseType = '_ng.AppView<$componentType>';
         final viewArgs = '_ng.AppView<dynamic> parentView, int parentIndex';
         final viewName = 'View${componentName}0';
         output.write('''
 // For @Component class $componentName.
 external List<dynamic> get styles\$$componentName;
-external _ng.ComponentFactory<_user.$componentName> get ${componentName}NgFactory;
+external _ng.ComponentFactory<$componentName> get ${componentName}NgFactory;
 external $baseType viewFactory_${componentName}0$typeParameters($viewArgs);
 class $viewName$typeParameters extends $baseType {
   external $viewName($viewArgs);
@@ -174,7 +174,7 @@ class $viewName$typeParameters extends $baseType {
         // difference between a type parameter and its use as a type argument,
         // so we reuse the type parameters for both.
         final typeParameters = _typeParametersOf(directive);
-        final directiveType = '_user.$directiveName$typeParameters';
+        final directiveType = '$directiveName$typeParameters';
         output.write('''
 // For @Directive class $directiveName.
 class $changeDetectorName$typeParameters extends _ng.DirectiveChangeDetector {

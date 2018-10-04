@@ -9,16 +9,16 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'pipes.dart' as _user;
+import 'pipes.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class Comp.
 external List<dynamic> get styles$Comp;
-external _ng.ComponentFactory<_user.Comp> get CompNgFactory;
-external _ng.AppView<_user.Comp> viewFactory_Comp0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewComp0 extends _ng.AppView<_user.Comp> {
+external _ng.ComponentFactory<Comp> get CompNgFactory;
+external _ng.AppView<Comp> viewFactory_Comp0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewComp0 extends _ng.AppView<Comp> {
   external ViewComp0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

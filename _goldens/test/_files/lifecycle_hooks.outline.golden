@@ -9,16 +9,16 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'lifecycle_hooks.dart' as _user;
+import 'lifecycle_hooks.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class LifecycleHooksComponent.
 external List<dynamic> get styles$LifecycleHooksComponent;
-external _ng.ComponentFactory<_user.LifecycleHooksComponent> get LifecycleHooksComponentNgFactory;
-external _ng.AppView<_user.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewLifecycleHooksComponent0 extends _ng.AppView<_user.LifecycleHooksComponent> {
+external _ng.ComponentFactory<LifecycleHooksComponent> get LifecycleHooksComponentNgFactory;
+external _ng.AppView<LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewLifecycleHooksComponent0 extends _ng.AppView<LifecycleHooksComponent> {
   external ViewLifecycleHooksComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

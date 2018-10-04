@@ -9,16 +9,16 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'has_template_file.dart' as _user;
+import 'has_template_file.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class HasTemplateFileComponent.
 external List<dynamic> get styles$HasTemplateFileComponent;
-external _ng.ComponentFactory<_user.HasTemplateFileComponent> get HasTemplateFileComponentNgFactory;
-external _ng.AppView<_user.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewHasTemplateFileComponent0 extends _ng.AppView<_user.HasTemplateFileComponent> {
+external _ng.ComponentFactory<HasTemplateFileComponent> get HasTemplateFileComponentNgFactory;
+external _ng.AppView<HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewHasTemplateFileComponent0 extends _ng.AppView<HasTemplateFileComponent> {
   external ViewHasTemplateFileComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

@@ -9,23 +9,23 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'property.dart' as _user;
+import 'property.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class I18nPropertyComponent.
 external List<dynamic> get styles$I18nPropertyComponent;
-external _ng.ComponentFactory<_user.I18nPropertyComponent> get I18nPropertyComponentNgFactory;
-external _ng.AppView<_user.I18nPropertyComponent> viewFactory_I18nPropertyComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewI18nPropertyComponent0 extends _ng.AppView<_user.I18nPropertyComponent> {
+external _ng.ComponentFactory<I18nPropertyComponent> get I18nPropertyComponentNgFactory;
+external _ng.AppView<I18nPropertyComponent> viewFactory_I18nPropertyComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewI18nPropertyComponent0 extends _ng.AppView<I18nPropertyComponent> {
   external ViewI18nPropertyComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Directive class MessageDirective.
 class MessageDirectiveNgCd extends _ng.DirectiveChangeDetector {
-  external _user.MessageDirective get instance;
+  external MessageDirective get instance;
   external void deliverChanges();
-  external MessageDirectiveNgCd(_user.MessageDirective instance);
+  external MessageDirectiveNgCd(MessageDirective instance);
   external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
 }
 

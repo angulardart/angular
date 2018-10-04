@@ -9,16 +9,16 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'event_tearoff.dart' as _user;
+import 'event_tearoff.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class UsesEventTearoff.
 external List<dynamic> get styles$UsesEventTearoff;
-external _ng.ComponentFactory<_user.UsesEventTearoff> get UsesEventTearoffNgFactory;
-external _ng.AppView<_user.UsesEventTearoff> viewFactory_UsesEventTearoff0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewUsesEventTearoff0 extends _ng.AppView<_user.UsesEventTearoff> {
+external _ng.ComponentFactory<UsesEventTearoff> get UsesEventTearoffNgFactory;
+external _ng.AppView<UsesEventTearoff> viewFactory_UsesEventTearoff0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesEventTearoff0 extends _ng.AppView<UsesEventTearoff> {
   external ViewUsesEventTearoff0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

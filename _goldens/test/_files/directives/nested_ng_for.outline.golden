@@ -9,16 +9,16 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'nested_ng_for.dart' as _user;
+import 'nested_ng_for.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class NestedNgForComponent.
 external List<dynamic> get styles$NestedNgForComponent;
-external _ng.ComponentFactory<_user.NestedNgForComponent> get NestedNgForComponentNgFactory;
-external _ng.AppView<_user.NestedNgForComponent> viewFactory_NestedNgForComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewNestedNgForComponent0 extends _ng.AppView<_user.NestedNgForComponent> {
+external _ng.ComponentFactory<NestedNgForComponent> get NestedNgForComponentNgFactory;
+external _ng.AppView<NestedNgForComponent> viewFactory_NestedNgForComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewNestedNgForComponent0 extends _ng.AppView<NestedNgForComponent> {
   external ViewNestedNgForComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 
