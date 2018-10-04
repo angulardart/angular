@@ -9,23 +9,23 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'whitespace.dart' as _user;
+import 'whitespace.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class PreserveWhitespace.
 external List<dynamic> get styles$PreserveWhitespace;
-external _ng.ComponentFactory<_user.PreserveWhitespace> get PreserveWhitespaceNgFactory;
-external _ng.AppView<_user.PreserveWhitespace> viewFactory_PreserveWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewPreserveWhitespace0 extends _ng.AppView<_user.PreserveWhitespace> {
+external _ng.ComponentFactory<PreserveWhitespace> get PreserveWhitespaceNgFactory;
+external _ng.AppView<PreserveWhitespace> viewFactory_PreserveWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewPreserveWhitespace0 extends _ng.AppView<PreserveWhitespace> {
   external ViewPreserveWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class MinifyWhitespace.
 external List<dynamic> get styles$MinifyWhitespace;
-external _ng.ComponentFactory<_user.MinifyWhitespace> get MinifyWhitespaceNgFactory;
-external _ng.AppView<_user.MinifyWhitespace> viewFactory_MinifyWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewMinifyWhitespace0 extends _ng.AppView<_user.MinifyWhitespace> {
+external _ng.ComponentFactory<MinifyWhitespace> get MinifyWhitespaceNgFactory;
+external _ng.AppView<MinifyWhitespace> viewFactory_MinifyWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewMinifyWhitespace0 extends _ng.AppView<MinifyWhitespace> {
   external ViewMinifyWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

@@ -9,7 +9,7 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'import_prefixes.dart' as _user;
+import 'import_prefixes.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart' as angular;
@@ -19,16 +19,16 @@ import 'import_prefixes.dart' as prefixed3 hide ChildComponent;
 
 // For @Component class ParentComponent.
 external List<dynamic> get styles$ParentComponent;
-external _ng.ComponentFactory<_user.ParentComponent> get ParentComponentNgFactory;
-external _ng.AppView<_user.ParentComponent> viewFactory_ParentComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewParentComponent0 extends _ng.AppView<_user.ParentComponent> {
+external _ng.ComponentFactory<ParentComponent> get ParentComponentNgFactory;
+external _ng.AppView<ParentComponent> viewFactory_ParentComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewParentComponent0 extends _ng.AppView<ParentComponent> {
   external ViewParentComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class ChildComponent.
 external List<dynamic> get styles$ChildComponent;
-external _ng.ComponentFactory<_user.ChildComponent> get ChildComponentNgFactory;
-external _ng.AppView<_user.ChildComponent> viewFactory_ChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewChildComponent0 extends _ng.AppView<_user.ChildComponent> {
+external _ng.ComponentFactory<ChildComponent> get ChildComponentNgFactory;
+external _ng.AppView<ChildComponent> viewFactory_ChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewChildComponent0 extends _ng.AppView<ChildComponent> {
   external ViewChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

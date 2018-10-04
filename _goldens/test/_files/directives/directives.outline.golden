@@ -9,7 +9,7 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'directives.dart' as _user;
+import 'directives.dart';
 
 // Required for "type inference" (scoping).
 import 'dart:collection' as collection_lib;
@@ -17,16 +17,16 @@ import 'package:angular/angular.dart';
 
 // For @Directive class TestDirective.
 class TestDirectiveNgCd extends _ng.DirectiveChangeDetector {
-  external _user.TestDirective get instance;
+  external TestDirective get instance;
   external void deliverChanges();
-  external TestDirectiveNgCd(_user.TestDirective instance);
+  external TestDirectiveNgCd(TestDirective instance);
   external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
 }
 // For @Directive class TestDirectiveWithInputs.
 class TestDirectiveWithInputsNgCd extends _ng.DirectiveChangeDetector {
-  external _user.TestDirectiveWithInputs get instance;
+  external TestDirectiveWithInputs get instance;
   external void deliverChanges();
-  external TestDirectiveWithInputsNgCd(_user.TestDirectiveWithInputs instance);
+  external TestDirectiveWithInputsNgCd(TestDirectiveWithInputs instance);
   external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
 }
 

@@ -9,51 +9,51 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'interpolation.dart' as _user;
+import 'interpolation.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class InterpolationComponent.
 external List<dynamic> get styles$InterpolationComponent;
-external _ng.ComponentFactory<_user.InterpolationComponent> get InterpolationComponentNgFactory;
-external _ng.AppView<_user.InterpolationComponent> viewFactory_InterpolationComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewInterpolationComponent0 extends _ng.AppView<_user.InterpolationComponent> {
+external _ng.ComponentFactory<InterpolationComponent> get InterpolationComponentNgFactory;
+external _ng.AppView<InterpolationComponent> viewFactory_InterpolationComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationComponent0 extends _ng.AppView<InterpolationComponent> {
   external ViewInterpolationComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InterpolationComponentNoWhitespace.
 external List<dynamic> get styles$InterpolationComponentNoWhitespace;
-external _ng.ComponentFactory<_user.InterpolationComponentNoWhitespace> get InterpolationComponentNoWhitespaceNgFactory;
-external _ng.AppView<_user.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewInterpolationComponentNoWhitespace0 extends _ng.AppView<_user.InterpolationComponentNoWhitespace> {
+external _ng.ComponentFactory<InterpolationComponentNoWhitespace> get InterpolationComponentNoWhitespaceNgFactory;
+external _ng.AppView<InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationComponentNoWhitespace0 extends _ng.AppView<InterpolationComponentNoWhitespace> {
   external ViewInterpolationComponentNoWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InterpolationTwoAdjacent.
 external List<dynamic> get styles$InterpolationTwoAdjacent;
-external _ng.ComponentFactory<_user.InterpolationTwoAdjacent> get InterpolationTwoAdjacentNgFactory;
-external _ng.AppView<_user.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewInterpolationTwoAdjacent0 extends _ng.AppView<_user.InterpolationTwoAdjacent> {
+external _ng.ComponentFactory<InterpolationTwoAdjacent> get InterpolationTwoAdjacentNgFactory;
+external _ng.AppView<InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationTwoAdjacent0 extends _ng.AppView<InterpolationTwoAdjacent> {
   external ViewInterpolationTwoAdjacent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InterpolationLongerSentence.
 external List<dynamic> get styles$InterpolationLongerSentence;
-external _ng.ComponentFactory<_user.InterpolationLongerSentence> get InterpolationLongerSentenceNgFactory;
-external _ng.AppView<_user.InterpolationLongerSentence> viewFactory_InterpolationLongerSentence0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewInterpolationLongerSentence0 extends _ng.AppView<_user.InterpolationLongerSentence> {
+external _ng.ComponentFactory<InterpolationLongerSentence> get InterpolationLongerSentenceNgFactory;
+external _ng.AppView<InterpolationLongerSentence> viewFactory_InterpolationLongerSentence0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationLongerSentence0 extends _ng.AppView<InterpolationLongerSentence> {
   external ViewInterpolationLongerSentence0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InterpolationLiterals.
 external List<dynamic> get styles$InterpolationLiterals;
-external _ng.ComponentFactory<_user.InterpolationLiterals> get InterpolationLiteralsNgFactory;
-external _ng.AppView<_user.InterpolationLiterals> viewFactory_InterpolationLiterals0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewInterpolationLiterals0 extends _ng.AppView<_user.InterpolationLiterals> {
+external _ng.ComponentFactory<InterpolationLiterals> get InterpolationLiteralsNgFactory;
+external _ng.AppView<InterpolationLiterals> viewFactory_InterpolationLiterals0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationLiterals0 extends _ng.AppView<InterpolationLiterals> {
   external ViewInterpolationLiterals0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InterpolationLocals.
 external List<dynamic> get styles$InterpolationLocals;
-external _ng.ComponentFactory<_user.InterpolationLocals> get InterpolationLocalsNgFactory;
-external _ng.AppView<_user.InterpolationLocals> viewFactory_InterpolationLocals0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewInterpolationLocals0 extends _ng.AppView<_user.InterpolationLocals> {
+external _ng.ComponentFactory<InterpolationLocals> get InterpolationLocalsNgFactory;
+external _ng.AppView<InterpolationLocals> viewFactory_InterpolationLocals0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInterpolationLocals0 extends _ng.AppView<InterpolationLocals> {
   external ViewInterpolationLocals0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

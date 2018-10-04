@@ -9,7 +9,7 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'injectables.dart' as _user;
+import 'injectables.dart';
 
 // Required for "type inference" (scoping).
 import 'dart:html' as html;
@@ -17,9 +17,9 @@ import 'package:angular/angular.dart';
 
 // For @Component class InjectableComponent.
 external List<dynamic> get styles$InjectableComponent;
-external _ng.ComponentFactory<_user.InjectableComponent> get InjectableComponentNgFactory;
-external _ng.AppView<_user.InjectableComponent> viewFactory_InjectableComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewInjectableComponent0 extends _ng.AppView<_user.InjectableComponent> {
+external _ng.ComponentFactory<InjectableComponent> get InjectableComponentNgFactory;
+external _ng.AppView<InjectableComponent> viewFactory_InjectableComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInjectableComponent0 extends _ng.AppView<InjectableComponent> {
   external ViewInjectableComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

@@ -9,23 +9,23 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'view_encapsulation.dart' as _user;
+import 'view_encapsulation.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
 // For @Component class EmulatedComponent.
 external List<dynamic> get styles$EmulatedComponent;
-external _ng.ComponentFactory<_user.EmulatedComponent> get EmulatedComponentNgFactory;
-external _ng.AppView<_user.EmulatedComponent> viewFactory_EmulatedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewEmulatedComponent0 extends _ng.AppView<_user.EmulatedComponent> {
+external _ng.ComponentFactory<EmulatedComponent> get EmulatedComponentNgFactory;
+external _ng.AppView<EmulatedComponent> viewFactory_EmulatedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewEmulatedComponent0 extends _ng.AppView<EmulatedComponent> {
   external ViewEmulatedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class NoneComponent.
 external List<dynamic> get styles$NoneComponent;
-external _ng.ComponentFactory<_user.NoneComponent> get NoneComponentNgFactory;
-external _ng.AppView<_user.NoneComponent> viewFactory_NoneComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewNoneComponent0 extends _ng.AppView<_user.NoneComponent> {
+external _ng.ComponentFactory<NoneComponent> get NoneComponentNgFactory;
+external _ng.AppView<NoneComponent> viewFactory_NoneComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewNoneComponent0 extends _ng.AppView<NoneComponent> {
   external ViewNoneComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 

@@ -9,7 +9,7 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'host.dart' as _user;
+import 'host.dart';
 
 // Required for "type inference" (scoping).
 import 'dart:async';
@@ -17,30 +17,30 @@ import 'package:angular/angular.dart';
 
 // For @Component class HostComponentNewSyntax.
 external List<dynamic> get styles$HostComponentNewSyntax;
-external _ng.ComponentFactory<_user.HostComponentNewSyntax> get HostComponentNewSyntaxNgFactory;
-external _ng.AppView<_user.HostComponentNewSyntax> viewFactory_HostComponentNewSyntax0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewHostComponentNewSyntax0 extends _ng.AppView<_user.HostComponentNewSyntax> {
+external _ng.ComponentFactory<HostComponentNewSyntax> get HostComponentNewSyntaxNgFactory;
+external _ng.AppView<HostComponentNewSyntax> viewFactory_HostComponentNewSyntax0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewHostComponentNewSyntax0 extends _ng.AppView<HostComponentNewSyntax> {
   external ViewHostComponentNewSyntax0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesHostComponentWithDirective.
 external List<dynamic> get styles$UsesHostComponentWithDirective;
-external _ng.ComponentFactory<_user.UsesHostComponentWithDirective> get UsesHostComponentWithDirectiveNgFactory;
-external _ng.AppView<_user.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirective0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewUsesHostComponentWithDirective0 extends _ng.AppView<_user.UsesHostComponentWithDirective> {
+external _ng.ComponentFactory<UsesHostComponentWithDirective> get UsesHostComponentWithDirectiveNgFactory;
+external _ng.AppView<UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirective0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesHostComponentWithDirective0 extends _ng.AppView<UsesHostComponentWithDirective> {
   external ViewUsesHostComponentWithDirective0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HostComponent.
 external List<dynamic> get styles$HostComponent;
-external _ng.ComponentFactory<_user.HostComponent> get HostComponentNgFactory;
-external _ng.AppView<_user.HostComponent> viewFactory_HostComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewHostComponent0 extends _ng.AppView<_user.HostComponent> {
+external _ng.ComponentFactory<HostComponent> get HostComponentNgFactory;
+external _ng.AppView<HostComponent> viewFactory_HostComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewHostComponent0 extends _ng.AppView<HostComponent> {
   external ViewHostComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Directive class ListensToFooEvent.
 class ListensToFooEventNgCd extends _ng.DirectiveChangeDetector {
-  external _user.ListensToFooEvent get instance;
+  external ListensToFooEvent get instance;
   external void deliverChanges();
-  external ListensToFooEventNgCd(_user.ListensToFooEvent instance);
+  external ListensToFooEventNgCd(ListensToFooEvent instance);
   external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
 }
 

@@ -9,7 +9,7 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 import 'package:angular/src/core/linker/app_view.dart' as _ng;
 
 // Required for specifically referencing user code.
-import 'dart2js_golden.dart' as _user;
+import 'dart2js_golden.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
@@ -18,72 +18,72 @@ import 'dart2js_golden.template.dart' as ng;
 
 // For @Component class RootComponent.
 external List<dynamic> get styles$RootComponent;
-external _ng.ComponentFactory<_user.RootComponent> get RootComponentNgFactory;
-external _ng.AppView<_user.RootComponent> viewFactory_RootComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewRootComponent0 extends _ng.AppView<_user.RootComponent> {
+external _ng.ComponentFactory<RootComponent> get RootComponentNgFactory;
+external _ng.AppView<RootComponent> viewFactory_RootComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewRootComponent0 extends _ng.AppView<RootComponent> {
   external ViewRootComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesDefaultChangeDetectionAndInput.
 external List<dynamic> get styles$UsesDefaultChangeDetectionAndInput;
-external _ng.ComponentFactory<_user.UsesDefaultChangeDetectionAndInput> get UsesDefaultChangeDetectionAndInputNgFactory;
-external _ng.AppView<_user.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewUsesDefaultChangeDetectionAndInput0 extends _ng.AppView<_user.UsesDefaultChangeDetectionAndInput> {
+external _ng.ComponentFactory<UsesDefaultChangeDetectionAndInput> get UsesDefaultChangeDetectionAndInputNgFactory;
+external _ng.AppView<UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesDefaultChangeDetectionAndInput0 extends _ng.AppView<UsesDefaultChangeDetectionAndInput> {
   external ViewUsesDefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class DefaultChangeDetectionAndInput.
 external List<dynamic> get styles$DefaultChangeDetectionAndInput;
-external _ng.ComponentFactory<_user.DefaultChangeDetectionAndInput> get DefaultChangeDetectionAndInputNgFactory;
-external _ng.AppView<_user.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewDefaultChangeDetectionAndInput0 extends _ng.AppView<_user.DefaultChangeDetectionAndInput> {
+external _ng.ComponentFactory<DefaultChangeDetectionAndInput> get DefaultChangeDetectionAndInputNgFactory;
+external _ng.AppView<DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewDefaultChangeDetectionAndInput0 extends _ng.AppView<DefaultChangeDetectionAndInput> {
   external ViewDefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InlinedNgIf.
 external List<dynamic> get styles$InlinedNgIf;
-external _ng.ComponentFactory<_user.InlinedNgIf> get InlinedNgIfNgFactory;
-external _ng.AppView<_user.InlinedNgIf> viewFactory_InlinedNgIf0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewInlinedNgIf0 extends _ng.AppView<_user.InlinedNgIf> {
+external _ng.ComponentFactory<InlinedNgIf> get InlinedNgIfNgFactory;
+external _ng.AppView<InlinedNgIf> viewFactory_InlinedNgIf0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInlinedNgIf0 extends _ng.AppView<InlinedNgIf> {
   external ViewInlinedNgIf0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class EmbeddedNgIf.
 external List<dynamic> get styles$EmbeddedNgIf;
-external _ng.ComponentFactory<_user.EmbeddedNgIf> get EmbeddedNgIfNgFactory;
-external _ng.AppView<_user.EmbeddedNgIf> viewFactory_EmbeddedNgIf0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewEmbeddedNgIf0 extends _ng.AppView<_user.EmbeddedNgIf> {
+external _ng.ComponentFactory<EmbeddedNgIf> get EmbeddedNgIfNgFactory;
+external _ng.AppView<EmbeddedNgIf> viewFactory_EmbeddedNgIf0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewEmbeddedNgIf0 extends _ng.AppView<EmbeddedNgIf> {
   external ViewEmbeddedNgIf0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class NullComponent.
 external List<dynamic> get styles$NullComponent;
-external _ng.ComponentFactory<_user.NullComponent> get NullComponentNgFactory;
-external _ng.AppView<_user.NullComponent> viewFactory_NullComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewNullComponent0 extends _ng.AppView<_user.NullComponent> {
+external _ng.ComponentFactory<NullComponent> get NullComponentNgFactory;
+external _ng.AppView<NullComponent> viewFactory_NullComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewNullComponent0 extends _ng.AppView<NullComponent> {
   external ViewNullComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InjectsFromArbitraryParent.
 external List<dynamic> get styles$InjectsFromArbitraryParent;
-external _ng.ComponentFactory<_user.InjectsFromArbitraryParent> get InjectsFromArbitraryParentNgFactory;
-external _ng.AppView<_user.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewInjectsFromArbitraryParent0 extends _ng.AppView<_user.InjectsFromArbitraryParent> {
+external _ng.ComponentFactory<InjectsFromArbitraryParent> get InjectsFromArbitraryParentNgFactory;
+external _ng.AppView<InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInjectsFromArbitraryParent0 extends _ng.AppView<InjectsFromArbitraryParent> {
   external ViewInjectsFromArbitraryParent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class ComponentConditionalFeatures.
 external List<dynamic> get styles$ComponentConditionalFeatures;
-external _ng.ComponentFactory<_user.ComponentConditionalFeatures> get ComponentConditionalFeaturesNgFactory;
-external _ng.AppView<_user.ComponentConditionalFeatures> viewFactory_ComponentConditionalFeatures0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewComponentConditionalFeatures0 extends _ng.AppView<_user.ComponentConditionalFeatures> {
+external _ng.ComponentFactory<ComponentConditionalFeatures> get ComponentConditionalFeaturesNgFactory;
+external _ng.AppView<ComponentConditionalFeatures> viewFactory_ComponentConditionalFeatures0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewComponentConditionalFeatures0 extends _ng.AppView<ComponentConditionalFeatures> {
   external ViewComponentConditionalFeatures0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class FeatureA.
 external List<dynamic> get styles$FeatureA;
-external _ng.ComponentFactory<_user.FeatureA> get FeatureANgFactory;
-external _ng.AppView<_user.FeatureA> viewFactory_FeatureA0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewFeatureA0 extends _ng.AppView<_user.FeatureA> {
+external _ng.ComponentFactory<FeatureA> get FeatureANgFactory;
+external _ng.AppView<FeatureA> viewFactory_FeatureA0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewFeatureA0 extends _ng.AppView<FeatureA> {
   external ViewFeatureA0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class FeatureB.
 external List<dynamic> get styles$FeatureB;
-external _ng.ComponentFactory<_user.FeatureB> get FeatureBNgFactory;
-external _ng.AppView<_user.FeatureB> viewFactory_FeatureB0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewFeatureB0 extends _ng.AppView<_user.FeatureB> {
+external _ng.ComponentFactory<FeatureB> get FeatureBNgFactory;
+external _ng.AppView<FeatureB> viewFactory_FeatureB0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewFeatureB0 extends _ng.AppView<FeatureB> {
   external ViewFeatureB0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 
