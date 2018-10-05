@@ -1267,7 +1267,7 @@
         C.JSArray_methods.addAll$1($arguments, positionalArguments);
       }
       t1.names = "";
-      if (namedArguments != null && namedArguments._length !== 0)
+      if (namedArguments != null && !namedArguments.get$isEmpty(namedArguments))
         namedArguments.forEach$1(0, new H.Primitives_functionNoSuchMethod_closure(t1, namedArgumentList, $arguments));
       return J.noSuchMethod$1$($function, new H.JSInvocationMirror(C.Symbol_call, "call" + "$" + t1.argumentCount + t1.names, 0, $arguments, namedArgumentList, 0));
     },
@@ -2534,12 +2534,14 @@
       get$length: function(_) {
         return this._length;
       },
+      get$isEmpty: function(_) {
+        return this._length === 0;
+      },
       get$keys: function(_) {
         return new H.LinkedHashMapKeyIterable(this, [H.getTypeArgumentByIndex(this, 0)]);
       },
       get$values: function(_) {
-        var t1 = H.getTypeArgumentByIndex(this, 0);
-        return H.MappedIterable_MappedIterable(new H.LinkedHashMapKeyIterable(this, [t1]), new H.JsLinkedHashMap_values_closure(this), t1, H.getTypeArgumentByIndex(this, 1));
+        return H.MappedIterable_MappedIterable(this.get$keys(this), new H.JsLinkedHashMap_values_closure(this), H.getTypeArgumentByIndex(this, 0), H.getTypeArgumentByIndex(this, 1));
       },
       $index: function(_, key) {
         var strings, cell, t1, nums;
@@ -2565,7 +2567,7 @@
         rest = this._rest;
         if (rest == null)
           return;
-        bucket = this._getTableBucket$2(rest, J.get$hashCode$(key) & 0x3ffffff);
+        bucket = this._getTableBucket$2(rest, this.internalComputeHashCode$1(key));
         index = this.internalFindBucketIndex$2(bucket, key);
         if (index < 0)
           return;
@@ -2593,7 +2595,7 @@
             rest = this._newHashTable$0();
             this._rest = rest;
           }
-          hash = J.get$hashCode$(key) & 0x3ffffff;
+          hash = this.internalComputeHashCode$1(key);
           bucket = this._getTableBucket$2(rest, hash);
           if (bucket == null)
             this._setTableEntry$3(rest, hash, [this._newLinkedCell$2(key, value)]);
@@ -2639,6 +2641,9 @@
         ++this._length;
         this._modifications = this._modifications + 1 & 67108863;
         return cell;
+      },
+      internalComputeHashCode$1: function(key) {
+        return J.get$hashCode$(key) & 0x3ffffff;
       },
       internalFindBucketIndex$2: function(bucket, key) {
         var $length, i;
@@ -4502,9 +4507,6 @@
     LinkedHashMap__makeEmpty: function() {
       return new H.JsLinkedHashMap(0, 0, [null, null]);
     },
-    LinkedHashMap__makeLiteral: function(keyValuePairs) {
-      return H.fillLiteralMap(keyValuePairs, new H.JsLinkedHashMap(0, 0, [null, null]));
-    },
     _LinkedHashSet__newHashTable: function() {
       var table = Object.create(null);
       table["<non-identifier-key>"] = table;
@@ -4660,15 +4662,8 @@
         return new P._HashMapKeyIterable(this, [H.getTypeArgumentByIndex(this, 0)]);
       },
       containsKey$1: function(_, key) {
-        var strings, nums;
-        if (typeof key === "string" && key !== "__proto__") {
-          strings = this._collection$_strings;
-          return strings == null ? false : strings[key] != null;
-        } else if (typeof key === "number" && (key & 0x3ffffff) === key) {
-          nums = this._collection$_nums;
-          return nums == null ? false : nums[key] != null;
-        } else
-          return this._containsKey$1(key);
+        var t1 = this._containsKey$1(key);
+        return t1;
       },
       _containsKey$1: function(key) {
         var rest = this._collection$_rest;
@@ -4865,6 +4860,24 @@
           this._offset = offset + 1;
           return true;
         }
+      }
+    },
+    _LinkedIdentityHashMap: {
+      "^": "JsLinkedHashMap;_length,0_strings,0_nums,0_rest,0_first,0_last,_modifications,$ti",
+      internalComputeHashCode$1: function(key) {
+        return H.objectHashCode(key) & 0x3ffffff;
+      },
+      internalFindBucketIndex$2: function(bucket, key) {
+        var $length, i, t1;
+        if (bucket == null)
+          return -1;
+        $length = bucket.length;
+        for (i = 0; i < $length; ++i) {
+          t1 = bucket[i].hashMapCellKey;
+          if (t1 == null ? key == null : t1 === key)
+            return i;
+        }
+        return -1;
       }
     },
     _LinkedHashSet: {
@@ -5069,7 +5082,8 @@
         this._collection$_map.forEach$1(0, action);
       },
       get$length: function(_) {
-        return this._collection$_map._length;
+        var t1 = this._collection$_map;
+        return t1.get$length(t1);
       },
       toString$0: function(_) {
         return P.MapBase_mapToString(this._collection$_map);
@@ -8565,7 +8579,7 @@
         t1 = this._testability$_ngZone;
         t2 = t1._onTurnStart;
         new P._BroadcastStream(t2, [H.getTypeArgumentByIndex(t2, 0)]).listen$1(new D.Testability__watchAngularEvents_closure(this));
-        t1._outerZone.run$1$1(new D.Testability__watchAngularEvents_closure0(this), null);
+        t1._outerZone.run$1$1(new D.Testability__watchAngularEvents_closure0(this), P.Null);
       },
       isStable$0: [function(_) {
         return this._isZoneStable && this._pendingCount === 0 && !this._testability$_ngZone._hasPendingMacrotasks;
@@ -8601,7 +8615,7 @@
     Testability__watchAngularEvents__closure: {
       "^": "Closure:4;$this",
       call$1: [function(_) {
-        if (J.$eq$($.Zone__current.$index(0, "isAngularZone"), true))
+        if (J.$eq$($.Zone__current.$index(0, $.$get$NgZone__zoneKey()), true))
           H.throwExpression(P.Exception_Exception("Expected to not be in Angular Zone, but it is!"));
         P.scheduleMicrotask(new D.Testability__watchAngularEvents___closure(this.$this));
       }, null, null, 4, 0, null, 0, "call"]
@@ -8642,7 +8656,11 @@
         this._innerZone = this._createInnerZone$2$handleUncaughtError(t1, this.get$_onErrorWithoutLongStackTrace());
       },
       _createInnerZone$2$handleUncaughtError: function(zone, handleUncaughtError) {
-        return zone.fork$2$specification$zoneValues(P._ZoneSpecification$(null, this.get$_createTimer(), null, null, handleUncaughtError, null, null, null, null, this.get$_run(), this.get$_runBinary(), this.get$_runUnary(), this.get$_ng_zone$_scheduleMicrotask()), P.LinkedHashMap__makeLiteral(["isAngularZone", true]));
+        var t1, t2;
+        t1 = P._ZoneSpecification$(null, this.get$_createTimer(), null, null, handleUncaughtError, null, null, null, null, this.get$_run(), this.get$_runBinary(), this.get$_runUnary(), this.get$_ng_zone$_scheduleMicrotask());
+        t2 = new P._LinkedIdentityHashMap(0, 0, [null, null]);
+        t2.$indexSet(0, $.$get$NgZone__zoneKey(), true);
+        return zone.fork$2$specification$zoneValues(t1, t2);
       },
       _ng_zone$_scheduleMicrotask$4: [function($self, $parent, zone, fn) {
         var implementation, implZone;
@@ -8717,7 +8735,7 @@
               --this._nesting;
               if (!this._hasPendingMicrotasks)
                 try {
-                  this._outerZone.run$1$1(new Y.NgZone__checkStable_closure(this), null);
+                  this._outerZone.run$1$1(new Y.NgZone__checkStable_closure(this), P.Null);
                 } finally {
                   this._isStable = true;
                 }
@@ -10107,7 +10125,9 @@
   }, "CssStyleDeclaration__propertyCache", "_viewContainerAnchor", "$get$_viewContainerAnchor", function() {
     var t1 = W.document();
     return t1.createComment("");
-  }, "_viewContainerAnchor"]);
+  }, "_viewContainerAnchor", "NgZone__zoneKey", "$get$NgZone__zoneKey", function() {
+    return new P.Object();
+  }, "NgZone__zoneKey"]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = ["_", "self", "parent", "zone", "arg", "arg1", "arg2", null, "error", "stackTrace", "f", "e", "result", "callback", "index", "closure", "numberOfArguments", "arg3", "arg4", "each", "specification", "zoneValues", "value", "s", true, "elem", "findInAncestors", "didWork_", "element", "t", "arguments"];
