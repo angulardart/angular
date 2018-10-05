@@ -3,105 +3,54 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-// TODO: add/fix links to:
-// - docs explaining zones and the use of zones in Angular and
-// - change-detection link to runOutsideAngular/run (throughout this file!)
-
-/// An injectable service for executing work inside or outside of the
-/// Angular zone.
+/// Handles and observes the side-effects of executing callbacks in AngularDart.
 ///
-/// The most common use of this service is to optimize performance when starting
-/// a work consisting of one or more asynchronous tasks that don't require UI
-/// updates or error handling to be handled by Angular. Such tasks can be
-/// kicked off via [#runOutsideAngular] and if needed, these tasks
-/// can reenter the Angular zone via [#run].
-///
-/// ## Example
-///
-/// <?code-excerpt "core/ngzone/lib/app_component.dart"?>
-/// ```dart
-/// import 'dart:async';
-///
-/// import 'package:angular/angular.dart';
-///
-/// @Component(
-///     selector: 'my-app',
-///     template: '''
-///       <h1>Demo: NgZone</h1>
-///       <p>
-///         Progress: {{progress}}%<br>
-///         <span *ngIf="progress >= 100">Done processing {{label}} of Angular zone!</span>
-///         &nbsp;
-///       </p>
-///       <button (click)="processWithinAngularZone()">Process within Angular zone</button>
-///       <button (click)="processOutsideOfAngularZone()">Process outside of Angular zone</button>
-///     ''')
-/// class AppComponent {
-///   int progress = 0;
-///   String label;
-///   final NgZone _ngZone;
-///
-///   AppComponent(this._ngZone);
-///
-///   // Loop inside the Angular zone
-///   // so the UI DOES refresh after each setTimeout cycle
-///   void processWithinAngularZone() {
-///     label = 'inside';
-///     progress = 0;
-///     _increaseProgress(() => print('Inside Done!'));
-///   }
-///
-///   // Loop outside of the Angular zone
-///   // so the UI DOES NOT refresh after each setTimeout cycle
-///   void processOutsideOfAngularZone() {
-///     label = 'outside';
-///     progress = 0;
-///     _ngZone.runOutsideAngular(() {
-///       _increaseProgress(() {
-///         // reenter the Angular zone and display done
-///         _ngZone.run(() => print('Outside Done!'));
-///       });
-///     });
-///   }
-///
-///   void _increaseProgress(void doneCallback()) {
-///     progress += 1;
-///     print('Current progress: $progress%');
-///     if (progress < 100) {
-///       new Future<void>.delayed(const Duration(milliseconds: 10),
-///           () => _increaseProgress(doneCallback));
-///     } else {
-///       doneCallback();
-///     }
-///   }
-/// }
-/// ```
-
+/// _Most_ applications will not need to access or use this class. It _may_ be
+/// used in order to get hooks into the application lifecycle or for hiding
+/// asynchronous actions from AngularDart that occur frequently (such as mouse
+/// movement, or a polling timer) and have a costly impact on change detection.
 class NgZone {
+  /// Private object used to specify whether [NgZone] exists in a [Zone].
+  static final _zoneKey = Object();
+
+  /// Returns whether an instance of [NgZone] is currently executing.
+  ///
+  /// If `true`, the side-effects of executing callbacks are being observed,
+  /// though not necessarily by the current application's [NgZone] in the case
+  /// of multiple applications running at the same time.
+  ///
+  /// It is highly preferred to use [isInnerZone] and [isOuterZone] instead.
+  ///
+  /// See the [Zone] documentation for details:
+  /// https://www.dartlang.org/articles/libraries/zones
   static bool isInAngularZone() {
-    return Zone.current['isAngularZone'] == true;
+    return Zone.current[_zoneKey] == true;
   }
 
+  /// In development mode, throws an error if [isInAngularZone] returns `false`.
+  ///
+  /// It is highly preferred to use `assert(ngZone.isInnerZone)` instead.
   static void assertInAngularZone() {
     if (!isInAngularZone()) {
       throw Exception("Expected to be in Angular Zone, but it is not!");
     }
   }
 
+  /// In development mode, throws an error if [isInAngularZone] returns `true`.
+  ///
+  /// It is highly preferred to use `assert(ngZone.isOuterZone)` instead.
+  ///
+  /// **NOTE**: This API is completely ignored in a production application.
   static void assertNotInAngularZone() {
     if (isInAngularZone()) {
       throw Exception("Expected to not be in Angular Zone, but it is!");
     }
   }
 
-  final StreamController<void> _onTurnStart =
-      StreamController.broadcast(sync: true);
-  final StreamController<void> _onMicrotaskEmpty =
-      StreamController.broadcast(sync: true);
-  final StreamController<void> _onTurnDone =
-      StreamController.broadcast(sync: true);
-  final StreamController<NgZoneError> _onError =
-      StreamController.broadcast(sync: true);
+  final _onTurnStart = StreamController<void>.broadcast(sync: true);
+  final _onMicrotaskEmpty = StreamController<void>.broadcast(sync: true);
+  final _onTurnDone = StreamController<void>.broadcast(sync: true);
+  final _onError = StreamController<NgZoneError>.broadcast(sync: true);
 
   Zone _outerZone;
   Zone _innerZone;
@@ -129,26 +78,30 @@ class NgZone {
     }
   }
 
-  /// Whether we are currently executing in the inner zone. This can be used by
-  /// clients to optimize and call [runOutside] when needed.
+  /// Whether we are currently executing within this AngularDart zone.
+  ///
+  /// If `true`, the side-effects of executing callbacks are being observed.
   bool get inInnerZone => Zone.current == _innerZone;
 
-  /// Whether we are currently executing in the outer zone. This can be used by
-  /// clients to optimize and call [runInside] when needed.
+  /// Whether we are currently executing outside of the AngularDart zone.
+  ///
+  /// If `true`, the side-effects of executing callbacks are not being observed.
   bool get inOuterZone => Zone.current == _outerZone;
 
   Zone _createInnerZone(Zone zone,
       {void handleUncaughtError(
           Zone _, ZoneDelegate __, Zone ___, Object ____, StackTrace s)}) {
     return zone.fork(
-        specification: ZoneSpecification(
-            scheduleMicrotask: _scheduleMicrotask,
-            run: _run,
-            runUnary: _runUnary,
-            runBinary: _runBinary,
-            handleUncaughtError: handleUncaughtError,
-            createTimer: _createTimer),
-        zoneValues: {'isAngularZone': true});
+      specification: ZoneSpecification(
+        scheduleMicrotask: _scheduleMicrotask,
+        run: _run,
+        runUnary: _runUnary,
+        runBinary: _runBinary,
+        handleUncaughtError: handleUncaughtError,
+        createTimer: _createTimer,
+      ),
+      zoneValues: new Map.identity()..[_zoneKey] = true,
+    );
   }
 
   void _scheduleMicrotask(
@@ -306,89 +259,114 @@ class NgZone {
   }
 
   /// Whether there are any outstanding microtasks.
+  ///
+  /// If `true`, one or more `scheduleMicrotask(...)` calls (or similar) that
+  /// were started while [isInnerZone] is `true` have yet to be completed.
+  ///
+  /// Most users should not need or use this value.
   bool get hasPendingMicrotasks => _hasPendingMicrotasks;
 
   /// Whether there are any outstanding microtasks.
+  ///
+  /// If `true`, one or more `Timer.run(...)` calls (or similar) that
+  /// were started while [isInnerZone] is `true` have yet to be completed.
+  ///
+  /// Most users should not need or use this value.
   bool get hasPendingMacrotasks => _hasPendingMacrotasks;
 
-  /// Executes the `fn` function synchronously within the Angular zone and
-  /// returns value returned by the function.
+  /// Executes and returns [callback] function synchronously within this zone.
   ///
-  /// Running functions via `run` allows you to reenter Angular zone from a task
-  /// that was executed outside of the Angular zone (typically started via
-  /// [#runOutsideAngular]).
+  /// Typically, this API should _only_ be used when [isOuterZone] is `true`,
+  /// e.g. a frequent event such as a polling timer or mouse movement is being
+  /// observed via [runOutsideAngular] for performance reasons.
   ///
-  /// Any future tasks or microtasks scheduled from within this function will
-  /// continue executing from within the Angular zone.
+  /// Future tasks or microtasks scheduled from within the [callback] will
+  /// continue executing from within this zone.
   ///
-  /// If a synchronous error happens it will be rethrown and not reported via
-  /// `onError`.
-  R run<R>(R fn()) {
-    return _innerZone.run(fn);
+  /// **NOTE**: If a _synchronous_ error happens it will be rethrown, and not
+  /// reported via the [onError] stream. To opt-in to that behavior, use
+  /// [runGuarded].
+  R run<R>(R Function() callback) {
+    return _innerZone.run(callback);
   }
 
-  /// Same as #run, except that synchronous errors are caught and forwarded
-  /// via `onError` and not rethrown.
-  void runGuarded(void fn()) {
-    return _innerZone.runGuarded(fn);
+  /// Executes [callback] function synchronously within this zone.
+  ///
+  /// This API is identical to [run], except that _synchronous_ errors that are
+  /// thrown will _also_ be reported via the [onError] stream (and eventually
+  /// the application exception handler).
+  void runGuarded(void Function() callback) {
+    return _innerZone.runGuarded(callback);
   }
 
-  /// Executes the `fn` function synchronously in Angular's parent zone and
-  /// returns value returned by the function.
+  /// Executes and returns [callback] function synchronously outside this zone.
   ///
-  /// Running functions via `runOutsideAngular` allows you to escape Angular's
-  /// zone and do work that doesn't trigger Angular change-detection or is
-  /// subject to Angular's error handling.
-  ///
-  /// Any future tasks or microtasks scheduled from within this function will
-  /// continue executing from outside of the Angular zone.
-  ///
-  /// Use [#run] to reenter the Angular zone and do work that updates the
-  /// application model.
-  dynamic runOutsideAngular(dynamic fn()) {
-    return _outerZone.run(fn);
+  /// Typically, this API should be used when a high-frequency event such as
+  /// a polling timer or mouse movement is being observed within [callback],
+  /// and for performance reasons you want to only react _sometimes_:
+  /// ```
+  /// // Just an example, not ideal!
+  /// void example(NgZone zone) {
+  ///   zone.runOutsideAngular(() {
+  ///     Timer(Duration.zero, () {
+  ///       if (someOtherValue) {
+  ///         zone.run(() => computeSomething());
+  ///       }
+  ///     });
+  ///   });
+  /// }
+  /// ```
+  R runOutsideAngular<R>(R Function() callback) {
+    return _outerZone.run(callback);
   }
 
   /// Whether [onTurnStart] has been triggered and [onTurnDone] has not.
   bool get isRunning => _isRunning;
 
-  /// Notify that an error has been delivered.
+  /// Notifies that an error has been caught.
+  ///
+  /// This is the callback hook used by exception handling behind the scenes.
   Stream<NgZoneError> get onError => _onError.stream;
 
-  /// Notifies when there is no more microtasks enqueue in the current VM Turn.
+  /// Notifies when there are no more microtasks enqueued within this zone.
   ///
-  /// This is a hint for Angular to do change detection, which may enqueue more
-  /// microtasks.
-  /// For this reason this event can fire multiple times per VM Turn.
+  /// This is normally used as a hint for AngularDart to perform change
+  /// detection, which in turn may enqueue additional microtasks; this event
+  /// may fire multiple times before [onTurnDone] occurs.
   Stream<void> get onMicrotaskEmpty => _onMicrotaskEmpty.stream;
 
-  /// A synchronous stream that fires when the VM turn has started, which means
-  /// that the inner (managed) zone has not executed any microtasks.
+  /// Notifies when there are no more microtasks enqueued within this zone.
   ///
-  /// Note:
-  /// - Causing any turn action, e.g., spawning a Future, within this zone will
-  ///   cause an infinite loop.
-  Stream<void> get onTurnStart => _onTurnStart.stream;
-
-  /// A synchronous stream that fires when the VM turn is finished, which means
-  /// when the inner (managed) zone has completed it's private microtask queue.
-  ///
-  /// Note:
-  /// - This won't wait for microtasks schedules in outer zones.
-  /// - Causing any turn action, e.g., spawning a Future, within this zone will
-  ///   cause an infinite loop.
-  Stream<void> get onTurnDone => _onTurnDone.stream;
-
-  /// A synchronous stream that fires when the last turn in an event completes.
-  /// This indicates VM event loop end.
-  ///
-  /// Note:
-  /// - This won't wait for microtasks schedules in outer zones.
-  /// - Causing any turn action, e.g., spawning a Future, within this zone will
-  ///   cause an infinite loop.
+  /// **NOTE**: This is currently an alias for [onMicrotaskEmpty].
   Stream<void> get onEventDone => _onMicrotaskEmpty.stream;
 
-  /// App is disposed stop sending events.
+  /// Notifies when an initial callback is executed within this zone.
+  ///
+  /// At this point in the execution AngularDart will start recording pending
+  /// microtasks and some macrotasks (such as timers), and fire any number of
+  /// [onMicrotaskEmpty] events until [onTurnDone].
+  ///
+  /// **WARNING**: Causing an asynchronous task while listening to this stream
+  /// will cause an infinite loop, as the zone constantly starts and ends
+  /// indefinitely.
+  Stream<void> get onTurnStart => _onTurnStart.stream;
+
+  /// Notifies when a final callback is executed within this zone.
+  ///
+  /// At this point in the execution, future tasks are being executed within the
+  /// parent (outer) zone, until another event occurs within the zone, which in
+  /// turn will start [onTurnStart] again.
+  ///
+  /// **WARNING**: Causing an asynchronous task while listening to this stream
+  /// will cause an infinite loop, as the zone constantly starts and ends
+  /// indefinitely.
+  Stream<void> get onTurnDone => _onTurnDone.stream;
+
+  /// Disables additional collection of asynchronous tasks.
+  ///
+  /// This effectively permanently shuts down the events of this instance. Most
+  /// applications will not need to invoke this, it is used internally in cases
+  /// such as tests.
   void dispose() {
     _disposed = true;
   }
@@ -427,7 +405,11 @@ class NgZoneError {
   /// Error object thrown.
   final error;
 
-  /// Either long or short chain of stack traces.
+  /// Either a single or multiple stack traces.
+  ///
+  /// For legacy reasons, this is not typed `List<StackTrace>` or `StackTrace`
+  /// at this time. It may be possible to change the typing at a later point.
   final List stackTrace;
+
   NgZoneError(this.error, this.stackTrace);
 }
