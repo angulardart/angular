@@ -11,7 +11,7 @@ dependencies:
   angular_forms:
 
 dev_dependencies:
-  build_runner: ^0.10.0
+  build_runner: ^1.0.0
   build_test: ^0.10.2+5
   build_web_compilers: ^0.4.0+4
   sass_builder: ^2.0.0
