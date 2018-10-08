@@ -196,12 +196,10 @@ class CompileTypeMetadataVisitor
   }) {
     final typeParameters = <o.TypeParameter>[];
     for (final typeParameter in element.typeParameters) {
-      if (typeParameter.bound != null) {
-        // TODO(b/111800117): generics with bounds aren't yet supported.
-        typeParameters.clear();
-        break;
-      }
-      typeParameters.add(o.TypeParameter(typeParameter.name));
+      typeParameters.add(o.TypeParameter(
+        typeParameter.name,
+        bound: fromDartType(typeParameter.bound, resolveBounds: false),
+      ));
     }
     return CompileTypeMetadata(
       moduleUrl: moduleUrl(element),

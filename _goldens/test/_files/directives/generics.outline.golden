@@ -73,8 +73,8 @@ class ViewUsesMappingComp20 extends _ng.AppView<UsesMappingComp2> {
 // For @Component class BoundComp.
 external List<dynamic> get styles$BoundComp;
 external _ng.ComponentFactory<BoundComp> get BoundCompNgFactory;
-external _ng.AppView<BoundComp> viewFactory_BoundComp0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewBoundComp0 extends _ng.AppView<BoundComp> {
+external _ng.AppView<BoundComp<T>> viewFactory_BoundComp0<T extends num>(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewBoundComp0<T extends num> extends _ng.AppView<BoundComp<T>> {
   external ViewBoundComp0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesBoundCompWithBounds.
@@ -94,8 +94,8 @@ class ViewUsesBoundComp0 extends _ng.AppView<UsesBoundComp> {
 // For @Component class SelfBoundComp.
 external List<dynamic> get styles$SelfBoundComp;
 external _ng.ComponentFactory<SelfBoundComp> get SelfBoundCompNgFactory;
-external _ng.AppView<SelfBoundComp> viewFactory_SelfBoundComp0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewSelfBoundComp0 extends _ng.AppView<SelfBoundComp> {
+external _ng.AppView<SelfBoundComp<A, B>> viewFactory_SelfBoundComp0<A, B extends A>(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewSelfBoundComp0<A, B extends A> extends _ng.AppView<SelfBoundComp<A, B>> {
   external ViewSelfBoundComp0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesSelfBoundComp.
@@ -108,8 +108,8 @@ class ViewUsesSelfBoundComp0 extends _ng.AppView<UsesSelfBoundComp> {
 // For @Component class RecursiveComp.
 external List<dynamic> get styles$RecursiveComp;
 external _ng.ComponentFactory<RecursiveComp> get RecursiveCompNgFactory;
-external _ng.AppView<RecursiveComp> viewFactory_RecursiveComp0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewRecursiveComp0 extends _ng.AppView<RecursiveComp> {
+external _ng.AppView<RecursiveComp<T>> viewFactory_RecursiveComp0<T extends Comparable<T>>(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewRecursiveComp0<T extends Comparable<T>> extends _ng.AppView<RecursiveComp<T>> {
   external ViewRecursiveComp0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesRecursiveComp.

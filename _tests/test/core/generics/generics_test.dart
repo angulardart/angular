@@ -5,6 +5,7 @@ import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
+import 'bound.dart';
 import 'generic_component.dart';
 import 'generics_test.template.dart' as ng;
 
@@ -62,6 +63,14 @@ void main() {
       expect(testFixture.assertOnlyInstance.child,
           const TypeMatcher<GenericComponent<String>>());
     });
+
+    test('should instantiate to bounds', () async {
+      final testBed =
+          NgTestBed.forComponent(ng.TestBoundedGenericComponentNgFactory);
+      final testFixture = await testBed.create();
+      expect(testFixture.assertOnlyInstance.child,
+          const TypeMatcher<BoundedGenericComponent<Bound>>());
+    });
   });
 
   group('directives', () {
@@ -78,6 +87,16 @@ void main() {
       final testFixture = await testBed.create();
       expect(testFixture.assertOnlyInstance.directive,
           const TypeMatcher<GenericDirectiveWithChangeDetector<String>>());
+    });
+
+    test('should instantiate to bounds', () async {
+      final testBed = NgTestBed.forComponent(
+          ng.TestBoundedGenericDirectiveWithChangeDetectorNgFactory);
+      final testFixture = await testBed.create();
+      expect(
+        testFixture.assertOnlyInstance.directive,
+        const TypeMatcher<BoundedGenericDirectiveWithChangeDetector<Bound>>(),
+      );
     });
   });
 }
@@ -256,6 +275,33 @@ class TestGenericDirectiveWithChangeDetector {
   void handle(String output) {}
 }
 
+@Directive(selector: '[generic]')
+class BoundedGenericDirectiveWithChangeDetector<T extends Bound> extends IO<T> {
+  T _input;
+
+  @override
+  set input(T value) {
+    _input = value;
+    super.input = value;
+  }
+
+  @HostBinding('attr.a')
+  T get a => _input;
+}
+
+@Component(
+  selector: 'test',
+  template: '<div generic [input]="value" (output)="handle"></div>',
+  directives: [BoundedGenericDirectiveWithChangeDetector],
+)
+class TestBoundedGenericDirectiveWithChangeDetector {
+  @ViewChild(BoundedGenericDirectiveWithChangeDetector)
+  BoundedGenericDirectiveWithChangeDetector directive;
+  var value = Bound();
+
+  void handle(Bound output) {}
+}
+
 @Component(
   selector: 'test',
   template: '<generic @deferred [input]="value" (output)="handle"></generic>',
@@ -268,4 +314,23 @@ class TestDeferredGenericComponent {
   var value = 'a';
 
   void handle(String output) {}
+}
+
+@Component(
+  selector: 'generic',
+  template: '',
+)
+class BoundedGenericComponent<T extends Bound> extends IO<T> {}
+
+@Component(
+  selector: 'test',
+  template: '<generic [input]="value" (output)="handle"></generic>',
+  directives: [BoundedGenericComponent],
+)
+class TestBoundedGenericComponent {
+  @ViewChild(BoundedGenericComponent)
+  BoundedGenericComponent child;
+  var value = Bound();
+
+  void handle(Bound output) {}
 }
