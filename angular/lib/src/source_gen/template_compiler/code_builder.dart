@@ -12,7 +12,6 @@ const _ignoredProblems = <String>[
   'duplicate_import',
   'non_constant_identifier_names',
   'library_prefixes',
-  'UNUSED_IMPORT',
   'UNUSED_SHOWN_NAME',
 ];
 
