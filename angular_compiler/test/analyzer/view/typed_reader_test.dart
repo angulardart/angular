@@ -293,24 +293,6 @@ void main() {
       );
     });
 
-    test('if a directive with bounded type parameters is typed', () async {
-      await compilesExpecting(
-        '''
-        @Component()
-        class GenericComponent<T extends num> {}
-        const typed = Typed<GenericComponent<int>>();
-
-        @typed
-        class Example {}
-        ''',
-        parseTyped,
-        errors: [
-          contains("Generic type arguments aren't supported for components and "
-              'directives with bounded type parameters.')
-        ],
-      );
-    });
-
     test('if "Typed" isn\'t applied to a directive', () async {
       await compilesExpecting(
         '''

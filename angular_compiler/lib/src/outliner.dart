@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import 'analyzer.dart';
+import 'outliner/collect_type_parameters.dart';
 
 const _htmlImport = "import 'dart:html' as _html;";
 const _angularImport = "import 'package:angular/angular.dart' as _ng;";
@@ -20,10 +21,8 @@ const _directiveChangeImport =
 const _analyzerIgnores =
     '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import';
 
-String _typeParametersOf(ClassElement element) {
-  // TODO(b/111800117): generics with bounds aren't yet supported.
-  if (element.typeParameters.isEmpty ||
-      element.typeParameters.any((t) => t.bound != null)) {
+String _typeArgumentsFor(ClassElement element) {
+  if (element.typeParameters.isEmpty) {
     return '';
   }
   final buffer = StringBuffer('<')
@@ -144,14 +143,14 @@ class TemplateOutliner implements Builder {
       }
     }
     output.writeln();
+    final directiveTypeParameters = await collectTypeParameters(
+        components.followedBy(directives), buildStep);
     if (components.isNotEmpty) {
       for (final component in components) {
         final componentName = component.name;
-        // Note that until type parameter bounds are supported, there's no
-        // difference between a type parameter and its use as a type argument,
-        // so we reuse the type parameters for both.
-        final typeParameters = _typeParametersOf(component);
-        final componentType = '$componentName$typeParameters';
+        final typeArguments = _typeArgumentsFor(component);
+        final typeParameters = directiveTypeParameters[component.name];
+        final componentType = '$componentName$typeArguments';
         final baseType = '_ng.AppView<$componentType>';
         final viewArgs = '_ng.AppView<dynamic> parentView, int parentIndex';
         final viewName = 'View${componentName}0';
@@ -170,11 +169,9 @@ class $viewName$typeParameters extends $baseType {
       for (final directive in directives) {
         final directiveName = directive.name;
         final changeDetectorName = '${directiveName}NgCd';
-        // Note that until type parameter bounds are supported, there's no
-        // difference between a type parameter and its use as a type argument,
-        // so we reuse the type parameters for both.
-        final typeParameters = _typeParametersOf(directive);
-        final directiveType = '$directiveName$typeParameters';
+        final typeArguments = _typeArgumentsFor(directive);
+        final typeParameters = directiveTypeParameters[directive.name];
+        final directiveType = '$directiveName$typeArguments';
         output.write('''
 // For @Directive class $directiveName.
 class $changeDetectorName$typeParameters extends _ng.DirectiveChangeDetector {

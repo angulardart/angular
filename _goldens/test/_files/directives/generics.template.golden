@@ -587,7 +587,7 @@ ComponentFactory<import1.UsesMappingComp2> get UsesMappingComp2NgFactory {
 
 final List<dynamic> styles$BoundComp = const [];
 
-class ViewBoundComp0 extends AppView<import1.BoundComp> {
+class ViewBoundComp0<T extends num> extends AppView<import1.BoundComp<T>> {
   static RenderComponentType _renderType;
   ViewBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
@@ -595,25 +595,25 @@ class ViewBoundComp0 extends AppView<import1.BoundComp> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import1.BoundComp> build() {
+  ComponentRef<import1.BoundComp<T>> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 }
 
-AppView<import1.BoundComp> viewFactory_BoundComp0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.BoundComp<T>> viewFactory_BoundComp0<T extends num>(AppView<dynamic> parentView, int parentIndex) {
   return ViewBoundComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$BoundCompHost = const [];
 
-class _ViewBoundCompHost0 extends AppView<import1.BoundComp> {
-  ViewBoundComp0 _compView_0;
-  import1.BoundComp _BoundComp_0_5;
+class _ViewBoundCompHost0<T extends num> extends AppView<import1.BoundComp<T>> {
+  ViewBoundComp0<T> _compView_0;
+  import1.BoundComp<T> _BoundComp_0_5;
   _ViewBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import1.BoundComp> build() {
+  ComponentRef<import1.BoundComp<T>> build() {
     _compView_0 = ViewBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _BoundComp_0_5 = import1.BoundComp();
@@ -633,7 +633,7 @@ class _ViewBoundCompHost0 extends AppView<import1.BoundComp> {
   }
 }
 
-AppView<import1.BoundComp> viewFactory_BoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.BoundComp<T>> viewFactory_BoundCompHost0<T extends num>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewBoundCompHost0(parentView, parentIndex);
 }
 
@@ -808,7 +808,7 @@ ComponentFactory<import1.UsesBoundComp> get UsesBoundCompNgFactory {
 
 final List<dynamic> styles$SelfBoundComp = const [];
 
-class ViewSelfBoundComp0 extends AppView<import1.SelfBoundComp> {
+class ViewSelfBoundComp0<A, B extends A> extends AppView<import1.SelfBoundComp<A, B>> {
   static RenderComponentType _renderType;
   ViewSelfBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
@@ -816,25 +816,25 @@ class ViewSelfBoundComp0 extends AppView<import1.SelfBoundComp> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import1.SelfBoundComp> build() {
+  ComponentRef<import1.SelfBoundComp<A, B>> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 }
 
-AppView<import1.SelfBoundComp> viewFactory_SelfBoundComp0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundComp0<A, B extends A>(AppView<dynamic> parentView, int parentIndex) {
   return ViewSelfBoundComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$SelfBoundCompHost = const [];
 
-class _ViewSelfBoundCompHost0 extends AppView<import1.SelfBoundComp> {
-  ViewSelfBoundComp0 _compView_0;
-  import1.SelfBoundComp _SelfBoundComp_0_5;
+class _ViewSelfBoundCompHost0<A, B extends A> extends AppView<import1.SelfBoundComp<A, B>> {
+  ViewSelfBoundComp0<A, B> _compView_0;
+  import1.SelfBoundComp<A, B> _SelfBoundComp_0_5;
   _ViewSelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import1.SelfBoundComp> build() {
+  ComponentRef<import1.SelfBoundComp<A, B>> build() {
     _compView_0 = ViewSelfBoundComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _SelfBoundComp_0_5 = import1.SelfBoundComp();
@@ -854,7 +854,7 @@ class _ViewSelfBoundCompHost0 extends AppView<import1.SelfBoundComp> {
   }
 }
 
-AppView<import1.SelfBoundComp> viewFactory_SelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundCompHost0<A, B extends A>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewSelfBoundCompHost0(parentView, parentIndex);
 }
 
@@ -953,7 +953,7 @@ ComponentFactory<import1.UsesSelfBoundComp> get UsesSelfBoundCompNgFactory {
 
 final List<dynamic> styles$RecursiveComp = const [];
 
-class ViewRecursiveComp0 extends AppView<import1.RecursiveComp> {
+class ViewRecursiveComp0<T extends Comparable<T>> extends AppView<import1.RecursiveComp<T>> {
   static RenderComponentType _renderType;
   ViewRecursiveComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');
@@ -961,25 +961,25 @@ class ViewRecursiveComp0 extends AppView<import1.RecursiveComp> {
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import1.RecursiveComp> build() {
+  ComponentRef<import1.RecursiveComp<T>> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 }
 
-AppView<import1.RecursiveComp> viewFactory_RecursiveComp0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.RecursiveComp<T>> viewFactory_RecursiveComp0<T extends Comparable<T>>(AppView<dynamic> parentView, int parentIndex) {
   return ViewRecursiveComp0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$RecursiveCompHost = const [];
 
-class _ViewRecursiveCompHost0 extends AppView<import1.RecursiveComp> {
-  ViewRecursiveComp0 _compView_0;
-  import1.RecursiveComp _RecursiveComp_0_5;
+class _ViewRecursiveCompHost0<T extends Comparable<T>> extends AppView<import1.RecursiveComp<T>> {
+  ViewRecursiveComp0<T> _compView_0;
+  import1.RecursiveComp<T> _RecursiveComp_0_5;
   _ViewRecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import1.RecursiveComp> build() {
+  ComponentRef<import1.RecursiveComp<T>> build() {
     _compView_0 = ViewRecursiveComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _RecursiveComp_0_5 = import1.RecursiveComp();
@@ -999,7 +999,7 @@ class _ViewRecursiveCompHost0 extends AppView<import1.RecursiveComp> {
   }
 }
 
-AppView<import1.RecursiveComp> viewFactory_RecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) {
+AppView<import1.RecursiveComp<T>> viewFactory_RecursiveCompHost0<T extends Comparable<T>>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewRecursiveCompHost0(parentView, parentIndex);
 }
 
