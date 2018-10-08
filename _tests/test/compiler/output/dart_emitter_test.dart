@@ -26,9 +26,8 @@ void main() {
       emitter = DartEmitter();
       someVar = o.variable('someVar');
     });
-    String emitStmt(o.Statement stmt, [List<String> exportedVars]) {
-      exportedVars ??= [];
-      return emitter.emitStatements(someModuleUrl, [stmt], exportedVars, {});
+    String emitStmt(o.Statement stmt) {
+      return emitter.emitStatements(someModuleUrl, [stmt], {});
     }
 
     test('should declare variables', () {
@@ -50,8 +49,8 @@ void main() {
                   o.BuiltinType(o.BuiltinTypeName.Int, [o.TypeModifier.Const])))
               .toDeclStmt(null, [o.StmtModifier.Final])),
           'final int someVar = 1;');
-      expect(emitStmt(someVar.set(o.literal(1)).toDeclStmt(), ['someVar']),
-          'var someVar = 1;');
+      expect(
+          emitStmt(someVar.set(o.literal(1)).toDeclStmt()), 'var someVar = 1;');
       expect(emitStmt(someVar.set(o.literal(1)).toDeclStmt(o.INT_TYPE)),
           'int someVar = 1;');
     });
