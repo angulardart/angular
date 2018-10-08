@@ -114,7 +114,10 @@ class BuildError extends Error {
     // https://github.com/dart-lang/angular/issues/902#issuecomment-366330965
     final source = element.source;
     if (source == null || source.contents.data.isEmpty) {
-      logWarning('Could not find source $element: the next error may be terse');
+      final warning = source == null
+          ? 'No source text available for $element'
+          : 'No source text available for $element (${source.uri})';
+      logWarning('$warning: the next error may be terse');
       throw BuildError(message, trace);
     }
     final sourceUrl = source.uri;

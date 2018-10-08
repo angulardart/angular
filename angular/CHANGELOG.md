@@ -204,6 +204,10 @@
     messages with meanings that are formatted differently will now properly be
     treated as the same message.
 
+*  [#1633][]: Using a function type or any non-class `Type` inside of the
+   `@GenerateInjector([...])` annotation would cause a non-ideal error to be
+   produced. It now includes more information where available.
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#930]: https://github.com/dart-lang/angular/issues/930
@@ -217,6 +221,7 @@
 [#1591]: https://github.com/dart-lang/angular/issues/1591
 [#1598]: https://github.com/dart-lang/angular/issues/1598
 [#1625]: https://github.com/dart-lang/angular/issues/1625
+[#1633]: https://github.com/dart-lang/angular/issues/1633
 
 ### Other improvements
 

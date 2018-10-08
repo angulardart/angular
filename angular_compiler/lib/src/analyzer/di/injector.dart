@@ -104,6 +104,9 @@ class InjectorReader {
         _throwParseError(e.constant);
       } on NullFactoryException catch (e) {
         _throwFactoryProvider(e.constant);
+      } on BuildError {
+        logWarning('An error occurred parsing providers on $doNotScope');
+        rethrow;
       }
     }
     return _providers;
