@@ -19,7 +19,7 @@ const _directiveChangeImport =
     "import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;";
 
 const _analyzerIgnores =
-    '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import';
+    '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit';
 
 String _typeArgumentsFor(ClassElement element) {
   if (element.typeParameters.isEmpty) {
