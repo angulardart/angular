@@ -89,37 +89,31 @@ class OfflineCompiler {
       throw StateError('No components nor injectorModules given');
     }
     var statements = <o.Statement>[];
-    var exportedVars = <String>[];
     for (var componentWithDirs in artifacts.components) {
       CompileDirectiveMetadata compMeta = componentWithDirs.component;
       _assertComponent(compMeta);
 
       // Compile Component View and Embedded templates.
-      var compViewFactoryVar = _compileComponent(
+      _compileComponent(
           compMeta,
           componentWithDirs.directives,
           componentWithDirs.directiveTypes,
           componentWithDirs.pipes,
           statements,
           _deferredModules);
-      exportedVars.add(compViewFactoryVar);
 
       String hostViewFactoryVar = _compileComponentHost(compMeta, statements);
 
-      var compFactoryVar =
-          _registerComponentFactory(statements, compMeta, hostViewFactoryVar);
-      exportedVars.add(compFactoryVar);
+      _registerComponentFactory(statements, compMeta, hostViewFactoryVar);
     }
 
     for (CompileDirectiveMetadata directive in artifacts.directives) {
       if (!directive.requiresDirectiveChangeDetector) continue;
-      var changeDetectorClassName = _compileDirective(directive, statements);
-      exportedVars.add(changeDetectorClassName);
+      _compileDirective(directive, statements);
     }
 
     String moduleUrl = _moduleUrlFor(artifacts);
-    return _createSourceModule(
-        moduleUrl, statements, exportedVars, _deferredModules);
+    return _createSourceModule(moduleUrl, statements, _deferredModules);
   }
 
   List<SourceModule> compileStylesheet(String stylesheetUrl, String cssText) {
@@ -129,9 +123,9 @@ class OfflineCompiler {
         _styleCompiler.compileStylesheet(stylesheetUrl, cssText, true);
     return [
       _createSourceModule(stylesModuleUrl(stylesheetUrl, false),
-          plainStyles.statements, [plainStyles.stylesVar], _deferredModules),
+          plainStyles.statements, _deferredModules),
       _createSourceModule(stylesModuleUrl(stylesheetUrl, true),
-          shimStyles.statements, [shimStyles.stylesVar], _deferredModules)
+          shimStyles.statements, _deferredModules)
     ];
   }
 
@@ -179,7 +173,7 @@ class OfflineCompiler {
   // ComponentFactory<Foo> FooNgFactory get _FooNgFactory;
   //
   // This is referenced in `initReflector/METADATA` and by user-code.
-  String _registerComponentFactory(List<o.Statement> statements,
+  void _registerComponentFactory(List<o.Statement> statements,
       CompileDirectiveMetadata compMeta, String hostViewFactoryVar) {
     var compFactoryVar = '${compMeta.type.name}NgFactory';
     var factoryType = [o.importType(compMeta.type)];
@@ -212,25 +206,20 @@ class OfflineCompiler {
         ),
       ).toGetter('$compFactoryVar'),
     );
-    return compFactoryVar;
   }
 
-  String _compileDirective(
+  void _compileDirective(
       CompileDirectiveMetadata directive, List<o.Statement> statements) {
     DirectiveCompiler comp =
         DirectiveCompiler(directive, _templateParser.schemaRegistry);
     DirectiveCompileResult res = comp.compile();
     statements.addAll(res.statements);
-    return comp.changeDetectorClassName;
   }
 
-  SourceModule _createSourceModule(
-      String moduleUrl,
-      List<o.Statement> statements,
-      List<String> exportedVars,
-      Map<String, String> deferredModules) {
-    String sourceCode = _outputEmitter.emitStatements(
-        moduleUrl, statements, exportedVars, deferredModules);
+  SourceModule _createSourceModule(String moduleUrl,
+      List<o.Statement> statements, Map<String, String> deferredModules) {
+    String sourceCode =
+        _outputEmitter.emitStatements(moduleUrl, statements, deferredModules);
     return SourceModule(moduleUrl, sourceCode, deferredModules);
   }
 

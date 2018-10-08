@@ -6,7 +6,7 @@ final catchStackVar = o.variable('stack');
 
 abstract class OutputEmitter {
   String emitStatements(String moduleUrl, List<o.Statement> stmts,
-      List<String> exportedVars, Map<String, String> deferredModules);
+      Map<String, String> deferredModules);
 }
 
 class _EmittedLine {
@@ -17,7 +17,6 @@ class _EmittedLine {
 
 class EmitterVisitorContext {
   final Map<String, String> deferredModules;
-  final List<String> _exportedVars;
   int _indent;
   int _outputPos = 0;
   // Current method being emitted. Allows expressions access to method
@@ -28,12 +27,11 @@ class EmitterVisitorContext {
   final List<_EmittedLine> _lines;
   final List<o.ClassStmt> _classes = [];
 
-  static EmitterVisitorContext createRoot(
-      List<String> exportedVars, Map<String, String> deferredModules) {
-    return EmitterVisitorContext(exportedVars, 0, deferredModules);
+  static EmitterVisitorContext createRoot(Map<String, String> deferredModules) {
+    return EmitterVisitorContext(0, deferredModules);
   }
 
-  EmitterVisitorContext(this._exportedVars, this._indent, this.deferredModules)
+  EmitterVisitorContext(this._indent, this.deferredModules)
       : this._lines = [_EmittedLine(_indent)];
 
   _EmittedLine get _currentLine {
@@ -41,10 +39,6 @@ class EmitterVisitorContext {
   }
 
   int get currentLineLength => _currentLine.indent + _outputPos;
-
-  bool isExportedVar(String varName) {
-    return !identical(_exportedVars.indexOf(varName), -1);
-  }
 
   void println([String lastPart = '']) {
     print(lastPart, true);

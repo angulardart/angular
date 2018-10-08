@@ -14,7 +14,7 @@ var _METADATA_MAP_VAR = '_METADATA';
 String debugOutputAstAsDart(
     dynamic /* o . Statement | o . Expression | o . Type | List < dynamic > */ ast) {
   var converter = _DartEmitterVisitor(_debugModuleUrl);
-  var ctx = EmitterVisitorContext.createRoot([], {});
+  var ctx = EmitterVisitorContext.createRoot({});
   List<dynamic> asts;
   if (ast is! List) {
     asts = [ast];
@@ -36,12 +36,12 @@ String debugOutputAstAsDart(
 class DartEmitter implements OutputEmitter {
   @override
   String emitStatements(String moduleUrl, List<o.Statement> stmts,
-      List<String> exportedVars, Map<String, String> deferredModules) {
+      Map<String, String> deferredModules) {
     final srcParts = <String>[];
     // Note: We are not creating a library here as Dart does not need it.
     // Dart analyzer might complain about it though.
     final converter = _DartEmitterVisitor(moduleUrl);
-    final ctx = EmitterVisitorContext.createRoot(exportedVars, deferredModules);
+    final ctx = EmitterVisitorContext.createRoot(deferredModules);
     converter.visitAllStatements(stmts, ctx);
     converter.importsWithPrefixes.forEach((importedModuleUrl, prefix) {
       String importPath = getImportModulePath(moduleUrl, importedModuleUrl);
