@@ -9,7 +9,6 @@ import 'template_compiler_outputs.dart';
 const _ignoredProblems = <String>[
   'cancel_subscriptions',
   'constant_identifier_names',
-  'duplicate_import',
   'non_constant_identifier_names',
   'library_prefixes',
   'UNUSED_SHOWN_NAME',
