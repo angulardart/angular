@@ -18,7 +18,7 @@ const _directiveChangeImport =
     "import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;";
 
 const _analyzerIgnores =
-    '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import,unused_shown_name';
+    '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit,duplicate_import';
 
 String _typeParametersOf(ClassElement element) {
   // TODO(b/111800117): generics with bounds aren't yet supported.
