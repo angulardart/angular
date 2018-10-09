@@ -1,3 +1,5 @@
+## 0.4.1
+
 *   Catches an (invalid) `null` token of a provider and throws a better error.
 
 *   Catches an (invalid) `null` value of the function for `FactoryProvider`.

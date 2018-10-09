@@ -1,3 +1,5 @@
+## 2.0.0-alpha+20
+
 ### Bug fixes
 
 *   Fixed a discrepancy between the href rendered by `RouterLinkDirective`, and
