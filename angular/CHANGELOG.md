@@ -1,3 +1,5 @@
+## 5.1.0
+
 ### New features
 
 *   Added support for generic components and directives.
