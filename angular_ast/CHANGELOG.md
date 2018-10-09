@@ -1,3 +1,4 @@
+## 0.5.7
 *   Annotations may now have compound names (for example `@foo.bar`).
 
 *   It is now an error to use `@deferred` on a `<template>` tag or combined with

@@ -1,3 +1,5 @@
+## 2.1.0
+
 ### New Features
 
 *   `PatternValidator` now has a `pattern` input. This allows the `pattern`

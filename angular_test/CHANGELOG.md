@@ -1,3 +1,7 @@
+## 2.1.0
+
+### New Features
+
 *   Supported `beforeComponentCreated(Injector)` when creating fixture to allow
     using `injector` to set up prerequisite data for testing from DI.
 
