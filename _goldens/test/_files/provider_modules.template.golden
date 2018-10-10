@@ -2,7 +2,6 @@
 // Generator: Instance of 'Compiler'
 // **************************************************************************
 
-// ignore_for_file: cancel_subscriptions,constant_identifier_names,non_constant_identifier_names,library_prefixes
 import 'provider_modules.dart';
 export 'provider_modules.dart';
 import 'package:angular/angular.dart';

@@ -6,12 +6,7 @@ import 'package:code_builder/code_builder.dart';
 
 import 'template_compiler_outputs.dart';
 
-const _ignoredProblems = <String>[
-  'cancel_subscriptions',
-  'constant_identifier_names',
-  'non_constant_identifier_names',
-  'library_prefixes',
-];
+const _ignoredProblems = <String>[];
 
 String buildGeneratedCode(
   LibraryElement element,
