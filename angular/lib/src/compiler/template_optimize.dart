@@ -59,7 +59,8 @@ void _typeNgForLocals(
     switch (variable.value) {
       case r'$implicit':
         // This local is the generic type of the `Iterable` bound to [ngForOf].
-        variable.type = fromDartType(getIterableElementType(ngForOfType));
+        final elementType = getIterableElementType(ngForOfType);
+        variable.type = fromDartType(elementType, resolveBounds: false);
         break;
       case 'index':
       case 'count':
