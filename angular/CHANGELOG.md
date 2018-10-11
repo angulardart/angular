@@ -1,3 +1,39 @@
+### Breaking changes
+
+*   The template parser no longer supports styles defined inside the template
+    itself.
+
+    Previously, the following two snippets would have been parsed and shimmed in
+    the same way. `html <style> .my-class {padding: 10px;} </style>`
+
+    ```dart
+    @Component(
+      styles: ['.other-class {padding: 10px;}'],
+    )
+    class ExampleComponent{}
+    ```
+
+    Now, only the latter will be parsed and shimmed. The former will be ignored.
+
+*   The template parser no longer supports loading stylesheets defined in an
+    `<link>` tag in the template itself.
+
+    Previously, the following two snippets would have loaded the exact same
+    stylesheet.
+
+    ```html
+    <link href="my-styles.css" rel="stylesheet" />
+    ```
+
+    ```dart
+    @Component(
+      styleUrls: ['my-styles.css'],
+    )
+    class ExampleComponent {}
+    ```
+
+    Now, only the latter will actually be loaded. The former will be ignored.
+
 ## 5.1.0
 
 ### New features
@@ -109,7 +145,6 @@
 [intl]: https://pub.dartlang.org/packages/intl
 [i18n_example]: https://github.com/dart-lang/angular/blob/master/examples/i18n
 
-
 ### Bug fixes
 
 *   [#1538][]: A compile-time error is reported if the `@deferred` template
@@ -153,13 +188,13 @@
     ```
 
     ... additionally, a check for a race condition of the deferred component
-    being loaded _after_ the parent view was already destroyed was added. As
-    a result, [#1540][] has also been fixed (view and content queries were not
+    being loaded _after_ the parent view was already destroyed was added. As a
+    result, [#1540][] has also been fixed (view and content queries were not
     getting reset as the `@deferred` node was destroyed).
 
 *   [#880][]: Fixed a bug where an extraneous space in `*ngFor` micro expression
-    caused the directive to no longer be functional
-    (`*ngFor="let x; let i = $index "`, for example).
+    caused the directive to no longer be functional (`*ngFor="let x; let i =
+    $index "`, for example).
 
 *   [#1570][]: When a provider's `token` for `@GeneratedInjector(...)` is read
     as `null` (either intentionally, or due to analysis errors/imports missing)
@@ -175,22 +210,22 @@
     `*ngFor="let item of items;"` - note the trailing `;`), throws a proper
     unexpected token error instead of a confusing type error during recovery.
 
-*   [#1500][]: Configuring a provider with `FactoryProvider(Foo, null)` is now
-    a compile-time error, instead of a misleading runtime error.
+*   [#1500][]: Configuring a provider with `FactoryProvider(Foo, null)` is now a
+    compile-time error, instead of a misleading runtime error.
 
 *   [#1591][]: Using `@GenerateInjector` with a `ValueProvider` bound to a
     `String` instance that expects a _raw_ string (i.e `r'$5.00'`) no longer
     generates invalid code. Now _all_ strings are emitted as _raw_.
 
-*   [#1598][]: Using `@GenerateInjector` with a `ValueProvider` whose value
-    is created as a `const` object with _named_ arguments is now created
-    correctly. Before, all named arguments were skipped (left to default values,
-    which was often `null`).
+*   [#1598][]: Using `@GenerateInjector` with a `ValueProvider` whose value is
+    created as a `const` object with _named_ arguments is now created correctly.
+    Before, all named arguments were skipped (left to default values, which was
+    often `null`).
 
-*   `@GenerateInjector(...)` now correctly solves duplicate tokens by having
-    the _last_, not _first_, provider win. This aligns the semantics with how
-    the other injector implementations work. For `MultiToken`, the order stays
-    the same.
+*   `@GenerateInjector(...)` now correctly solves duplicate tokens by having the
+    _last_, not _first_, provider win. This aligns the semantics with how the
+    other injector implementations work. For `MultiToken`, the order stays the
+    same.
 
 *   Clarified that `Injector.map({...})` doesn't support `null` as values.
 
@@ -206,9 +241,9 @@
     messages with meanings that are formatted differently will now properly be
     treated as the same message.
 
-*  [#1633][]: Using a function type or any non-class `Type` inside of the
-   `@GenerateInjector([...])` annotation would cause a non-ideal error to be
-   produced. It now includes more information where available.
+*   [#1633][]: Using a function type or any non-class `Type` inside of the
+    `@GenerateInjector([...])` annotation would cause a non-ideal error to be
+    produced. It now includes more information where available.
 
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880

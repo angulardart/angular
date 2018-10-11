@@ -7,7 +7,7 @@ import 'package:angular_compiler/cli.dart';
 
 import 'compile_metadata.dart';
 import 'parse_util.dart';
-import 'style_url_resolver.dart' show extractStyleUrls, isStyleUrlResolvable;
+import 'style_url_resolver.dart' show isStyleUrlResolvable;
 
 /// Loads the content of `templateUrl` and `styleUrls` to normalize directives.
 ///
@@ -29,7 +29,6 @@ class AstDirectiveNormalizer {
     return _normalizeTemplate(
       directive.type,
       directive.template,
-      exports: directive.exports,
     ).then((result) {
       return CompileDirectiveMetadata(
         type: directive.type,
@@ -57,10 +56,8 @@ class AstDirectiveNormalizer {
   }
 
   Future<CompileTemplateMetadata> _normalizeTemplate(
-    CompileTypeMetadata directiveType,
-    CompileTemplateMetadata template, {
-    List<CompileIdentifierMetadata> exports,
-  }) async {
+      CompileTypeMetadata directiveType,
+      CompileTemplateMetadata template) async {
     template ??= CompileTemplateMetadata(template: '');
     if (template.styles != null && template.styles.isNotEmpty) {
       await _validateStyleUrlsNotMeant(template.styles, directiveType);
@@ -72,8 +69,6 @@ class AstDirectiveNormalizer {
         template,
         template.template,
         directiveType.moduleUrl,
-        template.preserveWhitespace,
-        exports: exports,
       );
     }
     if (template.templateUrl != null) {
@@ -81,16 +76,13 @@ class AstDirectiveNormalizer {
         directiveType.moduleUrl,
         template.templateUrl,
       );
-      return _reader.readText(sourceAbsoluteUrl).then((templateContent) {
-        return _normalizeLoadedTemplate(
-          directiveType,
-          template,
-          templateContent,
-          sourceAbsoluteUrl,
-          template.preserveWhitespace,
-          exports: exports,
-        );
-      });
+      final templateContent = await _reader.readText(sourceAbsoluteUrl);
+      return _normalizeLoadedTemplate(
+        directiveType,
+        template,
+        templateContent,
+        sourceAbsoluteUrl,
+      );
     }
     throwFailure(''
         'Component "${directiveType.name}" in \n'
@@ -145,15 +137,53 @@ class AstDirectiveNormalizer {
   }
 
   CompileTemplateMetadata _normalizeLoadedTemplate(
-    CompileTypeMetadata directiveType,
-    CompileTemplateMetadata templateMeta,
-    String template,
-    String templateAbsUrl,
-    bool preserveWhitespace, {
-    List<CompileIdentifierMetadata> exports = const [],
-  }) {
-    // Parse the template, and visit to find <style>/<link> and <ng-content>.
-    final visitor = _TemplateNormalizerVisitor();
+      CompileTypeMetadata directiveType,
+      CompileTemplateMetadata templateMeta,
+      String template,
+      String templateAbsUrl) {
+    // TODO(alorenzen): Remove need to parse template here.
+    // We should be able to calculate this in the main parse.
+    var ngContentSelectors =
+        _parseTemplate(template, directiveType, templateAbsUrl);
+
+    List<String> allExternalStyles =
+        _resolveExternalStylesheets(templateMeta, directiveType.moduleUrl);
+
+    // Optimization: Turn off encapsulation when there are no styles to apply.
+    var encapsulation = templateMeta.encapsulation;
+    if (encapsulation == ViewEncapsulation.Emulated &&
+        templateMeta.styles.isEmpty &&
+        allExternalStyles.isEmpty) {
+      encapsulation = ViewEncapsulation.None;
+    }
+
+    return CompileTemplateMetadata(
+      encapsulation: encapsulation,
+      template: template,
+      templateUrl: templateAbsUrl,
+      styles: templateMeta.styles,
+      styleUrls: allExternalStyles,
+      ngContentSelectors: ngContentSelectors,
+      preserveWhitespace: templateMeta.preserveWhitespace,
+    );
+  }
+
+  List<String> _resolveExternalStylesheets(
+      CompileTemplateMetadata templateMeta, String moduleUrl) {
+    final allExternalStyles = <String>[];
+
+    // Try to resolve external stylesheets.
+    for (final url in templateMeta.styleUrls) {
+      if (isStyleUrlResolvable(url)) {
+        allExternalStyles.add(_reader.resolveUrl(moduleUrl, url));
+      }
+    }
+    return allExternalStyles;
+  }
+
+  /// Parse the template, and visit to find <ng-content>.
+  List<String> _parseTemplate(String template,
+      CompileTypeMetadata directiveType, String templateAbsUrl) {
     final exceptionHandler = AstExceptionHandler(template, directiveType.name);
     final parsedNodes = ast.parse(
       template,
@@ -164,73 +194,16 @@ class AstDirectiveNormalizer {
     );
     exceptionHandler.maybeReportExceptions();
 
+    final visitor = _TemplateNormalizerVisitor();
     for (final node in parsedNodes) {
       node.accept(visitor);
     }
-
-    final allInlineStyles = templateMeta.styles + visitor.inlineStyles;
-    final allExternalStyles = <String>[];
-    final allResolvedStyles = <String>[];
-
-    // Try to resolve external stylesheets.
-    for (final url in visitor.externalStyles) {
-      if (isStyleUrlResolvable(url)) {
-        allExternalStyles.add(_reader.resolveUrl(templateAbsUrl, url));
-      }
-    }
-    for (final url in templateMeta.styleUrls) {
-      if (isStyleUrlResolvable(url)) {
-        allExternalStyles.add(_reader.resolveUrl(directiveType.moduleUrl, url));
-      }
-    }
-
-    // Try to resolve <style> import statements.
-    for (final inlineStyle in allInlineStyles) {
-      final import = extractStyleUrls(templateAbsUrl, inlineStyle);
-      allExternalStyles.addAll(import.styleUrls);
-      allResolvedStyles.add(import.style);
-    }
-
-    // Optimization: Turn off encapsulation when there are no styles to apply.
-    var encapsulation = templateMeta.encapsulation;
-    if (encapsulation == ViewEncapsulation.Emulated &&
-        allResolvedStyles.isEmpty &&
-        allExternalStyles.isEmpty) {
-      encapsulation = ViewEncapsulation.None;
-    }
-
-    return CompileTemplateMetadata(
-      encapsulation: encapsulation,
-      template: template,
-      templateUrl: templateAbsUrl,
-      styles: allResolvedStyles,
-      styleUrls: allExternalStyles,
-      ngContentSelectors: visitor.ngContentSelectors,
-      preserveWhitespace: preserveWhitespace,
-    );
+    return visitor.ngContentSelectors;
   }
 }
 
 class _TemplateNormalizerVisitor extends ast.RecursiveTemplateAstVisitor<Null> {
-  final externalStyles = <String>[];
-  final inlineStyles = <String>[];
   final ngContentSelectors = <String>[];
-
-  static String _extractAttrValue(ast.ElementAst astNode, String name) =>
-      astNode?.attributes
-          ?.firstWhere((a) => a.name.toLowerCase() == name, orElse: () => null)
-          ?.value;
-
-  static String _extractInnerText(ast.ElementAst astNode) {
-    if (astNode.childNodes.isEmpty) {
-      return '';
-    }
-    final firstChild = astNode.childNodes.first;
-    if (firstChild is ast.TextAst) {
-      return firstChild.value;
-    }
-    return '';
-  }
 
   @override
   ast.EmbeddedContentAst visitEmbeddedContent(
@@ -239,24 +212,5 @@ class _TemplateNormalizerVisitor extends ast.RecursiveTemplateAstVisitor<Null> {
   ]) {
     ngContentSelectors.add(astNode.selector);
     return astNode;
-  }
-
-  @override
-  ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
-    final tagName = astNode.name.toLowerCase();
-    switch (tagName) {
-      case 'link':
-        if (_extractAttrValue(astNode, 'rel')?.toLowerCase() == 'stylesheet') {
-          final href = _extractAttrValue(astNode, 'href');
-          if (href != null) {
-            externalStyles.add(href);
-          }
-        }
-        break;
-      case 'style':
-        inlineStyles.add(_extractInnerText(astNode));
-        break;
-    }
-    return super.visitElement(astNode);
   }
 }
