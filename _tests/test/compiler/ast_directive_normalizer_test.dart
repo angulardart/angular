@@ -140,10 +140,8 @@ void main() {
     expect(
       metadata.template.styleUrls,
       orderedEquals([
-        'package:a/3.css',
         'package:a/1.css',
         'package:a/2.css',
-        'package:a/4.css',
       ]),
     );
   });
@@ -196,9 +194,8 @@ void main() {
       metadata.template.styles,
       [
         contains(':host { margin: 10px; }'),
-        contains(':host { padding: 10px; }'),
       ],
-      reason: 'Only a two inline styles should have been processed',
+      reason: 'Only one inline style should have been processed',
     );
   });
 }
