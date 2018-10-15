@@ -4,7 +4,11 @@
     itself.
 
     Previously, the following two snippets would have been parsed and shimmed in
-    the same way. `html <style> .my-class {padding: 10px;} </style>`
+    the same way.
+
+    ```html
+    <style> .my-class {padding: 10px;} </style>
+    ```
 
     ```dart
     @Component(
