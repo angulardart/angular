@@ -38,6 +38,10 @@
 
     Now, only the latter will actually be loaded. The former will be ignored.
 
+*   The deprecated field, `ComponentRef.componentType`, which always threw, has
+    now been completely removed. This was a legacy field for older clients of
+    AngularDart.
+
 ## 5.1.0
 
 ### New features
@@ -289,7 +293,7 @@ this release is not compatible with older versions of Dart 1.XX. Additionally:
 
 More details of
 [changes to Dart 2 for web users](https://webdev.dartlang.org/dart-2) are
-available on our webiste.
+available on our website.
 
 **Thanks**, and enjoy AngularDart!
 
