@@ -211,7 +211,7 @@ o.Expression createFlatArray(List<o.Expression> expressions,
   for (var i = 0; i < expressions.length; i++) {
     var expr = expressions[i];
     if (expr.type is o.ArrayType) {
-      if (lastNonArrayExpressions.length > 0) {
+      if (lastNonArrayExpressions.isNotEmpty) {
         if (initialEmptyArray) {
           result = o.literalArr(lastNonArrayExpressions, o.DYNAMIC_TYPE);
           initialEmptyArray = false;
@@ -229,7 +229,7 @@ o.Expression createFlatArray(List<o.Expression> expressions,
       lastNonArrayExpressions.add(expr);
     }
   }
-  if (lastNonArrayExpressions.length > 0) {
+  if (lastNonArrayExpressions.isNotEmpty) {
     if (initialEmptyArray) {
       result = o.literalArr(lastNonArrayExpressions);
     } else {

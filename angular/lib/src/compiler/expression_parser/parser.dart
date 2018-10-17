@@ -150,7 +150,7 @@ class Parser {
       if (i.isEven) {
         // fixed string
         strings.add(part);
-      } else if (part.trim().length > 0) {
+      } else if (part.trim().isNotEmpty) {
         expressions.add(part);
       } else {
         throw ParseException(
@@ -314,7 +314,7 @@ class _ParseAST {
         error("Unexpected token '$next'");
       }
     }
-    if (exprs.length == 0) return EmptyExpr();
+    if (exprs.isEmpty) return EmptyExpr();
     if (exprs.length == 1) return exprs[0];
     return Chain(exprs);
   }
@@ -644,7 +644,7 @@ class _ParseAST {
         while (optionalCharacter($SEMICOLON)) {}
       }
     }
-    if (exprs.length == 0) return EmptyExpr();
+    if (exprs.isEmpty) return EmptyExpr();
     if (exprs.length == 1) return exprs[0];
     return Chain(exprs);
   }

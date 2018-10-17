@@ -349,7 +349,7 @@ class RouterImpl extends Router {
   Future<MutableRouterState> _attachDefaultChildren(
       MutableRouterState stateSoFar) async {
     RouterOutlet nextOutlet;
-    if (stateSoFar.routes.length == 0) {
+    if (stateSoFar.routes.isEmpty) {
       nextOutlet = _rootOutlet;
     } else {
       // If the last route is a not component route, there will be no default

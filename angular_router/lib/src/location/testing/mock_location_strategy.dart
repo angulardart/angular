@@ -35,7 +35,7 @@ class MockLocationStrategy extends LocationStrategy {
 
   void pushState(dynamic ctx, String title, String path, String query) {
     internalTitle = title;
-    var url = path + (query.length > 0 ? ('?' + query) : '');
+    var url = path + (query.isNotEmpty ? ('?' + query) : '');
     internalPath = url;
     var externalUrl = prepareExternalUrl(url);
     urlChanges.add(externalUrl);
@@ -43,7 +43,7 @@ class MockLocationStrategy extends LocationStrategy {
 
   void replaceState(dynamic ctx, String title, String path, String query) {
     internalTitle = title;
-    var url = path + (query.length > 0 ? ('?' + query) : '');
+    var url = path + (query.isNotEmpty ? ('?' + query) : '');
     internalPath = url;
     var externalUrl = prepareExternalUrl(url);
     urlChanges.add('replace: ' + externalUrl);
@@ -56,10 +56,10 @@ class MockLocationStrategy extends LocationStrategy {
   String getBaseHref() => internalBaseHref;
 
   void back() {
-    if (urlChanges.length > 0) {
+    if (urlChanges.isNotEmpty) {
       urlChanges.removeLast();
       var nextUrl =
-          urlChanges.length > 0 ? urlChanges[urlChanges.length - 1] : '';
+          urlChanges.isNotEmpty ? urlChanges[urlChanges.length - 1] : '';
       simulatePopState(nextUrl);
     }
   }

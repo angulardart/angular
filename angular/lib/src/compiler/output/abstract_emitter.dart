@@ -50,7 +50,7 @@ class EmitterVisitorContext {
   }
 
   void print(String part, [bool newLine = false]) {
-    if (part.length > 0) {
+    if (part.isNotEmpty) {
       _currentLine.parts.add(part);
     }
     if (newLine) {
@@ -86,7 +86,7 @@ class EmitterVisitorContext {
   }
 
   o.ClassStmt get currentClass {
-    return _classes.length > 0 ? _classes[_classes.length - 1] : null;
+    return _classes.isNotEmpty ? _classes[_classes.length - 1] : null;
   }
 
   String toSource() {
@@ -96,7 +96,7 @@ class EmitterVisitorContext {
     }
     return lines
         .map((line) {
-          if (line.parts.length > 0) {
+          if (line.parts.isNotEmpty) {
             return _createIndent(line.indent) + line.parts.join('');
           } else {
             return '';
@@ -167,7 +167,7 @@ abstract class AbstractEmitterVisitor
     context.print('if (');
     stmt.condition.visitExpression(this, context);
     context.print(') {');
-    var hasElseCase = stmt.falseCase != null && stmt.falseCase.length > 0;
+    var hasElseCase = stmt.falseCase != null && stmt.falseCase.isNotEmpty;
     if (stmt.trueCase.length <= 1 && !hasElseCase) {
       context.print(' ');
       visitAllStatements(stmt.trueCase, context);
