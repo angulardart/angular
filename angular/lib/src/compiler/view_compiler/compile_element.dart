@@ -471,7 +471,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
           (query) => query.metadata.descendants || distance <= 1,
         ));
       }
-      if (currentEl._directives.length > 0) {
+      if (currentEl._directives.isNotEmpty) {
         distance++;
       }
       currentEl = currentEl.parent;

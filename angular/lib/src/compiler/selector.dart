@@ -29,7 +29,7 @@ class CssSelector {
   static List<CssSelector> parse(String selector) {
     List<CssSelector> results = [];
     var _addResult = (List<CssSelector> res, CssSelector cssSel) {
-      if (cssSel.notSelectors.length > 0 &&
+      if (cssSel.notSelectors.isNotEmpty &&
           cssSel.element == null &&
           cssSel.classNames.isEmpty &&
           cssSel.attrs.isEmpty) {
@@ -355,7 +355,7 @@ class SelectorContext {
   bool finalize(
       CssSelector cssSelector, void callback(CssSelector c, dynamic a)) {
     var result = true;
-    if (this.notSelectors.length > 0 &&
+    if (this.notSelectors.isNotEmpty &&
         (this.listContext == null || !this.listContext.alreadyMatched)) {
       var notMatcher = SelectorMatcher.createNotMatcher(this.notSelectors);
       result = !notMatcher.match(cssSelector, null);

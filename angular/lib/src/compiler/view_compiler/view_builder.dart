@@ -124,10 +124,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
           parent, view.declarationElement.nodeIndex, nodeIndex);
     } else {
       elementRef = NodeReference(parent, nodeIndex);
-      if (ast.inputs.length == 0 &&
-          ast.outputs.length == 0 &&
-          ast.references.length == 0 &&
-          ast.directives.length == 0) {
+      if (ast.inputs.isEmpty &&
+          ast.outputs.isEmpty &&
+          ast.references.isEmpty &&
+          ast.directives.isEmpty) {
         elementRef.lockVisibility(NodeReferenceVisibility.build);
       }
     }

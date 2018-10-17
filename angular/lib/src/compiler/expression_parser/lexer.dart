@@ -392,7 +392,7 @@ bool isIdentifierStart(num code) =>
     (code == $$);
 
 bool isIdentifier(String input) {
-  if (input.length == 0) return false;
+  if (input.isEmpty) return false;
   var scanner = _Scanner(input);
   if (!isIdentifierStart(scanner.peek)) return false;
   scanner.advance();
