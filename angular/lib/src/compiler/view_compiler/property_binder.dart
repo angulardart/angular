@@ -6,18 +6,20 @@ import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
+import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 
-import "../compile_metadata.dart";
+import '../compile_metadata.dart';
 import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
     show
-        BoundTextAst,
+        BoundDirectivePropertyAst,
         BoundElementPropertyAst,
-        DirectiveAst,
         BoundExpression,
+        BoundTextAst,
+        DirectiveAst,
         PropertyBindingType;
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
@@ -55,18 +57,21 @@ void _bindAst(
   o.ReadClassMemberExpr fieldExpr,
   ast.AST parsedExpression,
   SourceSpan parsedExpressionSourceSpan,
-  o.Expression context,
   List<o.Statement> actions,
   CompileMethod method,
   CompileMethod literalMethod, {
   o.OutputType fieldType,
-  bool isHostComponent = false,
   o.Expression fieldExprInitializer,
 }) {
   parsedExpression =
       rewriteInterpolate(parsedExpression, viewDirective.analyzedClass);
-  var checkExpression = convertCdExpressionToIr(nameResolver, context,
-      parsedExpression, parsedExpressionSourceSpan, viewDirective, fieldType);
+  var checkExpression = convertCdExpressionToIr(
+      nameResolver,
+      DetectChangesVars.cachedCtx,
+      parsedExpression,
+      parsedExpressionSourceSpan,
+      viewDirective,
+      fieldType);
   _bind(
     storage,
     currValExpr,
@@ -78,7 +83,7 @@ void _bindAst(
     method,
     literalMethod,
     fieldType: fieldType,
-    isHostComponent: isHostComponent,
+    isHostComponent: false,
     fieldExprInitializer: fieldExprInitializer,
   );
 }
@@ -186,7 +191,6 @@ void bindRenderText(
     valueField,
     boundText.value,
     boundText.sourceSpan,
-    DetectChangesVars.cachedCtx,
     [
       compileNode.renderNode.toReadExpr().prop('text').set(currValExpr).toStmt()
     ],
@@ -625,9 +629,6 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
   assert(directiveAst.directive.identifier.name == 'NgIf',
       'Inlining a template that is not an NgIf');
   var view = compileElement.view;
-  var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
-  var dynamicInputsMethod = CompileMethod();
-  var constantInputsMethod = CompileMethod();
 
   var input = directiveAst.inputs.single;
   var bindingIndex = view.nameResolver.createUniqueBindIndex();
@@ -640,48 +641,31 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
   embeddedView.writeBuildStatements(buildStmts);
   var rootNodes = createFlatArray(embeddedView.rootNodesOrViewContainers);
   var anchor = compileElement.renderNode.toReadExpr();
-  var isRoot = compileElement.view != compileElement.parent.view;
   var buildArgs = [anchor, rootNodes];
   var destroyArgs = [rootNodes];
-  if (isRoot) {
+  if (compileElement.isRootElement) {
     buildArgs.add(o.literal(true));
     destroyArgs.add(o.literal(true));
   }
   buildStmts
       .add(o.InvokeMemberMethodExpr('addInlinedNodes', buildArgs).toStmt());
 
-  var destroyStmts = <o.Statement>[
-    o.InvokeMemberMethodExpr('removeInlinedNodes', destroyArgs).toStmt(),
-  ];
+  var inputAst = _inputAst(input);
 
-  ast.AST inputAst;
-  var inputValue = input.value;
-  if (inputValue is BoundExpression) {
-    // This promotion is require to support the legacy hack in the following if.
-    inputAst = inputValue.expression;
-  } else {
-    // This state is reached if an @i18n message is bound to an *ngIf, which we
-    // know isn't a boolean expression.
-    throwFailure(input.sourceSpan.message('Expected a boolean expression'));
-  }
+  final converter =
+      BoundValueConverter.forView(view, DetectChangesVars.cachedCtx);
 
-  List<o.Statement> statements;
-  ast.AST condition;
-  final implicitReceiver = DetectChangesVars.cachedCtx;
-  final converter = BoundValueConverter.forView(view, implicitReceiver);
-  if (converter.isImmutable(input.value)) {
-    // If the input is immutable, we don't need to handle the case where the
-    // condition is false since in that case we simply do nothing.
-    statements = <o.Statement>[
-      o.IfStmt(currValExpr, buildStmts),
-    ];
-    condition = inputAst;
-  } else {
-    statements = <o.Statement>[o.IfStmt(currValExpr, buildStmts, destroyStmts)];
-    // This hack is to allow legacy NgIf behavior on null inputs
-    condition = ast.Binary('==', inputAst, ast.LiteralPrimitive(true));
-  }
+  var isImmutable = converter.isImmutable(input.value);
+  ast.AST condition = isImmutable
+      ? inputAst
+      // This hack is to allow legacy NgIf behavior on null inputs
+      : ast.Binary('==', inputAst, ast.LiteralPrimitive(true));
+  List<o.Statement> statements = _statements(
+      currValExpr, buildStmts, destroyArgs,
+      isImmutable: isImmutable);
 
+  var dynamicInputsMethod = CompileMethod();
+  var constantInputsMethod = CompileMethod();
   _bindAst(
       view.component,
       view.nameResolver,
@@ -690,21 +674,49 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       fieldExpr,
       condition,
       input.sourceSpan,
-      implicitReceiver,
       statements,
       dynamicInputsMethod,
       constantInputsMethod,
       fieldType: o.BOOL_TYPE,
-      isHostComponent: false,
       fieldExprInitializer: o.literal(false));
 
   if (constantInputsMethod.isNotEmpty) {
-    detectChangesInInputsMethod.addStmtsIfFirstCheck(
+    view.detectChangesInInputsMethod.addStmtsIfFirstCheck(
       constantInputsMethod.finish(),
     );
   }
   if (dynamicInputsMethod.isNotEmpty) {
-    detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
+    view.detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
+  }
+}
+
+List<o.Statement> _statements(
+  o.ReadVarExpr currValExpr,
+  List<o.Statement> buildStmts,
+  List<o.Expression> destroyArgs, {
+  @required bool isImmutable,
+}) {
+  if (isImmutable) {
+    // If the input is immutable, we don't need to handle the case where the
+    // condition is false since in that case we simply do nothing.
+    return <o.Statement>[o.IfStmt(currValExpr, buildStmts)];
+  } else {
+    var destroyStmts = <o.Statement>[
+      o.InvokeMemberMethodExpr('removeInlinedNodes', destroyArgs).toStmt(),
+    ];
+    return <o.Statement>[o.IfStmt(currValExpr, buildStmts, destroyStmts)];
+  }
+}
+
+ast.AST _inputAst(BoundDirectivePropertyAst input) {
+  var inputValue = input.value;
+  if (inputValue is BoundExpression) {
+    // This promotion is require to support the legacy hack in the following if.
+    return inputValue.expression;
+  } else {
+    // This state is reached if an @i18n message is bound to an *ngIf, which we
+    // know isn't a boolean expression.
+    throwFailure(input.sourceSpan.message('Expected a boolean expression'));
   }
 }
 
