@@ -8,24 +8,24 @@ import '../schema/element_schema_registry.dart';
 import '../template_ast.dart';
 import '../template_parser.dart';
 import 'bound_value_converter.dart';
-import "compile_element.dart" show CompileElement;
-import "compile_method.dart" show CompileMethod;
-import "compile_view.dart" show CompileView;
-import "event_binder.dart"
+import 'compile_element.dart' show CompileElement;
+import 'compile_method.dart' show CompileMethod;
+import 'compile_view.dart' show CompileView;
+import 'event_binder.dart'
     show
         bindRenderOutputs,
         collectEventListeners,
         CompileEventListener,
         bindDirectiveOutputs;
 import 'ir/provider_source.dart';
-import "lifecycle_binder.dart"
+import 'lifecycle_binder.dart'
     show
         bindDirectiveAfterContentLifecycleCallbacks,
         bindDirectiveAfterViewLifecycleCallbacks,
         bindDirectiveDestroyLifecycleCallbacks,
         bindPipeDestroyLifecycleCallbacks,
         bindDirectiveDetectChangesLifecycleCallbacks;
-import "property_binder.dart"
+import 'property_binder.dart'
     show
         bindAndWriteToRenderer,
         bindDirectiveHostProps,
@@ -46,28 +46,29 @@ void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
   }
 }
 
-class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
+class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   final CompileView view;
   int _nodeIndex = 0;
   _ViewBinderVisitor(this.view);
 
-  void visitBoundText(BoundTextAst ast, dynamic context) {
+  @override
+  void visitBoundText(BoundTextAst ast, _) {
     var node = this.view.nodes[_nodeIndex++];
     bindRenderText(ast, node, this.view);
   }
 
-  void visitText(TextAst ast, dynamic context) {
+  @override
+  void visitText(TextAst ast, _) {
     _nodeIndex++;
   }
 
   @override
-  void visitNgContainer(NgContainerAst ast, dynamic context) {
+  void visitNgContainer(NgContainerAst ast, _) {
     templateVisitAll(this, ast.children);
   }
 
-  void visitNgContent(NgContentAst ast, dynamic context) {}
-
-  void visitElement(ElementAst ast, dynamic context) {
+  @override
+  void visitElement(ElementAst ast, _) {
     var compileElement = (view.nodes[_nodeIndex++] as CompileElement);
     var listeners = collectEventListeners(ast.outputs, ast.directives,
         compileElement, view.component.analyzedClass);
@@ -107,7 +108,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
       bindDirectiveHostProps(directiveAst, directiveInstance, compileElement);
       bindDirectiveOutputs(directiveAst, directiveInstance, streamListeners);
     }
-    templateVisitAll(this, ast.children, compileElement);
+    templateVisitAll(this, ast.children);
     // afterContent and afterView lifecycles need to be called bottom up
     // so that children are notified before parents
     index = -1;
@@ -127,10 +128,11 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
     }
   }
 
-  void visitEmbeddedTemplate(EmbeddedTemplateAst ast, dynamic context) {
-    var compileElement = this.view.nodes[this._nodeIndex++] as CompileElement;
+  @override
+  void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
+    var compileElement = view.nodes[_nodeIndex++] as CompileElement;
     if (compileElement.embeddedView.isInlined) {
-      visitInlinedTemplate(ast, compileElement);
+      _visitInlinedTemplate(ast, compileElement);
       return;
     }
     // The template parser ensures these listeners are for directive outputs,
@@ -159,7 +161,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
     bindView(compileElement.embeddedView, ast.children);
   }
 
-  void visitInlinedTemplate(
+  void _visitInlinedTemplate(
       EmbeddedTemplateAst ast, CompileElement compileElement) {
     var directiveAst = ast.directives.single;
     if (ast.children.isEmpty) {
@@ -168,28 +170,37 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, dynamic> {
     bindInlinedNgIf(directiveAst, compileElement);
   }
 
-  void visitAttr(AttrAst ast, dynamic context) {}
-
-  void visitDirective(DirectiveAst ast, dynamic context) {}
-
-  void visitEvent(BoundEventAst ast, dynamic context) {
-    var eventTargetAndNames = context as Map<String, BoundEventAst>;
-    assert(eventTargetAndNames != null);
-  }
-
-  void visitReference(ReferenceAst ast, dynamic context) {}
-
-  void visitVariable(VariableAst ast, dynamic context) {}
-
-  void visitDirectiveProperty(BoundDirectivePropertyAst ast, dynamic context) {}
-
-  void visitElementProperty(BoundElementPropertyAst ast, dynamic context) {}
-
-  void visitProvider(ProviderAst ast, dynamic context) {}
-
-  void visitI18nText(I18nTextAst ast, dynamic context) {
+  @override
+  void visitI18nText(I18nTextAst ast, _) {
     _nodeIndex++;
   }
+
+  @override
+  void visitEvent(BoundEventAst ast, _) {}
+
+  @override
+  void visitNgContent(NgContentAst ast, _) {}
+
+  @override
+  void visitAttr(AttrAst ast, _) {}
+
+  @override
+  void visitDirective(DirectiveAst ast, _) {}
+
+  @override
+  void visitReference(ReferenceAst ast, _) {}
+
+  @override
+  void visitVariable(VariableAst ast, _) {}
+
+  @override
+  void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {}
+
+  @override
+  void visitElementProperty(BoundElementPropertyAst ast, _) {}
+
+  @override
+  void visitProvider(ProviderAst ast, _) {}
 }
 
 void bindViewHostProperties(CompileView view, Parser parser,

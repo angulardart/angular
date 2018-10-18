@@ -13,7 +13,6 @@ import '../html_events.dart';
 import '../identifiers.dart' show Identifiers;
 import '../is_pure_html.dart';
 import '../output/output_ast.dart' as o;
-import '../style_compiler.dart' show StylesCompileResult;
 import '../template_ast.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_view.dart';
@@ -43,7 +42,6 @@ import 'view_compiler_utils.dart'
 
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   final CompileView view;
-  final StylesCompileResult stylesCompileResult;
 
   /// This is `true` if this is building a view that will be inlined into it's
   /// parent view.
@@ -60,8 +58,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   String docVarName;
 
   ViewBuilderVisitor(
-    this.view,
-    this.stylesCompileResult, {
+    this.view, {
     this.isInlinedView = false,
   });
 
@@ -304,9 +301,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         isInlined: isPureHtml);
 
     // Create a visitor for embedded view and visit all nodes.
-    var embeddedViewVisitor = ViewBuilderVisitor(
-        embeddedView, stylesCompileResult,
-        isInlinedView: isPureHtml);
+    var embeddedViewVisitor =
+        ViewBuilderVisitor(embeddedView, isInlinedView: isPureHtml);
     templateVisitAll(
         embeddedViewVisitor,
         ast.children,
