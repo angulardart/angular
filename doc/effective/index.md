@@ -1,4 +1,4 @@
-# HTML generation in AngularDart
+# Best Practices
 
 go/angular-dart/effective
 
