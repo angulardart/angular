@@ -1,4 +1,4 @@
-# Effective AngularDart: Styling
+# CSS Styling
 
 
 AngularDart offers a variety of methods for styling your application. This
