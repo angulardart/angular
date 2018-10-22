@@ -1,36 +1,10 @@
 # Effective AngularDart: Change Detection
 
 
-> **NOTE**: This is a work-in-progress, and not yet final. Some of the links may
-> be substituted with `(...)`, and some TODOs or missing parts may be in the
-> documentation.
-
 Change detection is the performance bottleneck in most Angular apps. A component
 with problematic change detection bindings can cause the entire app to slow to a
 crawl. This best practices document will show you how to write components and
 templates that maximize the performance of your app.
-
-*   [Templates](#templates)
-    *   [AVOID expensive bindings](#avoid-expensive-bindings)
-    *   [DO use final fields where
-        possible](#do-use-final-fields-where-possible)
-    *   [DO use `exports` for static
-        bindings](#do-use-exports-for-static-bindings)
-    *   [PREFER 0- or 1-argument event
-        handlers](#prefer-0--or-1-argument-event-handlers)
-*   [Components](#components)
-    *   [AVOID order-dependent input
-        setters](#avoid-order-dependent-input-setters)
-    *   [AVOID any asynchronous actions in
-        `ngDoCheck`](#avoid-any-asynchronous-actions-in-ngdocheck)
-    *   [PREFER `ngAfterChanges` to
-        `ngOnChanges`](#prefer-implementing-afterchanges-to-onchanges)
-    *   [PREFER setters to
-        `ngAfterXChecked`](#prefer-setters-to-ngafterxchecked)
-    *   [PREFER `bool` setters to using
-        `getBool`](#prefer-bool-setters-to-using-getbool)
-    *   [PREFER using `OnPush` where
-        possible](#prefer-using-onpush-where-possible)
 
 ## Templates
 
