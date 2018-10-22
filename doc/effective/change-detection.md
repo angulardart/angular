@@ -1,4 +1,4 @@
-# Effective AngularDart: Change Detection
+# Change Detection
 
 
 Change detection is the performance bottleneck in most Angular apps. A component
