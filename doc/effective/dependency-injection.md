@@ -411,6 +411,16 @@ import 'file.template.dart' as ng;
 final InjectorFactory heroInjector = ng.heroInjector$Injector;
 ```
 
+**GOOD**: For migration purpoess, you could use
+[`ReflectiveInjector.resolveStaticAndCreate`][ri-static] instead of
+`resolveAndCreate`. This is meant to be a _transitional_ API before you switch
+to another injector. With `resolveStaticAndCreate`, any `ClassProvider` or a
+`FactoryProvider` without `deps: [ ... ]` will be rejected at runtime. This
+allows you to start using `runApp` (and remove `initReflector()`) without
+removing _every_ instance of `ReflectiveInjector` use.
+
+[ri-static]: https://cs.corp.google.com/piper///depot/google3/third_party/dart_src/angular/angular/lib/src/di/injector/runtime.dart?sq=package:piper+file://depot/google3+-file:google3/experimental&rcl=218100503&g=0&l=45-82
+
 ## Components
 
 ### CONSIDER avoiding using injection to configure individual components
