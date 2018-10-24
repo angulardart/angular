@@ -15,28 +15,28 @@ import 'providers.dart';
 /// pattern may be re-written to use `Module`:
 /// ```dart
 /// // Before.
-/// const carModule = const [
-///   const ClassProvider(Car, useClass: AmericanCar),
+/// const carModule = [
+///   ClassProvider(Car, useClass: AmericanCar),
 /// ];
 ///
-/// const autoShopModule = const [
+/// const autoShopModule = [
 ///   carModule,
-///   const ClassProvider(Oil, useClass: GenericOil),
+///   ClassProvider(Oil, useClass: GenericOil),
 /// ];
 ///
 /// // After.
-/// const carModule = const Module(
-///   provide: const [
-///     const ClassProvider(Car, useClass: AmericanCar),
+/// const carModule = Module(
+///   provide: [
+///     ClassProvider(Car, useClass: AmericanCar),
 ///   ],
 /// );
 ///
-/// const autoShopModule = const Module(
-///   include: const [
+/// const autoShopModule = Module(
+///   include: [
 ///     carModule,
 ///   ],
-///   provide: const [
-///     const ClassProvider(Oil, useClass: GenericOil),
+///   provide: [
+///     ClassProvider(Oil, useClass: GenericOil),
 ///   ],
 /// );
 /// ```
