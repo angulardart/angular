@@ -168,8 +168,29 @@ class BlogArticleComponent {
 }
 ```
 
-### Deferred loading
+### Using `@deferred` to lazy load components
 
+A _simple_ option for deferred (or lazy) loading is using the `@deferred` syntax
+within the HTML template. Simply place `@deferred` on any _component_ tag. The
+below example will lazy load the code required to create `<expensive-comp>`:
+
+```html
+<expensive-comp @deferred></expensive-comp>
+```
+
+You can also combine `@deferred` with something like an `ngIf`, but you will
+need to use a nested `ngIf`, as `@deferred` cannot be placed directly on a `*`
+directive:
+
+```html
+<template [ngIf]="showExpensiveComp">
+  <expensive-comp @deferred></expensive-comp>
+</template>
+```
+
+### Manual lazy loading using `ComponentLoader`
+
+If your use case requires more controlt than `@deferred` provides,
 `ComponentLoader` also works great with _deferred_ loading. Here is an example
 of the same component above using _deferred_ loading to load more code on
 demand:
@@ -222,17 +243,6 @@ void ngOnInit() async {
 }
 ```
 
-Another option, for simple templates, is using `@deferred`:
-
-```html
-<ng-container *ngIf="showAds">
-  <ad-view @deferred></ad-view>
-</ng-container>
-```
-
-This is similar to the code you would write imperatively above. The component
-will be automatically deferred loading, and in Dart2JS be present in a second
-(or subsequent) download of JavaScript.
 
 ## Migration
 
