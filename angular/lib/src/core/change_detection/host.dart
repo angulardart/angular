@@ -13,9 +13,6 @@ import 'constants.dart';
 
 /// A host for tracking the current application and stateful components.
 ///
-/// This is a work-in-progress as a refactor in [#1071]
-/// (https://github.com/dart-lang/angular/issues/1071).
-///
 /// This is expected to the base class for an `ApplicationRef`, and eventually
 /// could be merged in directly to avoid having inheritance if necessary. For
 /// now this is just for ease of testing and not breaking existing code.
