@@ -9,4 +9,4 @@ export 'src/core/metadata.dart' show Component, Directive, Input, Output;
 export 'src/core/metadata.dart' show Pipe;
 export 'src/core/zone/ng_zone.dart';
 // TODO: remove ExceptionHandler and WrappedException after deprecation.
-export 'src/facade/facade.dart' show ExceptionHandler;
+export 'src/facade/exception_handler.dart' show ExceptionHandler;
