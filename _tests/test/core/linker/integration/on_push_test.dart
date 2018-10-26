@@ -14,15 +14,32 @@ void main() {
 
   tearDown(disposeAnyRunningTest);
 
-  test('should use ChangeDetectorRef to manually request a check', () async {
-    final testBed = NgTestBed<ManualCheckComponent>();
-    final testFixture = await testBed.create();
-    final cmp = testFixture.assertOnlyInstance.child;
-    expect(cmp.numberOfChecks, 1);
-    await testFixture.update();
-    expect(cmp.numberOfChecks, 1);
-    await testFixture.update((_) => cmp.propagate());
-    expect(cmp.numberOfChecks, 2);
+  group('should use ChangeDetectorRef to manually request a check', () {
+    test('from a component declared in the template', () async {
+      final testBed = NgTestBed<ManualCheckComponent>();
+      final testFixture = await testBed.create();
+      final cmp = testFixture.assertOnlyInstance.child;
+      expect(cmp.numberOfChecks, 1);
+      await testFixture.update();
+      expect(cmp.numberOfChecks, 1);
+      await testFixture.update((_) => cmp.propagate());
+      expect(cmp.numberOfChecks, 2);
+    });
+
+    test('from an imperatively loaded component', () async {
+      final testBed = NgTestBed<ManualCheckLoadedComponent>();
+      PushCmpWithRef cmp;
+      final testFixture = await testBed.create(
+        beforeChangeDetection: (component) {
+          cmp = component.loadComponent();
+        },
+      );
+      expect(cmp.numberOfChecks, 1);
+      await testFixture.update();
+      expect(cmp.numberOfChecks, 1);
+      await testFixture.update((_) => cmp.propagate());
+      expect(cmp.numberOfChecks, 2);
+    });
   });
 
   test('should check component when bindings update', () async {
@@ -111,6 +128,21 @@ class PushCmpWithRef {
 class ManualCheckComponent {
   @ViewChild('cmp')
   PushCmpWithRef child;
+}
+
+@Component(
+  selector: 'test',
+  template: '<template #container></template>',
+)
+class ManualCheckLoadedComponent {
+  @ViewChild('container', read: ViewContainerRef)
+  ViewContainerRef componentLoader;
+
+  PushCmpWithRef loadComponent() {
+    return componentLoader
+        .createComponent(ng_generated.PushCmpWithRefNgFactory)
+        .instance;
+  }
 }
 
 @Component(
