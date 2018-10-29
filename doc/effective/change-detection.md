@@ -481,3 +481,62 @@ class MyComponent {
   }
 }
 ```
+
+### Prefer `NgZone.runAfterChangesObserved` to timers or microtasks
+
+It is sometimes seemingly necessary to _wait_ an arbtitrary amount of time for
+change detection to be executed before executing other dependent code. **This is
+sometimes a sign of another bug or design flaw** in an app model.
+
+To make it more clear the code you are using might have any issue, and the
+microtasks and/or timers are not an explicit part of your design, use the method
+`runAfterChangesObserved` by injecting `NgZone`.
+
+**BAD**: Using `scheduleMicrotask`.
+
+```dart
+class MyComponent {
+  var someField = false;
+  void someFunction() {
+    someField = true;
+    scheduleMicrotask(() {
+      // Observe some side-effect of "someField" being true.
+    });
+  }
+}
+```
+
+**BAD**: Using `Timer.run` (or any other `Timer` or `Future` method).
+
+```dart
+class MyComponent {
+  var someField = false;
+  void someFunction() {
+    someField = true;
+    Timer.run(() {
+      // Observe some side-effect of "someField" being true.
+    });
+  }
+}
+```
+
+**GOOD**: Using `NgZone#runAfterChangesObserved`.
+
+```dart
+class MyComponent {
+  final NgZone _ngZone;
+  MyComponent(this._ngZone);
+  var someField = false;
+  void someFunction() {
+    someField = true;
+    // TODO(...bug...): This should not be necessary.
+    NgZone.runAfterChangesObserved(() {
+      // Observe some side-effect of "someField" being true.
+    });
+  }
+}
+```
+
+As an added bonus, the AngularDart team and other knowledgeable folks will be
+much better prepared to help diagnose bugs or issues when they see this method
+being used than arbitrary timing.
