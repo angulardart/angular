@@ -42,6 +42,12 @@
     now been completely removed. This was a legacy field for older clients of
     AngularDart.
 
+### New features
+
+*   Added `runAfterChangesObserved` to `NgZone`. This API is intended to be a
+    more precise way to execute code _after_ AngularDart would have run change
+    detection (instead of relying on `scheduleMicrotask` or `Timer.run`).
+
 ## 5.1.0
 
 ### New features

@@ -260,5 +260,18 @@ void main() {
         'firefox': Skip('Strack trace appears differently'),
       });
     });
+
+    test('should support "runAfterChangesObserved"', () async {
+      var counter = 0;
+      return zone.run(() {
+        counter++;
+        scheduleMicrotask(() {
+          counter++;
+        });
+        zone.runAfterChangesObserved(expectAsync0(() {
+          expect(counter, 2);
+        }));
+      });
+    });
   });
 }
