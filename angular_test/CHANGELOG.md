@@ -1,3 +1,30 @@
+### Breaking Changes
+
+*   Changed `NgTestStabilizer` initialization from originating from a
+    `List<NgTestStabilizerFactory>` to a single `NgTestStabilizerFactory`. The
+    new top-level function `composeStabilizers` may be used to create a
+    composite factory from multiple factories:
+
+    ```dart
+    composeStabilizers([
+      (_) => stabilizer1,
+      (_) => stabilizer2,
+    ])
+    ```
+
+    This helps disambiguate the order of stabilizers running, which in turn will
+    allow additional new stabilizers and features to be added in a non-breaking
+    fashion. This change does not impact users that were not augmenting or
+    creating their own stabilizers (i.e. most users/most tests).
+
+*   Removed `NgTestStabilizer.all`. See `composeStabilizers` instead.
+
+### New Features
+
+*   Added a new `NgTestStabilizer.alwaysStable`, which does what it sounds like
+    and always reports stability. This handles making composition easier as the
+    root stabilizer can effectively be a no-op.
+
 ## 2.1.0
 
 ### New Features

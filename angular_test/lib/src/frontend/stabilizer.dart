@@ -13,6 +13,15 @@ import '../errors.dart';
 /// Creates a [NgTestStabilizer], optionally from an [Injector].
 typedef NgTestStabilizerFactory = NgTestStabilizer Function(Injector);
 
+/// Returns a composed sequence of [factories] as a single stabilizer.
+NgTestStabilizerFactory composeStabilizers(
+  Iterable<NgTestStabilizerFactory> factories,
+) {
+  return (injector) {
+    return _DelegatingNgTestStabilizer(factories.map((f) => f(injector)));
+  };
+}
+
 /// Abstraction around services that change the state of the DOM asynchronously.
 ///
 /// One strategy of testing Angular components is to interact with their emitted
@@ -40,12 +49,7 @@ typedef NgTestStabilizerFactory = NgTestStabilizer Function(Injector);
 ///
 /// Either `extend` or `implement` [NgTestStabilizer].
 abstract class NgTestStabilizer {
-  /// Create a new [NgTestStabilizer] that delegates to all [stabilizers].
-  ///
-  /// The [NgTestStabilizer.update] completes when _every_ stabilizer completes.
-  factory NgTestStabilizer.all(
-    Iterable<NgTestStabilizer> stabilizers,
-  ) = DelegatingNgTestStabilizer;
+  static const NgTestStabilizer alwaysStable = _AlwaysStableNgTestStabilizer();
 
   // Allow inheritance.
   const NgTestStabilizer();
@@ -116,13 +120,19 @@ abstract class NgTestStabilizer {
   }
 }
 
-@visibleForTesting
-class DelegatingNgTestStabilizer extends NgTestStabilizer {
+class _AlwaysStableNgTestStabilizer extends NgTestStabilizer {
+  const _AlwaysStableNgTestStabilizer();
+
+  @override
+  bool get isStable => true;
+}
+
+class _DelegatingNgTestStabilizer extends NgTestStabilizer {
   final List<NgTestStabilizer> _delegates;
 
   bool _updatedAtLeastOnce = false;
 
-  DelegatingNgTestStabilizer(Iterable<NgTestStabilizer> stabilizers)
+  _DelegatingNgTestStabilizer(Iterable<NgTestStabilizer> stabilizers)
       : _delegates = stabilizers.toList(growable: false);
 
   @override

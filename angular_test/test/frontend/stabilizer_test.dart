@@ -144,22 +144,22 @@ void main() {
     });
   });
 
-  group('$DelegatingNgTestStabilizer', () {
+  group('$composeStabilizers', () {
     NgZoneStabilizerForTesting ngZoneStabilizer;
     FakeNgTestStabilizer fakeNgTestStabilizer;
     AlwaysStableNgTestStabilizer alwaysStableNgTestStabilizer;
-    DelegatingNgTestStabilizer delegatingNgTestStabilizer;
+    NgTestStabilizer delegatingNgTestStabilizer;
 
     setUp(() {
       final ngZone = NgZone();
       ngZoneStabilizer = NgZoneStabilizerForTesting(ngZone);
       fakeNgTestStabilizer = FakeNgTestStabilizer(ngZone);
       alwaysStableNgTestStabilizer = AlwaysStableNgTestStabilizer();
-      delegatingNgTestStabilizer = DelegatingNgTestStabilizer([
-        ngZoneStabilizer,
-        fakeNgTestStabilizer,
-        alwaysStableNgTestStabilizer
-      ]);
+      delegatingNgTestStabilizer = composeStabilizers([
+        (_) => ngZoneStabilizer,
+        (_) => fakeNgTestStabilizer,
+        (_) => alwaysStableNgTestStabilizer
+      ])(null);
     });
 
     test('should stabilize if there is no function to run', () async {
