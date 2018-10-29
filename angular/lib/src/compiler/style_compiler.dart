@@ -20,17 +20,11 @@ const _viewClass = '_ngcontent-$_componentIdPlaceholder';
 class StylesCompileResult {
   final List<o.Statement> statements;
   final String stylesVar;
-  final bool usesHostAttribute;
-  final bool usesContentAttribute;
-  StylesCompileResult(this.statements, this.stylesVar, this.usesHostAttribute,
-      this.usesContentAttribute);
+  StylesCompileResult(this.statements, this.stylesVar);
 }
 
 class StyleCompiler {
   final CompilerFlags _config;
-
-  bool usesContentAttribute;
-  bool usesHostAttribute;
 
   StyleCompiler(this._config);
 
@@ -41,8 +35,6 @@ class StyleCompiler {
   /// tests) and [comp.template.styleUrls] contains urls to other css.shim.dart
   /// resources.
   StylesCompileResult compileComponent(CompileDirectiveMetadata comp) {
-    usesContentAttribute = false;
-    usesHostAttribute = false;
     var requiresShim =
         comp.template.encapsulation == ViewEncapsulation.Emulated;
     return this._compileStyles(_getStylesVarName(comp), comp.template.styles,
@@ -94,27 +86,13 @@ class StyleCompiler {
       null,
       [o.StmtModifier.Final],
     );
-    return StylesCompileResult(
-      [statement],
-      stylesVar,
-      usesHostAttribute,
-      usesContentAttribute,
-    );
+    return StylesCompileResult([statement], stylesVar);
   }
 
-  String _shimIfNeeded(String style, bool shim) {
-    String result = shim
-        ? shimShadowCss(style, _viewClass, _hostClass,
-            useLegacyEncapsulation: _config.useLegacyStyleEncapsulation)
-        : style;
-    if (result.contains(_viewClass)) {
-      usesContentAttribute = true;
-    }
-    if (result.contains(_hostClass)) {
-      usesHostAttribute = true;
-    }
-    return result;
-  }
+  String _shimIfNeeded(String style, bool shim) => shim
+      ? shimShadowCss(style, _viewClass, _hostClass,
+          useLegacyEncapsulation: _config.useLegacyStyleEncapsulation)
+      : style;
 }
 
 /// Returns variable name to use to access styles for a particular component
