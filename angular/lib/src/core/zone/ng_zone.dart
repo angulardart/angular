@@ -362,6 +362,32 @@ class NgZone {
   /// indefinitely.
   Stream<void> get onTurnDone => _onTurnDone.stream;
 
+  /// Executes a callback after changes were observed by the zone.
+  ///
+  /// Instead of adding arbitrary `Timer.run` and `scheduleMicrotask` calls to
+  /// user-code to try and simulate this event, instead `await` directly from
+  /// the `NgZone`:
+  ///
+  /// ```
+  /// void example(NgZone zone) async {
+  ///   someValue = true;
+  ///   // TODO(...): Remove this statement after following up with bug XXX.
+  ///   zone.runAfterChangesObserved(() {
+  ///     doSomethingDependentOnSomeValueChanging();
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// **WARNING**: This is not to be considered a permanent API fixture, as it
+  /// allows observing an event that is not relevant to all AngularDart apps -
+  /// for example components that use _stateful_ or other future types of change
+  /// detection may not be counted as part of this event. **Use sparingly**, and
+  /// consider filing bugs if you find yourself needing this function.
+  @experimental
+  void runAfterChangesObserved(void Function() callback) {
+    onTurnDone.first.whenComplete(() => callback());
+  }
+
   /// Disables additional collection of asynchronous tasks.
   ///
   /// This effectively permanently shuts down the events of this instance. Most
