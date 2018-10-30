@@ -25,6 +25,7 @@ import 'dart:core';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/common/directives/ng_for.dart' as import15;
 
 final List<dynamic> styles$RootComponent = const [];
 
@@ -39,11 +40,14 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   ViewEmbeddedNgIf0 _compView_2;
   import1.EmbeddedNgIf _EmbeddedNgIf_2_5;
   import2.Element _el_3;
-  ViewInjectsFromArbitraryParent0 _compView_3;
-  import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_3_5;
+  ViewEmbeddedNgFor0 _compView_3;
+  import1.EmbeddedNgFor _EmbeddedNgFor_3_5;
   import2.Element _el_4;
-  ViewComponentConditionalFeatures0 _compView_4;
-  import1.ComponentConditionalFeatures _ComponentConditionalFeatures_4_5;
+  ViewInjectsFromArbitraryParent0 _compView_4;
+  import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_4_5;
+  import2.Element _el_5;
+  ViewComponentConditionalFeatures0 _compView_5;
+  import1.ComponentConditionalFeatures _ComponentConditionalFeatures_5_5;
   static RenderComponentType _renderType;
   ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('root-component');
@@ -69,20 +73,25 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     parentRenderNode.append(_el_2);
     _EmbeddedNgIf_2_5 = import1.EmbeddedNgIf();
     _compView_2.create(_EmbeddedNgIf_2_5, []);
-    _compView_3 = ViewInjectsFromArbitraryParent0(this, 3);
+    _compView_3 = ViewEmbeddedNgFor0(this, 3);
     _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
-    _InjectsFromArbitraryParent_3_5 = (import7.isDevMode
+    _EmbeddedNgFor_3_5 = import1.EmbeddedNgFor();
+    _compView_3.create(_EmbeddedNgFor_3_5, []);
+    _compView_4 = ViewInjectsFromArbitraryParent0(this, 4);
+    _el_4 = _compView_4.rootEl;
+    parentRenderNode.append(_el_4);
+    _InjectsFromArbitraryParent_4_5 = (import7.isDevMode
         ? import9.debugInjectorWrap(import1.InjectsFromArbitraryParent, () {
             return import1.InjectsFromArbitraryParent(parentView.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex));
           })
         : import1.InjectsFromArbitraryParent(parentView.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex)));
-    _compView_3.create(_InjectsFromArbitraryParent_3_5, []);
-    _compView_4 = ViewComponentConditionalFeatures0(this, 4);
-    _el_4 = _compView_4.rootEl;
-    parentRenderNode.append(_el_4);
-    _ComponentConditionalFeatures_4_5 = import1.ComponentConditionalFeatures();
-    _compView_4.create(_ComponentConditionalFeatures_4_5, []);
+    _compView_4.create(_InjectsFromArbitraryParent_4_5, []);
+    _compView_5 = ViewComponentConditionalFeatures0(this, 5);
+    _el_5 = _compView_5.rootEl;
+    parentRenderNode.append(_el_5);
+    _ComponentConditionalFeatures_5_5 = import1.ComponentConditionalFeatures();
+    _compView_5.create(_ComponentConditionalFeatures_5_5, []);
     init(const [], null);
   }
 
@@ -90,14 +99,15 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      _ComponentConditionalFeatures_4_5.useFeatureA = true;
-      _ComponentConditionalFeatures_4_5.useFeatureB = false;
+      _ComponentConditionalFeatures_5_5.useFeatureA = true;
+      _ComponentConditionalFeatures_5_5.useFeatureB = false;
     }
     _compView_0.detectChanges();
     _compView_1.detectChanges();
     _compView_2.detectChanges();
     _compView_3.detectChanges();
     _compView_4.detectChanges();
+    _compView_5.detectChanges();
   }
 
   @override
@@ -107,6 +117,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_2?.destroy();
     _compView_3?.destroy();
     _compView_4?.destroy();
+    _compView_5?.destroy();
   }
 }
 
@@ -480,6 +491,122 @@ AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIfHost0(AppView<dynamic> par
 const ComponentFactory<import1.EmbeddedNgIf> _EmbeddedNgIfNgFactory = const ComponentFactory('embedded-ng-if', viewFactory_EmbeddedNgIfHost0);
 ComponentFactory<import1.EmbeddedNgIf> get EmbeddedNgIfNgFactory {
   return _EmbeddedNgIfNgFactory;
+}
+
+final List<dynamic> styles$EmbeddedNgFor = const [];
+
+class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
+  ViewContainer _appEl_1;
+  import15.NgFor _NgFor_1_9;
+  static RenderComponentType _renderType;
+  ViewEmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('embedded-ng-for');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$EmbeddedNgFor);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.EmbeddedNgFor> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import2.document;
+    final _el_0 = createAndAppend(doc, 'ul', parentRenderNode);
+    final _anchor_1 = createViewContainerAnchor();
+    _el_0.append(_anchor_1);
+    _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
+    TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_EmbeddedNgFor1);
+    _NgFor_1_9 = import15.NgFor(_appEl_1, _TemplateRef_1_8);
+    init(const [], null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      if (!identical(_ctx.items, null)) {
+        (_NgFor_1_9.ngForOf = _ctx.items);
+      }
+    }
+    if (!import6.AppViewUtils.throwOnChanges) {
+      _NgFor_1_9.ngDoCheck();
+    }
+    _appEl_1.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_1?.destroyNestedViews();
+  }
+}
+
+AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) {
+  return ViewEmbeddedNgFor0(parentView, parentIndex);
+}
+
+class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
+  import2.Text _text_1;
+  var _expr_0;
+  _ViewEmbeddedNgFor1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    componentType = ViewEmbeddedNgFor0._renderType;
+  }
+  @override
+  ComponentRef<import1.EmbeddedNgFor> build() {
+    var doc = import2.document;
+    final _el_0 = doc.createElement('li');
+    _text_1 = import2.Text('');
+    _el_0.append(_text_1);
+    init0(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final local_item = import7.unsafeCast<String>(locals['\$implicit']);
+    final currVal_0 = import6.interpolate0(local_item);
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      _text_1.text = currVal_0;
+      _expr_0 = currVal_0;
+    }
+  }
+}
+
+AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgFor1(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewEmbeddedNgFor1(parentView, parentIndex);
+}
+
+final List<dynamic> styles$EmbeddedNgForHost = const [];
+
+class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
+  ViewEmbeddedNgFor0 _compView_0;
+  import1.EmbeddedNgFor _EmbeddedNgFor_0_5;
+  _ViewEmbeddedNgForHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.EmbeddedNgFor> build() {
+    _compView_0 = ViewEmbeddedNgFor0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _EmbeddedNgFor_0_5 = import1.EmbeddedNgFor();
+    _compView_0.create(_EmbeddedNgFor_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _EmbeddedNgFor_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgForHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewEmbeddedNgForHost0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.EmbeddedNgFor> _EmbeddedNgForNgFactory = const ComponentFactory('embedded-ng-for', viewFactory_EmbeddedNgForHost0);
+ComponentFactory<import1.EmbeddedNgFor> get EmbeddedNgForNgFactory {
+  return _EmbeddedNgForNgFactory;
 }
 
 final List<dynamic> styles$NullComponent = const [];
@@ -878,6 +1005,7 @@ void initReflector() {
   _ngRef.registerComponent(DefaultChangeDetectionAndInput, DefaultChangeDetectionAndInputNgFactory);
   _ngRef.registerComponent(InlinedNgIf, InlinedNgIfNgFactory);
   _ngRef.registerComponent(EmbeddedNgIf, EmbeddedNgIfNgFactory);
+  _ngRef.registerComponent(EmbeddedNgFor, EmbeddedNgForNgFactory);
   _ngRef.registerComponent(NullComponent, NullComponentNgFactory);
   _ngRef.registerComponent(InjectsFromArbitraryParent, InjectsFromArbitraryParentNgFactory);
   _ngRef.registerComponent(ComponentConditionalFeatures, ComponentConditionalFeaturesNgFactory);

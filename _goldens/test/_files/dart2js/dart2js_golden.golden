@@ -726,6 +726,8 @@
       removeAt$1: function(receiver, index) {
         if (!!receiver.fixed$length)
           H.throwExpression(P.UnsupportedError$("removeAt"));
+        if (typeof index !== "number" || Math.floor(index) !== index)
+          throw H.wrapException(H.argumentErrorValue(index));
         if (index < 0 || index >= receiver.length)
           throw H.wrapException(P.RangeError$value(index, null, null));
         return receiver.splice(index, 1)[0];
@@ -734,6 +736,8 @@
         var t1;
         if (!!receiver.fixed$length)
           H.throwExpression(P.UnsupportedError$("insert"));
+        if (typeof index !== "number" || Math.floor(index) !== index)
+          throw H.wrapException(H.argumentErrorValue(index));
         t1 = receiver.length;
         if (index > t1)
           throw H.wrapException(P.RangeError$value(index, null, null));
@@ -774,6 +778,18 @@
           return receiver[t1 - 1];
         throw H.wrapException(H.IterableElementError_noElement());
       },
+      indexOf$2: function(receiver, element, start) {
+        var i;
+        if (start >= receiver.length)
+          return -1;
+        for (i = start; i < receiver.length; ++i)
+          if (J.$eq$(receiver[i], element))
+            return i;
+        return -1;
+      },
+      indexOf$1: function($receiver, element) {
+        return this.indexOf$2($receiver, element, 0);
+      },
       contains$1: function(receiver, other) {
         var i;
         for (i = 0; i < receiver.length; ++i)
@@ -801,6 +817,8 @@
         receiver.length = newLength;
       },
       $index: function(receiver, index) {
+        if (typeof index !== "number" || Math.floor(index) !== index)
+          throw H.wrapException(H.diagnoseIndexError(receiver, index));
         if (index >= receiver.length || index < 0)
           throw H.wrapException(H.diagnoseIndexError(receiver, index));
         return receiver[index];
@@ -2548,6 +2566,27 @@
       get$values: function(_) {
         return H.MappedIterable_MappedIterable(this.get$keys(this), new H.JsLinkedHashMap_values_closure(this), H.getTypeArgumentByIndex(this, 0), H.getTypeArgumentByIndex(this, 1));
       },
+      containsKey$1: function(_, key) {
+        var strings, nums;
+        if (typeof key === "string") {
+          strings = this._strings;
+          if (strings == null)
+            return false;
+          return this._containsTableEntry$2(strings, key);
+        } else if (typeof key === "number" && (key & 0x3ffffff) === key) {
+          nums = this._nums;
+          if (nums == null)
+            return false;
+          return this._containsTableEntry$2(nums, key);
+        } else
+          return this.internalContainsKey$1(key);
+      },
+      internalContainsKey$1: function(key) {
+        var rest = this._rest;
+        if (rest == null)
+          return false;
+        return this.internalFindBucketIndex$2(this._getTableBucket$2(rest, this.internalComputeHashCode$1(key)), key) >= 0;
+      },
       $index: function(_, key) {
         var strings, cell, t1, nums;
         if (typeof key === "string") {
@@ -2613,6 +2652,38 @@
           }
         }
       },
+      remove$1: function(_, key) {
+        if (typeof key === "string")
+          return this._removeHashTableEntry$2(this._strings, key);
+        else if (typeof key === "number" && (key & 0x3ffffff) === key)
+          return this._removeHashTableEntry$2(this._nums, key);
+        else
+          return this.internalRemove$1(key);
+      },
+      internalRemove$1: function(key) {
+        var rest, bucket, index, cell;
+        rest = this._rest;
+        if (rest == null)
+          return;
+        bucket = this._getTableBucket$2(rest, this.internalComputeHashCode$1(key));
+        index = this.internalFindBucketIndex$2(bucket, key);
+        if (index < 0)
+          return;
+        cell = bucket.splice(index, 1)[0];
+        this._unlinkCell$1(cell);
+        return cell.hashMapCellValue;
+      },
+      clear$0: function(_) {
+        if (this._length > 0) {
+          this._last = null;
+          this._first = null;
+          this._rest = null;
+          this._nums = null;
+          this._strings = null;
+          this._length = 0;
+          this._modified$0();
+        }
+      },
       forEach$1: function(_, action) {
         var cell, modifications;
         cell = this._first;
@@ -2631,6 +2702,20 @@
         else
           cell.hashMapCellValue = value;
       },
+      _removeHashTableEntry$2: function(table, key) {
+        var cell;
+        if (table == null)
+          return;
+        cell = this._getTableCell$2(table, key);
+        if (cell == null)
+          return;
+        this._unlinkCell$1(cell);
+        this._deleteTableEntry$2(table, key);
+        return cell.hashMapCellValue;
+      },
+      _modified$0: function() {
+        this._modifications = this._modifications + 1 & 67108863;
+      },
       _newLinkedCell$2: function(key, value) {
         var cell, last;
         cell = new H.LinkedHashMapCell(key, value);
@@ -2644,8 +2729,23 @@
           this._last = cell;
         }
         ++this._length;
-        this._modifications = this._modifications + 1 & 67108863;
+        this._modified$0();
         return cell;
+      },
+      _unlinkCell$1: function(cell) {
+        var previous, next;
+        previous = cell._previous;
+        next = cell._next;
+        if (previous == null)
+          this._first = next;
+        else
+          previous._next = next;
+        if (next == null)
+          this._last = previous;
+        else
+          next._previous = previous;
+        --this._length;
+        this._modified$0();
       },
       internalComputeHashCode$1: function(key) {
         return J.get$hashCode$(key) & 0x3ffffff;
@@ -2674,6 +2774,9 @@
       },
       _deleteTableEntry$2: function(table, key) {
         delete table[key];
+      },
+      _containsTableEntry$2: function(table, key) {
+        return this._getTableCell$2(table, key) != null;
       },
       _newHashTable$0: function() {
         var table = Object.create(null);
@@ -4883,6 +4986,11 @@
             return i;
         }
         return -1;
+      },
+      static: {
+        _LinkedIdentityHashMap__LinkedIdentityHashMap$es6: function($K, $V) {
+          return new P._LinkedIdentityHashMap(0, 0, [$K, $V]);
+        }
       }
     },
     _LinkedHashSet: {
@@ -7383,7 +7491,7 @@
     _callDartFunctionFast: [function(callback, $arguments) {
       var t1 = H.Primitives_applyFunctionWithPositionalArguments(callback, $arguments);
       return t1;
-    }, null, null, 8, 0, null, 13, 30],
+    }, null, null, 8, 0, null, 13, 31],
     allowInterop: function(f) {
       if (typeof f == "function")
         return f;
@@ -7981,43 +8089,84 @@
         return result.call$0();
       }
     }
+  }], ["", "package:angular/src/common/directives/ng_for.dart",, R, {
+    "^": "",
+    NgFor: {
+      "^": "Object;_ng_for$_viewContainer,0_differ,0_ngForOf,0_ngForTrackBy,_ng_for$_templateRef",
+      _applyChanges$1: function(changes) {
+        var insertTuples, i, t1, t2, t3, len;
+        insertTuples = H.setRuntimeTypeInfo([], [R._RecordViewTuple]);
+        changes.forEachOperation$1(new R.NgFor__applyChanges_closure(this, insertTuples));
+        for (i = 0; i < insertTuples.length; ++i) {
+          t1 = insertTuples[i];
+          t2 = t1.record;
+          t1 = t1.view.appView.locals;
+          t1.$indexSet(0, "$implicit", t2.item);
+          t3 = t2.currentIndex;
+          t3.toString;
+          t1.$indexSet(0, "even", (t3 & 1) === 0);
+          t2 = t2.currentIndex;
+          t2.toString;
+          t1.$indexSet(0, "odd", (t2 & 1) === 1);
+        }
+        for (t1 = this._ng_for$_viewContainer, len = t1.get$length(t1), t2 = len - 1, i = 0; i < len; ++i) {
+          t3 = t1.nestedViews[i].viewData.ref.appView.locals;
+          t3.$indexSet(0, "first", i === 0);
+          t3.$indexSet(0, "last", i === t2);
+          t3.$indexSet(0, "index", i);
+          t3.$indexSet(0, "count", len);
+        }
+        changes.forEachIdentityChange$1(new R.NgFor__applyChanges_closure0(this));
+      }
+    },
+    NgFor__applyChanges_closure: {
+      "^": "Closure;$this,insertTuples",
+      call$3: function(item, adjustedPreviousIndex, currentIndex) {
+        var t1, t2, viewRef, index, view;
+        if (item.previousIndex == null) {
+          t1 = this.$this;
+          t2 = t1._ng_for$_viewContainer;
+          t2.toString;
+          viewRef = t1._ng_for$_templateRef.createEmbeddedView$0();
+          index = currentIndex === -1 ? t2.get$length(t2) : currentIndex;
+          t2.attachView$2(viewRef.appView, index);
+          this.insertTuples.push(new R._RecordViewTuple(viewRef, item));
+        } else {
+          t1 = this.$this._ng_for$_viewContainer;
+          if (currentIndex == null)
+            t1.remove$1(0, adjustedPreviousIndex);
+          else {
+            view = t1.nestedViews[adjustedPreviousIndex].viewData.ref;
+            t1.move$2(view, currentIndex);
+            this.insertTuples.push(new R._RecordViewTuple(view, item));
+          }
+        }
+      }
+    },
+    NgFor__applyChanges_closure0: {
+      "^": "Closure;$this",
+      call$1: function(record) {
+        var t1 = record.currentIndex;
+        this.$this._ng_for$_viewContainer.nestedViews[t1].viewData.ref.appView.locals.$indexSet(0, "$implicit", record.item);
+      }
+    },
+    _RecordViewTuple: {
+      "^": "Object;view,record"
+    }
   }], ["", "package:angular/src/common/directives/ng_if.dart",, K, {
     "^": "",
     NgIf: {
       "^": "Object;_templateRef,_viewContainer,_prevCondition",
       set$ngIf: function(newCondition) {
-        var t1, t2, t3, parentView, view, _nestedViews, refRenderNode;
+        var t1;
         newCondition = newCondition === true;
         t1 = this._prevCondition;
         if (t1 === newCondition)
           return;
         t1 = this._viewContainer;
         if (newCondition) {
-          t2 = this._templateRef;
           t1.toString;
-          t3 = t2._template_ref$_viewContainer;
-          parentView = t3.parentView;
-          view = t2._template_ref$_viewFactory.call$2(parentView, t3.index);
-          view.create$2(0, parentView.ctx, parentView.viewData.projectableNodes);
-          t3 = view.viewData.ref.appView;
-          t2 = t1.get$length(t1);
-          if (t3.viewData.type === C.ViewType_1)
-            H.throwExpression(P.StateError$("Component views can't be moved!"));
-          _nestedViews = t1.nestedViews;
-          if (_nestedViews == null)
-            _nestedViews = H.setRuntimeTypeInfo([], [[S.AppView,,]]);
-          C.JSArray_methods.insert$2(_nestedViews, t2, t3);
-          if (t2 > 0) {
-            t2 = _nestedViews[t2 - 1].viewData.rootNodesOrViewContainers;
-            refRenderNode = S._findLastRenderNode(t2.length !== 0 ? (t2 && C.JSArray_methods).get$last(t2) : null);
-          } else
-            refRenderNode = t1.nativeElement;
-          t1.nestedViews = _nestedViews;
-          if (refRenderNode != null) {
-            S._moveNodesAfterSibling(refRenderNode, S._flattenNestedViewRenderNodes(t3.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
-            $.domRootRendererIsDirty = true;
-          }
-          t3.viewData._viewContainerElement = t1;
+          t1.attachView$2(this._templateRef.createEmbeddedView$0().appView, t1.get$length(t1));
         } else
           t1.clear$0(0);
         this._prevCondition = newCondition;
@@ -8132,6 +8281,433 @@
     ChangeDetectorRef: {
       "^": "Object;"
     }
+  }], ["", "package:angular/src/core/change_detection/differs/default_iterable_differ.dart",, R, {
+    "^": "",
+    _trackByIdentity: [function(index, item) {
+      return item;
+    }, "call$2", "default_iterable_differ___trackByIdentity$closure", 8, 0, 29, 14, 23],
+    _getPreviousIndex: function(item, addRemoveOffset, moveOffsets) {
+      var previousIndex, moveOffset;
+      previousIndex = item.previousIndex;
+      if (previousIndex == null)
+        return previousIndex;
+      moveOffset = moveOffsets != null && previousIndex < moveOffsets.length ? moveOffsets[previousIndex] : 0;
+      return previousIndex + addRemoveOffset + moveOffset;
+    },
+    DefaultIterableDiffer: {
+      "^": "Object;_trackByFn,0_default_iterable_differ$_length,0_collection,0_linkedRecords,0_unlinkedRecords,0_previousItHead,0_itHead,0_itTail,0_additionsHead,0_additionsTail,0_movesHead,0_movesTail,0_removalsHead,0_removalsTail,0_identityChangesHead,0_identityChangesTail",
+      get$length: function(_) {
+        return this._default_iterable_differ$_length;
+      },
+      forEachOperation$1: function(fn) {
+        var nextIt, nextRemove, t1, addRemoveOffset, sizeDeficit, moveOffsets, t2, record, adjPreviousIndex, currentIndex, localMovePreviousIndex, localCurrentIndex, i, offset, j, index, previousIndex;
+        nextIt = this._itHead;
+        nextRemove = this._removalsHead;
+        t1 = [P.int];
+        addRemoveOffset = 0;
+        sizeDeficit = null;
+        moveOffsets = null;
+        while (true) {
+          t2 = nextIt == null;
+          if (!(!t2 || nextRemove != null))
+            break;
+          if (nextRemove != null)
+            t2 = !t2 && nextIt.currentIndex < R._getPreviousIndex(nextRemove, addRemoveOffset, moveOffsets);
+          else
+            t2 = true;
+          record = t2 ? nextIt : nextRemove;
+          adjPreviousIndex = R._getPreviousIndex(record, addRemoveOffset, moveOffsets);
+          currentIndex = record.currentIndex;
+          if (record === nextRemove) {
+            --addRemoveOffset;
+            nextRemove = nextRemove._nextRemoved;
+          } else {
+            nextIt = nextIt._default_iterable_differ$_next;
+            if (record.previousIndex == null)
+              ++addRemoveOffset;
+            else {
+              if (moveOffsets == null)
+                moveOffsets = H.setRuntimeTypeInfo([], t1);
+              localMovePreviousIndex = adjPreviousIndex - addRemoveOffset;
+              localCurrentIndex = currentIndex - addRemoveOffset;
+              if (localMovePreviousIndex !== localCurrentIndex) {
+                for (i = 0; i < localMovePreviousIndex; ++i) {
+                  t2 = moveOffsets.length;
+                  if (i < t2)
+                    offset = moveOffsets[i];
+                  else {
+                    if (t2 > i)
+                      moveOffsets[i] = 0;
+                    else {
+                      sizeDeficit = i - t2 + 1;
+                      for (j = 0; j < sizeDeficit; ++j)
+                        moveOffsets.push(null);
+                      moveOffsets[i] = 0;
+                    }
+                    offset = 0;
+                  }
+                  index = offset + i;
+                  if (localCurrentIndex <= index && index < localMovePreviousIndex)
+                    moveOffsets[i] = offset + 1;
+                }
+                previousIndex = record.previousIndex;
+                sizeDeficit = previousIndex - moveOffsets.length + 1;
+                for (j = 0; j < sizeDeficit; ++j)
+                  moveOffsets.push(null);
+                moveOffsets[previousIndex] = localCurrentIndex - localMovePreviousIndex;
+              }
+            }
+          }
+          if (adjPreviousIndex != currentIndex)
+            fn.call$3(record, adjPreviousIndex, currentIndex);
+        }
+      },
+      forEachIdentityChange$1: function(fn) {
+        var record;
+        for (record = this._identityChangesHead; record != null; record = record._nextIdentityChange)
+          fn.call$1(record);
+      },
+      check$1: function(_, collection) {
+        var record, t1, t2, t3, t4, index, item, itemTrackBy, t5;
+        this._reset$0();
+        record = this._itHead;
+        this._default_iterable_differ$_length = collection.length;
+        for (t1 = this._trackByFn, t2 = record, t3 = false, t4 = 0; t4 < this._default_iterable_differ$_length; index = t4 + 1, t4 = index, t2 = record) {
+          item = collection[t4];
+          itemTrackBy = t1.call$2(t4, item);
+          if (t2 != null) {
+            t5 = t2.trackById;
+            t5 = t5 == null ? itemTrackBy != null : t5 !== itemTrackBy;
+          } else
+            t5 = true;
+          if (t5) {
+            record = this._mismatch$4(t2, item, itemTrackBy, t4);
+            t2 = record;
+            t3 = true;
+          } else {
+            if (t3)
+              t2 = this._verifyReinsertion$4(t2, item, itemTrackBy, t4);
+            t5 = t2.item;
+            if (t5 == null ? item != null : t5 !== item) {
+              t2.item = item;
+              t5 = this._identityChangesTail;
+              if (t5 == null) {
+                this._identityChangesHead = t2;
+                this._identityChangesTail = t2;
+              } else {
+                t5._nextIdentityChange = t2;
+                this._identityChangesTail = t2;
+              }
+            }
+          }
+          record = t2._default_iterable_differ$_next;
+        }
+        t1 = t2;
+        this._truncate$1(t1);
+        this._collection = collection;
+        return this.get$isDirty();
+      },
+      get$isDirty: function() {
+        return this._additionsHead != null || this._movesHead != null || this._removalsHead != null || this._identityChangesHead != null;
+      },
+      _reset$0: function() {
+        var record, record0, nextRecord;
+        if (this.get$isDirty()) {
+          for (record = this._itHead, this._previousItHead = record; record != null; record = record0) {
+            record0 = record._default_iterable_differ$_next;
+            record._nextPrevious = record0;
+          }
+          for (record = this._additionsHead; record != null; record = record._nextAdded)
+            record.previousIndex = record.currentIndex;
+          this._additionsTail = null;
+          this._additionsHead = null;
+          for (record = this._movesHead; record != null; record = nextRecord) {
+            record.previousIndex = record.currentIndex;
+            nextRecord = record._nextMoved;
+          }
+          this._movesTail = null;
+          this._movesHead = null;
+          this._removalsTail = null;
+          this._removalsHead = null;
+          this._identityChangesTail = null;
+          this._identityChangesHead = null;
+        }
+      },
+      _mismatch$4: function(record, item, itemTrackBy, index) {
+        var previousRecord, t1;
+        if (record == null)
+          previousRecord = this._itTail;
+        else {
+          previousRecord = record._prev;
+          this._addToRemovals$1(this._unlink$1(record));
+        }
+        t1 = this._linkedRecords;
+        record = t1 == null ? null : t1.$get$2(0, itemTrackBy, index);
+        if (record != null) {
+          t1 = record.item;
+          if (t1 == null ? item != null : t1 !== item)
+            this._addIdentityChange$2(record, item);
+          this._unlink$1(record);
+          this._insertAfter$3(record, previousRecord, index);
+          this._addToMoves$2(record, index);
+        } else {
+          t1 = this._unlinkedRecords;
+          record = t1 == null ? null : t1.$get$1(0, itemTrackBy);
+          if (record != null) {
+            t1 = record.item;
+            if (t1 == null ? item != null : t1 !== item)
+              this._addIdentityChange$2(record, item);
+            this._reinsertAfter$3(record, previousRecord, index);
+          } else {
+            record = new R.CollectionChangeRecord(item, itemTrackBy);
+            this._insertAfter$3(record, previousRecord, index);
+            t1 = this._additionsTail;
+            if (t1 == null) {
+              this._additionsHead = record;
+              this._additionsTail = record;
+            } else {
+              t1._nextAdded = record;
+              this._additionsTail = record;
+            }
+          }
+        }
+        return record;
+      },
+      _verifyReinsertion$4: function(record, item, itemTrackBy, index) {
+        var t1, reinsertRecord;
+        t1 = this._unlinkedRecords;
+        reinsertRecord = t1 == null ? null : t1.$get$1(0, itemTrackBy);
+        if (reinsertRecord != null)
+          record = this._reinsertAfter$3(reinsertRecord, record._prev, index);
+        else if (record.currentIndex != index) {
+          record.currentIndex = index;
+          this._addToMoves$2(record, index);
+        }
+        return record;
+      },
+      _truncate$1: function(record) {
+        var nextRecord, t1;
+        for (; record != null; record = nextRecord) {
+          nextRecord = record._default_iterable_differ$_next;
+          this._addToRemovals$1(this._unlink$1(record));
+        }
+        t1 = this._unlinkedRecords;
+        if (t1 != null)
+          t1._default_iterable_differ$_map.clear$0(0);
+        t1 = this._additionsTail;
+        if (t1 != null)
+          t1._nextAdded = null;
+        t1 = this._movesTail;
+        if (t1 != null)
+          t1._nextMoved = null;
+        t1 = this._itTail;
+        if (t1 != null)
+          t1._default_iterable_differ$_next = null;
+        t1 = this._removalsTail;
+        if (t1 != null)
+          t1._nextRemoved = null;
+        t1 = this._identityChangesTail;
+        if (t1 != null)
+          t1._nextIdentityChange = null;
+      },
+      _reinsertAfter$3: function(record, prevRecord, index) {
+        var t1, prev, next;
+        t1 = this._unlinkedRecords;
+        if (t1 != null)
+          t1.remove$1(0, record);
+        prev = record._prevRemoved;
+        next = record._nextRemoved;
+        if (prev == null)
+          this._removalsHead = next;
+        else
+          prev._nextRemoved = next;
+        if (next == null)
+          this._removalsTail = prev;
+        else
+          next._prevRemoved = prev;
+        this._insertAfter$3(record, prevRecord, index);
+        this._addToMoves$2(record, index);
+        return record;
+      },
+      _insertAfter$3: function(record, prevRecord, index) {
+        var t1, next;
+        t1 = prevRecord == null;
+        next = t1 ? this._itHead : prevRecord._default_iterable_differ$_next;
+        record._default_iterable_differ$_next = next;
+        record._prev = prevRecord;
+        if (next == null)
+          this._itTail = record;
+        else
+          next._prev = record;
+        if (t1)
+          this._itHead = record;
+        else
+          prevRecord._default_iterable_differ$_next = record;
+        t1 = this._linkedRecords;
+        if (t1 == null) {
+          t1 = new R._DuplicateMap(P._LinkedIdentityHashMap__LinkedIdentityHashMap$es6(null, R._DuplicateItemRecordList));
+          this._linkedRecords = t1;
+        }
+        t1.put$1(0, record);
+        record.currentIndex = index;
+        return record;
+      },
+      _unlink$1: function(record) {
+        var t1, prev, next;
+        t1 = this._linkedRecords;
+        if (!(t1 == null))
+          t1.remove$1(0, record);
+        prev = record._prev;
+        next = record._default_iterable_differ$_next;
+        if (prev == null)
+          this._itHead = next;
+        else
+          prev._default_iterable_differ$_next = next;
+        if (next == null)
+          this._itTail = prev;
+        else
+          next._prev = prev;
+        return record;
+      },
+      _addToMoves$2: function(record, toIndex) {
+        var t1;
+        if (record.previousIndex == toIndex)
+          return record;
+        t1 = this._movesTail;
+        if (t1 == null) {
+          this._movesHead = record;
+          this._movesTail = record;
+        } else {
+          t1._nextMoved = record;
+          this._movesTail = record;
+        }
+        return record;
+      },
+      _addToRemovals$1: function(record) {
+        var t1 = this._unlinkedRecords;
+        if (t1 == null) {
+          t1 = new R._DuplicateMap(P._LinkedIdentityHashMap__LinkedIdentityHashMap$es6(null, R._DuplicateItemRecordList));
+          this._unlinkedRecords = t1;
+        }
+        t1.put$1(0, record);
+        record.currentIndex = null;
+        record._nextRemoved = null;
+        t1 = this._removalsTail;
+        if (t1 == null) {
+          this._removalsHead = record;
+          this._removalsTail = record;
+          record._prevRemoved = null;
+        } else {
+          record._prevRemoved = t1;
+          t1._nextRemoved = record;
+          this._removalsTail = record;
+        }
+        return record;
+      },
+      _addIdentityChange$2: function(record, item) {
+        var t1;
+        record.item = item;
+        t1 = this._identityChangesTail;
+        if (t1 == null) {
+          this._identityChangesHead = record;
+          this._identityChangesTail = record;
+        } else {
+          t1._nextIdentityChange = record;
+          this._identityChangesTail = record;
+        }
+        return record;
+      },
+      toString$0: function(_) {
+        var t1 = this.super$Object$toString(0);
+        return t1;
+      }
+    },
+    CollectionChangeRecord: {
+      "^": "Object;item,trackById,0currentIndex,0previousIndex,0_nextPrevious,0_prev,0_default_iterable_differ$_next,0_prevDup,0_nextDup,0_prevRemoved,0_nextRemoved,0_nextAdded,0_nextMoved,0_nextIdentityChange",
+      toString$0: function(_) {
+        var t1, t2, t3;
+        t1 = this.previousIndex;
+        t2 = this.currentIndex;
+        t3 = this.item;
+        return t1 == t2 ? J.toString$0$(t3) : H.S(t3) + "[" + H.S(this.previousIndex) + "->" + H.S(this.currentIndex) + "]";
+      }
+    },
+    _DuplicateItemRecordList: {
+      "^": "Object;0_head,0_tail",
+      add$1: function(_, record) {
+        var t1;
+        if (this._head == null) {
+          this._tail = record;
+          this._head = record;
+          record._nextDup = null;
+          record._prevDup = null;
+        } else {
+          t1 = this._tail;
+          t1._nextDup = record;
+          record._prevDup = t1;
+          record._nextDup = null;
+          this._tail = record;
+        }
+      },
+      $get$2: function(_, trackById, afterIndex) {
+        var record, t1, t2;
+        for (record = this._head, t1 = afterIndex != null; record != null; record = record._nextDup) {
+          if (!t1 || afterIndex < record.currentIndex) {
+            t2 = record.trackById;
+            t2 = t2 == null ? trackById == null : t2 === trackById;
+          } else
+            t2 = false;
+          if (t2)
+            return record;
+        }
+        return;
+      }
+    },
+    _DuplicateMap: {
+      "^": "Object;_default_iterable_differ$_map",
+      put$1: function(_, record) {
+        var key, t1, duplicates;
+        key = record.trackById;
+        t1 = this._default_iterable_differ$_map;
+        duplicates = t1.$index(0, key);
+        if (duplicates == null) {
+          duplicates = new R._DuplicateItemRecordList();
+          t1.$indexSet(0, key, duplicates);
+        }
+        duplicates.add$1(0, record);
+      },
+      $get$2: function(_, trackById, afterIndex) {
+        var recordList = this._default_iterable_differ$_map.$index(0, trackById);
+        return recordList == null ? null : recordList.$get$2(0, trackById, afterIndex);
+      },
+      $get$1: function($receiver, trackById) {
+        return this.$get$2($receiver, trackById, null);
+      },
+      remove$1: function(_, record) {
+        var key, t1, recordList, prev, next;
+        key = record.trackById;
+        t1 = this._default_iterable_differ$_map;
+        recordList = t1.$index(0, key);
+        recordList.toString;
+        prev = record._prevDup;
+        next = record._nextDup;
+        if (prev == null)
+          recordList._head = next;
+        else
+          prev._nextDup = next;
+        if (next == null)
+          recordList._tail = prev;
+        else
+          next._prevDup = prev;
+        if (recordList._head == null)
+          if (t1.containsKey$1(0, key))
+            t1.remove$1(0, key);
+        return record;
+      },
+      toString$0: function(_) {
+        return "_DuplicateMap(" + this._default_iterable_differ$_map.toString$0(0) + ")";
+      }
+    }
   }], ["", "package:angular/src/core/change_detection/host.dart",, M, {
     "^": "",
     ChangeDetectionHost: {
@@ -8235,7 +8811,7 @@
         var sCasted = s;
         this.completer.completeError$2(e, sCasted);
         this.$this._exceptionHandler.call$3(e, sCasted, null);
-      }, null, null, 8, 0, null, 11, 23, "call"]
+      }, null, null, 8, 0, null, 11, 24, "call"]
     }
   }], ["", "package:angular/src/core/di/opaque_token.dart",, S, {
     "^": "",
@@ -8420,6 +8996,10 @@
       },
       destroyInternal$0: function() {
       },
+      get$lastRootNode: function() {
+        var t1 = this.viewData.rootNodesOrViewContainers;
+        return S._findLastRenderNode(t1.length !== 0 ? (t1 && C.JSArray_methods).get$last(t1) : null);
+      },
       detectChanges$0: function() {
         if (this.viewData._skipChangeDetection)
           return;
@@ -8459,6 +9039,11 @@
     }
   }], ["", "package:angular/src/core/linker/app_view_utils.dart",, Q, {
     "^": "",
+    interpolate0: function(p) {
+      if (typeof p === "string")
+        return p;
+      return p == null ? "" : p;
+    },
     AppViewUtils: {
       "^": "Object;_appId,eventManager,sanitizer",
       createRenderType$3: function(templateUrl, encapsulation, styles) {
@@ -8490,7 +9075,15 @@
   }], ["", "package:angular/src/core/linker/template_ref.dart",, D, {
     "^": "",
     TemplateRef: {
-      "^": "Object;_template_ref$_viewContainer,_template_ref$_viewFactory"
+      "^": "Object;_template_ref$_viewContainer,_template_ref$_viewFactory",
+      createEmbeddedView$0: function() {
+        var t1, parentView, view;
+        t1 = this._template_ref$_viewContainer;
+        parentView = t1.parentView;
+        view = this._template_ref$_viewFactory.call$2(parentView, t1.index);
+        view.create$2(0, parentView.ctx, parentView.viewData.projectableNodes);
+        return view.viewData.ref;
+      }
     }
   }], ["", "package:angular/src/core/linker/view_container.dart",, V, {
     "^": "",
@@ -8516,26 +9109,67 @@
         for (len = _nestedViews.length, i = 0; i < len; ++i)
           _nestedViews[i].destroy$0();
       },
+      move$2: function(viewRef, currentIndex) {
+        var t1, views, previousIndex, refRenderNode;
+        if (currentIndex === -1)
+          return;
+        t1 = viewRef.appView;
+        views = this.nestedViews;
+        previousIndex = (views && C.JSArray_methods).indexOf$1(views, t1);
+        if (t1.viewData.type === C.ViewType_1)
+          H.throwExpression(P.Exception_Exception("Component views can't be moved!"));
+        C.JSArray_methods.removeAt$1(views, previousIndex);
+        C.JSArray_methods.insert$2(views, currentIndex, t1);
+        refRenderNode = currentIndex > 0 ? views[currentIndex - 1].get$lastRootNode() : this.nativeElement;
+        if (refRenderNode != null) {
+          S._moveNodesAfterSibling(refRenderNode, S._flattenNestedViewRenderNodes(t1.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
+          $.domRootRendererIsDirty = true;
+        }
+        return viewRef;
+      },
+      remove$1: function(_, index) {
+        this.detachView$1(index === -1 ? this.get$length(this) - 1 : index).destroy$0();
+      },
       clear$0: function(_) {
-        var i, t1, nested, index, t2, view;
-        for (i = this.get$length(this) - 1, t1 = [W.Node]; i >= 0; --i) {
+        var i, nested, index;
+        for (i = this.get$length(this) - 1; i >= 0; --i) {
           if (i === -1) {
             nested = this.nestedViews;
             index = (nested == null ? 0 : nested.length) - 1;
           } else
             index = i;
-          t2 = this.nestedViews;
-          view = (t2 && C.JSArray_methods).removeAt$1(t2, index);
-          t2 = view.viewData;
-          if (t2.type === C.ViewType_1)
-            H.throwExpression(P.StateError$("Component views can't be moved!"));
-          S._detachAll(S._flattenNestedViewRenderNodes(t2.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], t1)));
-          t2 = view.viewData.inlinedNodes;
-          if (t2 != null)
-            S._detachAll(t2);
-          view.viewData._viewContainerElement = null;
-          view.destroy$0();
+          this.detachView$1(index).destroy$0();
         }
+      },
+      attachView$2: function(view, viewIndex) {
+        var _nestedViews, refRenderNode;
+        if (view.viewData.type === C.ViewType_1)
+          throw H.wrapException(P.StateError$("Component views can't be moved!"));
+        _nestedViews = this.nestedViews;
+        if (_nestedViews == null)
+          _nestedViews = H.setRuntimeTypeInfo([], [[S.AppView,,]]);
+        C.JSArray_methods.insert$2(_nestedViews, viewIndex, view);
+        refRenderNode = viewIndex > 0 ? _nestedViews[viewIndex - 1].get$lastRootNode() : this.nativeElement;
+        this.nestedViews = _nestedViews;
+        if (refRenderNode != null) {
+          S._moveNodesAfterSibling(refRenderNode, S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
+          $.domRootRendererIsDirty = true;
+        }
+        view.viewData._viewContainerElement = this;
+      },
+      detachView$1: function(viewIndex) {
+        var t1, view;
+        t1 = this.nestedViews;
+        view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex);
+        t1 = view.viewData;
+        if (t1.type === C.ViewType_1)
+          throw H.wrapException(P.StateError$("Component views can't be moved!"));
+        S._detachAll(S._flattenNestedViewRenderNodes(t1.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
+        t1 = view.viewData.inlinedNodes;
+        if (t1 != null)
+          S._detachAll(t1);
+        view.viewData._viewContainerElement = null;
+        return view;
       }
     }
   }], ["", "package:angular/src/core/linker/view_ref.dart",, L, {
@@ -8663,7 +9297,7 @@
       _createInnerZone$2$handleUncaughtError: function(zone, handleUncaughtError) {
         var t1, t2;
         t1 = P._ZoneSpecification$(null, this.get$_createTimer(), null, null, handleUncaughtError, null, null, null, null, this.get$_run(), this.get$_runBinary(), this.get$_runUnary(), this.get$_ng_zone$_scheduleMicrotask());
-        t2 = new P._LinkedIdentityHashMap(0, 0, [null, null]);
+        t2 = P._LinkedIdentityHashMap__LinkedIdentityHashMap$es6(null, null);
         t2.$indexSet(0, $.$get$NgZone__zoneKey(), true);
         return zone.fork$2$specification$zoneValues(t1, t2);
       },
@@ -9046,7 +9680,7 @@
         throw H.wrapException(P.StateError$("Could not find testability for element."));
       }, function(elem) {
         return this.call$2(elem, true);
-      }, "call$1", null, null, null, 4, 2, null, 24, 25, 26, "call"]
+      }, "call$1", null, null, null, 4, 2, null, 25, 26, 27, "call"]
     },
     BrowserGetTestability_addToWindow_closure0: {
       "^": "Closure;",
@@ -9089,7 +9723,7 @@
         t1.didWork = didWork;
         if (--t1.count === 0)
           this.callback.call$1(didWork);
-      }, null, null, 4, 0, null, 27, "call"]
+      }, null, null, 4, 0, null, 28, "call"]
     },
     BrowserGetTestability__createRegistry_closure: {
       "^": "Closure;registry",
@@ -9098,7 +9732,7 @@
         t1 = this.registry;
         testability = t1._testabilityGetter.findTestabilityInTree$2(t1, element);
         return testability == null ? null : {isStable: P.allowInterop(testability.get$isStable(testability)), whenStable: P.allowInterop(testability.get$whenStable(testability))};
-      }, null, null, 4, 0, null, 28, "call"]
+      }, null, null, 4, 0, null, 29, "call"]
     },
     BrowserGetTestability__createRegistry_closure0: {
       "^": "Closure;registry",
@@ -9113,7 +9747,7 @@
       "^": "Closure;",
       call$1: [function(t) {
         return {isStable: P.allowInterop(t.get$isStable(t)), whenStable: P.allowInterop(t.get$whenStable(t))};
-      }, null, null, 4, 0, null, 29, "call"]
+      }, null, null, 4, 0, null, 30, "call"]
     }
   }], ["", "package:angular/src/platform/dom/events/dom_events.dart",, L, {
     "^": "",
@@ -9198,6 +9832,9 @@
     EmbeddedNgIf: {
       "^": "Object;showNull"
     },
+    EmbeddedNgFor: {
+      "^": "Object;items"
+    },
     NullComponent: {
       "^": "Object;"
     },
@@ -9222,13 +9859,19 @@
       var t1 = new N._ViewRootComponentHost0(P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), parentView);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_0, parentIndex);
       return t1;
-    }, "call$2", "dart2js_golden_template__viewFactory_RootComponentHost0$closure", 8, 0, 29],
+    }, "call$2", "dart2js_golden_template__viewFactory_RootComponentHost0$closure", 8, 0, 30],
     viewFactory_EmbeddedNgIf1: [function(parentView, parentIndex) {
       var t1 = new N._ViewEmbeddedNgIf1(P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), parentView);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_2, parentIndex);
       t1.componentType = $.ViewEmbeddedNgIf0__renderType;
       return t1;
-    }, "call$2", "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", 8, 0, 30],
+    }, "call$2", "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", 8, 0, 31],
+    viewFactory_EmbeddedNgFor1: [function(parentView, parentIndex) {
+      var t1 = new N._ViewEmbeddedNgFor1(P.LinkedHashMap_LinkedHashMap$_literal(["$implicit", null], P.String, null), parentView);
+      t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_2, parentIndex);
+      t1.componentType = $.ViewEmbeddedNgFor0__renderType;
+      return t1;
+    }, "call$2", "dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure", 8, 0, 32],
     viewFactory_ComponentConditionalFeatures1: [function(parentView, parentIndex) {
       var t1 = new N._ViewComponentConditionalFeatures1(P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), parentView);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_2, parentIndex);
@@ -9242,7 +9885,7 @@
       return t1;
     }, "call$2", "dart2js_golden_template__viewFactory_ComponentConditionalFeatures2$closure", 8, 0, 15],
     ViewRootComponent0: {
-      "^": "AppView;0_el_0,0_compView_0,0_UsesDefaultChangeDetectionAndInput_0_5,0_el_1,0_compView_1,0_InlinedNgIf_1_5,0_el_2,0_compView_2,0_EmbeddedNgIf_2_5,0_el_3,0_compView_3,0_InjectsFromArbitraryParent_3_5,0_el_4,0_compView_4,0_ComponentConditionalFeatures_4_5,0viewData,locals,parentView,0componentType,0rootEl,0ctx",
+      "^": "AppView;0_el_0,0_compView_0,0_UsesDefaultChangeDetectionAndInput_0_5,0_el_1,0_compView_1,0_InlinedNgIf_1_5,0_el_2,0_compView_2,0_EmbeddedNgIf_2_5,0_el_3,0_compView_3,0_EmbeddedNgFor_3_5,0_el_4,0_compView_4,0_InjectsFromArbitraryParent_4_5,0_el_5,0_compView_5,0_ComponentConditionalFeatures_5_5,0viewData,locals,parentView,0componentType,0rootEl,0ctx",
       build$0: function() {
         var parentRenderNode, t1, t2, t3, t4, t5, t6;
         parentRenderNode = this.initViewRoot$1(this.rootEl);
@@ -9302,8 +9945,26 @@
         t2 = new O.EmbeddedNgIf(self.defeatDart2JsOptimizations("showNull"));
         this._EmbeddedNgIf_2_5 = t2;
         this._compView_2.create$2(0, t2, []);
-        t2 = new N.ViewInjectsFromArbitraryParent0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
+        t2 = new N.ViewEmbeddedNgFor0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
         t2.viewData = S.AppViewData_AppViewData(t2, 3, C.ViewType_1, 3);
+        t4 = t3.createElement("embedded-ng-for");
+        t2.rootEl = t4;
+        t4 = $.ViewEmbeddedNgFor0__renderType;
+        if (t4 == null) {
+          t4 = $.appViewUtils;
+          t4 = t4.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty);
+          $.ViewEmbeddedNgFor0__renderType = t4;
+        }
+        t2.setupComponentType$1(t4);
+        this._compView_3 = t2;
+        t2 = t2.rootEl;
+        this._el_3 = t2;
+        parentRenderNode.appendChild(t2);
+        t2 = new O.EmbeddedNgFor(H.setRuntimeTypeInfo(["foo", "bar", "baz"], [t1]));
+        this._EmbeddedNgFor_3_5 = t2;
+        this._compView_3.create$2(0, t2, []);
+        t2 = new N.ViewInjectsFromArbitraryParent0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
+        t2.viewData = S.AppViewData_AppViewData(t2, 3, C.ViewType_1, 4);
         t4 = t3.createElement("injects-from-arbitrary-parent");
         t2.rootEl = t4;
         t4 = $.ViewInjectsFromArbitraryParent0__renderType;
@@ -9313,9 +9974,9 @@
           $.ViewInjectsFromArbitraryParent0__renderType = t4;
         }
         t2.setupComponentType$1(t4);
-        this._compView_3 = t2;
+        this._compView_4 = t2;
         t2 = t2.rootEl;
-        this._el_3 = t2;
+        this._el_4 = t2;
         parentRenderNode.appendChild(t2);
         t2 = this.parentView;
         t4 = t2.injectorGet$2(C.MultiToken_usPresidents, this.viewData.parentIndex);
@@ -9324,10 +9985,10 @@
         t6 = new O.InjectsFromArbitraryParent();
         t2.printWashingtonDc$2(t5, t4);
         t2 = t6;
-        this._InjectsFromArbitraryParent_3_5 = t2;
-        this._compView_3.create$2(0, t2, []);
+        this._InjectsFromArbitraryParent_4_5 = t2;
+        this._compView_4.create$2(0, t2, []);
         t1 = new N.ViewComponentConditionalFeatures0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
-        t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 4);
+        t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 5);
         t2 = t3.createElement("component-conditional-features");
         t1.rootEl = t2;
         t2 = $.ViewComponentConditionalFeatures0__renderType;
@@ -9337,18 +9998,18 @@
           $.ViewComponentConditionalFeatures0__renderType = t2;
         }
         t1.setupComponentType$1(t2);
-        this._compView_4 = t1;
+        this._compView_5 = t1;
         t1 = t1.rootEl;
-        this._el_4 = t1;
+        this._el_5 = t1;
         parentRenderNode.appendChild(t1);
         t1 = new O.ComponentConditionalFeatures(false, false);
-        this._ComponentConditionalFeatures_4_5 = t1;
-        this._compView_4.create$2(0, t1, []);
+        this._ComponentConditionalFeatures_5_5 = t1;
+        this._compView_5.create$2(0, t1, []);
         this.init$2(C.List_empty, null);
       },
       detectChangesInternal$0: function() {
         if (this.viewData._cdState === 0) {
-          var t1 = this._ComponentConditionalFeatures_4_5;
+          var t1 = this._ComponentConditionalFeatures_5_5;
           t1.useFeatureA = true;
           t1.useFeatureB = false;
         }
@@ -9357,6 +10018,7 @@
         this._compView_2.detectChanges$0();
         this._compView_3.detectChanges$0();
         this._compView_4.detectChanges$0();
+        this._compView_5.detectChanges$0();
       },
       destroyInternal$0: function() {
         var t1 = this._compView_0;
@@ -9372,6 +10034,9 @@
         if (!(t1 == null))
           t1.destroy$0();
         t1 = this._compView_4;
+        if (!(t1 == null))
+          t1.destroy$0();
+        t1 = this._compView_5;
         if (!(t1 == null))
           t1.destroy$0();
       },
@@ -9528,6 +10193,73 @@
       },
       $asAppView: function() {
         return [O.EmbeddedNgIf];
+      }
+    },
+    ViewEmbeddedNgFor0: {
+      "^": "AppView;0_appEl_1,0_NgFor_1_9,0viewData,locals,parentView,0componentType,0rootEl,0ctx",
+      build$0: function() {
+        var parentRenderNode, _el_0, t1;
+        parentRenderNode = this.initViewRoot$1(this.rootEl);
+        _el_0 = S.createAndAppend(document, "ul", parentRenderNode);
+        t1 = $.$get$_viewContainerAnchor().cloneNode(false);
+        _el_0.appendChild(t1);
+        t1 = new V.ViewContainer(1, 0, this, t1);
+        this._appEl_1 = t1;
+        this._NgFor_1_9 = new R.NgFor(t1, new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure()));
+        this.init$2(C.List_empty, null);
+      },
+      detectChangesInternal$0: function() {
+        var _ctx, t1, changes, collection;
+        _ctx = this.ctx;
+        if (this.viewData._cdState === 0) {
+          t1 = this._NgFor_1_9;
+          t1._ngForOf = _ctx.items;
+          if (t1._differ == null && true)
+            t1._differ = new R.DefaultIterableDiffer(R.default_iterable_differ___trackByIdentity$closure());
+        }
+        t1 = this._NgFor_1_9;
+        changes = t1._differ;
+        if (changes != null) {
+          collection = t1._ngForOf;
+          if (!(collection != null))
+            collection = C.List_empty;
+          changes = changes.check$1(0, collection) ? changes : null;
+          if (changes != null)
+            t1._applyChanges$1(changes);
+        }
+        this._appEl_1.detectChangesInNestedViews$0();
+      },
+      destroyInternal$0: function() {
+        var t1 = this._appEl_1;
+        if (!(t1 == null))
+          t1.destroyNestedViews$0();
+      },
+      $asAppView: function() {
+        return [O.EmbeddedNgFor];
+      }
+    },
+    _ViewEmbeddedNgFor1: {
+      "^": "AppView;0_text_1,0_expr_0,0viewData,locals,parentView,0componentType,0rootEl,0ctx",
+      build$0: function() {
+        var doc, _el_0, t1;
+        doc = document;
+        _el_0 = doc.createElement("li");
+        t1 = doc.createTextNode("");
+        this._text_1 = t1;
+        _el_0.appendChild(t1);
+        this.init0$1(_el_0);
+      },
+      detectChangesInternal$0: function() {
+        var currVal_0, t1;
+        currVal_0 = Q.interpolate0(this.locals.$index(0, "$implicit"));
+        t1 = this._expr_0;
+        if (t1 !== currVal_0) {
+          this._text_1.textContent = currVal_0;
+          this._expr_0 = currVal_0;
+        }
+      },
+      $asAppView: function() {
+        return [O.EmbeddedNgFor];
       }
     },
     ViewNullComponent0: {
@@ -10029,6 +10761,7 @@
   $.ViewUsesDefaultChangeDetectionAndInput0__renderType = null;
   $.ViewInlinedNgIf0__renderType = null;
   $.ViewEmbeddedNgIf0__renderType = null;
+  $.ViewEmbeddedNgFor0__renderType = null;
   $.ViewNullComponent0__renderType = null;
   $.ViewInjectsFromArbitraryParent0__renderType = null;
   $.ViewComponentConditionalFeatures0__renderType = null;
@@ -10135,8 +10868,8 @@
   }, "NgZone__zoneKey"]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
-  init.metadata = ["_", "self", "parent", "zone", "arg", "arg1", "arg2", null, "error", "stackTrace", "f", "e", "result", "callback", "index", "closure", "numberOfArguments", "arg3", "arg4", "each", "specification", "zoneValues", "value", "s", true, "elem", "findInAncestors", "didWork_", "element", "t", "arguments"];
-  init.types = [{func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: [S.AppView, O.ComponentConditionalFeatures], args: [[S.AppView,,], P.int]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, args: [,,]}, {func: 1, ret: P.bool}, {func: 1, ret: -1, args: [P.Function]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: [S.AppView, O.RootComponent], args: [[S.AppView,,], P.int]}, {func: 1, ret: [S.AppView, O.EmbeddedNgIf], args: [[S.AppView,,], P.int]}];
+  init.metadata = ["_", "self", "parent", "zone", "arg", "arg1", "arg2", null, "error", "stackTrace", "f", "e", "result", "callback", "index", "closure", "numberOfArguments", "arg3", "arg4", "each", "specification", "zoneValues", "value", "item", "s", true, "elem", "findInAncestors", "didWork_", "element", "t", "arguments"];
+  init.types = [{func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: [S.AppView, O.ComponentConditionalFeatures], args: [[S.AppView,,], P.int]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, args: [,,]}, {func: 1, ret: P.bool}, {func: 1, ret: -1, args: [P.Function]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent], args: [[S.AppView,,], P.int]}, {func: 1, ret: [S.AppView, O.EmbeddedNgIf], args: [[S.AppView,,], P.int]}, {func: 1, ret: [S.AppView, O.EmbeddedNgFor], args: [[S.AppView,,], P.int]}];
   function convertToFastObject(properties) {
     function MyClass() {
     }

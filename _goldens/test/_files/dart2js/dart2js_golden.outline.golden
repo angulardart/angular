@@ -51,6 +51,13 @@ external _ng.AppView<EmbeddedNgIf> viewFactory_EmbeddedNgIf0(_ng.AppView<dynamic
 class ViewEmbeddedNgIf0 extends _ng.AppView<EmbeddedNgIf> {
   external ViewEmbeddedNgIf0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class EmbeddedNgFor.
+external List<dynamic> get styles$EmbeddedNgFor;
+external _ng.ComponentFactory<EmbeddedNgFor> get EmbeddedNgForNgFactory;
+external _ng.AppView<EmbeddedNgFor> viewFactory_EmbeddedNgFor0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewEmbeddedNgFor0 extends _ng.AppView<EmbeddedNgFor> {
+  external ViewEmbeddedNgFor0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 // For @Component class NullComponent.
 external List<dynamic> get styles$NullComponent;
 external _ng.ComponentFactory<NullComponent> get NullComponentNgFactory;
