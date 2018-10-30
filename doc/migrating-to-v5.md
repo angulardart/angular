@@ -154,7 +154,7 @@ void main() {
 }
 ```
 
-When using `runApp` it's possible to enable `angular_compiler` settings, which
+When using `runApp()` it's possible to enable `angular_compiler` settings, which
 will reduce the DDC load times during development, by adding the following lines
 to the `build.yaml`:
 
@@ -168,7 +168,7 @@ global_options:
 
 For further information about best practices for the dependency injector see
 [Effective AngularDart: Dependency
-Injection](https://github.com/dart-lang/angular/blob/master/doc/effective/di.md#injectors).
+Injection](https://github.com/dart-lang/angular/blob/master/doc/effective/dependency-injection.md#injectors).
 
 ### Refactor providers to use typed variant
 
@@ -217,7 +217,7 @@ equivalents to `provide` and `const Provider`.
 
 This of course also applies to the setup of an `Injector` within `main.dart`.
 For further information about providers see [Effective AngularDart: Dependency
-Injection](https://github.com/dart-lang/angular/blob/master/doc/effective/di.md#providers).
+Injection](https://github.com/dart-lang/angular/blob/master/doc/effective/dependency-injection.md#providers).
 
 ### Adjust deferred loaded components
 
