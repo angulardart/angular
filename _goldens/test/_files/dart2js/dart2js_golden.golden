@@ -9087,6 +9087,10 @@
     }
   }], ["", "package:angular/src/core/linker/view_container.dart",, V, {
     "^": "",
+    _assertCanMove: function(view) {
+      if (view.viewData.type === C.ViewType_1)
+        throw H.wrapException(P.ArgumentError$("Component views can't be moved!"));
+    },
     ViewContainer: {
       "^": "ComponentLoader;index,parentIndex,parentView,nativeElement,0nestedViews,0_elementRef,0_parentInjector",
       get$length: function(_) {
@@ -9114,10 +9118,9 @@
         if (currentIndex === -1)
           return;
         t1 = viewRef.appView;
+        V._assertCanMove(t1);
         views = this.nestedViews;
         previousIndex = (views && C.JSArray_methods).indexOf$1(views, t1);
-        if (t1.viewData.type === C.ViewType_1)
-          H.throwExpression(P.Exception_Exception("Component views can't be moved!"));
         C.JSArray_methods.removeAt$1(views, previousIndex);
         C.JSArray_methods.insert$2(views, currentIndex, t1);
         refRenderNode = currentIndex > 0 ? views[currentIndex - 1].get$lastRootNode() : this.nativeElement;
@@ -9143,8 +9146,7 @@
       },
       attachView$2: function(view, viewIndex) {
         var _nestedViews, refRenderNode;
-        if (view.viewData.type === C.ViewType_1)
-          throw H.wrapException(P.StateError$("Component views can't be moved!"));
+        V._assertCanMove(view);
         _nestedViews = this.nestedViews;
         if (_nestedViews == null)
           _nestedViews = H.setRuntimeTypeInfo([], [[S.AppView,,]]);
@@ -9161,10 +9163,8 @@
         var t1, view;
         t1 = this.nestedViews;
         view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex);
-        t1 = view.viewData;
-        if (t1.type === C.ViewType_1)
-          throw H.wrapException(P.StateError$("Component views can't be moved!"));
-        S._detachAll(S._flattenNestedViewRenderNodes(t1.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
+        V._assertCanMove(view);
+        S._detachAll(S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
         t1 = view.viewData.inlinedNodes;
         if (t1 != null)
           S._detachAll(t1);

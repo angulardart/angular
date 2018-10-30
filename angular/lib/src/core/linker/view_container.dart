@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:angular/src/di/injector/injector.dart' show Injector;
 import 'package:angular/src/runtime.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 
 import 'app_view.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
@@ -173,13 +174,10 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   void moveView(AppView view, int currentIndex) {
+    _assertCanMove(view);
     List<AppView> views = nestedViews;
 
     int previousIndex = views.indexOf(view);
-
-    if (view.viewData.type == ViewType.component) {
-      throw Exception("Component views can't be moved!");
-    }
 
     if (views == null) {
       views = <AppView>[];
@@ -205,9 +203,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   void attachView(AppView view, int viewIndex) {
-    if (identical(view.viewData.type, ViewType.component)) {
-      throw StateError("Component views can't be moved!");
-    }
+    _assertCanMove(view);
     var _nestedViews = nestedViews ?? <AppView>[];
     _nestedViews.insert(viewIndex, view);
     Node refRenderNode;
@@ -226,9 +222,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
 
   AppView detachView(int viewIndex) {
     var view = nestedViews.removeAt(viewIndex);
-    if (view.viewData.type == ViewType.component) {
-      throw StateError("Component views can't be moved!");
-    }
+    _assertCanMove(view);
     view.detachViewNodes(view.flatRootNodes);
     if (view.inlinedNodes != null) {
       view.detachViewNodes(view.inlinedNodes);
@@ -243,4 +237,11 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     Injector injector,
   }) =>
       loadNextToLocation(component, this, injector: injector);
+}
+
+@dart2js.noInline
+void _assertCanMove(AppView view) {
+  if (view.viewData.type == ViewType.component) {
+    throw ArgumentError("Component views can't be moved!");
+  }
 }
