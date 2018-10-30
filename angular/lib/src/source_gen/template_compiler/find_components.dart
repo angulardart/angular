@@ -3,6 +3,7 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:analyzer/source/line_info.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -133,7 +134,8 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
             // We didn't resolve something.
             _failFastOnUnresolvedExpressions(
                 values.elements.where((e) => e.staticType?.isDynamic != false),
-                element);
+                element,
+                annotationImpl.compilationUnit);
           }
         }
       }
@@ -704,8 +706,8 @@ class _ComponentVisitor
       ));
     }
     if (unresolvedExports.isNotEmpty) {
-      _failFastOnUnresolvedExpressions(
-          unresolvedExports, _directiveClassElement);
+      _failFastOnUnresolvedExpressions(unresolvedExports,
+          _directiveClassElement, annotation.compilationUnit);
     }
     return exports;
   }
@@ -730,17 +732,24 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
       .toList();
 }
 
-void _failFastOnUnresolvedExpressions(
-  Iterable<Expression> expressions,
-  ClassElement componentType,
-) {
+void _failFastOnUnresolvedExpressions(Iterable<Expression> expressions,
+    ClassElement componentType, CompilationUnitElement compilationUnit) {
   final sourceUrl = componentType.source.uri;
+  LineInfo lineInfo = compilationUnit.lineInfo;
   throw BuildError(
     messages.unresolvedSource(
       expressions.map((e) {
+        CharacterLocation start = lineInfo.getLocation(e.offset);
+        CharacterLocation end = lineInfo.getLocation(e.offset + e.length);
         return SourceSpan(
-          SourceLocation(e.offset, sourceUrl: sourceUrl),
-          SourceLocation(e.offset + e.length, sourceUrl: sourceUrl),
+          SourceLocation(e.offset,
+              sourceUrl: sourceUrl,
+              line: start.lineNumber,
+              column: start.columnNumber),
+          SourceLocation(e.offset + e.length,
+              sourceUrl: sourceUrl,
+              line: end.lineNumber,
+              column: end.columnNumber),
           e.toSource(),
         );
       }),

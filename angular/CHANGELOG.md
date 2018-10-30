@@ -259,6 +259,9 @@
     `@GenerateInjector([...])` annotation would cause a non-ideal error to be
     produced. It now includes more information where available.
 
+*   Error ranges for invalid code sometimes listed the error offset as if it
+    were a column on line 1. Now shows correct line and column number.
+
 [#434]: https://github.com/dart-lang/angular/issues/434
 [#880]: https://github.com/dart-lang/angular/issues/880
 [#930]: https://github.com/dart-lang/angular/issues/930
