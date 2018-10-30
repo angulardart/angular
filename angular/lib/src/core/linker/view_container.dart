@@ -178,12 +178,6 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     List<AppView> views = nestedViews;
 
     int previousIndex = views.indexOf(view);
-
-    if (views == null) {
-      views = <AppView>[];
-      nestedViews = views;
-    }
-
     views.removeAt(previousIndex);
     views.insert(currentIndex, view);
     Node refRenderNode;

@@ -9114,14 +9114,13 @@
           _nestedViews[i].destroy$0();
       },
       move$2: function(viewRef, currentIndex) {
-        var t1, views, previousIndex, refRenderNode;
+        var t1, views, refRenderNode;
         if (currentIndex === -1)
           return;
         t1 = viewRef.appView;
         V._assertCanMove(t1);
         views = this.nestedViews;
-        previousIndex = (views && C.JSArray_methods).indexOf$1(views, t1);
-        C.JSArray_methods.removeAt$1(views, previousIndex);
+        C.JSArray_methods.removeAt$1(views, (views && C.JSArray_methods).indexOf$1(views, t1));
         C.JSArray_methods.insert$2(views, currentIndex, t1);
         refRenderNode = currentIndex > 0 ? views[currentIndex - 1].get$lastRootNode() : this.nativeElement;
         if (refRenderNode != null) {
