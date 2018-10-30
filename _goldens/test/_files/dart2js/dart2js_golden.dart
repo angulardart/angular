@@ -32,6 +32,7 @@ void main() {
     UsesDefaultChangeDetectionAndInput,
     InlinedNgIf,
     EmbeddedNgIf,
+    EmbeddedNgFor,
     InjectsFromArbitraryParent
   ],
   template: r'''
@@ -41,6 +42,8 @@ void main() {
     </inlined-ng-if>
     <embedded-ng-if>
     </embedded-ng-if>
+    <embedded-ng-for>
+    </embedded-ng-for>
     <injects-from-arbitrary-parent>
     </injects-from-arbitrary-parent>
     <component-conditional-features [useFeatureA]="true" [useFeatureB]="false">
@@ -94,6 +97,21 @@ class InlinedNgIf {
 )
 class EmbeddedNgIf {
   bool showNull = defeatDart2JsOptimizations('showNull');
+}
+
+@Component(
+  selector: 'embedded-ng-for',
+  directives: [
+    NgFor,
+  ],
+  template: r'''
+    <ul>
+      <li *ngFor="let item of items">{{item}}</li>
+    </ul>
+  ''',
+)
+class EmbeddedNgFor {
+  final items = ['foo', 'bar', 'baz'];
 }
 
 @Component(
