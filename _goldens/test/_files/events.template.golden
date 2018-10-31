@@ -45,6 +45,11 @@ AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEvents0(AppView<dynamic>
   return ViewUsesNativeEvents0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesNativeEvents> _UsesNativeEventsNgFactory = const ComponentFactory('uses-native-events', viewFactory_UsesNativeEventsHost0);
+ComponentFactory<import1.UsesNativeEvents> get UsesNativeEventsNgFactory {
+  return _UsesNativeEventsNgFactory;
+}
+
 final List<dynamic> styles$UsesNativeEventsHost = const [];
 
 class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
@@ -74,11 +79,6 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
 
 AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEventsHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesNativeEventsHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.UsesNativeEvents> _UsesNativeEventsNgFactory = const ComponentFactory('uses-native-events', viewFactory_UsesNativeEventsHost0);
-ComponentFactory<import1.UsesNativeEvents> get UsesNativeEventsNgFactory {
-  return _UsesNativeEventsNgFactory;
 }
 
 final List<dynamic> styles$UsesAngularEvents = const [];
@@ -121,6 +121,11 @@ AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEvents0(AppView<dynami
   return ViewUsesAngularEvents0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesAngularEvents> _UsesAngularEventsNgFactory = const ComponentFactory('uses-angular-events', viewFactory_UsesAngularEventsHost0);
+ComponentFactory<import1.UsesAngularEvents> get UsesAngularEventsNgFactory {
+  return _UsesAngularEventsNgFactory;
+}
+
 final List<dynamic> styles$UsesAngularEventsHost = const [];
 
 class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
@@ -152,11 +157,6 @@ AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEventsHost0(AppView<dy
   return _ViewUsesAngularEventsHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesAngularEvents> _UsesAngularEventsNgFactory = const ComponentFactory('uses-angular-events', viewFactory_UsesAngularEventsHost0);
-ComponentFactory<import1.UsesAngularEvents> get UsesAngularEventsNgFactory {
-  return _UsesAngularEventsNgFactory;
-}
-
 final List<dynamic> styles$HasAngularEvents = const [];
 
 class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
@@ -176,6 +176,11 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
 
 AppView<import1.HasAngularEvents> viewFactory_HasAngularEvents0(AppView<dynamic> parentView, int parentIndex) {
   return ViewHasAngularEvents0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.HasAngularEvents> _HasAngularEventsNgFactory = const ComponentFactory('has-angular-events', viewFactory_HasAngularEventsHost0);
+ComponentFactory<import1.HasAngularEvents> get HasAngularEventsNgFactory {
+  return _HasAngularEventsNgFactory;
 }
 
 final List<dynamic> styles$HasAngularEventsHost = const [];
@@ -209,11 +214,6 @@ AppView<import1.HasAngularEvents> viewFactory_HasAngularEventsHost0(AppView<dyna
   return _ViewHasAngularEventsHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.HasAngularEvents> _HasAngularEventsNgFactory = const ComponentFactory('has-angular-events', viewFactory_HasAngularEventsHost0);
-ComponentFactory<import1.HasAngularEvents> get HasAngularEventsNgFactory {
-  return _HasAngularEventsNgFactory;
-}
-
 final List<dynamic> styles$HasManyNativeHostEvents = const [];
 
 class ViewHasManyNativeHostEvents0 extends AppView<import1.HasManyNativeHostEvents> {
@@ -240,6 +240,11 @@ class ViewHasManyNativeHostEvents0 extends AppView<import1.HasManyNativeHostEven
 
 AppView<import1.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEvents0(AppView<dynamic> parentView, int parentIndex) {
   return ViewHasManyNativeHostEvents0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.HasManyNativeHostEvents> _HasManyNativeHostEventsNgFactory = const ComponentFactory('material-button-like', viewFactory_HasManyNativeHostEventsHost0);
+ComponentFactory<import1.HasManyNativeHostEvents> get HasManyNativeHostEventsNgFactory {
+  return _HasManyNativeHostEventsNgFactory;
 }
 
 final List<dynamic> styles$HasManyNativeHostEventsHost = const [];
@@ -271,11 +276,6 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
 
 AppView<import1.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEventsHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewHasManyNativeHostEventsHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.HasManyNativeHostEvents> _HasManyNativeHostEventsNgFactory = const ComponentFactory('material-button-like', viewFactory_HasManyNativeHostEventsHost0);
-ComponentFactory<import1.HasManyNativeHostEvents> get HasManyNativeHostEventsNgFactory {
-  return _HasManyNativeHostEventsNgFactory;
 }
 
 var _visited = false;

@@ -45,6 +45,11 @@ AppView<import1.AppComponent> viewFactory_AppComponent0(AppView<dynamic> parentV
   return ViewAppComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.AppComponent> _AppComponentNgFactory = const ComponentFactory('app', viewFactory_AppComponentHost0);
+ComponentFactory<import1.AppComponent> get AppComponentNgFactory {
+  return _AppComponentNgFactory;
+}
+
 final List<dynamic> styles$AppComponentHost = const [];
 
 class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
@@ -90,11 +95,6 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
 
 AppView<import1.AppComponent> viewFactory_AppComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewAppComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.AppComponent> _AppComponentNgFactory = const ComponentFactory('app', viewFactory_AppComponentHost0);
-ComponentFactory<import1.AppComponent> get AppComponentNgFactory {
-  return _AppComponentNgFactory;
 }
 
 var _visited = false;

@@ -43,6 +43,11 @@ AppView<import1.UntypedComp> viewFactory_UntypedComp0(AppView<dynamic> parentVie
   return ViewUntypedComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UntypedComp> _UntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UntypedCompHost0);
+ComponentFactory<import1.UntypedComp> get UntypedCompNgFactory {
+  return _UntypedCompNgFactory;
+}
+
 final List<dynamic> styles$UntypedCompHost = const [];
 
 class _ViewUntypedCompHost0 extends AppView<import1.UntypedComp> {
@@ -72,11 +77,6 @@ class _ViewUntypedCompHost0 extends AppView<import1.UntypedComp> {
 
 AppView<import1.UntypedComp> viewFactory_UntypedCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUntypedCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.UntypedComp> _UntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UntypedCompHost0);
-ComponentFactory<import1.UntypedComp> get UntypedCompNgFactory {
-  return _UntypedCompNgFactory;
 }
 
 final List<dynamic> styles$UsesUntypedComp = const [];
@@ -125,6 +125,11 @@ AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedComp0(AppView<dynamic> p
   return ViewUsesUntypedComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesUntypedComp> _UsesUntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UsesUntypedCompHost0);
+ComponentFactory<import1.UsesUntypedComp> get UsesUntypedCompNgFactory {
+  return _UsesUntypedCompNgFactory;
+}
+
 final List<dynamic> styles$UsesUntypedCompHost = const [];
 
 class _ViewUsesUntypedCompHost0 extends AppView<import1.UsesUntypedComp> {
@@ -156,11 +161,6 @@ AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0(AppView<dynami
   return _ViewUsesUntypedCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesUntypedComp> _UsesUntypedCompNgFactory = const ComponentFactory('comp', viewFactory_UsesUntypedCompHost0);
-ComponentFactory<import1.UsesUntypedComp> get UsesUntypedCompNgFactory {
-  return _UsesUntypedCompNgFactory;
-}
-
 final List<dynamic> styles$GenericComp = const [];
 
 class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
@@ -180,6 +180,11 @@ class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
 
 AppView<import1.GenericComp<T>> viewFactory_GenericComp0<T>(AppView<dynamic> parentView, int parentIndex) {
   return ViewGenericComp0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.GenericComp> _GenericCompNgFactory = const ComponentFactory('comp', viewFactory_GenericCompHost0);
+ComponentFactory<import1.GenericComp> get GenericCompNgFactory {
+  return _GenericCompNgFactory;
 }
 
 final List<dynamic> styles$GenericCompHost = const [];
@@ -211,11 +216,6 @@ class _ViewGenericCompHost0<T> extends AppView<import1.GenericComp<T>> {
 
 AppView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewGenericCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.GenericComp> _GenericCompNgFactory = const ComponentFactory('comp', viewFactory_GenericCompHost0);
-ComponentFactory<import1.GenericComp> get GenericCompNgFactory {
-  return _GenericCompNgFactory;
 }
 
 final List<dynamic> styles$UsesGenericComp = const [];
@@ -264,6 +264,11 @@ AppView<import1.UsesGenericComp> viewFactory_UsesGenericComp0(AppView<dynamic> p
   return ViewUsesGenericComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesGenericComp> _UsesGenericCompNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericCompHost0);
+ComponentFactory<import1.UsesGenericComp> get UsesGenericCompNgFactory {
+  return _UsesGenericCompNgFactory;
+}
+
 final List<dynamic> styles$UsesGenericCompHost = const [];
 
 class _ViewUsesGenericCompHost0 extends AppView<import1.UsesGenericComp> {
@@ -295,11 +300,6 @@ AppView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0(AppView<dynami
   return _ViewUsesGenericCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesGenericComp> _UsesGenericCompNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericCompHost0);
-ComponentFactory<import1.UsesGenericComp> get UsesGenericCompNgFactory {
-  return _UsesGenericCompNgFactory;
-}
-
 final List<dynamic> styles$MappingComp1 = const [];
 
 class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
@@ -319,6 +319,11 @@ class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
 
 AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp10<K, V>(AppView<dynamic> parentView, int parentIndex) {
   return ViewMappingComp10(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.MappingComp1> _MappingComp1NgFactory = const ComponentFactory('comp', viewFactory_MappingComp1Host0);
+ComponentFactory<import1.MappingComp1> get MappingComp1NgFactory {
+  return _MappingComp1NgFactory;
 }
 
 final List<dynamic> styles$MappingComp1Host = const [];
@@ -350,11 +355,6 @@ class _ViewMappingComp1Host0<K, V> extends AppView<import1.MappingComp1<K, V>> {
 
 AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewMappingComp1Host0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.MappingComp1> _MappingComp1NgFactory = const ComponentFactory('comp', viewFactory_MappingComp1Host0);
-ComponentFactory<import1.MappingComp1> get MappingComp1NgFactory {
-  return _MappingComp1NgFactory;
 }
 
 final List<dynamic> styles$UsesMappingComp1 = const [];
@@ -409,6 +409,11 @@ AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp10(AppView<dynamic>
   return ViewUsesMappingComp10(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesMappingComp1> _UsesMappingComp1NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp1Host0);
+ComponentFactory<import1.UsesMappingComp1> get UsesMappingComp1NgFactory {
+  return _UsesMappingComp1NgFactory;
+}
+
 final List<dynamic> styles$UsesMappingComp1Host = const [];
 
 class _ViewUsesMappingComp1Host0 extends AppView<import1.UsesMappingComp1> {
@@ -440,11 +445,6 @@ AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0(AppView<dyna
   return _ViewUsesMappingComp1Host0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesMappingComp1> _UsesMappingComp1NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp1Host0);
-ComponentFactory<import1.UsesMappingComp1> get UsesMappingComp1NgFactory {
-  return _UsesMappingComp1NgFactory;
-}
-
 final List<dynamic> styles$MappingComp2 = const [];
 
 class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
@@ -464,6 +464,11 @@ class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
 
 AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp20<K, V>(AppView<dynamic> parentView, int parentIndex) {
   return ViewMappingComp20(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.MappingComp2> _MappingComp2NgFactory = const ComponentFactory('comp', viewFactory_MappingComp2Host0);
+ComponentFactory<import1.MappingComp2> get MappingComp2NgFactory {
+  return _MappingComp2NgFactory;
 }
 
 final List<dynamic> styles$MappingComp2Host = const [];
@@ -495,11 +500,6 @@ class _ViewMappingComp2Host0<K, V> extends AppView<import1.MappingComp2<K, V>> {
 
 AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewMappingComp2Host0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.MappingComp2> _MappingComp2NgFactory = const ComponentFactory('comp', viewFactory_MappingComp2Host0);
-ComponentFactory<import1.MappingComp2> get MappingComp2NgFactory {
-  return _MappingComp2NgFactory;
 }
 
 final List<dynamic> styles$UsesMappingComp2 = const [];
@@ -548,6 +548,11 @@ AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp20(AppView<dynamic>
   return ViewUsesMappingComp20(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesMappingComp2> _UsesMappingComp2NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp2Host0);
+ComponentFactory<import1.UsesMappingComp2> get UsesMappingComp2NgFactory {
+  return _UsesMappingComp2NgFactory;
+}
+
 final List<dynamic> styles$UsesMappingComp2Host = const [];
 
 class _ViewUsesMappingComp2Host0 extends AppView<import1.UsesMappingComp2> {
@@ -579,11 +584,6 @@ AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0(AppView<dyna
   return _ViewUsesMappingComp2Host0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesMappingComp2> _UsesMappingComp2NgFactory = const ComponentFactory('comp', viewFactory_UsesMappingComp2Host0);
-ComponentFactory<import1.UsesMappingComp2> get UsesMappingComp2NgFactory {
-  return _UsesMappingComp2NgFactory;
-}
-
 final List<dynamic> styles$BoundComp = const [];
 
 class ViewBoundComp0<T extends num> extends AppView<import1.BoundComp<T>> {
@@ -603,6 +603,11 @@ class ViewBoundComp0<T extends num> extends AppView<import1.BoundComp<T>> {
 
 AppView<import1.BoundComp<T>> viewFactory_BoundComp0<T extends num>(AppView<dynamic> parentView, int parentIndex) {
   return ViewBoundComp0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.BoundComp> _BoundCompNgFactory = const ComponentFactory('comp', viewFactory_BoundCompHost0);
+ComponentFactory<import1.BoundComp> get BoundCompNgFactory {
+  return _BoundCompNgFactory;
 }
 
 final List<dynamic> styles$BoundCompHost = const [];
@@ -634,11 +639,6 @@ class _ViewBoundCompHost0<T extends num> extends AppView<import1.BoundComp<T>> {
 
 AppView<import1.BoundComp<T>> viewFactory_BoundCompHost0<T extends num>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewBoundCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.BoundComp> _BoundCompNgFactory = const ComponentFactory('comp', viewFactory_BoundCompHost0);
-ComponentFactory<import1.BoundComp> get BoundCompNgFactory {
-  return _BoundCompNgFactory;
 }
 
 final List<dynamic> styles$UsesBoundCompWithBounds = const [];
@@ -687,6 +687,11 @@ AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBounds0(Ap
   return ViewUsesBoundCompWithBounds0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesBoundCompWithBounds> _UsesBoundCompWithBoundsNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompWithBoundsHost0);
+ComponentFactory<import1.UsesBoundCompWithBounds> get UsesBoundCompWithBoundsNgFactory {
+  return _UsesBoundCompWithBoundsNgFactory;
+}
+
 final List<dynamic> styles$UsesBoundCompWithBoundsHost = const [];
 
 class _ViewUsesBoundCompWithBoundsHost0 extends AppView<import1.UsesBoundCompWithBounds> {
@@ -716,11 +721,6 @@ class _ViewUsesBoundCompWithBoundsHost0 extends AppView<import1.UsesBoundCompWit
 
 AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesBoundCompWithBoundsHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.UsesBoundCompWithBounds> _UsesBoundCompWithBoundsNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompWithBoundsHost0);
-ComponentFactory<import1.UsesBoundCompWithBounds> get UsesBoundCompWithBoundsNgFactory {
-  return _UsesBoundCompWithBoundsNgFactory;
 }
 
 final List<dynamic> styles$UsesBoundComp = const [];
@@ -769,6 +769,11 @@ AppView<import1.UsesBoundComp> viewFactory_UsesBoundComp0(AppView<dynamic> paren
   return ViewUsesBoundComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesBoundComp> _UsesBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompHost0);
+ComponentFactory<import1.UsesBoundComp> get UsesBoundCompNgFactory {
+  return _UsesBoundCompNgFactory;
+}
+
 final List<dynamic> styles$UsesBoundCompHost = const [];
 
 class _ViewUsesBoundCompHost0 extends AppView<import1.UsesBoundComp> {
@@ -800,11 +805,6 @@ AppView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0(AppView<dynamic> p
   return _ViewUsesBoundCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesBoundComp> _UsesBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesBoundCompHost0);
-ComponentFactory<import1.UsesBoundComp> get UsesBoundCompNgFactory {
-  return _UsesBoundCompNgFactory;
-}
-
 final List<dynamic> styles$SelfBoundComp = const [];
 
 class ViewSelfBoundComp0<A, B extends A> extends AppView<import1.SelfBoundComp<A, B>> {
@@ -824,6 +824,11 @@ class ViewSelfBoundComp0<A, B extends A> extends AppView<import1.SelfBoundComp<A
 
 AppView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundComp0<A, B extends A>(AppView<dynamic> parentView, int parentIndex) {
   return ViewSelfBoundComp0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.SelfBoundComp> _SelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_SelfBoundCompHost0);
+ComponentFactory<import1.SelfBoundComp> get SelfBoundCompNgFactory {
+  return _SelfBoundCompNgFactory;
 }
 
 final List<dynamic> styles$SelfBoundCompHost = const [];
@@ -855,11 +860,6 @@ class _ViewSelfBoundCompHost0<A, B extends A> extends AppView<import1.SelfBoundC
 
 AppView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundCompHost0<A, B extends A>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewSelfBoundCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.SelfBoundComp> _SelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_SelfBoundCompHost0);
-ComponentFactory<import1.SelfBoundComp> get SelfBoundCompNgFactory {
-  return _SelfBoundCompNgFactory;
 }
 
 final List<dynamic> styles$UsesSelfBoundComp = const [];
@@ -914,6 +914,11 @@ AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundComp0(AppView<dynami
   return ViewUsesSelfBoundComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesSelfBoundComp> _UsesSelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesSelfBoundCompHost0);
+ComponentFactory<import1.UsesSelfBoundComp> get UsesSelfBoundCompNgFactory {
+  return _UsesSelfBoundCompNgFactory;
+}
+
 final List<dynamic> styles$UsesSelfBoundCompHost = const [];
 
 class _ViewUsesSelfBoundCompHost0 extends AppView<import1.UsesSelfBoundComp> {
@@ -945,11 +950,6 @@ AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0(AppView<dy
   return _ViewUsesSelfBoundCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesSelfBoundComp> _UsesSelfBoundCompNgFactory = const ComponentFactory('comp', viewFactory_UsesSelfBoundCompHost0);
-ComponentFactory<import1.UsesSelfBoundComp> get UsesSelfBoundCompNgFactory {
-  return _UsesSelfBoundCompNgFactory;
-}
-
 final List<dynamic> styles$RecursiveComp = const [];
 
 class ViewRecursiveComp0<T extends Comparable<T>> extends AppView<import1.RecursiveComp<T>> {
@@ -969,6 +969,11 @@ class ViewRecursiveComp0<T extends Comparable<T>> extends AppView<import1.Recurs
 
 AppView<import1.RecursiveComp<T>> viewFactory_RecursiveComp0<T extends Comparable<T>>(AppView<dynamic> parentView, int parentIndex) {
   return ViewRecursiveComp0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.RecursiveComp> _RecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_RecursiveCompHost0);
+ComponentFactory<import1.RecursiveComp> get RecursiveCompNgFactory {
+  return _RecursiveCompNgFactory;
 }
 
 final List<dynamic> styles$RecursiveCompHost = const [];
@@ -1000,11 +1005,6 @@ class _ViewRecursiveCompHost0<T extends Comparable<T>> extends AppView<import1.R
 
 AppView<import1.RecursiveComp<T>> viewFactory_RecursiveCompHost0<T extends Comparable<T>>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewRecursiveCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.RecursiveComp> _RecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_RecursiveCompHost0);
-ComponentFactory<import1.RecursiveComp> get RecursiveCompNgFactory {
-  return _RecursiveCompNgFactory;
 }
 
 final List<dynamic> styles$UsesRecursiveComp = const [];
@@ -1053,6 +1053,11 @@ AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveComp0(AppView<dynami
   return ViewUsesRecursiveComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesRecursiveComp> _UsesRecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_UsesRecursiveCompHost0);
+ComponentFactory<import1.UsesRecursiveComp> get UsesRecursiveCompNgFactory {
+  return _UsesRecursiveCompNgFactory;
+}
+
 final List<dynamic> styles$UsesRecursiveCompHost = const [];
 
 class _ViewUsesRecursiveCompHost0 extends AppView<import1.UsesRecursiveComp> {
@@ -1084,11 +1089,6 @@ AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveCompHost0(AppView<dy
   return _ViewUsesRecursiveCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesRecursiveComp> _UsesRecursiveCompNgFactory = const ComponentFactory('comp', viewFactory_UsesRecursiveCompHost0);
-ComponentFactory<import1.UsesRecursiveComp> get UsesRecursiveCompNgFactory {
-  return _UsesRecursiveCompNgFactory;
-}
-
 final List<dynamic> styles$FunctionTypeComp = const [];
 
 class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
@@ -1108,6 +1108,11 @@ class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
 
 AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeComp0<F>(AppView<dynamic> parentView, int parentIndex) {
   return ViewFunctionTypeComp0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.FunctionTypeComp> _FunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_FunctionTypeCompHost0);
+ComponentFactory<import1.FunctionTypeComp> get FunctionTypeCompNgFactory {
+  return _FunctionTypeCompNgFactory;
 }
 
 final List<dynamic> styles$FunctionTypeCompHost = const [];
@@ -1139,11 +1144,6 @@ class _ViewFunctionTypeCompHost0<F> extends AppView<import1.FunctionTypeComp<F>>
 
 AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewFunctionTypeCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.FunctionTypeComp> _FunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_FunctionTypeCompHost0);
-ComponentFactory<import1.FunctionTypeComp> get FunctionTypeCompNgFactory {
-  return _FunctionTypeCompNgFactory;
 }
 
 final List<dynamic> styles$UsesFunctionTypeComp = const [];
@@ -1192,6 +1192,11 @@ AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeComp0(AppView<
   return ViewUsesFunctionTypeComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesFunctionTypeComp> _UsesFunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_UsesFunctionTypeCompHost0);
+ComponentFactory<import1.UsesFunctionTypeComp> get UsesFunctionTypeCompNgFactory {
+  return _UsesFunctionTypeCompNgFactory;
+}
+
 final List<dynamic> styles$UsesFunctionTypeCompHost = const [];
 
 class _ViewUsesFunctionTypeCompHost0 extends AppView<import1.UsesFunctionTypeComp> {
@@ -1221,11 +1226,6 @@ class _ViewUsesFunctionTypeCompHost0 extends AppView<import1.UsesFunctionTypeCom
 
 AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesFunctionTypeCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.UsesFunctionTypeComp> _UsesFunctionTypeCompNgFactory = const ComponentFactory('comp', viewFactory_UsesFunctionTypeCompHost0);
-ComponentFactory<import1.UsesFunctionTypeComp> get UsesFunctionTypeCompNgFactory {
-  return _UsesFunctionTypeCompNgFactory;
 }
 
 final List<dynamic> styles$NestedParentComp = const [];
@@ -1310,6 +1310,11 @@ AppView<import1.NestedParentComp<T>> viewFactory_NestedParentComp0<T>(AppView<dy
   return ViewNestedParentComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.NestedParentComp> _NestedParentCompNgFactory = const ComponentFactory('parent', viewFactory_NestedParentCompHost0);
+ComponentFactory<import1.NestedParentComp> get NestedParentCompNgFactory {
+  return _NestedParentCompNgFactory;
+}
+
 class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
   import5.Element _el_0;
   ViewNestedChildComp0<T> _compView_0;
@@ -1379,11 +1384,6 @@ AppView<import1.NestedParentComp<T>> viewFactory_NestedParentCompHost0<T>(AppVie
   return _ViewNestedParentCompHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.NestedParentComp> _NestedParentCompNgFactory = const ComponentFactory('parent', viewFactory_NestedParentCompHost0);
-ComponentFactory<import1.NestedParentComp> get NestedParentCompNgFactory {
-  return _NestedParentCompNgFactory;
-}
-
 final List<dynamic> styles$NestedChildComp = const [];
 
 class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
@@ -1403,6 +1403,11 @@ class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
 
 AppView<import1.NestedChildComp<T>> viewFactory_NestedChildComp0<T>(AppView<dynamic> parentView, int parentIndex) {
   return ViewNestedChildComp0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.NestedChildComp> _NestedChildCompNgFactory = const ComponentFactory('child', viewFactory_NestedChildCompHost0);
+ComponentFactory<import1.NestedChildComp> get NestedChildCompNgFactory {
+  return _NestedChildCompNgFactory;
 }
 
 final List<dynamic> styles$NestedChildCompHost = const [];
@@ -1434,11 +1439,6 @@ class _ViewNestedChildCompHost0<T> extends AppView<import1.NestedChildComp<T>> {
 
 AppView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedChildCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.NestedChildComp> _NestedChildCompNgFactory = const ComponentFactory('child', viewFactory_NestedChildCompHost0);
-ComponentFactory<import1.NestedChildComp> get NestedChildCompNgFactory {
-  return _NestedChildCompNgFactory;
 }
 
 final List<dynamic> styles$UsesNestedParentComp = const [];
@@ -1499,6 +1499,11 @@ AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentComp0(AppView<
   return ViewUsesNestedParentComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesNestedParentComp> _UsesNestedParentCompNgFactory = const ComponentFactory('comp', viewFactory_UsesNestedParentCompHost0);
+ComponentFactory<import1.UsesNestedParentComp> get UsesNestedParentCompNgFactory {
+  return _UsesNestedParentCompNgFactory;
+}
+
 final List<dynamic> styles$UsesNestedParentCompHost = const [];
 
 class _ViewUsesNestedParentCompHost0 extends AppView<import1.UsesNestedParentComp> {
@@ -1528,11 +1533,6 @@ class _ViewUsesNestedParentCompHost0 extends AppView<import1.UsesNestedParentCom
 
 AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesNestedParentCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.UsesNestedParentComp> _UsesNestedParentCompNgFactory = const ComponentFactory('comp', viewFactory_UsesNestedParentCompHost0);
-ComponentFactory<import1.UsesNestedParentComp> get UsesNestedParentCompNgFactory {
-  return _UsesNestedParentCompNgFactory;
 }
 
 final List<dynamic> styles$UsesMultipleTypesComp = const [];
@@ -1597,6 +1597,11 @@ AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesComp0(AppVie
   return ViewUsesMultipleTypesComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesMultipleTypesComp> _UsesMultipleTypesCompNgFactory = const ComponentFactory('comp', viewFactory_UsesMultipleTypesCompHost0);
+ComponentFactory<import1.UsesMultipleTypesComp> get UsesMultipleTypesCompNgFactory {
+  return _UsesMultipleTypesCompNgFactory;
+}
+
 final List<dynamic> styles$UsesMultipleTypesCompHost = const [];
 
 class _ViewUsesMultipleTypesCompHost0 extends AppView<import1.UsesMultipleTypesComp> {
@@ -1626,11 +1631,6 @@ class _ViewUsesMultipleTypesCompHost0 extends AppView<import1.UsesMultipleTypesC
 
 AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesMultipleTypesCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.UsesMultipleTypesComp> _UsesMultipleTypesCompNgFactory = const ComponentFactory('comp', viewFactory_UsesMultipleTypesCompHost0);
-ComponentFactory<import1.UsesMultipleTypesComp> get UsesMultipleTypesCompNgFactory {
-  return _UsesMultipleTypesCompNgFactory;
 }
 
 final List<dynamic> styles$UsesGenericChangeDetector = const [];
@@ -1672,6 +1672,11 @@ AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetector
   return ViewUsesGenericChangeDetector0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesGenericChangeDetector> _UsesGenericChangeDetectorNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericChangeDetectorHost0);
+ComponentFactory<import1.UsesGenericChangeDetector> get UsesGenericChangeDetectorNgFactory {
+  return _UsesGenericChangeDetectorNgFactory;
+}
+
 final List<dynamic> styles$UsesGenericChangeDetectorHost = const [];
 
 class _ViewUsesGenericChangeDetectorHost0 extends AppView<import1.UsesGenericChangeDetector> {
@@ -1701,11 +1706,6 @@ class _ViewUsesGenericChangeDetectorHost0 extends AppView<import1.UsesGenericCha
 
 AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetectorHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesGenericChangeDetectorHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.UsesGenericChangeDetector> _UsesGenericChangeDetectorNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericChangeDetectorHost0);
-ComponentFactory<import1.UsesGenericChangeDetector> get UsesGenericChangeDetectorNgFactory {
-  return _UsesGenericChangeDetectorNgFactory;
 }
 
 class GenericDirectiveNgCd<T> extends import13.DirectiveChangeDetector {

@@ -125,6 +125,11 @@ AppView<import1.RootComponent> viewFactory_RootComponent0(AppView<dynamic> paren
   return ViewRootComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.RootComponent> _RootComponentNgFactory = const ComponentFactory('root-component', viewFactory_RootComponentHost0);
+ComponentFactory<import1.RootComponent> get RootComponentNgFactory {
+  return _RootComponentNgFactory;
+}
+
 final List<dynamic> styles$RootComponentHost = const [];
 
 class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
@@ -154,11 +159,6 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
 
 AppView<import1.RootComponent> viewFactory_RootComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewRootComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.RootComponent> _RootComponentNgFactory = const ComponentFactory('root-component', viewFactory_RootComponentHost0);
-ComponentFactory<import1.RootComponent> get RootComponentNgFactory {
-  return _RootComponentNgFactory;
 }
 
 final List<dynamic> styles$UsesDefaultChangeDetectionAndInput = const [];
@@ -196,6 +196,11 @@ AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChang
   return ViewUsesDefaultChangeDetectionAndInput0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> _UsesDefaultChangeDetectionAndInputNgFactory = const ComponentFactory('uses-default-change-detection-and-input', viewFactory_UsesDefaultChangeDetectionAndInputHost0);
+ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> get UsesDefaultChangeDetectionAndInputNgFactory {
+  return _UsesDefaultChangeDetectionAndInputNgFactory;
+}
+
 final List<dynamic> styles$UsesDefaultChangeDetectionAndInputHost = const [];
 
 class _ViewUsesDefaultChangeDetectionAndInputHost0 extends AppView<import1.UsesDefaultChangeDetectionAndInput> {
@@ -225,11 +230,6 @@ class _ViewUsesDefaultChangeDetectionAndInputHost0 extends AppView<import1.UsesD
 
 AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewUsesDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> _UsesDefaultChangeDetectionAndInputNgFactory = const ComponentFactory('uses-default-change-detection-and-input', viewFactory_UsesDefaultChangeDetectionAndInputHost0);
-ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> get UsesDefaultChangeDetectionAndInputNgFactory {
-  return _UsesDefaultChangeDetectionAndInputNgFactory;
 }
 
 final List<dynamic> styles$DefaultChangeDetectionAndInput = const [];
@@ -269,6 +269,11 @@ AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetecti
   return ViewDefaultChangeDetectionAndInput0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.DefaultChangeDetectionAndInput> _DefaultChangeDetectionAndInputNgFactory = const ComponentFactory('default-change-detection-and-input', viewFactory_DefaultChangeDetectionAndInputHost0);
+ComponentFactory<import1.DefaultChangeDetectionAndInput> get DefaultChangeDetectionAndInputNgFactory {
+  return _DefaultChangeDetectionAndInputNgFactory;
+}
+
 final List<dynamic> styles$DefaultChangeDetectionAndInputHost = const [];
 
 class _ViewDefaultChangeDetectionAndInputHost0 extends AppView<import1.DefaultChangeDetectionAndInput> {
@@ -298,11 +303,6 @@ class _ViewDefaultChangeDetectionAndInputHost0 extends AppView<import1.DefaultCh
 
 AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.DefaultChangeDetectionAndInput> _DefaultChangeDetectionAndInputNgFactory = const ComponentFactory('default-change-detection-and-input', viewFactory_DefaultChangeDetectionAndInputHost0);
-ComponentFactory<import1.DefaultChangeDetectionAndInput> get DefaultChangeDetectionAndInputNgFactory {
-  return _DefaultChangeDetectionAndInputNgFactory;
 }
 
 final List<dynamic> styles$InlinedNgIf = const [];
@@ -350,6 +350,11 @@ AppView<import1.InlinedNgIf> viewFactory_InlinedNgIf0(AppView<dynamic> parentVie
   return ViewInlinedNgIf0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.InlinedNgIf> _InlinedNgIfNgFactory = const ComponentFactory('inlined-ng-if', viewFactory_InlinedNgIfHost0);
+ComponentFactory<import1.InlinedNgIf> get InlinedNgIfNgFactory {
+  return _InlinedNgIfNgFactory;
+}
+
 final List<dynamic> styles$InlinedNgIfHost = const [];
 
 class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
@@ -379,11 +384,6 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
 
 AppView<import1.InlinedNgIf> viewFactory_InlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInlinedNgIfHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.InlinedNgIf> _InlinedNgIfNgFactory = const ComponentFactory('inlined-ng-if', viewFactory_InlinedNgIfHost0);
-ComponentFactory<import1.InlinedNgIf> get InlinedNgIfNgFactory {
-  return _InlinedNgIfNgFactory;
 }
 
 final List<dynamic> styles$EmbeddedNgIf = const [];
@@ -424,6 +424,11 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
 
 AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex) {
   return ViewEmbeddedNgIf0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.EmbeddedNgIf> _EmbeddedNgIfNgFactory = const ComponentFactory('embedded-ng-if', viewFactory_EmbeddedNgIfHost0);
+ComponentFactory<import1.EmbeddedNgIf> get EmbeddedNgIfNgFactory {
+  return _EmbeddedNgIfNgFactory;
 }
 
 class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
@@ -488,11 +493,6 @@ AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIfHost0(AppView<dynamic> par
   return _ViewEmbeddedNgIfHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmbeddedNgIf> _EmbeddedNgIfNgFactory = const ComponentFactory('embedded-ng-if', viewFactory_EmbeddedNgIfHost0);
-ComponentFactory<import1.EmbeddedNgIf> get EmbeddedNgIfNgFactory {
-  return _EmbeddedNgIfNgFactory;
-}
-
 final List<dynamic> styles$EmbeddedNgFor = const [];
 
 class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
@@ -541,6 +541,11 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
 
 AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) {
   return ViewEmbeddedNgFor0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.EmbeddedNgFor> _EmbeddedNgForNgFactory = const ComponentFactory('embedded-ng-for', viewFactory_EmbeddedNgForHost0);
+ComponentFactory<import1.EmbeddedNgFor> get EmbeddedNgForNgFactory {
+  return _EmbeddedNgForNgFactory;
 }
 
 class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
@@ -604,11 +609,6 @@ AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgForHost0(AppView<dynamic> p
   return _ViewEmbeddedNgForHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmbeddedNgFor> _EmbeddedNgForNgFactory = const ComponentFactory('embedded-ng-for', viewFactory_EmbeddedNgForHost0);
-ComponentFactory<import1.EmbeddedNgFor> get EmbeddedNgForNgFactory {
-  return _EmbeddedNgForNgFactory;
-}
-
 final List<dynamic> styles$NullComponent = const [];
 
 class ViewNullComponent0 extends AppView<import1.NullComponent> {
@@ -628,6 +628,11 @@ class ViewNullComponent0 extends AppView<import1.NullComponent> {
 
 AppView<import1.NullComponent> viewFactory_NullComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewNullComponent0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.NullComponent> _NullComponentNgFactory = const ComponentFactory('null', viewFactory_NullComponentHost0);
+ComponentFactory<import1.NullComponent> get NullComponentNgFactory {
+  return _NullComponentNgFactory;
 }
 
 final List<dynamic> styles$NullComponentHost = const [];
@@ -661,11 +666,6 @@ AppView<import1.NullComponent> viewFactory_NullComponentHost0(AppView<dynamic> p
   return _ViewNullComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.NullComponent> _NullComponentNgFactory = const ComponentFactory('null', viewFactory_NullComponentHost0);
-ComponentFactory<import1.NullComponent> get NullComponentNgFactory {
-  return _NullComponentNgFactory;
-}
-
 final List<dynamic> styles$InjectsFromArbitraryParent = const [];
 
 class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitraryParent> {
@@ -685,6 +685,11 @@ class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitra
 
 AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewInjectsFromArbitraryParent0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.InjectsFromArbitraryParent> _InjectsFromArbitraryParentNgFactory = const ComponentFactory('injects-from-arbitrary-parent', viewFactory_InjectsFromArbitraryParentHost0);
+ComponentFactory<import1.InjectsFromArbitraryParent> get InjectsFromArbitraryParentNgFactory {
+  return _InjectsFromArbitraryParentNgFactory;
 }
 
 final List<dynamic> styles$InjectsFromArbitraryParentHost = const [];
@@ -720,11 +725,6 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
 
 AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInjectsFromArbitraryParentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.InjectsFromArbitraryParent> _InjectsFromArbitraryParentNgFactory = const ComponentFactory('injects-from-arbitrary-parent', viewFactory_InjectsFromArbitraryParentHost0);
-ComponentFactory<import1.InjectsFromArbitraryParent> get InjectsFromArbitraryParentNgFactory {
-  return _InjectsFromArbitraryParentNgFactory;
 }
 
 final List<dynamic> styles$ComponentConditionalFeatures = const [];
@@ -775,6 +775,11 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
 
 AppView<import1.ComponentConditionalFeatures> viewFactory_ComponentConditionalFeatures0(AppView<dynamic> parentView, int parentIndex) {
   return ViewComponentConditionalFeatures0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.ComponentConditionalFeatures> _ComponentConditionalFeaturesNgFactory = const ComponentFactory('component-conditional-features', viewFactory_ComponentConditionalFeaturesHost0);
+ComponentFactory<import1.ComponentConditionalFeatures> get ComponentConditionalFeaturesNgFactory {
+  return _ComponentConditionalFeaturesNgFactory;
 }
 
 class _ViewComponentConditionalFeatures1 extends AppView<import1.ComponentConditionalFeatures> {
@@ -870,11 +875,6 @@ AppView<import1.ComponentConditionalFeatures> viewFactory_ComponentConditionalFe
   return _ViewComponentConditionalFeaturesHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.ComponentConditionalFeatures> _ComponentConditionalFeaturesNgFactory = const ComponentFactory('component-conditional-features', viewFactory_ComponentConditionalFeaturesHost0);
-ComponentFactory<import1.ComponentConditionalFeatures> get ComponentConditionalFeaturesNgFactory {
-  return _ComponentConditionalFeaturesNgFactory;
-}
-
 final List<dynamic> styles$FeatureA = const [];
 
 class ViewFeatureA0 extends AppView<import1.FeatureA> {
@@ -896,6 +896,11 @@ class ViewFeatureA0 extends AppView<import1.FeatureA> {
 
 AppView<import1.FeatureA> viewFactory_FeatureA0(AppView<dynamic> parentView, int parentIndex) {
   return ViewFeatureA0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.FeatureA> _FeatureANgFactory = const ComponentFactory('feature-a', viewFactory_FeatureAHost0);
+ComponentFactory<import1.FeatureA> get FeatureANgFactory {
+  return _FeatureANgFactory;
 }
 
 final List<dynamic> styles$FeatureAHost = const [];
@@ -929,11 +934,6 @@ AppView<import1.FeatureA> viewFactory_FeatureAHost0(AppView<dynamic> parentView,
   return _ViewFeatureAHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.FeatureA> _FeatureANgFactory = const ComponentFactory('feature-a', viewFactory_FeatureAHost0);
-ComponentFactory<import1.FeatureA> get FeatureANgFactory {
-  return _FeatureANgFactory;
-}
-
 final List<dynamic> styles$FeatureB = const [];
 
 class ViewFeatureB0 extends AppView<import1.FeatureB> {
@@ -955,6 +955,11 @@ class ViewFeatureB0 extends AppView<import1.FeatureB> {
 
 AppView<import1.FeatureB> viewFactory_FeatureB0(AppView<dynamic> parentView, int parentIndex) {
   return ViewFeatureB0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.FeatureB> _FeatureBNgFactory = const ComponentFactory('feature-b', viewFactory_FeatureBHost0);
+ComponentFactory<import1.FeatureB> get FeatureBNgFactory {
+  return _FeatureBNgFactory;
 }
 
 final List<dynamic> styles$FeatureBHost = const [];
@@ -986,11 +991,6 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
 
 AppView<import1.FeatureB> viewFactory_FeatureBHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewFeatureBHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.FeatureB> _FeatureBNgFactory = const ComponentFactory('feature-b', viewFactory_FeatureBHost0);
-ComponentFactory<import1.FeatureB> get FeatureBNgFactory {
-  return _FeatureBNgFactory;
 }
 
 var _visited = false;

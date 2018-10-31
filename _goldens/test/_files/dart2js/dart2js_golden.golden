@@ -2383,8 +2383,8 @@
       toString$0: function(_) {
         var t1 = this._method;
         if (t1 == null)
-          return "NullError: " + H.S(this._message);
-        return "NullError: method not found: '" + t1 + "' on null";
+          return "NoSuchMethodError: " + H.S(this._message);
+        return "NoSuchMethodError: method not found: '" + t1 + "' on null";
       },
       static: {
         NullError$: function(_message, match) {

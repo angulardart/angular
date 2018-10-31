@@ -127,6 +127,11 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent0(AppV
   return ViewTestContainerComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.TestContainerComponent> _TestContainerComponentNgFactory = const ComponentFactory('test-container', viewFactory_TestContainerComponentHost0);
+ComponentFactory<import1.TestContainerComponent> get TestContainerComponentNgFactory {
+  return _TestContainerComponentNgFactory;
+}
+
 class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponent> {
   import4.Element _el_0;
   AppView _compView_0;
@@ -385,11 +390,6 @@ class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComp
 
 AppView<import1.TestContainerComponent> viewFactory_TestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.TestContainerComponent> _TestContainerComponentNgFactory = const ComponentFactory('test-container', viewFactory_TestContainerComponentHost0);
-ComponentFactory<import1.TestContainerComponent> get TestContainerComponentNgFactory {
-  return _TestContainerComponentNgFactory;
 }
 
 var _visited = false;

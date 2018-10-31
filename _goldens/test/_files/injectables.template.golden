@@ -48,6 +48,11 @@ AppView<import1.InjectableComponent> viewFactory_InjectableComponent0(AppView<dy
   return ViewInjectableComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.InjectableComponent> _InjectableComponentNgFactory = const ComponentFactory('test-injectables', viewFactory_InjectableComponentHost0);
+ComponentFactory<import1.InjectableComponent> get InjectableComponentNgFactory {
+  return _InjectableComponentNgFactory;
+}
+
 final List<dynamic> styles$InjectableComponentHost = const [];
 
 class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent> {
@@ -121,11 +126,6 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
 
 AppView<import1.InjectableComponent> viewFactory_InjectableComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInjectableComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.InjectableComponent> _InjectableComponentNgFactory = const ComponentFactory('test-injectables', viewFactory_InjectableComponentHost0);
-ComponentFactory<import1.InjectableComponent> get InjectableComponentNgFactory {
-  return _InjectableComponentNgFactory;
 }
 
 var _visited = false;

@@ -38,6 +38,11 @@ AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(Ap
   return ViewLifecycleHooksComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.LifecycleHooksComponent> _LifecycleHooksComponentNgFactory = const ComponentFactory('lifecycle-hooks', viewFactory_LifecycleHooksComponentHost0);
+ComponentFactory<import1.LifecycleHooksComponent> get LifecycleHooksComponentNgFactory {
+  return _LifecycleHooksComponentNgFactory;
+}
+
 final List<dynamic> styles$LifecycleHooksComponentHost = const [];
 
 class _ViewLifecycleHooksComponentHost0 extends AppView<import1.LifecycleHooksComponent> {
@@ -87,11 +92,6 @@ class _ViewLifecycleHooksComponentHost0 extends AppView<import1.LifecycleHooksCo
 
 AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewLifecycleHooksComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.LifecycleHooksComponent> _LifecycleHooksComponentNgFactory = const ComponentFactory('lifecycle-hooks', viewFactory_LifecycleHooksComponentHost0);
-ComponentFactory<import1.LifecycleHooksComponent> get LifecycleHooksComponentNgFactory {
-  return _LifecycleHooksComponentNgFactory;
 }
 
 var _visited = false;

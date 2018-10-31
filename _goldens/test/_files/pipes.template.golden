@@ -105,6 +105,11 @@ AppView<import1.Comp> viewFactory_Comp0(AppView<dynamic> parentView, int parentI
   return ViewComp0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.Comp> _CompNgFactory = const ComponentFactory('comp', viewFactory_CompHost0);
+ComponentFactory<import1.Comp> get CompNgFactory {
+  return _CompNgFactory;
+}
+
 final List<dynamic> styles$CompHost = const [];
 
 class _ViewCompHost0 extends AppView<import1.Comp> {
@@ -134,11 +139,6 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
 
 AppView<import1.Comp> viewFactory_CompHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewCompHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.Comp> _CompNgFactory = const ComponentFactory('comp', viewFactory_CompHost0);
-ComponentFactory<import1.Comp> get CompNgFactory {
-  return _CompNgFactory;
 }
 
 var _visited = false;

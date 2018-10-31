@@ -39,6 +39,11 @@ AppView<import1.Dependent> viewFactory_Dependent0(AppView<dynamic> parentView, i
   return ViewDependent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.Dependent> _DependentNgFactory = const ComponentFactory('dependent', viewFactory_DependentHost0);
+ComponentFactory<import1.Dependent> get DependentNgFactory {
+  return _DependentNgFactory;
+}
+
 final List<dynamic> styles$DependentHost = const [];
 
 class _ViewDependentHost0 extends AppView<import1.Dependent> {
@@ -72,11 +77,6 @@ class _ViewDependentHost0 extends AppView<import1.Dependent> {
 
 AppView<import1.Dependent> viewFactory_DependentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewDependentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.Dependent> _DependentNgFactory = const ComponentFactory('dependent', viewFactory_DependentHost0);
-ComponentFactory<import1.Dependent> get DependentNgFactory {
-  return _DependentNgFactory;
 }
 
 final List<dynamic> styles$DependencyWithDependentInView = const [];
@@ -122,6 +122,11 @@ AppView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDepende
   return ViewDependencyWithDependentInView0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.DependencyWithDependentInView> _DependencyWithDependentInViewNgFactory = const ComponentFactory('dependency-with-dependent-in-view', viewFactory_DependencyWithDependentInViewHost0);
+ComponentFactory<import1.DependencyWithDependentInView> get DependencyWithDependentInViewNgFactory {
+  return _DependencyWithDependentInViewNgFactory;
+}
+
 final List<dynamic> styles$DependencyWithDependentInViewHost = const [];
 
 class _ViewDependencyWithDependentInViewHost0 extends AppView<import1.DependencyWithDependentInView> {
@@ -161,11 +166,6 @@ AppView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDepende
   return _ViewDependencyWithDependentInViewHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DependencyWithDependentInView> _DependencyWithDependentInViewNgFactory = const ComponentFactory('dependency-with-dependent-in-view', viewFactory_DependencyWithDependentInViewHost0);
-ComponentFactory<import1.DependencyWithDependentInView> get DependencyWithDependentInViewNgFactory {
-  return _DependencyWithDependentInViewNgFactory;
-}
-
 final List<dynamic> styles$DependencyWithContent = const [];
 
 class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> {
@@ -186,6 +186,11 @@ class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> 
 
 AppView<import1.DependencyWithContent> viewFactory_DependencyWithContent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewDependencyWithContent0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.DependencyWithContent> _DependencyWithContentNgFactory = const ComponentFactory('dependency-with-content', viewFactory_DependencyWithContentHost0);
+ComponentFactory<import1.DependencyWithContent> get DependencyWithContentNgFactory {
+  return _DependencyWithContentNgFactory;
 }
 
 final List<dynamic> styles$DependencyWithContentHost = const [];
@@ -225,11 +230,6 @@ class _ViewDependencyWithContentHost0 extends AppView<import1.DependencyWithCont
 
 AppView<import1.DependencyWithContent> viewFactory_DependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewDependencyWithContentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.DependencyWithContent> _DependencyWithContentNgFactory = const ComponentFactory('dependency-with-content', viewFactory_DependencyWithContentHost0);
-ComponentFactory<import1.DependencyWithContent> get DependencyWithContentNgFactory {
-  return _DependencyWithContentNgFactory;
 }
 
 final List<dynamic> styles$DependencyAndDependentInView = const [];
@@ -277,6 +277,11 @@ AppView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependent
   return ViewDependencyAndDependentInView0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.DependencyAndDependentInView> _DependencyAndDependentInViewNgFactory = const ComponentFactory('dependency-and-dependent-in-view', viewFactory_DependencyAndDependentInViewHost0);
+ComponentFactory<import1.DependencyAndDependentInView> get DependencyAndDependentInViewNgFactory {
+  return _DependencyAndDependentInViewNgFactory;
+}
+
 final List<dynamic> styles$DependencyAndDependentInViewHost = const [];
 
 class _ViewDependencyAndDependentInViewHost0 extends AppView<import1.DependencyAndDependentInView> {
@@ -308,11 +313,6 @@ AppView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependent
   return _ViewDependencyAndDependentInViewHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DependencyAndDependentInView> _DependencyAndDependentInViewNgFactory = const ComponentFactory('dependency-and-dependent-in-view', viewFactory_DependencyAndDependentInViewHost0);
-ComponentFactory<import1.DependencyAndDependentInView> get DependencyAndDependentInViewNgFactory {
-  return _DependencyAndDependentInViewNgFactory;
-}
-
 final List<dynamic> styles$HasVisibilityAll = const [];
 
 class ViewHasVisibilityAll0 extends AppView<import1.HasVisibilityAll> {
@@ -332,6 +332,11 @@ class ViewHasVisibilityAll0 extends AppView<import1.HasVisibilityAll> {
 
 AppView<import1.HasVisibilityAll> viewFactory_HasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) {
   return ViewHasVisibilityAll0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.HasVisibilityAll> _HasVisibilityAllNgFactory = const ComponentFactory('has-visibility-all', viewFactory_HasVisibilityAllHost0);
+ComponentFactory<import1.HasVisibilityAll> get HasVisibilityAllNgFactory {
+  return _HasVisibilityAllNgFactory;
 }
 
 final List<dynamic> styles$HasVisibilityAllHost = const [];
@@ -373,11 +378,6 @@ AppView<import1.HasVisibilityAll> viewFactory_HasVisibilityAllHost0(AppView<dyna
   return _ViewHasVisibilityAllHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.HasVisibilityAll> _HasVisibilityAllNgFactory = const ComponentFactory('has-visibility-all', viewFactory_HasVisibilityAllHost0);
-ComponentFactory<import1.HasVisibilityAll> get HasVisibilityAllNgFactory {
-  return _HasVisibilityAllNgFactory;
-}
-
 final List<dynamic> styles$HasVisibilityLocal = const [];
 
 class ViewHasVisibilityLocal0 extends AppView<import1.HasVisibilityLocal> {
@@ -397,6 +397,11 @@ class ViewHasVisibilityLocal0 extends AppView<import1.HasVisibilityLocal> {
 
 AppView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) {
   return ViewHasVisibilityLocal0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.HasVisibilityLocal> _HasVisibilityLocalNgFactory = const ComponentFactory('has-visibility-local', viewFactory_HasVisibilityLocalHost0);
+ComponentFactory<import1.HasVisibilityLocal> get HasVisibilityLocalNgFactory {
+  return _HasVisibilityLocalNgFactory;
 }
 
 final List<dynamic> styles$HasVisibilityLocalHost = const [];
@@ -428,11 +433,6 @@ class _ViewHasVisibilityLocalHost0 extends AppView<import1.HasVisibilityLocal> {
 
 AppView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocalHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewHasVisibilityLocalHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.HasVisibilityLocal> _HasVisibilityLocalNgFactory = const ComponentFactory('has-visibility-local', viewFactory_HasVisibilityLocalHost0);
-ComponentFactory<import1.HasVisibilityLocal> get HasVisibilityLocalNgFactory {
-  return _HasVisibilityLocalNgFactory;
 }
 
 var _visited = false;

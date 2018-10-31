@@ -69,6 +69,11 @@ AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent0(AppView<
   return ViewNestedNgForComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.NestedNgForComponent> _NestedNgForComponentNgFactory = const ComponentFactory('nested-ng-for', viewFactory_NestedNgForComponentHost0);
+ComponentFactory<import1.NestedNgForComponent> get NestedNgForComponentNgFactory {
+  return _NestedNgForComponentNgFactory;
+}
+
 class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
   ViewContainer _appEl_1;
   import3.NgFor _NgFor_1_9;
@@ -171,11 +176,6 @@ class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponen
 
 AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedNgForComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.NestedNgForComponent> _NestedNgForComponentNgFactory = const ComponentFactory('nested-ng-for', viewFactory_NestedNgForComponentHost0);
-ComponentFactory<import1.NestedNgForComponent> get NestedNgForComponentNgFactory {
-  return _NestedNgForComponentNgFactory;
 }
 
 var _visited = false;
