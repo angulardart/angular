@@ -94,6 +94,11 @@ AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(
   return ViewEmptyPropertiesComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.EmptyPropertiesComponent> _EmptyPropertiesComponentNgFactory = const ComponentFactory('empty-properties', viewFactory_EmptyPropertiesComponentHost0);
+ComponentFactory<import1.EmptyPropertiesComponent> get EmptyPropertiesComponentNgFactory {
+  return _EmptyPropertiesComponentNgFactory;
+}
+
 final List<dynamic> styles$EmptyPropertiesComponentHost = const [];
 
 class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyPropertiesComponent> {
@@ -125,11 +130,6 @@ AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponentHo
   return _ViewEmptyPropertiesComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmptyPropertiesComponent> _EmptyPropertiesComponentNgFactory = const ComponentFactory('empty-properties', viewFactory_EmptyPropertiesComponentHost0);
-ComponentFactory<import1.EmptyPropertiesComponent> get EmptyPropertiesComponentNgFactory {
-  return _EmptyPropertiesComponentNgFactory;
-}
-
 final List<dynamic> styles$FancyButtonComponent = const [];
 
 class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
@@ -149,6 +149,11 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
 
 AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewFancyButtonComponent0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.FancyButtonComponent> _FancyButtonComponentNgFactory = const ComponentFactory('fancy-button', viewFactory_FancyButtonComponentHost0);
+ComponentFactory<import1.FancyButtonComponent> get FancyButtonComponentNgFactory {
+  return _FancyButtonComponentNgFactory;
 }
 
 final List<dynamic> styles$FancyButtonComponentHost = const [];
@@ -180,11 +185,6 @@ class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponen
 
 AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewFancyButtonComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.FancyButtonComponent> _FancyButtonComponentNgFactory = const ComponentFactory('fancy-button', viewFactory_FancyButtonComponentHost0);
-ComponentFactory<import1.FancyButtonComponent> get FancyButtonComponentNgFactory {
-  return _FancyButtonComponentNgFactory;
 }
 
 var _visited = false;

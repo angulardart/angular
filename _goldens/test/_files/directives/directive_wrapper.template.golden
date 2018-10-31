@@ -71,6 +71,11 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic>
   return ViewTestFooComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.TestFooComponent> _TestFooComponentNgFactory = const ComponentFactory('test-foo', viewFactory_TestFooComponentHost0);
+ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
+  return _TestFooComponentNgFactory;
+}
+
 final List<dynamic> styles$TestFooComponentHost = const [];
 
 class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
@@ -100,11 +105,6 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
 
 AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestFooComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.TestFooComponent> _TestFooComponentNgFactory = const ComponentFactory('test-foo', viewFactory_TestFooComponentHost0);
-ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
-  return _TestFooComponentNgFactory;
 }
 
 final List<dynamic> styles$DirectiveContainerTest = const [];
@@ -151,6 +151,11 @@ AppView<import1.DirectiveContainerTest> viewFactory_DirectiveContainerTest0(AppV
   return ViewDirectiveContainerTest0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.DirectiveContainerTest> _DirectiveContainerTestNgFactory = const ComponentFactory('directive-container', viewFactory_DirectiveContainerTestHost0);
+ComponentFactory<import1.DirectiveContainerTest> get DirectiveContainerTestNgFactory {
+  return _DirectiveContainerTestNgFactory;
+}
+
 final List<dynamic> styles$DirectiveContainerTestHost = const [];
 
 class _ViewDirectiveContainerTestHost0 extends AppView<import1.DirectiveContainerTest> {
@@ -180,11 +185,6 @@ class _ViewDirectiveContainerTestHost0 extends AppView<import1.DirectiveContaine
 
 AppView<import1.DirectiveContainerTest> viewFactory_DirectiveContainerTestHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewDirectiveContainerTestHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.DirectiveContainerTest> _DirectiveContainerTestNgFactory = const ComponentFactory('directive-container', viewFactory_DirectiveContainerTestHost0);
-ComponentFactory<import1.DirectiveContainerTest> get DirectiveContainerTestNgFactory {
-  return _DirectiveContainerTestNgFactory;
 }
 
 class ChildDirectiveNgCd extends import10.DirectiveChangeDetector {

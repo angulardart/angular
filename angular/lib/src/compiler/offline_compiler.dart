@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
     show
@@ -10,7 +12,6 @@ import 'compile_metadata.dart'
         createHostComponentMeta,
         createHostDirectiveTypes;
 import 'compiler_utils.dart' show stylesModuleUrl, templateModuleUrl;
-import 'identifiers.dart';
 import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
 import 'source_module.dart';
@@ -41,7 +42,17 @@ class NormalizedComponentWithViewDirectives {
     this.directives,
     this.directiveTypes,
     this.pipes,
-  );
+  ) {
+    _assertComponent(component);
+  }
+
+  static void _assertComponent(CompileDirectiveMetadata meta) {
+    if (!meta.isComponent) {
+      throw StateError(
+          'Could not compile \'${meta.type.name}\' because it is not a '
+          'component.');
+    }
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'class': 'NormalizedComponentWithViewDirectives',
@@ -90,21 +101,7 @@ class OfflineCompiler {
     }
     var statements = <o.Statement>[];
     for (var componentWithDirs in artifacts.components) {
-      CompileDirectiveMetadata compMeta = componentWithDirs.component;
-      _assertComponent(compMeta);
-
-      // Compile Component View and Embedded templates.
-      _compileComponent(
-          compMeta,
-          componentWithDirs.directives,
-          componentWithDirs.directiveTypes,
-          componentWithDirs.pipes,
-          statements,
-          _deferredModules);
-
-      String hostViewFactoryVar = _compileComponentHost(compMeta, statements);
-
-      _registerComponentFactory(statements, compMeta, hostViewFactoryVar);
+      _compileComponent(componentWithDirs, statements);
     }
 
     for (CompileDirectiveMetadata directive in artifacts.directives) {
@@ -114,6 +111,23 @@ class OfflineCompiler {
 
     String moduleUrl = _moduleUrlFor(artifacts);
     return _createSourceModule(moduleUrl, statements, _deferredModules);
+  }
+
+  void _compileComponent(
+      NormalizedComponentWithViewDirectives componentWithDirs,
+      List<o.Statement> statements) {
+    var compMeta = componentWithDirs.component;
+    // Compile Component View and Embedded templates.
+    _compileComponentView(
+      compMeta,
+      componentWithDirs.directives,
+      componentWithDirs.directiveTypes,
+      componentWithDirs.pipes,
+      statements,
+      registerComponentFactory: true,
+    );
+
+    _compileComponentHost(compMeta, statements);
   }
 
   List<SourceModule> compileStylesheet(String stylesheetUrl, String cssText) {
@@ -129,13 +143,13 @@ class OfflineCompiler {
     ];
   }
 
-  String _compileComponent(
+  void _compileComponentView(
       CompileDirectiveMetadata compMeta,
       List<CompileDirectiveMetadata> directives,
       List<CompileTypedMetadata> directiveTypes,
       List<CompilePipeMetadata> pipes,
       List<o.Statement> targetStatements,
-      Map<String, String> deferredModules) {
+      {@required bool registerComponentFactory}) {
     var styleResult = _styleCompiler.compileComponent(compMeta);
     List<TemplateAst> parsedTemplate = _templateParser.parse(compMeta,
         compMeta.template.template, directives, pipes, compMeta.type.name);
@@ -146,65 +160,26 @@ class OfflineCompiler {
         o.variable(styleResult.stylesVar),
         directiveTypes,
         pipes,
-        deferredModules);
+        _deferredModules,
+        registerComponentFactory: registerComponentFactory);
     targetStatements.addAll(styleResult.statements);
     targetStatements.addAll(viewResult.statements);
-    return viewResult.viewFactoryVar;
   }
 
   // Compile ComponentHost to be able to use dynamic component loader at
   // runtime.
-  String _compileComponentHost(
+  void _compileComponentHost(
       CompileDirectiveMetadata compMeta, List<o.Statement> statements) {
     var hostMeta = createHostComponentMeta(
         compMeta.type, compMeta.selector, compMeta.template.preserveWhitespace);
     var hostDirectiveTypes = createHostDirectiveTypes(compMeta.type);
-    return _compileComponent(
+    _compileComponentView(
       hostMeta,
       [compMeta],
       hostDirectiveTypes,
       [],
       statements,
-      _deferredModules,
-    );
-  }
-
-  // Adds const _FooNgFactory = const ComponentFactory<Foo>(...).
-  // ComponentFactory<Foo> FooNgFactory get _FooNgFactory;
-  //
-  // This is referenced in `initReflector/METADATA` and by user-code.
-  void _registerComponentFactory(List<o.Statement> statements,
-      CompileDirectiveMetadata compMeta, String hostViewFactoryVar) {
-    var compFactoryVar = '${compMeta.type.name}NgFactory';
-    var factoryType = [o.importType(compMeta.type)];
-    statements.add(o
-        .variable('_$compFactoryVar')
-        .set(o.importExpr(Identifiers.ComponentFactory).instantiate(
-          <o.Expression>[
-            o.literal(compMeta.selector),
-            o.variable(hostViewFactoryVar),
-          ],
-          type: o.importType(
-            Identifiers.ComponentFactory,
-            factoryType,
-            [o.TypeModifier.Const],
-          ),
-        ))
-        .toDeclStmt(null, [o.StmtModifier.Const]));
-
-    statements.add(
-      o.fn(
-        // No parameters.
-        [],
-        // Statements.
-        [
-          o.ReturnStatement(o.ReadVarExpr('_$compFactoryVar')),
-        ],
-        o.importType(
-          Identifiers.ComponentFactory,
-          factoryType,
-        ),
-      ).toGetter('$compFactoryVar'),
+      registerComponentFactory: false,
     );
   }
 
@@ -238,12 +213,5 @@ class OfflineCompiler {
     print(components.map((comp) {
       return const JsonEncoder.withIndent('  ').convert(comp.toJson());
     }).join('\n'));
-  }
-}
-
-void _assertComponent(CompileDirectiveMetadata meta) {
-  if (!meta.isComponent) {
-    throw StateError(
-        "Could not compile '${meta.type.name}' because it is not a component.");
   }
 }

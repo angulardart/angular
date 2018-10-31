@@ -40,6 +40,11 @@ AppView<import1.DeferredChild1Component> viewFactory_DeferredChild1Component0(Ap
   return ViewDeferredChild1Component0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.DeferredChild1Component> _DeferredChild1ComponentNgFactory = const ComponentFactory('deferred-child-1', viewFactory_DeferredChild1ComponentHost0);
+ComponentFactory<import1.DeferredChild1Component> get DeferredChild1ComponentNgFactory {
+  return _DeferredChild1ComponentNgFactory;
+}
+
 final List<dynamic> styles$DeferredChild1ComponentHost = const [];
 
 class _ViewDeferredChild1ComponentHost0 extends AppView<import1.DeferredChild1Component> {
@@ -71,11 +76,6 @@ AppView<import1.DeferredChild1Component> viewFactory_DeferredChild1ComponentHost
   return _ViewDeferredChild1ComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DeferredChild1Component> _DeferredChild1ComponentNgFactory = const ComponentFactory('deferred-child-1', viewFactory_DeferredChild1ComponentHost0);
-ComponentFactory<import1.DeferredChild1Component> get DeferredChild1ComponentNgFactory {
-  return _DeferredChild1ComponentNgFactory;
-}
-
 final List<dynamic> styles$DeferredChild2Component = const [];
 
 class ViewDeferredChild2Component0 extends AppView<import1.DeferredChild2Component> {
@@ -97,6 +97,11 @@ class ViewDeferredChild2Component0 extends AppView<import1.DeferredChild2Compone
 
 AppView<import1.DeferredChild2Component> viewFactory_DeferredChild2Component0(AppView<dynamic> parentView, int parentIndex) {
   return ViewDeferredChild2Component0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.DeferredChild2Component> _DeferredChild2ComponentNgFactory = const ComponentFactory('deferred-child-2', viewFactory_DeferredChild2ComponentHost0);
+ComponentFactory<import1.DeferredChild2Component> get DeferredChild2ComponentNgFactory {
+  return _DeferredChild2ComponentNgFactory;
 }
 
 final List<dynamic> styles$DeferredChild2ComponentHost = const [];
@@ -130,11 +135,6 @@ AppView<import1.DeferredChild2Component> viewFactory_DeferredChild2ComponentHost
   return _ViewDeferredChild2ComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DeferredChild2Component> _DeferredChild2ComponentNgFactory = const ComponentFactory('deferred-child-2', viewFactory_DeferredChild2ComponentHost0);
-ComponentFactory<import1.DeferredChild2Component> get DeferredChild2ComponentNgFactory {
-  return _DeferredChild2ComponentNgFactory;
-}
-
 final List<dynamic> styles$DeferredChild3Component = const [];
 
 class ViewDeferredChild3Component0 extends AppView<import1.DeferredChild3Component> {
@@ -156,6 +156,11 @@ class ViewDeferredChild3Component0 extends AppView<import1.DeferredChild3Compone
 
 AppView<import1.DeferredChild3Component> viewFactory_DeferredChild3Component0(AppView<dynamic> parentView, int parentIndex) {
   return ViewDeferredChild3Component0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.DeferredChild3Component> _DeferredChild3ComponentNgFactory = const ComponentFactory('deferred-child-3', viewFactory_DeferredChild3ComponentHost0);
+ComponentFactory<import1.DeferredChild3Component> get DeferredChild3ComponentNgFactory {
+  return _DeferredChild3ComponentNgFactory;
 }
 
 final List<dynamic> styles$DeferredChild3ComponentHost = const [];
@@ -189,11 +194,6 @@ AppView<import1.DeferredChild3Component> viewFactory_DeferredChild3ComponentHost
   return _ViewDeferredChild3ComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DeferredChild3Component> _DeferredChild3ComponentNgFactory = const ComponentFactory('deferred-child-3', viewFactory_DeferredChild3ComponentHost0);
-ComponentFactory<import1.DeferredChild3Component> get DeferredChild3ComponentNgFactory {
-  return _DeferredChild3ComponentNgFactory;
-}
-
 final List<dynamic> styles$NotDeferredChildComponent = const [];
 
 class ViewNotDeferredChildComponent0 extends AppView<import1.NotDeferredChildComponent> {
@@ -213,6 +213,11 @@ class ViewNotDeferredChildComponent0 extends AppView<import1.NotDeferredChildCom
 
 AppView<import1.NotDeferredChildComponent> viewFactory_NotDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewNotDeferredChildComponent0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.NotDeferredChildComponent> _NotDeferredChildComponentNgFactory = const ComponentFactory('not-deferred-child', viewFactory_NotDeferredChildComponentHost0);
+ComponentFactory<import1.NotDeferredChildComponent> get NotDeferredChildComponentNgFactory {
+  return _NotDeferredChildComponentNgFactory;
 }
 
 final List<dynamic> styles$NotDeferredChildComponentHost = const [];
@@ -246,11 +251,6 @@ AppView<import1.NotDeferredChildComponent> viewFactory_NotDeferredChildComponent
   return _ViewNotDeferredChildComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.NotDeferredChildComponent> _NotDeferredChildComponentNgFactory = const ComponentFactory('not-deferred-child', viewFactory_NotDeferredChildComponentHost0);
-ComponentFactory<import1.NotDeferredChildComponent> get NotDeferredChildComponentNgFactory {
-  return _NotDeferredChildComponentNgFactory;
-}
-
 final List<dynamic> styles$DeferredChildComponentWithoutNgContent = const [];
 
 class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.DeferredChildComponentWithoutNgContent> {
@@ -274,6 +274,11 @@ class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.Deferr
 
 AppView<import1.DeferredChildComponentWithoutNgContent> viewFactory_DeferredChildComponentWithoutNgContent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewDeferredChildComponentWithoutNgContent0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.DeferredChildComponentWithoutNgContent> _DeferredChildComponentWithoutNgContentNgFactory = const ComponentFactory('deferred-child-without-ng-content', viewFactory_DeferredChildComponentWithoutNgContentHost0);
+ComponentFactory<import1.DeferredChildComponentWithoutNgContent> get DeferredChildComponentWithoutNgContentNgFactory {
+  return _DeferredChildComponentWithoutNgContentNgFactory;
 }
 
 final List<dynamic> styles$DeferredChildComponentWithoutNgContentHost = const [];
@@ -307,11 +312,6 @@ AppView<import1.DeferredChildComponentWithoutNgContent> viewFactory_DeferredChil
   return _ViewDeferredChildComponentWithoutNgContentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DeferredChildComponentWithoutNgContent> _DeferredChildComponentWithoutNgContentNgFactory = const ComponentFactory('deferred-child-without-ng-content', viewFactory_DeferredChildComponentWithoutNgContentHost0);
-ComponentFactory<import1.DeferredChildComponentWithoutNgContent> get DeferredChildComponentWithoutNgContentNgFactory {
-  return _DeferredChildComponentWithoutNgContentNgFactory;
-}
-
 final List<dynamic> styles$DeferredChildComponentWithNgContent = const [];
 
 class ViewDeferredChildComponentWithNgContent0 extends AppView<import1.DeferredChildComponentWithNgContent> {
@@ -334,6 +334,11 @@ class ViewDeferredChildComponentWithNgContent0 extends AppView<import1.DeferredC
 
 AppView<import1.DeferredChildComponentWithNgContent> viewFactory_DeferredChildComponentWithNgContent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewDeferredChildComponentWithNgContent0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.DeferredChildComponentWithNgContent> _DeferredChildComponentWithNgContentNgFactory = const ComponentFactory('deferred-child-with-ng-content', viewFactory_DeferredChildComponentWithNgContentHost0);
+ComponentFactory<import1.DeferredChildComponentWithNgContent> get DeferredChildComponentWithNgContentNgFactory {
+  return _DeferredChildComponentWithNgContentNgFactory;
 }
 
 final List<dynamic> styles$DeferredChildComponentWithNgContentHost = const [];
@@ -365,11 +370,6 @@ class _ViewDeferredChildComponentWithNgContentHost0 extends AppView<import1.Defe
 
 AppView<import1.DeferredChildComponentWithNgContent> viewFactory_DeferredChildComponentWithNgContentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewDeferredChildComponentWithNgContentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.DeferredChildComponentWithNgContent> _DeferredChildComponentWithNgContentNgFactory = const ComponentFactory('deferred-child-with-ng-content', viewFactory_DeferredChildComponentWithNgContentHost0);
-ComponentFactory<import1.DeferredChildComponentWithNgContent> get DeferredChildComponentWithNgContentNgFactory {
-  return _DeferredChildComponentWithNgContentNgFactory;
 }
 
 var _visited = false;

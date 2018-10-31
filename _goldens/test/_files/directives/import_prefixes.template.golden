@@ -55,6 +55,11 @@ AppView<import1.ParentComponent> viewFactory_ParentComponent0(AppView<dynamic> p
   return ViewParentComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.ParentComponent> _ParentComponentNgFactory = const ComponentFactory('parent-comp', viewFactory_ParentComponentHost0);
+ComponentFactory<import1.ParentComponent> get ParentComponentNgFactory {
+  return _ParentComponentNgFactory;
+}
+
 final List<dynamic> styles$ParentComponentHost = const [];
 
 class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
@@ -84,11 +89,6 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
 
 AppView<import1.ParentComponent> viewFactory_ParentComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewParentComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.ParentComponent> _ParentComponentNgFactory = const ComponentFactory('parent-comp', viewFactory_ParentComponentHost0);
-ComponentFactory<import1.ParentComponent> get ParentComponentNgFactory {
-  return _ParentComponentNgFactory;
 }
 
 final List<dynamic> styles$ChildComponent = const [];
@@ -126,6 +126,11 @@ AppView<import1.ChildComponent> viewFactory_ChildComponent0(AppView<dynamic> par
   return ViewChildComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.ChildComponent> _ChildComponentNgFactory = const ComponentFactory('child-cmp', viewFactory_ChildComponentHost0);
+ComponentFactory<import1.ChildComponent> get ChildComponentNgFactory {
+  return _ChildComponentNgFactory;
+}
+
 final List<dynamic> styles$ChildComponentHost = const [];
 
 class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
@@ -155,11 +160,6 @@ class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
 
 AppView<import1.ChildComponent> viewFactory_ChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewChildComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.ChildComponent> _ChildComponentNgFactory = const ComponentFactory('child-cmp', viewFactory_ChildComponentHost0);
-ComponentFactory<import1.ChildComponent> get ChildComponentNgFactory {
-  return _ChildComponentNgFactory;
 }
 
 var _visited = false;

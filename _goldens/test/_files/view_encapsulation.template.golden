@@ -42,6 +42,11 @@ AppView<import1.EmulatedComponent> viewFactory_EmulatedComponent0(AppView<dynami
   return ViewEmulatedComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.EmulatedComponent> _EmulatedComponentNgFactory = const ComponentFactory('Emulated', viewFactory_EmulatedComponentHost0);
+ComponentFactory<import1.EmulatedComponent> get EmulatedComponentNgFactory {
+  return _EmulatedComponentNgFactory;
+}
+
 final List<dynamic> styles$EmulatedComponentHost = const [];
 
 class _ViewEmulatedComponentHost0 extends AppView<import1.EmulatedComponent> {
@@ -73,11 +78,6 @@ AppView<import1.EmulatedComponent> viewFactory_EmulatedComponentHost0(AppView<dy
   return _ViewEmulatedComponentHost0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.EmulatedComponent> _EmulatedComponentNgFactory = const ComponentFactory('Emulated', viewFactory_EmulatedComponentHost0);
-ComponentFactory<import1.EmulatedComponent> get EmulatedComponentNgFactory {
-  return _EmulatedComponentNgFactory;
-}
-
 final List<dynamic> styles$NoneComponent = const [];
 
 class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
@@ -101,6 +101,11 @@ class ViewNoneComponent0 extends AppView<import1.NoneComponent> {
 
 AppView<import1.NoneComponent> viewFactory_NoneComponent0(AppView<dynamic> parentView, int parentIndex) {
   return ViewNoneComponent0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.NoneComponent> _NoneComponentNgFactory = const ComponentFactory('None', viewFactory_NoneComponentHost0);
+ComponentFactory<import1.NoneComponent> get NoneComponentNgFactory {
+  return _NoneComponentNgFactory;
 }
 
 final List<dynamic> styles$NoneComponentHost = const [];
@@ -132,11 +137,6 @@ class _ViewNoneComponentHost0 extends AppView<import1.NoneComponent> {
 
 AppView<import1.NoneComponent> viewFactory_NoneComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNoneComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.NoneComponent> _NoneComponentNgFactory = const ComponentFactory('None', viewFactory_NoneComponentHost0);
-ComponentFactory<import1.NoneComponent> get NoneComponentNgFactory {
-  return _NoneComponentNgFactory;
 }
 
 var _visited = false;

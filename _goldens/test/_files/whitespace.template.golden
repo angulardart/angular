@@ -51,6 +51,11 @@ AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespace0(AppView<dyna
   return ViewPreserveWhitespace0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.PreserveWhitespace> _PreserveWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_PreserveWhitespaceHost0);
+ComponentFactory<import1.PreserveWhitespace> get PreserveWhitespaceNgFactory {
+  return _PreserveWhitespaceNgFactory;
+}
+
 final List<dynamic> styles$PreserveWhitespaceHost = const [];
 
 class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
@@ -80,11 +85,6 @@ class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
 
 AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewPreserveWhitespaceHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.PreserveWhitespace> _PreserveWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_PreserveWhitespaceHost0);
-ComponentFactory<import1.PreserveWhitespace> get PreserveWhitespaceNgFactory {
-  return _PreserveWhitespaceNgFactory;
 }
 
 final List<dynamic> styles$MinifyWhitespace = const [];
@@ -117,6 +117,11 @@ AppView<import1.MinifyWhitespace> viewFactory_MinifyWhitespace0(AppView<dynamic>
   return ViewMinifyWhitespace0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.MinifyWhitespace> _MinifyWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_MinifyWhitespaceHost0);
+ComponentFactory<import1.MinifyWhitespace> get MinifyWhitespaceNgFactory {
+  return _MinifyWhitespaceNgFactory;
+}
+
 final List<dynamic> styles$MinifyWhitespaceHost = const [];
 
 class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
@@ -146,11 +151,6 @@ class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
 
 AppView<import1.MinifyWhitespace> viewFactory_MinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewMinifyWhitespaceHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.MinifyWhitespace> _MinifyWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_MinifyWhitespaceHost0);
-ComponentFactory<import1.MinifyWhitespace> get MinifyWhitespaceNgFactory {
-  return _MinifyWhitespaceNgFactory;
 }
 
 var _visited = false;

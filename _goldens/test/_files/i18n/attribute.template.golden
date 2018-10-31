@@ -43,6 +43,11 @@ AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponent0(AppV
   return ViewI18nAttributeComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.I18nAttributeComponent> _I18nAttributeComponentNgFactory = const ComponentFactory('message', viewFactory_I18nAttributeComponentHost0);
+ComponentFactory<import1.I18nAttributeComponent> get I18nAttributeComponentNgFactory {
+  return _I18nAttributeComponentNgFactory;
+}
+
 final List<dynamic> styles$I18nAttributeComponentHost = const [];
 
 class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComponent> {
@@ -72,11 +77,6 @@ class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComp
 
 AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewI18nAttributeComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.I18nAttributeComponent> _I18nAttributeComponentNgFactory = const ComponentFactory('message', viewFactory_I18nAttributeComponentHost0);
-ComponentFactory<import1.I18nAttributeComponent> get I18nAttributeComponentNgFactory {
-  return _I18nAttributeComponentNgFactory;
 }
 
 var _visited = false;

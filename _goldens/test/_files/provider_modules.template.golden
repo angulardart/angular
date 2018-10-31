@@ -40,6 +40,11 @@ AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(
   return ViewProviderModulesComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.ProviderModulesComponent> _ProviderModulesComponentNgFactory = const ComponentFactory('provider-modules', viewFactory_ProviderModulesComponentHost0);
+ComponentFactory<import1.ProviderModulesComponent> get ProviderModulesComponentNgFactory {
+  return _ProviderModulesComponentNgFactory;
+}
+
 final List<dynamic> styles$ProviderModulesComponentHost = const [];
 
 class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModulesComponent> {
@@ -118,11 +123,6 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
 
 AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewProviderModulesComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.ProviderModulesComponent> _ProviderModulesComponentNgFactory = const ComponentFactory('provider-modules', viewFactory_ProviderModulesComponentHost0);
-ComponentFactory<import1.ProviderModulesComponent> get ProviderModulesComponentNgFactory {
-  return _ProviderModulesComponentNgFactory;
 }
 
 var _visited = false;

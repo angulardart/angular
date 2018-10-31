@@ -44,6 +44,11 @@ AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponent0(
   return ViewHasTemplateFileComponent0(parentView, parentIndex);
 }
 
+const ComponentFactory<import2.HasTemplateFileComponent> _HasTemplateFileComponentNgFactory = const ComponentFactory('has-template-file', viewFactory_HasTemplateFileComponentHost0);
+ComponentFactory<import2.HasTemplateFileComponent> get HasTemplateFileComponentNgFactory {
+  return _HasTemplateFileComponentNgFactory;
+}
+
 final List<dynamic> styles$HasTemplateFileComponentHost = const [];
 
 class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFileComponent> {
@@ -73,11 +78,6 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFile
 
 AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import2.HasTemplateFileComponent> _HasTemplateFileComponentNgFactory = const ComponentFactory('has-template-file', viewFactory_HasTemplateFileComponentHost0);
-ComponentFactory<import2.HasTemplateFileComponent> get HasTemplateFileComponentNgFactory {
-  return _HasTemplateFileComponentNgFactory;
 }
 
 var _visited = false;

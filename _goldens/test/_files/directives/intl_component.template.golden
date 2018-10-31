@@ -66,6 +66,11 @@ AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinal0(AppView<dynamic>
   return ViewCompWithoutFinal0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.CompWithoutFinal> _CompWithoutFinalNgFactory = const ComponentFactory('comp-without-final', viewFactory_CompWithoutFinalHost0);
+ComponentFactory<import1.CompWithoutFinal> get CompWithoutFinalNgFactory {
+  return _CompWithoutFinalNgFactory;
+}
+
 final List<dynamic> styles$CompWithoutFinalHost = const [];
 
 class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
@@ -95,11 +100,6 @@ class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
 
 AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewCompWithoutFinalHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.CompWithoutFinal> _CompWithoutFinalNgFactory = const ComponentFactory('comp-without-final', viewFactory_CompWithoutFinalHost0);
-ComponentFactory<import1.CompWithoutFinal> get CompWithoutFinalNgFactory {
-  return _CompWithoutFinalNgFactory;
 }
 
 final List<dynamic> styles$CompWithFinal = const [];
@@ -134,6 +134,11 @@ AppView<import1.CompWithFinal> viewFactory_CompWithFinal0(AppView<dynamic> paren
   return ViewCompWithFinal0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.CompWithFinal> _CompWithFinalNgFactory = const ComponentFactory('comp-with-final', viewFactory_CompWithFinalHost0);
+ComponentFactory<import1.CompWithFinal> get CompWithFinalNgFactory {
+  return _CompWithFinalNgFactory;
+}
+
 final List<dynamic> styles$CompWithFinalHost = const [];
 
 class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
@@ -163,11 +168,6 @@ class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
 
 AppView<import1.CompWithFinal> viewFactory_CompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewCompWithFinalHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.CompWithFinal> _CompWithFinalNgFactory = const ComponentFactory('comp-with-final', viewFactory_CompWithFinalHost0);
-ComponentFactory<import1.CompWithFinal> get CompWithFinalNgFactory {
-  return _CompWithFinalNgFactory;
 }
 
 final List<dynamic> styles$CompWithFinalStatic = const [];
@@ -202,6 +202,11 @@ AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(AppView<dy
   return ViewCompWithFinalStatic0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.CompWithFinalStatic> _CompWithFinalStaticNgFactory = const ComponentFactory('comp-with-final-static', viewFactory_CompWithFinalStaticHost0);
+ComponentFactory<import1.CompWithFinalStatic> get CompWithFinalStaticNgFactory {
+  return _CompWithFinalStaticNgFactory;
+}
+
 final List<dynamic> styles$CompWithFinalStaticHost = const [];
 
 class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic> {
@@ -231,11 +236,6 @@ class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic>
 
 AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewCompWithFinalStaticHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.CompWithFinalStatic> _CompWithFinalStaticNgFactory = const ComponentFactory('comp-with-final-static', viewFactory_CompWithFinalStaticHost0);
-ComponentFactory<import1.CompWithFinalStatic> get CompWithFinalStaticNgFactory {
-  return _CompWithFinalStaticNgFactory;
 }
 
 final List<dynamic> styles$CompWithExternalFinal = const [];
@@ -270,6 +270,11 @@ AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(AppVie
   return ViewCompWithExternalFinal0(parentView, parentIndex);
 }
 
+const ComponentFactory<import1.CompWithExternalFinal> _CompWithExternalFinalNgFactory = const ComponentFactory('comp-with-external-final', viewFactory_CompWithExternalFinalHost0);
+ComponentFactory<import1.CompWithExternalFinal> get CompWithExternalFinalNgFactory {
+  return _CompWithExternalFinalNgFactory;
+}
+
 final List<dynamic> styles$CompWithExternalFinalHost = const [];
 
 class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFinal> {
@@ -299,11 +304,6 @@ class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFi
 
 AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewCompWithExternalFinalHost0(parentView, parentIndex);
-}
-
-const ComponentFactory<import1.CompWithExternalFinal> _CompWithExternalFinalNgFactory = const ComponentFactory('comp-with-external-final', viewFactory_CompWithExternalFinalHost0);
-ComponentFactory<import1.CompWithExternalFinal> get CompWithExternalFinalNgFactory {
-  return _CompWithExternalFinalNgFactory;
 }
 
 var _visited = false;
