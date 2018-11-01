@@ -48,6 +48,13 @@
     more precise way to execute code _after_ AngularDart would have run change
     detection (instead of relying on `scheduleMicrotask` or `Timer.run`).
 
+### Bug fixes
+
+*   [#1653][]: `AppView.lastRootNode` now correctly returns the last root node
+    when multiple `ViewContainer`s are directly nested.
+
+[#1653]: https://github.com/dart-lang/angular/issues/1653
+
 ## 5.1.0
 
 ### New features

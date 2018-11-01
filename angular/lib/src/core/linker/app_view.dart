@@ -651,7 +651,7 @@ Node _findLastRenderNode(dynamic node) {
       for (var i = nestedViews.length - 1; i >= 0; i--) {
         var nestedViewData = appEl.nestedViews[i].viewData;
         if (nestedViewData.rootNodesOrViewContainers.isNotEmpty) {
-          lastNode = _findLastRenderNode(
+          return _findLastRenderNode(
               nestedViewData.rootNodesOrViewContainers.last);
         }
       }

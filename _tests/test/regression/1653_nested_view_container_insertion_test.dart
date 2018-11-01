@@ -19,10 +19,7 @@ void main() {
     await testFixture.update((component) {
       component.matrix.add([3, 4]);
     });
-    // This currently fails as the new row is appended after the first root node
-    // of the outer view container.
-    expect(testFixture.text, '1234',
-        skip: 'https://github.com/dart-lang/angular/issues/1653');
+    expect(testFixture.text, '1234');
   });
 }
 
