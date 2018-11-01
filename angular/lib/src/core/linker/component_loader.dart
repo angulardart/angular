@@ -25,8 +25,7 @@ class ComponentLoader {
   /// API is considered to be a lower-level hook for higher-level components
   /// such as popups.
   ///
-  /// May optionally define the parent [injector], otherwise defaults to the
-  /// DI hierarchy that is present where this interface is injected:
+  /// May optionally define a parent [injector]; defaults to an empty injector.
   ///
   /// ```dart
   /// // An `ExampleComponent`s generated code, including a `ComponentFactory`.
