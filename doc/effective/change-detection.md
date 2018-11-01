@@ -530,7 +530,7 @@ class MyComponent {
   void someFunction() {
     someField = true;
     // TODO(...bug...): This should not be necessary.
-    NgZone.runAfterChangesObserved(() {
+    _ngZone.runAfterChangesObserved(() {
       // Observe some side-effect of "someField" being true.
     });
   }
