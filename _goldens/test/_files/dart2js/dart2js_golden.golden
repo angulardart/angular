@@ -8839,9 +8839,9 @@
         nestedViews = node.nestedViews;
         if (nestedViews != null)
           for (i = nestedViews.length - 1; i >= 0; --i) {
-            t1 = node.nestedViews[i].viewData.rootNodesOrViewContainers;
+            t1 = nestedViews[i].viewData.rootNodesOrViewContainers;
             if (t1.length !== 0)
-              lastNode = S._findLastRenderNode((t1 && C.JSArray_methods).get$last(t1));
+              return S._findLastRenderNode((t1 && C.JSArray_methods).get$last(t1));
           }
       } else
         lastNode = node;
