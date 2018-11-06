@@ -48,7 +48,7 @@ void main() {
           throwsNoProviderError,
         );
         expect(
-          () => i.inject(ExampleService),
+          () => i.provide<ExampleService>(),
           throwsNoProviderError,
         );
         expect(
@@ -94,23 +94,23 @@ void main() {
       test('should use orElse if provided', () {
         i = Injector.empty();
         expect(i.get(ExampleService, 123), 123);
-        expect(i.injectOptionalUntyped(ExampleService, 123), 123);
         expect(i.injectFromSelfOptional(ExampleService, 123), 123);
         expect(i.injectFromAncestryOptional(ExampleService, 123), 123);
         expect(i.injectFromParentOptional(ExampleService, 123), 123);
       });
 
       test('should fallback to the parent injector if provided', () {
-        final parent = Injector.map({ExampleService: 123});
+        final instance = ExampleService();
+        final parent = Injector.map({ExampleService: instance});
         i = Injector.empty(parent);
-        expect(i.get(ExampleService), 123);
-        expect(i.inject(ExampleService), 123);
+        expect(i.get(ExampleService), instance);
+        expect(i.provide<ExampleService>(), instance);
         expect(
           () => i.injectFromSelf(ExampleService),
           throwsNoProviderError,
         );
-        expect(i.injectFromAncestry(ExampleService), 123);
-        expect(i.injectFromParent(ExampleService), 123);
+        expect(i.injectFromAncestry(ExampleService), instance);
+        expect(i.injectFromParent(ExampleService), instance);
       });
 
       test('should return itself if Injector is passed', () {
@@ -123,10 +123,11 @@ void main() {
       HierarchicalInjector i;
 
       test('should return a provided key-value pair', () {
-        i = Injector.map({ExampleService: 123});
-        expect(i.get(ExampleService), 123);
-        expect(i.inject(ExampleService), 123);
-        expect(i.injectFromSelf(ExampleService), 123);
+        final instance = ExampleService();
+        i = Injector.map({ExampleService: instance});
+        expect(i.get(ExampleService), instance);
+        expect(i.provide<ExampleService>(), instance);
+        expect(i.injectFromSelf(ExampleService), instance);
         expect(
           () => i.injectFromAncestry(ExampleService),
           throwsNoProviderError,
@@ -605,10 +606,7 @@ class CaptureInjectInjector extends Injector {
   Object lastOrElse;
 
   @override
-  T inject<T>(Object token) => injectOptionalUntyped(token);
-
-  @override
-  Object injectOptionalUntyped(Object token, [Object orElse]) {
+  Object provideUntyped(Object token, [Object orElse]) {
     lastToken = token;
     lastOrElse = orElse;
     return null;
