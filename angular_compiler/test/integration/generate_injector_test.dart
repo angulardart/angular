@@ -43,7 +43,7 @@ void main() {
 
             dynamic _field0;
 
-            dynamic _getdynamic$0() => _field0 ??= createFooDynamicDependency(inject(dynamic));
+            dynamic _getdynamic$0() => _field0 ??= createFooDynamicDependency(get(dynamic));
             Injector _getInjector$1() => this;
             @override
             Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {

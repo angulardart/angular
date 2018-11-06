@@ -26,18 +26,7 @@ abstract class HierarchicalInjector extends Injector {
   const HierarchicalInjector.maybeEmpty([this.parent]);
 
   @override
-  T inject<T>(Object token) {
-    errors.debugInjectorEnter(token);
-    final result = injectOptionalUntyped(token);
-    if (identical(result, throwIfNotFound)) {
-      return throwsNotFound(this, token);
-    }
-    errors.debugInjectorLeave(token);
-    return unsafeCast<T>(result);
-  }
-
-  @override
-  Object injectOptionalUntyped(
+  Object provideUntyped(
     Object token, [
     Object orElse = throwIfNotFound,
   ]) {
@@ -131,5 +120,5 @@ abstract class HierarchicalInjector extends Injector {
     Object token, [
     Object orElse = throwIfNotFound,
   ]) =>
-      parent.injectOptionalUntyped(token, orElse);
+      parent.provideUntyped(token, orElse);
 }

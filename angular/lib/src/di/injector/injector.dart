@@ -1,3 +1,5 @@
+import 'package:angular/src/core/di/opaque_token.dart';
+import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 import '../errors.dart' as errors;
@@ -85,7 +87,7 @@ abstract class Injector {
   @mustCallSuper
   dynamic get(Object token, [Object notFoundValue = throwIfNotFound]) {
     errors.debugInjectorEnter(token);
-    final result = injectOptionalUntyped(token, notFoundValue);
+    final result = provideUntyped(token, notFoundValue);
     if (identical(result, throwIfNotFound)) {
       return throwsNotFound(this, token);
     }
@@ -93,24 +95,38 @@ abstract class Injector {
     return result;
   }
 
-  /// Injects and returns an object representing [token].
-  ///
-  /// ```dart
-  /// final rpcService = injector.inject<RpcService>();
-  /// ```
-  ///
-  /// **EXPERIMENTAL**: Reified types are currently not supported in all of the
-  /// various Dart runtime implementations (only DDC, not Dart2JS or the VM), so
-  /// [fallbackToken] is currently required to be used.
+  @Deprecated('Unsupported API, and will be removed. Use "provide" or "get".')
   @experimental
-  @protected
-  T inject<T>(Object token);
+  T inject<T>(Object token) => get(token) as T;
 
   /// Injects and returns an object representing [token].
   ///
   /// If the key was not found, returns [orElse] (default is `null`).
-  @experimental
-  Object injectOptionalUntyped(Object token, [Object orElse]);
+  ///
+  /// **NOTE**: This is an internal-only method and may be removed.
+  @protected
+  Object provideUntyped(Object token, [Object orElse]);
+
+  /// Finds and returns an object instance provided for a type token of [T].
+  ///
+  /// A runtime assertion is thrown in debug mode if:
+  ///
+  /// * [T] is explicitly or implicitly bound to `Object`, `dynamic`, or `Null`.
+  ///
+  /// An error is thrown if a provider is not found.
+  T provide<T extends Object>() {
+    assert(T != Object, 'Injecting Object is not supported');
+    assert(T != dynamic, 'Injecting dynamic is not supported');
+    assert(T != Null, 'Injecting a value of Null is not supported');
+    return unsafeCast(get(T));
+  }
+
+  /// Finds and returns an object instance provided for a [token].
+  ///
+  /// An error is thrown if a provider is not found.
+  T provideToken<T>(OpaqueToken<T> token) {
+    return unsafeCast(get(token));
+  }
 }
 
 /// Annotates a method to generate an [Injector] factory at compile-time.

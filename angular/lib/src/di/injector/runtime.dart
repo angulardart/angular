@@ -177,7 +177,7 @@ class _RuntimeInjector extends HierarchicalInjector
         result = _resolveMeta(dep);
       } else {
         errors.debugInjectorEnter(dep);
-        result = inject(dep);
+        result = get(dep);
         errors.debugInjectorLeave(dep);
       }
       // We don't check to see if this failed otherwise, because this is an
@@ -233,7 +233,7 @@ class _RuntimeInjector extends HierarchicalInjector
     } else if (isHost) {
       result = injectFromParentOptional(token, orElse);
     } else {
-      result = injectOptionalUntyped(token, orElse);
+      result = provideUntyped(token, orElse);
     }
     if (identical(result, throwIfNotFound)) {
       throwsNotFound(this, token);
@@ -249,7 +249,7 @@ class _RuntimeInjector extends HierarchicalInjector
   }
 
   @override
-  Object useExisting(Object to) => inject(to);
+  Object useExisting(Object to) => get(to);
 
   @override
   Object useFactory(Function factory, {List<Object> deps}) {

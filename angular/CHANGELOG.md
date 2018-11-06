@@ -48,6 +48,26 @@
     more precise way to execute code _after_ AngularDart would have run change
     detection (instead of relying on `scheduleMicrotask` or `Timer.run`).
 
+*   Added new type-safe ways to use the `Injector` API without dynamic calls:
+
+    ```dart
+    void example(Injector injector) {
+      // Injecting "SomeType".
+      // Before:
+      var someType1 = injector.get(SomeType) as SomeType;
+
+      // After:
+      var someType2 = injector.provide<SomeType>();
+
+      // Injecting "OpaqueToken<SomeType>(...)".
+      // Before:
+      var someToken1 = injector.get(someToken) as SomeType;
+
+      // After:
+      var someToken2 = injector.provideToken(someToken);
+    }
+    ```
+
 ### Bug fixes
 
 *   [#1653][]: `AppView.lastRootNode` now correctly returns the last root node
