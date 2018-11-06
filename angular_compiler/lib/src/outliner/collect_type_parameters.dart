@@ -60,7 +60,8 @@ Future<void> _collectTypeParametersFromUnit(
   // accessing the resolved compilation unit through the element model.
   final id = AssetId.parse(unitName);
   final source = await buildStep.readAsString(id);
-  final unit = parseCompilationUnit(source, parseFunctionBodies: false);
+  final unit = parseCompilationUnit(source,
+      name: '${id.uri}', parseFunctionBodies: false);
   // Collect generic type parameters for directives.
   for (final declaration in unit.declarations) {
     if (declaration is ClassDeclaration &&

@@ -1,3 +1,6 @@
+*   Update failure message to include an asset id when collecting type
+    parameters.
+
 ## 0.4.1
 
 *   Catches an (invalid) `null` token of a provider and throws a better error.
