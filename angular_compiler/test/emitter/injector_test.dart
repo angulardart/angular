@@ -51,8 +51,8 @@ void main() {
         refer('FooImpl'),
         null,
         [
-          refer('get').call([refer('Dep1')]),
-          refer('get').call([refer('Dep2')]),
+          refer('this.get').call([refer('Dep1')]),
+          refer('this.get').call([refer('Dep2')]),
         ],
         false,
       );
@@ -64,7 +64,7 @@ void main() {
 
           FooImpl _field0;
 
-          FooImpl _getFooImpl$0() => _field0 ??= new FooImpl(get(Dep1), get(Dep2));
+          FooImpl _getFooImpl$0() => _field0 ??= new FooImpl(this.get(Dep1), this.get(Dep2));
           @override
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
             if (identical(token, Foo)) {
@@ -93,7 +93,7 @@ void main() {
         class FooInjector extends HierarchicalInjector {
           FooInjector._([Injector parent]) : super(parent);
 
-          Foo _getExisting$0() => get(Foo);
+          Foo _getExisting$0() => this.get(Foo);
           @override
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
             if (identical(token, FooPrime)) {
@@ -115,8 +115,8 @@ void main() {
         refer('Foo'),
         refer('createFoo'),
         [
-          refer('get').call([refer('Dep1')]),
-          refer('get').call([refer('Dep2')]),
+          refer('this.get').call([refer('Dep1')]),
+          refer('this.get').call([refer('Dep2')]),
         ],
         false,
       );
@@ -128,7 +128,7 @@ void main() {
 
           Foo _field0;
 
-          Foo _getFoo$0() => _field0 ??= createFoo(get(Dep1), get(Dep2));
+          Foo _getFoo$0() => _field0 ??= createFoo(this.get(Dep1), this.get(Dep2));
           @override
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
             if (identical(token, Foo)) {

@@ -211,7 +211,7 @@ class InjectorReader {
           literalNull,
         ]);
       } else {
-        return refer('get').call([
+        return refer('this.get').call([
           _tokenToIdentifier(dep.token),
         ]);
       }
