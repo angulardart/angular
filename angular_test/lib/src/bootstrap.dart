@@ -134,7 +134,7 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
     beforeChangeDetectionReturn = beforeChangeDetection(componentRef.instance);
   }
 
-  if (beforeChangeDetectionReturn is Future) {
+  if (beforeChangeDetectionReturn is Future<void>) {
     return beforeChangeDetectionReturn.then((_) => loadComponent());
   } else {
     return loadComponent();

@@ -183,63 +183,6 @@ class _DelegatingNgTestStabilizer extends NgTestStabilizer {
   }
 }
 
-/// Represents a function that will be invoked to create an [NgZone] instance.
-const createNgZone = OpaqueToken<NgZone Function()>('createNgZone');
-
-/// A parent stabilizer that is expected to manage and use Angular [NgZone].
-///
-/// This base implementation creates and runs a parent zone for [NgZone], and
-/// concrete implementations can use that information in order to capture
-/// additional information for testing/stabilizing.
-abstract class _BaseNgZoneStabilizer<T extends Timer> extends NgTestStabilizer {
-  @protected
-  NgZone ngZone;
-
-  /// Creates and returns the [NgZone] instance for this stabilizer.
-  ///
-  /// This method must and may only be used exactly _once_ per instance.
-  ///
-  /// May be overridden in order to create the zone within a specific parent.
-  @mustCallSuper
-  NgZone createNgZone(NgZone Function() create) {
-    if (ngZone != null) {
-      throw StateError('Already invoked');
-    }
-    return ngZone = create();
-  }
-}
-
-/// Uses [NgZone] and a custom parent zone to stabilize.
-///
-/// * Any microtasks are automatically waited for stability.
-/// * Any timers are elapsed in _real-time_ for stability.
-///
-/// This stabilizer is a good choice for most tests, as it will most closely
-/// represent how a _real_ app will perform, and doesn't require manual work to
-/// elapse timers.
-class RealTimeNgZoneStabilizer extends _BaseNgZoneStabilizer {}
-
-/// Uses a [NgZone], a custom parent zone, and test timing hooks to stabilize.
-///
-/// * Any microtasks are automatically waited for stability.
-/// * Any timers `<=` to a provided [threshold] are elapsed in _real-time_.
-/// * Any timers `>` to a provided [threshold] must be elapsed via [elapse].
-///
-/// **NOTE**: Support is limited to _one-shot_, not _periodic_ timers.
-class FakeTimeNgZoneStabilizer extends _BaseNgZoneStabilizer {
-  /// Any timers that are `<=` this value do not require [elapse] to complete.
-  final Duration threshold;
-
-  FakeTimeNgZoneStabilizer([this.threshold = Duration.zero]);
-
-  /// Returns a future that completes after elapsing the provided [time].
-  ///
-  /// Any microtasks or zero-length timers that are spawned as a result of
-  /// elapsing this duration of time are _also_ awaited, but any new timers
-  /// that are added are not, even if they are `<=` [time].
-  Future<void> elapse(Duration time) => throw UnimplementedError();
-}
-
 /// A wrapper API that reports stability based on the Angular [NgZone].
 class NgZoneStabilizer extends NgTestStabilizer {
   final NgZone _ngZone;
