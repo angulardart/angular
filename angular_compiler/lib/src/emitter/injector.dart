@@ -186,7 +186,7 @@ class InjectorEmitter implements InjectorVisitor {
     _methodCache.add(Method((b) => b
       ..name = methodName
       ..returns = type
-      ..body = refer('get').call([redirect]).code));
+      ..body = refer('this.get').call([redirect]).code));
 
     if (isMulti) {
       _addToMulti(token, tokenExpression, methodName);
