@@ -78,10 +78,10 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     _appEl_4 = ViewContainer(4, null, this, _anchor_4);
     TemplateRef _TemplateRef_4_8 = TemplateRef(_appEl_4, viewFactory_TestContainerComponent7);
     _cancelDeferredLoad4 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_4, _TemplateRef_4_8);
-    _compView_5 = import5.ViewNotDeferredChildComponent0(this, 5);
+    _compView_5 = deflib1.ViewNotDeferredChildComponent0(this, 5);
     _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
-    _NotDeferredChildComponent_5_5 = import6.NotDeferredChildComponent();
+    _NotDeferredChildComponent_5_5 = deflib0.NotDeferredChildComponent();
     _compView_5.create(_NotDeferredChildComponent_5_5, []);
     init(const [], null);
   }
@@ -141,9 +141,9 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    _compView_0 = import5.viewFactory_DeferredChild1Component0(this, 0);
+    _compView_0 = deflib1.viewFactory_DeferredChild1Component0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChild1Component_0_5 = import6.DeferredChild1Component();
+    _DeferredChild1Component_0_5 = deflib0.DeferredChild1Component();
     _compView_0.create(_DeferredChild1Component_0_5, []);
     init0(_el_0);
   }
@@ -203,9 +203,9 @@ class _ViewTestContainerComponent3 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    _compView_0 = import5.viewFactory_DeferredChild2Component0(this, 0);
+    _compView_0 = deflib1.viewFactory_DeferredChild2Component0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChild2Component_0_5 = import6.DeferredChild2Component();
+    _DeferredChild2Component_0_5 = deflib0.DeferredChild2Component();
     _compView_0.create(_DeferredChild2Component_0_5, []);
     init0(_el_0);
   }
@@ -268,9 +268,9 @@ class _ViewTestContainerComponent5 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    _compView_0 = import5.viewFactory_DeferredChild3Component0(this, 0);
+    _compView_0 = deflib1.viewFactory_DeferredChild3Component0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChild3Component_0_5 = import6.DeferredChild3Component();
+    _DeferredChild3Component_0_5 = deflib0.DeferredChild3Component();
     _compView_0.create(_DeferredChild3Component_0_5, []);
     init0(_el_0);
   }
@@ -304,9 +304,9 @@ class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    _compView_0 = import5.viewFactory_DeferredChildComponentWithoutNgContent0(this, 0);
+    _compView_0 = deflib1.viewFactory_DeferredChildComponentWithoutNgContent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChildComponentWithoutNgContent_0_5 = import6.DeferredChildComponentWithoutNgContent();
+    _DeferredChildComponentWithoutNgContent_0_5 = deflib0.DeferredChildComponentWithoutNgContent();
     final _text_1 = import4.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithoutNgContent_0_5, []);
     init0(_el_0);
@@ -336,9 +336,9 @@ class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    _compView_0 = import5.viewFactory_DeferredChildComponentWithNgContent0(this, 0);
+    _compView_0 = deflib1.viewFactory_DeferredChildComponentWithNgContent0(this, 0);
     _el_0 = _compView_0.rootEl;
-    _DeferredChildComponentWithNgContent_0_5 = import6.DeferredChildComponentWithNgContent();
+    _DeferredChildComponentWithNgContent_0_5 = deflib0.DeferredChildComponentWithNgContent();
     final _text_1 = import4.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithNgContent_0_5, [
       [_text_1]
