@@ -5,7 +5,6 @@ import 'package:meta/meta.dart';
 import 'package:pedantic/pedantic.dart';
 
 import '../stabilizer.dart';
-import 'intercepted_timer.dart';
 
 /// A stabilizer expected to manage and use [NgZone] *and* its own [Zone].
 abstract class BaseNgZoneStabilizer<T extends Timer> extends NgTestStabilizer {
@@ -19,8 +18,7 @@ abstract class BaseNgZoneStabilizer<T extends Timer> extends NgTestStabilizer {
   /// Creates the stabilizer wrapping an instance of [NgZone].
   ///
   /// Concrete classes should make sure this zone is created with a zone
-  /// specification that utilizes [InterceptedTimer.createTimer] for
-  /// [ZoneSpecification.createTimer].
+  /// specification that utilizes [ZoneSpecification.createTimer].
   BaseNgZoneStabilizer(this.ngZone, this.pendingTimers);
 
   @mustCallSuper
