@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "abstract_emitter.dart"
     show
@@ -93,6 +95,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   /// Whether this is currently emitting a const expression.
   var _inConstContext = false;
+
+  /// Whether this is currently emitting a new instance of a class.
+  var _inInvokeOrNewInstance = false;
 
   _DartEmitterVisitor(this._moduleUrl) : super(true);
 
@@ -458,7 +463,10 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     o.InvokeFunctionExpr expr,
     EmitterVisitorContext context,
   ) {
+    final wasInNewInstance = _inInvokeOrNewInstance;
+    _inInvokeOrNewInstance = true;
     expr.fn.visitExpression(this, context);
+    _inInvokeOrNewInstance = wasInNewInstance;
     _visitTypeArguments(expr.typeArgs, context);
     context.print('(');
     visitAllExpressions(expr.args, context, ',');
@@ -474,12 +482,15 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   void visitInstantiateExpr(
       o.InstantiateExpr ast, EmitterVisitorContext context) {
+    final wasInNewInstance = _inInvokeOrNewInstance;
     final wasInConstContext = _inConstContext;
     if (!wasInConstContext && _isConstType(ast.type)) {
       context.print('const ');
       _inConstContext = true;
     }
+    _inInvokeOrNewInstance = true;
     ast.classExpr.visitExpression(this, context);
+    _inInvokeOrNewInstance = wasInNewInstance;
     _visitTypeArguments(ast.typeArguments, context);
     context.print('(');
     visitAllExpressions(ast.args, context, ',');
@@ -586,20 +597,26 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     List<o.OutputType> typeParams,
     EmitterVisitorContext context,
   ) {
-    final moduleUrl = value.moduleUrl;
-    final isDeferred = context.deferredModules.containsKey(moduleUrl);
-    final prefix = _computeModulePrefix(value, context, isDeferred);
+    final prefix = _computeModulePrefix(
+      value,
+      context,
+      isDeferredAndNewInstance: _inInvokeOrNewInstance &&
+          context.deferredModules.containsKey(value.moduleUrl),
+    );
     _emitIdentifier(value.name, typeParams, context, prefix);
   }
 
   /// Determines the import prefix for accessing symbols for [value].
   String _computeModulePrefix(
     CompileIdentifierMetadata value,
-    EmitterVisitorContext context,
-    bool isDeferred,
-  ) {
-    String prefix = '';
+    EmitterVisitorContext context, {
+    @required bool isDeferredAndNewInstance,
+  }) {
     final moduleUrl = value.moduleUrl;
+    if (isDeferredAndNewInstance) {
+      return context.deferredModules[moduleUrl];
+    }
+    var prefix = '';
     if (moduleUrl != null && moduleUrl != _moduleUrl) {
       prefix = importsWithPrefixes[moduleUrl];
       if (prefix == null) {

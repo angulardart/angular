@@ -73,6 +73,11 @@
 *   [#1653][]: `AppView.lastRootNode` now correctly returns the last root node
     when multiple `ViewContainer`s are directly nested.
 
+*   When using the `@deferred` annotation in a template file, ensure that the
+    constructed component class uses the _deferred_ import. For example, we now
+    emit `deflib1.ComponentName(...)` instead of `lib1.ComponentName(...)`. This
+    should ensure Dart2JS properly defer loads the entire component.
+
 [#1653]: https://github.com/dart-lang/angular/issues/1653
 
 ## 5.1.0
