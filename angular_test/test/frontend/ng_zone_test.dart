@@ -1,44 +1,10 @@
 import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_test/src/frontend/ng_zone/fake_time_stabilizer.dart';
-import 'package:angular_test/src/frontend/ng_zone/intercepted_timer.dart';
+import 'package:angular_test/src/frontend/ng_zone/real_time_stabilizer.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('InterceptedTimer', () {
-    Zone childZone;
-
-    setUp(() {
-      childZone = Zone.current.fork(
-        specification: ZoneSpecification(
-          createTimer: InterceptedTimer.createTimer,
-        ),
-      );
-    });
-
-    test('should be created and run in the correct Zone', () {
-      childZone.run(() {
-        Timer.run(expectAsync0(() {
-          expect(Zone.current, childZone);
-        }));
-      });
-    });
-
-    test('should be able to be manually completed', () async {
-      InterceptedTimer upcast;
-      childZone.run(() {
-        final timer = Timer(Duration(seconds: 1), expectAsync0(() {}));
-        upcast = timer as InterceptedTimer;
-      });
-
-      // Manually complete the timer.
-      upcast.complete();
-
-      // Ensure it does not fire a second time (i.e. it was cancelled).
-      await Future.delayed(Duration(seconds: 2));
-    });
-  });
-
   group('FakeTimeNgZoneStabilizer', () {
     NgZone ngZone;
     FakeTimeNgZoneStabilizer stabilizer;
@@ -161,6 +127,116 @@ void main() {
 
       // Executes a timer.
       expect(stabilizer.elapse(Duration(seconds: 3)), _throwsIntentionalError);
+    });
+  });
+
+  group('RealTimeNgZoneStabilizer', () {
+    NgZone ngZone;
+    RealTimeNgZoneStabilizer stabilizer;
+
+    setUp(() {
+      stabilizer = RealTimeNgZoneStabilizer(() {
+        return ngZone = NgZone(enableLongStackTrace: true);
+      });
+    });
+
+    test('should elapse a series of simple timers', () async {
+      var lastTimersRun = <int>[];
+      ngZone.run(() {
+        Timer(Duration(seconds: 1), () {
+          lastTimersRun.add(1);
+        });
+        Timer(Duration(seconds: 2), () {
+          lastTimersRun.add(2);
+        });
+        Timer(Duration(seconds: 3), () {
+          lastTimersRun.add(3);
+        });
+      });
+      expect(lastTimersRun, isEmpty);
+
+      await stabilizer.update();
+      expect(lastTimersRun, [1, 2, 3]);
+    });
+
+    test('should elapse timers manually, microtasks automatically', () async {
+      var tasks = <String>[];
+      ngZone.run(() {
+        scheduleMicrotask(() {
+          tasks.add('#1: scheduleMicrotask');
+        });
+        Timer.run(() {
+          tasks.add('#2: Timer.run');
+          scheduleMicrotask(() {
+            tasks.add('#3: scheduleMicrotask');
+            Timer.run(() {
+              tasks.add('#4: Timer.run');
+            });
+          });
+          Timer(Duration(seconds: 5), () {
+            tasks.add('#5: Timer(Duration(seconds: 5))');
+          });
+        });
+      });
+
+      expect(await stabilizer.update(), isFalse);
+      expect(tasks, [
+        '#1: scheduleMicrotask',
+        '#2: Timer.run',
+        '#3: scheduleMicrotask',
+        '#4: Timer.run',
+      ]);
+      tasks.clear();
+
+      expect(await stabilizer.update(), isTrue);
+      expect(tasks, [
+        '#5: Timer(Duration(seconds: 5))',
+      ]);
+    });
+
+    test('should propogate synchronous errors', () {
+      expect(
+        stabilizer.update(() => throw _IntentionalError()),
+        _throwsIntentionalError,
+      );
+    });
+
+    test('should propogate asynchronous errors from microtasks', () {
+      expect(() {
+        return stabilizer.update(() {
+          scheduleMicrotask(() {
+            throw _IntentionalError();
+          });
+        });
+      }, _throwsIntentionalError);
+    });
+
+    test('should propogate asynchronous errors from an async body', () {
+      expect(() {
+        return stabilizer.update(() async {
+          throw _IntentionalError();
+        });
+      }, _throwsIntentionalError);
+    });
+
+    test('should propogate asynchronous errors from timers', () async {
+      // Schedules and executes a timer.
+      expect(stabilizer.update(() {
+        Timer.run(() {
+          throw _IntentionalError();
+        });
+      }), _throwsIntentionalError);
+    });
+
+    test('should propogate deeply nested asynchronous errors', () async {
+      // Schedules and executes a timer.
+      expect(stabilizer.update(() {
+        Timer.run(() async {
+          scheduleMicrotask(() async {
+            throw _IntentionalError();
+          });
+        });
+      }), _throwsIntentionalError);
     });
   });
 }
