@@ -385,7 +385,11 @@ class NgZone {
   /// consider filing bugs if you find yourself needing this function.
   @experimental
   void runAfterChangesObserved(void Function() callback) {
-    onTurnDone.first.whenComplete(() => callback());
+    if (isRunning) {
+      onTurnDone.first.whenComplete(() => scheduleMicrotask(callback));
+    } else {
+      scheduleMicrotask(callback);
+    }
   }
 
   /// Disables additional collection of asynchronous tasks.
@@ -405,6 +409,12 @@ class NgZone {
 /// **INTERNAL ONLY**: This is an experimental API subject to change.
 @experimental
 Duration longestPendingTimer(NgZone zone) => zone._longestPendingTimer;
+
+/// For a [zone], returns whether there are pending timers yet to execute.
+///
+/// **INTERNAL ONLY**: This is an experimental API subject to change.
+@experimental
+bool hasPendingMacrotasks(NgZone zone) => zone._hasPendingMacrotasks;
 
 /// A `Timer` wrapper that lets you specify additional functions to call when it
 /// is cancelled.
