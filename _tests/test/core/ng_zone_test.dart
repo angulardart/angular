@@ -247,21 +247,14 @@ void main() {
         ]);
         final fullStackTrace = traces.map((t) => t.toString()).join('');
         expect(fullStackTrace, contains('bar'));
-
-        // Skip this part of the test in DDC, we seem to be only getting:
-        // a short stack trace (perhaps pkg/stack_trace doesn't work the same
-        // inside this test environment).
-        //
-        // Internal bug: b/38171558.
-        if (!fullStackTrace.contains('ng_zone_test_library.js')) {
-          expect(fullStackTrace, contains('foo'));
-        }
+        expect(fullStackTrace, contains('foo'));
       }, onPlatform: {
         'firefox': Skip('Strack trace appears differently'),
       });
     });
 
     test('should support "runAfterChangesObserved"', () async {
+      createNgZone(enableLongStackTrace: true);
       var counter = 0;
       return zone.run(() {
         counter++;
@@ -272,6 +265,23 @@ void main() {
           expect(counter, 2);
         }));
       });
+    });
+
+    test('should support "runAfterChangesObserved" in onTurnDone', () async {
+      createNgZone(enableLongStackTrace: true);
+      var onTurnDoneTriggered = 0;
+      var sub = zone.onTurnDone.listen((_) {
+        onTurnDoneTriggered++;
+        if (onTurnDoneTriggered == 0) {
+          zone.runAfterChangesObserved(() {
+            zone.run(() {});
+          });
+        }
+      });
+      zone.run(() {});
+      await Future(() {});
+      expect(onTurnDoneTriggered, 1);
+      await sub.cancel();
     });
   });
 }
