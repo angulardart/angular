@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
@@ -63,9 +62,6 @@ class NormalizedComponentWithViewDirectives {
       };
 }
 
-// Make this `true` in order to print what is being compiled.
-const _DEBUG_PRINT_COMPILATION = false;
-
 /// Compiles a view template.
 class OfflineCompiler {
   final AstDirectiveNormalizer _directiveNormalizer;
@@ -93,9 +89,6 @@ class OfflineCompiler {
   }
 
   SourceModule compile(AngularArtifacts artifacts) {
-    if (_DEBUG_PRINT_COMPILATION) {
-      _printDebugCompilation(artifacts.components);
-    }
     if (artifacts.isEmpty) {
       throw StateError('No components nor injectorModules given');
     }
@@ -206,12 +199,5 @@ class OfflineCompiler {
     } else {
       throw StateError('No components nor injectorModules given');
     }
-  }
-
-  void _printDebugCompilation(
-      List<NormalizedComponentWithViewDirectives> components) {
-    print(components.map((comp) {
-      return const JsonEncoder.withIndent('  ').convert(comp.toJson());
-    }).join('\n'));
   }
 }
