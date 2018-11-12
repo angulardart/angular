@@ -123,7 +123,6 @@ abstract class Injector {
     //
     // See historic discussion here: dartbug.com/35098
     assert(T != dynamic, 'Returning a dynamic is not supported');
-    assert(T == Object || T == token, '$T is not equivalent to $token');
     return unsafeCast(get(token));
   }
 
