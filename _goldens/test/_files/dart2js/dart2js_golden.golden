@@ -9780,6 +9780,10 @@
     JsTestability: {
       "^": "JavaScriptObject;",
       "%": ""
+    },
+    JsTestabilityRegistry: {
+      "^": "JavaScriptObject;",
+      "%": ""
     }
   }], ["dart2js_golden", "/bazel-root/third_party/dart_src/angular/_goldens/test/_files/dart2js/dart2js_golden.dart",, O, {
     "^": "",
