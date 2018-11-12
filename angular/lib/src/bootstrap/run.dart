@@ -27,7 +27,7 @@ import 'modules.dart';
 Injector _platformInjectorCache;
 
 /// **INTERNAL ONLY**: Creates a new injector for platform-level services.
-Injector platformInjector() {
+Injector _platformInjector() {
   if (_platformInjectorCache == null) {
     final testabilityRegistry = TestabilityRegistry();
     sharedStylesHost ??= DomSharedStylesHost(document);
@@ -45,22 +45,29 @@ Injector platformInjector() {
 /// to make sure we allow [userProvidedInjector] to override _some_ top-level
 /// services (`APP_ID`, `ExceptionHandler`) _and_ to ensure that Angular-level
 /// services (`ApplicationRef`) get the user-provided versions.
-Injector appInjector(InjectorFactory userProvidedInjector) {
+///
+/// May override [createNgZone] to provide a custom callback to create one. This
+/// is primarily useful in testing (i.e. via directly or indirectly the
+/// `angular_test` package).
+Injector appInjector(
+  InjectorFactory userProvidedInjector, {
+  NgZone Function() createNgZone = createNgZone,
+}) {
   // These are the required root services, always provided by AngularDart.
-  final Injector minimalInjector = minimalApp(platformInjector());
+  final Injector minimalInjector = minimalApp(_platformInjector());
 
   // Lazily initialized later on once we have the user injector.
   ApplicationRef applicationRef;
+  final ngZone = createNgZone();
   final Injector appGlobalInjector = _LazyInjector({
     ApplicationRef: () => applicationRef,
     AppViewUtils: () => appViewUtils,
+    NgZone: () => ngZone,
+    Testability: () => new Testability(ngZone),
   }, unsafeCast(minimalInjector));
 
   // These are the user-provided overrides.
   final Injector userInjector = userProvidedInjector(appGlobalInjector);
-
-  // Get a handle of NgZone, so we can create ApplicationRef in it.
-  final NgZone ngZone = unsafeCast(minimalInjector.get(NgZone));
 
   // ... and then we add ApplicationRef, which has the unique property of
   // injecting services (specifically, `ExceptionHandler` and `APP_ID`) that
@@ -83,7 +90,7 @@ Injector appInjector(InjectorFactory userProvidedInjector) {
     appViewUtils = AppViewUtils(
       unsafeCast(userInjector.get(APP_ID)),
       unsafeCast(userInjector.get(SanitizationService)),
-      unsafeCast(minimalInjector.get(EventManager)),
+      unsafeCast(new EventManager(createEventPlugins(), ngZone)),
     );
     return userInjector;
   });
