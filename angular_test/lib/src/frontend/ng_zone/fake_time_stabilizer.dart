@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 
 import 'base_stabilizer.dart';
+import 'timer_hook_zone.dart';
 
 /// Observes [NgZone], a custom parent zone, and custom hooks to stabilize.
 ///
@@ -16,48 +17,31 @@ import 'base_stabilizer.dart';
 ///
 /// **NOTE**: _Periodic_ timers are not supported by this stabilizer.
 class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
-  /// Creates a new stabilizer which manages a custom zone around an [NgZone].
-  ///
-  /// Expects a provided [createNgZone] callback, which will ensure the zone
-  /// is created _within_ the parent zone owned by [FakeTimeNgZoneStabilizer],
-  /// and applies appropriate zone-hooks in order to control the [Timer] API
-  /// using [elapse].
-  factory FakeTimeNgZoneStabilizer(NgZone Function() createNgZone) {
+  /// Creates a new stabilizer which uses a combination of zones.
+  factory FakeTimeNgZoneStabilizer(TimerHookZone timerZone, NgZone ngZone) {
     // All non-periodic timers that have been started, but not completed.
     final pendingTimers = Set<_FakeTimer>.identity();
     // The parent zone that adds hooks around every non-periodic timer.
     FakeTimeNgZoneStabilizer stabilizer;
-    final timerZone = Zone.current.fork(
-      specification: ZoneSpecification(createTimer: (
-        self,
-        parent,
-        zone,
-        duration,
-        callback,
-      ) {
-        _FakeTimer instance;
-        void removeTimer() {
-          pendingTimers.remove(instance);
-        }
+    timerZone.createTimer = (self, parent, zone, duration, callback) {
+      _FakeTimer instance;
+      void removeTimer() {
+        pendingTimers.remove(instance);
+      }
 
-        final wrappedCallback = () {
-          try {
-            callback();
-          } finally {
-            removeTimer();
-          }
-        };
-        instance = _FakeTimer(
-          zone.bindCallback(wrappedCallback),
-          removeTimer,
-          stabilizer._lastElapse + duration,
-        );
-        pendingTimers.add(instance);
-        return instance;
-      }),
-    );
+      final wrappedCallback = () {
+        try {
+          callback();
+        } finally {
+          removeTimer();
+        }
+      };
+      instance = _FakeTimer(zone.bindCallback(wrappedCallback), removeTimer,
+          stabilizer._lastElapse + duration);
+      pendingTimers.add(instance);
+    };
     return stabilizer = FakeTimeNgZoneStabilizer._(
-      timerZone.run(createNgZone),
+      ngZone,
       pendingTimers,
     );
   }

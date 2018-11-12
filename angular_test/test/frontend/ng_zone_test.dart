@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_test/src/frontend/ng_zone/fake_time_stabilizer.dart';
 import 'package:angular_test/src/frontend/ng_zone/real_time_stabilizer.dart';
+import 'package:angular_test/src/frontend/ng_zone/timer_hook_zone.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -10,9 +11,9 @@ void main() {
     FakeTimeNgZoneStabilizer stabilizer;
 
     setUp(() {
-      stabilizer = FakeTimeNgZoneStabilizer(() {
-        return ngZone = NgZone(enableLongStackTrace: true);
-      });
+      final timerZone = new TimerHookZone();
+      ngZone = timerZone.run(() => NgZone(enableLongStackTrace: true));
+      stabilizer = FakeTimeNgZoneStabilizer(timerZone, ngZone);
     });
 
     test('should elapse a series of simple timers', () async {
@@ -135,9 +136,9 @@ void main() {
     RealTimeNgZoneStabilizer stabilizer;
 
     setUp(() {
-      stabilizer = RealTimeNgZoneStabilizer(() {
-        return ngZone = NgZone(enableLongStackTrace: true);
-      });
+      final timerZone = new TimerHookZone();
+      ngZone = timerZone.run(() => NgZone(enableLongStackTrace: true));
+      stabilizer = RealTimeNgZoneStabilizer(timerZone, ngZone);
     });
 
     test('should elapse a series of simple timers', () async {
