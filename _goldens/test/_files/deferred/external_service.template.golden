@@ -1,0 +1,9 @@
+// **************************************************************************
+// Generator: Instance of 'Compiler'
+// **************************************************************************
+
+import 'external_service.dart';
+export 'external_service.dart';
+
+// No initReflector() linking required.
+void initReflector() {}

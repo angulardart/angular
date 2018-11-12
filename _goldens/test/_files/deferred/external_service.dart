@@ -1,0 +1,3 @@
+class ExternalServiceImmediatelyCreated {}
+
+class ExternalServiceLazilyCreatedMaybe {}

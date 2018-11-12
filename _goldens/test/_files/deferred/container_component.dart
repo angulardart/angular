@@ -20,6 +20,7 @@ import 'deferred_component.dart';
       Hello World
     </deferred-child-with-ng-content>
     <not-deferred-child></not-deferred-child>
+    <deferred-child-with-services></deferred-child-with-services>
   ''',
   directives: [
     DeferredChild1Component,
@@ -27,6 +28,7 @@ import 'deferred_component.dart';
     DeferredChild3Component,
     DeferredChildComponentWithoutNgContent,
     DeferredChildComponentWithNgContent,
+    DeferredChildComponentWithServices,
     NgIf,
     NotDeferredChildComponent,
     SampleComponent,

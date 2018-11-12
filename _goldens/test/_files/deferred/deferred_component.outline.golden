@@ -13,6 +13,7 @@ import 'deferred_component.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'external_service.dart';
 
 // For @Component class DeferredChild1Component.
 external List<dynamic> get styles$DeferredChild1Component;
@@ -55,6 +56,13 @@ external _ng.ComponentFactory<DeferredChildComponentWithNgContent> get DeferredC
 external _ng.AppView<DeferredChildComponentWithNgContent> viewFactory_DeferredChildComponentWithNgContent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewDeferredChildComponentWithNgContent0 extends _ng.AppView<DeferredChildComponentWithNgContent> {
   external ViewDeferredChildComponentWithNgContent0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class DeferredChildComponentWithServices.
+external List<dynamic> get styles$DeferredChildComponentWithServices;
+external _ng.ComponentFactory<DeferredChildComponentWithServices> get DeferredChildComponentWithServicesNgFactory;
+external _ng.AppView<DeferredChildComponentWithServices> viewFactory_DeferredChildComponentWithServices0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewDeferredChildComponentWithServices0 extends _ng.AppView<DeferredChildComponentWithServices> {
+  external ViewDeferredChildComponentWithServices0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 
 external void initReflector();
