@@ -48,7 +48,7 @@ void main() {
           throwsNoProviderError,
         );
         expect(
-          () => i.provide<ExampleService>(),
+          () => i.provideType<ExampleService>(ExampleService),
           throwsNoProviderError,
         );
         expect(
@@ -104,7 +104,7 @@ void main() {
         final parent = Injector.map({ExampleService: instance});
         i = Injector.empty(parent);
         expect(i.get(ExampleService), instance);
-        expect(i.provide<ExampleService>(), instance);
+        expect(i.provideType<ExampleService>(ExampleService), instance);
         expect(
           () => i.injectFromSelf(ExampleService),
           throwsNoProviderError,
@@ -126,7 +126,7 @@ void main() {
         final instance = ExampleService();
         i = Injector.map({ExampleService: instance});
         expect(i.get(ExampleService), instance);
-        expect(i.provide<ExampleService>(), instance);
+        expect(i.provideType<ExampleService>(ExampleService), instance);
         expect(i.injectFromSelf(ExampleService), instance);
         expect(
           () => i.injectFromAncestry(ExampleService),
