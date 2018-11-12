@@ -507,22 +507,10 @@
     Function.prototype.call$3 = function(a, b, c) {
       return this(a, b, c);
     };
-    Function.prototype.call$1$1 = function(a) {
-      return this(a);
-    };
-    Function.prototype.call$3$3 = function(a, b, c) {
-      return this(a, b, c);
-    };
-    Function.prototype.call$2$2 = function(a, b) {
-      return this(a, b);
-    };
     Function.prototype.call$4 = function(a, b, c, d) {
       return this(a, b, c, d);
     };
-    Function.prototype.call$2$1 = function(a) {
-      return this(a);
-    };
-    Function.prototype.call$3$1 = function(a) {
+    Function.prototype.call$1$1 = function(a) {
       return this(a);
     };
     Function.prototype.call$1$2 = function(a, b) {
@@ -531,8 +519,8 @@
     Function.prototype.call$5 = function(a, b, c, d, e) {
       return this(a, b, c, d, e);
     };
-    Function.prototype.call$3$4 = function(a, b, c, d) {
-      return this(a, b, c, d);
+    Function.prototype.call$2$5 = function(a, b, c, d, e) {
+      return this(a, b, c, d, e);
     };
     Function.prototype.call$2$4 = function(a, b, c, d) {
       return this(a, b, c, d);
@@ -540,8 +528,20 @@
     Function.prototype.call$3$6 = function(a, b, c, d, e, f) {
       return this(a, b, c, d, e, f);
     };
-    Function.prototype.call$2$5 = function(a, b, c, d, e) {
-      return this(a, b, c, d, e);
+    Function.prototype.call$3$3 = function(a, b, c) {
+      return this(a, b, c);
+    };
+    Function.prototype.call$2$2 = function(a, b) {
+      return this(a, b);
+    };
+    Function.prototype.call$2$1 = function(a) {
+      return this(a);
+    };
+    Function.prototype.call$3$1 = function(a) {
+      return this(a);
+    };
+    Function.prototype.call$3$4 = function(a, b, c, d) {
+      return this(a, b, c, d);
     };
     function tearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name, isIntercepted) {
       return isIntercepted ? new Function("funcs", "applyTrampolineIndex", "reflectionInfo", "name", "H", "c", "return function tearOff_" + name + functionCounter++ + "(x) {" + "if (c === null) c = " + "H.closureFromTearOff" + "(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, [x], name);" + "return new c(this, funcs[0], x, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H, null) : new Function("funcs", "applyTrampolineIndex", "reflectionInfo", "name", "H", "c", "return function tearOff_" + name + functionCounter++ + "() {" + "if (c === null) c = " + "H.closureFromTearOff" + "(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, [], name);" + "return new c(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H, null);
@@ -2235,9 +2235,9 @@
       $isMap: 1
     },
     ConstantStringMap: {
-      "^": "ConstantMap;_length,_jsObject,__js_helper$_keys,$ti",
+      "^": "ConstantMap;__js_helper$_length,_jsObject,__js_helper$_keys,$ti",
       get$length: function(_) {
-        return this._length;
+        return this.__js_helper$_length;
       },
       _fetch$1: function(key) {
         return this._jsObject[key];
@@ -2421,7 +2421,7 @@
       }
     },
     unwrapException_saveStackTrace: {
-      "^": "Closure:6;ex",
+      "^": "Closure:8;ex",
       call$1: function(error) {
         if (!!J.getInterceptor$(error).$isError)
           if (error.$thrownJsError == null)
@@ -2470,7 +2470,7 @@
       }
     },
     BoundClosure: {
-      "^": "TearOffClosure;_self,_target,_receiver,__js_helper$_name",
+      "^": "TearOffClosure;_self,_target,_receiver,_name",
       $eq: function(_, other) {
         if (other == null)
           return false;
@@ -2493,7 +2493,7 @@
         var receiver = this._receiver;
         if (receiver == null)
           receiver = this._self;
-        return "Closure '" + H.S(this.__js_helper$_name) + "' of " + ("Instance of '" + H.Primitives_objectTypeName(receiver) + "'");
+        return "Closure '" + H.S(this._name) + "' of " + ("Instance of '" + H.Primitives_objectTypeName(receiver) + "'");
       },
       static: {
         BoundClosure_selfOf: function(closure) {
@@ -2553,12 +2553,12 @@
       }
     },
     JsLinkedHashMap: {
-      "^": "MapBase;_length,0_strings,0_nums,0_rest,0_first,0_last,_modifications,$ti",
+      "^": "MapBase;__js_helper$_length,0_strings,0_nums,0_rest,0_first,0_last,_modifications,$ti",
       get$length: function(_) {
-        return this._length;
+        return this.__js_helper$_length;
       },
       get$isEmpty: function(_) {
-        return this._length === 0;
+        return this.__js_helper$_length === 0;
       },
       get$keys: function(_) {
         return new H.LinkedHashMapKeyIterable(this, [H.getTypeArgumentByIndex(this, 0)]);
@@ -2674,13 +2674,13 @@
         return cell.hashMapCellValue;
       },
       clear$0: function(_) {
-        if (this._length > 0) {
+        if (this.__js_helper$_length > 0) {
           this._last = null;
           this._first = null;
           this._rest = null;
           this._nums = null;
           this._strings = null;
-          this._length = 0;
+          this.__js_helper$_length = 0;
           this._modified$0();
         }
       },
@@ -2728,7 +2728,7 @@
           last._next = cell;
           this._last = cell;
         }
-        ++this._length;
+        ++this.__js_helper$_length;
         this._modified$0();
         return cell;
       },
@@ -2744,7 +2744,7 @@
           this._last = previous;
         else
           next._previous = previous;
-        --this._length;
+        --this.__js_helper$_length;
         this._modified$0();
       },
       internalComputeHashCode$1: function(key) {
@@ -2801,7 +2801,7 @@
     LinkedHashMapKeyIterable: {
       "^": "EfficientLengthIterable;_map,$ti",
       get$length: function(_) {
-        return this._map._length;
+        return this._map.__js_helper$_length;
       },
       get$iterator: function(_) {
         var t1, t2;
@@ -2834,7 +2834,7 @@
       }
     },
     initHooks_closure: {
-      "^": "Closure:6;getTag",
+      "^": "Closure:8;getTag",
       call$1: function(o) {
         return this.getTag(o);
       }
@@ -3081,13 +3081,13 @@
     },
     _AsyncRun__scheduleImmediateJsOverride: [function(callback) {
       self.scheduleImmediate(H.convertDartClosureToJS(new P._AsyncRun__scheduleImmediateJsOverride_internalCallback(callback), 0));
-    }, "call$1", "async__AsyncRun__scheduleImmediateJsOverride$closure", 4, 0, 5],
+    }, "call$1", "async__AsyncRun__scheduleImmediateJsOverride$closure", 4, 0, 2],
     _AsyncRun__scheduleImmediateWithSetImmediate: [function(callback) {
       self.setImmediate(H.convertDartClosureToJS(new P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback(callback), 0));
-    }, "call$1", "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", 4, 0, 5],
+    }, "call$1", "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", 4, 0, 2],
     _AsyncRun__scheduleImmediateWithTimer: [function(callback) {
       P.Timer__createTimer(C.Duration_0, callback);
-    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 5],
+    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 2],
     Timer__createTimer: function(duration, callback) {
       var milliseconds = C.JSInt_methods._tdivFast$1(duration._duration, 1000);
       return P._TimerImpl$(milliseconds < 0 ? 0 : milliseconds, callback);
@@ -3180,7 +3180,7 @@
       $.Zone__current.handleUncaughtError$2(error, stackTrace);
     }, function(error) {
       return P._nullErrorHandler(error, null);
-    }, "call$2", "call$1", "async___nullErrorHandler$closure", 4, 2, 3, 7, 8, 9],
+    }, "call$2", "call$1", "async___nullErrorHandler$closure", 4, 2, 4, 7, 8, 9],
     _nullDoneHandler: [function() {
     }, "call$0", "async___nullDoneHandler$closure", 0, 0, 0],
     _parentDelegate: function(zone) {
@@ -3192,7 +3192,7 @@
       var t1 = {};
       t1.error = error;
       P._schedulePriorityAsyncCallback(new P._rootHandleUncaughtError_closure(t1, stackTrace));
-    }, "call$5", "async___rootHandleUncaughtError$closure", 20, 0, 12],
+    }, "call$5", "async___rootHandleUncaughtError$closure", 20, 0, 6],
     _rootRun: [1, function($self, $parent, zone, f) {
       var old, t1;
       t1 = $.Zone__current;
@@ -3208,7 +3208,7 @@
       }
     }, function($self, $parent, zone, f) {
       return P._rootRun($self, $parent, zone, f, null);
-    }, "call$1$4", "call$4", "async___rootRun$closure", 16, 0, 9, 1, 2, 3, 10],
+    }, "call$1$4", "call$4", "async___rootRun$closure", 16, 0, 10, 1, 2, 3, 10],
     _rootRunUnary: [1, function($self, $parent, zone, f, arg) {
       var old, t1;
       t1 = $.Zone__current;
@@ -3224,7 +3224,7 @@
       }
     }, function($self, $parent, zone, f, arg) {
       return P._rootRunUnary($self, $parent, zone, f, arg, null, null);
-    }, "call$2$5", "call$5", "async___rootRunUnary$closure", 20, 0, 10, 1, 2, 3, 10, 4],
+    }, "call$2$5", "call$5", "async___rootRunUnary$closure", 20, 0, 11, 1, 2, 3, 10, 4],
     _rootRunBinary: [1, function($self, $parent, zone, f, arg1, arg2) {
       var old, t1;
       t1 = $.Zone__current;
@@ -3240,47 +3240,47 @@
       }
     }, function($self, $parent, zone, f, arg1, arg2) {
       return P._rootRunBinary($self, $parent, zone, f, arg1, arg2, null, null, null);
-    }, "call$3$6", "call$6", "async___rootRunBinary$closure", 24, 0, 11, 1, 2, 3, 10, 5, 6],
+    }, "call$3$6", "call$6", "async___rootRunBinary$closure", 24, 0, 12, 1, 2, 3, 10, 5, 6],
     _rootRegisterCallback: [function($self, $parent, zone, f) {
       return f;
     }, function($self, $parent, zone, f) {
       return P._rootRegisterCallback($self, $parent, zone, f, null);
-    }, "call$1$4", "call$4", "async___rootRegisterCallback$closure", 16, 0, 21],
+    }, "call$1$4", "call$4", "async___rootRegisterCallback$closure", 16, 0, 20],
     _rootRegisterUnaryCallback: [function($self, $parent, zone, f) {
       return f;
     }, function($self, $parent, zone, f) {
       return P._rootRegisterUnaryCallback($self, $parent, zone, f, null, null);
-    }, "call$2$4", "call$4", "async___rootRegisterUnaryCallback$closure", 16, 0, 22],
+    }, "call$2$4", "call$4", "async___rootRegisterUnaryCallback$closure", 16, 0, 21],
     _rootRegisterBinaryCallback: [function($self, $parent, zone, f) {
       return f;
     }, function($self, $parent, zone, f) {
       return P._rootRegisterBinaryCallback($self, $parent, zone, f, null, null, null);
-    }, "call$3$4", "call$4", "async___rootRegisterBinaryCallback$closure", 16, 0, 23],
+    }, "call$3$4", "call$4", "async___rootRegisterBinaryCallback$closure", 16, 0, 28],
     _rootErrorCallback: [function($self, $parent, zone, error, stackTrace) {
       return;
-    }, "call$5", "async___rootErrorCallback$closure", 20, 0, 24],
+    }, "call$5", "async___rootErrorCallback$closure", 20, 0, 22],
     _rootScheduleMicrotask: [function($self, $parent, zone, f) {
       var t1 = C.C__RootZone !== zone;
       if (t1)
         f = !(!t1 || C.C__RootZone.get$errorZone() === zone.get$errorZone()) ? zone.bindCallbackGuarded$1(f) : zone.bindCallback$1$1(f, -1);
       P._scheduleAsyncCallback(f);
-    }, "call$4", "async___rootScheduleMicrotask$closure", 16, 0, 8],
+    }, "call$4", "async___rootScheduleMicrotask$closure", 16, 0, 9],
     _rootCreateTimer: [function($self, $parent, zone, duration, callback) {
       callback = zone.bindCallback$1$1(callback, -1);
       return P.Timer__createTimer(duration, callback);
-    }, "call$5", "async___rootCreateTimer$closure", 20, 0, 13],
+    }, "call$5", "async___rootCreateTimer$closure", 20, 0, 14],
     _rootCreatePeriodicTimer: [function($self, $parent, zone, duration, callback) {
       var milliseconds;
       callback = zone.bindUnaryCallback$2$1(callback, null, P.Timer);
       milliseconds = C.JSInt_methods._tdivFast$1(duration._duration, 1000);
       return P._TimerImpl$periodic(milliseconds < 0 ? 0 : milliseconds, callback);
-    }, "call$5", "async___rootCreatePeriodicTimer$closure", 20, 0, 25],
+    }, "call$5", "async___rootCreatePeriodicTimer$closure", 20, 0, 23],
     _rootPrint: [function($self, $parent, zone, line) {
       H.printString(H.S(line));
-    }, "call$4", "async___rootPrint$closure", 16, 0, 26],
+    }, "call$4", "async___rootPrint$closure", 16, 0, 24],
     _printToZone: [function(line) {
       $.Zone__current.print$1(0, line);
-    }, "call$1", "async___printToZone$closure", 4, 0, 27],
+    }, "call$1", "async___printToZone$closure", 4, 0, 25],
     _rootFork: [function($self, $parent, zone, specification, zoneValues) {
       var valueMap, t1, t2;
       $.printToZone = P.async___printToZone$closure();
@@ -3318,9 +3318,9 @@
       t2 = specification.handleUncaughtError;
       t1._handleUncaughtError = t2 != null ? new P._ZoneFunction(t1, t2) : zone.get$_handleUncaughtError();
       return t1;
-    }, "call$5", "async___rootFork$closure", 20, 0, 28, 1, 2, 3, 20, 21],
+    }, "call$5", "async___rootFork$closure", 20, 0, 26, 1, 2, 3, 20, 21],
     _AsyncRun__initializeScheduleImmediate_internalCallback: {
-      "^": "Closure:2;_box_0",
+      "^": "Closure:3;_box_0",
       call$1: [function(_) {
         var t1, f;
         t1 = this._box_0;
@@ -3522,7 +3522,7 @@
           return;
         if (t1 === this._lastSubscription) {
           this._state |= 2;
-          t1._async$_add$1(0, data);
+          t1._add$1(0, data);
           this._state &= 4294967293;
           if (this._firstSubscription == null)
             this._callOnCancel$0();
@@ -3534,7 +3534,7 @@
     _SyncBroadcastStreamController__sendData_closure: {
       "^": "Closure;data",
       call$1: function(subscription) {
-        subscription._async$_add$1(0, this.data);
+        subscription._add$1(0, this.data);
       }
     },
     _Completer: {
@@ -3555,7 +3555,7 @@
         this._completeError$2(error, stackTrace);
       }, function(error) {
         return this.completeError$2(error, null);
-      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 3]
+      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 4]
     },
     _AsyncCompleter: {
       "^": "_Completer;future,$ti",
@@ -3696,7 +3696,7 @@
         P._Future__propagateToListeners(this, listeners);
       }, function(error) {
         return this._completeError$2(error, null);
-      }, "_completeError$1", "call$2", "call$1", "get$_completeError", 4, 2, 3, 7, 8, 9],
+      }, "_completeError$1", "call$2", "call$1", "get$_completeError", 4, 2, 4, 7, 8, 9],
       _asyncComplete$1: function(value) {
         if (H.checkSubtype(value, "$isFuture", this.$ti, "$asFuture")) {
           this._chainFuture$1(value);
@@ -3854,7 +3854,7 @@
       }, null, null, 0, 0, null, "call"]
     },
     _Future__chainForeignFuture_closure: {
-      "^": "Closure:2;target",
+      "^": "Closure:3;target",
       call$1: [function(value) {
         var t1 = this.target;
         t1._state = 0;
@@ -3862,7 +3862,7 @@
       }, null, null, 4, 0, null, 22, "call"]
     },
     _Future__chainForeignFuture_closure0: {
-      "^": "Closure:16;target",
+      "^": "Closure:17;target",
       call$2: [function(error, stackTrace) {
         this.target._completeError$2(error, stackTrace);
       }, function(error) {
@@ -3941,7 +3941,7 @@
       }
     },
     _Future__propagateToListeners_handleWhenCompleteCallback_closure: {
-      "^": "Closure:17;originalSource",
+      "^": "Closure:19;originalSource",
       call$1: [function(_) {
         return this.originalSource;
       }, null, null, 4, 0, null, 0, "call"]
@@ -4058,7 +4058,7 @@
           H.throwExpression(P.ArgumentError$("handleError callback must take either an Object (the error), or both an Object (the error) and a StackTrace."));
         this._onDone = t1.registerCallback$1(onDone == null ? P.async___nullDoneHandler$closure() : onDone);
       },
-      _async$_add$1: function(_, data) {
+      _add$1: function(_, data) {
         var t1 = this._state;
         if ((t1 & 8) !== 0)
           return;
@@ -4971,7 +4971,7 @@
       }
     },
     _LinkedIdentityHashMap: {
-      "^": "JsLinkedHashMap;_length,0_strings,0_nums,0_rest,0_first,0_last,_modifications,$ti",
+      "^": "JsLinkedHashMap;__js_helper$_length,0_strings,0_nums,0_rest,0_first,0_last,_modifications,$ti",
       internalComputeHashCode$1: function(key) {
         return H.objectHashCode(key) & 0x3ffffff;
       },
@@ -5020,9 +5020,9 @@
           }
           return this._collection$_addHashTableEntry$2(nums, element);
         } else
-          return this._add$1(0, element);
+          return this._collection$_add$1(0, element);
       },
-      _add$1: function(_, element) {
+      _collection$_add$1: function(_, element) {
         var rest, hash, bucket;
         rest = this._collection$_rest;
         if (rest == null) {
@@ -7035,11 +7035,11 @@
       }
     },
     FixedSizeListIterator: {
-      "^": "Object;_array,_html$_length,_position,0_current",
+      "^": "Object;_array,_length,_position,0_current",
       moveNext$0: function() {
         var nextPosition, t1;
         nextPosition = this._position + 1;
-        t1 = this._html$_length;
+        t1 = this._length;
         if (nextPosition < t1) {
           this._current = J.$index$asx(this._array, nextPosition);
           this._position = nextPosition;
@@ -7375,7 +7375,7 @@
       }
     },
     _AcceptStructuredClone_walk_closure: {
-      "^": "Closure:18;_box_0,$this",
+      "^": "Closure:16;_box_0,$this",
       call$2: function(key, value) {
         var t1, t2;
         t1 = this._box_0.copy;
@@ -7919,6 +7919,9 @@
     }
   }], ["angular.src.bootstrap.modules", "package:angular/src/bootstrap/modules.dart",, G, {
     "^": "",
+    createNgZone: [function() {
+      return Y.NgZone$(false);
+    }, "call$0", "modules__createNgZone$closure", 0, 0, 27],
     createRandomAppId: function() {
       var t1 = new G.createRandomAppId_char(C.C__JSRandom);
       return H.S(t1.call$0()) + H.S(t1.call$0()) + H.S(t1.call$0());
@@ -7938,56 +7941,39 @@
       return new Y._Injector$minimalApp($parent == null ? C.EmptyInjector_null : $parent);
     }, function() {
       return Y.minimalApp$Injector(null);
-    }, "call$1", "call$0", "modules_template__minimalApp$Injector$closure", 0, 2, 14],
+    }, "call$1", "call$0", "modules_template__minimalApp$Injector$closure", 0, 2, 13],
     _Injector$minimalApp: {
-      "^": "HierarchicalInjector;0_field0,0_field1,0_field2,0_field3,0_field4,0_field5,0_field7,0_field8,0_field9,parent",
+      "^": "HierarchicalInjector;0_field0,0_field1,0_field2,0_field3,0_field5,parent",
       injectFromSelfOptional$2: function(token, orElse) {
         var t1;
-        if (token === C.Type_Testability_h8g) {
+        if (token === C.Type_SlowComponentLoader_qxe) {
           t1 = this._field0;
           if (t1 == null) {
-            t1 = new D.Testability(this.$get$1(0, C.Type_NgZone_6ty), 0, true, false, H.setRuntimeTypeInfo([], [P.Function]));
-            t1._watchAngularEvents$0();
+            t1 = new G.ThrowingSlowComponentLoader();
             this._field0 = t1;
           }
           return t1;
         }
-        if (token === C.Type_SlowComponentLoader_qxe) {
+        if (token === C.Type_ComponentLoader_7xV) {
           t1 = this._field1;
           if (t1 == null) {
-            t1 = new G.ThrowingSlowComponentLoader();
+            t1 = new M.ComponentLoader();
             this._field1 = t1;
           }
           return t1;
         }
-        if (token === C.Type_ComponentLoader_7xV) {
+        if (token === C.OpaqueToken_APP_ID) {
           t1 = this._field2;
           if (t1 == null) {
-            t1 = new M.ComponentLoader();
+            t1 = G.createRandomAppId();
             this._field2 = t1;
           }
           return t1;
         }
-        if (token === C.OpaqueToken_APP_ID) {
+        if (token === C.Type_DomSanitizationService_cKo) {
           t1 = this._field3;
           if (t1 == null) {
-            t1 = G.createRandomAppId();
-            this._field3 = t1;
-          }
-          return t1;
-        }
-        if (token === C.Type_NgZone_6ty) {
-          t1 = this._field4;
-          if (t1 == null) {
-            t1 = Y.NgZone$(false);
-            this._field4 = t1;
-          }
-          return t1;
-        }
-        if (token === C.Type_DomSanitizationService_cKo) {
-          t1 = this._field5;
-          if (t1 == null) {
-            this._field5 = C.C_DomSanitizationServiceImpl;
+            this._field3 = C.C_DomSanitizationServiceImpl;
             t1 = C.C_DomSanitizationServiceImpl;
           }
           return t1;
@@ -7995,26 +7981,10 @@
         if (token === C.Type_SanitizationService_bRS)
           return this.$get$1(0, C.Type_DomSanitizationService_cKo);
         if (token === C.Type_ExceptionHandler_qBE) {
-          t1 = this._field7;
+          t1 = this._field5;
           if (t1 == null) {
             t1 = new T.BrowserExceptionHandler();
-            this._field7 = t1;
-          }
-          return t1;
-        }
-        if (token === C.OpaqueToken_EventManagerPlugins) {
-          t1 = this._field8;
-          if (t1 == null) {
-            t1 = H.setRuntimeTypeInfo([new L.DomEventsPlugin(), new N.KeyEventsPlugin()], [N.EventManagerPlugin]);
-            this._field8 = t1;
-          }
-          return t1;
-        }
-        if (token === C.Type_EventManager_hsx) {
-          t1 = this._field9;
-          if (t1 == null) {
-            t1 = N.EventManager$(this.$get$1(0, C.OpaqueToken_EventManagerPlugins), this.$get$1(0, C.Type_NgZone_6ty));
-            this._field9 = t1;
+            this._field5 = t1;
           }
           return t1;
         }
@@ -8025,8 +7995,8 @@
     }
   }], ["", "package:angular/src/bootstrap/run.dart",, G, {
     "^": "",
-    appInjector: function(userProvidedInjector) {
-      var t1, t2, testabilityRegistry, minimalInjector, userInjector, ngZone;
+    appInjector: function(userProvidedInjector, createNgZone) {
+      var t1, t2, testabilityRegistry, minimalInjector, ngZone, userInjector;
       t1 = {};
       t2 = $._platformInjectorCache;
       if (t2 == null) {
@@ -8043,16 +8013,16 @@
       }
       minimalInjector = Y.modules_template__minimalApp$Injector$closure().call$1(t2);
       t1.applicationRef = null;
-      t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(t1), C.Type_AppViewUtils_NWH, new G.appInjector_closure0()], P.Object, {func: 1, ret: P.Object});
+      ngZone = createNgZone.call$0();
+      t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(t1), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], P.Object, {func: 1, ret: P.Object});
       userInjector = userProvidedInjector.call$1(new G._LazyInjector(t2, minimalInjector == null ? C.EmptyInjector_null : minimalInjector));
-      ngZone = minimalInjector.$get$1(0, C.Type_NgZone_6ty);
-      return ngZone._innerZone.run$1$1(new G.appInjector_closure1(t1, ngZone, userInjector, minimalInjector), M.Injector);
+      return ngZone._innerZone.run$1$1(new G.appInjector_closure3(t1, ngZone, userInjector), M.Injector);
     },
     _identityInjector: [function($parent) {
       return $parent;
     }, function() {
       return G._identityInjector(null);
-    }, "call$1", "call$0", "run___identityInjector$closure", 0, 2, 14],
+    }, "call$1", "call$0", "run___identityInjector$closure", 0, 2, 13],
     appInjector_closure: {
       "^": "Closure;_box_0",
       call$0: function() {
@@ -8066,15 +8036,30 @@
       }
     },
     appInjector_closure1: {
-      "^": "Closure;_box_0,ngZone,userInjector,minimalInjector",
-      call$0: [function() {
-        var t1, t2, t3;
-        t1 = this.userInjector;
-        this._box_0.applicationRef = Y.ApplicationRef$_(this.ngZone, t1.$get$1(0, C.Type_ExceptionHandler_qBE), t1);
-        t2 = t1.$get$1(0, C.OpaqueToken_APP_ID);
-        t3 = t1.$get$1(0, C.Type_SanitizationService_bRS);
-        $.appViewUtils = new Q.AppViewUtils(t2, this.minimalInjector.$get$1(0, C.Type_EventManager_hsx), t3);
+      "^": "Closure;ngZone",
+      call$0: function() {
+        return this.ngZone;
+      }
+    },
+    appInjector_closure2: {
+      "^": "Closure;ngZone",
+      call$0: function() {
+        var t1 = new D.Testability(this.ngZone, 0, true, false, H.setRuntimeTypeInfo([], [P.Function]));
+        t1._watchAngularEvents$0();
         return t1;
+      }
+    },
+    appInjector_closure3: {
+      "^": "Closure;_box_0,ngZone,userInjector",
+      call$0: [function() {
+        var t1, t2, t3, t4;
+        t1 = this.ngZone;
+        t2 = this.userInjector;
+        this._box_0.applicationRef = Y.ApplicationRef$_(t1, t2.$get$1(0, C.Type_ExceptionHandler_qBE), t2);
+        t3 = t2.$get$1(0, C.OpaqueToken_APP_ID);
+        t4 = t2.$get$1(0, C.Type_SanitizationService_bRS);
+        $.appViewUtils = new Q.AppViewUtils(t3, N.EventManager$(H.setRuntimeTypeInfo([new L.DomEventsPlugin(), new N.KeyEventsPlugin()], [N.EventManagerPlugin]), t1), t4);
+        return t2;
       }, null, null, 0, 0, null, "call"]
     },
     _LazyInjector: {
@@ -8223,7 +8208,7 @@
       }, null, null, 4, 0, null, 11, "call"]
     },
     ApplicationRef$__closure0: {
-      "^": "Closure:4;$this",
+      "^": "Closure:5;$this",
       call$1: [function(_) {
         var t1 = this.$this;
         t1._ngZone._innerZone.runGuarded$1(t1.get$tick());
@@ -9179,9 +9164,9 @@
   }], ["", "package:angular/src/core/linker/view_type.dart",, R, {
     "^": "",
     ViewType: {
-      "^": "Object;index,_name",
+      "^": "Object;index,_view_type$_name",
       toString$0: function(_) {
-        return this._name;
+        return this._view_type$_name;
       }
     }
   }], ["", "package:angular/src/core/metadata/view.dart",, A, {
@@ -9221,7 +9206,7 @@
       },
       isStable$0: [function(_) {
         return this._isZoneStable && this._pendingCount === 0 && !this._testability$_ngZone._hasPendingMacrotasks;
-      }, "call$0", "get$isStable", 1, 0, 19],
+      }, "call$0", "get$isStable", 1, 0, 18],
       _runCallbacksIfReady$0: function() {
         if (this.isStable$0(0))
           P.scheduleMicrotask(new D.Testability__runCallbacksIfReady_closure(this));
@@ -9231,10 +9216,10 @@
       whenStable$1: [function(_, callback) {
         this._callbacks.push(callback);
         this._runCallbacksIfReady$0();
-      }, "call$1", "get$whenStable", 5, 0, 20, 13]
+      }, "call$1", "get$whenStable", 5, 0, 33, 13]
     },
     Testability__watchAngularEvents_closure: {
-      "^": "Closure:4;$this",
+      "^": "Closure:5;$this",
       call$1: [function(_) {
         var t1 = this.$this;
         t1._didWork = true;
@@ -9251,7 +9236,7 @@
       }, null, null, 0, 0, null, "call"]
     },
     Testability__watchAngularEvents__closure: {
-      "^": "Closure:4;$this",
+      "^": "Closure:5;$this",
       call$1: [function(_) {
         if (J.$eq$($.Zone__current.$index(0, $.$get$NgZone__zoneKey()), true))
           H.throwExpression(P.Exception_Exception("Expected to not be in Angular Zone, but it is!"));
@@ -9310,7 +9295,7 @@
         implementation = $parent._delegationTarget.get$_scheduleMicrotask();
         implZone = implementation.zone;
         implementation.$function.call$4(implZone, P._parentDelegate(implZone), zone, new Y.NgZone__scheduleMicrotask_closure(this, fn));
-      }, "call$4", "get$_ng_zone$_scheduleMicrotask", 16, 0, 8],
+      }, "call$4", "get$_ng_zone$_scheduleMicrotask", 16, 0, 9],
       _run$1$4: [function($self, $parent, zone, fn) {
         var implementation, implZone;
         implementation = $parent._delegationTarget.get$_async$_run();
@@ -9318,7 +9303,7 @@
         return implementation.$function.call$4(implZone, P._parentDelegate(implZone), zone, new Y.NgZone__run_closure(this, fn));
       }, function($self, $parent, zone, fn) {
         return this._run$1$4($self, $parent, zone, fn, null);
-      }, "_run$4", "call$1$4", "call$4", "get$_run", 16, 0, 9],
+      }, "_run$4", "call$1$4", "call$4", "get$_run", 16, 0, 10],
       _runUnary$2$5: [function($self, $parent, zone, fn, arg, $R, $T) {
         var implementation, implZone;
         implementation = $parent._delegationTarget.get$_async$_runUnary();
@@ -9326,13 +9311,13 @@
         return implementation.$function.call$2$5(implZone, P._parentDelegate(implZone), zone, new Y.NgZone__runUnary_closure(this, fn, $T, $R), arg, $R, $T);
       }, function($self, $parent, zone, fn, arg) {
         return this._runUnary$2$5($self, $parent, zone, fn, arg, null, null);
-      }, "_runUnary$5", "call$2$5", "call$5", "get$_runUnary", 20, 0, 10],
+      }, "_runUnary$5", "call$2$5", "call$5", "get$_runUnary", 20, 0, 11],
       _runBinary$3$6: [function($self, $parent, zone, fn, arg1, arg2, $R, T1, T2) {
         var implementation, implZone;
         implementation = $parent._delegationTarget.get$_async$_runBinary();
         implZone = implementation.zone;
         return implementation.$function.call$3$6(implZone, P._parentDelegate(implZone), zone, new Y.NgZone__runBinary_closure(this, fn, T1, T2, $R), arg1, arg2, $R, T1, T2);
-      }, "call$3$6", "get$_runBinary", 24, 0, 11],
+      }, "call$3$6", "get$_runBinary", 24, 0, 12],
       _onEnter$0: function() {
         ++this._nesting;
         if (this._isStable) {
@@ -9347,7 +9332,7 @@
       },
       _onErrorWithoutLongStackTrace$5: [function($self, $parent, zone, error, trace) {
         this._onError.add$1(0, new Y.NgZoneError(error, [J.toString$0$(trace)]));
-      }, "call$5", "get$_onErrorWithoutLongStackTrace", 20, 0, 12],
+      }, "call$5", "get$_onErrorWithoutLongStackTrace", 20, 0, 6],
       _createTimer$5: [function($self, $parent, zone, duration, fn) {
         var t1, onDone, implementation, implZone, wrappedTimer;
         t1 = {};
@@ -9360,7 +9345,7 @@
         this._pendingTimers.push(wrappedTimer);
         this._hasPendingMacrotasks = true;
         return t1.wrappedTimer;
-      }, "call$5", "get$_createTimer", 20, 0, 13],
+      }, "call$5", "get$_createTimer", 20, 0, 14],
       _checkStable$0: function() {
         var t1 = this._nesting;
         if (t1 === 0)
@@ -9680,7 +9665,7 @@
       }, null, null, 0, 0, null, "call"]
     },
     BrowserGetTestability_addToWindow_closure1: {
-      "^": "Closure:2;getAllAngularTestabilities",
+      "^": "Closure:3;getAllAngularTestabilities",
       call$1: [function(callback) {
         var _box_0, testabilities, t1, decrement, testability;
         _box_0 = {};
@@ -9740,9 +9725,9 @@
     EventManager: {
       "^": "Object;zone,_plugins,_eventToPlugin",
       EventManager$2: function(_plugins, zone) {
-        var t1, t2, len, i;
-        for (t1 = this._plugins, t2 = J.getInterceptor$asx(t1), len = t2.get$length(t1), i = 0; i < len; ++i)
-          t2.$index(t1, i).set$manager(this);
+        var t1, i;
+        for (t1 = this._plugins, i = 0; i < 2; ++i)
+          t1[i].manager = this;
       },
       static: {
         EventManager$: function(_plugins, zone) {
@@ -9753,7 +9738,7 @@
       }
     },
     EventManagerPlugin: {
-      "^": "Object;0manager?"
+      "^": "Object;"
     }
   }], ["", "package:angular/src/platform/dom/events/key_events.dart",, N, {
     "^": "",
@@ -9799,7 +9784,7 @@
   }], ["dart2js_golden", "/bazel-root/third_party/dart_src/angular/_goldens/test/_files/dart2js/dart2js_golden.dart",, O, {
     "^": "",
     main: function() {
-      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(C.ComponentFactory_2Vk, O.RootComponent);
+      G.appInjector(G.run___identityInjector$closure(), G.modules__createNgZone$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(C.ComponentFactory_2Vk, O.RootComponent);
     },
     RootComponent: {
       "^": "Object;"
@@ -10678,13 +10663,11 @@
   C.MultiToken_usPresidents = new S.MultiToken("usPresidents", [P.String]);
   C.MultiToken_whiteHouse = new S.MultiToken("whiteHouse", [P.String]);
   C.OpaqueToken_APP_ID = new S.OpaqueToken("APP_ID", [P.String]);
-  C.OpaqueToken_EventManagerPlugins = new S.OpaqueToken("EventManagerPlugins", [null]);
   C.Symbol_call = new H.Symbol("call");
   C.Type_AppViewUtils_NWH = H.createRuntimeType(Q.AppViewUtils);
   C.Type_ApplicationRef_Aij = H.createRuntimeType(Y.ApplicationRef);
   C.Type_ComponentLoader_7xV = H.createRuntimeType(M.ComponentLoader);
   C.Type_DomSanitizationService_cKo = H.createRuntimeType(Z.DomSanitizationService);
-  C.Type_EventManager_hsx = H.createRuntimeType(N.EventManager);
   C.Type_ExceptionHandler_qBE = H.createRuntimeType(U.ExceptionHandler);
   C.Type_InjectableService_AmT = H.createRuntimeType(O.InjectableService);
   C.Type_Injector_aJC = H.createRuntimeType(M.Injector);
@@ -10850,7 +10833,7 @@
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = ["_", "self", "parent", "zone", "arg", "arg1", "arg2", null, "error", "stackTrace", "f", "e", "result", "callback", "index", "closure", "numberOfArguments", "arg3", "arg4", "each", "specification", "zoneValues", "value", "item", "s", true, "elem", "findInAncestors", "didWork_", "element", "t", "arguments"];
-  init.types = [{func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: [S.AppView, O.ComponentConditionalFeatures], args: [[S.AppView,,], P.int]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, args: [,,]}, {func: 1, ret: P.bool}, {func: 1, ret: -1, args: [P.Function]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent], args: [[S.AppView,,], P.int]}, {func: 1, ret: [S.AppView, O.EmbeddedNgIf], args: [[S.AppView,,], P.int]}, {func: 1, ret: [S.AppView, O.EmbeddedNgFor], args: [[S.AppView,,], P.int]}];
+  init.types = [{func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: [S.AppView, O.ComponentConditionalFeatures], args: [[S.AppView,,], P.int]}, {func: 1, args: [,,]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: P.bool}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent], args: [[S.AppView,,], P.int]}, {func: 1, ret: [S.AppView, O.EmbeddedNgIf], args: [[S.AppView,,], P.int]}, {func: 1, ret: [S.AppView, O.EmbeddedNgFor], args: [[S.AppView,,], P.int]}, {func: 1, ret: -1, args: [P.Function]}];
   function convertToFastObject(properties) {
     function MyClass() {
     }

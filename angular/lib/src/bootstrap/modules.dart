@@ -78,22 +78,15 @@ class ThrowingSlowComponentLoader implements SlowComponentLoader {
 ///
 /// Does not support any service that requires the `initReflector()`-based APIs.
 const bootstrapMinimalModule = <Object>[
-  // Custom events and fallback if the compiler does not detect an event.
-  eventPluginModule,
-
   // HTML/DOM sanitization.
   Provider(ExceptionHandler, useClass: BrowserExceptionHandler),
   Provider(SanitizationService, useExisting: DomSanitizationService),
   Provider(DomSanitizationService, useClass: DomSanitizationServiceImpl),
 
   // Core components of the runtime.
-  Provider(NgZone, useFactory: createNgZone, deps: []),
   Provider(APP_ID, useFactory: createRandomAppId, deps: []),
   Provider(ComponentLoader),
   Provider(SlowComponentLoader, useClass: ThrowingSlowComponentLoader),
-
-  // Enable Testability.
-  Provider(Testability, useClass: Testability),
 ];
 
 /// An experimental application [Injector] that is statically generated.
@@ -121,6 +114,8 @@ String createRandomAppId() {
 @experimental
 const bootstrapLegacyModule = <Object>[
   bootstrapMinimalModule,
+  eventPluginModule,
+  Provider(NgZone, useFactory: createNgZone, deps: []),
   Provider(
     ApplicationRef,
     useFactory: internalCreateApplicationRef,
@@ -128,4 +123,5 @@ const bootstrapLegacyModule = <Object>[
   ),
   Provider(AppViewUtils),
   Provider(SlowComponentLoader),
+  Provider(Testability, useClass: Testability),
 ];
