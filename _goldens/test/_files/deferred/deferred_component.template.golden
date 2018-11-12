@@ -5,6 +5,7 @@
 import 'deferred_component.dart';
 export 'deferred_component.dart';
 import 'package:angular/angular.dart';
+import 'external_service.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
@@ -16,6 +17,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'external_service.dart' as import9;
 
 final List<dynamic> styles$DeferredChild1Component = const [];
 
@@ -372,6 +374,84 @@ AppView<import1.DeferredChildComponentWithNgContent> viewFactory_DeferredChildCo
   return _ViewDeferredChildComponentWithNgContentHost0(parentView, parentIndex);
 }
 
+final List<dynamic> styles$DeferredChildComponentWithServices = const [];
+
+class ViewDeferredChildComponentWithServices0 extends AppView<import1.DeferredChildComponentWithServices> {
+  static RenderComponentType _renderType;
+  ViewDeferredChildComponentWithServices0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('deferred-child-with-services');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null), ViewEncapsulation.None, styles$DeferredChildComponentWithServices);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.DeferredChildComponentWithServices> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+  }
+}
+
+AppView<import1.DeferredChildComponentWithServices> viewFactory_DeferredChildComponentWithServices0(AppView<dynamic> parentView, int parentIndex) {
+  return ViewDeferredChildComponentWithServices0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.DeferredChildComponentWithServices> _DeferredChildComponentWithServicesNgFactory = const ComponentFactory('deferred-child-with-services', viewFactory_DeferredChildComponentWithServicesHost0);
+ComponentFactory<import1.DeferredChildComponentWithServices> get DeferredChildComponentWithServicesNgFactory {
+  return _DeferredChildComponentWithServicesNgFactory;
+}
+
+final List<dynamic> styles$DeferredChildComponentWithServicesHost = const [];
+
+class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.DeferredChildComponentWithServices> {
+  ViewDeferredChildComponentWithServices0 _compView_0;
+  import9.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
+  import1.DeferredChildComponentWithServices _DeferredChildComponentWithServices_0_6;
+  import9.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
+  _ViewDeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  import9.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
+    if ((this.__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
+      (__ExternalServiceLazilyCreatedMaybe_0_7 = import9.ExternalServiceLazilyCreatedMaybe());
+    }
+    return this.__ExternalServiceLazilyCreatedMaybe_0_7;
+  }
+
+  @override
+  ComponentRef<import1.DeferredChildComponentWithServices> build() {
+    _compView_0 = ViewDeferredChildComponentWithServices0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _ExternalServiceImmediatelyCreated_0_5 = import9.ExternalServiceImmediatelyCreated();
+    _DeferredChildComponentWithServices_0_6 = import1.DeferredChildComponentWithServices(_ExternalServiceImmediatelyCreated_0_5);
+    _compView_0.create(_DeferredChildComponentWithServices_0_6, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _DeferredChildComponentWithServices_0_6);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import9.ExternalServiceImmediatelyCreated) && (0 == nodeIndex))) {
+      return _ExternalServiceImmediatelyCreated_0_5;
+    }
+    if ((identical(token, import9.ExternalServiceLazilyCreatedMaybe) && (0 == nodeIndex))) {
+      return _ExternalServiceLazilyCreatedMaybe_0_7;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0?.destroy();
+  }
+}
+
+AppView<import1.DeferredChildComponentWithServices> viewFactory_DeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewDeferredChildComponentWithServicesHost0(parentView, parentIndex);
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -385,5 +465,6 @@ void initReflector() {
   _ngRef.registerComponent(NotDeferredChildComponent, NotDeferredChildComponentNgFactory);
   _ngRef.registerComponent(DeferredChildComponentWithoutNgContent, DeferredChildComponentWithoutNgContentNgFactory);
   _ngRef.registerComponent(DeferredChildComponentWithNgContent, DeferredChildComponentWithNgContentNgFactory);
+  _ngRef.registerComponent(DeferredChildComponentWithServices, DeferredChildComponentWithServicesNgFactory);
   _ref0.initReflector();
 }

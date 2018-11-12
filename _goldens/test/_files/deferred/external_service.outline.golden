@@ -1,0 +1,8 @@
+// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit
+// The .template.dart files also export the user code.
+export 'external_service.dart';
+
+// Required for "type inference" (scoping).
+
+
+external void initReflector();
