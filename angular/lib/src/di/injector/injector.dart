@@ -107,18 +107,24 @@ abstract class Injector {
   @protected
   Object provideUntyped(Object token, [Object orElse]);
 
-  /// Finds and returns an object instance provided for a type token of [T].
+  /// Finds and returns an object instance provided for a type [token].
   ///
   /// A runtime assertion is thrown in debug mode if:
   ///
-  /// * [T] is explicitly or implicitly bound to `Object`, `dynamic`, or `Null`.
+  /// * [T] is explicitly or implicitly bound to `dynamic`.
+  /// * If [T] is not `Object`, the DI [token] is not the *same* as [T].
   ///
   /// An error is thrown if a provider is not found.
-  T provide<T extends Object>() {
-    assert(T != Object, 'Injecting Object is not supported');
-    assert(T != dynamic, 'Injecting dynamic is not supported');
-    assert(T != Null, 'Injecting a value of Null is not supported');
-    return unsafeCast(get(T));
+  T provideType<T extends Object>(Type token) {
+    // NOTE: It is not possible to design this API in such a way that only "T"
+    // can be used, and not require "token" as well. Our injection system
+    // currently uses "identical" (similar to JS' ===), and the types passed
+    // through "T" are not canonical (they are == equivalent, but not ===).
+    //
+    // See historic discussion here: dartbug.com/35098
+    assert(T != dynamic, 'Returning a dynamic is not supported');
+    assert(T == Object || T == token, '$T is not equivalent to $token');
+    return unsafeCast(get(token));
   }
 
   /// Finds and returns an object instance provided for a [token].
