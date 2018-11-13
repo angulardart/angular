@@ -12,6 +12,7 @@ import 'package:angular/experimental.dart';
 import '../bootstrap.dart';
 import '../errors.dart';
 import 'fixture.dart';
+import 'ng_zone/timer_hook_zone.dart';
 import 'stabilizer.dart';
 
 /// Used to determine if there is an actively executing test.
@@ -299,18 +300,33 @@ class NgTestBed<T> {
       if (_providers.isNotEmpty) {
         rootInjector = ([parent]) {
           return ReflectiveInjector.resolveAndCreate(
-              _providers, _rootInjector(parent));
+            _providers,
+            _rootInjector(parent),
+          );
         };
       }
+
+      // Create a zone to intercept timer creation.
+      final timerHookZone = TimerHookZone();
+      NgZone ngZoneFactory() {
+        return timerHookZone.run(() => NgZone(enableLongStackTrace: true));
+      }
+
       return bootstrapForTest<T>(
         _componentFactory ?? typeToFactory(type),
         _host ?? _defaultHost(),
         rootInjector,
         beforeComponentCreated: beforeComponentCreated,
         beforeChangeDetection: beforeChangeDetection,
+        createNgZone: ngZoneFactory,
       ).then((componentRef) async {
         _checkForActiveTest();
-        final allStabilizers = _createStabilizer(componentRef.injector);
+        // Some internal stabilizers get access to the TimerHookZone.
+        // Most (i.e. user-land) stabilizers do not.
+        final allStabilizers = _createStabilizer is NgTestStabilizerFactory
+            ? _createStabilizer(componentRef.injector)
+            : (_createStabilizer as AllowTimerHookZoneAccess)(
+                componentRef.injector, timerHookZone);
         await allStabilizers.stabilize();
         final testFixture = NgTestFixture<T>(
           componentRef.injector.get(ApplicationRef),
