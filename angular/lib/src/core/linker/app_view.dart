@@ -248,9 +248,6 @@ abstract class AppView<T> {
   @dart2js.noInline
   void init0(dynamic e) {
     viewData.rootNodesOrViewContainers = <dynamic>[e];
-    if (viewData.type == ViewType.component) {
-      dirtyParentQueriesInternal();
-    }
   }
 
   /// Called by build once all dom nodes are available.
@@ -258,9 +255,6 @@ abstract class AppView<T> {
   void init(List rootNodesOrViewContainers, List subscriptions) {
     viewData.rootNodesOrViewContainers = rootNodesOrViewContainers;
     viewData.subscriptions = subscriptions;
-    if (viewData.type == ViewType.component) {
-      dirtyParentQueriesInternal();
-    }
   }
 
   void addInlinedNodes(Node anchor, List<Node> inlinedNodes,

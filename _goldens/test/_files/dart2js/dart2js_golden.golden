@@ -8924,15 +8924,12 @@
         return;
       },
       init0$1: function(e) {
-        var t1 = this.viewData;
-        t1.rootNodesOrViewContainers = [e];
-        t1.type;
+        this.viewData.rootNodesOrViewContainers = [e];
       },
       init$2: function(rootNodesOrViewContainers, subscriptions) {
         var t1 = this.viewData;
         t1.rootNodesOrViewContainers = rootNodesOrViewContainers;
         t1.subscriptions = subscriptions;
-        t1.type;
       },
       removeInlinedNodes$2: function(inlinedNodes, isRoot) {
         var nodeList, i, node;
