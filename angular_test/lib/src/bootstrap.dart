@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:angular/src/bootstrap/modules.dart';
 import 'package:angular/src/bootstrap/run.dart';
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
@@ -40,6 +41,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   InjectorFactory userInjector, {
   FutureOr<void> Function(Injector) beforeComponentCreated,
   FutureOr<void> Function(E) beforeChangeDetection,
+  NgZone Function() createNgZone = createNgZone,
 }) async {
   if (componentFactory == null) {
     throw ArgumentError.notNull('componentFactory');
@@ -51,7 +53,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
     throw ArgumentError.notNull('userInjector');
   }
   // This should be kept in sync with 'runApp' as much as possible.
-  final injector = appInjector(userInjector);
+  final injector = appInjector(userInjector, createNgZone: createNgZone);
   final ApplicationRef appRef = injector.get(ApplicationRef);
   NgZoneError caughtError;
   final NgZone ngZone = injector.get(NgZone);
