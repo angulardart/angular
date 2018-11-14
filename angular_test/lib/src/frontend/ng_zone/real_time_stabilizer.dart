@@ -39,7 +39,11 @@ class RealTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_ObservedTimer> {
         duration,
         wrappedCallback,
       );
-      instance = _ObservedTimer(delegate, duration);
+      instance = _ObservedTimer(
+        delegate,
+        duration,
+        () => pendingTimers.remove(instance),
+      );
       pendingTimers.add(instance);
       return instance;
     };
@@ -58,11 +62,11 @@ class RealTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_ObservedTimer> {
   bool get isStable => super.isStable && pendingTimers.isEmpty;
 
   @protected
-  Future<void> waitForAsyncEvents() {
-    if (pendingTimers.isEmpty) {
-      return super.waitForAsyncEvents();
+  Future<void> waitForAsyncEvents() async {
+    await super.waitForAsyncEvents();
+    if (pendingTimers.isNotEmpty) {
+      await Future.delayed(_minimumDurationForAllPendingTimers());
     }
-    return Future.delayed(_minimumDurationForAllPendingTimers());
   }
 
   Duration _minimumDurationForAllPendingTimers() {
@@ -84,10 +88,16 @@ class _ObservedTimer implements Timer {
   /// Scheduled duration.
   final Duration _duration;
 
-  const _ObservedTimer(this._delegate, this._duration);
+  /// Handles a user cancelling the timer directly.
+  final void Function() _onCancel;
+
+  const _ObservedTimer(this._delegate, this._duration, this._onCancel);
 
   @override
-  void cancel() => _delegate.cancel();
+  void cancel() {
+    _onCancel();
+    _delegate.cancel();
+  }
 
   @override
   int get tick => _delegate.tick;

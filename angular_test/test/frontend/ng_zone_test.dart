@@ -195,6 +195,18 @@ void main() {
       ]);
     });
 
+    test('should consider a cancelled timer completed', () {
+      final pendingTimer = ngZone.run(() {
+        return Timer(
+          Duration(seconds: 30),
+          expectAsync0(() {}, count: 0),
+        );
+      });
+      expect(stabilizer.isStable, isFalse);
+      pendingTimer.cancel();
+      expect(stabilizer.isStable, isTrue);
+    });
+
     test('should propogate synchronous errors', () {
       expect(
         stabilizer.update(() => throw _IntentionalError()),
