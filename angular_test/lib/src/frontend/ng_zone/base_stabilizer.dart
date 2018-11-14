@@ -29,10 +29,10 @@ abstract class BaseNgZoneStabilizer<T extends Timer> extends NgTestStabilizer {
 
   @override
   Future<bool> update([
-    void Function() runAndTrackSideEffects = _noSideEffects,
+    void Function() runAndTrackSideEffects,
   ]) {
     return Future<void>.sync(() {
-      _triggerSideEffects(runAndTrackSideEffects);
+      _triggerSideEffects(runAndTrackSideEffects ?? _noSideEffects);
       return _waitForAsyncEventsOrErrors();
     }).then((_) => isStable);
   }
