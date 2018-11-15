@@ -62,12 +62,9 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   });
 
   if (beforeComponentCreated != null) {
-    var completer = Completer<void>();
-    ngZone.runGuarded(() => new Future(() {})
-        .then((_) => beforeComponentCreated(injector))
-        .then((_) => completer.complete(), onError: completer.completeError));
-    await completer.future;
+    await beforeComponentCreated(injector);
   }
+
   // Code works improperly when .run is typed to return FutureOr:
   // https://github.com/dart-lang/sdk/issues/32285.
   return appRef.run<ComponentRef<E>>(() {
