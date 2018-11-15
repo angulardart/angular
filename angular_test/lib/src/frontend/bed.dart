@@ -316,25 +316,51 @@ class NgTestBed<T> {
 
       // Create a zone to intercept timer creation.
       final timerHookZone = TimerHookZone();
+      NgZone ngZoneInstance;
       NgZone ngZoneFactory() {
-        return timerHookZone.run(() => NgZone(enableLongStackTrace: true));
+        return timerHookZone.run(() {
+          return ngZoneInstance = NgZone(enableLongStackTrace: true);
+        });
+      }
+
+      // Created within "createStabilizersAndRunUserHook".
+      NgTestStabilizer allStabilizers;
+
+      Future<void> createStabilizersAndRunUserHook(Injector injector) async {
+        // Some internal stabilizers get access to the TimerHookZone.
+        // Most (i.e. user-land) stabilizers do not.
+        final createStabilizer = _createStabilizer;
+        allStabilizers = createStabilizer is AllowTimerHookZoneAccess
+            ? createStabilizer(injector, timerHookZone)
+            : createStabilizer(injector);
+
+        // If there is no user hook, we are done.
+        if (beforeComponentCreated == null) {
+          return null;
+        }
+
+        // If there is a user hook, execute it within the ngZone:
+        final completer = Completer<void>();
+        ngZoneInstance.runGuarded(() async {
+          try {
+            await beforeComponentCreated(injector);
+            completer.complete();
+          } catch (e, s) {
+            completer.completeError(e, s);
+          }
+        });
+        return completer.future.whenComplete(() => allStabilizers.update());
       }
 
       return bootstrapForTest<T>(
         _componentFactory ?? typeToFactory(type),
         _host ?? _defaultHost(),
         _createRootInjectorFactory(),
-        beforeComponentCreated: beforeComponentCreated,
+        beforeComponentCreated: createStabilizersAndRunUserHook,
         beforeChangeDetection: beforeChangeDetection,
         createNgZone: ngZoneFactory,
       ).then((componentRef) async {
         _checkForActiveTest();
-        // Some internal stabilizers get access to the TimerHookZone.
-        // Most (i.e. user-land) stabilizers do not.
-        final allStabilizers = _createStabilizer is NgTestStabilizerFactory
-            ? _createStabilizer(componentRef.injector)
-            : (_createStabilizer as AllowTimerHookZoneAccess)(
-                componentRef.injector, timerHookZone);
         await allStabilizers.stabilize();
         final testFixture = NgTestFixture(
           componentRef.injector.get(ApplicationRef),
