@@ -256,8 +256,8 @@ class NgTestBed<T> {
   /// Returns a new instance of [NgTestBed] with [stabilizers] added.
   NgTestBed<T> addStabilizers(Iterable<NgTestStabilizerFactory> stabilizers) {
     return fork(
-        stabilizer:
-            composeStabilizers([_createStabilizer]..addAll(stabilizers)));
+      stabilizer: composeStabilizers([_createStabilizer]..addAll(stabilizers)),
+    );
   }
 
   /// Creates a new test application with [T] as the root component.
@@ -278,6 +278,26 @@ class NgTestBed<T> {
     );
   }
 
+  static void _checkForActiveTest() {
+    if (activeTest != null) {
+      throw TestAlreadyRunningError();
+    }
+  }
+
+  /// Creates the root [InjectorFactory] for a test instance.
+  InjectorFactory _createRootInjectorFactory() {
+    var rootInjector = _rootInjector;
+    if (_providers.isNotEmpty) {
+      rootInjector = ([parent]) {
+        return ReflectiveInjector.resolveAndCreate(
+          _providers,
+          _rootInjector(parent),
+        );
+      };
+    }
+    return rootInjector;
+  }
+
   // Used for compatibility only. See `create` for public API.
   Future<NgTestFixture<T>> _createDynamic(
     Type type, {
@@ -287,24 +307,12 @@ class NgTestBed<T> {
     // We *purposefully* do not use async/await here - that always adds an
     // additional micro-task - we want this to fail fast without entering an
     // asynchronous event if another test is running.
-    void _checkForActiveTest() {
-      if (activeTest != null) {
-        throw TestAlreadyRunningError();
-      }
-    }
-
     _checkForActiveTest();
+
+    // Future.sync promotes synchronous errors to Future.error if they occur.
     return Future<NgTestFixture<T>>.sync(() {
+      // Ensure that no tests have started since the last microtask.
       _checkForActiveTest();
-      var rootInjector = _rootInjector;
-      if (_providers.isNotEmpty) {
-        rootInjector = ([parent]) {
-          return ReflectiveInjector.resolveAndCreate(
-            _providers,
-            _rootInjector(parent),
-          );
-        };
-      }
 
       // Create a zone to intercept timer creation.
       final timerHookZone = TimerHookZone();
@@ -315,7 +323,7 @@ class NgTestBed<T> {
       return bootstrapForTest<T>(
         _componentFactory ?? typeToFactory(type),
         _host ?? _defaultHost(),
-        rootInjector,
+        _createRootInjectorFactory(),
         beforeComponentCreated: beforeComponentCreated,
         beforeChangeDetection: beforeChangeDetection,
         createNgZone: ngZoneFactory,
@@ -328,7 +336,7 @@ class NgTestBed<T> {
             : (_createStabilizer as AllowTimerHookZoneAccess)(
                 componentRef.injector, timerHookZone);
         await allStabilizers.stabilize();
-        final testFixture = NgTestFixture<T>(
+        final testFixture = NgTestFixture(
           componentRef.injector.get(ApplicationRef),
           componentRef,
           allStabilizers,
