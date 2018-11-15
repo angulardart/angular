@@ -12,6 +12,7 @@ import 'package:angular/experimental.dart';
 import '../bootstrap.dart';
 import '../errors.dart';
 import 'fixture.dart';
+import 'ng_zone/real_time_stabilizer.dart';
 import 'ng_zone/timer_hook_zone.dart';
 import 'stabilizer.dart';
 
@@ -117,8 +118,23 @@ class NgTestBed<T> {
 
   static NgTestStabilizer _alwaysStable(_) => NgTestStabilizer.alwaysStable;
 
-  static NgTestStabilizer _defaultStabilizers(Injector injector) {
-    return NgZoneStabilizer(injector.get(NgZone));
+  /// May be set to `true` in order to prefer using the previous stabilizer.
+  ///
+  /// The new stabilizer more correctly tracks asynchronous work, and unblocks
+  /// the ability to make all [Timer] instances be mocked out, elapsing time
+  /// manually.
+  ///
+  /// Setting this to `true` should be considered temporary for migration only.
+  static bool useLegacyNgTestBedStabilizer = true;
+
+  static NgTestStabilizer _defaultStabilizers(
+    Injector injector, [
+    TimerHookZone timerZone,
+  ]) {
+    if (useLegacyNgTestBedStabilizer) {
+      return NgZoneStabilizer(injector.provideType(NgZone));
+    }
+    return RealTimeNgZoneStabilizer(timerZone, injector.provideType(NgZone));
   }
 
   final Element _host;
