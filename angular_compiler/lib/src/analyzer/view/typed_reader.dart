@@ -117,6 +117,14 @@ class TypedReader {
       final typeArguments = typeArgumentsReader.isList
           ? typeArgumentsReader.listValue.map(_parse).toList()
           : type.typeArguments.map(linkTypeOf).toList();
+      for (final typeArgument in typeArguments) {
+        if (typeArgument.isPrivate) {
+          throwFailure(''
+              'Directive type arguments must be public, but "${type.name}" was '
+              'given private type argument "${typeArgument.symbol}" by '
+              '"${_hostElement.name}".');
+        }
+      }
       return TypedElement(
         TypeLink(
           getTypeName(type),

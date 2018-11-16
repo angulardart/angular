@@ -309,5 +309,25 @@ void main() {
         ],
       );
     });
+
+    test('if a private type argument is used', () async {
+      await compilesExpecting(
+        '''
+        @Component()
+        class GenericComponent<T> {}
+        class _Private {}
+        const typed = Typed<GenericComponent<_Private>>();
+
+        @typed
+        class Example {}
+        ''',
+        parseTyped,
+        errors: [
+          contains(
+              'Directive type arguments must be public, but "GenericComponent" '
+              'was given private type argument "_Private" by "Example".')
+        ],
+      );
+    });
   });
 }
