@@ -1,6 +1,8 @@
 *   Update failure message to include an asset id when collecting type
     parameters.
 
+*   `TypedReader` now throws a build error when reading a private type argument.
+
 ## 0.4.1
 
 *   Catches an (invalid) `null` token of a provider and throws a better error.

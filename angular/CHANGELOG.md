@@ -78,6 +78,12 @@
     emit `deflib1.ComponentName(...)` instead of `lib1.ComponentName(...)`. This
     should ensure Dart2JS properly defer loads the entire component.
 
+*   Typing a generic directive with a private type argument is now a build
+    error. Directive type arguments must be public so that they can be
+    referenced by the generated library that instantiates the directive.
+    Previously, this would build successfully but emit code that instantiated
+    the directive with `dynamic` in place of the private type.
+
 [#1653]: https://github.com/dart-lang/angular/issues/1653
 
 ## 5.1.0
