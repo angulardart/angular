@@ -9,10 +9,10 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'inlined_providers.dart' as import1;
-import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
@@ -21,29 +21,23 @@ import 'package:angular/src/di/errors.dart' as import9;
 final List<dynamic> styles$ParentComponent = const [];
 
 class ViewParentComponent0 extends AppView<import1.ParentComponent> {
-  import2.Element _el_0;
   ViewChildComponentProvidingA$B$C0 _compView_0;
   import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_0_5;
   import1.A __A_0_6;
   import1.B __B_0_7;
   import1.C __C_0_8;
-  import2.Element _el_1;
   ViewChildComponentProvidingA$B$C0 _compView_1;
   import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_1_5;
   import1.A __A_1_6;
   import1.B __B_1_7;
   import1.C __C_1_8;
-  import2.Element _el_2;
   ViewChildComponentWithNgContentProviding$D0 _compView_2;
   import1.ChildComponentWithNgContentProviding$D _ChildComponentWithNgContentProviding$D_2_5;
   import1.D _D_2_6;
-  import2.Element _el_3;
   ViewChildComponentInjecting$D0 _compView_3;
   import1.ChildComponentInjecting$D _ChildComponentInjecting$D_3_5;
-  import2.Element _el_4;
   ViewChildComponentWithVisibilityAll0 _compView_4;
   import1.ChildComponentWithVisibilityAll _ChildComponentWithVisibilityAll_4_5;
-  import2.Element _el_5;
   ViewChildComponentProvidingA$B$C0 _compView_5;
   import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_5_5;
   import1.DirectiveProviding$A2$D2 _DirectiveProviding$A2$D2_5_6;
@@ -51,18 +45,16 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   import1.B __B_5_8;
   import1.C __C_5_9;
   import1.D2 __D_5_10;
-  import2.Element _el_6;
   ViewChildComponentWithNgContentProviding$D0 _compView_6;
   import1.ChildComponentWithNgContentProviding$D _ChildComponentWithNgContentProviding$D_6_5;
   import1.DirectiveProviding$A2$D2 _DirectiveProviding$A2$D2_6_6;
   import1.D2 _D_6_7;
   import1.A2 __A_6_8;
-  import2.Element _el_7;
   ViewChildComponentInjecting$D0 _compView_7;
   import1.ChildComponentInjecting$D _ChildComponentInjecting$D_7_5;
   static RenderComponentType _renderType;
-  ViewParentComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('parent-component');
+  ViewParentComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('parent-component');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null), ViewEncapsulation.None, styles$ParentComponent);
     setupComponentType(_renderType);
   }
@@ -146,50 +138,50 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   @override
   ComponentRef<import1.ParentComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewChildComponentProvidingA$B$C0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
     _compView_0.create(_ChildComponentProvidingA$B$C_0_5, []);
     _compView_1 = ViewChildComponentProvidingA$B$C0(this, 1);
-    _el_1 = _compView_1.rootEl;
+    final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     _ChildComponentProvidingA$B$C_1_5 = import1.ChildComponentProvidingA$B$C();
     _compView_1.create(_ChildComponentProvidingA$B$C_1_5, []);
     _compView_2 = ViewChildComponentWithNgContentProviding$D0(this, 2);
-    _el_2 = _compView_2.rootEl;
+    final _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     _ChildComponentWithNgContentProviding$D_2_5 = import1.ChildComponentWithNgContentProviding$D();
     _D_2_6 = import1.D();
     _compView_3 = ViewChildComponentInjecting$D0(this, 3);
-    _el_3 = _compView_3.rootEl;
+    final _el_3 = _compView_3.rootEl;
     _ChildComponentInjecting$D_3_5 = import1.ChildComponentInjecting$D(_D_2_6);
     _compView_3.create(_ChildComponentInjecting$D_3_5, []);
     _compView_2.create(_ChildComponentWithNgContentProviding$D_2_5, [
       [_el_3]
     ]);
     _compView_4 = ViewChildComponentWithVisibilityAll0(this, 4);
-    _el_4 = _compView_4.rootEl;
+    final _el_4 = _compView_4.rootEl;
     parentRenderNode.append(_el_4);
     _ChildComponentWithVisibilityAll_4_5 = import1.ChildComponentWithVisibilityAll();
     _compView_4.create(_ChildComponentWithVisibilityAll_4_5, []);
     _compView_5 = ViewChildComponentProvidingA$B$C0(this, 5);
-    _el_5 = _compView_5.rootEl;
+    final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
     createAttr(_el_5, 'directive-providing-a2-d2', '');
     _ChildComponentProvidingA$B$C_5_5 = import1.ChildComponentProvidingA$B$C();
     _DirectiveProviding$A2$D2_5_6 = import1.DirectiveProviding$A2$D2();
     _compView_5.create(_ChildComponentProvidingA$B$C_5_5, []);
     _compView_6 = ViewChildComponentWithNgContentProviding$D0(this, 6);
-    _el_6 = _compView_6.rootEl;
+    final _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
     createAttr(_el_6, 'directive-providing-a2-d2', '');
     _ChildComponentWithNgContentProviding$D_6_5 = import1.ChildComponentWithNgContentProviding$D();
     _DirectiveProviding$A2$D2_6_6 = import1.DirectiveProviding$A2$D2();
     _D_6_7 = import1.D2();
     _compView_7 = ViewChildComponentInjecting$D0(this, 7);
-    _el_7 = _compView_7.rootEl;
+    final _el_7 = _compView_7.rootEl;
     _ChildComponentInjecting$D_7_5 = import1.ChildComponentInjecting$D(_D_6_7);
     _compView_7.create(_ChildComponentInjecting$D_7_5, []);
     _compView_6.create(_ChildComponentWithNgContentProviding$D_6_5, [
@@ -284,7 +276,7 @@ final List<dynamic> styles$ParentComponentHost = const [];
 class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   ViewParentComponent0 _compView_0;
   import1.ParentComponent _ParentComponent_0_5;
-  _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ParentComponent> build() {
     _compView_0 = ViewParentComponent0(this, 0);
@@ -314,15 +306,15 @@ final List<dynamic> styles$ChildComponentProvidingA$B$C = const [];
 
 class ViewChildComponentProvidingA$B$C0 extends AppView<import1.ChildComponentProvidingA$B$C> {
   static RenderComponentType _renderType;
-  ViewChildComponentProvidingA$B$C0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('child-component-providing-a-b-c');
+  ViewChildComponentProvidingA$B$C0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('child-component-providing-a-b-c');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null), ViewEncapsulation.None, styles$ChildComponentProvidingA$B$C);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.ChildComponentProvidingA$B$C> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 }
@@ -344,7 +336,7 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
   import1.A __A_0_6;
   import1.B __B_0_7;
   import1.C __C_0_8;
-  _ViewChildComponentProvidingA$B$CHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewChildComponentProvidingA$B$CHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.A get _A_0_6 {
     if ((this.__A_0_6 == null)) {
       (__A_0_6 = import1.A());
@@ -409,15 +401,15 @@ final List<dynamic> styles$ChildComponentWithNgContentProviding$D = const [];
 
 class ViewChildComponentWithNgContentProviding$D0 extends AppView<import1.ChildComponentWithNgContentProviding$D> {
   static RenderComponentType _renderType;
-  ViewChildComponentWithNgContentProviding$D0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('child-component-with-ngcontent-providing-d');
+  ViewChildComponentWithNgContentProviding$D0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('child-component-with-ngcontent-providing-d');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null), ViewEncapsulation.None, styles$ChildComponentWithNgContentProviding$D);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.ChildComponentWithNgContentProviding$D> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     project(parentRenderNode, 0);
     init(const [], null);
   }
@@ -438,7 +430,7 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
   ViewChildComponentWithNgContentProviding$D0 _compView_0;
   import1.ChildComponentWithNgContentProviding$D _ChildComponentWithNgContentProviding$D_0_5;
   import1.D __D_0_6;
-  _ViewChildComponentWithNgContentProviding$DHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewChildComponentWithNgContentProviding$DHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.D get _D_0_6 {
     if ((this.__D_0_6 == null)) {
       (__D_0_6 = import1.D());
@@ -483,15 +475,15 @@ final List<dynamic> styles$ChildComponentInjecting$D = const [];
 
 class ViewChildComponentInjecting$D0 extends AppView<import1.ChildComponentInjecting$D> {
   static RenderComponentType _renderType;
-  ViewChildComponentInjecting$D0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('child-component-injecting-d');
+  ViewChildComponentInjecting$D0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('child-component-injecting-d');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null), ViewEncapsulation.None, styles$ChildComponentInjecting$D);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.ChildComponentInjecting$D> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 }
@@ -510,7 +502,7 @@ final List<dynamic> styles$ChildComponentInjecting$DHost = const [];
 class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponentInjecting$D> {
   ViewChildComponentInjecting$D0 _compView_0;
   import1.ChildComponentInjecting$D _ChildComponentInjecting$D_0_5;
-  _ViewChildComponentInjecting$DHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewChildComponentInjecting$DHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ChildComponentInjecting$D> build() {
     _compView_0 = ViewChildComponentInjecting$D0(this, 0);
@@ -544,15 +536,15 @@ final List<dynamic> styles$ChildComponentWithVisibilityAll = const [];
 
 class ViewChildComponentWithVisibilityAll0 extends AppView<import1.ChildComponentWithVisibilityAll> {
   static RenderComponentType _renderType;
-  ViewChildComponentWithVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('child-component-with-visibility-all');
+  ViewChildComponentWithVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('child-component-with-visibility-all');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null), ViewEncapsulation.None, styles$ChildComponentWithVisibilityAll);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.ChildComponentWithVisibilityAll> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 }
@@ -571,7 +563,7 @@ final List<dynamic> styles$ChildComponentWithVisibilityAllHost = const [];
 class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildComponentWithVisibilityAll> {
   ViewChildComponentWithVisibilityAll0 _compView_0;
   import1.ChildComponentWithVisibilityAll _ChildComponentWithVisibilityAll_0_5;
-  _ViewChildComponentWithVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewChildComponentWithVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ChildComponentWithVisibilityAll> build() {
     _compView_0 = ViewChildComponentWithVisibilityAll0(this, 0);

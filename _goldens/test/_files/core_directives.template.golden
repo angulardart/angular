@@ -9,9 +9,9 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'core_directives.dart' as import1;
-import 'dart:html' as import2;
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import4;
+import 'package:angular/src/common/directives/ng_for.dart' as import3;
+import 'dart:html' as import4;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import6;
 import 'package:angular/src/core/change_detection/change_detection.dart';
@@ -24,28 +24,26 @@ import 'dart:core';
 final List<dynamic> styles$TestFooComponent = const [];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
-  import2.Comment _anchor_0;
-  import2.DivElement _el_0_0;
-  import2.Text _text_0_1;
   ViewContainer _appEl_1;
-  import4.NgFor _NgFor_1_9;
+  import3.NgFor _NgFor_1_9;
+  import4.Comment _anchor_0;
   static RenderComponentType _renderType;
   ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('test-foo');
+    rootEl = import4.document.createElement('test-foo');
     _renderType ??= import8.appViewUtils.createRenderType((import9.isDevMode ? 'asset:_goldens/test/_files/core_directives.dart' : null), ViewEncapsulation.None, styles$TestFooComponent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.TestFooComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     final _anchor_1 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_1);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
-    _NgFor_1_9 = import4.NgFor(_appEl_1, _TemplateRef_1_8);
+    _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
     init([], null);
   }
 
@@ -56,9 +54,9 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     if (firstCheck) {
       if (!identical(_ctx.foo, null)) {
         if (_ctx.foo) {
-          var doc = import2.document;
-          _el_0_0 = doc.createElement('div');
-          _text_0_1 = import2.Text('Foo');
+          var doc = import4.document;
+          final _el_0_0 = doc.createElement('div');
+          final _text_0_1 = import4.Text('Foo');
           _el_0_0.append(_text_0_1);
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }
@@ -89,18 +87,17 @@ ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
 }
 
 class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
-  import2.Element _el_1;
-  import2.Text _text_2;
   var _expr_0;
+  import4.Text _text_2;
   _ViewTestFooComponent2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestFooComponent0._renderType;
   }
   @override
   ComponentRef<import1.TestFooComponent> build() {
-    var doc = import2.document;
+    var doc = import4.document;
     final _el_0 = doc.createElement('div');
-    _el_1 = createSpanAndAppend(doc, _el_0);
-    _text_2 = import2.Text('');
+    final _el_1 = createSpanAndAppend(doc, _el_0);
+    _text_2 = import4.Text('');
     _el_1.append(_text_2);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
     init0(_el_0);

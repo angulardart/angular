@@ -82,7 +82,6 @@ AppView<import1.UntypedComp> viewFactory_UntypedCompHost0(AppView<dynamic> paren
 final List<dynamic> styles$UsesUntypedComp = const [];
 
 class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
-  import5.Element _el_0;
   ViewUntypedComp0 _compView_0;
   import1.UntypedComp _UntypedComp_0_5;
   var _expr_0;
@@ -97,7 +96,7 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewUntypedComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _UntypedComp_0_5 = import1.UntypedComp();
     _compView_0.create(_UntypedComp_0_5, []);
@@ -221,7 +220,6 @@ AppView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>(AppView<dynamic>
 final List<dynamic> styles$UsesGenericComp = const [];
 
 class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
-  import5.Element _el_0;
   ViewGenericComp0<int> _compView_0;
   import1.GenericComp<int> _GenericComp_0_5;
   var _expr_0;
@@ -236,7 +234,7 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewGenericComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _GenericComp_0_5 = import1.GenericComp();
     _compView_0.create(_GenericComp_0_5, []);
@@ -360,7 +358,6 @@ AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>(AppView<
 final List<dynamic> styles$UsesMappingComp1 = const [];
 
 class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
-  import5.Element _el_0;
   ViewMappingComp10<int, String> _compView_0;
   import1.MappingComp1<int, String> _MappingComp1_0_5;
   var _expr_0;
@@ -376,7 +373,7 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewMappingComp10(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _MappingComp1_0_5 = import1.MappingComp1();
     _compView_0.create(_MappingComp1_0_5, []);
@@ -505,7 +502,6 @@ AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>(AppView<
 final List<dynamic> styles$UsesMappingComp2 = const [];
 
 class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
-  import5.Element _el_0;
   ViewMappingComp20<int, String> _compView_0;
   import1.MappingComp2<int, String> _MappingComp2_0_5;
   var _expr_0;
@@ -520,7 +516,7 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewMappingComp20(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _MappingComp2_0_5 = import1.MappingComp2();
     _compView_0.create(_MappingComp2_0_5, []);
@@ -644,7 +640,6 @@ AppView<import1.BoundComp<T>> viewFactory_BoundCompHost0<T extends num>(AppView<
 final List<dynamic> styles$UsesBoundCompWithBounds = const [];
 
 class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBounds> {
-  import5.Element _el_0;
   ViewBoundComp0 _compView_0;
   import1.BoundComp _BoundComp_0_5;
   num _expr_0;
@@ -659,7 +654,7 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewBoundComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _BoundComp_0_5 = import1.BoundComp();
     _compView_0.create(_BoundComp_0_5, []);
@@ -726,7 +721,6 @@ AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost
 final List<dynamic> styles$UsesBoundComp = const [];
 
 class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
-  import5.Element _el_0;
   ViewBoundComp0 _compView_0;
   import1.BoundComp _BoundComp_0_5;
   num _expr_0;
@@ -741,7 +735,7 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewBoundComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _BoundComp_0_5 = import1.BoundComp();
     _compView_0.create(_BoundComp_0_5, []);
@@ -865,7 +859,6 @@ AppView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundCompHost0<A, B extends
 final List<dynamic> styles$UsesSelfBoundComp = const [];
 
 class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
-  import5.Element _el_0;
   ViewSelfBoundComp0 _compView_0;
   import1.SelfBoundComp _SelfBoundComp_0_5;
   var _expr_0;
@@ -881,7 +874,7 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewSelfBoundComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _SelfBoundComp_0_5 = import1.SelfBoundComp();
     _compView_0.create(_SelfBoundComp_0_5, []);
@@ -1010,7 +1003,6 @@ AppView<import1.RecursiveComp<T>> viewFactory_RecursiveCompHost0<T extends Compa
 final List<dynamic> styles$UsesRecursiveComp = const [];
 
 class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
-  import5.Element _el_0;
   ViewRecursiveComp0 _compView_0;
   import1.RecursiveComp _RecursiveComp_0_5;
   var _expr_0;
@@ -1025,7 +1017,7 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewRecursiveComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _RecursiveComp_0_5 = import1.RecursiveComp();
     _compView_0.create(_RecursiveComp_0_5, []);
@@ -1149,7 +1141,6 @@ AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>(AppVie
 final List<dynamic> styles$UsesFunctionTypeComp = const [];
 
 class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
-  import5.Element _el_0;
   ViewFunctionTypeComp0<String> _compView_0;
   import1.FunctionTypeComp<String> _FunctionTypeComp_0_5;
   var _expr_0;
@@ -1164,7 +1155,7 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewFunctionTypeComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _FunctionTypeComp_0_5 = import1.FunctionTypeComp();
     _compView_0.create(_FunctionTypeComp_0_5, []);
@@ -1231,10 +1222,8 @@ AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0(AppV
 final List<dynamic> styles$NestedParentComp = const [];
 
 class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
-  import5.Element _el_0;
   ViewNestedChildComp0<T> _compView_0;
   import1.NestedChildComp<T> _NestedChildComp_0_5;
-  import5.Element _el_1;
   ViewNestedChildComp0<T> _compView_1;
   import1.NestedChildComp<T> _NestedChildComp_1_5;
   ViewContainer _appEl_2;
@@ -1253,12 +1242,12 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewNestedChildComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _NestedChildComp_0_5 = import1.NestedChildComp();
     _compView_0.create(_NestedChildComp_0_5, []);
     _compView_1 = ViewNestedChildComp0(this, 1);
-    _el_1 = _compView_1.rootEl;
+    final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     _NestedChildComp_1_5 = import1.NestedChildComp();
     _compView_1.create(_NestedChildComp_1_5, []);
@@ -1316,7 +1305,6 @@ ComponentFactory<import1.NestedParentComp> get NestedParentCompNgFactory {
 }
 
 class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
-  import5.Element _el_0;
   ViewNestedChildComp0<T> _compView_0;
   import1.NestedChildComp<T> _NestedChildComp_0_5;
   var _expr_0;
@@ -1326,7 +1314,7 @@ class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
   @override
   ComponentRef<import1.NestedParentComp<T>> build() {
     _compView_0 = ViewNestedChildComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _NestedChildComp_0_5 = import1.NestedChildComp();
     _compView_0.create(_NestedChildComp_0_5, []);
     init0(_el_0);
@@ -1444,7 +1432,6 @@ AppView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>(AppView<
 final List<dynamic> styles$UsesNestedParentComp = const [];
 
 class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
-  import5.Element _el_0;
   ViewNestedParentComp0<int> _compView_0;
   import1.NestedParentComp<int> _NestedParentComp_0_5;
   var _expr_0;
@@ -1461,7 +1448,7 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewNestedParentComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _NestedParentComp_0_5 = import1.NestedParentComp();
     _compView_0.create(_NestedParentComp_0_5, []);
@@ -1538,10 +1525,8 @@ AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0(AppV
 final List<dynamic> styles$UsesMultipleTypesComp = const [];
 
 class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> {
-  import5.Element _el_0;
   ViewGenericComp0<String> _compView_0;
   import1.GenericComp<String> _GenericComp_0_5;
-  import5.Element _el_1;
   ViewGenericComp0<int> _compView_1;
   import1.GenericComp<int> _GenericComp_1_5;
   var _expr_0;
@@ -1557,12 +1542,12 @@ class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> 
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewGenericComp0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _GenericComp_0_5 = import1.GenericComp();
     _compView_0.create(_GenericComp_0_5, []);
     _compView_1 = ViewGenericComp0(this, 1);
-    _el_1 = _compView_1.rootEl;
+    final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     _GenericComp_1_5 = import1.GenericComp();
     _compView_1.create(_GenericComp_1_5, []);
@@ -1636,9 +1621,9 @@ AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0(Ap
 final List<dynamic> styles$UsesGenericChangeDetector = const [];
 
 class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDetector> {
-  import5.DivElement _el_0;
   GenericDirectiveNgCd<String> _GenericDirective_0_5;
   var _expr_0;
+  import5.DivElement _el_0;
   static RenderComponentType _renderType;
   ViewUsesGenericChangeDetector0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('comp');

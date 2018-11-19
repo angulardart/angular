@@ -79,7 +79,6 @@ AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0(
 final List<dynamic> styles$UsesHostComponentWithDirective = const [];
 
 class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostComponentWithDirective> {
-  import5.Element _el_0;
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_5;
   import1.ListensToFooEvent _ListensToFooEvent_0_6;
@@ -94,7 +93,7 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewHostComponent0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     createAttr(_el_0, 'listens-to-foo', '');
     _HostComponent_0_5 = import1.HostComponent();

@@ -3993,7 +3993,7 @@
     },
     ViewRootComponent0: function ViewRootComponent0(t0, t1) {
       var _ = this;
-      _.viewData = _._ComponentConditionalFeatures_5_5 = _._compView_5 = _._el_5 = _._InjectsFromArbitraryParent_4_5 = _._compView_4 = _._el_4 = _._EmbeddedNgFor_3_5 = _._compView_3 = _._el_3 = _._EmbeddedNgIf_2_5 = _._compView_2 = _._el_2 = _._InlinedNgIf_1_5 = _._compView_1 = _._el_1 = _._UsesDefaultChangeDetectionAndInput_0_5 = _._compView_0 = _._el_0 = null;
+      _.viewData = _._ComponentConditionalFeatures_5_5 = _._compView_5 = _._InjectsFromArbitraryParent_4_5 = _._compView_4 = _._EmbeddedNgFor_3_5 = _._compView_3 = _._EmbeddedNgIf_2_5 = _._compView_2 = _._InlinedNgIf_1_5 = _._compView_1 = _._UsesDefaultChangeDetectionAndInput_0_5 = _._compView_0 = null;
       _.locals = t0;
       _.parentView = t1;
       _.ctx = _.rootEl = _.componentType = null;
@@ -4007,16 +4007,15 @@
     },
     ViewUsesDefaultChangeDetectionAndInput0: function ViewUsesDefaultChangeDetectionAndInput0(t0, t1) {
       var _ = this;
-      _.viewData = _._expr_0 = _._el_0 = null;
+      _.viewData = _._el_0 = _._expr_0 = null;
       _.locals = t0;
       _.parentView = t1;
       _.ctx = _.rootEl = _.componentType = null;
     },
     ViewInlinedNgIf0: function ViewInlinedNgIf0(t0, t1, t2) {
       var _ = this;
-      _._text_0_1 = _._el_0_0 = _._anchor_0 = null;
       _._expr_0 = t0;
-      _.viewData = null;
+      _.viewData = _._el_0_0 = _._anchor_0 = null;
       _.locals = t1;
       _.parentView = t2;
       _.ctx = _.rootEl = _.componentType = null;
@@ -4030,7 +4029,7 @@
     },
     _ViewEmbeddedNgIf1: function _ViewEmbeddedNgIf1(t0, t1) {
       var _ = this;
-      _.viewData = _._NullComponent_0_5 = _._compView_0 = _._el_0 = null;
+      _.viewData = _._NullComponent_0_5 = _._compView_0 = null;
       _.locals = t0;
       _.parentView = t1;
       _.ctx = _.rootEl = _.componentType = null;
@@ -4044,7 +4043,7 @@
     },
     _ViewEmbeddedNgFor1: function _ViewEmbeddedNgFor1(t0, t1) {
       var _ = this;
-      _.viewData = _._expr_0 = _._text_1 = null;
+      _.viewData = _._text_1 = _._expr_0 = null;
       _.locals = t0;
       _.parentView = t1;
       _.ctx = _.rootEl = _.componentType = null;
@@ -4072,14 +4071,14 @@
     },
     _ViewComponentConditionalFeatures1: function _ViewComponentConditionalFeatures1(t0, t1) {
       var _ = this;
-      _.viewData = _._FeatureA_0_5 = _._compView_0 = _._el_0 = null;
+      _.viewData = _._FeatureA_0_5 = _._compView_0 = null;
       _.locals = t0;
       _.parentView = t1;
       _.ctx = _.rootEl = _.componentType = null;
     },
     _ViewComponentConditionalFeatures2: function _ViewComponentConditionalFeatures2(t0, t1) {
       var _ = this;
-      _.viewData = _._FeatureB_0_5 = _._compView_0 = _._el_0 = null;
+      _.viewData = _._FeatureB_0_5 = _._compView_0 = null;
       _.locals = t0;
       _.parentView = t1;
       _.ctx = _.rootEl = _.componentType = null;
@@ -10744,9 +10743,7 @@
       }
       t2.setupComponentType$1(t4);
       this._compView_0 = t2;
-      t2 = t2.rootEl;
-      this._el_0 = t2;
-      parentRenderNode.appendChild(t2);
+      parentRenderNode.appendChild(t2.rootEl);
       t2 = new O.UsesDefaultChangeDetectionAndInput(self.defeatDart2JsOptimizations("name"));
       this._UsesDefaultChangeDetectionAndInput_0_5 = t2;
       this._compView_0.create$2(0, t2, []);
@@ -10762,9 +10759,7 @@
       }
       t2.setupComponentType$1(t4);
       this._compView_1 = t2;
-      t2 = t2.rootEl;
-      this._el_1 = t2;
-      parentRenderNode.appendChild(t2);
+      parentRenderNode.appendChild(t2.rootEl);
       t2 = new O.InlinedNgIf(self.defeatDart2JsOptimizations("showDiv"));
       this._InlinedNgIf_1_5 = t2;
       this._compView_1.create$2(0, t2, []);
@@ -10780,9 +10775,7 @@
       }
       t2.setupComponentType$1(t4);
       this._compView_2 = t2;
-      t2 = t2.rootEl;
-      this._el_2 = t2;
-      parentRenderNode.appendChild(t2);
+      parentRenderNode.appendChild(t2.rootEl);
       t2 = new O.EmbeddedNgIf(self.defeatDart2JsOptimizations("showNull"));
       this._EmbeddedNgIf_2_5 = t2;
       this._compView_2.create$2(0, t2, []);
@@ -10798,9 +10791,7 @@
       }
       t2.setupComponentType$1(t4);
       this._compView_3 = t2;
-      t2 = t2.rootEl;
-      this._el_3 = t2;
-      parentRenderNode.appendChild(t2);
+      parentRenderNode.appendChild(t2.rootEl);
       t2 = new O.EmbeddedNgFor(H.setRuntimeTypeInfo(["foo", "bar", "baz"], [t1]));
       this._EmbeddedNgFor_3_5 = t2;
       this._compView_3.create$2(0, t2, []);
@@ -10816,9 +10807,7 @@
       }
       t2.setupComponentType$1(t4);
       this._compView_4 = t2;
-      t2 = t2.rootEl;
-      this._el_4 = t2;
-      parentRenderNode.appendChild(t2);
+      parentRenderNode.appendChild(t2.rootEl);
       t2 = this.parentView;
       t4 = t2.injectorGet$2(C.MultiToken_usPresidents, this.viewData.parentIndex);
       t5 = t2.injectorGet$2(C.MultiToken_whiteHouse, this.viewData.parentIndex);
@@ -10840,9 +10829,7 @@
       }
       t1.setupComponentType$1(t2);
       this._compView_5 = t1;
-      t1 = t1.rootEl;
-      this._el_5 = t1;
-      parentRenderNode.appendChild(t1);
+      parentRenderNode.appendChild(t1.rootEl);
       t1 = new O.ComponentConditionalFeatures(false, false);
       this._ComponentConditionalFeatures_5_5 = t1;
       this._compView_5.create$2(0, t1, []);
@@ -10956,14 +10943,12 @@
           doc = document;
           t1 = doc.createElement("div");
           this._el_0_0 = t1;
-          t2 = doc.createTextNode("Hello World");
-          this._text_0_1 = t2;
-          t1.appendChild(t2);
-          t2 = this._anchor_0;
-          t1 = H.setRuntimeTypeInfo([this._el_0_0], [W.Node]);
-          S._moveNodesAfterSibling(t2, t1);
-          t2 = this.viewData.rootNodesOrViewContainers;
-          (t2 && C.JSArray_methods).addAll$1(t2, t1);
+          t1.appendChild(doc.createTextNode("Hello World"));
+          t1 = this._anchor_0;
+          t2 = H.setRuntimeTypeInfo([this._el_0_0], [W.Node]);
+          S._moveNodesAfterSibling(t1, t2);
+          t1 = this.viewData.rootNodesOrViewContainers;
+          (t1 && C.JSArray_methods).addAll$1(t1, t2);
         } else
           this.removeInlinedNodes$2(H.setRuntimeTypeInfo([this._el_0_0], [W.Node]), true);
         this._expr_0 = currVal_0;
@@ -11000,7 +10985,7 @@
   };
   N._ViewEmbeddedNgIf1.prototype = {
     build$0: function() {
-      var t1, t2;
+      var t1, t2, _el_0;
       t1 = new N.ViewNullComponent0(P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 0);
       t2 = document.createElement("null");
@@ -11013,11 +10998,11 @@
       }
       t1.setupComponentType$1(t2);
       this._compView_0 = t1;
-      this._el_0 = t1.rootEl;
+      _el_0 = t1.rootEl;
       t2 = new O.NullComponent();
       this._NullComponent_0_5 = t2;
       t1.create$2(0, t2, []);
-      this.init0$1(this._el_0);
+      this.init0$1(_el_0);
     },
     detectChangesInternal$0: function() {
       this._compView_0.detectChanges$0();
@@ -11155,7 +11140,7 @@
   };
   N._ViewComponentConditionalFeatures1.prototype = {
     build$0: function() {
-      var t1, t2;
+      var t1, t2, _el_0;
       t1 = new N.ViewFeatureA0(P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 0);
       t2 = document.createElement("feature-a");
@@ -11168,11 +11153,11 @@
       }
       t1.setupComponentType$1(t2);
       this._compView_0 = t1;
-      this._el_0 = t1.rootEl;
+      _el_0 = t1.rootEl;
       t2 = new O.FeatureA();
       this._FeatureA_0_5 = t2;
       t1.create$2(0, t2, []);
-      this.init0$1(this._el_0);
+      this.init0$1(_el_0);
     },
     detectChangesInternal$0: function() {
       this._compView_0.detectChanges$0();
@@ -11188,7 +11173,7 @@
   };
   N._ViewComponentConditionalFeatures2.prototype = {
     build$0: function() {
-      var t1, t2;
+      var t1, t2, _el_0;
       t1 = new N.ViewFeatureB0(P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 0);
       t2 = document.createElement("feature-b");
@@ -11201,11 +11186,11 @@
       }
       t1.setupComponentType$1(t2);
       this._compView_0 = t1;
-      this._el_0 = t1.rootEl;
+      _el_0 = t1.rootEl;
       t2 = new O.FeatureB();
       this._FeatureB_0_5 = t2;
       t1.create$2(0, t2, []);
-      this.init0$1(this._el_0);
+      this.init0$1(_el_0);
     },
     detectChangesInternal$0: function() {
       this._compView_0.detectChanges$0();

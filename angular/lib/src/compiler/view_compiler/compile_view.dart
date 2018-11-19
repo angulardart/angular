@@ -62,7 +62,6 @@ import 'view_compiler_utils.dart'
         debugInjectorLeave,
         getViewFactory,
         getViewFactoryName,
-        identifierFromTagName,
         injectFromViewParentInjector,
         mergeHtmlAndDirectiveAttrs;
 import 'view_name_resolver.dart';
@@ -77,54 +76,151 @@ final notThrowOnChanges = o.not(o.importExpr(Identifiers.throwOnChanges));
 
 /// Reference to html node created during AppView build.
 class NodeReference {
-  final CompileElement parent;
-  final int nodeIndex;
+  final CompileViewStorage _storage;
+  final o.OutputType _type;
   final String _name;
 
-  NodeReferenceVisibility _visibility = NodeReferenceVisibility.classPublic;
+  NodeReferenceVisibility _visibility = NodeReferenceVisibility.build;
 
-  NodeReference(this.parent, this.nodeIndex) : _name = '_el_$nodeIndex';
-  NodeReference.html(this.parent, this.nodeIndex) : _name = '_html_$nodeIndex';
-  NodeReference.inlinedNode(this.parent, this.nodeIndex, int inlinedNodeIndex)
+  NodeReference(this._storage, this._type, int nodeIndex)
+      : _name = '_el_$nodeIndex';
+  NodeReference.html(this._storage, int nodeIndex)
+      : _type = o.importType(Identifiers.HTML_DOCUMENT_FRAGMENT),
+        _name = '_html_$nodeIndex';
+  NodeReference.inlinedNode(
+      this._storage, this._type, int nodeIndex, int inlinedNodeIndex)
       : _name = '_el_${nodeIndex}_$inlinedNodeIndex';
-  NodeReference.textNode(this.parent, this.nodeIndex)
-      : _name = '_text_$nodeIndex';
+  NodeReference.textNode(this._storage, int nodeIndex)
+      : _type = o.importType(Identifiers.HTML_TEXT_NODE),
+        _name = '_text_$nodeIndex';
   NodeReference.inlinedTextNode(
-      this.parent, this.nodeIndex, int inlinedNodeIndex)
-      : _name = '_text_${nodeIndex}_$inlinedNodeIndex';
-  NodeReference.anchor(this.parent, this.nodeIndex,
+      this._storage, int nodeIndex, int inlinedNodeIndex)
+      : _type = o.importType(Identifiers.HTML_TEXT_NODE),
+        _name = '_text_${nodeIndex}_$inlinedNodeIndex';
+  NodeReference.anchor(this._storage, int nodeIndex,
       [this._visibility = NodeReferenceVisibility.build])
-      : _name = '_anchor_$nodeIndex';
+      : _type = o.importType(Identifiers.HTML_COMMENT_NODE),
+        _name = '_anchor_$nodeIndex';
   NodeReference.appViewRoot()
-      : parent = null,
-        nodeIndex = -1,
-        _name = appViewRootElementName;
+      : _storage = null,
+        _type = o.importType(Identifiers.HTML_ELEMENT),
+        _name = appViewRootElementName,
+        _visibility = NodeReferenceVisibility.classPublic;
 
-  void lockVisibility(NodeReferenceVisibility visibility) {
-    if (_visibility != NodeReferenceVisibility.classPublic &&
-        _visibility != visibility) {
-      throw ArgumentError('The reference was already restricted. '
-          'Can\'t change access to reference.');
+  o.Expression toReadExpr() => ReadNodeReferenceExpr(this);
+
+  o.Statement toWriteStmt(o.Expression value) =>
+      WriteNodeReferenceStmt(this, value);
+
+  void promoteToClassMember() {
+    if (_visibility != NodeReferenceVisibility.classPublic) {
+      _visibility = NodeReferenceVisibility.classPublic;
+      _storage.allocate(this._name, outputType: _type);
     }
-    _visibility = visibility;
+  }
+}
+
+/// An AST expression that reads the value of a NodeReference.
+///
+/// When visited it behaves as a ReadVarExpr or ReadClassMemberExpr depending on
+/// the visibility of the NodeReference.
+class ReadNodeReferenceExpr extends o.ReadVarExpr {
+  final NodeReference node;
+
+  ReadNodeReferenceExpr(this.node) : super(node._name, null);
+
+  @override
+  R visitExpression<R, C>(o.ExpressionVisitor<R, C> visitor, C context) {
+    return node._visibility == NodeReferenceVisibility.classPublic
+        ? o.ReadClassMemberExpr(name, type).visitExpression(visitor, context)
+        : visitor.visitReadVarExpr(this, context);
+  }
+}
+
+/// An AST statement that writes the value of a NodeReference.
+///
+/// When visited it behaves as a DeclareVarStmt or WriteClassMemberStmt
+/// depending on the visibility of the NodeReference.
+class WriteNodeReferenceStmt extends o.DeclareVarStmt {
+  final NodeReference node;
+
+  WriteNodeReferenceStmt(this.node, o.Expression value)
+      : super(node._name, value, null, const [o.StmtModifier.Final]);
+
+  @override
+  R visitStatement<R, C>(o.StatementVisitor<R, C> visitor, C context) {
+    return node._visibility == NodeReferenceVisibility.classPublic
+        ? o.WriteClassMemberExpr(name, value)
+            .toStmt()
+            .visitStatement(visitor, context)
+        : visitor.visitDeclareVarStmt(this, context);
   }
 
-  o.Expression toReadExpr() {
-    return _visibility == NodeReferenceVisibility.classPublic
-        ? o.ReadClassMemberExpr(_name)
-        : o.variable(_name);
+  @override
+  WriteNodeReferenceStmt withValue(o.Expression replacement) {
+    return WriteNodeReferenceStmt(node, replacement);
+  }
+}
+
+/// AST visitor which promotes inaccessible NodeReferences to class members.
+class NodeReferenceStorageVisitor extends o.RecursiveExpressionVisitor<void> {
+  final NodeReferenceStorageVisitor parent;
+  final Set<NodeReference> scope = Set<NodeReference>();
+
+  NodeReferenceStorageVisitor(this.parent);
+
+  @override
+  o.Expression visitReadVarExpr(o.ReadVarExpr ast, _) {
+    if (ast is ReadNodeReferenceExpr) {
+      NodeReference node = ast.node;
+      NodeReferenceStorageVisitor visitor = this;
+      while (visitor != null && !visitor.scope.contains(node)) {
+        visitor = visitor.parent;
+      }
+      if (visitor == null) node.promoteToClassMember();
+    }
+    return ast;
   }
 
-  o.Statement toWriteStmt(o.Expression value) {
-    return _visibility == NodeReferenceVisibility.classPublic
-        ? o.WriteClassMemberExpr(_name, value).toStmt()
-        : o.variable(_name).set(value).toDeclStmt(null, [o.StmtModifier.Final]);
+  @override
+  o.Expression visitFunctionExpr(o.FunctionExpr ast, _) {
+    visitScopedStatements(ast.statements, this);
+    return ast;
   }
 
-  void allocate(CompileViewStorage storage,
-      {o.OutputType outputType, List<o.StmtModifier> modifiers}) {
-    if (_visibility == NodeReferenceVisibility.classPublic) {
-      storage.allocate(_name, outputType: outputType, modifiers: modifiers);
+  @override
+  o.Statement visitDeclareVarStmt(o.DeclareVarStmt stmt, _) {
+    stmt.value?.visitExpression(this, null);
+    if (stmt is WriteNodeReferenceStmt) scope.add(stmt.node);
+    return stmt;
+  }
+
+  @override
+  o.Statement visitDeclareFunctionStmt(o.DeclareFunctionStmt stmt, _) {
+    visitScopedStatements(stmt.statements, this);
+    return stmt;
+  }
+
+  @override
+  o.Statement visitIfStmt(o.IfStmt stmt, _) {
+    stmt.condition.visitExpression(this, null);
+    visitScopedStatements(stmt.trueCase, this);
+    visitScopedStatements(stmt.falseCase, this);
+    return stmt;
+  }
+
+  @override
+  o.Statement visitTryCatchStmt(o.TryCatchStmt stmt, _) {
+    visitScopedStatements(stmt.bodyStmts, this);
+    visitScopedStatements(stmt.catchStmts, this);
+    return stmt;
+  }
+
+  static void visitScopedStatements(List<o.Statement> stmts,
+      [NodeReferenceStorageVisitor parent]) {
+    final visitor = NodeReferenceStorageVisitor(parent);
+    for (var stmt in stmts) {
+      stmt.visitStatement(visitor, null);
     }
   }
 }
@@ -552,17 +648,9 @@ class CompileView implements AppViewBuilder {
     int nodeIndex,
     o.Expression html,
   ) {
-    final renderNode = NodeReference.html(parent, nodeIndex);
-    _createMethod.addStmt(o.DeclareVarStmt(
-      renderNode._name,
-      o.importExpr(Identifiers.createTrustedHtml).callFn([html]),
-      o.importType(Identifiers.HTML_DOCUMENT_FRAGMENT),
-    ));
-    final parentRenderNodeExpr = _getParentRenderNode(parent);
-    if (parentRenderNodeExpr != o.NULL_EXPR) {
-      _createMethod.addStmt(parentRenderNodeExpr
-          .callMethod('append', [renderNode.toReadExpr()]).toStmt());
-    }
+    final renderNode = NodeReference.html(storage, nodeIndex);
+    _initializeAndAppendNode(parent, renderNode,
+        o.importExpr(Identifiers.createTrustedHtml).callFn([html]));
     return renderNode;
   }
 
@@ -572,24 +660,12 @@ class CompileView implements AppViewBuilder {
     NodeReference renderNode;
     if (isInlined) {
       renderNode = NodeReference.inlinedTextNode(
-          parent, declarationElement.nodeIndex, nodeIndex);
-      renderNode.allocate(storage,
-          outputType: o.importType(Identifiers.HTML_TEXT_NODE),
-          modifiers: const [o.StmtModifier.Private]);
-      _createMethod.addStmt(renderNode.toWriteStmt(
-          o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text])));
+          storage, declarationElement.nodeIndex, nodeIndex);
     } else {
-      renderNode = NodeReference.textNode(parent, nodeIndex);
-      renderNode.lockVisibility(NodeReferenceVisibility.build);
-      _createMethod.addStmt(renderNode.toWriteStmt(
-          o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text])));
+      renderNode = NodeReference.textNode(storage, nodeIndex);
     }
-    var parentRenderNodeExpr = _getParentRenderNode(parent);
-    if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
-      // Write append code.
-      _createMethod.addStmt(parentRenderNodeExpr
-          .callMethod('append', [renderNode.toReadExpr()]).toStmt());
-    }
+    _initializeAndAppendNode(parent, renderNode,
+        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text]));
     return renderNode;
   }
 
@@ -598,12 +674,8 @@ class CompileView implements AppViewBuilder {
       CompileElement parent, int nodeIndex, BoundTextAst ast) {
     // If Text field is bound, we need access to the renderNode beyond
     // build method and write reference to class member.
-    NodeReference renderNode = NodeReference.textNode(parent, nodeIndex);
-    renderNode.allocate(storage,
-        outputType: o.importType(Identifiers.HTML_TEXT_NODE),
-        modifiers: const [o.StmtModifier.Private]);
+    NodeReference renderNode = NodeReference.textNode(storage, nodeIndex);
 
-    var parentRenderNodeExpr = _getParentRenderNode(parent);
     o.Expression initialText = o.literal('');
     if (component.analyzedClass != null &&
         isImmutable(ast.value, component.analyzedClass)) {
@@ -617,14 +689,8 @@ class CompileView implements AppViewBuilder {
         o.STRING_TYPE,
       );
     }
-    _createMethod.addStmt(renderNode.toWriteStmt(
-        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([initialText])));
-
-    if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
-      // Write append code.
-      _createMethod.addStmt(parentRenderNodeExpr
-          .callMethod('append', [renderNode.toReadExpr()]).toStmt());
-    }
+    _initializeAndAppendNode(parent, renderNode,
+        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([initialText]));
     return renderNode;
   }
 
@@ -633,12 +699,6 @@ class CompileView implements AppViewBuilder {
       int nodeIndex, String tagName, TemplateAst ast) {
     var parentRenderNodeExpr = _getParentRenderNode(parent);
     final generateDebugInfo = genConfig.genDebugInfo;
-
-    if (!_isRootNodeOfHost(nodeIndex)) {
-      elementRef.allocate(storage,
-          outputType: o.importType(identifierFromTagName(tagName)),
-          modifiers: const [o.StmtModifier.Private]);
-    }
 
     _createElementAndAppend(tagName, parentRenderNodeExpr, elementRef,
         generateDebugInfo, ast.sourceSpan, nodeIndex);
@@ -693,25 +753,13 @@ class CompileView implements AppViewBuilder {
   /// Creates an html node with a namespace and appends to parent element.
   void createElementNs(CompileElement parent, NodeReference elementRef,
       int nodeIndex, String ns, String tagName, TemplateAst ast) {
-    var parentRenderNodeExpr = _getParentRenderNode(parent);
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());
-    }
-
-    if (!_isRootNodeOfHost(nodeIndex)) {
-      elementRef.allocate(storage,
-          outputType: o.importType(identifierFromTagName('$ns:$tagName')),
-          modifiers: const [o.StmtModifier.Private]);
     }
     var createRenderNodeExpr = o
         .variable(docVarName)
         .callMethod('createElementNS', [o.literal(ns), o.literal(tagName)]);
-    _createMethod.addStmt(elementRef.toWriteStmt(createRenderNodeExpr));
-    if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
-      // Write code to append to parent node.
-      _createMethod.addStmt(parentRenderNodeExpr
-          .callMethod('append', [elementRef.toReadExpr()]).toStmt());
-    }
+    _initializeAndAppendNode(parent, elementRef, createRenderNodeExpr);
   }
 
   /// Adds a field member that holds the reference to a child app view for
@@ -727,17 +775,6 @@ class CompileView implements AppViewBuilder {
         CompileIdentifierMetadata(
             name: 'View${childComponent.type.name}0',
             moduleUrl: templateModuleUrl(childComponent.type));
-
-    bool isHostRootView = nodeIndex == 0 && viewType == ViewType.host;
-    var elementType = isHostRootView
-        ? Identifiers.HTML_HTML_ELEMENT
-        : identifierFromTagName(ast.name);
-
-    if (!isHostRootView) {
-      elementRef.allocate(storage,
-          outputType: o.importType(elementType),
-          modifiers: const [o.StmtModifier.Private]);
-    }
 
     AppViewReference appViewRef = AppViewReference(parent, nodeIndex);
 
@@ -790,22 +827,9 @@ class CompileView implements AppViewBuilder {
   /// build method.
   NodeReference createViewContainerAnchor(
       CompileElement parent, int nodeIndex, TemplateAst ast, bool topLevel) {
-    var visibility = topLevel
-        ? NodeReferenceVisibility.classPublic
-        : NodeReferenceVisibility.build;
-    NodeReference renderNode =
-        NodeReference.anchor(parent, nodeIndex, visibility);
-    renderNode.allocate(storage,
-        outputType: o.importType(Identifiers.HTML_COMMENT_NODE));
-    o.Expression createAnchor =
-        o.importExpr(Identifiers.createViewContainerAnchor).callFn([]);
-    _createMethod.addStmt(renderNode.toWriteStmt(createAnchor));
-    var parentNode = _getParentRenderNode(parent);
-    if (parentNode != o.NULL_EXPR) {
-      var addCommentStmt =
-          parentNode.callMethod('append', [renderNode.toReadExpr()]).toStmt();
-      _createMethod.addStmt(addCommentStmt);
-    }
+    NodeReference renderNode = NodeReference.anchor(storage, nodeIndex);
+    _initializeAndAppendNode(parent, renderNode,
+        o.importExpr(Identifiers.createViewContainerAnchor).callFn([]));
     return renderNode;
   }
 
@@ -850,19 +874,12 @@ class CompileView implements AppViewBuilder {
     AppViewReference compAppViewExpr = _createAppViewNodeAndComponent(
         parent, component, elementRef, nodeIndex, isDeferred, ast);
 
+    final root = compAppViewExpr.toReadExpr().prop(appViewRootElementName);
     if (_isRootNodeOfHost(nodeIndex)) {
       // Assign root element created by viewfactory call to our own root.
-      _createMethod.addStmt(elementRef.toWriteStmt(
-          compAppViewExpr.toReadExpr().prop(appViewRootElementName)));
+      _createMethod.addStmt(elementRef.toWriteStmt(root));
     } else {
-      var parentRenderNodeExpr = _getParentRenderNode(parent);
-      _createMethod.addStmt(elementRef.toWriteStmt(
-          compAppViewExpr.toReadExpr().prop(appViewRootElementName)));
-      if (parentRenderNodeExpr != null && parentRenderNodeExpr != o.NULL_EXPR) {
-        // Write code to append to parent node.
-        _createMethod.addStmt(parentRenderNodeExpr
-            .callMethod('append', [elementRef.toReadExpr()]).toStmt());
-      }
+      _initializeAndAppendNode(parent, elementRef, root);
     }
     return compAppViewExpr;
   }
@@ -1412,6 +1429,16 @@ class CompileView implements AppViewBuilder {
       return parentElement.component != null
           ? o.NULL_EXPR
           : parentElement.renderNode.toReadExpr();
+    }
+  }
+
+  void _initializeAndAppendNode(CompileElement parentElement,
+      NodeReference nodeReference, o.Expression value) {
+    _createMethod.addStmt(nodeReference.toWriteStmt(value));
+    final parentExpr = _getParentRenderNode(parentElement);
+    if (parentExpr != o.NULL_EXPR) {
+      _createMethod.addStmt(parentExpr
+          .callMethod('append', [nodeReference.toReadExpr()]).toStmt());
     }
   }
 

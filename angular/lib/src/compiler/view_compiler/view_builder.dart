@@ -113,20 +113,15 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     int nodeIndex = view.nodes.length;
 
     bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.host;
+    final type = o.importType(identifierFromTagName(ast.name));
     NodeReference elementRef;
     if (isHostRootView) {
       elementRef = NodeReference.appViewRoot();
     } else if (view.isInlined) {
       elementRef = NodeReference.inlinedNode(
-          parent, view.declarationElement.nodeIndex, nodeIndex);
+          view.storage, type, view.declarationElement.nodeIndex, nodeIndex);
     } else {
-      elementRef = NodeReference(parent, nodeIndex);
-      if (ast.inputs.isEmpty &&
-          ast.outputs.isEmpty &&
-          ast.references.isEmpty &&
-          ast.directives.isEmpty) {
-        elementRef.lockVisibility(NodeReferenceVisibility.build);
-      }
+      elementRef = NodeReference(view.storage, type, nodeIndex);
     }
 
     var directives = <CompileDirectiveMetadata>[];
@@ -382,6 +377,16 @@ o.ClassStmt createViewClass(
         'detectHostChanges',
         [o.FnParam(DetectChangesVars.firstCheck.name, o.BOOL_TYPE)],
         view.detectHostChangesMethod.finish()));
+  }
+  for (final method in viewMethods) {
+    if (method.body != null) {
+      NodeReferenceStorageVisitor.visitScopedStatements(method.body);
+    }
+  }
+  for (final getter in view.getters) {
+    if (getter.body != null) {
+      NodeReferenceStorageVisitor.visitScopedStatements(getter.body);
+    }
   }
   var viewClass = o.ClassStmt(
     view.className,
