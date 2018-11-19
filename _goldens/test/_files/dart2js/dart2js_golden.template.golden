@@ -12,10 +12,10 @@ import 'dart2js_golden.template.dart' as _ref0;
 import 'package:angular/angular.template.dart' as _ref1;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'dart2js_golden.dart' as import1;
-import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
@@ -30,56 +30,50 @@ import 'package:angular/src/common/directives/ng_for.dart' as import15;
 final List<dynamic> styles$RootComponent = const [];
 
 class ViewRootComponent0 extends AppView<import1.RootComponent> {
-  import2.Element _el_0;
   ViewUsesDefaultChangeDetectionAndInput0 _compView_0;
   import1.UsesDefaultChangeDetectionAndInput _UsesDefaultChangeDetectionAndInput_0_5;
-  import2.Element _el_1;
   ViewInlinedNgIf0 _compView_1;
   import1.InlinedNgIf _InlinedNgIf_1_5;
-  import2.Element _el_2;
   ViewEmbeddedNgIf0 _compView_2;
   import1.EmbeddedNgIf _EmbeddedNgIf_2_5;
-  import2.Element _el_3;
   ViewEmbeddedNgFor0 _compView_3;
   import1.EmbeddedNgFor _EmbeddedNgFor_3_5;
-  import2.Element _el_4;
   ViewInjectsFromArbitraryParent0 _compView_4;
   import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_4_5;
-  import2.Element _el_5;
   ViewComponentConditionalFeatures0 _compView_5;
   import1.ComponentConditionalFeatures _ComponentConditionalFeatures_5_5;
   static RenderComponentType _renderType;
-  ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('root-component');
+  ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('root-component');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$RootComponent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.RootComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewUsesDefaultChangeDetectionAndInput0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _UsesDefaultChangeDetectionAndInput_0_5 = import1.UsesDefaultChangeDetectionAndInput();
     _compView_0.create(_UsesDefaultChangeDetectionAndInput_0_5, []);
     _compView_1 = ViewInlinedNgIf0(this, 1);
-    _el_1 = _compView_1.rootEl;
+    final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     _InlinedNgIf_1_5 = import1.InlinedNgIf();
     _compView_1.create(_InlinedNgIf_1_5, []);
     _compView_2 = ViewEmbeddedNgIf0(this, 2);
-    _el_2 = _compView_2.rootEl;
+    final _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     _EmbeddedNgIf_2_5 = import1.EmbeddedNgIf();
     _compView_2.create(_EmbeddedNgIf_2_5, []);
     _compView_3 = ViewEmbeddedNgFor0(this, 3);
-    _el_3 = _compView_3.rootEl;
+    final _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
     _EmbeddedNgFor_3_5 = import1.EmbeddedNgFor();
     _compView_3.create(_EmbeddedNgFor_3_5, []);
     _compView_4 = ViewInjectsFromArbitraryParent0(this, 4);
-    _el_4 = _compView_4.rootEl;
+    final _el_4 = _compView_4.rootEl;
     parentRenderNode.append(_el_4);
     _InjectsFromArbitraryParent_4_5 = (import7.isDevMode
         ? import9.debugInjectorWrap(import1.InjectsFromArbitraryParent, () {
@@ -88,7 +82,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
         : import1.InjectsFromArbitraryParent(parentView.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex)));
     _compView_4.create(_InjectsFromArbitraryParent_4_5, []);
     _compView_5 = ViewComponentConditionalFeatures0(this, 5);
-    _el_5 = _compView_5.rootEl;
+    final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
     _ComponentConditionalFeatures_5_5 = import1.ComponentConditionalFeatures();
     _compView_5.create(_ComponentConditionalFeatures_5_5, []);
@@ -135,7 +129,7 @@ final List<dynamic> styles$RootComponentHost = const [];
 class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
   ViewRootComponent0 _compView_0;
   import1.RootComponent _RootComponent_0_5;
-  _ViewRootComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewRootComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.RootComponent> build() {
     _compView_0 = ViewRootComponent0(this, 0);
@@ -164,19 +158,19 @@ AppView<import1.RootComponent> viewFactory_RootComponentHost0(AppView<dynamic> p
 final List<dynamic> styles$UsesDefaultChangeDetectionAndInput = const [];
 
 class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaultChangeDetectionAndInput> {
-  import2.Element _el_0;
   var _expr_0;
+  import5.Element _el_0;
   static RenderComponentType _renderType;
-  ViewUsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('uses-default-change-detection-and-input');
+  ViewUsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('uses-default-change-detection-and-input');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$UsesDefaultChangeDetectionAndInput);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.UsesDefaultChangeDetectionAndInput> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import5.document;
     _el_0 = createAndAppend(doc, 'default-change-detection-and-input', parentRenderNode);
     init(const [], null);
   }
@@ -206,7 +200,7 @@ final List<dynamic> styles$UsesDefaultChangeDetectionAndInputHost = const [];
 class _ViewUsesDefaultChangeDetectionAndInputHost0 extends AppView<import1.UsesDefaultChangeDetectionAndInput> {
   ViewUsesDefaultChangeDetectionAndInput0 _compView_0;
   import1.UsesDefaultChangeDetectionAndInput _UsesDefaultChangeDetectionAndInput_0_5;
-  _ViewUsesDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesDefaultChangeDetectionAndInput> build() {
     _compView_0 = ViewUsesDefaultChangeDetectionAndInput0(this, 0);
@@ -235,21 +229,21 @@ AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChang
 final List<dynamic> styles$DefaultChangeDetectionAndInput = const [];
 
 class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeDetectionAndInput> {
-  import2.Text _text_1;
   var _expr_0;
+  import5.Text _text_1;
   static RenderComponentType _renderType;
-  ViewDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('default-change-detection-and-input');
+  ViewDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('default-change-detection-and-input');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$DefaultChangeDetectionAndInput);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import2.Text('Hello ');
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _text_0 = import5.Text('Hello ');
     parentRenderNode.append(_text_0);
-    _text_1 = import2.Text('');
+    _text_1 = import5.Text('');
     parentRenderNode.append(_text_1);
     init(const [], null);
   }
@@ -279,7 +273,7 @@ final List<dynamic> styles$DefaultChangeDetectionAndInputHost = const [];
 class _ViewDefaultChangeDetectionAndInputHost0 extends AppView<import1.DefaultChangeDetectionAndInput> {
   ViewDefaultChangeDetectionAndInput0 _compView_0;
   import1.DefaultChangeDetectionAndInput _DefaultChangeDetectionAndInput_0_5;
-  _ViewDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
     _compView_0 = ViewDefaultChangeDetectionAndInput0(this, 0);
@@ -308,20 +302,19 @@ AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetecti
 final List<dynamic> styles$InlinedNgIf = const [];
 
 class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
-  import2.Comment _anchor_0;
-  import2.DivElement _el_0_0;
-  import2.Text _text_0_1;
   bool _expr_0 = false;
+  import5.Comment _anchor_0;
+  import5.DivElement _el_0_0;
   static RenderComponentType _renderType;
-  ViewInlinedNgIf0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('inlined-ng-if');
+  ViewInlinedNgIf0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('inlined-ng-if');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$InlinedNgIf);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.InlinedNgIf> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     init([], null);
@@ -333,9 +326,9 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
     final currVal_0 = (_ctx.showDiv == true);
     if (import6.checkBinding(_expr_0, currVal_0)) {
       if (currVal_0) {
-        var doc = import2.document;
+        var doc = import5.document;
         _el_0_0 = doc.createElement('div');
-        _text_0_1 = import2.Text('Hello World');
+        final _text_0_1 = import5.Text('Hello World');
         _el_0_0.append(_text_0_1);
         addInlinedNodes(_anchor_0, [_el_0_0], true);
       } else {
@@ -360,7 +353,7 @@ final List<dynamic> styles$InlinedNgIfHost = const [];
 class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
   ViewInlinedNgIf0 _compView_0;
   import1.InlinedNgIf _InlinedNgIf_0_5;
-  _ViewInlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewInlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InlinedNgIf> build() {
     _compView_0 = ViewInlinedNgIf0(this, 0);
@@ -392,15 +385,15 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
   ViewContainer _appEl_0;
   NgIf _NgIf_0_9;
   static RenderComponentType _renderType;
-  ViewEmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('embedded-ng-if');
+  ViewEmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('embedded-ng-if');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$EmbeddedNgIf);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
@@ -432,16 +425,15 @@ ComponentFactory<import1.EmbeddedNgIf> get EmbeddedNgIfNgFactory {
 }
 
 class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
-  import2.Element _el_0;
   ViewNullComponent0 _compView_0;
   import1.NullComponent _NullComponent_0_5;
-  _ViewEmbeddedNgIf1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewEmbeddedNgIf1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedNgIf0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
     _compView_0 = ViewNullComponent0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _NullComponent_0_5 = import1.NullComponent();
     _compView_0.create(_NullComponent_0_5, []);
     init0(_el_0);
@@ -467,7 +459,7 @@ final List<dynamic> styles$EmbeddedNgIfHost = const [];
 class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
   ViewEmbeddedNgIf0 _compView_0;
   import1.EmbeddedNgIf _EmbeddedNgIf_0_5;
-  _ViewEmbeddedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewEmbeddedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
     _compView_0 = ViewEmbeddedNgIf0(this, 0);
@@ -499,16 +491,16 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
   ViewContainer _appEl_1;
   import15.NgFor _NgFor_1_9;
   static RenderComponentType _renderType;
-  ViewEmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('embedded-ng-for');
+  ViewEmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('embedded-ng-for');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$EmbeddedNgFor);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.EmbeddedNgFor> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import5.document;
     final _el_0 = createAndAppend(doc, 'ul', parentRenderNode);
     final _anchor_1 = createViewContainerAnchor();
     _el_0.append(_anchor_1);
@@ -549,16 +541,16 @@ ComponentFactory<import1.EmbeddedNgFor> get EmbeddedNgForNgFactory {
 }
 
 class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
-  import2.Text _text_1;
   var _expr_0;
-  _ViewEmbeddedNgFor1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  import5.Text _text_1;
+  _ViewEmbeddedNgFor1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedNgFor0._renderType;
   }
   @override
   ComponentRef<import1.EmbeddedNgFor> build() {
-    var doc = import2.document;
+    var doc = import5.document;
     final _el_0 = doc.createElement('li');
-    _text_1 = import2.Text('');
+    _text_1 = import5.Text('');
     _el_0.append(_text_1);
     init0(_el_0);
   }
@@ -583,7 +575,7 @@ final List<dynamic> styles$EmbeddedNgForHost = const [];
 class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
   ViewEmbeddedNgFor0 _compView_0;
   import1.EmbeddedNgFor _EmbeddedNgFor_0_5;
-  _ViewEmbeddedNgForHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewEmbeddedNgForHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmbeddedNgFor> build() {
     _compView_0 = ViewEmbeddedNgFor0(this, 0);
@@ -613,15 +605,15 @@ final List<dynamic> styles$NullComponent = const [];
 
 class ViewNullComponent0 extends AppView<import1.NullComponent> {
   static RenderComponentType _renderType;
-  ViewNullComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('null');
+  ViewNullComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('null');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$NullComponent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.NullComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 }
@@ -640,7 +632,7 @@ final List<dynamic> styles$NullComponentHost = const [];
 class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
   ViewNullComponent0 _compView_0;
   import1.NullComponent _NullComponent_0_5;
-  _ViewNullComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewNullComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.NullComponent> build() {
     _compView_0 = ViewNullComponent0(this, 0);
@@ -670,15 +662,15 @@ final List<dynamic> styles$InjectsFromArbitraryParent = const [];
 
 class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitraryParent> {
   static RenderComponentType _renderType;
-  ViewInjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('injects-from-arbitrary-parent');
+  ViewInjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('injects-from-arbitrary-parent');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$InjectsFromArbitraryParent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 }
@@ -697,7 +689,7 @@ final List<dynamic> styles$InjectsFromArbitraryParentHost = const [];
 class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromArbitraryParent> {
   ViewInjectsFromArbitraryParent0 _compView_0;
   import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_0_5;
-  _ViewInjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewInjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
     _compView_0 = ViewInjectsFromArbitraryParent0(this, 0);
@@ -735,15 +727,15 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
   ViewContainer _appEl_1;
   NgIf _NgIf_1_9;
   static RenderComponentType _renderType;
-  ViewComponentConditionalFeatures0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('component-conditional-features');
+  ViewComponentConditionalFeatures0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('component-conditional-features');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$ComponentConditionalFeatures);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _anchor_0 = createViewContainerAnchor();
     parentRenderNode.append(_anchor_0);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
@@ -783,16 +775,15 @@ ComponentFactory<import1.ComponentConditionalFeatures> get ComponentConditionalF
 }
 
 class _ViewComponentConditionalFeatures1 extends AppView<import1.ComponentConditionalFeatures> {
-  import2.Element _el_0;
   ViewFeatureA0 _compView_0;
   import1.FeatureA _FeatureA_0_5;
-  _ViewComponentConditionalFeatures1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewComponentConditionalFeatures1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewComponentConditionalFeatures0._renderType;
   }
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
     _compView_0 = ViewFeatureA0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _FeatureA_0_5 = import1.FeatureA();
     _compView_0.create(_FeatureA_0_5, []);
     init0(_el_0);
@@ -814,16 +805,15 @@ AppView<import1.ComponentConditionalFeatures> viewFactory_ComponentConditionalFe
 }
 
 class _ViewComponentConditionalFeatures2 extends AppView<import1.ComponentConditionalFeatures> {
-  import2.Element _el_0;
   ViewFeatureB0 _compView_0;
   import1.FeatureB _FeatureB_0_5;
-  _ViewComponentConditionalFeatures2(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewComponentConditionalFeatures2(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewComponentConditionalFeatures0._renderType;
   }
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
     _compView_0 = ViewFeatureB0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _FeatureB_0_5 = import1.FeatureB();
     _compView_0.create(_FeatureB_0_5, []);
     init0(_el_0);
@@ -849,7 +839,7 @@ final List<dynamic> styles$ComponentConditionalFeaturesHost = const [];
 class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentConditionalFeatures> {
   ViewComponentConditionalFeatures0 _compView_0;
   import1.ComponentConditionalFeatures _ComponentConditionalFeatures_0_5;
-  _ViewComponentConditionalFeaturesHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewComponentConditionalFeaturesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
     _compView_0 = ViewComponentConditionalFeatures0(this, 0);
@@ -879,16 +869,16 @@ final List<dynamic> styles$FeatureA = const [];
 
 class ViewFeatureA0 extends AppView<import1.FeatureA> {
   static RenderComponentType _renderType;
-  ViewFeatureA0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('feature-a');
+  ViewFeatureA0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('feature-a');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$FeatureA);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.FeatureA> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import2.Text('I am Feature A');
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _text_0 = import5.Text('I am Feature A');
     parentRenderNode.append(_text_0);
     init(const [], null);
   }
@@ -908,7 +898,7 @@ final List<dynamic> styles$FeatureAHost = const [];
 class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
   ViewFeatureA0 _compView_0;
   import1.FeatureA _FeatureA_0_5;
-  _ViewFeatureAHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewFeatureAHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.FeatureA> build() {
     _compView_0 = ViewFeatureA0(this, 0);
@@ -938,16 +928,16 @@ final List<dynamic> styles$FeatureB = const [];
 
 class ViewFeatureB0 extends AppView<import1.FeatureB> {
   static RenderComponentType _renderType;
-  ViewFeatureB0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('feature-b');
+  ViewFeatureB0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('feature-b');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$FeatureB);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.FeatureB> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import2.Text('I am Feature B');
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _text_0 = import5.Text('I am Feature B');
     parentRenderNode.append(_text_0);
     init(const [], null);
   }
@@ -967,7 +957,7 @@ final List<dynamic> styles$FeatureBHost = const [];
 class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
   ViewFeatureB0 _compView_0;
   import1.FeatureB _FeatureB_0_5;
-  _ViewFeatureBHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewFeatureBHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.FeatureB> build() {
     _compView_0 = ViewFeatureB0(this, 0);

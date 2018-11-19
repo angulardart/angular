@@ -82,7 +82,6 @@ AppView<import1.Dependent> viewFactory_DependentHost0(AppView<dynamic> parentVie
 final List<dynamic> styles$DependencyWithDependentInView = const [];
 
 class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithDependentInView> {
-  import5.Element _el_0;
   ViewDependent0 _compView_0;
   import1.Dependent _Dependent_0_5;
   static RenderComponentType _renderType;
@@ -96,7 +95,7 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewDependent0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _Dependent_0_5 = (import7.isDevMode
         ? import9.debugInjectorWrap(import1.Dependent, () {
@@ -235,7 +234,6 @@ AppView<import1.DependencyWithContent> viewFactory_DependencyWithContentHost0(Ap
 final List<dynamic> styles$DependencyAndDependentInView = const [];
 
 class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDependentInView> {
-  import5.Element _el_1;
   ViewDependent0 _compView_1;
   import1.Dependent _Dependent_1_5;
   static RenderComponentType _renderType;
@@ -251,7 +249,7 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
     var doc = import5.document;
     final _el_0 = createAndAppend(doc, 'dependency', parentRenderNode);
     _compView_1 = ViewDependent0(this, 1);
-    _el_1 = _compView_1.rootEl;
+    final _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
     _Dependent_1_5 = (import7.isDevMode
         ? import9.debugInjectorWrap(import1.Dependent, () {

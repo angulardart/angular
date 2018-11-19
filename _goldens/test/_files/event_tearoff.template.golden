@@ -9,10 +9,10 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'event_tearoff.dart' as import1;
-import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
@@ -20,19 +20,18 @@ import 'package:angular/angular.dart';
 final List<dynamic> styles$UsesEventTearoff = const [];
 
 class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
-  import2.ButtonElement _el_0;
   static RenderComponentType _renderType;
-  ViewUsesEventTearoff0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('uses-event-tearoff');
+  ViewUsesEventTearoff0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('uses-event-tearoff');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/event_tearoff.dart' : null), ViewEncapsulation.None, styles$UsesEventTearoff);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.UsesEventTearoff> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import5.document;
+    final _el_0 = createAndAppend(doc, 'button', parentRenderNode);
     _el_0.addEventListener('click', eventHandler1(ctx.onClick));
     _el_0.addEventListener('blur', eventHandler0(ctx.onBlur));
     init(const [], null);
@@ -53,7 +52,7 @@ final List<dynamic> styles$UsesEventTearoffHost = const [];
 class _ViewUsesEventTearoffHost0 extends AppView<import1.UsesEventTearoff> {
   ViewUsesEventTearoff0 _compView_0;
   import1.UsesEventTearoff _UsesEventTearoff_0_5;
-  _ViewUsesEventTearoffHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesEventTearoffHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesEventTearoff> build() {
     _compView_0 = ViewUsesEventTearoff0(this, 0);

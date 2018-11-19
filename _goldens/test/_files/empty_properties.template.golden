@@ -9,10 +9,10 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'empty_properties.dart' as import1;
-import 'dart:html' as import2;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
@@ -20,46 +20,42 @@ import 'package:angular/angular.dart';
 final List<dynamic> styles$EmptyPropertiesComponent = const [];
 
 class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesComponent> {
-  import2.Element _el_0;
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_5;
-  import2.Element _el_1;
   ViewFancyButtonComponent0 _compView_1;
   import1.FancyButtonComponent _FancyButtonComponent_1_5;
-  import2.Element _el_2;
   ViewFancyButtonComponent0 _compView_2;
   import1.FancyButtonComponent _FancyButtonComponent_2_5;
-  import2.Element _el_3;
   ViewFancyButtonComponent0 _compView_3;
   import1.FancyButtonComponent _FancyButtonComponent_3_5;
   static RenderComponentType _renderType;
-  ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('empty-properties');
+  ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('empty-properties');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/empty_properties.dart' : null), ViewEncapsulation.None, styles$EmptyPropertiesComponent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.EmptyPropertiesComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewFancyButtonComponent0(this, 0);
-    _el_0 = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     createAttr(_el_0, 'raised', '');
     _FancyButtonComponent_0_5 = import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_5, []);
     _compView_1 = ViewFancyButtonComponent0(this, 1);
-    _el_1 = _compView_1.rootEl;
+    final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     _FancyButtonComponent_1_5 = import1.FancyButtonComponent();
     _compView_1.create(_FancyButtonComponent_1_5, []);
     _compView_2 = ViewFancyButtonComponent0(this, 2);
-    _el_2 = _compView_2.rootEl;
+    final _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     _FancyButtonComponent_2_5 = import1.FancyButtonComponent();
     _compView_2.create(_FancyButtonComponent_2_5, []);
     _compView_3 = ViewFancyButtonComponent0(this, 3);
-    _el_3 = _compView_3.rootEl;
+    final _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
     _FancyButtonComponent_3_5 = import1.FancyButtonComponent();
     _compView_3.create(_FancyButtonComponent_3_5, []);
@@ -104,7 +100,7 @@ final List<dynamic> styles$EmptyPropertiesComponentHost = const [];
 class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyPropertiesComponent> {
   ViewEmptyPropertiesComponent0 _compView_0;
   import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_5;
-  _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmptyPropertiesComponent> build() {
     _compView_0 = ViewEmptyPropertiesComponent0(this, 0);
@@ -134,15 +130,15 @@ final List<dynamic> styles$FancyButtonComponent = const [];
 
 class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
   static RenderComponentType _renderType;
-  ViewFancyButtonComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('fancy-button');
+  ViewFancyButtonComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('fancy-button');
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/empty_properties.dart' : null), ViewEncapsulation.None, styles$FancyButtonComponent);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.FancyButtonComponent> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 }
@@ -161,7 +157,7 @@ final List<dynamic> styles$FancyButtonComponentHost = const [];
 class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponent> {
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_5;
-  _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.FancyButtonComponent> build() {
     _compView_0 = ViewFancyButtonComponent0(this, 0);

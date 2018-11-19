@@ -9,8 +9,8 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'pipes.dart' as import1;
-import 'dart:html' as import2;
 import 'dart:core';
+import 'dart:html' as import3;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/core/linker/view_type.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
@@ -21,10 +21,6 @@ import 'package:angular/angular.dart';
 final List<dynamic> styles$Comp = const [];
 
 class ViewComp0 extends AppView<import1.Comp> {
-  import2.Text _text_0;
-  import2.Text _text_2;
-  import2.Text _text_4;
-  import2.Text _text_6;
   var _expr_0;
   var _expr_1;
   var _expr_2;
@@ -36,29 +32,33 @@ class ViewComp0 extends AppView<import1.Comp> {
   dynamic Function(dynamic) _pipe_lifecycle_2_0;
   import1.TypesPipe _pipe_types_3;
   String Function(String, int, dynamic, import1.C, void Function(String)) _pipe_types_3_0;
+  import3.Text _text_0;
+  import3.Text _text_2;
+  import3.Text _text_4;
+  import3.Text _text_6;
   static RenderComponentType _renderType;
   ViewComp0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('comp');
+    rootEl = import3.document.createElement('comp');
     _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/pipes.dart' : null), ViewEncapsulation.None, styles$Comp);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.Comp> build() {
     final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = import2.Text('');
+    final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _text_0 = import3.Text('');
     parentRenderNode.append(_text_0);
-    final _text_1 = import2.Text(' ');
+    final _text_1 = import3.Text(' ');
     parentRenderNode.append(_text_1);
-    _text_2 = import2.Text('');
+    _text_2 = import3.Text('');
     parentRenderNode.append(_text_2);
-    final _text_3 = import2.Text(' ');
+    final _text_3 = import3.Text(' ');
     parentRenderNode.append(_text_3);
-    _text_4 = import2.Text('');
+    _text_4 = import3.Text('');
     parentRenderNode.append(_text_4);
-    final _text_5 = import2.Text(' ');
+    final _text_5 = import3.Text(' ');
     parentRenderNode.append(_text_5);
-    _text_6 = import2.Text('');
+    _text_6 = import3.Text('');
     parentRenderNode.append(_text_6);
     _pipe_pure_0 = import1.PurePipe();
     _pipe_pure_0_0 = import7.pureProxy1(_pipe_pure_0.transform);

@@ -33,7 +33,7 @@ class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
     final _el_0 = createAndAppend(doc, 'p', parentRenderNode);
-    import5.DocumentFragment _html_1 = import6.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
+    final _html_1 = import6.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_html_1);
     init(const [], null);
   }
