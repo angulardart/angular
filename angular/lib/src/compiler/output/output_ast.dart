@@ -780,6 +780,10 @@ class DeclareVarStmt extends Statement {
   R visitStatement<R, C>(StatementVisitor<R, C> visitor, C context) {
     return visitor.visitDeclareVarStmt(this, context);
   }
+
+  DeclareVarStmt withValue(Expression replacement) {
+    return DeclareVarStmt(name, replacement, type, modifiers);
+  }
 }
 
 class DeclareFunctionStmt extends Statement {
@@ -985,7 +989,7 @@ abstract class StatementVisitor<R, C> {
   R visitCommentStmt(CommentStmt stmt, C context);
 }
 
-class _ExpressionTransformer<C>
+class ExpressionTransformer<C>
     implements
         StatementVisitor<Statement, C>,
         ExpressionVisitor<Expression, C> {
@@ -1175,8 +1179,7 @@ class _ExpressionTransformer<C>
 
   @override
   Statement visitDeclareVarStmt(DeclareVarStmt stmt, C context) {
-    return DeclareVarStmt(stmt.name, stmt.value?.visitExpression(this, context),
-        stmt.type, stmt.modifiers);
+    return stmt.withValue(stmt.value?.visitExpression(this, context));
   }
 
   @override
@@ -1230,7 +1233,7 @@ class _ExpressionTransformer<C>
   }
 }
 
-class _RecursiveExpressionVisitor<C>
+class RecursiveExpressionVisitor<C>
     implements
         StatementVisitor<Statement, C>,
         ExpressionVisitor<Expression, C> {
@@ -1469,28 +1472,13 @@ class _RecursiveExpressionVisitor<C>
   }
 }
 
-Expression replaceReadClassMemberInExpression(
-    Expression newValue, Expression expression) {
-  var transformer = _ReplaceReadClassMemberTransformer(newValue);
-  return expression.visitExpression(transformer, null);
-}
-
-class _ReplaceReadClassMemberTransformer extends _ExpressionTransformer<Null> {
-  final Expression _newValue;
-  _ReplaceReadClassMemberTransformer(this._newValue);
-
-  @override
-  Expression visitReadClassMemberExpr(ReadClassMemberExpr ast, _) =>
-      ReadPropExpr(_newValue, ast.name);
-}
-
 Statement replaceVarInStatement(
     String varName, Expression newValue, Statement statement) {
   var transformer = _ReplaceVariableTransformer(varName, newValue);
   return statement.visitStatement(transformer, null);
 }
 
-class _ReplaceVariableTransformer extends _ExpressionTransformer<Null> {
+class _ReplaceVariableTransformer extends ExpressionTransformer<Null> {
   final String _varName;
   final Expression _newValue;
   _ReplaceVariableTransformer(this._varName, this._newValue);
@@ -1516,7 +1504,7 @@ Set<String> findWriteVarNames(List<Statement> stmts) {
   return finder.varNames;
 }
 
-class _VariableReadFinder extends _RecursiveExpressionVisitor<Null> {
+class _VariableReadFinder extends RecursiveExpressionVisitor<Null> {
   final varNames = Set<String>();
 
   @override
@@ -1526,7 +1514,7 @@ class _VariableReadFinder extends _RecursiveExpressionVisitor<Null> {
   }
 }
 
-class _VariableWriteFinder extends _RecursiveExpressionVisitor<Null> {
+class _VariableWriteFinder extends RecursiveExpressionVisitor<Null> {
   final varNames = Set<String>();
 
   @override

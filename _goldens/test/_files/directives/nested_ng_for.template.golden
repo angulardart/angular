@@ -118,8 +118,8 @@ AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent1(AppView<
 }
 
 class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
-  import7.Text _text_1;
   var _expr_0;
+  import7.Text _text_1;
   _ViewNestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedNgForComponent0._renderType;
   }

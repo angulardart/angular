@@ -12,7 +12,7 @@ import '../identifiers.dart';
 import '../output/convert.dart' show typeArgumentsFrom;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show AttrAst, LiteralAttributeValue;
-import 'compile_view.dart' show CompileView;
+import 'compile_view.dart' show CompileView, ReadNodeReferenceExpr;
 import 'constants.dart';
 
 // List of supported namespaces.
@@ -24,6 +24,25 @@ const namespaceUris = {
 
 /// Variable name used to read viewData.parentIndex in build functions.
 const String cachedParentIndexVarName = 'parentIdx';
+
+/// All fields and getters defined on [AppView] that don't need a cast in
+/// getPropertyInView.
+final _appViewFields = Set<String>.from([
+  'viewData',
+  'locals',
+  'parentView',
+  'componentType',
+  'rootEl',
+  'ctx',
+  'cdMode',
+  'cdState',
+  'ref',
+  'projectableNodes',
+  'changeDetectorRef',
+  'inlinedNodes',
+  'flatRootNodes',
+  'lastRootNode',
+]);
 
 // Creates method parameters list for AppView set attribute calls.
 List<o.Expression> createSetAttributeParams(o.Expression renderNode,
@@ -67,19 +86,49 @@ o.Expression getPropertyInView(
           'in a parent view: $property');
     }
 
-    o.ReadClassMemberExpr readMemberExpr = unwrapDirective(property);
-
-    if (readMemberExpr != null) {
-      // Note: Don't cast for members of the AppView base class...
-      if (definedView.storage.fields
-              .any((field) => field.name == readMemberExpr.name) ||
-          definedView.getters
-              .any((field) => field.name == readMemberExpr.name)) {
-        viewProp = unsafeCast(viewProp, definedView.classType);
-      }
-    }
-    return o.replaceReadClassMemberInExpression(viewProp, property);
+    // Note: Don't cast for members of the AppView base class...
+    return replaceReadClassMemberInExpression(
+        property,
+        (String name) => _appViewFields.contains(name)
+            ? viewProp
+            : unsafeCast(viewProp, definedView.classType));
   }
+}
+
+typedef o.Expression ReplaceWithName(String name);
+
+/// Returns [expression] with every [ReadClassMemberExpr] replaced with an
+/// equivalently named [ReadPropExpr] invoked on the receiver returned from
+/// [replacer].
+///
+/// [replacer] is passed the name of the [ReadClassMemberExpr] being replaced.
+///
+/// Any [ReadNodeReferenceExpr] encountered are promoted to class members and
+/// replaced in the same way.
+o.Expression replaceReadClassMemberInExpression(
+    o.Expression expression, ReplaceWithName replacer) {
+  var transformer = _ReplaceReadClassMemberTransformer(replacer);
+  return expression.visitExpression(transformer, null);
+}
+
+class _ReplaceReadClassMemberTransformer extends o.ExpressionTransformer<void> {
+  final ReplaceWithName _replacer;
+  _ReplaceReadClassMemberTransformer(this._replacer);
+
+  @override
+  o.Expression visitReadVarExpr(o.ReadVarExpr ast, _) {
+    if (ast is ReadNodeReferenceExpr) {
+      ast.node.promoteToClassMember();
+      return _replace(ast.name);
+    }
+    return ast;
+  }
+
+  @override
+  o.Expression visitReadClassMemberExpr(o.ReadClassMemberExpr ast, _) =>
+      _replace(ast.name);
+
+  o.Expression _replace(String name) => o.ReadPropExpr(_replacer(name), name);
 }
 
 o.Expression injectFromViewParentInjector(

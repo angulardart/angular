@@ -20,10 +20,9 @@ import 'package:angular/angular.dart';
 final List<dynamic> styles$InlinedNgIfComponent = const [];
 
 class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
+  bool _expr_0 = false;
   import2.Comment _anchor_0;
   import2.DivElement _el_0_0;
-  import2.Text _text_0_1;
-  bool _expr_0 = false;
   static RenderComponentType _renderType;
   ViewInlinedNgIfComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('inlined-ngif');
@@ -47,7 +46,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
       if (currVal_0) {
         var doc = import2.document;
         _el_0_0 = doc.createElement('div');
-        _text_0_1 = import2.Text('Hello World!');
+        final _text_0_1 = import2.Text('Hello World!');
         _el_0_0.append(_text_0_1);
         addInlinedNodes(_anchor_0, [_el_0_0], true);
       } else {
@@ -102,8 +101,6 @@ final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponent = const []
 
 class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.InlinedNgIfWithImmutableConditionComponent> {
   import2.Comment _anchor_0;
-  import2.DivElement _el_0_0;
-  import2.Text _text_0_1;
   static RenderComponentType _renderType;
   ViewInlinedNgIfWithImmutableConditionComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('inlined-ngif-with-immutable-condition');
@@ -127,8 +124,8 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
       if (!identical(_ctx.foo, null)) {
         if (_ctx.foo) {
           var doc = import2.document;
-          _el_0_0 = doc.createElement('div');
-          _text_0_1 = import2.Text('Hello World!');
+          final _el_0_0 = doc.createElement('div');
+          final _text_0_1 = import2.Text('Hello World!');
           _el_0_0.append(_text_0_1);
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }

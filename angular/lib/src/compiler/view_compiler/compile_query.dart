@@ -7,7 +7,8 @@ import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
 import 'ir/provider_source.dart';
 import 'ir/view_storage.dart';
-import "view_compiler_utils.dart" show getPropertyInView;
+import "view_compiler_utils.dart"
+    show getPropertyInView, replaceReadClassMemberInExpression;
 
 class _QueryValues {
   /// Compiled template associated to [values] and embedded [templates].
@@ -212,9 +213,9 @@ abstract class CompileQuery {
 
     // Changes `_el_0` to `nestedView._el_0`.
     final adjustedExpressions = expressions.map((expr) {
-      return o.replaceReadClassMemberInExpression(
-        o.variable('nestedView'),
+      return replaceReadClassMemberInExpression(
         expr,
+        (_) => o.variable('nestedView'),
       );
     }).toList();
 
