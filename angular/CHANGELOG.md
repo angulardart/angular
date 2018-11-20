@@ -84,7 +84,13 @@
     Previously, this would build successfully but emit code that instantiated
     the directive with `dynamic` in place of the private type.
 
+*   [#1665][]: `@Optional()` dependencies of pipes are now correctly treated as
+    optional. Previously the annotation was ignored, and attempting to
+    instantiate the pipe with a missing optional dependency would throw an error
+    for the missing dependency.
+
 [#1653]: https://github.com/dart-lang/angular/issues/1653
+[#1665]: https://github.com/dart-lang/angular/issues/1665
 
 ## 5.1.0
 
