@@ -25,11 +25,11 @@ o.OutputType fromDartType(DartType dartType, {bool resolveBounds = true}) {
   if (dartType.isDartCoreNull) {
     return o.NULL_TYPE;
   }
-  if (dartType.element.isPrivate) {
-    return o.DYNAMIC_TYPE;
-  }
   if (dartType is FunctionType) {
     return fromFunctionType(dartType);
+  }
+  if (dartType.element.isPrivate) {
+    return o.DYNAMIC_TYPE;
   }
   if (dartType is TypeParameterType && resolveBounds) {
     // Resolve generic type to its bound or dynamic if it has none.
