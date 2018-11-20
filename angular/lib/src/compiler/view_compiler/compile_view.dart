@@ -1158,7 +1158,7 @@ class CompileView implements AppViewBuilder {
         return o.ReadClassMemberExpr('ref');
       }
       usesInjectorGet = true;
-      return injectFromViewParentInjector(this, diDep.token, false);
+      return injectFromViewParentInjector(this, diDep.token, diDep.isOptional);
     }).toList();
     final pipeInstance = storage.allocate(
       name,
