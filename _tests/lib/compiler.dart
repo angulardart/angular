@@ -142,43 +142,37 @@ Future<Null> compilesExpecting(
   }..addAll(include);
 
   // Run the builder.
-  final records = <Level, List<String>>{};
+  final records = <Level, List<LogRecord>>{};
   await _testBuilder(_testAngularBuilder, sources, onLog: (record) {
-    var message = record.message;
-    if (record.error != null) {
-      message += '\nERROR: ${record.error}';
-    }
-    records.putIfAbsent(record.level, () => []).add(message);
+    records.putIfAbsent(record.level, () => []).add(record);
   });
 
-  if (errors != null) {
-    final logs = records[Level.SEVERE] ?? [];
-    expect(
-      logs,
-      errors,
-      reason: 'Errors: \n${logs.join('\n')}',
-    );
-  }
-  if (warnings != null) {
-    final logs = records[Level.WARNING] ?? [];
-    expect(
-      logs,
-      warnings,
-      reason: 'Warnings: \n${logs.join('\n')}',
-    );
-  }
-  if (notices != null) {
-    final logs = records[Level.INFO] ?? [];
-    expect(
-      logs,
-      notices,
-      reason: 'Notices: \n${logs.join('\n')}',
-    );
-  }
+  expectLogRecords(records[Level.SEVERE], errors, 'Errors');
+  expectLogRecords(records[Level.WARNING], warnings, 'Warnings');
+  expectLogRecords(records[Level.INFO], notices, 'Notices');
+
   if (outputs != null) {
     // TODO: Add an output verification or consider a golden file mechanism.
     throw UnimplementedError();
   }
+}
+
+void expectLogRecords(List<LogRecord> logs, matcher, String reasonPrefix) {
+  if (matcher == null) {
+    return;
+  }
+  logs ??= [];
+  expect(logs.map(formattedLogMessage), matcher,
+      reason:
+          '$reasonPrefix: \n${logs.map((l) => '${formattedLogMessage(l)} at:\n ${l.stackTrace}')}');
+}
+
+String formattedLogMessage(LogRecord record) {
+  var message = record.message;
+  if (record.error != null) {
+    message += '\nERROR: ${record.error}';
+  }
+  return message;
 }
 
 /// Returns a future that completes, asserting no errors or warnings occur.
