@@ -125,7 +125,7 @@ class NgTestBed<T> {
   /// manually.
   ///
   /// Setting this to `true` should be considered temporary for migration only.
-  static bool useLegacyNgTestBedStabilizer = true;
+  static bool useLegacyNgTestBedStabilizer = false;
 
   static NgTestStabilizer _defaultStabilizers(
     Injector injector, [
