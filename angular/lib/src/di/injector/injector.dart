@@ -95,10 +95,6 @@ abstract class Injector {
     return result;
   }
 
-  @Deprecated('Unsupported API, and will be removed. Use "provide" or "get".')
-  @experimental
-  T inject<T>(Object token) => get(token) as T;
-
   /// Injects and returns an object representing [token].
   ///
   /// If the key was not found, returns [orElse] (default is `null`).
