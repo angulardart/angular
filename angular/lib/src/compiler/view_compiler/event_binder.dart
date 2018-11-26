@@ -144,7 +144,7 @@ class CompileEventListener {
       _handler(hostEvent) is PropertyRead;
 
   BoundEventAst _rewriteTearoff(BoundEventAst hostEvent, AnalyzedClass clazz) =>
-      BoundEventAst(hostEvent.name, rewriteTearoff(_handler(hostEvent), clazz),
+      BoundEventAst(hostEvent.name, rewriteTearOff(_handler(hostEvent), clazz),
           hostEvent.sourceSpan);
 
   AST _handler(BoundEventAst hostEvent) {

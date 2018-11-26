@@ -19,7 +19,7 @@ void main() {
     expect(fixture.assertOnlyInstance.captured, ['bar']);
   });
 
-  test('should support default named arguments with implicit call', () async {
+  test('should support default named arguments with a tear-off', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsWithDefaultValue2>(
       ng.TestNamedArgsWithDefaultValue2NgFactory,
     );
@@ -28,7 +28,7 @@ void main() {
       fixture.rootElement.querySelector('button').click();
     });
     expect(fixture.assertOnlyInstance.captured, ['bar']);
-  }, skip: 'https://github.com/dart-lang/angular/issues/1666');
+  });
 
   test('should support passing a component field as an arg', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsFromComponentField>(
@@ -78,9 +78,7 @@ class TestNamedArgsWithDefaultValue1 {
 
 @Component(
   selector: 'test',
-  //                         ="foo" crashes the compiler:
-  // '({bar: String}) can't be assigned to the parameter type '(Event)'
-  template: r'<button (click)="foo()"></button>',
+  template: r'<button (click)="foo"></button>',
 )
 class TestNamedArgsWithDefaultValue2 {
   final captured = <String>[];
