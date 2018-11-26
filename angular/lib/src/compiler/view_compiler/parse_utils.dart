@@ -25,7 +25,7 @@ HandlerType handlerTypeFromExpression(AST handler) {
     return HandlerType.notSimple;
   }
   var call = eventHandler as MethodCall;
-  if (call.receiver is! ImplicitReceiver) {
+  if (call.receiver is! ImplicitReceiver || call.namedArgs.isNotEmpty) {
     return HandlerType.notSimple;
   }
   if (call.args.isEmpty) {

@@ -30,6 +30,17 @@ void main() {
     expect(fixture.assertOnlyInstance.captured, ['bar']);
   });
 
+  test('should support passing a component field as positional arg', () async {
+    final testBed = NgTestBed.forComponent<TestPositionalArgsFromComponent>(
+      ng.TestPositionalArgsFromComponentNgFactory,
+    );
+    final fixture = await testBed.create();
+    await fixture.update((_) {
+      fixture.rootElement.querySelector('button').click();
+    });
+    expect(fixture.assertOnlyInstance.captured, ['bar']);
+  });
+
   test('should support passing a component field as an arg', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsFromComponentField>(
       ng.TestNamedArgsFromComponentFieldNgFactory,
@@ -39,7 +50,7 @@ void main() {
       fixture.rootElement.querySelector('button').click();
     });
     expect(fixture.assertOnlyInstance.captured, ['bar']);
-  }, skip: 'https://github.com/dart-lang/angular/issues/1666');
+  });
 
   test('should support passing a literal value as an arg', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsFromLiteralValue>(
@@ -50,7 +61,7 @@ void main() {
       fixture.rootElement.querySelector('button').click();
     });
     expect(fixture.assertOnlyInstance.captured, ['bar']);
-  }, skip: 'https://github.com/dart-lang/angular/issues/1666');
+  });
 
   test('should support passing a template local variable as an arg', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsFromLocalValue>(
@@ -61,7 +72,7 @@ void main() {
       fixture.rootElement.querySelector('button').click();
     });
     expect(fixture.assertOnlyInstance.captured, ['bar']);
-  }, skip: 'https://github.com/dart-lang/angular/issues/1666');
+  });
 }
 
 @Component(
@@ -84,6 +95,19 @@ class TestNamedArgsWithDefaultValue2 {
   final captured = <String>[];
 
   void foo({String bar = 'bar'}) {
+    captured.add(bar);
+  }
+}
+
+@Component(
+  selector: 'test',
+  template: r'<button (click)="foo(field)"></button>',
+)
+class TestPositionalArgsFromComponent {
+  final field = 'bar';
+  final captured = <String>[];
+
+  void foo(String bar) {
     captured.add(bar);
   }
 }
