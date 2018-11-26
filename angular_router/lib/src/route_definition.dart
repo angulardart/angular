@@ -199,10 +199,8 @@ class ComponentRouteDefinition extends RouteDefinition {
     if (!isDevMode) {
       return;
     }
-    if (component is! Type && component is! ComponentFactory) {
-      throw StateError(
-        'Must have a valid (non-null) `component` type (got $component).',
-      );
+    if (component == null) {
+      throw StateError('Must have a non-null `component` factory');
     }
     super.assertValid();
   }
