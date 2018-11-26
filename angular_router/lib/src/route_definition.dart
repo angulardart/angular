@@ -201,7 +201,7 @@ class ComponentRouteDefinition extends RouteDefinition {
     }
     if (component is! Type && component is! ComponentFactory) {
       throw StateError(
-        'Must have a valid (non-null) `component` type (got $Component).',
+        'Must have a valid (non-null) `component` type (got $component).',
       );
     }
     super.assertValid();
