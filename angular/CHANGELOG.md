@@ -89,8 +89,14 @@
     instantiate the pipe with a missing optional dependency would throw an error
     for the missing dependency.
 
+*   [#1666][]: Properly emit calls from event bindings in templates where the
+    tear-off function has one or more named arguments. Previously we would
+    consider named arguments in the same vane as positional, and it would
+    generate invalid code causing Dart2JS or DDC to fail compilation.
+
 [#1653]: https://github.com/dart-lang/angular/issues/1653
 [#1665]: https://github.com/dart-lang/angular/issues/1665
+[#1666]: https://github.com/dart-lang/angular/issues/1666
 
 ## 5.1.0
 
