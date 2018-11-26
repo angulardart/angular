@@ -67,8 +67,8 @@ class CompileEventListener {
     ProviderSource directiveInstance,
     AnalyzedClass clazz,
   ) {
-    if (_isTearoff(hostEvent)) {
-      hostEvent = _rewriteTearoff(hostEvent, clazz);
+    if (_isTearOff(hostEvent)) {
+      hostEvent = _rewriteTearOff(hostEvent, clazz);
     }
     if (_isSimple) {
       _handlerType = hostEvent.handlerType;
@@ -121,7 +121,7 @@ class CompileEventListener {
 
   o.Expression _createEventHandlerExpr() {
     o.Expression handlerExpr;
-    var numArgs;
+    int numArgs;
 
     if (_isSimple) {
       handlerExpr = _simpleHandler;
@@ -133,17 +133,18 @@ class CompileEventListener {
 
     final wrapperName = 'eventHandler$numArgs';
     if (_hasComponentHostListener) {
-      return compileElement.componentView
-          .callMethod(wrapperName, [handlerExpr]);
-    } else {
-      return o.InvokeMemberMethodExpr(wrapperName, [handlerExpr]);
+      return compileElement.componentView.callMethod(
+        wrapperName,
+        [handlerExpr],
+      );
     }
+    return o.InvokeMemberMethodExpr(wrapperName, [handlerExpr]);
   }
 
-  bool _isTearoff(BoundEventAst hostEvent) =>
+  bool _isTearOff(BoundEventAst hostEvent) =>
       _handler(hostEvent) is PropertyRead;
 
-  BoundEventAst _rewriteTearoff(BoundEventAst hostEvent, AnalyzedClass clazz) =>
+  BoundEventAst _rewriteTearOff(BoundEventAst hostEvent, AnalyzedClass clazz) =>
       BoundEventAst(hostEvent.name, rewriteTearOff(_handler(hostEvent), clazz),
           hostEvent.sourceSpan);
 
