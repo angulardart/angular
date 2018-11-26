@@ -142,29 +142,40 @@ ast.AST rewriteInterpolate(ast.AST original, AnalyzedClass analyzedClass) {
   return original;
 }
 
-/// Rewrites an event tearoff as a method call.
+/// Rewrites an event tear-off as a method call.
 ///
 /// If [original] is a [ast.PropertyRead], and a method with the same name
 /// exists in [analyzedClass], then convert [original] into a [ast.MethodCall].
 ///
 /// If the underlying method has any parameters, then assume one parameter of
 /// '$event'.
-ast.AST rewriteTearoff(ast.AST original, AnalyzedClass analyzedClass) {
-  ast.AST unwrappedExpression = original;
+ast.AST rewriteTearOff(ast.AST original, AnalyzedClass analyzedClass) {
+  var unwrappedExpression = original;
   if (original is ast.ASTWithSource) {
     unwrappedExpression = original.ast;
   }
-  if (unwrappedExpression is! ast.PropertyRead) return original;
-  ast.PropertyRead propertyRead = unwrappedExpression;
-  final method =
-      analyzedClass._classElement.type.lookUpInheritedMethod(propertyRead.name);
-  if (method == null) return original;
+  if (unwrappedExpression is ast.PropertyRead) {
+    // Find the method, either on "this." or "super.".
+    final method = analyzedClass._classElement.type.lookUpInheritedMethod(
+      unwrappedExpression.name,
+    );
 
-  if (method.parameters.isEmpty) {
-    return _simpleMethodCall(propertyRead);
-  } else {
-    return _complexMethodCall(propertyRead);
+    // If not found, we do not perform any re-write.
+    if (method == null) {
+      return original;
+    }
+
+    // If we have no positional parameters (optional or otherwise), then we
+    // translate the call into "foo()". If we have at least one, we translate
+    // the call into "foo($event)".
+    final positionalParameters = method.parameters.where((p) => !p.isNamed);
+    if (positionalParameters.isEmpty) {
+      return _simpleMethodCall(unwrappedExpression);
+    } else {
+      return _complexMethodCall(unwrappedExpression);
+    }
   }
+  return original;
 }
 
 ast.AST _simpleMethodCall(ast.PropertyRead propertyRead) =>
