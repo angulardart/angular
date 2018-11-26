@@ -1,0 +1,134 @@
+@TestOn('browser')
+import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
+import 'package:test/test.dart';
+
+import '1666_named_arguments_test.template.dart' as ng;
+
+void main() {
+  tearDown(disposeAnyRunningTest);
+
+  test('should support default named arguments', () async {
+    final testBed = NgTestBed.forComponent<TestNamedArgsWithDefaultValue1>(
+      ng.TestNamedArgsWithDefaultValue1NgFactory,
+    );
+    final fixture = await testBed.create();
+    await fixture.update((_) {
+      fixture.rootElement.querySelector('button').click();
+    });
+    expect(fixture.assertOnlyInstance.captured, ['bar']);
+  });
+
+  test('should support default named arguments with implicit call', () async {
+    final testBed = NgTestBed.forComponent<TestNamedArgsWithDefaultValue2>(
+      ng.TestNamedArgsWithDefaultValue2NgFactory,
+    );
+    final fixture = await testBed.create();
+    await fixture.update((_) {
+      fixture.rootElement.querySelector('button').click();
+    });
+    expect(fixture.assertOnlyInstance.captured, ['bar']);
+  }, skip: 'https://github.com/dart-lang/angular/issues/1666');
+
+  test('should support passing a component field as an arg', () async {
+    final testBed = NgTestBed.forComponent<TestNamedArgsFromComponentField>(
+      ng.TestNamedArgsFromComponentFieldNgFactory,
+    );
+    final fixture = await testBed.create();
+    await fixture.update((_) {
+      fixture.rootElement.querySelector('button').click();
+    });
+    expect(fixture.assertOnlyInstance.captured, ['bar']);
+  }, skip: 'https://github.com/dart-lang/angular/issues/1666');
+
+  test('should support passing a literal value as an arg', () async {
+    final testBed = NgTestBed.forComponent<TestNamedArgsFromLiteralValue>(
+      ng.TestNamedArgsFromLiteralValueNgFactory,
+    );
+    final fixture = await testBed.create();
+    await fixture.update((_) {
+      fixture.rootElement.querySelector('button').click();
+    });
+    expect(fixture.assertOnlyInstance.captured, ['bar']);
+  }, skip: 'https://github.com/dart-lang/angular/issues/1666');
+
+  test('should support passing a template local variable as an arg', () async {
+    final testBed = NgTestBed.forComponent<TestNamedArgsFromLocalValue>(
+      ng.TestNamedArgsFromLocalValueNgFactory,
+    );
+    final fixture = await testBed.create();
+    await fixture.update((_) {
+      fixture.rootElement.querySelector('button').click();
+    });
+    expect(fixture.assertOnlyInstance.captured, ['bar']);
+  }, skip: 'https://github.com/dart-lang/angular/issues/1666');
+}
+
+@Component(
+  selector: 'test',
+  template: r'<button (click)="foo()"></button>',
+)
+class TestNamedArgsWithDefaultValue1 {
+  final captured = <String>[];
+
+  void foo({String bar = 'bar'}) {
+    captured.add(bar);
+  }
+}
+
+@Component(
+  selector: 'test',
+  //                         ="foo" crashes the compiler:
+  // '({bar: String}) can't be assigned to the parameter type '(Event)'
+  template: r'<button (click)="foo()"></button>',
+)
+class TestNamedArgsWithDefaultValue2 {
+  final captured = <String>[];
+
+  void foo({String bar = 'bar'}) {
+    captured.add(bar);
+  }
+}
+
+@Component(
+  selector: 'test',
+  template: r'<button (click)="foo(bar: field)"></button>',
+)
+class TestNamedArgsFromComponentField {
+  final field = 'bar';
+  final captured = <String>[];
+
+  void foo({String bar}) {
+    captured.add(bar);
+  }
+}
+
+@Component(
+  selector: 'test',
+  template: r'''<button (click)="foo(bar: 'bar')"></button>''',
+)
+class TestNamedArgsFromLiteralValue {
+  final captured = <String>[];
+
+  void foo({String bar}) {
+    captured.add(bar);
+  }
+}
+
+@Component(
+  selector: 'test',
+  directives: [NgFor],
+  template: r'''
+    <ng-container *ngFor="let item of items">
+      <button (click)="foo(bar: item)"></button>
+    </ng-container>
+  ''',
+)
+class TestNamedArgsFromLocalValue {
+  final items = ['bar'];
+  final captured = <String>[];
+
+  void foo({String bar}) {
+    captured.add(bar);
+  }
+}
