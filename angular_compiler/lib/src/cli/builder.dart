@@ -42,6 +42,10 @@ class Compiler implements Generator {
       header: '',
     );
   }
+
+  /// Identify ourselves in debug logs and generated files.
+  @override
+  toString() => 'AngularDart Compiler';
 }
 
 /// Generates an empty file to indicate `.template.dart` will exist.
