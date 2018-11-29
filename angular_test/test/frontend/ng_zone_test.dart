@@ -141,6 +141,24 @@ void main() {
       stabilizer = RealTimeNgZoneStabilizer(timerZone, ngZone);
     });
 
+    test('should not elapse timers outside of Angular zone', () async {
+      var lastTimersRun = <int>[];
+      var completer = Completer<void>();
+      ngZone.runOutsideAngular(() {
+        Timer(Duration(seconds: 1), () {
+          lastTimersRun.add(1);
+          completer.complete();
+        });
+      });
+      expect(lastTimersRun, isEmpty);
+
+      await stabilizer.update();
+      expect(lastTimersRun, isEmpty);
+
+      await completer.future;
+      expect(lastTimersRun, [1]);
+    });
+
     test('should elapse a series of simple timers', () async {
       var lastTimersRun = <int>[];
       ngZone.run(() {

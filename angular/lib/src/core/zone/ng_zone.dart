@@ -78,6 +78,14 @@ class NgZone {
     }
   }
 
+  /// **INTERNAL ONLY**: See [inAngularZone].
+  bool _inAngularZone(Zone zone) {
+    if (zone == null || zone == _outerZone) {
+      return false;
+    }
+    return zone == _innerZone || _inAngularZone(zone.parent);
+  }
+
   /// Whether we are currently executing within this AngularDart zone.
   ///
   /// If `true`, the side-effects of executing callbacks are being observed.
@@ -415,6 +423,12 @@ Duration longestPendingTimer(NgZone zone) => zone._longestPendingTimer;
 /// **INTERNAL ONLY**: This is an experimental API subject to change.
 @experimental
 bool hasPendingMacrotasks(NgZone zone) => zone._hasPendingMacrotasks;
+
+/// For a [zone], returns whether it is within AngularDart [ngZone].
+///
+/// **INTERNAL ONLY**: This is an experimental API subject to change.
+@experimental
+bool inAngularZone(NgZone ngZone, Zone zone) => ngZone._inAngularZone(zone);
 
 /// A `Timer` wrapper that lets you specify additional functions to call when it
 /// is cancelled.
