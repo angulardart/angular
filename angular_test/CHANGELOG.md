@@ -25,6 +25,11 @@
     and always reports stability. This handles making composition easier as the
     root stabilizer can effectively be a no-op.
 
+### Bug Fixes
+
+*   When using `RealTimeNgZoneStabilizer`, do not try to stabilize timers that
+    run outside of Angular zone.
+
 ## 2.1.0
 
 ### New Features

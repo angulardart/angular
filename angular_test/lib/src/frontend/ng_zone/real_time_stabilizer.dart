@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 import 'package:meta/meta.dart';
 
 import 'base_stabilizer.dart';
@@ -26,6 +27,12 @@ class RealTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_ObservedTimer> {
       duration,
       callback,
     ) {
+      // If the timer is meant to run outside of Angular zone, we do not try to
+      // stabilize it, and delegate it to the parent zone.
+      if (!inAngularZone(ngZone, zone)) {
+        return parent.createTimer(zone, duration, callback);
+      }
+
       _ObservedTimer instance;
       final wrappedCallback = () {
         try {
