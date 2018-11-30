@@ -6,6 +6,12 @@ import 'messages/messages.dart';
 /// Returns the currently bound [Messages] instance.
 final Messages messages = const $Messages();
 
+class SourceSpanMessageTuple {
+  final SourceSpan sourceSpan;
+  final String message;
+  SourceSpanMessageTuple(this.sourceSpan, this.message);
+}
+
 /// Defines common messages to use during compilation.
 abstract class Messages {
   @visibleForOverriding
@@ -15,14 +21,11 @@ abstract class Messages {
   String get analysisFailureReasons;
 
   /// Returns a message that the following [sourceSpans] were unresolvable.
-  String unresolvedSource(
-    Iterable<SourceSpan> sourceSpans, {
-    String message = 'Was not resolved',
-    @required String reason,
-  }) {
+  String unresolvedSource(Iterable<SourceSpanMessageTuple> tuples,
+      {@required String reason}) {
     final buffer = StringBuffer(reason)..writeln()..writeln();
-    for (final sourceSpans in sourceSpans) {
-      buffer.writeln(sourceSpans.message(message));
+    for (final tuple in tuples) {
+      buffer.writeln(tuple.sourceSpan.message(tuple.message));
     }
     return buffer.toString();
   }

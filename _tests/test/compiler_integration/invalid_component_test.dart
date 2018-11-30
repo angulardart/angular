@@ -44,4 +44,24 @@ void main() {
       ]),
     ]);
   });
+
+  test('should identify an unresolved provider', () async {
+    await compilesExpecting('''
+    import '$ngImport';
+
+      @Component(
+        selector: 'bad-provider',
+        directives: const [
+          ClassProvider(Nope),
+        ],
+        template: '',
+      )
+      class BadProvider {}
+
+    ''', errors: [
+      allOf([
+        contains('Compiling @Component-annotated class "BadProvider" failed'),
+      ])
+    ]);
+  });
 }

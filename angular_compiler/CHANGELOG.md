@@ -1,3 +1,6 @@
+*   Updates the `messages.unresolvedSource` API to support different error
+    messages for each `SourceSpan` affected.
+
 *   Update failure message to include an asset id when collecting type
     parameters.
 
