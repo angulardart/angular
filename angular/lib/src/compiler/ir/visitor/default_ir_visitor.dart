@@ -8,6 +8,12 @@ class DefaultIRVisitor<R, C> implements IRVisitor<R, C> {
   @override
   R visitComponent(Component component, [C context]) => null;
 
+  @override
+  R visitComponentView(ComponentView componentView, [C context]) => null;
+
+  @override
+  R visitHostView(HostView hostView, [C context]) => null;
+
   /// Visits all nodes provided, aggregating the result.
   ///
   /// If the visitor returns [null], then the result is removed from the list.
