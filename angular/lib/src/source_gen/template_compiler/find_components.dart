@@ -1,6 +1,7 @@
 import 'package:analyzer/analyzer.dart' hide Directive;
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/error/error.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/source/line_info.dart';
@@ -532,6 +533,11 @@ class _ComponentVisitor
     _collectInheritableMetadata(element);
     final isComp = safeMatcher(isComponent)(annotation);
     final annotationValue = annotation.computeConstantValue();
+
+    if (annotation.constantEvaluationErrors.isNotEmpty) {
+      _failFastOnAnalysisErrors(annotation.constantEvaluationErrors, element);
+    }
+
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     CompileTypeMetadata componentType =
@@ -732,7 +738,10 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
       .toList();
 }
 
-void _failFastOnUnresolvedExpressions(Iterable<Expression> expressions,
+// TODO(deboer): Since we are checking ElementAnnotation.constantValueErrors,
+// all code paths that call this function are unreachable.
+// If we don't see any errors in the wild, delete this code.
+void _failFastOnUnresolvedExpressions(Iterable<AstNode> expressions,
     ClassElement componentType, CompilationUnitElement compilationUnit) {
   final sourceUrl = componentType.source.uri;
   LineInfo lineInfo = compilationUnit.lineInfo;
@@ -741,19 +750,56 @@ void _failFastOnUnresolvedExpressions(Iterable<Expression> expressions,
       expressions.map((e) {
         CharacterLocation start = lineInfo.getLocation(e.offset);
         CharacterLocation end = lineInfo.getLocation(e.offset + e.length);
-        return SourceSpan(
-          SourceLocation(e.offset,
-              sourceUrl: sourceUrl,
-              line: start.lineNumber,
-              column: start.columnNumber),
-          SourceLocation(e.offset + e.length,
-              sourceUrl: sourceUrl,
-              line: end.lineNumber,
-              column: end.columnNumber),
-          e.toSource(),
-        );
+        return SourceSpanMessageTuple(
+            SourceSpan(
+              SourceLocation(e.offset,
+                  sourceUrl: sourceUrl,
+                  line: start.lineNumber,
+                  column: start.columnNumber),
+              SourceLocation(e.offset + e.length,
+                  sourceUrl: sourceUrl,
+                  line: end.lineNumber,
+                  column: end.columnNumber),
+              e.toSource(),
+            ),
+            'This argument *may* have not been resolved');
       }),
-      message: 'This argument *may* have not been resolved',
+      reason: ''
+          'Compiling @Component annotated class "${componentType.name}" '
+          'failed.\n'
+          'NOTE: Your build triggered an error in the Angular error reporting\n'
+          'code. Please report a bug: ${messages.urlFileBugs}\n'
+          '\n\n${messages.analysisFailureReasons}',
+    ),
+  );
+}
+
+void _failFastOnAnalysisErrors(
+    Iterable<AnalysisError> errors, ClassElement componentType) {
+  throw BuildError(
+    messages.unresolvedSource(
+      errors.map((e) {
+        final sourceUrl = e.source.uri;
+        final sourceContent = e.source.contents.data;
+        LineInfo lineInfo = LineInfo.fromContent(sourceContent);
+        int startOffset = e.offset;
+        int endOffset = e.offset + e.length;
+        CharacterLocation start = lineInfo.getLocation(startOffset);
+        CharacterLocation end = lineInfo.getLocation(endOffset);
+        return SourceSpanMessageTuple(
+            SourceSpan(
+              SourceLocation(startOffset,
+                  sourceUrl: sourceUrl,
+                  line: start.lineNumber,
+                  column: start.columnNumber),
+              SourceLocation(endOffset,
+                  sourceUrl: sourceUrl,
+                  line: end.lineNumber,
+                  column: end.columnNumber),
+              e.source.contents.data.substring(startOffset, endOffset),
+            ),
+            e.message);
+      }),
       reason: ''
           'Compiling @Component-annotated class "${componentType.name}" '
           'failed.\n\n${messages.analysisFailureReasons}',

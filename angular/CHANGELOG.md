@@ -44,6 +44,10 @@
 
 ### New features
 
+*   Better error messages in the compiler by failing fast on all analyzer errors
+    in element annotations (@Component, etc) and passing the analyzer error
+    messages to the user.
+
 *   Added `runAfterChangesObserved` to `NgZone`. This API is intended to be a
     more precise way to execute code _after_ AngularDart would have run change
     detection (instead of relying on `scheduleMicrotask` or `Timer.run`).

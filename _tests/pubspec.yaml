@@ -20,7 +20,7 @@ dev_dependencies:
   angular_forms:
 
   # Actual valid dependencies required.
-  analyzer: ^0.33.0
+  analyzer: ^0.34.0
   build_runner: ^1.0.0
   build_test: ^0.10.2+5
   build_web_compilers: ^0.4.0+4
