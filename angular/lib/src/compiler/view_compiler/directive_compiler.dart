@@ -11,7 +11,7 @@ import '../output/convert.dart' show typeArgumentsFrom;
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart' show ElementSchemaRegistry;
-import "../template_ast.dart" show BoundElementPropertyAst, BoundExpression;
+import '../template_ast.dart' show BoundElementPropertyAst, BoundExpression;
 import '../template_parser.dart';
 import 'bound_value_converter.dart';
 import 'compile_method.dart';
@@ -29,47 +29,30 @@ class DirectiveCompileResult {
 }
 
 class DirectiveCompiler {
-  final CompileDirectiveMetadata directive;
-  final bool hasOnChangesLifecycle;
-  final bool hasAfterChangesLifecycle;
   final ElementSchemaRegistry _schemaRegistry;
-  final viewMethods = <o.ClassMethod>[];
+  final ViewNameResolver _nameResolver = DirectiveNameResolver();
   final CompileViewStorage _storage = CompileViewStorage();
 
-  bool _hasChangeDetector = false;
-  bool _implementsComponentState;
-  ViewNameResolver _nameResolver;
+  static final _emptySpan =
+      SourceSpan(SourceLocation(0), SourceLocation(0), '');
+  static final _implicitReceiver = o.ReadClassMemberExpr('instance');
 
-  DirectiveCompiler(this.directive, this._schemaRegistry)
-      : hasOnChangesLifecycle =
-            directive.lifecycleHooks.contains(LifecycleHooks.onChanges),
-        hasAfterChangesLifecycle =
-            directive.lifecycleHooks.contains(LifecycleHooks.afterChanges) {
-    _implementsComponentState =
-        directive.changeDetection == ChangeDetectionStrategy.Stateful;
-  }
+  DirectiveCompiler(this._schemaRegistry);
 
-  DirectiveCompileResult compile() {
+  DirectiveCompileResult compile(CompileDirectiveMetadata directive) {
     assert(directive.requiresDirectiveChangeDetector);
-    _nameResolver = DirectiveNameResolver();
-    var classStmt = _buildChangeDetector();
+    var classStmt = _buildChangeDetector(directive);
     return DirectiveCompileResult(classStmt);
   }
 
-  o.ClassStmt _buildChangeDetector() {
+  o.ClassStmt _buildChangeDetector(CompileDirectiveMetadata directive) {
     var ctor = _createChangeDetectorConstructor(directive);
 
-    _buildDetectHostChanges();
-    var superClassExpr;
-    if (hasOnChangesLifecycle ||
-        hasAfterChangesLifecycle ||
-        _hasChangeDetector) {
-      superClassExpr = o.importExpr(Identifiers.DirectiveChangeDetector);
-    }
+    var viewMethods = _buildDetectHostChanges(directive);
+
     var changeDetectorClass = o.ClassStmt(
-        changeDetectorClassName,
-        // ignore: argument_type_not_assignable
-        superClassExpr,
+        _changeDetectorClassName(directive),
+        o.importExpr(Identifiers.DirectiveChangeDetector),
         _storage.fields ?? const [],
         const [],
         ctor,
@@ -78,13 +61,13 @@ class DirectiveCompiler {
     return changeDetectorClass;
   }
 
-  bool get usesSetState =>
-      _implementsComponentState && directive.hostProperties.isNotEmpty;
+  static String _changeDetectorClassName(CompileDirectiveMetadata directive) =>
+      '${directive.type.name}NgCd';
 
   o.ClassMethod _createChangeDetectorConstructor(
-      CompileDirectiveMetadata meta) {
+      CompileDirectiveMetadata directive) {
     var instanceType = o.importType(
-      meta.type.identifier,
+      directive.type.identifier,
       typeArgumentsFrom(directive.originType.typeParameters),
     );
     ViewStorageItem instance = _storage.allocate(
@@ -95,13 +78,14 @@ class DirectiveCompiler {
       ],
     );
     var statements = <o.Statement>[];
-    if (hasOnChangesLifecycle || usesSetState) {
+    if (_implementsOnChangesLifecycle(directive) ||
+        _implementsComponentState(directive)) {
       statements.add(
           o.WriteClassMemberExpr('directive', _storage.buildReadExpr(instance))
               .toStmt());
     }
     var constructorArgs = [o.FnParam('this.instance')];
-    if (usesSetState) {
+    if (_implementsComponentState(directive)) {
       constructorArgs.add(o.FnParam('v', o.importType(Identifiers.AppView)));
       constructorArgs
           .add(o.FnParam('e', o.importType(Identifiers.HTML_ELEMENT)));
@@ -110,46 +94,42 @@ class DirectiveCompiler {
       statements.add(o.WriteClassMemberExpr('el', o.ReadVarExpr('e')).toStmt());
       statements.add(o.InvokeMemberMethodExpr('initCd', const []).toStmt());
     }
-    // ignore: argument_type_not_assignable
     return o.ClassMethod(null, constructorArgs, statements);
   }
 
-  void _buildDetectHostChanges() {
+  static bool _implementsOnChangesLifecycle(
+          CompileDirectiveMetadata directive) =>
+      directive.lifecycleHooks.contains(LifecycleHooks.onChanges);
+
+  static bool _implementsComponentState(CompileDirectiveMetadata directive) =>
+      directive.changeDetection == ChangeDetectionStrategy.Stateful;
+
+  List<o.ClassMethod> _buildDetectHostChanges(
+      CompileDirectiveMetadata directive) {
     final hostProps = directive.hostProperties;
-    if (hostProps.isEmpty) return;
-    final CompileMethod method = CompileMethod();
+    if (hostProps.isEmpty) return [];
 
     List<BoundElementPropertyAst> hostProperties = <BoundElementPropertyAst>[];
 
-    var errorHandler =
-        (String message, SourceSpan sourceSpan, [ParseErrorLevel level]) {
-      if (level == ParseErrorLevel.FATAL) {
-        throwFailure(message);
-      } else {
-        logWarning(message);
-      }
-    };
-
-    var span = SourceSpan(SourceLocation(0), SourceLocation(0), '');
     hostProps.forEach((String propName, ast.AST expression) {
       const securityContextElementName = 'div';
       hostProperties.add(createElementPropertyAst(
           securityContextElementName,
           propName,
           BoundExpression(expression),
-          span,
+          _emptySpan,
           _schemaRegistry,
-          errorHandler));
+          _reportError));
     });
 
-    _hasChangeDetector = true;
+    final CompileMethod method = CompileMethod();
 
-    final implicitReceiver = o.ReadClassMemberExpr('instance');
-    final converter = BoundValueConverter.forDirective(
-        directive, implicitReceiver, _nameResolver);
+    final _boundValueConverter = BoundValueConverter.forDirective(
+        directive, _implicitReceiver, _nameResolver);
+
     bindAndWriteToRenderer(
       hostProperties,
-      converter,
+      _boundValueConverter,
       o.variable('view'),
       o.variable('el'),
       false,
@@ -162,35 +142,46 @@ class DirectiveCompiler {
     var readVars = method.findReadVarNames();
 
     if (readVars.contains(DetectChangesVars.firstCheck.name)) {
-      statements.insert(
-          0,
-          o.DeclareVarStmt(
-              DetectChangesVars.firstCheck.name,
-              o
-                  .variable('view')
-                  .prop('cdState')
-                  .equals(o.literal(ChangeDetectorState.NeverChecked)),
-              o.BOOL_TYPE));
+      statements.insert(0, _firstCheckVarStmt());
     }
 
-    viewMethods.add(o.ClassMethod(
-        'detectHostChanges',
-        [
-          o.FnParam(
-              'view', o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
-          o.FnParam('el', o.importType(Identifiers.HTML_ELEMENT)),
-        ],
-        statements));
+    return [_detectHostChanges(statements)];
+  }
+
+  static o.DeclareVarStmt _firstCheckVarStmt() => o.DeclareVarStmt(
+      DetectChangesVars.firstCheck.name,
+      o
+          .variable('view')
+          .prop('cdState')
+          .equals(o.literal(ChangeDetectorState.NeverChecked)),
+      o.BOOL_TYPE);
+
+  static o.ClassMethod _detectHostChanges(List<o.Statement> statements) =>
+      o.ClassMethod(
+          'detectHostChanges',
+          [
+            o.FnParam(
+                'view', o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
+            o.FnParam('el', o.importType(Identifiers.HTML_ELEMENT)),
+          ],
+          statements);
+
+  static void _reportError(String message, SourceSpan sourceSpan,
+      [ParseErrorLevel level]) {
+    if (level == ParseErrorLevel.FATAL) {
+      throwFailure(message);
+    } else {
+      logWarning(message);
+    }
   }
 
   static String buildInputUpdateMethodName(String input) => 'ngSet\$$input';
-
-  String get changeDetectorClassName => '${directive.type.name}NgCd';
 }
 
 class DirectiveNameResolver extends ViewNameResolver {
   DirectiveNameResolver() : super(null);
 
+  @override
   void addLocal(String name, o.Expression e, [o.OutputType type]) {
     throw UnsupportedError('Locals are not supported in directives');
   }

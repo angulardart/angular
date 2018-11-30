@@ -146,9 +146,8 @@ class OfflineCompiler {
 
   void _compileDirective(
       CompileDirectiveMetadata directive, List<o.Statement> statements) {
-    DirectiveCompiler comp =
-        DirectiveCompiler(directive, _templateParser.schemaRegistry);
-    DirectiveCompileResult res = comp.compile();
+    DirectiveCompiler comp = DirectiveCompiler(_templateParser.schemaRegistry);
+    DirectiveCompileResult res = comp.compile(directive);
     statements.addAll(res.statements);
   }
 
