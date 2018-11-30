@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
-
+import '../core/metadata/view.dart' show ViewEncapsulation;
 import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
     show
@@ -11,6 +10,7 @@ import 'compile_metadata.dart'
         createHostComponentMeta,
         createHostDirectiveTypes;
 import 'compiler_utils.dart' show stylesModuleUrl, templateModuleUrl;
+import 'ir/model.dart' as ir;
 import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
 import 'source_module.dart';
@@ -94,7 +94,8 @@ class OfflineCompiler {
     }
     var statements = <o.Statement>[];
     for (var componentWithDirs in artifacts.components) {
-      _compileComponent(componentWithDirs, statements);
+      var component = _convertToIR(componentWithDirs);
+      _compileComponent(component, statements);
     }
 
     for (CompileDirectiveMetadata directive in artifacts.directives) {
@@ -106,21 +107,28 @@ class OfflineCompiler {
     return _createSourceModule(moduleUrl, statements, _deferredModules);
   }
 
-  void _compileComponent(
-      NormalizedComponentWithViewDirectives componentWithDirs,
-      List<o.Statement> statements) {
-    var compMeta = componentWithDirs.component;
-    // Compile Component View and Embedded templates.
-    _compileComponentView(
-      compMeta,
-      componentWithDirs.directives,
-      componentWithDirs.directiveTypes,
-      componentWithDirs.pipes,
-      statements,
-      registerComponentFactory: true,
-    );
+  void _compileComponent(ir.Component component, List<o.Statement> statements) {
+    for (var view in component.views) {
+      _compileView(component, view, statements);
+    }
+  }
 
-    _compileComponentHost(compMeta, statements);
+  void _compileView(
+      ir.Component component, ir.View view, List<o.Statement> statements) {
+    var styleResult = view is ir.HostView
+        ? _styleCompiler.compileHostComponent(component)
+        : _styleCompiler.compileComponent(component);
+    var viewResult = _viewCompiler.compileComponent(
+        view.cmpMetadata,
+        view.parsedTemplate,
+        styleResult,
+        o.variable(styleResult.stylesVar),
+        view.directiveTypes,
+        view.pipes,
+        _deferredModules,
+        registerComponentFactory: view is ir.ComponentView);
+    statements.addAll(styleResult.statements);
+    statements.addAll(viewResult.statements);
   }
 
   List<SourceModule> compileStylesheet(String stylesheetUrl, String cssText) {
@@ -134,46 +142,6 @@ class OfflineCompiler {
       _createSourceModule(stylesModuleUrl(stylesheetUrl, true),
           shimStyles.statements, _deferredModules)
     ];
-  }
-
-  void _compileComponentView(
-      CompileDirectiveMetadata compMeta,
-      List<CompileDirectiveMetadata> directives,
-      List<CompileTypedMetadata> directiveTypes,
-      List<CompilePipeMetadata> pipes,
-      List<o.Statement> targetStatements,
-      {@required bool registerComponentFactory}) {
-    var styleResult = _styleCompiler.compileComponent(compMeta);
-    List<TemplateAst> parsedTemplate = _templateParser.parse(compMeta,
-        compMeta.template.template, directives, pipes, compMeta.type.name);
-    var viewResult = _viewCompiler.compileComponent(
-        compMeta,
-        parsedTemplate,
-        styleResult,
-        o.variable(styleResult.stylesVar),
-        directiveTypes,
-        pipes,
-        _deferredModules,
-        registerComponentFactory: registerComponentFactory);
-    targetStatements.addAll(styleResult.statements);
-    targetStatements.addAll(viewResult.statements);
-  }
-
-  // Compile ComponentHost to be able to use dynamic component loader at
-  // runtime.
-  void _compileComponentHost(
-      CompileDirectiveMetadata compMeta, List<o.Statement> statements) {
-    var hostMeta = createHostComponentMeta(
-        compMeta.type, compMeta.selector, compMeta.template.preserveWhitespace);
-    var hostDirectiveTypes = createHostDirectiveTypes(compMeta.type);
-    _compileComponentView(
-      hostMeta,
-      [compMeta],
-      hostDirectiveTypes,
-      [],
-      statements,
-      registerComponentFactory: false,
-    );
   }
 
   void _compileDirective(
@@ -199,5 +167,56 @@ class OfflineCompiler {
     } else {
       throw StateError('No components nor injectorModules given');
     }
+  }
+
+  ir.Component _convertToIR(
+      NormalizedComponentWithViewDirectives componentWithDirs) {
+    return ir.Component(componentWithDirs.component.type.name,
+        encapsulation: _encapsulation(componentWithDirs),
+        styles: componentWithDirs.component.template.styles,
+        styleUrls: componentWithDirs.component.template.styleUrls,
+        views: [
+          _componentView(componentWithDirs),
+          _hostView(componentWithDirs.component)
+        ]);
+  }
+
+  ir.ViewEncapsulation _encapsulation(
+      NormalizedComponentWithViewDirectives componentWithDirs) {
+    switch (componentWithDirs.component.template.encapsulation) {
+      case ViewEncapsulation.Emulated:
+        return ir.ViewEncapsulation.emulated;
+      case ViewEncapsulation.None:
+        return ir.ViewEncapsulation.none;
+      default:
+        throw ArgumentError.value(
+            componentWithDirs.component.template.encapsulation);
+    }
+  }
+
+  ir.View _componentView(
+      NormalizedComponentWithViewDirectives componentWithDirs) {
+    List<TemplateAst> parsedTemplate = _templateParser.parse(
+        componentWithDirs.component,
+        componentWithDirs.component.template.template,
+        componentWithDirs.directives,
+        componentWithDirs.pipes,
+        componentWithDirs.component.type.name);
+    return ir.ComponentView(
+        cmpMetadata: componentWithDirs.component,
+        directiveTypes: componentWithDirs.directiveTypes,
+        parsedTemplate: parsedTemplate,
+        pipes: componentWithDirs.pipes);
+  }
+
+  ir.View _hostView(CompileDirectiveMetadata component) {
+    var hostMeta = createHostComponentMeta(component.type, component.selector,
+        component.template.preserveWhitespace);
+    var parsedTemplate = _templateParser.parse(hostMeta,
+        hostMeta.template.template, [component], [], hostMeta.type.name);
+    return ir.HostView(null,
+        cmpMetadata: hostMeta,
+        parsedTemplate: parsedTemplate,
+        directiveTypes: createHostDirectiveTypes(component.type));
   }
 }

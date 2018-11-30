@@ -1,12 +1,11 @@
-import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular_compiler/cli.dart';
 
-import "compile_metadata.dart"
-    show CompileIdentifierMetadata, CompileDirectiveMetadata;
+import 'compile_metadata.dart' show CompileIdentifierMetadata;
 import 'compiler_utils.dart';
-import "output/output_ast.dart" as o;
-import "shadow_css.dart";
-import "style_url_resolver.dart" show extractStyleUrls;
+import 'ir/model.dart' as ir;
+import 'output/output_ast.dart' as o;
+import 'shadow_css.dart';
+import 'style_url_resolver.dart' show extractStyleUrls;
 
 /// This placeholder is replaced by the component ID at run-time.
 const _componentIdPlaceholder = '%ID%';
@@ -34,17 +33,21 @@ class StyleCompiler {
   /// [comp.template.styles] contains a list of inline styles (or overrides in
   /// tests) and [comp.template.styleUrls] contains urls to other css.shim.dart
   /// resources.
-  StylesCompileResult compileComponent(CompileDirectiveMetadata comp) {
-    var requiresShim =
-        comp.template.encapsulation == ViewEncapsulation.Emulated;
-    return this._compileStyles(_getStylesVarName(comp), comp.template.styles,
-        comp.template.styleUrls, requiresShim);
+  StylesCompileResult compileComponent(ir.Component component) {
+    var requiresShim = component.encapsulation == ir.ViewEncapsulation.emulated;
+    return _compileStyles(_getStylesVarName(component.name), component.styles,
+        component.styleUrls, requiresShim);
+  }
+
+  StylesCompileResult compileHostComponent(ir.Component component) {
+    return _compileStyles(
+        _getStylesVarName('${component.name}Host'), [], [], true);
   }
 
   StylesCompileResult compileStylesheet(
       String stylesheetUrl, String cssText, bool isShimmed) {
     var styleWithImports = extractStyleUrls(stylesheetUrl, cssText);
-    return this._compileStyles(_getStylesVarName(), [styleWithImports.style],
+    return _compileStyles(_getStylesVarName(), [styleWithImports.style],
         styleWithImports.styleUrls, isShimmed);
   }
 
@@ -100,5 +103,5 @@ class StyleCompiler {
 ///
 /// Styles are assigned to style_componentTypeName variables and
 /// passed onto ViewUtils.createRenderComponentType for creating the prototype.
-String _getStylesVarName([CompileDirectiveMetadata component]) =>
-    component != null ? 'styles\$${component.type.name}' : 'styles';
+String _getStylesVarName([String componentName]) =>
+    componentName != null ? 'styles\$$componentName' : 'styles';
