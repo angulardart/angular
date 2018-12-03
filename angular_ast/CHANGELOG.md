@@ -1,3 +1,6 @@
+*   Fixed a type error that occurred when recovering from a missing closing
+    banana ')]'.
+
 ## 0.5.7
 *   Annotations may now have compound names (for example `@foo.bar`).
 
