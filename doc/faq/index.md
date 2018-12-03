@@ -10,4 +10,4 @@ The AngularDart team maintains a set of _FAQs_:
 
 * [Change Detection](change-detection.md)
 * [Component Loading](component-loading.md)
-* [Dependency Injection](di.md)
+* [Dependency Injection](dependency-injection.md)
