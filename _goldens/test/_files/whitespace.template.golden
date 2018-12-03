@@ -78,7 +78,7 @@ class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -144,7 +144,7 @@ class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

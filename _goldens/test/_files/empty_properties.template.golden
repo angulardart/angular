@@ -78,10 +78,10 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
-    _compView_1?.destroy();
-    _compView_2?.destroy();
-    _compView_3?.destroy();
+    _compView_0.destroy();
+    _compView_1.destroy();
+    _compView_2.destroy();
+    _compView_3.destroy();
   }
 }
 
@@ -117,7 +117,7 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyProperties
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -174,7 +174,7 @@ class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponen
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

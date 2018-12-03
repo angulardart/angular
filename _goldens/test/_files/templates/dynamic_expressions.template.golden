@@ -83,7 +83,7 @@ class _ViewComp1Host0 extends AppView<import1.Comp1> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -154,7 +154,7 @@ class _ViewComp2Host0 extends AppView<import1.Comp2> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -225,7 +225,7 @@ class _ViewComp3Host0 extends AppView<import1.Comp3> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -300,7 +300,7 @@ class _ViewComp4Host0 extends AppView<import1.Comp4> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -377,7 +377,7 @@ class _ViewComp5Host0 extends AppView<import1.Comp5> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -425,7 +425,7 @@ class ViewComp60 extends AppView<import1.Comp6> {
 
   @override
   void destroyInternal() {
-    _appEl_0?.destroyNestedViews();
+    _appEl_0.destroyNestedViews();
   }
 }
 
@@ -488,7 +488,7 @@ class _ViewComp6Host0 extends AppView<import1.Comp6> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -536,7 +536,7 @@ class ViewComp70 extends AppView<import1.Comp7> {
 
   @override
   void destroyInternal() {
-    _appEl_0?.destroyNestedViews();
+    _appEl_0.destroyNestedViews();
   }
 }
 
@@ -581,7 +581,7 @@ class _ViewComp71 extends AppView<import1.Comp7> {
 
   @override
   void destroyInternal() {
-    _appEl_0?.destroyNestedViews();
+    _appEl_0.destroyNestedViews();
   }
 }
 
@@ -639,7 +639,7 @@ class _ViewComp7Host0 extends AppView<import1.Comp7> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

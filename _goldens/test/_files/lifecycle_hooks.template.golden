@@ -84,7 +84,7 @@ class _ViewLifecycleHooksComponentHost0 extends AppView<import1.LifecycleHooksCo
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
     _LifecycleHooksComponent_0_5.ngOnDestroy();
   }
 }

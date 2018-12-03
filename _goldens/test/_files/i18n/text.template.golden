@@ -71,7 +71,7 @@ class _ViewI18nTextComponentHost0 extends AppView<import1.I18nTextComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

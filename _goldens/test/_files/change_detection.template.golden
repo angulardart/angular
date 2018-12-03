@@ -80,7 +80,7 @@ class _ViewCheckOnceComponentHost0 extends AppView<import1.CheckOnceComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -141,7 +141,7 @@ class _ViewCheckedComponentHost0 extends AppView<import1.CheckedComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -202,7 +202,7 @@ class _ViewCheckAlwaysComponentHost0 extends AppView<import1.CheckAlwaysComponen
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -263,7 +263,7 @@ class _ViewDetachedComponentHost0 extends AppView<import1.DetachedComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -334,7 +334,7 @@ class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent>
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -385,7 +385,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -425,7 +425,7 @@ class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -504,7 +504,7 @@ class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponen
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -567,7 +567,7 @@ class _ViewStatefulComponentHost0 extends AppView<import1.StatefulComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -628,7 +628,7 @@ class _ViewDefaultComponentHost0 extends AppView<import1.DefaultComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

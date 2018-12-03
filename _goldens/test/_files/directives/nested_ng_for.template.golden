@@ -60,7 +60,7 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
 
   @override
   void destroyInternal() {
-    _appEl_0?.destroyNestedViews();
+    _appEl_0.destroyNestedViews();
   }
 }
 
@@ -108,7 +108,7 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
 
   @override
   void destroyInternal() {
-    _appEl_1?.destroyNestedViews();
+    _appEl_1.destroyNestedViews();
   }
 }
 
@@ -169,7 +169,7 @@ class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponen
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

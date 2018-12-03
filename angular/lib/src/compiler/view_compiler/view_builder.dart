@@ -533,11 +533,10 @@ o.Expression _constructRenderType(
 List<o.Statement> _generateDestroyMethod(CompileView view) {
   var statements = <o.Statement>[];
   for (o.Expression child in view.viewContainers) {
-    statements.add(
-        child.callMethod('destroyNestedViews', [], checked: true).toStmt());
+    statements.add(child.callMethod('destroyNestedViews', []).toStmt());
   }
   for (o.Expression child in view.viewChildren) {
-    statements.add(child.callMethod('destroy', [], checked: true).toStmt());
+    statements.add(child.callMethod('destroy', []).toStmt());
   }
   statements.addAll(view.destroyMethod.finish());
   return statements;

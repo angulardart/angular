@@ -103,12 +103,12 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
-    _compView_1?.destroy();
-    _compView_2?.destroy();
-    _compView_3?.destroy();
-    _compView_4?.destroy();
-    _compView_5?.destroy();
+    _compView_0.destroy();
+    _compView_1.destroy();
+    _compView_2.destroy();
+    _compView_3.destroy();
+    _compView_4.destroy();
+    _compView_5.destroy();
   }
 }
 
@@ -144,7 +144,7 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -215,7 +215,7 @@ class _ViewUsesDefaultChangeDetectionAndInputHost0 extends AppView<import1.UsesD
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -288,7 +288,7 @@ class _ViewDefaultChangeDetectionAndInputHost0 extends AppView<import1.DefaultCh
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -368,7 +368,7 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -408,7 +408,7 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
 
   @override
   void destroyInternal() {
-    _appEl_0?.destroyNestedViews();
+    _appEl_0.destroyNestedViews();
   }
 }
 
@@ -443,7 +443,7 @@ class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -474,7 +474,7 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -524,7 +524,7 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
 
   @override
   void destroyInternal() {
-    _appEl_1?.destroyNestedViews();
+    _appEl_1.destroyNestedViews();
   }
 }
 
@@ -590,7 +590,7 @@ class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -647,7 +647,7 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -708,7 +708,7 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -757,8 +757,8 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
 
   @override
   void destroyInternal() {
-    _appEl_0?.destroyNestedViews();
-    _appEl_1?.destroyNestedViews();
+    _appEl_0.destroyNestedViews();
+    _appEl_1.destroyNestedViews();
   }
 }
 
@@ -793,7 +793,7 @@ class _ViewComponentConditionalFeatures1 extends AppView<import1.ComponentCondit
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -823,7 +823,7 @@ class _ViewComponentConditionalFeatures2 extends AppView<import1.ComponentCondit
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -854,7 +854,7 @@ class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentCo
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -913,7 +913,7 @@ class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -972,7 +972,7 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

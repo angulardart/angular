@@ -72,6 +72,11 @@
     }
     ```
 
+*   The code in generated `AppView` no longer performs null safety `?.` checks
+    when calling child views `.destroy()` or `.destroyNestedViews()`. This means
+    that misbehaving code could have slightly more confusing stack traces
+    (new null errors), at the benefit of reduced code-size across the board.
+
 ### Bug fixes
 
 *   [#1653][]: `AppView.lastRootNode` now correctly returns the last root node
