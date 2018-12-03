@@ -421,6 +421,52 @@ removing _every_ instance of `ReflectiveInjector` use.
 
 [ri-static]: https://cs.corp.google.com/piper///depot/google3/third_party/dart_src/angular/angular/lib/src/di/injector/runtime.dart?sq=package:piper+file://depot/google3+-file:google3/experimental&rcl=218100503&g=0&l=45-82
 
+### PREFER `.provideType` or `.provideToken` to `.get`
+
+When using the `Injector` API directly (or APIs that provide access to
+`Injector`), use `.provideType` or `.provideToken` in order to avoid accidental
+dynamic calls, and improve the performance of DDC and Dart2JS.
+
+**BAD**:
+
+```dart
+void example(Injector injector) {
+  var dog = injector.get(Dog);
+  dog.bark(); // Dynamic call, "dog" is dynamic.
+  dog.meow(); // Runtime error, NoSuchMethod.
+}
+```
+
+**GOOD**: Use `.provideType<T>(Type token)`.
+
+```dart
+void example(Injector injector) {
+  var dog = injector.provideType<Dog>(Dog); // Omitting <Dog> is a runtime error.
+  dog.bark(); // Static call.
+  dog.meow(); // Static error.
+}
+```
+
+You can also infer `<T>` in some cases by relying on existing types:
+
+```dart
+void example(Injector injector) {
+  giveMeADog(injector.provideType(Dog)); // Inferred as .provideType<Dog>
+}
+
+void giveMeADog(Dog dog) {}
+```
+
+**GOOD**: Use `.provideToken` for `OpaqueToken`s.
+
+```dart
+const xsrfToken = OpaqueToken<String>('xsrfToken');
+
+void example(Injector injector) {
+  var token = injector.provideToken(xsrfToken); // inferred as <String>
+}
+```
+
 ## Components
 
 ### CONSIDER avoiding using injection to configure individual components
