@@ -4,8 +4,6 @@
 
 import 'directives.dart';
 export 'directives.dart';
-import 'dart:collection' as collection_lib;
-import 'package:angular/angular.dart';
 import 'package:angular/angular.template.dart' as _ref0;
 
 var _visited = false;

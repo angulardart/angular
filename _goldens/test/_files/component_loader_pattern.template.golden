@@ -4,9 +4,6 @@
 
 import 'component_loader_pattern.dart';
 export 'component_loader_pattern.dart';
-import 'package:angular/angular.dart';
-import 'package:angular/di.template.dart' as di_lib;
-import 'example_of_file_that_is_not_generated_yet.template.dart' as example_lib;
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'example_of_file_that_is_not_generated_yet.template.dart' as _ref0;
 import 'package:angular/angular.template.dart' as _ref1;

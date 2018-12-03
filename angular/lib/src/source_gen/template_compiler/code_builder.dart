@@ -42,34 +42,6 @@ String buildGeneratedCode(
     buffer.writeln("export '$sourceFile';");
   }
 
-  // TODO(matanl): Add this as a helper function in angular_compiler.
-  // Write all other imports out directly.
-  for (final d in element.imports) {
-    if (!d.isDeferred && d.uri != null) {
-      var directive = "import '${d.uri}'";
-      if (d.prefix != null) {
-        directive += ' as ${d.prefix.name}';
-      }
-      if (d.combinators.isNotEmpty) {
-        final isShow = d.combinators.first is ShowElementCombinator;
-        directive += isShow ? ' show ' : ' hide ';
-        directive += d.combinators
-            .map((c) {
-              if (c is ShowElementCombinator) {
-                return c.shownNames;
-              }
-              if (c is HideElementCombinator) {
-                return c.hiddenNames;
-              }
-              return const [];
-            })
-            .expand((i) => i)
-            .join(', ');
-      }
-      buffer.writeln('$directive;');
-    }
-  }
-
   // Write imports required for initReflector.
   buffer.writeln(reflectableOutput.emitImports());
 
