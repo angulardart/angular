@@ -67,7 +67,7 @@ class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

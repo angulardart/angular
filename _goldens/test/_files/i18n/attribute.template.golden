@@ -70,7 +70,7 @@ class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComp
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

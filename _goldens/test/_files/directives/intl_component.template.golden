@@ -93,7 +93,7 @@ class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -159,7 +159,7 @@ class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -225,7 +225,7 @@ class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic>
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 
@@ -291,7 +291,7 @@ class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFi
 
   @override
   void destroyInternal() {
-    _compView_0?.destroy();
+    _compView_0.destroy();
   }
 }
 

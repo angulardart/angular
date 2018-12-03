@@ -10849,24 +10849,12 @@
       this._compView_5.detectChanges$0();
     },
     destroyInternal$0: function() {
-      var t1 = this._compView_0;
-      if (!(t1 == null))
-        t1.destroy$0();
-      t1 = this._compView_1;
-      if (!(t1 == null))
-        t1.destroy$0();
-      t1 = this._compView_2;
-      if (!(t1 == null))
-        t1.destroy$0();
-      t1 = this._compView_3;
-      if (!(t1 == null))
-        t1.destroy$0();
-      t1 = this._compView_4;
-      if (!(t1 == null))
-        t1.destroy$0();
-      t1 = this._compView_5;
-      if (!(t1 == null))
-        t1.destroy$0();
+      this._compView_0.destroy$0();
+      this._compView_1.destroy$0();
+      this._compView_2.destroy$0();
+      this._compView_3.destroy$0();
+      this._compView_4.destroy$0();
+      this._compView_5.destroy$0();
     },
     $asAppView: function() {
       return [O.RootComponent];
@@ -10898,9 +10886,7 @@
       this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      var t1 = this._compView_0;
-      if (!(t1 == null))
-        t1.destroy$0();
+      this._compView_0.destroy$0();
     },
     $asAppView: function() {
       return [O.RootComponent];
@@ -10975,9 +10961,7 @@
       this._appEl_0.detectChangesInNestedViews$0();
     },
     destroyInternal$0: function() {
-      var t1 = this._appEl_0;
-      if (!(t1 == null))
-        t1.destroyNestedViews$0();
+      this._appEl_0.destroyNestedViews$0();
     },
     $asAppView: function() {
       return [O.EmbeddedNgIf];
@@ -11008,9 +10992,7 @@
       this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      var t1 = this._compView_0;
-      if (!(t1 == null))
-        t1.destroy$0();
+      this._compView_0.destroy$0();
     },
     $asAppView: function() {
       return [O.EmbeddedNgIf];
@@ -11050,9 +11032,7 @@
       this._appEl_1.detectChangesInNestedViews$0();
     },
     destroyInternal$0: function() {
-      var t1 = this._appEl_1;
-      if (!(t1 == null))
-        t1.destroyNestedViews$0();
+      this._appEl_1.destroyNestedViews$0();
     },
     $asAppView: function() {
       return [O.EmbeddedNgFor];
@@ -11127,12 +11107,8 @@
       this._appEl_1.detectChangesInNestedViews$0();
     },
     destroyInternal$0: function() {
-      var t1 = this._appEl_0;
-      if (!(t1 == null))
-        t1.destroyNestedViews$0();
-      t1 = this._appEl_1;
-      if (!(t1 == null))
-        t1.destroyNestedViews$0();
+      this._appEl_0.destroyNestedViews$0();
+      this._appEl_1.destroyNestedViews$0();
     },
     $asAppView: function() {
       return [O.ComponentConditionalFeatures];
@@ -11163,9 +11139,7 @@
       this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      var t1 = this._compView_0;
-      if (!(t1 == null))
-        t1.destroy$0();
+      this._compView_0.destroy$0();
     },
     $asAppView: function() {
       return [O.ComponentConditionalFeatures];
@@ -11196,9 +11170,7 @@
       this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      var t1 = this._compView_0;
-      if (!(t1 == null))
-        t1.destroy$0();
+      this._compView_0.destroy$0();
     },
     $asAppView: function() {
       return [O.ComponentConditionalFeatures];
