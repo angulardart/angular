@@ -4,9 +4,6 @@
 
 import 'dart2js_golden.dart';
 export 'dart2js_golden.dart';
-import 'package:angular/angular.dart';
-import 'package:js/js.dart';
-import 'dart2js_golden.template.dart' as ng;
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'dart2js_golden.template.dart' as _ref0;
 import 'package:angular/angular.template.dart' as _ref1;

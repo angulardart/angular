@@ -98,6 +98,9 @@
     consider named arguments in the same vane as positional, and it would
     generate invalid code causing Dart2JS or DDC to fail compilation.
 
+*   The `@deferred` annotation now also defers the annotated component's
+    defining library, rather than just its generated template's library.
+
 [#1653]: https://github.com/dart-lang/angular/issues/1653
 [#1665]: https://github.com/dart-lang/angular/issues/1665
 [#1666]: https://github.com/dart-lang/angular/issues/1666
