@@ -8,8 +8,10 @@ export 'src/frontend.dart'
     show
         composeStabilizers,
         disposeAnyRunningTest,
+        FakeTimeNgZoneStabilizer,
         NgTestBed,
         NgTestFixture,
         NgTestStabilizerFactory,
         NgTestStabilizer,
-        NgZoneStabilizer;
+        NgZoneStabilizer,
+        TimerHookZone;
