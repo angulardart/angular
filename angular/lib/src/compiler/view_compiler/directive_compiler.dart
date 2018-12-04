@@ -29,8 +29,6 @@ class DirectiveCompileResult {
 
 class DirectiveCompiler {
   final ElementSchemaRegistry _schemaRegistry;
-  final ViewNameResolver _nameResolver = DirectiveNameResolver();
-  final CompileViewStorage _storage = CompileViewStorage();
 
   static final _emptySpan =
       SourceSpan(SourceLocation(0), SourceLocation(0), '');
@@ -40,19 +38,23 @@ class DirectiveCompiler {
 
   DirectiveCompileResult compile(ir.Directive directive) {
     assert(directive.requiresDirectiveChangeDetector);
-    var classStmt = _buildChangeDetector(directive);
+
+    final nameResolver = DirectiveNameResolver();
+    final storage = CompileViewStorage();
+    var classStmt = _buildChangeDetector(directive, nameResolver, storage);
     return DirectiveCompileResult(classStmt);
   }
 
-  o.ClassStmt _buildChangeDetector(ir.Directive directive) {
-    var ctor = _createChangeDetectorConstructor(directive);
+  o.ClassStmt _buildChangeDetector(ir.Directive directive,
+      ViewNameResolver nameResolver, CompileViewStorage storage) {
+    var ctor = _createChangeDetectorConstructor(directive, storage);
 
-    var viewMethods = _buildDetectHostChanges(directive);
+    var viewMethods = _buildDetectHostChanges(directive, nameResolver, storage);
 
     var changeDetectorClass = o.ClassStmt(
         _changeDetectorClassName(directive),
         o.importExpr(Identifiers.DirectiveChangeDetector),
-        _storage.fields ?? const [],
+        storage.fields ?? const [],
         const [],
         ctor,
         viewMethods,
@@ -63,12 +65,13 @@ class DirectiveCompiler {
   static String _changeDetectorClassName(ir.Directive directive) =>
       '${directive.name}NgCd';
 
-  o.ClassMethod _createChangeDetectorConstructor(ir.Directive directive) {
+  o.ClassMethod _createChangeDetectorConstructor(
+      ir.Directive directive, CompileViewStorage storage) {
     var instanceType = o.importType(
       directive.metadata.type.identifier,
       typeArgumentsFrom(directive.typeParameters),
     );
-    ViewStorageItem instance = _storage.allocate(
+    ViewStorageItem instance = storage.allocate(
       'instance',
       outputType: instanceType,
       modifiers: [
@@ -79,7 +82,7 @@ class DirectiveCompiler {
     if (_implementsOnChangesLifecycle(directive) ||
         _implementsComponentState(directive)) {
       statements.add(
-          o.WriteClassMemberExpr('directive', _storage.buildReadExpr(instance))
+          o.WriteClassMemberExpr('directive', storage.buildReadExpr(instance))
               .toStmt());
     }
     var constructorArgs = [o.FnParam('this.instance')];
@@ -101,7 +104,8 @@ class DirectiveCompiler {
   static bool _implementsComponentState(ir.Directive directive) =>
       directive.implementsComponentState;
 
-  List<o.ClassMethod> _buildDetectHostChanges(ir.Directive directive) {
+  List<o.ClassMethod> _buildDetectHostChanges(ir.Directive directive,
+      ViewNameResolver nameResolver, CompileViewStorage storage) {
     final hostProps = directive.hostProperties;
     if (hostProps.isEmpty) return [];
 
@@ -121,7 +125,7 @@ class DirectiveCompiler {
     final CompileMethod method = CompileMethod();
 
     final _boundValueConverter = BoundValueConverter.forDirective(
-        directive.metadata, _implicitReceiver, _nameResolver);
+        directive.metadata, _implicitReceiver, nameResolver);
 
     bindAndWriteToRenderer(
       hostProperties,
@@ -129,8 +133,8 @@ class DirectiveCompiler {
       o.variable('view'),
       o.variable('el'),
       false,
-      _nameResolver,
-      _storage,
+      nameResolver,
+      storage,
       method,
     );
 
