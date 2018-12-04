@@ -77,6 +77,9 @@
     that misbehaving code could have slightly more confusing stack traces
     (new null errors), at the benefit of reduced code-size across the board.
 
+*   It's now a build error for `@Component()` to include an entry in
+    `directiveTypes` that types a directive not present in `directives`.
+
 ### Bug fixes
 
 *   [#1653][]: `AppView.lastRootNode` now correctly returns the last root node
