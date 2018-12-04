@@ -9,6 +9,9 @@ class DefaultIRVisitor<R, C> implements IRVisitor<R, C> {
   R visitComponent(Component component, [C context]) => null;
 
   @override
+  R visitDirective(Directive directive, [C context]) => null;
+
+  @override
   R visitComponentView(ComponentView componentView, [C context]) => null;
 
   @override

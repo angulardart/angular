@@ -2,6 +2,9 @@ import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 
+import '../expression_parser/ast.dart' as ast;
+import '../output/output_ast.dart' as o;
+
 /// Base class for all intermediate representation (IR) data model classes.
 abstract class IRNode {
   R accept<R, C>(IRVisitor<R, C> visitor, [C context]);
@@ -26,6 +29,40 @@ class Component implements IRNode {
   @override
   R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
       visitor.visitComponent(this, context);
+}
+
+class Directive implements IRNode {
+  final String name;
+
+  final List<o.TypeParameter> typeParameters;
+
+  final CompileDirectiveMetadata metadata;
+
+  /// Whether the directive requires a change detector class to be generated.
+  ///
+  /// [DirectiveChangeDetector] classes should only be generated if they
+  /// reduce the amount of duplicate code. Therefore we check for the presence
+  /// of host bindings to move from each call site to a single method.
+  final bool requiresDirectiveChangeDetector;
+
+  final bool implementsComponentState;
+  final bool implementsOnChanges;
+
+  final Map<String, ast.AST> hostProperties;
+
+  Directive({
+    this.name,
+    this.typeParameters,
+    this.hostProperties,
+    this.metadata,
+    this.requiresDirectiveChangeDetector,
+    this.implementsComponentState,
+    this.implementsOnChanges,
+  });
+
+  @override
+  R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
+      visitor.visitDirective(this, context);
 }
 
 /// Defines template and style encapsulation options available for Component's
@@ -108,6 +145,7 @@ class HostView implements View {
 
 abstract class IRVisitor<R, C> {
   R visitComponent(Component component, [C context]);
+  R visitDirective(Directive directive, C context);
 
   R visitComponentView(ComponentView componentView, [C context]);
   R visitHostView(HostView hostView, [C context]);

@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import '../core/change_detection/change_detection.dart'
+    show ChangeDetectionStrategy;
+import '../core/metadata/lifecycle_hooks.dart' show LifecycleHooks;
 import '../core/metadata/view.dart' show ViewEncapsulation;
 import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
@@ -98,7 +101,8 @@ class OfflineCompiler {
       _compileComponent(component, statements);
     }
 
-    for (CompileDirectiveMetadata directive in artifacts.directives) {
+    for (CompileDirectiveMetadata directiveMeta in artifacts.directives) {
+      var directive = _convertDirectiveToIR(directiveMeta);
       if (!directive.requiresDirectiveChangeDetector) continue;
       _compileDirective(directive, statements);
     }
@@ -144,11 +148,11 @@ class OfflineCompiler {
     ];
   }
 
-  void _compileDirective(
-      CompileDirectiveMetadata directive, List<o.Statement> statements) {
-    DirectiveCompiler comp = DirectiveCompiler(_templateParser.schemaRegistry);
-    DirectiveCompileResult res = comp.compile(directive);
-    statements.addAll(res.statements);
+  void _compileDirective(ir.Directive directive, List<o.Statement> statements) {
+    final DirectiveCompiler _directiveCompiler =
+        DirectiveCompiler(_templateParser.schemaRegistry);
+    var result = _directiveCompiler.compile(directive);
+    statements.addAll(result.statements);
   }
 
   SourceModule _createSourceModule(String moduleUrl,
@@ -218,4 +222,17 @@ class OfflineCompiler {
         parsedTemplate: parsedTemplate,
         directiveTypes: createHostDirectiveTypes(component.type));
   }
+
+  ir.Directive _convertDirectiveToIR(CompileDirectiveMetadata directiveMeta) =>
+      ir.Directive(
+          name: directiveMeta.identifier.name,
+          typeParameters: directiveMeta.originType.typeParameters,
+          hostProperties: directiveMeta.hostProperties,
+          metadata: directiveMeta,
+          requiresDirectiveChangeDetector:
+              directiveMeta.requiresDirectiveChangeDetector,
+          implementsComponentState:
+              directiveMeta.changeDetection == ChangeDetectionStrategy.Stateful,
+          implementsOnChanges:
+              directiveMeta.lifecycleHooks.contains(LifecycleHooks.onChanges));
 }
