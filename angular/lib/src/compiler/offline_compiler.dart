@@ -71,20 +71,21 @@ class OfflineCompiler {
   final TemplateParser _templateParser;
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;
+  final DirectiveCompiler _directiveCompiler;
   final OutputEmitter _outputEmitter;
 
   /// Maps a moduleUrl to a library prefix. Deferred modules have defer###
   /// prefixes. The moduleUrl has asset: scheme or is a relative url.
   final Map<String, String> _deferredModules;
 
-  const OfflineCompiler(
+  OfflineCompiler(
     this._directiveNormalizer,
     this._templateParser,
     this._styleCompiler,
     this._viewCompiler,
     this._outputEmitter,
     this._deferredModules,
-  );
+  ) : _directiveCompiler = DirectiveCompiler(_templateParser.schemaRegistry);
 
   Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
       CompileDirectiveMetadata directive) {
@@ -149,8 +150,6 @@ class OfflineCompiler {
   }
 
   void _compileDirective(ir.Directive directive, List<o.Statement> statements) {
-    final DirectiveCompiler _directiveCompiler =
-        DirectiveCompiler(_templateParser.schemaRegistry);
     var result = _directiveCompiler.compile(directive);
     statements.addAll(result.statements);
   }
