@@ -1,12 +1,11 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy, ChangeDetectorState;
-import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
+    show ChangeDetectorState;
 import 'package:angular_compiler/cli.dart';
 
-import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart';
+import '../ir/model.dart' as ir;
 import '../output/convert.dart' show typeArgumentsFrom;
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
@@ -39,13 +38,13 @@ class DirectiveCompiler {
 
   DirectiveCompiler(this._schemaRegistry);
 
-  DirectiveCompileResult compile(CompileDirectiveMetadata directive) {
+  DirectiveCompileResult compile(ir.Directive directive) {
     assert(directive.requiresDirectiveChangeDetector);
     var classStmt = _buildChangeDetector(directive);
     return DirectiveCompileResult(classStmt);
   }
 
-  o.ClassStmt _buildChangeDetector(CompileDirectiveMetadata directive) {
+  o.ClassStmt _buildChangeDetector(ir.Directive directive) {
     var ctor = _createChangeDetectorConstructor(directive);
 
     var viewMethods = _buildDetectHostChanges(directive);
@@ -57,18 +56,17 @@ class DirectiveCompiler {
         const [],
         ctor,
         viewMethods,
-        typeParameters: directive.originType.typeParameters);
+        typeParameters: directive.typeParameters);
     return changeDetectorClass;
   }
 
-  static String _changeDetectorClassName(CompileDirectiveMetadata directive) =>
-      '${directive.type.name}NgCd';
+  static String _changeDetectorClassName(ir.Directive directive) =>
+      '${directive.name}NgCd';
 
-  o.ClassMethod _createChangeDetectorConstructor(
-      CompileDirectiveMetadata directive) {
+  o.ClassMethod _createChangeDetectorConstructor(ir.Directive directive) {
     var instanceType = o.importType(
-      directive.type.identifier,
-      typeArgumentsFrom(directive.originType.typeParameters),
+      directive.metadata.type.identifier,
+      typeArgumentsFrom(directive.typeParameters),
     );
     ViewStorageItem instance = _storage.allocate(
       'instance',
@@ -97,15 +95,13 @@ class DirectiveCompiler {
     return o.ClassMethod(null, constructorArgs, statements);
   }
 
-  static bool _implementsOnChangesLifecycle(
-          CompileDirectiveMetadata directive) =>
-      directive.lifecycleHooks.contains(LifecycleHooks.onChanges);
+  static bool _implementsOnChangesLifecycle(ir.Directive directive) =>
+      directive.implementsOnChanges;
 
-  static bool _implementsComponentState(CompileDirectiveMetadata directive) =>
-      directive.changeDetection == ChangeDetectionStrategy.Stateful;
+  static bool _implementsComponentState(ir.Directive directive) =>
+      directive.implementsComponentState;
 
-  List<o.ClassMethod> _buildDetectHostChanges(
-      CompileDirectiveMetadata directive) {
+  List<o.ClassMethod> _buildDetectHostChanges(ir.Directive directive) {
     final hostProps = directive.hostProperties;
     if (hostProps.isEmpty) return [];
 
@@ -125,7 +121,7 @@ class DirectiveCompiler {
     final CompileMethod method = CompileMethod();
 
     final _boundValueConverter = BoundValueConverter.forDirective(
-        directive, _implicitReceiver, _nameResolver);
+        directive.metadata, _implicitReceiver, _nameResolver);
 
     bindAndWriteToRenderer(
       hostProperties,
