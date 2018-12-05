@@ -39,6 +39,7 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
       instance = _FakeTimer(zone.bindCallback(wrappedCallback), removeTimer,
           stabilizer._lastElapse + duration);
       pendingTimers.add(instance);
+      return instance;
     };
     return stabilizer = FakeTimeNgZoneStabilizer._(
       ngZone,
@@ -65,14 +66,20 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
     _lastElapse = waitUntil;
   }
 
+  /// Completes all the times that [shouldComplete] in time order and update
+  /// [_lastElapse] with each timer completes.
   Future<void> _completeTimers(bool Function(_FakeTimer) shouldComplete) async {
-    var toComplete = pendingTimers.where(shouldComplete).toList();
-    do {
-      for (final pendingTimer in toComplete) {
-        await update(pendingTimer.complete);
+    while (true) {
+      var toComplete = pendingTimers.where(shouldComplete).toList();
+      if (toComplete.isEmpty) {
+        break;
       }
-      toComplete = pendingTimers.where(shouldComplete).toList();
-    } while (toComplete.isNotEmpty);
+
+      toComplete.sort(_FakeTimer._compareByCompleteAfter);
+      var firstPendingTimer = toComplete.first;
+      _lastElapse = firstPendingTimer._completeAfter;
+      await update(firstPendingTimer.complete);
+    }
   }
 }
 
@@ -84,8 +91,10 @@ class _FakeTimer implements Timer {
 
   _FakeTimer(this._complete, this._clearPendingStatus, this._completeAfter);
 
+  bool _isActive = true;
+
   @override
-  var isActive = true;
+  bool get isActive => _isActive;
 
   @override
   int get tick => 0;
@@ -94,7 +103,7 @@ class _FakeTimer implements Timer {
   void cancel() {
     if (isActive) {
       _clearPendingStatus();
-      isActive = false;
+      _isActive = false;
     }
   }
 
@@ -104,4 +113,7 @@ class _FakeTimer implements Timer {
       cancel();
     }
   }
+
+  static int _compareByCompleteAfter(_FakeTimer a, _FakeTimer b) =>
+      a._completeAfter.compareTo(b._completeAfter);
 }
