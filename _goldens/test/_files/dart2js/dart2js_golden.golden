@@ -2511,6 +2511,9 @@
     LinkedHashMap__makeEmpty: function() {
       return new H.JsLinkedHashMap(0, 0, [null, null]);
     },
+    LinkedHashMap__makeLiteral: function(keyValuePairs) {
+      return H.fillLiteralMap(keyValuePairs, new H.JsLinkedHashMap(0, 0, [null, null]));
+    },
     _LinkedIdentityHashMap__LinkedIdentityHashMap$es6: function($K, $V) {
       return new P._LinkedIdentityHashMap(0, 0, [$K, $V]);
     },
@@ -3602,25 +3605,26 @@
     },
     NgZone$: function(enableLongStackTrace) {
       var t1 = [-1];
-      t1 = new Y.NgZone(new P._SyncBroadcastStreamController(null, null, 0, t1), new P._SyncBroadcastStreamController(null, null, 0, t1), new P._SyncBroadcastStreamController(null, null, 0, t1), new P._SyncBroadcastStreamController(null, null, 0, [Y.NgZoneError]), false, false, true, 0, false, false, 0, H.setRuntimeTypeInfo([], [Y._WrappedTimer]));
+      t1 = new Y.NgZone(new P.Object(), new P._SyncBroadcastStreamController(null, null, 0, t1), new P._SyncBroadcastStreamController(null, null, 0, t1), new P._SyncBroadcastStreamController(null, null, 0, t1), new P._SyncBroadcastStreamController(null, null, 0, [Y.NgZoneError]), false, false, true, 0, false, false, 0, H.setRuntimeTypeInfo([], [Y._WrappedTimer]));
       t1.NgZone$1$enableLongStackTrace(false);
       return t1;
     },
-    NgZone: function NgZone(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11) {
+    NgZone: function NgZone(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12) {
       var _ = this;
-      _._onTurnStart = t0;
-      _._onMicrotaskEmpty = t1;
-      _._onTurnDone = t2;
-      _._onError = t3;
+      _._thisZoneKey = t0;
+      _._onTurnStart = t1;
+      _._onMicrotaskEmpty = t2;
+      _._onTurnDone = t3;
+      _._onError = t4;
       _._innerZone = _._outerZone = null;
-      _._hasPendingMicrotasks = t4;
-      _._hasPendingMacrotasks = t5;
-      _._isStable = t6;
-      _._nesting = t7;
-      _._isRunning = t8;
-      _._disposed = t9;
-      _._pendingMicrotasks = t10;
-      _._pendingTimers = t11;
+      _._hasPendingMicrotasks = t5;
+      _._hasPendingMacrotasks = t6;
+      _._isStable = t7;
+      _._nesting = t8;
+      _._isRunning = t9;
+      _._disposed = t10;
+      _._pendingMicrotasks = t11;
+      _._pendingTimers = t12;
     },
     NgZone__scheduleMicrotask_closure: function NgZone__scheduleMicrotask_closure(t0, t1) {
       this.$this = t0;
@@ -10237,7 +10241,7 @@
   };
   D.Testability__watchAngularEvents__closure.prototype = {
     call$1: function(_) {
-      if (J.$eq$($.Zone__current.$index(0, $.$get$NgZone__zoneKey()), true))
+      if ($.Zone__current.$index(0, $.$get$NgZone__anyZoneKey()) === true)
         H.throwExpression(P.Exception_Exception("Expected to not be in Angular Zone, but it is!"));
       P.scheduleMicrotask(new D.Testability__watchAngularEvents___closure(this.$this));
     },
@@ -10277,11 +10281,7 @@
       this._innerZone = this._createInnerZone$2$handleUncaughtError(t1, this.get$_onErrorWithoutLongStackTrace());
     },
     _createInnerZone$2$handleUncaughtError: function(zone, handleUncaughtError) {
-      var t1, t2;
-      t1 = P._ZoneSpecification$(null, this.get$_createTimer(), null, null, handleUncaughtError, null, null, null, null, this.get$_run(), this.get$_runBinary(), this.get$_runUnary(), this.get$_ng_zone$_scheduleMicrotask());
-      t2 = P._LinkedIdentityHashMap__LinkedIdentityHashMap$es6(null, null);
-      t2.$indexSet(0, $.$get$NgZone__zoneKey(), true);
-      return zone.fork$2$specification$zoneValues(t1, t2);
+      return zone.fork$2$specification$zoneValues(P._ZoneSpecification$(null, this.get$_createTimer(), null, null, handleUncaughtError, null, null, null, null, this.get$_run(), this.get$_runBinary(), this.get$_runUnary(), this.get$_ng_zone$_scheduleMicrotask()), P.LinkedHashMap__makeLiteral([this._thisZoneKey, true, $.$get$NgZone__anyZoneKey(), true]));
     },
     _ng_zone$_scheduleMicrotask$4: function($self, $parent, zone, fn) {
       var implementation, implZone;
@@ -11746,7 +11746,7 @@
       var t1 = W.document();
       return t1.createComment("");
     });
-    lazy($, "NgZone__zoneKey", "$get$NgZone__zoneKey", function() {
+    lazy($, "NgZone__anyZoneKey", "$get$NgZone__anyZoneKey", function() {
       return new P.Object();
     });
   })();

@@ -10,8 +10,11 @@ import 'package:stack_trace/stack_trace.dart';
 /// asynchronous actions from AngularDart that occur frequently (such as mouse
 /// movement, or a polling timer) and have a costly impact on change detection.
 class NgZone {
-  /// Private object used to specify whether [NgZone] exists in a [Zone].
-  static final _zoneKey = Object();
+  /// Private object used to specify whether any [NgZone] is currently running.
+  static final _anyZoneKey = Object();
+
+  /// Private object used to specify whether [NgZone] exists in this [NgZone].
+  final _thisZoneKey = Object();
 
   /// Returns whether an instance of [NgZone] is currently executing.
   ///
@@ -24,7 +27,7 @@ class NgZone {
   /// See the [Zone] documentation for details:
   /// https://www.dartlang.org/articles/libraries/zones
   static bool isInAngularZone() {
-    return Zone.current[_zoneKey] == true;
+    return identical(Zone.current[_anyZoneKey], true);
   }
 
   /// In development mode, throws an error if [isInAngularZone] returns `false`.
@@ -78,14 +81,6 @@ class NgZone {
     }
   }
 
-  /// **INTERNAL ONLY**: See [inAngularZone].
-  bool _inAngularZone(Zone zone) {
-    if (zone == null || zone == _outerZone) {
-      return false;
-    }
-    return zone == _innerZone || _inAngularZone(zone.parent);
-  }
-
   /// Whether we are currently executing within this AngularDart zone.
   ///
   /// If `true`, the side-effects of executing callbacks are being observed.
@@ -108,7 +103,7 @@ class NgZone {
         handleUncaughtError: handleUncaughtError,
         createTimer: _createTimer,
       ),
-      zoneValues: new Map.identity()..[_zoneKey] = true,
+      zoneValues: {_thisZoneKey: true, _anyZoneKey: true},
     );
   }
 
@@ -428,7 +423,9 @@ bool hasPendingMacrotasks(NgZone zone) => zone._hasPendingMacrotasks;
 ///
 /// **INTERNAL ONLY**: This is an experimental API subject to change.
 @experimental
-bool inAngularZone(NgZone ngZone, Zone zone) => ngZone._inAngularZone(zone);
+bool inAngularZone(NgZone ngZone, Zone zone) {
+  return identical(Zone.current[ngZone._thisZoneKey], true);
+}
 
 /// A `Timer` wrapper that lets you specify additional functions to call when it
 /// is cancelled.
