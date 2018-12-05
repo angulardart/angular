@@ -55,15 +55,11 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     final directive = element.accept(_ComponentVisitor(_library));
     if (directive != null) {
       if (directive.isComponent) {
-        final directives = _visitDirectives(element);
-        final directiveTypes = _visitDirectiveTypes(element);
-        final pipes = _visitPipes(element);
-        _failFastOnUnusedDirectiveTypes(element, directives, directiveTypes);
         components.add(NormalizedComponentWithViewDirectives(
           directive,
-          directives,
-          directiveTypes,
-          pipes,
+          _visitDirectives(element),
+          _visitDirectiveTypes(element),
+          _visitPipes(element),
         ));
       } else {
         directives.add(directive);
@@ -809,34 +805,6 @@ void _failFastOnAnalysisErrors(
           'failed.\n\n${messages.analysisFailureReasons}',
     ),
   );
-}
-
-/// Ensures that all entries in [directiveTypes] match an entry in [directives].
-void _failFastOnUnusedDirectiveTypes(
-  ClassElement element,
-  List<CompileDirectiveMetadata> directives,
-  List<CompileTypedMetadata> directiveTypes,
-) {
-  if (directiveTypes.isEmpty) return;
-
-  // Creates a unique key given a module URL and symbol name.
-  String key(String moduleUrl, String name) => '$moduleUrl#$name';
-
-  // The set of directives declared for use.
-  var used = directives.map((d) => key(d.type.moduleUrl, d.type.name)).toSet();
-
-  // Throw if the user attempts to type any directives that aren't used.
-  for (var directiveType in directiveTypes) {
-    var typed = key(directiveType.moduleUrl, directiveType.name);
-    if (!used.contains(typed)) {
-      BuildError.throwForAnnotation(
-          element.metadata.firstWhere(isComponent),
-          'Entry in "directiveTypes" missing corresponding entry in '
-          '"directives" for "${directiveType.name}".\n\n'
-          'If you recently removed "${directiveType.name}" from "directives", '
-          'please also remove its corresponding entry from "directiveTypes".');
-    }
-  }
 }
 
 void _prohibitBindingChange(
