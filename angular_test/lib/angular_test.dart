@@ -13,5 +13,5 @@ export 'src/frontend.dart'
         NgTestFixture,
         NgTestStabilizerFactory,
         NgTestStabilizer,
-        NgZoneStabilizer,
+        RealTimeNgZoneStabilizer,
         TimerHookZone;

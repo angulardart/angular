@@ -6,7 +6,6 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:angular/di.dart';
-import 'package:angular/experimental.dart';
 
 import '../errors.dart';
 import 'ng_zone/timer_hook_zone.dart';
@@ -204,72 +203,4 @@ class _DelegatingNgTestStabilizer extends NgTestStabilizer {
       _updatedAtLeastOnce = false;
     }
   }
-}
-
-/// A wrapper API that reports stability based on the Angular [NgZone].
-class NgZoneStabilizer extends NgTestStabilizer {
-  final NgZone _ngZone;
-
-  const NgZoneStabilizer(this._ngZone);
-
-  /// Zone is considered stable when there are no more micro-tasks or timers.
-  @override
-  bool get isStable {
-    return !(_ngZone.hasPendingMacrotasks || _ngZone.hasPendingMicrotasks);
-  }
-
-  @override
-  Future<bool> update([void Function() fn]) {
-    return Future.sync(() => _waitForZone(fn)).then((_) => isStable);
-  }
-
-  Future<void> _waitForZone([void fn()]) async {
-    // If we haven't supplied anything, at least run a simple function w/ task.
-    // This gives enough "work" to do where we can catch an error or stability.
-    scheduleMicrotask(() {
-      _ngZone.runGuarded(fn ?? () => scheduleMicrotask(() {}));
-    });
-
-    var ngZoneErrorFuture = _ngZone.onError.first;
-    await _waitForFutureOrFailOnNgZoneError(
-        _ngZone.onTurnDone.first, ngZoneErrorFuture);
-
-    var longestPendingTimerDuration = longestPendingTimer(_ngZone);
-    if (longestPendingTimerDuration != Duration.zero) {
-      await _waitForFutureOrFailOnNgZoneError(
-          Future.delayed(longestPendingTimerDuration), ngZoneErrorFuture);
-    }
-  }
-
-  Future<void> _waitForFutureOrFailOnNgZoneError(
-      Future future, Future<NgZoneError> ngZoneErrorFuture) async {
-    // Stop executing as soon as either [future] or an error occurs.
-    NgZoneError caughtError;
-    var finishedWithoutError = false;
-    await Future.any([
-      future,
-      ngZoneErrorFuture.then((e) {
-        if (!finishedWithoutError) {
-          caughtError = e;
-        }
-      })
-    ]);
-
-    // Give a bit of time to catch up, we could still have an occur in future.
-    await Future(() {});
-
-    // Fail if we caught an error.
-    if (caughtError != null) {
-      return Future.error(
-        caughtError.error,
-        StackTrace.fromString(caughtError.stackTrace.join('\n')),
-      );
-    }
-
-    // Mark finish.
-    finishedWithoutError = true;
-  }
-
-  @override
-  String toString() => '$NgZoneStabilizer {isStable: $isStable}';
 }

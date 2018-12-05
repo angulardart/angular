@@ -19,6 +19,10 @@
 
 *   Removed `NgTestStabilizer.all`. See `composeStabilizers` instead.
 
+*   Removed `NgZoneStabilizer`. The new class is `RealTimeNgZoneStabilizer`,
+    though most users should not be impacted `NgTestBed` now uses the new
+    stabilizer by default.
+
 ### New Features
 
 *   Added a new `NgTestStabilizer.alwaysStable`, which does what it sounds like
