@@ -41,6 +41,48 @@ void main() {
       expect(lastTimersRun, [1, 2, 3]);
     });
 
+    test('should elapse a series of nested timers', () async {
+      var lastTimersRun = <int>[];
+      ngZone.run(() {
+        Timer(Duration(seconds: 1), () {
+          lastTimersRun.add(1);
+          Timer(Duration(seconds: 2), () {
+            lastTimersRun.add(2);
+            Timer(Duration(seconds: 3), () {
+              lastTimersRun.add(3);
+            });
+          });
+        });
+      });
+      expect(lastTimersRun, isEmpty);
+
+      // Elapsed: 0
+      await stabilizer.elapse(Duration(seconds: 0));
+      expect(lastTimersRun, isEmpty);
+
+      // Elapsed: 1
+      // Only the first timer should complete. and the second timer should
+      // be added as pending timers with elapsedTime = 1s.
+      await stabilizer.elapse(Duration(seconds: 1));
+      expect(lastTimersRun, [1]);
+
+      // Elapsed: 2
+      // The second timer should not complete.
+      await stabilizer.elapse(Duration(seconds: 1));
+      expect(lastTimersRun, [1]);
+
+      // Elapsed: 3
+      // The second timer should complete and the third one should be added in
+      // pending timers.
+      await stabilizer.elapse(Duration(seconds: 1));
+      expect(lastTimersRun, [1, 2]);
+
+      // Elapsed: 6
+      // All timers complete.
+      await stabilizer.elapse(Duration(seconds: 3));
+      expect(lastTimersRun, [1, 2, 3]);
+    });
+
     test('should elapse timers manually, microtasks automatically', () async {
       var tasks = <String>[];
       ngZone.run(() {
