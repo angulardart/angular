@@ -81,13 +81,26 @@ class BuildError extends Error {
   // https://github.com/dart-lang/sdk/issues/32454
   static SourceSpan _getSourceSpanFrom(ElementAnnotation annotation) {
     final internals = annotation as ElementAnnotationImpl;
+    final lineInfo = internals.compilationUnit.lineInfo;
     final astNode = internals.annotationAst;
     final contents = annotation.source.contents.data;
     final start = astNode.offset;
+    final startInfo = lineInfo.getLocation(start);
     final end = start + astNode.length;
+    final endInfo = lineInfo.getLocation(end);
     return SourceSpan(
-      SourceLocation(start, sourceUrl: annotation.source.uri),
-      SourceLocation(end, sourceUrl: annotation.source.uri),
+      SourceLocation(
+        start,
+        sourceUrl: annotation.source.uri,
+        line: startInfo.lineNumber,
+        column: startInfo.columnNumber,
+      ),
+      SourceLocation(
+        end,
+        sourceUrl: annotation.source.uri,
+        line: endInfo.lineNumber,
+        column: endInfo.columnNumber,
+      ),
       contents.substring(start, end),
     );
   }
