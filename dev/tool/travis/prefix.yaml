@@ -49,6 +49,7 @@ jobs:
     - env: PKG="examples/hacker_news_pwa"
     - env: PKG="examples/github_issues"
     - env: PKG="examples/registration_form"
+    - env: PKG="examples/i18n"
 
   include:
 
