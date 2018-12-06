@@ -784,12 +784,22 @@ void _failFastOnAnalysisErrors(
     messages.unresolvedSource(
       errors.map((e) {
         final sourceUrl = e.source.uri;
-        final sourceContent = e.source.contents.data;
+        final sourceContent = componentType.context.getContents(e.source).data;
         LineInfo lineInfo = LineInfo.fromContent(sourceContent);
         int startOffset = e.offset;
         int endOffset = e.offset + e.length;
         CharacterLocation start = lineInfo.getLocation(startOffset);
         CharacterLocation end = lineInfo.getLocation(endOffset);
+
+        if (sourceContent.isEmpty) {
+          return SourceSpanMessageTuple(
+              SourceSpan(
+                  SourceLocation(0, sourceUrl: sourceUrl, line: 0, column: 0),
+                  SourceLocation(0, sourceUrl: sourceUrl, line: 0, column: 0),
+                  ''),
+              '${e.message} [with offsets into source file missing]');
+        }
+
         return SourceSpanMessageTuple(
             SourceSpan(
               SourceLocation(startOffset,
@@ -800,7 +810,7 @@ void _failFastOnAnalysisErrors(
                   sourceUrl: sourceUrl,
                   line: end.lineNumber,
                   column: end.columnNumber),
-              e.source.contents.data.substring(startOffset, endOffset),
+              sourceContent.substring(startOffset, endOffset),
             ),
             e.message);
       }),
