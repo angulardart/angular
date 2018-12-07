@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:analyzer/src/generated/source.dart';
 import 'package:analyzer/dart/element/element.dart';
 // TODO(https://github.com/dart-lang/sdk/issues/32454):
 // ignore: implementation_imports
 import 'package:analyzer/src/dart/element/element.dart';
+import 'package:analyzer/source/line_info.dart';
 import 'package:build/build.dart' as build;
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
@@ -61,6 +63,44 @@ Future<T> runBuildZoned<T>(
   return completer.future;
 }
 
+/// Creates a source span with line and column numbers.
+///
+/// If known to the caller, [lineInfo] should be provided to avoid the cost of
+/// recomputing it from [source].
+SourceSpan sourceSpanWithLineInfo(
+  int offset,
+  int length,
+  String source,
+  Uri uri, {
+  LineInfo lineInfo,
+}) {
+  lineInfo ??= LineInfo.fromContent(source);
+  var end = offset + length;
+  return SourceSpan(
+    _location(offset, uri, lineInfo),
+    _location(end, uri, lineInfo),
+    source.substring(offset, end),
+  );
+}
+
+/// Creates a SourceLocation with line and column numbers from [lineInfo].
+///
+/// This handles line and column number discrepancies between package:analyzer
+/// and package:source_span.
+SourceLocation _location(int offset, Uri uri, LineInfo lineInfo) {
+  final location = lineInfo.getLocation(offset);
+  return SourceLocation(
+    offset,
+    // Subtracting by one is necessary because `CharacterLocation` from
+    // package:analyzer returns one-based line and column numbers, while
+    // `SourceLocation` from package:source_span expects to be given
+    // zero-based line and column numbers.
+    line: location.lineNumber - 1,
+    column: location.columnNumber - 1,
+    sourceUrl: uri,
+  );
+}
+
 /// Base error type for all fatal errors encountered while compiling.
 ///
 /// There is _intentionally_ not a `logFailure` function, as all failures should
@@ -80,28 +120,14 @@ class BuildError extends Error {
   // TODO: Remove internal API once ElementAnnotation has source information.
   // https://github.com/dart-lang/sdk/issues/32454
   static SourceSpan _getSourceSpanFrom(ElementAnnotation annotation) {
-    final internals = annotation as ElementAnnotationImpl;
-    final lineInfo = internals.compilationUnit.lineInfo;
-    final astNode = internals.annotationAst;
-    final contents = annotation.source.contents.data;
-    final start = astNode.offset;
-    final startInfo = lineInfo.getLocation(start);
-    final end = start + astNode.length;
-    final endInfo = lineInfo.getLocation(end);
-    return SourceSpan(
-      SourceLocation(
-        start,
-        sourceUrl: annotation.source.uri,
-        line: startInfo.lineNumber,
-        column: startInfo.columnNumber,
-      ),
-      SourceLocation(
-        end,
-        sourceUrl: annotation.source.uri,
-        line: endInfo.lineNumber,
-        column: endInfo.columnNumber,
-      ),
-      contents.substring(start, end),
+    final annotationImpl = annotation as ElementAnnotationImpl;
+    final astNode = annotationImpl.annotationAst;
+    return sourceSpanWithLineInfo(
+      astNode.offset,
+      astNode.length,
+      annotation.source.contents.data,
+      annotation.source.uri,
+      lineInfo: annotationImpl.compilationUnit.lineInfo,
     );
   }
 

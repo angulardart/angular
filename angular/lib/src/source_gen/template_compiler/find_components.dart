@@ -4,7 +4,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
-import 'package:analyzer/source/line_info.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -747,26 +746,19 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
 // If we don't see any errors in the wild, delete this code.
 void _failFastOnUnresolvedExpressions(Iterable<AstNode> expressions,
     ClassElement componentType, CompilationUnitElement compilationUnit) {
-  final sourceUrl = componentType.source.uri;
-  LineInfo lineInfo = compilationUnit.lineInfo;
   throw BuildError(
     messages.unresolvedSource(
       expressions.map((e) {
-        CharacterLocation start = lineInfo.getLocation(e.offset);
-        CharacterLocation end = lineInfo.getLocation(e.offset + e.length);
         return SourceSpanMessageTuple(
-            SourceSpan(
-              SourceLocation(e.offset,
-                  sourceUrl: sourceUrl,
-                  line: start.lineNumber,
-                  column: start.columnNumber),
-              SourceLocation(e.offset + e.length,
-                  sourceUrl: sourceUrl,
-                  line: end.lineNumber,
-                  column: end.columnNumber),
-              e.toSource(),
-            ),
-            'This argument *may* have not been resolved');
+          sourceSpanWithLineInfo(
+            e.offset,
+            e.length,
+            componentType.source.contents.data,
+            componentType.source.uri,
+            lineInfo: compilationUnit.lineInfo,
+          ),
+          'This argument *may* have not been resolved',
+        );
       }),
       reason: ''
           'Compiling @Component annotated class "${componentType.name}" '
@@ -785,11 +777,6 @@ void _failFastOnAnalysisErrors(
       errors.map((e) {
         final sourceUrl = e.source.uri;
         final sourceContent = componentType.context.getContents(e.source).data;
-        LineInfo lineInfo = LineInfo.fromContent(sourceContent);
-        int startOffset = e.offset;
-        int endOffset = e.offset + e.length;
-        CharacterLocation start = lineInfo.getLocation(startOffset);
-        CharacterLocation end = lineInfo.getLocation(endOffset);
 
         if (sourceContent.isEmpty) {
           return SourceSpanMessageTuple(
@@ -801,18 +788,14 @@ void _failFastOnAnalysisErrors(
         }
 
         return SourceSpanMessageTuple(
-            SourceSpan(
-              SourceLocation(startOffset,
-                  sourceUrl: sourceUrl,
-                  line: start.lineNumber,
-                  column: start.columnNumber),
-              SourceLocation(endOffset,
-                  sourceUrl: sourceUrl,
-                  line: end.lineNumber,
-                  column: end.columnNumber),
-              sourceContent.substring(startOffset, endOffset),
-            ),
-            e.message);
+          sourceSpanWithLineInfo(
+            e.offset,
+            e.length,
+            sourceContent,
+            sourceUrl,
+          ),
+          e.message,
+        );
       }),
       reason: ''
           'Compiling @Component-annotated class "${componentType.name}" '
