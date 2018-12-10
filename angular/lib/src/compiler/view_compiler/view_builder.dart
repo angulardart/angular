@@ -1,4 +1,3 @@
-import 'package:angular/src/compiler/output/output_ast.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
@@ -699,7 +698,7 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     statements.insert(
         0,
         o.DeclareVarStmt(cachedParentIndexVarName,
-            ReadClassMemberExpr('viewData').prop('parentIndex')));
+            o.ReadClassMemberExpr('viewData').prop('parentIndex')));
   }
   return statements;
 }
