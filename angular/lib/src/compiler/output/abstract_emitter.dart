@@ -19,10 +19,12 @@ class EmitterVisitorContext {
   final Map<String, String> deferredModules;
   int _indent;
   int _outputPos = 0;
-  // Current method being emitted. Allows expressions access to method
-  // parameter names.
-  o.ClassMethod _activeMethod;
-  bool _inSuperCall = false;
+
+  /// Parameter names of the current method being emitted.
+  ///
+  /// This is used to automatically scope any member variables with `this` when
+  /// shadowed by a parameter.
+  Set<String> _parametersInScope;
 
   final List<_EmittedLine> _lines;
   final List<o.ClassStmt> _classes = [];
@@ -108,26 +110,17 @@ class EmitterVisitorContext {
 
   /// Creates method context for expressions.
   void enterMethod(o.ClassMethod method) {
-    _activeMethod = method;
+    _parametersInScope = method.paramNames;
   }
 
   /// Removes method context for expressions.
   void exitMethod() {
-    _activeMethod = null;
+    _parametersInScope = null;
   }
 
-  /// Creates super call context for expressions.
-  void enterSuperCall() {
-    _inSuperCall = true;
-  }
-
-  /// Removes super call context for expressions.
-  void exitSuperCall() {
-    _inSuperCall = false;
-  }
-
-  bool get inSuperCall => _inSuperCall;
-  o.ClassMethod get activeMethod => _activeMethod;
+  /// Whether a class member is shadowed by a parameter with the same [name].
+  bool shadows(String name) =>
+      _parametersInScope != null && _parametersInScope.contains(name);
 }
 
 abstract class AbstractEmitterVisitor

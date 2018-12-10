@@ -58,80 +58,80 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     setupComponentType(_renderType);
   }
   import1.A get _A_0_6 {
-    if ((this.__A_0_6 == null)) {
+    if ((__A_0_6 == null)) {
       (__A_0_6 = import1.A());
     }
-    return this.__A_0_6;
+    return __A_0_6;
   }
 
   import1.B get _B_0_7 {
-    if ((this.__B_0_7 == null)) {
+    if ((__B_0_7 == null)) {
       (__B_0_7 = import1.B());
     }
-    return this.__B_0_7;
+    return __B_0_7;
   }
 
   import1.C get _C_0_8 {
-    if ((this.__C_0_8 == null)) {
+    if ((__C_0_8 == null)) {
       (__C_0_8 = import1.C());
     }
-    return this.__C_0_8;
+    return __C_0_8;
   }
 
   import1.A get _A_1_6 {
-    if ((this.__A_1_6 == null)) {
+    if ((__A_1_6 == null)) {
       (__A_1_6 = import1.A());
     }
-    return this.__A_1_6;
+    return __A_1_6;
   }
 
   import1.B get _B_1_7 {
-    if ((this.__B_1_7 == null)) {
+    if ((__B_1_7 == null)) {
       (__B_1_7 = import1.B());
     }
-    return this.__B_1_7;
+    return __B_1_7;
   }
 
   import1.C get _C_1_8 {
-    if ((this.__C_1_8 == null)) {
+    if ((__C_1_8 == null)) {
       (__C_1_8 = import1.C());
     }
-    return this.__C_1_8;
+    return __C_1_8;
   }
 
   import1.A2 get _A_5_7 {
-    if ((this.__A_5_7 == null)) {
+    if ((__A_5_7 == null)) {
       (__A_5_7 = import1.A2());
     }
-    return this.__A_5_7;
+    return __A_5_7;
   }
 
   import1.B get _B_5_8 {
-    if ((this.__B_5_8 == null)) {
+    if ((__B_5_8 == null)) {
       (__B_5_8 = import1.B());
     }
-    return this.__B_5_8;
+    return __B_5_8;
   }
 
   import1.C get _C_5_9 {
-    if ((this.__C_5_9 == null)) {
+    if ((__C_5_9 == null)) {
       (__C_5_9 = import1.C());
     }
-    return this.__C_5_9;
+    return __C_5_9;
   }
 
   import1.D2 get _D_5_10 {
-    if ((this.__D_5_10 == null)) {
+    if ((__D_5_10 == null)) {
       (__D_5_10 = import1.D2());
     }
-    return this.__D_5_10;
+    return __D_5_10;
   }
 
   import1.A2 get _A_6_8 {
-    if ((this.__A_6_8 == null)) {
+    if ((__A_6_8 == null)) {
       (__A_6_8 = import1.A2());
     }
-    return this.__A_6_8;
+    return __A_6_8;
   }
 
   @override
@@ -337,24 +337,24 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
   import1.C __C_0_8;
   _ViewChildComponentProvidingA$B$CHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.A get _A_0_6 {
-    if ((this.__A_0_6 == null)) {
+    if ((__A_0_6 == null)) {
       (__A_0_6 = import1.A());
     }
-    return this.__A_0_6;
+    return __A_0_6;
   }
 
   import1.B get _B_0_7 {
-    if ((this.__B_0_7 == null)) {
+    if ((__B_0_7 == null)) {
       (__B_0_7 = import1.B());
     }
-    return this.__B_0_7;
+    return __B_0_7;
   }
 
   import1.C get _C_0_8 {
-    if ((this.__C_0_8 == null)) {
+    if ((__C_0_8 == null)) {
       (__C_0_8 = import1.C());
     }
-    return this.__C_0_8;
+    return __C_0_8;
   }
 
   @override
@@ -431,10 +431,10 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
   import1.D __D_0_6;
   _ViewChildComponentWithNgContentProviding$DHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.D get _D_0_6 {
-    if ((this.__D_0_6 == null)) {
+    if ((__D_0_6 == null)) {
       (__D_0_6 = import1.D());
     }
-    return this.__D_0_6;
+    return __D_0_6;
   }
 
   @override

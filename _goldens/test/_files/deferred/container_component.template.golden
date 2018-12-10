@@ -372,10 +372,10 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
     componentType = ViewTestContainerComponent0._renderType;
   }
   import14.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
-    if ((this.__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
+    if ((__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
       (__ExternalServiceLazilyCreatedMaybe_0_7 = import14.ExternalServiceLazilyCreatedMaybe());
     }
-    return this.__ExternalServiceLazilyCreatedMaybe_0_7;
+    return __ExternalServiceLazilyCreatedMaybe_0_7;
   }
 
   @override
