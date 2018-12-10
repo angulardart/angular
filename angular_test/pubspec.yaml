@@ -8,7 +8,7 @@ environment:
   sdk: ">=2.1.0-dev.5.0 <3.0.0"
 
 dependencies:
-  angular: ^5.1.0
+  angular: ^5.2.0
   meta: ^1.1.4
   pedantic: ^1.2.0
 

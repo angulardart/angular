@@ -1,3 +1,7 @@
+## 2.0.0-alpha+21
+
+*   Maintenance release to support Angular 5.2.
+
 ## 2.0.0-alpha+20
 
 ### Bug fixes
@@ -25,7 +29,7 @@
 
 ## 2.0.0-alpha+16
 
-*   Maintanence release; declare official support for the Dart2 SDK.
+*   Maintenance release; declare official support for the Dart2 SDK.
 
 ## 2.0.0-alpha+15
 

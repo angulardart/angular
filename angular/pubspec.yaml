@@ -1,5 +1,5 @@
 name: angular
-version: 5.1.0
+version: 5.2.0
 author: Dart Team <web@dartlang.org>
 description: Fast and productive web framework
 homepage: https://webdev.dartlang.org/angular
@@ -20,8 +20,8 @@ dependencies:
   analyzer: ^0.34.0
 
   # It is extremely important these two dependencies stay pinned to current.
-  angular_ast: 0.5.7
-  angular_compiler: 0.4.1
+  angular_ast: 0.5.8
+  angular_compiler: 0.4.2
   ##########################################################################
 
   build: '>=0.12.7 <2.0.0'

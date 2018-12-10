@@ -1,3 +1,7 @@
+## 2.1.1
+
+*   Maintenance release to support Angular 5.2.
+
 ## 2.1.0
 
 ### New Features

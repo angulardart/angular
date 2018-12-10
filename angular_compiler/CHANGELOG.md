@@ -1,3 +1,5 @@
+## 0.4.2
+
 *   Updates the `messages.unresolvedSource` API to support different error
     messages for each `SourceSpan` affected.
 
