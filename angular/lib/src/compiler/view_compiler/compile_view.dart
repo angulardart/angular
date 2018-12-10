@@ -74,48 +74,99 @@ enum NodeReferenceVisibility {
 
 final notThrowOnChanges = o.not(o.importExpr(Identifiers.throwOnChanges));
 
-/// Reference to html node created during AppView build.
+/// A reference to an HTML, Text, or View node created during `AppView.build()`.
 class NodeReference {
   final CompileViewStorage _storage;
+  final o.Expression _initialValue;
   final o.OutputType _type;
   final String _name;
 
   NodeReferenceVisibility _visibility = NodeReferenceVisibility.build;
 
-  NodeReference(this._storage, this._type, int nodeIndex)
-      : _name = '_el_$nodeIndex';
-  NodeReference.html(this._storage, int nodeIndex)
-      : _type = o.importType(Identifiers.HTML_DOCUMENT_FRAGMENT),
-        _name = '_html_$nodeIndex';
+  /// Create a [NodeReference] with a defined [o.OutputType].
+  ///
+  /// In practice, this is used for `ElementRef`, and nothing else.
+  NodeReference(
+    this._storage,
+    this._type,
+    int nodeIndex,
+  )   : _name = '_el_$nodeIndex',
+        _initialValue = null;
+
+  /// Create a [NodeReference] for an HTML fragment (for i18n).
+  NodeReference.html(
+    this._storage,
+    int nodeIndex,
+  )   : _type = o.importType(Identifiers.HTML_DOCUMENT_FRAGMENT),
+        _name = '_html_$nodeIndex',
+        _initialValue = null;
+
+  /// Create a [NodeReference] for a field moved from an inlined `NgIf`.
+  ///
+  /// Like [NodeReference], in practice this is used for `ElementRef` only.
   NodeReference.inlinedNode(
-      this._storage, this._type, int nodeIndex, int inlinedNodeIndex)
-      : _name = '_el_${nodeIndex}_$inlinedNodeIndex';
-  NodeReference.textNode(this._storage, int nodeIndex)
-      : _type = o.importType(Identifiers.HTML_TEXT_NODE),
-        _name = '_text_$nodeIndex';
+    this._storage,
+    this._type,
+    int nodeIndex,
+    int inlinedNodeIndex,
+  )   : _name = '_el_${nodeIndex}_$inlinedNodeIndex',
+        _initialValue = null;
+
+  /// Create a [NodeReference] for a `Text` node.
+  NodeReference.textNode(
+    this._storage,
+    int nodeIndex,
+  )   : _type = o.importType(Identifiers.HTML_TEXT_NODE),
+        _name = '_text_$nodeIndex',
+        _initialValue = null;
+
+  /// Create a [NodeReference] for a `Text` node moved from an inlined `NgIf`.
   NodeReference.inlinedTextNode(
-      this._storage, int nodeIndex, int inlinedNodeIndex)
-      : _type = o.importType(Identifiers.HTML_TEXT_NODE),
-        _name = '_text_${nodeIndex}_$inlinedNodeIndex';
-  NodeReference.anchor(this._storage, int nodeIndex,
-      [this._visibility = NodeReferenceVisibility.build])
-      : _type = o.importType(Identifiers.HTML_COMMENT_NODE),
-        _name = '_anchor_$nodeIndex';
+    this._storage,
+    int nodeIndex,
+    int inlinedNodeIndex,
+  )   : _type = o.importType(Identifiers.HTML_TEXT_NODE),
+        _name = '_text_${nodeIndex}_$inlinedNodeIndex',
+        _initialValue = null;
+
+  /// Create a [NodeReference] for an anchor node for view containers.
+  NodeReference.anchor(
+    this._storage,
+    int nodeIndex, [
+    this._visibility = NodeReferenceVisibility.build,
+  ])  : _type = o.importType(Identifiers.HTML_COMMENT_NODE),
+        _name = '_anchor_$nodeIndex',
+        _initialValue = null;
+
+  /// Create a [NodeReference] for the root element of a view.
   NodeReference.appViewRoot()
       : _storage = null,
         _type = o.importType(Identifiers.HTML_ELEMENT),
         _name = appViewRootElementName,
-        _visibility = NodeReferenceVisibility.classPublic;
+        _visibility = NodeReferenceVisibility.classPublic,
+        _initialValue = null;
 
+  /// Returns an expression that reads from this variable or field.
   o.Expression toReadExpr() => ReadNodeReferenceExpr(this);
 
+  /// Returns an expression that writes [value] to this variable or field.
   o.Statement toWriteStmt(o.Expression value) =>
       WriteNodeReferenceStmt(this, value);
 
+  /// If accessed outside of `build()`, makes a variable into a class field.
   void promoteToClassMember() {
     if (_visibility != NodeReferenceVisibility.classPublic) {
       _visibility = NodeReferenceVisibility.classPublic;
-      _storage.allocate(this._name, outputType: _type);
+      _storage.allocate(
+        this._name,
+        outputType: _type,
+        // All of our NodeReferences are shallowly immutable, that is, they are
+        // initialized lazily, but the instance does not change after that. If
+        // we have an initialValue (for example "Text('')"), it is effectively
+        // final.
+        modifiers: _initialValue != null ? const [o.StmtModifier.Final] : null,
+        initializer: _initialValue,
+      );
     }
   }
 }
