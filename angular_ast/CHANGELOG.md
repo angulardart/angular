@@ -1,3 +1,5 @@
+## 0.5.8
+
 *   Fixed a type error that occurred when recovering from a missing closing
     banana ')]'.
 

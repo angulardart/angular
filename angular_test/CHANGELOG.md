@@ -1,3 +1,5 @@
+## 2.2.0
+
 ### Breaking Changes
 
 *   Changed `NgTestStabilizer` initialization from originating from a
