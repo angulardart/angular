@@ -57,7 +57,7 @@ Future<T> runBuildZoned<T>(
       }
     },
     zoneSpecification: ZoneSpecification(
-      print: (_, __, ___, line) => build.log.fine(line),
+      print: (_, __, ___, line) => build.log.info(line),
     ),
   );
   return completer.future;
