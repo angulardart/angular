@@ -873,12 +873,6 @@ class ClassMethod extends AbstractClassPart {
       }
     }
   }
-
-  /// Whether [name] is a parameter name.
-  bool containsParameterName(String name) {
-    if (paramNames == null) return false;
-    return paramNames.contains(name);
-  }
 }
 
 class ClassGetter extends AbstractClassPart {
