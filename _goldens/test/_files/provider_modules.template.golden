@@ -55,31 +55,31 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
   dynamic __bazToken_0_9;
   _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.FooService get _FooService_0_6 {
-    if ((this.__FooService_0_6 == null)) {
+    if ((__FooService_0_6 == null)) {
       (__FooService_0_6 = import1.FooService());
     }
-    return this.__FooService_0_6;
+    return __FooService_0_6;
   }
 
   Duration get _fooToken_0_7 {
-    if ((this.__fooToken_0_7 == null)) {
+    if ((__fooToken_0_7 == null)) {
       (__fooToken_0_7 = const Duration(seconds: 500));
     }
-    return this.__fooToken_0_7;
+    return __fooToken_0_7;
   }
 
   List<dynamic> get _barToken_0_8 {
-    if ((this.__barToken_0_8 == null)) {
+    if ((__barToken_0_8 == null)) {
       (__barToken_0_8 = const ['a', 'b', 'c']);
     }
-    return this.__barToken_0_8;
+    return __barToken_0_8;
   }
 
   dynamic get _bazToken_0_9 {
-    if ((this.__bazToken_0_9 == null)) {
+    if ((__bazToken_0_9 == null)) {
       (__bazToken_0_9 = import1.getSomeValues());
     }
-    return this.__bazToken_0_9;
+    return __bazToken_0_9;
   }
 
   @override

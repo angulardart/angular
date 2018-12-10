@@ -479,5 +479,33 @@ void main() {
       expect(emitStmt(writeVarExpr.toDeclStmt(o.MapType(o.INT_TYPE))),
           'Map<String, int> a = null;');
     });
+    test('should support shadowing members', () {
+      var name = 'someValue';
+      var field = o.ClassField(name);
+      var method = o.ClassMethod(
+        'someMethod',
+        [o.FnParam(name)],
+        [
+          // Test shadowing of `WriteClassMemberExpr`.
+          o.WriteClassMemberExpr(name, o.variable(name)).toStmt(),
+          // Test shadowing of `ReadClassMemberExpr`.
+          o.variable(name).set(o.ReadClassMemberExpr(name)).toStmt(),
+        ],
+      );
+      var classStmt =
+          o.ClassStmt('SomeClass', null, [field], [], null, [method]);
+      expect(
+        emitStmt(classStmt),
+        [
+          'class SomeClass {',
+          '  var $name;',
+          '  void someMethod($name) {',
+          '    this.$name = $name;',
+          '    $name = this.$name;',
+          '  }',
+          '}'
+        ].join('\n'),
+      );
+    });
   });
 }

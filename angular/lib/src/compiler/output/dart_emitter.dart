@@ -219,9 +219,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
         : null;
     if (superCtorExpr != null) {
       context.print(': ');
-      context.enterSuperCall();
       superCtorExpr.visitExpression(this, context);
-      context.exitSuperCall();
       ctorStmts = ctorStmts.sublist(1);
     }
     if (ctorStmts.isEmpty) {
@@ -355,13 +353,10 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   void visitReadClassMemberExpr(
       o.ReadClassMemberExpr ast, EmitterVisitorContext context) {
-    if (context.activeMethod != null &&
-        !context.activeMethod.containsParameterName(ast.name) &&
-        !context.inSuperCall) {
-      context.print('${ast.name}');
-    } else {
-      context.print('this.${ast.name}');
+    if (context.shadows(ast.name)) {
+      context.print('this.');
     }
+    context.print(ast.name);
   }
 
   @override
@@ -370,6 +365,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     var lineWasEmpty = context.lineIsEmpty();
     if (!lineWasEmpty) {
       context.print('(');
+    }
+    if (context.shadows(expr.name)) {
+      context.print('this.');
     }
     context.print('${expr.name} = ');
     expr.value.visitExpression(this, context);

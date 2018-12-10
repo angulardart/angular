@@ -211,7 +211,7 @@ class FastDirectiveNgCd extends import10.DirectiveChangeDetector {
   final import1.FastDirective instance;
   var _expr_0;
   FastDirectiveNgCd(this.instance, AppView v, import2.Element e) {
-    directive = this.instance;
+    directive = instance;
     view = v;
     el = e;
     initCd();

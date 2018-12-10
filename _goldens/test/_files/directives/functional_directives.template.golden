@@ -55,10 +55,10 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   import1.TextService __TextService_0_6;
   _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.TextService get _TextService_0_6 {
-    if ((this.__TextService_0_6 == null)) {
+    if ((__TextService_0_6 == null)) {
       (__TextService_0_6 = import1.TextService());
     }
-    return this.__TextService_0_6;
+    return __TextService_0_6;
   }
 
   @override
