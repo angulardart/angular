@@ -23,7 +23,8 @@ class AngularProfiler {
   final ApplicationRef appRef;
 
   // ignore: field_initializer_not_assignable
-  AngularProfiler(ComponentRef ref) : appRef = ref.injector.get(ApplicationRef);
+  AngularProfiler(ComponentRef ref)
+      : appRef = ref.injector.provideType(ApplicationRef);
 
   /// Exercises change detection in a loop and then prints the average amount of
   /// time in milliseconds how long a single round of change detection takes for
