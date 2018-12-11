@@ -67,7 +67,8 @@ abstract class TemplateParser {
       String template,
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
-      String name);
+      String name,
+      String templateSourceUrl);
 }
 
 typedef void ErrorCallback(String message, SourceSpan sourceSpan,

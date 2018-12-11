@@ -58,10 +58,12 @@ class AstTemplateParser implements TemplateParser {
       String template,
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
-      String name) {
-    final exceptionHandler = AstExceptionHandler(template, name);
+      String name,
+      String templateSourceUrl) {
+    final exceptionHandler = AstExceptionHandler(template, templateSourceUrl);
 
-    final parsedAst = _parseTemplate(template, name, exceptionHandler);
+    final parsedAst = _parseTemplate(
+        template, name, exceptionHandler, templateSourceUrl ?? name);
     exceptionHandler.maybeReportExceptions();
     if (parsedAst.isEmpty) return const [];
 
@@ -85,10 +87,10 @@ class AstTemplateParser implements TemplateParser {
     return processedAsts;
   }
 
-  List<ast.TemplateAst> _parseTemplate(
-          String template, String name, AstExceptionHandler exceptionHandler) =>
+  List<ast.TemplateAst> _parseTemplate(String template, String name,
+          AstExceptionHandler exceptionHandler, String templateSourceUrl) =>
       ast.parse(template,
-          sourceUrl: name,
+          sourceUrl: templateSourceUrl,
           desugar: true,
           toolFriendlyAst: true,
           parseExpressions: false,

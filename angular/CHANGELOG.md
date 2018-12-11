@@ -1,3 +1,9 @@
+
+### Bug fixes
+
+*   The template compiler now outputs the full path to a template file when it
+    reports an error.
+
 ## 5.2.0
 
 ### Breaking changes
