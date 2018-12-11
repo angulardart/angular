@@ -1449,17 +1449,18 @@ class CompileView implements AppViewBuilder {
   @override
   o.ClassMethod writeInjectorGetMethod() {
     return o.ClassMethod(
-        "injectorGetInternal",
-        [
-          o.FnParam(InjectMethodVars.token.name, o.DYNAMIC_TYPE),
-          o.FnParam(InjectMethodVars.nodeIndex.name, o.INT_TYPE),
-          o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
-        ],
-        _addReturnValueIfNotEmpty(
-            _injectorGetMethod.finish(), InjectMethodVars.notFoundResult),
-        o.DYNAMIC_TYPE,
-        null,
-        ['override']);
+      "injectorGetInternal",
+      [
+        o.FnParam(InjectMethodVars.token.name, o.DYNAMIC_TYPE),
+        o.FnParam(InjectMethodVars.nodeIndex.name, o.INT_TYPE),
+        o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
+      ],
+      _addReturnValueIfNotEmpty(
+          _injectorGetMethod.finish(), InjectMethodVars.notFoundResult),
+      o.DYNAMIC_TYPE,
+      null,
+      [o.importExpr(Identifiers.dartCoreOverride)],
+    );
   }
 
   // Returns reference for compile element or null if compile element

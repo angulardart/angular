@@ -353,23 +353,47 @@ o.ClassStmt createViewClass(
   CompileView view,
   Parser parser,
 ) {
-  var viewConstructor = _createViewClassConstructor(view);
-  var viewMethods = <o.ClassMethod>[
-    o.ClassMethod("build", [], _generateBuildMethod(view, parser),
-        o.importType(Identifiers.ComponentRef,
-            // The 'HOST' view is the only implementation that actually returns
-            // a ComponentRef, the rest statically declare they do but in
-            // reality return `null`. There is no way to fix this without
-            // creating new sub-class-able AppView types:
-            // https://github.com/dart-lang/angular/issues/1421
-            [_getContextType(view)]), null, ['override']),
+  final viewConstructor = _createViewClassConstructor(view);
+  final viewMethods = <o.ClassMethod>[
+    o.ClassMethod(
+      "build",
+      [],
+      _generateBuildMethod(view, parser),
+      o.importType(Identifiers.ComponentRef,
+          // The 'HOST' view is the only implementation that actually returns
+          // a ComponentRef, the rest statically declare they do but in
+          // reality return `null`. There is no way to fix this without
+          // creating new sub-class-able AppView types:
+          // https://github.com/dart-lang/angular/issues/1421
+          [_getContextType(view)]),
+      null,
+      [o.importExpr(Identifiers.dartCoreOverride)],
+    ),
     view.writeInjectorGetMethod(),
-    o.ClassMethod("detectChangesInternal", [],
-        view.writeChangeDetectionStatements(), null, null, ['override']),
-    o.ClassMethod("dirtyParentQueriesInternal", [],
-        view.dirtyParentQueriesMethod.finish(), null, null, ['override']),
-    o.ClassMethod("destroyInternal", [], _generateDestroyMethod(view), null,
-        null, ['override'])
+    o.ClassMethod(
+      "detectChangesInternal",
+      [],
+      view.writeChangeDetectionStatements(),
+      null,
+      null,
+      [o.importExpr(Identifiers.dartCoreOverride)],
+    ),
+    o.ClassMethod(
+      "dirtyParentQueriesInternal",
+      [],
+      view.dirtyParentQueriesMethod.finish(),
+      null,
+      null,
+      [o.importExpr(Identifiers.dartCoreOverride)],
+    ),
+    o.ClassMethod(
+      "destroyInternal",
+      [],
+      _generateDestroyMethod(view),
+      null,
+      null,
+      [o.importExpr(Identifiers.dartCoreOverride)],
+    )
   ]..addAll(view.methods);
   if (view.detectHostChangesMethod != null) {
     viewMethods.add(o.ClassMethod(
@@ -387,7 +411,7 @@ o.ClassStmt createViewClass(
       NodeReferenceStorageVisitor.visitScopedStatements(getter.body);
     }
   }
-  var viewClass = o.ClassStmt(
+  final viewClass = o.ClassStmt(
     view.className,
     o.importExpr(Identifiers.AppView, typeParams: [_getContextType(view)]),
     view.storage.fields,
@@ -420,8 +444,11 @@ o.ClassMethod _createViewClassConstructor(CompileView view) {
     ViewConstructorVars.parentIndex,
     changeDetectionStrategyToConst(_getChangeDetectionMode(view))
   ];
-  o.ClassMethod ctor = o.ClassMethod(null, viewConstructorArgs,
-      [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()]);
+  final ctor = o.ClassMethod(
+    null,
+    viewConstructorArgs,
+    [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()],
+  );
   if (view.viewType == ViewType.component && view.viewIndex == 0) {
     // No namespace just call [document.createElement].
     String tagName = _tagNameFromComponentSelector(view.component.selector);

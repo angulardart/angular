@@ -210,10 +210,16 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   }
 
   void _visitClassConstructor(o.ClassStmt stmt, EmitterVisitorContext context) {
+    final method = stmt.constructorMethod;
+    for (final annotation in method.annotations) {
+      context.print('@');
+      annotation.visitExpression(this, context);
+      context.println();
+    }
     context.print('${stmt.name}(');
-    _visitParams(stmt.constructorMethod.params, context);
+    _visitParams(method.params, context);
     context.print(')');
-    var ctorStmts = stmt.constructorMethod.body;
+    var ctorStmts = method.body;
     var superCtorExpr = ctorStmts.isNotEmpty
         ? _getSuperConstructorCallExpr(ctorStmts[0])
         : null;
@@ -235,10 +241,12 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   }
 
   void _visitClassMethod(o.ClassMethod method, EmitterVisitorContext context) {
-    context.enterMethod(method);
-    for (var annotation in method.annotations) {
-      context.print('@$annotation ');
+    for (final annotation in method.annotations) {
+      context.print('@');
+      annotation.visitExpression(this, context);
+      context.println();
     }
+    context.enterMethod(method);
     if (method.hasModifier(o.StmtModifier.Static)) {
       context.print('static ');
     }

@@ -244,6 +244,15 @@ class Identifiers {
     name: 'Intl',
     moduleUrl: 'package:intl/intl.dart',
   );
+
+  static final dart2JsNoInline = CompileIdentifierMetadata(
+    name: 'noInline',
+    moduleUrl: 'package:meta/dart2js.dart',
+  );
+
+  static final dartCoreOverride = CompileIdentifierMetadata(
+    name: 'override',
+  );
 }
 
 CompileTokenMetadata identifierToken(CompileIdentifierMetadata identifier) {
