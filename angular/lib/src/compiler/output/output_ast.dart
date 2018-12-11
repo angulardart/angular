@@ -833,10 +833,8 @@ class ReturnStatement extends Statement {
 class AbstractClassPart {
   OutputType type;
   List<StmtModifier> modifiers;
+  List<Expression> annotations;
 
-  // TODO(srawlins): Make an Annotation class when we need to annotate with
-  // something other than a constant, like `@overrides`.
-  List<String> annotations;
   AbstractClassPart([this.type, this.modifiers, this.annotations]) {
     modifiers ??= [];
     annotations ??= [];
@@ -852,7 +850,7 @@ class ClassField extends AbstractClassPart {
   ClassField(this.name,
       {OutputType outputType,
       List<StmtModifier> modifiers,
-      List<String> annotations,
+      List<Expression> annotations,
       this.initializer})
       : super(outputType, modifiers, annotations);
 }
@@ -863,9 +861,14 @@ class ClassMethod extends AbstractClassPart {
   // Set for fast lookup of parameter names to see if we need 'this.' prefix.
   Set<String> paramNames;
   List<Statement> body;
-  ClassMethod(this.name, this.params, this.body,
-      [OutputType type, List<StmtModifier> modifiers, List<String> annotations])
-      : super(type, modifiers, annotations) {
+  ClassMethod(
+    this.name,
+    this.params,
+    this.body, [
+    OutputType type,
+    List<StmtModifier> modifiers,
+    List<Expression> annotations,
+  ]) : super(type, modifiers, annotations) {
     if (params != null) {
       paramNames = Set<String>();
       for (FnParam param in params) {
