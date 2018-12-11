@@ -184,7 +184,7 @@ class AstDirectiveNormalizer {
   /// Parse the template, and visit to find <ng-content>.
   List<String> _parseTemplate(String template,
       CompileTypeMetadata directiveType, String templateAbsUrl) {
-    final exceptionHandler = AstExceptionHandler(template, directiveType.name);
+    final exceptionHandler = AstExceptionHandler(template, templateAbsUrl);
     final parsedNodes = ast.parse(
       template,
       // TODO: Use the full-file path when possible.

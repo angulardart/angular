@@ -26,12 +26,12 @@ void main() {
   ) {
     final componentMetadata = component.component;
     final templateAsts = templateParser.parse(
-      componentMetadata,
-      componentMetadata.template.template,
-      component.directives,
-      [],
-      null,
-    );
+        componentMetadata,
+        componentMetadata.template.template,
+        component.directives,
+        [],
+        null,
+        componentMetadata.template.templateUrl);
     return humanizeTplAst(templateAsts);
   }
 

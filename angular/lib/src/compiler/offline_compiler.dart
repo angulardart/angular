@@ -203,7 +203,8 @@ class OfflineCompiler {
         componentWithDirs.component.template.template,
         componentWithDirs.directives,
         componentWithDirs.pipes,
-        componentWithDirs.component.type.name);
+        componentWithDirs.component.type.name,
+        componentWithDirs.component.template.templateUrl);
     return ir.ComponentView(
         cmpMetadata: componentWithDirs.component,
         directiveTypes: componentWithDirs.directiveTypes,
@@ -214,8 +215,13 @@ class OfflineCompiler {
   ir.View _hostView(CompileDirectiveMetadata component) {
     var hostMeta = createHostComponentMeta(component.type, component.selector,
         component.template.preserveWhitespace);
-    var parsedTemplate = _templateParser.parse(hostMeta,
-        hostMeta.template.template, [component], [], hostMeta.type.name);
+    var parsedTemplate = _templateParser.parse(
+        hostMeta,
+        hostMeta.template.template,
+        [component],
+        [],
+        hostMeta.type.name,
+        hostMeta.template.templateUrl);
     return ir.HostView(null,
         cmpMetadata: hostMeta,
         parsedTemplate: parsedTemplate,
