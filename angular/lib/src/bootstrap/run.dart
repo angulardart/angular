@@ -88,9 +88,9 @@ Injector appInjector(
         ' ensure that class is using a factory providing to provide only one'
         ' static instance.');
     appViewUtils = AppViewUtils(
-      unsafeCast(userInjector.get(APP_ID)),
-      unsafeCast(userInjector.get(SanitizationService)),
-      unsafeCast(new EventManager(createEventPlugins(), ngZone)),
+      userInjector.provideToken(APP_ID),
+      userInjector.provideType(SanitizationService),
+      EventManager(createEventPlugins(), ngZone),
     );
     return userInjector;
   });
@@ -103,9 +103,14 @@ Injector appInjector(
 // This check can be removed in the future if appViewUtils is no longer
 // static.
 bool _checkSanitizationService(
-    AppViewUtils appViewUtils, Injector userInjector) {
-  if (appViewUtils == null) return true;
-  final service = unsafeCast(userInjector.get(SanitizationService));
+  AppViewUtils appViewUtils,
+  Injector userInjector,
+) {
+  if (appViewUtils == null) {
+    return true;
+  }
+  // We can use Object since we just use identity semantics.
+  final service = userInjector.provideType<Object>(SanitizationService);
   // Make sure it is the same instance of the sanitizer.
   // Note since DDC uses the same static values across apps in the same web
   // page it isn't enough to just rely on injection to ensure this is the same
@@ -216,7 +221,7 @@ ComponentRef<T> runApp<T>(
     throw ArgumentError.notNull('componentFactory');
   }
   final injector = appInjector(createInjector);
-  final ApplicationRef appRef = unsafeCast(injector.get(ApplicationRef));
+  final appRef = injector.provideType<ApplicationRef>(ApplicationRef);
   return appRef.bootstrap(componentFactory);
 }
 
@@ -243,7 +248,7 @@ Future<ComponentRef<T>> runAppAsync<T>(
   }
   final injector = appInjector(createInjector);
   return beforeComponentCreated(injector).then((_) {
-    final appRef = unsafeCast<ApplicationRef>(injector.get(ApplicationRef));
+    final appRef = injector.provideType<ApplicationRef>(ApplicationRef);
     return appRef.bootstrap(componentFactory);
   });
 }

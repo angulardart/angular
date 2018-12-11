@@ -20,7 +20,7 @@ ApplicationRef internalCreateApplicationRef(
 ) =>
     ApplicationRef._(
       ngZone,
-      unsafeCast(injector.get(ExceptionHandler)),
+      injector.provideType(ExceptionHandler),
       injector,
     );
 
@@ -84,12 +84,14 @@ class ApplicationRef extends ChangeDetectionHost {
         assert(component.location != null);
         document.body.append(component.location);
       }
+      // TODO(https://github.com/dart-lang/angular/issues/1683):
+      // We need .get(...) because .provideType(...) does not support optional.
       final testability = unsafeCast<Testability>(
         component.injector.get(Testability, null),
       );
       if (testability != null) {
-        final registry = unsafeCast<TestabilityRegistry>(
-          _injector.get(TestabilityRegistry),
+        final registry = _injector.provideType<TestabilityRegistry>(
+          TestabilityRegistry,
         );
         registry.registerApplication(component.location, testability);
       }
