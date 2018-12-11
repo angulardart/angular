@@ -576,7 +576,7 @@ CompileDirectiveMetadata createHostComponentMeta(
         isHost: true),
     template: CompileTemplateMetadata(
         template: template,
-        templateUrl: '',
+        templateUrl: '${componentType.moduleUrl}/host/$componentSelector',
         preserveWhitespace: preserveWhitespace,
         styles: const [],
         styleUrls: const [],
