@@ -45,7 +45,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
       if (currVal_0) {
         var doc = import2.document;
         _el_0_0 = doc.createElement('div');
-        final _text_0_1 = import2.Text('Hello World!');
+        final _text_0_1 = createText('Hello World!');
         _el_0_0.append(_text_0_1);
         addInlinedNodes(_anchor_0, [_el_0_0], true);
       } else {
@@ -124,7 +124,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
         if (_ctx.foo) {
           var doc = import2.document;
           final _el_0_0 = doc.createElement('div');
-          final _text_0_1 = import2.Text('Hello World!');
+          final _text_0_1 = createText('Hello World!');
           _el_0_0.append(_text_0_1);
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }

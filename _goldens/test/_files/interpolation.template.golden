@@ -23,7 +23,7 @@ final List<dynamic> styles$InterpolationComponent = const [];
 
 class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent> {
   var _expr_0;
-  import2.Text _text_3;
+  final import2.Text _text_3 = createText('');
   static RenderComponentType _renderType;
   ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
@@ -34,17 +34,16 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   ComponentRef<import1.InterpolationComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import2.Text('    ');
+    final _text_0 = createText('    ');
     parentRenderNode.append(_text_0);
     var doc = import2.document;
     final _el_1 = createDivAndAppend(doc, parentRenderNode);
-    final _text_2 = import2.Text('\n      ');
+    final _text_2 = createText('\n      ');
     _el_1.append(_text_2);
-    _text_3 = import2.Text('');
     _el_1.append(_text_3);
-    final _text_4 = import2.Text('\n    ');
+    final _text_4 = createText('\n    ');
     _el_1.append(_text_4);
-    final _text_5 = import2.Text('\n  ');
+    final _text_5 = createText('\n  ');
     parentRenderNode.append(_text_5);
     init(const [], null);
   }
@@ -104,7 +103,7 @@ final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
 class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.InterpolationComponentNoWhitespace> {
   var _expr_0;
-  import2.Text _text_1;
+  final import2.Text _text_1 = createText('');
   static RenderComponentType _renderType;
   ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
@@ -117,7 +116,6 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _text_1 = import2.Text('');
     _el_0.append(_text_1);
     init(const [], null);
   }
@@ -178,8 +176,8 @@ final List<dynamic> styles$InterpolationTwoAdjacent = const [];
 class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdjacent> {
   var _expr_0;
   var _expr_1;
-  import2.Text _text_1;
-  import2.Text _text_3;
+  final import2.Text _text_1 = createText('');
+  final import2.Text _text_3 = createText('');
   static RenderComponentType _renderType;
   ViewInterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
@@ -192,13 +190,11 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
-    _text_1 = import2.Text('');
     _el_0.append(_text_1);
-    final _text_2 = import2.Text(' ');
+    final _text_2 = createText(' ');
     _el_0.append(_text_2);
-    _text_3 = import2.Text('');
     _el_0.append(_text_3);
-    final _text_4 = import2.Text('!');
+    final _text_4 = createText('!');
     _el_0.append(_text_4);
     init(const [], null);
   }
@@ -265,9 +261,9 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
   var _expr_0;
   var _expr_1;
   var _expr_2;
-  import2.Text _text_2;
-  import2.Text _text_4;
-  import2.Text _text_6;
+  final import2.Text _text_2 = createText('');
+  final import2.Text _text_4 = createText('');
+  final import2.Text _text_6 = createText('');
   static RenderComponentType _renderType;
   ViewInterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
@@ -280,19 +276,16 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
-    final _text_1 = import2.Text('Welcome ');
+    final _text_1 = createText('Welcome ');
     _el_0.append(_text_1);
-    _text_2 = import2.Text('');
     _el_0.append(_text_2);
-    final _text_3 = import2.Text(' to the ');
+    final _text_3 = createText(' to the ');
     _el_0.append(_text_3);
-    _text_4 = import2.Text('');
     _el_0.append(_text_4);
-    final _text_5 = import2.Text(' of ');
+    final _text_5 = createText(' of ');
     _el_0.append(_text_5);
-    _text_6 = import2.Text('');
     _el_0.append(_text_6);
-    final _text_7 = import2.Text('!');
+    final _text_7 = createText('!');
     _el_0.append(_text_7);
     init(const [], null);
   }
@@ -373,13 +366,13 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
-    final _text_1 = import2.Text('Welcome');
+    final _text_1 = createText('Welcome');
     _el_0.append(_text_1);
-    final _text_2 = import2.Text(' ');
+    final _text_2 = createText(' ');
     _el_0.append(_text_2);
-    final _text_3 = import2.Text('Home');
+    final _text_3 = createText('Home');
     _el_0.append(_text_3);
-    final _text_4 = import2.Text('!');
+    final _text_4 = createText('!');
     _el_0.append(_text_4);
     init(const [], null);
   }
@@ -521,18 +514,16 @@ AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals1(AppView<dy
 class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
   var _expr_0;
   var _expr_1;
-  import2.Text _text_1;
-  import2.Text _text_3;
+  final import2.Text _text_1 = createText('');
+  final import2.Text _text_3 = createText('');
   _ViewInterpolationLocals2(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewInterpolationLocals0._renderType;
   }
   @override
   ComponentRef<import1.InterpolationLocals> build() {
-    final _text_0 = import2.Text('Hello ');
-    _text_1 = import2.Text('');
-    final _text_2 = import2.Text(': ');
-    _text_3 = import2.Text('');
-    final _text_4 = import2.Text('!');
+    final _text_0 = createText('Hello ');
+    final _text_2 = createText(': ');
+    final _text_4 = createText('!');
     init([_text_0, _text_1, _text_2, _text_3, _text_4], null);
   }
 

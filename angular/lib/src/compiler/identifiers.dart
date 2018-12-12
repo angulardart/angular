@@ -79,6 +79,8 @@ class Identifiers {
       name: "ChangeDetectorState", moduleUrl: cdModuleUrl);
   static final checkBinding = CompileIdentifierMetadata<dynamic>(
       name: "checkBinding", moduleUrl: appViewUtilsModuleUrl);
+  static final createText = CompileIdentifierMetadata(
+      name: "createText", moduleUrl: appViewModuleUrl);
   static final createAndAppend = CompileIdentifierMetadata<dynamic>(
       name: "createAndAppend", moduleUrl: appViewModuleUrl);
   static final createDivAndAppend = CompileIdentifierMetadata<dynamic>(

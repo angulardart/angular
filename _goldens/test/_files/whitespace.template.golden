@@ -29,18 +29,18 @@ class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
   ComponentRef<import1.PreserveWhitespace> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import5.Text('    ');
+    final _text_0 = createText('    ');
     parentRenderNode.append(_text_0);
     var doc = import5.document;
     final _el_1 = createDivAndAppend(doc, parentRenderNode);
-    final _text_2 = import5.Text('\n      Welcome...\n      To...\n      ');
+    final _text_2 = createText('\n      Welcome...\n      To...\n      ');
     _el_1.append(_text_2);
     final _el_3 = createAndAppend(doc, 'strong', _el_1);
-    final _text_4 = import5.Text('Jurassic...');
+    final _text_4 = createText('Jurassic...');
     _el_3.append(_text_4);
-    final _text_5 = import5.Text('\n      Park!\n    ');
+    final _text_5 = createText('\n      Park!\n    ');
     _el_1.append(_text_5);
-    final _text_6 = import5.Text('\n  ');
+    final _text_6 = createText('\n  ');
     parentRenderNode.append(_text_6);
     init(const [], null);
   }
@@ -101,12 +101,12 @@ class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
-    final _text_1 = import5.Text('Welcome... To... ');
+    final _text_1 = createText('Welcome... To... ');
     _el_0.append(_text_1);
     final _el_2 = createAndAppend(doc, 'strong', _el_0);
-    final _text_3 = import5.Text('Jurassic...');
+    final _text_3 = createText('Jurassic...');
     _el_2.append(_text_3);
-    final _text_4 = import5.Text(' Park!');
+    final _text_4 = createText(' Park!');
     _el_0.append(_text_4);
     init(const [], null);
   }
