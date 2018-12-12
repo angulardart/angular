@@ -33,7 +33,7 @@ class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileCompo
     var doc = import6.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
     addShimC(_el_0);
-    final _text_1 = import6.Text('Has Template File!');
+    final _text_1 = createText('Has Template File!');
     _el_0.append(_text_1);
     init(const [], null);
   }

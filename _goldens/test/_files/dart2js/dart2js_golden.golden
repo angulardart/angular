@@ -3796,6 +3796,9 @@
             $parent.appendChild(nodes[i]);
       }
     },
+    createText: function(text) {
+      return document.createTextNode(text);
+    },
     createAndAppend: function(doc, tagName, $parent) {
       var t1 = doc.createElement(tagName);
       return $parent.appendChild(t1);
@@ -3978,7 +3981,7 @@
       return t1;
     },
     viewFactory_EmbeddedNgFor1: function(parentView, parentIndex) {
-      var t1 = new N._ViewEmbeddedNgFor1(P.LinkedHashMap_LinkedHashMap$_literal(["$implicit", null], P.String, null), parentView);
+      var t1 = new N._ViewEmbeddedNgFor1(S.createText(""), P.LinkedHashMap_LinkedHashMap$_literal(["$implicit", null], P.String, null), parentView);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_2, parentIndex);
       t1.componentType = $.ViewEmbeddedNgFor0__renderType;
       return t1;
@@ -4045,11 +4048,13 @@
       _.parentView = t1;
       _.ctx = _.rootEl = _.componentType = null;
     },
-    _ViewEmbeddedNgFor1: function _ViewEmbeddedNgFor1(t0, t1) {
+    _ViewEmbeddedNgFor1: function _ViewEmbeddedNgFor1(t0, t1, t2) {
       var _ = this;
-      _.viewData = _._text_1 = _._expr_0 = null;
-      _.locals = t0;
-      _.parentView = t1;
+      _._expr_0 = null;
+      _._text_1 = t0;
+      _.viewData = null;
+      _.locals = t1;
+      _.parentView = t2;
       _.ctx = _.rootEl = _.componentType = null;
     },
     ViewNullComponent0: function ViewNullComponent0(t0, t1) {
@@ -10921,15 +10926,14 @@
       this.init$2([], null);
     },
     detectChangesInternal$0: function() {
-      var currVal_0, t1, doc, t2;
+      var currVal_0, t1, t2;
       currVal_0 = this.ctx.showDiv === true;
       t1 = this._expr_0;
       if (t1 !== currVal_0) {
         if (currVal_0) {
-          doc = document;
-          t1 = doc.createElement("div");
+          t1 = document.createElement("div");
           this._el_0_0 = t1;
-          t1.appendChild(doc.createTextNode("Hello World"));
+          t1.appendChild(S.createText("Hello World"));
           t1 = this._anchor_0;
           t2 = H.setRuntimeTypeInfo([this._el_0_0], [W.Node]);
           S._moveNodesAfterSibling(t1, t2);
@@ -11040,12 +11044,8 @@
   };
   N._ViewEmbeddedNgFor1.prototype = {
     build$0: function() {
-      var doc, _el_0, t1;
-      doc = document;
-      _el_0 = doc.createElement("li");
-      t1 = doc.createTextNode("");
-      this._text_1 = t1;
-      _el_0.appendChild(t1);
+      var _el_0 = document.createElement("li");
+      _el_0.appendChild(this._text_1);
       this.init0$1(_el_0);
     },
     detectChangesInternal$0: function() {
@@ -11178,7 +11178,7 @@
   };
   N.ViewFeatureA0.prototype = {
     build$0: function() {
-      this.initViewRoot$1(this.rootEl).appendChild(document.createTextNode("I am Feature A"));
+      this.initViewRoot$1(this.rootEl).appendChild(S.createText("I am Feature A"));
       this.init$2(C.List_empty, null);
     },
     $asAppView: function() {
@@ -11187,7 +11187,7 @@
   };
   N.ViewFeatureB0.prototype = {
     build$0: function() {
-      this.initViewRoot$1(this.rootEl).appendChild(document.createTextNode("I am Feature B"));
+      this.initViewRoot$1(this.rootEl).appendChild(S.createText("I am Feature B"));
       this.init$2(C.List_empty, null);
     },
     $asAppView: function() {

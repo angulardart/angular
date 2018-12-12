@@ -34,13 +34,13 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
-    final _text_1 = import5.Text('My own template');
+    final _text_1 = createText('My own template');
     _el_0.append(_text_1);
-    final _text_2 = import5.Text('A directive:');
+    final _text_2 = createText('A directive:');
     parentRenderNode.append(_text_2);
     final _el_3 = createAndAppend(doc, 'directive', parentRenderNode);
     _TestDirective_3_5 = import1.TestDirective();
-    final _text_4 = import5.Text('A component:');
+    final _text_4 = createText('A component:');
     parentRenderNode.append(_text_4);
     _compView_5 = ViewTestSubComponent0(this, 5);
     final _el_5 = _compView_5.rootEl;
@@ -116,7 +116,7 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import5.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
-    final _text_1 = import5.Text('Bar');
+    final _text_1 = createText('Bar');
     _el_0.append(_text_1);
     init(const [], null);
   }

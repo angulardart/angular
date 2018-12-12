@@ -55,7 +55,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
         if (_ctx.foo) {
           var doc = import4.document;
           final _el_0_0 = doc.createElement('div');
-          final _text_0_1 = import4.Text('Foo');
+          final _text_0_1 = createText('Foo');
           _el_0_0.append(_text_0_1);
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }
@@ -87,7 +87,7 @@ ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
 
 class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   var _expr_0;
-  import4.Text _text_2;
+  final import4.Text _text_2 = createText('');
   _ViewTestFooComponent2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestFooComponent0._renderType;
   }
@@ -96,7 +96,6 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     var doc = import4.document;
     final _el_0 = doc.createElement('div');
     final _el_1 = createSpanAndAppend(doc, _el_0);
-    _text_2 = import4.Text('');
     _el_1.append(_text_2);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
     init0(_el_0);

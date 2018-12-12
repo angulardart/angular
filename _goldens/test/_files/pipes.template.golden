@@ -31,10 +31,10 @@ class ViewComp0 extends AppView<import1.Comp> {
   dynamic Function(dynamic) _pipe_lifecycle_2_0;
   import1.TypesPipe _pipe_types_3;
   String Function(String, int, dynamic, import1.C, void Function(String)) _pipe_types_3_0;
-  import3.Text _text_0;
-  import3.Text _text_2;
-  import3.Text _text_4;
-  import3.Text _text_6;
+  final import3.Text _text_0 = createText('');
+  final import3.Text _text_2 = createText('');
+  final import3.Text _text_4 = createText('');
+  final import3.Text _text_6 = createText('');
   static RenderComponentType _renderType;
   ViewComp0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import3.document.createElement('comp');
@@ -45,19 +45,15 @@ class ViewComp0 extends AppView<import1.Comp> {
   ComponentRef<import1.Comp> build() {
     final _rootEl = rootEl;
     final import3.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = import3.Text('');
     parentRenderNode.append(_text_0);
-    final _text_1 = import3.Text(' ');
+    final _text_1 = createText(' ');
     parentRenderNode.append(_text_1);
-    _text_2 = import3.Text('');
     parentRenderNode.append(_text_2);
-    final _text_3 = import3.Text(' ');
+    final _text_3 = createText(' ');
     parentRenderNode.append(_text_3);
-    _text_4 = import3.Text('');
     parentRenderNode.append(_text_4);
-    final _text_5 = import3.Text(' ');
+    final _text_5 = createText(' ');
     parentRenderNode.append(_text_5);
-    _text_6 = import3.Text('');
     parentRenderNode.append(_text_6);
     _pipe_pure_0 = import1.PurePipe();
     _pipe_pure_0_0 = import7.pureProxy1(_pipe_pure_0.transform);

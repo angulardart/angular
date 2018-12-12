@@ -227,7 +227,7 @@ final List<dynamic> styles$DefaultChangeDetectionAndInput = const [];
 
 class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeDetectionAndInput> {
   var _expr_0;
-  import5.Text _text_1;
+  final import5.Text _text_1 = createText('');
   static RenderComponentType _renderType;
   ViewDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('default-change-detection-and-input');
@@ -238,9 +238,8 @@ class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeD
   ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import5.Text('Hello ');
+    final _text_0 = createText('Hello ');
     parentRenderNode.append(_text_0);
-    _text_1 = import5.Text('');
     parentRenderNode.append(_text_1);
     init(const [], null);
   }
@@ -325,7 +324,7 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
       if (currVal_0) {
         var doc = import5.document;
         _el_0_0 = doc.createElement('div');
-        final _text_0_1 = import5.Text('Hello World');
+        final _text_0_1 = createText('Hello World');
         _el_0_0.append(_text_0_1);
         addInlinedNodes(_anchor_0, [_el_0_0], true);
       } else {
@@ -539,7 +538,7 @@ ComponentFactory<import1.EmbeddedNgFor> get EmbeddedNgForNgFactory {
 
 class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
   var _expr_0;
-  import5.Text _text_1;
+  final import5.Text _text_1 = createText('');
   _ViewEmbeddedNgFor1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewEmbeddedNgFor0._renderType;
   }
@@ -547,7 +546,6 @@ class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
   ComponentRef<import1.EmbeddedNgFor> build() {
     var doc = import5.document;
     final _el_0 = doc.createElement('li');
-    _text_1 = import5.Text('');
     _el_0.append(_text_1);
     init0(_el_0);
   }
@@ -875,7 +873,7 @@ class ViewFeatureA0 extends AppView<import1.FeatureA> {
   ComponentRef<import1.FeatureA> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import5.Text('I am Feature A');
+    final _text_0 = createText('I am Feature A');
     parentRenderNode.append(_text_0);
     init(const [], null);
   }
@@ -934,7 +932,7 @@ class ViewFeatureB0 extends AppView<import1.FeatureB> {
   ComponentRef<import1.FeatureB> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import5.Text('I am Feature B');
+    final _text_0 = createText('I am Feature B');
     parentRenderNode.append(_text_0);
     init(const [], null);
   }

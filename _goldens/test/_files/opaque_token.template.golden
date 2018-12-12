@@ -35,7 +35,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   ComponentRef<import1.HasOpaqueTokens> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import5.Text((ctx.baseUrl ?? ''));
+    final _text_0 = createText((ctx.baseUrl ?? ''));
     parentRenderNode.append(_text_0);
     init(const [], null);
   }

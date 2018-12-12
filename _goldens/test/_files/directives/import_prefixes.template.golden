@@ -91,7 +91,7 @@ final List<dynamic> styles$ChildComponent = const [];
 
 class ViewChildComponent0 extends AppView<import1.ChildComponent> {
   var _expr_0;
-  import2.Text _text_0;
+  final import2.Text _text_0 = createText('');
   static RenderComponentType _renderType;
   ViewChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('child-cmp');
@@ -102,7 +102,6 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
   ComponentRef<import1.ChildComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
     init(const [], null);
   }

@@ -24,7 +24,7 @@ final List<dynamic> styles$Comp1 = const [];
 
 class ViewComp10 extends AppView<import1.Comp1> {
   var _expr_0;
-  import2.Text _text_0;
+  final import2.Text _text_0 = createText('');
   static RenderComponentType _renderType;
   ViewComp10(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-1');
@@ -35,7 +35,6 @@ class ViewComp10 extends AppView<import1.Comp1> {
   ComponentRef<import1.Comp1> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
     init(const [], null);
   }
@@ -95,7 +94,7 @@ final List<dynamic> styles$Comp2 = const [];
 
 class ViewComp20 extends AppView<import1.Comp2> {
   var _expr_0;
-  import2.Text _text_0;
+  final import2.Text _text_0 = createText('');
   static RenderComponentType _renderType;
   ViewComp20(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-2');
@@ -106,7 +105,6 @@ class ViewComp20 extends AppView<import1.Comp2> {
   ComponentRef<import1.Comp2> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
     init(const [], null);
   }
@@ -166,7 +164,7 @@ final List<dynamic> styles$Comp3 = const [];
 
 class ViewComp30 extends AppView<import1.Comp3> {
   var _expr_0;
-  import2.Text _text_0;
+  final import2.Text _text_0 = createText('');
   static RenderComponentType _renderType;
   ViewComp30(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-3');
@@ -177,7 +175,6 @@ class ViewComp30 extends AppView<import1.Comp3> {
   ComponentRef<import1.Comp3> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
     init(const [], null);
   }
@@ -238,7 +235,7 @@ final List<dynamic> styles$Comp4 = const [];
 class ViewComp40 extends AppView<import1.Comp4> {
   List<dynamic> Function(dynamic, dynamic) _arr_0;
   var _expr_0;
-  import2.Text _text_0;
+  final import2.Text _text_0 = createText('');
   static RenderComponentType _renderType;
   ViewComp40(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-4');
@@ -249,7 +246,6 @@ class ViewComp40 extends AppView<import1.Comp4> {
   ComponentRef<import1.Comp4> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
     _arr_0 = import6.pureProxy2((p0, p1) {
       return [p0, p1];
@@ -313,7 +309,7 @@ final List<dynamic> styles$Comp5 = const [];
 class ViewComp50 extends AppView<import1.Comp5> {
   Map<String, dynamic> Function(dynamic) _map_0;
   var _expr_0;
-  import2.Text _text_0;
+  final import2.Text _text_0 = createText('');
   static RenderComponentType _renderType;
   ViewComp50(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-5');
@@ -324,9 +320,8 @@ class ViewComp50 extends AppView<import1.Comp5> {
   ComponentRef<import1.Comp5> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _text_0 = import2.Text('');
     parentRenderNode.append(_text_0);
-    final _text_1 = import2.Text('}');
+    final _text_1 = createText('}');
     parentRenderNode.append(_text_1);
     _map_0 = import6.pureProxy1((p0) {
       return {'1': p0};
@@ -440,13 +435,12 @@ ComponentFactory<import1.Comp6> get Comp6NgFactory {
 
 class _ViewComp61 extends AppView<import1.Comp6> {
   var _expr_0;
-  import2.Text _text_0;
+  final import2.Text _text_0 = createText('');
   _ViewComp61(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewComp60._renderType;
   }
   @override
   ComponentRef<import1.Comp6> build() {
-    _text_0 = import2.Text('');
     init0(_text_0);
   }
 
@@ -591,13 +585,12 @@ AppView<import1.Comp7> viewFactory_Comp71(AppView<dynamic> parentView, int paren
 
 class _ViewComp72 extends AppView<import1.Comp7> {
   var _expr_0;
-  import2.Text _text_0;
+  final import2.Text _text_0 = createText('');
   _ViewComp72(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewComp70._renderType;
   }
   @override
   ComponentRef<import1.Comp7> build() {
-    _text_0 = import2.Text('');
     init0(_text_0);
   }
 
