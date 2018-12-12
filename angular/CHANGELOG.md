@@ -1,3 +1,8 @@
+### New features
+
+*   The template compiler issues a warning if a component that does not project
+    content has children. Previously, these nodes were created and never
+    attached. Now the nodes are not created at all.
 
 ### Bug fixes
 
