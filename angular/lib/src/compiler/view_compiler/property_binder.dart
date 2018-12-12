@@ -1,13 +1,13 @@
+import 'package:meta/meta.dart';
+import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/core/change_detection/constants.dart'
-    show isDefaultChangeDetectionStrategy, ChangeDetectionStrategy;
+    show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
-import 'package:meta/meta.dart';
-import 'package:source_span/source_span.dart';
 
 import '../compile_metadata.dart';
 import '../expression_parser/ast.dart' as ast;
@@ -239,7 +239,6 @@ void bindAndWriteToRenderer(
     // Expression for current value of expression when value is re-read.
     var currValExpr = _createCurrValueExpr(bindingIndex);
 
-    String renderMethod;
     o.OutputType fieldType;
     // Wraps current value with sanitization call if necessary.
     o.Expression renderValue = _sanitizedValue(boundProp, currValExpr);
@@ -247,7 +246,6 @@ void bindAndWriteToRenderer(
     var updateStmts = <o.Statement>[];
     switch (boundProp.type) {
       case PropertyBindingType.property:
-        renderMethod = 'setElementProperty';
         // If user asked for logging bindings, generate code to log them.
         if (boundProp.name == 'className') {
           // Handle className special case for class="binding".
@@ -309,7 +307,7 @@ void bindAndWriteToRenderer(
         break;
       case PropertyBindingType.cssClass:
         fieldType = o.BOOL_TYPE;
-        renderMethod = isHtmlElement ? 'updateClass' : 'updateElemClass';
+        var renderMethod = isHtmlElement ? 'updateClass' : 'updateElemClass';
         updateStmts.add(o.InvokeMemberMethodExpr(renderMethod,
             [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
         break;
@@ -442,8 +440,8 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   }
 
   var view = compileElement.view;
-  var implicitReceiver = DetectChangesVars.cachedCtx;
-  var converter = BoundValueConverter.forView(view, implicitReceiver);
+  var converter =
+      BoundValueConverter.forView(view, DetectChangesVars.cachedCtx);
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var dynamicInputsMethod = CompileMethod();
   var constantInputsMethod = CompileMethod();
@@ -451,7 +449,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.onChanges);
   bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.afterChanges);
   var isOnPushComp = directive.isComponent &&
-      !isDefaultChangeDetectionStrategy(directive.changeDetection);
+      directive.changeDetection == ChangeDetectionStrategy.OnPush;
   var isStatefulComp = directive.isComponent &&
       directive.changeDetection == ChangeDetectionStrategy.Stateful;
   var isStatefulDirective = !directive.isComponent &&
@@ -473,8 +471,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   // therefore we keep track of changes using bool changed variable.
   // At the beginning of change detecting inputs we reset this flag to false,
   // and then set it to true if any of it's inputs change.
-  if (((!isStatefulComp && isOnPushComp) || calcChangedState) &&
-      view.viewType != ViewType.host) {
+  if ((isOnPushComp || calcChangedState) && view.viewType != ViewType.host) {
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changed.set(o.literal(false)).toStmt());
   }
@@ -534,7 +531,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
               .instantiate([fieldExpr, currValExpr]))
           .toStmt());
     }
-    if ((!isStatefulComp && isOnPushComp) || calcChangedState) {
+    if (isOnPushComp || calcChangedState) {
       statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
     }
     // Execute actions and assign result to fieldExpr which hold previous value.
@@ -580,7 +577,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   if (dynamicInputsMethod.isNotEmpty) {
     detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
   }
-  if (!isStatefulComp && isOnPushComp) {
+  if (isOnPushComp) {
     detectChangesInInputsMethod.addStmt(o.IfStmt(DetectChangesVars.changed, [
       compileElement.componentView.callMethod('markAsCheckOnce', []).toStmt()
     ]));
