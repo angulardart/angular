@@ -64,4 +64,31 @@ void main() {
       ])
     ]);
   });
+
+  test('should warn on dead code', () async {
+    await compilesExpecting('''
+    import '$ngImport';
+
+    @Component(
+      selector: 'opaque',
+      template: 'I am a rock'
+    )
+    class OpaqueComponent {}
+
+    @Component(
+      selector: 'hidden-gold',
+      template: '<opaque>Dropped</opaque>',
+      directives: [OpaqueComponent]
+    )
+    class HiddenGoldComponenet {}
+    ''', warnings: [
+      allOf([
+        'line 1, column 9 of asset:pkg/lib/input.dart: Dead code in template: '
+            'Non-empty text node (Dropped) is a child of a non-projecting '
+            'component (opaque) and will not be added to the DOM.\n'
+            '<opaque>Dropped</opaque>\n'
+            '        ^^^^^^^'
+      ])
+    ]);
+  });
 }

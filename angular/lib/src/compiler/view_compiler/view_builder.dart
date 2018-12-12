@@ -82,7 +82,22 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     }
   }
 
+  bool _maybeSkipNode(CompileElement parent, ngContentIndex) {
+    if (!_isRootNode(parent) &&
+        parent.component != null &&
+        ngContentIndex == null) {
+      // Keep the list of nodes in sync with the tree.
+      view.nodes.add(null);
+      return true;
+    }
+    return false;
+  }
+
   void visitBoundText(BoundTextAst ast, CompileElement parent) {
+    if (_maybeSkipNode(parent, ast.ngContentIndex)) {
+      _deadCodeWarning("Bound text node (${ast.value})", ast, parent);
+      return;
+    }
     int nodeIndex = view.nodes.length;
     NodeReference renderNode = view.createBoundTextNode(parent, nodeIndex, ast);
     var compileNode = CompileNode(parent, view, nodeIndex, renderNode, ast);
@@ -91,12 +106,27 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   }
 
   void visitText(TextAst ast, CompileElement parent) {
+    if (_maybeSkipNode(parent, ast.ngContentIndex)) {
+      if (ast.value.trim() != '') {
+        _deadCodeWarning("Non-empty text node (${ast.value})", ast, parent);
+      }
+      return;
+    }
     int nodeIndex = view.nodes.length;
+
     NodeReference renderNode =
         view.createTextNode(parent, nodeIndex, o.literal(ast.value), ast);
     var compileNode = CompileNode(parent, view, nodeIndex, renderNode, ast);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+  }
+
+  void _deadCodeWarning(
+      String nodeDescription, TemplateAst ast, CompileElement parent) {
+    logWarning(ast.sourceSpan.message("Dead code in template: "
+        "$nodeDescription is a child of a non-projecting "
+        "component (${parent.component.selector}) and will not "
+        "be added to the DOM."));
   }
 
   @override
