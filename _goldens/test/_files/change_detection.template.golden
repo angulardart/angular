@@ -274,8 +274,9 @@ AppView<import1.DetachedComponent> viewFactory_DetachedComponentHost0(AppView<dy
 final List<dynamic> styles$UsesOnPushComponent = const [];
 
 class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
-  var _expr_0;
-  import5.Element _el_0;
+  ViewOnPushComponent0 _compView_0;
+  import1.OnPushComponent _OnPushComponent_0_5;
+  String _expr_0;
   static RenderComponentType _renderType;
   ViewUsesOnPushComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('uses-cd-on-push');
@@ -286,19 +287,34 @@ class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
   ComponentRef<import1.UsesOnPushComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    _el_0 = createAndAppend(doc, 'cd-on-push', parentRenderNode);
+    _compView_0 = ViewOnPushComponent0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _OnPushComponent_0_5 = import1.OnPushComponent();
+    _compView_0.create(_OnPushComponent_0_5, []);
     init(const [], null);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
+    bool changed = false;
+    changed = false;
     final currVal_0 = _ctx.name;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setProp(_el_0, 'name', currVal_0);
+      _OnPushComponent_0_5.name = currVal_0;
+      changed = true;
       _expr_0 = currVal_0;
     }
+    if (changed) {
+      _compView_0.markAsCheckOnce();
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
   }
 }
 

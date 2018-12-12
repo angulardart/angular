@@ -34,6 +34,7 @@ class DetachedComponent {}
 @Component(
   selector: 'uses-cd-on-push',
   template: '<cd-on-push [name]="name"></cd-on-push>',
+  directives: [OnPushComponent],
 )
 class UsesOnPushComponent {
   String name;
