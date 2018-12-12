@@ -269,6 +269,13 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
     _visitingRoot = false;
     _ensureExpressionMode(mode, ast);
 
+    final expressionsAreString =
+        ast.expressions.every((ast) => isString(ast, _metadata.analyzedClass));
+
+    final interpolateIdentifiers = expressionsAreString
+        ? Identifiers.interpolateString
+        : Identifiers.interpolate;
+
     /// Handle most common case where prefix and postfix are empty.
     if (ast.expressions.length == 1) {
       String firstArg = _compressWhitespacePreceding(ast.strings[0]);
@@ -277,14 +284,14 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
         var args = <o.Expression>[
           ast.expressions[0].visit<dynamic, _Mode>(this, _Mode.Expression)
         ];
-        return o.importExpr(Identifiers.interpolate[0]).callFn(args);
+        return o.importExpr(interpolateIdentifiers[0]).callFn(args);
       } else {
         var args = <o.Expression>[
           o.literal(firstArg),
           ast.expressions[0].visit<dynamic, _Mode>(this, _Mode.Expression),
           o.literal(secondArg),
         ];
-        return o.importExpr(Identifiers.interpolate[1]).callFn(args);
+        return o.importExpr(interpolateIdentifiers[1]).callFn(args);
       }
     } else {
       var args = <o.Expression>[];
@@ -299,7 +306,7 @@ class _AstToIrVisitor implements compiler_ast.AstVisitor<dynamic, _Mode> {
       args.add(o.literal(
           _compressWhitespaceFollowing(ast.strings[ast.strings.length - 1])));
       return o
-          .importExpr(Identifiers.interpolate[ast.expressions.length])
+          .importExpr(interpolateIdentifiers[ast.expressions.length])
           .callFn(args);
     }
   }

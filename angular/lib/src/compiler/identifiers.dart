@@ -100,8 +100,6 @@ class Identifiers {
   static final profileMarkEnd = CompileIdentifierMetadata<dynamic>(
       name: "profileMarkEnd", moduleUrl: profileRuntimeModuleUrl);
 
-  /// String interpolation where prefix,suffix are empty
-  /// (most common case).
   static final throwOnChanges = CompileIdentifierMetadata<dynamic>(
       name: "AppViewUtils.throwOnChanges", moduleUrl: appViewUtilsModuleUrl);
   static final isDevMode = CompileIdentifierMetadata<dynamic>(
@@ -114,6 +112,31 @@ class Identifiers {
       name: "debugInjectorLeave", moduleUrl: debugInjectorModuleUrl);
   static final debugInjectorWrap = CompileIdentifierMetadata<dynamic>(
       name: "debugInjectorWrap", moduleUrl: debugInjectorModuleUrl);
+
+  /// String interpolation where prefix,suffix are empty
+  /// (most common case).
+  static final interpolateString = <CompileIdentifierMetadata>[
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString0", moduleUrl: appViewUtilsModuleUrl),
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString1", moduleUrl: appViewUtilsModuleUrl),
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString2", moduleUrl: appViewUtilsModuleUrl),
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString3", moduleUrl: appViewUtilsModuleUrl),
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString4", moduleUrl: appViewUtilsModuleUrl),
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString5", moduleUrl: appViewUtilsModuleUrl),
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString6", moduleUrl: appViewUtilsModuleUrl),
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString7", moduleUrl: appViewUtilsModuleUrl),
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString8", moduleUrl: appViewUtilsModuleUrl),
+    CompileIdentifierMetadata<dynamic>(
+        name: "interpolateString9", moduleUrl: appViewUtilsModuleUrl),
+  ];
 
   static final interpolate = <CompileIdentifierMetadata>[
     CompileIdentifierMetadata<dynamic>(
