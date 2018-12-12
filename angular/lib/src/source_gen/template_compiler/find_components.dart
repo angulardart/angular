@@ -1,9 +1,9 @@
 import 'package:analyzer/analyzer.dart' hide Directive;
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/error/error.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:analyzer/error/error.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -14,6 +14,8 @@ import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/compiler/output/convert.dart';
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/view_compiler/property_binder.dart'
+    show isPrimitiveTypeName;
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
@@ -22,8 +24,6 @@ import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
 
-import '../../compiler/view_compiler/property_binder.dart'
-    show isPrimitiveTypeName;
 import 'compile_metadata.dart';
 import 'dart_object_utils.dart';
 import 'pipe_visitor.dart';
