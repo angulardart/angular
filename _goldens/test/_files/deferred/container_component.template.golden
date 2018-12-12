@@ -310,7 +310,6 @@ class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponen
     _compView_0 = deflib1.viewFactory_DeferredChildComponentWithoutNgContent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChildComponentWithoutNgContent_0_5 = deflib0.DeferredChildComponentWithoutNgContent();
-    final _text_1 = import9.Text('Hello World');
     _compView_0.create(_DeferredChildComponentWithoutNgContent_0_5, []);
     init0(_el_0);
   }

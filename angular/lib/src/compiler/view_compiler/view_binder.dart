@@ -54,6 +54,11 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   @override
   void visitBoundText(BoundTextAst ast, _) {
     var node = this.view.nodes[_nodeIndex++];
+    if (node == null) {
+      // The node was never added in ViewBuilder since it
+      // is dead code.
+      return;
+    }
     bindRenderText(ast, node, this.view);
   }
 
