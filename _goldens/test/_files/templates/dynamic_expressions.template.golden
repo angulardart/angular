@@ -112,7 +112,7 @@ class ViewComp20 extends AppView<import1.Comp2> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = import6.interpolate0(_ctx.a.b(_ctx.c));
+    final currVal_0 = import6.interpolateString0(_ctx.a.b(_ctx.c));
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
