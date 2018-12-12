@@ -33,7 +33,7 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   ComponentRef<import1.ProvidersComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import5.Text('Hello');
+    final _text_0 = createText('Hello');
     parentRenderNode.append(_text_0);
     init(const [], null);
   }

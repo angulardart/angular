@@ -115,19 +115,21 @@ class NodeReference {
   /// Create a [NodeReference] for a `Text` node.
   NodeReference.textNode(
     this._storage,
-    int nodeIndex,
-  )   : _type = o.importType(Identifiers.HTML_TEXT_NODE),
+    int nodeIndex, {
+    o.Expression initialValue,
+  })  : _type = o.importType(Identifiers.HTML_TEXT_NODE),
         _name = '_text_$nodeIndex',
-        _initialValue = null;
+        _initialValue = initialValue;
 
   /// Create a [NodeReference] for a `Text` node moved from an inlined `NgIf`.
   NodeReference.inlinedTextNode(
     this._storage,
     int nodeIndex,
-    int inlinedNodeIndex,
-  )   : _type = o.importType(Identifiers.HTML_TEXT_NODE),
+    int inlinedNodeIndex, {
+    o.Expression initialValue,
+  })  : _type = o.importType(Identifiers.HTML_TEXT_NODE),
         _name = '_text_${nodeIndex}_$inlinedNodeIndex',
-        _initialValue = null;
+        _initialValue = initialValue;
 
   /// Create a [NodeReference] for an anchor node for view containers.
   NodeReference.anchor(
@@ -706,32 +708,49 @@ class CompileView implements AppViewBuilder {
   }
 
   @override
-  NodeReference createTextNode(CompileElement parent, int nodeIndex,
-      o.Expression text, TemplateAst ast) {
-    NodeReference renderNode;
-    if (isInlined) {
-      renderNode = NodeReference.inlinedTextNode(
-          storage, declarationElement.nodeIndex, nodeIndex);
-    } else {
-      renderNode = NodeReference.textNode(storage, nodeIndex);
-    }
-    _initializeAndAppendNode(parent, renderNode,
-        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([text]));
+  NodeReference createTextNode(
+    CompileElement parent,
+    int nodeIndex,
+    o.Expression textValue,
+    TemplateAst ast,
+  ) {
+    final renderNode = isInlined
+        ? NodeReference.inlinedTextNode(
+            storage,
+            declarationElement.nodeIndex,
+            nodeIndex,
+          )
+        : NodeReference.textNode(
+            storage,
+            nodeIndex,
+          );
+    final createText = o.importExpr(Identifiers.createText);
+    _initializeAndAppendNode(
+      parent,
+      renderNode,
+      createText.callFn([textValue]),
+    );
     return renderNode;
   }
 
   @override
   NodeReference createBoundTextNode(
-      CompileElement parent, int nodeIndex, BoundTextAst ast) {
-    // If Text field is bound, we need access to the renderNode beyond
-    // build method and write reference to class member.
-    NodeReference renderNode = NodeReference.textNode(storage, nodeIndex);
-
-    o.Expression initialText = o.literal('');
-    if (component.analyzedClass != null &&
-        isImmutable(ast.value, component.analyzedClass)) {
-      var newValue = rewriteInterpolate(ast.value, component.analyzedClass);
-      initialText = convertCdExpressionToIr(
+    CompileElement parent,
+    int nodeIndex,
+    BoundTextAst ast,
+  ) {
+    // Optimization: Treat bound final strings as static text:
+    //
+    // {{message}}
+    //
+    // class C {
+    //   final message = 'Hello World';
+    // }
+    final clazz = component.analyzedClass;
+    final textWillNotChange = isImmutable(ast.value, clazz);
+    if (textWillNotChange) {
+      final newValue = rewriteInterpolate(ast.value, clazz);
+      final initialText = convertCdExpressionToIr(
         nameResolver,
         o.ReadClassMemberExpr('ctx'),
         newValue,
@@ -739,9 +758,30 @@ class CompileView implements AppViewBuilder {
         component,
         o.STRING_TYPE,
       );
+      return this.createTextNode(
+        parent,
+        nodeIndex,
+        initialText,
+        ast,
+      );
     }
-    _initializeAndAppendNode(parent, renderNode,
-        o.importExpr(Identifiers.HTML_TEXT_NODE).instantiate([initialText]));
+
+    // Base case: Bound text where the value may change over time.
+    //
+    // {{message}}
+    //
+    // class C {
+    //   @Input()
+    //   String message;
+    // }
+    final createText = o.importExpr(Identifiers.createText);
+    final initialText = createText.callFn([o.literal('')]);
+    final renderNode = NodeReference.textNode(
+      storage,
+      nodeIndex,
+      initialValue: initialText,
+    );
+    _initializeAndAppendNode(parent, renderNode);
     return renderNode;
   }
 
@@ -1456,7 +1496,9 @@ class CompileView implements AppViewBuilder {
         o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
       ],
       _addReturnValueIfNotEmpty(
-          _injectorGetMethod.finish(), InjectMethodVars.notFoundResult),
+        _injectorGetMethod.finish(),
+        InjectMethodVars.notFoundResult,
+      ),
       o.DYNAMIC_TYPE,
       null,
       [o.importExpr(Identifiers.dartCoreOverride)],
@@ -1484,9 +1526,14 @@ class CompileView implements AppViewBuilder {
     }
   }
 
-  void _initializeAndAppendNode(CompileElement parentElement,
-      NodeReference nodeReference, o.Expression value) {
-    _createMethod.addStmt(nodeReference.toWriteStmt(value));
+  void _initializeAndAppendNode(
+    CompileElement parentElement,
+    NodeReference nodeReference, [
+    o.Expression value,
+  ]) {
+    if (value != null) {
+      _createMethod.addStmt(nodeReference.toWriteStmt(value));
+    }
     final parentExpr = _getParentRenderNode(parentElement);
     if (parentExpr != o.NULL_EXPR) {
       _createMethod.addStmt(parentExpr

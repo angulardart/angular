@@ -723,6 +723,10 @@ void _moveNodesAfterSibling(Node sibling, List<Node> nodes) {
   }
 }
 
+/// Helper function called by [AppView] to reduce code-size.
+@dart2js.noInline
+Text createText(String text) => Text(text);
+
 /// Helper function called by AppView.build to reduce code size.
 @dart2js.noInline
 Element createAndAppend(Document doc, String tagName, Element parent) {

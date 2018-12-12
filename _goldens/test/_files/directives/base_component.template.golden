@@ -35,7 +35,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import7.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
-    final _text_1 = import7.Text('Foo');
+    final _text_1 = createText('Foo');
     _el_0.append(_text_1);
     _compView_2 = import2.ViewTestSubComponent0(this, 2);
     final _el_2 = _compView_2.rootEl;
