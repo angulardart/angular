@@ -6,8 +6,6 @@ import 'package:code_builder/code_builder.dart';
 
 import 'template_compiler_outputs.dart';
 
-const _ignoredProblems = <String>[];
-
 String buildGeneratedCode(
   LibraryElement element,
   TemplateCompilerOutputs outputs,
@@ -16,12 +14,6 @@ String buildGeneratedCode(
   CompilerFlags flags,
 ) {
   final buffer = StringBuffer();
-
-  // Avoid strong-mode warnings that are not solvable quite yet.
-  if (_ignoredProblems.isNotEmpty) {
-    var problems = _ignoredProblems.join(',');
-    buffer.writeln('// ignore_for_file: $problems');
-  }
 
   // Generated code.
   final allocator = Allocator.simplePrefixing();
