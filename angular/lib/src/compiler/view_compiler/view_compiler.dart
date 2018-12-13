@@ -9,7 +9,6 @@ import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart';
-import '../style_compiler.dart' show StylesCompileResult;
 import '../template_ast.dart' show TemplateAst, templateVisitAll;
 import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
@@ -39,7 +38,6 @@ class ViewCompiler {
   ViewCompileResult compileComponent(
       CompileDirectiveMetadata component,
       List<TemplateAst> template,
-      StylesCompileResult stylesCompileResult,
       o.Expression styles,
       List<CompileTypedMetadata> directiveTypes,
       List<CompilePipeMetadata> pipes,
@@ -48,7 +46,7 @@ class ViewCompiler {
     var statements = <o.Statement>[];
     var view = CompileView(component, _genConfig, directiveTypes, pipes, styles,
         0, CompileElement.root(), [], deferredModules);
-    _buildView(view, template, stylesCompileResult);
+    _buildView(view, template);
     // Need to separate binding from creation to be able to refer to
     // variables that have been declared after usage.
     bindView(view, template);
@@ -71,8 +69,7 @@ class ViewCompiler {
   }
 
   /// Builds the view and returns number of nested views generated.
-  void _buildView(CompileView view, List<TemplateAst> template,
-      StylesCompileResult stylesCompileResult) {
+  void _buildView(CompileView view, List<TemplateAst> template) {
     var builderVisitor = ViewBuilderVisitor(view);
     templateVisitAll(builderVisitor, template,
         view.declarationElement.parent ?? view.declarationElement);
