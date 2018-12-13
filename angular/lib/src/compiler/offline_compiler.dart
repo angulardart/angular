@@ -17,7 +17,7 @@ import 'ir/model.dart' as ir;
 import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
 import 'source_module.dart';
-import 'style_compiler.dart' show StyleCompiler;
+import 'stylesheet_compiler/style_compiler.dart' show StyleCompiler;
 import 'template_ast.dart';
 import 'template_parser.dart' show TemplateParser;
 import 'view_compiler/directive_compiler.dart';
