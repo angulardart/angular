@@ -126,7 +126,6 @@ class OfflineCompiler {
     var viewResult = _viewCompiler.compileComponent(
         view.cmpMetadata,
         view.parsedTemplate,
-        styleResult,
         o.variable(styleResult.stylesVar),
         view.directiveTypes,
         view.pipes,
