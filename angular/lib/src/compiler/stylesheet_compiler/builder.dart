@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:build/build.dart';
+import 'package:angular/src/source_gen/common/names.dart';
 import 'package:angular_compiler/cli.dart';
 
-import '../common/names.dart';
 import 'processor.dart';
 
 /// Pre-compiles CSS stylesheet files to Dart code for Angular 2.
