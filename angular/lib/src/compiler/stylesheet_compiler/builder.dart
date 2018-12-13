@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:build/build.dart';
-import 'package:angular/src/source_gen/common/names.dart';
 import 'package:angular_compiler/cli.dart';
 
 import 'processor.dart';
+
+const _cssExtension = '.css';
+const _shimmedStylesheetExtension = '.css.shim.dart';
+const _nonShimmedStylesheetExtension = '.css.dart';
 
 /// Pre-compiles CSS stylesheet files to Dart code for Angular 2.
 class StylesheetCompiler implements Builder {
@@ -14,9 +17,9 @@ class StylesheetCompiler implements Builder {
 
   @override
   final buildExtensions = const {
-    CSS_EXTENSION: [
-      SHIMMED_STYLESHEET_EXTENSION,
-      NON_SHIMMED_STYLESHEET_EXTENSION,
+    _cssExtension: [
+      _shimmedStylesheetExtension,
+      _nonShimmedStylesheetExtension,
     ],
   };
 

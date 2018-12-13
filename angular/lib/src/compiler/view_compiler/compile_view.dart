@@ -7,7 +7,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
-import 'package:angular/src/source_gen/common/names.dart'
+import 'package:angular/src/source_gen/common/url_resolver.dart'
     show toTemplateExtension;
 import 'package:angular_compiler/cli.dart';
 
