@@ -6,7 +6,7 @@ import 'package:angular/src/compiler/expression_parser/parser.dart' as ng;
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/compiler/output/dart_emitter.dart';
 import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
-import 'package:angular/src/compiler/style_compiler.dart';
+import 'package:angular/src/compiler/stylesheet_compiler/style_compiler.dart';
 import 'package:angular/src/compiler/view_compiler/view_compiler.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
