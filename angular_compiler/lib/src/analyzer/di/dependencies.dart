@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../common.dart';
 import '../types.dart';
@@ -125,8 +126,7 @@ class DependencyReader {
   ) {
     final constructor = findConstructor(element);
     if (constructor == null) {
-      // TODO(matanl): Log an exception instead of throwing.
-      throw StateError('Could not find a valid constructor for $element.');
+      BuildError.throwForElement(element, 'Could not find a valid constructor');
     }
     return _parseDependencies(constructor, constructor.parameters);
   }
