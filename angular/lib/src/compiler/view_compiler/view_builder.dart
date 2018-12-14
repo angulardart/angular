@@ -293,7 +293,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       view.hasInlinedView = true;
     }
     NodeReference nodeReference =
-        view.createViewContainerAnchor(parent, nodeIndex, ast, isPureHtml);
+        view.createViewContainerAnchor(parent, nodeIndex, ast);
     var directives =
         ast.directives.map((directiveAst) => directiveAst.directive).toList();
     var compileElement = CompileElement(
