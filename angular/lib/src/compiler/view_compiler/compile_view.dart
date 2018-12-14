@@ -911,13 +911,9 @@ class CompileView implements AppViewBuilder {
 
   /// Creates a node 'anchor' to mark the insertion point for dynamically
   /// created elements.
-  ///
-  /// If [topLevel] is `true`, the anchor node is available to any method in the
-  /// view. This is useful for inlined views, which are built in the
-  /// `detectChanges` method. Otherwise, the anchor is local to this view's
-  /// build method.
+
   NodeReference createViewContainerAnchor(
-      CompileElement parent, int nodeIndex, TemplateAst ast, bool topLevel) {
+      CompileElement parent, int nodeIndex, TemplateAst ast) {
     NodeReference renderNode = NodeReference.anchor(storage, nodeIndex);
     _initializeAndAppendNode(parent, renderNode,
         o.importExpr(Identifiers.createViewContainerAnchor).callFn([]));
