@@ -28,40 +28,40 @@ import 'package:build/build.dart';
 Future<Map<String, String>> collectTypeParameters(
     Iterable<ClassElement> directives, BuildStep buildStep) async {
   final typeParameters = <String, String>{};
-  final unitsToParse = Set<String>();
+  final assetsToParse = Set<AssetId>();
+  final resolver = buildStep.resolver;
   for (final directive in directives) {
     typeParameters[directive.name] = '';
     if (directive.typeParameters != null) {
-      unitsToParse.add(directive.source.fullName);
+      assetsToParse.add(await resolver.assetIdForElement(directive));
     }
   }
   // Avoid parsing source if there are no directives with generic type
   // parameters to collect.
-  if (unitsToParse.isNotEmpty) {
-    await Future.wait(unitsToParse.map((unit) =>
-        _collectTypeParametersFromUnit(unit, buildStep, typeParameters)));
+  if (assetsToParse.isNotEmpty) {
+    await Future.wait(assetsToParse.map((asset) =>
+        _collectTypeParametersFromUnit(asset, buildStep, typeParameters)));
   }
   return typeParameters;
 }
 
 /// Records the generic type parameters of classes in a compilation unit.
 ///
-/// [unitName] identifies the source of the compilation unit to parse.
+/// [unitUri] identifies the source of the compilation unit to parse.
 ///
 /// [typeParameters] must contain an entry, keyed by class name, for each class
 /// whose type parameters should be collected. Any collected type parameters are
 /// recorded in [typeParameters], overwriting the original value.
 Future<void> _collectTypeParametersFromUnit(
-  String unitName,
+  AssetId assetId,
   BuildStep buildStep,
   Map<String, String> typeParameters,
 ) async {
   // Parse unresolved compilation unit from source. This is cheaper than
   // accessing the resolved compilation unit through the element model.
-  final id = AssetId.parse(unitName);
-  final source = await buildStep.readAsString(id);
+  final source = await buildStep.readAsString(assetId);
   final unit = parseCompilationUnit(source,
-      name: '${id.uri}', parseFunctionBodies: false);
+      name: '${assetId.uri}', parseFunctionBodies: false);
   // Collect generic type parameters for directives.
   for (final declaration in unit.declarations) {
     if (declaration is ClassDeclaration &&
