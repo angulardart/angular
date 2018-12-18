@@ -6,6 +6,9 @@ import '../model.dart';
 /// visitors to implement only the methods needed.
 class DefaultIRVisitor<R, C> implements IRVisitor<R, C> {
   @override
+  R visitLibrary(Library library, [C context]) => null;
+
+  @override
   R visitComponent(Component component, [C context]) => null;
 
   @override

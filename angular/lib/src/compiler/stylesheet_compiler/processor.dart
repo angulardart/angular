@@ -13,7 +13,7 @@ Future<Map<AssetId, String>> processStylesheet(
     BuildStep buildStep, AssetId stylesheetId, CompilerFlags flags) async {
   final stylesheetUrl = toAssetUri(stylesheetId);
   final templateCompiler =
-      zone.templateCompiler ?? createTemplateCompiler(buildStep, flags);
+      zone.templateCompiler ?? createOfflineCompiler(buildStep, flags);
   final cssText = await buildStep.readAsString(stylesheetId);
   final sourceModules =
       templateCompiler.compileStylesheet(stylesheetUrl, cssText);
