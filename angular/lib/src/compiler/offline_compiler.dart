@@ -1,25 +1,11 @@
-import 'dart:async';
-
-import '../core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy;
-import '../core/metadata/lifecycle_hooks.dart' show LifecycleHooks;
-import '../core/metadata/view.dart' show ViewEncapsulation;
-import 'ast_directive_normalizer.dart' show AstDirectiveNormalizer;
 import 'compile_metadata.dart'
-    show
-        CompileDirectiveMetadata,
-        CompileTypedMetadata,
-        CompilePipeMetadata,
-        createHostComponentMeta,
-        createHostDirectiveTypes;
-import 'compiler_utils.dart' show stylesModuleUrl, templateModuleUrl;
+    show CompileDirectiveMetadata, CompileTypedMetadata, CompilePipeMetadata;
+import 'compiler_utils.dart' show stylesModuleUrl;
 import 'ir/model.dart' as ir;
 import 'output/abstract_emitter.dart' show OutputEmitter;
 import 'output/output_ast.dart' as o;
 import 'source_module.dart';
 import 'stylesheet_compiler/style_compiler.dart' show StyleCompiler;
-import 'template_ast.dart';
-import 'template_parser.dart' show TemplateParser;
 import 'view_compiler/directive_compiler.dart';
 import 'view_compiler/view_compiler.dart' show ViewCompiler;
 
@@ -55,20 +41,10 @@ class NormalizedComponentWithViewDirectives {
           'component.');
     }
   }
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'class': 'NormalizedComponentWithViewDirectives',
-        'component': component,
-        'directives': directives,
-        'directiveTypes': directiveTypes,
-        'pipes': pipes,
-      };
 }
 
 /// Compiles a view template.
 class OfflineCompiler {
-  final AstDirectiveNormalizer _directiveNormalizer;
-  final TemplateParser _templateParser;
   final StyleCompiler _styleCompiler;
   final ViewCompiler _viewCompiler;
   final DirectiveCompiler _directiveCompiler;
@@ -79,36 +55,24 @@ class OfflineCompiler {
   final Map<String, String> _deferredModules;
 
   OfflineCompiler(
-    this._directiveNormalizer,
-    this._templateParser,
+    this._directiveCompiler,
     this._styleCompiler,
     this._viewCompiler,
     this._outputEmitter,
     this._deferredModules,
-  ) : _directiveCompiler = DirectiveCompiler(_templateParser.schemaRegistry);
+  );
 
-  Future<CompileDirectiveMetadata> normalizeDirectiveMetadata(
-      CompileDirectiveMetadata directive) {
-    return _directiveNormalizer.normalizeDirective(directive);
-  }
-
-  SourceModule compile(AngularArtifacts artifacts) {
-    if (artifacts.isEmpty) {
-      throw StateError('No components nor injectorModules given');
-    }
+  SourceModule compile(ir.Library library, String moduleUrl) {
     var statements = <o.Statement>[];
-    for (var componentWithDirs in artifacts.components) {
-      var component = _convertToIR(componentWithDirs);
+    for (var component in library.components) {
       _compileComponent(component, statements);
     }
 
-    for (CompileDirectiveMetadata directiveMeta in artifacts.directives) {
-      var directive = _convertDirectiveToIR(directiveMeta);
+    for (var directive in library.directives) {
       if (!directive.requiresDirectiveChangeDetector) continue;
       _compileDirective(directive, statements);
     }
 
-    String moduleUrl = _moduleUrlFor(artifacts);
     return _createSourceModule(moduleUrl, statements, _deferredModules);
   }
 
@@ -141,10 +105,10 @@ class OfflineCompiler {
     var shimStyles =
         _styleCompiler.compileStylesheet(stylesheetUrl, cssText, true);
     return [
-      _createSourceModule(stylesModuleUrl(stylesheetUrl, false),
-          plainStyles.statements, _deferredModules),
-      _createSourceModule(stylesModuleUrl(stylesheetUrl, true),
-          shimStyles.statements, _deferredModules)
+      _createSourceModule(
+          stylesModuleUrl(stylesheetUrl, false), plainStyles.statements, {}),
+      _createSourceModule(
+          stylesModuleUrl(stylesheetUrl, true), shimStyles.statements, {})
     ];
   }
 
@@ -159,84 +123,4 @@ class OfflineCompiler {
         _outputEmitter.emitStatements(moduleUrl, statements, deferredModules);
     return SourceModule(moduleUrl, sourceCode, deferredModules);
   }
-
-  String _moduleUrlFor(AngularArtifacts artifacts) {
-    if (artifacts.components.isNotEmpty) {
-      return templateModuleUrl(artifacts.components.first.component.type);
-    } else if (artifacts.directives.isNotEmpty) {
-      return templateModuleUrl(artifacts.directives.first.type);
-    } else {
-      throw StateError('No components nor injectorModules given');
-    }
-  }
-
-  ir.Component _convertToIR(
-      NormalizedComponentWithViewDirectives componentWithDirs) {
-    return ir.Component(componentWithDirs.component.type.name,
-        encapsulation: _encapsulation(componentWithDirs),
-        styles: componentWithDirs.component.template.styles,
-        styleUrls: componentWithDirs.component.template.styleUrls,
-        views: [
-          _componentView(componentWithDirs),
-          _hostView(componentWithDirs.component)
-        ]);
-  }
-
-  ir.ViewEncapsulation _encapsulation(
-      NormalizedComponentWithViewDirectives componentWithDirs) {
-    switch (componentWithDirs.component.template.encapsulation) {
-      case ViewEncapsulation.Emulated:
-        return ir.ViewEncapsulation.emulated;
-      case ViewEncapsulation.None:
-        return ir.ViewEncapsulation.none;
-      default:
-        throw ArgumentError.value(
-            componentWithDirs.component.template.encapsulation);
-    }
-  }
-
-  ir.View _componentView(
-      NormalizedComponentWithViewDirectives componentWithDirs) {
-    List<TemplateAst> parsedTemplate = _templateParser.parse(
-        componentWithDirs.component,
-        componentWithDirs.component.template.template,
-        componentWithDirs.directives,
-        componentWithDirs.pipes,
-        componentWithDirs.component.type.name,
-        componentWithDirs.component.template.templateUrl);
-    return ir.ComponentView(
-        cmpMetadata: componentWithDirs.component,
-        directiveTypes: componentWithDirs.directiveTypes,
-        parsedTemplate: parsedTemplate,
-        pipes: componentWithDirs.pipes);
-  }
-
-  ir.View _hostView(CompileDirectiveMetadata component) {
-    var hostMeta = createHostComponentMeta(component.type, component.selector,
-        component.template.preserveWhitespace);
-    var parsedTemplate = _templateParser.parse(
-        hostMeta,
-        hostMeta.template.template,
-        [component],
-        [],
-        hostMeta.type.name,
-        hostMeta.template.templateUrl);
-    return ir.HostView(null,
-        cmpMetadata: hostMeta,
-        parsedTemplate: parsedTemplate,
-        directiveTypes: createHostDirectiveTypes(component.type));
-  }
-
-  ir.Directive _convertDirectiveToIR(CompileDirectiveMetadata directiveMeta) =>
-      ir.Directive(
-          name: directiveMeta.identifier.name,
-          typeParameters: directiveMeta.originType.typeParameters,
-          hostProperties: directiveMeta.hostProperties,
-          metadata: directiveMeta,
-          requiresDirectiveChangeDetector:
-              directiveMeta.requiresDirectiveChangeDetector,
-          implementsComponentState:
-              directiveMeta.changeDetection == ChangeDetectionStrategy.Stateful,
-          implementsOnChanges:
-              directiveMeta.lifecycleHooks.contains(LifecycleHooks.onChanges));
 }

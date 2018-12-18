@@ -10,6 +10,19 @@ abstract class IRNode {
   R accept<R, C>(IRVisitor<R, C> visitor, [C context]);
 }
 
+/// Top-level object to encapsulate the IR objects created by the frontend and
+/// passed to the backend.
+class Library implements IRNode {
+  final List<Component> components;
+  final List<Directive> directives;
+
+  Library(this.components, this.directives);
+
+  @override
+  R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
+      visitor.visitLibrary(this, context);
+}
+
 /// The core reusable UI building blocks for an application.
 class Component implements IRNode {
   final String name;
@@ -144,6 +157,8 @@ class HostView implements View {
 }
 
 abstract class IRVisitor<R, C> {
+  R visitLibrary(Library library, [C context]);
+
   R visitComponent(Component component, [C context]);
   R visitDirective(Directive directive, C context);
 

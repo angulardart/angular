@@ -1,15 +1,11 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular/src/compiler/offline_compiler.dart';
-import 'package:angular/src/source_gen/common/logging.dart';
+import 'package:build/build.dart';
 import 'package:angular/src/source_gen/common/ng_compiler.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
-import 'package:build/build.dart';
-import 'package:source_gen/source_gen.dart';
 
-import 'find_components.dart';
 import 'template_compiler_outputs.dart';
 
 Future<TemplateCompilerOutputs> processTemplates(
@@ -20,46 +16,14 @@ Future<TemplateCompilerOutputs> processTemplates(
   final reflectables = await _resolveReflectables(flags, buildStep, element);
   final injectors = InjectorReader.findInjectors(element);
 
-  final AngularArtifacts compileComponentsData = logElapsedSync(
-      () => findComponentsAndDirectives(LibraryReader(element)),
-      operationName: 'findComponents',
-      assetId: buildStep.inputId,
-      log: log);
-
-  if (compileComponentsData.isEmpty) {
-    return TemplateCompilerOutputs(
-      null,
-      reflectables,
-      injectors,
-    );
-  }
-
-  final templateCompiler = createTemplateCompiler(buildStep, flags);
-  // Normalize directive meta data for component and directives.
-  for (final component in compileComponentsData.components) {
-    await _normalizeComponent(templateCompiler, component);
-  }
-  final compiledTemplates = logElapsedSync(() {
-    return templateCompiler.compile(compileComponentsData);
-  }, operationName: 'compile', assetId: buildStep.inputId, log: log);
+  final compiler = createAngularCompiler(buildStep, flags);
+  final sourceModule = await compiler.compile(element);
 
   return TemplateCompilerOutputs(
-    compiledTemplates,
+    sourceModule,
     reflectables,
     injectors,
   );
-}
-
-Future<void> _normalizeComponent(OfflineCompiler templateCompiler,
-    NormalizedComponentWithViewDirectives component) async {
-  final normalizedComp = await templateCompiler.normalizeDirectiveMetadata(
-    component.component,
-  );
-  final normalizedDirs = await Future.wait(
-      component.directives.map(templateCompiler.normalizeDirectiveMetadata));
-  component
-    ..component = normalizedComp
-    ..directives = normalizedDirs;
 }
 
 Future<ReflectableOutput> _resolveReflectables(
