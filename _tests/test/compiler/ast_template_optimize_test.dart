@@ -1,11 +1,11 @@
 @TestOn('vm')
 import 'package:test/test.dart';
-import 'package:angular/src/compiler/ast_template_parser.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart';
 import 'package:angular/src/compiler/expression_parser/parser.dart';
 import 'package:angular/src/compiler/offline_compiler.dart';
 import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/template_parser/ast_template_parser.dart';
 import 'package:angular_compiler/cli.dart';
 
 import '../resolve_util.dart';
