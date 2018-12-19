@@ -27,8 +27,8 @@ import 'package:angular/src/common/directives/ng_for.dart' as import15;
 final List<dynamic> styles$RootComponent = const [];
 
 class ViewRootComponent0 extends AppView<import1.RootComponent> {
-  ViewUsesDefaultChangeDetectionAndInput0 _compView_0;
-  import1.UsesDefaultChangeDetectionAndInput _UsesDefaultChangeDetectionAndInput_0_5;
+  ViewUsesDefaultChangeDetectionAndInputs0 _compView_0;
+  import1.UsesDefaultChangeDetectionAndInputs _UsesDefaultChangeDetectionAndInputs_0_5;
   ViewInlinedNgIf0 _compView_1;
   import1.InlinedNgIf _InlinedNgIf_1_5;
   ViewEmbeddedNgIf0 _compView_2;
@@ -49,11 +49,11 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   ComponentRef<import1.RootComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _compView_0 = ViewUsesDefaultChangeDetectionAndInput0(this, 0);
+    _compView_0 = ViewUsesDefaultChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _UsesDefaultChangeDetectionAndInput_0_5 = import1.UsesDefaultChangeDetectionAndInput();
-    _compView_0.create(_UsesDefaultChangeDetectionAndInput_0_5, []);
+    _UsesDefaultChangeDetectionAndInputs_0_5 = import1.UsesDefaultChangeDetectionAndInputs();
+    _compView_0.create(_UsesDefaultChangeDetectionAndInputs_0_5, []);
     _compView_1 = ViewInlinedNgIf0(this, 1);
     final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
@@ -152,37 +152,43 @@ AppView<import1.RootComponent> viewFactory_RootComponentHost0(AppView<dynamic> p
   return _ViewRootComponentHost0(parentView, parentIndex);
 }
 
-final List<dynamic> styles$UsesDefaultChangeDetectionAndInput = const [];
+final List<dynamic> styles$UsesDefaultChangeDetectionAndInputs = const [];
 
-class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaultChangeDetectionAndInput> {
-  ViewDefaultChangeDetectionAndInput0 _compView_0;
-  import1.DefaultChangeDetectionAndInput _DefaultChangeDetectionAndInput_0_5;
-  String _expr_0;
+class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefaultChangeDetectionAndInputs> {
+  ViewDefaultChangeDetectionAndInputs0 _compView_0;
+  import1.DefaultChangeDetectionAndInputs _DefaultChangeDetectionAndInputs_0_5;
+  String _expr_1;
   static RenderComponentType _renderType;
-  ViewUsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('uses-default-change-detection-and-input');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$UsesDefaultChangeDetectionAndInput);
+  ViewUsesDefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('uses-default-change-detection-and-inputs');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$UsesDefaultChangeDetectionAndInputs);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import1.UsesDefaultChangeDetectionAndInput> build() {
+  ComponentRef<import1.UsesDefaultChangeDetectionAndInputs> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _compView_0 = ViewDefaultChangeDetectionAndInput0(this, 0);
+    _compView_0 = ViewDefaultChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _DefaultChangeDetectionAndInput_0_5 = import1.DefaultChangeDetectionAndInput();
-    _compView_0.create(_DefaultChangeDetectionAndInput_0_5, []);
+    _DefaultChangeDetectionAndInputs_0_5 = import1.DefaultChangeDetectionAndInputs();
+    _compView_0.create(_DefaultChangeDetectionAndInputs_0_5, []);
     init(const [], null);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = _ctx.name;
-    if (import6.checkBinding(_expr_0, currVal_0)) {
-      _DefaultChangeDetectionAndInput_0_5.name = currVal_0;
-      _expr_0 = currVal_0;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      if (!identical(_ctx.title, null)) {
+        (_DefaultChangeDetectionAndInputs_0_5.title = _ctx.title);
+      }
+    }
+    final currVal_1 = _ctx.name;
+    if (import6.checkBinding(_expr_1, currVal_1)) {
+      _DefaultChangeDetectionAndInputs_0_5.name = currVal_1;
+      _expr_1 = currVal_1;
     }
     _compView_0.detectChanges();
   }
@@ -193,29 +199,29 @@ class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaul
   }
 }
 
-AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewUsesDefaultChangeDetectionAndInput0(parentView, parentIndex);
+AppView<import1.UsesDefaultChangeDetectionAndInputs> viewFactory_UsesDefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) {
+  return ViewUsesDefaultChangeDetectionAndInputs0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> _UsesDefaultChangeDetectionAndInputNgFactory = const ComponentFactory('uses-default-change-detection-and-input', viewFactory_UsesDefaultChangeDetectionAndInputHost0);
-ComponentFactory<import1.UsesDefaultChangeDetectionAndInput> get UsesDefaultChangeDetectionAndInputNgFactory {
-  return _UsesDefaultChangeDetectionAndInputNgFactory;
+const ComponentFactory<import1.UsesDefaultChangeDetectionAndInputs> _UsesDefaultChangeDetectionAndInputsNgFactory = const ComponentFactory('uses-default-change-detection-and-inputs', viewFactory_UsesDefaultChangeDetectionAndInputsHost0);
+ComponentFactory<import1.UsesDefaultChangeDetectionAndInputs> get UsesDefaultChangeDetectionAndInputsNgFactory {
+  return _UsesDefaultChangeDetectionAndInputsNgFactory;
 }
 
-final List<dynamic> styles$UsesDefaultChangeDetectionAndInputHost = const [];
+final List<dynamic> styles$UsesDefaultChangeDetectionAndInputsHost = const [];
 
-class _ViewUsesDefaultChangeDetectionAndInputHost0 extends AppView<import1.UsesDefaultChangeDetectionAndInput> {
-  ViewUsesDefaultChangeDetectionAndInput0 _compView_0;
-  import1.UsesDefaultChangeDetectionAndInput _UsesDefaultChangeDetectionAndInput_0_5;
-  _ViewUsesDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.UsesDefaultChangeDetectionAndInputs> {
+  ViewUsesDefaultChangeDetectionAndInputs0 _compView_0;
+  import1.UsesDefaultChangeDetectionAndInputs _UsesDefaultChangeDetectionAndInputs_0_5;
+  _ViewUsesDefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import1.UsesDefaultChangeDetectionAndInput> build() {
-    _compView_0 = ViewUsesDefaultChangeDetectionAndInput0(this, 0);
+  ComponentRef<import1.UsesDefaultChangeDetectionAndInputs> build() {
+    _compView_0 = ViewUsesDefaultChangeDetectionAndInputs0(this, 0);
     rootEl = _compView_0.rootEl;
-    _UsesDefaultChangeDetectionAndInput_0_5 = import1.UsesDefaultChangeDetectionAndInput();
-    _compView_0.create(_UsesDefaultChangeDetectionAndInput_0_5, projectableNodes);
+    _UsesDefaultChangeDetectionAndInputs_0_5 = import1.UsesDefaultChangeDetectionAndInputs();
+    _compView_0.create(_UsesDefaultChangeDetectionAndInputs_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _UsesDefaultChangeDetectionAndInput_0_5);
+    return ComponentRef(0, this, rootEl, _UsesDefaultChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -229,65 +235,75 @@ class _ViewUsesDefaultChangeDetectionAndInputHost0 extends AppView<import1.UsesD
   }
 }
 
-AppView<import1.UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
+AppView<import1.UsesDefaultChangeDetectionAndInputs> viewFactory_UsesDefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewUsesDefaultChangeDetectionAndInputsHost0(parentView, parentIndex);
 }
 
-final List<dynamic> styles$DefaultChangeDetectionAndInput = const [];
+final List<dynamic> styles$DefaultChangeDetectionAndInputs = const [];
 
-class ViewDefaultChangeDetectionAndInput0 extends AppView<import1.DefaultChangeDetectionAndInput> {
+class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChangeDetectionAndInputs> {
   var _expr_0;
+  var _expr_1;
   final import5.Text _text_1 = createText('');
+  final import5.Text _text_3 = createText('');
   static RenderComponentType _renderType;
-  ViewDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('default-change-detection-and-input');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$DefaultChangeDetectionAndInput);
+  ViewDefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('default-change-detection-and-inputs');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$DefaultChangeDetectionAndInputs);
     setupComponentType(_renderType);
   }
   @override
-  ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
+  ComponentRef<import1.DefaultChangeDetectionAndInputs> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _text_0 = createText('Hello ');
     parentRenderNode.append(_text_0);
     parentRenderNode.append(_text_1);
+    final _text_2 = createText(' ');
+    parentRenderNode.append(_text_2);
+    parentRenderNode.append(_text_3);
     init(const [], null);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = (_ctx.name ?? '');
+    final currVal_0 = (_ctx.title ?? '');
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
+    final currVal_1 = (_ctx.name ?? '');
+    if (import6.checkBinding(_expr_1, currVal_1)) {
+      _text_3.text = currVal_1;
+      _expr_1 = currVal_1;
+    }
   }
 }
 
-AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewDefaultChangeDetectionAndInput0(parentView, parentIndex);
+AppView<import1.DefaultChangeDetectionAndInputs> viewFactory_DefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) {
+  return ViewDefaultChangeDetectionAndInputs0(parentView, parentIndex);
 }
 
-const ComponentFactory<import1.DefaultChangeDetectionAndInput> _DefaultChangeDetectionAndInputNgFactory = const ComponentFactory('default-change-detection-and-input', viewFactory_DefaultChangeDetectionAndInputHost0);
-ComponentFactory<import1.DefaultChangeDetectionAndInput> get DefaultChangeDetectionAndInputNgFactory {
-  return _DefaultChangeDetectionAndInputNgFactory;
+const ComponentFactory<import1.DefaultChangeDetectionAndInputs> _DefaultChangeDetectionAndInputsNgFactory = const ComponentFactory('default-change-detection-and-inputs', viewFactory_DefaultChangeDetectionAndInputsHost0);
+ComponentFactory<import1.DefaultChangeDetectionAndInputs> get DefaultChangeDetectionAndInputsNgFactory {
+  return _DefaultChangeDetectionAndInputsNgFactory;
 }
 
-final List<dynamic> styles$DefaultChangeDetectionAndInputHost = const [];
+final List<dynamic> styles$DefaultChangeDetectionAndInputsHost = const [];
 
-class _ViewDefaultChangeDetectionAndInputHost0 extends AppView<import1.DefaultChangeDetectionAndInput> {
-  ViewDefaultChangeDetectionAndInput0 _compView_0;
-  import1.DefaultChangeDetectionAndInput _DefaultChangeDetectionAndInput_0_5;
-  _ViewDefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultChangeDetectionAndInputs> {
+  ViewDefaultChangeDetectionAndInputs0 _compView_0;
+  import1.DefaultChangeDetectionAndInputs _DefaultChangeDetectionAndInputs_0_5;
+  _ViewDefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
-  ComponentRef<import1.DefaultChangeDetectionAndInput> build() {
-    _compView_0 = ViewDefaultChangeDetectionAndInput0(this, 0);
+  ComponentRef<import1.DefaultChangeDetectionAndInputs> build() {
+    _compView_0 = ViewDefaultChangeDetectionAndInputs0(this, 0);
     rootEl = _compView_0.rootEl;
-    _DefaultChangeDetectionAndInput_0_5 = import1.DefaultChangeDetectionAndInput();
-    _compView_0.create(_DefaultChangeDetectionAndInput_0_5, projectableNodes);
+    _DefaultChangeDetectionAndInputs_0_5 = import1.DefaultChangeDetectionAndInputs();
+    _compView_0.create(_DefaultChangeDetectionAndInputs_0_5, projectableNodes);
     init0(rootEl);
-    return ComponentRef(0, this, rootEl, _DefaultChangeDetectionAndInput_0_5);
+    return ComponentRef(0, this, rootEl, _DefaultChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -301,8 +317,8 @@ class _ViewDefaultChangeDetectionAndInputHost0 extends AppView<import1.DefaultCh
   }
 }
 
-AppView<import1.DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInputHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDefaultChangeDetectionAndInputHost0(parentView, parentIndex);
+AppView<import1.DefaultChangeDetectionAndInputs> viewFactory_DefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewDefaultChangeDetectionAndInputsHost0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InlinedNgIf = const [];
@@ -996,8 +1012,8 @@ void initReflector() {
   _visited = true;
 
   _ngRef.registerComponent(RootComponent, RootComponentNgFactory);
-  _ngRef.registerComponent(UsesDefaultChangeDetectionAndInput, UsesDefaultChangeDetectionAndInputNgFactory);
-  _ngRef.registerComponent(DefaultChangeDetectionAndInput, DefaultChangeDetectionAndInputNgFactory);
+  _ngRef.registerComponent(UsesDefaultChangeDetectionAndInputs, UsesDefaultChangeDetectionAndInputsNgFactory);
+  _ngRef.registerComponent(DefaultChangeDetectionAndInputs, DefaultChangeDetectionAndInputsNgFactory);
   _ngRef.registerComponent(InlinedNgIf, InlinedNgIfNgFactory);
   _ngRef.registerComponent(EmbeddedNgIf, EmbeddedNgIfNgFactory);
   _ngRef.registerComponent(EmbeddedNgFor, EmbeddedNgForNgFactory);

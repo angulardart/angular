@@ -23,19 +23,19 @@ external _ng.AppView<RootComponent> viewFactory_RootComponent0(_ng.AppView<dynam
 class ViewRootComponent0 extends _ng.AppView<RootComponent> {
   external ViewRootComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
-// For @Component class UsesDefaultChangeDetectionAndInput.
-external List<dynamic> get styles$UsesDefaultChangeDetectionAndInput;
-external _ng.ComponentFactory<UsesDefaultChangeDetectionAndInput> get UsesDefaultChangeDetectionAndInputNgFactory;
-external _ng.AppView<UsesDefaultChangeDetectionAndInput> viewFactory_UsesDefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewUsesDefaultChangeDetectionAndInput0 extends _ng.AppView<UsesDefaultChangeDetectionAndInput> {
-  external ViewUsesDefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
+// For @Component class UsesDefaultChangeDetectionAndInputs.
+external List<dynamic> get styles$UsesDefaultChangeDetectionAndInputs;
+external _ng.ComponentFactory<UsesDefaultChangeDetectionAndInputs> get UsesDefaultChangeDetectionAndInputsNgFactory;
+external _ng.AppView<UsesDefaultChangeDetectionAndInputs> viewFactory_UsesDefaultChangeDetectionAndInputs0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesDefaultChangeDetectionAndInputs0 extends _ng.AppView<UsesDefaultChangeDetectionAndInputs> {
+  external ViewUsesDefaultChangeDetectionAndInputs0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
-// For @Component class DefaultChangeDetectionAndInput.
-external List<dynamic> get styles$DefaultChangeDetectionAndInput;
-external _ng.ComponentFactory<DefaultChangeDetectionAndInput> get DefaultChangeDetectionAndInputNgFactory;
-external _ng.AppView<DefaultChangeDetectionAndInput> viewFactory_DefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewDefaultChangeDetectionAndInput0 extends _ng.AppView<DefaultChangeDetectionAndInput> {
-  external ViewDefaultChangeDetectionAndInput0(_ng.AppView<dynamic> parentView, int parentIndex);
+// For @Component class DefaultChangeDetectionAndInputs.
+external List<dynamic> get styles$DefaultChangeDetectionAndInputs;
+external _ng.ComponentFactory<DefaultChangeDetectionAndInputs> get DefaultChangeDetectionAndInputsNgFactory;
+external _ng.AppView<DefaultChangeDetectionAndInputs> viewFactory_DefaultChangeDetectionAndInputs0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewDefaultChangeDetectionAndInputs0 extends _ng.AppView<DefaultChangeDetectionAndInputs> {
+  external ViewDefaultChangeDetectionAndInputs0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class InlinedNgIf.
 external List<dynamic> get styles$InlinedNgIf;
