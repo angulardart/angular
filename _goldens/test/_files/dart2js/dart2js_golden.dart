@@ -29,15 +29,15 @@ void main() {
   selector: 'root-component',
   directives: [
     ComponentConditionalFeatures,
-    UsesDefaultChangeDetectionAndInput,
+    UsesDefaultChangeDetectionAndInputs,
     InlinedNgIf,
     EmbeddedNgIf,
     EmbeddedNgFor,
     InjectsFromArbitraryParent
   ],
   template: r'''
-    <uses-default-change-detection-and-input>
-    </uses-default-change-detection-and-input>
+    <uses-default-change-detection-and-inputs>
+    </uses-default-change-detection-and-inputs>
     <inlined-ng-if>
     </inlined-ng-if>
     <embedded-ng-if>
@@ -53,22 +53,26 @@ void main() {
 class RootComponent {}
 
 @Component(
-  selector: 'uses-default-change-detection-and-input',
-  directives: [DefaultChangeDetectionAndInput],
+  selector: 'uses-default-change-detection-and-inputs',
+  directives: [DefaultChangeDetectionAndInputs],
   template: r'''
-    <default-change-detection-and-input [name]="name">
-    </default-change-detection-and-input>
+    <default-change-detection-and-inputs [title]="title" [name]="name">
+    </default-change-detection-and-inputs>
   ''',
 )
-class UsesDefaultChangeDetectionAndInput {
+class UsesDefaultChangeDetectionAndInputs {
+  final String title = defeatDart2JsOptimizations('title');
   String name = defeatDart2JsOptimizations('name');
 }
 
 @Component(
-  selector: 'default-change-detection-and-input',
-  template: 'Hello {{name}}',
+  selector: 'default-change-detection-and-inputs',
+  template: 'Hello {{title}} {{name}}',
 )
-class DefaultChangeDetectionAndInput {
+class DefaultChangeDetectionAndInputs {
+  @Input()
+  String title;
+
   @Input()
   String name;
 }
