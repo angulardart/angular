@@ -6,10 +6,24 @@ class TimerHookZone {
 
   TimerHookZone() {
     _timerZone = Zone.current.fork(
-      specification: ZoneSpecification(
-          createTimer: (self, parent, zone, duration, callback) {
+      specification: ZoneSpecification(createTimer: (
+        self,
+        parent,
+        zone,
+        duration,
+        callback,
+      ) {
         // Intentionally not bound directly to allow indirect/lazy assignment.
         return createTimer(self, parent, zone, duration, callback);
+      }, createPeriodicTimer: (
+        self,
+        parent,
+        zone,
+        duration,
+        callback,
+      ) {
+        // Intentionally not bound directly to allow indirect/lazy assignment.
+        return createPeriodicTimer(self, parent, zone, duration, callback);
       }),
     );
   }
@@ -23,6 +37,17 @@ class TimerHookZone {
     callback,
   ) {
     return parent.createTimer(zone, duration, callback);
+  };
+
+  /// Lazily set by stabilizers that need access to intercept timer creation.
+  CreatePeriodicTimerHandler createPeriodicTimer = (
+    self,
+    parent,
+    zone,
+    duration,
+    callback,
+  ) {
+    return parent.createPeriodicTimer(zone, duration, callback);
   };
 
   /// Runs and returns [context], capturing the timers.

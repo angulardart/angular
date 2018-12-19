@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart';
+import 'package:collection/collection.dart';
+import 'package:meta/meta.dart';
 
 import 'base_stabilizer.dart';
 import 'timer_hook_zone.dart';
@@ -20,36 +22,49 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
   /// Creates a new stabilizer which uses a combination of zones.
   factory FakeTimeNgZoneStabilizer(TimerHookZone timerZone, NgZone ngZone) {
     // All non-periodic timers that have been started, but not completed.
-    final pendingTimers = Set<_FakeTimer>.identity();
+    final pendingTimers = PriorityQueue<_FakeTimer>();
+
     // The parent zone that adds hooks around every non-periodic timer.
     FakeTimeNgZoneStabilizer stabilizer;
+
     timerZone.createTimer = (self, parent, zone, duration, callback) {
       _FakeTimer instance;
-      void removeTimer() {
-        pendingTimers.remove(instance);
-      }
-
-      final wrappedCallback = () {
-        try {
-          callback();
-        } finally {
-          removeTimer();
-        }
-      };
-      instance = _FakeTimer(zone.bindCallback(wrappedCallback), removeTimer,
-          stabilizer._lastElapse + duration);
+      instance = _FakeTimer(
+        (_) => zone.run(callback),
+        pendingTimers.remove,
+        duration,
+        stabilizer._lastElapse + duration,
+        isPeriodic: false,
+      );
       pendingTimers.add(instance);
       return instance;
     };
+
+    timerZone.createPeriodicTimer = (self, parent, zone, duration, callback) {
+      _FakeTimer instance;
+      instance = _FakeTimer(
+        (timer) => zone.run(() => callback(timer)),
+        pendingTimers.remove,
+        duration,
+        stabilizer._lastElapse + duration,
+        isPeriodic: true,
+      );
+      pendingTimers.add(instance);
+      return instance;
+    };
+
     return stabilizer = FakeTimeNgZoneStabilizer._(
       ngZone,
       pendingTimers,
     );
   }
 
+  // We can consider making this configurable if needed.
+  static const _maxIterations = 10;
+
   FakeTimeNgZoneStabilizer._(
     NgZone ngZone,
-    Set<_FakeTimer> pendingTimers,
+    PriorityQueue<_FakeTimer> pendingTimers,
   ) : super(ngZone, pendingTimers);
 
   /// The amount of time since construction that [elapse] has executed on.
@@ -69,27 +84,45 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
   /// Completes all the times that [shouldComplete] in time order and update
   /// [_lastElapse] with each timer completes.
   Future<void> _completeTimers(bool Function(_FakeTimer) shouldComplete) async {
-    while (true) {
-      var toComplete = pendingTimers.where(shouldComplete).toList();
-      if (toComplete.isEmpty) {
+    // We need to execute seemingly indefinitely until enough time is elapsed.
+    var totalIterations = 0;
+    while (pendingTimers.isNotEmpty) {
+      // We want to find the shortest duration timer.
+      final run = pendingTimers.first;
+      if (!shouldComplete(run)) {
         break;
       }
 
-      toComplete.sort(_FakeTimer._compareByCompleteAfter);
-      var firstPendingTimer = toComplete.first;
-      _lastElapse = firstPendingTimer._completeAfter;
-      await update(firstPendingTimer.complete);
+      if (++totalIterations > _maxIterations) {
+        final willNeverComplete = pendingTimers.toList().where(shouldComplete);
+        throw new StateError(
+          'Timers will never complete: ${willNeverComplete.toList()}',
+        );
+      }
+
+      _lastElapse = run._completeAfter;
+      await update(() => run.complete(pendingTimers.add));
     }
   }
 }
 
 /// A simplified fake timer that does not wrap an actual timer.
-class _FakeTimer implements Timer {
-  final void Function() _complete;
-  final void Function() _clearPendingStatus;
-  final Duration _completeAfter;
+class _FakeTimer implements Timer, Comparable<_FakeTimer> {
+  final void Function(_FakeTimer) _complete;
+  final void Function(_FakeTimer) _clearPendingStatus;
+  final bool isPeriodic;
+  final Duration _scheduledDuration;
 
-  _FakeTimer(this._complete, this._clearPendingStatus, this._completeAfter);
+  // Mutable for periodic timers.
+  Duration _completeAfter;
+
+  _FakeTimer(
+    this._complete,
+    this._clearPendingStatus,
+    this._scheduledDuration,
+    this._completeAfter, {
+    @required this.isPeriodic,
+  });
 
   bool _isActive = true;
 
@@ -101,19 +134,42 @@ class _FakeTimer implements Timer {
 
   @override
   void cancel() {
-    if (isActive) {
-      _clearPendingStatus();
+    if (_isActive) {
+      _clearPendingStatus(this);
       _isActive = false;
     }
   }
 
-  void complete() {
-    if (isActive) {
-      _complete();
-      cancel();
+  void complete(void Function(_FakeTimer) onPeriodic) {
+    assert(_isActive, 'An inactive timer should not be accessible to complete');
+
+    // In case the complete crashes, we still want to clear the state.
+    _clearPendingStatus(this);
+
+    // Now complete.
+    _complete(this);
+
+    if (isPeriodic) {
+      // For periodic timers, we've cancelled this one and schedule a new one.
+      _completeAfter = _completeAfter + _scheduledDuration;
+
+      // Trigger this timer being removed and added to the pendingTimers queue.
+      _clearPendingStatus(this);
+      onPeriodic(this);
+    } else {
+      _isActive = false;
     }
   }
 
-  static int _compareByCompleteAfter(_FakeTimer a, _FakeTimer b) =>
-      a._completeAfter.compareTo(b._completeAfter);
+  @override
+  int compareTo(_FakeTimer b) => _completeAfter.compareTo(b._completeAfter);
+
+  @override
+  String toString() {
+    if (isPeriodic) {
+      return '$hashCode: Periodic: $_scheduledDuration -> $_completeAfter';
+    } else {
+      return '$hashCode: One-Off: $_scheduledDuration -> $_completeAfter';
+    }
+  }
 }

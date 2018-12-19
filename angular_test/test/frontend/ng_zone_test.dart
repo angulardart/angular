@@ -119,6 +119,27 @@ void main() {
       expect(tasks, ['#5: Timer(Duration(seconds: 5))']);
     });
 
+    test('should execute periodic timers', () async {
+      Timer timer;
+      var counter = 0;
+
+      ngZone.run(() {
+        timer = Timer.periodic(Duration(seconds: 1), (_) => counter++);
+      });
+
+      expect(counter, 0);
+
+      await stabilizer.elapse(Duration(seconds: 1));
+      expect(counter, 1);
+
+      await stabilizer.elapse(Duration(seconds: 1));
+      expect(counter, 2);
+
+      timer.cancel();
+      await stabilizer.elapse(Duration(seconds: 1));
+      expect(counter, 2);
+    });
+
     test('should propogate synchronous errors', () {
       expect(
         stabilizer.update(() => throw _IntentionalError()),
