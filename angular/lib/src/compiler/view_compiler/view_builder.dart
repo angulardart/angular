@@ -1,18 +1,18 @@
+import 'package:meta/meta.dart';
+import 'package:angular/src/compiler/compile_metadata.dart'
+    show CompileDirectiveMetadata, CompileIdentifierMetadata;
+import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
+import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
+import 'package:angular/src/compiler/html_events.dart';
+import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/template_parser/is_pure_html.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular_compiler/cli.dart';
-import 'package:meta/meta.dart';
 
-import '../compile_metadata.dart'
-    show CompileDirectiveMetadata, CompileIdentifierMetadata;
-import '../expression_parser/ast.dart' as ast;
-import '../expression_parser/parser.dart' show Parser;
-import '../html_events.dart';
-import '../identifiers.dart' show Identifiers;
-import '../is_pure_html.dart';
-import '../output/output_ast.dart' as o;
-import '../template_ast.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_view.dart';
 import 'constants.dart'
