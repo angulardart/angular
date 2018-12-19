@@ -54,6 +54,7 @@ class RootComponent {}
 
 @Component(
   selector: 'uses-default-change-detection-and-input',
+  directives: [DefaultChangeDetectionAndInput],
   template: r'''
     <default-change-detection-and-input [name]="name">
     </default-change-detection-and-input>

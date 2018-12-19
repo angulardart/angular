@@ -155,8 +155,9 @@ AppView<import1.RootComponent> viewFactory_RootComponentHost0(AppView<dynamic> p
 final List<dynamic> styles$UsesDefaultChangeDetectionAndInput = const [];
 
 class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaultChangeDetectionAndInput> {
-  var _expr_0;
-  import5.Element _el_0;
+  ViewDefaultChangeDetectionAndInput0 _compView_0;
+  import1.DefaultChangeDetectionAndInput _DefaultChangeDetectionAndInput_0_5;
+  String _expr_0;
   static RenderComponentType _renderType;
   ViewUsesDefaultChangeDetectionAndInput0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('uses-default-change-detection-and-input');
@@ -167,8 +168,11 @@ class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaul
   ComponentRef<import1.UsesDefaultChangeDetectionAndInput> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    _el_0 = createAndAppend(doc, 'default-change-detection-and-input', parentRenderNode);
+    _compView_0 = ViewDefaultChangeDetectionAndInput0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _DefaultChangeDetectionAndInput_0_5 = import1.DefaultChangeDetectionAndInput();
+    _compView_0.create(_DefaultChangeDetectionAndInput_0_5, []);
     init(const [], null);
   }
 
@@ -177,9 +181,15 @@ class ViewUsesDefaultChangeDetectionAndInput0 extends AppView<import1.UsesDefaul
     final _ctx = ctx;
     final currVal_0 = _ctx.name;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setProp(_el_0, 'name', currVal_0);
+      _DefaultChangeDetectionAndInput_0_5.name = currVal_0;
       _expr_0 = currVal_0;
     }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
   }
 }
 
