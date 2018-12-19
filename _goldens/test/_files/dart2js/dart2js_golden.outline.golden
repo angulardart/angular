@@ -37,6 +37,20 @@ external _ng.AppView<DefaultChangeDetectionAndInputs> viewFactory_DefaultChangeD
 class ViewDefaultChangeDetectionAndInputs0 extends _ng.AppView<DefaultChangeDetectionAndInputs> {
   external ViewDefaultChangeDetectionAndInputs0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesOnPushChangeDetectionAndInputs.
+external List<dynamic> get styles$UsesOnPushChangeDetectionAndInputs;
+external _ng.ComponentFactory<UsesOnPushChangeDetectionAndInputs> get UsesOnPushChangeDetectionAndInputsNgFactory;
+external _ng.AppView<UsesOnPushChangeDetectionAndInputs> viewFactory_UsesOnPushChangeDetectionAndInputs0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesOnPushChangeDetectionAndInputs0 extends _ng.AppView<UsesOnPushChangeDetectionAndInputs> {
+  external ViewUsesOnPushChangeDetectionAndInputs0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class OnPushChangeDetectionAndInputs.
+external List<dynamic> get styles$OnPushChangeDetectionAndInputs;
+external _ng.ComponentFactory<OnPushChangeDetectionAndInputs> get OnPushChangeDetectionAndInputsNgFactory;
+external _ng.AppView<OnPushChangeDetectionAndInputs> viewFactory_OnPushChangeDetectionAndInputs0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewOnPushChangeDetectionAndInputs0 extends _ng.AppView<OnPushChangeDetectionAndInputs> {
+  external ViewOnPushChangeDetectionAndInputs0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 // For @Component class InlinedNgIf.
 external List<dynamic> get styles$InlinedNgIf;
 external _ng.ComponentFactory<InlinedNgIf> get InlinedNgIfNgFactory;
