@@ -4014,9 +4014,18 @@
     },
     ViewUsesDefaultChangeDetectionAndInput0: function ViewUsesDefaultChangeDetectionAndInput0(t0, t1) {
       var _ = this;
-      _.viewData = _._el_0 = _._expr_0 = null;
+      _.viewData = _._expr_0 = _._DefaultChangeDetectionAndInput_0_5 = _._compView_0 = null;
       _.locals = t0;
       _.parentView = t1;
+      _.ctx = _.rootEl = _.componentType = null;
+    },
+    ViewDefaultChangeDetectionAndInput0: function ViewDefaultChangeDetectionAndInput0(t0, t1, t2) {
+      var _ = this;
+      _._expr_0 = null;
+      _._text_1 = t0;
+      _.viewData = null;
+      _.locals = t1;
+      _.parentView = t2;
       _.ctx = _.rootEl = _.componentType = null;
     },
     ViewInlinedNgIf0: function ViewInlinedNgIf0(t0, t1, t2) {
@@ -4117,6 +4126,9 @@
     },
     UsesDefaultChangeDetectionAndInput: function UsesDefaultChangeDetectionAndInput(t0) {
       this.name = t0;
+    },
+    DefaultChangeDetectionAndInput: function DefaultChangeDetectionAndInput() {
+      this.name = null;
     },
     InlinedNgIf: function InlinedNgIf(t0) {
       this.showDiv = t0;
@@ -10721,6 +10733,7 @@
   U.JsTestabilityRegistry.prototype = {};
   O.RootComponent.prototype = {};
   O.UsesDefaultChangeDetectionAndInput.prototype = {};
+  O.DefaultChangeDetectionAndInput.prototype = {};
   O.InlinedNgIf.prototype = {};
   O.EmbeddedNgIf.prototype = {};
   O.EmbeddedNgFor.prototype = {};
@@ -10899,8 +10912,24 @@
   };
   N.ViewUsesDefaultChangeDetectionAndInput0.prototype = {
     build$0: function() {
-      var parentRenderNode = this.initViewRoot$1(this.rootEl);
-      this._el_0 = S.createAndAppend(document, "default-change-detection-and-input", parentRenderNode);
+      var parentRenderNode, t1, t2;
+      parentRenderNode = this.initViewRoot$1(this.rootEl);
+      t1 = new N.ViewDefaultChangeDetectionAndInput0(S.createText(""), P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this);
+      t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 0);
+      t2 = document.createElement("default-change-detection-and-input");
+      t1.rootEl = t2;
+      t2 = $.ViewDefaultChangeDetectionAndInput0__renderType;
+      if (t2 == null) {
+        t2 = $.appViewUtils;
+        t2 = t2.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty);
+        $.ViewDefaultChangeDetectionAndInput0__renderType = t2;
+      }
+      t1.setupComponentType$1(t2);
+      this._compView_0 = t1;
+      parentRenderNode.appendChild(t1.rootEl);
+      t1 = new O.DefaultChangeDetectionAndInput();
+      this._DefaultChangeDetectionAndInput_0_5 = t1;
+      this._compView_0.create$2(0, t1, []);
       this.init$2(C.List_empty, null);
     },
     detectChangesInternal$0: function() {
@@ -10908,12 +10937,38 @@
       currVal_0 = this.ctx.name;
       t1 = this._expr_0;
       if (t1 != currVal_0) {
-        this._el_0.name = currVal_0;
+        this._DefaultChangeDetectionAndInput_0_5.name = currVal_0;
+        this._expr_0 = currVal_0;
+      }
+      this._compView_0.detectChanges$0();
+    },
+    destroyInternal$0: function() {
+      this._compView_0.destroy$0();
+    },
+    $asAppView: function() {
+      return [O.UsesDefaultChangeDetectionAndInput];
+    }
+  };
+  N.ViewDefaultChangeDetectionAndInput0.prototype = {
+    build$0: function() {
+      var parentRenderNode = this.initViewRoot$1(this.rootEl);
+      parentRenderNode.appendChild(S.createText("Hello "));
+      parentRenderNode.appendChild(this._text_1);
+      this.init$2(C.List_empty, null);
+    },
+    detectChangesInternal$0: function() {
+      var currVal_0, t1;
+      currVal_0 = this.ctx.name;
+      if (currVal_0 == null)
+        currVal_0 = "";
+      t1 = this._expr_0;
+      if (t1 !== currVal_0) {
+        this._text_1.textContent = currVal_0;
         this._expr_0 = currVal_0;
       }
     },
     $asAppView: function() {
-      return [O.UsesDefaultChangeDetectionAndInput];
+      return [O.DefaultChangeDetectionAndInput];
     }
   };
   N.ViewInlinedNgIf0.prototype = {
@@ -11271,7 +11326,7 @@
       _inherit = inherit,
       _inheritMany = inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.ReflectionInfo, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.SetMixin, P._LinkedHashSetCell, P._LinkedHashSetIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.StackOverflowError, P._Exception, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, R.NgFor, R._RecordViewTuple, K.NgIf, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, S.OpaqueToken, S.AppViewData, S.AppView, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, D.TemplateRef, L.ViewRefImpl, R.ViewType, A.ViewEncapsulation, A.RenderComponentType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.EventManagerPlugin, N.EventManager, A.DomSharedStylesHost, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.UsesDefaultChangeDetectionAndInput, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.ReflectionInfo, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.SetMixin, P._LinkedHashSetCell, P._LinkedHashSetIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.StackOverflowError, P._Exception, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, R.NgFor, R._RecordViewTuple, K.NgIf, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, S.OpaqueToken, S.AppViewData, S.AppView, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, D.TemplateRef, L.ViewRefImpl, R.ViewType, A.ViewEncapsulation, A.RenderComponentType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.EventManagerPlugin, N.EventManager, A.DomSharedStylesHost, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.UsesDefaultChangeDetectionAndInput, O.DefaultChangeDetectionAndInput, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeByteBuffer, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssStyleValue, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W.Event, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.ImageBitmap, W.ImageData, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.PaintSize, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.Screen, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W.TextMetrics, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.Url, W.VttRegion, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.ObjectStore, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P.Rect, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, U.JsTestability, U.JsTestabilityRegistry]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
@@ -11390,7 +11445,7 @@
     _inherit(S.MultiToken, S.OpaqueToken);
     _inherit(V.ViewContainer, M.ComponentLoader);
     _inheritMany(N.EventManagerPlugin, [L.DomEventsPlugin, N.KeyEventsPlugin]);
-    _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInput0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0]);
+    _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInput0, N.ViewDefaultChangeDetectionAndInput0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0]);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, P.ListMixin);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H.FixedLengthListMixin);
     _mixin(H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin, P.ListMixin);
@@ -11650,6 +11705,7 @@
     $.sharedStylesHost = null;
     $.ViewRootComponent0__renderType = null;
     $.ViewUsesDefaultChangeDetectionAndInput0__renderType = null;
+    $.ViewDefaultChangeDetectionAndInput0__renderType = null;
     $.ViewInlinedNgIf0__renderType = null;
     $.ViewEmbeddedNgIf0__renderType = null;
     $.ViewEmbeddedNgFor0__renderType = null;
