@@ -30,6 +30,7 @@ void main() {
   directives: [
     ComponentConditionalFeatures,
     UsesDefaultChangeDetectionAndInputs,
+    UsesOnPushChangeDetectionAndInputs,
     InlinedNgIf,
     EmbeddedNgIf,
     EmbeddedNgFor,
@@ -38,6 +39,8 @@ void main() {
   template: r'''
     <uses-default-change-detection-and-inputs>
     </uses-default-change-detection-and-inputs>
+    <uses-on-push-change-detection-and-inputs>
+    </uses-on-push-change-detection-and-inputs>
     <inlined-ng-if>
     </inlined-ng-if>
     <embedded-ng-if>
@@ -70,6 +73,32 @@ class UsesDefaultChangeDetectionAndInputs {
   template: 'Hello {{title}} {{name}}',
 )
 class DefaultChangeDetectionAndInputs {
+  @Input()
+  String title;
+
+  @Input()
+  String name;
+}
+
+@Component(
+  selector: 'uses-on-push-change-detection-and-inputs',
+  directives: [OnPushChangeDetectionAndInputs],
+  template: r'''
+    <on-push-change-detection-and-inputs [title]="title" [name]="name">
+    </on-push-change-detection-and-inputs>
+  ''',
+)
+class UsesOnPushChangeDetectionAndInputs {
+  final String title = defeatDart2JsOptimizations('title');
+  String name = defeatDart2JsOptimizations('name');
+}
+
+@Component(
+  selector: 'on-push-change-detection-and-inputs',
+  template: 'Hello {{title}} {{name}}',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+)
+class OnPushChangeDetectionAndInputs {
   @Input()
   String title;
 
