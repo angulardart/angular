@@ -1,7 +1,7 @@
 import 'package:build/build.dart' hide AssetReader;
 import 'package:angular/src/compiler/angular_compiler.dart';
 import 'package:angular/src/compiler/ast_directive_normalizer.dart';
-import 'package:angular/src/compiler/ast_template_parser.dart';
+import 'package:angular/src/compiler/template_parser/ast_template_parser.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart' as ng;
 import 'package:angular/src/compiler/expression_parser/parser.dart' as ng;
 import 'package:angular/src/compiler/offline_compiler.dart';

@@ -1,8 +1,9 @@
 @TestOn('vm')
 import 'dart:async';
 
+import 'package:logging/logging.dart';
+import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
-import 'package:angular/src/compiler/ast_template_parser.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/compiler_utils.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart';
@@ -14,9 +15,8 @@ import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular/src/compiler/schema/element_schema_registry.dart'
     show ElementSchemaRegistry;
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/template_parser/ast_template_parser.dart';
 import 'package:angular_compiler/cli.dart';
-import 'package:logging/logging.dart';
-import 'package:test/test.dart';
 
 import 'schema_registry_mock.dart' show MockSchemaRegistry;
 import 'template_humanizer_util.dart';

@@ -1,4 +1,4 @@
-import 'template_ast.dart';
+import 'package:angular/src/compiler/template_ast.dart';
 
 /// Determines if an AST is pure vanilla HTML.
 ///
