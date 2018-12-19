@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
+import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
 import 'base_stabilizer.dart';
@@ -19,7 +20,7 @@ class RealTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_ObservedTimer> {
   /// Creates a new stabilizer which manages a custom zone around an [NgZone].
   factory RealTimeNgZoneStabilizer(TimerHookZone timerZone, NgZone ngZone) {
     // All non-periodic timers that have been started, but not completed.
-    final pendingTimers = Set<_ObservedTimer>.identity();
+    final pendingTimers = PriorityQueue<_ObservedTimer>();
     timerZone.createTimer = (
       self,
       parent,
@@ -62,7 +63,7 @@ class RealTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_ObservedTimer> {
 
   RealTimeNgZoneStabilizer._(
     NgZone ngZone,
-    Set<_ObservedTimer> pendingTimers,
+    PriorityQueue<_ObservedTimer> pendingTimers,
   ) : super(ngZone, pendingTimers);
 
   @override
@@ -77,18 +78,12 @@ class RealTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_ObservedTimer> {
   }
 
   Duration _minimumDurationForAllPendingTimers() {
-    var result = Duration.zero;
-    for (final timer in pendingTimers) {
-      if (timer._duration > result) {
-        result = timer._duration;
-      }
-    }
-    return result;
+    return pendingTimers.toList().last._duration;
   }
 }
 
 /// A wrapper interface around a [Timer] that tracks how long it will take.
-class _ObservedTimer implements Timer {
+class _ObservedTimer implements Timer, Comparable<_ObservedTimer> {
   /// Underlying (live) timer implementation.
   final Timer _delegate;
 
@@ -105,6 +100,9 @@ class _ObservedTimer implements Timer {
     _onCancel();
     _delegate.cancel();
   }
+
+  @override
+  int compareTo(_ObservedTimer b) => _duration.compareTo(b._duration);
 
   @override
   int get tick => _delegate.tick;

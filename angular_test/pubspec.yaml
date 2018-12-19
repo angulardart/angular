@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   angular: ^5.2.0
+  collection: ^1.14.10
   meta: ^1.1.4
   pedantic: ^1.2.0
 

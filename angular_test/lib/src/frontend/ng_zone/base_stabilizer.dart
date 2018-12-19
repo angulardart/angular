@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart';
+import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:pedantic/pedantic.dart';
 
@@ -13,7 +14,7 @@ abstract class BaseNgZoneStabilizer<T extends Timer> extends NgTestStabilizer {
 
   /// Timer instances that are currently pending execution.
   @protected
-  final Set<T> pendingTimers;
+  final PriorityQueue<T> pendingTimers;
 
   /// Creates the stabilizer wrapping an instance of [NgZone].
   ///
