@@ -1,12 +1,13 @@
 import 'package:source_span/source_span.dart';
+import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
+import 'package:angular/src/compiler/expression_parser/parser.dart';
+import 'package:angular/src/compiler/ir/model.dart' as ir;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/schema/element_schema_registry.dart';
+import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/template_parser.dart';
+import 'package:angular/src/core/linker/view_type.dart';
 
-import '../../core/linker/view_type.dart';
-import '../expression_parser/ast.dart' as ast;
-import '../expression_parser/parser.dart';
-import '../output/output_ast.dart' as o;
-import '../schema/element_schema_registry.dart';
-import '../template_ast.dart';
-import '../template_parser.dart';
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
@@ -53,13 +54,17 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
 
   @override
   void visitBoundText(BoundTextAst ast, _) {
-    var node = this.view.nodes[_nodeIndex++];
+    var node = view.nodes[_nodeIndex++];
     if (node == null) {
       // The node was never added in ViewBuilder since it
       // is dead code.
       return;
     }
-    bindRenderText(ast, node, this.view);
+    bindRenderText(
+        ir.BoundExpression(
+            ast.value, ast.sourceSpan, view.component.analyzedClass),
+        node,
+        view);
   }
 
   @override

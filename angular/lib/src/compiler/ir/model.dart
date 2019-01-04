@@ -1,4 +1,6 @@
 import 'package:meta/meta.dart';
+import 'package:source_span/source_span.dart';
+import 'package:angular/src/compiler/analyzed_class.dart' as analyzed;
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 
@@ -154,6 +156,36 @@ class HostView implements View {
 
   @override
   List<IRNode> get children => [componentView];
+}
+
+/// A [BindingSource] which represents a general-purpose expression.
+class BoundExpression {
+  final ast.AST expression;
+  final SourceSpan sourceSpan;
+  final analyzed.AnalyzedClass _analyzedClass;
+
+  BoundExpression(
+      ast.AST parsedExpression, this.sourceSpan, this._analyzedClass)
+      : this.expression =
+            analyzed.rewriteInterpolate(parsedExpression, _analyzedClass);
+
+  /// Wraps the expression in an `== true` check, in order to support null
+  /// values.
+  ///
+  /// This hack is to allow legacy NgIf behavior on null inputs
+  BoundExpression.falseIfNull(ast.AST parsedExpression, SourceSpan sourceSpan,
+      analyzed.AnalyzedClass scope)
+      : this(
+            analyzed.isImmutable(parsedExpression, scope)
+                ? parsedExpression
+                : ast.Binary(
+                    '==', parsedExpression, ast.LiteralPrimitive(true)),
+            sourceSpan,
+            scope);
+
+  bool get isImmutable => analyzed.isImmutable(expression, _analyzedClass);
+
+  bool get isNullable => analyzed.canBeNull(expression);
 }
 
 abstract class IRVisitor<R, C> {
