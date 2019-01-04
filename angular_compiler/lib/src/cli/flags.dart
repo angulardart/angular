@@ -30,7 +30,7 @@ class CompilerFlags {
     )
     ..addOption(
       _argProfileFor,
-      valueHelp: '"build" or "binding"',
+      valueHelp: '"build"',
       defaultsTo: null,
       help: ''
           'Whether to emit additional code that may be used by tooling '
@@ -197,9 +197,6 @@ enum Profile {
 
   /// Profile component view construction performance.
   build,
-
-  /// Profile component bindings (accessed methods and getters in components).
-  binding,
 }
 
 Profile _toProfile(dynamic profile, void log(dynamic message)) {
@@ -209,8 +206,6 @@ Profile _toProfile(dynamic profile, void log(dynamic message)) {
       return Profile.none;
     case 'build':
       return Profile.build;
-    case 'binding':
-      return Profile.binding;
     default:
       log('Invalid flag for "$_argProfileFor": $profile.');
       return Profile.none;
