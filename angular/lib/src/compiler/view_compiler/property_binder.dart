@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:source_span/source_span.dart';
-import 'package:angular/src/compiler/analyzed_class.dart';
+import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/core/change_detection/constants.dart'
     show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
@@ -10,7 +9,6 @@ import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
 
 import '../compile_metadata.dart';
-import '../expression_parser/ast.dart' as ast;
 import '../identifiers.dart' show Identifiers;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
@@ -18,7 +16,6 @@ import '../template_ast.dart'
         BoundDirectivePropertyAst,
         BoundElementPropertyAst,
         BoundExpression,
-        BoundTextAst,
         DirectiveAst,
         PropertyBindingType;
 import 'bound_value_converter.dart';
@@ -55,21 +52,18 @@ void _bindAst(
   ViewStorage storage,
   o.ReadVarExpr currValExpr,
   o.ReadClassMemberExpr fieldExpr,
-  ast.AST parsedExpression,
-  SourceSpan parsedExpressionSourceSpan,
+  ir.BoundExpression bindingSource,
   List<o.Statement> actions,
   CompileMethod method,
   CompileMethod literalMethod, {
   o.OutputType fieldType,
   o.Expression fieldExprInitializer,
 }) {
-  parsedExpression =
-      rewriteInterpolate(parsedExpression, viewDirective.analyzedClass);
   var checkExpression = convertCdExpressionToIr(
       nameResolver,
       DetectChangesVars.cachedCtx,
-      parsedExpression,
-      parsedExpressionSourceSpan,
+      bindingSource.expression,
+      bindingSource.sourceSpan,
       viewDirective,
       fieldType);
   _bind(
@@ -77,8 +71,8 @@ void _bindAst(
     currValExpr,
     fieldExpr,
     checkExpression,
-    isImmutable(parsedExpression, viewDirective.analyzedClass),
-    canBeNull(parsedExpression),
+    bindingSource.isImmutable,
+    bindingSource.isNullable,
     actions,
     method,
     literalMethod,
@@ -171,8 +165,8 @@ void _bindLiteral(
 }
 
 void bindRenderText(
-    BoundTextAst boundText, CompileNode compileNode, CompileView view) {
-  if (isImmutable(boundText.value, view.component.analyzedClass)) {
+    ir.BoundExpression boundText, CompileNode compileNode, CompileView view) {
+  if (boundText.isImmutable) {
     // We already set the value to the text node at creation
     return;
   }
@@ -189,8 +183,7 @@ void bindRenderText(
     view.storage,
     currValExpr,
     valueField,
-    boundText.value,
-    boundText.sourceSpan,
+    boundText,
     [
       compileNode.renderNode.toReadExpr().prop('text').set(currValExpr).toStmt()
     ],
@@ -627,7 +620,6 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       'Inlining a template that is not an NgIf');
   var view = compileElement.view;
 
-  var input = directiveAst.inputs.single;
   var bindingIndex = view.nameResolver.createUniqueBindIndex();
   var fieldExpr = _createBindFieldExpr(bindingIndex);
   var currValExpr = _createCurrValueExpr(bindingIndex);
@@ -647,19 +639,11 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
   buildStmts
       .add(o.InvokeMemberMethodExpr('addInlinedNodes', buildArgs).toStmt());
 
-  var inputAst = _inputAst(input);
+  var boundExpression = _boundExpression(directiveAst.inputs.single, view);
 
-  final converter =
-      BoundValueConverter.forView(view, DetectChangesVars.cachedCtx);
-
-  var isImmutable = converter.isImmutable(input.value);
-  ast.AST condition = isImmutable
-      ? inputAst
-      // This hack is to allow legacy NgIf behavior on null inputs
-      : ast.Binary('==', inputAst, ast.LiteralPrimitive(true));
   List<o.Statement> statements = _statements(
       currValExpr, buildStmts, destroyArgs,
-      isImmutable: isImmutable);
+      isImmutable: boundExpression.isImmutable);
 
   var dynamicInputsMethod = CompileMethod();
   var constantInputsMethod = CompileMethod();
@@ -669,8 +653,7 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
       view.storage,
       currValExpr,
       fieldExpr,
-      condition,
-      input.sourceSpan,
+      boundExpression,
       statements,
       dynamicInputsMethod,
       constantInputsMethod,
@@ -705,16 +688,18 @@ List<o.Statement> _statements(
   }
 }
 
-ast.AST _inputAst(BoundDirectivePropertyAst input) {
-  var inputValue = input.value;
-  if (inputValue is BoundExpression) {
-    // This promotion is require to support the legacy hack in the following if.
-    return inputValue.expression;
-  } else {
+ir.BoundExpression _boundExpression(
+    BoundDirectivePropertyAst input, CompileView view) {
+  if (input.value is! BoundExpression) {
     // This state is reached if an @i18n message is bound to an *ngIf, which we
     // know isn't a boolean expression.
     throwFailure(input.sourceSpan.message('Expected a boolean expression'));
   }
+
+  return ir.BoundExpression.falseIfNull(
+      (input.value as BoundExpression).expression,
+      input.sourceSpan,
+      view.component.analyzedClass);
 }
 
 bool _isPrimitiveFieldType(o.OutputType type) {
