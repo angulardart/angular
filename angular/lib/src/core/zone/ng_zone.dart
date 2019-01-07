@@ -22,7 +22,7 @@ class NgZone {
   /// though not necessarily by the current application's [NgZone] in the case
   /// of multiple applications running at the same time.
   ///
-  /// It is highly preferred to use [isInnerZone] and [isOuterZone] instead.
+  /// It is highly preferred to use [inInnerZone] and [inOuterZone] instead.
   ///
   /// See the [Zone] documentation for details:
   /// https://www.dartlang.org/articles/libraries/zones
@@ -32,7 +32,7 @@ class NgZone {
 
   /// In development mode, throws an error if [isInAngularZone] returns `false`.
   ///
-  /// It is highly preferred to use `assert(ngZone.isInnerZone)` instead.
+  /// It is highly preferred to use `assert(ngZone.inInnerZone)` instead.
   static void assertInAngularZone() {
     if (!isInAngularZone()) {
       throw Exception("Expected to be in Angular Zone, but it is not!");
@@ -41,9 +41,7 @@ class NgZone {
 
   /// In development mode, throws an error if [isInAngularZone] returns `true`.
   ///
-  /// It is highly preferred to use `assert(ngZone.isOuterZone)` instead.
-  ///
-  /// **NOTE**: This API is completely ignored in a production application.
+  /// It is highly preferred to use `assert(ngZone.inOuterZone)` instead.
   static void assertNotInAngularZone() {
     if (isInAngularZone()) {
       throw Exception("Expected to not be in Angular Zone, but it is!");
@@ -264,7 +262,7 @@ class NgZone {
   /// Whether there are any outstanding microtasks.
   ///
   /// If `true`, one or more `scheduleMicrotask(...)` calls (or similar) that
-  /// were started while [isInnerZone] is `true` have yet to be completed.
+  /// were started while [inInnerZone] is `true` have yet to be completed.
   ///
   /// Most users should not need or use this value.
   bool get hasPendingMicrotasks => _hasPendingMicrotasks;
@@ -272,14 +270,14 @@ class NgZone {
   /// Whether there are any outstanding microtasks.
   ///
   /// If `true`, one or more `Timer.run(...)` calls (or similar) that
-  /// were started while [isInnerZone] is `true` have yet to be completed.
+  /// were started while [inInnerZone] is `true` have yet to be completed.
   ///
   /// Most users should not need or use this value.
   bool get hasPendingMacrotasks => _hasPendingMacrotasks;
 
   /// Executes and returns [callback] function synchronously within this zone.
   ///
-  /// Typically, this API should _only_ be used when [isOuterZone] is `true`,
+  /// Typically, this API should _only_ be used when [inOuterZone] is `true`,
   /// e.g. a frequent event such as a polling timer or mouse movement is being
   /// observed via [runOutsideAngular] for performance reasons.
   ///
