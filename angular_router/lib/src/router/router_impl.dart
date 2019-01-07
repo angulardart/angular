@@ -237,94 +237,73 @@ class RouterImpl extends Router {
     String path,
     NavigationParams navigationParams,
   ) {
-    return _resolveStateForOutlet(_rootOutlet, path).then((routerState) {
-      if (routerState != null) {
-        routerState.path = path;
-        if (navigationParams != null) {
-          routerState.fragment = navigationParams.fragment;
-          routerState.queryParameters = navigationParams.queryParameters;
-        }
-        return _attachDefaultChildren(routerState);
-      }
-    });
+    var state = MutableRouterState()..path = path;
+    if (navigationParams != null) {
+      state
+        ..fragment = navigationParams.fragment
+        ..queryParameters = navigationParams.queryParameters;
+    }
+    return _resolveStateForOutlet(_rootOutlet, state, path)
+        .then((matched) => matched ? _attachDefaultChildren(state) : null);
   }
 
   /// Recursive function to iterate through route tree.
   ///
   /// Should only be called by [_resolveState].
-  Future<MutableRouterState> _resolveStateForOutlet(
-      RouterOutlet outlet, String path) async {
-    if (outlet == null) {
-      if (path == '') {
-        return MutableRouterState();
+  ///
+  /// Returns true if [outlet] has a route definition that matches [path]. The
+  /// matching results are written to [state].
+  Future<bool> _resolveStateForOutlet(
+    RouterOutlet outlet,
+    MutableRouterState state,
+    String path,
+  ) async {
+    // If there's no outlet, this is a successful match if there's also no
+    // remaining path.
+    if (outlet == null) return path.isEmpty;
+    for (var route in outlet.routes) {
+      var match = route.toRegExp().matchAsPrefix(path);
+      if (match == null) continue;
+      var incomplete = match.end != path.length;
+      var component = await _getTypeFromRoute(route);
+      if (component == null) {
+        // If the route definition doesn't specify a component to load, we can
+        // assume it redirects. Since a redirecting route definition can't
+        // have any nested routes, it must match completely.
+        if (incomplete) continue;
+        // Found a matching, redirecting route.
+        state
+          ..routes.add(route)
+          ..pushParameters(_parameters(route, match));
+        return true;
       }
-      return null;
-    }
-
-    for (RouteDefinition route in outlet.routes) {
-      Match match = route.toRegExp().matchAsPrefix(path);
-      if (match != null) {
-        MutableRouterState routerState;
-        final component = await _getTypeFromRoute(route);
-        ComponentRef componentRef =
-            component != null ? outlet.prepare(component) : null;
-
-        // TODO(nxl): Handle wildcard paths.
-        // Only the prefix matched and the route is not a wildcard path.
-        if (match.end != path.length) {
-          // The route has no component and cannot have children. Continue
-          // to search the next route.
-          if (componentRef == null) {
-            continue;
-          }
-
-          RouterOutlet nextOutlet =
-              componentRef.injector.get(RouterOutletToken).routerOutlet;
-          // The route's component has no outlet. Continue search.
-          if (nextOutlet == null) {
-            continue;
-          }
-        }
-
-        if (componentRef != null) {
-          RouterOutlet nextOutlet =
-              componentRef.injector.get(RouterOutletToken).routerOutlet;
-          routerState = await _resolveStateForOutlet(
-              nextOutlet, path.substring(match.end));
-        }
-        if (routerState == null) {
-          if (match.end != path.length) {
-            continue;
-          }
-
-          routerState = MutableRouterState();
-        }
-
-        routerState.routes.insert(0, route);
-
-        if (component != null) {
-          routerState
-            ..factories[componentRef] = component
-            ..components.insert(0, componentRef);
-        }
-
-        Iterable<String> parameters = route.parameters;
-        // Append current matches params
-        int index = 1;
-        for (String parameter in parameters) {
-          routerState.parameters[parameter] =
-              Uri.decodeComponent(match[index++]);
-        }
-
-        return routerState;
+      var componentRef = outlet.prepare(component);
+      var nextOutlet = _nextOutlet(componentRef);
+      // If the current route doesn't match the entire path, there must be a
+      // nested outlet to complete the match.
+      if (incomplete && nextOutlet == null) continue;
+      // Update state for potential match.
+      state
+        ..components.add(componentRef)
+        ..factories[componentRef] = component
+        ..routes.add(route)
+        ..pushParameters(_parameters(route, match));
+      // Attempt to match remaining path to nested routes.
+      var remainder = path.substring(match.end);
+      if (await _resolveStateForOutlet(nextOutlet, state, remainder)) {
+        return true;
       }
+      // Backtrack and try the next route.
+      state
+        ..components.removeLast()
+        ..factories.remove(componentRef)
+        ..routes.removeLast()
+        ..popParameters();
     }
-
-    if (path == '') {
-      return MutableRouterState();
-    }
-
-    return null;
+    // At this point no routes matched. This is considered a successful match
+    // only if there's also no remaining path to be matched, in which case the
+    // outlet can render a default route, if defined.
+    return path.isEmpty;
   }
 
   /// Gets a type from a [RouteDefinition].
@@ -339,6 +318,21 @@ class RouterImpl extends Router {
       return route.loader();
     }
     return null;
+  }
+
+  /// Returns the next [RouterOutlet] created by [componentRef], if any.
+  RouterOutlet _nextOutlet(ComponentRef componentRef) => componentRef.injector
+      .provideType<RouterOutletToken>(RouterOutletToken)
+      .routerOutlet;
+
+  /// Returns [parameters] from [match], mapped from name to value.
+  Map<String, String> _parameters(RouteDefinition route, Match match) {
+    var result = <String, String>{};
+    var index = 1;
+    for (var parameter in route.parameters) {
+      result[parameter] = Uri.decodeComponent(match[index++]);
+    }
+    return result;
   }
 
   /// Navigates the remaining router tree and adds the default children.
