@@ -48,7 +48,7 @@ class RouterState extends Url {
 class MutableRouterState {
   final List<ComponentRef> components = [];
   final Map<ComponentRef, ComponentFactory> factories = {};
-  final Map<String, String> parameters = {};
+  final List<Map<String, String>> _parameterStack = [];
   final List<RouteDefinition> routes = [];
 
   String fragment = '';
@@ -56,6 +56,22 @@ class MutableRouterState {
   Map<String, String> queryParameters = {};
 
   MutableRouterState();
+
+  Map<String, String> get parameters {
+    var result = <String, String>{};
+    for (var p in _parameterStack) {
+      result.addAll(p);
+    }
+    return result;
+  }
+
+  void pushParameters(Map<String, String> parameters) {
+    _parameterStack.add(parameters);
+  }
+
+  void popParameters() {
+    _parameterStack.removeLast();
+  }
 
   RouterState build() {
     return RouterState(path, routes.toList(),
