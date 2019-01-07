@@ -4,15 +4,15 @@
     content has children. Previously, these nodes were created and never
     attached. Now the nodes are not created at all.
 
+*   Specialized interpolation functions for Strings.
+
+*   Optimization: Removes toString() calls of interpolated strings bound to
+    properties.
+
 ### Bug fixes
 
 *   The template compiler now outputs the full path to a template file when it
     reports an error.
-
-
-### New features
-
-*   Specialized interpolation functions for Strings.
 
 ## 5.2.0
 
