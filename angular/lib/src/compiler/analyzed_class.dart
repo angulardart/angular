@@ -214,10 +214,12 @@ bool canBeNull(ast.AST expression) {
 /// * `SafePropertyRead`
 class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   final DartType _dynamicType;
+  final DartType _stringType;
   final InterfaceType _implicitReceiverType;
 
   _TypeResolver(ClassElement classElement)
       : _dynamicType = classElement.context.typeProvider.dynamicType,
+        _stringType = classElement.context.typeProvider.stringType,
         _implicitReceiverType = classElement.type;
 
   @override
@@ -243,7 +245,7 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
       _implicitReceiverType;
 
   @override
-  DartType visitInterpolation(ast.Interpolation ast, _) => _dynamicType;
+  DartType visitInterpolation(ast.Interpolation ast, _) => _stringType;
 
   @override
   DartType visitKeyedRead(ast.KeyedRead ast, _) => _dynamicType;
