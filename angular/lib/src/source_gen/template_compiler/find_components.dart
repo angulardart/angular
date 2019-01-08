@@ -571,6 +571,15 @@ class _ComponentVisitor
             'invoked with values. Consider "AfterChanges" instead.');
       }
     }
+
+    final selector = coerceString(annotationValue, 'selector');
+    if (selector == null || selector.isEmpty) {
+      BuildError.throwForAnnotation(
+        annotation,
+        'Selector is required, got "$selector"',
+      );
+    }
+
     return CompileDirectiveMetadata(
       type: componentType,
       originType: componentType,
