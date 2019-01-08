@@ -9,6 +9,8 @@
 *   Optimization: Removes toString() calls of interpolated strings bound to
     properties.
 
+*   The compiler now uses superclass information to determine immutability.
+
 ### Bug fixes
 
 *   The template compiler now outputs the full path to a template file when it

@@ -46,6 +46,16 @@ bool isString(ast.AST expression, AnalyzedClass analyzedClass) {
   return type.isEquivalentTo(string);
 }
 
+PropertyInducingElement _getField(AnalyzedClass clazz, String name) {
+  var getter =
+      clazz._classElement.lookUpGetter(name, clazz._classElement.library);
+  return getter?.variable;
+}
+
+MethodElement _getMethod(AnalyzedClass clazz, String name) {
+  return clazz._classElement.lookUpMethod(name, clazz._classElement.library);
+}
+
 // TODO(het): Make this work with chained expressions.
 /// Returns [true] if [expression] is immutable.
 bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
@@ -75,12 +85,11 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
         (receiver is ast.StaticRead && receiver.analyzedClass != null)) {
       var clazz =
           receiver is ast.StaticRead ? receiver.analyzedClass : analyzedClass;
-      var field = clazz._classElement.getField(expression.name);
+      var field = _getField(clazz, expression.name);
       if (field != null) {
         return !field.isSynthetic && (field.isFinal || field.isConst);
       }
-      var method = clazz._classElement.getMethod(expression.name);
-      if (method != null) {
+      if (_getMethod(clazz, expression.name) != null) {
         // methods are immutable
         return true;
       }
