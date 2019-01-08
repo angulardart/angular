@@ -9,6 +9,7 @@ import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 
 import 'route_path.dart';
+import 'router/router_state.dart';
 import 'url.dart';
 
 /// A user defined route [path] for a router.
@@ -107,12 +108,23 @@ abstract class RouteDefinition {
   /// new RouteDefinition.defer('contact', loadContactView);
   /// ```
   ///
+  /// An optional [prefetcher] can be specified to prefetch additional
+  /// resources. The [prefetcher] is passed a partial [RouterState] that
+  /// represents the match *so far* from the root matching route. It's possible
+  /// that the [prefetcher] will be invoked during route resolution, even if its
+  /// route doesn't fully match, or is prevented from activating. The
+  /// [prefetcher] is run concurrently with [loader]. If the [prefetcher]
+  /// returns a [Future], its result is awaited before the route is initialized.
+  /// If the result of the [prefetcher] doesn't need to be awaited before
+  /// activating the route, it should return void.
+  ///
   /// At most one route may be set to [useAsDefault], which means it will be
   /// automatically inferred to be in use if there are no matching routes for a
   /// given outlet.
   factory RouteDefinition.defer({
     String path,
     LoadComponentAsync loader,
+    FutureOr<void> Function(RouterState) prefetcher,
     bool useAsDefault,
     additionalData,
     RoutePath routePath,
@@ -210,9 +222,15 @@ class DeferredRouteDefinition extends RouteDefinition {
   /// Returns a future that completes with a component type to be resolved.
   final LoadComponentAsync loader;
 
+  /// An optional function for prefetching resources before loading this route.
+  ///
+  /// See [RouteDefinition.defer] for details.
+  final FutureOr<void> Function(RouterState) prefetcher;
+
   DeferredRouteDefinition._({
     String path,
     this.loader,
+    this.prefetcher,
     bool useAsDefault,
     additionalData,
     RoutePath routePath,

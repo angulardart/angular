@@ -1,3 +1,9 @@
+### New features
+
+*   `RouteDefinition.defer` now supports an optional `prefetcher` parameter
+    which can be defined to prefetch additional resources that are dependent on
+    the matched `RouterState`.
+
 ## 2.0.0-alpha+21
 
 *   Maintenance release to support Angular 5.2.

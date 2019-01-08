@@ -65,18 +65,32 @@ class MutableRouterState {
     return result;
   }
 
-  void pushParameters(Map<String, String> parameters) {
-    _parameterStack.add(parameters);
-  }
-
-  void popParameters() {
-    _parameterStack.removeLast();
-  }
-
   RouterState build() {
     return RouterState(path, routes.toList(),
         fragment: fragment,
         queryParameters: queryParameters,
         parameters: parameters);
+  }
+
+  /// Pushes a [route] and its [match].
+  void push(RouteDefinition route, Match match) {
+    routes.add(route);
+    _parameterStack.add(_parameters(route, match));
+  }
+
+  /// Pops the last pushed [RouteDefinition] and its [Match].
+  void pop() {
+    routes.removeLast();
+    _parameterStack.removeLast();
+  }
+
+  /// Returns [route] [parameters] from [match], mapped from name to value.
+  Map<String, String> _parameters(RouteDefinition route, Match match) {
+    var result = <String, String>{};
+    var index = 1;
+    for (var parameter in route.parameters) {
+      result[parameter] = Uri.decodeComponent(match[index++]);
+    }
+    return result;
   }
 }
