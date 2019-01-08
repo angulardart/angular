@@ -265,29 +265,31 @@ class RouterImpl extends Router {
       var match = route.toRegExp().matchAsPrefix(path);
       if (match == null) continue;
       var incomplete = match.end != path.length;
-      var component = await _getTypeFromRoute(route);
+      state.push(route, match);
+      var component = await _componentFactory(state);
       if (component == null) {
         // If the route definition doesn't specify a component to load, we can
         // assume it redirects. Since a redirecting route definition can't
         // have any nested routes, it must match completely.
-        if (incomplete) continue;
+        if (incomplete) {
+          state.pop();
+          continue;
+        }
         // Found a matching, redirecting route.
-        state
-          ..routes.add(route)
-          ..pushParameters(_parameters(route, match));
         return true;
       }
       var componentRef = outlet.prepare(component);
       var nextOutlet = _nextOutlet(componentRef);
       // If the current route doesn't match the entire path, there must be a
       // nested outlet to complete the match.
-      if (incomplete && nextOutlet == null) continue;
-      // Update state for potential match.
+      if (incomplete && nextOutlet == null) {
+        state.pop();
+        continue;
+      }
+      // Push matching component factory and reference before recursing.
       state
         ..components.add(componentRef)
-        ..factories[componentRef] = component
-        ..routes.add(route)
-        ..pushParameters(_parameters(route, match));
+        ..factories[componentRef] = component;
       // Attempt to match remaining path to nested routes.
       var remainder = path.substring(match.end);
       if (await _resolveStateForOutlet(nextOutlet, state, remainder)) {
@@ -297,8 +299,7 @@ class RouterImpl extends Router {
       state
         ..components.removeLast()
         ..factories.remove(componentRef)
-        ..routes.removeLast()
-        ..popParameters();
+        ..pop();
     }
     // At this point no routes matched. This is considered a successful match
     // only if there's also no remaining path to be matched, in which case the
@@ -306,16 +307,22 @@ class RouterImpl extends Router {
     return path.isEmpty;
   }
 
-  /// Gets a type from a [RouteDefinition].
+  /// Returns the [ComponentFactory] loaded by the partial [state]'s last route.
   ///
-  /// Checks if the route is a valid component route and returns the component
-  /// type. If the route is not a valid component route, returns null.
-  FutureOr<ComponentFactory> _getTypeFromRoute(RouteDefinition route) {
+  /// Returns null if the last route is a [RedirectRouteDefinition].
+  FutureOr<ComponentFactory> _componentFactory(MutableRouterState state) {
+    var route = state.routes.last;
     if (route is ComponentRouteDefinition) {
       return route.component;
     }
     if (route is DeferredRouteDefinition) {
-      return route.loader();
+      if (route.prefetcher == null) return route.loader();
+      // The prefetcher may return void, so it must be wrapped in a Future so
+      // that it can be passed to Future.wait().
+      var prefetcherFuture = Future.value(route.prefetcher(state.build()));
+      var loaderFuture = route.loader();
+      return Future.wait([prefetcherFuture, loaderFuture])
+          .then((_) => loaderFuture);
     }
     return null;
   }
@@ -324,16 +331,6 @@ class RouterImpl extends Router {
   RouterOutlet _nextOutlet(ComponentRef componentRef) => componentRef.injector
       .provideType<RouterOutletToken>(RouterOutletToken)
       .routerOutlet;
-
-  /// Returns [parameters] from [match], mapped from name to value.
-  Map<String, String> _parameters(RouteDefinition route, Match match) {
-    var result = <String, String>{};
-    var index = 1;
-    for (var parameter in route.parameters) {
-      result[parameter] = Uri.decodeComponent(match[index++]);
-    }
-    return result;
-  }
 
   /// Navigates the remaining router tree and adds the default children.
   ///
@@ -348,7 +345,7 @@ class RouterImpl extends Router {
     } else {
       // If the last route is a not component route, there will be no default
       // children.
-      final component = await _getTypeFromRoute(stateSoFar.routes.last);
+      final component = await _componentFactory(stateSoFar);
       if (component == null) {
         return stateSoFar;
       }
@@ -366,7 +363,7 @@ class RouterImpl extends Router {
       if (route.useAsDefault) {
         stateSoFar.routes.add(route);
 
-        final component = await _getTypeFromRoute(stateSoFar.routes.last);
+        final component = await _componentFactory(stateSoFar);
         // The default route has a component, and we need to check for defaults
         // on the child route.
         if (component != null) {
