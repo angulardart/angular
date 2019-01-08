@@ -7,7 +7,7 @@ void main() {
   group('should be mock-like', () {
     test("with 'noSuchMethod' implementation", () async {
       final normalizedComponent = await resolveAndFindComponent('''
-        @Component()
+        @Component(selector: 'not-blank')
         class MockLikeComponent {
           noSuchMethod(Invocation invocation) => null;
         }''');
@@ -20,7 +20,7 @@ void main() {
           noSuchMethod(Invocation invocation) => null;
         }
 
-        @Component()
+        @Component(selector: 'not-blank')
         class MockLikeComponent extends MockLikeBase {}''');
       expect(normalizedComponent.component.analyzedClass.isMockLike, true);
     });
@@ -31,7 +31,7 @@ void main() {
           noSuchMethod(Invocation invocation) => null;
         }
 
-        @Component()
+        @Component(selector: 'not-blank')
         class MockLikeComponent extends Object with MockLikeMixin {}''');
       expect(normalizedComponent.component.analyzedClass.isMockLike, true);
     });
@@ -39,7 +39,7 @@ void main() {
 
   test('should not be mock-like', () async {
     final normalizedComponent = await resolveAndFindComponent('''
-      @Component()
+      @Component(selector: 'not-blank')
       class NotMockLikeComponent {}''');
     expect(normalizedComponent.component.analyzedClass.isMockLike, false);
   });
@@ -47,7 +47,7 @@ void main() {
   group('Generic type parameter', () {
     test('should resolve to dynamic when unspecified', () async {
       final normalizedComponent = await resolveAndFindComponent('''
-        @Component()
+        @Component(selector: 'not-blank')
         class TestComponent<T> {
           @Input()
           T value;
@@ -62,7 +62,7 @@ void main() {
           T value;
         }
 
-        @Component()
+        @Component(selector: 'not-blank')
         class TestComponent extends Base {}
       ''');
       expect(normalizedComponent.component.inputTypes['value'].name, 'dynamic');
@@ -70,7 +70,7 @@ void main() {
 
     test('should resolve bounded type', () async {
       final normalizedComponent = await resolveAndFindComponent('''
-        @Component()
+        @Component(selector: 'not-blank')
         class TestComponent<T extends String> {
           @Input()
           T value;
@@ -85,7 +85,7 @@ void main() {
           T value;
         }
 
-        @Component()
+        @Component(selector: 'not-blank')
         class TestComponent<S extends String> extends Base<S> {}
       ''');
       expect(normalizedComponent.component.inputTypes['value'].name, 'String');
@@ -98,7 +98,7 @@ void main() {
           T value;
         }
 
-        @Component()
+        @Component(selector: 'not-blank')
         class TestComponent extends Base<String> {}
       ''');
       expect(normalizedComponent.component.inputTypes['value'].name, 'String');
