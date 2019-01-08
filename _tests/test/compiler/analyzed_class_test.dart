@@ -59,6 +59,41 @@ void main() {
       expect(type.toString(), 'int');
     });
   });
+
+  group("isImmutable", () {
+    test('should support PropertyReads', () async {
+      final analyzedClass = await analyzeClass('''
+        class AppComponent {
+          final int seven = 7;
+          int someNumber;
+        }
+      ''');
+      final sevenExpr = PropertyRead(ImplicitReceiver(), 'seven');
+      final someNumberExpr = PropertyRead(ImplicitReceiver(), 'someNumber');
+      expect(isImmutable(sevenExpr, analyzedClass), true);
+      expect(isImmutable(someNumberExpr, analyzedClass), false);
+    });
+
+    test('should support PropertyReads from ancestors', () async {
+      final library = await resolve('''
+        class AppComponent {
+          final int seven = 7;
+          int someNumber;
+        }
+
+        class SubComponent extends AppComponent {
+          final int eight = 8;
+        }
+      ''');
+      var analyzedClass = AnalyzedClass(library.getType('SubComponent'));
+      final sevenExpr = PropertyRead(ImplicitReceiver(), 'seven');
+      final eightExpr = PropertyRead(ImplicitReceiver(), 'eight');
+      final someNumberExpr = PropertyRead(ImplicitReceiver(), 'someNumber');
+      expect(isImmutable(eightExpr, analyzedClass), true);
+      expect(isImmutable(sevenExpr, analyzedClass), true);
+      expect(isImmutable(someNumberExpr, analyzedClass), false);
+    });
+  });
 }
 
 Future<AnalyzedClass> analyzeClass(String source) async {
