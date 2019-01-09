@@ -785,7 +785,7 @@ void _failFastOnAnalysisErrors(
     messages.unresolvedSource(
       errors.map((e) {
         final sourceUrl = e.source.uri;
-        final sourceContent = componentType.context.getContents(e.source).data;
+        final sourceContent = e.source.contents.data;
 
         if (sourceContent.isEmpty) {
           return SourceSpanMessageTuple(
