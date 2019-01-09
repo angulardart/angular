@@ -11,6 +11,8 @@
 
 *   The compiler now uses superclass information to determine immutability.
 
+*   Added `Injector.provideTypeOptional` and `Injector.provideTokenOptional`.
+
 ### Bug fixes
 
 *   The template compiler now outputs the full path to a template file when it
