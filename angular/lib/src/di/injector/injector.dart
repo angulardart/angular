@@ -122,11 +122,32 @@ abstract class Injector {
     return unsafeCast(get(token));
   }
 
+  /// Finds and returns an object instance provided for a type [token].
+  ///
+  /// Unlike [provideType], `null` is returned if a provider is not found.
+  ///
+  /// A runtime assertion is thrown in debug mode if:
+  ///
+  /// * [T] is explicitly or implicitly bound to `dynamic`.
+  /// * If [T] is not `Object`, the DI [token] is not the *same* as [T].
+  T provideTypeOptional<T extends Object>(Type token) {
+    // See provideType.
+    assert(T != dynamic, 'Returning a dynamic is not supported');
+    return unsafeCast(get(token, null));
+  }
+
   /// Finds and returns an object instance provided for a [token].
   ///
   /// An error is thrown if a provider is not found.
   T provideToken<T>(OpaqueToken<T> token) {
     return unsafeCast(get(token));
+  }
+
+  /// Finds and returns an object instance provided for a [token].
+  ///
+  /// Unlike [provideToken], `null` is returned if a provider is not found.
+  T provideTokenOptional<T>(OpaqueToken<T> token) {
+    return unsafeCast(get(token, null));
   }
 }
 
