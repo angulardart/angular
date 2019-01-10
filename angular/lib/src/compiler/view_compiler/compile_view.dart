@@ -315,7 +315,7 @@ abstract class AppViewBuilder {
 
   /// Creates an unbound literal text node.
   NodeReference createTextNode(
-      CompileElement parent, int nodeIndex, o.Expression text, TemplateAst ast);
+      CompileElement parent, int nodeIndex, o.Expression text);
 
   NodeReference createBoundTextNode(
       CompileElement parent, int nodeIndex, BoundTextAst ast);
@@ -712,7 +712,6 @@ class CompileView implements AppViewBuilder {
     CompileElement parent,
     int nodeIndex,
     o.Expression textValue,
-    TemplateAst ast,
   ) {
     final renderNode = isInlined
         ? NodeReference.inlinedTextNode(
@@ -762,7 +761,6 @@ class CompileView implements AppViewBuilder {
         parent,
         nodeIndex,
         initialText,
-        ast,
       );
     }
 

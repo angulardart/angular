@@ -100,7 +100,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     }
     int nodeIndex = view.nodes.length;
     NodeReference renderNode = view.createBoundTextNode(parent, nodeIndex, ast);
-    var compileNode = CompileNode(parent, view, nodeIndex, renderNode, ast);
+    var compileNode = CompileNode(parent, view, nodeIndex, renderNode);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
   }
@@ -115,8 +115,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     int nodeIndex = view.nodes.length;
 
     NodeReference renderNode =
-        view.createTextNode(parent, nodeIndex, o.literal(ast.value), ast);
-    var compileNode = CompileNode(parent, view, nodeIndex, renderNode, ast);
+        view.createTextNode(parent, nodeIndex, o.literal(ast.value));
+    var compileNode = CompileNode(parent, view, nodeIndex, renderNode);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
   }
@@ -370,8 +370,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     final message = view.createI18nMessage(ast.value);
     final renderNode = ast.value.containsHtml
         ? view.createHtml(parent, nodeIndex, message)
-        : view.createTextNode(parent, nodeIndex, message, ast);
-    final compileNode = CompileNode(parent, view, nodeIndex, renderNode, ast);
+        : view.createTextNode(parent, nodeIndex, message);
+    final compileNode = CompileNode(parent, view, nodeIndex, renderNode);
     view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
   }

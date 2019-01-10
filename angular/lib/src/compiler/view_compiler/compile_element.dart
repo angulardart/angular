@@ -35,15 +35,11 @@ class CompileNode {
   /// Expression that resolves to reference to instance of of node.
   final NodeReference renderNode;
 
-  /// Source location in template.
-  final TemplateAst sourceAst;
-
   CompileNode(
     this.parent,
     this.view,
     this.nodeIndex,
     this.renderNode,
-    this.sourceAst,
   );
 
   /// Whether node is the root of the view.
@@ -65,6 +61,9 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   final bool hasTemplateRefQuery;
   final bool isInlined;
   final bool isDeferredComponent;
+
+  /// Source location in template.
+  final TemplateAst sourceAst;
 
   /// Reference to optional view container created for this element.
   o.ReadClassMemberExpr appViewContainer;
@@ -90,7 +89,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       CompileView view,
       int nodeIndex,
       NodeReference renderNode,
-      TemplateAst sourceAst,
+      this.sourceAst,
       this.component,
       this._directives,
       this._resolvedProvidersArray,
@@ -101,7 +100,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       this.hasTemplateRefQuery = false,
       this.isInlined = false,
       this.isDeferredComponent = false})
-      : super(parent, view, nodeIndex, renderNode, sourceAst) {
+      : super(parent, view, nodeIndex, renderNode) {
     _providers = ProvidersNode(this, parent?._providers,
         view == null || view.viewType == ViewType.host);
     if (references.isNotEmpty) {
