@@ -174,10 +174,7 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, void> {
     astNode.bananas.clear();
   }
 
-  EmbeddedTemplateAst _desugarStar(
-    StandaloneTemplateAst astNode,
-    List<StarAst> stars,
-  ) {
+  TemplateAst _desugarStar(StandaloneTemplateAst astNode, List<StarAst> stars) {
     var starAst = stars[0];
     var origin = _toolFriendlyAstOrigin ? starAst : null;
     var starExpression = starAst.value?.trim();
@@ -201,11 +198,7 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, void> {
         );
       } catch (e) {
         exceptionHandler.handle(e);
-        if (astNode is EmbeddedTemplateAst) {
-          return astNode;
-        }
-        // We parsed this as something unexpected, and should not continue.
-        rethrow;
+        return astNode;
       }
       if (micro != null) {
         propertiesToAdd.addAll(micro.properties);

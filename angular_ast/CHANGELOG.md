@@ -1,3 +1,6 @@
+*   Errors caused by parsing an invalid micro expression (i.e. `*ngFor`) are now
+    reported to the registered `ExceptionHandler` rather than thrown.
+
 ## 0.5.8
 
 *   Fixed a type error that occurred when recovering from a missing closing
