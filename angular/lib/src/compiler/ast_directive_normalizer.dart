@@ -191,6 +191,7 @@ class AstDirectiveNormalizer {
       // Otherwise, the analyzer crashes today seeing an 'asset:...' URL.
       sourceUrl: Uri.parse(templateAbsUrl).replace(scheme: 'file').toFilePath(),
       exceptionHandler: exceptionHandler,
+      desugar: false,
     );
     exceptionHandler.maybeReportExceptions();
 
