@@ -40,30 +40,15 @@ import 'view_compiler_utils.dart'
         namespaceUris;
 
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
-  final CompileView view;
-
-  /// This is `true` if this is building a view that will be inlined into it's
-  /// parent view.
-  final bool isInlinedView;
+  final CompileView _view;
 
   /// This is `true` if this is visiting nodes that will be projected into
   /// another view.
-  bool visitingProjectedContent = false;
+  bool _visitingProjectedContent = false;
 
-  int nestedViewCount = 0;
+  int _nestedViewCount = 0;
 
-  /// Local variable name used to refer to document. null if not created yet.
-  static final defaultDocVarName = 'doc';
-  String docVarName;
-
-  ViewBuilderVisitor(
-    this.view, {
-    this.isInlinedView = false,
-  });
-
-  bool _isRootNode(CompileElement parent) {
-    return !identical(parent.view, this.view);
-  }
+  ViewBuilderVisitor(this._view);
 
   void _addRootNodeAndProject(
       CompileNode node, int ngContentIndex, CompileElement parent) {
@@ -72,8 +57,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         : null;
     if (_isRootNode(parent)) {
       // store appElement as root node only for ViewContainers
-      if (view.viewType != ViewType.component) {
-        view.rootNodesOrViewContainers
+      if (_view.viewType != ViewType.component) {
+        _view.rootNodesOrViewContainers
             .add(vcAppEl ?? node.renderNode.toReadExpr());
       }
     } else if (parent.component != null && ngContentIndex != null) {
@@ -82,29 +67,21 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     }
   }
 
-  bool _maybeSkipNode(CompileElement parent, ngContentIndex) {
-    if (!_isRootNode(parent) &&
-        parent.component != null &&
-        ngContentIndex == null) {
-      // Keep the list of nodes in sync with the tree.
-      view.nodes.add(null);
-      return true;
-    }
-    return false;
-  }
-
+  @override
   void visitBoundText(BoundTextAst ast, CompileElement parent) {
     if (_maybeSkipNode(parent, ast.ngContentIndex)) {
       _deadCodeWarning("Bound text node (${ast.value})", ast, parent);
       return;
     }
-    int nodeIndex = view.nodes.length;
-    NodeReference renderNode = view.createBoundTextNode(parent, nodeIndex, ast);
-    var compileNode = CompileNode(parent, view, nodeIndex, renderNode);
-    view.nodes.add(compileNode);
+    int nodeIndex = _view.nodes.length;
+    NodeReference renderNode =
+        _view.createBoundTextNode(parent, nodeIndex, ast);
+    var compileNode = CompileNode(parent, _view, nodeIndex, renderNode);
+    _view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
   }
 
+  @override
   void visitText(TextAst ast, CompileElement parent) {
     if (_maybeSkipNode(parent, ast.ngContentIndex)) {
       if (ast.value.trim() != '') {
@@ -112,13 +89,36 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       }
       return;
     }
-    int nodeIndex = view.nodes.length;
+    int nodeIndex = _view.nodes.length;
 
     NodeReference renderNode =
-        view.createTextNode(parent, nodeIndex, o.literal(ast.value));
-    var compileNode = CompileNode(parent, view, nodeIndex, renderNode);
-    view.nodes.add(compileNode);
+        _view.createTextNode(parent, nodeIndex, o.literal(ast.value));
+    var compileNode = CompileNode(parent, _view, nodeIndex, renderNode);
+    _view.nodes.add(compileNode);
     _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+  }
+
+  @override
+  void visitI18nText(I18nTextAst ast, CompileElement parent) {
+    final nodeIndex = _view.nodes.length;
+    final message = _view.createI18nMessage(ast.value);
+    final renderNode = ast.value.containsHtml
+        ? _view.createHtml(parent, nodeIndex, message)
+        : _view.createTextNode(parent, nodeIndex, message);
+    final compileNode = CompileNode(parent, _view, nodeIndex, renderNode);
+    _view.nodes.add(compileNode);
+    _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+  }
+
+  bool _maybeSkipNode(CompileElement parent, ngContentIndex) {
+    if (!_isRootNode(parent) &&
+        parent.component != null &&
+        ngContentIndex == null) {
+      // Keep the list of nodes in sync with the tree.
+      _view.nodes.add(null);
+      return true;
+    }
+    return false;
   }
 
   void _deadCodeWarning(
@@ -134,23 +134,25 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     templateVisitAll(this, ast.children, parent);
   }
 
+  @override
   void visitNgContent(NgContentAst ast, CompileElement parent) {
-    view.projectNodesIntoElement(parent, ast.index, ast);
+    _view.projectNodesIntoElement(parent, ast.index, ast);
   }
 
+  @override
   void visitElement(ElementAst ast, CompileElement parent) {
-    int nodeIndex = view.nodes.length;
+    int nodeIndex = _view.nodes.length;
 
-    bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.host;
+    bool isHostRootView = nodeIndex == 0 && _view.viewType == ViewType.host;
     final type = o.importType(identifierFromTagName(ast.name));
     NodeReference elementRef;
     if (isHostRootView) {
       elementRef = NodeReference.appViewRoot();
-    } else if (view.isInlined) {
+    } else if (_view.isInlined) {
       elementRef = NodeReference.inlinedNode(
-          view.storage, type, view.declarationElement.nodeIndex, nodeIndex);
+          _view.storage, type, _view.declarationElement.nodeIndex, nodeIndex);
     } else {
-      elementRef = NodeReference(view.storage, type, nodeIndex);
+      elementRef = NodeReference(_view.storage, type, nodeIndex);
     }
 
     var directives = <CompileDirectiveMetadata>[];
@@ -159,8 +161,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     if (component != null) {
       bool isDeferred = nodeIndex == 0 &&
-          (view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
-          (view.declarationElement.sourceAst as EmbeddedTemplateAst)
+          (_view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
+          (_view.declarationElement.sourceAst as EmbeddedTemplateAst)
               .hasDeferredComponent;
       _visitComponentElement(
           parent, nodeIndex, component, elementRef, directives, ast,
@@ -178,19 +180,19 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       List<CompileDirectiveMetadata> directives,
       ElementAst ast,
       {bool isDeferred = false}) {
-    AppViewReference compAppViewExpr = view.createComponentNodeAndAppend(
+    AppViewReference compAppViewExpr = _view.createComponentNodeAndAppend(
         component, parent, elementRef, nodeIndex, ast,
         isDeferred: isDeferred);
 
-    if (view.viewType != ViewType.host) {
-      view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
+    if (_view.viewType != ViewType.host) {
+      _view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
     }
 
-    view.shimCssForNode(elementRef, nodeIndex, Identifiers.HTML_HTML_ELEMENT);
+    _view.shimCssForNode(elementRef, nodeIndex, Identifiers.HTML_HTML_ELEMENT);
 
     var compileElement = CompileElement(
         parent,
-        this.view,
+        _view,
         nodeIndex,
         elementRef,
         ast,
@@ -204,26 +206,26 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         hasTemplateRefQuery: parent.hasTemplateRefQuery,
         isDeferredComponent: isDeferred);
 
-    view.nodes.add(compileElement);
+    _view.nodes.add(compileElement);
 
     if (component != null) {
       compileElement.componentView = compAppViewExpr.toReadExpr();
-      view.addViewChild(compAppViewExpr.toReadExpr());
+      _view.addViewChild(compAppViewExpr.toReadExpr());
     }
 
     // beforeChildren() -> _prepareProviderInstances will create the actual
     // directive and component instances.
     compileElement.beforeChildren();
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
-    bool oldVisitingProjectedContent = visitingProjectedContent;
-    visitingProjectedContent = true;
+    bool oldVisitingProjectedContent = _visitingProjectedContent;
+    _visitingProjectedContent = true;
     templateVisitAll(this, ast.children, compileElement);
-    visitingProjectedContent = oldVisitingProjectedContent;
+    _visitingProjectedContent = oldVisitingProjectedContent;
 
-    compileElement.afterChildren(view.nodes.length - nodeIndex - 1);
+    compileElement.afterChildren(_view.nodes.length - nodeIndex - 1);
 
     o.Expression projectables;
-    if (view.component.type.isHost) {
+    if (_view.component.type.isHost) {
       projectables = ViewProperties.projectableNodes;
     } else {
       projectables = o.literalArr(compileElement.contentNodesByNgContentIndex
@@ -231,7 +233,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
           .toList());
     }
     var componentInstance = compileElement.getComponent();
-    view.createAppView(compAppViewExpr, componentInstance, projectables);
+    _view.createAppView(compAppViewExpr, componentInstance, projectables);
   }
 
   void _visitHtmlElement(
@@ -247,24 +249,24 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     if (isNamespacedElement) {
       var nameParts = ast.name.substring(1).split(':');
       String ns = namespaceUris[nameParts[0]];
-      view.createElementNs(
+      _view.createElementNs(
           parent, elementRef, nodeIndex, ns, nameParts[1], ast);
     } else {
-      view.createElement(parent, elementRef, nodeIndex, tagName, ast);
+      _view.createElement(parent, elementRef, nodeIndex, tagName, ast);
     }
 
-    view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
+    _view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
 
-    bool isHostRootView = nodeIndex == 0 && view.viewType == ViewType.host;
+    bool isHostRootView = nodeIndex == 0 && _view.viewType == ViewType.host;
     // Set ng_content class for CSS shim.
     var elementType = isHostRootView
         ? Identifiers.HTML_HTML_ELEMENT
         : identifierFromTagName(ast.name);
-    view.shimCssForNode(elementRef, nodeIndex, elementType);
+    _view.shimCssForNode(elementRef, nodeIndex, elementType);
 
     var compileElement = CompileElement(
         parent,
-        this.view,
+        _view,
         nodeIndex,
         elementRef,
         ast,
@@ -277,28 +279,29 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         isHtmlElement: detectHtmlElementFromTagName(tagName),
         hasTemplateRefQuery: parent.hasTemplateRefQuery);
 
-    view.nodes.add(compileElement);
+    _view.nodes.add(compileElement);
     // beforeChildren() -> _prepareProviderInstances will create the actual
     // directive and component instances.
     compileElement.beforeChildren();
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     templateVisitAll(this, ast.children, compileElement);
-    compileElement.afterChildren(view.nodes.length - nodeIndex - 1);
+    compileElement.afterChildren(_view.nodes.length - nodeIndex - 1);
   }
 
+  @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, CompileElement parent) {
-    var nodeIndex = view.nodes.length;
-    var isPureHtml = !visitingProjectedContent && _isPureHtml(ast);
+    var nodeIndex = _view.nodes.length;
+    var isPureHtml = !_visitingProjectedContent && _isPureHtml(ast);
     if (isPureHtml) {
-      view.hasInlinedView = true;
+      _view.hasInlinedView = true;
     }
     NodeReference nodeReference =
-        view.createViewContainerAnchor(parent, nodeIndex, ast);
+        _view.createViewContainerAnchor(parent, nodeIndex, ast);
     var directives =
         ast.directives.map((directiveAst) => directiveAst.directive).toList();
     var compileElement = CompileElement(
         parent,
-        this.view,
+        _view,
         nodeIndex,
         nodeReference,
         ast,
@@ -310,29 +313,28 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         ast.references,
         hasTemplateRefQuery: parent.hasTemplateRefQuery,
         isInlined: isPureHtml);
-    view.nodes.add(compileElement);
-    nestedViewCount++;
+    _view.nodes.add(compileElement);
+    _nestedViewCount++;
     var embeddedView = CompileView(
-        view.component,
-        view.genConfig,
-        view.directiveTypes,
-        view.pipeMetas,
+        _view.component,
+        _view.genConfig,
+        _view.directiveTypes,
+        _view.pipeMetas,
         o.NULL_EXPR,
-        view.viewIndex + nestedViewCount,
+        _view.viewIndex + _nestedViewCount,
         compileElement,
         ast.variables,
-        view.deferredModules,
+        _view.deferredModules,
         isInlined: isPureHtml);
 
     // Create a visitor for embedded view and visit all nodes.
-    var embeddedViewVisitor =
-        ViewBuilderVisitor(embeddedView, isInlinedView: isPureHtml);
+    var embeddedViewVisitor = ViewBuilderVisitor(embeddedView);
     templateVisitAll(
         embeddedViewVisitor,
         ast.children,
         embeddedView.declarationElement.parent ??
             embeddedView.declarationElement);
-    nestedViewCount += embeddedViewVisitor.nestedViewCount;
+    _nestedViewCount += embeddedViewVisitor._nestedViewCount;
 
     if (!isPureHtml) {
       compileElement.beforeChildren();
@@ -342,38 +344,38 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       compileElement.afterChildren(0);
     }
     if (ast.hasDeferredComponent) {
-      view.deferLoadEmbeddedTemplate(embeddedView, compileElement);
+      _view.deferLoadEmbeddedTemplate(embeddedView, compileElement);
     }
   }
 
+  @override
   void visitAttr(AttrAst ast, CompileElement parent) {}
 
+  @override
   void visitDirective(DirectiveAst ast, CompileElement parent) {}
 
+  @override
   void visitEvent(BoundEventAst ast, CompileElement parent) {}
 
+  @override
   void visitReference(ReferenceAst ast, CompileElement parent) {}
 
+  @override
   void visitVariable(VariableAst ast, CompileElement parent) {}
 
+  @override
   void visitDirectiveProperty(
       BoundDirectivePropertyAst ast, CompileElement parent) {}
 
+  @override
   void visitElementProperty(
       BoundElementPropertyAst ast, CompileElement parent) {}
 
+  @override
   void visitProvider(ProviderAst ast, CompileElement parent) {}
 
-  @override
-  void visitI18nText(I18nTextAst ast, CompileElement parent) {
-    final nodeIndex = view.nodes.length;
-    final message = view.createI18nMessage(ast.value);
-    final renderNode = ast.value.containsHtml
-        ? view.createHtml(parent, nodeIndex, message)
-        : view.createTextNode(parent, nodeIndex, message);
-    final compileNode = CompileNode(parent, view, nodeIndex, renderNode);
-    view.nodes.add(compileNode);
-    _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+  bool _isRootNode(CompileElement parent) {
+    return !identical(parent.view, _view);
   }
 }
 
