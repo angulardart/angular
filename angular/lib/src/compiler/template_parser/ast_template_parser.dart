@@ -91,7 +91,6 @@ class AstTemplateParser implements TemplateParser {
           AstExceptionHandler exceptionHandler, String templateSourceUrl) =>
       ast.parse(template,
           sourceUrl: templateSourceUrl,
-          desugar: true,
           toolFriendlyAst: true,
           parseExpressions: false,
           exceptionHandler: exceptionHandler);
