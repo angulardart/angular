@@ -4,6 +4,11 @@
     which can be defined to prefetch additional resources that are dependent on
     the matched `RouterState`.
 
+### Bug fixes
+
+*   Deferred route loaders and prefetchers are no longer called a second time
+    when matched during route resolution.
+
 ## 2.0.0-alpha+21
 
 *   Maintenance release to support Angular 5.2.

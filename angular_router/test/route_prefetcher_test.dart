@@ -24,13 +24,7 @@ void main() {
       RouteDefinition.defer(
         path: '/',
         loader: () async => ng.EmptyComponentNgFactory,
-        prefetcher: expectAsync1(
-          (_) {},
-          // Even in a simple case like this, the prefetcher will be invoked
-          // twice. Once to resolve the route, and again when checking for
-          // default children.
-          max: -1,
-        ),
+        prefetcher: expectAsync1((_) {}),
       ),
     ];
     return testBed.create();
@@ -87,7 +81,7 @@ void main() {
           expect(state.fragment, 'qux',
               skip: 'Not correctly set by MockLocationStrategy (b/122484064)');
           expect(state.queryParameters, {'x': '12'});
-        }, max: -1),
+        }),
       ),
     ];
     BarComponent.routes = [

@@ -342,14 +342,10 @@ class RouterImpl extends Router {
     RouterOutlet nextOutlet;
     if (stateSoFar.routes.isEmpty) {
       nextOutlet = _rootOutlet;
+    } else if (stateSoFar.routes.last is RedirectRouteDefinition) {
+      // If the last route is a redirect, there will be no default children.
+      return stateSoFar;
     } else {
-      // If the last route is a not component route, there will be no default
-      // children.
-      final component = await _componentFactory(stateSoFar);
-      if (component == null) {
-        return stateSoFar;
-      }
-
       nextOutlet = stateSoFar.components.last.injector
           .get(RouterOutletToken)
           .routerOutlet;
