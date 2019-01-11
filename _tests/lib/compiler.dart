@@ -189,3 +189,8 @@ Future<Null> compilesNormally(
       errors: isEmpty,
       warnings: isEmpty,
     );
+
+/// Match for a source location, but don't require tests to manage package
+/// names.
+Matcher containsSourceLocation(int line, int column) =>
+    contains("line $line, column $column of ");

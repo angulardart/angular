@@ -20,6 +20,7 @@ void main() {
         contains('Compiling @Component-annotated class "BadComponent" failed'),
         contains('BadExport'),
         isNot(contains('GoodExport')),
+        containsSourceLocation(8, 25)
       ]),
     ]);
   });
