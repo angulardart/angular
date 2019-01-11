@@ -24,6 +24,8 @@ void main() {
     ''', errors: [
       allOf([
         contains('Compiling @Component-annotated class "BadComp" failed'),
+        containsSourceLocation(11, 11),
+        contains('OopsDirective')
       ]),
     ]);
   });
@@ -41,6 +43,8 @@ void main() {
     ''', errors: [
       allOf([
         contains('Compiling @Component-annotated class "BadComp" failed'),
+        containsSourceLocation(6, 17),
+        contains('MissingPipe')
       ]),
     ]);
   });
@@ -61,6 +65,8 @@ void main() {
     ''', errors: [
       allOf([
         contains('Compiling @Component-annotated class "BadProvider" failed'),
+        containsSourceLocation(6, 25),
+        contains('Nope')
       ])
     ]);
   });
