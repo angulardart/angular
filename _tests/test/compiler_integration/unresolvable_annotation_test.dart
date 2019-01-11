@@ -14,6 +14,7 @@ void main() {
         contains('Could not resolve "@Injectionable()"'),
         contains('class HeroService'),
         contains('Try the following when diagnosing the problem:'),
+        containsSourceLocation(4, 13),
       ),
     ]);
   });
@@ -29,6 +30,7 @@ void main() {
         contains('Could not resolve "@Injectable()"'),
         contains('class HeroService'),
         contains('Try the following when diagnosing the problem:'),
+        containsSourceLocation(4, 13),
       ),
     ]);
   });
