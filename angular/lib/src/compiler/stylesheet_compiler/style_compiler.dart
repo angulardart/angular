@@ -1,11 +1,13 @@
+import 'package:angular/src/compiler/compile_metadata.dart'
+    show CompileIdentifierMetadata;
+import 'package:angular/src/compiler/compiler_utils.dart';
+import 'package:angular/src/compiler/ir/model.dart' as ir;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/style_url_resolver.dart'
+    show extractStyleUrls;
 import 'package:angular_compiler/cli.dart';
 
-import '../compile_metadata.dart' show CompileIdentifierMetadata;
-import '../compiler_utils.dart';
-import '../ir/model.dart' as ir;
-import '../output/output_ast.dart' as o;
-import '../shadow_css.dart';
-import '../style_url_resolver.dart' show extractStyleUrls;
+import 'shadow_css.dart';
 
 /// This placeholder is replaced by the component ID at run-time.
 const _componentIdPlaceholder = '%ID%';
