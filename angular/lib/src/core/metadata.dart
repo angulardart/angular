@@ -554,6 +554,7 @@ abstract class _ViewQuery extends _Query {
 ///     }
 ///   }
 /// }
+/// ```
 ///
 /// Reading an HTML element using `read`:
 ///
