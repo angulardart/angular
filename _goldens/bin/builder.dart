@@ -17,7 +17,6 @@ Builder releaseBuilder(BuilderOptions options) {
   return angular.templateCompiler(
     _withoutExtensions(options),
     defaultFlags: const CompilerFlags(
-      genDebugInfo: false,
       ignoreNgPlaceholderForGoldens: true,
     ),
     templateExtension: options.config['extensions']['template'],
@@ -35,7 +34,6 @@ Builder outlineBuilder(BuilderOptions options) {
   return angular.outlineCompiler(
     _withoutExtensions(options),
     defaultFlags: const CompilerFlags(
-      genDebugInfo: false,
       ignoreNgPlaceholderForGoldens: true,
     ),
     extension: options.config['extensions']['outline'],
