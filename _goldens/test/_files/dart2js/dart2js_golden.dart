@@ -34,7 +34,8 @@ void main() {
     InlinedNgIf,
     EmbeddedNgIf,
     EmbeddedNgFor,
-    InjectsFromArbitraryParent
+    InjectsFromArbitraryParent,
+    UsesDomBindings,
   ],
   template: r'''
     <uses-default-change-detection-and-inputs>
@@ -51,6 +52,8 @@ void main() {
     </injects-from-arbitrary-parent>
     <component-conditional-features [useFeatureA]="true" [useFeatureB]="false">
     </component-conditional-features>
+    <uses-dom-bindings>
+    </uses-dom-bindings>
   ''',
 )
 class RootComponent {}
@@ -208,3 +211,17 @@ class FeatureA {}
   template: 'I am Feature B',
 )
 class FeatureB {}
+
+@Component(
+  selector: 'uses-dom-bindings',
+  template: r'''
+    <button [attr.title]="title" [class.fancy]="isFancy"></button>
+  ''',
+)
+class UsesDomBindings {
+  @HostBinding('attr.title')
+  String get title => defeatDart2JsOptimizations('title');
+
+  @HostBinding('class.fancy')
+  bool get isFancy => defeatDart2JsOptimizations('fancy');
+}

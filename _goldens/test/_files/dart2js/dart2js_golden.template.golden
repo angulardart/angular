@@ -41,6 +41,8 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_5_5;
   ViewComponentConditionalFeatures0 _compView_6;
   import1.ComponentConditionalFeatures _ComponentConditionalFeatures_6_5;
+  ViewUsesDomBindings0 _compView_7;
+  import1.UsesDomBindings _UsesDomBindings_7_5;
   static RenderComponentType _renderType;
   ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('root-component');
@@ -90,6 +92,11 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     parentRenderNode.append(_el_6);
     _ComponentConditionalFeatures_6_5 = import1.ComponentConditionalFeatures();
     _compView_6.create(_ComponentConditionalFeatures_6_5, []);
+    _compView_7 = ViewUsesDomBindings0(this, 7);
+    final _el_7 = _compView_7.rootEl;
+    parentRenderNode.append(_el_7);
+    _UsesDomBindings_7_5 = import1.UsesDomBindings();
+    _compView_7.create(_UsesDomBindings_7_5, []);
     init(const [], null);
   }
 
@@ -100,6 +107,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
       _ComponentConditionalFeatures_6_5.useFeatureA = true;
       _ComponentConditionalFeatures_6_5.useFeatureB = false;
     }
+    _compView_7.detectHostChanges(firstCheck);
     _compView_0.detectChanges();
     _compView_1.detectChanges();
     _compView_2.detectChanges();
@@ -107,6 +115,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_4.detectChanges();
     _compView_5.detectChanges();
     _compView_6.detectChanges();
+    _compView_7.detectChanges();
   }
 
   @override
@@ -118,6 +127,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_4.destroy();
     _compView_5.destroy();
     _compView_6.destroy();
+    _compView_7.destroy();
   }
 }
 
@@ -1193,6 +1203,100 @@ AppView<import1.FeatureB> viewFactory_FeatureBHost0(AppView<dynamic> parentView,
   return _ViewFeatureBHost0(parentView, parentIndex);
 }
 
+final List<dynamic> styles$UsesDomBindings = const [];
+
+class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
+  var _expr_0;
+  bool _expr_1;
+  var _expr_2;
+  bool _expr_3;
+  import5.ButtonElement _el_0;
+  static RenderComponentType _renderType;
+  ViewUsesDomBindings0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('uses-dom-bindings');
+    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null), ViewEncapsulation.None, styles$UsesDomBindings);
+    setupComponentType(_renderType);
+  }
+  @override
+  ComponentRef<import1.UsesDomBindings> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    var doc = import5.document;
+    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    init(const [], null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    final currVal_0 = _ctx.title;
+    if (import6.checkBinding(_expr_0, currVal_0)) {
+      setAttr(_el_0, 'title', currVal_0);
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.isFancy;
+    if (import6.checkBinding(_expr_1, currVal_1)) {
+      updateClass(_el_0, 'fancy', currVal_1);
+      _expr_1 = currVal_1;
+    }
+  }
+
+  void detectHostChanges(bool firstCheck) {
+    final currVal_2 = ctx.title;
+    if (import6.checkBinding(_expr_2, currVal_2)) {
+      setAttr(rootEl, 'title', currVal_2);
+      _expr_2 = currVal_2;
+    }
+    final currVal_3 = ctx.isFancy;
+    if (import6.checkBinding(_expr_3, currVal_3)) {
+      updateElemClass(rootEl, 'fancy', currVal_3);
+      _expr_3 = currVal_3;
+    }
+  }
+}
+
+AppView<import1.UsesDomBindings> viewFactory_UsesDomBindings0(AppView<dynamic> parentView, int parentIndex) {
+  return ViewUsesDomBindings0(parentView, parentIndex);
+}
+
+const ComponentFactory<import1.UsesDomBindings> _UsesDomBindingsNgFactory = const ComponentFactory('uses-dom-bindings', viewFactory_UsesDomBindingsHost0);
+ComponentFactory<import1.UsesDomBindings> get UsesDomBindingsNgFactory {
+  return _UsesDomBindingsNgFactory;
+}
+
+final List<dynamic> styles$UsesDomBindingsHost = const [];
+
+class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
+  ViewUsesDomBindings0 _compView_0;
+  import1.UsesDomBindings _UsesDomBindings_0_5;
+  _ViewUsesDomBindingsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.UsesDomBindings> build() {
+    _compView_0 = ViewUsesDomBindings0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesDomBindings_0_5 = import1.UsesDomBindings();
+    _compView_0.create(_UsesDomBindings_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _UsesDomBindings_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool firstCheck = (this.cdState == 0);
+    _compView_0.detectHostChanges(firstCheck);
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.UsesDomBindings> viewFactory_UsesDomBindingsHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewUsesDomBindingsHost0(parentView, parentIndex);
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -1213,6 +1317,7 @@ void initReflector() {
   _ngRef.registerComponent(ComponentConditionalFeatures, ComponentConditionalFeaturesNgFactory);
   _ngRef.registerComponent(FeatureA, FeatureANgFactory);
   _ngRef.registerComponent(FeatureB, FeatureBNgFactory);
+  _ngRef.registerComponent(UsesDomBindings, UsesDomBindingsNgFactory);
   _ref0.initReflector();
   _ref1.initReflector();
 }

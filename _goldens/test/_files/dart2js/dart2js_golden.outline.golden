@@ -107,5 +107,12 @@ external _ng.AppView<FeatureB> viewFactory_FeatureB0(_ng.AppView<dynamic> parent
 class ViewFeatureB0 extends _ng.AppView<FeatureB> {
   external ViewFeatureB0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesDomBindings.
+external List<dynamic> get styles$UsesDomBindings;
+external _ng.ComponentFactory<UsesDomBindings> get UsesDomBindingsNgFactory;
+external _ng.AppView<UsesDomBindings> viewFactory_UsesDomBindings0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesDomBindings0 extends _ng.AppView<UsesDomBindings> {
+  external ViewUsesDomBindings0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 
 external void initReflector();
