@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/analyzed_class.dart' as analyzed;
 import 'package:angular/src/compiler/compile_metadata.dart';
+import 'package:angular/src/compiler/i18n/message.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 
 import '../expression_parser/ast.dart' as ast;
@@ -158,8 +159,55 @@ class HostView implements View {
   List<IRNode> get children => [componentView];
 }
 
+/// A generic representation of a value binding.
+///
+/// This is represented as a pairing between the [source], or value being bound,
+/// and the [target], or the place where the value is actually bound.
+class Binding {
+  final BindingSource source;
+  final BindingTarget target;
+
+  Binding({this.source, this.target});
+}
+
+class BindingTarget {}
+
+class TextBinding implements BindingTarget {}
+
+class HtmlBinding implements BindingTarget {}
+
+abstract class BindingSource {
+  bool get isImmutable;
+  bool get isNullable;
+}
+
+class BoundI18nMessage implements BindingSource {
+  final I18nMessage value;
+
+  @override
+  final bool isImmutable = true;
+  @override
+  final bool isNullable = false;
+
+  BoundI18nMessage(this.value);
+}
+
+class BoundLiteral implements BindingSource {
+  @override
+  final bool isImmutable = true;
+
+  @override
+  final bool isNullable = false;
+}
+
+class StringLiteral extends BoundLiteral {
+  final String value;
+
+  StringLiteral(this.value);
+}
+
 /// A [BindingSource] which represents a general-purpose expression.
-class BoundExpression {
+class BoundExpression implements BindingSource {
   final ast.AST expression;
   final SourceSpan sourceSpan;
   final analyzed.AnalyzedClass _analyzedClass;
@@ -183,8 +231,10 @@ class BoundExpression {
             sourceSpan,
             scope);
 
+  @override
   bool get isImmutable => analyzed.isImmutable(expression, _analyzedClass);
 
+  @override
   bool get isNullable => analyzed.canBeNull(expression);
 }
 
