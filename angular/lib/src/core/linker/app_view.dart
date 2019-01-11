@@ -149,7 +149,7 @@ class AppViewData<T> {
 }
 
 /// Base class for a generated template for a given [Component] type [T].
-abstract class AppView<T> extends View {
+abstract class AppView<T> extends View<T> {
   AppViewData<T> viewData;
 
   /// Local values scoped to this view.
@@ -321,6 +321,7 @@ abstract class AppView<T> extends View {
     _detachAll(viewRootNodes);
   }
 
+  @override
   void destroy() {
     if (viewData.destroyed) return;
     viewData.destroyed = true;
@@ -359,8 +360,8 @@ abstract class AppView<T> extends View {
   /// Overwritten by implementations
   void dirtyParentQueriesInternal() {}
 
-  /// Framework-visible implementation of change detection for the view.
   @mustCallSuper
+  @override
   void detectChanges() {
     // Whether the CD state means change detection should be skipped.
     // Cases: ERRORED (Crash), CHECKED (Already-run), DETACHED (inactive).
@@ -403,10 +404,6 @@ abstract class AppView<T> extends View {
       ChangeDetectionHost.handleCrash(this, e, s);
     }
   }
-
-  /// Generated code that is called internally by [detectChanges].
-  @protected
-  void detectChangesInternal() {}
 
   /// Generated code that is called by hosts.
   /// This is needed since deferred components don't allow call sites

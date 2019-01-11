@@ -10081,8 +10081,6 @@
         current._lastCaughtTrace = s;
       }
     },
-    detectChangesInternal$0: function() {
-    },
     initViewRoot$1: function(hostElement) {
       var t1 = this.componentType._hostAttr;
       if (t1 != null)
@@ -10090,7 +10088,10 @@
       return hostElement;
     }
   };
-  X.View.prototype = {};
+  X.View.prototype = {
+    detectChangesInternal$0: function() {
+    }
+  };
   Q.AppViewUtils.prototype = {
     createRenderType$3: function(templateUrl, encapsulation, styles) {
       var t1, t2;
