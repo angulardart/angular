@@ -124,5 +124,5 @@ void main() {
         contains('@HostListener expected 2 arguments, but 1 found'),
       ]);
     });
-  }, skip: 'Not yet supported');
+  }, skip: 'Not yet supported (tracked in b/122730445)');
 }
