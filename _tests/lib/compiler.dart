@@ -15,7 +15,6 @@ final Builder _testAngularBuilder = MultiplexingBuilder([
   templateCompiler(
     BuilderOptions({}),
     defaultFlags: const CompilerFlags(
-      genDebugInfo: false,
       ignoreNgPlaceholderForGoldens: true,
     ),
   ),

@@ -585,8 +585,6 @@ class CompileView implements AppViewBuilder {
     }
   }
 
-  bool get genDebugInfo => genConfig.genDebugInfo;
-
   // Adds reference to a child view.
   void addViewChild(o.Expression componentViewExpr) {
     _viewChildren.add(componentViewExpr);
@@ -787,19 +785,18 @@ class CompileView implements AppViewBuilder {
   void createElement(CompileElement parent, NodeReference elementRef,
       int nodeIndex, String tagName, TemplateAst ast) {
     var parentRenderNodeExpr = _getParentRenderNode(parent);
-    final generateDebugInfo = genConfig.genDebugInfo;
 
-    _createElementAndAppend(tagName, parentRenderNodeExpr, elementRef,
-        generateDebugInfo, ast.sourceSpan, nodeIndex);
+    _createElementAndAppend(
+      tagName,
+      parentRenderNodeExpr,
+      elementRef,
+      ast.sourceSpan,
+      nodeIndex,
+    );
   }
 
-  void _createElementAndAppend(
-      String tagName,
-      o.Expression parent,
-      NodeReference elementRef,
-      bool generateDebugInfo,
-      SourceSpan debugSpan,
-      int debugNodeIndex) {
+  void _createElementAndAppend(String tagName, o.Expression parent,
+      NodeReference elementRef, SourceSpan debugSpan, int debugNodeIndex) {
     // No namespace just call [document.createElement].
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());

@@ -55,10 +55,6 @@ class CompilerFlags {
       hide: true,
     );
 
-  /// Whether to emit extra code suitable for testing and local development.
-  @Deprecated('This value is always `false`')
-  final bool genDebugInfo;
-
   /// May emit extra code suitable for profiling or tooling.
   final Profile profileFor;
 
@@ -98,7 +94,6 @@ class CompilerFlags {
   final bool exportUserCodeFromTemplate;
 
   const CompilerFlags({
-    this.genDebugInfo = false,
     this.ignoreNgPlaceholderForGoldens = false,
     this.profileFor = Profile.none,
     this.useLegacyStyleEncapsulation = false,
@@ -113,7 +108,7 @@ class CompilerFlags {
   /// Failures are reported to [logger].
   factory CompilerFlags.parseArgs(
     List<String> args, {
-    CompilerFlags defaultTo = const CompilerFlags(genDebugInfo: false),
+    CompilerFlags defaultTo = const CompilerFlags(),
     Logger logger,
     Level severity = Level.WARNING,
   }) {
@@ -176,7 +171,6 @@ class CompilerFlags {
     final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
 
     return CompilerFlags(
-      genDebugInfo: false,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
