@@ -1758,6 +1758,13 @@
         return receiver;
       return J.getNativeInterceptor(receiver);
     },
+    getInterceptor$z: function(receiver) {
+      if (receiver == null)
+        return receiver;
+      if (!(receiver instanceof P.Object))
+        return J.UnknownJavaScriptObject.prototype;
+      return receiver;
+    },
     get$hashCode$: function(receiver) {
       return J.getInterceptor$(receiver).get$hashCode(receiver);
     },
@@ -1766,6 +1773,9 @@
     },
     get$length$asx: function(receiver) {
       return J.getInterceptor$asx(receiver).get$length(receiver);
+    },
+    get$title$z: function(receiver) {
+      return J.getInterceptor$z(receiver).get$title(receiver);
     },
     $eq$: function(receiver, a0) {
       if (receiver == null)
@@ -2704,7 +2714,7 @@
       _.$ti = t2;
     },
     _LinkedHashSetCell: function _LinkedHashSetCell(t0) {
-      this._element = t0;
+      this._collection$_element = t0;
       this._collection$_previous = this._collection$_next = null;
     },
     _LinkedHashSetIterator: function _LinkedHashSetIterator(t0, t1) {
@@ -3401,6 +3411,11 @@
     },
     _StyleSheetList: function _StyleSheetList() {
     },
+    _AttributeMap: function _AttributeMap() {
+    },
+    _ElementAttributeMap: function _ElementAttributeMap(t0) {
+      this._element = t0;
+    },
     _EventStreamSubscription: function _EventStreamSubscription(t0, t1, t2, t3, t4) {
       var _ = this;
       _._pauseCount = t0;
@@ -4009,7 +4024,7 @@
     },
     ViewRootComponent0: function ViewRootComponent0(t0, t1) {
       var _ = this;
-      _.viewData = _._ComponentConditionalFeatures_6_5 = _._compView_6 = _._InjectsFromArbitraryParent_5_5 = _._compView_5 = _._EmbeddedNgFor_4_5 = _._compView_4 = _._EmbeddedNgIf_3_5 = _._compView_3 = _._InlinedNgIf_2_5 = _._compView_2 = _._UsesOnPushChangeDetectionAndInputs_1_5 = _._compView_1 = _._UsesDefaultChangeDetectionAndInputs_0_5 = _._compView_0 = null;
+      _.viewData = _._UsesDomBindings_7_5 = _._compView_7 = _._ComponentConditionalFeatures_6_5 = _._compView_6 = _._InjectsFromArbitraryParent_5_5 = _._compView_5 = _._EmbeddedNgFor_4_5 = _._compView_4 = _._EmbeddedNgIf_3_5 = _._compView_3 = _._InlinedNgIf_2_5 = _._compView_2 = _._UsesOnPushChangeDetectionAndInputs_1_5 = _._compView_1 = _._UsesDefaultChangeDetectionAndInputs_0_5 = _._compView_0 = null;
       _.locals = t0;
       _.parentView = t1;
       _.ctx = _.rootEl = _.componentType = null;
@@ -4141,6 +4156,13 @@
       _.locals = t0;
       _.parentView = t1;
       _.ctx = _.rootEl = _.componentType = null;
+    },
+    ViewUsesDomBindings0: function ViewUsesDomBindings0(t0, t1) {
+      var _ = this;
+      _.viewData = _._el_0 = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = null;
+      _.locals = t0;
+      _.parentView = t1;
+      _.ctx = _.rootEl = _.componentType = null;
     }
   },
   Z = {DomSanitizationService: function DomSanitizationService() {
@@ -4187,6 +4209,8 @@
     FeatureA: function FeatureA() {
     },
     FeatureB: function FeatureB() {
+    },
+    UsesDomBindings: function UsesDomBindings() {
     }
   };
   var holders = [C, H, J, P, W, G, Y, R, K, S, M, X, Q, D, L, V, A, E, U, T, N, Z, O];
@@ -6724,6 +6748,9 @@
       table[element] = this._collection$_newLinkedCell$1(element);
       return true;
     },
+    _collection$_modified$0: function() {
+      this._collection$_modifications = this._collection$_modifications + 1 & 67108863;
+    },
     _collection$_newLinkedCell$1: function(element) {
       var cell, last;
       cell = new P._LinkedHashSetCell(element);
@@ -6737,7 +6764,7 @@
         this._collection$_last = cell;
       }
       ++this._collection$_length;
-      this._collection$_modifications = this._collection$_modifications + 1 & 67108863;
+      this._collection$_modified$0();
       return cell;
     },
     _computeHashCode$1: function(element) {
@@ -6749,7 +6776,7 @@
         return -1;
       $length = bucket.length;
       for (i = 0; i < $length; ++i)
-        if (J.$eq$(bucket[i]._element, element))
+        if (J.$eq$(bucket[i]._collection$_element, element))
           return i;
       return -1;
     }
@@ -6764,7 +6791,7 @@
         return -1;
       $length = bucket.length;
       for (i = 0; i < $length; ++i) {
-        t1 = bucket[i]._element;
+        t1 = bucket[i]._collection$_element;
         if (t1 == null ? element == null : t1 === element)
           return i;
       }
@@ -6786,7 +6813,7 @@
           this._collection$_current = null;
           return false;
         } else {
-          this._collection$_current = t1._element;
+          this._collection$_current = t1._collection$_element;
           this._collection$_cell = t1._collection$_next;
           return true;
         }
@@ -8404,6 +8431,47 @@
     $isList: 1,
     $asList: function() {
       return [W.StyleSheet];
+    }
+  };
+  W._AttributeMap.prototype = {
+    forEach$1: function(_, f) {
+      var t1, t2, t3, _i, key;
+      for (t1 = this.get$keys(this), t2 = t1.length, t3 = this._element, _i = 0; _i < t1.length; t1.length === t2 || (0, H.throwConcurrentModificationError)(t1), ++_i) {
+        key = t1[_i];
+        f.call$2(key, t3.getAttribute(key));
+      }
+    },
+    get$keys: function(_) {
+      var attributes, keys, len, i, attr;
+      attributes = this._element.attributes;
+      keys = H.setRuntimeTypeInfo([], [P.String]);
+      for (len = attributes.length, i = 0; i < len; ++i) {
+        attr = attributes[i];
+        if (attr.namespaceURI == null)
+          keys.push(attr.name);
+      }
+      return keys;
+    },
+    $asMapMixin: function() {
+      return [P.String, P.String];
+    },
+    $asMap: function() {
+      return [P.String, P.String];
+    }
+  };
+  W._ElementAttributeMap.prototype = {
+    $index: function(_, key) {
+      return this._element.getAttribute(key);
+    },
+    remove$1: function(_, key) {
+      var t1, value;
+      t1 = this._element;
+      value = t1.getAttribute(key);
+      t1.removeAttribute(key);
+      return value;
+    },
+    get$length: function(_) {
+      return this.get$keys(this).length;
     }
   };
   W._EventStreamSubscription.prototype = {};
@@ -10086,6 +10154,15 @@
       if (t1 != null)
         hostElement.classList.add(t1);
       return hostElement;
+    },
+    setAttr$3: function(renderElement, attributeName, attributeValue) {
+      if (attributeValue != null)
+        renderElement.setAttribute(attributeName, attributeValue);
+      else {
+        renderElement.toString;
+        new W._ElementAttributeMap(renderElement).remove$1(0, attributeName);
+      }
+      $.domRootRendererIsDirty = true;
     }
   };
   X.View.prototype = {
@@ -10717,10 +10794,26 @@
   U.JsTestability.prototype = {};
   U.JsTestabilityRegistry.prototype = {};
   O.RootComponent.prototype = {};
-  O.UsesDefaultChangeDetectionAndInputs.prototype = {};
-  O.DefaultChangeDetectionAndInputs.prototype = {};
-  O.UsesOnPushChangeDetectionAndInputs.prototype = {};
-  O.OnPushChangeDetectionAndInputs.prototype = {};
+  O.UsesDefaultChangeDetectionAndInputs.prototype = {
+    get$title: function(receiver) {
+      return this.title;
+    }
+  };
+  O.DefaultChangeDetectionAndInputs.prototype = {
+    get$title: function(receiver) {
+      return this.title;
+    }
+  };
+  O.UsesOnPushChangeDetectionAndInputs.prototype = {
+    get$title: function(receiver) {
+      return this.title;
+    }
+  };
+  O.OnPushChangeDetectionAndInputs.prototype = {
+    get$title: function(receiver) {
+      return this.title;
+    }
+  };
   O.InlinedNgIf.prototype = {};
   O.EmbeddedNgIf.prototype = {};
   O.EmbeddedNgFor.prototype = {};
@@ -10730,6 +10823,14 @@
   O.ComponentConditionalFeatures.prototype = {};
   O.FeatureA.prototype = {};
   O.FeatureB.prototype = {};
+  O.UsesDomBindings.prototype = {
+    get$title: function(_) {
+      return self.defeatDart2JsOptimizations("title");
+    },
+    get$isFancy: function() {
+      return self.defeatDart2JsOptimizations("fancy");
+    }
+  };
   N.ViewRootComponent0.prototype = {
     build$0: function() {
       var parentRenderNode, t1, t2, t3, t4, t5, t6;
@@ -10838,29 +10939,63 @@
       t2 = t6;
       this._InjectsFromArbitraryParent_5_5 = t2;
       this._compView_5.create$2(0, t2, []);
-      t1 = new N.ViewComponentConditionalFeatures0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
-      t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 6);
-      t2 = t3.createElement("component-conditional-features");
+      t2 = new N.ViewComponentConditionalFeatures0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
+      t2.viewData = S.AppViewData_AppViewData(t2, 3, C.ViewType_1, 6);
+      t4 = t3.createElement("component-conditional-features");
+      t2.rootEl = t4;
+      t4 = $.ViewComponentConditionalFeatures0__renderType;
+      if (t4 == null) {
+        t4 = $.appViewUtils;
+        t4 = t4.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty);
+        $.ViewComponentConditionalFeatures0__renderType = t4;
+      }
+      t2.setupComponentType$1(t4);
+      this._compView_6 = t2;
+      parentRenderNode.appendChild(t2.rootEl);
+      t2 = new O.ComponentConditionalFeatures(false, false);
+      this._ComponentConditionalFeatures_6_5 = t2;
+      this._compView_6.create$2(0, t2, []);
+      t1 = new N.ViewUsesDomBindings0(P.LinkedHashMap_LinkedHashMap$_empty(t1, null), this);
+      t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 7);
+      t2 = t3.createElement("uses-dom-bindings");
       t1.rootEl = t2;
-      t2 = $.ViewComponentConditionalFeatures0__renderType;
+      t2 = $.ViewUsesDomBindings0__renderType;
       if (t2 == null) {
         t2 = $.appViewUtils;
         t2 = t2.createRenderType$3(null, C.ViewEncapsulation_1, C.List_empty);
-        $.ViewComponentConditionalFeatures0__renderType = t2;
+        $.ViewUsesDomBindings0__renderType = t2;
       }
       t1.setupComponentType$1(t2);
-      this._compView_6 = t1;
+      this._compView_7 = t1;
       parentRenderNode.appendChild(t1.rootEl);
-      t1 = new O.ComponentConditionalFeatures(false, false);
-      this._ComponentConditionalFeatures_6_5 = t1;
-      this._compView_6.create$2(0, t1, []);
+      t1 = new O.UsesDomBindings();
+      this._UsesDomBindings_7_5 = t1;
+      this._compView_7.create$2(0, t1, []);
       this.init$2(C.List_empty, null);
     },
     detectChangesInternal$0: function() {
+      var t1, currVal_2, t2, currVal_3;
       if (this.viewData._cdState === 0) {
-        var t1 = this._ComponentConditionalFeatures_6_5;
+        t1 = this._ComponentConditionalFeatures_6_5;
         t1.useFeatureA = true;
         t1.useFeatureB = false;
+      }
+      t1 = this._compView_7;
+      currVal_2 = J.get$title$z(t1.ctx);
+      t2 = t1._expr_2;
+      if (t2 != currVal_2) {
+        t1.setAttr$3(t1.rootEl, "title", currVal_2);
+        t1._expr_2 = currVal_2;
+      }
+      currVal_3 = t1.ctx.get$isFancy();
+      t2 = t1._expr_3;
+      if (t2 != currVal_3) {
+        t2 = t1.rootEl;
+        if (currVal_3)
+          t2.classList.add("fancy");
+        else
+          t2.classList.remove("fancy");
+        t1._expr_3 = currVal_3;
       }
       this._compView_0.detectChanges$0();
       this._compView_1.detectChanges$0();
@@ -10869,6 +11004,7 @@
       this._compView_4.detectChanges$0();
       this._compView_5.detectChanges$0();
       this._compView_6.detectChanges$0();
+      this._compView_7.detectChanges$0();
     },
     destroyInternal$0: function() {
       this._compView_0.destroy$0();
@@ -10878,6 +11014,7 @@
       this._compView_4.destroy$0();
       this._compView_5.destroy$0();
       this._compView_6.destroy$0();
+      this._compView_7.destroy$0();
     },
     $asAppView: function() {
       return [O.RootComponent];
@@ -11361,6 +11498,36 @@
       return [O.FeatureB];
     }
   };
+  N.ViewUsesDomBindings0.prototype = {
+    build$0: function() {
+      var parentRenderNode = this.initViewRoot$1(this.rootEl);
+      this._el_0 = S.createAndAppend(document, "button", parentRenderNode);
+      this.init$2(C.List_empty, null);
+    },
+    detectChangesInternal$0: function() {
+      var t1, t2;
+      this.ctx.toString;
+      t1 = self.defeatDart2JsOptimizations("title");
+      t2 = this._expr_0;
+      if (t2 != t1) {
+        this.setAttr$3(this._el_0, "title", t1);
+        this._expr_0 = t1;
+      }
+      t1 = self.defeatDart2JsOptimizations("fancy");
+      t2 = this._expr_1;
+      if (t2 != t1) {
+        t2 = this._el_0;
+        if (t1)
+          t2.classList.add("fancy");
+        else
+          t2.classList.remove("fancy");
+        this._expr_1 = t1;
+      }
+    },
+    $asAppView: function() {
+      return [O.UsesDomBindings];
+    }
+  };
   J.Interceptor.prototype.super$Interceptor$toString = J.Interceptor.prototype.toString$0;
   J.Interceptor.prototype.super$Interceptor$noSuchMethod = J.Interceptor.prototype.noSuchMethod$1;
   J.JavaScriptObject.prototype.super$JavaScriptObject$toString = J.JavaScriptObject.prototype.toString$0;
@@ -11446,7 +11613,7 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.ReflectionInfo, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.SetMixin, P._LinkedHashSetCell, P._LinkedHashSetIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.StackOverflowError, P._Exception, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, R.NgFor, R._RecordViewTuple, K.NgIf, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, S.OpaqueToken, S.AppViewData, X.View, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, D.TemplateRef, L.ViewRefImpl, R.ViewType, A.ViewEncapsulation, A.RenderComponentType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.EventManagerPlugin, N.EventManager, A.DomSharedStylesHost, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.ReflectionInfo, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.SetMixin, P._LinkedHashSetCell, P._LinkedHashSetIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.StackOverflowError, P._Exception, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, R.NgFor, R._RecordViewTuple, K.NgIf, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, S.OpaqueToken, S.AppViewData, X.View, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, D.TemplateRef, L.ViewRefImpl, R.ViewType, A.ViewEncapsulation, A.RenderComponentType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.EventManagerPlugin, N.EventManager, A.DomSharedStylesHost, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeByteBuffer, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssStyleValue, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W.Event, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.ImageBitmap, W.ImageData, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.PaintSize, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.Screen, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W.TextMetrics, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.Url, W.VttRegion, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.ObjectStore, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P.Rect, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, U.JsTestability, U.JsTestabilityRegistry]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
@@ -11464,7 +11631,7 @@
     _inheritMany(P.Error, [H.NullError, H.JsNoSuchMethodError, H.UnknownJsTypeError, H.RuntimeError, P.NullThrownError, P.ArgumentError, P.NoSuchMethodError, P.UnsupportedError, P.UnimplementedError, P.StateError, P.ConcurrentModificationError, P.CyclicInitializationError]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(P.MapBase, P.MapMixin);
-    _inheritMany(P.MapBase, [H.JsLinkedHashMap, P._HashMap]);
+    _inheritMany(P.MapBase, [H.JsLinkedHashMap, P._HashMap, W._AttributeMap]);
     _inherit(H.NativeTypedArray, H.NativeTypedData);
     _inheritMany(H.NativeTypedArray, [H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin]);
     _inherit(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin);
@@ -11540,6 +11707,7 @@
     _inherit(W._SpeechRecognitionResultList, W.__SpeechRecognitionResultList_Interceptor_ListMixin_ImmutableListMixin);
     _inherit(W.__StyleSheetList_Interceptor_ListMixin_ImmutableListMixin, W.__StyleSheetList_Interceptor_ListMixin);
     _inherit(W._StyleSheetList, W.__StyleSheetList_Interceptor_ListMixin_ImmutableListMixin);
+    _inherit(W._ElementAttributeMap, W._AttributeMap);
     _inherit(W._EventStreamSubscription, P.StreamSubscription);
     _inherit(P._StructuredCloneDart2Js, P._StructuredClone);
     _inherit(P._AcceptStructuredCloneDart2Js, P._AcceptStructuredClone);
@@ -11566,7 +11734,7 @@
     _inherit(S.AppView, X.View);
     _inherit(V.ViewContainer, M.ComponentLoader);
     _inheritMany(N.EventManagerPlugin, [L.DomEventsPlugin, N.KeyEventsPlugin]);
-    _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0]);
+    _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0]);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, P.ListMixin);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H.FixedLengthListMixin);
     _mixin(H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin, P.ListMixin);
@@ -11838,6 +12006,7 @@
     $.ViewComponentConditionalFeatures0__renderType = null;
     $.ViewFeatureA0__renderType = null;
     $.ViewFeatureB0__renderType = null;
+    $.ViewUsesDomBindings0__renderType = null;
   })();
   (function lazyInitializers() {
     var _lazy = hunkHelpers.lazy;
