@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileDirectiveMetadata, CompileIdentifierMetadata;
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
@@ -73,12 +74,13 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       _deadCodeWarning("Bound text node (${ast.value})", ast, parent);
       return;
     }
-    int nodeIndex = _view.nodes.length;
-    NodeReference renderNode =
-        _view.createBoundTextNode(parent, nodeIndex, ast);
-    var compileNode = CompileNode(parent, _view, nodeIndex, renderNode);
-    _view.nodes.add(compileNode);
-    _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+    _visitText(
+        ir.Binding(
+            source: ir.BoundExpression(
+                ast.value, ast.sourceSpan, _view.component.analyzedClass),
+            target: ir.TextBinding()),
+        parent,
+        ast.ngContentIndex);
   }
 
   @override
@@ -89,25 +91,22 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       }
       return;
     }
-    int nodeIndex = _view.nodes.length;
-
-    NodeReference renderNode =
-        _view.createTextNode(parent, nodeIndex, o.literal(ast.value));
-    var compileNode = CompileNode(parent, _view, nodeIndex, renderNode);
-    _view.nodes.add(compileNode);
-    _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+    _visitText(
+        ir.Binding(
+            source: ir.StringLiteral(ast.value), target: ir.TextBinding()),
+        parent,
+        ast.ngContentIndex);
   }
 
   @override
   void visitI18nText(I18nTextAst ast, CompileElement parent) {
-    final nodeIndex = _view.nodes.length;
-    final message = _view.createI18nMessage(ast.value);
-    final renderNode = ast.value.containsHtml
-        ? _view.createHtml(parent, nodeIndex, message)
-        : _view.createTextNode(parent, nodeIndex, message);
-    final compileNode = CompileNode(parent, _view, nodeIndex, renderNode);
-    _view.nodes.add(compileNode);
-    _addRootNodeAndProject(compileNode, ast.ngContentIndex, parent);
+    _visitText(
+        ir.Binding(
+            source: ir.BoundI18nMessage(ast.value),
+            target:
+                ast.value.containsHtml ? ir.HtmlBinding() : ir.TextBinding()),
+        parent,
+        ast.ngContentIndex);
   }
 
   bool _maybeSkipNode(CompileElement parent, ngContentIndex) {
@@ -127,6 +126,28 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         "$nodeDescription is a child of a non-projecting "
         "component (${parent.component.selector}) and will not "
         "be added to the DOM."));
+  }
+
+  void _visitText(
+      ir.Binding binding, CompileElement parent, int ngContentIndex) {
+    int nodeIndex = _view.nodes.length;
+    NodeReference renderNode = _nodeReference(binding, parent, nodeIndex);
+    var compileNode = CompileNode(parent, _view, nodeIndex, renderNode);
+    _view.nodes.add(compileNode);
+    _addRootNodeAndProject(compileNode, ngContentIndex, parent);
+  }
+
+  NodeReference _nodeReference(
+      ir.Binding binding, CompileElement parent, int nodeIndex) {
+    int nodeIndex = _view.nodes.length;
+    if (binding.target is ir.TextBinding) {
+      return _view.createTextBinding(binding.source, parent, nodeIndex);
+    } else if (binding.target is ir.HtmlBinding) {
+      return _view.createHtml(binding.source, parent, nodeIndex);
+    } else {
+      throw ArgumentError.value(
+          binding.target, 'binding.target', 'Unsupported binding target.');
+    }
   }
 
   @override

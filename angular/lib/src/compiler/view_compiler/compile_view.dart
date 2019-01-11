@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:source_span/source_span.dart';
-import 'package:angular/src/compiler/analyzed_class.dart';
+import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/view_compiler/expression_converter.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
@@ -28,7 +28,6 @@ import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
     show
         AttrAst,
-        BoundTextAst,
         ElementAst,
         EmbeddedTemplateAst,
         I18nAttributeValue,
@@ -308,17 +307,13 @@ abstract class AppViewBuilder {
   /// The [html] argument may be any expression that evaluates to a string
   /// containing **trusted** HTML.
   NodeReference createHtml(
+    ir.BindingSource html,
     CompileElement parent,
     int nodeIndex,
-    o.Expression html,
   );
 
-  /// Creates an unbound literal text node.
-  NodeReference createTextNode(
-      CompileElement parent, int nodeIndex, o.Expression text);
-
-  NodeReference createBoundTextNode(
-      CompileElement parent, int nodeIndex, BoundTextAst ast);
+  NodeReference createTextBinding(
+      ir.BindingSource text, CompileElement parent, int nodeIndex);
 
   /// Create an html node and appends to parent element.
   void createElement(CompileElement parent, NodeReference elementRef,
@@ -695,91 +690,70 @@ class CompileView implements AppViewBuilder {
 
   @override
   NodeReference createHtml(
+    ir.BindingSource html,
     CompileElement parent,
     int nodeIndex,
-    o.Expression html,
   ) {
     final renderNode = NodeReference.html(storage, nodeIndex);
     _initializeAndAppendNode(parent, renderNode,
-        o.importExpr(Identifiers.createTrustedHtml).callFn([html]));
+        o.importExpr(Identifiers.createTrustedHtml).callFn([_textValue(html)]));
     return renderNode;
   }
 
   @override
-  NodeReference createTextNode(
-    CompileElement parent,
-    int nodeIndex,
-    o.Expression textValue,
-  ) {
-    final renderNode = isInlined
-        ? NodeReference.inlinedTextNode(
-            storage,
-            declarationElement.nodeIndex,
-            nodeIndex,
-          )
-        : NodeReference.textNode(
-            storage,
-            nodeIndex,
-          );
-    final createText = o.importExpr(Identifiers.createText);
+  NodeReference createTextBinding(
+      ir.BindingSource text, CompileElement parent, int nodeIndex) {
+    final renderNode = _textNode(text, nodeIndex);
     _initializeAndAppendNode(
-      parent,
-      renderNode,
-      createText.callFn([textValue]),
-    );
+        parent, renderNode, text.isImmutable ? _createText(text) : null);
     return renderNode;
   }
 
-  @override
-  NodeReference createBoundTextNode(
-    CompileElement parent,
-    int nodeIndex,
-    BoundTextAst ast,
-  ) {
-    // Optimization: Treat bound final strings as static text:
-    //
-    // {{message}}
-    //
-    // class C {
-    //   final message = 'Hello World';
-    // }
-    final clazz = component.analyzedClass;
-    final textWillNotChange = isImmutable(ast.value, clazz);
-    if (textWillNotChange) {
-      final newValue = rewriteInterpolate(ast.value, clazz);
-      final initialText = convertCdExpressionToIr(
+  NodeReference _textNode(ir.BindingSource source, int nodeIndex) {
+    if (source.isImmutable) {
+      return isInlined
+          ? NodeReference.inlinedTextNode(
+              storage,
+              declarationElement.nodeIndex,
+              nodeIndex,
+            )
+          : NodeReference.textNode(
+              storage,
+              nodeIndex,
+            );
+    } else {
+      return NodeReference.textNode(
+        storage,
+        nodeIndex,
+        initialValue: _createEmptyText,
+      );
+    }
+  }
+
+  o.Expression _createText(ir.BindingSource source) =>
+      o.importExpr(Identifiers.createText).callFn([_textValue(source)]);
+
+  o.Expression _textValue(ir.BindingSource source) {
+    if (source is ir.StringLiteral) {
+      return o.literal(source.value);
+    } else if (source is ir.BoundI18nMessage) {
+      return createI18nMessage(source.value);
+    } else if (source is ir.BoundExpression) {
+      return convertCdExpressionToIr(
         nameResolver,
         o.ReadClassMemberExpr('ctx'),
-        newValue,
-        ast.sourceSpan,
+        source.expression,
+        source.sourceSpan,
         component,
         o.STRING_TYPE,
       );
-      return this.createTextNode(
-        parent,
-        nodeIndex,
-        initialText,
-      );
+    } else {
+      throw ArgumentError.value(source, 'source', 'Unsupported source type');
     }
-
-    // Base case: Bound text where the value may change over time.
-    //
-    // {{message}}
-    //
-    // class C {
-    //   @Input()
-    //   String message;
-    // }
-    final createText = o.importExpr(Identifiers.createText);
-    final initialText = createText.callFn([o.literal('')]);
-    final renderNode = NodeReference.textNode(
-      storage,
-      nodeIndex,
-      initialValue: initialText,
-    );
-    _initializeAndAppendNode(parent, renderNode);
-    return renderNode;
   }
+
+  static final _createEmptyText =
+      o.importExpr(Identifiers.createText).callFn([o.literal('')]);
 
   /// Create an html node and appends to parent element.
   void createElement(CompileElement parent, NodeReference elementRef,
