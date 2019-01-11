@@ -27,7 +27,6 @@ const _useTemplateOutlinesInstead = 'outline-only';
 
 /// Default build flags that are merged into provided configuration.
 const _defaultFlags = CompilerFlags(
-  genDebugInfo: false,
   useLegacyStyleEncapsulation: false,
 );
 
