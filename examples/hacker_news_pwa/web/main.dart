@@ -23,7 +23,7 @@ import 'main.template.dart' as ng;
 ])
 final InjectorFactory hackerNewsApp = ng.hackerNewsApp$Injector;
 
-HackerNewsService _service;
+final _service = HackerNewsService(defaultBaseUrl);
 HackerNewsService getNewsService() => _service;
 
 void main() {
@@ -32,24 +32,29 @@ void main() {
   // This will make the perceived first load faster, and allow us to avoid
   // a flash-of-unstyled-content (Loading...) for the initial load, which hurts
   // PWA scores.
-  _service = HackerNewsService(defaultBaseUrl);
-  Future future;
-  final path = window.location.pathname;
-  if (window.location.search.isEmpty && !path.startsWith('/item')) {
-    var feed = path.split('/').last;
-    if (feed.isEmpty) {
-      feed = 'news';
-    }
-    future = _service.getFeed(feed, 1);
-  }
+  final prefetch = _prefetchFeed();
 
   installServiceWorker();
 
   // Start app after fetched.
-  future.then((_) {
+  prefetch.then((_) {
     runApp(
       app.AppComponentNgFactory,
       createInjector: hackerNewsApp,
     );
   });
+}
+
+/// Maybe prefetches data for the initial page if the source can be determined.
+Future<void> _prefetchFeed() {
+  final path = window.location.pathname;
+  final query = window.location.search;
+  // We don't bother prefetching a paginated feed or an item page, since it
+  // avoids the need to parse parameters, and it's less likely a user will land
+  // on such a view rather than a main feed.
+  if (query.isNotEmpty || path.startsWith('/item')) return Future.value();
+  // All feed route paths match the name of their corresponding feed, except for
+  // the default route ('/') which corresponds to the 'news' feed.
+  final feed = path == '/' ? 'news' : path.substring(1);
+  return _service.getFeed(feed, 1);
 }
