@@ -1,7 +1,7 @@
 @TestOn('vm')
 import 'dart:async';
 
-import 'package:angular/src/compiler/shadow_css.dart';
+import 'package:angular/src/compiler/stylesheet_compiler/shadow_css.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
