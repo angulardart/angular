@@ -14,6 +14,7 @@ import 'package:angular/src/runtime.dart';
 import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 
+import 'app_view_base.dart';
 import 'app_view_utils.dart';
 import 'component_factory.dart';
 import 'template_ref.dart';
@@ -148,7 +149,7 @@ class AppViewData<T> {
 }
 
 /// Base class for a generated template for a given [Component] type [T].
-abstract class AppView<T> {
+abstract class AppView<T> extends View {
   AppViewData<T> viewData;
 
   /// Local values scoped to this view.
@@ -242,6 +243,7 @@ abstract class AppView<T> {
   /// Returns the ComponentRef for the host element for ViewType.HOST.
   ///
   /// Overwritten by implementations.
+  @override
   ComponentRef<T> build() => null;
 
   /// Specialized init when component has a single root node.
@@ -306,12 +308,7 @@ abstract class AppView<T> {
     return result;
   }
 
-  /// Overwritten by implementations
-  dynamic injectorGetInternal(
-      dynamic token, int nodeIndex, dynamic notFoundResult) {
-    return notFoundResult;
-  }
-
+  @override
   Injector injector(int nodeIndex) => ElementInjector(this, nodeIndex);
 
   void detachAndDestroy() {
