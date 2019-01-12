@@ -65,8 +65,8 @@ abstract class RecursiveTemplateVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitNgContainer(NgContainerAst ast, _) =>
-      NgContainerAst(visitAll(ast.children), ast.sourceSpan);
+  TemplateAst visitNgContainer(NgContainerAst ast, context) =>
+      NgContainerAst(visitAll(ast.children, context), ast.sourceSpan);
 
   @override
   TemplateAst visitNgContent(NgContentAst ast, _) => ast;
