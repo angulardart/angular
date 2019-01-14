@@ -3742,6 +3742,18 @@
       this.parent = t0;
     },
     DomSanitizationServiceImpl: function DomSanitizationServiceImpl() {
+    },
+    updateClassBinding: function(element, className, isAdd) {
+      if (isAdd)
+        element.classList.add(className);
+      else
+        element.classList.remove(className);
+    },
+    updateClassBindingNonHtml: function(element, className, isAdd) {
+      if (isAdd)
+        element.classList.add(className);
+      else
+        element.classList.remove(className);
     }
   },
   K = {NgIf: function NgIf(t0, t1, t2) {
@@ -10983,11 +10995,7 @@
       currVal_3 = t1.ctx.get$isFancy();
       t2 = t1._expr_3;
       if (t2 != currVal_3) {
-        t2 = t1.rootEl;
-        if (currVal_3)
-          t2.classList.add("fancy");
-        else
-          t2.classList.remove("fancy");
+        R.updateClassBindingNonHtml(t1.rootEl, "fancy", currVal_3);
         t1._expr_3 = currVal_3;
       }
       this._compView_0.detectChanges$0();
@@ -11510,11 +11518,7 @@
       t1 = self.defeatDart2JsOptimizations("fancy");
       t2 = this._expr_1;
       if (t2 != t1) {
-        t2 = this._el_0;
-        if (t1)
-          t2.classList.add("fancy");
-        else
-          t2.classList.remove("fancy");
+        R.updateClassBinding(this._el_0, "fancy", t1);
         this._expr_1 = t1;
       }
     },

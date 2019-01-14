@@ -15,6 +15,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$HostComponentNewSyntax = const [];
 
@@ -182,7 +183,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   void detectHostChanges(bool firstCheck) {
     if (firstCheck) {
       if (!identical(import1.HostComponent.hostClassFoo, null)) {
-        updateElemClass(rootEl, 'foo', import1.HostComponent.hostClassFoo);
+        import9.updateClassBindingNonHtml(rootEl, 'foo', import1.HostComponent.hostClassFoo);
       }
       if (!identical(import1.HostComponent.hostStyleColor, null)) {
         rootEl.style.setProperty('color', import1.HostComponent.hostStyleColor?.toString());
@@ -210,7 +211,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     }
     final currVal_4 = ctx.isDisabled;
     if (import6.checkBinding(_expr_4, currVal_4)) {
-      updateElemClass(rootEl, 'is-disabled', currVal_4);
+      import9.updateClassBindingNonHtml(rootEl, 'is-disabled', currVal_4);
       _expr_4 = currVal_4;
     }
   }

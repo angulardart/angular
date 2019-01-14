@@ -23,6 +23,7 @@ import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import15;
+import 'package:angular/src/runtime/dom_helpers.dart' as import16;
 
 final List<dynamic> styles$RootComponent = const [];
 
@@ -1236,7 +1237,7 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
     }
     final currVal_1 = _ctx.isFancy;
     if (import6.checkBinding(_expr_1, currVal_1)) {
-      updateClass(_el_0, 'fancy', currVal_1);
+      import16.updateClassBinding(_el_0, 'fancy', currVal_1);
       _expr_1 = currVal_1;
     }
   }
@@ -1249,7 +1250,7 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
     }
     final currVal_3 = ctx.isFancy;
     if (import6.checkBinding(_expr_3, currVal_3)) {
-      updateElemClass(rootEl, 'fancy', currVal_3);
+      import16.updateClassBindingNonHtml(rootEl, 'fancy', currVal_3);
       _expr_3 = currVal_3;
     }
   }

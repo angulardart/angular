@@ -9,7 +9,7 @@ import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
 
 import '../compile_metadata.dart';
-import '../identifiers.dart' show Identifiers;
+import '../identifiers.dart' show DomHelpers, Identifiers;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
     show
@@ -300,9 +300,16 @@ void bindAndWriteToRenderer(
         break;
       case PropertyBindingType.cssClass:
         fieldType = o.BOOL_TYPE;
-        var renderMethod = isHtmlElement ? 'updateClass' : 'updateElemClass';
-        updateStmts.add(o.InvokeMemberMethodExpr(renderMethod,
-            [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
+        final renderMethod = isHtmlElement
+            ? DomHelpers.updateClassBinding
+            : DomHelpers.updateClassBindingNonHtml;
+        updateStmts.add(
+          o.importExpr(renderMethod).callFn([
+            renderNode,
+            o.literal(boundProp.name),
+            renderValue,
+          ]).toStmt(),
+        );
         break;
       case PropertyBindingType.style:
         // Convert to string if necessary.

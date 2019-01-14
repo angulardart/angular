@@ -1,24 +1,40 @@
 import "compile_metadata.dart"
     show CompileIdentifierMetadata, CompileTokenMetadata;
 
-final appViewModuleUrl = "asset:angular/lib/src/core/linker/app_view.dart";
-final appViewUtilsModuleUrl =
-    "asset:angular/lib/src/core/linker/app_view_utils.dart";
-final cdModuleUrl =
-    "asset:angular/lib/src/core/change_detection/change_detection.dart";
-final angularRootUrl = "package:angular/angular.dart";
-final ngIfUrl = "asset:angular/lib/src/common/directives/ng_if.dart";
-final ngForUrl = "asset:angular/lib/src/common/directives/ng_for.dart";
-final profileRuntimeModuleUrl =
-    "asset:angular/lib/src/debug/profile_runtime.dart";
-final runtimeUtilsModuleUrl = "asset:angular/lib/src/runtime.dart";
-final debugInjectorModuleUrl = 'asset:angular/lib/src/di/errors.dart';
+const _angularLib = 'asset:angular/lib';
+
+const _appViewModuleUrl = "$_angularLib/src/core/linker/app_view.dart";
+const _appViewUtilsModuleUrl =
+    "$_angularLib/src/core/linker/app_view_utils.dart";
+const _cdModuleUrl =
+    "$_angularLib/src/core/change_detection/change_detection.dart";
+const _angularRootUrl = "package:angular/angular.dart";
+const _ngIfUrl = "$_angularLib/src/common/directives/ng_if.dart";
+const _ngForUrl = "$_angularLib/src/common/directives/ng_for.dart";
+const _profileRuntimeModuleUrl = "$_angularLib/src/debug/profile_runtime.dart";
+const _runtimeUtilsModuleUrl = "$_angularLib/src/runtime.dart";
+final _debugInjectorModuleUrl = '$_angularLib/src/di/errors.dart';
+
+/// A collection of methods for manipulating the DOM from generated code.
+class DomHelpers {
+  const DomHelpers._();
+
+  static CompileIdentifierMetadata _of(String name) {
+    return CompileIdentifierMetadata(
+      name: name,
+      moduleUrl: '$_angularLib/src/runtime/dom_helpers.dart',
+    );
+  }
+
+  static final updateClassBinding = _of('updateClassBinding');
+  static final updateClassBindingNonHtml = _of('updateClassBindingNonHtml');
+}
 
 class Identifiers {
   static final appViewUtils = CompileIdentifierMetadata<dynamic>(
-      name: "appViewUtils", moduleUrl: appViewUtilsModuleUrl);
+      name: "appViewUtils", moduleUrl: _appViewUtilsModuleUrl);
   static final AppView = CompileIdentifierMetadata<dynamic>(
-      name: "AppView", moduleUrl: appViewModuleUrl);
+      name: "AppView", moduleUrl: _appViewModuleUrl);
   static final ViewContainer = CompileIdentifierMetadata<dynamic>(
       name: "ViewContainer",
       moduleUrl: "asset:angular/lib/src/core/linker/view_container.dart");
@@ -43,7 +59,7 @@ class Identifiers {
   static final ChangeDetectorRefToken =
       identifierToken(Identifiers.ChangeDetectorRef);
   static final ComponentFactory = CompileIdentifierMetadata<dynamic>(
-      name: 'ComponentFactory', moduleUrl: angularRootUrl);
+      name: 'ComponentFactory', moduleUrl: _angularRootUrl);
   static final DirectiveChangeDetector = CompileIdentifierMetadata<dynamic>(
       name: 'DirectiveChangeDetector',
       moduleUrl: 'asset:angular/lib/src/core/'
@@ -52,150 +68,150 @@ class Identifiers {
       name: "RenderComponentType",
       moduleUrl: "asset:angular/lib/src/core/render/api.dart");
   static final ComponentRef = CompileIdentifierMetadata<dynamic>(
-      name: "ComponentRef", moduleUrl: angularRootUrl);
+      name: "ComponentRef", moduleUrl: _angularRootUrl);
   static final TemplateRef = CompileIdentifierMetadata<dynamic>(
       name: "TemplateRef",
       moduleUrl: "asset:angular/lib/src/core/linker/template_ref.dart");
   static final TemplateRefToken = identifierToken(Identifiers.TemplateRef);
   static final ValueUnwrapper = CompileIdentifierMetadata<dynamic>(
-      name: "ValueUnwrapper", moduleUrl: cdModuleUrl);
+      name: "ValueUnwrapper", moduleUrl: _cdModuleUrl);
   static final Injector = CompileIdentifierMetadata<dynamic>(
       name: "Injector",
       moduleUrl: 'asset:angular/lib/src/di/injector/injector.dart');
   static final InjectorToken = identifierToken(Identifiers.Injector);
   static final ViewEncapsulation = CompileIdentifierMetadata<dynamic>(
-      name: "ViewEncapsulation", moduleUrl: angularRootUrl);
+      name: "ViewEncapsulation", moduleUrl: _angularRootUrl);
   static final ViewType = CompileIdentifierMetadata<dynamic>(
       name: "ViewType",
       moduleUrl: 'asset:angular/lib/src/core/linker/view_type.dart');
   static final ChangeDetectionStrategy = CompileIdentifierMetadata<dynamic>(
-      name: "ChangeDetectionStrategy", moduleUrl: cdModuleUrl);
+      name: "ChangeDetectionStrategy", moduleUrl: _cdModuleUrl);
   static final TemplateSecurityContext = CompileIdentifierMetadata<dynamic>(
       name: 'TemplateSecurityContext',
       moduleUrl: 'asset:angular/lib/src/core/security.dart');
   static final SimpleChange = CompileIdentifierMetadata<dynamic>(
-      name: "SimpleChange", moduleUrl: cdModuleUrl);
+      name: "SimpleChange", moduleUrl: _cdModuleUrl);
   static final ChangeDetectorState = CompileIdentifierMetadata<dynamic>(
-      name: "ChangeDetectorState", moduleUrl: cdModuleUrl);
+      name: "ChangeDetectorState", moduleUrl: _cdModuleUrl);
   static final checkBinding = CompileIdentifierMetadata<dynamic>(
-      name: "checkBinding", moduleUrl: appViewUtilsModuleUrl);
+      name: "checkBinding", moduleUrl: _appViewUtilsModuleUrl);
   static final createText = CompileIdentifierMetadata(
-      name: "createText", moduleUrl: appViewModuleUrl);
+      name: "createText", moduleUrl: _appViewModuleUrl);
   static final createAndAppend = CompileIdentifierMetadata<dynamic>(
-      name: "createAndAppend", moduleUrl: appViewModuleUrl);
+      name: "createAndAppend", moduleUrl: _appViewModuleUrl);
   static final createDivAndAppend = CompileIdentifierMetadata<dynamic>(
-      name: "createDivAndAppend", moduleUrl: appViewModuleUrl);
+      name: "createDivAndAppend", moduleUrl: _appViewModuleUrl);
   static final createSpanAndAppend = CompileIdentifierMetadata<dynamic>(
-      name: "createSpanAndAppend", moduleUrl: appViewModuleUrl);
+      name: "createSpanAndAppend", moduleUrl: _appViewModuleUrl);
   static final createViewContainerAnchor = CompileIdentifierMetadata(
-      name: 'createViewContainerAnchor', moduleUrl: appViewModuleUrl);
+      name: 'createViewContainerAnchor', moduleUrl: _appViewModuleUrl);
   static final devModeEqual = CompileIdentifierMetadata<dynamic>(
-      name: "devModeEqual", moduleUrl: cdModuleUrl);
+      name: "devModeEqual", moduleUrl: _cdModuleUrl);
   static final identical =
       CompileIdentifierMetadata<dynamic>(name: "identical");
   static final profileSetup = CompileIdentifierMetadata<dynamic>(
-      name: "profileSetup", moduleUrl: profileRuntimeModuleUrl);
+      name: "profileSetup", moduleUrl: _profileRuntimeModuleUrl);
   static final profileMarkStart = CompileIdentifierMetadata<dynamic>(
-      name: "profileMarkStart", moduleUrl: profileRuntimeModuleUrl);
+      name: "profileMarkStart", moduleUrl: _profileRuntimeModuleUrl);
   static final profileMarkEnd = CompileIdentifierMetadata<dynamic>(
-      name: "profileMarkEnd", moduleUrl: profileRuntimeModuleUrl);
+      name: "profileMarkEnd", moduleUrl: _profileRuntimeModuleUrl);
 
   static final throwOnChanges = CompileIdentifierMetadata<dynamic>(
-      name: "AppViewUtils.throwOnChanges", moduleUrl: appViewUtilsModuleUrl);
+      name: "AppViewUtils.throwOnChanges", moduleUrl: _appViewUtilsModuleUrl);
   static final isDevMode = CompileIdentifierMetadata<dynamic>(
-      name: "isDevMode", moduleUrl: runtimeUtilsModuleUrl);
+      name: "isDevMode", moduleUrl: _runtimeUtilsModuleUrl);
   static final unsafeCast = CompileIdentifierMetadata<dynamic>(
-      name: "unsafeCast", moduleUrl: runtimeUtilsModuleUrl);
+      name: "unsafeCast", moduleUrl: _runtimeUtilsModuleUrl);
   static final debugInjectorEnter = CompileIdentifierMetadata<dynamic>(
-      name: "debugInjectorEnter", moduleUrl: debugInjectorModuleUrl);
+      name: "debugInjectorEnter", moduleUrl: _debugInjectorModuleUrl);
   static final debugInjectorLeave = CompileIdentifierMetadata<dynamic>(
-      name: "debugInjectorLeave", moduleUrl: debugInjectorModuleUrl);
+      name: "debugInjectorLeave", moduleUrl: _debugInjectorModuleUrl);
   static final debugInjectorWrap = CompileIdentifierMetadata<dynamic>(
-      name: "debugInjectorWrap", moduleUrl: debugInjectorModuleUrl);
+      name: "debugInjectorWrap", moduleUrl: _debugInjectorModuleUrl);
 
   /// String interpolation where prefix,suffix are empty
   /// (most common case).
   static final interpolateString = <CompileIdentifierMetadata>[
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString0", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString0", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString1", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString1", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString2", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString2", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString3", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString3", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString4", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString4", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString5", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString5", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString6", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString6", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString7", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString7", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString8", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString8", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolateString9", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolateString9", moduleUrl: _appViewUtilsModuleUrl),
   ];
 
   static final interpolate = <CompileIdentifierMetadata>[
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate0", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate0", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate1", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate1", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate2", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate2", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate3", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate3", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate4", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate4", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate5", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate5", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate6", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate6", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate7", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate7", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate8", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate8", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "interpolate9", moduleUrl: appViewUtilsModuleUrl),
+        name: "interpolate9", moduleUrl: _appViewUtilsModuleUrl),
   ];
   static final createTrustedHtml = CompileIdentifierMetadata(
-      name: 'createTrustedHtml', moduleUrl: appViewUtilsModuleUrl);
+      name: 'createTrustedHtml', moduleUrl: _appViewUtilsModuleUrl);
   static final flattenNodes = CompileIdentifierMetadata<dynamic>(
-      name: "flattenNodes", moduleUrl: appViewUtilsModuleUrl);
+      name: "flattenNodes", moduleUrl: _appViewUtilsModuleUrl);
   static final firstOrNull = CompileIdentifierMetadata<dynamic>(
-      name: "firstOrNull", moduleUrl: appViewUtilsModuleUrl);
+      name: "firstOrNull", moduleUrl: _appViewUtilsModuleUrl);
   static final EMPTY_ARRAY = CompileIdentifierMetadata<dynamic>(
-      name: "EMPTY_ARRAY", moduleUrl: appViewUtilsModuleUrl);
+      name: "EMPTY_ARRAY", moduleUrl: _appViewUtilsModuleUrl);
   static final EMPTY_MAP = CompileIdentifierMetadata<dynamic>(
-      name: "EMPTY_MAP", moduleUrl: appViewUtilsModuleUrl);
+      name: "EMPTY_MAP", moduleUrl: _appViewUtilsModuleUrl);
   static final NG_IF_DIRECTIVE =
-      CompileIdentifierMetadata<dynamic>(name: "NgIf", moduleUrl: ngIfUrl);
+      CompileIdentifierMetadata<dynamic>(name: "NgIf", moduleUrl: _ngIfUrl);
   static final NG_FOR_DIRECTIVE =
-      CompileIdentifierMetadata<dynamic>(name: "NgFor", moduleUrl: ngForUrl);
+      CompileIdentifierMetadata<dynamic>(name: "NgFor", moduleUrl: _ngForUrl);
   static final pureProxies = [
     null,
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy1", moduleUrl: appViewUtilsModuleUrl),
+        name: "pureProxy1", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy2", moduleUrl: appViewUtilsModuleUrl),
+        name: "pureProxy2", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy3", moduleUrl: appViewUtilsModuleUrl),
+        name: "pureProxy3", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy4", moduleUrl: appViewUtilsModuleUrl),
+        name: "pureProxy4", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy5", moduleUrl: appViewUtilsModuleUrl),
+        name: "pureProxy5", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy6", moduleUrl: appViewUtilsModuleUrl),
+        name: "pureProxy6", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy7", moduleUrl: appViewUtilsModuleUrl),
+        name: "pureProxy7", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy8", moduleUrl: appViewUtilsModuleUrl),
+        name: "pureProxy8", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy9", moduleUrl: appViewUtilsModuleUrl),
+        name: "pureProxy9", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata<dynamic>(
-        name: "pureProxy10", moduleUrl: appViewUtilsModuleUrl)
+        name: "pureProxy10", moduleUrl: _appViewUtilsModuleUrl)
   ];
   // Runtime is initialized by output interpreter. Compiler executes in VM and
   // can't import dart:html to initialize here.
