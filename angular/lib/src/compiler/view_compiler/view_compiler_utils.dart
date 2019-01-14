@@ -491,11 +491,21 @@ Map<String, ast.AST> mergeHtmlAndDirectiveAttrs(
     bool isComponent = directiveMeta.isComponent;
     for (String name in directiveMeta.hostAttributes.keys) {
       var value = directiveMeta.hostAttributes[name];
-      if (isComponent &&
-          !((name == classAttrName || name == styleAttrName) &&
-              mergeCount[name] > 1)) {
-        continue;
-      }
+      var canMerge = name == classAttrName || name == styleAttrName;
+      var hasMultiple = mergeCount[name] > 1;
+      var shouldMerge = canMerge && hasMultiple;
+      // The code for component host bindings is generated at another site, thus
+      // we don't need to merge it here if there are no other bindings to the
+      // same attribute.
+      //
+      // In the event that such a host binding collides with another directive
+      // host binding or attribute binding, they're merged here and the
+      // resulting code overwrites the component host binding (at runtime).
+      //
+      // If the attribute can't be merged and there are multiple, we skip the
+      // component host binding so that an HTML attribute or directive host
+      // binding that came earlier takes priority.
+      if (isComponent && !shouldMerge) continue;
       var prevValue = result[name];
       result[name] = prevValue != null
           ? _mergeAttributeValue(name, prevValue, value)
