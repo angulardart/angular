@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/src/generated/resolver.dart';
 import 'package:source_gen/src/type_checker.dart';
 
 import 'expression_parser/ast.dart' as ast;
@@ -10,6 +11,7 @@ final _stringTypeChecker = TypeChecker.fromRuntime(String);
 /// needed for the view compiler to find types for expressions.
 class AnalyzedClass {
   final ClassElement _classElement;
+  final Map<String, DartType> locals;
 
   /// Whether this class has mock-like behavior.
   ///
@@ -18,17 +20,28 @@ class AnalyzedClass {
   /// [noSuchMethod].
   final bool isMockLike;
 
+  // The type provider associated with this class.
+  TypeProvider get _typeProvider => _classElement.context.typeProvider;
+
   AnalyzedClass(
     this._classElement, {
     this.isMockLike = false,
+    this.locals = const {},
   });
+
+  AnalyzedClass.from(AnalyzedClass other,
+      {Map<String, DartType> additionalLocals = const {}})
+      : this._classElement = other._classElement,
+        this.isMockLike = other.isMockLike,
+        this.locals = {}..addAll(other.locals)..addAll(additionalLocals);
 }
 
 /// Returns the [expression] type evaluated within context of [analyzedClass].
 ///
 /// Returns dynamic if [expression] can't be resolved.
 DartType getExpressionType(ast.AST expression, AnalyzedClass analyzedClass) {
-  final typeResolver = _TypeResolver(analyzedClass._classElement);
+  final typeResolver =
+      _TypeResolver(analyzedClass._classElement, analyzedClass.locals);
   return expression.visit(typeResolver);
 }
 
@@ -39,10 +52,18 @@ DartType getIterableElementType(DartType dartType) => dartType is InterfaceType
     ? dartType.lookUpInheritedGetter('single')?.returnType
     : null;
 
+/// Returns an int type using the [analyzedClass]'s context.
+DartType intType(AnalyzedClass analyzedClass) =>
+    analyzedClass._typeProvider.intType;
+
+/// Returns an bool type using the [analyzedClass]'s context.
+DartType boolType(AnalyzedClass analyzedClass) =>
+    analyzedClass._typeProvider.boolType;
+
 /// Returns whether the type [expression] is [String].
 bool isString(ast.AST expression, AnalyzedClass analyzedClass) {
   final type = getExpressionType(expression, analyzedClass);
-  final string = analyzedClass._classElement.context.typeProvider.stringType;
+  final string = analyzedClass._typeProvider.stringType;
   return type.isEquivalentTo(string);
 }
 
@@ -225,8 +246,9 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   final DartType _dynamicType;
   final DartType _stringType;
   final InterfaceType _implicitReceiverType;
+  final Map<String, DartType> _variables;
 
-  _TypeResolver(ClassElement classElement)
+  _TypeResolver(ClassElement classElement, this._variables)
       : _dynamicType = classElement.context.typeProvider.dynamicType,
         _stringType = classElement.context.typeProvider.stringType,
         _implicitReceiverType = classElement.type;
@@ -289,6 +311,14 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   @override
   DartType visitPropertyRead(ast.PropertyRead ast, _) {
     DartType receiverType = ast.receiver.visit(this, _);
+    if (identical(receiverType, _implicitReceiverType)) {
+      // This may be a local variable.
+      for (var variableName in _variables.keys) {
+        if (variableName == ast.name) {
+          return _variables[variableName] ?? _dynamicType;
+        }
+      }
+    }
     return _lookupGetterReturnType(receiverType, ast.name);
   }
 

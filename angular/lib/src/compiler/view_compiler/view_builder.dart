@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
+import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileDirectiveMetadata, CompileIdentifierMetadata;
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
@@ -336,8 +337,16 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         isInlined: isPureHtml);
     _view.nodes.add(compileElement);
     _nestedViewCount++;
-    var embeddedView = CompileView(
+
+    CompileDirectiveMetadata metadata = CompileDirectiveMetadata.from(
         _view.component,
+        analyzedClass: AnalyzedClass.from(_view.component.analyzedClass,
+            additionalLocals: Map.fromIterable(ast.variables,
+                key: (v) => (v as VariableAst).name,
+                value: (v) => (v as VariableAst).dartType)));
+
+    var embeddedView = CompileView(
+        metadata,
         _view.genConfig,
         _view.directiveTypes,
         _view.pipeMetas,

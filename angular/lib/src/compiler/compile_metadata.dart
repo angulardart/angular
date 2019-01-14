@@ -480,6 +480,29 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.viewQueries = const [],
   });
 
+  CompileDirectiveMetadata.from(CompileDirectiveMetadata other,
+      {AnalyzedClass analyzedClass})
+      : this.type = other.type,
+        this.originType = other.originType,
+        this.metadataType = other.metadataType,
+        this.selector = other.selector,
+        this.exportAs = other.exportAs,
+        this.changeDetection = other.changeDetection,
+        this.inputs = other.inputs,
+        this.inputTypes = other.inputTypes,
+        this.outputs = other.outputs,
+        this.hostBindings = other.hostBindings,
+        this.hostListeners = other.hostListeners,
+        this.analyzedClass = analyzedClass ?? other.analyzedClass,
+        this.template = other.template,
+        this.visibility = other.visibility,
+        this.lifecycleHooks = other.lifecycleHooks,
+        this.providers = other.providers,
+        this.viewProviders = other.viewProviders,
+        this.exports = other.exports,
+        this.queries = other.queries,
+        this.viewQueries = other.viewQueries;
+
   @override
   CompileIdentifierMetadata get identifier => type;
 
