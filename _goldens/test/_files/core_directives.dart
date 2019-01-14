@@ -4,8 +4,8 @@ import 'package:angular/angular.dart';
   selector: 'test-foo',
   template: '''
     <div *ngIf="foo">Foo</div>
-    <div *ngFor="let bar of bars">
-      <span (click)="onClick(bar)">{{bar}}</span>
+    <div *ngFor="let bar of bars; let index=index; let odd=odd">
+      <span (click)="onClick(bar)">{{bar}}. #{{index}} odd?{{odd}}</span>
     </div>
     ''',
   directives: [NgIf, NgFor],

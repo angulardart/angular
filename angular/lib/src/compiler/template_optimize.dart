@@ -1,8 +1,6 @@
 import 'analyzed_class.dart';
 import 'compile_metadata.dart';
 import 'identifiers.dart';
-import 'output/convert.dart';
-import 'output/output_ast.dart';
 import 'template_ast.dart';
 import 'template_parser/recursive_template_visitor.dart';
 
@@ -59,20 +57,19 @@ void _typeNgForLocals(
     switch (variable.value) {
       case r'$implicit':
         // This local is the generic type of the `Iterable` bound to [ngForOf].
-        final elementType = getIterableElementType(ngForOfType);
-        variable.type = fromDartType(elementType, resolveBounds: false);
+        variable.dartType = getIterableElementType(ngForOfType);
         break;
       case 'index':
       case 'count':
         // These locals are always integers.
-        variable.type = INT_TYPE;
+        variable.dartType = intType(component.analyzedClass);
         break;
       case 'first':
       case 'last':
       case 'even':
       case 'odd':
         // These locals are always booleans.
-        variable.type = BOOL_TYPE;
+        variable.dartType = boolType(component.analyzedClass);
         break;
     }
   }
