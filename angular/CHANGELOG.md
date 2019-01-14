@@ -13,6 +13,8 @@
 
 *   Added `Injector.provideTypeOptional` and `Injector.provideTokenOptional`.
 
+*   The compiler now optimizes string bindings inside ngFor loops.
+
 ### Bug fixes
 
 *   The template compiler now outputs the full path to a template file when it

@@ -1,4 +1,6 @@
+import 'package:analyzer/dart/element/type.dart';
 import 'package:source_span/source_span.dart';
+import 'package:angular/src/compiler/output/convert.dart';
 import 'package:angular/src/compiler/view_compiler/parse_utils.dart'
     show handlerTypeFromExpression, HandlerType;
 
@@ -153,9 +155,11 @@ class VariableAst implements TemplateAst {
   /// Optional type for optimizing generated code if [value] references a local.
   ///
   /// Locals are stored in a dynamic map, thus retain no type annotation. If
-  /// [type] is non-null, it's used to generate a type annotation for the local
-  /// variable declaration.
-  OutputType type;
+  /// [dartType] is non-null, it's used to generate a type annotation for the
+  /// local variable declaration.
+  DartType dartType;
+
+  OutputType get type => fromDartType(dartType, resolveBounds: false);
 
   VariableAst(this.name, String value, this.sourceSpan)
       : value = value != null && value.isNotEmpty ? value : implicitValue;

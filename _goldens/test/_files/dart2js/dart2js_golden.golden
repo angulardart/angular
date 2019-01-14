@@ -3874,18 +3874,11 @@
   },
   X = {View: function View() {
     }},
-  Q = {
-    interpolate0: function(p) {
-      if (typeof p === "string")
-        return p;
-      return p == null ? "" : p;
-    },
-    AppViewUtils: function AppViewUtils(t0, t1, t2) {
+  Q = {AppViewUtils: function AppViewUtils(t0, t1, t2) {
       this._appId = t0;
       this.eventManager = t1;
       this.sanitizer = t2;
-    }
-  },
+    }},
   D = {ComponentRef: function ComponentRef(t0, t1, t2, t3) {
       var _ = this;
       _._parentView = t0;
@@ -11353,8 +11346,9 @@
       this.init0$1(_el_0);
     },
     detectChangesInternal$0: function() {
-      var currVal_0, t1;
-      currVal_0 = Q.interpolate0(this.locals.$index(0, "$implicit"));
+      var local_item, currVal_0, t1;
+      local_item = this.locals.$index(0, "$implicit");
+      currVal_0 = local_item == null ? "" : local_item;
       t1 = this._expr_0;
       if (t1 !== currVal_0) {
         this._text_1.textContent = currVal_0;
