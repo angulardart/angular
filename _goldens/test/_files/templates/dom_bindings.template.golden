@@ -15,6 +15,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$HasHostAttributes = const [];
 
@@ -175,7 +176,7 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
   void detectHostChanges(bool firstCheck) {
     final currVal_0 = ctx.fancy;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      updateElemClass(rootEl, 'fancy', currVal_0);
+      import9.updateClassBindingNonHtml(rootEl, 'fancy', currVal_0);
       _expr_0 = currVal_0;
     }
   }
@@ -248,7 +249,7 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
     final _ctx = ctx;
     final currVal_0 = _ctx.fancy;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      updateClass(_el_0, 'fancy', currVal_0);
+      import9.updateClassBinding(_el_0, 'fancy', currVal_0);
       _expr_0 = currVal_0;
     }
   }
