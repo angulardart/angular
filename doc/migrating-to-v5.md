@@ -35,9 +35,9 @@ Add or update the build_runner related dependencies to your `pubspec.yaml`.
 
 ```yaml
 dev_dependencies:
-  build_runner: ^0.9.0
+  build_runner: ^1.0.0
   build_test: ^0.10.2
-  build_web_compilers: ^0.4.0
+  build_web_compilers: ^1.0.0
 ```
 
 > Notice: It's no longer required to use a separate tool/build.dart in case
