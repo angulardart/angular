@@ -135,7 +135,11 @@ class KeyEventsPlugin extends EventManagerPlugin {
   static Function _eventCallback(
       dynamic element, String fullKey, Function handler) {
     return (event) {
-      if (_getEventFullKey(event as KeyboardEvent) == fullKey) {
+      // Check that the event is a real `KeyboardEvent` and not a synthetic
+      // event that happens to be share the same `type` property. This ensures
+      // that the event has a `keyCode` property we can use to construct the
+      // full key name.
+      if (event is KeyboardEvent && _getEventFullKey(event) == fullKey) {
         handler(event);
       }
     };
