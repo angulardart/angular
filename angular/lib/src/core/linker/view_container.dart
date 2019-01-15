@@ -2,7 +2,6 @@ import 'dart:html';
 
 import 'package:angular/src/di/injector/injector.dart' show Injector;
 import 'package:angular/src/runtime.dart';
-import 'package:meta/dart2js.dart' as dart2js;
 
 import 'app_view.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
@@ -23,13 +22,16 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   final AppView parentView;
   final Node nativeElement;
   List<AppView> nestedViews;
-  ElementRef _elementRef;
-  Injector _parentInjector;
 
   ViewContainer(
-      this.index, this.parentIndex, this.parentView, this.nativeElement);
+    this.index,
+    this.parentIndex,
+    this.parentView,
+    this.nativeElement,
+  );
 
-  ElementRef get elementRef => _elementRef ??= ElementRef(nativeElement);
+  @Deprecated('Use .nativeElement instead')
+  ElementRef get elementRef => ElementRef(nativeElement);
 
   /// Returns the [ViewRef] for the View located in this container at the
   /// specified index.
@@ -41,7 +43,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// The number of Views currently attached to this container.
   @override
   int get length {
-    var nested = nestedViews;
+    final nested = nestedViews;
     return nested == null ? 0 : nested.length;
   }
 
@@ -51,25 +53,28 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   ElementRef get element => elementRef;
 
   @override
-  Injector get parentInjector =>
-      _parentInjector ??= parentView.injector(parentIndex);
+  Injector get parentInjector => parentView.injector(parentIndex);
 
   @override
   Injector get injector => parentView.injector(index);
 
   void detectChangesInNestedViews() {
-    var _nestedViews = nestedViews;
-    if (_nestedViews == null) return;
-    for (var i = 0, len = _nestedViews.length; i < len; i++) {
-      _nestedViews[i].detectChanges();
+    final nested = nestedViews;
+    if (nested == null) {
+      return;
+    }
+    for (var i = 0, len = nested.length; i < len; i++) {
+      nested[i].detectChanges();
     }
   }
 
   void destroyNestedViews() {
-    var _nestedViews = nestedViews;
-    if (_nestedViews == null) return;
-    for (var i = 0, len = _nestedViews.length; i < len; i++) {
-      _nestedViews[i].destroy();
+    final nested = nestedViews;
+    if (nested == null) {
+      return;
+    }
+    for (var i = 0, len = nested.length; i < len; i++) {
+      nested[i].destroy();
     }
   }
 
@@ -82,7 +87,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// Returns the [ViewRef] for the newly created View.
   @override
   EmbeddedViewRef insertEmbeddedView(TemplateRef templateRef, int index) {
-    EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
+    final viewRef = templateRef.createEmbeddedView();
     insert(viewRef, index);
     return viewRef;
   }
@@ -91,7 +96,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// and appends it into this container.
   @override
   EmbeddedViewRef createEmbeddedView(TemplateRef templateRef) {
-    EmbeddedViewRef viewRef = templateRef.createEmbeddedView();
+    final viewRef = templateRef.createEmbeddedView();
     attachView((viewRef as ViewRefImpl).appView, length);
     return viewRef;
   }
@@ -102,25 +107,31 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     Injector injector,
     List<List<dynamic>> projectableNodes,
   ]) {
-    var contextInjector = injector ?? parentInjector;
-    var componentRef =
-        componentFactory.create(contextInjector, projectableNodes);
+    final contextInjector = injector ?? parentInjector;
+    final componentRef = componentFactory.create(
+      contextInjector,
+      projectableNodes,
+    );
     insert(componentRef.hostView, index);
     return componentRef;
   }
 
   @override
   ViewRef insert(ViewRef viewRef, [int index = -1]) {
-    if (index == -1) index = this.length;
-    var viewRef_ = (viewRef as ViewRefImpl);
+    if (index == -1) {
+      index = length;
+    }
+    final viewRef_ = unsafeCast<ViewRefImpl>(viewRef);
     attachView(viewRef_.appView, index);
     return viewRef;
   }
 
   @override
   ViewRef move(ViewRef viewRef, int currentIndex) {
-    if (currentIndex == -1) return null;
-    var viewRef_ = viewRef as ViewRefImpl;
+    if (currentIndex == -1) {
+      return null;
+    }
+    final viewRef_ = unsafeCast<ViewRefImpl>(viewRef);
     moveView(viewRef_.appView, currentIndex);
     return viewRef_;
   }
@@ -128,8 +139,10 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// Returns the index of the View, specified via [ViewRef], within the current
   /// container or `-1` if this container doesn't contain the View.
   @override
-  int indexOf(ViewRef viewRef) =>
-      nestedViews.indexOf((viewRef as ViewRefImpl).appView);
+  int indexOf(ViewRef viewRef) {
+    final viewRef_ = unsafeCast<ViewRefImpl>(viewRef);
+    return nestedViews.indexOf(viewRef_.appView);
+  }
 
   /// Destroys a View attached to this container at the specified `index`.
   ///
@@ -138,9 +151,10 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// TODO(i): rename to destroy
   @override
   void remove([int index = -1]) {
-    if (index == -1) index = this.length - 1;
-    var view = detachView(index);
-    view.destroy();
+    if (index == -1) {
+      index = length - 1;
+    }
+    detachView(index).destroy();
   }
 
   /// Use along with [#insert] to move a View within the current container.
@@ -149,14 +163,16 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// TODO(i): refactor insert+remove into move
   @override
   ViewRef detach([int index = -1]) {
-    if (index == -1) index = this.length - 1;
+    if (index == -1) {
+      index = length - 1;
+    }
     return detachView(index).viewData.ref;
   }
 
   /// Destroys all Views in this container.
   @override
   void clear() {
-    for (var i = this.length - 1; i >= 0; i--) {
+    for (var i = length - 1; i >= 0; i--) {
       remove(i);
     }
   }
@@ -173,21 +189,19 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     return result;
   }
 
+  Node _findRenderNode(List<AppView> views, int index) {
+    return index > 0 ? views[index - 1].lastRootNode : nativeElement;
+  }
+
   void moveView(AppView view, int currentIndex) {
     _assertCanMove(view);
-    List<AppView> views = nestedViews;
+    final views = nestedViews;
+    final previousIndex = views.indexOf(view);
 
-    int previousIndex = views.indexOf(view);
     views.removeAt(previousIndex);
     views.insert(currentIndex, view);
-    Node refRenderNode;
 
-    if (currentIndex > 0) {
-      AppView prevView = views[currentIndex - 1];
-      refRenderNode = prevView.lastRootNode;
-    } else {
-      refRenderNode = nativeElement;
-    }
+    final refRenderNode = _findRenderNode(views, currentIndex);
 
     if (refRenderNode != null) {
       view.attachViewAfter(refRenderNode, view.flatRootNodes);
@@ -198,24 +212,21 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
 
   void attachView(AppView view, int viewIndex) {
     _assertCanMove(view);
-    var _nestedViews = nestedViews ?? <AppView>[];
-    _nestedViews.insert(viewIndex, view);
-    Node refRenderNode;
-    if (viewIndex > 0) {
-      var prevView = _nestedViews[viewIndex - 1];
-      refRenderNode = prevView.lastRootNode;
-    } else {
-      refRenderNode = nativeElement;
-    }
-    nestedViews = _nestedViews;
+    final views = nestedViews ?? <AppView>[];
+    views.insert(viewIndex, view);
+
+    final refRenderNode = _findRenderNode(views, viewIndex);
+    nestedViews = views;
+
     if (refRenderNode != null) {
       view.attachViewAfter(refRenderNode, view.flatRootNodes);
     }
+
     view.addToContentChildren(this);
   }
 
   AppView detachView(int viewIndex) {
-    var view = nestedViews.removeAt(viewIndex);
+    final view = nestedViews.removeAt(viewIndex);
     _assertCanMove(view);
     view.detachViewNodes(view.flatRootNodes);
     if (view.inlinedNodes != null) {
@@ -233,9 +244,11 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
       loadNextToLocation(component, this, injector: injector);
 }
 
-@dart2js.noInline
 void _assertCanMove(AppView view) {
-  if (view.viewData.type == ViewType.component) {
-    throw ArgumentError("Component views can't be moved!");
-  }
+  assert(() {
+    if (view.viewData.type == ViewType.component) {
+      throw ArgumentError("Component views can't be moved!");
+    }
+    return true;
+  }());
 }

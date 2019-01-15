@@ -3914,20 +3914,14 @@
     }, DomEventsPlugin: function DomEventsPlugin() {
       this.manager = null;
     }},
-  V = {
-    _assertCanMove: function(view) {
-      if (view.viewData.type === C.ViewType_1)
-        throw H.wrapException(P.ArgumentError$("Component views can't be moved!"));
-    },
-    ViewContainer: function ViewContainer(t0, t1, t2, t3) {
+  V = {ViewContainer: function ViewContainer(t0, t1, t2, t3) {
       var _ = this;
       _.index = t0;
       _.parentIndex = t1;
       _.parentView = t2;
       _.nativeElement = t3;
-      _._parentInjector = _._elementRef = _.nestedViews = null;
-    }
-  },
+      _.nestedViews = null;
+    }},
   A = {ViewEncapsulation: function ViewEncapsulation(t0, t1) {
       this.index = t0;
       this._view$_name = t1;
@@ -10087,10 +10081,6 @@
     },
     destroyInternal$0: function() {
     },
-    get$lastRootNode: function() {
-      var t1 = this.viewData.rootNodesOrViewContainers;
-      return S._findLastRenderNode(t1.length !== 0 ? (t1 && C.JSArray_methods).get$last(t1) : null);
-    },
     detectChanges$0: function() {
       if (this.viewData._skipChangeDetection)
         return;
@@ -10159,31 +10149,30 @@
       return nested == null ? 0 : nested.length;
     },
     detectChangesInNestedViews$0: function() {
-      var _nestedViews, len, i;
-      _nestedViews = this.nestedViews;
-      if (_nestedViews == null)
+      var nested, len, i;
+      nested = this.nestedViews;
+      if (nested == null)
         return;
-      for (len = _nestedViews.length, i = 0; i < len; ++i)
-        _nestedViews[i].detectChanges$0();
+      for (len = nested.length, i = 0; i < len; ++i)
+        nested[i].detectChanges$0();
     },
     destroyNestedViews$0: function() {
-      var _nestedViews, len, i;
-      _nestedViews = this.nestedViews;
-      if (_nestedViews == null)
+      var nested, len, i;
+      nested = this.nestedViews;
+      if (nested == null)
         return;
-      for (len = _nestedViews.length, i = 0; i < len; ++i)
-        _nestedViews[i].destroy$0();
+      for (len = nested.length, i = 0; i < len; ++i)
+        nested[i].destroy$0();
     },
     move$2: function(viewRef, currentIndex) {
       var t1, views, refRenderNode;
       if (currentIndex === -1)
         return;
       t1 = viewRef.appView;
-      V._assertCanMove(t1);
       views = this.nestedViews;
       C.JSArray_methods.removeAt$1(views, (views && C.JSArray_methods).indexOf$1(views, t1));
       C.JSArray_methods.insert$2(views, currentIndex, t1);
-      refRenderNode = currentIndex > 0 ? views[currentIndex - 1].get$lastRootNode() : this.nativeElement;
+      refRenderNode = this._findRenderNode$2(views, currentIndex);
       if (refRenderNode != null) {
         S._moveNodesAfterSibling(refRenderNode, S._flattenNestedViewRenderNodes(t1.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
         $.domRootRendererIsDirty = true;
@@ -10204,15 +10193,23 @@
         this.detachView$1(index).destroy$0();
       }
     },
+    _findRenderNode$2: function(views, index) {
+      var t1;
+      if (index > 0) {
+        t1 = views[index - 1].viewData.rootNodesOrViewContainers;
+        t1 = S._findLastRenderNode(t1.length !== 0 ? (t1 && C.JSArray_methods).get$last(t1) : null);
+      } else
+        t1 = this.nativeElement;
+      return t1;
+    },
     attachView$2: function(view, viewIndex) {
-      var _nestedViews, refRenderNode;
-      V._assertCanMove(view);
-      _nestedViews = this.nestedViews;
-      if (_nestedViews == null)
-        _nestedViews = H.setRuntimeTypeInfo([], [[S.AppView,,]]);
-      C.JSArray_methods.insert$2(_nestedViews, viewIndex, view);
-      refRenderNode = viewIndex > 0 ? _nestedViews[viewIndex - 1].get$lastRootNode() : this.nativeElement;
-      this.nestedViews = _nestedViews;
+      var views, refRenderNode;
+      views = this.nestedViews;
+      if (views == null)
+        views = H.setRuntimeTypeInfo([], [[S.AppView,,]]);
+      C.JSArray_methods.insert$2(views, viewIndex, view);
+      refRenderNode = this._findRenderNode$2(views, viewIndex);
+      this.nestedViews = views;
       if (refRenderNode != null) {
         S._moveNodesAfterSibling(refRenderNode, S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
         $.domRootRendererIsDirty = true;
@@ -10223,7 +10220,6 @@
       var t1, view;
       t1 = this.nestedViews;
       view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex);
-      V._assertCanMove(view);
       S._detachAll(S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
       t1 = view.viewData.inlinedNodes;
       if (t1 != null)
