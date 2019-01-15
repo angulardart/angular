@@ -430,11 +430,16 @@ o.Statement createSetAttributeStatement(String astNodeName,
         break;
     }
   }
-  var params =
-      createSetAttributeParams(renderNode, attrNs, attrName, attrValue);
-  return o.InvokeMemberMethodExpr(
-          attrNs == null ? "createAttr" : "setAttrNS", params)
-      .toStmt();
+  final params = createSetAttributeParams(
+    renderNode,
+    attrNs,
+    attrName,
+    attrValue,
+  );
+  final function = o.importExpr(
+    attrNs == null ? DomHelpers.setAttribute : DomHelpers.updateAttributeNS,
+  );
+  return function.callFn(params).toStmt();
 }
 
 Map<String, ast.AST> _toSortedMap(Map<String, ast.AST> data) {

@@ -28,6 +28,10 @@ class DomHelpers {
 
   static final updateClassBinding = _of('updateClassBinding');
   static final updateClassBindingNonHtml = _of('updateClassBindingNonHtml');
+
+  static final updateAttribute = _of('updateAttribute');
+  static final updateAttributeNS = _of('updateAttributeNS');
+  static final setAttribute = _of('setAttribute');
 }
 
 class Identifiers {

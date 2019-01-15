@@ -292,10 +292,12 @@ void bindAndWriteToRenderer(
             attrName,
             renderValue,
           );
-          updateStmts.add(o.InvokeMemberMethodExpr(
-            attrNs == null ? 'setAttr' : 'setAttrNS',
-            params,
-          ).toStmt());
+
+          final updateAttribute = o.importExpr(attrNs == null
+              ? DomHelpers.updateAttribute
+              : DomHelpers.updateAttributeNS);
+
+          updateStmts.add(updateAttribute.callFn(params).toStmt());
         }
         break;
       case PropertyBindingType.cssClass:

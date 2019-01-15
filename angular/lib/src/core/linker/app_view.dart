@@ -11,6 +11,7 @@ import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
 import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/runtime.dart';
+import 'package:angular/src/runtime/dom_helpers.dart';
 import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 
@@ -33,13 +34,6 @@ final _viewContainerAnchor = Comment();
 /// the `<template>` itself isn't rendered.
 Comment createViewContainerAnchor() =>
     unsafeCast(_viewContainerAnchor.clone(false));
-
-/// Set to `true` when Angular modified the DOM.
-///
-/// May be used in order to optimize polling techniques that attempt to only
-/// process events after a significant change detection cycle (i.e. one that
-/// modified the DOM versus a no-op).
-bool domRootRendererIsDirty = false;
 
 const _UndefinedInjectorResult = Object();
 
@@ -454,31 +448,6 @@ abstract class AppView<T> extends View<T> {
       hostElement.classes.add(componentType.hostAttr);
     }
     return hostElement;
-  }
-
-  void setAttr(
-      Element renderElement, String attributeName, String attributeValue) {
-    if (attributeValue != null) {
-      renderElement.setAttribute(attributeName, attributeValue);
-    } else {
-      renderElement.attributes.remove(attributeName);
-    }
-    domRootRendererIsDirty = true;
-  }
-
-  void createAttr(
-      Element renderElement, String attributeName, String attributeValue) {
-    renderElement.setAttribute(attributeName, attributeValue);
-  }
-
-  void setAttrNS(Element renderElement, String attrNS, String attributeName,
-      String attributeValue) {
-    if (attributeValue != null) {
-      renderElement.setAttributeNS(attrNS, attributeName, attributeValue);
-    } else {
-      renderElement.getNamespacedAttributes(attrNS).remove(attributeName);
-    }
-    domRootRendererIsDirty = true;
   }
 
   /// Adds content shim class to HtmlElement.

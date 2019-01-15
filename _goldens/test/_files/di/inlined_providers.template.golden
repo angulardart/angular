@@ -15,7 +15,8 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/di/errors.dart' as import10;
 
 final List<dynamic> styles$ParentComponent = const [];
 
@@ -168,14 +169,14 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     _compView_5 = ViewChildComponentProvidingA$B$C0(this, 5);
     final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
-    createAttr(_el_5, 'directive-providing-a2-d2', '');
+    import9.setAttribute(_el_5, 'directive-providing-a2-d2', '');
     _ChildComponentProvidingA$B$C_5_5 = import1.ChildComponentProvidingA$B$C();
     _DirectiveProviding$A2$D2_5_6 = import1.DirectiveProviding$A2$D2();
     _compView_5.create(_ChildComponentProvidingA$B$C_5_5, []);
     _compView_6 = ViewChildComponentWithNgContentProviding$D0(this, 6);
     final _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
-    createAttr(_el_6, 'directive-providing-a2-d2', '');
+    import9.setAttribute(_el_6, 'directive-providing-a2-d2', '');
     _ChildComponentWithNgContentProviding$D_6_5 = import1.ChildComponentWithNgContentProviding$D();
     _DirectiveProviding$A2$D2_6_6 = import1.DirectiveProviding$A2$D2();
     _D_6_7 = import1.D2();
@@ -507,7 +508,7 @@ class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponent
     _compView_0 = ViewChildComponentInjecting$D0(this, 0);
     rootEl = _compView_0.rootEl;
     _ChildComponentInjecting$D_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
+        ? import10.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
             return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, viewData.parentIndex));
           })
         : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, viewData.parentIndex)));
