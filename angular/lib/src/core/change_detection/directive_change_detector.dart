@@ -17,7 +17,7 @@ class DirectiveChangeDetector {
 
   void initCd() {
     assert(directive is ComponentState);
-    ComponentState s = directive;
+    var s = directive as ComponentState;
     s.stateChangeCallback = () {
       if (!_hasHostChanges) {
         _hasHostChanges = true;

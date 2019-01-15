@@ -107,7 +107,7 @@ class DefaultIterableDiffer {
       int adjPreviousIndex =
           _getPreviousIndex(unsafeCast(record), addRemoveOffset, moveOffsets);
 
-      int currentIndex = record.currentIndex;
+      var currentIndex = record.currentIndex as int;
 
       // consume the item, adjust the addRemoveOffset and update
       // moveDistance if necessary
@@ -152,7 +152,7 @@ class DefaultIterableDiffer {
               }
             }
 
-            int previousIndex = record.previousIndex;
+            var previousIndex = record.previousIndex as int;
             sizeDeficit = previousIndex - moveOffsets.length + 1;
             for (int j = 0; j < sizeDeficit; j++) {
               moveOffsets.add(null);

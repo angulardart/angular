@@ -144,7 +144,7 @@ ast.AST rewriteInterpolate(ast.AST original, AnalyzedClass analyzedClass) {
     unwrappedExpression = original.ast;
   }
   if (unwrappedExpression is! ast.Interpolation) return original;
-  ast.Interpolation interpolation = unwrappedExpression;
+  var interpolation = unwrappedExpression as ast.Interpolation;
   if (interpolation.expressions.length == 1 &&
       interpolation.strings[0].isEmpty &&
       interpolation.strings[1].isEmpty) {

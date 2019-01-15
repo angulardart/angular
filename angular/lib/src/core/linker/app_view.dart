@@ -518,7 +518,7 @@ abstract class AppView<T> extends View<T> {
     // If the projectable is ViewContainer we fall back to building up a list.
     var projectableNodes = viewData.projectableNodes;
     if (projectableNodes == null || index >= projectableNodes.length) return;
-    List projectables = projectableNodes[index];
+    var projectables = projectableNodes[index] as List;
     if (projectables == null) return;
     int projectableCount = projectables.length;
     for (var i = 0; i < projectableCount; i++) {
@@ -540,12 +540,12 @@ abstract class AppView<T> extends View<T> {
               _appendNestedViewRenderNodes(parentElement, node);
             }
           } else {
-            Node nativeNode = node;
+            var nativeNode = node as Node;
             parentElement.append(nativeNode);
           }
         }
       } else {
-        Node child = projectable;
+        var child = projectable as Node;
         parentElement.append(child);
       }
     }
@@ -650,7 +650,7 @@ void _appendNestedViewRenderNodes(
       if (projectable is ViewContainer) {
         _appendNestedViewRenderNodes(targetElement, projectable);
       } else {
-        Node child = projectable;
+        var child = projectable as Node;
         targetElement.append(child);
       }
     }

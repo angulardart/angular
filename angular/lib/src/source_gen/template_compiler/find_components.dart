@@ -676,9 +676,9 @@ class _ComponentVisitor
         analyzedClass: AnalyzedClass(element)));
 
     var arguments = annotation.annotationAst.arguments.arguments;
-    NamedExpression exportsArg = arguments.firstWhere(
+    var exportsArg = arguments.firstWhere(
         (arg) => arg is NamedExpression && arg.name.label.name == 'exports',
-        orElse: () => null);
+        orElse: () => null) as NamedExpression;
     if (exportsArg == null || exportsArg.expression is! ListLiteral) {
       return exports;
     }
@@ -690,7 +690,8 @@ class _ComponentVisitor
     }
 
     final unresolvedExports = <Identifier>[];
-    for (Identifier id in staticNames) {
+    for (var staticName in staticNames) {
+      var id = staticName as Identifier;
       String name;
       String prefix;
       AnalyzedClass analyzedClass;

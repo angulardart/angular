@@ -20,7 +20,8 @@ class BrowserGetTestability implements GetTestability {
       js_util.setProperty(_self, 'ngTestabilityRegistries', jsRegistry = []);
       js_util.setProperty(_self, 'getAngularTestability',
           allowInterop((Element elem, [bool findInAncestors = true]) {
-        List registry = js_util.getProperty(_self, 'ngTestabilityRegistries');
+        var registry =
+            js_util.getProperty(_self, 'ngTestabilityRegistries') as List;
         for (int i = 0; i < registry.length; i++) {
           var result =
               js_util.callMethod(registry[i], 'getAngularTestability', [elem]);
@@ -29,7 +30,8 @@ class BrowserGetTestability implements GetTestability {
         throw StateError('Could not find testability for element.');
       }));
       var getAllAngularTestabilities = () {
-        List registry = js_util.getProperty(_self, 'ngTestabilityRegistries');
+        var registry =
+            js_util.getProperty(_self, 'ngTestabilityRegistries') as List;
         var result = [];
         for (int i = 0; i < registry.length; i++) {
           var testabilities =

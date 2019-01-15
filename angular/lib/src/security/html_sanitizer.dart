@@ -23,7 +23,7 @@ Node _getInertElement() {
 /// This function uses the builtin Dart innerHTML sanitization provided by
 /// NodeTreeSanitizer on an inert element.
 String sanitizeHtmlInternal(String value) {
-  Element element = _getInertElement();
+  var element = _getInertElement() as Element;
   element.innerHtml = value;
   String safeHtml = element.innerHtml;
   element.children?.clear();
