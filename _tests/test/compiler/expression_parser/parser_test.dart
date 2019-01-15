@@ -274,6 +274,7 @@ void main() {
           checkBinding("a | b:(c | d)", "(a | b:(c | d))");
           checkBinding("a(n: (b | c))");
           checkBinding("a(n: (a | b:c | d))", "a(n: ((a | b:c) | d))");
+          checkBinding("f(value | pipe:x:y)", "f((value | pipe:x:y))");
         });
         test("should only allow identifier or keyword as formatter names", () {
           expectBindingError("\"Foo\"|(", throwsWith("identifier or keyword"));

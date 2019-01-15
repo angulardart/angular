@@ -330,9 +330,12 @@ class _ParseAST {
       do {
         var name = expectIdentifierOrKeyword();
         var args = <AST>[];
+        var prevParseCall = _parseCall;
+        _parseCall = false;
         while (optionalCharacter($COLON)) {
           args.add(parseExpression());
         }
+        _parseCall = prevParseCall;
         result = BindingPipe(result, name, args);
       } while (optionalOperator('|'));
     }
