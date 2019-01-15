@@ -97,4 +97,33 @@ void main() {
       ])
     ]);
   });
+
+  test('should throw on unused directive types', () async {
+    await compilesExpecting('''
+    import '$ngImport';
+    
+    @Component(
+      selector: 'generic',
+      template: 'Bye',
+    )
+    class GenericComponent<T> {
+      GenericComponent() {}
+    }
+    
+    @Component(
+      selector: 'mis-match',
+      template: 'Aye',
+      directves: [],
+      directiveTypes: [Typed<GenericComponent<String>>()])
+      
+      class ExampleComponent {}
+ 
+    ''', errors: [
+      allOf([
+        contains('Entry in "directiveTypes" missing corresponding entry in'
+            ' "directives" for "GenericComponent".'),
+        containsSourceLocation(11, 5)
+      ])
+    ]);
+  });
 }
