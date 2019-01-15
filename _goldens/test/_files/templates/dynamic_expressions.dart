@@ -86,7 +86,7 @@ class Comp6 {
   var durations = [Duration(seconds: 1)];
 }
 
-// Dynamic :(
+// OK!
 //
 // Compiles to:
 //    "final local_durations = import7.unsafeCast<List<Duration>>(locals['\$implicit']);"
@@ -96,7 +96,7 @@ class Comp6 {
 //      "_expr_0 = currVal_0;"
 //    "}"
 // ...
-//    "final local_duration = locals['\$implicit'];"
+//    "final local_duration = import7.unsafeCast<Duration>(locals['\$implicit']);"
 //    "final currVal_0 = import6.interpolate0(local_duration.inMilliseconds);"
 @Component(
   selector: 'comp-7',

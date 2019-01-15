@@ -8,15 +8,28 @@ import 'template_parser/recursive_template_visitor.dart';
 ///
 /// This information can't be provided during construction of the [TemplateAst]s
 /// as it may not exist yet at the time it is needed.
-class OptimizeTemplateAstVisitor extends RecursiveTemplateVisitor<Null> {
-  final CompileDirectiveMetadata _component;
-
-  OptimizeTemplateAstVisitor(this._component);
+class OptimizeTemplateAstVisitor
+    extends RecursiveTemplateVisitor<CompileDirectiveMetadata> {
+  OptimizeTemplateAstVisitor();
 
   @override
-  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
-    _typeNgForLocals(_component, ast.directives, ast.variables);
-    return super.visitEmbeddedTemplate(ast, null);
+  TemplateAst visitEmbeddedTemplate(
+      EmbeddedTemplateAst ast, CompileDirectiveMetadata component) {
+    _typeNgForLocals(component, ast.directives, ast.variables);
+
+    // Add the local variables to the [CompileDirectiveMetadata] used in
+    // children embedded templates.
+    var scoped = CompileDirectiveMetadata.from(component,
+        analyzedClass: AnalyzedClass.from(
+          component.analyzedClass,
+          additionalLocals: Map.fromIterable(
+            ast.variables,
+            key: (v) => (v as VariableAst).name,
+            value: (v) => (v as VariableAst).dartType,
+          ),
+        ));
+
+    return super.visitEmbeddedTemplate(ast, scoped);
   }
 }
 

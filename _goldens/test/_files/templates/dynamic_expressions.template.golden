@@ -596,7 +596,7 @@ class _ViewComp72 extends AppView<import1.Comp7> {
 
   @override
   void detectChangesInternal() {
-    final local_duration = locals['\$implicit'];
+    final local_duration = import7.unsafeCast<Duration>(locals['\$implicit']);
     final currVal_0 = import6.interpolate0(local_duration.inMilliseconds);
     if (import6.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
