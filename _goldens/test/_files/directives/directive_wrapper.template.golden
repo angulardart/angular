@@ -15,9 +15,9 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import10;
-import 'package:angular/src/runtime/dom_helpers.dart' as import11;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import11;
 
 final List<dynamic> styles$TestFooComponent = ['div._ngcontent-%ID%{font-size:10px}'];
 
@@ -38,9 +38,9 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     var doc = import2.document;
     _el_0 = createDivAndAppend(doc, parentRenderNode);
-    createAttr(_el_0, 'directive-with-output', '');
-    createAttr(_el_0, 'role', import1.ChildDirective.hostRole);
-    createAttr(_el_0, 'some-child-directive', '');
+    import9.setAttribute(_el_0, 'directive-with-output', '');
+    import9.setAttribute(_el_0, 'role', import1.ChildDirective.hostRole);
+    import9.setAttribute(_el_0, 'some-child-directive', '');
     addShimC(_el_0);
     _ChildDirective_0_5 = ChildDirectiveNgCd(import1.ChildDirective(_el_0, ElementRef(_el_0)));
     _DirectiveWithOutput_0_6 = import1.DirectiveWithOutput();
@@ -123,11 +123,11 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
     var doc = import2.document;
     final _el_0 = createDivAndAppend(doc, parentRenderNode);
     _el_0.className = 'target1';
-    createAttr(_el_0, 'fastDirective', '');
+    import9.setAttribute(_el_0, 'fastDirective', '');
     _FastDirective_0_5 = FastDirectiveNgCd(import1.FastDirective(_el_0), this, _el_0);
     final _el_1 = createDivAndAppend(doc, parentRenderNode);
     _el_1.className = 'target2';
-    createAttr(_el_1, 'fastDirective', '');
+    import9.setAttribute(_el_1, 'fastDirective', '');
     _FastDirective_1_5 = FastDirectiveNgCd(import1.FastDirective(_el_1), this, _el_1);
     init(const [], null);
   }
@@ -183,7 +183,7 @@ AppView<import1.DirectiveContainerTest> viewFactory_DirectiveContainerTestHost0(
   return _ViewDirectiveContainerTestHost0(parentView, parentIndex);
 }
 
-class ChildDirectiveNgCd extends import10.DirectiveChangeDetector {
+class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
   var _expr_1;
@@ -197,18 +197,18 @@ class ChildDirectiveNgCd extends import10.DirectiveChangeDetector {
     }
     final currVal_1 = instance.disabledStr;
     if (import6.checkBinding(_expr_1, currVal_1)) {
-      setAttr(el, 'aria-disabled', currVal_1);
+      import9.updateAttribute(el, 'aria-disabled', currVal_1);
       _expr_1 = currVal_1;
     }
     final currVal_2 = instance.disabled;
     if (import6.checkBinding(_expr_2, currVal_2)) {
-      import11.updateClassBindingNonHtml(el, 'is-disabled', currVal_2);
+      import9.updateClassBindingNonHtml(el, 'is-disabled', currVal_2);
       _expr_2 = currVal_2;
     }
   }
 }
 
-class FastDirectiveNgCd extends import10.DirectiveChangeDetector {
+class FastDirectiveNgCd extends import11.DirectiveChangeDetector {
   final import1.FastDirective instance;
   var _expr_0;
   FastDirectiveNgCd(this.instance, AppView v, import2.Element e) {
@@ -220,7 +220,7 @@ class FastDirectiveNgCd extends import10.DirectiveChangeDetector {
   void detectHostChanges(AppView<dynamic> view, import2.Element el) {
     final currVal_0 = instance.msg;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setAttr(el, 'data-msg', currVal_0);
+      import9.updateAttribute(el, 'data-msg', currVal_0);
       _expr_0 = currVal_0;
     }
   }

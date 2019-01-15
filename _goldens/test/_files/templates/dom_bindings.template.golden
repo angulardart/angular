@@ -37,7 +37,7 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   void detectHostChanges(bool firstCheck) {
     final currVal_0 = ctx.title;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setAttr(rootEl, 'title', currVal_0);
+      import9.updateAttribute(rootEl, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
   }
@@ -110,7 +110,7 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
     final _ctx = ctx;
     final currVal_0 = _ctx.title;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setAttr(_el_0, 'title', currVal_0);
+      import9.updateAttribute(_el_0, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
   }

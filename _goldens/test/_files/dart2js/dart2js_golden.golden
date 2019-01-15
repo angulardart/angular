@@ -2714,7 +2714,7 @@
       _.$ti = t2;
     },
     _LinkedHashSetCell: function _LinkedHashSetCell(t0) {
-      this._collection$_element = t0;
+      this._element = t0;
       this._collection$_previous = this._collection$_next = null;
     },
     _LinkedHashSetIterator: function _LinkedHashSetIterator(t0, t1) {
@@ -3411,11 +3411,6 @@
     },
     _StyleSheetList: function _StyleSheetList() {
     },
-    _AttributeMap: function _AttributeMap() {
-    },
-    _ElementAttributeMap: function _ElementAttributeMap(t0) {
-      this._element = t0;
-    },
     _EventStreamSubscription: function _EventStreamSubscription(t0, t1, t2, t3, t4) {
       var _ = this;
       _._pauseCount = t0;
@@ -3742,18 +3737,6 @@
       this.parent = t0;
     },
     DomSanitizationServiceImpl: function DomSanitizationServiceImpl() {
-    },
-    updateClassBinding: function(element, className, isAdd) {
-      if (isAdd)
-        element.classList.add(className);
-      else
-        element.classList.remove(className);
-    },
-    updateClassBindingNonHtml: function(element, className, isAdd) {
-      if (isAdd)
-        element.classList.add(className);
-      else
-        element.classList.remove(className);
     }
   },
   K = {NgIf: function NgIf(t0, t1, t2) {
@@ -3981,7 +3964,30 @@
     }, JsTestabilityRegistry: function JsTestabilityRegistry() {
     }},
   T = {BrowserExceptionHandler: function BrowserExceptionHandler() {
-    }},
+    },
+    updateClassBinding: function(element, className, isAdd) {
+      if (isAdd)
+        element.classList.add(className);
+      else
+        element.classList.remove(className);
+    },
+    updateClassBindingNonHtml: function(element, className, isAdd) {
+      if (isAdd)
+        element.classList.add(className);
+      else
+        element.classList.remove(className);
+    },
+    updateAttribute: function(element, attribute, value) {
+      if (value == null)
+        element.removeAttribute.apply(element, [attribute]);
+      else
+        T.setAttribute(element, attribute, value);
+      $.domRootRendererIsDirty = true;
+    },
+    setAttribute: function(element, attribute, value) {
+      element.setAttribute(attribute, value);
+    }
+  },
   N = {
     EventManager$: function(_plugins, zone) {
       var t1 = new N.EventManager(zone, _plugins, P.LinkedHashMap_LinkedHashMap$_empty(P.String, N.EventManagerPlugin));
@@ -6781,7 +6787,7 @@
         return -1;
       $length = bucket.length;
       for (i = 0; i < $length; ++i)
-        if (J.$eq$(bucket[i]._collection$_element, element))
+        if (J.$eq$(bucket[i]._element, element))
           return i;
       return -1;
     }
@@ -6796,7 +6802,7 @@
         return -1;
       $length = bucket.length;
       for (i = 0; i < $length; ++i) {
-        t1 = bucket[i]._collection$_element;
+        t1 = bucket[i]._element;
         if (t1 == null ? element == null : t1 === element)
           return i;
       }
@@ -6818,7 +6824,7 @@
           this._collection$_current = null;
           return false;
         } else {
-          this._collection$_current = t1._collection$_element;
+          this._collection$_current = t1._element;
           this._collection$_cell = t1._collection$_next;
           return true;
         }
@@ -8436,47 +8442,6 @@
     $isList: 1,
     $asList: function() {
       return [W.StyleSheet];
-    }
-  };
-  W._AttributeMap.prototype = {
-    forEach$1: function(_, f) {
-      var t1, t2, t3, _i, key;
-      for (t1 = this.get$keys(this), t2 = t1.length, t3 = this._element, _i = 0; _i < t1.length; t1.length === t2 || (0, H.throwConcurrentModificationError)(t1), ++_i) {
-        key = t1[_i];
-        f.call$2(key, t3.getAttribute(key));
-      }
-    },
-    get$keys: function(_) {
-      var attributes, keys, len, i, attr;
-      attributes = this._element.attributes;
-      keys = H.setRuntimeTypeInfo([], [P.String]);
-      for (len = attributes.length, i = 0; i < len; ++i) {
-        attr = attributes[i];
-        if (attr.namespaceURI == null)
-          keys.push(attr.name);
-      }
-      return keys;
-    },
-    $asMapMixin: function() {
-      return [P.String, P.String];
-    },
-    $asMap: function() {
-      return [P.String, P.String];
-    }
-  };
-  W._ElementAttributeMap.prototype = {
-    $index: function(_, key) {
-      return this._element.getAttribute(key);
-    },
-    remove$1: function(_, key) {
-      var t1, value;
-      t1 = this._element;
-      value = t1.getAttribute(key);
-      t1.removeAttribute(key);
-      return value;
-    },
-    get$length: function(_) {
-      return this.get$keys(this).length;
     }
   };
   W._EventStreamSubscription.prototype = {};
@@ -10159,15 +10124,6 @@
       if (t1 != null)
         hostElement.classList.add(t1);
       return hostElement;
-    },
-    setAttr$3: function(renderElement, attributeName, attributeValue) {
-      if (attributeValue != null)
-        renderElement.setAttribute(attributeName, attributeValue);
-      else {
-        renderElement.toString;
-        new W._ElementAttributeMap(renderElement).remove$1(0, attributeName);
-      }
-      $.domRootRendererIsDirty = true;
     }
   };
   X.View.prototype = {
@@ -10989,13 +10945,13 @@
       currVal_2 = J.get$title$z(t1.ctx);
       t2 = t1._expr_2;
       if (t2 != currVal_2) {
-        t1.setAttr$3(t1.rootEl, "title", currVal_2);
+        T.updateAttribute(t1.rootEl, "title", currVal_2);
         t1._expr_2 = currVal_2;
       }
       currVal_3 = t1.ctx.get$isFancy();
       t2 = t1._expr_3;
       if (t2 != currVal_3) {
-        R.updateClassBindingNonHtml(t1.rootEl, "fancy", currVal_3);
+        T.updateClassBindingNonHtml(t1.rootEl, "fancy", currVal_3);
         t1._expr_3 = currVal_3;
       }
       this._compView_0.detectChanges$0();
@@ -11512,13 +11468,13 @@
       t1 = self.defeatDart2JsOptimizations("title");
       t2 = this._expr_0;
       if (t2 != t1) {
-        this.setAttr$3(this._el_0, "title", t1);
+        T.updateAttribute(this._el_0, "title", t1);
         this._expr_0 = t1;
       }
       t1 = self.defeatDart2JsOptimizations("fancy");
       t2 = this._expr_1;
       if (t2 != t1) {
-        R.updateClassBinding(this._el_0, "fancy", t1);
+        T.updateClassBinding(this._el_0, "fancy", t1);
         this._expr_1 = t1;
       }
     },
@@ -11629,7 +11585,7 @@
     _inheritMany(P.Error, [H.NullError, H.JsNoSuchMethodError, H.UnknownJsTypeError, H.RuntimeError, P.NullThrownError, P.ArgumentError, P.NoSuchMethodError, P.UnsupportedError, P.UnimplementedError, P.StateError, P.ConcurrentModificationError, P.CyclicInitializationError]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(P.MapBase, P.MapMixin);
-    _inheritMany(P.MapBase, [H.JsLinkedHashMap, P._HashMap, W._AttributeMap]);
+    _inheritMany(P.MapBase, [H.JsLinkedHashMap, P._HashMap]);
     _inherit(H.NativeTypedArray, H.NativeTypedData);
     _inheritMany(H.NativeTypedArray, [H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin]);
     _inherit(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin);
@@ -11705,7 +11661,6 @@
     _inherit(W._SpeechRecognitionResultList, W.__SpeechRecognitionResultList_Interceptor_ListMixin_ImmutableListMixin);
     _inherit(W.__StyleSheetList_Interceptor_ListMixin_ImmutableListMixin, W.__StyleSheetList_Interceptor_ListMixin);
     _inherit(W._StyleSheetList, W.__StyleSheetList_Interceptor_ListMixin_ImmutableListMixin);
-    _inherit(W._ElementAttributeMap, W._AttributeMap);
     _inherit(W._EventStreamSubscription, P.StreamSubscription);
     _inherit(P._StructuredCloneDart2Js, P._StructuredClone);
     _inherit(P._AcceptStructuredCloneDart2Js, P._AcceptStructuredClone);
@@ -11987,10 +11942,10 @@
     $.Device__cachedCssPrefix = null;
     $._platformInjectorCache = null;
     $.ChangeDetectionHost__current = null;
-    $.domRootRendererIsDirty = false;
     $.appViewUtils = null;
     $.AppViewUtils__nextCompTypeId = 0;
     $.sharedStylesHost = null;
+    $.domRootRendererIsDirty = false;
     $.ViewRootComponent0__renderType = null;
     $.ViewUsesDefaultChangeDetectionAndInputs0__renderType = null;
     $.ViewDefaultChangeDetectionAndInputs0__renderType = null;

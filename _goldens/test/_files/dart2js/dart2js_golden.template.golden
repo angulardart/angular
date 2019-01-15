@@ -1232,7 +1232,7 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
     final _ctx = ctx;
     final currVal_0 = _ctx.title;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setAttr(_el_0, 'title', currVal_0);
+      import16.updateAttribute(_el_0, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.isFancy;
@@ -1245,7 +1245,7 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
   void detectHostChanges(bool firstCheck) {
     final currVal_2 = ctx.title;
     if (import6.checkBinding(_expr_2, currVal_2)) {
-      setAttr(rootEl, 'title', currVal_2);
+      import16.updateAttribute(rootEl, 'title', currVal_2);
       _expr_2 = currVal_2;
     }
     final currVal_3 = ctx.isFancy;

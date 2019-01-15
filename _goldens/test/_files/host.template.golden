@@ -94,7 +94,7 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
     _compView_0 = ViewHostComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    createAttr(_el_0, 'listens-to-foo', '');
+    import9.setAttribute(_el_0, 'listens-to-foo', '');
     _HostComponent_0_5 = import1.HostComponent();
     _ListensToFooEvent_0_6 = import1.ListensToFooEvent();
     _compView_0.create(_HostComponent_0_5, []);
@@ -166,7 +166,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   static RenderComponentType _renderType;
   ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('host');
-    createAttr(rootEl, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
+    import9.setAttribute(rootEl, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
     _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null), ViewEncapsulation.None, styles$HostComponent);
     setupComponentType(_renderType);
   }
@@ -191,7 +191,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     }
     final currVal_0 = import1.HostComponent.hasTerrible;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setAttr(rootEl, 'has-terrible', (currVal_0 ? '' : null));
+      import9.updateAttribute(rootEl, 'has-terrible', (currVal_0 ? '' : null));
       _expr_0 = currVal_0;
     }
     final currVal_1 = ctx.title;
@@ -201,12 +201,12 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     }
     final currVal_2 = ctx.title;
     if (import6.checkBinding(_expr_2, currVal_2)) {
-      setAttr(rootEl, 'aria-title', currVal_2);
+      import9.updateAttribute(rootEl, 'aria-title', currVal_2);
       _expr_2 = currVal_2;
     }
     final currVal_3 = ctx.isDisabled;
     if (import6.checkBinding(_expr_3, currVal_3)) {
-      setAttr(rootEl, 'aria-disabled', (currVal_3 ? '' : null));
+      import9.updateAttribute(rootEl, 'aria-disabled', (currVal_3 ? '' : null));
       _expr_3 = currVal_3;
     }
     final currVal_4 = ctx.isDisabled;
