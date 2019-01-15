@@ -26,12 +26,14 @@ export 'metadata/visibility.dart';
 ///
 /// <?code-excerpt "docs/attribute-directives/lib/src/highlight_directive_1.dart"?>
 /// ```dart
+/// import 'dart:html';
+///
 /// import 'package:angular/angular.dart';
 ///
 /// @Directive(selector: '[myHighlight]')
 /// class HighlightDirective {
-///   HighlightDirective(ElementRef el) {
-///     el.nativeElement.style.backgroundColor = 'yellow';
+///   HighlightDirective(Element el) {
+///     el.style.backgroundColor = 'yellow';
 ///   }
 /// }
 /// ```
