@@ -178,7 +178,7 @@ class AstTemplateParser implements TemplateParser {
 
   List<ng.TemplateAst> _optimize(
           CompileDirectiveMetadata compMeta, List<ng.TemplateAst> asts) =>
-      OptimizeTemplateAstVisitor(compMeta).visitAll(asts);
+      OptimizeTemplateAstVisitor().visitAll(asts, compMeta);
 
   List<ng.TemplateAst> _sortInputs(List<ng.TemplateAst> asts) =>
       _SortInputsVisitor().visitAll(asts);

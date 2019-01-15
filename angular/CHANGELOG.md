@@ -13,7 +13,10 @@
 
 *   Added `Injector.provideTypeOptional` and `Injector.provideTokenOptional`.
 
-*   The compiler now optimizes string bindings inside ngFor loops.
+*   The compiler now optimizes string bindings inside `NgFor` loops.
+
+*   The compiler now adds type information to local variables in nested `NgFor`
+    loops.
 
 ### Bug fixes
 

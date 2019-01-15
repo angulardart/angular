@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
+import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/compiler_utils.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart';
@@ -2220,19 +2221,19 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   });
 
   return CompileDirectiveMetadata(
-    type: type,
-    metadataType: metadataType ?? CompileDirectiveMetadataType.Directive,
-    selector: selector,
-    exportAs: exportAs,
-    inputs: inputsMap,
-    inputTypes: inputTypeMap,
-    outputs: outputsMap,
-    hostListeners: {},
-    hostBindings: {},
-    lifecycleHooks: [],
-    providers: providers,
-    viewProviders: viewProviders,
-    queries: queries,
-    template: template ?? CompileTemplateMetadata(),
-  );
+      type: type,
+      metadataType: metadataType ?? CompileDirectiveMetadataType.Directive,
+      selector: selector,
+      exportAs: exportAs,
+      inputs: inputsMap,
+      inputTypes: inputTypeMap,
+      outputs: outputsMap,
+      hostListeners: {},
+      hostBindings: {},
+      lifecycleHooks: [],
+      providers: providers,
+      viewProviders: viewProviders,
+      queries: queries,
+      template: template ?? CompileTemplateMetadata(),
+      analyzedClass: AnalyzedClass(null));
 }

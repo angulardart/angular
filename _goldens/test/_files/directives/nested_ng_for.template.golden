@@ -132,7 +132,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
 
   @override
   void detectChangesInternal() {
-    final local_value = locals['\$implicit'];
+    final local_value = import9.unsafeCast<int>(locals['\$implicit']);
     final currVal_0 = import8.interpolate0(local_value);
     if (import8.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
