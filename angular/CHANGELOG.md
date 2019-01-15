@@ -20,6 +20,12 @@
 *   The template compiler now outputs the full path to a template file when it
     reports an error.
 
+*   [#1694][]: Composite `keyup` and `keydown` event bindings now ignore
+    synthetic events (e.g. those triggered by a mouse click) instead of throwing
+    a `TypeError`.
+
+[#1694]: https://github.com/dart-lang/angular/issues/1694
+
 ## 5.2.0
 
 ### Breaking changes
