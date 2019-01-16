@@ -30,6 +30,29 @@ void main() {
     ]);
   });
 
+  test('should not report unrelated errors', () async {
+    await compilesExpecting('''
+      import '$ngImport';
+
+      const int neverMentionFour = "four";
+
+      @Component(
+        selector: 'bad-comp',
+        directives: const [
+          OopsDirective,
+        ],
+        template: '',
+      )
+      class BadComp {}
+    ''', errors: [
+      allOf([
+        isNot(contains(
+            "The argument type 'int' can't be assigned to the parameter type 'String'")),
+        isNot(contains("neverMentionFour"))
+      ]),
+    ]);
+  });
+
   test('should identify a possibly unresolvable pipe', () async {
     await compilesExpecting('''
       import '$ngImport';

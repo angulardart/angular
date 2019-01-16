@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/error/error.dart';
+import 'package:analyzer/src/dart/analysis/results.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -196,16 +197,17 @@ class _ComponentVisitor
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
-    final annotation = element.metadata.firstWhere(
-      safeMatcher(isDirective),
-      orElse: () => null,
-    );
-    if (annotation == null) return null;
+    final annotationIndex =
+        element.metadata.indexWhere(safeMatcher(isDirective));
+    if (annotationIndex == -1) return null;
+    final annotation = element.metadata[annotationIndex];
+
     if (element.isPrivate) {
       log.severe('Components and directives must be public: $element');
       return null;
     }
-    return _createCompileDirectiveMetadata(annotation, element);
+    return _createCompileDirectiveMetadata(
+        IndexedAnnotation(element, annotation, annotationIndex));
   }
 
   @override
@@ -286,7 +288,12 @@ class _ComponentVisitor
     bool isGetter = false,
     bool isSetter = false,
   }) {
-    for (ElementAnnotation annotation in element.metadata) {
+    for (var annotationIndex = 0;
+        annotationIndex < element.metadata.length;
+        annotationIndex++) {
+      ElementAnnotation annotation = element.metadata[annotationIndex];
+      final indexedAnnotation =
+          IndexedAnnotation(element, annotation, annotationIndex);
       if (safeMatcherType(Input)(annotation)) {
         if (isSetter && element.isPublic) {
           final isField = element is FieldElement;
@@ -335,7 +342,7 @@ class _ComponentVisitor
       ])(annotation)) {
         if (isSetter && element.isPublic) {
           _queries.add(_getQuery(
-            annotation,
+            indexedAnnotation,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
             _fieldOrPropertyType(element),
@@ -350,7 +357,7 @@ class _ComponentVisitor
       ])(annotation)) {
         if (isSetter && element.isPublic) {
           _viewQueries.add(_getQuery(
-            annotation,
+            indexedAnnotation,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
             _fieldOrPropertyType(element),
@@ -374,13 +381,11 @@ class _ComponentVisitor
   }
 
   List<CompileTokenMetadata> _getSelectors(
-    ElementAnnotation annotation,
-    DartObject value,
-  ) {
+      IndexedAnnotation indexedAnnotation, DartObject value) {
     var selector = getField(value, 'selector');
     if (isNull(selector)) {
-      _exceptionHandler.handle(ErrorMessageForAnnotation(
-          annotation, 'Missing selector argument for "@${value.type.name}"'));
+      _exceptionHandler.handle(ErrorMessageForAnnotation(indexedAnnotation,
+          'Missing selector argument for "@${value.type.name}"'));
       return [];
     }
     var selectorString = selector?.toStringValue();
@@ -394,7 +399,7 @@ class _ComponentVisitor
     if (selectorType == null) {
       // NOTE(deboer): This code is untested and probably unreachable.
       _exceptionHandler.handle(ErrorMessageForAnnotation(
-          annotation,
+          indexedAnnotation,
           'Only a value of `String` or `Type` for "@${value.type.name}" is '
           'supported'));
       return [];
@@ -413,14 +418,14 @@ class _ComponentVisitor
   static final _htmlElement = TypeChecker.fromUrl('dart:html#Element');
 
   CompileQueryMetadata _getQuery(
-    ElementAnnotation annotation,
+    IndexedAnnotation indexedAnnotation,
     String propertyName,
     DartType propertyType,
   ) {
-    final value = annotation.computeConstantValue();
+    final value = indexedAnnotation.annotation.computeConstantValue();
     final readType = getField(value, 'read')?.toTypeValue();
     return CompileQueryMetadata(
-      selectors: _getSelectors(annotation, value),
+      selectors: _getSelectors(indexedAnnotation, value),
       descendants: coerceBool(value, 'descendants', defaultTo: false),
       first: coerceBool(value, 'first', defaultTo: false),
       propertyName: propertyName,
@@ -535,9 +540,10 @@ class _ComponentVisitor
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
-    ElementAnnotation annotation,
-    ClassElement element,
-  ) {
+      IndexedAnnotation<ClassElement> indexedAnnotation) {
+    final element = indexedAnnotation.element;
+    final annotation = indexedAnnotation.annotation;
+
     _directiveClassElement = element;
     DirectiveVisitor(
       onHostBinding: _addHostBinding,
@@ -548,8 +554,8 @@ class _ComponentVisitor
     final annotationValue = annotation.computeConstantValue();
 
     if (annotation.constantEvaluationErrors.isNotEmpty) {
-      _exceptionHandler.handle(
-          AngularAnalysisError(annotation.constantEvaluationErrors, element));
+      _exceptionHandler.handle(AngularAnalysisError(
+          annotation.constantEvaluationErrors, indexedAnnotation));
       return null;
     }
 
@@ -586,10 +592,10 @@ class _ComponentVisitor
 
     final selector = coerceString(annotationValue, 'selector');
     if (selector == null || selector.isEmpty) {
-      BuildError.throwForAnnotation(
-        annotation,
+      _exceptionHandler.handle(ErrorMessageForAnnotation(
+        indexedAnnotation,
         'Selector is required, got "$selector"',
-      );
+      ));
     }
 
     return CompileDirectiveMetadata(
@@ -785,6 +791,14 @@ void _errorOnUnusedDirectiveTypes(
   }
 }
 
+class IndexedAnnotation<T extends Element> {
+  final T element;
+  final ElementAnnotation annotation;
+  final int annotationIndex;
+
+  IndexedAnnotation(this.element, this.annotation, this.annotationIndex);
+}
+
 class FindComponentsExceptionHandler {
   final List<AsyncBuildError> _errors = [];
 
@@ -809,13 +823,40 @@ class AsyncBuildError extends BuildError {
 
 class AngularAnalysisError extends AsyncBuildError {
   final List<AnalysisError> constantEvaluationErrors;
-  final ClassElement element;
+  final IndexedAnnotation<ClassElement> indexedAnnotation;
 
-  AngularAnalysisError(this.constantEvaluationErrors, this.element);
+  AngularAnalysisError(this.constantEvaluationErrors, this.indexedAnnotation);
 
   @override
-  Future<BuildError> resolve() => Future.value(
-      _buildErrorForAnalysisErrors(constantEvaluationErrors, element));
+  Future<BuildError> resolve() async {
+    bool hasOffsetInformation =
+        constantEvaluationErrors.any((error) => error.offset != 0);
+    // If this code is called from a tool using [AnalysisResolvers], then
+    //   1) [constantEvaluationErrors] already has source location information
+    //   2) [ResolvedLibraryResultImpl] will NOT have the errors.
+    // So, we return immediately with the information in
+    // [constantEvaluationErrors].
+    if (hasOffsetInformation) {
+      return Future.value(_buildErrorForAnalysisErrors(
+          constantEvaluationErrors, indexedAnnotation.element));
+    }
+
+    var libraryElement = indexedAnnotation.element.library;
+    var libraryResult = await ResolvedLibraryResultImpl.tmp(libraryElement);
+    var classResult =
+        libraryResult.getElementDeclaration(indexedAnnotation.element);
+
+    ClassDeclaration classDeclaration = classResult.node;
+    final resolvedAnnotation =
+        classDeclaration.metadata[indexedAnnotation.annotationIndex];
+
+    // Only include the errors that are inside the annotation.
+    return _buildErrorForAnalysisErrors(
+        classResult.resolvedUnit.errors.where((error) =>
+            error.offset >= resolvedAnnotation.offset &&
+            error.offset <= resolvedAnnotation.end),
+        indexedAnnotation.element);
+  }
 
   BuildError _buildErrorForAnalysisErrors(
       Iterable<AnalysisError> errors, ClassElement componentType) {
@@ -895,30 +936,51 @@ class UnresolvedExpressionError extends AsyncBuildError {
   }
 }
 
-class UnusedDirectiveTypeError extends AsyncBuildError {
+class UnusedDirectiveTypeError extends ErrorMessageForAnnotation {
   final ClassElement element;
   final CompileTypedMetadata directiveType;
 
-  UnusedDirectiveTypeError(this.element, this.directiveType);
+  static IndexedAnnotation firstComponentAnnotation(ClassElement element) {
+    final index = element.metadata.indexWhere(isComponent);
+    if (index == -1)
+      throw ArgumentError("[element] must have a @Component annotation");
+    return IndexedAnnotation(element, element.metadata[index], index);
+  }
 
-  @override
-  Future<BuildError> resolve() => Future.value(BuildError.forAnnotation(
-      element.metadata.firstWhere(isComponent),
-      'Entry in "directiveTypes" missing corresponding entry in '
-      '"directives" for "${directiveType.name}".\n\n'
-      'If you recently removed "${directiveType.name}" from "directives", '
-      'please also remove its corresponding entry from "directiveTypes".'));
+  UnusedDirectiveTypeError(this.element, this.directiveType)
+      : super(
+            firstComponentAnnotation(element),
+            'Entry in "directiveTypes" missing corresponding entry in '
+            '"directives" for "${directiveType.name}".\n\n'
+            'If you recently removed "${directiveType.name}" from "directives", '
+            'please also remove its corresponding entry from "directiveTypes".');
 }
 
 class ErrorMessageForAnnotation extends AsyncBuildError {
-  final ElementAnnotation annotation;
+  final IndexedAnnotation indexedAnnotation;
   final String message;
 
-  ErrorMessageForAnnotation(this.annotation, this.message);
+  ErrorMessageForAnnotation(this.indexedAnnotation, this.message);
 
   @override
-  Future<BuildError> resolve() =>
-      Future.value(BuildError.forAnnotation(annotation, message));
+  Future<BuildError> resolve() async {
+    final element = indexedAnnotation.element;
+    final annotationIndex = indexedAnnotation.annotationIndex;
+
+    var libraryResult = await ResolvedLibraryResultImpl.tmp(element.library);
+    var result = libraryResult.getElementDeclaration(element);
+    AnnotatedNode annotatedNode = result.node;
+    if (annotatedNode.metadata.length != element.metadata.length) {
+      // [ResolvedLibraryResultImpl] lost the metadata, so return the
+      // original annotation even though it probably doesn't have the correct
+      // information.
+      return BuildError.forAnnotation(
+          element.metadata[annotationIndex], message);
+    }
+    ElementAnnotation resolvedAnnotation =
+        annotatedNode.metadata[annotationIndex].elementAnnotation;
+    return BuildError.forAnnotation(resolvedAnnotation, message);
+  }
 }
 
 class ErrorMessageForElement extends AsyncBuildError {
