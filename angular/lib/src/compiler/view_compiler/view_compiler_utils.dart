@@ -1,17 +1,26 @@
 import 'dart:collection';
 
-import 'package:angular/src/core/linker/view_type.dart';
-
-import '../compile_metadata.dart'
+import 'package:angular/src/compiler/analyzed_class.dart';
+import 'package:angular/src/compiler/compile_metadata.dart'
     show
         CompileTokenMetadata,
         CompileDirectiveMetadata,
         CompileIdentifierMetadata;
-import '../expression_parser/ast.dart' as ast;
-import '../identifiers.dart';
-import '../output/convert.dart' show typeArgumentsFrom;
-import '../output/output_ast.dart' as o;
-import '../template_ast.dart' show AttrAst, LiteralAttributeValue;
+import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
+import 'package:angular/src/compiler/identifiers.dart';
+import 'package:angular/src/compiler/ir/model.dart' as ir;
+import 'package:angular/src/compiler/output/convert.dart'
+    show typeArgumentsFrom;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/template_ast.dart'
+    show
+        AttrAst,
+        AttributeValue,
+        ElementAst,
+        I18nAttributeValue,
+        LiteralAttributeValue;
+import 'package:angular/src/core/linker/view_type.dart';
+
 import 'compile_view.dart' show CompileView, ReadNodeReferenceExpr;
 import 'constants.dart';
 
@@ -338,36 +347,6 @@ String toTemplateExtension(String moduleUrl) {
   return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
 }
 
-Map<String, AttrAst> astAttribListToMap(List<AttrAst> attrs) {
-  Map<String, AttrAst> htmlAttrs = {};
-  for (AttrAst attr in attrs) {
-    htmlAttrs[attr.name] = attr;
-  }
-  return htmlAttrs;
-}
-
-ast.AST _mergeAttributeValue(
-    String attrName, ast.AST attrValue1, ast.AST attrValue2) {
-  if (attrName == classAttrName || attrName == styleAttrName) {
-    // attrValue1 can be a literal string (from an HTML attribute), an
-    // expression (from a host attribute), or an interpolation (from a previous
-    // merge). attrValue2 can only be an expression (from a host attribute), it
-    // CANNOT be an interpolate because attrValue2 represents the "new"
-    // attribute value we need to merge in, which must always be a property
-    // access. Only the "previous" attrValue can be an interpolation because we
-    // are constructing the interpolation here.
-    if (attrValue1 is ast.Interpolation) {
-      attrValue1.expressions.add(attrValue2);
-      attrValue1.strings.add(' ');
-      return attrValue1;
-    } else {
-      return ast.Interpolation(['', ' ', ''], [attrValue1, attrValue2]);
-    }
-  } else {
-    return attrValue2;
-  }
-}
-
 o.Statement createSetAttributeStatement(String astNodeName,
     o.Expression renderNode, String attrName, o.Expression attrValue) {
   String attrNs;
@@ -434,9 +413,32 @@ o.Statement createSetAttributeStatement(String astNodeName,
   return function.callFn(params).toStmt();
 }
 
-Map<String, ast.AST> _toSortedMap(Map<String, ast.AST> data) {
-  var result = SplayTreeMap<String, ast.AST>();
-  return result..addAll(data);
+List<ir.Binding> mergeHtmlAndDirectiveAttributes(ElementAst elementAst,
+    List<CompileDirectiveMetadata> directives, AnalyzedClass analyzedClass) {
+  var attrs = elementAst.attrs;
+  var htmlAttrs = _attributeToIr(attrs, elementAst.name);
+  // Create statements to initialize literal attribute values.
+  // For example, a directive may have hostAttributes setting class name.
+  return _mergeHtmlAndDirectiveAttrs(htmlAttrs, directives, analyzedClass);
+}
+
+List<ir.Binding> _attributeToIr(List<AttrAst> attrs, String elementName) {
+  var htmlAttrs = <ir.Binding>[];
+  for (AttrAst attr in attrs) {
+    htmlAttrs.add(ir.Binding(
+        source: _attributeValue(attr.value),
+        target: ir.AttributeBinding(attr.name)));
+  }
+  return htmlAttrs;
+}
+
+ir.BindingSource _attributeValue(AttributeValue attr) {
+  if (attr is LiteralAttributeValue) {
+    return ir.StringLiteral(attr.value);
+  } else if (attr is I18nAttributeValue) {
+    return ir.BoundI18nMessage(attr.value);
+  }
+  throw ArgumentError.value(attr, 'attr', 'Unknown $AttributeValue type.');
 }
 
 /// Merges host attributes from [directives] with [declaredHtmlAttrs].
@@ -448,46 +450,26 @@ Map<String, ast.AST> _toSortedMap(Map<String, ast.AST> data) {
 ///   1. Component host attributes.
 ///   2. HTML attributes.
 ///   3. Directive host attributes.
-///
-/// Note that internationalized (`@i18n:`) attributes are skipped, and handled
-/// separately at the call site. These should be treated with the same priority
-/// as HTML attributes (2), meaning that any merged attribute returned by this
-/// function takes priority over an internationalized attribute of the same name
-/// (since it must have originated from a directive). There's currently a subtle
-/// but where the priority isn't entirely respected, since this logic actually
-/// puts component host attributes ahead of `@i18n` HTML attributes. See
-/// https://github.com/dart-lang/angular/issues/1600.
-Map<String, ast.AST> mergeHtmlAndDirectiveAttrs(
-    Map<String, AttrAst> declaredHtmlAttrs,
-    List<CompileDirectiveMetadata> directives) {
-  var result = <String, ast.AST>{};
+List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
+  List<ir.Binding> declaredHtmlAttrs,
+  List<CompileDirectiveMetadata> directives,
+  AnalyzedClass analyzedClass,
+) {
+  var result = <String, ir.BindingSource>{};
   var mergeCount = <String, int>{};
-  declaredHtmlAttrs.forEach((name, value) {
-    final attributeValue = value.value;
-    // Only HTML attributes with literal values are merged here.
-    // Internationalized attributes are handled separately.
-    if (attributeValue is LiteralAttributeValue) {
-      result[name] = ast.LiteralPrimitive(attributeValue.value);
-      if (mergeCount.containsKey(name)) {
-        mergeCount[name]++;
-      } else {
-        mergeCount[name] = 1;
-      }
-    }
-  });
+  for (var binding in declaredHtmlAttrs) {
+    var name = (binding.target as ir.AttributeBinding).name;
+    result[name] = binding.source;
+    _increment(mergeCount, name);
+  }
   for (CompileDirectiveMetadata directiveMeta in directives) {
     directiveMeta.hostAttributes.forEach((name, value) {
-      if (mergeCount.containsKey(name)) {
-        mergeCount[name]++;
-      } else {
-        mergeCount[name] = 1;
-      }
+      _increment(mergeCount, name);
     });
   }
   for (CompileDirectiveMetadata directiveMeta in directives) {
     bool isComponent = directiveMeta.isComponent;
     for (String name in directiveMeta.hostAttributes.keys) {
-      var value = directiveMeta.hostAttributes[name];
       var canMerge = name == classAttrName || name == styleAttrName;
       var hasMultiple = mergeCount[name] > 1;
       var shouldMerge = canMerge && hasMultiple;
@@ -503,14 +485,79 @@ Map<String, ast.AST> mergeHtmlAndDirectiveAttrs(
       // component host binding so that an HTML attribute or directive host
       // binding that came earlier takes priority.
       if (isComponent && !shouldMerge) continue;
+
+      var value = _toIr(directiveMeta.hostAttributes[name], analyzedClass);
       var prevValue = result[name];
       result[name] = prevValue != null
-          ? _mergeAttributeValue(name, prevValue, value)
+          ? _mergeAttributeValue(name, prevValue, value, analyzedClass)
           : value;
     }
   }
-  return _toSortedMap(result);
+  return _toSortedBindings(result);
 }
+
+void _increment(Map<String, int> mergeCount, String name) {
+  mergeCount.putIfAbsent(name, () => 0);
+  mergeCount[name]++;
+}
+
+ir.BoundExpression _toIr(ast.AST ast, AnalyzedClass analyzedClass) {
+  return ir.BoundExpression(ast, null, analyzedClass);
+}
+
+ir.BindingSource _mergeAttributeValue(
+  String attrName,
+  ir.BindingSource attrValue1,
+  ir.BindingSource attrValue2,
+  AnalyzedClass analyzedClass,
+) {
+  if (attrName != classAttrName && attrName != styleAttrName) {
+    return attrValue2;
+  }
+  // attrValue1 can be a literal string (from an HTML attribute), an
+  // expression (from a host attribute), or an interpolation (from a previous
+  // merge). attrValue2 can only be an expression (from a host attribute), it
+  // CANNOT be an interpolate because attrValue2 represents the "new"
+  // attribute value we need to merge in, which must always be a property
+  // access. Only the "previous" attrValue can be an interpolation because we
+  // are constructing the interpolation here.
+  if (attrValue1 is ir.BoundExpression &&
+      attrValue1.expression is ast.Interpolation) {
+    attrValue1.expression as ast.Interpolation
+      ..expressions.add(_asAst(attrValue2))
+      ..strings.add(' ');
+    return attrValue1;
+  } else {
+    return ir.BoundExpression(
+        ast.Interpolation(
+            ['', ' ', ''], [_asAst(attrValue1), _asAst(attrValue2)]),
+        null,
+        analyzedClass);
+  }
+}
+
+ast.AST _asAst(ir.BindingSource bindingSource) {
+  if (bindingSource is ir.BoundExpression) {
+    return bindingSource.expression;
+  } else if (bindingSource is ir.StringLiteral) {
+    return ast.LiteralPrimitive(bindingSource.value);
+  }
+  throw ArgumentError.value(
+      bindingSource,
+      'bindingSource',
+      'BindingSource implementation $bindingSource doesn\'t support conversion '
+      'to an AST.');
+}
+
+List<ir.Binding> _toSortedBindings(Map<String, ir.BindingSource> attributes) {
+  var sortedMap = _toSortedMap(attributes);
+  return sortedMap.keys
+      .map((name) => ir.Binding(
+          source: sortedMap[name], target: ir.AttributeBinding(name)))
+      .toList();
+}
+
+Map<K, V> _toSortedMap<K, V>(Map<K, V> data) => SplayTreeMap.from(data);
 
 Map<String, CompileIdentifierMetadata> _tagNameToIdentifier;
 

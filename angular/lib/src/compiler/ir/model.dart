@@ -176,6 +176,12 @@ class TextBinding implements BindingTarget {}
 
 class HtmlBinding implements BindingTarget {}
 
+class AttributeBinding implements BindingTarget {
+  final String name;
+
+  AttributeBinding(this.name);
+}
+
 abstract class BindingSource {
   bool get isImmutable;
   bool get isNullable;

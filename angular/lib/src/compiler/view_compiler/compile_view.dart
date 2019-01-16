@@ -26,10 +26,8 @@ import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
     show
-        AttrAst,
         ElementAst,
         EmbeddedTemplateAst,
-        I18nAttributeValue,
         NgContentAst,
         ProviderAst,
         ProviderAstType,
@@ -52,7 +50,6 @@ import 'ir/view_storage.dart';
 import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'
     show
-        astAttribListToMap,
         createDiTokenExpression,
         createSetAttributeStatement,
         cachedParentIndexVarName,
@@ -60,8 +57,7 @@ import 'view_compiler_utils.dart'
         debugInjectorLeave,
         getViewFactory,
         getViewFactoryName,
-        injectFromViewParentInjector,
-        mergeHtmlAndDirectiveAttrs;
+        injectFromViewParentInjector;
 import 'view_name_resolver.dart';
 
 /// Visibility of NodeReference within AppView implementation.
@@ -606,7 +602,11 @@ class CompileView {
   o.Expression _createText(ir.BindingSource source) =>
       o.importExpr(Identifiers.createText).callFn([_textValue(source)]);
 
-  o.Expression _textValue(ir.BindingSource source) {
+  o.Expression _textValue(ir.BindingSource source) =>
+      _toExpression(source, o.ReadClassMemberExpr('ctx'));
+
+  o.Expression _toExpression(
+      ir.BindingSource source, o.Expression implicitReceiver) {
     if (source is ir.StringLiteral) {
       return o.literal(source.value);
     } else if (source is ir.BoundI18nMessage) {
@@ -614,7 +614,7 @@ class CompileView {
     } else if (source is ir.BoundExpression) {
       return convertCdExpressionToIr(
         nameResolver,
-        o.ReadClassMemberExpr('ctx'),
+        implicitReceiver,
         source.expression,
         source.sourceSpan,
         component,
@@ -1141,49 +1141,25 @@ class CompileView {
         .toStmt());
   }
 
-  void writeLiteralAttributeValues(
-      ElementAst elementAst,
-      NodeReference nodeReference,
-      int nodeIndex,
-      List<CompileDirectiveMetadata> directives) {
-    List<AttrAst> attrs = elementAst.attrs;
-    var htmlAttrs = astAttribListToMap(attrs);
-    // Create statements to initialize literal attribute values.
-    // Internationalized attributes are handled separately below, see the
-    // documentation of `mergeHtmlAndDirectiveAttrs` for more information.
-    // For example, a directive may have hostAttributes setting class name.
-    var attrNameAndValues = mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);
-    attrNameAndValues.forEach((name, value) {
-      var expression = convertCdExpressionToIr(
-        nameResolver,
-        o.THIS_EXPR,
-        value,
-        // While the expression being converted may be the merged result of
-        // several bindings (a template binding and/or any number of host
-        // bindings), the only kind that could fail conversion is a template
-        // binding, so we pass its source span if present.
-        htmlAttrs[name]?.sourceSpan,
-        component,
-        o.STRING_TYPE,
-      );
-      o.Statement stmt = createSetAttributeStatement(
-          elementAst.name, nodeReference.toReadExpr(), name, expression);
-      _createMethod.addStmt(stmt);
-    });
-    // Handle internationalized (`@i18n:`) attributes.
-    for (final attribute in attrs) {
-      final name = attribute.name;
-      final value = attribute.value;
-      // Don't set any internationalized attributes that were overridden by a
-      // directive host binding above. This implementation has a subtle bug
-      // describe by https://github.com/dart-lang/angular/issues/1600.
-      if (value is I18nAttributeValue && !attrNameAndValues.containsKey(name)) {
-        final message = createI18nMessage(value.value);
-        final stmt = createSetAttributeStatement(
-            elementAst.name, nodeReference.toReadExpr(), name, message);
-        _createMethod.addStmt(stmt);
-      }
+  void writeLiteralAttributeValues(String elementName,
+      NodeReference nodeReference, List<ir.Binding> bindings) {
+    assert(bindings.every((binding) => binding.target is ir.AttributeBinding));
+    for (var binding in bindings) {
+      _writeLiteralAttributeValue(elementName, nodeReference,
+          binding.target as ir.AttributeBinding, binding.source);
     }
+  }
+
+  void _writeLiteralAttributeValue(
+    String elementName,
+    NodeReference nodeReference,
+    ir.AttributeBinding target,
+    ir.BindingSource source,
+  ) {
+    var expression = _toExpression(source, o.THIS_EXPR);
+    o.Statement stmt = createSetAttributeStatement(
+        elementName, nodeReference.toReadExpr(), target.name, expression);
+    _createMethod.addStmt(stmt);
   }
 
   void deferLoadEmbeddedTemplate(

@@ -38,6 +38,7 @@ import 'view_compiler_utils.dart'
         createSetAttributeStatement,
         detectHtmlElementFromTagName,
         identifierFromTagName,
+        mergeHtmlAndDirectiveAttributes,
         namespaceUris;
 
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
@@ -214,7 +215,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         isDeferred: isDeferred);
 
     if (_view.viewType != ViewType.host) {
-      _view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
+      var mergedBindings = mergeHtmlAndDirectiveAttributes(
+          ast, directives, _view.component.analyzedClass);
+      _view.writeLiteralAttributeValues(ast.name, elementRef, mergedBindings);
     }
 
     _view.shimCssForNode(elementRef, nodeIndex, Identifiers.HTML_HTML_ELEMENT);
@@ -282,7 +285,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       _view.createElement(parent, elementRef, nodeIndex, tagName, ast);
     }
 
-    _view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
+    var mergedBindings = mergeHtmlAndDirectiveAttributes(
+        ast, directives, _view.component.analyzedClass);
+    _view.writeLiteralAttributeValues(ast.name, elementRef, mergedBindings);
 
     // Set ng_content class for CSS shim.
     var elementType = _view.isRootNodeOfHost(nodeIndex)
