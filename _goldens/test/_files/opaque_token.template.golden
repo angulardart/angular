@@ -18,8 +18,9 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/di/opaque_token.dart' as import9;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import12;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/di/errors.dart' as import13;
+import 'package:angular/src/di/errors.dart' as import14;
 import 'dart:core';
 
 final List<dynamic> styles$HasOpaqueTokens = const [];
@@ -106,8 +107,8 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
   ComponentRef<import1.ContainsChildComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
+    final doc = import5.document;
+    final _anchor_0 = import12.appendAnchor(doc, parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
@@ -144,10 +145,9 @@ class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponen
   }
   @override
   ComponentRef<import1.ContainsChildComponent> build() {
-    var doc = import5.document;
+    final doc = import5.document;
     final _el_0 = doc.createElement('div');
-    final _anchor_1 = createViewContainerAnchor();
-    _el_0.append(_anchor_1);
+    final _anchor_1 = import12.appendAnchor(doc, _el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_ContainsChildComponent2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
@@ -179,13 +179,13 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
   }
   @override
   ComponentRef<import1.ContainsChildComponent> build() {
-    var doc = import5.document;
+    final doc = import5.document;
     final _el_0 = doc.createElement('div');
     _compView_1 = ViewInjectsTypedTokenFromSomeParent0(this, 1);
     final _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
     _InjectsTypedTokenFromSomeParent_1_5 = (import7.isDevMode
-        ? import13.debugInjectorWrap(import1.InjectsTypedTokenFromSomeParent, () {
+        ? import14.debugInjectorWrap(import1.InjectsTypedTokenFromSomeParent, () {
             return import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
           })
         : import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex)));
@@ -276,7 +276,7 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
     _compView_0 = ViewInjectsTypedTokenFromSomeParent0(this, 0);
     rootEl = _compView_0.rootEl;
     _InjectsTypedTokenFromSomeParent_0_5 = (import7.isDevMode
-        ? import13.debugInjectorWrap(import1.InjectsTypedTokenFromSomeParent, () {
+        ? import14.debugInjectorWrap(import1.InjectsTypedTokenFromSomeParent, () {
             return import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
           })
         : import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex)));

@@ -17,6 +17,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/src/runtime.dart' as import9;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'dart:core';
 
@@ -36,10 +37,9 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     final _rootEl = rootEl;
     final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
-    final _anchor_1 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_1);
+    final doc = import4.document;
+    _anchor_0 = import11.appendAnchor(doc, parentRenderNode);
+    final _anchor_1 = import11.appendAnchor(doc, parentRenderNode);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
     _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
@@ -53,7 +53,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     if (firstCheck) {
       if (!identical(_ctx.foo, null)) {
         if (_ctx.foo) {
-          var doc = import4.document;
+          final doc = import4.document;
           final _el_0_0 = doc.createElement('div');
           final _text_0_1 = createText('Foo');
           _el_0_0.append(_text_0_1);
@@ -97,9 +97,9 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   }
   @override
   ComponentRef<import1.TestFooComponent> build() {
-    var doc = import4.document;
+    final doc = import4.document;
     final _el_0 = doc.createElement('div');
-    final _el_1 = createSpanAndAppend(doc, _el_0);
+    final _el_1 = import11.appendSpan(doc, _el_0);
     _el_1.append(_text_2);
     final _text_3 = createText('. #');
     _el_1.append(_text_3);

@@ -25,16 +25,6 @@ import 'view_type.dart' show ViewType;
 
 export 'package:angular/src/core/change_detection/component_state.dart';
 
-/// A comment to clone as an anchor for the view container of a `<template>`.
-final _viewContainerAnchor = Comment();
-
-/// Creates a comment to anchor the view container of a `<template>`.
-///
-/// The comment is necessary to anchor the location of the view container since
-/// the `<template>` itself isn't rendered.
-Comment createViewContainerAnchor() =>
-    unsafeCast(_viewContainerAnchor.clone(false));
-
 const _UndefinedInjectorResult = Object();
 
 /// Shared app view members used to reduce polymorphic calls and
@@ -671,30 +661,6 @@ void _moveNodesAfterSibling(Node sibling, List<Node> nodes) {
 /// Helper function called by [AppView] to reduce code-size.
 @dart2js.noInline
 Text createText(String text) => Text(text);
-
-/// Helper function called by AppView.build to reduce code size.
-@dart2js.noInline
-Element createAndAppend(Document doc, String tagName, Element parent) {
-  // Allow implicit cast here to avoid messing with inlining heuristics.
-  // ignore: return_of_invalid_type
-  return parent.append(doc.createElement(tagName));
-}
-
-/// Helper function called by AppView.build to reduce code size.
-@dart2js.noInline
-DivElement createDivAndAppend(Document doc, Element parent) {
-  // Allow implicit cast here to avoid messing with inlining heuristics.
-  // ignore: return_of_invalid_type
-  return parent.append(doc.createElement('div'));
-}
-
-/// Helper function called by AppView.build to reduce code size.
-@dart2js.noInline
-SpanElement createSpanAndAppend(Document doc, Element parent) {
-  // Allow implicit cast here to avoid messing with inlining heuristics.
-  // ignore: return_of_invalid_type
-  return parent.append(doc.createElement('span'));
-}
 
 void _detachAll(List<Node> viewRootNodes) {
   int len = viewRootNodes.length;

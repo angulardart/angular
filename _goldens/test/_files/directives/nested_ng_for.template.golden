@@ -17,6 +17,7 @@ import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/src/runtime.dart' as import9;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'dart:core';
 
@@ -36,8 +37,8 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   ComponentRef<import1.NestedNgForComponent> build() {
     final _rootEl = rootEl;
     final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
+    final doc = import7.document;
+    final _anchor_0 = import11.appendAnchor(doc, parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
     _NgFor_0_9 = import3.NgFor(_appEl_0, _TemplateRef_0_8);
@@ -82,10 +83,9 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
   }
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
-    var doc = import7.document;
+    final doc = import7.document;
     final _el_0 = doc.createElement('span');
-    final _anchor_1 = createViewContainerAnchor();
-    _el_0.append(_anchor_1);
+    final _anchor_1 = import11.appendAnchor(doc, _el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
     _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
@@ -124,7 +124,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   }
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
-    var doc = import7.document;
+    final doc = import7.document;
     final _el_0 = doc.createElement('div');
     _el_0.append(_text_1);
     init0(_el_0);

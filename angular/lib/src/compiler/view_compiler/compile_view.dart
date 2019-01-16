@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/view_compiler/expression_converter.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
@@ -638,42 +637,43 @@ class CompileView {
       tagName,
       parentRenderNodeExpr,
       elementRef,
-      ast.sourceSpan,
-      nodeIndex,
     );
   }
 
-  void _createElementAndAppend(String tagName, o.Expression parent,
-      NodeReference elementRef, SourceSpan debugSpan, int debugNodeIndex) {
+  void _createElementAndAppend(
+    String tagName,
+    o.Expression parent,
+    NodeReference elementRef,
+  ) {
     // No namespace just call [document.createElement].
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());
     }
-
     if (parent != null && parent != o.NULL_EXPR) {
       o.Expression createExpr;
-      final createParams = <o.Expression>[o.ReadVarExpr(docVarName)];
+      final createParams = <o.Expression>[o.ReadVarExpr(docVarName), parent];
 
       CompileIdentifierMetadata createAndAppendMethod;
       switch (tagName) {
         case 'div':
-          createAndAppendMethod = Identifiers.createDivAndAppend;
+          createAndAppendMethod = DomHelpers.appendDiv;
           break;
         case 'span':
-          createAndAppendMethod = Identifiers.createSpanAndAppend;
+          createAndAppendMethod = DomHelpers.appendSpan;
           break;
         default:
-          createAndAppendMethod = Identifiers.createAndAppend;
+          createAndAppendMethod = DomHelpers.appendElement;
           createParams.add(o.literal(tagName));
           break;
       }
-      createParams.add(parent);
       createExpr = o.importExpr(createAndAppendMethod).callFn(createParams);
       _createMethod.addStmt(elementRef.toWriteStmt(createExpr));
     } else {
       // No parent node, just create element and assign.
-      var createRenderNodeExpr = o.ReadVarExpr(docVarName)
-          .callMethod('createElement', [o.literal(tagName)]);
+      final createRenderNodeExpr = o.ReadVarExpr(docVarName).callMethod(
+        'createElement',
+        [o.literal(tagName)],
+      );
       _createMethod.addStmt(elementRef.toWriteStmt(createRenderNodeExpr));
     }
   }
@@ -681,7 +681,11 @@ class CompileView {
   o.Statement _createLocalDocumentVar() {
     docVarName = defaultDocVarName;
     return o.DeclareVarStmt(
-        docVarName, o.importExpr(Identifiers.HTML_DOCUMENT));
+      docVarName,
+      o.importExpr(Identifiers.HTML_DOCUMENT),
+      null,
+      const [o.StmtModifier.Final],
+    );
   }
 
   /// Creates an html node with a namespace and appends to parent element.
@@ -756,10 +760,27 @@ class CompileView {
   /// created elements.
 
   NodeReference createViewContainerAnchor(
-      CompileElement parent, int nodeIndex, TemplateAst ast) {
-    NodeReference renderNode = NodeReference.anchor(storage, nodeIndex);
-    _initializeAndAppendNode(parent, renderNode,
-        o.importExpr(Identifiers.createViewContainerAnchor).callFn([]));
+    CompileElement parent,
+    int nodeIndex,
+    TemplateAst ast,
+  ) {
+    if (docVarName == null) {
+      _createMethod.addStmt(_createLocalDocumentVar());
+    }
+    final renderNode = NodeReference.anchor(storage, nodeIndex);
+    final parentNode = _getParentRenderNode(parent);
+    if (parentNode != o.NULL_EXPR) {
+      final appendAnchor = o.importExpr(DomHelpers.appendAnchor).callFn([
+        o.ReadVarExpr(docVarName),
+        parentNode,
+      ]);
+      _createMethod.addStmt(renderNode.toWriteStmt(appendAnchor));
+    } else {
+      final createAnchor = o.importExpr(DomHelpers.createAnchor).callFn([
+        o.ReadVarExpr(docVarName),
+      ]);
+      _createMethod.addStmt(renderNode.toWriteStmt(createAnchor));
+    }
     return renderNode;
   }
 
@@ -1355,8 +1376,10 @@ class CompileView {
     }
     final parentExpr = _getParentRenderNode(parentElement);
     if (parentExpr != o.NULL_EXPR) {
-      _createMethod.addStmt(parentExpr
-          .callMethod('append', [nodeReference.toReadExpr()]).toStmt());
+      _createMethod.addStmt(parentExpr.callMethod(
+        'append',
+        [nodeReference.toReadExpr()],
+      ).toStmt());
     }
   }
 

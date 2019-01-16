@@ -15,6 +15,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$CheckOnceComponent = const [];
 
@@ -30,8 +31,8 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
   ComponentRef<import1.CheckOnceComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('CheckOnce');
     _el_0.append(_text_1);
     init(const [], null);
@@ -101,8 +102,8 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
   ComponentRef<import1.CheckedComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Checked');
     _el_0.append(_text_1);
     init(const [], null);
@@ -162,8 +163,8 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
   ComponentRef<import1.CheckAlwaysComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('CheckAlways');
     _el_0.append(_text_1);
     init(const [], null);
@@ -223,8 +224,8 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
   ComponentRef<import1.DetachedComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Detached');
     _el_0.append(_text_1);
     init(const [], null);
@@ -464,8 +465,8 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
   ComponentRef<import1.OnPushChildComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('OnPushChild: ');
     _el_0.append(_text_1);
     _el_0.append(_text_2);
@@ -541,8 +542,8 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     final import1.StatefulComponent _ctx = ctx;
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Stateful');
     _el_0.append(_text_1);
     init(const [], null);
@@ -603,8 +604,8 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
   ComponentRef<import1.DefaultComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Default');
     _el_0.append(_text_1);
     init(const [], null);

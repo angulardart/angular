@@ -15,7 +15,8 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'external_service.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'external_service.dart' as import10;
 
 final List<dynamic> styles$DeferredChild1Component = const [];
 
@@ -264,8 +265,8 @@ class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.Deferr
   ComponentRef<import1.DeferredChildComponentWithoutNgContent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Child');
     _el_0.append(_text_1);
     init(const [], null);
@@ -325,8 +326,8 @@ class ViewDeferredChildComponentWithNgContent0 extends AppView<import1.DeferredC
   ComponentRef<import1.DeferredChildComponentWithNgContent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     project(_el_0, 0);
     init(const [], null);
   }
@@ -402,13 +403,13 @@ final List<dynamic> styles$DeferredChildComponentWithServicesHost = const [];
 
 class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.DeferredChildComponentWithServices> {
   ViewDeferredChildComponentWithServices0 _compView_0;
-  import9.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
+  import10.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
   import1.DeferredChildComponentWithServices _DeferredChildComponentWithServices_0_6;
-  import9.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
+  import10.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
   _ViewDeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
-  import9.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
+  import10.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
     if ((__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
-      (__ExternalServiceLazilyCreatedMaybe_0_7 = import9.ExternalServiceLazilyCreatedMaybe());
+      (__ExternalServiceLazilyCreatedMaybe_0_7 = import10.ExternalServiceLazilyCreatedMaybe());
     }
     return __ExternalServiceLazilyCreatedMaybe_0_7;
   }
@@ -417,7 +418,7 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
   ComponentRef<import1.DeferredChildComponentWithServices> build() {
     _compView_0 = ViewDeferredChildComponentWithServices0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ExternalServiceImmediatelyCreated_0_5 = import9.ExternalServiceImmediatelyCreated();
+    _ExternalServiceImmediatelyCreated_0_5 = import10.ExternalServiceImmediatelyCreated();
     _DeferredChildComponentWithServices_0_6 = import1.DeferredChildComponentWithServices(_ExternalServiceImmediatelyCreated_0_5);
     _compView_0.create(_DeferredChildComponentWithServices_0_6, projectableNodes);
     init0(rootEl);
@@ -426,10 +427,10 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import9.ExternalServiceImmediatelyCreated) && (0 == nodeIndex))) {
+    if ((identical(token, import10.ExternalServiceImmediatelyCreated) && (0 == nodeIndex))) {
       return _ExternalServiceImmediatelyCreated_0_5;
     }
-    if ((identical(token, import9.ExternalServiceLazilyCreatedMaybe) && (0 == nodeIndex))) {
+    if ((identical(token, import10.ExternalServiceLazilyCreatedMaybe) && (0 == nodeIndex))) {
       return _ExternalServiceLazilyCreatedMaybe_0_7;
     }
     return notFoundResult;

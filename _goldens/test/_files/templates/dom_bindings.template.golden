@@ -100,8 +100,8 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
   ComponentRef<import1.HasTemplateAttributes> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    _el_0 = import9.appendDiv(doc, parentRenderNode);
     init(const [], null);
   }
 
@@ -239,8 +239,8 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
   ComponentRef<import1.HasTemplateClass> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    _el_0 = import9.appendDiv(doc, parentRenderNode);
     init(const [], null);
   }
 

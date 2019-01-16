@@ -16,6 +16,7 @@ import 'dart:html' as import6;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$HasTemplateFileComponent = [import0.styles];
 
@@ -30,8 +31,8 @@ class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileCompo
   ComponentRef<import2.HasTemplateFileComponent> build() {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import6.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import6.document;
+    final _el_0 = import10.appendDiv(doc, parentRenderNode);
     addShimC(_el_0);
     final _text_1 = createText('Has Template File!');
     _el_0.append(_text_1);

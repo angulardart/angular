@@ -32,6 +32,14 @@ class DomHelpers {
   static final updateAttribute = _of('updateAttribute');
   static final updateAttributeNS = _of('updateAttributeNS');
   static final setAttribute = _of('setAttribute');
+
+  static final createText = _of('createText');
+  static final appendText = _of('appendText');
+  static final createAnchor = _of('createAnchor');
+  static final appendAnchor = _of('appendAnchor');
+  static final appendDiv = _of('appendDiv');
+  static final appendSpan = _of('appendSpan');
+  static final appendElement = _of('appendElement');
 }
 
 class Identifiers {
@@ -101,14 +109,6 @@ class Identifiers {
       name: "checkBinding", moduleUrl: _appViewUtilsModuleUrl);
   static final createText = CompileIdentifierMetadata(
       name: "createText", moduleUrl: _appViewModuleUrl);
-  static final createAndAppend = CompileIdentifierMetadata<dynamic>(
-      name: "createAndAppend", moduleUrl: _appViewModuleUrl);
-  static final createDivAndAppend = CompileIdentifierMetadata<dynamic>(
-      name: "createDivAndAppend", moduleUrl: _appViewModuleUrl);
-  static final createSpanAndAppend = CompileIdentifierMetadata<dynamic>(
-      name: "createSpanAndAppend", moduleUrl: _appViewModuleUrl);
-  static final createViewContainerAnchor = CompileIdentifierMetadata(
-      name: 'createViewContainerAnchor', moduleUrl: _appViewModuleUrl);
   static final devModeEqual = CompileIdentifierMetadata<dynamic>(
       name: "devModeEqual", moduleUrl: _cdModuleUrl);
   static final identical =

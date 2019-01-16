@@ -15,6 +15,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$UsesEventTearoff = const [];
 
@@ -29,8 +30,8 @@ class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
   ComponentRef<import1.UsesEventTearoff> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
     _el_0.addEventListener('click', eventHandler1(ctx.onClick));
     _el_0.addEventListener('blur', eventHandler0(ctx.onBlur));
     init(const [], null);

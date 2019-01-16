@@ -17,8 +17,9 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import9;
-import 'package:angular/src/core/di/opaque_token.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/di/errors.dart' as import10;
+import 'package:angular/src/core/di/opaque_token.dart' as import11;
 import 'dart:core';
 
 final List<dynamic> styles$InjectableComponent = const [];
@@ -34,8 +35,8 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   ComponentRef<import1.InjectableComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Inject!');
     _el_0.append(_text_1);
     init(const [], null);
@@ -70,7 +71,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
   dynamic get _BaseService_0_8 {
     if ((__BaseService_0_8 == null)) {
       (__BaseService_0_8 = (import7.isDevMode
-          ? import9.debugInjectorWrap(import1.BaseService, () {
+          ? import10.debugInjectorWrap(import1.BaseService, () {
               return import1.createLinkedHashMap(_SomeDep_0_7, this.injectorGet(import1.SomeDep, viewData.parentIndex), _SomeDep_0_7);
             })
           : import1.createLinkedHashMap(_SomeDep_0_7, this.injectorGet(import1.SomeDep, viewData.parentIndex), _SomeDep_0_7)));
@@ -83,12 +84,12 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
     _compView_0 = ViewInjectableComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _test_0_5 = (import7.isDevMode
-        ? import9.debugInjectorWrap(const import10.OpaqueToken<dynamic>('test'), () {
+        ? import10.debugInjectorWrap(const import11.OpaqueToken<dynamic>('test'), () {
             return import1.injectableFactory(this.injectorGet(import5.Window, viewData.parentIndex));
           })
         : import1.injectableFactory(this.injectorGet(import5.Window, viewData.parentIndex)));
     _InjectableComponent_0_6 = (import7.isDevMode
-        ? import9.debugInjectorWrap(import1.InjectableComponent, () {
+        ? import10.debugInjectorWrap(import1.InjectableComponent, () {
             return import1.InjectableComponent(null, this.injectorGet(import1.InjectableService, viewData.parentIndex, null), _test_0_5, this.injectorGet(String, viewData.parentIndex, null));
           })
         : import1.InjectableComponent(null, this.injectorGet(import1.InjectableService, viewData.parentIndex, null), _test_0_5, this.injectorGet(String, viewData.parentIndex, null)));
@@ -99,7 +100,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const import10.OpaqueToken<dynamic>('test')) && (0 == nodeIndex))) {
+    if ((identical(token, const import11.OpaqueToken<dynamic>('test')) && (0 == nodeIndex))) {
       return _test_0_5;
     }
     if ((identical(token, import1.SomeDep) && (0 == nodeIndex))) {

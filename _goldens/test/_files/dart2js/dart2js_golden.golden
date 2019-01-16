@@ -3200,9 +3200,6 @@
     }
   },
   W = {
-    document: function() {
-      return document;
-    },
     _JenkinsSmiHash_combine: function(hash, value) {
       hash = 536870911 & hash + value;
       hash = 536870911 & hash + ((524287 & hash) << 10);
@@ -3816,10 +3813,6 @@
     createText: function(text) {
       return document.createTextNode(text);
     },
-    createAndAppend: function(doc, tagName, $parent) {
-      var t1 = doc.createElement(tagName);
-      return $parent.appendChild(t1);
-    },
     _detachAll: function(viewRootNodes) {
       var len, i, node, t1;
       len = viewRootNodes.length;
@@ -3980,6 +3973,14 @@
     },
     setAttribute: function(element, attribute, value) {
       element.setAttribute(attribute, value);
+    },
+    appendAnchor: function(doc, $parent) {
+      var t1 = document;
+      return $parent.appendChild(t1.createComment(""));
+    },
+    appendElement: function(doc, $parent, tagName) {
+      var t1 = doc.createElement(tagName);
+      return $parent.appendChild(t1);
     }
   },
   N = {
@@ -11175,11 +11176,8 @@
   };
   N.ViewInlinedNgIf0.prototype = {
     build$0: function() {
-      var parentRenderNode, t1;
-      parentRenderNode = this.initViewRoot$1(this.rootEl);
-      t1 = $.$get$_viewContainerAnchor().cloneNode(false);
-      this._anchor_0 = t1;
-      parentRenderNode.appendChild(t1);
+      var parentRenderNode = this.initViewRoot$1(this.rootEl);
+      this._anchor_0 = T.appendAnchor(document, parentRenderNode);
       this.init$2([], null);
     },
     detectChangesInternal$0: function() {
@@ -11209,9 +11207,7 @@
     build$0: function() {
       var parentRenderNode, t1;
       parentRenderNode = this.initViewRoot$1(this.rootEl);
-      t1 = $.$get$_viewContainerAnchor().cloneNode(false);
-      parentRenderNode.appendChild(t1);
-      t1 = new V.ViewContainer(0, null, this, t1);
+      t1 = new V.ViewContainer(0, null, this, T.appendAnchor(document, parentRenderNode));
       this._appEl_0 = t1;
       this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure()), t1, false);
       this.init$2(C.List_empty, null);
@@ -11261,12 +11257,10 @@
   };
   N.ViewEmbeddedNgFor0.prototype = {
     build$0: function() {
-      var parentRenderNode, _el_0, t1;
+      var parentRenderNode, doc, t1;
       parentRenderNode = this.initViewRoot$1(this.rootEl);
-      _el_0 = S.createAndAppend(document, "ul", parentRenderNode);
-      t1 = $.$get$_viewContainerAnchor().cloneNode(false);
-      _el_0.appendChild(t1);
-      t1 = new V.ViewContainer(1, 0, this, t1);
+      doc = document;
+      t1 = new V.ViewContainer(1, 0, this, T.appendAnchor(doc, T.appendElement(doc, parentRenderNode, "ul")));
       this._appEl_1 = t1;
       this._NgFor_1_9 = new R.NgFor(t1, new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure()));
       this.init$2(C.List_empty, null);
@@ -11339,17 +11333,13 @@
   };
   N.ViewComponentConditionalFeatures0.prototype = {
     build$0: function() {
-      var parentRenderNode, t1, t2;
+      var parentRenderNode, doc, t1;
       parentRenderNode = this.initViewRoot$1(this.rootEl);
-      t1 = $.$get$_viewContainerAnchor();
-      t2 = t1.cloneNode(false);
-      parentRenderNode.appendChild(t2);
-      t2 = new V.ViewContainer(0, null, this, t2);
-      this._appEl_0 = t2;
-      this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t2, N.dart2js_golden_template__viewFactory_ComponentConditionalFeatures1$closure()), t2, false);
-      t1 = t1.cloneNode(false);
-      parentRenderNode.appendChild(t1);
-      t1 = new V.ViewContainer(1, null, this, t1);
+      doc = document;
+      t1 = new V.ViewContainer(0, null, this, T.appendAnchor(doc, parentRenderNode));
+      this._appEl_0 = t1;
+      this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_ComponentConditionalFeatures1$closure()), t1, false);
+      t1 = new V.ViewContainer(1, null, this, T.appendAnchor(doc, parentRenderNode));
       this._appEl_1 = t1;
       this._NgIf_1_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_ComponentConditionalFeatures2$closure()), t1, false);
       this.init$2(C.List_empty, null);
@@ -11455,7 +11445,7 @@
   N.ViewUsesDomBindings0.prototype = {
     build$0: function() {
       var parentRenderNode = this.initViewRoot$1(this.rootEl);
-      this._el_0 = S.createAndAppend(document, "button", parentRenderNode);
+      this._el_0 = T.appendElement(document, parentRenderNode, "button");
       this.init$2(C.List_empty, null);
     },
     detectChangesInternal$0: function() {
@@ -12040,10 +12030,6 @@
     });
     _lazy($, "CssStyleDeclaration__propertyCache", "$get$CssStyleDeclaration__propertyCache", function() {
       return {};
-    });
-    _lazy($, "_viewContainerAnchor", "$get$_viewContainerAnchor", function() {
-      var t1 = W.document();
-      return t1.createComment("");
     });
     _lazy($, "NgZone__anyZoneKey", "$get$NgZone__anyZoneKey", function() {
       return new P.Object();

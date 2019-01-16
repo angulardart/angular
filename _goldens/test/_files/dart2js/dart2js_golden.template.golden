@@ -19,11 +19,11 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/di/errors.dart' as import9;
 import 'package:angular/src/core/di/opaque_token.dart' as import10;
 import 'dart:core';
+import 'package:angular/src/runtime/dom_helpers.dart' as import12;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import15;
-import 'package:angular/src/runtime/dom_helpers.dart' as import16;
+import 'package:angular/src/common/directives/ng_for.dart' as import16;
 
 final List<dynamic> styles$RootComponent = const [];
 
@@ -537,8 +537,8 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
   ComponentRef<import1.InlinedNgIf> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
+    final doc = import5.document;
+    _anchor_0 = import12.appendAnchor(doc, parentRenderNode);
     init([], null);
   }
 
@@ -548,7 +548,7 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
     final currVal_0 = (_ctx.showDiv == true);
     if (import6.checkBinding(_expr_0, currVal_0)) {
       if (currVal_0) {
-        var doc = import5.document;
+        final doc = import5.document;
         _el_0_0 = doc.createElement('div');
         final _text_0_1 = createText('Hello World');
         _el_0_0.append(_text_0_1);
@@ -616,8 +616,8 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
   ComponentRef<import1.EmbeddedNgIf> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
+    final doc = import5.document;
+    final _anchor_0 = import12.appendAnchor(doc, parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_EmbeddedNgIf1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
@@ -711,7 +711,7 @@ final List<dynamic> styles$EmbeddedNgFor = const [];
 
 class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
   ViewContainer _appEl_1;
-  import15.NgFor _NgFor_1_9;
+  import16.NgFor _NgFor_1_9;
   static RenderComponentType _renderType;
   ViewEmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('embedded-ng-for');
@@ -722,13 +722,12 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
   ComponentRef<import1.EmbeddedNgFor> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createAndAppend(doc, 'ul', parentRenderNode);
-    final _anchor_1 = createViewContainerAnchor();
-    _el_0.append(_anchor_1);
+    final doc = import5.document;
+    final _el_0 = import12.appendElement(doc, parentRenderNode, 'ul');
+    final _anchor_1 = import12.appendAnchor(doc, _el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_EmbeddedNgFor1);
-    _NgFor_1_9 = import15.NgFor(_appEl_1, _TemplateRef_1_8);
+    _NgFor_1_9 = import16.NgFor(_appEl_1, _TemplateRef_1_8);
     init(const [], null);
   }
 
@@ -770,7 +769,7 @@ class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
   }
   @override
   ComponentRef<import1.EmbeddedNgFor> build() {
-    var doc = import5.document;
+    final doc = import5.document;
     final _el_0 = doc.createElement('li');
     _el_0.append(_text_1);
     init0(_el_0);
@@ -957,13 +956,12 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
   ComponentRef<import1.ComponentConditionalFeatures> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
+    final doc = import5.document;
+    final _anchor_0 = import12.appendAnchor(doc, parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_ComponentConditionalFeatures1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
-    final _anchor_1 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_1);
+    final _anchor_1 = import12.appendAnchor(doc, parentRenderNode);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_ComponentConditionalFeatures2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
@@ -1222,8 +1220,8 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
   ComponentRef<import1.UsesDomBindings> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    _el_0 = createAndAppend(doc, 'button', parentRenderNode);
+    final doc = import5.document;
+    _el_0 = import12.appendElement(doc, parentRenderNode, 'button');
     init(const [], null);
   }
 
@@ -1232,12 +1230,12 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
     final _ctx = ctx;
     final currVal_0 = _ctx.title;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      import16.updateAttribute(_el_0, 'title', currVal_0);
+      import12.updateAttribute(_el_0, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.isFancy;
     if (import6.checkBinding(_expr_1, currVal_1)) {
-      import16.updateClassBinding(_el_0, 'fancy', currVal_1);
+      import12.updateClassBinding(_el_0, 'fancy', currVal_1);
       _expr_1 = currVal_1;
     }
   }
@@ -1245,12 +1243,12 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
   void detectHostChanges(bool firstCheck) {
     final currVal_2 = ctx.title;
     if (import6.checkBinding(_expr_2, currVal_2)) {
-      import16.updateAttribute(rootEl, 'title', currVal_2);
+      import12.updateAttribute(rootEl, 'title', currVal_2);
       _expr_2 = currVal_2;
     }
     final currVal_3 = ctx.isFancy;
     if (import6.checkBinding(_expr_3, currVal_3)) {
-      import16.updateClassBindingNonHtml(rootEl, 'fancy', currVal_3);
+      import12.updateClassBindingNonHtml(rootEl, 'fancy', currVal_3);
       _expr_3 = currVal_3;
     }
   }

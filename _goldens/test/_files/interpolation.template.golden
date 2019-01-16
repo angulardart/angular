@@ -15,8 +15,9 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import10;
+import 'package:angular/src/common/directives/ng_for.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
 
 final List<dynamic> styles$InterpolationComponent = const [];
@@ -36,8 +37,8 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _text_0 = createText('    ');
     parentRenderNode.append(_text_0);
-    var doc = import2.document;
-    final _el_1 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import2.document;
+    final _el_1 = import9.appendDiv(doc, parentRenderNode);
     final _text_2 = createText('\n      ');
     _el_1.append(_text_2);
     _el_1.append(_text_3);
@@ -114,8 +115,8 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import2.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     _el_0.append(_text_1);
     init(const [], null);
   }
@@ -188,8 +189,8 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
   ComponentRef<import1.InterpolationTwoAdjacent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import2.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     _el_0.append(_text_1);
     final _text_2 = createText(' ');
     _el_0.append(_text_2);
@@ -274,8 +275,8 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
   ComponentRef<import1.InterpolationLongerSentence> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import2.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Welcome ');
     _el_0.append(_text_1);
     _el_0.append(_text_2);
@@ -364,8 +365,8 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
   ComponentRef<import1.InterpolationLiterals> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import2.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Welcome');
     _el_0.append(_text_1);
     final _text_2 = createText(' ');
@@ -422,7 +423,7 @@ final List<dynamic> styles$InterpolationLocals = const [];
 
 class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
-  import10.NgFor _NgFor_0_9;
+  import11.NgFor _NgFor_0_9;
   var _expr_0;
   static RenderComponentType _renderType;
   ViewInterpolationLocals0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -434,11 +435,11 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   ComponentRef<import1.InterpolationLocals> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
+    final doc = import2.document;
+    final _anchor_0 = import9.appendAnchor(doc, parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
-    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import11.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
   }
 
@@ -473,17 +474,18 @@ ComponentFactory<import1.InterpolationLocals> get InterpolationLocalsNgFactory {
 
 class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
-  import10.NgFor _NgFor_0_9;
+  import11.NgFor _NgFor_0_9;
   var _expr_0;
   _ViewInterpolationLocals1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewInterpolationLocals0._renderType;
   }
   @override
   ComponentRef<import1.InterpolationLocals> build() {
-    final _anchor_0 = createViewContainerAnchor();
+    final doc = import2.document;
+    final _anchor_0 = import9.createAnchor(doc);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
-    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import11.NgFor(_appEl_0, _TemplateRef_0_8);
     init0(_appEl_0);
   }
 
