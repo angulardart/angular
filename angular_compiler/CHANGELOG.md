@@ -1,3 +1,6 @@
+*   BuildError now has factory constructors to create errors for annotations and
+    elements.
+
 ## 0.4.2
 
 *   Updates the `messages.unresolvedSource` API to support different error

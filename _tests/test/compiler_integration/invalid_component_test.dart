@@ -126,4 +126,74 @@ void main() {
       ])
     ]);
   });
+
+  test('should throw on missing selector', () async {
+    await compilesExpecting('''
+    import '$ngImport';
+
+    @Component(
+      template: 'boo'
+    )
+    class NoSelector {}
+    ''', errors: [
+      allOf([
+        contains('Selector is required, got "null"'),
+        containsSourceLocation(3, 5)
+      ])
+    ]);
+  });
+
+  test('should throw on empty selector', () async {
+    await compilesExpecting('''
+    import '$ngImport';
+
+    @Component(
+      selector: '',
+      template: 'boo'
+    )
+    class EmptySelector {}
+    ''', errors: [
+      allOf([
+        contains('Selector is required, got ""'),
+        containsSourceLocation(3, 5)
+      ])
+    ]);
+  });
+
+  test('should throw on async ngDoCheck', () async {
+    await compilesExpecting('''
+    import '$ngImport';
+
+    @Component(
+      selector: 'async-docheck',
+      template: 'boo'
+    )
+    class AsyncDoCheck implements DoCheck {
+      void ngDoCheck() async {}
+    }
+    ''', errors: [
+      allOf([
+        contains('ngDoCheck should not be "async"'),
+        containsSourceLocation(8, 12)
+      ])
+    ]);
+  });
+
+  test('should throw on DoCheck and OnChanges', () async {
+    await compilesExpecting('''
+    import '$ngImport';
+
+    @Component(
+      selector: 'do-check-and-on-changes',
+      template: 'boo'
+    )
+    class DoCheckAndOnChanges implements DoCheck, OnChanges {}
+    ''', errors: [
+      allOf([
+        contains(
+            'Cannot implement both the DoCheck and OnChanges lifecycle events'),
+        containsSourceLocation(7, 11)
+      ])
+    ]);
+  });
 }

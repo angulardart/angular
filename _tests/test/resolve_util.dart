@@ -19,6 +19,7 @@ Future<NormalizedComponentWithViewDirectives> resolveAndFindComponent(
 ) async {
   final library = await resolve("import 'package:angular/angular.dart';"
       "$source");
-  final artifacts = findComponentsAndDirectives(LibraryReader(library));
+  final artifacts = findComponentsAndDirectives(
+      LibraryReader(library), FindComponentsExceptionHandler());
   return artifacts.components.first;
 }
