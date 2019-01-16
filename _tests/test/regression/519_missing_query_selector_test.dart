@@ -17,7 +17,10 @@ void main() {
         Element div;
       }
     """, errors: [
-      contains('Missing selector argument for "@ViewChild"'),
+      allOf([
+        contains('Missing selector argument for "@ViewChild"'),
+        containsSourceLocation(9, 9)
+      ])
     ]);
   });
 }

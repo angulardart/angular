@@ -30,6 +30,9 @@
 *   [#1669][]: Fixed a regression which prevented a pipe invoked with more than
     two arguments from being passed as an argument to a function.
 
+*   The compiler emits source locations for errors in Dart files when using an
+    `AnalysisDriver`.
+
 [#1694]: https://github.com/dart-lang/angular/issues/1694
 [#1669]: https://github.com/dart-lang/angular/issues/1669
 
