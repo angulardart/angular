@@ -37,7 +37,6 @@ import 'view_compiler_utils.dart'
         createFlatArray,
         createSetAttributeStatement,
         detectHtmlElementFromTagName,
-        componentFromDirectives,
         identifierFromTagName,
         namespaceUris;
 
@@ -165,27 +164,13 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   void visitElement(ElementAst ast, CompileElement parent) {
     int nodeIndex = _view.nodes.length;
 
-    bool isHostRootView = nodeIndex == 0 && _view.viewType == ViewType.host;
-    final type = o.importType(identifierFromTagName(ast.name));
-    NodeReference elementRef;
-    if (isHostRootView) {
-      elementRef = NodeReference.appViewRoot();
-    } else if (_view.isInlined) {
-      elementRef = NodeReference.inlinedNode(
-          _view.storage, type, _view.declarationElement.nodeIndex, nodeIndex);
-    } else {
-      elementRef = NodeReference(_view.storage, type, nodeIndex);
-    }
+    final elementRef = _elementReference(ast, nodeIndex);
 
-    var directives = <CompileDirectiveMetadata>[];
-    for (var dir in ast.directives) directives.add(dir.directive);
-    CompileDirectiveMetadata component = componentFromDirectives(directives);
+    var directives = _toCompileMetadata(ast.directives);
+    CompileDirectiveMetadata component = _componentFromDirectives(directives);
 
     if (component != null) {
-      bool isDeferred = nodeIndex == 0 &&
-          (_view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
-          (_view.declarationElement.sourceAst as EmbeddedTemplateAst)
-              .hasDeferredComponent;
+      bool isDeferred = nodeIndex == 0 && _viewHasDeferredComponent;
       _visitComponentElement(
           parent, nodeIndex, component, elementRef, directives, ast,
           isDeferred: isDeferred);
@@ -193,6 +178,28 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       _visitHtmlElement(parent, nodeIndex, elementRef, directives, ast);
     }
   }
+
+  NodeReference _elementReference(ElementAst ast, int nodeIndex) {
+    final type = o.importType(identifierFromTagName(ast.name));
+    if (_view.isRootNodeOfHost(nodeIndex)) {
+      return NodeReference.appViewRoot();
+    } else if (_view.isInlined) {
+      return NodeReference.inlinedNode(
+          _view.storage, type, _view.declarationElement.nodeIndex, nodeIndex);
+    } else {
+      return NodeReference(_view.storage, type, nodeIndex);
+    }
+  }
+
+  CompileDirectiveMetadata _componentFromDirectives(
+          List<CompileDirectiveMetadata> directives) =>
+      directives.firstWhere((directive) => directive.isComponent,
+          orElse: () => null);
+
+  bool get _viewHasDeferredComponent =>
+      (_view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
+      (_view.declarationElement.sourceAst as EmbeddedTemplateAst)
+          .hasDeferredComponent;
 
   void _visitComponentElement(
       CompileElement parent,
@@ -230,10 +237,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     _view.nodes.add(compileElement);
 
-    if (component != null) {
-      compileElement.componentView = compAppViewExpr.toReadExpr();
-      _view.addViewChild(compAppViewExpr.toReadExpr());
-    }
+    compileElement.componentView = compAppViewExpr.toReadExpr();
+    _view.addViewChild(compAppViewExpr.toReadExpr());
 
     // beforeChildren() -> _prepareProviderInstances will create the actual
     // directive and component instances.
@@ -279,9 +284,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     _view.writeLiteralAttributeValues(ast, elementRef, nodeIndex, directives);
 
-    bool isHostRootView = nodeIndex == 0 && _view.viewType == ViewType.host;
     // Set ng_content class for CSS shim.
-    var elementType = isHostRootView
+    var elementType = _view.isRootNodeOfHost(nodeIndex)
         ? Identifiers.HTML_HTML_ELEMENT
         : identifierFromTagName(ast.name);
     _view.shimCssForNode(elementRef, nodeIndex, elementType);
@@ -319,8 +323,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     }
     NodeReference nodeReference =
         _view.createViewContainerAnchor(parent, nodeIndex, ast);
-    var directives =
-        ast.directives.map((directiveAst) => directiveAst.directive).toList();
+    var directives = _toCompileMetadata(ast.directives);
     var compileElement = CompileElement(
         parent,
         _view,
@@ -377,6 +380,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       _view.deferLoadEmbeddedTemplate(embeddedView, compileElement);
     }
   }
+
+  List<CompileDirectiveMetadata> _toCompileMetadata(
+          List<DirectiveAst> directives) =>
+      directives.map((directiveAst) => directiveAst.directive).toList();
 
   @override
   void visitAttr(AttrAst ast, CompileElement parent) {}

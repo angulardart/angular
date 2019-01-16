@@ -803,7 +803,7 @@ class CompileView {
         parent, component, elementRef, nodeIndex, isDeferred, ast);
 
     final root = compAppViewExpr.toReadExpr().prop(appViewRootElementName);
-    if (_isRootNodeOfHost(nodeIndex)) {
+    if (isRootNodeOfHost(nodeIndex)) {
       // Assign root element created by viewfactory call to our own root.
       _createMethod.addStmt(elementRef.toWriteStmt(root));
     } else {
@@ -819,7 +819,7 @@ class CompileView {
         .callMethod('create', [componentInstance, contentNodesArray]).toStmt());
   }
 
-  bool _isRootNodeOfHost(int nodeIndex) =>
+  bool isRootNodeOfHost(int nodeIndex) =>
       nodeIndex == 0 && viewType == ViewType.host;
 
   void projectNodesIntoElement(
@@ -851,7 +851,7 @@ class CompileView {
 
   void shimCssForNode(NodeReference nodeReference, int nodeIndex,
       CompileIdentifierMetadata nodeType) {
-    if (_isRootNodeOfHost(nodeIndex)) return;
+    if (isRootNodeOfHost(nodeIndex)) return;
     if (component.template.encapsulation == ViewEncapsulation.Emulated) {
       // Set ng_content class for CSS shim.
       String shimMethod =

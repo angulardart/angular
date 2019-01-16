@@ -308,14 +308,6 @@ o.Expression convertValueToOutputAst(dynamic value) {
   }
 }
 
-CompileDirectiveMetadata componentFromDirectives(
-    List<CompileDirectiveMetadata> directives) {
-  for (CompileDirectiveMetadata directive in directives) {
-    if (directive.isComponent) return directive;
-  }
-  return null;
-}
-
 // Detect _PopupSourceDirective_0_6.instance for directives that have
 // change detectors and unwrap to change detector.
 o.Expression unwrapDirectiveInstance(o.Expression directiveInstance) {
