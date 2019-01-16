@@ -16,6 +16,7 @@ import 'dart:html' as import6;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
 import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$I18nPropertyComponent = const [];
 
@@ -32,8 +33,8 @@ class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> 
   ComponentRef<import1.I18nPropertyComponent> build() {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import6.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import6.document;
+    final _el_0 = import10.appendDiv(doc, parentRenderNode);
     _MessageDirective_0_5 = import1.MessageDirective();
     final _text_1 = createText(',');
     parentRenderNode.append(_text_1);

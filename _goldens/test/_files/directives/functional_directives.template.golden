@@ -30,10 +30,10 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   ComponentRef<import1.AppComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     import9.setAttribute(_el_0, 'generateText', '');
-    final _el_1 = createDivAndAppend(doc, _el_0);
+    final _el_1 = import9.appendDiv(doc, _el_0);
     import1.generateTextDirective(_el_0, parentView.injectorGet(import1.TextService, viewData.parentIndex));
     init(const [], null);
   }

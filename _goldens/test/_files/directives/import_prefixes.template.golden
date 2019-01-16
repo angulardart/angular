@@ -15,6 +15,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$ParentComponent = const [];
 
@@ -30,8 +31,8 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   ComponentRef<import1.ParentComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = createAndAppend(doc, 'child-comp', parentRenderNode);
+    final doc = import2.document;
+    _el_0 = import9.appendElement(doc, parentRenderNode, 'child-comp');
     init(const [], null);
   }
 

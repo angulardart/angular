@@ -19,8 +19,9 @@ import 'dart:html' as import9;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
 import 'package:angular/src/runtime.dart' as import11;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import13;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'external_service.dart' as import14;
+import 'external_service.dart' as import15;
 import 'deferred_component.dart' deferred as deflib0;
 import 'deferred_component.template.dart' deferred as deflib1;
 
@@ -52,28 +53,24 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   ComponentRef<import1.TestContainerComponent> build() {
     final _rootEl = rootEl;
     final import9.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
+    final doc = import9.document;
+    final _anchor_0 = import13.appendAnchor(doc, parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);
     _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
-    final _anchor_1 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_1);
+    final _anchor_1 = import13.appendAnchor(doc, parentRenderNode);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
-    final _anchor_2 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_2);
+    final _anchor_2 = import13.appendAnchor(doc, parentRenderNode);
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_8 = TemplateRef(_appEl_2, viewFactory_TestContainerComponent4);
     _NgIf_2_9 = NgIf(_appEl_2, _TemplateRef_2_8);
-    final _anchor_3 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_3);
+    final _anchor_3 = import13.appendAnchor(doc, parentRenderNode);
     _appEl_3 = ViewContainer(3, null, this, _anchor_3);
     TemplateRef _TemplateRef_3_8 = TemplateRef(_appEl_3, viewFactory_TestContainerComponent6);
     _cancelDeferredLoad3 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_3, _TemplateRef_3_8);
-    final _anchor_4 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_4);
+    final _anchor_4 = import13.appendAnchor(doc, parentRenderNode);
     _appEl_4 = ViewContainer(4, null, this, _anchor_4);
     TemplateRef _TemplateRef_4_8 = TemplateRef(_appEl_4, viewFactory_TestContainerComponent7);
     _cancelDeferredLoad4 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_4, _TemplateRef_4_8);
@@ -82,8 +79,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     parentRenderNode.append(_el_5);
     _NotDeferredChildComponent_5_5 = deflib0.NotDeferredChildComponent();
     _compView_5.create(_NotDeferredChildComponent_5_5, []);
-    final _anchor_6 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_6);
+    final _anchor_6 = import13.appendAnchor(doc, parentRenderNode);
     _appEl_6 = ViewContainer(6, null, this, _anchor_6);
     TemplateRef _TemplateRef_6_8 = TemplateRef(_appEl_6, viewFactory_TestContainerComponent8);
     _cancelDeferredLoad6 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_6, _TemplateRef_6_8);
@@ -177,7 +173,8 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    final _anchor_0 = createViewContainerAnchor();
+    final doc = import9.document;
+    final _anchor_0 = import13.createAnchor(doc);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent3);
     _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
@@ -238,10 +235,9 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    var doc = import9.document;
+    final doc = import9.document;
     final _el_0 = doc.createElement('div');
-    final _anchor_1 = createViewContainerAnchor();
-    _el_0.append(_anchor_1);
+    final _anchor_1 = import13.appendAnchor(doc, _el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent5);
     _cancelDeferredLoad1 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_8);
@@ -364,15 +360,15 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent7(AppV
 
 class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponent> {
   AppView _compView_0;
-  import14.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
+  import15.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
   dynamic _DeferredChildComponentWithServices_0_6;
-  import14.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
+  import15.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
   _ViewTestContainerComponent8(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestContainerComponent0._renderType;
   }
-  import14.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
+  import15.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
     if ((__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
-      (__ExternalServiceLazilyCreatedMaybe_0_7 = import14.ExternalServiceLazilyCreatedMaybe());
+      (__ExternalServiceLazilyCreatedMaybe_0_7 = import15.ExternalServiceLazilyCreatedMaybe());
     }
     return __ExternalServiceLazilyCreatedMaybe_0_7;
   }
@@ -381,7 +377,7 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = deflib1.viewFactory_DeferredChildComponentWithServices0(this, 0);
     final _el_0 = _compView_0.rootEl;
-    _ExternalServiceImmediatelyCreated_0_5 = import14.ExternalServiceImmediatelyCreated();
+    _ExternalServiceImmediatelyCreated_0_5 = import15.ExternalServiceImmediatelyCreated();
     _DeferredChildComponentWithServices_0_6 = deflib0.DeferredChildComponentWithServices(_ExternalServiceImmediatelyCreated_0_5);
     _compView_0.create(_DeferredChildComponentWithServices_0_6, []);
     init0(_el_0);
@@ -389,10 +385,10 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import14.ExternalServiceImmediatelyCreated) && (0 == nodeIndex))) {
+    if ((identical(token, import15.ExternalServiceImmediatelyCreated) && (0 == nodeIndex))) {
       return _ExternalServiceImmediatelyCreated_0_5;
     }
-    if ((identical(token, import14.ExternalServiceLazilyCreatedMaybe) && (0 == nodeIndex))) {
+    if ((identical(token, import15.ExternalServiceLazilyCreatedMaybe) && (0 == nodeIndex))) {
       return _ExternalServiceLazilyCreatedMaybe_0_7;
     }
     return notFoundResult;

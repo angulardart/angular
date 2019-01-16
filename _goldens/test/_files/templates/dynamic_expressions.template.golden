@@ -17,6 +17,7 @@ import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'dart:core';
 
@@ -396,8 +397,8 @@ class ViewComp60 extends AppView<import1.Comp6> {
   ComponentRef<import1.Comp6> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
+    final doc = import2.document;
+    final _anchor_0 = import11.appendAnchor(doc, parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp61);
     _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
@@ -506,8 +507,8 @@ class ViewComp70 extends AppView<import1.Comp7> {
   ComponentRef<import1.Comp7> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_0);
+    final doc = import2.document;
+    final _anchor_0 = import11.appendAnchor(doc, parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp71);
     _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
@@ -552,7 +553,8 @@ class _ViewComp71 extends AppView<import1.Comp7> {
   }
   @override
   ComponentRef<import1.Comp7> build() {
-    final _anchor_0 = createViewContainerAnchor();
+    final doc = import2.document;
+    final _anchor_0 = import11.createAnchor(doc);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp72);
     _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);

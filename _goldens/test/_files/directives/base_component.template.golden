@@ -17,6 +17,7 @@ import 'dart:html' as import7;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/src/runtime.dart' as import9;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import11;
 
 final List<dynamic> styles$TestFooComponent = const [];
 
@@ -33,8 +34,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     final _rootEl = rootEl;
     final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import7.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import7.document;
+    final _el_0 = import11.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Foo');
     _el_0.append(_text_1);
     _compView_2 = import2.ViewTestSubComponent0(this, 2);

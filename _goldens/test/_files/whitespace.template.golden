@@ -15,6 +15,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$PreserveWhitespace = const [];
 
@@ -31,11 +32,11 @@ class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _text_0 = createText('    ');
     parentRenderNode.append(_text_0);
-    var doc = import5.document;
-    final _el_1 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_1 = import9.appendDiv(doc, parentRenderNode);
     final _text_2 = createText('\n      Welcome...\n      To...\n      ');
     _el_1.append(_text_2);
-    final _el_3 = createAndAppend(doc, 'strong', _el_1);
+    final _el_3 = import9.appendElement(doc, _el_1, 'strong');
     final _text_4 = createText('Jurassic...');
     _el_3.append(_text_4);
     final _text_5 = createText('\n      Park!\n    ');
@@ -99,11 +100,11 @@ class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
   ComponentRef<import1.MinifyWhitespace> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Welcome... To... ');
     _el_0.append(_text_1);
-    final _el_2 = createAndAppend(doc, 'strong', _el_0);
+    final _el_2 = import9.appendElement(doc, _el_0, 'strong');
     final _text_3 = createText('Jurassic...');
     _el_2.append(_text_3);
     final _text_4 = createText(' Park!');

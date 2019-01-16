@@ -18,8 +18,8 @@ import 'package:angular/angular.dart';
 import 'dart:core';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import11;
+import 'package:angular/src/runtime/dom_helpers.dart' as import12;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import13;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import14;
 
 final List<dynamic> styles$UntypedComp = const [];
@@ -1251,8 +1251,8 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
     parentRenderNode.append(_el_1);
     _NestedChildComp_1_5 = import1.NestedChildComp();
     _compView_1.create(_NestedChildComp_1_5, []);
-    final _anchor_2 = createViewContainerAnchor();
-    parentRenderNode.append(_anchor_2);
+    final doc = import5.document;
+    final _anchor_2 = import12.appendAnchor(doc, parentRenderNode);
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_8 = TemplateRef(_appEl_2, (parentView, parentIndex) {
       return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
@@ -1634,9 +1634,9 @@ class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDe
   ComponentRef<import1.UsesGenericChangeDetector> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
-    import13.setAttribute(_el_0, 'generic', '');
+    final doc = import5.document;
+    _el_0 = import12.appendDiv(doc, parentRenderNode);
+    import12.setAttribute(_el_0, 'generic', '');
     _GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
     init(const [], null);
   }
@@ -1700,7 +1700,7 @@ class GenericDirectiveNgCd<T> extends import14.DirectiveChangeDetector {
   void detectHostChanges(AppView<dynamic> view, import5.Element el) {
     final currVal_0 = instance.input;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      import13.updateAttribute(el, 'a', currVal_0?.toString());
+      import12.updateAttribute(el, 'a', currVal_0?.toString());
       _expr_0 = currVal_0;
     }
   }

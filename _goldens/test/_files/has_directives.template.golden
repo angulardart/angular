@@ -15,6 +15,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$TestFooComponent = const [];
 
@@ -32,13 +33,13 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('My own template');
     _el_0.append(_text_1);
     final _text_2 = createText('A directive:');
     parentRenderNode.append(_text_2);
-    final _el_3 = createAndAppend(doc, 'directive', parentRenderNode);
+    final _el_3 = import9.appendElement(doc, parentRenderNode, 'directive');
     _TestDirective_3_5 = import1.TestDirective();
     final _text_4 = createText('A component:');
     parentRenderNode.append(_text_4);
@@ -114,8 +115,8 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   ComponentRef<import1.TestSubComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import5.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import5.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = createText('Bar');
     _el_0.append(_text_1);
     init(const [], null);

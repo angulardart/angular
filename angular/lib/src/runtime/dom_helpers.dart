@@ -1,12 +1,16 @@
 /// This library is considered separate from rest of `runtime.dart`, as it
 /// imports `dart:html` and `runtime.dart` is currently used on libraries
 /// that expect to only run on the command-line VM.
+@JS()
 library angular.src.runtime.dom_helpers;
 
-import 'dart:html';
+import 'dart:html' hide document;
 
+import 'package:js/js.dart';
 import 'package:js/js_util.dart' as js;
 import 'package:meta/dart2js.dart' as dart2js;
+
+import 'optimizations.dart';
 
 // Adds additional (missing) methods to `dart:html`'s [Element].
 //
@@ -19,8 +23,16 @@ void _removeAttribute(Element e, String attribute) {
 
 /// https://developer.mozilla.org/en-US/docs/Web/API/Element/removeAttributeNS
 void _removeAttributeNS(Element e, String namespace, String attribute) {
-  js.callMethod(e, 'removeAttributeNS', [attribute]);
+  js.callMethod(e, 'removeAttributeNS', [namespace, attribute]);
 }
+
+// TODO(https://github.com/dart-lang/sdk/issues/35669): Remove.
+
+/// https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode
+Text _createTextNode(Document d, String text) => Text(text);
+
+/// https://developer.mozilla.org/en-US/docs/Web/API/Document/createComment
+Comment _createComment(Document d) => Comment();
 
 /// Set to `true` when Angular modified the DOM.
 ///
@@ -116,4 +128,97 @@ void setAttribute(
   String value = '',
 ]) {
   element.setAttribute(attribute, value);
+}
+
+/// Creates a [Text] node with the provided [contents].
+///
+/// This is an optimization to reduce code size for a common operation.
+///
+/// For example, the naive way of creating text nodes would be:
+///
+/// ```dart
+/// var a = Text('Hello');
+/// var b = Text('World');
+/// var c = Text('!')
+/// ```
+///
+/// This in turn compiles to the following after Dart2JS:
+///
+/// ```js
+/// var t, a, b, c;
+/// t = document;
+/// a = t.createTextNode('Hello');
+/// b = t.createTextNode('World');
+/// c = t.createTextNode('!')
+/// ```
+///
+/// Where-as using [createText] minimizes the amount of code:
+///
+/// ```dart
+/// var d = document;
+/// var a = createText(d, 'Hello');
+/// var b = createText(d, 'World');
+/// var c = createText('!');
+/// ```
+///
+/// ... compiles to (and can be further minified, assume as `z6` below):
+///
+/// ```js
+/// var t, a, b, c;
+/// t = document;
+/// a = z6(d, 'Hello');
+/// b = z6(d, 'World');
+/// c = z6(d, '!');
+/// ```
+@dart2js.noInline
+Text createText(Document doc, String contents) {
+  return _createTextNode(doc, contents);
+}
+
+/// Appends and returns a a new [Text] node to a [parent] node.
+///
+/// This is an optimization to reduce code size for a common operation.
+@dart2js.noInline
+Text appendText(Document doc, Node parent, String text) {
+  return unsafeCast(parent.append(createText(doc, text)));
+}
+
+/// Returns a new [Comment] node with empty contents.
+///
+/// This is an optimization to reduce code size for a common operation.
+@dart2js.noInline
+Comment createAnchor(Document doc) => _createComment(doc);
+
+/// Appends and returns a new empty [Comment] to a [parent] node.
+///
+/// This is an optimization to reduce code size for a common operation.
+@dart2js.noInline
+Comment appendAnchor(Document doc, Node parent) {
+  return unsafeCast(parent.append(_createComment(doc)));
+}
+
+/// Appends and returns a new empty [DivElement] to a [parent] node.
+///
+/// This is an optimization to reduce code size for a common operation.
+@dart2js.noInline
+DivElement appendDiv(Document doc, Node parent) {
+  return unsafeCast(parent.append(doc.createElement('div')));
+}
+
+/// Appends and returns a new empty [SpanElement] to a [parent] node.
+///
+/// This is an optimization to reduce code size for a common operation.
+@dart2js.noInline
+SpanElement appendSpan(Document doc, Node parent) {
+  return unsafeCast(parent.append(doc.createElement('span')));
+}
+
+/// Appends and returns a new empty [Element] to a [parent] node.
+///
+/// For `<div>`, see [appendDiv], and for `<span>`, see [appendSpan].
+///
+/// This is an optimization to reduce code size for a common operation.
+@dart2js.noInline
+Element appendElement(Document doc, Node parent, String tagName) {
+  return unsafeCast(parent.append(doc.createElement(tagName)));
 }

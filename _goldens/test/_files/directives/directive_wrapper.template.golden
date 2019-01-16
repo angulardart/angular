@@ -36,8 +36,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import2.document;
+    _el_0 = import9.appendDiv(doc, parentRenderNode);
     import9.setAttribute(_el_0, 'directive-with-output', '');
     import9.setAttribute(_el_0, 'role', import1.ChildDirective.hostRole);
     import9.setAttribute(_el_0, 'some-child-directive', '');
@@ -120,12 +120,12 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
   ComponentRef<import1.DirectiveContainerTest> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    var doc = import2.document;
-    final _el_0 = createDivAndAppend(doc, parentRenderNode);
+    final doc = import2.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
     _el_0.className = 'target1';
     import9.setAttribute(_el_0, 'fastDirective', '');
     _FastDirective_0_5 = FastDirectiveNgCd(import1.FastDirective(_el_0), this, _el_0);
-    final _el_1 = createDivAndAppend(doc, parentRenderNode);
+    final _el_1 = import9.appendDiv(doc, parentRenderNode);
     _el_1.className = 'target2';
     import9.setAttribute(_el_1, 'fastDirective', '');
     _FastDirective_1_5 = FastDirectiveNgCd(import1.FastDirective(_el_1), this, _el_1);
