@@ -25,9 +25,13 @@ class AngularCompiler {
       this.templateCompiler, this._directiveNormalizer, this._templateParser);
 
   Future<SourceModule> compile(LibraryElement element) async {
+    final exceptionHandler = FindComponentsExceptionHandler();
     // Parse Dart code for @Components and @Directives
     final compileComponentsData =
-        findComponentsAndDirectives(LibraryReader(element));
+        findComponentsAndDirectives(LibraryReader(element), exceptionHandler);
+
+    await exceptionHandler.maybeReportErrors();
+
     if (compileComponentsData.isEmpty) return null;
 
     // Convert the Components into an intermediate representation

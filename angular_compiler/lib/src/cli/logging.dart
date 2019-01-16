@@ -117,6 +117,43 @@ class BuildError extends Error {
   BuildError([this.message, Trace trace])
       : stackTrace = trace ?? Trace.current();
 
+  factory BuildError.forAnnotation(
+    ElementAnnotation annotation,
+    String message, [
+    Trace trace,
+  ]) {
+    final sourceSpan = _getSourceSpanFrom(annotation);
+    return BuildError(sourceSpan.message(message), trace);
+  }
+
+  factory BuildError.forElement(
+    Element element,
+    String message, [
+    Trace trace,
+  ]) {
+    // TODO(matanl): Once AnalysisDriver is available, revisit:
+    // https://github.com/dart-lang/angular/issues/902#issuecomment-366330965
+    final source = element.source;
+    if (source == null || source.contents.data.isEmpty) {
+      final warning = source == null
+          ? 'No source text available for $element'
+          : 'No source text available for $element (${source.uri})';
+      logWarning('$warning: the next error may be terse');
+      return BuildError(message, trace);
+    }
+    final sourceUrl = source.uri;
+    final sourceContents = source.contents.data;
+    final sourceFile = SourceFile.fromString(
+      sourceContents,
+      url: sourceUrl,
+    );
+    final sourceSpan = sourceFile.span(
+      element.nameOffset,
+      element.nameLength + element.nameOffset,
+    );
+    return BuildError(sourceSpan.message(message), trace);
+  }
+
   // TODO: Remove internal API once ElementAnnotation has source information.
   // https://github.com/dart-lang/sdk/issues/32454
   static SourceSpan _getSourceSpanFrom(ElementAnnotation annotation) {
@@ -138,8 +175,7 @@ class BuildError extends Error {
     String message, [
     Trace trace,
   ]) {
-    final sourceSpan = _getSourceSpanFrom(annotation);
-    throw BuildError(sourceSpan.message(message), trace);
+    throw BuildError.forAnnotation(annotation, message, trace);
   }
 
   /// Throws a [BuildError] caused by analyzing the provided [element].
@@ -149,27 +185,7 @@ class BuildError extends Error {
     String message, [
     Trace trace,
   ]) {
-    // TODO(matanl): Once AnalysisDriver is available, revisit:
-    // https://github.com/dart-lang/angular/issues/902#issuecomment-366330965
-    final source = element.source;
-    if (source == null || source.contents.data.isEmpty) {
-      final warning = source == null
-          ? 'No source text available for $element'
-          : 'No source text available for $element (${source.uri})';
-      logWarning('$warning: the next error may be terse');
-      throw BuildError(message, trace);
-    }
-    final sourceUrl = source.uri;
-    final sourceContents = source.contents.data;
-    final sourceFile = SourceFile.fromString(
-      sourceContents,
-      url: sourceUrl,
-    );
-    final sourceSpan = sourceFile.span(
-      element.nameOffset,
-      element.nameLength + element.nameOffset,
-    );
-    throw BuildError(sourceSpan.message(message), trace);
+    throw BuildError.forElement(element, message, trace);
   }
 
   @override

@@ -33,8 +33,9 @@ const _statefulDirectiveFields = [
   'exportAs',
 ];
 
-AngularArtifacts findComponentsAndDirectives(LibraryReader library) {
-  var componentVisitor = _NormalizedComponentVisitor(library);
+AngularArtifacts findComponentsAndDirectives(
+    LibraryReader library, FindComponentsExceptionHandler exceptionHandler) {
+  var componentVisitor = _NormalizedComponentVisitor(library, exceptionHandler);
   library.element.accept(componentVisitor);
   return AngularArtifacts(
     componentVisitor.components,
@@ -47,17 +48,21 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   final List<CompileDirectiveMetadata> directives = [];
   final LibraryReader _library;
 
-  _NormalizedComponentVisitor(this._library);
+  final FindComponentsExceptionHandler _exceptionHandler;
+
+  _NormalizedComponentVisitor(this._library, this._exceptionHandler);
 
   @override
   Null visitClassElement(ClassElement element) {
-    final directive = element.accept(_ComponentVisitor(_library));
+    final directive =
+        element.accept(_ComponentVisitor(_library, _exceptionHandler));
     if (directive != null) {
       if (directive.isComponent) {
         final directives = _visitDirectives(element);
         final directiveTypes = _visitDirectiveTypes(element);
         final pipes = _visitPipes(element);
-        _failFastOnUnusedDirectiveTypes(element, directives, directiveTypes);
+        _errorOnUnusedDirectiveTypes(
+            element, directives, directiveTypes, _exceptionHandler);
         components.add(NormalizedComponentWithViewDirectives(
           directive,
           directives,
@@ -73,7 +78,8 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   @override
   Null visitFunctionElement(FunctionElement element) {
-    final directive = element.accept(_ComponentVisitor(_library));
+    final directive =
+        element.accept(_ComponentVisitor(_library, _exceptionHandler));
     if (directive != null) {
       directives.add(directive);
     }
@@ -83,7 +89,8 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) {
     final values = _getResolvedArgumentsOrFail(element, 'directives');
     return visitAll(values, (value) {
-      return typeDeclarationOf(value)?.accept(_ComponentVisitor(_library));
+      return typeDeclarationOf(value)
+          ?.accept(_ComponentVisitor(_library, _exceptionHandler));
     });
   }
 
@@ -136,10 +143,10 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
               // this point.
               values.elements.every((e) => e.staticType?.isDynamic != false)) {
             // We didn't resolve something.
-            _failFastOnUnresolvedExpressions(
+            _exceptionHandler.handle((UnresolvedExpressionError(
                 values.elements.where((e) => e.staticType?.isDynamic != false),
                 element,
-                annotationImpl.compilationUnit);
+                annotationImpl.compilationUnit)));
           }
         }
       }
@@ -175,6 +182,7 @@ class _ComponentVisitor
   final _viewQueries = <CompileQueryMetadata>[];
 
   final LibraryReader _library;
+  final FindComponentsExceptionHandler _exceptionHandler;
 
   /// Whether the component being visited re-implements 'noSuchMethod'.
   bool _implementsNoSuchMethod = false;
@@ -184,7 +192,7 @@ class _ComponentVisitor
   /// This is used to look up resolved type information.
   ClassElement _directiveClassElement;
 
-  _ComponentVisitor(this._library);
+  _ComponentVisitor(this._library, this._exceptionHandler);
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
@@ -371,10 +379,9 @@ class _ComponentVisitor
   ) {
     var selector = getField(value, 'selector');
     if (isNull(selector)) {
-      BuildError.throwForAnnotation(
-        annotation,
-        'Missing selector argument for "@${value.type.name}"',
-      );
+      _exceptionHandler.handle(ErrorMessageForAnnotation(
+          annotation, 'Missing selector argument for "@${value.type.name}"'));
+      return [];
     }
     var selectorString = selector?.toStringValue();
     if (selectorString != null) {
@@ -385,9 +392,12 @@ class _ComponentVisitor
     }
     var selectorType = selector.toTypeValue();
     if (selectorType == null) {
-      throwFailure(
+      // NOTE(deboer): This code is untested and probably unreachable.
+      _exceptionHandler.handle(ErrorMessageForAnnotation(
+          annotation,
           'Only a value of `String` or `Type` for "@${value.type.name}" is '
-          'supported');
+          'supported'));
+      return [];
     }
     return [
       CompileTokenMetadata(
@@ -538,7 +548,9 @@ class _ComponentVisitor
     final annotationValue = annotation.computeConstantValue();
 
     if (annotation.constantEvaluationErrors.isNotEmpty) {
-      _failFastOnAnalysisErrors(annotation.constantEvaluationErrors, element);
+      _exceptionHandler.handle(
+          AngularAnalysisError(annotation.constantEvaluationErrors, element));
+      return null;
     }
 
     // Some directives won't have templates but the template parser is going to
@@ -555,20 +567,20 @@ class _ComponentVisitor
       final ngDoCheck = element.getMethod('ngDoCheck') ??
           element.lookUpInheritedMethod('ngDoCheck', element.library);
       if (ngDoCheck != null && ngDoCheck.isAsynchronous) {
-        BuildError.throwForElement(
+        _exceptionHandler.handle(ErrorMessageForElement(
             ngDoCheck,
             'ngDoCheck should not be "async". The "ngDoCheck" lifecycle event '
             'must be strictly synchronous, and should not invoke any methods '
             '(or getters/setters) that directly run asynchronous code (such as '
-            'microtasks, timers).');
+            'microtasks, timers).'));
       }
       if (lifecycleHooks.contains(LifecycleHooks.onChanges)) {
-        BuildError.throwForElement(
+        _exceptionHandler.handle(ErrorMessageForElement(
             element,
             'Cannot implement both the DoCheck and OnChanges lifecycle '
             'events. By implementing "DoCheck", default change detection of '
             'inputs is disabled, meaning that "ngOnChanges" will never be '
-            'invoked with values. Consider "AfterChanges" instead.');
+            'invoked with values. Consider "AfterChanges" instead.'));
       }
     }
 
@@ -724,8 +736,8 @@ class _ComponentVisitor
       ));
     }
     if (unresolvedExports.isNotEmpty) {
-      _failFastOnUnresolvedExpressions(unresolvedExports,
-          _directiveClassElement, annotation.compilationUnit);
+      _exceptionHandler.handle(UnresolvedExpressionError(unresolvedExports,
+          _directiveClassElement, annotation.compilationUnit));
     }
     return exports;
   }
@@ -750,75 +762,12 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
       .toList();
 }
 
-// TODO(deboer): Since we are checking ElementAnnotation.constantValueErrors,
-// all code paths that call this function are unreachable.
-// If we don't see any errors in the wild, delete this code.
-void _failFastOnUnresolvedExpressions(Iterable<AstNode> expressions,
-    ClassElement componentType, CompilationUnitElement compilationUnit) {
-  throw BuildError(
-    messages.unresolvedSource(
-      expressions.map((e) {
-        return SourceSpanMessageTuple(
-          sourceSpanWithLineInfo(
-            e.offset,
-            e.length,
-            componentType.source.contents.data,
-            componentType.source.uri,
-            lineInfo: compilationUnit.lineInfo,
-          ),
-          'This argument *may* have not been resolved',
-        );
-      }),
-      reason: ''
-          'Compiling @Component annotated class "${componentType.name}" '
-          'failed.\n'
-          'NOTE: Your build triggered an error in the Angular error reporting\n'
-          'code. Please report a bug: ${messages.urlFileBugs}\n'
-          '\n\n${messages.analysisFailureReasons}',
-    ),
-  );
-}
-
-void _failFastOnAnalysisErrors(
-    Iterable<AnalysisError> errors, ClassElement componentType) {
-  throw BuildError(
-    messages.unresolvedSource(
-      errors.map((e) {
-        final sourceUrl = e.source.uri;
-        final sourceContent = e.source.contents.data;
-
-        if (sourceContent.isEmpty) {
-          return SourceSpanMessageTuple(
-              SourceSpan(
-                  SourceLocation(0, sourceUrl: sourceUrl, line: 0, column: 0),
-                  SourceLocation(0, sourceUrl: sourceUrl, line: 0, column: 0),
-                  ''),
-              '${e.message} [with offsets into source file missing]');
-        }
-
-        return SourceSpanMessageTuple(
-          sourceSpanWithLineInfo(
-            e.offset,
-            e.length,
-            sourceContent,
-            sourceUrl,
-          ),
-          e.message,
-        );
-      }),
-      reason: ''
-          'Compiling @Component-annotated class "${componentType.name}" '
-          'failed.\n\n${messages.analysisFailureReasons}',
-    ),
-  );
-}
-
 /// Ensures that all entries in [directiveTypes] match an entry in [directives].
-void _failFastOnUnusedDirectiveTypes(
-  ClassElement element,
-  List<CompileDirectiveMetadata> directives,
-  List<CompileTypedMetadata> directiveTypes,
-) {
+void _errorOnUnusedDirectiveTypes(
+    ClassElement element,
+    List<CompileDirectiveMetadata> directives,
+    List<CompileTypedMetadata> directiveTypes,
+    FindComponentsExceptionHandler exceptionHandler) {
   if (directiveTypes.isEmpty) return;
 
   // Creates a unique key given a module URL and symbol name.
@@ -831,14 +780,156 @@ void _failFastOnUnusedDirectiveTypes(
   for (var directiveType in directiveTypes) {
     var typed = key(directiveType.moduleUrl, directiveType.name);
     if (!used.contains(typed)) {
-      BuildError.throwForAnnotation(
-          element.metadata.firstWhere(isComponent),
-          'Entry in "directiveTypes" missing corresponding entry in '
-          '"directives" for "${directiveType.name}".\n\n'
-          'If you recently removed "${directiveType.name}" from "directives", '
-          'please also remove its corresponding entry from "directiveTypes".');
+      exceptionHandler.handle(UnusedDirectiveTypeError(element, directiveType));
     }
   }
+}
+
+class FindComponentsExceptionHandler {
+  final List<AsyncBuildError> _errors = [];
+
+  void handle(AsyncBuildError error) {
+    _errors.add(error);
+  }
+
+  Future<void> maybeReportErrors() async {
+    if (_errors.isEmpty) {
+      return;
+    }
+    final buildErrors =
+        await Future.wait(_errors.map((error) => error.resolve()));
+    throw BuildError(
+        buildErrors.map((buildError) => buildError.message).join("\n\n"));
+  }
+}
+
+class AsyncBuildError extends BuildError {
+  Future<BuildError> resolve() => Future.value(this);
+}
+
+class AngularAnalysisError extends AsyncBuildError {
+  final List<AnalysisError> constantEvaluationErrors;
+  final ClassElement element;
+
+  AngularAnalysisError(this.constantEvaluationErrors, this.element);
+
+  @override
+  Future<BuildError> resolve() => Future.value(
+      _buildErrorForAnalysisErrors(constantEvaluationErrors, element));
+
+  BuildError _buildErrorForAnalysisErrors(
+      Iterable<AnalysisError> errors, ClassElement componentType) {
+    return BuildError(
+      messages.unresolvedSource(
+        errors.map((e) {
+          final sourceUrl = e.source.uri;
+          final sourceContent = e.source.contents.data;
+
+          if (sourceContent.isEmpty) {
+            return SourceSpanMessageTuple(
+                SourceSpan(
+                    SourceLocation(0, sourceUrl: sourceUrl, line: 0, column: 0),
+                    SourceLocation(0, sourceUrl: sourceUrl, line: 0, column: 0),
+                    ''),
+                '${e.message} [with offsets into source file missing]');
+          }
+
+          return SourceSpanMessageTuple(
+            sourceSpanWithLineInfo(
+              e.offset,
+              e.length,
+              sourceContent,
+              sourceUrl,
+            ),
+            e.message,
+          );
+        }),
+        reason: ''
+            'Compiling @Component-annotated class "${componentType.name}" '
+            'failed.\n\n${messages.analysisFailureReasons}',
+      ),
+    );
+  }
+}
+
+class UnresolvedExpressionError extends AsyncBuildError {
+  final Iterable<AstNode> expressions;
+  final ClassElement componentType;
+  final CompilationUnitElement compilationUnit;
+
+  UnresolvedExpressionError(
+      this.expressions, this.componentType, this.compilationUnit);
+
+  @override
+  Future<BuildError> resolve() =>
+      Future.value(_buildErrorForUnresolvedExpressions(
+          expressions, componentType, compilationUnit));
+
+  // TODO(deboer): Since we are checking ElementAnnotation.constantValueErrors,
+  // all code paths that call this function are unreachable.
+  // If we don't see any errors in the wild, delete this code.
+  BuildError _buildErrorForUnresolvedExpressions(Iterable<AstNode> expressions,
+      ClassElement componentType, CompilationUnitElement compilationUnit) {
+    return BuildError(
+      messages.unresolvedSource(
+        expressions.map((e) {
+          return SourceSpanMessageTuple(
+            sourceSpanWithLineInfo(
+              e.offset,
+              e.length,
+              componentType.source.contents.data,
+              componentType.source.uri,
+              lineInfo: compilationUnit.lineInfo,
+            ),
+            'This argument *may* have not been resolved',
+          );
+        }),
+        reason: ''
+            'Compiling @Component annotated class "${componentType.name}" '
+            'failed.\n'
+            'NOTE: Your build triggered an error in the Angular error reporting\n'
+            'code. Please report a bug: ${messages.urlFileBugs}\n'
+            '\n\n${messages.analysisFailureReasons}',
+      ),
+    );
+  }
+}
+
+class UnusedDirectiveTypeError extends AsyncBuildError {
+  final ClassElement element;
+  final CompileTypedMetadata directiveType;
+
+  UnusedDirectiveTypeError(this.element, this.directiveType);
+
+  @override
+  Future<BuildError> resolve() => Future.value(BuildError.forAnnotation(
+      element.metadata.firstWhere(isComponent),
+      'Entry in "directiveTypes" missing corresponding entry in '
+      '"directives" for "${directiveType.name}".\n\n'
+      'If you recently removed "${directiveType.name}" from "directives", '
+      'please also remove its corresponding entry from "directiveTypes".'));
+}
+
+class ErrorMessageForAnnotation extends AsyncBuildError {
+  final ElementAnnotation annotation;
+  final String message;
+
+  ErrorMessageForAnnotation(this.annotation, this.message);
+
+  @override
+  Future<BuildError> resolve() =>
+      Future.value(BuildError.forAnnotation(annotation, message));
+}
+
+class ErrorMessageForElement extends AsyncBuildError {
+  final Element element;
+  final String message;
+
+  ErrorMessageForElement(this.element, this.message);
+
+  @override
+  Future<BuildError> resolve() =>
+      Future.value(BuildError.forElement(element, message));
 }
 
 void _prohibitBindingChange(
