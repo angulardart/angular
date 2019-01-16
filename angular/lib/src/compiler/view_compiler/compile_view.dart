@@ -300,134 +300,10 @@ class AppViewReference {
   }
 }
 
-/// Interface to generate a build function for an AppView.
-abstract class AppViewBuilder {
-  /// Creates an HTML document fragment from trusted [html].
-  ///
-  /// The [html] argument may be any expression that evaluates to a string
-  /// containing **trusted** HTML.
-  NodeReference createHtml(
-    ir.BindingSource html,
-    CompileElement parent,
-    int nodeIndex,
-  );
-
-  NodeReference createTextBinding(
-      ir.BindingSource text, CompileElement parent, int nodeIndex);
-
-  /// Create an html node and appends to parent element.
-  void createElement(CompileElement parent, NodeReference elementRef,
-      int nodeIndex, String tagName, TemplateAst ast);
-
-  /// Creates an html node with a namespace and appends to parent element.
-  void createElementNs(CompileElement parent, NodeReference elementRef,
-      int nodeIndex, String ns, String tagName, TemplateAst ast);
-
-  /// Create a view container for a given node reference and index.
-  ///
-  /// isPrivate indicates that the view container is only used for an embedded
-  /// view and is not publicly shared through injection or view query.
-  o.Expression createViewContainer(
-      NodeReference nodeReference, int nodeIndex, bool isPrivate,
-      [int parentNodeIndex]);
-
-  /// Locally caches node reference for component and appends to parent
-  /// html node.
-  AppViewReference createComponentNodeAndAppend(
-      CompileDirectiveMetadata component,
-      CompileElement parent,
-      NodeReference elementRef,
-      int nodeIndex,
-      ElementAst ast,
-      {bool isDeferred});
-
-  /// Creates call to AppView.create to build an AppView.
-  ///
-  /// contentNodesArray provides projectable nodes to be used during
-  /// initialization.
-  void createAppView(AppViewReference appViewRef,
-      o.Expression componentInstance, o.Expression contentNodesArray);
-
-  /// Projects projectables at sourceAstIndex into target element.
-  void projectNodesIntoElement(
-      CompileElement target, int sourceAstIndex, NgContentAst ast);
-
-  /// Writes instruction to enable css encapsulation for a node.
-  void shimCssForNode(NodeReference nodeReference, int nodeIndex,
-      CompileIdentifierMetadata nodeType);
-
-  /// Creates a field to store a stream subscription to be destroyed.
-  void createSubscription(o.Expression streamReference, o.Expression handler,
-      {bool isMockLike = false});
-
-  /// Add DOM event listener.
-  void addDomEventListener(
-      NodeReference node, String eventName, o.Expression handler);
-
-  /// Adds event listener that is routed through EventManager for custom
-  /// events.
-  void addCustomEventListener(
-      NodeReference node, String eventName, o.Expression handler);
-
-  /// Initializes query target on component at startup/build time.
-  void updateQueryAtStartup(CompileQuery query);
-
-  /// Writes code to update content query targets.
-  void updateContentQuery(CompileQuery query);
-
-  /// Creates a provider as a field or local expression.
-  o.Expression createProvider(
-      String propName,
-      CompileDirectiveMetadata directiveMetadata,
-      ProviderAst provider,
-      List<o.Expression> providerValueExpressions,
-      bool isMulti,
-      bool isEager,
-      CompileElement compileElement,
-      {bool forceDynamic = false});
-
-  /// Calls function directive on view startup.
-  void callFunctionalDirective(o.Expression invokeExpr);
-
-  /// Creates a pipe and stores reference expression in fieldName.
-  void createPipeInstance(String pipeFieldName, CompilePipeMetadata pipeMeta);
-
-  /// Constructs a pure proxy and stores instance in class member.
-  void createPureProxy(
-      o.Expression fn, int argCount, o.ReadClassMemberExpr pureProxyProp);
-
-  /// Writes literal attribute values on the element itself and those
-  /// contributed from directives on the ast node.
-  ///
-  /// !Component level attributes are excluded since we want to avoid per
-  ///  call site duplication.
-  void writeLiteralAttributeValues(
-      ElementAst elementAst,
-      NodeReference elementRef,
-      int nodeIndex,
-      List<CompileDirectiveMetadata> directives);
-
-  /// Writes code to start defer loading an embedded template.
-  void deferLoadEmbeddedTemplate(
-      CompileView deferredView, CompileElement targetElement);
-
-  /// Finally writes build statements into target.
-  void writeBuildStatements(List<o.Statement> targetStatements);
-
-  /// Writes change detection code for detectChangesInternal method.
-  List<o.Statement> writeChangeDetectionStatements();
-
-  /// Adds reference to a provider by token type and nodeIndex range.
-  void addInjectable(int nodeIndex, int childNodeCount, ProviderAst provider,
-      o.Expression providerExpr, List<CompileTokenMetadata> aliases);
-
-  o.ClassMethod writeInjectorGetMethod();
-}
-
 /// Represents data to generate a host, component or embedded AppView.
 ///
 /// Members and method builders are populated by ViewBuilder.
-class CompileView implements AppViewBuilder {
+class CompileView {
   final CompileDirectiveMetadata component;
   final CompilerFlags genConfig;
   final List<CompilePipeMetadata> pipeMetas;
@@ -688,7 +564,6 @@ class CompileView implements AppViewBuilder {
     return _i18nMessages[message] = messageExpression;
   }
 
-  @override
   NodeReference createHtml(
     ir.BindingSource html,
     CompileElement parent,
@@ -700,7 +575,6 @@ class CompileView implements AppViewBuilder {
     return renderNode;
   }
 
-  @override
   NodeReference createTextBinding(
       ir.BindingSource text, CompileElement parent, int nodeIndex) {
     final renderNode = _textNode(text, nodeIndex);
@@ -889,7 +763,6 @@ class CompileView implements AppViewBuilder {
     return renderNode;
   }
 
-  @override
   o.ReadClassMemberExpr createViewContainer(
       NodeReference nodeReference, int nodeIndex, bool isPrivate,
       [int parentNodeIndex]) {
@@ -919,7 +792,6 @@ class CompileView implements AppViewBuilder {
     return appViewContainer;
   }
 
-  @override
   AppViewReference createComponentNodeAndAppend(
       CompileDirectiveMetadata component,
       CompileElement parent,
@@ -940,7 +812,6 @@ class CompileView implements AppViewBuilder {
     return compAppViewExpr;
   }
 
-  @override
   void createAppView(AppViewReference appViewRef,
       o.Expression componentInstance, o.Expression contentNodesArray) {
     _createMethod.addStmt(appViewRef
@@ -951,7 +822,6 @@ class CompileView implements AppViewBuilder {
   bool _isRootNodeOfHost(int nodeIndex) =>
       nodeIndex == 0 && viewType == ViewType.host;
 
-  @override
   void projectNodesIntoElement(
       CompileElement target, int sourceAstIndex, NgContentAst ast) {
     // The projected nodes originate from a different view, so we don't
@@ -979,7 +849,6 @@ class CompileView implements AppViewBuilder {
     }
   }
 
-  @override
   void shimCssForNode(NodeReference nodeReference, int nodeIndex,
       CompileIdentifierMetadata nodeType) {
     if (_isRootNodeOfHost(nodeIndex)) return;
@@ -993,7 +862,6 @@ class CompileView implements AppViewBuilder {
     }
   }
 
-  @override
   void createSubscription(o.Expression streamReference, o.Expression handler,
       {bool isMockLike = false}) {
     final subscription = o.variable('subscription_${subscriptions.length}');
@@ -1008,7 +876,6 @@ class CompileView implements AppViewBuilder {
     }
   }
 
-  @override
   void addDomEventListener(
       NodeReference node, String eventName, o.Expression handler) {
     var listenExpr = node
@@ -1017,7 +884,6 @@ class CompileView implements AppViewBuilder {
     _createMethod.addStmt(listenExpr.toStmt());
   }
 
-  @override
   void addCustomEventListener(
       NodeReference node, String eventName, o.Expression handler) {
     final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
@@ -1027,12 +893,10 @@ class CompileView implements AppViewBuilder {
     _createMethod.addStmt(listenExpr.toStmt());
   }
 
-  @override
   void updateQueryAtStartup(CompileQuery query) {
     _createMethod.addStmts(query.createImmediateUpdates());
   }
 
-  @override
   void updateContentQuery(CompileQuery query) {
     _updateContentQueriesMethod.addStmts(query.createDynamicUpdates());
   }
@@ -1047,7 +911,6 @@ class CompileView implements AppViewBuilder {
   ///
   /// TemplateRef _TemplateRef_9_4;
   ///
-  @override
   o.Expression createProvider(
       String propName,
       CompileDirectiveMetadata directiveMetadata,
@@ -1200,12 +1063,10 @@ class CompileView implements AppViewBuilder {
     return o.ReadClassMemberExpr(propName, type);
   }
 
-  @override
   void callFunctionalDirective(o.Expression invokeExpression) {
     _createMethod.addStmt(invokeExpression.toStmt());
   }
 
-  @override
   void createPipeInstance(String name, CompilePipeMetadata pipeMeta) {
     var usesInjectorGet = false;
     final deps = pipeMeta.type.diDeps.map((diDep) {
@@ -1236,7 +1097,6 @@ class CompileView implements AppViewBuilder {
     }
   }
 
-  @override
   void createPureProxy(
     o.Expression fn,
     int argCount,
@@ -1260,7 +1120,6 @@ class CompileView implements AppViewBuilder {
         .toStmt());
   }
 
-  @override
   void writeLiteralAttributeValues(
       ElementAst elementAst,
       NodeReference nodeReference,
@@ -1306,7 +1165,6 @@ class CompileView implements AppViewBuilder {
     }
   }
 
-  @override
   void deferLoadEmbeddedTemplate(
     CompileView deferredView,
     CompileElement targetElement,
@@ -1328,12 +1186,10 @@ class CompileView implements AppViewBuilder {
     );
   }
 
-  @override
   void writeBuildStatements(List<o.Statement> targetStatements) {
     targetStatements.addAll(_createMethod.finish());
   }
 
-  @override
   List<o.Statement> writeChangeDetectionStatements() {
     var statements = <o.Statement>[];
     if (detectChangesInInputsMethod.isEmpty &&
@@ -1425,7 +1281,6 @@ class CompileView implements AppViewBuilder {
     return List.from(varStmts)..addAll(statements);
   }
 
-  @override
   void addInjectable(
     int nodeIndex,
     int childNodeCount,
@@ -1451,7 +1306,6 @@ class CompileView implements AppViewBuilder {
         .addStmt(o.IfStmt(condition, [o.ReturnStatement(providerExpr)]));
   }
 
-  @override
   o.ClassMethod writeInjectorGetMethod() {
     return o.ClassMethod(
       "injectorGetInternal",
