@@ -13,6 +13,7 @@ import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
+import 'package:angular/src/source_gen/template_compiler/component_visitor_exceptions.dart';
 import 'package:angular/src/source_gen/template_compiler/find_components.dart';
 
 /// The main compiler for the AngularDart framework.
@@ -25,7 +26,7 @@ class AngularCompiler {
       this.templateCompiler, this._directiveNormalizer, this._templateParser);
 
   Future<SourceModule> compile(LibraryElement element) async {
-    final exceptionHandler = FindComponentsExceptionHandler();
+    final exceptionHandler = ComponentVisitorExceptionHandler();
     // Parse Dart code for @Components and @Directives
     final compileComponentsData =
         findComponentsAndDirectives(LibraryReader(element), exceptionHandler);
