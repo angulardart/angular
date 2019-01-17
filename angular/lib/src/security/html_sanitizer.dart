@@ -1,5 +1,7 @@
 import 'dart:html';
 
+import 'package:angular/src/runtime.dart';
+
 Node _inertElement;
 
 Node _getInertElement() {
@@ -23,7 +25,7 @@ Node _getInertElement() {
 /// This function uses the builtin Dart innerHTML sanitization provided by
 /// NodeTreeSanitizer on an inert element.
 String sanitizeHtmlInternal(String value) {
-  Element element = _getInertElement();
+  Element element = unsafeCast(_getInertElement());
   element.innerHtml = value;
   String safeHtml = element.innerHtml;
   element.children?.clear();

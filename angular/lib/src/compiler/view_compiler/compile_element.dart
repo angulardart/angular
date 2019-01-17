@@ -350,7 +350,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     CompileElement deferredElement = embeddedView.nodes[0] as CompileElement;
     CompileDirectiveMetadata deferredMeta = deferredElement.component;
     if (deferredMeta == null) {
-      ElementAst elemAst = deferredElement.sourceAst;
+      var elemAst = deferredElement.sourceAst as ElementAst;
       throwFailure('Cannot defer Unknown component type <${elemAst.name}>');
     }
     String deferredModuleUrl = deferredMeta.identifier.moduleUrl;

@@ -17,7 +17,7 @@ import 'view_ref.dart' show EmbeddedViewRef;
 /// it to the View Container.
 class TemplateRef {
   final ViewContainer _viewContainer;
-  final Function _viewFactory;
+  final AppView Function(AppView, int) _viewFactory;
 
   TemplateRef(this._viewContainer, this._viewFactory);
 

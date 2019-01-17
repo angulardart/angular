@@ -4300,13 +4300,11 @@
       return receiver.splice(index, 1)[0];
     },
     insert$2: function(receiver, index, value) {
-      var t1;
       if (!!receiver.fixed$length)
         H.throwExpression(P.UnsupportedError$("insert"));
       if (typeof index !== "number" || Math.floor(index) !== index)
         throw H.wrapException(H.argumentErrorValue(index));
-      t1 = receiver.length;
-      if (index > t1)
+      if (index < 0 || index > receiver.length)
         throw H.wrapException(P.RangeError$value(index, null, null));
       receiver.splice(index, 0, value);
     },
