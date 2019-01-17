@@ -102,15 +102,14 @@ class CompileProviderMetadata {
   @override
   // ignore: hash_and_equals
   bool operator ==(other) {
-    if (other is! CompileProviderMetadata) return false;
-    CompileProviderMetadata _other = other;
-    return token == _other.token &&
-        useClass == _other.useClass &&
-        useValue == _other.useValue &&
-        useExisting == _other.useExisting &&
-        useFactory == _other.useFactory &&
-        _listsEqual(deps, _other.deps) &&
-        multi == _other.multi;
+    return other is CompileProviderMetadata &&
+        token == other.token &&
+        useClass == other.useClass &&
+        useValue == other.useValue &&
+        useExisting == other.useExisting &&
+        useFactory == other.useFactory &&
+        _listsEqual(deps, other.deps) &&
+        multi == other.multi;
   }
 
   @override
@@ -316,15 +315,14 @@ class CompileTypeMetadata
   @override
   // ignore: hash_and_equals
   bool operator ==(other) {
-    if (other is! CompileTypeMetadata) return false;
-    CompileTypeMetadata _other = other;
-    return name == _other.name &&
-        prefix == _other.prefix &&
-        emitPrefix == _other.emitPrefix &&
-        moduleUrl == _other.moduleUrl &&
-        isHost == _other.isHost &&
-        value == _other.value &&
-        _listsEqual(diDeps, _other.diDeps);
+    return other is CompileTypeMetadata &&
+        name == other.name &&
+        prefix == other.prefix &&
+        emitPrefix == other.emitPrefix &&
+        moduleUrl == other.moduleUrl &&
+        isHost == other.isHost &&
+        value == other.value &&
+        _listsEqual(diDeps, other.diDeps);
   }
 
   @override

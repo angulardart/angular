@@ -360,7 +360,7 @@ abstract class AbstractEmitterVisitor
   void visitReadStaticMemberExpr(
       o.ReadStaticMemberExpr ast, EmitterVisitorContext context) {
     var varName = ast.name;
-    o.ExternalType t = ast.sourceClass;
+    var t = ast.sourceClass as o.ExternalType;
     if (t != null) {
       context.print('${t.value.name}.');
     }

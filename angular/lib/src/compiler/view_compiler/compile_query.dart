@@ -142,8 +142,8 @@ abstract class CompileQuery {
     // Fast-path: There are no nested views, these are all static elements.
     if (!viewValues.hasNestedViews) {
       final result = <o.Expression>[];
-      for (final o.Expression expression in viewValues.valuesOrTemplates) {
-        result.add(expression);
+      for (final expression in viewValues.valuesOrTemplates) {
+        result.add(expression as o.Expression);
       }
       // In the recursive case (i.e. called by another mapNestedViews), we need
       // to return the results as a List<T> explicitly (this is a little complex
@@ -340,11 +340,11 @@ class _ListCompileQuery extends CompileQuery {
     if (_isStatic) {
       return;
     }
-    final o.ReadPropExpr queryDirtyField = getPropertyInView(
+    final queryDirtyField = getPropertyInView(
       _storage.buildReadExpr(_dirtyField),
       origin,
       _queryRoot,
-    );
+    ) as o.ReadPropExpr;
     origin.dirtyParentQueriesMethod.addStmt(
       queryDirtyField.set(o.literal(true)).toStmt(),
     );
