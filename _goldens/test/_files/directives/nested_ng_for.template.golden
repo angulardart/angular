@@ -37,8 +37,7 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   ComponentRef<import1.NestedNgForComponent> build() {
     final _rootEl = rootEl;
     final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import7.document;
-    final _anchor_0 = import11.appendAnchor(doc, parentRenderNode);
+    final _anchor_0 = import11.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
     _NgFor_0_9 = import3.NgFor(_appEl_0, _TemplateRef_0_8);
@@ -85,7 +84,7 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
   ComponentRef<import1.NestedNgForComponent> build() {
     final doc = import7.document;
     final _el_0 = doc.createElement('span');
-    final _anchor_1 = import11.appendAnchor(doc, _el_0);
+    final _anchor_1 = import11.appendAnchor(_el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
     _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
@@ -118,7 +117,7 @@ AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent1(AppView<
 
 class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   var _expr_0;
-  final import7.Text _text_1 = createText('');
+  final import7.Text _text_1 = import11.createText('');
   _ViewNestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewNestedNgForComponent0._renderType;
   }

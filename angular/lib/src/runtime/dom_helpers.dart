@@ -29,10 +29,10 @@ void _removeAttributeNS(Element e, String namespace, String attribute) {
 // TODO(https://github.com/dart-lang/sdk/issues/35669): Remove.
 
 /// https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode
-Text _createTextNode(Document d, String text) => Text(text);
+Text _createTextNode(String text) => Text(text);
 
 /// https://developer.mozilla.org/en-US/docs/Web/API/Document/createComment
-Comment _createComment(Document d) => Comment();
+Comment _createComment() => Comment();
 
 /// Set to `true` when Angular modified the DOM.
 ///
@@ -130,6 +130,22 @@ void setAttribute(
   element.setAttribute(attribute, value);
 }
 
+/// Helper function for setting an arbitrary [property] on an [element].
+///
+/// For example `setProperty(e, 'disabled', true)` should compile to:
+///
+/// ```js
+/// e.disabled = true;
+/// ```
+@dart2js.tryInline
+void setProperty(
+  Element element,
+  String property,
+  Object value,
+) {
+  js.setProperty(element, property, value);
+}
+
 /// Creates a [Text] node with the provided [contents].
 ///
 /// This is an optimization to reduce code size for a common operation.
@@ -171,30 +187,30 @@ void setAttribute(
 /// c = z6(d, '!');
 /// ```
 @dart2js.noInline
-Text createText(Document doc, String contents) {
-  return _createTextNode(doc, contents);
+Text createText(String contents) {
+  return _createTextNode(contents);
 }
 
 /// Appends and returns a a new [Text] node to a [parent] node.
 ///
 /// This is an optimization to reduce code size for a common operation.
 @dart2js.noInline
-Text appendText(Document doc, Node parent, String text) {
-  return unsafeCast(parent.append(createText(doc, text)));
+Text appendText(Node parent, String text) {
+  return unsafeCast(parent.append(createText(text)));
 }
 
 /// Returns a new [Comment] node with empty contents.
 ///
 /// This is an optimization to reduce code size for a common operation.
 @dart2js.noInline
-Comment createAnchor(Document doc) => _createComment(doc);
+Comment createAnchor() => _createComment();
 
 /// Appends and returns a new empty [Comment] to a [parent] node.
 ///
 /// This is an optimization to reduce code size for a common operation.
 @dart2js.noInline
-Comment appendAnchor(Document doc, Node parent) {
-  return unsafeCast(parent.append(_createComment(doc)));
+Comment appendAnchor(Node parent) {
+  return unsafeCast(parent.append(_createComment()));
 }
 
 /// Appends and returns a new empty [DivElement] to a [parent] node.

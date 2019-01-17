@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:html';
-import 'dart:js_util' as js_util;
 
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
@@ -538,10 +537,6 @@ abstract class AppView<T> extends View<T> {
     };
   }
 
-  void setProp(Element element, String name, Object value) {
-    js_util.setProperty(element, name, value);
-  }
-
   /// Loads dart code used in [templateRef] lazily.
   ///
   /// Returns a function, than when executed, cancels the creation of the view.
@@ -657,10 +652,6 @@ void _moveNodesAfterSibling(Node sibling, List<Node> nodes) {
     }
   }
 }
-
-/// Helper function called by [AppView] to reduce code-size.
-@dart2js.noInline
-Text createText(String text) => Text(text);
 
 void _detachAll(List<Node> viewRootNodes) {
   int len = viewRootNodes.length;

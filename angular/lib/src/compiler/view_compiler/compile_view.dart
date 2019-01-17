@@ -571,10 +571,70 @@ class CompileView {
   }
 
   NodeReference createTextBinding(
-      ir.BindingSource text, CompileElement parent, int nodeIndex) {
+    ir.BindingSource text,
+    CompileElement parent,
+    int nodeIndex,
+  ) {
     final renderNode = _textNode(text, nodeIndex);
-    _initializeAndAppendNode(
-        parent, renderNode, text.isImmutable ? _createText(text) : null);
+    final parentNode = _getParentRenderNode(parent);
+    final isImmutable = text.isImmutable;
+    if (parentNode != o.NULL_EXPR) {
+      if (isImmutable) {
+        // We do not create a class-level member, effectively "one-time".
+        //
+        // class V {
+        //   build() {
+        //     _el_0 = ...;
+        //     appendText(_el_0, '...');
+        //   }
+        // }
+        final appendText = o.importExpr(DomHelpers.appendText).callFn([
+          parentNode,
+          _textValue(text),
+        ]);
+        _createMethod.addStmt(renderNode.toWriteStmt(appendText));
+      } else {
+        // A class-level member is created in a previous phase, and all we need
+        // to do is append it to its parent (and detectChanges will handle
+        // updating it).
+        //
+        // class V {
+        //   final _text_0 = Text('');
+        //
+        //   build() {
+        //     _el_0 = ...;
+        //     _el_0.append(_text_0);
+        //   }
+        // }
+        _createMethod.addStmt(
+          parentNode.callMethod('append', [renderNode.toReadExpr()]).toStmt(),
+        );
+      }
+    } else if (isImmutable) {
+      // Text is being appended or otherwise used somewhere else in the build
+      // (it does not start attached). This is similar to the "isImmutable"
+      // case above, but does not append the text.
+      //
+      // class V {
+      //   build() {
+      //     _text_0 = createText('...')
+      //   }
+      // }
+      final createText = o.importExpr(DomHelpers.createText).callFn([
+        _textValue(text),
+      ]);
+      _createMethod.addStmt(renderNode.toWriteStmt(createText));
+    } else {
+      // A mutable string without being appended to anything.
+      //
+      // class V {
+      //   final _text_0 = Text('');
+      // }
+      //
+      // For example, text nodes that are attached to the root node use the
+      // initN(...) function to append themselves, and not ".append". We may
+      // be able to refactor this case in the future.
+    }
     return renderNode;
   }
 
@@ -599,9 +659,6 @@ class CompileView {
     }
   }
 
-  o.Expression _createText(ir.BindingSource source) =>
-      o.importExpr(Identifiers.createText).callFn([_textValue(source)]);
-
   o.Expression _textValue(ir.BindingSource source) =>
       _toExpression(source, o.ReadClassMemberExpr('ctx'));
 
@@ -625,8 +682,9 @@ class CompileView {
     }
   }
 
-  static final _createEmptyText =
-      o.importExpr(Identifiers.createText).callFn([o.literal('')]);
+  static final _createEmptyText = o.importExpr(DomHelpers.createText).callFn(
+    [o.literal('')],
+  );
 
   /// Create an html node and appends to parent element.
   void createElement(CompileElement parent, NodeReference elementRef,
@@ -764,21 +822,15 @@ class CompileView {
     int nodeIndex,
     TemplateAst ast,
   ) {
-    if (docVarName == null) {
-      _createMethod.addStmt(_createLocalDocumentVar());
-    }
     final renderNode = NodeReference.anchor(storage, nodeIndex);
     final parentNode = _getParentRenderNode(parent);
     if (parentNode != o.NULL_EXPR) {
       final appendAnchor = o.importExpr(DomHelpers.appendAnchor).callFn([
-        o.ReadVarExpr(docVarName),
         parentNode,
       ]);
       _createMethod.addStmt(renderNode.toWriteStmt(appendAnchor));
     } else {
-      final createAnchor = o.importExpr(DomHelpers.createAnchor).callFn([
-        o.ReadVarExpr(docVarName),
-      ]);
+      final createAnchor = o.importExpr(DomHelpers.createAnchor).callFn([]);
       _createMethod.addStmt(renderNode.toWriteStmt(createAnchor));
     }
     return renderNode;

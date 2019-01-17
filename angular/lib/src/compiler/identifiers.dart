@@ -32,6 +32,7 @@ class DomHelpers {
   static final updateAttribute = _of('updateAttribute');
   static final updateAttributeNS = _of('updateAttributeNS');
   static final setAttribute = _of('setAttribute');
+  static final setProperty = _of('setProperty');
 
   static final createText = _of('createText');
   static final appendText = _of('appendText');

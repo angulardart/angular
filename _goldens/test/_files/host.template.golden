@@ -196,7 +196,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     }
     final currVal_1 = ctx.title;
     if (import6.checkBinding(_expr_1, currVal_1)) {
-      setProp(rootEl, 'title', currVal_1);
+      import9.setProperty(rootEl, 'title', currVal_1);
       _expr_1 = currVal_1;
     }
     final currVal_2 = ctx.title;

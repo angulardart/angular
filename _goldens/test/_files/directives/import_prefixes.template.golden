@@ -42,7 +42,7 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
       if (!identical(_ctx.input, null)) {
-        setProp(_el_0, 'myType', _ctx.input);
+        import9.setProperty(_el_0, 'myType', _ctx.input);
       }
     }
   }
@@ -92,7 +92,7 @@ final List<dynamic> styles$ChildComponent = const [];
 
 class ViewChildComponent0 extends AppView<import1.ChildComponent> {
   var _expr_0;
-  final import2.Text _text_0 = createText('');
+  final import2.Text _text_0 = import9.createText('');
   static RenderComponentType _renderType;
   ViewChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('child-cmp');

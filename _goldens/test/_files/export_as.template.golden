@@ -32,8 +32,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = createText('Foo');
-    _el_0.append(_text_1);
+    final _text_1 = import9.appendText(_el_0, 'Foo');
     init(const [], null);
   }
 }

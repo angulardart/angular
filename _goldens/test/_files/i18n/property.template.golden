@@ -36,8 +36,7 @@ class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> 
     final doc = import6.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
     _MessageDirective_0_5 = import1.MessageDirective();
-    final _text_1 = createText(',');
-    parentRenderNode.append(_text_1);
+    final _text_1 = import10.appendText(parentRenderNode, ',');
     init(const [], null);
   }
 

@@ -44,8 +44,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     addShimC(_el_0);
     _ChildDirective_0_5 = ChildDirectiveNgCd(import1.ChildDirective(_el_0, ElementRef(_el_0)));
     _DirectiveWithOutput_0_6 = import1.DirectiveWithOutput();
-    final _text_1 = createText('Foo');
-    _el_0.append(_text_1);
+    final _text_1 = import9.appendText(_el_0, 'Foo');
     _el_0.addEventListener('click', eventHandler1(_ChildDirective_0_5.instance.handleClick));
     _el_0.addEventListener('keypress', eventHandler1(_ChildDirective_0_5.instance.handleKeyPress));
     final subscription_0 = _ChildDirective_0_5.instance.trigger.listen(eventHandler1(ctx.onTrigger));
@@ -192,7 +191,7 @@ class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
   void detectHostChanges(AppView<dynamic> view, import2.Element el) {
     final currVal_0 = instance.tabIndex;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setProp(el, 'tabIndex', currVal_0);
+      import9.setProperty(el, 'tabIndex', currVal_0);
       _expr_0 = currVal_0;
     }
     final currVal_1 = instance.disabledStr;
