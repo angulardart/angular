@@ -9,7 +9,7 @@ import 'package:source_gen/source_gen.dart';
 import '../../compiler/output/convert.dart';
 import 'compile_metadata.dart';
 import 'dart_object_utils.dart';
-import 'find_components.dart';
+import 'lifecycle_hooks.dart';
 
 class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   final LibraryReader _library;
