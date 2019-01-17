@@ -33,15 +33,14 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = createText('CheckOnce');
-    _el_0.append(_text_1);
+    final _text_1 = import9.appendText(_el_0, 'CheckOnce');
     init(const [], null);
   }
 
   void detectHostChanges(bool firstCheck) {
     final currVal_0 = ctx.id;
     if (import6.checkBinding(_expr_0, currVal_0)) {
-      setProp(rootEl, 'id', currVal_0);
+      import9.setProperty(rootEl, 'id', currVal_0);
       _expr_0 = currVal_0;
     }
   }
@@ -104,8 +103,7 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = createText('Checked');
-    _el_0.append(_text_1);
+    final _text_1 = import9.appendText(_el_0, 'Checked');
     init(const [], null);
   }
 }
@@ -165,8 +163,7 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = createText('CheckAlways');
-    _el_0.append(_text_1);
+    final _text_1 = import9.appendText(_el_0, 'CheckAlways');
     init(const [], null);
   }
 }
@@ -226,8 +223,7 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = createText('Detached');
-    _el_0.append(_text_1);
+    final _text_1 = import9.appendText(_el_0, 'Detached');
     init(const [], null);
   }
 }
@@ -454,7 +450,7 @@ final List<dynamic> styles$OnPushChildComponent = const [];
 
 class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
   var _expr_0;
-  final import5.Text _text_2 = createText('');
+  final import5.Text _text_2 = import9.createText('');
   static RenderComponentType _renderType;
   ViewOnPushChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import5.document.createElement('cd-on-push-child');
@@ -467,8 +463,7 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = createText('OnPushChild: ');
-    _el_0.append(_text_1);
+    final _text_1 = import9.appendText(_el_0, 'OnPushChild: ');
     _el_0.append(_text_2);
     init(const [], null);
   }
@@ -544,8 +539,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = createText('Stateful');
-    _el_0.append(_text_1);
+    final _text_1 = import9.appendText(_el_0, 'Stateful');
     init(const [], null);
     _ctx.stateChangeCallback = markStateChanged;
   }
@@ -606,8 +600,7 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = createText('Default');
-    _el_0.append(_text_1);
+    final _text_1 = import9.appendText(_el_0, 'Default');
     init(const [], null);
   }
 }

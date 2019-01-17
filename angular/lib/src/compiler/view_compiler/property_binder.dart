@@ -247,8 +247,13 @@ void bindAndWriteToRenderer(
           updateStmts.add(updateClassExpr.toStmt());
           fieldType = o.STRING_TYPE;
         } else {
-          updateStmts.add(o.InvokeMemberMethodExpr('setProp',
-              [renderNode, o.literal(boundProp.name), renderValue]).toStmt());
+          updateStmts.add(
+            o.importExpr(DomHelpers.setProperty).callFn([
+              renderNode,
+              o.literal(boundProp.name),
+              renderValue,
+            ]).toStmt(),
+          );
         }
         break;
       case PropertyBindingType.attribute:

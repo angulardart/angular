@@ -37,9 +37,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ComponentRef<import1.TestFooComponent> build() {
     final _rootEl = rootEl;
     final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import4.document;
-    _anchor_0 = import11.appendAnchor(doc, parentRenderNode);
-    final _anchor_1 = import11.appendAnchor(doc, parentRenderNode);
+    _anchor_0 = import11.appendAnchor(parentRenderNode);
+    final _anchor_1 = import11.appendAnchor(parentRenderNode);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
     _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
@@ -55,8 +54,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
         if (_ctx.foo) {
           final doc = import4.document;
           final _el_0_0 = doc.createElement('div');
-          final _text_0_1 = createText('Foo');
-          _el_0_0.append(_text_0_1);
+          final _text_0_1 = import11.appendText(_el_0_0, 'Foo');
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }
       }
@@ -89,9 +87,9 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
   var _expr_0;
   var _expr_1;
   var _expr_2;
-  final import4.Text _text_2 = createText('');
-  final import4.Text _text_4 = createText('');
-  final import4.Text _text_6 = createText('');
+  final import4.Text _text_2 = import11.createText('');
+  final import4.Text _text_4 = import11.createText('');
+  final import4.Text _text_6 = import11.createText('');
   _ViewTestFooComponent2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, {'\$implicit': null, 'index': null, 'odd': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewTestFooComponent0._renderType;
   }
@@ -101,11 +99,9 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     final _el_0 = doc.createElement('div');
     final _el_1 = import11.appendSpan(doc, _el_0);
     _el_1.append(_text_2);
-    final _text_3 = createText('. #');
-    _el_1.append(_text_3);
+    final _text_3 = import11.appendText(_el_1, '. #');
     _el_1.append(_text_4);
-    final _text_5 = createText(' odd?');
-    _el_1.append(_text_5);
+    final _text_5 = import11.appendText(_el_1, ' odd?');
     _el_1.append(_text_6);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
     init0(_el_0);

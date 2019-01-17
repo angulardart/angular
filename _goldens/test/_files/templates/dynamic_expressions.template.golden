@@ -9,15 +9,15 @@ import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'dynamic_expressions.dart' as import1;
 import 'dart:html' as import2;
+import 'package:angular/src/runtime/dom_helpers.dart' as import3;
 import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import7;
+import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import10;
-import 'package:angular/src/runtime/dom_helpers.dart' as import11;
+import 'package:angular/src/common/directives/ng_for.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'dart:core';
 
@@ -25,11 +25,11 @@ final List<dynamic> styles$Comp1 = const [];
 
 class ViewComp10 extends AppView<import1.Comp1> {
   var _expr_0;
-  final import2.Text _text_0 = createText('');
+  final import2.Text _text_0 = import3.createText('');
   static RenderComponentType _renderType;
-  ViewComp10(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewComp10(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-1');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp1);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp1);
     setupComponentType(_renderType);
   }
   @override
@@ -43,8 +43,8 @@ class ViewComp10 extends AppView<import1.Comp1> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = import6.interpolate0((_ctx.a + _ctx.b));
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import7.interpolate0((_ctx.a + _ctx.b));
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -65,7 +65,7 @@ final List<dynamic> styles$Comp1Host = const [];
 class _ViewComp1Host0 extends AppView<import1.Comp1> {
   ViewComp10 _compView_0;
   import1.Comp1 _Comp1_0_5;
-  _ViewComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.Comp1> build() {
     _compView_0 = ViewComp10(this, 0);
@@ -95,11 +95,11 @@ final List<dynamic> styles$Comp2 = const [];
 
 class ViewComp20 extends AppView<import1.Comp2> {
   var _expr_0;
-  final import2.Text _text_0 = createText('');
+  final import2.Text _text_0 = import3.createText('');
   static RenderComponentType _renderType;
-  ViewComp20(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewComp20(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-2');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp2);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp2);
     setupComponentType(_renderType);
   }
   @override
@@ -113,8 +113,8 @@ class ViewComp20 extends AppView<import1.Comp2> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = import6.interpolateString0(_ctx.a.b(_ctx.c));
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import7.interpolateString0(_ctx.a.b(_ctx.c));
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -135,7 +135,7 @@ final List<dynamic> styles$Comp2Host = const [];
 class _ViewComp2Host0 extends AppView<import1.Comp2> {
   ViewComp20 _compView_0;
   import1.Comp2 _Comp2_0_5;
-  _ViewComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.Comp2> build() {
     _compView_0 = ViewComp20(this, 0);
@@ -165,11 +165,11 @@ final List<dynamic> styles$Comp3 = const [];
 
 class ViewComp30 extends AppView<import1.Comp3> {
   var _expr_0;
-  final import2.Text _text_0 = createText('');
+  final import2.Text _text_0 = import3.createText('');
   static RenderComponentType _renderType;
-  ViewComp30(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewComp30(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-3');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp3);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp3);
     setupComponentType(_renderType);
   }
   @override
@@ -183,8 +183,8 @@ class ViewComp30 extends AppView<import1.Comp3> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = import6.interpolate0(import1.Comp3.max(_ctx.a, _ctx.b).isEven);
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import7.interpolate0(import1.Comp3.max(_ctx.a, _ctx.b).isEven);
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -205,7 +205,7 @@ final List<dynamic> styles$Comp3Host = const [];
 class _ViewComp3Host0 extends AppView<import1.Comp3> {
   ViewComp30 _compView_0;
   import1.Comp3 _Comp3_0_5;
-  _ViewComp3Host0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewComp3Host0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.Comp3> build() {
     _compView_0 = ViewComp30(this, 0);
@@ -236,11 +236,11 @@ final List<dynamic> styles$Comp4 = const [];
 class ViewComp40 extends AppView<import1.Comp4> {
   List<dynamic> Function(dynamic, dynamic) _arr_0;
   var _expr_0;
-  final import2.Text _text_0 = createText('');
+  final import2.Text _text_0 = import3.createText('');
   static RenderComponentType _renderType;
-  ViewComp40(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewComp40(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-4');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp4);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp4);
     setupComponentType(_renderType);
   }
   @override
@@ -248,7 +248,7 @@ class ViewComp40 extends AppView<import1.Comp4> {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     parentRenderNode.append(_text_0);
-    _arr_0 = import6.pureProxy2((p0, p1) {
+    _arr_0 = import7.pureProxy2((p0, p1) {
       return [p0, p1];
     });
     init(const [], null);
@@ -257,8 +257,8 @@ class ViewComp40 extends AppView<import1.Comp4> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = import6.interpolate0(_arr_0(_ctx.a, _ctx.b).first.inMilliseconds);
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import7.interpolate0(_arr_0(_ctx.a, _ctx.b).first.inMilliseconds);
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -279,7 +279,7 @@ final List<dynamic> styles$Comp4Host = const [];
 class _ViewComp4Host0 extends AppView<import1.Comp4> {
   ViewComp40 _compView_0;
   import1.Comp4 _Comp4_0_5;
-  _ViewComp4Host0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewComp4Host0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.Comp4> build() {
     _compView_0 = ViewComp40(this, 0);
@@ -310,11 +310,11 @@ final List<dynamic> styles$Comp5 = const [];
 class ViewComp50 extends AppView<import1.Comp5> {
   Map<String, dynamic> Function(dynamic) _map_0;
   var _expr_0;
-  final import2.Text _text_0 = createText('');
+  final import2.Text _text_0 = import3.createText('');
   static RenderComponentType _renderType;
-  ViewComp50(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewComp50(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-5');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp5);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp5);
     setupComponentType(_renderType);
   }
   @override
@@ -322,9 +322,8 @@ class ViewComp50 extends AppView<import1.Comp5> {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     parentRenderNode.append(_text_0);
-    final _text_1 = createText('}');
-    parentRenderNode.append(_text_1);
-    _map_0 = import6.pureProxy1((p0) {
+    final _text_1 = import3.appendText(parentRenderNode, '}');
+    _map_0 = import7.pureProxy1((p0) {
       return {'1': p0};
     });
     init(const [], null);
@@ -333,8 +332,8 @@ class ViewComp50 extends AppView<import1.Comp5> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = import6.interpolate0(_map_0(_ctx.b).values.first.inMilliseconds);
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import7.interpolate0(_map_0(_ctx.b).values.first.inMilliseconds);
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -355,7 +354,7 @@ final List<dynamic> styles$Comp5Host = const [];
 class _ViewComp5Host0 extends AppView<import1.Comp5> {
   ViewComp50 _compView_0;
   import1.Comp5 _Comp5_0_5;
-  _ViewComp5Host0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewComp5Host0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.Comp5> build() {
     _compView_0 = ViewComp50(this, 0);
@@ -385,23 +384,22 @@ final List<dynamic> styles$Comp6 = const [];
 
 class ViewComp60 extends AppView<import1.Comp6> {
   ViewContainer _appEl_0;
-  import10.NgFor _NgFor_0_9;
+  import11.NgFor _NgFor_0_9;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewComp60(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewComp60(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-6');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp6);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp6);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.Comp6> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import2.document;
-    final _anchor_0 = import11.appendAnchor(doc, parentRenderNode);
+    final _anchor_0 = import3.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp61);
-    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import11.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
   }
 
@@ -409,11 +407,11 @@ class ViewComp60 extends AppView<import1.Comp6> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.durations;
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import6.AppViewUtils.throwOnChanges) {
+    if (!import7.AppViewUtils.throwOnChanges) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -436,8 +434,8 @@ ComponentFactory<import1.Comp6> get Comp6NgFactory {
 
 class _ViewComp61 extends AppView<import1.Comp6> {
   var _expr_0;
-  final import2.Text _text_0 = createText('');
-  _ViewComp61(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  final import2.Text _text_0 = import3.createText('');
+  _ViewComp61(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewComp60._renderType;
   }
   @override
@@ -447,9 +445,9 @@ class _ViewComp61 extends AppView<import1.Comp6> {
 
   @override
   void detectChangesInternal() {
-    final local_duration = import7.unsafeCast<Duration>(locals['\$implicit']);
-    final currVal_0 = import6.interpolate0(local_duration.inMilliseconds);
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final local_duration = import8.unsafeCast<Duration>(locals['\$implicit']);
+    final currVal_0 = import7.interpolate0(local_duration.inMilliseconds);
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -465,7 +463,7 @@ final List<dynamic> styles$Comp6Host = const [];
 class _ViewComp6Host0 extends AppView<import1.Comp6> {
   ViewComp60 _compView_0;
   import1.Comp6 _Comp6_0_5;
-  _ViewComp6Host0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewComp6Host0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.Comp6> build() {
     _compView_0 = ViewComp60(this, 0);
@@ -495,23 +493,22 @@ final List<dynamic> styles$Comp7 = const [];
 
 class ViewComp70 extends AppView<import1.Comp7> {
   ViewContainer _appEl_0;
-  import10.NgFor _NgFor_0_9;
+  import11.NgFor _NgFor_0_9;
   var _expr_0;
   static RenderComponentType _renderType;
-  ViewComp70(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewComp70(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('comp-7');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp7);
+    _renderType ??= import7.appViewUtils.createRenderType((import8.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null), ViewEncapsulation.None, styles$Comp7);
     setupComponentType(_renderType);
   }
   @override
   ComponentRef<import1.Comp7> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import2.document;
-    final _anchor_0 = import11.appendAnchor(doc, parentRenderNode);
+    final _anchor_0 = import3.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp71);
-    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import11.NgFor(_appEl_0, _TemplateRef_0_8);
     init(const [], null);
   }
 
@@ -519,11 +516,11 @@ class ViewComp70 extends AppView<import1.Comp7> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.items;
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import6.AppViewUtils.throwOnChanges) {
+    if (!import7.AppViewUtils.throwOnChanges) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -546,30 +543,29 @@ ComponentFactory<import1.Comp7> get Comp7NgFactory {
 
 class _ViewComp71 extends AppView<import1.Comp7> {
   ViewContainer _appEl_0;
-  import10.NgFor _NgFor_0_9;
+  import11.NgFor _NgFor_0_9;
   var _expr_0;
-  _ViewComp71(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewComp71(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewComp70._renderType;
   }
   @override
   ComponentRef<import1.Comp7> build() {
-    final doc = import2.document;
-    final _anchor_0 = import11.createAnchor(doc);
+    final _anchor_0 = import3.createAnchor();
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp72);
-    _NgFor_0_9 = import10.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import11.NgFor(_appEl_0, _TemplateRef_0_8);
     init0(_appEl_0);
   }
 
   @override
   void detectChangesInternal() {
-    final local_durations = import7.unsafeCast<List<Duration>>(locals['\$implicit']);
+    final local_durations = import8.unsafeCast<List<Duration>>(locals['\$implicit']);
     final currVal_0 = local_durations;
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import6.AppViewUtils.throwOnChanges) {
+    if (!import7.AppViewUtils.throwOnChanges) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -587,8 +583,8 @@ AppView<import1.Comp7> viewFactory_Comp71(AppView<dynamic> parentView, int paren
 
 class _ViewComp72 extends AppView<import1.Comp7> {
   var _expr_0;
-  final import2.Text _text_0 = createText('');
-  _ViewComp72(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  final import2.Text _text_0 = import3.createText('');
+  _ViewComp72(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     componentType = ViewComp70._renderType;
   }
   @override
@@ -598,9 +594,9 @@ class _ViewComp72 extends AppView<import1.Comp7> {
 
   @override
   void detectChangesInternal() {
-    final local_duration = import7.unsafeCast<Duration>(locals['\$implicit']);
-    final currVal_0 = import6.interpolate0(local_duration.inMilliseconds);
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final local_duration = import8.unsafeCast<Duration>(locals['\$implicit']);
+    final currVal_0 = import7.interpolate0(local_duration.inMilliseconds);
+    if (import7.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -616,7 +612,7 @@ final List<dynamic> styles$Comp7Host = const [];
 class _ViewComp7Host0 extends AppView<import1.Comp7> {
   ViewComp70 _compView_0;
   import1.Comp7 _Comp7_0_5;
-  _ViewComp7Host0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewComp7Host0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.Comp7> build() {
     _compView_0 = ViewComp70(this, 0);

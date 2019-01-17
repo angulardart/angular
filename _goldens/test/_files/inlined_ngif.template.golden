@@ -33,8 +33,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
   ComponentRef<import1.InlinedNgIfComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import2.document;
-    _anchor_0 = import9.appendAnchor(doc, parentRenderNode);
+    _anchor_0 = import9.appendAnchor(parentRenderNode);
     init([], null);
   }
 
@@ -46,8 +45,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
       if (currVal_0) {
         final doc = import2.document;
         _el_0_0 = doc.createElement('div');
-        final _text_0_1 = createText('Hello World!');
-        _el_0_0.append(_text_0_1);
+        final _text_0_1 = import9.appendText(_el_0_0, 'Hello World!');
         addInlinedNodes(_anchor_0, [_el_0_0], true);
       } else {
         removeInlinedNodes([_el_0_0], true);
@@ -111,8 +109,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
   ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import2.document;
-    _anchor_0 = import9.appendAnchor(doc, parentRenderNode);
+    _anchor_0 = import9.appendAnchor(parentRenderNode);
     init([], null);
   }
 
@@ -125,8 +122,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
         if (_ctx.foo) {
           final doc = import2.document;
           final _el_0_0 = doc.createElement('div');
-          final _text_0_1 = createText('Hello World!');
-          _el_0_0.append(_text_0_1);
+          final _text_0_1 = import9.appendText(_el_0_0, 'Hello World!');
           addInlinedNodes(_anchor_0, [_el_0_0], true);
         }
       }

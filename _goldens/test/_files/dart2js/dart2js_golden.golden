@@ -3810,9 +3810,6 @@
             $parent.appendChild(nodes[i]);
       }
     },
-    createText: function(text) {
-      return document.createTextNode(text);
-    },
     _detachAll: function(viewRootNodes) {
       var len, i, node, t1;
       len = viewRootNodes.length;
@@ -3974,7 +3971,13 @@
     setAttribute: function(element, attribute, value) {
       element.setAttribute(attribute, value);
     },
-    appendAnchor: function(doc, $parent) {
+    createText: function(contents) {
+      return document.createTextNode(contents);
+    },
+    appendText: function($parent, text) {
+      return $parent.appendChild(T.createText(text));
+    },
+    appendAnchor: function($parent) {
       var t1 = document;
       return $parent.appendChild(t1.createComment(""));
     },
@@ -4011,7 +4014,7 @@
       return t1;
     },
     viewFactory_EmbeddedNgFor1: function(parentView, parentIndex) {
-      var t1 = new N._ViewEmbeddedNgFor1(S.createText(""), P.LinkedHashMap_LinkedHashMap$_literal(["$implicit", null], P.String, null), parentView);
+      var t1 = new N._ViewEmbeddedNgFor1(T.createText(""), P.LinkedHashMap_LinkedHashMap$_literal(["$implicit", null], P.String, null), parentView);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_2, parentIndex);
       t1.componentType = $.ViewEmbeddedNgFor0__renderType;
       return t1;
@@ -11008,7 +11011,7 @@
     build$0: function() {
       var parentRenderNode, t1, t2;
       parentRenderNode = this.initViewRoot$1(this.rootEl);
-      t1 = new N.ViewDefaultChangeDetectionAndInputs0(S.createText(""), S.createText(""), P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this);
+      t1 = new N.ViewDefaultChangeDetectionAndInputs0(T.createText(""), T.createText(""), P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this);
       t1.viewData = S.AppViewData_AppViewData(t1, 3, C.ViewType_1, 0);
       t2 = document.createElement("default-change-detection-and-inputs");
       t1.rootEl = t2;
@@ -11052,9 +11055,9 @@
   N.ViewDefaultChangeDetectionAndInputs0.prototype = {
     build$0: function() {
       var parentRenderNode = this.initViewRoot$1(this.rootEl);
-      parentRenderNode.appendChild(S.createText("Hello "));
+      T.appendText(parentRenderNode, "Hello ");
       parentRenderNode.appendChild(this._text_1);
-      parentRenderNode.appendChild(S.createText(" "));
+      T.appendText(parentRenderNode, " ");
       parentRenderNode.appendChild(this._text_3);
       this.init$2(C.List_empty, null);
     },
@@ -11086,7 +11089,7 @@
     build$0: function() {
       var parentRenderNode, t1, t2;
       parentRenderNode = this.initViewRoot$1(this.rootEl);
-      t1 = new N.ViewOnPushChangeDetectionAndInputs0(S.createText(""), S.createText(""), P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this);
+      t1 = new N.ViewOnPushChangeDetectionAndInputs0(T.createText(""), T.createText(""), P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), this);
       t1.viewData = S.AppViewData_AppViewData(t1, 1, C.ViewType_1, 0);
       t2 = document.createElement("on-push-change-detection-and-inputs");
       t1.rootEl = t2;
@@ -11142,9 +11145,9 @@
   N.ViewOnPushChangeDetectionAndInputs0.prototype = {
     build$0: function() {
       var parentRenderNode = this.initViewRoot$1(this.rootEl);
-      parentRenderNode.appendChild(S.createText("Hello "));
+      T.appendText(parentRenderNode, "Hello ");
       parentRenderNode.appendChild(this._text_1);
-      parentRenderNode.appendChild(S.createText(" "));
+      T.appendText(parentRenderNode, " ");
       parentRenderNode.appendChild(this._text_3);
       this.init$2(C.List_empty, null);
     },
@@ -11174,8 +11177,7 @@
   };
   N.ViewInlinedNgIf0.prototype = {
     build$0: function() {
-      var parentRenderNode = this.initViewRoot$1(this.rootEl);
-      this._anchor_0 = T.appendAnchor(document, parentRenderNode);
+      this._anchor_0 = T.appendAnchor(this.initViewRoot$1(this.rootEl));
       this.init$2([], null);
     },
     detectChangesInternal$0: function() {
@@ -11186,7 +11188,7 @@
         if (currVal_0) {
           t1 = document.createElement("div");
           this._el_0_0 = t1;
-          t1.appendChild(S.createText("Hello World"));
+          T.appendText(t1, "Hello World");
           t1 = this._anchor_0;
           t2 = H.setRuntimeTypeInfo([this._el_0_0], [W.Node]);
           S._moveNodesAfterSibling(t1, t2);
@@ -11203,9 +11205,7 @@
   };
   N.ViewEmbeddedNgIf0.prototype = {
     build$0: function() {
-      var parentRenderNode, t1;
-      parentRenderNode = this.initViewRoot$1(this.rootEl);
-      t1 = new V.ViewContainer(0, null, this, T.appendAnchor(document, parentRenderNode));
+      var t1 = new V.ViewContainer(0, null, this, T.appendAnchor(this.initViewRoot$1(this.rootEl)));
       this._appEl_0 = t1;
       this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure()), t1, false);
       this.init$2(C.List_empty, null);
@@ -11255,10 +11255,9 @@
   };
   N.ViewEmbeddedNgFor0.prototype = {
     build$0: function() {
-      var parentRenderNode, doc, t1;
+      var parentRenderNode, t1;
       parentRenderNode = this.initViewRoot$1(this.rootEl);
-      doc = document;
-      t1 = new V.ViewContainer(1, 0, this, T.appendAnchor(doc, T.appendElement(doc, parentRenderNode, "ul")));
+      t1 = new V.ViewContainer(1, 0, this, T.appendAnchor(T.appendElement(document, parentRenderNode, "ul")));
       this._appEl_1 = t1;
       this._NgFor_1_9 = new R.NgFor(t1, new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure()));
       this.init$2(C.List_empty, null);
@@ -11331,13 +11330,12 @@
   };
   N.ViewComponentConditionalFeatures0.prototype = {
     build$0: function() {
-      var parentRenderNode, doc, t1;
+      var parentRenderNode, t1;
       parentRenderNode = this.initViewRoot$1(this.rootEl);
-      doc = document;
-      t1 = new V.ViewContainer(0, null, this, T.appendAnchor(doc, parentRenderNode));
+      t1 = new V.ViewContainer(0, null, this, T.appendAnchor(parentRenderNode));
       this._appEl_0 = t1;
       this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_ComponentConditionalFeatures1$closure()), t1, false);
-      t1 = new V.ViewContainer(1, null, this, T.appendAnchor(doc, parentRenderNode));
+      t1 = new V.ViewContainer(1, null, this, T.appendAnchor(parentRenderNode));
       this._appEl_1 = t1;
       this._NgIf_1_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_ComponentConditionalFeatures2$closure()), t1, false);
       this.init$2(C.List_empty, null);
@@ -11424,7 +11422,7 @@
   };
   N.ViewFeatureA0.prototype = {
     build$0: function() {
-      this.initViewRoot$1(this.rootEl).appendChild(S.createText("I am Feature A"));
+      T.appendText(this.initViewRoot$1(this.rootEl), "I am Feature A");
       this.init$2(C.List_empty, null);
     },
     $asAppView: function() {
@@ -11433,7 +11431,7 @@
   };
   N.ViewFeatureB0.prototype = {
     build$0: function() {
-      this.initViewRoot$1(this.rootEl).appendChild(S.createText("I am Feature B"));
+      T.appendText(this.initViewRoot$1(this.rootEl), "I am Feature B");
       this.init$2(C.List_empty, null);
     },
     $asAppView: function() {

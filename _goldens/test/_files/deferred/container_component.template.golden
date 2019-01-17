@@ -53,24 +53,23 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   ComponentRef<import1.TestContainerComponent> build() {
     final _rootEl = rootEl;
     final import9.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import9.document;
-    final _anchor_0 = import13.appendAnchor(doc, parentRenderNode);
+    final _anchor_0 = import13.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);
     _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
-    final _anchor_1 = import13.appendAnchor(doc, parentRenderNode);
+    final _anchor_1 = import13.appendAnchor(parentRenderNode);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
-    final _anchor_2 = import13.appendAnchor(doc, parentRenderNode);
+    final _anchor_2 = import13.appendAnchor(parentRenderNode);
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_8 = TemplateRef(_appEl_2, viewFactory_TestContainerComponent4);
     _NgIf_2_9 = NgIf(_appEl_2, _TemplateRef_2_8);
-    final _anchor_3 = import13.appendAnchor(doc, parentRenderNode);
+    final _anchor_3 = import13.appendAnchor(parentRenderNode);
     _appEl_3 = ViewContainer(3, null, this, _anchor_3);
     TemplateRef _TemplateRef_3_8 = TemplateRef(_appEl_3, viewFactory_TestContainerComponent6);
     _cancelDeferredLoad3 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_3, _TemplateRef_3_8);
-    final _anchor_4 = import13.appendAnchor(doc, parentRenderNode);
+    final _anchor_4 = import13.appendAnchor(parentRenderNode);
     _appEl_4 = ViewContainer(4, null, this, _anchor_4);
     TemplateRef _TemplateRef_4_8 = TemplateRef(_appEl_4, viewFactory_TestContainerComponent7);
     _cancelDeferredLoad4 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_4, _TemplateRef_4_8);
@@ -79,7 +78,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     parentRenderNode.append(_el_5);
     _NotDeferredChildComponent_5_5 = deflib0.NotDeferredChildComponent();
     _compView_5.create(_NotDeferredChildComponent_5_5, []);
-    final _anchor_6 = import13.appendAnchor(doc, parentRenderNode);
+    final _anchor_6 = import13.appendAnchor(parentRenderNode);
     _appEl_6 = ViewContainer(6, null, this, _anchor_6);
     TemplateRef _TemplateRef_6_8 = TemplateRef(_appEl_6, viewFactory_TestContainerComponent8);
     _cancelDeferredLoad6 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_6, _TemplateRef_6_8);
@@ -173,8 +172,7 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    final doc = import9.document;
-    final _anchor_0 = import13.createAnchor(doc);
+    final _anchor_0 = import13.createAnchor();
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent3);
     _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
@@ -237,7 +235,7 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     final doc = import9.document;
     final _el_0 = doc.createElement('div');
-    final _anchor_1 = import13.appendAnchor(doc, _el_0);
+    final _anchor_1 = import13.appendAnchor(_el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent5);
     _cancelDeferredLoad1 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_8);
@@ -336,7 +334,7 @@ class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponen
     _compView_0 = deflib1.viewFactory_DeferredChildComponentWithNgContent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChildComponentWithNgContent_0_5 = deflib0.DeferredChildComponentWithNgContent();
-    final _text_1 = createText('Hello World');
+    final _text_1 = import13.createText('Hello World');
     _compView_0.create(_DeferredChildComponentWithNgContent_0_5, [
       [_text_1]
     ]);
