@@ -178,6 +178,16 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
 
   ErrorMessageForAnnotation(this.indexedAnnotation, this.message);
 
+  /// Find the ancestor node that should have the metadata.
+  /// Angular only looks at metadata on class declarations and
+  /// class members.
+  static AnnotatedNode _ancestorWithMetadata(AstNode node) {
+    ArgumentError.checkNotNull(node);
+    return node is ClassMember || node is ClassDeclaration
+        ? node as AnnotatedNode
+        : _ancestorWithMetadata(node.parent);
+  }
+
   @override
   Future<BuildError> resolve() async {
     final element = indexedAnnotation.element;
@@ -185,14 +195,8 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
 
     var libraryResult = await ResolvedLibraryResultImpl.tmp(element.library);
     var result = libraryResult.getElementDeclaration(element);
-    AnnotatedNode annotatedNode = result.node;
-    if (annotatedNode.metadata.length != element.metadata.length) {
-      // [ResolvedLibraryResultImpl] lost the metadata, so return the
-      // original annotation even though it probably doesn't have the correct
-      // information.
-      return BuildError.forAnnotation(
-          element.metadata[annotationIndex], message);
-    }
+    AnnotatedNode annotatedNode = _ancestorWithMetadata(result.node);
+
     ElementAnnotation resolvedAnnotation =
         annotatedNode.metadata[annotationIndex].elementAnnotation;
     return BuildError.forAnnotation(resolvedAnnotation, message);
