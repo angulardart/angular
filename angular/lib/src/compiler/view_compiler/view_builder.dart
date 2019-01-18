@@ -1,12 +1,11 @@
 import 'package:meta/meta.dart';
-import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileDirectiveMetadata, CompileIdentifierMetadata;
-import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
 import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
 import 'package:angular/src/compiler/html_events.dart';
 import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
+import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/template_parser/is_pure_html.dart';
@@ -35,7 +34,6 @@ import 'view_compiler_utils.dart'
     show
         cachedParentIndexVarName,
         createFlatArray,
-        createSetAttributeStatement,
         detectHtmlElementFromTagName,
         identifierFromTagName,
         mergeHtmlAndDirectiveAttributes,
@@ -541,20 +539,17 @@ o.ClassMethod _createViewClassConstructor(CompileView view) {
 
     // Write literal attribute values on element.
     CompileDirectiveMetadata componentMeta = view.component;
-    componentMeta.hostAttributes.forEach((String name, ast.AST value) {
-      var expression = convertCdExpressionToIr(
-        view.nameResolver,
-        o.THIS_EXPR,
-        value,
-        // We neither have a source span to provide, nor should it be possible
-        // for a host binding to fail expression conversion and need it.
-        null,
-        view.component,
-        o.STRING_TYPE,
+    componentMeta.hostAttributes.forEach((name, value) {
+      var binding = ir.Binding(
+          source: ir.BoundExpression(value, null, view.component.analyzedClass),
+          target: ir.AttributeBinding(name));
+      var statement = view.createAttributeStatement(
+        binding.source,
+        binding.target as ir.AttributeBinding,
+        tagName,
+        o.variable(appViewRootElementName),
       );
-      o.Statement stmt = createSetAttributeStatement(
-          tagName, o.variable(appViewRootElementName), name, expression);
-      ctor.body.add(stmt);
+      ctor.body.add(statement);
     });
     if (view.genConfig.profileFor != Profile.none) {
       genProfileSetup(ctor.body);
