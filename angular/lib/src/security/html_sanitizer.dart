@@ -1,23 +1,6 @@
 import 'dart:html';
 
-import 'package:angular/src/runtime.dart';
-
-Node _inertElement;
-
-Node _getInertElement() {
-  if (_inertElement == null) {
-    // Prefer using <template> element if supported.
-    TemplateElement templateEl = TemplateElement();
-    if (templateEl != null) {
-      // TODO: investigate template.children.clear and remove extra div.
-      _inertElement = document.createElement('div');
-      templateEl.append(_inertElement);
-    } else {
-      _inertElement = DocumentFragment();
-    }
-  }
-  return _inertElement;
-}
+final _inertFragment = DocumentFragment();
 
 /// Sanitizes the given unsafe, untrusted HTML fragment, and returns HTML text
 /// that is safe to add to the DOM in a browser environment.
@@ -25,9 +8,8 @@ Node _getInertElement() {
 /// This function uses the builtin Dart innerHTML sanitization provided by
 /// NodeTreeSanitizer on an inert element.
 String sanitizeHtmlInternal(String value) {
-  Element element = unsafeCast(_getInertElement());
-  element.innerHtml = value;
-  String safeHtml = element.innerHtml;
-  element.children?.clear();
+  final inertFragment = _inertFragment..innerHtml = value;
+  final safeHtml = inertFragment.innerHtml;
+  inertFragment.children.clear();
   return safeHtml;
 }
