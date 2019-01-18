@@ -1208,10 +1208,16 @@ class CompileView {
     ir.AttributeBinding target,
     ir.BindingSource source,
   ) {
+    _createMethod.addStmt(createAttributeStatement(
+        source, target, elementName, nodeReference.toReadExpr()));
+  }
+
+  o.Statement createAttributeStatement(ir.BindingSource source,
+      ir.AttributeBinding target, String elementName, o.Expression renderNode) {
     var expression = _toExpression(source, o.THIS_EXPR);
     o.Statement stmt = createSetAttributeStatement(
-        elementName, nodeReference.toReadExpr(), target.name, expression);
-    _createMethod.addStmt(stmt);
+        elementName, renderNode, target.name, expression);
+    return stmt;
   }
 
   void deferLoadEmbeddedTemplate(
