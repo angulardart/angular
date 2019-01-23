@@ -43,6 +43,21 @@ class DomHelpers {
   static final appendElement = _of('appendElement');
 }
 
+class SpecializedViews {
+  const SpecializedViews._();
+
+  static CompileIdentifierMetadata _of(String name) {
+    return CompileIdentifierMetadata(
+      name: name,
+      moduleUrl: '$_angularLib/src/core/linker/$name.dart',
+    );
+  }
+
+  static final componentView = _of('specializations/component');
+  static final embeddedView = _of('specializations/embedded');
+  static final hostView = _of('specializations/host');
+}
+
 class Identifiers {
   static final appViewUtils = CompileIdentifierMetadata<dynamic>(
       name: "appViewUtils", moduleUrl: _appViewUtilsModuleUrl);
