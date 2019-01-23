@@ -1,4 +1,5 @@
 import 'package:analyzer/analyzer.dart';
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/src/dart/analysis/results.dart';
@@ -59,6 +60,12 @@ class AngularAnalysisError extends AsyncBuildError {
 
     var libraryElement = indexedAnnotation.element.library;
     var libraryResult = await ResolvedLibraryResultImpl.tmp(libraryElement);
+    if (libraryResult.state == ResultState.NOT_A_FILE) {
+      // We don't have access to source information in summarized libraries,
+      // but another build step will likely emit the root cause errors.
+      return BuildError("Analysis errors in summarized library "
+          "${libraryElement.source.fullName}");
+    }
     var classResult =
         libraryResult.getElementDeclaration(indexedAnnotation.element);
 
