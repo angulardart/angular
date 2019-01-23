@@ -329,3 +329,53 @@ branches going unused in production code.
 The code behind `.cast` creates a forwarding wrapper (based on `sync*` and
 `async*` in many cases) that adds a lot of overhead. It is preferrable to either
 fix the typing _or_ use an alternative pattern to get the typing required.
+
+## Avoid multiple returns when inlining of a method is desirable
+
+See https://github.com/dart-lang/sdk/issues/35728, but Dart2JS is currently
+unable to inline in cases where multiple `return` statements are present.
+
+**BAD**:
+
+```dart
+import 'package:meta/dart2js.dart' as dart2js;
+
+@dart2js.tryInline
+String getLetter(int counter) {
+  if (counter == 1) {
+    return 'A';
+  }
+  if (counter == 2) {
+    return 'B';
+  }
+  return null;
+}
+```
+
+**OK**: Using a ternary statement to avoid multiple `return`s.
+
+```dart
+import 'package:meta/dart2js.dart' as dart2js;
+
+@dart2js.tryInline
+String getLetter(int counter) {
+  return counter == 1 ? 'A' : counter == 2 ? 'B' : null;
+}
+```
+
+**OK**: Using a `result` value.
+
+```dart
+import 'package:meta/dart2js.dart' as dart2js;
+
+@dart2js.tryInline
+String getLetter(int counter) {
+  String result;
+  if (counter == 1) {
+    result = 'A';
+  } else if (counter == 2) {
+    result = 'B';
+  }
+  return result;
+}
+```
