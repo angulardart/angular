@@ -96,6 +96,7 @@ class AttrAst implements TemplateAst {
 
 /// A binding for an element property (e.g. [property]='expression').
 class BoundElementPropertyAst implements TemplateAst {
+  final String namespace;
   final String name;
   final PropertyBindingType type;
   final BoundValue value;
@@ -103,8 +104,8 @@ class BoundElementPropertyAst implements TemplateAst {
   final SourceSpan sourceSpan;
   final TemplateSecurityContext securityContext;
 
-  BoundElementPropertyAst(this.name, this.type, this.securityContext,
-      this.value, this.unit, this.sourceSpan);
+  BoundElementPropertyAst(this.namespace, this.name, this.type,
+      this.securityContext, this.value, this.unit, this.sourceSpan);
 
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>
       visitor.visitElementProperty(this, context);

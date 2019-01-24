@@ -1,5 +1,5 @@
-import 'package:angular/src/facade/lang.dart' show jsSplit;
 import 'package:source_span/source_span.dart';
+import 'package:angular/src/facade/lang.dart' show jsSplit;
 
 import '../core/security.dart';
 import 'compile_metadata.dart'
@@ -82,6 +82,7 @@ BoundElementPropertyAst createElementPropertyAst(
     ElementSchemaRegistry schemaRegistry,
     ErrorCallback reportError) {
   String unit;
+  String namespace;
   PropertyBindingType bindingType;
   String boundPropertyName;
   TemplateSecurityContext securityContext;
@@ -124,9 +125,8 @@ BoundElementPropertyAst createElementPropertyAst(
           elementName, schemaRegistry.getMappedPropName(boundPropertyName));
       var nsSeparatorIdx = boundPropertyName.indexOf(':');
       if (nsSeparatorIdx > -1) {
-        var ns = boundPropertyName.substring(0, nsSeparatorIdx);
-        var name = boundPropertyName.substring(nsSeparatorIdx + 1);
-        boundPropertyName = mergeNsAndName(ns, name);
+        namespace = boundPropertyName.substring(0, nsSeparatorIdx);
+        boundPropertyName = boundPropertyName.substring(nsSeparatorIdx + 1);
       }
       bindingType = PropertyBindingType.attribute;
     } else if (parts[0] == _classPrefix) {
@@ -145,6 +145,7 @@ BoundElementPropertyAst createElementPropertyAst(
     }
   }
   return BoundElementPropertyAst(
+    namespace,
     boundPropertyName,
     bindingType,
     securityContext,

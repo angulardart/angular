@@ -257,15 +257,7 @@ void bindAndWriteToRenderer(
         }
         break;
       case PropertyBindingType.attribute:
-        String attrNs;
-        String attrName = boundProp.name;
-        if (attrName.startsWith('@') && attrName.contains(':')) {
-          var nameParts = attrName.substring(1).split(':');
-          attrNs = namespaceUris[nameParts[0]];
-          attrName = nameParts[1];
-        }
-
-        if (attrName == 'class') {
+        if (boundProp.name == 'class') {
           // Handle [attr.class].
           var updateClassExpr = appViewInstance
               .callMethod('updateChildClass', [renderNode, renderValue]);
@@ -291,10 +283,12 @@ void bindAndWriteToRenderer(
               );
             }
           }
+
+          String attrNs = namespaceUris[boundProp.namespace];
           var params = createSetAttributeParams(
             renderNode,
             attrNs,
-            attrName,
+            boundProp.name,
             renderValue,
           );
 
