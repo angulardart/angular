@@ -93,10 +93,12 @@ class DirectiveVisitor {
   }
 
   void _visitMember(Element member) {
-    for (final hostBinding in $HostBinding.annotationsOfExact(member)) {
+    for (final hostBinding
+        in $HostBinding.annotationsOfExact(member, throwOnUnresolved: false)) {
       _visitHostBinding(member, hostBinding);
     }
-    for (final hostListener in $HostListener.annotationsOfExact(member)) {
+    for (final hostListener
+        in $HostListener.annotationsOfExact(member, throwOnUnresolved: false)) {
       _visitHostListener(member, hostListener);
     }
   }

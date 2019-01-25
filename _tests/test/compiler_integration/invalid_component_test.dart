@@ -30,6 +30,36 @@ void main() {
     ]);
   });
 
+  test('should error on an incorrect member annotation', () async {
+    // NOTE: @Input on BadComp.inValue is invalid.
+    await compilesExpecting('''
+      import '$ngImport';
+
+      @Directive(
+        selector: 'valid',
+      )
+      class ValidDirective {}
+
+      @Component(
+        selector: 'bad-comp',
+        directives: const [
+        ],
+        template: '',
+      )
+      class BadComp {
+        @Input
+        String inValue;
+      }
+    ''', warnings: [
+      // TODO(b/123366944): This message should be printed only once.
+      contains('Could not resolve @class Input'),
+      contains('Could not resolve @class Input'),
+      contains('Could not resolve @class Input'),
+      contains('Could not resolve @class Input'),
+      // TODO(b/123367431): Add source locations to this error message.
+    ]);
+  });
+
   test('should not report unrelated errors', () async {
     await compilesExpecting('''
       import '$ngImport';
