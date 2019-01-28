@@ -46,7 +46,7 @@ class NgScanner {
   }) {
     var reader = NgTokenReversibleReader<NgSimpleTokenType>(
         SourceFile.fromString(html, url: sourceUrl),
-        NgSimpleTokenizer().tokenize(html));
+        const NgSimpleTokenizer().tokenize(html));
     var recoverError = exceptionHandler is RecoveringExceptionHandler;
 
     return NgScanner._(reader, recoverError, exceptionHandler);
