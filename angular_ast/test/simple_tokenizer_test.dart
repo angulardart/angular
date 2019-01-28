@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 
 void main() {
   Iterable<NgSimpleToken> tokenize(String html) =>
-      NgSimpleTokenizer().tokenize(html);
+      const NgSimpleTokenizer().tokenize(html);
   String untokenize(Iterable<NgSimpleToken> tokens) => tokens
       .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
       .toString();

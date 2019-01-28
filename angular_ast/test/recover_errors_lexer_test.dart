@@ -8,7 +8,7 @@ import 'package:angular_ast/src/token/tokens.dart';
 import 'package:angular_ast/src/parser/reader.dart';
 import 'package:test/test.dart';
 
-ThrowingExceptionHandler throwingException = ThrowingExceptionHandler();
+const ThrowingExceptionHandler throwingException = ThrowingExceptionHandler();
 RecoveringExceptionHandler recoveringException = RecoveringExceptionHandler();
 RecoveryProtocol recoveryProtocol = NgAnalyzerRecoveryProtocol();
 
