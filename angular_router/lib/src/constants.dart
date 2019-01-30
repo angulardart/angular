@@ -27,28 +27,32 @@ const routerDirectives = [RouterOutlet, RouterLink, RouterLinkActive];
 
 /// The main [Router] providers.
 ///
-/// The [routerProviders] should be added to the providers during the
-/// main app's bootstrap.
+/// The [routerProviders] should be added to the app's root injector.
 /// ```
-/// bootstrap(MyAppComponent, [routerProviders]);
+/// @GenerateInjector([routerProviders])
+/// final InjectorFactory appInjector = ng.appInjector$Injector;
+/// ...
+/// runApp(ng.MyAppComponentNgFactory, createInjector: appInjector);
 /// ```
 const routerProviders = [
-  Provider(LocationStrategy, useClass: PathLocationStrategy),
-  Provider(PlatformLocation, useClass: BrowserPlatformLocation),
-  Provider(Location),
-  Provider(Router, useClass: RouterImpl)
+  ClassProvider(LocationStrategy, useClass: PathLocationStrategy),
+  ClassProvider(PlatformLocation, useClass: BrowserPlatformLocation),
+  ClassProvider(Location),
+  ClassProvider(Router, useClass: RouterImpl)
 ];
 
 /// The main [Router] providers when using hash routing.
 ///
-/// The [routerProvidersHash] should be added to the providers during the
-/// main app's bootstrap.
+/// The [routerProvidersHash] should be added to the app's root injector.
 /// ```
-/// bootstrap(MyAppComponent, [routerProvidersHash]);
+/// @GenerateInjector([routerProvidersHash])
+/// final InjectorFactory appInjector = ng.appInjector$Injector;
+/// ...
+/// runApp(ng.MyAppComponentNgFactory, createInjector: appInjector);
 /// ```
 const routerProvidersHash = [
-  Provider(LocationStrategy, useClass: HashLocationStrategy),
-  Provider(PlatformLocation, useClass: BrowserPlatformLocation),
-  Provider(Location),
-  Provider(Router, useClass: RouterImpl)
+  ClassProvider(LocationStrategy, useClass: HashLocationStrategy),
+  ClassProvider(PlatformLocation, useClass: BrowserPlatformLocation),
+  ClassProvider(Location),
+  ClassProvider(Router, useClass: RouterImpl)
 ];
