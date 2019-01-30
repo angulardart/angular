@@ -8,8 +8,8 @@ analyzer:
     # Allow importing .template.dart files without an analyzer error.
     uri_has_not_been_generated: ignore
 
-    # The noise of deprecations isn't worth the effort.
-    deprecated_member_use: ignore
+    # Ignore our own deprecated symbols.
+    deprecated_member_use_from_same_package: ignore
   exclude:
     - .dart_tool/**
     - build/**
