@@ -66,11 +66,11 @@ class AngularAnalysisError extends AsyncBuildError {
       return BuildError("Analysis errors in summarized library "
           "${libraryElement.source.fullName}");
     }
+
     var classResult =
         libraryResult.getElementDeclaration(indexedAnnotation.element);
-
-    ClassDeclaration classDeclaration = classResult.node;
-    final resolvedAnnotation =
+    var classDeclaration = classResult.node as ClassDeclaration;
+    var resolvedAnnotation =
         classDeclaration.metadata[indexedAnnotation.annotationIndex];
 
     // Only include the errors that are inside the annotation.
