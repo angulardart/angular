@@ -1,4 +1,6 @@
 @TestOn('browser')
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
@@ -17,8 +19,9 @@ void main() {
   test('should render message in attribute', () async {
     final testBed = NgTestBed.forComponent(ng.TestI18nAttributeNgFactory);
     final testFixture = await testBed.create();
-    final imgElement = testFixture.rootElement.querySelector('img');
-    expect(imgElement.getAttribute('alt'), 'A puppy!');
+    final imgElement =
+        testFixture.rootElement.querySelector('img') as ImageElement;
+    expect(imgElement.alt, 'A puppy!');
   });
 
   test('should render message with HTML', () async {
@@ -36,14 +39,6 @@ void main() {
     expect(testFixture.text, 'Click here to file an issue.');
     final anchorElement = testFixture.rootElement.querySelector('a');
     expect(anchorElement.getAttribute('href'), issuesLink);
-  });
-
-  test('should render message with escaped Dart characters', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.TestI18nNodeWithEscapedDartCharactersNgFactory);
-    final testFixture = await testBed.create();
-    expect(testFixture.text, contains('Escape\nnewline.'));
-    expect(testFixture.text, contains('This is not an \$interpolation.'));
   });
 
   test('should render message with escaped HTML characters', () async {
@@ -145,15 +140,6 @@ class TestI18nNodeWithHtml {}
   ''',
 )
 class TestI18nNodeWithUnsafeHtml {}
-
-@Component(
-  selector: 'test',
-  template: '''
-    <p @i18n="description">Escape\nnewline.</p>
-    <p @i18n="description">This is not an \$interpolation.</p>
-  ''',
-)
-class TestI18nNodeWithEscapedDartCharacters {}
 
 @Component(
   selector: 'test',
