@@ -41,6 +41,17 @@ const routerProviders = [
   ClassProvider(Router, useClass: RouterImpl)
 ];
 
+/// The main [Router] DI module.
+///
+/// The [routerModule] should be added to the app's root injector.
+/// ```
+/// @GenerateInjector.fromModules([routerModule])
+/// final InjectorFactory appInjector = ng.appInjector$Injector;
+/// ...
+/// runApp(ng.MyAppComponentNgFactory, createInjector: appInjector);
+/// ```
+const routerModule = Module(provide: routerProviders);
+
 /// The main [Router] providers when using hash routing.
 ///
 /// The [routerProvidersHash] should be added to the app's root injector.
@@ -56,3 +67,14 @@ const routerProvidersHash = [
   ClassProvider(Location),
   ClassProvider(Router, useClass: RouterImpl)
 ];
+
+/// The main [Router] DI module when using hash routing.
+///
+/// The [routerHashModule] should be added to the app's root injector.
+/// ```
+/// @GenerateInjector.fromModules([routerHashModule])
+/// final InjectorFactory appInjector = ng.appInjector$Injector;
+/// ...
+/// runApp(ng.MyAppComponentNgFactory, createInjector: appInjector);
+/// ```
+const routerHashModule = Module(provide: routerProvidersHash);
