@@ -1,7 +1,8 @@
-import 'package:angular_ast/angular_ast.dart' as ast;
 import 'package:source_span/source_span.dart';
+import 'package:angular_ast/angular_ast.dart' as ast;
 
 import 'i18n/builder.dart';
+import 'i18n/message.dart';
 import 'i18n/metadata.dart';
 import 'template_ast.dart' as ng;
 import 'template_parser.dart' show TemplateContext;
@@ -22,8 +23,7 @@ List<ng.TemplateAst> internationalize(
   int ngContentIndex,
   TemplateContext context,
 ) {
-  final i18nBuilder = I18nBuilder(context)..visitAll(parent.childNodes);
-  final i18nMessage = i18nBuilder.build(metadata);
+  final i18nMessage = _message(parent.childNodes, metadata, context);
   if (i18nMessage == null) {
     context.reportError(
       'Internationalized messages must contain text',
@@ -38,6 +38,43 @@ List<ng.TemplateAst> internationalize(
       _spanWithin(parent),
     )
   ];
+}
+
+/// Creates an internationalized messages from [nodes].
+I18nMessage _message(
+  List<ast.StandaloneTemplateAst> nodes,
+  I18nMetadata metadata,
+  TemplateContext context,
+) {
+  /// This disambiguation is important to ensure the message contents are
+  /// properly escaped. The `I18nBuilder` used to construct messages does
+  /// manual escaping, while messages without nested HTML are automatically
+  /// escaped later during code generation.
+  return _isText(nodes)
+      ? _textMessage(nodes.single as ast.TextAst, metadata)
+      : _htmlMessage(nodes, metadata, context);
+}
+
+/// Whether [nodes] contains only a plain text node.
+bool _isText(List<ast.StandaloneTemplateAst> nodes) =>
+    nodes.length == 1 && nodes[0] is ast.TextAst;
+
+/// Creates an internationalized message from [nodes] that contain nested HTML.
+I18nMessage _htmlMessage(
+  List<ast.StandaloneTemplateAst> nodes,
+  I18nMetadata metadata,
+  TemplateContext context,
+) {
+  final i18nBuilder = I18nBuilder(context);
+  for (final child in nodes) {
+    child.accept(i18nBuilder);
+  }
+  return i18nBuilder.build(metadata);
+}
+
+/// Creates an internationalized message from a [text] node.
+I18nMessage _textMessage(ast.TextAst text, I18nMetadata metadata) {
+  return I18nMessage(text.value, metadata);
 }
 
 SourceSpan _spanWithin(ast.StandaloneTemplateAst parent) {

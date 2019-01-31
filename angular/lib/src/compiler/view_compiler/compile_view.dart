@@ -480,17 +480,8 @@ class CompileView {
     if (_i18nMessages.containsKey(message)) {
       return _i18nMessages[message];
     }
-    var text = message.text;
-    if (message.containsHtml) {
-      // If the message contains HTML, it will be parsed into a document
-      // fragment. To prevent any manually escaped '<' and '>' characters (that
-      // were decoded during template parsing) from being interpreted as HTML
-      // tags, we must escape them again.
-      final htmlEscape = const HtmlEscape(HtmlEscapeMode.element);
-      text = htmlEscape.convert(text);
-    }
     final args = [
-      o.escapedString(text),
+      _textExpression(message),
       o.NamedExpr('desc', o.literal(message.metadata.description)),
     ];
     if (message.metadata.meaning != null) {
@@ -657,6 +648,24 @@ class CompileView {
         initialValue: _createEmptyText,
       );
     }
+  }
+
+  /// Returns an expression for the text content of [message].
+  o.Expression _textExpression(I18nMessage message) {
+    if (message.containsHtml) {
+      // If the message contains HTML, it will be parsed into a document
+      // fragment. To prevent any manually escaped '<' and '>' characters (that
+      // were decoded during template parsing) from being interpreted as HTML
+      // tags, we must escape them again.
+      final htmlEscape = const HtmlEscape(HtmlEscapeMode.element);
+      final text = htmlEscape.convert(message.text);
+      // Messages that contain HTML are escaped manually during construction
+      // to preserve the interpolations used to render the HTML tags.
+      return o.escapedString(text);
+    }
+    // Normal messages are escaped during code generation like any other literal
+    // text.
+    return o.literal(message.text);
   }
 
   o.Expression _textValue(ir.BindingSource source) =>

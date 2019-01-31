@@ -33,6 +33,11 @@
 *   The compiler emits source locations for errors in Dart files when using an
     `AnalysisDriver`.
 
+*   Internationalized attribute, property, and input bindings will now properly
+    escape characters in the message that would invalidate the generated string
+    (such as `\n`, `$`, and `'`). This behavior is now consistent with
+    internationalized text and HTML.
+
 [#1694]: https://github.com/dart-lang/angular/issues/1694
 [#1669]: https://github.com/dart-lang/angular/issues/1669
 
