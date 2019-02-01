@@ -186,5 +186,5 @@ abstract class OnDeactivate {
   ///
   /// **NOTE**: This is still called even if the component also extends
   /// [CanReuse] and is reused.
-  void onDeactivate(RouterState previous, RouterState current);
+  void onDeactivate(RouterState current, RouterState next);
 }
