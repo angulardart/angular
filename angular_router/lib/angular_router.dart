@@ -3,7 +3,12 @@
 library angular_router;
 
 export 'src/constants.dart'
-    show routerDirectives, routerProviders, routerProvidersHash;
+    show
+        routerDirectives,
+        routerProviders,
+        routerProvidersHash,
+        routerModule,
+        routerHashModule;
 export 'src/directives/router_link_active_directive.dart' show RouterLinkActive;
 export 'src/directives/router_link_directive.dart' show RouterLink;
 export 'src/directives/router_outlet_directive.dart' show RouterOutlet;
