@@ -38,6 +38,8 @@
     (such as `\n`, `$`, and `'`). This behavior is now consistent with
     internationalized text and HTML.
 
+*   The template compiler no longer crashes on HTML attributes ending in ":"
+
 [#1694]: https://github.com/dart-lang/angular/issues/1694
 [#1669]: https://github.com/dart-lang/angular/issues/1669
 

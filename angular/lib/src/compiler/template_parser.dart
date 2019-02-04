@@ -209,7 +209,10 @@ List<T> removeDuplicates<T>(List<T> items) {
 }
 
 String mergeNsAndName(String prefix, String localName) {
-  return prefix != null ? '@$prefix:$localName' : localName;
+  if (prefix == null) return localName;
+  // At least one part is empty, this is not a valid namespaced token.
+  if (prefix == '' || localName == '') return '$prefix:$localName';
+  return '@$prefix:$localName';
 }
 
 final _nsPrefixRegExp = RegExp(r'^@([^:]+):(.+)');

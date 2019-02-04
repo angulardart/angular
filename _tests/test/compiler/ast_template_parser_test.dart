@@ -2183,6 +2183,15 @@ void main() {
                 '"@deferred" on elements can\'t be bound to an expression.'));
       }, skip: 'Re-enable. Does not throw.');
     });
+
+    group('namespaces', () {
+      test('should not choke on invalid namespace attributes', () {
+        expect(humanizeTplAstSourceSpans(parse('<h3 suffixEmpty:></h3>', [])), [
+          [ElementAst, 'h3', '<h3 suffixEmpty:>'],
+          [AttrAst, 'suffixEmpty:', '', 'suffixEmpty:'],
+        ]);
+      });
+    });
   });
 }
 
