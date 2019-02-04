@@ -56,6 +56,7 @@ bool _matchTypes(Iterable<Type> types, ElementAnnotation annotation) =>
 /// annotation, otherwise an [ArgumentError] is thrown.
 bool matchAnnotation(Type type, ElementAnnotation annotation) {
   annotation.computeConstantValue();
+  // TODO(b/123715184) Surface the constantEvaluationErrors.
   try {
     final checker = TypeChecker.fromRuntime(type);
     final objectType = annotation.constantValue.type;

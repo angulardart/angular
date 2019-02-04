@@ -185,14 +185,21 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
 
   ErrorMessageForAnnotation(this.indexedAnnotation, this.message);
 
-  /// Find the ancestor node that should have the metadata.
-  /// Angular only looks at metadata on class declarations and
-  /// class members.
-  static AnnotatedNode _ancestorWithMetadata(AstNode node) {
-    ArgumentError.checkNotNull(node);
-    return node is ClassMember || node is ClassDeclaration
-        ? node as AnnotatedNode
-        : _ancestorWithMetadata(node.parent);
+  /// Find the ancestor node that should have the metadata and return
+  /// that metadata.
+  /// Angular only looks at metadata on class declarations,
+  /// class members and formal parameters.
+  static List<Annotation> _metadataFromAncestry(AstNode node) {
+    // NOTE: We check for [ClassMember] or [ClassDeclaration] explicitly
+    // as some [AnnotatedNode]s in the ancestor chain do not have
+    // the metadata we are looking for.  See
+    // 519_missing_query_selector_test.dart for an example of this condition.
+    if (node is ClassMember || node is ClassDeclaration) {
+      return (node as AnnotatedNode).metadata;
+    } else if (node is FormalParameter) {
+      return node.metadata;
+    }
+    return _metadataFromAncestry(node.parent);
   }
 
   @override
@@ -202,10 +209,10 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
 
     var libraryResult = await ResolvedLibraryResultImpl.tmp(element.library);
     var result = libraryResult.getElementDeclaration(element);
-    AnnotatedNode annotatedNode = _ancestorWithMetadata(result.node);
+    List<Annotation> resolvedMetadata = _metadataFromAncestry(result.node);
 
     ElementAnnotation resolvedAnnotation =
-        annotatedNode.metadata[annotationIndex].elementAnnotation;
+        resolvedMetadata[annotationIndex].elementAnnotation;
     return BuildError.forAnnotation(resolvedAnnotation, message);
   }
 }

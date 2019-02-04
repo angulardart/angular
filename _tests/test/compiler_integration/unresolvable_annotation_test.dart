@@ -19,6 +19,25 @@ void main() {
     ]);
   });
 
+  test('should fail with an error on mispelled parameter annotation', () async {
+    await compilesExpecting("""
+      import '$ngImport';
+
+      @Component(
+        selector: 'with-bad-annotation',
+        template: '<b>Boo</b>')
+      class HeroComponent {
+        HeroComponent(@badAnnotation someService);
+      }
+    """, errors: [
+      allOf(
+        contains('Error evaluating annotation'),
+        contains('@badAnnotation'),
+        containsSourceLocation(7, 23),
+      ),
+    ]);
+  });
+
   test('should fail with a readable error on a missing import', () async {
     await compilesExpecting("""
       // Intentionally missing import.

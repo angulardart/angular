@@ -10,11 +10,13 @@ import '../../compiler/output/convert.dart';
 import 'compile_metadata.dart';
 import 'dart_object_utils.dart';
 import 'lifecycle_hooks.dart';
+import 'component_visitor_exceptions.dart';
 
 class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   final LibraryReader _library;
+  final ComponentVisitorExceptionHandler _exceptionHandler;
 
-  PipeVisitor(this._library);
+  PipeVisitor(this._library, this._exceptionHandler);
 
   @override
   CompilePipeMetadata visitClassElement(ClassElement element) {
@@ -50,7 +52,8 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
     }
     final value = annotation.computeConstantValue();
     return CompilePipeMetadata(
-      type: element.accept(CompileTypeMetadataVisitor(_library)),
+      type: element
+          .accept(CompileTypeMetadataVisitor(_library, _exceptionHandler)),
       transformType: fromFunctionType(transformType),
       name: coerceString(value, 'name'),
       pure: coerceBool(value, 'pure', defaultTo: true),

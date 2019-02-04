@@ -106,7 +106,8 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   List<CompilePipeMetadata> _visitPipes(ClassElement element) {
     final values = _getResolvedArgumentsOrFail(element, 'pipes');
     return visitAll(values, (value) {
-      return typeDeclarationOf(value)?.accept(PipeVisitor(_library));
+      return typeDeclarationOf(value)
+          ?.accept(PipeVisitor(_library, _exceptionHandler));
     });
   }
 
@@ -241,7 +242,8 @@ class _ComponentVisitor
       invalid = true;
     }
     if (invalid) return null;
-    final type = element.accept(CompileTypeMetadataVisitor(_library));
+    final type =
+        element.accept(CompileTypeMetadataVisitor(_library, _exceptionHandler));
     final selector = coerceString(annotationValue, 'selector');
     return CompileDirectiveMetadata(
       type: type,
@@ -560,7 +562,8 @@ class _ComponentVisitor
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     CompileTypeMetadata componentType =
-        element.accept(CompileTypeMetadataVisitor(_library));
+        element.accept(CompileTypeMetadataVisitor(_library, _exceptionHandler));
+
     final template = isComp
         ? _createTemplateMetadata(annotationValue, componentType)
         : CompileTemplateMetadata();
@@ -679,7 +682,8 @@ class _ComponentVisitor
       visitAll(
           const ModuleReader()
               .extractProviderObjects(getField(component, providerField)),
-          CompileTypeMetadataVisitor(_library).createProviderMetadata);
+          CompileTypeMetadataVisitor(_library, _exceptionHandler)
+              .createProviderMetadata);
 
   List<CompileIdentifierMetadata> _extractExports(
       ElementAnnotationImpl annotation, ClassElement element) {
