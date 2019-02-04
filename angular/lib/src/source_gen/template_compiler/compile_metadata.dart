@@ -21,6 +21,7 @@ import 'package:source_gen/source_gen.dart';
 
 import 'dart_object_utils.dart' as dart_objects;
 import 'provider_inference.dart';
+import 'component_visitor_exceptions.dart';
 
 /// Returns whether the string is `null` _or_ an empty string.
 bool _isEmptyString(String s) => s == null || s.isEmpty;
@@ -28,8 +29,9 @@ bool _isEmptyString(String s) => s == null || s.isEmpty;
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
   final LibraryReader _library;
+  final ComponentVisitorExceptionHandler _exceptionHandler;
 
-  CompileTypeMetadataVisitor(this._library);
+  CompileTypeMetadataVisitor(this._library, this._exceptionHandler);
 
   @override
   CompileTypeMetadata visitClassElement(ClassElement element) {
@@ -288,7 +290,7 @@ class CompileTypeMetadataVisitor
           ? _tokenForAttribute(p)
           : _hasAnnotation(p, Inject)
               ? _tokenForInject(p)
-              : $OpaqueToken.hasAnnotationOf(p)
+              : $OpaqueToken.hasAnnotationOf(p, throwOnUnresolved: false)
                   ? _tokenForOpaqueToken(p)
                   : _tokenForType(p.type);
 
@@ -561,12 +563,25 @@ class CompileTypeMetadataVisitor
   bool _isOpaqueToken(DartObject token) =>
       token != null && $OpaqueToken.isAssignableFromType(token.type);
 
-  ElementAnnotation _getAnnotation(Element element, Type type) =>
-      element.metadata.firstWhere(
-          (annotation) => annotation_matcher.matchAnnotation(type, annotation));
+  ElementAnnotation _getAnnotation(Element element, Type type) {
+    for (var annotationIndex = 0;
+        annotationIndex < element.metadata.length;
+        annotationIndex++) {
+      final annotation = element.metadata[annotationIndex];
+      try {
+        if (annotation_matcher.matchAnnotation(type, annotation))
+          return annotation;
+      } on ArgumentError catch (_) {
+        _exceptionHandler.handle(ErrorMessageForAnnotation(
+            IndexedAnnotation(element, annotation, annotationIndex),
+            'Error evaluating annotation on element "$element"'));
+      }
+    }
+    return null;
+  }
 
-  bool _hasAnnotation(Element element, Type type) => element.metadata.any(
-      (annotation) => annotation_matcher.matchAnnotation(type, annotation));
+  bool _hasAnnotation(Element element, Type type) =>
+      _getAnnotation(element, type) != null;
 
   o.Expression _expressionForEnum(DartObject token) {
     final field =
