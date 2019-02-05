@@ -94,7 +94,7 @@ void main() {
 }
 
 @GenerateInjector(routerProvidersTest)
-const appInjector = ng.appInjector$Injector;
+final appInjector = ng.appInjector$Injector;
 
 @Component(
   selector: 'app',
