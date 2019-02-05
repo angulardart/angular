@@ -1515,7 +1515,8 @@ class _VariableWriteFinder extends RecursiveExpressionVisitor<Null> {
   final varNames = Set<String>();
 
   @override
-  Expression visitWriteVarExpr(WriteVarExpr ast, _, {bool checkForNull}) {
+  Expression visitWriteVarExpr(WriteVarExpr ast, _,
+      {bool checkForNull = false}) {
     varNames.add(ast.name);
     return null;
   }
