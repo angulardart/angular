@@ -52,10 +52,10 @@ void main() {
       }
     ''', warnings: [
       // TODO(b/123366944): This message should be printed only once.
-      contains('Could not resolve @class Input'),
-      contains('Could not resolve @class Input'),
-      contains('Could not resolve @class Input'),
-      contains('Could not resolve @class Input'),
+      allOf(contains('Could not resolve'), contains('Input')),
+      allOf(contains('Could not resolve'), contains('Input')),
+      allOf(contains('Could not resolve'), contains('Input')),
+      allOf(contains('Could not resolve'), contains('Input')),
       // TODO(b/123367431): Add source locations to this error message.
     ]);
   });
