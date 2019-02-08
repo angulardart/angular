@@ -1,16 +1,16 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
+import 'package:angular/src/compiler/output/convert.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular_compiler/cli.dart';
-import 'package:source_gen/source_gen.dart';
 
-import '../../compiler/output/convert.dart';
 import 'compile_metadata.dart';
+import 'component_visitor_exceptions.dart';
 import 'dart_object_utils.dart';
 import 'lifecycle_hooks.dart';
-import 'component_visitor_exceptions.dart';
 
 class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   final LibraryReader _library;

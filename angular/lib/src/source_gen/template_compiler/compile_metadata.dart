@@ -6,6 +6,7 @@ import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/constant/value.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/generated/utilities_dart.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/output/convert.dart';
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
@@ -17,11 +18,10 @@ import 'package:angular/src/source_gen/common/annotation_matcher.dart'
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
-import 'package:source_gen/source_gen.dart';
 
+import 'component_visitor_exceptions.dart';
 import 'dart_object_utils.dart' as dart_objects;
 import 'provider_inference.dart';
-import 'component_visitor_exceptions.dart';
 
 /// Returns whether the string is `null` _or_ an empty string.
 bool _isEmptyString(String s) => s == null || s.isEmpty;
