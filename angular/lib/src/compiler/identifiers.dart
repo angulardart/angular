@@ -58,6 +58,21 @@ class SpecializedViews {
   static final hostView = _of('specializations/host');
 }
 
+class StyleEncapsulation {
+  const StyleEncapsulation._();
+
+  static CompileIdentifierMetadata _of(String name) {
+    return CompileIdentifierMetadata(
+      name: name,
+      moduleUrl: '$_angularLib/src/core/linker/style_encapsulation.dart',
+    );
+  }
+
+  static final componentStyles = _of('ComponentStyles');
+  static final componentStylesScoped = _of('ComponentStyles.scoped');
+  static final componentStylesUnscoped = _of('ComponentStyles.unscoped');
+}
+
 class Identifiers {
   static final appViewUtils = CompileIdentifierMetadata<dynamic>(
       name: "appViewUtils", moduleUrl: _appViewUtilsModuleUrl);

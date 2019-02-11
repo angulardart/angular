@@ -1,11 +1,9 @@
 import 'dart:html' show DocumentFragment, NodeTreeSanitizer;
 
-import 'package:angular/di.dart' show Injectable, Inject;
+import 'package:angular/di.dart' show Injectable;
 import 'package:angular/src/core/application_tokens.dart' show APP_ID;
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show devModeEqual;
-import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
-import 'package:angular/src/core/render/api.dart' show RenderComponentType;
 import 'package:angular/src/core/security.dart';
 import 'package:angular/src/platform/dom/events/event_manager.dart'
     show EventManager;
@@ -21,10 +19,9 @@ AppViewUtils appViewUtils;
 /// provide access to root dom renderer.
 @Injectable()
 class AppViewUtils {
-  final String _appId;
+  final String appId;
   final EventManager eventManager;
   final SanitizationService sanitizer;
-  static int _nextCompTypeId = 0;
 
   /// Whether change detection should throw an exception when a change is
   /// detected.
@@ -34,18 +31,7 @@ class AppViewUtils {
   static bool _throwOnChanges = false;
   static int _throwOnChangesCounter = 0;
 
-  AppViewUtils(@Inject(APP_ID) this._appId, this.sanitizer, this.eventManager);
-
-  /// Used by the generated code to initialize and share common rendering data
-  /// such as css across instances.
-  @dart2js.noInline
-  RenderComponentType createRenderType(
-      String templateUrl,
-      ViewEncapsulation encapsulation,
-      List<dynamic /* String | List < dynamic > */ > styles) {
-    return RenderComponentType(
-        '$_appId-${_nextCompTypeId++}', templateUrl, encapsulation, styles);
-  }
+  AppViewUtils(@APP_ID this.appId, this.sanitizer, this.eventManager);
 
   /// Enters execution mode that will throw exceptions if any binding
   /// has been updated since last change detection cycle.

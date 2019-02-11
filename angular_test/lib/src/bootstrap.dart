@@ -11,8 +11,6 @@ import 'package:angular/src/bootstrap/run.dart';
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
-import 'package:angular/src/core/render/api.dart';
-import 'package:angular/src/platform/dom/shared_styles_host.dart';
 
 /// Returns an application injector factory for [providers], if any.
 InjectorFactory testInjectorFactory(List<dynamic> providers) {
@@ -105,8 +103,6 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   Injector injector, {
   FutureOr<void> beforeChangeDetection(E componentInstance),
 }) {
-  // TODO: Consider using hostElement instead.
-  sharedStylesHost ??= DomSharedStylesHost(document);
   final componentRef = componentFactory.create(injector);
   final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
   if (!isDefaultChangeDetectionStrategy(cdMode) &&

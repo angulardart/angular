@@ -10,28 +10,39 @@ import 'package:angular/angular.template.dart' as _ref1;
 import 'package:angular/di.template.dart' as _ref2;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'component_loader_pattern.dart' as import1;
-import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
 import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$TestComponent = const [];
 
 class ViewTestComponent0 extends AppView<import1.TestComponent> {
-  static RenderComponentType _renderType;
+  static import2.ComponentStyles _componentStyles;
   ViewTestComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('test');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/component_loader_pattern.dart' : null), ViewEncapsulation.None, styles$TestComponent);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/component_loader_pattern.dart' : null);
+  }
+
   @override
   ComponentRef<import1.TestComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$TestComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -49,7 +60,9 @@ final List<dynamic> styles$TestComponentHost = const [];
 class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
   ViewTestComponent0 _compView_0;
   import1.TestComponent _TestComponent_0_5;
-  _ViewTestComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewTestComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.TestComponent> build() {
     _compView_0 = ViewTestComponent0(this, 0);

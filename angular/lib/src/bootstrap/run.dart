@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:meta/meta.dart';
 
@@ -10,7 +9,6 @@ import '../core/linker.dart'
     show ComponentFactory, ComponentRef, SlowComponentLoader;
 import '../core/linker/app_view_utils.dart';
 import '../core/linker/component_resolver.dart' show typeToFactory;
-import '../core/render/api.dart';
 import '../core/testability/testability.dart';
 import '../core/zone.dart';
 import '../di/injector/empty.dart';
@@ -18,7 +16,6 @@ import '../di/injector/hierarchical.dart';
 import '../di/injector/injector.dart';
 import '../platform/browser_common.dart';
 import '../platform/dom/events/event_manager.dart';
-import '../platform/dom/shared_styles_host.dart';
 import '../runtime.dart';
 import '../security/dom_sanitization_service.dart';
 
@@ -30,7 +27,6 @@ Injector _platformInjectorCache;
 Injector _platformInjector() {
   if (_platformInjectorCache == null) {
     final testabilityRegistry = TestabilityRegistry();
-    sharedStylesHost ??= DomSharedStylesHost(document);
     initTestability(testabilityRegistry);
     _platformInjectorCache = Injector.map({
       TestabilityRegistry: testabilityRegistry,

@@ -8,31 +8,42 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'deferred_component.dart' as import1;
-import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
 import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import9;
-import 'external_service.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import8;
+import 'external_service.dart' as import9;
 
 final List<dynamic> styles$DeferredChild1Component = const [];
 
 class ViewDeferredChild1Component0 extends AppView<import1.DeferredChild1Component> {
-  static RenderComponentType _renderType;
+  static import2.ComponentStyles _componentStyles;
   ViewDeferredChild1Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-1');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null), ViewEncapsulation.None, styles$DeferredChild1Component);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
+  }
+
   @override
   ComponentRef<import1.DeferredChild1Component> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import9.appendText(parentRenderNode, 'Deferred Child 1');
+    final _text_0 = import8.appendText(parentRenderNode, 'Deferred Child 1');
     init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChild1Component, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -50,7 +61,9 @@ final List<dynamic> styles$DeferredChild1ComponentHost = const [];
 class _ViewDeferredChild1ComponentHost0 extends AppView<import1.DeferredChild1Component> {
   ViewDeferredChild1Component0 _compView_0;
   import1.DeferredChild1Component _DeferredChild1Component_0_5;
-  _ViewDeferredChild1ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDeferredChild1ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.DeferredChild1Component> build() {
     _compView_0 = ViewDeferredChild1Component0(this, 0);
@@ -79,18 +92,30 @@ AppView<import1.DeferredChild1Component> viewFactory_DeferredChild1ComponentHost
 final List<dynamic> styles$DeferredChild2Component = const [];
 
 class ViewDeferredChild2Component0 extends AppView<import1.DeferredChild2Component> {
-  static RenderComponentType _renderType;
+  static import2.ComponentStyles _componentStyles;
   ViewDeferredChild2Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-2');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null), ViewEncapsulation.None, styles$DeferredChild2Component);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
+  }
+
   @override
   ComponentRef<import1.DeferredChild2Component> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import9.appendText(parentRenderNode, 'Deferred Child 2');
+    final _text_0 = import8.appendText(parentRenderNode, 'Deferred Child 2');
     init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChild2Component, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -108,7 +133,9 @@ final List<dynamic> styles$DeferredChild2ComponentHost = const [];
 class _ViewDeferredChild2ComponentHost0 extends AppView<import1.DeferredChild2Component> {
   ViewDeferredChild2Component0 _compView_0;
   import1.DeferredChild2Component _DeferredChild2Component_0_5;
-  _ViewDeferredChild2ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDeferredChild2ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.DeferredChild2Component> build() {
     _compView_0 = ViewDeferredChild2Component0(this, 0);
@@ -137,18 +164,30 @@ AppView<import1.DeferredChild2Component> viewFactory_DeferredChild2ComponentHost
 final List<dynamic> styles$DeferredChild3Component = const [];
 
 class ViewDeferredChild3Component0 extends AppView<import1.DeferredChild3Component> {
-  static RenderComponentType _renderType;
+  static import2.ComponentStyles _componentStyles;
   ViewDeferredChild3Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-3');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null), ViewEncapsulation.None, styles$DeferredChild3Component);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
+  }
+
   @override
   ComponentRef<import1.DeferredChild3Component> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import9.appendText(parentRenderNode, 'Deferred Child 3');
+    final _text_0 = import8.appendText(parentRenderNode, 'Deferred Child 3');
     init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChild3Component, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -166,7 +205,9 @@ final List<dynamic> styles$DeferredChild3ComponentHost = const [];
 class _ViewDeferredChild3ComponentHost0 extends AppView<import1.DeferredChild3Component> {
   ViewDeferredChild3Component0 _compView_0;
   import1.DeferredChild3Component _DeferredChild3Component_0_5;
-  _ViewDeferredChild3ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDeferredChild3ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.DeferredChild3Component> build() {
     _compView_0 = ViewDeferredChild3Component0(this, 0);
@@ -195,17 +236,29 @@ AppView<import1.DeferredChild3Component> viewFactory_DeferredChild3ComponentHost
 final List<dynamic> styles$NotDeferredChildComponent = const [];
 
 class ViewNotDeferredChildComponent0 extends AppView<import1.NotDeferredChildComponent> {
-  static RenderComponentType _renderType;
+  static import2.ComponentStyles _componentStyles;
   ViewNotDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('not-deferred-child');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null), ViewEncapsulation.None, styles$NotDeferredChildComponent);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
+  }
+
   @override
   ComponentRef<import1.NotDeferredChildComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$NotDeferredChildComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -223,7 +276,9 @@ final List<dynamic> styles$NotDeferredChildComponentHost = const [];
 class _ViewNotDeferredChildComponentHost0 extends AppView<import1.NotDeferredChildComponent> {
   ViewNotDeferredChildComponent0 _compView_0;
   import1.NotDeferredChildComponent _NotDeferredChildComponent_0_5;
-  _ViewNotDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewNotDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.NotDeferredChildComponent> build() {
     _compView_0 = ViewNotDeferredChildComponent0(this, 0);
@@ -252,20 +307,32 @@ AppView<import1.NotDeferredChildComponent> viewFactory_NotDeferredChildComponent
 final List<dynamic> styles$DeferredChildComponentWithoutNgContent = const [];
 
 class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.DeferredChildComponentWithoutNgContent> {
-  static RenderComponentType _renderType;
+  static import2.ComponentStyles _componentStyles;
   ViewDeferredChildComponentWithoutNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-without-ng-content');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null), ViewEncapsulation.None, styles$DeferredChildComponentWithoutNgContent);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
+  }
+
   @override
   ComponentRef<import1.DeferredChildComponentWithoutNgContent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
-    final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = import9.appendText(_el_0, 'Child');
+    final _el_0 = import8.appendDiv(doc, parentRenderNode);
+    final _text_1 = import8.appendText(_el_0, 'Child');
     init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChildComponentWithoutNgContent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -283,7 +350,9 @@ final List<dynamic> styles$DeferredChildComponentWithoutNgContentHost = const []
 class _ViewDeferredChildComponentWithoutNgContentHost0 extends AppView<import1.DeferredChildComponentWithoutNgContent> {
   ViewDeferredChildComponentWithoutNgContent0 _compView_0;
   import1.DeferredChildComponentWithoutNgContent _DeferredChildComponentWithoutNgContent_0_5;
-  _ViewDeferredChildComponentWithoutNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDeferredChildComponentWithoutNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.DeferredChildComponentWithoutNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithoutNgContent0(this, 0);
@@ -312,20 +381,32 @@ AppView<import1.DeferredChildComponentWithoutNgContent> viewFactory_DeferredChil
 final List<dynamic> styles$DeferredChildComponentWithNgContent = const [];
 
 class ViewDeferredChildComponentWithNgContent0 extends AppView<import1.DeferredChildComponentWithNgContent> {
-  static RenderComponentType _renderType;
+  static import2.ComponentStyles _componentStyles;
   ViewDeferredChildComponentWithNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-with-ng-content');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null), ViewEncapsulation.None, styles$DeferredChildComponentWithNgContent);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
+  }
+
   @override
   ComponentRef<import1.DeferredChildComponentWithNgContent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
-    final _el_0 = import9.appendDiv(doc, parentRenderNode);
+    final _el_0 = import8.appendDiv(doc, parentRenderNode);
     project(_el_0, 0);
     init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChildComponentWithNgContent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -343,7 +424,9 @@ final List<dynamic> styles$DeferredChildComponentWithNgContentHost = const [];
 class _ViewDeferredChildComponentWithNgContentHost0 extends AppView<import1.DeferredChildComponentWithNgContent> {
   ViewDeferredChildComponentWithNgContent0 _compView_0;
   import1.DeferredChildComponentWithNgContent _DeferredChildComponentWithNgContent_0_5;
-  _ViewDeferredChildComponentWithNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewDeferredChildComponentWithNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.DeferredChildComponentWithNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithNgContent0(this, 0);
@@ -372,17 +455,29 @@ AppView<import1.DeferredChildComponentWithNgContent> viewFactory_DeferredChildCo
 final List<dynamic> styles$DeferredChildComponentWithServices = const [];
 
 class ViewDeferredChildComponentWithServices0 extends AppView<import1.DeferredChildComponentWithServices> {
-  static RenderComponentType _renderType;
+  static import2.ComponentStyles _componentStyles;
   ViewDeferredChildComponentWithServices0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-with-services');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null), ViewEncapsulation.None, styles$DeferredChildComponentWithServices);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
+  }
+
   @override
   ComponentRef<import1.DeferredChildComponentWithServices> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChildComponentWithServices, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -399,13 +494,15 @@ final List<dynamic> styles$DeferredChildComponentWithServicesHost = const [];
 
 class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.DeferredChildComponentWithServices> {
   ViewDeferredChildComponentWithServices0 _compView_0;
-  import10.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
+  import9.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
   import1.DeferredChildComponentWithServices _DeferredChildComponentWithServices_0_6;
-  import10.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
-  _ViewDeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
-  import10.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
+  import9.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
+  _ViewDeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  import9.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
     if ((__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
-      (__ExternalServiceLazilyCreatedMaybe_0_7 = import10.ExternalServiceLazilyCreatedMaybe());
+      (__ExternalServiceLazilyCreatedMaybe_0_7 = import9.ExternalServiceLazilyCreatedMaybe());
     }
     return __ExternalServiceLazilyCreatedMaybe_0_7;
   }
@@ -414,7 +511,7 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
   ComponentRef<import1.DeferredChildComponentWithServices> build() {
     _compView_0 = ViewDeferredChildComponentWithServices0(this, 0);
     rootEl = _compView_0.rootEl;
-    _ExternalServiceImmediatelyCreated_0_5 = import10.ExternalServiceImmediatelyCreated();
+    _ExternalServiceImmediatelyCreated_0_5 = import9.ExternalServiceImmediatelyCreated();
     _DeferredChildComponentWithServices_0_6 = import1.DeferredChildComponentWithServices(_ExternalServiceImmediatelyCreated_0_5);
     _compView_0.create(_DeferredChildComponentWithServices_0_6, projectableNodes);
     init0(rootEl);
@@ -423,10 +520,10 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import10.ExternalServiceImmediatelyCreated) && (0 == nodeIndex))) {
+    if ((identical(token, import9.ExternalServiceImmediatelyCreated) && (0 == nodeIndex))) {
       return _ExternalServiceImmediatelyCreated_0_5;
     }
-    if ((identical(token, import10.ExternalServiceLazilyCreatedMaybe) && (0 == nodeIndex))) {
+    if ((identical(token, import9.ExternalServiceLazilyCreatedMaybe) && (0 == nodeIndex))) {
       return _ExternalServiceLazilyCreatedMaybe_0_7;
     }
     return notFoundResult;
