@@ -34,6 +34,18 @@ class ComponentVisitorExceptionHandler {
   }
 }
 
+Future<ElementDeclarationResult> _resolvedClassResult(Element element) async {
+  var libraryElement = element.library;
+  var libraryResult = await ResolvedLibraryResultImpl.tmp(libraryElement);
+  if (libraryResult.state == ResultState.NOT_A_FILE) {
+    // We don't have access to source information in summarized libraries,
+    // but another build step will likely emit the root cause errors.
+    throw BuildError("Analysis errors in summarized library "
+        "${libraryElement.source.fullName}");
+  }
+  return libraryResult.getElementDeclaration(element);
+}
+
 class AsyncBuildError extends BuildError {
   Future<BuildError> resolve() => Future.value(this);
 }
@@ -58,17 +70,13 @@ class AngularAnalysisError extends AsyncBuildError {
           constantEvaluationErrors, indexedAnnotation.element));
     }
 
-    var libraryElement = indexedAnnotation.element.library;
-    var libraryResult = await ResolvedLibraryResultImpl.tmp(libraryElement);
-    if (libraryResult.state == ResultState.NOT_A_FILE) {
-      // We don't have access to source information in summarized libraries,
-      // but another build step will likely emit the root cause errors.
-      return BuildError("Analysis errors in summarized library "
-          "${libraryElement.source.fullName}");
+    ElementDeclarationResult classResult;
+    try {
+      classResult = await _resolvedClassResult(indexedAnnotation.element);
+    } on BuildError catch (buildError) {
+      return buildError;
     }
 
-    var classResult =
-        libraryResult.getElementDeclaration(indexedAnnotation.element);
     var classDeclaration = classResult.node as ClassDeclaration;
     var resolvedAnnotation =
         classDeclaration.metadata[indexedAnnotation.annotationIndex];
@@ -204,11 +212,15 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
 
   @override
   Future<BuildError> resolve() async {
-    final element = indexedAnnotation.element;
     final annotationIndex = indexedAnnotation.annotationIndex;
 
-    var libraryResult = await ResolvedLibraryResultImpl.tmp(element.library);
-    var result = libraryResult.getElementDeclaration(element);
+    ElementDeclarationResult result;
+    try {
+      result = await _resolvedClassResult(indexedAnnotation.element);
+    } on BuildError catch (buildError) {
+      return buildError;
+    }
+
     List<Annotation> resolvedMetadata = _metadataFromAncestry(result.node);
 
     ElementAnnotation resolvedAnnotation =
