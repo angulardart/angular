@@ -346,9 +346,7 @@ class RouterImpl extends Router {
       // If the last route is a redirect, there will be no default children.
       return stateSoFar;
     } else {
-      nextOutlet = stateSoFar.components.last.injector
-          .get(RouterOutletToken)
-          .routerOutlet;
+      nextOutlet = _nextOutlet(stateSoFar.components.last);
     }
     if (nextOutlet == null) {
       return stateSoFar;
@@ -456,7 +454,7 @@ class RouterImpl extends Router {
         // that lifecycle methods are invoked on the correct instance.
         mutableNextState.components[i] = componentRef;
       }
-      currentOutlet = componentRef.injector.get(RouterOutletToken).routerOutlet;
+      currentOutlet = _nextOutlet(componentRef);
       final component = componentRef.instance;
       if (component is OnActivate) {
         component.onActivate(_activeState, nextState);
