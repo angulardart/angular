@@ -160,8 +160,13 @@ abstract class Expression {
     OutputType type,
     List<OutputType> genericTypes,
   }) {
-    return InstantiateExpr(this, params,
-        type: type, typeArguments: genericTypes, namedArgs: namedParams);
+    return InstantiateExpr(
+      this,
+      params,
+      type: type,
+      typeArguments: genericTypes,
+      namedArgs: namedParams,
+    );
   }
 
   ConditionalExpr conditional(Expression trueCase, [Expression falseCase]) {
@@ -881,9 +886,12 @@ class ClassMethod extends AbstractClassPart {
 class ClassGetter extends AbstractClassPart {
   String name;
   List<Statement> body;
-  ClassGetter(this.name, this.body,
-      [OutputType type, List<StmtModifier> modifiers])
-      : super(type, modifiers);
+  ClassGetter(
+    this.name,
+    this.body, [
+    OutputType type,
+    List<StmtModifier> modifiers,
+  ]) : super(type, modifiers);
 }
 
 /// A generic type parameter.

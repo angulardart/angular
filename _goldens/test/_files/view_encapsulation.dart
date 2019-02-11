@@ -2,7 +2,12 @@ import 'package:angular/angular.dart';
 
 @Component(
   selector: 'Emulated',
-  template: '<div>Emulated</div>',
+  template: r'''
+    <div>Emulated in Component</div>
+    <template>
+      <div>Emulated in Template</div>
+    </template>
+  ''',
   encapsulation: ViewEncapsulation.Emulated,
   styles: [
     ':host { border: 1px solid #000; } ',
@@ -16,7 +21,12 @@ class EmulatedComponent {}
 
 @Component(
   selector: 'None',
-  template: '<div>None</div>',
+  template: r'''
+    <div>Emulated in Component</div>
+    <template>
+      <div>Emulated in Template</div>
+    </template>
+  ''',
   encapsulation: ViewEncapsulation.None,
   styles: [
     ':host { border: 1px solid #000; } ',

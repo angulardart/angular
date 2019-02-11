@@ -1,6 +1,8 @@
 import 'dart:html';
 
+import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/runtime.dart';
+import 'package:meta/dart2js.dart' as dart2js;
 
 /// Stores `styles: [ ... ]`,  `styleUrls: [ ... ]` for a given `@Component`.
 class ComponentStyles {
@@ -34,9 +36,6 @@ class ComponentStyles {
   /// A generated unique ID for this component, used for encapsulation
   final String _componentId;
 
-  /// Tracks whether [appendStyles] has been used already on an element.
-  final _isAppendedTo = Expando<bool>();
-
   /// CSS prefix applied to elements in a template for style encapsulation.
   final String contentPrefix;
 
@@ -49,18 +48,21 @@ class ComponentStyles {
     this.hostPrefix, [
     this._componentId,
     this._componentUrl,
-  ]);
+  ]) {
+    _appendStyles();
+  }
 
   static int _nextUniqueId = 0;
   static const _hostClassPrefix = '_nghost-';
   static const _viewClassPrefix = '_ngcontent-';
 
   /// Creates a [ComponentStyles] that applies style encapsulation.
+  @dart2js.noInline
   factory ComponentStyles.scoped(
     List<Object> styles, [
     String componentUrl,
   ]) {
-    final componentId = (_nextUniqueId++).toString();
+    final componentId = '${appViewUtils.appId}-${_nextUniqueId++}';
     return ComponentStyles._(
       styles,
       '$_viewClassPrefix$componentId',
@@ -71,32 +73,39 @@ class ComponentStyles {
   }
 
   /// Creates a [ComponentStyles] that directly appends [styles] to the DOM.
+  @dart2js.noInline
   factory ComponentStyles.unscoped(
     List<Object> styles, [
     String componentUrl,
-  ]) {
-    return ComponentStyles._(
-      styles,
-      '',
-      '',
-      '',
-      componentUrl,
-    );
-  }
+  ]) = _UnscopedComponentStyles;
 
-  /// Writes styles from this instance to [parent] as a `<style>` tag.
-  void appendStyles(HtmlElement parent) {
-    if (identical(_isAppendedTo[parent], true)) {
-      return;
-    }
+  /// Whether style encapsulation is used by this instance.
+  ///
+  /// TODO: Remove this field, and instead move the shimming code from `AppView`
+  /// into this class, using the polymorphism (and [appendStyles]) to make CSS
+  /// class decisions and not `AppView`.
+  bool get usesStyleEncapsulation => true;
+
+  /// Writes styles from this instance to [document.head] as a `<style>` tag.
+  @dart2js.noInline
+  void _appendStyles() {
     final target = <String>[];
     if (isDevMode) {
       target.add('/* From: $_componentUrl*/');
     }
     final styles = _flattenStyles(_styles, target, _componentId).join('\n');
-    parent.append(StyleElement()..text = styles);
-    _isAppendedTo[parent] = true;
+    document.head.append(StyleElement()..text = styles);
   }
+}
+
+class _UnscopedComponentStyles extends ComponentStyles {
+  _UnscopedComponentStyles(
+    List<Object> styles, [
+    String componentUrl,
+  ]) : super._(styles, '', '', '', componentUrl);
+
+  @override
+  bool get usesStyleEncapsulation => false;
 }
 
 /// Flattens and appends [styles] to [target], returning the mutated [target].
@@ -108,8 +117,8 @@ List<String> _flattenStyles(
   if (styles == null || styles.isEmpty) {
     return target;
   }
-  // The inbound lists should always be JSArray, so for-in is fine to use.
-  for (final styleOrList in styles) {
+  for (var i = 0, l = styles.length; i < l; i++) {
+    final styleOrList = styles[i];
     if (styleOrList is List) {
       _flattenStyles(
         styleOrList,
@@ -118,8 +127,10 @@ List<String> _flattenStyles(
       );
     } else {
       final styleString = unsafeCast<String>(styleOrList);
-      target.add(styleString.replaceAll('%ID%', componentIdOrNull));
+      target.add(styleString.replaceAll(_idPlaceholder, componentIdOrNull));
     }
   }
   return target;
 }
+
+final _idPlaceholder = RegExp('%ID%');

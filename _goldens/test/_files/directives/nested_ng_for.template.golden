@@ -10,15 +10,15 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'nested_ng_for.dart' as import1;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import3;
-import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import4;
 import 'package:angular/src/core/linker/view_type.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import7;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
-import 'package:angular/src/runtime.dart' as import9;
+import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import11;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
 import 'dart:core';
 
 final List<dynamic> styles$NestedNgForComponent = const [];
@@ -27,17 +27,20 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   ViewContainer _appEl_0;
   import3.NgFor _NgFor_0_9;
   var _expr_0;
-  static RenderComponentType _renderType;
+  static import4.ComponentStyles _componentStyles;
   ViewNestedNgForComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import7.document.createElement('nested-ng-for');
-    _renderType ??= import8.appViewUtils.createRenderType((import9.isDevMode ? 'asset:_goldens/test/_files/directives/nested_ng_for.dart' : null), ViewEncapsulation.None, styles$NestedNgForComponent);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import8.isDevMode ? 'asset:_goldens/test/_files/directives/nested_ng_for.dart' : null);
+  }
+
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
     final _rootEl = rootEl;
     final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = import11.appendAnchor(parentRenderNode);
+    final _anchor_0 = import10.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
     _NgFor_0_9 = import3.NgFor(_appEl_0, _TemplateRef_0_8);
@@ -48,11 +51,11 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.matrix;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
+    if (import12.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import8.AppViewUtils.throwOnChanges) {
+    if (!import12.AppViewUtils.throwOnChanges) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -61,6 +64,15 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   @override
   void destroyInternal() {
     _appEl_0.destroyNestedViews();
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$NestedNgForComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -78,13 +90,13 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
   import3.NgFor _NgFor_1_9;
   var _expr_0;
   _ViewNestedNgForComponent1(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    componentType = ViewNestedNgForComponent0._renderType;
+    initComponentStyles();
   }
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
     final doc = import7.document;
     final _el_0 = doc.createElement('span');
-    final _anchor_1 = import11.appendAnchor(_el_0);
+    final _anchor_1 = import10.appendAnchor(_el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
     _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
@@ -93,13 +105,13 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
 
   @override
   void detectChangesInternal() {
-    final local_row = import9.unsafeCast<List<int>>(locals['\$implicit']);
+    final local_row = import8.unsafeCast<List<int>>(locals['\$implicit']);
     final currVal_0 = local_row;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
+    if (import12.checkBinding(_expr_0, currVal_0)) {
       _NgFor_1_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import8.AppViewUtils.throwOnChanges) {
+    if (!import12.AppViewUtils.throwOnChanges) {
       _NgFor_1_9.ngDoCheck();
     }
     _appEl_1.detectChangesInNestedViews();
@@ -117,9 +129,9 @@ AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent1(AppView<
 
 class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   var _expr_0;
-  final import7.Text _text_1 = import11.createText('');
+  final import7.Text _text_1 = import10.createText('');
   _ViewNestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    componentType = ViewNestedNgForComponent0._renderType;
+    initComponentStyles();
   }
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
@@ -131,9 +143,9 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
 
   @override
   void detectChangesInternal() {
-    final local_value = import9.unsafeCast<int>(locals['\$implicit']);
-    final currVal_0 = import8.interpolate0(local_value);
-    if (import8.checkBinding(_expr_0, currVal_0)) {
+    final local_value = import8.unsafeCast<int>(locals['\$implicit']);
+    final currVal_0 = import12.interpolate0(local_value);
+    if (import12.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -149,7 +161,9 @@ final List<dynamic> styles$NestedNgForComponentHost = const [];
 class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponent> {
   ViewNestedNgForComponent0 _compView_0;
   import1.NestedNgForComponent _NestedNgForComponent_0_5;
-  _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
     _compView_0 = ViewNestedNgForComponent0(this, 0);

@@ -4,11 +4,11 @@ import 'dart:html';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/change_detection/host.dart';
+import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/di/errors.dart' as di_errors;
 import 'package:angular/src/di/injector/element.dart';
 import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
-import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:angular/src/runtime/dom_helpers.dart';
 import 'package:meta/meta.dart';
@@ -141,13 +141,6 @@ abstract class AppView<T> extends View<T> {
   /// Parent generated view.
   final AppView parentView;
 
-  /// A representation of how the component will be rendered in the DOM.
-  ///
-  /// This is _lazily_ set via [setupComponentType] in a generated constructor.
-  /// Not available on Host component views since shimming is performed by
-  /// View0.
-  RenderComponentType componentType;
-
   /// The root element.
   ///
   /// This is _lazily_ initialized in a generated constructor.
@@ -167,14 +160,6 @@ abstract class AppView<T> extends View<T> {
     int cdMode,
   ) {
     viewData = AppViewData(this, cdMode, type, parentIndex);
-  }
-
-  void setupComponentType(RenderComponentType renderType) {
-    if (!renderType.stylesShimmed) {
-      renderType.shimStyles(sharedStylesHost);
-      renderType.stylesShimmed = true;
-    }
-    componentType = renderType;
   }
 
   /// Sets change detection mode for this view and caches flag to skip
@@ -431,39 +416,59 @@ abstract class AppView<T> extends View<T> {
     }
   }
 
+  @protected
+  void initComponentStyles() {
+    componentStyles = parentView?.componentStyles;
+  }
+
+  @protected
+  ComponentStyles componentStyles;
+
   /// Initializes styling to enable css shim for host element.
+  @dart2js.noInline
   HtmlElement initViewRoot(HtmlElement hostElement) {
-    if (componentType.hostAttr != null) {
-      hostElement.classes.add(componentType.hostAttr);
+    final styles = componentStyles;
+    if (styles.usesStyleEncapsulation) {
+      updateClassBinding(hostElement, styles.hostPrefix, true);
     }
     return hostElement;
   }
 
   /// Adds content shim class to HtmlElement.
+  @dart2js.noInline
   void addShimC(HtmlElement element) {
-    String contentClass = componentType.contentAttr;
-    if (contentClass != null) element.classes.add(contentClass);
+    final styles = componentStyles;
+    if (styles.usesStyleEncapsulation) {
+      updateClassBinding(element, styles.contentPrefix, true);
+    }
   }
 
   /// Adds content shim class to Svg or unknown tag type.
+  @dart2js.noInline
   void addShimE(Element element) {
-    String contentClass = componentType.contentAttr;
-    if (contentClass != null) element.classes.add(contentClass);
+    final styles = componentStyles;
+    if (styles.usesStyleEncapsulation) {
+      updateClassBindingNonHtml(element, styles.contentPrefix, true);
+    }
   }
 
   /// Called by change detector to apply correct host and content shimming
   /// after node's className is changed.
+
+  /// Used by [detectChanges] when changing [element.className] directly.
+  ///
+  /// For example, through the `[class]="..."` or `[attr.class]="..."` syntax.
+  @dart2js.noInline
   void updateChildClass(Element element, String newClass) {
+    final styles = componentStyles;
+    final shim = styles.usesStyleEncapsulation;
     if (element == rootEl) {
-      String hostClass = componentType.hostAttr;
-      element.className = hostClass == null ? newClass : '$newClass $hostClass';
-      if (parentView != null && parentView.componentType != null) {
+      element.className = shim ? '$newClass ${styles.hostPrefix}' : newClass;
+      if (parentView?.componentStyles != null) {
         parentView.addShimE(element);
       }
     } else {
-      String contentClass = componentType.contentAttr;
-      element.className =
-          contentClass == null ? newClass : '$newClass $contentClass';
+      element.className = shim ? '$newClass ${styles.contentPrefix}' : newClass;
     }
   }
 

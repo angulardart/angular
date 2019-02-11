@@ -198,6 +198,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   }
 
   void _visitClassGetter(o.ClassGetter getter, EmitterVisitorContext context) {
+    if (getter.hasModifier(o.StmtModifier.Static)) {
+      context.print('static ');
+    }
     if (getter.type != null) {
       getter.type.visitType(this, context);
       context.print(' ');

@@ -8,30 +8,41 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'provider_modules.dart' as import1;
-import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
 import 'package:angular/src/core/linker/view_type.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'dart:core';
-import 'package:angular/src/core/di/opaque_token.dart' as import10;
+import 'package:angular/src/core/di/opaque_token.dart' as import9;
 
 final List<dynamic> styles$ProviderModulesComponent = const [];
 
 class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesComponent> {
-  static RenderComponentType _renderType;
+  static import2.ComponentStyles _componentStyles;
   ViewProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('provider-modules');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/provider_modules.dart' : null), ViewEncapsulation.None, styles$ProviderModulesComponent);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/provider_modules.dart' : null);
+  }
+
   @override
   ComponentRef<import1.ProviderModulesComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ProviderModulesComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -53,7 +64,9 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
   Duration __fooToken_0_7;
   List<dynamic> __barToken_0_8;
   dynamic __bazToken_0_9;
-  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   import1.FooService get _FooService_0_6 {
     if ((__FooService_0_6 == null)) {
       (__FooService_0_6 = import1.FooService());
@@ -97,13 +110,13 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
     if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
       return _FooService_0_6;
     }
-    if ((identical(token, const import10.OpaqueToken<dynamic>('fooToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken<dynamic>('fooToken')) && (0 == nodeIndex))) {
       return _fooToken_0_7;
     }
-    if ((identical(token, const import10.OpaqueToken<dynamic>('barToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken<dynamic>('barToken')) && (0 == nodeIndex))) {
       return _barToken_0_8;
     }
-    if ((identical(token, const import10.OpaqueToken<dynamic>('bazToken')) && (0 == nodeIndex))) {
+    if ((identical(token, const import9.OpaqueToken<dynamic>('bazToken')) && (0 == nodeIndex))) {
       return _bazToken_0_9;
     }
     return notFoundResult;

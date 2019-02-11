@@ -38,6 +38,7 @@ import 'view_compiler_utils.dart'
         identifierFromTagName,
         mergeHtmlAndDirectiveAttributes,
         namespaceUris;
+import 'view_style_linker.dart';
 
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   final CompileView _view;
@@ -494,9 +495,7 @@ o.ClassStmt createViewClass(
         .toList(),
     typeParameters: view.component.originType.typeParameters,
   );
-  if (view.viewType != ViewType.host) {
-    _addRenderTypeCtorInitialization(view, viewClass);
-  }
+  initStyleEncapsulation(view, viewClass);
   return viewClass;
 }
 
@@ -568,61 +567,6 @@ String _tagNameFromComponentSelector(String selector) {
   // Some users have invalid space before selector in @Component, trim so
   // that document.createElement call doesn't fail.
   return selector.trim();
-}
-
-void _addRenderTypeCtorInitialization(CompileView view, o.ClassStmt viewClass) {
-  var viewConstructor = viewClass.constructorMethod;
-
-  /// Add render type.
-  if (view.viewIndex == 0) {
-    var renderTypeExpr = _constructRenderType(view, viewClass, viewConstructor);
-    viewConstructor.body.add(
-        o.InvokeMemberMethodExpr('setupComponentType', [renderTypeExpr])
-            .toStmt());
-  } else {
-    viewConstructor.body.add(o.WriteClassMemberExpr(
-            'componentType',
-            o.ReadStaticMemberExpr('_renderType',
-                sourceClass: view.componentView.classType))
-        .toStmt());
-  }
-}
-
-// Writes code to initial RenderComponentType for component.
-o.Expression _constructRenderType(
-    CompileView view, o.ClassStmt viewClass, o.ClassMethod viewConstructor) {
-  assert(view.viewIndex == 0);
-  final templateUrlInfo = view.component.type.moduleUrl;
-  // renderType static to hold RenderComponentType instance.
-  String renderTypeVarName = '_renderType';
-  o.Expression renderCompTypeVar = o.ReadStaticMemberExpr(renderTypeVarName);
-
-  o.Statement initRenderTypeStatement = o.WriteStaticMemberExpr(
-          renderTypeVarName,
-          o
-              .importExpr(Identifiers.appViewUtils)
-              .callMethod("createRenderType", [
-            o.ConditionalExpr(
-              o.importExpr(Identifiers.isDevMode),
-              o.literal(templateUrlInfo),
-              o.NULL_EXPR,
-            ),
-            createEnumExpression(
-              Identifiers.ViewEncapsulation,
-              view.component.template.encapsulation,
-            ),
-            view.styles
-          ]),
-          checkIfNull: true)
-      .toStmt();
-
-  viewConstructor.body.add(initRenderTypeStatement);
-
-  viewClass.fields.add(o.ClassField(renderTypeVarName,
-      modifiers: [o.StmtModifier.Static],
-      outputType: o.importType(Identifiers.RenderComponentType)));
-
-  return renderCompTypeVar;
 }
 
 List<o.Statement> _generateDestroyMethod(CompileView view) {

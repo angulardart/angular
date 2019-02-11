@@ -4,9 +4,7 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
-import 'package:angular/src/core/render/api.dart';
 import 'package:angular/src/platform/browser/exceptions.dart';
-import 'package:angular/src/platform/dom/shared_styles_host.dart';
 import 'package:test/test.dart';
 
 import 'application_ref_test.template.dart' as ng;
@@ -30,7 +28,6 @@ void main() {
         null,
         null,
       );
-      sharedStylesHost ??= DomSharedStylesHost(document);
     });
 
     test('destroy bootstrapped components', () {

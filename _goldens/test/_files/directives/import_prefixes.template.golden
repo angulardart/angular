@@ -9,30 +9,33 @@ import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'import_prefixes.dart' as import1;
 import 'dart:html' as import2;
-import 'package:angular/src/core/render/api.dart';
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
 import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import8;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
 
 final List<dynamic> styles$ParentComponent = const [];
 
 class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   import2.Element _el_0;
-  static RenderComponentType _renderType;
+  static import3.ComponentStyles _componentStyles;
   ViewParentComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('parent-comp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null), ViewEncapsulation.None, styles$ParentComponent);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null);
+  }
+
   @override
   ComponentRef<import1.ParentComponent> build() {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import2.document;
-    _el_0 = import9.appendElement(doc, parentRenderNode, 'child-comp');
+    _el_0 = import8.appendElement(doc, parentRenderNode, 'child-comp');
     init(const [], null);
   }
 
@@ -42,9 +45,18 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
       if (!identical(_ctx.input, null)) {
-        import9.setProperty(_el_0, 'myType', _ctx.input);
+        import8.setProperty(_el_0, 'myType', _ctx.input);
       }
     }
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$ParentComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -62,7 +74,9 @@ final List<dynamic> styles$ParentComponentHost = const [];
 class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   ViewParentComponent0 _compView_0;
   import1.ParentComponent _ParentComponent_0_5;
-  _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.ParentComponent> build() {
     _compView_0 = ViewParentComponent0(this, 0);
@@ -92,13 +106,16 @@ final List<dynamic> styles$ChildComponent = const [];
 
 class ViewChildComponent0 extends AppView<import1.ChildComponent> {
   var _expr_0;
-  final import2.Text _text_0 = import9.createText('');
-  static RenderComponentType _renderType;
+  final import2.Text _text_0 = import8.createText('');
+  static import3.ComponentStyles _componentStyles;
   ViewChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('child-cmp');
-    _renderType ??= import6.appViewUtils.createRenderType((import7.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null), ViewEncapsulation.None, styles$ChildComponent);
-    setupComponentType(_renderType);
+    initComponentStyles();
   }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null);
+  }
+
   @override
   ComponentRef<import1.ChildComponent> build() {
     final _rootEl = rootEl;
@@ -110,11 +127,20 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = import6.interpolate0(_ctx.myType);
-    if (import6.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import9.interpolate0(_ctx.myType);
+    if (import9.checkBinding(_expr_0, currVal_0)) {
       _text_0.text = currVal_0;
       _expr_0 = currVal_0;
     }
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$ChildComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
   }
 }
 
@@ -132,7 +158,9 @@ final List<dynamic> styles$ChildComponentHost = const [];
 class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
   ViewChildComponent0 _compView_0;
   import1.ChildComponent _ChildComponent_0_5;
-  _ViewChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
   @override
   ComponentRef<import1.ChildComponent> build() {
     _compView_0 = ViewChildComponent0(this, 0);
