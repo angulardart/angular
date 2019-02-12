@@ -22,8 +22,8 @@ export 'src/frontend/fixture.dart' show injectFromFixture;
 Injector createTestInjector(List<dynamic> providers) {
   return rootLegacyInjector(([parent]) {
     return ReflectiveInjector.resolveAndCreate([
-      // Enable Legacy APIs.
-      SlowComponentLoader,
+      // Enable Legacy APIs
+      SlowComponentLoader, // ignore: deprecated_member_use
       providers,
     ], parent);
   });

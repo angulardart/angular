@@ -16,7 +16,7 @@ void main() {
     // Prior to the fix of #920, this was always provided as List<dynamic>.
     expect(
       childComp.injectedList,
-      const isInstanceOf<List<String>>(),
+      const TypeMatcher<List<String>>(),
       reason: 'Got ${childComp.injectedList?.runtimeType} not List<String>',
     );
   });

@@ -40,7 +40,7 @@ void main() {
       expect(
           update,
           throwsA(allOf(
-              isInstanceOf<Error>(),
+              TypeMatcher<Error>(),
               predicate((e) => e.message.contains(
                   'ngFormModel expects a form. Please pass one in.')))));
     });

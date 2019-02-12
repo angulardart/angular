@@ -1,6 +1,6 @@
-import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/src/generated/utilities_dart.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
@@ -95,8 +95,10 @@ class DependencyReader {
     final positional = <DependencyElement>[];
     for (final parameter in parameters) {
       // ParameterKind.POSITIONAL is "optional positional".
+      // ignore: deprecated_member_use, no migration path
       bool isNamed() => parameter.parameterKind == ParameterKind.NAMED;
       bool isOptionalAndNotInjectable() =>
+          // ignore: deprecated_member_use, no migration path
           parameter.parameterKind == ParameterKind.POSITIONAL &&
           $Optional.firstAnnotationOfExact(parameter) == null &&
           $Inject.firstAnnotationOf(parameter) == null &&

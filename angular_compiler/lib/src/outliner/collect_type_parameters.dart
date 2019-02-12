@@ -1,3 +1,6 @@
+// We're not supposed to import the top-level analyzer.dart, but  it's needed
+// for [parseCompiliationUnit], which has no alternatives.
+// ignore: deprecated_member_use
 import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';

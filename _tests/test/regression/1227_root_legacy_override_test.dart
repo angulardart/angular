@@ -22,7 +22,7 @@ void main() {
     });
     expect(
       _CustomExceptionHandler.lastCaught,
-      const isInstanceOf<_IntentionalError>(),
+      const TypeMatcher<_IntentionalError>(),
     );
   });
 
@@ -33,7 +33,8 @@ void main() {
 
     // Easiest way to tell is make sure its the same const instance.
     expect(
-      appInjector.get(SlowComponentLoader),
+      appInjector.get(SlowComponentLoader), // ignore: deprecated_member_use
+      // ignore: deprecated_member_use
       const SlowComponentLoader(ComponentLoader()),
     );
   });

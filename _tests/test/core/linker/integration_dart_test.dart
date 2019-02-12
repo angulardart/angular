@@ -36,7 +36,7 @@ void main() {
       var testBed = NgTestBed<MyCompWithTemplateRef>();
       var testFixture = await testBed.create();
       var refReader = testFixture.assertOnlyInstance.refReaderComponent;
-      expect(refReader.ref1, isInstanceOf<TemplateRef>());
+      expect(refReader.ref1, TypeMatcher<TemplateRef>());
     });
   });
 }

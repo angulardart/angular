@@ -28,6 +28,7 @@ void main() {
         ValueProvider(Place, Place('Child')),
       ]);
       expect(
+        // ignore: deprecated_member_use
         (childInjector.resolveAndInstantiate(Model) as Model).place.name,
         'Child',
       );
@@ -57,6 +58,7 @@ void main() {
         ValueProvider(Place, Place('Child')),
       ]);
       expect(
+        // ignore: deprecated_member_use
         (childInjector.resolveAndInstantiate(modelProvider) as Model)
             .place
             .name,

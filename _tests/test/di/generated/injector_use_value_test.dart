@@ -16,42 +16,42 @@ void main() {
     test('class with a const constructor', () {
       expect(
         injector.get(ClassWithConstConstructor),
-        const isInstanceOf<ClassWithConstConstructor>(),
+        const TypeMatcher<ClassWithConstConstructor>(),
       );
     });
 
     test('class with a named const constructor', () {
       expect(
         injector.get(ClassWithNamedConstConstructor),
-        const isInstanceOf<ClassWithNamedConstConstructor>(),
+        const TypeMatcher<ClassWithNamedConstConstructor>(),
       );
     });
 
     test('class with multiple constructors, at least one const', () {
       expect(
         injector.get(ClassWithMultipleConstructors),
-        const isInstanceOf<ClassWithMultipleConstructors>(),
+        const TypeMatcher<ClassWithMultipleConstructors>(),
       );
     });
 
     test('class with a private constructor, but a public static field', () {
       expect(
         injector.get(ClassWithPrivateConstructorAndStaticField),
-        const isInstanceOf<ClassWithPrivateConstructorAndStaticField>(),
+        const TypeMatcher<ClassWithPrivateConstructorAndStaticField>(),
       );
     });
 
     test('class with a private constructor, but a public top-level field', () {
       expect(
         injector.get(ClassWithPrivateConstructorAndTopLevelField),
-        const isInstanceOf<ClassWithPrivateConstructorAndTopLevelField>(),
+        const TypeMatcher<ClassWithPrivateConstructorAndTopLevelField>(),
       );
     });
 
     test('class with a redirecting constructor', () {
       expect(
         injector.get(ClassWithRedirectingConstructor),
-        const isInstanceOf<ClassWithRedirectingConstructor>(),
+        const TypeMatcher<ClassWithRedirectingConstructor>(),
       );
     });
 

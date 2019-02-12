@@ -212,4 +212,4 @@ class FakeAssetReader extends NgAssetReader {
   Future<String> readText(String url) => Future.value(_cache[url]);
 }
 
-final throwsBuildError = throwsA(const isInstanceOf<BuildError>());
+final throwsBuildError = throwsA(const TypeMatcher<BuildError>());

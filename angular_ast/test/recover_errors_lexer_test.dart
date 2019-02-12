@@ -59,7 +59,7 @@ void testRecoverySolution(
       var it = tokenizeThrow(errorHtml);
       expect(() {
         while (it.moveNext() != null) {}
-      }, throwsA(isInstanceOf<AngularParserException>()));
+      }, throwsA(TypeMatcher<AngularParserException>()));
 
       var solution = recoveryProtocol.recover(startState, token, reader);
 

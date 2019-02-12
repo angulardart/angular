@@ -7,6 +7,7 @@ import 'package:angular/angular.dart';
 )
 class ChildDirective {
   Element element;
+  // ignore: deprecated_member_use
   ElementRef elementRef;
   ChildDirective(this.element, this.elementRef);
 

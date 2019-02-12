@@ -142,7 +142,7 @@ void main() {
       final testFixture = await testBed.create();
       expect(testFixture.update((component) {
         component.items = 'this is not iterable';
-      }), throwsA(const isInstanceOf<TypeError>()));
+      }), throwsA(const TypeMatcher<TypeError>()));
     });
 
     test("should work with duplicates", () async {

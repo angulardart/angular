@@ -41,7 +41,7 @@ void main() {
   });
 }
 
-const isTypedList = isInstanceOf<List<SomeInterface>>();
+const isTypedList = TypeMatcher<List<SomeInterface>>();
 const someInterfaces = MultiToken<SomeInterface>('someInterfaces');
 
 abstract class SomeInterface {

@@ -5,7 +5,7 @@ import 'package:angular_test/angular_test.dart';
 
 import 'visibility_test.template.dart' as ng_generated;
 
-final throwsNoProviderError = throwsA(const isInstanceOf<NoProviderError>());
+final throwsNoProviderError = throwsA(const TypeMatcher<NoProviderError>());
 
 void main() {
   ng_generated.initReflector();
@@ -64,8 +64,8 @@ void main() {
         final testBed = NgTestBed<ShouldInjectMultiToken>();
         final testFixture = await testBed.create();
         expect(testFixture.assertOnlyInstance.child.dependencies, [
-          const isInstanceOf<VisibilityLocalImplementation>(),
-          const isInstanceOf<VisibilityAllImplementation>(),
+          const TypeMatcher<VisibilityLocalImplementation>(),
+          const TypeMatcher<VisibilityAllImplementation>(),
         ]);
       });
 

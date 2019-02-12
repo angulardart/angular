@@ -15,7 +15,7 @@ analyzer:
     uri_has_not_been_generated: ignore
 
     # The noise of deprecations isn't worth the effort.
-    deprecated_member_use: ignore
+    deprecated_member_use_from_same_package: ignore
 linter:
   rules:
     - avoid_empty_else
