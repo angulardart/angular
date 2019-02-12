@@ -47,4 +47,25 @@ void main() {
       ),
     ]);
   });
+
+  test('should fail with an error for unresolved provider', () async {
+    await compilesExpecting('''
+      import '$ngImport';
+
+      const badModule = Module(
+        provide: const [
+          unknownToken,
+        ],
+      );
+
+      @GenerateInjector(const [
+        badModule,
+      ])
+      final InjectorFactory example = null;
+    ''', errors: [
+      allOf([
+        contains('Expected list for \'provide\' field of Module'),
+      ]),
+    ]);
+  });
 }
