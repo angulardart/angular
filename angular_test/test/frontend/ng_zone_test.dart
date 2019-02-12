@@ -337,4 +337,4 @@ void main() {
 
 class _IntentionalError extends Error {}
 
-final _throwsIntentionalError = throwsA(isInstanceOf<_IntentionalError>());
+final _throwsIntentionalError = throwsA(TypeMatcher<_IntentionalError>());

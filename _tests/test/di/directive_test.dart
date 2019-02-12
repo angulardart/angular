@@ -37,7 +37,7 @@ void main() {
     final injector = fixture.assertOnlyInstance.injector;
     expect(
       injector.get(ExampleService),
-      const isInstanceOf<ExampleService>(),
+      const TypeMatcher<ExampleService>(),
     );
   });
 
@@ -53,7 +53,7 @@ void main() {
     final fixture = await NgTestBed<ReifiedMultiGenerics>().create();
     expect(
       fixture.assertOnlyInstance.usPresidents,
-      const isInstanceOf<List<String>>(),
+      const TypeMatcher<List<String>>(),
     );
     expect(fixture.text, '[George, Abraham]');
   });
@@ -62,7 +62,7 @@ void main() {
     final fixture = await NgTestBed<UsesTypedTokensComponent>().create();
     expect(
       fixture.assertOnlyInstance.directive.arbitrary,
-      const isInstanceOf<List<Arbitrary>>(),
+      const TypeMatcher<List<Arbitrary>>(),
     );
   });
 
@@ -70,7 +70,7 @@ void main() {
     final fixture = await NgTestBed<SupportsInferredProviders>().create();
     expect(
       fixture.assertOnlyInstance.arbitrary,
-      const isInstanceOf<List<Arbitrary>>(),
+      const TypeMatcher<List<Arbitrary>>(),
     );
   });
 
@@ -78,7 +78,7 @@ void main() {
     final fixture = await NgTestBed<SupportsMultiToken>().create();
     expect(
       fixture.assertOnlyInstance.values,
-      const isInstanceOf<List<String>>(),
+      const TypeMatcher<List<String>>(),
     );
   });
 
@@ -86,7 +86,7 @@ void main() {
     final fixture = await NgTestBed<SupportsCustomMultiToken>().create();
     expect(
       fixture.assertOnlyInstance.values,
-      const isInstanceOf<List<String>>(),
+      const TypeMatcher<List<String>>(),
     );
   });
 
@@ -280,7 +280,7 @@ void main() {
   test('should support modules in providers: const [ ... ]', () async {
     final fixture = await NgTestBed<SupportsModules>().create();
     final injector = fixture.assertOnlyInstance.injector;
-    expect(injector.get(ExampleService), const isInstanceOf<ExampleService>());
+    expect(injector.get(ExampleService), const TypeMatcher<ExampleService>());
     expect(injector.get(C), const C('Hello World'));
   });
 

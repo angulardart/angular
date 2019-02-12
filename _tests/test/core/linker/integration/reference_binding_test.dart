@@ -16,14 +16,13 @@ void main() {
   test('should assign a component to a reference', () async {
     final testBed = NgTestBed<ComponentReferenceBindingComponent>();
     final testFixture = await testBed.create();
-    expect(
-        testFixture.assertOnlyInstance.child, isInstanceOf<ChildComponent>());
+    expect(testFixture.assertOnlyInstance.child, TypeMatcher<ChildComponent>());
   });
 
   test('should assign a directive to a reference', () async {
     final testBed = NgTestBed<DirectiveReferenceBindingComponent>();
     final testFixture = await testBed.create();
-    expect(testFixture.assertOnlyInstance.directive, isInstanceOf<ExportDir>());
+    expect(testFixture.assertOnlyInstance.directive, TypeMatcher<ExportDir>());
   });
 
   test('should assign an element to a reference', () async {
@@ -31,7 +30,7 @@ void main() {
     final testFixture = await testBed.create();
     expect(
       testFixture.assertOnlyInstance.captured.reference,
-      const isInstanceOf<DivElement>(),
+      const TypeMatcher<DivElement>(),
     );
   });
 
@@ -46,8 +45,8 @@ void main() {
     final testFixture = await testBed.create();
     final alice = testFixture.assertOnlyInstance.alice;
     final bob = testFixture.assertOnlyInstance.bob;
-    expect(alice, isInstanceOf<ChildComponent>());
-    expect(bob, isInstanceOf<ChildComponent>());
+    expect(alice, TypeMatcher<ChildComponent>());
+    expect(bob, TypeMatcher<ChildComponent>());
     expect(alice, isNot(bob));
   });
 
@@ -56,7 +55,7 @@ void main() {
     final testFixture = await testBed.create();
     final caseSensitive = testFixture.assertOnlyInstance.caseSensitive;
     final caseInsensitive = testFixture.assertOnlyInstance.caseInsensitive;
-    expect(caseSensitive, isInstanceOf<ChildComponent>());
+    expect(caseSensitive, TypeMatcher<ChildComponent>());
     expect(caseInsensitive, isNull);
   });
 }

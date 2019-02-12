@@ -31,7 +31,7 @@ void main() {
 
     test('Type', () {
       final token = reader.parseTokenObject(tokens[0]);
-      expect(token, const isInstanceOf<TypeTokenElement>());
+      expect(token, const TypeMatcher<TypeTokenElement>());
       expect(
         (token as TypeTokenElement).link,
         TypeLink('Example', 'asset:test_lib/lib/test_lib.dart'),
@@ -40,7 +40,7 @@ void main() {
 
     test('OpaqueToken', () {
       final token = reader.parseTokenObject(tokens[1]);
-      expect(token, const isInstanceOf<OpaqueTokenElement>());
+      expect(token, const TypeMatcher<OpaqueTokenElement>());
       expect(
         '${(token as OpaqueTokenElement).identifier}',
         'exampleToken',
@@ -167,4 +167,4 @@ void main() {
   });
 }
 
-final throwsBuildError = throwsA(const isInstanceOf<BuildError>());
+final throwsBuildError = throwsA(const TypeMatcher<BuildError>());

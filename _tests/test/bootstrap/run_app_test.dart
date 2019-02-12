@@ -161,7 +161,7 @@ class ServiceThatInjectsApplicationRef {
 
 class IntentionalError extends Error {}
 
-final isIntentionalError = const isInstanceOf<IntentionalError>();
+final isIntentionalError = const TypeMatcher<IntentionalError>();
 
 class StubExceptionHandler implements ExceptionHandler {
   static Object lastCaughtException;

@@ -94,13 +94,13 @@ void main() {
       test('should handle synchronous fn', () async {
         expect(testBed.create(beforeComponentCreated: (_) {
           throw Error();
-        }), throwsA(const isInstanceOf<Error>()));
+        }), throwsA(const TypeMatcher<Error>()));
       });
 
       test('should handle asynchronous fn', () async {
         expect(testBed.create(beforeComponentCreated: (_) async {
           throw Error();
-        }), throwsA(const isInstanceOf<Error>()));
+        }), throwsA(const TypeMatcher<Error>()));
       });
 
       test('should handle asynchronous fn with delayed future', () async {
@@ -111,7 +111,7 @@ void main() {
                         .then((_) {
                       throw Error();
                     })),
-            throwsA(const isInstanceOf<Error>()));
+            throwsA(const TypeMatcher<Error>()));
       });
     });
   });

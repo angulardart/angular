@@ -205,7 +205,7 @@ class NgTestBed<T> {
     return NgTestBed<T>._(
       host: host,
       // For uses of NgTestBed w/o `.forComponent`, we enable legacy APIs.
-      providers: const [SlowComponentLoader],
+      providers: const [SlowComponentLoader], // ignore: deprecated_member_use
       stabilizer: watchAngularLifecycle ? _defaultStabilizers : _alwaysStable,
       rootInjector: rootInjector,
     );

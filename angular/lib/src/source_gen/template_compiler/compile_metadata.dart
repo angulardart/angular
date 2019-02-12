@@ -252,6 +252,7 @@ class CompileTypeMetadataVisitor
       List<ParameterElement> parameters, Element element) {
     List<CompileDiDependencyMetadata> deps = [];
     for (final param in parameters) {
+      // ignore: deprecated_member_use, no migration path
       if (param.parameterKind == ParameterKind.NAMED) {
         // No use being a warning, since this is not prohibited; just skip.
         continue;
@@ -601,6 +602,7 @@ class CompileTypeMetadataVisitor
       type is InterfaceType && type.element.isEnum;
 
   bool _isPositional(ParameterElement param) =>
+      // ignore: deprecated_member_use, no migration path
       param.parameterKind == ParameterKind.POSITIONAL;
 
   bool _isProtobufEnum(ParameterizedType type) {

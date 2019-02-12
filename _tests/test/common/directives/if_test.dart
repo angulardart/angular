@@ -119,7 +119,7 @@ void main() {
 }
 
 const isExpressionChanged =
-    isInstanceOf<ExpressionChangedAfterItHasBeenCheckedException>();
+    TypeMatcher<ExpressionChangedAfterItHasBeenCheckedException>();
 
 @Component(
   selector: 'ngif-intemplate-test',

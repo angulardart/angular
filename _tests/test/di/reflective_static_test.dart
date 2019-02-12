@@ -129,6 +129,7 @@ void main() {
     test('resolveAndInstantiate should also check providers', () {
       final i = ReflectiveInjector.resolveStaticAndCreate([]);
       expect(
+        // ignore: deprecated_member_use
         () => i.resolveAndInstantiate(InjectableService),
         throwsUnsupportedError,
       );

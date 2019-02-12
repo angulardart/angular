@@ -146,7 +146,7 @@ void main() {
             () async => await fixture.update((cmp) {
                   cmp.formModel = null;
                 }),
-            throwsA(isInstanceOf<StateError>()));
+            throwsA(TypeMatcher<StateError>()));
       });
     });
   });

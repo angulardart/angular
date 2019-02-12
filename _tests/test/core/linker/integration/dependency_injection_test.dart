@@ -15,21 +15,21 @@ void main() {
     final testBed = NgTestBed<ProvideConsumeInjectableComponent>();
     final testFixture = await testBed.create();
     final consumer = testFixture.assertOnlyInstance.consumer;
-    expect(consumer.injectable, isInstanceOf<InjectableService>());
+    expect(consumer.injectable, TypeMatcher<InjectableService>());
   });
 
   test('should support viewProviders', () async {
     final testBed = NgTestBed<ProvidesInjectableInViewComponent>();
     final testFixture = await testBed.create();
     final consumer = testFixture.assertOnlyInstance.consumer;
-    expect(consumer.injectable, isInstanceOf<InjectableService>());
+    expect(consumer.injectable, TypeMatcher<InjectableService>());
   });
 
   test('should support unbounded lookup', () async {
     final testBed = NgTestBed<ProvidesInjectableUnboundedComponent>();
     final testFixture = await testBed.create();
     final dir = testFixture.assertOnlyInstance.container;
-    expect(dir.directive.injectable, isInstanceOf<InjectableService>());
+    expect(dir.directive.injectable, TypeMatcher<InjectableService>());
   });
 
   test('should support the event-bus scenario', () async {
@@ -57,7 +57,7 @@ void main() {
     final testBed = NgTestBed<InjectsHostComponent>();
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.compWithHost;
-    expect(cmp.myHost, isInstanceOf<SomeDirective>());
+    expect(cmp.myHost, TypeMatcher<SomeDirective>());
   });
 
   test('should create a component that injects @Host through ViewContainer',
@@ -65,7 +65,7 @@ void main() {
     final testBed = NgTestBed<InjectsHostThroughViewContainer>();
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.compWithHost;
-    expect(cmp.myHost, isInstanceOf<SomeDirective>());
+    expect(cmp.myHost, TypeMatcher<SomeDirective>());
   });
 }
 

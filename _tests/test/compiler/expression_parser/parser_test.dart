@@ -441,7 +441,7 @@ void main() {
       test("should parse pipes", () {
         var bindings = parseTemplateBindings("key value|pipe");
         var ast = bindings[0].expression.ast;
-        expect(ast, isInstanceOf<BindingPipe>());
+        expect(ast, TypeMatcher<BindingPipe>());
       });
     });
     group("parseInterpolation", () {

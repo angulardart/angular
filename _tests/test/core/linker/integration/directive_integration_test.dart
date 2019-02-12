@@ -73,7 +73,7 @@ void main() {
     final testBed = NgTestBed<RetrievesDependencyFromHostComponent>();
     final testFixture = await testBed.create();
     final needsPublicApi = testFixture.assertOnlyInstance.needsPublicApi;
-    expect(needsPublicApi.api, const isInstanceOf<PrivateImpl>());
+    expect(needsPublicApi.api, const TypeMatcher<PrivateImpl>());
   });
 
   test('should consume pipe binding', () async {

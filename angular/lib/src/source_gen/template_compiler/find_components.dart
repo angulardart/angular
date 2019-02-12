@@ -1,4 +1,4 @@
-import 'package:analyzer/analyzer.dart' hide Directive;
+import 'package:analyzer/dart/ast/ast.dart' hide Directive;
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';

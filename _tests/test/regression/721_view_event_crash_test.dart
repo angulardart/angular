@@ -33,4 +33,4 @@ class ComponentWithHostEventThatThrows {
 
 class IntentionalError extends Error {}
 
-final throwsIntentional = throwsA(const isInstanceOf<IntentionalError>());
+final throwsIntentional = throwsA(const TypeMatcher<IntentionalError>());

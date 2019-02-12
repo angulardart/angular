@@ -76,7 +76,7 @@ void main() {
     test('a function with no parameters', () {
       final function = functionNamed('createExample0');
       final deps = reader.parseDependencies(function);
-      expect(deps.bound, const isInstanceOf<FunctionElement>());
+      expect(deps.bound, const TypeMatcher<FunctionElement>());
       expect(deps.positional, isEmpty);
       expect(deps.named, isEmpty);
     });
@@ -84,7 +84,7 @@ void main() {
     test('a function with one parameter', () {
       final function = functionNamed('createExample1');
       final deps = reader.parseDependencies(function);
-      expect(deps.bound, const isInstanceOf<FunctionElement>());
+      expect(deps.bound, const TypeMatcher<FunctionElement>());
       expect(deps.positional, [
         DependencyElement(
           TypeTokenElement(
@@ -98,7 +98,7 @@ void main() {
     test('a function with two parameters, of which one is named', () {
       final function = functionNamed('createExample2');
       final deps = reader.parseDependencies(function);
-      expect(deps.bound, const isInstanceOf<FunctionElement>());
+      expect(deps.bound, const TypeMatcher<FunctionElement>());
       expect(deps.positional, [
         DependencyElement(
           TypeTokenElement(
@@ -221,7 +221,7 @@ void main() {
     test('a class with a default constructor', () {
       final clazz = classNamed('Example');
       final deps = reader.parseDependencies(clazz);
-      expect(deps.bound, const isInstanceOf<ConstructorElement>());
+      expect(deps.bound, const TypeMatcher<ConstructorElement>());
       expect(deps.positional, isEmpty);
       expect(deps.named, isEmpty);
     });
@@ -229,7 +229,7 @@ void main() {
     test('an abstract class with a public factory constructor', () {
       final clazz = classNamed('Engine');
       final deps = reader.parseDependencies(clazz);
-      expect(deps.bound, const isInstanceOf<ConstructorElement>());
+      expect(deps.bound, const TypeMatcher<ConstructorElement>());
       expect(deps.positional, isEmpty);
       expect(deps.named, isEmpty);
     });
@@ -237,7 +237,7 @@ void main() {
     test('a class with a named constructor', () {
       final clazz = classNamed('Logger');
       final deps = reader.parseDependencies(clazz);
-      expect(deps.bound, const isInstanceOf<ConstructorElement>());
+      expect(deps.bound, const TypeMatcher<ConstructorElement>());
       expect(deps.positional, isEmpty);
       expect(deps.named, isEmpty);
     });

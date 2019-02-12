@@ -168,21 +168,21 @@ void main() {
 
       test('should resolve a Type', () {
         i = ReflectiveInjector.resolveAndCreate([ExampleService]);
-        expect(i.get(ExampleService), const isInstanceOf<ExampleService>());
+        expect(i.get(ExampleService), const TypeMatcher<ExampleService>());
       });
 
       test('should resolve a Provider', () {
         i = ReflectiveInjector.resolveAndCreate([
           Provider(ExampleService),
         ]);
-        expect(i.get(ExampleService), const isInstanceOf<ExampleService>());
+        expect(i.get(ExampleService), const TypeMatcher<ExampleService>());
       });
 
       test('should resolve a Provider.useClass', () {
         i = ReflectiveInjector.resolveAndCreate([
           Provider(ExampleService, useClass: ExampleService2),
         ]);
-        expect(i.get(ExampleService), const isInstanceOf<ExampleService2>());
+        expect(i.get(ExampleService), const TypeMatcher<ExampleService2>());
       });
 
       test('should resolve a Provider.useValue', () {
@@ -197,7 +197,7 @@ void main() {
         i = ReflectiveInjector.resolveAndCreate([
           Provider(ExampleService, useFactory: createExampleService),
         ]);
-        expect(i.get(ExampleService), const isInstanceOf<ExampleService>());
+        expect(i.get(ExampleService), const TypeMatcher<ExampleService>());
       });
 
       test('should resolve a Provider.useFactory with deps', () {
@@ -295,7 +295,7 @@ void main() {
             multi: true,
           ),
         ]);
-        expect(injector.get(usPresidents), const isInstanceOf<List<String>>());
+        expect(injector.get(usPresidents), const TypeMatcher<List<String>>());
       });
 
       test('should support MultiToken instead of multi: true', () {
@@ -306,7 +306,7 @@ void main() {
         ]);
         expect(
           injector.get(usPresidentsMulti),
-          const isInstanceOf<List<String>>(),
+          const TypeMatcher<List<String>>(),
         );
       });
 
@@ -334,7 +334,7 @@ void main() {
         ]);
         expect(
           injector.get(ExampleService),
-          const isInstanceOf<ExampleService>(),
+          const TypeMatcher<ExampleService>(),
         );
       });
 
@@ -450,7 +450,7 @@ void main() {
         ]);
         expect(
           injector.get(ExampleService),
-          const isInstanceOf<ExampleService2>(),
+          const TypeMatcher<ExampleService2>(),
         );
       });
     });
@@ -461,14 +461,14 @@ void main() {
       test('should consider Provider(T) as Provider(T, useClass: T)', () {
         expect(
           injector.get(ExampleService2),
-          const isInstanceOf<ExampleService2>(),
+          const TypeMatcher<ExampleService2>(),
         );
       });
 
       test('should support "useClass"', () {
         expect(
           injector.get(ExampleService),
-          const isInstanceOf<ExampleService2>(),
+          const TypeMatcher<ExampleService2>(),
         );
       });
 
@@ -490,7 +490,7 @@ void main() {
         final result = injector.get(multiStringToken);
         expect(
           result,
-          const isInstanceOf<List<String>>(),
+          const TypeMatcher<List<String>>(),
           reason: 'List<String> expected, got $result of ${result.runtimeType}',
         );
         expect(result, ['A', 'B']);
@@ -500,7 +500,7 @@ void main() {
         final result = injector.get(const CustomMultiString());
         expect(
           result,
-          const isInstanceOf<List<String>>(),
+          const TypeMatcher<List<String>>(),
           reason: 'List<String> expected, got $result of ${result.runtimeType}',
         );
         expect(result, ['C', 'D']);
@@ -572,7 +572,7 @@ void main() {
       test('should support Module', () {
         expect(
           exampleFromModule().get(ExampleService),
-          const isInstanceOf<ExampleService2>(),
+          const TypeMatcher<ExampleService2>(),
         );
       });
 

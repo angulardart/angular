@@ -167,7 +167,7 @@ void main() {
     test('should throw when given an invalid object', () {
       var pipe = AsyncPipe(null);
       expect(() => pipe.transform('some bogus object'),
-          throwsA(isInstanceOf<InvalidPipeArgumentException>()));
+          throwsA(TypeMatcher<InvalidPipeArgumentException>()));
     });
   });
 }

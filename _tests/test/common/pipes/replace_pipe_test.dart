@@ -6,7 +6,7 @@ final someNumber = 42;
 final str = "Douglas Adams";
 
 final Matcher throwsAnInvalidPipeArgumentException =
-    throwsA(isInstanceOf<InvalidPipeArgumentException>());
+    throwsA(TypeMatcher<InvalidPipeArgumentException>());
 
 void main() {
   group("ReplacePipe", () {

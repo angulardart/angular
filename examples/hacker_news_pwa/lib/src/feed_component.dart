@@ -34,7 +34,7 @@ class FeedComponent implements OnActivate {
     final routePath = current.routePath;
     final String feed = routePath.additionalData['feed'];
     final page = current.queryParameters['p'];
-    final pageNumber = page != null ? int.parse(page, onError: (_) => 1) : 1;
+    final pageNumber = page != null ? int.tryParse(page) ?? 1 : 1;
 
     if (pageNumber < 10) {
       nextPageUrl =

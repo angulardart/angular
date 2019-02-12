@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 Matcher hasTextContent(expected) => _HasTextContent(expected);
 
 final throwsNoProviderError = throwsA(_isNoProviderError);
-final _isNoProviderError = const isInstanceOf<NoProviderError>();
+final _isNoProviderError = const TypeMatcher<NoProviderError>();
 
 // TODO(matanl): Add matcher to new test infrastructure.
 class _HasTextContent extends Matcher {
