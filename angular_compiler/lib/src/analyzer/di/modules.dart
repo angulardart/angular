@@ -115,13 +115,19 @@ class ModuleReader {
 
   ModuleElement _parseModule(DartObject o) {
     final reader = ConstantReader(o);
-    final include = reader.read('include').listValue.map(parseModule).toList();
-    final provide = reader
-        .read('provide')
-        .listValue
-        .map(_providerReader.parseProvider)
-        .toList();
-
+    final includeReader = reader.read('include');
+    if (!includeReader.isList) {
+      throw FormatException(
+          "Expected list for 'include' field of ${reader.objectValue.type}");
+    }
+    final include = includeReader.listValue.map(parseModule).toList();
+    final provideReader = reader.read('provide');
+    if (!provideReader.isList) {
+      throw FormatException(
+          "Expected list for 'provide' field of ${reader.objectValue.type}.");
+    }
+    final provide =
+        provideReader.listValue.map(_providerReader.parseProvider).toList();
     return ModuleElement(provide: provide, include: include);
   }
 }

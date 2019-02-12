@@ -1,3 +1,10 @@
+*   FormatExceptions thrown while parsing modules in InjectorReader are now rethrown
+    as BuildErrors with source information.
+    
+*   The InjectorReader will fail earlier in the compile process on parse errors.
+
+*   Unhandled errors from InjectorReader are now caught and reported with source information.
+
 *   BuildError now has factory constructors to create errors for annotations and
     elements.
 

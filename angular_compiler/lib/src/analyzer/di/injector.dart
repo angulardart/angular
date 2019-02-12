@@ -68,17 +68,22 @@ class InjectorReader {
     this.doNotScope,
   }) : this.annotation = ConstantReader(
           $GenerateInjector.firstAnnotationOfExact(field),
-        );
+        ) {
+    _providers = _computeProviders(annotation, moduleReader);
+  }
 
   @alwaysThrows
-  void _throwParseError([DartObject context]) {
+  void _throwParseError([DartObject context, String message = '']) {
+    if (message != '') {
+      message = '. Additional information: $message';
+    }
     BuildError.throwForElement(
       field,
       context == null
           ? 'Unable to parse @GenerateInjector. You may have analysis errors'
           : 'Unable to parse @GenerateInjector. A provider\'s token ($context) '
           'was read as "null". This is either invalid configuration or you '
-          'have analysis errors',
+          'have analysis errors$message',
     );
   }
 
@@ -91,25 +96,28 @@ class InjectorReader {
   }
 
   /// Providers that are part of the provided list of the annotation.
-  Iterable<ProviderElement> get providers {
-    if (_providers == null) {
-      final providersOrModules = annotation.read('_providersOrModules');
-      if (providersOrModules.isNull) {
-        _throwParseError();
-      }
-      try {
-        final module = moduleReader.parseModule(providersOrModules.objectValue);
-        _providers = moduleReader.deduplicateProviders(module.flatten());
-      } on NullTokenException catch (e) {
-        _throwParseError(e.constant);
-      } on NullFactoryException catch (e) {
-        _throwFactoryProvider(e.constant);
-      } on BuildError {
-        logWarning('An error occurred parsing providers on $doNotScope');
-        rethrow;
-      }
+  Iterable<ProviderElement> get providers => _providers;
+
+  Iterable<ProviderElement> _computeProviders(
+      ConstantReader annotation, ModuleReader moduleReader) {
+    final providersOrModules = annotation.read('_providersOrModules');
+    if (providersOrModules.isNull) {
+      _throwParseError();
     }
-    return _providers;
+
+    try {
+      final module = moduleReader.parseModule(providersOrModules.objectValue);
+      return moduleReader.deduplicateProviders(module.flatten());
+    } on NullTokenException catch (e) {
+      _throwParseError(e.constant);
+    } on NullFactoryException catch (e) {
+      _throwFactoryProvider(e.constant);
+    } on FormatException catch (e) {
+      _throwParseError(annotation.objectValue, e.message);
+    } on BuildError {
+      logWarning('An error occurred parsing providers on $doNotScope');
+      rethrow;
+    }
   }
 
   /// Creates a codegen reference to [symbol] in [url].
