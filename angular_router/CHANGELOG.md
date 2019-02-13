@@ -4,6 +4,10 @@
     which can be defined to prefetch additional resources that are dependent on
     the matched `RouterState`.
 
+*   The `RouteDefinition` subclasses `DeferredRouteDefinition`,
+    `RedirectRouteDefinition`, and `ComponentRouteDefinition` are now exported
+    from `package:angular_router/testing.dart`.
+
 ### Bug fixes
 
 *   Deferred route loaders and prefetchers are no longer called a second time
