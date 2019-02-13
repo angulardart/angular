@@ -4,13 +4,13 @@ targets:
       angular:
         generate_for:
           exclude:
-            - "lib/builder.dart"
+            - "lib/src/build.dart"
             - "lib/src/compiler/**"
             - "lib/src/source_gen/**"
 
 builders:
   angular:
-    import: "package:angular/builder.dart"
+    import: "package:angular/src/build.dart"
     builder_factories:
       - templatePlaceholder
       - templateCompiler
@@ -31,10 +31,10 @@ builders:
         - ".template.dart"
 post_process_builders:
   placeholder_cleanup:
-    import: "package:angular/builder.dart"
+    import: "package:angular/src/build.dart"
     builder_factory: "placeholderCleanup"
   component_source_cleanup:
-    import: "package:angular/builder.dart"
+    import: "package:angular/src/build.dart"
     builder_factory: "componentSourceCleanup"
     defaults:
       generate_for: ["lib/**"]

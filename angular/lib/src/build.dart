@@ -14,8 +14,8 @@ import 'package:logging/logging.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
 
-import 'src/compiler/stylesheet_compiler/builder.dart';
-import 'src/source_gen/template_compiler/generator.dart';
+import 'compiler/stylesheet_compiler/builder.dart';
+import 'source_gen/template_compiler/generator.dart';
 
 /// An option to generate a lighter-weight output for complex build systems.
 ///
