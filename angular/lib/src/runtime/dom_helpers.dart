@@ -238,3 +238,48 @@ SpanElement appendSpan(Document doc, Node parent) {
 Element appendElement(Document doc, Node parent, String tagName) {
   return unsafeCast(parent.append(doc.createElement(tagName)));
 }
+
+/// Inserts [nodes] into the DOM before [sibling].
+///
+/// This intentionally does not use [Node.insertAllBefore], which is slower due
+/// to extra type and runtime checks that are not necessary for our generated
+/// code.
+@dart2js.noInline
+void insertNodesBefore(List<Node> nodes, Node parent, Node sibling) {
+  for (var i = 0, l = nodes.length; i < l; i++) {
+    parent.insertBefore(nodes[i], sibling);
+  }
+}
+
+/// Appends [nodes] into the DOM inside of [parent].
+@dart2js.noInline
+void appendNodes(List<Node> nodes, Node parent) {
+  for (var i = 0, l = nodes.length; i < l; i++) {
+    parent.append(nodes[i]);
+  }
+}
+
+/// Removes [nodes] from the DOM.
+@dart2js.noInline
+void removeNodes(List<Node> nodes) {
+  for (var i = 0, l = nodes.length; i < l; i++) {
+    nodes[i].remove();
+  }
+}
+
+/// Appends [nodes] into the DOM as siblings of [sibling] node.
+///
+/// **NOTE**: This was previously called `_moveNodesAfterSibling`.
+@dart2js.noInline
+void insertNodesAsSibling(List<Node> nodes, Node sibling) {
+  final parentOfSibling = sibling.parentNode;
+  if (nodes.isEmpty || parentOfSibling == null) {
+    return;
+  }
+  final nextSibling = sibling.nextNode;
+  if (nextSibling == null) {
+    appendNodes(nodes, parentOfSibling);
+  } else {
+    insertNodesBefore(nodes, parentOfSibling, nextSibling);
+  }
+}

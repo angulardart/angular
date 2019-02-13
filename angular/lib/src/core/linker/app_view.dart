@@ -227,9 +227,12 @@ abstract class AppView<T> extends View<T> {
     viewData.subscriptions = subscriptions;
   }
 
-  void addInlinedNodes(Node anchor, List<Node> inlinedNodes,
-      [bool isRoot = false]) {
-    _moveNodesAfterSibling(anchor, inlinedNodes);
+  void addInlinedNodes(
+    Node anchor,
+    List<Node> inlinedNodes, [
+    bool isRoot = false,
+  ]) {
+    insertNodesAsSibling(inlinedNodes, anchor);
     if (isRoot) {
       viewData.rootNodesOrViewContainers.addAll(inlinedNodes);
     } else {
@@ -238,7 +241,7 @@ abstract class AppView<T> extends View<T> {
   }
 
   void removeInlinedNodes(List<Node> inlinedNodes, [bool isRoot = false]) {
-    _detachAll(inlinedNodes);
+    removeNodes(inlinedNodes);
     var nodeList =
         isRoot ? viewData.rootNodesOrViewContainers : viewData.inlinedNodes;
     for (int i = nodeList.length - 1; i >= 0; i--) {
@@ -247,10 +250,11 @@ abstract class AppView<T> extends View<T> {
         nodeList.remove(node);
       }
     }
+    domRootRendererIsDirty = true;
   }
 
   void attachViewAfter(Node node, List<Node> viewRootNodes) {
-    _moveNodesAfterSibling(node, viewRootNodes);
+    insertNodesAsSibling(viewRootNodes, node);
     domRootRendererIsDirty = true;
   }
 
@@ -285,8 +289,10 @@ abstract class AppView<T> extends View<T> {
     destroy();
   }
 
+  @dart2js.noInline
   void detachViewNodes(List<Node> viewRootNodes) {
-    _detachAll(viewRootNodes);
+    removeNodes(viewRootNodes);
+    domRootRendererIsDirty = domRootRendererIsDirty || viewRootNodes.isNotEmpty;
   }
 
   @override
@@ -639,30 +645,4 @@ List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
     }
   }
   return renderNodes;
-}
-
-void _moveNodesAfterSibling(Node sibling, List<Node> nodes) {
-  Node parent = sibling.parentNode;
-  if (nodes.isNotEmpty && parent != null) {
-    var nextSibling = sibling.nextNode;
-    int len = nodes.length;
-    if (nextSibling != null) {
-      for (var i = 0; i < len; i++) {
-        parent.insertBefore(nodes[i], nextSibling);
-      }
-    } else {
-      for (var i = 0; i < len; i++) {
-        parent.append(nodes[i]);
-      }
-    }
-  }
-}
-
-void _detachAll(List<Node> viewRootNodes) {
-  int len = viewRootNodes.length;
-  for (var i = 0; i < len; i++) {
-    Node node = viewRootNodes[i];
-    node.remove();
-    domRootRendererIsDirty = true;
-  }
 }

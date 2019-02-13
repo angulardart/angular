@@ -3583,31 +3583,6 @@
       }
       return renderNodes;
     },
-    _moveNodesAfterSibling: function(sibling, nodes) {
-      var $parent, t1, nextSibling, i;
-      $parent = sibling.parentNode;
-      t1 = nodes.length;
-      if (t1 !== 0 && $parent != null) {
-        nextSibling = sibling.nextSibling;
-        if (nextSibling != null)
-          for (i = 0; i < t1; ++i)
-            $parent.insertBefore(nodes[i], nextSibling);
-        else
-          for (i = 0; i < t1; ++i)
-            $parent.appendChild(nodes[i]);
-      }
-    },
-    _detachAll: function(viewRootNodes) {
-      var len, i, node, t1;
-      len = viewRootNodes.length;
-      for (i = 0; i < len; ++i) {
-        node = viewRootNodes[i];
-        t1 = node.parentNode;
-        if (t1 != null)
-          t1.removeChild(node);
-        $.domRootRendererIsDirty = true;
-      }
-    },
     AppViewData: function AppViewData(t0, t1, t2, t3, t4) {
       var _ = this;
       _.type = t0;
@@ -3815,6 +3790,36 @@
     appendElement: function(doc, $parent, tagName) {
       var t1 = doc.createElement(tagName);
       return $parent.appendChild(t1);
+    },
+    insertNodesBefore: function(nodes, $parent, sibling) {
+      var l, i;
+      for (l = nodes.length, i = 0; i < l; ++i)
+        $parent.insertBefore(nodes[i], sibling);
+    },
+    appendNodes: function(nodes, $parent) {
+      var l, i;
+      for (l = nodes.length, i = 0; i < l; ++i)
+        $parent.appendChild(nodes[i]);
+    },
+    removeNodes: function(nodes) {
+      var l, i, t1, t2;
+      for (l = nodes.length, i = 0; i < l; ++i) {
+        t1 = nodes[i];
+        t2 = t1.parentNode;
+        if (t2 != null)
+          t2.removeChild(t1);
+      }
+    },
+    insertNodesAsSibling: function(nodes, sibling) {
+      var parentOfSibling, nextSibling;
+      parentOfSibling = sibling.parentNode;
+      if (nodes.length === 0 || parentOfSibling == null)
+        return;
+      nextSibling = sibling.nextSibling;
+      if (nextSibling == null)
+        T.appendNodes(nodes, parentOfSibling);
+      else
+        T.insertNodesBefore(nodes, parentOfSibling, nextSibling);
     }
   },
   N = {
@@ -9223,13 +9228,14 @@
     },
     removeInlinedNodes$2: function(inlinedNodes, isRoot) {
       var nodeList, i, node;
-      S._detachAll(inlinedNodes);
+      T.removeNodes(inlinedNodes);
       nodeList = this.viewData.rootNodesOrViewContainers;
       for (i = nodeList.length - 1; i >= 0; --i) {
         node = nodeList[i];
         if (C.JSArray_methods.contains$1(inlinedNodes, node))
           C.JSArray_methods.remove$1(nodeList, node);
       }
+      $.domRootRendererIsDirty = true;
     },
     injectorGet$3: function(token, nodeIndex, notFoundValue) {
       var result, view, injector;
@@ -9252,6 +9258,10 @@
     },
     injectorGet$2: function(token, nodeIndex) {
       return this.injectorGet$3(token, nodeIndex, C.C_Object);
+    },
+    detachViewNodes$1: function(viewRootNodes) {
+      T.removeNodes(viewRootNodes);
+      $.domRootRendererIsDirty = $.domRootRendererIsDirty || viewRootNodes.length !== 0;
     },
     destroy$0: function() {
       var t1 = this.viewData;
@@ -9363,7 +9373,7 @@
       C.JSArray_methods.insert$2(views, currentIndex, t1);
       refRenderNode = this._findRenderNode$2(views, currentIndex);
       if (refRenderNode != null) {
-        S._moveNodesAfterSibling(refRenderNode, S._flattenNestedViewRenderNodes(t1.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
+        T.insertNodesAsSibling(S._flattenNestedViewRenderNodes(t1.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])), refRenderNode);
         $.domRootRendererIsDirty = true;
       }
       return viewRef;
@@ -9400,7 +9410,7 @@
       refRenderNode = this._findRenderNode$2(views, viewIndex);
       this.nestedViews = views;
       if (refRenderNode != null) {
-        S._moveNodesAfterSibling(refRenderNode, S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
+        T.insertNodesAsSibling(S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])), refRenderNode);
         $.domRootRendererIsDirty = true;
       }
       view.viewData._viewContainerElement = this;
@@ -9409,10 +9419,10 @@
       var t1, view;
       t1 = this.nestedViews;
       view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex);
-      S._detachAll(S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
+      view.detachViewNodes$1(S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
       t1 = view.viewData.inlinedNodes;
       if (t1 != null)
-        S._detachAll(t1);
+        view.detachViewNodes$1(t1);
       view.viewData._viewContainerElement = null;
       return view;
     }
@@ -10327,7 +10337,7 @@
           T.appendText(t1, "Hello World");
           t1 = this._anchor_0;
           t2 = H.setRuntimeTypeInfo([this._el_0_0], [W.Node]);
-          S._moveNodesAfterSibling(t1, t2);
+          T.insertNodesAsSibling(t2, t1);
           t1 = this.viewData.rootNodesOrViewContainers;
           (t1 && C.JSArray_methods).addAll$1(t1, t2);
         } else
