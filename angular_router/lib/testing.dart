@@ -6,6 +6,11 @@ import 'src/router/router.dart';
 import 'src/router/router_impl.dart';
 
 export 'src/location/testing/mock_location_strategy.dart';
+export 'src/route_definition.dart'
+    show
+        DeferredRouteDefinition,
+        RedirectRouteDefinition,
+        ComponentRouteDefinition;
 
 /// The main [Router] providers for testing.
 ///
