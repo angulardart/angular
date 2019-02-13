@@ -136,6 +136,18 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
       final annotationImpl = annotation as ElementAnnotationImpl;
       for (final argument in annotationImpl.annotationAst.arguments.arguments) {
         if (argument is NamedExpression && argument.name.label.name == field) {
+          if (argument.expression is! ListLiteral) {
+            // Something like
+            //   directives: 'Ha Ha!'
+            //
+            // ... was attempted to be used.
+            _exceptionHandler.handle(UnresolvedExpressionError(
+              [argument.expression],
+              element,
+              annotationImpl.compilationUnit,
+            ));
+            break;
+          }
           final values = argument.expression as ListLiteral;
           if (values.elements.isNotEmpty &&
               // Avoid an edge case where all of your entries are just empty
@@ -143,10 +155,11 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
               // this point.
               values.elements.every((e) => e.staticType?.isDynamic != false)) {
             // We didn't resolve something.
-            _exceptionHandler.handle((UnresolvedExpressionError(
-                values.elements.where((e) => e.staticType?.isDynamic != false),
-                element,
-                annotationImpl.compilationUnit)));
+            _exceptionHandler.handle(UnresolvedExpressionError(
+              values.elements.where((e) => e.staticType?.isDynamic != false),
+              element,
+              annotationImpl.compilationUnit,
+            ));
           }
         }
       }
