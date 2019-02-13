@@ -1,5 +1,5 @@
-import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/src/dart/analysis/results.dart';
@@ -36,6 +36,8 @@ class ComponentVisitorExceptionHandler {
 
 Future<ElementDeclarationResult> _resolvedClassResult(Element element) async {
   var libraryElement = element.library;
+  // We are intentionally using this until we are migrated by the analyzer team.
+  // ignore: deprecated_member_use
   var libraryResult = await ResolvedLibraryResultImpl.tmp(libraryElement);
   if (libraryResult.state == ResultState.NOT_A_FILE) {
     // We don't have access to source information in summarized libraries,
@@ -47,6 +49,8 @@ Future<ElementDeclarationResult> _resolvedClassResult(Element element) async {
 }
 
 class AsyncBuildError extends BuildError {
+  AsyncBuildError([String message]) : super(message);
+
   Future<BuildError> resolve() => Future.value(this);
 }
 
@@ -189,9 +193,11 @@ class UnusedDirectiveTypeError extends ErrorMessageForAnnotation {
 
 class ErrorMessageForAnnotation extends AsyncBuildError {
   final IndexedAnnotation indexedAnnotation;
-  final String message;
 
-  ErrorMessageForAnnotation(this.indexedAnnotation, this.message);
+  ErrorMessageForAnnotation(
+    this.indexedAnnotation,
+    String message,
+  ) : super(message);
 
   /// Find the ancestor node that should have the metadata and return
   /// that metadata.
@@ -231,9 +237,8 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
 
 class ErrorMessageForElement extends AsyncBuildError {
   final Element element;
-  final String message;
 
-  ErrorMessageForElement(this.element, this.message);
+  ErrorMessageForElement(this.element, String message) : super(message);
 
   @override
   Future<BuildError> resolve() =>
