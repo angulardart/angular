@@ -1,3 +1,5 @@
+import 'package:angular_compiler/cli.dart';
+
 import '../analyzed_class.dart';
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../expression_parser/ast.dart';
@@ -32,6 +34,7 @@ class CompileEventListener {
   bool _isSimple = true;
   HandlerType _handlerType = HandlerType.notSimple;
   o.Expression _simpleHandler;
+  BoundEventAst _simpleHostEvent;
   String _methodName;
   o.FnParam _eventParam;
 
@@ -72,6 +75,7 @@ class CompileEventListener {
     }
     if (_isSimple) {
       _handlerType = hostEvent.handlerType;
+      _simpleHostEvent = hostEvent;
       _isSimple = _method.isEmpty && _handlerType != HandlerType.notSimple;
     }
     if (directive != null && directive.isComponent) {
@@ -86,9 +90,18 @@ class CompileEventListener {
   void _finish() {
     final stmts = _method.finish();
     if (_isSimple) {
+      stmts.insertAll(0, _nameResolver.getLocalDeclarations());
+      final returnExpr = convertStmtIntoExpression(stmts.last);
+      if (returnExpr is! o.InvokeMethodExpr) {
+        final message = "Expected method for event binding.";
+        throwFailure(_simpleHostEvent != null
+            ? _simpleHostEvent.sourceSpan.message(message)
+            : message);
+      }
+
       // If debug info is enabled, the first statement is a call to [dbg], so
       // retrieve last statement to ensure it's the handler invocation.
-      _simpleHandler = _extractFunction(convertStmtIntoExpression(stmts.last));
+      _simpleHandler = _extractFunction(returnExpr);
     } else {
       // Declare variables for locals used in this event listener.
       stmts.insertAll(0, _nameResolver.getLocalDeclarations());
