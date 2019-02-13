@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:glob/glob.dart';
-import 'package:angular/builder.dart';
+import 'package:angular/src/build.dart';
 import 'package:angular_compiler/cli.dart';
 import 'package:logging/logging.dart';
 import 'package:build/build.dart';

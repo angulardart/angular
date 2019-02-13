@@ -1,4 +1,4 @@
-import 'package:angular/builder.dart' as angular;
+import 'package:angular/src/build.dart' as angular;
 import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 
