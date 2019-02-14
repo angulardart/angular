@@ -1,6 +1,7 @@
 import 'package:source_gen/source_gen.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../src/resolve.dart';
 
@@ -179,6 +180,53 @@ void main() {
           'foo.template.dart',
         ],
       );
+    });
+  });
+
+  group('errors', () {
+    ReflectableReader reader;
+
+    String pleaseThrow = 'please.throw';
+    setUp(() {
+      reader = ReflectableReader(
+        hasInput: (input) => input.contains(pleaseThrow)
+            ? throw Exception("bad input $input")
+            : false,
+        isLibrary: (lib) async => lib.contains(pleaseThrow)
+            ? throw Exception("bad library $lib")
+            : false,
+      );
+    });
+
+    test('should throw on invalid asset it', () async {
+      final testLib = await resolveLibrary('''
+        import 'package:$pleaseThrow/file.dart';
+      ''');
+      expect(
+          reader.resolve(testLib),
+          throwsA(allOf([
+            predicate((e) => e is BuildError),
+            predicate((e) =>
+                e.message.contains("Could not parse URI") &&
+                e.message.contains("line 4, column 9")),
+          ])));
+    });
+
+    test('should throw on private injectable class', () async {
+      final testLib = await resolveLibrary(r'''
+      @Injectable()
+      class _Example {
+        Example(Duration duration);
+      }
+    ''');
+      expect(
+          reader.resolve(testLib),
+          throwsA(allOf([
+            predicate((e) => e is BuildError),
+            predicate((e) =>
+                e.message.contains("Private classes can not be @Injectable") &&
+                e.message.contains("line 5, column 13")),
+          ])));
     });
   });
 }
