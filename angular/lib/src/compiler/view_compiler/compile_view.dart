@@ -1502,7 +1502,15 @@ o.Expression _createIndexCondition(int start, int length) {
   final lowerBound = o.literal(start);
   if (length > 0) {
     final upperBound = o.literal(start + length);
-    return lowerBound.lowerEquals(index).and(index.lowerEquals(upperBound));
+    final withinUpperBound = index.lowerEquals(upperBound);
+    if (start == 0) {
+      // It's unnecessary to check that the index is greater than zero, since
+      // we would never generate a negative index. Furthermore, dart2js can tell
+      // that this is always true, which confuses its logic for recreating the
+      // expression in JavaScript (b/30508405).
+      return withinUpperBound;
+    }
+    return lowerBound.lowerEquals(index).and(withinUpperBound);
   } else {
     return lowerBound.equals(index);
   }

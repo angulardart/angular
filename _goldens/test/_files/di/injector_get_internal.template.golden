@@ -309,7 +309,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if ((identical(token, import1.ControlContainer) && ((3 <= nodeIndex) && (nodeIndex <= 8)))) {
       return _NgControlGroup_3_5;
     }
-    if (((identical(token, import1.NgForm) || identical(token, import1.ControlContainer)) && ((0 <= nodeIndex) && (nodeIndex <= 8)))) {
+    if (((identical(token, import1.NgForm) || identical(token, import1.ControlContainer)) && (nodeIndex <= 8))) {
       return _NgForm_0_5;
     }
     return notFoundResult;
