@@ -127,8 +127,8 @@ class ReflectableReader {
     DependencyInvocation<ConstructorElement> factory;
     if (_shouldRecordFactory(element) && recordInjectableFactories) {
       if (element.isPrivate) {
-        // TODO(matanl): Make this a better error message.
-        throw BuildError('Cannot access private class ${element.name}');
+        throw BuildError.throwForElement(
+            element, 'Private classes can not be @Injectable');
       }
       factory = dependencyReader.parseDependencies(element);
     }
@@ -205,7 +205,12 @@ class ReflectableReader {
       return false;
     }
     final outputUri = _withOutputExtension(uri);
-    return await isLibrary(outputUri) || await hasInput(uri);
+    try {
+      return await isLibrary(outputUri) || await hasInput(uri);
+    } catch (e) {
+      throw BuildError.forElement(
+          directive, 'Could not parse URI. Additional information:\n$e\n');
+    }
   }
 
   bool _shouldRecordFactory(ClassElement element) =>

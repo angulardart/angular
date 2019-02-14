@@ -10,7 +10,11 @@ void main() {
       @Injectable()
       class _HeroService {}
     """, errors: [
-      contains('Cannot access private class _HeroService'),
+      allOf([
+        contains('Private classes can not be @Injectable'),
+        contains('_HeroService'),
+        containsSourceLocation(4, 13)
+      ]),
     ]);
   });
 
