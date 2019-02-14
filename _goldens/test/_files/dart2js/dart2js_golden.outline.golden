@@ -114,5 +114,19 @@ external _ng.AppView<UsesDomBindings> viewFactory_UsesDomBindings0(_ng.AppView<d
 class ViewUsesDomBindings0 extends _ng.AppView<UsesDomBindings> {
   external ViewUsesDomBindings0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Directive class HasProvider.
+class HasProviderNgCd extends _ng.DirectiveChangeDetector {
+  external HasProvider get instance;
+  external void deliverChanges();
+  external HasProviderNgCd(HasProvider instance);
+  external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
+}
+// For @Directive class HasProviders.
+class HasProvidersNgCd extends _ng.DirectiveChangeDetector {
+  external HasProviders get instance;
+  external void deliverChanges();
+  external HasProvidersNgCd(HasProviders instance);
+  external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
+}
 
 external void initReflector();
