@@ -18,6 +18,9 @@
 *   The compiler now adds type information to local variables in nested `NgFor`
     loops.
 
+*   The compiler now includes source locations to errors in annotations on class
+    members.
+
 ### Bug fixes
 
 *   The template compiler now outputs the full path to a template file when it

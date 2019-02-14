@@ -51,12 +51,25 @@ void main() {
         String inValue;
       }
     ''', warnings: [
-      // TODO(b/123366944): This message should be printed only once.
-      allOf(contains('Could not resolve'), contains('Input')),
-      allOf(contains('Could not resolve'), contains('Input')),
-      allOf(contains('Could not resolve'), contains('Input')),
-      allOf(contains('Could not resolve'), contains('Input')),
-      // TODO(b/123367431): Add source locations to this error message.
+      allOf(contains('Could not resolve'), contains('Input'),
+          containsSourceLocation(15, 9)),
+    ]);
+  });
+
+  test('should error on incorrect function annotations', () async {
+    await compilesExpecting('''
+      import '$ngImport';
+
+      @Directive(
+        selector: 'badProvider',
+        providers: [OopsProvider]
+      )
+      bool functionDirective() {};
+
+      
+    ''', errors: [
+      allOf(contains('Errors resolving annotation'),
+          containsSourceLocation(3, 7)),
     ]);
   });
 
