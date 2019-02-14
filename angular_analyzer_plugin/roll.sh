@@ -6,3 +6,4 @@
 SOURCE=$1
 cp $SOURCE/*.md .
 cp $SOURCE/angular_analyzer_plugin/pubspec.yaml .
+cp -r $SOURCE/angular_analyzer_plugin/lib/src/model/syntactic lib/src/model
