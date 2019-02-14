@@ -162,13 +162,13 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     if ((identical(token, import1.C) && (1 == nodeIndex))) {
       return _C_1_6;
     }
-    if ((identical(token, import1.A) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
+    if ((identical(token, import1.A) && (nodeIndex <= 1))) {
       return _A_0_6;
     }
-    if ((identical(token, import1.B) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
+    if ((identical(token, import1.B) && (nodeIndex <= 1))) {
       return _B_0_7;
     }
-    if ((identical(token, import1.C) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
+    if ((identical(token, import1.C) && (nodeIndex <= 1))) {
       return _C_0_8;
     }
     if ((identical(token, import1.C) && (2 == nodeIndex))) {
