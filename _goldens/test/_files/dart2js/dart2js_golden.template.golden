@@ -15,11 +15,11 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import5;
 import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import8;
-import 'package:angular/src/core/di/opaque_token.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import8;
+import 'package:angular/src/di/errors.dart' as import9;
+import 'package:angular/src/core/di/opaque_token.dart' as import10;
 import 'dart:core';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import11;
-import 'package:angular/src/runtime/dom_helpers.dart' as import12;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
@@ -28,27 +28,70 @@ import 'package:angular/src/common/directives/ng_for.dart' as import16;
 final List<dynamic> styles$RootComponent = const [];
 
 class ViewRootComponent0 extends AppView<import1.RootComponent> {
-  ViewUsesDefaultChangeDetectionAndInputs0 _compView_0;
-  import1.UsesDefaultChangeDetectionAndInputs _UsesDefaultChangeDetectionAndInputs_0_5;
-  ViewUsesOnPushChangeDetectionAndInputs0 _compView_1;
-  import1.UsesOnPushChangeDetectionAndInputs _UsesOnPushChangeDetectionAndInputs_1_5;
-  ViewInlinedNgIf0 _compView_2;
-  import1.InlinedNgIf _InlinedNgIf_2_5;
-  ViewEmbeddedNgIf0 _compView_3;
-  import1.EmbeddedNgIf _EmbeddedNgIf_3_5;
-  ViewEmbeddedNgFor0 _compView_4;
-  import1.EmbeddedNgFor _EmbeddedNgFor_4_5;
-  ViewInjectsFromArbitraryParent0 _compView_5;
-  import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_5_5;
-  ViewComponentConditionalFeatures0 _compView_6;
-  import1.ComponentConditionalFeatures _ComponentConditionalFeatures_6_5;
-  ViewUsesDomBindings0 _compView_7;
-  import1.UsesDomBindings _UsesDomBindings_7_5;
+  import1.HasProviders _HasProviders_0_5;
+  import1.A __A_0_6;
+  import1.B __B_0_7;
+  import1.C __C_0_8;
+  import1.HasProvider _HasProvider_1_5;
+  import1.C2 __C_1_6;
+  import1.HasProvider _HasProvider_2_5;
+  import1.C2 __C_2_6;
+  ViewUsesDefaultChangeDetectionAndInputs0 _compView_3;
+  import1.UsesDefaultChangeDetectionAndInputs _UsesDefaultChangeDetectionAndInputs_3_5;
+  ViewUsesOnPushChangeDetectionAndInputs0 _compView_4;
+  import1.UsesOnPushChangeDetectionAndInputs _UsesOnPushChangeDetectionAndInputs_4_5;
+  ViewInlinedNgIf0 _compView_5;
+  import1.InlinedNgIf _InlinedNgIf_5_5;
+  ViewEmbeddedNgIf0 _compView_6;
+  import1.EmbeddedNgIf _EmbeddedNgIf_6_5;
+  ViewEmbeddedNgFor0 _compView_7;
+  import1.EmbeddedNgFor _EmbeddedNgFor_7_5;
+  ViewInjectsFromArbitraryParent0 _compView_8;
+  import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_8_5;
+  ViewComponentConditionalFeatures0 _compView_9;
+  import1.ComponentConditionalFeatures _ComponentConditionalFeatures_9_5;
+  ViewUsesDomBindings0 _compView_10;
+  import1.UsesDomBindings _UsesDomBindings_10_5;
   static import2.ComponentStyles _componentStyles;
   ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('root-component');
     initComponentStyles();
   }
+  import1.A get _A_0_6 {
+    if ((__A_0_6 == null)) {
+      (__A_0_6 = import1.A());
+    }
+    return __A_0_6;
+  }
+
+  import1.B get _B_0_7 {
+    if ((__B_0_7 == null)) {
+      (__B_0_7 = import1.B());
+    }
+    return __B_0_7;
+  }
+
+  import1.C get _C_0_8 {
+    if ((__C_0_8 == null)) {
+      (__C_0_8 = import1.C());
+    }
+    return __C_0_8;
+  }
+
+  import1.C2 get _C_1_6 {
+    if ((__C_1_6 == null)) {
+      (__C_1_6 = import1.C2());
+    }
+    return __C_1_6;
+  }
+
+  import1.C2 get _C_2_6 {
+    if ((__C_2_6 == null)) {
+      (__C_2_6 = import1.C2());
+    }
+    return __C_2_6;
+  }
+
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
   }
@@ -57,81 +100,111 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   ComponentRef<import1.RootComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _compView_0 = ViewUsesDefaultChangeDetectionAndInputs0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    parentRenderNode.append(_el_0);
-    _UsesDefaultChangeDetectionAndInputs_0_5 = import1.UsesDefaultChangeDetectionAndInputs();
-    _compView_0.create(_UsesDefaultChangeDetectionAndInputs_0_5, []);
-    _compView_1 = ViewUsesOnPushChangeDetectionAndInputs0(this, 1);
-    final _el_1 = _compView_1.rootEl;
-    parentRenderNode.append(_el_1);
-    _UsesOnPushChangeDetectionAndInputs_1_5 = import1.UsesOnPushChangeDetectionAndInputs();
-    _compView_1.create(_UsesOnPushChangeDetectionAndInputs_1_5, []);
-    _compView_2 = ViewInlinedNgIf0(this, 2);
-    final _el_2 = _compView_2.rootEl;
-    parentRenderNode.append(_el_2);
-    _InlinedNgIf_2_5 = import1.InlinedNgIf();
-    _compView_2.create(_InlinedNgIf_2_5, []);
-    _compView_3 = ViewEmbeddedNgIf0(this, 3);
+    final doc = import5.document;
+    final _el_0 = import8.appendDiv(doc, parentRenderNode);
+    import8.setAttribute(_el_0, 'hasProviders', '');
+    _HasProviders_0_5 = import1.HasProviders();
+    final _el_1 = import8.appendDiv(doc, _el_0);
+    import8.setAttribute(_el_1, 'hasProvider', '');
+    _HasProvider_1_5 = import1.HasProvider();
+    final _el_2 = import8.appendDiv(doc, parentRenderNode);
+    import8.setAttribute(_el_2, 'hasProvider', '');
+    _HasProvider_2_5 = import1.HasProvider();
+    _compView_3 = ViewUsesDefaultChangeDetectionAndInputs0(this, 3);
     final _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
-    _EmbeddedNgIf_3_5 = import1.EmbeddedNgIf();
-    _compView_3.create(_EmbeddedNgIf_3_5, []);
-    _compView_4 = ViewEmbeddedNgFor0(this, 4);
+    _UsesDefaultChangeDetectionAndInputs_3_5 = import1.UsesDefaultChangeDetectionAndInputs();
+    _compView_3.create(_UsesDefaultChangeDetectionAndInputs_3_5, []);
+    _compView_4 = ViewUsesOnPushChangeDetectionAndInputs0(this, 4);
     final _el_4 = _compView_4.rootEl;
     parentRenderNode.append(_el_4);
-    _EmbeddedNgFor_4_5 = import1.EmbeddedNgFor();
-    _compView_4.create(_EmbeddedNgFor_4_5, []);
-    _compView_5 = ViewInjectsFromArbitraryParent0(this, 5);
+    _UsesOnPushChangeDetectionAndInputs_4_5 = import1.UsesOnPushChangeDetectionAndInputs();
+    _compView_4.create(_UsesOnPushChangeDetectionAndInputs_4_5, []);
+    _compView_5 = ViewInlinedNgIf0(this, 5);
     final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
-    _InjectsFromArbitraryParent_5_5 = (import6.isDevMode
-        ? import8.debugInjectorWrap(import1.InjectsFromArbitraryParent, () {
-            return import1.InjectsFromArbitraryParent(parentView.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex));
-          })
-        : import1.InjectsFromArbitraryParent(parentView.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex)));
-    _compView_5.create(_InjectsFromArbitraryParent_5_5, []);
-    _compView_6 = ViewComponentConditionalFeatures0(this, 6);
+    _InlinedNgIf_5_5 = import1.InlinedNgIf();
+    _compView_5.create(_InlinedNgIf_5_5, []);
+    _compView_6 = ViewEmbeddedNgIf0(this, 6);
     final _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
-    _ComponentConditionalFeatures_6_5 = import1.ComponentConditionalFeatures();
-    _compView_6.create(_ComponentConditionalFeatures_6_5, []);
-    _compView_7 = ViewUsesDomBindings0(this, 7);
+    _EmbeddedNgIf_6_5 = import1.EmbeddedNgIf();
+    _compView_6.create(_EmbeddedNgIf_6_5, []);
+    _compView_7 = ViewEmbeddedNgFor0(this, 7);
     final _el_7 = _compView_7.rootEl;
     parentRenderNode.append(_el_7);
-    _UsesDomBindings_7_5 = import1.UsesDomBindings();
-    _compView_7.create(_UsesDomBindings_7_5, []);
+    _EmbeddedNgFor_7_5 = import1.EmbeddedNgFor();
+    _compView_7.create(_EmbeddedNgFor_7_5, []);
+    _compView_8 = ViewInjectsFromArbitraryParent0(this, 8);
+    final _el_8 = _compView_8.rootEl;
+    parentRenderNode.append(_el_8);
+    _InjectsFromArbitraryParent_8_5 = (import6.isDevMode
+        ? import9.debugInjectorWrap(import1.InjectsFromArbitraryParent, () {
+            return import1.InjectsFromArbitraryParent(parentView.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex));
+          })
+        : import1.InjectsFromArbitraryParent(parentView.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex)));
+    _compView_8.create(_InjectsFromArbitraryParent_8_5, []);
+    _compView_9 = ViewComponentConditionalFeatures0(this, 9);
+    final _el_9 = _compView_9.rootEl;
+    parentRenderNode.append(_el_9);
+    _ComponentConditionalFeatures_9_5 = import1.ComponentConditionalFeatures();
+    _compView_9.create(_ComponentConditionalFeatures_9_5, []);
+    _compView_10 = ViewUsesDomBindings0(this, 10);
+    final _el_10 = _compView_10.rootEl;
+    parentRenderNode.append(_el_10);
+    _UsesDomBindings_10_5 = import1.UsesDomBindings();
+    _compView_10.create(_UsesDomBindings_10_5, []);
     init(const [], null);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.C) && (1 == nodeIndex))) {
+      return _C_1_6;
+    }
+    if ((identical(token, import1.A) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
+      return _A_0_6;
+    }
+    if ((identical(token, import1.B) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
+      return _B_0_7;
+    }
+    if ((identical(token, import1.C) && ((0 <= nodeIndex) && (nodeIndex <= 1)))) {
+      return _C_0_8;
+    }
+    if ((identical(token, import1.C) && (2 == nodeIndex))) {
+      return _C_2_6;
+    }
+    return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      _ComponentConditionalFeatures_6_5.useFeatureA = true;
-      _ComponentConditionalFeatures_6_5.useFeatureB = false;
+      _ComponentConditionalFeatures_9_5.useFeatureA = true;
+      _ComponentConditionalFeatures_9_5.useFeatureB = false;
     }
-    _compView_7.detectHostChanges(firstCheck);
-    _compView_0.detectChanges();
-    _compView_1.detectChanges();
-    _compView_2.detectChanges();
+    _compView_10.detectHostChanges(firstCheck);
     _compView_3.detectChanges();
     _compView_4.detectChanges();
     _compView_5.detectChanges();
     _compView_6.detectChanges();
     _compView_7.detectChanges();
+    _compView_8.detectChanges();
+    _compView_9.detectChanges();
+    _compView_10.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
-    _compView_1.destroy();
-    _compView_2.destroy();
     _compView_3.destroy();
     _compView_4.destroy();
     _compView_5.destroy();
     _compView_6.destroy();
     _compView_7.destroy();
+    _compView_8.destroy();
+    _compView_9.destroy();
+    _compView_10.destroy();
   }
 
   @override
@@ -223,7 +296,7 @@ class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefau
       }
     }
     final currVal_1 = _ctx.name;
-    if (import11.checkBinding(_expr_1, currVal_1)) {
+    if (import12.checkBinding(_expr_1, currVal_1)) {
       _DefaultChangeDetectionAndInputs_0_5.name = currVal_1;
       _expr_1 = currVal_1;
     }
@@ -292,8 +365,8 @@ final List<dynamic> styles$DefaultChangeDetectionAndInputs = const [];
 class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChangeDetectionAndInputs> {
   var _expr_0;
   var _expr_1;
-  final import5.Text _text_1 = import12.createText('');
-  final import5.Text _text_3 = import12.createText('');
+  final import5.Text _text_1 = import8.createText('');
+  final import5.Text _text_3 = import8.createText('');
   static import2.ComponentStyles _componentStyles;
   ViewDefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('default-change-detection-and-inputs');
@@ -307,9 +380,9 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
   ComponentRef<import1.DefaultChangeDetectionAndInputs> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import12.appendText(parentRenderNode, 'Hello ');
+    final _text_0 = import8.appendText(parentRenderNode, 'Hello ');
     parentRenderNode.append(_text_1);
-    final _text_2 = import12.appendText(parentRenderNode, ' ');
+    final _text_2 = import8.appendText(parentRenderNode, ' ');
     parentRenderNode.append(_text_3);
     init(const [], null);
   }
@@ -318,12 +391,12 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = (_ctx.title ?? '');
-    if (import11.checkBinding(_expr_0, currVal_0)) {
+    if (import12.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = (_ctx.name ?? '');
-    if (import11.checkBinding(_expr_1, currVal_1)) {
+    if (import12.checkBinding(_expr_1, currVal_1)) {
       _text_3.text = currVal_1;
       _expr_1 = currVal_1;
     }
@@ -421,7 +494,7 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
       }
     }
     final currVal_1 = _ctx.name;
-    if (import11.checkBinding(_expr_1, currVal_1)) {
+    if (import12.checkBinding(_expr_1, currVal_1)) {
       _OnPushChangeDetectionAndInputs_0_5.name = currVal_1;
       changed = true;
       _expr_1 = currVal_1;
@@ -494,8 +567,8 @@ final List<dynamic> styles$OnPushChangeDetectionAndInputs = const [];
 class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDetectionAndInputs> {
   var _expr_0;
   var _expr_1;
-  final import5.Text _text_1 = import12.createText('');
-  final import5.Text _text_3 = import12.createText('');
+  final import5.Text _text_1 = import8.createText('');
+  final import5.Text _text_3 = import8.createText('');
   static import2.ComponentStyles _componentStyles;
   ViewOnPushChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import5.document.createElement('on-push-change-detection-and-inputs');
@@ -509,9 +582,9 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
   ComponentRef<import1.OnPushChangeDetectionAndInputs> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import12.appendText(parentRenderNode, 'Hello ');
+    final _text_0 = import8.appendText(parentRenderNode, 'Hello ');
     parentRenderNode.append(_text_1);
-    final _text_2 = import12.appendText(parentRenderNode, ' ');
+    final _text_2 = import8.appendText(parentRenderNode, ' ');
     parentRenderNode.append(_text_3);
     init(const [], null);
   }
@@ -520,12 +593,12 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = (_ctx.title ?? '');
-    if (import11.checkBinding(_expr_0, currVal_0)) {
+    if (import12.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
     final currVal_1 = (_ctx.name ?? '');
-    if (import11.checkBinding(_expr_1, currVal_1)) {
+    if (import12.checkBinding(_expr_1, currVal_1)) {
       _text_3.text = currVal_1;
       _expr_1 = currVal_1;
     }
@@ -606,7 +679,7 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
   ComponentRef<import1.InlinedNgIf> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = import12.appendAnchor(parentRenderNode);
+    _anchor_0 = import8.appendAnchor(parentRenderNode);
     init([], null);
   }
 
@@ -614,11 +687,11 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = (_ctx.showDiv == true);
-    if (import11.checkBinding(_expr_0, currVal_0)) {
+    if (import12.checkBinding(_expr_0, currVal_0)) {
       if (currVal_0) {
         final doc = import5.document;
         _el_0_0 = doc.createElement('div');
-        final _text_0_1 = import12.appendText(_el_0_0, 'Hello World');
+        final _text_0_1 = import8.appendText(_el_0_0, 'Hello World');
         addInlinedNodes(_anchor_0, [_el_0_0], true);
       } else {
         removeInlinedNodes([_el_0_0], true);
@@ -697,7 +770,7 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
   ComponentRef<import1.EmbeddedNgIf> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = import12.appendAnchor(parentRenderNode);
+    final _anchor_0 = import8.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_EmbeddedNgIf1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
@@ -817,8 +890,8 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
-    final _el_0 = import12.appendElement(doc, parentRenderNode, 'ul');
-    final _anchor_1 = import12.appendAnchor(_el_0);
+    final _el_0 = import8.appendElement(doc, parentRenderNode, 'ul');
+    final _anchor_1 = import8.appendAnchor(_el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_EmbeddedNgFor1);
     _NgFor_1_9 = import16.NgFor(_appEl_1, _TemplateRef_1_8);
@@ -834,7 +907,7 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
         (_NgFor_1_9.ngForOf = _ctx.items);
       }
     }
-    if (!import11.AppViewUtils.throwOnChanges) {
+    if (!import12.AppViewUtils.throwOnChanges) {
       _NgFor_1_9.ngDoCheck();
     }
     _appEl_1.detectChangesInNestedViews();
@@ -866,7 +939,7 @@ ComponentFactory<import1.EmbeddedNgFor> get EmbeddedNgForNgFactory {
 
 class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
   var _expr_0;
-  final import5.Text _text_1 = import12.createText('');
+  final import5.Text _text_1 = import8.createText('');
   _ViewEmbeddedNgFor1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
@@ -881,8 +954,8 @@ class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
   @override
   void detectChangesInternal() {
     final local_item = import6.unsafeCast<String>(locals['\$implicit']);
-    final currVal_0 = import11.interpolateString0(local_item);
-    if (import11.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import12.interpolateString0(local_item);
+    if (import12.checkBinding(_expr_0, currVal_0)) {
       _text_1.text = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -1048,10 +1121,10 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
     _compView_0 = ViewInjectsFromArbitraryParent0(this, 0);
     rootEl = _compView_0.rootEl;
     _InjectsFromArbitraryParent_0_5 = (import6.isDevMode
-        ? import8.debugInjectorWrap(import1.InjectsFromArbitraryParent, () {
-            return import1.InjectsFromArbitraryParent(this.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex));
+        ? import9.debugInjectorWrap(import1.InjectsFromArbitraryParent, () {
+            return import1.InjectsFromArbitraryParent(this.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex));
           })
-        : import1.InjectsFromArbitraryParent(this.injectorGet(const import9.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import9.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex)));
+        : import1.InjectsFromArbitraryParent(this.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex)));
     _compView_0.create(_InjectsFromArbitraryParent_0_5, projectableNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InjectsFromArbitraryParent_0_5);
@@ -1092,11 +1165,11 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
   ComponentRef<import1.ComponentConditionalFeatures> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = import12.appendAnchor(parentRenderNode);
+    final _anchor_0 = import8.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_ComponentConditionalFeatures1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
-    final _anchor_1 = import12.appendAnchor(parentRenderNode);
+    final _anchor_1 = import8.appendAnchor(parentRenderNode);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_ComponentConditionalFeatures2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
@@ -1246,7 +1319,7 @@ class ViewFeatureA0 extends AppView<import1.FeatureA> {
   ComponentRef<import1.FeatureA> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import12.appendText(parentRenderNode, 'I am Feature A');
+    final _text_0 = import8.appendText(parentRenderNode, 'I am Feature A');
     init(const [], null);
   }
 
@@ -1318,7 +1391,7 @@ class ViewFeatureB0 extends AppView<import1.FeatureB> {
   ComponentRef<import1.FeatureB> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import12.appendText(parentRenderNode, 'I am Feature B');
+    final _text_0 = import8.appendText(parentRenderNode, 'I am Feature B');
     init(const [], null);
   }
 
@@ -1396,7 +1469,7 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
-    _el_0 = import12.appendElement(doc, parentRenderNode, 'button');
+    _el_0 = import8.appendElement(doc, parentRenderNode, 'button');
     init(const [], null);
   }
 
@@ -1404,26 +1477,26 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.title;
-    if (import11.checkBinding(_expr_0, currVal_0)) {
-      import12.updateAttribute(_el_0, 'title', currVal_0);
+    if (import12.checkBinding(_expr_0, currVal_0)) {
+      import8.updateAttribute(_el_0, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.isFancy;
-    if (import11.checkBinding(_expr_1, currVal_1)) {
-      import12.updateClassBinding(_el_0, 'fancy', currVal_1);
+    if (import12.checkBinding(_expr_1, currVal_1)) {
+      import8.updateClassBinding(_el_0, 'fancy', currVal_1);
       _expr_1 = currVal_1;
     }
   }
 
   void detectHostChanges(bool firstCheck) {
     final currVal_2 = ctx.title;
-    if (import11.checkBinding(_expr_2, currVal_2)) {
-      import12.updateAttribute(rootEl, 'title', currVal_2);
+    if (import12.checkBinding(_expr_2, currVal_2)) {
+      import8.updateAttribute(rootEl, 'title', currVal_2);
       _expr_2 = currVal_2;
     }
     final currVal_3 = ctx.isFancy;
-    if (import11.checkBinding(_expr_3, currVal_3)) {
-      import12.updateClassBindingNonHtml(rootEl, 'fancy', currVal_3);
+    if (import12.checkBinding(_expr_3, currVal_3)) {
+      import8.updateClassBindingNonHtml(rootEl, 'fancy', currVal_3);
       _expr_3 = currVal_3;
     }
   }

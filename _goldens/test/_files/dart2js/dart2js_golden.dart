@@ -28,6 +28,8 @@ void main() {
 @Component(
   selector: 'root-component',
   directives: [
+    HasProvider,
+    HasProviders,
     ComponentConditionalFeatures,
     UsesDefaultChangeDetectionAndInputs,
     UsesOnPushChangeDetectionAndInputs,
@@ -38,6 +40,10 @@ void main() {
     UsesDomBindings,
   ],
   template: r'''
+    <div hasProviders>
+      <div hasProvider></div>
+    </div>
+    <div hasProvider></div>
     <uses-default-change-detection-and-inputs>
     </uses-default-change-detection-and-inputs>
     <uses-on-push-change-detection-and-inputs>
@@ -57,6 +63,32 @@ void main() {
   ''',
 )
 class RootComponent {}
+
+class A {}
+
+class B {}
+
+class C {}
+
+class C2 implements C {}
+
+@Directive(
+  selector: '[hasProvider]',
+  providers: [
+    ClassProvider(C, useClass: C2),
+  ],
+)
+class HasProvider {}
+
+@Directive(
+  selector: '[hasProviders]',
+  providers: [
+    ClassProvider(A),
+    ClassProvider(B),
+    ClassProvider(C),
+  ],
+)
+class HasProviders {}
 
 @Component(
   selector: 'uses-default-change-detection-and-inputs',
