@@ -787,39 +787,35 @@ class CompileView {
     // applied to the field that stores the view. However, for deferred
     // components, the field can't be explicitly typed so these type arguments
     // are instead applied to the constructor invocation.
-    final appViewTypeArguments =
+    final componentTypeArguments =
         lookupTypeArgumentsOf(childComponent.type, ast);
-    final appViewType = isDeferred
+
+    // If the component is deferred, we can't type the field which stores it.
+    final componentViewType = isDeferred
         ? o.importType(Identifiers.AppView)
-        : o.importType(componentViewIdentifier, appViewTypeArguments);
+        : o.importType(componentViewIdentifier, componentTypeArguments);
 
-    appViewRef.allocate(storage, outputType: appViewType);
+    // Create the field which stores the component view:
+    //
+    //   SomeComponent _compView_0;
+    //
+    appViewRef.allocate(storage, outputType: componentViewType);
 
-    if (isDeferred) {
-      // When deferred, we use AppView<dynamic> as type to store instance
-      // of component and create the instance using:
-      // deferredLibName.viewFactory_SomeComponent(...)
-      CompileIdentifierMetadata nestedComponentIdentifier =
-          CompileIdentifierMetadata(
-              name: getViewFactoryName(childComponent, 0),
-              moduleUrl: templateModuleUrl(childComponent.type));
+    // If the component is deferred, its type arguments can't be inferred from
+    // the field to which it's assigned.
+    final constructorTypeArguments = isDeferred ? componentTypeArguments : null;
 
-      var importExpr = o.importExpr(nestedComponentIdentifier);
-      _createMethod.addStmt(o.WriteClassMemberExpr(
-          appViewRef._name,
-          importExpr.callFn(
-            [o.THIS_EXPR, o.literal(nodeIndex)],
-            typeArguments: appViewTypeArguments,
-          )).toStmt());
-    } else {
-      // Create instance of component using ViewSomeComponent0 AppView.
-      var createComponentInstanceExpr = o
-          .importExpr(componentViewIdentifier)
-          .instantiate([o.THIS_EXPR, o.literal(nodeIndex)]);
-      _createMethod.addStmt(
-          o.WriteClassMemberExpr(appViewRef._name, createComponentInstanceExpr)
-              .toStmt());
-    }
+    // Instantiate the component view:
+    //
+    //   _compView_0 = SomeComponent(this, 0);
+    //
+    final createComponentInstanceExpr = o
+        .importExpr(componentViewIdentifier)
+        .instantiate([o.THIS_EXPR, o.literal(nodeIndex)],
+            genericTypes: constructorTypeArguments);
+    _createMethod.addStmt(
+        o.WriteClassMemberExpr(appViewRef._name, createComponentInstanceExpr)
+            .toStmt());
     return appViewRef;
   }
 
