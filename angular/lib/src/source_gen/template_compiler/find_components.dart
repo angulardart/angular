@@ -3,6 +3,7 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:analyzer/error/error.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -40,6 +41,63 @@ AngularArtifacts findComponentsAndDirectives(
     componentVisitor.components,
     componentVisitor.directives,
   );
+}
+
+/// Manages an annotation giving sane error handling behaviour.
+///
+/// Users who want to ignore errors, skipping bad annotations, will call the is*
+/// getters directly. This class will issue one warning to the exception\
+/// handler.
+///
+/// Users who want to fail on bad annotations can check [hasErrors] and then
+/// report errors directly to their exception handlers. In this case, this class
+/// will not issue warnings to the exception handler.
+class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
+  final ComponentVisitorExceptionHandler _exceptionHandler;
+  final DartObject constantValue;
+  final List<AnalysisError> constantEvaluationErrors;
+
+  AnnotationInformation(T element, ElementAnnotation annotation,
+      int annotationIndex, this._exceptionHandler)
+      : constantValue = annotation.computeConstantValue(),
+        constantEvaluationErrors = annotation.constantEvaluationErrors,
+        super(element, annotation, annotationIndex);
+
+  bool get isInputType => _isTypeExactly(Input);
+  bool get isOutputType => _isTypeExactly(Output);
+  bool get isContentType =>
+      _isTypeExactly(ContentChild) || _isTypeExactly(ContentChildren);
+  bool get isViewType =>
+      _isTypeExactly(ViewChild) || _isTypeExactly(ViewChildren);
+  bool get isComponent => _isTypeExactly(Component);
+
+  bool get hasErrors =>
+      constantValue == null || constantEvaluationErrors.isNotEmpty;
+
+  bool sentWarning = false;
+
+  bool _isTypeExactly(Type type) {
+    if (hasErrors) {
+      if (!sentWarning) {
+        // NOTE: AngularAnalysisError only supports ClassElements.
+        // TODO(b/124317949): It should support all Elements.
+        // NOTE: Upcast to satisfy Dart's type system.
+        // See https://github.com/dart-lang/sdk/issues/33932
+        final IndexedAnnotation annotation = this;
+        if (constantEvaluationErrors.isNotEmpty &&
+            annotation is IndexedAnnotation<ClassElement>) {
+          _exceptionHandler.handleWarning(
+              AngularAnalysisError(constantEvaluationErrors, annotation));
+        } else {
+          _exceptionHandler.handleWarning(
+              ErrorMessageForAnnotation(this, "Could not resolve annotation."));
+        }
+        sentWarning = true;
+      }
+      return false;
+    }
+    return matchTypeExactly(type, constantValue);
+  }
 }
 
 class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
@@ -122,8 +180,15 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
     ClassElement element,
     String field,
   ) {
-    final annotation = element.metadata.firstWhere(safeMatcher(isComponent));
-    final values = coerceList(annotation.computeConstantValue(), field);
+    final annotationInfo =
+        annotationWhere(element, safeMatcher(isComponent), _exceptionHandler);
+    if (annotationInfo.hasErrors) {
+      _exceptionHandler.handle(AngularAnalysisError(
+          annotationInfo.constantEvaluationErrors, annotationInfo));
+      return [];
+    }
+    final annotation = annotationInfo.annotation;
+    final values = coerceList(annotationInfo.constantValue, field);
     if (values.isEmpty) {
       // Two reasons we got to this point:
       // 1. The list argument was empty or omitted.
@@ -209,26 +274,29 @@ class _ComponentVisitor
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
-    final annotationIndex =
-        element.metadata.indexWhere(safeMatcher(isDirective));
-    if (annotationIndex == -1) return null;
-    final annotation = element.metadata[annotationIndex];
+    final annotationInfo =
+        annotationWhere(element, safeMatcher(isDirective), _exceptionHandler);
+    if (annotationInfo == null) return null;
 
     if (element.isPrivate) {
       log.severe('Components and directives must be public: $element');
       return null;
     }
-    return _createCompileDirectiveMetadata(
-        IndexedAnnotation(element, annotation, annotationIndex));
+    return _createCompileDirectiveMetadata(annotationInfo);
   }
 
   @override
   CompileDirectiveMetadata visitFunctionElement(FunctionElement element) {
-    final annotation = element.metadata.firstWhere(
-      safeMatcherType(Directive),
-      orElse: () => null,
-    );
-    if (annotation == null) return null;
+    final annotationInfo =
+        annotationWhere(element, safeMatcherType(Directive), _exceptionHandler);
+    if (annotationInfo == null) return null;
+
+    if (annotationInfo.hasErrors) {
+      // TODO(b/124317949): Print the errors as well.
+      _exceptionHandler.handle(ErrorMessageForAnnotation(
+          annotationInfo, "Errors resolving annotation."));
+      return null;
+    }
     var invalid = false;
     if (element.isPrivate) {
       log.severe('Functional directives must be public: $element');
@@ -238,7 +306,7 @@ class _ComponentVisitor
       log.severe('Functional directives must return void: $element');
       invalid = true;
     }
-    final annotationValue = annotation.computeConstantValue();
+    final annotationValue = annotationInfo.constantValue;
     for (var field in _statefulDirectiveFields) {
       if (!annotationValue.getField(field).isNull) {
         log.severe("Functional directives don't support '$field': $element");
@@ -305,9 +373,9 @@ class _ComponentVisitor
         annotationIndex < element.metadata.length;
         annotationIndex++) {
       ElementAnnotation annotation = element.metadata[annotationIndex];
-      final indexedAnnotation =
-          IndexedAnnotation(element, annotation, annotationIndex);
-      if (safeMatcherType(Input)(annotation)) {
+      final annotationInfo = AnnotationInformation(
+          element, annotation, annotationIndex, _exceptionHandler);
+      if (annotationInfo.isInputType) {
         if (isSetter && element.isPublic) {
           final isField = element is FieldElement;
           // Resolves specified generic type parameters.
@@ -342,20 +410,17 @@ class _ComponentVisitor
           log.severe('@Input can only be used on a public setter or non-final '
               'field, but was found on $element.');
         }
-      } else if (safeMatcherType(Output)(annotation)) {
+      } else if (annotationInfo.isOutputType) {
         if (isGetter && element.isPublic) {
           _addPropertyBindingTo(_outputs, annotation, element);
         } else {
           log.severe('@Output can only be used on a public getter or field, '
               'but was found on $element.');
         }
-      } else if (safeMatcherTypes(const [
-        ContentChildren,
-        ContentChild,
-      ])(annotation)) {
+      } else if (annotationInfo.isContentType) {
         if (isSetter && element.isPublic) {
           _queries.add(_getQuery(
-            indexedAnnotation,
+            annotationInfo,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
             _fieldOrPropertyType(element),
@@ -364,13 +429,10 @@ class _ComponentVisitor
           log.severe('@ContentChild or @ContentChildren can only be used on a '
               'public setter or non-final field, but was found on $element.');
         }
-      } else if (safeMatcherTypes(const [
-        ViewChildren,
-        ViewChild,
-      ])(annotation)) {
+      } else if (annotationInfo.isViewType) {
         if (isSetter && element.isPublic) {
           _viewQueries.add(_getQuery(
-            indexedAnnotation,
+            annotationInfo,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
             _fieldOrPropertyType(element),
@@ -394,10 +456,11 @@ class _ComponentVisitor
   }
 
   List<CompileTokenMetadata> _getSelectors(
-      IndexedAnnotation indexedAnnotation, DartObject value) {
+      AnnotationInformation annotationInfo) {
+    DartObject value = annotationInfo.constantValue;
     var selector = getField(value, 'selector');
     if (isNull(selector)) {
-      _exceptionHandler.handle(ErrorMessageForAnnotation(indexedAnnotation,
+      _exceptionHandler.handle(ErrorMessageForAnnotation(annotationInfo,
           'Missing selector argument for "@${value.type.name}"'));
       return [];
     }
@@ -412,7 +475,7 @@ class _ComponentVisitor
     if (selectorType == null) {
       // NOTE(deboer): This code is untested and probably unreachable.
       _exceptionHandler.handle(ErrorMessageForAnnotation(
-          indexedAnnotation,
+          annotationInfo,
           'Only a value of `String` or `Type` for "@${value.type.name}" is '
           'supported'));
       return [];
@@ -431,14 +494,14 @@ class _ComponentVisitor
   static final _htmlElement = TypeChecker.fromUrl('dart:html#Element');
 
   CompileQueryMetadata _getQuery(
-    IndexedAnnotation indexedAnnotation,
+    AnnotationInformation annotationInfo,
     String propertyName,
     DartType propertyType,
   ) {
-    final value = indexedAnnotation.annotation.computeConstantValue();
+    final value = annotationInfo.constantValue;
     final readType = getField(value, 'read')?.toTypeValue();
     return CompileQueryMetadata(
-      selectors: _getSelectors(indexedAnnotation, value),
+      selectors: _getSelectors(annotationInfo),
       descendants: coerceBool(value, 'descendants', defaultTo: false),
       first: coerceBool(value, 'first', defaultTo: false),
       propertyName: propertyName,
@@ -553,9 +616,9 @@ class _ComponentVisitor
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
-      IndexedAnnotation<ClassElement> indexedAnnotation) {
-    final element = indexedAnnotation.element;
-    final annotation = indexedAnnotation.annotation;
+      AnnotationInformation<ClassElement> annotationInfo) {
+    final element = annotationInfo.element;
+    final annotation = annotationInfo.annotation;
 
     _directiveClassElement = element;
     DirectiveVisitor(
@@ -563,12 +626,12 @@ class _ComponentVisitor
       onHostListener: _addHostListener,
     ).visitDirective(element);
     _collectInheritableMetadata(element);
-    final isComp = safeMatcher(isComponent)(annotation);
-    final annotationValue = annotation.computeConstantValue();
+    final isComp = annotationInfo.isComponent;
+    final annotationValue = annotationInfo.constantValue;
 
-    if (annotation.constantEvaluationErrors.isNotEmpty) {
+    if (annotationInfo.hasErrors) {
       _exceptionHandler.handle(AngularAnalysisError(
-          annotation.constantEvaluationErrors, indexedAnnotation));
+          annotationInfo.constantEvaluationErrors, annotationInfo));
       return null;
     }
 
@@ -607,7 +670,7 @@ class _ComponentVisitor
     final selector = coerceString(annotationValue, 'selector');
     if (selector == null || selector.isEmpty) {
       _exceptionHandler.handle(ErrorMessageForAnnotation(
-        indexedAnnotation,
+        annotationInfo,
         'Selector is required, got "$selector"',
       ));
     }
@@ -800,4 +863,17 @@ void _prohibitBindingChange(
         "'${element.displayName}' overwrites the binding name of property "
         "'$propertyName' from '${bindings[propertyName]}' to '$bindingName'.");
   }
+}
+
+/// Returns the [AnnotationInformation] for the first annotation on [element]
+/// that matches [test] or null if no such annotation exists.
+AnnotationInformation<T> annotationWhere<T extends Element>(
+    T element,
+    bool test(ElementAnnotation element),
+    ComponentVisitorExceptionHandler exceptionHandler) {
+  final annotationIndex = element.metadata.indexWhere(test);
+  if (annotationIndex == -1) return null;
+  final annotation = element.metadata[annotationIndex];
+  return AnnotationInformation(
+      element, annotation, annotationIndex, exceptionHandler);
 }

@@ -18,12 +18,22 @@ class IndexedAnnotation<T extends Element> {
 
 class ComponentVisitorExceptionHandler {
   final List<AsyncBuildError> _errors = [];
+  final List<AsyncBuildError> _warnings = [];
 
   void handle(AsyncBuildError error) {
     _errors.add(error);
   }
 
+  void handleWarning(AsyncBuildError warning) {
+    _warnings.add(warning);
+  }
+
   Future<void> maybeReportErrors() async {
+    if (_warnings.isNotEmpty) {
+      final buildWarnings =
+          await Future.wait(_warnings.map((warning) => warning.resolve()));
+      buildWarnings.forEach((buildWarning) => logWarning(buildWarning.message));
+    }
     if (_errors.isEmpty) {
       return;
     }
@@ -208,7 +218,9 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
     // as some [AnnotatedNode]s in the ancestor chain do not have
     // the metadata we are looking for.  See
     // 519_missing_query_selector_test.dart for an example of this condition.
-    if (node is ClassMember || node is ClassDeclaration) {
+    if (node is ClassMember ||
+        node is ClassDeclaration ||
+        node is FunctionDeclaration) {
       return (node as AnnotatedNode).metadata;
     } else if (node is FormalParameter) {
       return node.metadata;
