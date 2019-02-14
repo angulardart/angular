@@ -6,3 +6,7 @@
 SOURCE=$1
 cp $SOURCE/*.md .
 cp $SOURCE/angular_analyzer_plugin/pubspec.yaml .
+cp $SOURCE/angular_analyzer_plugin/test/analyzer_base.dart test
+cp $SOURCE/angular_analyzer_plugin/test/angular_base.dart test
+cp $SOURCE/angular_analyzer_plugin/test/mock_sdk.dart test
+cp $SOURCE/angular_analyzer_plugin/test/mock_sdk_test.dart test
