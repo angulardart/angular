@@ -50,10 +50,6 @@ class ViewI18nAttributeComponent0 extends AppView<import1.I18nAttributeComponent
   }
 }
 
-AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewI18nAttributeComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.I18nAttributeComponent> _I18nAttributeComponentNgFactory = const ComponentFactory('message', viewFactory_I18nAttributeComponentHost0);
 ComponentFactory<import1.I18nAttributeComponent> get I18nAttributeComponentNgFactory {
   return _I18nAttributeComponentNgFactory;

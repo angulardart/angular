@@ -106,10 +106,6 @@ class ViewComp0 extends AppView<import1.Comp> {
   }
 }
 
-AppView<import1.Comp> viewFactory_Comp0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewComp0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.Comp> _CompNgFactory = const ComponentFactory('comp', viewFactory_CompHost0);
 ComponentFactory<import1.Comp> get CompNgFactory {
   return _CompNgFactory;

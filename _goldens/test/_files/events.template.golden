@@ -50,10 +50,6 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
   }
 }
 
-AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEvents0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewUsesNativeEvents0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.UsesNativeEvents> _UsesNativeEventsNgFactory = const ComponentFactory('uses-native-events', viewFactory_UsesNativeEventsHost0);
 ComponentFactory<import1.UsesNativeEvents> get UsesNativeEventsNgFactory {
   return _UsesNativeEventsNgFactory;
@@ -139,10 +135,6 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   }
 }
 
-AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEvents0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewUsesAngularEvents0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.UsesAngularEvents> _UsesAngularEventsNgFactory = const ComponentFactory('uses-angular-events', viewFactory_UsesAngularEventsHost0);
 ComponentFactory<import1.UsesAngularEvents> get UsesAngularEventsNgFactory {
   return _UsesAngularEventsNgFactory;
@@ -208,10 +200,6 @@ class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.HasAngularEvents> viewFactory_HasAngularEvents0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewHasAngularEvents0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.HasAngularEvents> _HasAngularEventsNgFactory = const ComponentFactory('has-angular-events', viewFactory_HasAngularEventsHost0);
@@ -286,10 +274,6 @@ class ViewHasManyNativeHostEvents0 extends AppView<import1.HasManyNativeHostEven
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEvents0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewHasManyNativeHostEvents0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.HasManyNativeHostEvents> _HasManyNativeHostEventsNgFactory = const ComponentFactory('material-button-like', viewFactory_HasManyNativeHostEventsHost0);

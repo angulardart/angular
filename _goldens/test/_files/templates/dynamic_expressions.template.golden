@@ -63,10 +63,6 @@ class ViewComp10 extends AppView<import1.Comp1> {
   }
 }
 
-AppView<import1.Comp1> viewFactory_Comp10(AppView<dynamic> parentView, int parentIndex) {
-  return ViewComp10(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.Comp1> _Comp1NgFactory = const ComponentFactory('comp-1', viewFactory_Comp1Host0);
 ComponentFactory<import1.Comp1> get Comp1NgFactory {
   return _Comp1NgFactory;
@@ -147,10 +143,6 @@ class ViewComp20 extends AppView<import1.Comp2> {
   }
 }
 
-AppView<import1.Comp2> viewFactory_Comp20(AppView<dynamic> parentView, int parentIndex) {
-  return ViewComp20(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.Comp2> _Comp2NgFactory = const ComponentFactory('comp-2', viewFactory_Comp2Host0);
 ComponentFactory<import1.Comp2> get Comp2NgFactory {
   return _Comp2NgFactory;
@@ -229,10 +221,6 @@ class ViewComp30 extends AppView<import1.Comp3> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.Comp3> viewFactory_Comp30(AppView<dynamic> parentView, int parentIndex) {
-  return ViewComp30(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.Comp3> _Comp3NgFactory = const ComponentFactory('comp-3', viewFactory_Comp3Host0);
@@ -319,10 +307,6 @@ class ViewComp40 extends AppView<import1.Comp4> {
   }
 }
 
-AppView<import1.Comp4> viewFactory_Comp40(AppView<dynamic> parentView, int parentIndex) {
-  return ViewComp40(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.Comp4> _Comp4NgFactory = const ComponentFactory('comp-4', viewFactory_Comp4Host0);
 ComponentFactory<import1.Comp4> get Comp4NgFactory {
   return _Comp4NgFactory;
@@ -406,10 +390,6 @@ class ViewComp50 extends AppView<import1.Comp5> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.Comp5> viewFactory_Comp50(AppView<dynamic> parentView, int parentIndex) {
-  return ViewComp50(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.Comp5> _Comp5NgFactory = const ComponentFactory('comp-5', viewFactory_Comp5Host0);
@@ -503,10 +483,6 @@ class ViewComp60 extends AppView<import1.Comp6> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.Comp6> viewFactory_Comp60(AppView<dynamic> parentView, int parentIndex) {
-  return ViewComp60(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.Comp6> _Comp6NgFactory = const ComponentFactory('comp-6', viewFactory_Comp6Host0);
@@ -626,10 +602,6 @@ class ViewComp70 extends AppView<import1.Comp7> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.Comp7> viewFactory_Comp70(AppView<dynamic> parentView, int parentIndex) {
-  return ViewComp70(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.Comp7> _Comp7NgFactory = const ComponentFactory('comp-7', viewFactory_Comp7Host0);

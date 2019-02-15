@@ -49,10 +49,6 @@ class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
   }
 }
 
-AppView<import1.UsesEventTearoff> viewFactory_UsesEventTearoff0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewUsesEventTearoff0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.UsesEventTearoff> _UsesEventTearoffNgFactory = const ComponentFactory('uses-event-tearoff', viewFactory_UsesEventTearoffHost0);
 ComponentFactory<import1.UsesEventTearoff> get UsesEventTearoffNgFactory {
   return _UsesEventTearoffNgFactory;

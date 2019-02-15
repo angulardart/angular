@@ -52,10 +52,6 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   }
 }
 
-AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokens0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewHasOpaqueTokens0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.HasOpaqueTokens> _HasOpaqueTokensNgFactory = const ComponentFactory('has-opaque-tokens', viewFactory_HasOpaqueTokensHost0);
 ComponentFactory<import1.HasOpaqueTokens> get HasOpaqueTokensNgFactory {
   return _HasOpaqueTokensNgFactory;
@@ -149,10 +145,6 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewContainsChildComponent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.ContainsChildComponent> _ContainsChildComponentNgFactory = const ComponentFactory('contains-child-component', viewFactory_ContainsChildComponentHost0);
@@ -291,10 +283,6 @@ class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedT
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInjectsTypedTokenFromSomeParent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InjectsTypedTokenFromSomeParent> _InjectsTypedTokenFromSomeParentNgFactory = const ComponentFactory('injects-typed-token-from-parent', viewFactory_InjectsTypedTokenFromSomeParentHost0);

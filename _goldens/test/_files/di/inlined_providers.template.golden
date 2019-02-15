@@ -273,10 +273,6 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   }
 }
 
-AppView<import1.ParentComponent> viewFactory_ParentComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewParentComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.ParentComponent> _ParentComponentNgFactory = const ComponentFactory('parent-component', viewFactory_ParentComponentHost0);
 ComponentFactory<import1.ParentComponent> get ParentComponentNgFactory {
   return _ParentComponentNgFactory;
@@ -342,10 +338,6 @@ class ViewChildComponentProvidingA$B$C0 extends AppView<import1.ChildComponentPr
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidingA$B$C0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewChildComponentProvidingA$B$C0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.ChildComponentProvidingA$B$C> _ChildComponentProvidingA$B$CNgFactory = const ComponentFactory('child-component-providing-a-b-c', viewFactory_ChildComponentProvidingA$B$CHost0);
@@ -454,10 +446,6 @@ class ViewChildComponentWithNgContentProviding$D0 extends AppView<import1.ChildC
   }
 }
 
-AppView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildComponentWithNgContentProviding$D0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewChildComponentWithNgContentProviding$D0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.ChildComponentWithNgContentProviding$D> _ChildComponentWithNgContentProviding$DNgFactory = const ComponentFactory('child-component-with-ngcontent-providing-d', viewFactory_ChildComponentWithNgContentProviding$DHost0);
 ComponentFactory<import1.ChildComponentWithNgContentProviding$D> get ChildComponentWithNgContentProviding$DNgFactory {
   return _ChildComponentWithNgContentProviding$DNgFactory;
@@ -541,10 +529,6 @@ class ViewChildComponentInjecting$D0 extends AppView<import1.ChildComponentInjec
   }
 }
 
-AppView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$D0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewChildComponentInjecting$D0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.ChildComponentInjecting$D> _ChildComponentInjecting$DNgFactory = const ComponentFactory('child-component-injecting-d', viewFactory_ChildComponentInjecting$DHost0);
 ComponentFactory<import1.ChildComponentInjecting$D> get ChildComponentInjecting$DNgFactory {
   return _ChildComponentInjecting$DNgFactory;
@@ -614,10 +598,6 @@ class ViewChildComponentWithVisibilityAll0 extends AppView<import1.ChildComponen
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.ChildComponentWithVisibilityAll> viewFactory_ChildComponentWithVisibilityAll0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewChildComponentWithVisibilityAll0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.ChildComponentWithVisibilityAll> _ChildComponentWithVisibilityAllNgFactory = const ComponentFactory('child-component-with-visibility-all', viewFactory_ChildComponentWithVisibilityAllHost0);

@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/cli.dart';
 
+import '../../core/linker/view_type.dart';
 import '../compile_metadata.dart'
     show CompileDirectiveMetadata, CompileTypedMetadata, CompilePipeMetadata;
 import '../expression_parser/parser.dart';
@@ -99,10 +100,14 @@ class ViewCompiler {
       CompileView view, List<o.Statement> targetStatements,
       {@required bool registerComponentFactory}) {
     final viewClass = createViewClass(view, parser);
-    targetStatements
-      ..add(viewClass)
-      ..add(createViewFactory(view, viewClass))
-      ..addAll(registerComponentFactory ? _registerComponentFactory(view) : []);
+    targetStatements.add(viewClass);
+    if (view.viewType != ViewType.component) {
+      // View factories are only needed for embedded and host views, to be used
+      // by `TemplateRef` and `ComponentFactory` respectively.
+      targetStatements.add(createViewFactory(view, viewClass));
+    }
+    targetStatements.addAll(
+        registerComponentFactory ? _registerComponentFactory(view) : []);
   }
 
   // Adds const _FooNgFactory = const ComponentFactory<Foo>(...).

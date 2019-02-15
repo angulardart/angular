@@ -57,10 +57,6 @@ class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
   }
 }
 
-AppView<import2.EmulatedComponent> viewFactory_EmulatedComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewEmulatedComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import2.EmulatedComponent> _EmulatedComponentNgFactory = const ComponentFactory('Emulated', viewFactory_EmulatedComponentHost0);
 ComponentFactory<import2.EmulatedComponent> get EmulatedComponentNgFactory {
   return _EmulatedComponentNgFactory;
@@ -151,10 +147,6 @@ class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import2.NoneComponent> viewFactory_NoneComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewNoneComponent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import2.NoneComponent> _NoneComponentNgFactory = const ComponentFactory('None', viewFactory_NoneComponentHost0);

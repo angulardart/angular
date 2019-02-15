@@ -53,10 +53,6 @@ class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
   }
 }
 
-AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespace0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewPreserveWhitespace0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.PreserveWhitespace> _PreserveWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_PreserveWhitespaceHost0);
 ComponentFactory<import1.PreserveWhitespace> get PreserveWhitespaceNgFactory {
   return _PreserveWhitespaceNgFactory;
@@ -128,10 +124,6 @@ class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.MinifyWhitespace> viewFactory_MinifyWhitespace0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewMinifyWhitespace0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.MinifyWhitespace> _MinifyWhitespaceNgFactory = const ComponentFactory('preserve-whitespace', viewFactory_MinifyWhitespaceHost0);

@@ -102,10 +102,6 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   }
 }
 
-AppView<import1.QueriesComponent> viewFactory_QueriesComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewQueriesComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.QueriesComponent> _QueriesComponentNgFactory = const ComponentFactory('queries', viewFactory_QueriesComponentHost0);
 ComponentFactory<import1.QueriesComponent> get QueriesComponentNgFactory {
   return _QueriesComponentNgFactory;
@@ -228,10 +224,6 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewEmbeddedQueries0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.EmbeddedQueries> _EmbeddedQueriesNgFactory = const ComponentFactory('test', viewFactory_EmbeddedQueriesHost0);
@@ -378,10 +370,6 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
   }
 }
 
-AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewEmbeddedQueriesList0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.EmbeddedQueriesList> _EmbeddedQueriesListNgFactory = const ComponentFactory('test', viewFactory_EmbeddedQueriesListHost0);
 ComponentFactory<import1.EmbeddedQueriesList> get EmbeddedQueriesListNgFactory {
   return _EmbeddedQueriesListNgFactory;
@@ -524,10 +512,6 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewNestedNgForQueriesList0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.NestedNgForQueriesList> _NestedNgForQueriesListNgFactory = const ComponentFactory('test', viewFactory_NestedNgForQueriesListHost0);

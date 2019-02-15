@@ -217,10 +217,6 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   }
 }
 
-AppView<import1.RootComponent> viewFactory_RootComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewRootComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.RootComponent> _RootComponentNgFactory = const ComponentFactory('root-component', viewFactory_RootComponentHost0);
 ComponentFactory<import1.RootComponent> get RootComponentNgFactory {
   return _RootComponentNgFactory;
@@ -318,10 +314,6 @@ class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefau
   }
 }
 
-AppView<import1.UsesDefaultChangeDetectionAndInputs> viewFactory_UsesDefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewUsesDefaultChangeDetectionAndInputs0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.UsesDefaultChangeDetectionAndInputs> _UsesDefaultChangeDetectionAndInputsNgFactory = const ComponentFactory('uses-default-change-detection-and-inputs', viewFactory_UsesDefaultChangeDetectionAndInputsHost0);
 ComponentFactory<import1.UsesDefaultChangeDetectionAndInputs> get UsesDefaultChangeDetectionAndInputsNgFactory {
   return _UsesDefaultChangeDetectionAndInputsNgFactory;
@@ -410,10 +402,6 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.DefaultChangeDetectionAndInputs> viewFactory_DefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewDefaultChangeDetectionAndInputs0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.DefaultChangeDetectionAndInputs> _DefaultChangeDetectionAndInputsNgFactory = const ComponentFactory('default-change-detection-and-inputs', viewFactory_DefaultChangeDetectionAndInputsHost0);
@@ -520,10 +508,6 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
   }
 }
 
-AppView<import1.UsesOnPushChangeDetectionAndInputs> viewFactory_UsesOnPushChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewUsesOnPushChangeDetectionAndInputs0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.UsesOnPushChangeDetectionAndInputs> _UsesOnPushChangeDetectionAndInputsNgFactory = const ComponentFactory('uses-on-push-change-detection-and-inputs', viewFactory_UsesOnPushChangeDetectionAndInputsHost0);
 ComponentFactory<import1.UsesOnPushChangeDetectionAndInputs> get UsesOnPushChangeDetectionAndInputsNgFactory {
   return _UsesOnPushChangeDetectionAndInputsNgFactory;
@@ -612,10 +596,6 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.OnPushChangeDetectionAndInputs> viewFactory_OnPushChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewOnPushChangeDetectionAndInputs0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.OnPushChangeDetectionAndInputs> _OnPushChangeDetectionAndInputsNgFactory = const ComponentFactory('on-push-change-detection-and-inputs', viewFactory_OnPushChangeDetectionAndInputsHost0);
@@ -710,10 +690,6 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
   }
 }
 
-AppView<import1.InlinedNgIf> viewFactory_InlinedNgIf0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInlinedNgIf0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.InlinedNgIf> _InlinedNgIfNgFactory = const ComponentFactory('inlined-ng-if', viewFactory_InlinedNgIfHost0);
 ComponentFactory<import1.InlinedNgIf> get InlinedNgIfNgFactory {
   return _InlinedNgIfNgFactory;
@@ -797,10 +773,6 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewEmbeddedNgIf0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.EmbeddedNgIf> _EmbeddedNgIfNgFactory = const ComponentFactory('embedded-ng-if', viewFactory_EmbeddedNgIfHost0);
@@ -928,10 +900,6 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
   }
 }
 
-AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewEmbeddedNgFor0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.EmbeddedNgFor> _EmbeddedNgForNgFactory = const ComponentFactory('embedded-ng-for', viewFactory_EmbeddedNgForHost0);
 ComponentFactory<import1.EmbeddedNgFor> get EmbeddedNgForNgFactory {
   return _EmbeddedNgForNgFactory;
@@ -1028,10 +996,6 @@ class ViewNullComponent0 extends AppView<import1.NullComponent> {
   }
 }
 
-AppView<import1.NullComponent> viewFactory_NullComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewNullComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.NullComponent> _NullComponentNgFactory = const ComponentFactory('null', viewFactory_NullComponentHost0);
 ComponentFactory<import1.NullComponent> get NullComponentNgFactory {
   return _NullComponentNgFactory;
@@ -1097,10 +1061,6 @@ class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitra
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInjectsFromArbitraryParent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InjectsFromArbitraryParent> _InjectsFromArbitraryParentNgFactory = const ComponentFactory('injects-from-arbitrary-parent', viewFactory_InjectsFromArbitraryParentHost0);
@@ -1199,10 +1159,6 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.ComponentConditionalFeatures> viewFactory_ComponentConditionalFeatures0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewComponentConditionalFeatures0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.ComponentConditionalFeatures> _ComponentConditionalFeaturesNgFactory = const ComponentFactory('component-conditional-features', viewFactory_ComponentConditionalFeaturesHost0);
@@ -1333,10 +1289,6 @@ class ViewFeatureA0 extends AppView<import1.FeatureA> {
   }
 }
 
-AppView<import1.FeatureA> viewFactory_FeatureA0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewFeatureA0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.FeatureA> _FeatureANgFactory = const ComponentFactory('feature-a', viewFactory_FeatureAHost0);
 ComponentFactory<import1.FeatureA> get FeatureANgFactory {
   return _FeatureANgFactory;
@@ -1403,10 +1355,6 @@ class ViewFeatureB0 extends AppView<import1.FeatureB> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.FeatureB> viewFactory_FeatureB0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewFeatureB0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.FeatureB> _FeatureBNgFactory = const ComponentFactory('feature-b', viewFactory_FeatureBHost0);
@@ -1509,10 +1457,6 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.UsesDomBindings> viewFactory_UsesDomBindings0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewUsesDomBindings0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.UsesDomBindings> _UsesDomBindingsNgFactory = const ComponentFactory('uses-dom-bindings', viewFactory_UsesDomBindingsHost0);
