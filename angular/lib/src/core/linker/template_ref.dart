@@ -17,13 +17,13 @@ import 'view_ref.dart' show EmbeddedViewRef;
 /// it to the View Container.
 class TemplateRef {
   final ViewContainer _viewContainer;
-  final AppView Function(AppView, int) _viewFactory;
+  final AppView<void> Function(AppView, int) _viewFactory;
 
   TemplateRef(this._viewContainer, this._viewFactory);
 
   EmbeddedViewRef createEmbeddedView() {
-    AppView parentView = _viewContainer.parentView;
-    AppView view = _viewFactory(parentView, _viewContainer.index);
+    final parentView = _viewContainer.parentView;
+    final view = _viewFactory(parentView, _viewContainer.index);
     view.create(parentView.ctx, parentView.viewData.projectableNodes);
     return view.viewData.ref;
   }

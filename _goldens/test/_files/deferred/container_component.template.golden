@@ -168,7 +168,7 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_TestContainerComponent1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent1(parentView, parentIndex);
 }
 
@@ -199,7 +199,7 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_TestContainerComponent2(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent2(parentView, parentIndex);
 }
 
@@ -229,7 +229,7 @@ class _ViewTestContainerComponent3 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent3(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_TestContainerComponent3(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent3(parentView, parentIndex);
 }
 
@@ -262,7 +262,7 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent4(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_TestContainerComponent4(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent4(parentView, parentIndex);
 }
 
@@ -297,7 +297,7 @@ class _ViewTestContainerComponent5 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent5(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_TestContainerComponent5(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent5(parentView, parentIndex);
 }
 
@@ -327,7 +327,7 @@ class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent6(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_TestContainerComponent6(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent6(parentView, parentIndex);
 }
 
@@ -360,7 +360,7 @@ class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent7(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_TestContainerComponent7(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent7(parentView, parentIndex);
 }
 
@@ -411,7 +411,7 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent8(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_TestContainerComponent8(AppView<dynamic> parentView, int parentIndex) {
   return _ViewTestContainerComponent8(parentView, parentIndex);
 }
 

@@ -806,7 +806,7 @@ class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
   }
 }
 
-AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIf1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_EmbeddedNgIf1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewEmbeddedNgIf1(parentView, parentIndex);
 }
 
@@ -930,7 +930,7 @@ class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
   }
 }
 
-AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgFor1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_EmbeddedNgFor1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewEmbeddedNgFor1(parentView, parentIndex);
 }
 
@@ -1192,7 +1192,7 @@ class _ViewComponentConditionalFeatures1 extends AppView<import1.ComponentCondit
   }
 }
 
-AppView<import1.ComponentConditionalFeatures> viewFactory_ComponentConditionalFeatures1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_ComponentConditionalFeatures1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewComponentConditionalFeatures1(parentView, parentIndex);
 }
 
@@ -1222,7 +1222,7 @@ class _ViewComponentConditionalFeatures2 extends AppView<import1.ComponentCondit
   }
 }
 
-AppView<import1.ComponentConditionalFeatures> viewFactory_ComponentConditionalFeatures2(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_ComponentConditionalFeatures2(AppView<dynamic> parentView, int parentIndex) {
   return _ViewComponentConditionalFeatures2(parentView, parentIndex);
 }
 

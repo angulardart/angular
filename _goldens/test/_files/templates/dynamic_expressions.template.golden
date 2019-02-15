@@ -512,7 +512,7 @@ class _ViewComp61 extends AppView<import1.Comp6> {
   }
 }
 
-AppView<import1.Comp6> viewFactory_Comp61(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_Comp61(AppView<dynamic> parentView, int parentIndex) {
   return _ViewComp61(parentView, parentIndex);
 }
 
@@ -645,7 +645,7 @@ class _ViewComp71 extends AppView<import1.Comp7> {
   }
 }
 
-AppView<import1.Comp7> viewFactory_Comp71(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_Comp71(AppView<dynamic> parentView, int parentIndex) {
   return _ViewComp71(parentView, parentIndex);
 }
 
@@ -671,7 +671,7 @@ class _ViewComp72 extends AppView<import1.Comp7> {
   }
 }
 
-AppView<import1.Comp7> viewFactory_Comp72(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_Comp72(AppView<dynamic> parentView, int parentIndex) {
   return _ViewComp72(parentView, parentIndex);
 }
 

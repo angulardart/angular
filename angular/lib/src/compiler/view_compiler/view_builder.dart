@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
-    show CompileDirectiveMetadata, CompileIdentifierMetadata;
+    show CompileDirectiveMetadata;
 import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
 import 'package:angular/src/compiler/html_events.dart';
 import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
@@ -577,37 +577,77 @@ List<o.Statement> _generateDestroyMethod(CompileView view) {
   return statements;
 }
 
+/// Creates a factory function that instantiates a view.
+///
+/// ```
+/// AppView<SomeComponent> viewFactory_SomeComponentHost0(
+///   AppView<dynamic> parentView,
+///   int parentIndex,
+/// ) {
+///   return ViewSomeComponentHost0(parentView, parentIndex);
+/// }
+/// ```
 o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
-  var viewFactoryArgs = [
-    o.FnParam(ViewConstructorVars.parentView.name,
-        o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
+  final parentViewType = o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE]);
+  final parameters = [
+    o.FnParam(ViewConstructorVars.parentView.name, parentViewType),
     o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE),
   ];
-  var initRenderCompTypeStmts = [];
-  o.OutputType factoryReturnType;
-  if (view.component.originType == null) {
-    // TODO(matanl): Verify that this is needed:
-    // https://github.com/dart-lang/angular/issues/1421
-    factoryReturnType = o.importType(Identifiers.AppView);
+  // For component and host view factories, the returned `AppView` must include
+  // the component type as a type argument:
+  //
+  //     AppView<FooComponent> viewFactory_FooComponent0(...) { ... }
+  //
+  // This includes any generic type parameters the component itself might have.
+  // Note how the generic type arguments of the constructor are inferred from
+  // the return type.
+  //
+  //   AppView<BarComponent<T>> viewFactory_FooComponent0<T>(...) {
+  //     return ViewFooComponent0(...);
+  //   }
+  //
+  // In contrast, the return type of an embedded view factory doesn't need to
+  // include its component type. This is because we only need access to the API
+  // of `AppView` itself to insert and remove embedded views into view
+  // containers. Note that for generic embedded views, we can no longer infer
+  // the generic type arguments of the constructor from the return type.
+  //
+  //   AppView<void> viewFactory_FooComponent1<T>(...) {
+  //     return ViewComponent1<T>(...);
+  //   }
+  //
+  // We intentionally make this distinction as an optimization. Any time we take
+  // a method tear-off (which we do every time an embedded view is used),
+  // dart2js has to encode the return type of the method in the tear-off so that
+  // it can be type checked properly.
+  //
+  // When two or more methods share the same type signature, their type encoding
+  // can reference the same signatures. By removing the component type from the
+  // return type of all embedded view factories, we allow all of them to share
+  // the same type signature, instead of each one being unique, thus reducing
+  // code size.
+  List<o.OutputType> constructorTypeArguments;
+  List<o.OutputType> returnTypeTypeArguments;
+  if (view.viewType == ViewType.embedded) {
+    constructorTypeArguments =
+        viewClass.typeParameters.map((t) => t.toType()).toList();
+    returnTypeTypeArguments = [o.VOID_TYPE];
   } else {
-    factoryReturnType =
-        o.importType(Identifiers.AppView, [_getContextType(view)]);
+    returnTypeTypeArguments = [_getContextType(view)];
   }
-  return o
-      .fn(
-          viewFactoryArgs,
-          (List.from(initRenderCompTypeStmts)
-            ..addAll([
-              o.ReturnStatement(o.variable(viewClass.name).instantiate(viewClass
-                  .constructorMethod.params
-                  .map((o.FnParam param) => o.variable(param.name))
-                  .toList()))
-            ])),
-          factoryReturnType)
-      .toDeclStmt(
-        view.viewFactoryName,
-        typeParameters: viewClass.typeParameters,
-      );
+  final body = [
+    o.ReturnStatement(o.variable(viewClass.name).instantiate(
+        parameters.map((p) => o.variable(p.name)).toList(),
+        genericTypes: constructorTypeArguments)),
+  ];
+  final returnType = o.importType(Identifiers.AppView, returnTypeTypeArguments);
+  return o.DeclareFunctionStmt(
+    view.viewFactoryName,
+    parameters,
+    body,
+    type: returnType,
+    typeParameters: viewClass.typeParameters,
+  );
 }
 
 List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
@@ -825,9 +865,7 @@ o.OutputType _getContextType(CompileView view) {
   if (originType != null) {
     return o.importType(
       originType,
-      originType.typeParameters
-          .map((t) => o.importType(CompileIdentifierMetadata(name: t.name)))
-          .toList(),
+      originType.typeParameters.map((t) => t.toType()).toList(),
     );
   }
   return o.DYNAMIC_TYPE;
