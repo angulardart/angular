@@ -23,7 +23,7 @@ class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> 
   import1.MessageDirective _MessageDirective_0_5;
   static final String _message_0 = import2.Intl.message('message', desc: 'description');
   static import3.ComponentStyles _componentStyles;
-  ViewI18nPropertyComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewI18nPropertyComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import6.document.createElement('message');
     initComponentStyles();
   }
@@ -70,7 +70,7 @@ final List<dynamic> styles$I18nPropertyComponentHost = const [];
 class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyComponent> {
   ViewI18nPropertyComponent0 _compView_0;
   import1.I18nPropertyComponent _I18nPropertyComponent_0_5;
-  _ViewI18nPropertyComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewI18nPropertyComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

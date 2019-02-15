@@ -135,9 +135,6 @@ class AppViewData<T> {
 abstract class AppView<T> extends View<T> {
   AppViewData<T> viewData;
 
-  /// Local values scoped to this view.
-  final Map<String, dynamic> locals;
-
   /// Parent generated view.
   final AppView parentView;
 
@@ -154,11 +151,11 @@ abstract class AppView<T> extends View<T> {
 
   AppView(
     ViewType type,
-    this.locals,
     this.parentView,
     int parentIndex,
     int cdMode,
   ) {
+    locals = {};
     viewData = AppViewData(this, cdMode, type, parentIndex);
   }
 
@@ -325,11 +322,13 @@ abstract class AppView<T> extends View<T> {
     return _findLastRenderNode(lastNode);
   }
 
-  bool hasLocal(String contextName) => locals.containsKey(contextName);
+  /// Local values scoped to this view.
+  ///
+  /// Directives may create views and set additional variables accessible to
+  /// the template (for example, `NgFor` sets the current element iterated).
+  Map<String, dynamic> locals;
 
-  void setLocal(String contextName, dynamic value) {
-    locals[contextName] = value;
-  }
+  bool hasLocal(String contextName) => locals.containsKey(contextName);
 
   /// Overwritten by implementations
   void dirtyParentQueriesInternal() {}

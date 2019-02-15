@@ -22,7 +22,7 @@ final List<dynamic> styles$I18nTextComponent = const [];
 class ViewI18nTextComponent0 extends AppView<import1.I18nTextComponent> {
   static final String _message_0 = import2.Intl.message('message', desc: 'description', meaning: 'meaning', skip: true);
   static import3.ComponentStyles _componentStyles;
-  ViewI18nTextComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewI18nTextComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import6.document.createElement('message');
     initComponentStyles();
   }
@@ -60,7 +60,7 @@ final List<dynamic> styles$I18nTextComponentHost = const [];
 class _ViewI18nTextComponentHost0 extends AppView<import1.I18nTextComponent> {
   ViewI18nTextComponent0 _compView_0;
   import1.I18nTextComponent _I18nTextComponent_0_5;
-  _ViewI18nTextComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewI18nTextComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

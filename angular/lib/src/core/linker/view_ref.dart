@@ -86,7 +86,7 @@ class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
   ChangeDetectorRef get changeDetectorRef => this;
 
   void setLocal(String variableName, dynamic value) {
-    appView.setLocal(variableName, value);
+    appView.locals[variableName] = value;
   }
 
   bool hasLocal(String variableName) => appView.hasLocal(variableName);

@@ -21,7 +21,7 @@ final List<dynamic> styles$HostComponentNewSyntax = const [];
 
 class ViewHostComponentNewSyntax0 extends AppView<import1.HostComponentNewSyntax> {
   static import2.ComponentStyles _componentStyles;
-  ViewHostComponentNewSyntax0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHostComponentNewSyntax0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('host');
     rootEl.className = import1.HostComponentNewSyntax.hostClass;
     initComponentStyles();
@@ -57,7 +57,7 @@ final List<dynamic> styles$HostComponentNewSyntaxHost = const [];
 class _ViewHostComponentNewSyntaxHost0 extends AppView<import1.HostComponentNewSyntax> {
   ViewHostComponentNewSyntax0 _compView_0;
   import1.HostComponentNewSyntax _HostComponentNewSyntax_0_5;
-  _ViewHostComponentNewSyntaxHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewHostComponentNewSyntaxHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -92,7 +92,7 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
   import1.HostComponent _HostComponent_0_5;
   import1.ListensToFooEvent _ListensToFooEvent_0_6;
   static import2.ComponentStyles _componentStyles;
-  ViewUsesHostComponentWithDirective0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewUsesHostComponentWithDirective0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('uses-host');
     initComponentStyles();
   }
@@ -147,7 +147,7 @@ final List<dynamic> styles$UsesHostComponentWithDirectiveHost = const [];
 class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostComponentWithDirective> {
   ViewUsesHostComponentWithDirective0 _compView_0;
   import1.UsesHostComponentWithDirective _UsesHostComponentWithDirective_0_5;
-  _ViewUsesHostComponentWithDirectiveHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewUsesHostComponentWithDirectiveHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -184,7 +184,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   var _expr_3;
   bool _expr_4;
   static import2.ComponentStyles _componentStyles;
-  ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('host');
     import8.setAttribute(rootEl, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
     initComponentStyles();
@@ -259,7 +259,7 @@ final List<dynamic> styles$HostComponentHost = const [];
 class _ViewHostComponentHost0 extends AppView<import1.HostComponent> {
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_5;
-  _ViewHostComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewHostComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

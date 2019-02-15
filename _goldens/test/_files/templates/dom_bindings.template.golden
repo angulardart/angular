@@ -22,7 +22,7 @@ final List<dynamic> styles$HasHostAttributes = const [];
 class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasHostAttributes0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasHostAttributes0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('has-host-attributes');
     initComponentStyles();
   }
@@ -65,7 +65,7 @@ final List<dynamic> styles$HasHostAttributesHost = const [];
 class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
   ViewHasHostAttributes0 _compView_0;
   import1.HasHostAttributes _HasHostAttributes_0_5;
-  _ViewHasHostAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewHasHostAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -101,7 +101,7 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
   var _expr_0;
   import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasTemplateAttributes0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasTemplateAttributes0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('has-template-attributes');
     initComponentStyles();
   }
@@ -148,7 +148,7 @@ final List<dynamic> styles$HasTemplateAttributesHost = const [];
 class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttributes> {
   ViewHasTemplateAttributes0 _compView_0;
   import1.HasTemplateAttributes _HasTemplateAttributes_0_5;
-  _ViewHasTemplateAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewHasTemplateAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -181,7 +181,7 @@ final List<dynamic> styles$HasHostClass = const [];
 class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
   bool _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasHostClass0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasHostClass0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('has-host-class');
     initComponentStyles();
   }
@@ -224,7 +224,7 @@ final List<dynamic> styles$HasHostClassHost = const [];
 class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
   ViewHasHostClass0 _compView_0;
   import1.HasHostClass _HasHostClass_0_5;
-  _ViewHasHostClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewHasHostClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -260,7 +260,7 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
   bool _expr_0;
   import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasTemplateClass0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasTemplateClass0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('has-template-class');
     initComponentStyles();
   }
@@ -307,7 +307,7 @@ final List<dynamic> styles$HasTemplateClassHost = const [];
 class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
   ViewHasTemplateClass0 _compView_0;
   import1.HasTemplateClass _HasTemplateClass_0_5;
-  _ViewHasTemplateClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewHasTemplateClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

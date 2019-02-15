@@ -26,7 +26,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   var _expr_0;
   final import2.Text _text_3 = import3.createText('');
   static import4.ComponentStyles _componentStyles;
-  ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
     initComponentStyles();
   }
@@ -78,7 +78,7 @@ final List<dynamic> styles$InterpolationComponentHost = const [];
 class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComponent> {
   ViewInterpolationComponent0 _compView_0;
   import1.InterpolationComponent _InterpolationComponent_0_5;
-  _ViewInterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -112,7 +112,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
   var _expr_0;
   final import2.Text _text_1 = import3.createText('');
   static import4.ComponentStyles _componentStyles;
-  ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
     initComponentStyles();
   }
@@ -160,7 +160,7 @@ final List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.InterpolationComponentNoWhitespace> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
   import1.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
-  _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -196,7 +196,7 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
   final import2.Text _text_1 = import3.createText('');
   final import2.Text _text_3 = import3.createText('');
   static import4.ComponentStyles _componentStyles;
-  ViewInterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
     initComponentStyles();
   }
@@ -252,7 +252,7 @@ final List<dynamic> styles$InterpolationTwoAdjacentHost = const [];
 class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTwoAdjacent> {
   ViewInterpolationTwoAdjacent0 _compView_0;
   import1.InterpolationTwoAdjacent _InterpolationTwoAdjacent_0_5;
-  _ViewInterpolationTwoAdjacentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationTwoAdjacentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -290,7 +290,7 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
   final import2.Text _text_4 = import3.createText('');
   final import2.Text _text_6 = import3.createText('');
   static import4.ComponentStyles _componentStyles;
-  ViewInterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
     initComponentStyles();
   }
@@ -354,7 +354,7 @@ final List<dynamic> styles$InterpolationLongerSentenceHost = const [];
 class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.InterpolationLongerSentence> {
   ViewInterpolationLongerSentence0 _compView_0;
   import1.InterpolationLongerSentence _InterpolationLongerSentence_0_5;
-  _ViewInterpolationLongerSentenceHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationLongerSentenceHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -386,7 +386,7 @@ final List<dynamic> styles$InterpolationLiterals = const [];
 
 class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> {
   static import4.ComponentStyles _componentStyles;
-  ViewInterpolationLiterals0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInterpolationLiterals0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
     initComponentStyles();
   }
@@ -427,7 +427,7 @@ final List<dynamic> styles$InterpolationLiteralsHost = const [];
 class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiterals> {
   ViewInterpolationLiterals0 _compView_0;
   import1.InterpolationLiterals _InterpolationLiterals_0_5;
-  _ViewInterpolationLiteralsHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationLiteralsHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -462,7 +462,7 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   import11.NgFor _NgFor_0_9;
   var _expr_0;
   static import4.ComponentStyles _componentStyles;
-  ViewInterpolationLocals0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInterpolationLocals0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import2.document.createElement('interpolation');
     initComponentStyles();
   }
@@ -519,7 +519,7 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
   import11.NgFor _NgFor_0_9;
   var _expr_0;
-  _ViewInterpolationLocals1(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationLocals1(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -560,7 +560,7 @@ class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
   var _expr_1;
   final import2.Text _text_1 = import3.createText('');
   final import2.Text _text_3 = import3.createText('');
-  _ViewInterpolationLocals2(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {'\$implicit': null}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationLocals2(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -598,7 +598,7 @@ final List<dynamic> styles$InterpolationLocalsHost = const [];
 class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals> {
   ViewInterpolationLocals0 _compView_0;
   import1.InterpolationLocals _InterpolationLocals_0_5;
-  _ViewInterpolationLocalsHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewInterpolationLocalsHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

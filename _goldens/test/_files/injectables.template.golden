@@ -25,7 +25,7 @@ final List<dynamic> styles$InjectableComponent = const [];
 
 class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewInjectableComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInjectableComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('test-injectables');
     initComponentStyles();
   }
@@ -66,7 +66,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
   import1.InjectableComponent _InjectableComponent_0_6;
   dynamic __SomeDep_0_7;
   dynamic __BaseService_0_8;
-  _ViewInjectableComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewInjectableComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   dynamic get _SomeDep_0_7 {

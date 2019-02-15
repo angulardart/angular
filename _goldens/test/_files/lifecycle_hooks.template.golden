@@ -20,7 +20,7 @@ final List<dynamic> styles$LifecycleHooksComponent = const [];
 
 class ViewLifecycleHooksComponent0 extends AppView<import1.LifecycleHooksComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewLifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewLifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('lifecycle-hooks');
     initComponentStyles();
   }
@@ -55,7 +55,7 @@ final List<dynamic> styles$LifecycleHooksComponentHost = const [];
 class _ViewLifecycleHooksComponentHost0 extends AppView<import1.LifecycleHooksComponent> {
   ViewLifecycleHooksComponent0 _compView_0;
   import1.LifecycleHooksComponent _LifecycleHooksComponent_0_5;
-  _ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

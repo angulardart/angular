@@ -52,7 +52,7 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   ViewChildComponentInjecting$D0 _compView_7;
   import1.ChildComponentInjecting$D _ChildComponentInjecting$D_7_5;
   static import2.ComponentStyles _componentStyles;
-  ViewParentComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewParentComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('parent-component');
     initComponentStyles();
   }
@@ -283,7 +283,7 @@ final List<dynamic> styles$ParentComponentHost = const [];
 class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   ViewParentComponent0 _compView_0;
   import1.ParentComponent _ParentComponent_0_5;
-  _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -315,7 +315,7 @@ final List<dynamic> styles$ChildComponentProvidingA$B$C = const [];
 
 class ViewChildComponentProvidingA$B$C0 extends AppView<import1.ChildComponentProvidingA$B$C> {
   static import2.ComponentStyles _componentStyles;
-  ViewChildComponentProvidingA$B$C0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewChildComponentProvidingA$B$C0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('child-component-providing-a-b-c');
     initComponentStyles();
   }
@@ -353,7 +353,7 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
   import1.A __A_0_6;
   import1.B __B_0_7;
   import1.C __C_0_8;
-  _ViewChildComponentProvidingA$B$CHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewChildComponentProvidingA$B$CHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   import1.A get _A_0_6 {
@@ -420,7 +420,7 @@ final List<dynamic> styles$ChildComponentWithNgContentProviding$D = const [];
 
 class ViewChildComponentWithNgContentProviding$D0 extends AppView<import1.ChildComponentWithNgContentProviding$D> {
   static import2.ComponentStyles _componentStyles;
-  ViewChildComponentWithNgContentProviding$D0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewChildComponentWithNgContentProviding$D0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('child-component-with-ngcontent-providing-d');
     initComponentStyles();
   }
@@ -457,7 +457,7 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
   ViewChildComponentWithNgContentProviding$D0 _compView_0;
   import1.ChildComponentWithNgContentProviding$D _ChildComponentWithNgContentProviding$D_0_5;
   import1.D __D_0_6;
-  _ViewChildComponentWithNgContentProviding$DHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewChildComponentWithNgContentProviding$DHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   import1.D get _D_0_6 {
@@ -504,7 +504,7 @@ final List<dynamic> styles$ChildComponentInjecting$D = const [];
 
 class ViewChildComponentInjecting$D0 extends AppView<import1.ChildComponentInjecting$D> {
   static import2.ComponentStyles _componentStyles;
-  ViewChildComponentInjecting$D0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewChildComponentInjecting$D0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('child-component-injecting-d');
     initComponentStyles();
   }
@@ -539,7 +539,7 @@ final List<dynamic> styles$ChildComponentInjecting$DHost = const [];
 class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponentInjecting$D> {
   ViewChildComponentInjecting$D0 _compView_0;
   import1.ChildComponentInjecting$D _ChildComponentInjecting$D_0_5;
-  _ViewChildComponentInjecting$DHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewChildComponentInjecting$DHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -575,7 +575,7 @@ final List<dynamic> styles$ChildComponentWithVisibilityAll = const [];
 
 class ViewChildComponentWithVisibilityAll0 extends AppView<import1.ChildComponentWithVisibilityAll> {
   static import2.ComponentStyles _componentStyles;
-  ViewChildComponentWithVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewChildComponentWithVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('child-component-with-visibility-all');
     initComponentStyles();
   }
@@ -610,7 +610,7 @@ final List<dynamic> styles$ChildComponentWithVisibilityAllHost = const [];
 class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildComponentWithVisibilityAll> {
   ViewChildComponentWithVisibilityAll0 _compView_0;
   import1.ChildComponentWithVisibilityAll _ChildComponentWithVisibilityAll_0_5;
-  _ViewChildComponentWithVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewChildComponentWithVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

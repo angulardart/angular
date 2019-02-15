@@ -21,7 +21,7 @@ final List<dynamic> styles$DeferredChild1Component = const [];
 
 class ViewDeferredChild1Component0 extends AppView<import1.DeferredChild1Component> {
   static import2.ComponentStyles _componentStyles;
-  ViewDeferredChild1Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDeferredChild1Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-1');
     initComponentStyles();
   }
@@ -57,7 +57,7 @@ final List<dynamic> styles$DeferredChild1ComponentHost = const [];
 class _ViewDeferredChild1ComponentHost0 extends AppView<import1.DeferredChild1Component> {
   ViewDeferredChild1Component0 _compView_0;
   import1.DeferredChild1Component _DeferredChild1Component_0_5;
-  _ViewDeferredChild1ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewDeferredChild1ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -89,7 +89,7 @@ final List<dynamic> styles$DeferredChild2Component = const [];
 
 class ViewDeferredChild2Component0 extends AppView<import1.DeferredChild2Component> {
   static import2.ComponentStyles _componentStyles;
-  ViewDeferredChild2Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDeferredChild2Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-2');
     initComponentStyles();
   }
@@ -125,7 +125,7 @@ final List<dynamic> styles$DeferredChild2ComponentHost = const [];
 class _ViewDeferredChild2ComponentHost0 extends AppView<import1.DeferredChild2Component> {
   ViewDeferredChild2Component0 _compView_0;
   import1.DeferredChild2Component _DeferredChild2Component_0_5;
-  _ViewDeferredChild2ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewDeferredChild2ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -157,7 +157,7 @@ final List<dynamic> styles$DeferredChild3Component = const [];
 
 class ViewDeferredChild3Component0 extends AppView<import1.DeferredChild3Component> {
   static import2.ComponentStyles _componentStyles;
-  ViewDeferredChild3Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDeferredChild3Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-3');
     initComponentStyles();
   }
@@ -193,7 +193,7 @@ final List<dynamic> styles$DeferredChild3ComponentHost = const [];
 class _ViewDeferredChild3ComponentHost0 extends AppView<import1.DeferredChild3Component> {
   ViewDeferredChild3Component0 _compView_0;
   import1.DeferredChild3Component _DeferredChild3Component_0_5;
-  _ViewDeferredChild3ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewDeferredChild3ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -225,7 +225,7 @@ final List<dynamic> styles$NotDeferredChildComponent = const [];
 
 class ViewNotDeferredChildComponent0 extends AppView<import1.NotDeferredChildComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewNotDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewNotDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('not-deferred-child');
     initComponentStyles();
   }
@@ -260,7 +260,7 @@ final List<dynamic> styles$NotDeferredChildComponentHost = const [];
 class _ViewNotDeferredChildComponentHost0 extends AppView<import1.NotDeferredChildComponent> {
   ViewNotDeferredChildComponent0 _compView_0;
   import1.NotDeferredChildComponent _NotDeferredChildComponent_0_5;
-  _ViewNotDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewNotDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -292,7 +292,7 @@ final List<dynamic> styles$DeferredChildComponentWithoutNgContent = const [];
 
 class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.DeferredChildComponentWithoutNgContent> {
   static import2.ComponentStyles _componentStyles;
-  ViewDeferredChildComponentWithoutNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDeferredChildComponentWithoutNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-without-ng-content');
     initComponentStyles();
   }
@@ -330,7 +330,7 @@ final List<dynamic> styles$DeferredChildComponentWithoutNgContentHost = const []
 class _ViewDeferredChildComponentWithoutNgContentHost0 extends AppView<import1.DeferredChildComponentWithoutNgContent> {
   ViewDeferredChildComponentWithoutNgContent0 _compView_0;
   import1.DeferredChildComponentWithoutNgContent _DeferredChildComponentWithoutNgContent_0_5;
-  _ViewDeferredChildComponentWithoutNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewDeferredChildComponentWithoutNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -362,7 +362,7 @@ final List<dynamic> styles$DeferredChildComponentWithNgContent = const [];
 
 class ViewDeferredChildComponentWithNgContent0 extends AppView<import1.DeferredChildComponentWithNgContent> {
   static import2.ComponentStyles _componentStyles;
-  ViewDeferredChildComponentWithNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDeferredChildComponentWithNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-with-ng-content');
     initComponentStyles();
   }
@@ -400,7 +400,7 @@ final List<dynamic> styles$DeferredChildComponentWithNgContentHost = const [];
 class _ViewDeferredChildComponentWithNgContentHost0 extends AppView<import1.DeferredChildComponentWithNgContent> {
   ViewDeferredChildComponentWithNgContent0 _compView_0;
   import1.DeferredChildComponentWithNgContent _DeferredChildComponentWithNgContent_0_5;
-  _ViewDeferredChildComponentWithNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewDeferredChildComponentWithNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -432,7 +432,7 @@ final List<dynamic> styles$DeferredChildComponentWithServices = const [];
 
 class ViewDeferredChildComponentWithServices0 extends AppView<import1.DeferredChildComponentWithServices> {
   static import2.ComponentStyles _componentStyles;
-  ViewDeferredChildComponentWithServices0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDeferredChildComponentWithServices0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('deferred-child-with-services');
     initComponentStyles();
   }
@@ -469,7 +469,7 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
   import9.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
   import1.DeferredChildComponentWithServices _DeferredChildComponentWithServices_0_6;
   import9.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
-  _ViewDeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewDeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   import9.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {

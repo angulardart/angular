@@ -24,7 +24,7 @@ final List<dynamic> styles$ProvidersComponent = const [];
 
 class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewProvidersComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewProvidersComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('providers');
     initComponentStyles();
   }
@@ -70,7 +70,7 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
   Map<String, dynamic> __useValueMap_0_15;
   dynamic __useEnums_0_16;
   String __XsrfToken_0_17;
-  _ViewProvidersComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewProvidersComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   import1.MyTypeAnnotation get _MyTypeAnnotation_0_6 {
