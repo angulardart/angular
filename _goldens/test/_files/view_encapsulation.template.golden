@@ -25,7 +25,7 @@ final List<dynamic> styles$EmulatedComponent = [import0.styles, '._nghost-%ID%{b
 class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
-  ViewEmulatedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewEmulatedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import7.document.createElement('Emulated');
     initComponentStyles();
   }
@@ -63,7 +63,7 @@ ComponentFactory<import2.EmulatedComponent> get EmulatedComponentNgFactory {
 }
 
 class _ViewEmulatedComponent1 extends AppView<import2.EmulatedComponent> {
-  _ViewEmulatedComponent1(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewEmulatedComponent1(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -85,7 +85,7 @@ final List<dynamic> styles$EmulatedComponentHost = const [];
 class _ViewEmulatedComponentHost0 extends AppView<import2.EmulatedComponent> {
   ViewEmulatedComponent0 _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_5;
-  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -118,7 +118,7 @@ final List<dynamic> styles$NoneComponent = [import12.styles, ':host { border: 1p
 class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
-  ViewNoneComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewNoneComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import7.document.createElement('None');
     initComponentStyles();
   }
@@ -155,7 +155,7 @@ ComponentFactory<import2.NoneComponent> get NoneComponentNgFactory {
 }
 
 class _ViewNoneComponent1 extends AppView<import2.NoneComponent> {
-  _ViewNoneComponent1(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewNoneComponent1(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -176,7 +176,7 @@ final List<dynamic> styles$NoneComponentHost = const [];
 class _ViewNoneComponentHost0 extends AppView<import2.NoneComponent> {
   ViewNoneComponent0 _compView_0;
   import2.NoneComponent _NoneComponent_0_5;
-  _ViewNoneComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewNoneComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

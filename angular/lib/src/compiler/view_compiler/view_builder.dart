@@ -500,9 +500,6 @@ o.ClassStmt createViewClass(
 }
 
 o.ClassMethod _createViewClassConstructor(CompileView view) {
-  var emptyTemplateVariableBindings = view.templateVariables
-      .map((variable) => [variable.value, o.NULL_EXPR])
-      .toList();
   var viewConstructorArgs = [
     o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
@@ -510,7 +507,6 @@ o.ClassMethod _createViewClassConstructor(CompileView view) {
   ];
   var superConstructorArgs = [
     createEnumExpression(Identifiers.ViewType, view.viewType),
-    o.literalMap(emptyTemplateVariableBindings),
     ViewConstructorVars.parentView,
     ViewConstructorVars.parentIndex,
     changeDetectionStrategyToConst(_getChangeDetectionMode(view))

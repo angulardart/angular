@@ -44,7 +44,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   ViewContainer _appEl_6;
   void Function() _cancelDeferredLoad6;
   static import6.ComponentStyles _componentStyles;
-  ViewTestContainerComponent0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewTestContainerComponent0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import9.document.createElement('test-container');
     initComponentStyles();
   }
@@ -145,7 +145,7 @@ ComponentFactory<import1.TestContainerComponent> get TestContainerComponentNgFac
 class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponent> {
   AppView _compView_0;
   dynamic _DeferredChild1Component_0_5;
-  _ViewTestContainerComponent1(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent1(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -175,7 +175,7 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent1(AppV
 class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponent> {
   ViewContainer _appEl_0;
   void Function() _cancelDeferredLoad0;
-  _ViewTestContainerComponent2(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent2(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -206,7 +206,7 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent2(AppV
 class _ViewTestContainerComponent3 extends AppView<import1.TestContainerComponent> {
   AppView _compView_0;
   dynamic _DeferredChild2Component_0_5;
-  _ViewTestContainerComponent3(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent3(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -236,7 +236,7 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent3(AppV
 class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponent> {
   ViewContainer _appEl_1;
   void Function() _cancelDeferredLoad1;
-  _ViewTestContainerComponent4(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent4(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -269,7 +269,7 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent4(AppV
 class _ViewTestContainerComponent5 extends AppView<import1.TestContainerComponent> {
   AppView _compView_0;
   dynamic _DeferredChild3Component_0_5;
-  _ViewTestContainerComponent5(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent5(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -304,7 +304,7 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent5(AppV
 class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponent> {
   AppView _compView_0;
   dynamic _DeferredChildComponentWithoutNgContent_0_5;
-  _ViewTestContainerComponent6(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent6(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -334,7 +334,7 @@ AppView<import1.TestContainerComponent> viewFactory_TestContainerComponent6(AppV
 class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponent> {
   AppView _compView_0;
   dynamic _DeferredChildComponentWithNgContent_0_5;
-  _ViewTestContainerComponent7(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent7(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -369,7 +369,7 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
   import15.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
   dynamic _DeferredChildComponentWithServices_0_6;
   import15.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
-  _ViewTestContainerComponent8(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponent8(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   import15.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
@@ -420,7 +420,7 @@ final List<dynamic> styles$TestContainerComponentHost = const [];
 class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComponent> {
   ViewTestContainerComponent0 _compView_0;
   import1.TestContainerComponent _TestContainerComponent_0_5;
-  _ViewTestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewTestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

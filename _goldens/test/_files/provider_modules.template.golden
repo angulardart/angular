@@ -21,7 +21,7 @@ final List<dynamic> styles$ProviderModulesComponent = const [];
 
 class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('provider-modules');
     initComponentStyles();
   }
@@ -60,7 +60,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
   Duration __fooToken_0_7;
   List<dynamic> __barToken_0_8;
   dynamic __bazToken_0_9;
-  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   import1.FooService get _FooService_0_6 {

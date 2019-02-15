@@ -22,7 +22,7 @@ final List<dynamic> styles$I18nAttributeComponent = const [];
 class ViewI18nAttributeComponent0 extends AppView<import1.I18nAttributeComponent> {
   static final String _message_0 = import2.Intl.message('message', desc: 'description');
   static import3.ComponentStyles _componentStyles;
-  ViewI18nAttributeComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewI18nAttributeComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import6.document.createElement('message');
     initComponentStyles();
   }
@@ -60,7 +60,7 @@ final List<dynamic> styles$I18nAttributeComponentHost = const [];
 class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComponent> {
   ViewI18nAttributeComponent0 _compView_0;
   import1.I18nAttributeComponent _I18nAttributeComponent_0_5;
-  _ViewI18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewI18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

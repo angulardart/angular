@@ -20,7 +20,7 @@ final List<dynamic> styles$PreserveWhitespace = const [];
 
 class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
   static import2.ComponentStyles _componentStyles;
-  ViewPreserveWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewPreserveWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('preserve-whitespace');
     initComponentStyles();
   }
@@ -63,7 +63,7 @@ final List<dynamic> styles$PreserveWhitespaceHost = const [];
 class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
   ViewPreserveWhitespace0 _compView_0;
   import1.PreserveWhitespace _PreserveWhitespace_0_5;
-  _ViewPreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewPreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -95,7 +95,7 @@ final List<dynamic> styles$MinifyWhitespace = const [];
 
 class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
   static import2.ComponentStyles _componentStyles;
-  ViewMinifyWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewMinifyWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('preserve-whitespace');
     initComponentStyles();
   }
@@ -136,7 +136,7 @@ final List<dynamic> styles$MinifyWhitespaceHost = const [];
 class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
   ViewMinifyWhitespace0 _compView_0;
   import1.MinifyWhitespace _MinifyWhitespace_0_5;
-  _ViewMinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewMinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override

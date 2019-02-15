@@ -62,7 +62,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   import1.DeferredValidator __DeferredValidator_8_8;
   List<import1.Validator> __MultiToken_8_9;
   static import2.ComponentStyles _componentStyles;
-  ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('app');
     initComponentStyles();
   }
@@ -355,7 +355,7 @@ final List<dynamic> styles$AppComponentHost = const [];
 class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_5;
-  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -387,7 +387,7 @@ final List<dynamic> styles$MaterialAutoSuggestInputComponent = const [];
 
 class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAutoSuggestInputComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewMaterialAutoSuggestInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewMaterialAutoSuggestInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('material-auto-suggest-input');
     initComponentStyles();
   }
@@ -422,7 +422,7 @@ final List<dynamic> styles$MaterialAutoSuggestInputComponentHost = const [];
 class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.MaterialAutoSuggestInputComponent> {
   ViewMaterialAutoSuggestInputComponent0 _compView_0;
   import1.MaterialAutoSuggestInputComponent _MaterialAutoSuggestInputComponent_0_5;
-  _ViewMaterialAutoSuggestInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewMaterialAutoSuggestInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -462,7 +462,7 @@ final List<dynamic> styles$MaterialInputComponent = const [];
 
 class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewMaterialInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewMaterialInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('material-input');
     initComponentStyles();
   }
@@ -500,7 +500,7 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
   import1.MaterialInputComponent _MaterialInputComponent_0_5;
   import1.DeferredValidator __DeferredValidator_0_6;
   List<import1.Validator> __MultiToken_0_7;
-  _ViewMaterialInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, {}, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewMaterialInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   import1.DeferredValidator get _DeferredValidator_0_6 {
