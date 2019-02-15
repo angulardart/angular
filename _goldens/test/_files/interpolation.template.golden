@@ -551,7 +551,7 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
   }
 }
 
-AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_InterpolationLocals1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationLocals1(parentView, parentIndex);
 }
 
@@ -589,7 +589,7 @@ class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
   }
 }
 
-AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals2(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_InterpolationLocals2(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInterpolationLocals2(parentView, parentIndex);
 }
 

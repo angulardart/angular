@@ -128,7 +128,7 @@ class _ViewQueriesComponent1 extends AppView<import1.QueriesComponent> {
   }
 }
 
-AppView<import1.QueriesComponent> viewFactory_QueriesComponent1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_QueriesComponent1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewQueriesComponent1(parentView, parentIndex);
 }
 
@@ -250,7 +250,7 @@ class _ViewEmbeddedQueries1 extends AppView<import1.EmbeddedQueries> {
   }
 }
 
-AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_EmbeddedQueries1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewEmbeddedQueries1(parentView, parentIndex);
 }
 
@@ -273,7 +273,7 @@ class _ViewEmbeddedQueries2 extends AppView<import1.EmbeddedQueries> {
   }
 }
 
-AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueries2(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_EmbeddedQueries2(AppView<dynamic> parentView, int parentIndex) {
   return _ViewEmbeddedQueries2(parentView, parentIndex);
 }
 
@@ -394,7 +394,7 @@ class _ViewEmbeddedQueriesList1 extends AppView<import1.EmbeddedQueriesList> {
   }
 }
 
-AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_EmbeddedQueriesList1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewEmbeddedQueriesList1(parentView, parentIndex);
 }
 
@@ -417,7 +417,7 @@ class _ViewEmbeddedQueriesList2 extends AppView<import1.EmbeddedQueriesList> {
   }
 }
 
-AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesList2(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_EmbeddedQueriesList2(AppView<dynamic> parentView, int parentIndex) {
   return _ViewEmbeddedQueriesList2(parentView, parentIndex);
 }
 
@@ -549,7 +549,7 @@ class _ViewNestedNgForQueriesList1 extends AppView<import1.NestedNgForQueriesLis
   }
 }
 
-AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_NestedNgForQueriesList1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedNgForQueriesList1(parentView, parentIndex);
 }
 
@@ -591,7 +591,7 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
   }
 }
 
-AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList2(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_NestedNgForQueriesList2(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedNgForQueriesList2(parentView, parentIndex);
 }
 
@@ -616,7 +616,7 @@ class _ViewNestedNgForQueriesList3 extends AppView<import1.NestedNgForQueriesLis
   }
 }
 
-AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesList3(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_NestedNgForQueriesList3(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedNgForQueriesList3(parentView, parentIndex);
 }
 

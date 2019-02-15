@@ -182,7 +182,7 @@ class _ViewContainsChildComponent1 extends AppView<import1.ContainsChildComponen
   }
 }
 
-AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_ContainsChildComponent1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewContainsChildComponent1(parentView, parentIndex);
 }
 
@@ -219,7 +219,7 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
   }
 }
 
-AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponent2(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_ContainsChildComponent2(AppView<dynamic> parentView, int parentIndex) {
   return _ViewContainsChildComponent2(parentView, parentIndex);
 }
 

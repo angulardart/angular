@@ -1514,8 +1514,8 @@ class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
   }
 }
 
-AppView<import1.NestedParentComp<T>> viewFactory_NestedParentComp1<T>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewNestedParentComp1(parentView, parentIndex);
+AppView<void> viewFactory_NestedParentComp1<T>(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewNestedParentComp1<T>(parentView, parentIndex);
 }
 
 final List<dynamic> styles$NestedParentCompHost = const [];

@@ -76,7 +76,7 @@ class _ViewEmulatedComponent1 extends AppView<import2.EmulatedComponent> {
   }
 }
 
-AppView<import2.EmulatedComponent> viewFactory_EmulatedComponent1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_EmulatedComponent1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewEmulatedComponent1(parentView, parentIndex);
 }
 
@@ -167,7 +167,7 @@ class _ViewNoneComponent1 extends AppView<import2.NoneComponent> {
   }
 }
 
-AppView<import2.NoneComponent> viewFactory_NoneComponent1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_NoneComponent1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNoneComponent1(parentView, parentIndex);
 }
 

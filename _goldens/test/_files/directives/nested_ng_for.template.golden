@@ -119,7 +119,7 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
   }
 }
 
-AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent1(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_NestedNgForComponent1(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedNgForComponent1(parentView, parentIndex);
 }
 
@@ -148,7 +148,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   }
 }
 
-AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) {
+AppView<void> viewFactory_NestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) {
   return _ViewNestedNgForComponent2(parentView, parentIndex);
 }
 
