@@ -60,10 +60,6 @@ class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> 
   }
 }
 
-AppView<import1.I18nPropertyComponent> viewFactory_I18nPropertyComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewI18nPropertyComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.I18nPropertyComponent> _I18nPropertyComponentNgFactory = const ComponentFactory('message', viewFactory_I18nPropertyComponentHost0);
 ComponentFactory<import1.I18nPropertyComponent> get I18nPropertyComponentNgFactory {
   return _I18nPropertyComponentNgFactory;

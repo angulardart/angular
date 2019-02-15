@@ -48,10 +48,6 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   }
 }
 
-AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewTestSubComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.TestSubComponent> _TestSubComponentNgFactory = const ComponentFactory('test-bar', viewFactory_TestSubComponentHost0);
 ComponentFactory<import1.TestSubComponent> get TestSubComponentNgFactory {
   return _TestSubComponentNgFactory;

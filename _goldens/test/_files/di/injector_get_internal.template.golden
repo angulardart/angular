@@ -345,10 +345,6 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   }
 }
 
-AppView<import1.AppComponent> viewFactory_AppComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewAppComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.AppComponent> _AppComponentNgFactory = const ComponentFactory('app', viewFactory_AppComponentHost0);
 ComponentFactory<import1.AppComponent> get AppComponentNgFactory {
   return _AppComponentNgFactory;
@@ -414,10 +410,6 @@ class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAut
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.MaterialAutoSuggestInputComponent> viewFactory_MaterialAutoSuggestInputComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewMaterialAutoSuggestInputComponent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.MaterialAutoSuggestInputComponent> _MaterialAutoSuggestInputComponentNgFactory = const ComponentFactory('material-auto-suggest-input', viewFactory_MaterialAutoSuggestInputComponentHost0);
@@ -494,10 +486,6 @@ class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.MaterialInputComponent> viewFactory_MaterialInputComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewMaterialInputComponent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.MaterialInputComponent> _MaterialInputComponentNgFactory = const ComponentFactory('material-input', viewFactory_MaterialInputComponentHost0);

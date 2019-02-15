@@ -68,10 +68,6 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   }
 }
 
-AppView<import1.InterpolationComponent> viewFactory_InterpolationComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInterpolationComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.InterpolationComponent> _InterpolationComponentNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationComponentHost0);
 ComponentFactory<import1.InterpolationComponent> get InterpolationComponentNgFactory {
   return _InterpolationComponentNgFactory;
@@ -152,10 +148,6 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInterpolationComponentNoWhitespace0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationComponentNoWhitespace> _InterpolationComponentNoWhitespaceNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationComponentNoWhitespaceHost0);
@@ -248,10 +240,6 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInterpolationTwoAdjacent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationTwoAdjacent> _InterpolationTwoAdjacentNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationTwoAdjacentHost0);
@@ -356,10 +344,6 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
   }
 }
 
-AppView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInterpolationLongerSentence0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.InterpolationLongerSentence> _InterpolationLongerSentenceNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationLongerSentenceHost0);
 ComponentFactory<import1.InterpolationLongerSentence> get InterpolationLongerSentenceNgFactory {
   return _InterpolationLongerSentenceNgFactory;
@@ -431,10 +415,6 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.InterpolationLiterals> viewFactory_InterpolationLiterals0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInterpolationLiterals0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationLiterals> _InterpolationLiteralsNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationLiteralsHost0);
@@ -528,10 +508,6 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.InterpolationLocals> viewFactory_InterpolationLocals0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInterpolationLocals0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InterpolationLocals> _InterpolationLocalsNgFactory = const ComponentFactory('interpolation', viewFactory_InterpolationLocalsHost0);

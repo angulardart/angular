@@ -67,10 +67,6 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
   }
 }
 
-AppView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInlinedNgIfComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.InlinedNgIfComponent> _InlinedNgIfComponentNgFactory = const ComponentFactory('inlined-ngif', viewFactory_InlinedNgIfComponentHost0);
 ComponentFactory<import1.InlinedNgIfComponent> get InlinedNgIfComponentNgFactory {
   return _InlinedNgIfComponentNgFactory;
@@ -154,10 +150,6 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedNgIfWithImmutableConditionComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInlinedNgIfWithImmutableConditionComponent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent> _InlinedNgIfWithImmutableConditionComponentNgFactory = const ComponentFactory('inlined-ngif-with-immutable-condition', viewFactory_InlinedNgIfWithImmutableConditionComponentHost0);

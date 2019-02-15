@@ -53,10 +53,6 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   }
 }
 
-AppView<import1.InjectableComponent> viewFactory_InjectableComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewInjectableComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.InjectableComponent> _InjectableComponentNgFactory = const ComponentFactory('test-injectables', viewFactory_InjectableComponentHost0);
 ComponentFactory<import1.InjectableComponent> get InjectableComponentNgFactory {
   return _InjectableComponentNgFactory;

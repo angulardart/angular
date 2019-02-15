@@ -71,10 +71,6 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
   }
 }
 
-AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinal0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewCompWithoutFinal0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.CompWithoutFinal> _CompWithoutFinalNgFactory = const ComponentFactory('comp-without-final', viewFactory_CompWithoutFinalHost0);
 ComponentFactory<import1.CompWithoutFinal> get CompWithoutFinalNgFactory {
   return _CompWithoutFinalNgFactory;
@@ -146,10 +142,6 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.CompWithFinal> viewFactory_CompWithFinal0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewCompWithFinal0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.CompWithFinal> _CompWithFinalNgFactory = const ComponentFactory('comp-with-final', viewFactory_CompWithFinalHost0);
@@ -225,10 +217,6 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
   }
 }
 
-AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewCompWithFinalStatic0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.CompWithFinalStatic> _CompWithFinalStaticNgFactory = const ComponentFactory('comp-with-final-static', viewFactory_CompWithFinalStaticHost0);
 ComponentFactory<import1.CompWithFinalStatic> get CompWithFinalStaticNgFactory {
   return _CompWithFinalStaticNgFactory;
@@ -300,10 +288,6 @@ class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> 
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewCompWithExternalFinal0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.CompWithExternalFinal> _CompWithExternalFinalNgFactory = const ComponentFactory('comp-with-external-final', viewFactory_CompWithExternalFinalHost0);

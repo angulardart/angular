@@ -55,10 +55,6 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   }
 }
 
-AppView<import1.HasHostAttributes> viewFactory_HasHostAttributes0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewHasHostAttributes0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.HasHostAttributes> _HasHostAttributesNgFactory = const ComponentFactory('has-host-attributes', viewFactory_HasHostAttributesHost0);
 ComponentFactory<import1.HasHostAttributes> get HasHostAttributesNgFactory {
   return _HasHostAttributesNgFactory;
@@ -142,10 +138,6 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
   }
 }
 
-AppView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributes0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewHasTemplateAttributes0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.HasTemplateAttributes> _HasTemplateAttributesNgFactory = const ComponentFactory('has-template-attributes', viewFactory_HasTemplateAttributesHost0);
 ComponentFactory<import1.HasTemplateAttributes> get HasTemplateAttributesNgFactory {
   return _HasTemplateAttributesNgFactory;
@@ -220,10 +212,6 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.HasHostClass> viewFactory_HasHostClass0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewHasHostClass0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.HasHostClass> _HasHostClassNgFactory = const ComponentFactory('has-host-class', viewFactory_HasHostClassHost0);
@@ -307,10 +295,6 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.HasTemplateClass> viewFactory_HasTemplateClass0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewHasTemplateClass0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.HasTemplateClass> _HasTemplateClassNgFactory = const ComponentFactory('has-template-class', viewFactory_HasTemplateClassHost0);

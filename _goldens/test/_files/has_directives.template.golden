@@ -70,10 +70,6 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   }
 }
 
-AppView<import1.TestFooComponent> viewFactory_TestFooComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewTestFooComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.TestFooComponent> _TestFooComponentNgFactory = const ComponentFactory('test-foo', viewFactory_TestFooComponentHost0);
 ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
   return _TestFooComponentNgFactory;
@@ -142,10 +138,6 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.TestSubComponent> viewFactory_TestSubComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewTestSubComponent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.TestSubComponent> _TestSubComponentNgFactory = const ComponentFactory('test-bar', viewFactory_TestSubComponentHost0);

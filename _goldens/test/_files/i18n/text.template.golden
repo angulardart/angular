@@ -50,10 +50,6 @@ class ViewI18nTextComponent0 extends AppView<import1.I18nTextComponent> {
   }
 }
 
-AppView<import1.I18nTextComponent> viewFactory_I18nTextComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewI18nTextComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.I18nTextComponent> _I18nTextComponentNgFactory = const ComponentFactory('message', viewFactory_I18nTextComponentHost0);
 ComponentFactory<import1.I18nTextComponent> get I18nTextComponentNgFactory {
   return _I18nTextComponentNgFactory;

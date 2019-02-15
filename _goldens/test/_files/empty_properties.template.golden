@@ -97,10 +97,6 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
   }
 }
 
-AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewEmptyPropertiesComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.EmptyPropertiesComponent> _EmptyPropertiesComponentNgFactory = const ComponentFactory('empty-properties', viewFactory_EmptyPropertiesComponentHost0);
 ComponentFactory<import1.EmptyPropertiesComponent> get EmptyPropertiesComponentNgFactory {
   return _EmptyPropertiesComponentNgFactory;
@@ -166,10 +162,6 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewFancyButtonComponent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.FancyButtonComponent> _FancyButtonComponentNgFactory = const ComponentFactory('fancy-button', viewFactory_FancyButtonComponentHost0);

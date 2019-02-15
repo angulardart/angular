@@ -45,10 +45,6 @@ class ViewLifecycleHooksComponent0 extends AppView<import1.LifecycleHooksCompone
   }
 }
 
-AppView<import1.LifecycleHooksComponent> viewFactory_LifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewLifecycleHooksComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.LifecycleHooksComponent> _LifecycleHooksComponentNgFactory = const ComponentFactory('lifecycle-hooks', viewFactory_LifecycleHooksComponentHost0);
 ComponentFactory<import1.LifecycleHooksComponent> get LifecycleHooksComponentNgFactory {
   return _LifecycleHooksComponentNgFactory;

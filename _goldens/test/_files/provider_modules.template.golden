@@ -46,10 +46,6 @@ class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesCompo
   }
 }
 
-AppView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewProviderModulesComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.ProviderModulesComponent> _ProviderModulesComponentNgFactory = const ComponentFactory('provider-modules', viewFactory_ProviderModulesComponentHost0);
 ComponentFactory<import1.ProviderModulesComponent> get ProviderModulesComponentNgFactory {
   return _ProviderModulesComponentNgFactory;

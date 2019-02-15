@@ -60,10 +60,6 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   }
 }
 
-AppView<import1.ParentComponent> viewFactory_ParentComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewParentComponent0(parentView, parentIndex);
-}
-
 const ComponentFactory<import1.ParentComponent> _ParentComponentNgFactory = const ComponentFactory('parent-comp', viewFactory_ParentComponentHost0);
 ComponentFactory<import1.ParentComponent> get ParentComponentNgFactory {
   return _ParentComponentNgFactory;
@@ -142,10 +138,6 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
     }
     componentStyles = styles;
   }
-}
-
-AppView<import1.ChildComponent> viewFactory_ChildComponent0(AppView<dynamic> parentView, int parentIndex) {
-  return ViewChildComponent0(parentView, parentIndex);
 }
 
 const ComponentFactory<import1.ChildComponent> _ChildComponentNgFactory = const ComponentFactory('child-cmp', viewFactory_ChildComponentHost0);
