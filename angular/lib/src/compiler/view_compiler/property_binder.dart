@@ -293,7 +293,9 @@ void bindAndWriteToRenderer(
           );
 
           final updateAttribute = o.importExpr(attrNs == null
-              ? DomHelpers.updateAttribute
+              ? (converter.isNullable(boundProp.value)
+                  ? DomHelpers.updateAttribute
+                  : DomHelpers.setAttribute)
               : DomHelpers.updateAttributeNS);
 
           updateStmts.add(updateAttribute.callFn(params).toStmt());
