@@ -1,0 +1,289 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'eager_existing_providers.dart';
+export 'eager_existing_providers.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'eager_existing_providers.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
+import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/di/errors.dart' as import8;
+
+final List<dynamic> styles$AppComponent = const [];
+
+class ViewAppComponent0 extends AppView<import1.AppComponent> {
+  ViewProvidesServicesComponent0 _compView_0;
+  import1.ProvidesServicesComponent _ProvidesServicesComponent_0_5;
+  import1.ProvidesServicesComponent _EagerProviderA_0_6;
+  import1.ProvidesServicesComponent _EagerProviderB_0_7;
+  ViewInjectsServicesComponent0 _compView_1;
+  import1.InjectsServicesComponent _InjectsServicesComponent_1_5;
+  static import2.ComponentStyles _componentStyles;
+  ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('app');
+    initComponentStyles();
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.AppComponent> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = ViewProvidesServicesComponent0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
+    _EagerProviderA_0_6 = _ProvidesServicesComponent_0_5;
+    _EagerProviderB_0_7 = _ProvidesServicesComponent_0_5;
+    _compView_1 = ViewInjectsServicesComponent0(this, 1);
+    final _el_1 = _compView_1.rootEl;
+    _InjectsServicesComponent_1_5 = import1.InjectsServicesComponent(_EagerProviderA_0_6, _EagerProviderB_0_7);
+    _compView_1.create(_InjectsServicesComponent_1_5, []);
+    _compView_0.create(_ProvidesServicesComponent_0_5, [
+      [_el_1]
+    ]);
+    init(const [], null);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if (((identical(token, import1.LazyProviderA) || identical(token, import1.LazyProviderB)) && (nodeIndex <= 1))) {
+      return _ProvidesServicesComponent_0_5;
+    }
+    if ((identical(token, import1.EagerProviderA) && (nodeIndex <= 1))) {
+      return _EagerProviderA_0_6;
+    }
+    if ((identical(token, import1.EagerProviderB) && (nodeIndex <= 1))) {
+      return _EagerProviderB_0_7;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+    _compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+    _compView_1.destroy();
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.AppComponent> _AppComponentNgFactory = const ComponentFactory('app', viewFactory_AppComponentHost0);
+ComponentFactory<import1.AppComponent> get AppComponentNgFactory {
+  return _AppComponentNgFactory;
+}
+
+final List<dynamic> styles$AppComponentHost = const [];
+
+class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
+  ViewAppComponent0 _compView_0;
+  import1.AppComponent _AppComponent_0_5;
+  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.AppComponent> build() {
+    _compView_0 = ViewAppComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _AppComponent_0_5 = import1.AppComponent();
+    _compView_0.create(_AppComponent_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _AppComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.AppComponent> viewFactory_AppComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewAppComponentHost0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$ProvidesServicesComponent = const [];
+
+class ViewProvidesServicesComponent0 extends AppView<import1.ProvidesServicesComponent> {
+  static import2.ComponentStyles _componentStyles;
+  ViewProvidesServicesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('provides-services');
+    initComponentStyles();
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.ProvidesServicesComponent> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    project(parentRenderNode, 0);
+    init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ProvidesServicesComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.ProvidesServicesComponent> _ProvidesServicesComponentNgFactory = const ComponentFactory('provides-services', viewFactory_ProvidesServicesComponentHost0);
+ComponentFactory<import1.ProvidesServicesComponent> get ProvidesServicesComponentNgFactory {
+  return _ProvidesServicesComponentNgFactory;
+}
+
+final List<dynamic> styles$ProvidesServicesComponentHost = const [];
+
+class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServicesComponent> {
+  ViewProvidesServicesComponent0 _compView_0;
+  import1.ProvidesServicesComponent _ProvidesServicesComponent_0_5;
+  _ViewProvidesServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.ProvidesServicesComponent> build() {
+    _compView_0 = ViewProvidesServicesComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
+    _compView_0.create(_ProvidesServicesComponent_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _ProvidesServicesComponent_0_5);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if (((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB)) && (0 == nodeIndex))) {
+      return _ProvidesServicesComponent_0_5;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.ProvidesServicesComponent> viewFactory_ProvidesServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewProvidesServicesComponentHost0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$InjectsServicesComponent = const [];
+
+class ViewInjectsServicesComponent0 extends AppView<import1.InjectsServicesComponent> {
+  static import2.ComponentStyles _componentStyles;
+  ViewInjectsServicesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('injects-services');
+    initComponentStyles();
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.InjectsServicesComponent> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$InjectsServicesComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.InjectsServicesComponent> _InjectsServicesComponentNgFactory = const ComponentFactory('injects-services', viewFactory_InjectsServicesComponentHost0);
+ComponentFactory<import1.InjectsServicesComponent> get InjectsServicesComponentNgFactory {
+  return _InjectsServicesComponentNgFactory;
+}
+
+final List<dynamic> styles$InjectsServicesComponentHost = const [];
+
+class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServicesComponent> {
+  ViewInjectsServicesComponent0 _compView_0;
+  import1.InjectsServicesComponent _InjectsServicesComponent_0_5;
+  _ViewInjectsServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.InjectsServicesComponent> build() {
+    _compView_0 = ViewInjectsServicesComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _InjectsServicesComponent_0_5 = (import6.isDevMode
+        ? import8.debugInjectorWrap(import1.InjectsServicesComponent, () {
+            return import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, viewData.parentIndex), this.injectorGet(import1.EagerProviderB, viewData.parentIndex));
+          })
+        : import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, viewData.parentIndex), this.injectorGet(import1.EagerProviderB, viewData.parentIndex)));
+    _compView_0.create(_InjectsServicesComponent_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _InjectsServicesComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.InjectsServicesComponent> viewFactory_InjectsServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewInjectsServicesComponentHost0(parentView, parentIndex);
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(AppComponent, AppComponentNgFactory);
+  _ngRef.registerComponent(ProvidesServicesComponent, ProvidesServicesComponentNgFactory);
+  _ngRef.registerComponent(InjectsServicesComponent, InjectsServicesComponentNgFactory);
+  _ref0.initReflector();
+}
