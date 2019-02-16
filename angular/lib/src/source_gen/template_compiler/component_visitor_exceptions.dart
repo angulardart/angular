@@ -241,6 +241,13 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
 
     List<Annotation> resolvedMetadata = _metadataFromAncestry(result.node);
 
+    // TODO(b/124524319): Remove this check when the Analyzer is fixed.
+    if (resolvedMetadata.isEmpty &&
+        indexedAnnotation.element is ParameterElement &&
+        result.node is ConstructorDeclaration) {
+      return BuildError.forElement(indexedAnnotation.element, message);
+    }
+
     ElementAnnotation resolvedAnnotation =
         resolvedMetadata[annotationIndex].elementAnnotation;
     return BuildError.forAnnotation(resolvedAnnotation, message);
