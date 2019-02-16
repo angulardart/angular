@@ -202,7 +202,7 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      import9.updateAttribute(_el_0, 'title', 'title'.toString());
+      import9.setAttribute(_el_0, 'title', 'title'.toString());
     }
   }
 
