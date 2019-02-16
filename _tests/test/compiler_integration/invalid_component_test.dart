@@ -96,6 +96,28 @@ void main() {
     ]);
   });
 
+  test('should error gracefully on bad constructor parameters', () async {
+    await compilesExpecting('''
+      import '$ngImport';
+
+      @Component(
+        selector: 'bad-constructor',
+        template: '',
+      )
+      class BadConstructor {
+        BadConstructor(@HuhWhatIsThis);
+      }
+    ''', errors: [
+      // TODO(b/124524319): The source location should read 11, 25, which is
+      //  the start of the annotation.
+      // TODO(b/124524346): Only print one error.
+      allOf([
+        contains('Error evaluating annotation'),
+        containsSourceLocation(8, 38)
+      ]),
+    ]);
+  });
+
   test('should identify a possibly unresolvable pipe', () async {
     await compilesExpecting('''
       import '$ngImport';
