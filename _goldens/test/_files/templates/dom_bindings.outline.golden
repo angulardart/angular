@@ -28,6 +28,13 @@ external _ng.AppView<HasTemplateAttributes> viewFactory_HasTemplateAttributes0(_
 class ViewHasTemplateAttributes0 extends _ng.AppView<HasTemplateAttributes> {
   external ViewHasTemplateAttributes0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class HasStaticAttribute.
+external List<dynamic> get styles$HasStaticAttribute;
+external _ng.ComponentFactory<HasStaticAttribute> get HasStaticAttributeNgFactory;
+external _ng.AppView<HasStaticAttribute> viewFactory_HasStaticAttribute0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewHasStaticAttribute0 extends _ng.AppView<HasStaticAttribute> {
+  external ViewHasStaticAttribute0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 // For @Component class HasHostClass.
 external List<dynamic> get styles$HasHostClass;
 external _ng.ComponentFactory<HasHostClass> get HasHostClassNgFactory;
