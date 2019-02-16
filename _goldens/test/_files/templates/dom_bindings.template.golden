@@ -176,6 +176,84 @@ AppView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributesHost0(Ap
   return _ViewHasTemplateAttributesHost0(parentView, parentIndex);
 }
 
+final List<dynamic> styles$HasStaticAttribute = const [];
+
+class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
+  import5.DivElement _el_0;
+  static import2.ComponentStyles _componentStyles;
+  ViewHasStaticAttribute0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('has-static-attribute');
+    initComponentStyles();
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.HasStaticAttribute> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import5.document;
+    _el_0 = import9.appendDiv(doc, parentRenderNode);
+    init(const [], null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      import9.updateAttribute(_el_0, 'title', 'title'.toString());
+    }
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasStaticAttribute, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.HasStaticAttribute> _HasStaticAttributeNgFactory = const ComponentFactory('has-static-attribute', viewFactory_HasStaticAttributeHost0);
+ComponentFactory<import1.HasStaticAttribute> get HasStaticAttributeNgFactory {
+  return _HasStaticAttributeNgFactory;
+}
+
+final List<dynamic> styles$HasStaticAttributeHost = const [];
+
+class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
+  ViewHasStaticAttribute0 _compView_0;
+  import1.HasStaticAttribute _HasStaticAttribute_0_5;
+  _ViewHasStaticAttributeHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.HasStaticAttribute> build() {
+    _compView_0 = ViewHasStaticAttribute0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _HasStaticAttribute_0_5 = import1.HasStaticAttribute();
+    _compView_0.create(_HasStaticAttribute_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _HasStaticAttribute_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.HasStaticAttribute> viewFactory_HasStaticAttributeHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewHasStaticAttributeHost0(parentView, parentIndex);
+}
+
 final List<dynamic> styles$HasHostClass = const [];
 
 class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
@@ -344,6 +422,7 @@ void initReflector() {
 
   _ngRef.registerComponent(HasHostAttributes, HasHostAttributesNgFactory);
   _ngRef.registerComponent(HasTemplateAttributes, HasTemplateAttributesNgFactory);
+  _ngRef.registerComponent(HasStaticAttribute, HasStaticAttributeNgFactory);
   _ngRef.registerComponent(HasHostClass, HasHostClassNgFactory);
   _ngRef.registerComponent(HasTemplateClass, HasTemplateClassNgFactory);
   _ref0.initReflector();

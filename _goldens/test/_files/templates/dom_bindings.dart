@@ -20,6 +20,14 @@ class HasTemplateAttributes {
 }
 
 @Component(
+  selector: 'has-static-attribute',
+  template: r'''
+    <div [attr.title]="'title'"></div>
+  ''',
+)
+class HasStaticAttribute {}
+
+@Component(
   selector: 'has-host-class',
   template: '',
 )
