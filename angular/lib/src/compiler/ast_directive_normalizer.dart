@@ -76,7 +76,8 @@ class AstDirectiveNormalizer {
         directiveType.moduleUrl,
         template.templateUrl,
       );
-      final templateContent = await _reader.readText(sourceAbsoluteUrl);
+      final templateContent =
+          await _readTextOrThrow(sourceAbsoluteUrl, directiveType);
       return _normalizeLoadedTemplate(
         directiveType,
         template,
@@ -88,6 +89,19 @@ class AstDirectiveNormalizer {
         'Component "${directiveType.name}" in \n'
         '${directiveType.moduleUrl}:\n'
         'Requires either a "template" or "templateUrl"; had neither.');
+  }
+
+  Future<String> _readTextOrThrow(
+      String sourceAbsoluteUrl, CompileTypeMetadata directiveType) async {
+    try {
+      return await _reader.readText(sourceAbsoluteUrl);
+    } catch (e) {
+      throwFailure(''
+          'Component "${directiveType.name}" in \n'
+          '${directiveType.moduleUrl}:\n'
+          'Failed to read templateUrl $sourceAbsoluteUrl.\n'
+          'Ensure the file exists on disk and is available to the compiler.');
+    }
   }
 
   Future<void> _validateStyleUrlsNotMeant(
