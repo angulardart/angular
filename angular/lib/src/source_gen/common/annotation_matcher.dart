@@ -79,5 +79,8 @@ bool matchAnnotation(Type type, ElementAnnotation annotation) {
 bool matchTypeExactly(Type type, DartObject object) =>
     TypeChecker.fromRuntime(type).isExactlyType(object.type);
 
+bool isAssignableFrom(Type type, DartObject object) =>
+    TypeChecker.fromRuntime(type).isAssignableFromType(object.type);
+
 /// Checks if an [ElementAnnotation] node matches specific [Type]s.
 typedef bool AnnotationMatcher(ElementAnnotation annotation);

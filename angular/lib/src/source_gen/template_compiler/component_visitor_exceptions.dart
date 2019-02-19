@@ -66,7 +66,7 @@ class AsyncBuildError extends BuildError {
 
 class AngularAnalysisError extends AsyncBuildError {
   final List<AnalysisError> constantEvaluationErrors;
-  final IndexedAnnotation<ClassElement> indexedAnnotation;
+  final IndexedAnnotation<Element> indexedAnnotation;
 
   AngularAnalysisError(this.constantEvaluationErrors, this.indexedAnnotation);
 
@@ -84,27 +84,42 @@ class AngularAnalysisError extends AsyncBuildError {
           constantEvaluationErrors, indexedAnnotation.element));
     }
 
-    ElementDeclarationResult classResult;
+    ElementDeclarationResult result;
     try {
-      classResult = await _resolvedClassResult(indexedAnnotation.element);
+      result = await _resolvedClassResult(indexedAnnotation.element);
     } on BuildError catch (buildError) {
       return buildError;
     }
 
-    var classDeclaration = classResult.node as ClassDeclaration;
+    List<Annotation> resolvedMetadata =
+        _metadataWithWorkaround(result.node, indexedAnnotation.element);
+
+    if (resolvedMetadata == null) {
+      return BuildError.forElement(indexedAnnotation.element, message);
+    }
+
     var resolvedAnnotation =
-        classDeclaration.metadata[indexedAnnotation.annotationIndex];
+        resolvedMetadata[indexedAnnotation.annotationIndex];
 
     // Only include the errors that are inside the annotation.
     return _buildErrorForAnalysisErrors(
-        classResult.resolvedUnit.errors.where((error) =>
+        result.resolvedUnit.errors.where((error) =>
             error.offset >= resolvedAnnotation.offset &&
             error.offset <= resolvedAnnotation.end),
         indexedAnnotation.element);
   }
 
   BuildError _buildErrorForAnalysisErrors(
-      Iterable<AnalysisError> errors, ClassElement componentType) {
+      Iterable<AnalysisError> errors, Element element) {
+    String reason;
+    if (element is ClassElement) {
+      reason = ''
+          'Compiling @Component-annotated class "${element.name}" '
+          'failed.\n\n${messages.analysisFailureReasons}';
+    } else {
+      reason = 'Compiling element $element failed.';
+    }
+
     return BuildError(
       messages.unresolvedSource(
         errors.map((e) {
@@ -130,9 +145,7 @@ class AngularAnalysisError extends AsyncBuildError {
             e.message,
           );
         }),
-        reason: ''
-            'Compiling @Component-annotated class "${componentType.name}" '
-            'failed.\n\n${messages.analysisFailureReasons}',
+        reason: reason,
       ),
     );
   }
@@ -201,6 +214,38 @@ class UnusedDirectiveTypeError extends ErrorMessageForAnnotation {
             'please also remove its corresponding entry from "directiveTypes".');
 }
 
+/// Find the ancestor node that should have the metadata and return
+/// that metadata.
+/// Angular only looks at metadata on class declarations,
+/// class members and formal parameters.
+List<Annotation> _metadataFromAncestry(AstNode node) {
+// NOTE: We check for [ClassMember] or [ClassDeclaration] explicitly
+// as some [AnnotatedNode]s in the ancestor chain do not have
+// the metadata we are looking for.  See
+// 519_missing_query_selector_test.dart for an example of this condition.
+  if (node is ClassMember ||
+      node is ClassDeclaration ||
+      node is FunctionDeclaration) {
+    return (node as AnnotatedNode).metadata;
+  } else if (node is FormalParameter) {
+    return node.metadata;
+  }
+  return _metadataFromAncestry(node.parent);
+}
+
+List<Annotation> _metadataWithWorkaround(
+    AstNode node, Element originalElement) {
+  List<Annotation> resolvedMetadata = _metadataFromAncestry(node);
+
+  // TODO(b/124524319): Remove this check when the Analyzer is fixed.
+  if (resolvedMetadata.isEmpty &&
+      originalElement is ParameterElement &&
+      node is ConstructorDeclaration) {
+    return null;
+  }
+  return resolvedMetadata;
+}
+
 class ErrorMessageForAnnotation extends AsyncBuildError {
   final IndexedAnnotation indexedAnnotation;
 
@@ -208,25 +253,6 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
     this.indexedAnnotation,
     String message,
   ) : super(message);
-
-  /// Find the ancestor node that should have the metadata and return
-  /// that metadata.
-  /// Angular only looks at metadata on class declarations,
-  /// class members and formal parameters.
-  static List<Annotation> _metadataFromAncestry(AstNode node) {
-    // NOTE: We check for [ClassMember] or [ClassDeclaration] explicitly
-    // as some [AnnotatedNode]s in the ancestor chain do not have
-    // the metadata we are looking for.  See
-    // 519_missing_query_selector_test.dart for an example of this condition.
-    if (node is ClassMember ||
-        node is ClassDeclaration ||
-        node is FunctionDeclaration) {
-      return (node as AnnotatedNode).metadata;
-    } else if (node is FormalParameter) {
-      return node.metadata;
-    }
-    return _metadataFromAncestry(node.parent);
-  }
 
   @override
   Future<BuildError> resolve() async {
@@ -239,12 +265,10 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
       return buildError;
     }
 
-    List<Annotation> resolvedMetadata = _metadataFromAncestry(result.node);
+    List<Annotation> resolvedMetadata =
+        _metadataWithWorkaround(result.node, indexedAnnotation.element);
 
-    // TODO(b/124524319): Remove this check when the Analyzer is fixed.
-    if (resolvedMetadata.isEmpty &&
-        indexedAnnotation.element is ParameterElement &&
-        result.node is ConstructorDeclaration) {
+    if (resolvedMetadata == null) {
       return BuildError.forElement(indexedAnnotation.element, message);
     }
 
