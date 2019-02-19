@@ -222,15 +222,15 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     context.print('${stmt.name}(');
     _visitParams(method.params, context);
     context.print(')');
-    var ctorStmts = method.body;
-    var superCtorExpr = ctorStmts.isNotEmpty
-        ? _getSuperConstructorCallExpr(ctorStmts[0])
+    var initializerStmts = method.initializers;
+    var superCtorExpr = initializerStmts.isNotEmpty
+        ? _getSuperConstructorCallExpr(initializerStmts[0])
         : null;
     if (superCtorExpr != null) {
       context.print(': ');
       superCtorExpr.visitExpression(this, context);
-      ctorStmts = ctorStmts.sublist(1);
     }
+    var ctorStmts = method.body;
     if (ctorStmts.isEmpty) {
       // Empty constructor body.
       context.println(';');

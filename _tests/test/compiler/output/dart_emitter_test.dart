@@ -278,8 +278,8 @@ void main() {
       test('should support declaring constructors', () {
         var superCall = o.SUPER_EXPR.callFn([o.variable('someParam')]).toStmt();
         expect(
-            emitStmt(o.ClassStmt(
-                'SomeClass', null, [], [], o.ClassMethod(null, [], []), [])),
+            emitStmt(
+                o.ClassStmt('SomeClass', null, [], [], o.Constructor(), [])),
             ['class SomeClass {', '  SomeClass();', '}'].join('\n'));
         expect(
             emitStmt(o.ClassStmt(
@@ -287,18 +287,18 @@ void main() {
                 null,
                 [],
                 [],
-                o.ClassMethod(null, [o.FnParam('someParam', o.INT_TYPE)], []),
+                o.Constructor(params: [o.FnParam('someParam', o.INT_TYPE)]),
                 [])),
             ['class SomeClass {', '  SomeClass(int someParam);', '}']
                 .join('\n'));
         expect(
             emitStmt(o.ClassStmt('SomeClass', null, [], [],
-                o.ClassMethod(null, [], [superCall]), [])),
+                o.Constructor(initializers: [superCall]), [])),
             ['class SomeClass {', '  SomeClass(): super(someParam);', '}']
                 .join('\n'));
         expect(
             emitStmt(o.ClassStmt('SomeClass', null, [], [],
-                o.ClassMethod(null, [], [callSomeMethod]), [])),
+                o.Constructor(body: [callSomeMethod]), [])),
             [
               'class SomeClass {',
               '  SomeClass() {',

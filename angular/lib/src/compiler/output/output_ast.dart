@@ -860,6 +860,17 @@ class ClassField extends AbstractClassPart {
       : super(outputType, modifiers, annotations);
 }
 
+class Constructor extends ClassMethod {
+  List<Statement> initializers;
+
+  Constructor({
+    List<FnParam> params,
+    List<Statement> body,
+    List<Statement> initializers,
+  })  : this.initializers = initializers ?? [],
+        super(null, params ?? [], body ?? []);
+}
+
 class ClassMethod extends AbstractClassPart {
   String name;
   List<FnParam> params;
@@ -923,7 +934,7 @@ class ClassStmt extends Statement {
   Expression parent;
   List<ClassField> fields;
   List<ClassGetter> getters;
-  ClassMethod constructorMethod;
+  Constructor constructorMethod;
   List<ClassMethod> methods;
 
   ClassStmt(
