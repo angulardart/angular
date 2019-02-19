@@ -265,14 +265,15 @@ class CompileTypeMetadataVisitor
   CompileDiDependencyMetadata _createCompileDiDependencyMetadata(
     ParameterElement p,
   ) {
+    final parameterInfo = ParameterInfo(p, _exceptionHandler);
     try {
       return CompileDiDependencyMetadata(
-        token: _getToken(p),
-        isAttribute: _hasAnnotation(p, Attribute),
-        isSelf: _hasAnnotation(p, Self),
-        isHost: _hasAnnotation(p, Host),
-        isSkipSelf: _hasAnnotation(p, SkipSelf),
-        isOptional: _hasAnnotation(p, Optional) || _isPositional(p),
+        token: _getToken(parameterInfo),
+        isAttribute: parameterInfo.isAttribute, //(p, Attribute),
+        isSelf: parameterInfo.isSelf,
+        isHost: parameterInfo.isHost,
+        isSkipSelf: parameterInfo.isSkipSelf,
+        isOptional: parameterInfo.isOptional || parameterInfo.isPositional,
       );
     } on ArgumentError catch (_) {
       // Handle cases where something is annotated with @Injectable() but does
@@ -285,30 +286,25 @@ class CompileTypeMetadataVisitor
     }
   }
 
-  CompileTokenMetadata _getToken(
-          ParameterElement p) =>
-      _hasAnnotation(p, Attribute)
-          ? _tokenForAttribute(p)
-          : _hasAnnotation(p, Inject)
-              ? _tokenForInject(p)
-              : $OpaqueToken.hasAnnotationOf(p, throwOnUnresolved: false)
-                  ? _tokenForOpaqueToken(p)
-                  : _tokenForType(p.type);
+  CompileTokenMetadata _getToken(ParameterInfo pI) => pI.isAttribute
+      ? _tokenForAttribute(pI)
+      : pI.isInject
+          ? _tokenForInject(pI)
+          : pI.isOpaqueToken
+              ? _tokenForOpaqueToken(pI)
+              : _tokenForType(pI.type);
 
-  CompileTokenMetadata _tokenForAttribute(ParameterElement p) =>
+  CompileTokenMetadata _tokenForAttribute(ParameterInfo pI) =>
       CompileTokenMetadata(
-          value: dart_objects.coerceString(
-              _getAnnotation(p, Attribute).constantValue, 'attributeName'));
+          value: dart_objects.coerceString(pI.attribute, 'attributeName'));
 
-  CompileTokenMetadata _tokenForInject(ParameterElement p) {
-    final annotation = _getAnnotation(p, Inject);
-    final injectToken = annotation.computeConstantValue();
-    final token = dart_objects.getField(injectToken, 'token');
-    return _token(token, annotation);
+  CompileTokenMetadata _tokenForInject(ParameterInfo pI) {
+    return _token(
+        dart_objects.getField(pI.injectValue, 'token'), pI.injectAnnotation);
   }
 
-  CompileTokenMetadata _tokenForOpaqueToken(ParameterElement p) {
-    final annotation = $OpaqueToken.firstAnnotationOf(p);
+  CompileTokenMetadata _tokenForOpaqueToken(ParameterInfo pI) {
+    final annotation = pI.opaqueToken;
     return _token(annotation);
   }
 
@@ -564,26 +560,6 @@ class CompileTypeMetadataVisitor
   bool _isOpaqueToken(DartObject token) =>
       token != null && $OpaqueToken.isAssignableFromType(token.type);
 
-  ElementAnnotation _getAnnotation(Element element, Type type) {
-    for (var annotationIndex = 0;
-        annotationIndex < element.metadata.length;
-        annotationIndex++) {
-      final annotation = element.metadata[annotationIndex];
-      try {
-        if (annotation_matcher.matchAnnotation(type, annotation))
-          return annotation;
-      } on ArgumentError catch (_) {
-        _exceptionHandler.handle(ErrorMessageForAnnotation(
-            IndexedAnnotation(element, annotation, annotationIndex),
-            'Error evaluating annotation on element "$element"'));
-      }
-    }
-    return null;
-  }
-
-  bool _hasAnnotation(Element element, Type type) =>
-      _getAnnotation(element, type) != null;
-
   o.Expression _expressionForEnum(DartObject token) {
     final field =
         _enumValues(token).singleWhere((field) => field.constantValue == token);
@@ -600,10 +576,6 @@ class CompileTypeMetadataVisitor
 
   bool _isEnum(ParameterizedType type) =>
       type is InterfaceType && type.element.isEnum;
-
-  bool _isPositional(ParameterElement param) =>
-      // ignore: deprecated_member_use, no migration path
-      param.parameterKind == ParameterKind.POSITIONAL;
 
   bool _isProtobufEnum(ParameterizedType type) {
     return type is InterfaceType &&
@@ -626,4 +598,75 @@ class CompileTypeMetadataVisitor
 class _PrivateConstructorException extends Error {
   final String constructorName;
   _PrivateConstructorException(this.constructorName);
+}
+
+class ParameterInfo {
+  final ParameterElement _parameter;
+  final ComponentVisitorExceptionHandler _exceptionHandler;
+
+  DartObject attribute;
+  bool get isAttribute => attribute != null;
+  bool isSelf = false;
+  bool isHost = false;
+  bool isSkipSelf = false;
+  bool isOptional = false;
+
+  ElementAnnotation injectAnnotation;
+  DartObject injectValue;
+  bool get isInject => injectValue != null;
+
+  DartObject opaqueToken;
+  bool get isOpaqueToken => opaqueToken != null;
+
+  bool get isPositional =>
+      // ignore: deprecated_member_use, no migration path
+      _parameter.parameterKind == ParameterKind.POSITIONAL;
+
+  DartType get type => _parameter.type;
+
+  ParameterInfo(this._parameter, this._exceptionHandler) {
+    for (var annotationIndex = 0;
+        annotationIndex < _parameter.metadata.length;
+        annotationIndex++) {
+      final annotation = _parameter.metadata[annotationIndex];
+      final annotationValue = annotation.computeConstantValue();
+      final indexedAnnotation =
+          IndexedAnnotation(_parameter, annotation, annotationIndex);
+      if (annotation.constantEvaluationErrors.isNotEmpty) {
+        _exceptionHandler.handle(AngularAnalysisError(
+            annotation.constantEvaluationErrors, indexedAnnotation));
+      } else if (annotationValue == null) {
+        _exceptionHandler.handle(ErrorMessageForAnnotation(
+            indexedAnnotation, "Error evaluating annotation"));
+      } else {
+        _populateTypeInfo(annotationValue, annotation);
+      }
+    }
+  }
+
+  void _populateTypeInfo(
+      DartObject annotationValue, ElementAnnotation annotation) {
+    if (annotation_matcher.matchTypeExactly(Attribute, annotationValue)) {
+      attribute = annotationValue;
+    }
+    if (annotation_matcher.matchTypeExactly(Self, annotationValue)) {
+      isSelf = true;
+    }
+    if (annotation_matcher.matchTypeExactly(Host, annotationValue)) {
+      isHost = true;
+    }
+    if (annotation_matcher.matchTypeExactly(SkipSelf, annotationValue)) {
+      isSkipSelf = true;
+    }
+    if (annotation_matcher.matchTypeExactly(Optional, annotationValue)) {
+      isOptional = true;
+    }
+    if (annotation_matcher.isAssignableFrom(OpaqueToken, annotationValue)) {
+      opaqueToken = annotationValue;
+    }
+    if (annotation_matcher.matchTypeExactly(Inject, annotationValue)) {
+      injectValue = annotationValue;
+      injectAnnotation = annotation;
+    }
+  }
 }
