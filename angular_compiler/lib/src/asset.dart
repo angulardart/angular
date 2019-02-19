@@ -47,16 +47,6 @@ class _BuildStepAssetReader extends NgAssetReader {
   @override
   Future<String> readText(String url) async {
     final asset = AssetId.resolve(_normalize(url));
-    return _buildStep.readAsString(asset).catchError((e) async {
-      if (!await _buildStep.canRead(asset)) {
-        // TODO: https://github.com/dart-lang/angular/issues/851.
-        log.severe(''
-            'Unable to read file:\n'
-            '  "$url"\n  '
-            'Ensure the file exists on disk and is available to the compiler.');
-        return '';
-      }
-      throw e;
-    });
+    return _buildStep.readAsString(asset);
   }
 }
