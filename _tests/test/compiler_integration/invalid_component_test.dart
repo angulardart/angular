@@ -51,8 +51,8 @@ void main() {
         String inValue;
       }
     ''', warnings: [
-      allOf(contains('Could not resolve'), contains('Input'),
-          containsSourceLocation(15, 9)),
+      allOf(contains('Annotation creation must have arguments'),
+          contains('Input'), containsSourceLocation(15, 9)),
     ]);
   });
 
@@ -68,8 +68,10 @@ void main() {
 
       
     ''', errors: [
-      allOf(contains('Errors resolving annotation'),
-          containsSourceLocation(3, 7)),
+      allOf(
+          contains('Compiling annotation @Directive'),
+          contains('Undefined name \'OopsProvider\''),
+          containsSourceLocation(5, 21)), // pointing at OopsProvider
     ]);
   });
 

@@ -5,8 +5,8 @@ import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/output/convert.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
-import 'package:angular_compiler/cli.dart';
 
+import 'annotation_information.dart';
 import 'compile_metadata.dart';
 import 'component_visitor_exceptions.dart';
 import 'dart_object_utils.dart';
@@ -20,44 +20,54 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
 
   @override
   CompilePipeMetadata visitClassElement(ClassElement element) {
-    final annotation = element.metadata.firstWhere(isPipe, orElse: () => null);
-    if (annotation == null) return null;
-    if (element.isPrivate) {
-      BuildError.throwForElement(element, 'Pipes must be public');
+    final annotationInfo = annotationWhere(element, isPipe, _exceptionHandler);
+
+    if (annotationInfo == null) return null;
+    if (annotationInfo.hasErrors) {
+      _exceptionHandler.handle(AngularAnalysisError(
+          annotationInfo.constantEvaluationErrors, annotationInfo));
+      return null;
     }
-    return _createPipeMetadata(annotation, element);
+    if (element.isPrivate) {
+      _exceptionHandler
+          .handle(ErrorMessageForElement(element, 'Pipes must be public'));
+      return null;
+    }
+
+    return _createPipeMetadata(annotationInfo);
   }
 
   CompilePipeMetadata _createPipeMetadata(
-    ElementAnnotation annotation,
-    ClassElement element,
+    AnnotationInformation<ClassElement> annotation,
   ) {
+    InterfaceType elementType = annotation.element.type;
     FunctionType transformType;
-    final transformMethod = element.type.lookUpInheritedMethod('transform');
+    final transformMethod = elementType.lookUpInheritedMethod('transform');
     if (transformMethod != null) {
       // The pipe defines a 'transform' method.
       transformType = transformMethod.type;
     } else {
       // The pipe may define a function-typed 'transform' property. This is
       // supported for backwards compatibility.
-      final transformGetter = element.type.lookUpInheritedGetter('transform');
+      final transformGetter = elementType.lookUpInheritedGetter('transform');
       final transformGetterType = transformGetter?.returnType;
       if (transformGetterType is FunctionType) {
         transformType = transformGetterType;
       }
     }
     if (transformType == null) {
-      BuildError.throwForElement(
-          element, 'Pipes must implement a "transform" method');
+      _exceptionHandler.handle(ErrorMessageForElement(
+          annotation.element, 'Pipes must implement a "transform" method'));
+      return null;
     }
-    final value = annotation.computeConstantValue();
+    final value = annotation.constantValue;
     return CompilePipeMetadata(
-      type: element
+      type: annotation.element
           .accept(CompileTypeMetadataVisitor(_library, _exceptionHandler)),
       transformType: fromFunctionType(transformType),
       name: coerceString(value, 'name'),
       pure: coerceBool(value, 'pure', defaultTo: true),
-      lifecycleHooks: extractLifecycleHooks(element),
+      lifecycleHooks: extractLifecycleHooks(annotation.element),
     );
   }
 }
