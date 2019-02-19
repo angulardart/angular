@@ -3,7 +3,6 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
-import 'package:analyzer/error/error.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -22,6 +21,7 @@ import 'package:angular/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 
+import 'annotation_information.dart';
 import 'compile_metadata.dart';
 import 'component_visitor_exceptions.dart';
 import 'dart_object_utils.dart';
@@ -41,63 +41,6 @@ AngularArtifacts findComponentsAndDirectives(
     componentVisitor.components,
     componentVisitor.directives,
   );
-}
-
-/// Manages an annotation giving sane error handling behaviour.
-///
-/// Users who want to ignore errors, skipping bad annotations, will call the is*
-/// getters directly. This class will issue one warning to the exception\
-/// handler.
-///
-/// Users who want to fail on bad annotations can check [hasErrors] and then
-/// report errors directly to their exception handlers. In this case, this class
-/// will not issue warnings to the exception handler.
-class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
-  final ComponentVisitorExceptionHandler _exceptionHandler;
-  final DartObject constantValue;
-  final List<AnalysisError> constantEvaluationErrors;
-
-  AnnotationInformation(T element, ElementAnnotation annotation,
-      int annotationIndex, this._exceptionHandler)
-      : constantValue = annotation.computeConstantValue(),
-        constantEvaluationErrors = annotation.constantEvaluationErrors,
-        super(element, annotation, annotationIndex);
-
-  bool get isInputType => _isTypeExactly(Input);
-  bool get isOutputType => _isTypeExactly(Output);
-  bool get isContentType =>
-      _isTypeExactly(ContentChild) || _isTypeExactly(ContentChildren);
-  bool get isViewType =>
-      _isTypeExactly(ViewChild) || _isTypeExactly(ViewChildren);
-  bool get isComponent => _isTypeExactly(Component);
-
-  bool get hasErrors =>
-      constantValue == null || constantEvaluationErrors.isNotEmpty;
-
-  bool sentWarning = false;
-
-  bool _isTypeExactly(Type type) {
-    if (hasErrors) {
-      if (!sentWarning) {
-        // NOTE: AngularAnalysisError only supports ClassElements.
-        // TODO(b/124317949): It should support all Elements.
-        // NOTE: Upcast to satisfy Dart's type system.
-        // See https://github.com/dart-lang/sdk/issues/33932
-        final IndexedAnnotation annotation = this;
-        if (constantEvaluationErrors.isNotEmpty &&
-            annotation is IndexedAnnotation<ClassElement>) {
-          _exceptionHandler.handleWarning(
-              AngularAnalysisError(constantEvaluationErrors, annotation));
-        } else {
-          _exceptionHandler.handleWarning(
-              ErrorMessageForAnnotation(this, "Could not resolve annotation."));
-        }
-        sentWarning = true;
-      }
-      return false;
-    }
-    return matchTypeExactly(type, constantValue);
-  }
 }
 
 class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
@@ -292,9 +235,8 @@ class _ComponentVisitor
     if (annotationInfo == null) return null;
 
     if (annotationInfo.hasErrors) {
-      // TODO(b/124317949): Print the errors as well.
-      _exceptionHandler.handle(ErrorMessageForAnnotation(
-          annotationInfo, "Errors resolving annotation."));
+      _exceptionHandler.handle(AngularAnalysisError(
+          annotationInfo.constantEvaluationErrors, annotationInfo));
       return null;
     }
     var invalid = false;
@@ -863,17 +805,4 @@ void _prohibitBindingChange(
         "'${element.displayName}' overwrites the binding name of property "
         "'$propertyName' from '${bindings[propertyName]}' to '$bindingName'.");
   }
-}
-
-/// Returns the [AnnotationInformation] for the first annotation on [element]
-/// that matches [test] or null if no such annotation exists.
-AnnotationInformation<T> annotationWhere<T extends Element>(
-    T element,
-    bool test(ElementAnnotation element),
-    ComponentVisitorExceptionHandler exceptionHandler) {
-  final annotationIndex = element.metadata.indexWhere(test);
-  if (annotationIndex == -1) return null;
-  final annotation = element.metadata[annotationIndex];
-  return AnnotationInformation(
-      element, annotation, annotationIndex, exceptionHandler);
 }

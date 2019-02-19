@@ -72,6 +72,8 @@ class AngularAnalysisError extends AsyncBuildError {
 
   @override
   Future<BuildError> resolve() async {
+    final annotationSource = indexedAnnotation.annotation.toSource();
+
     bool hasOffsetInformation =
         constantEvaluationErrors.any((error) => error.offset != 0);
     // If this code is called from a tool using [AnalysisResolvers], then
@@ -80,15 +82,16 @@ class AngularAnalysisError extends AsyncBuildError {
     // So, we return immediately with the information in
     // [constantEvaluationErrors].
     if (hasOffsetInformation) {
-      return Future.value(_buildErrorForAnalysisErrors(
-          constantEvaluationErrors, indexedAnnotation.element));
+      return Future.value(_buildErrorForAnalysisErrors(constantEvaluationErrors,
+          indexedAnnotation.element, annotationSource));
     }
 
     ElementDeclarationResult result;
     try {
       result = await _resolvedClassResult(indexedAnnotation.element);
     } on BuildError catch (buildError) {
-      return buildError;
+      return BuildError(
+          '${buildError.message} while compiling $annotationSource');
     }
 
     List<Annotation> resolvedMetadata =
@@ -106,18 +109,20 @@ class AngularAnalysisError extends AsyncBuildError {
         result.resolvedUnit.errors.where((error) =>
             error.offset >= resolvedAnnotation.offset &&
             error.offset <= resolvedAnnotation.end),
-        indexedAnnotation.element);
+        indexedAnnotation.element,
+        annotationSource);
   }
 
-  BuildError _buildErrorForAnalysisErrors(
-      Iterable<AnalysisError> errors, Element element) {
+  BuildError _buildErrorForAnalysisErrors(Iterable<AnalysisError> errors,
+      Element element, String annnotationSouce) {
     String reason;
-    if (element is ClassElement) {
+    if (element is ClassElement && annnotationSouce.startsWith('@Component')) {
       reason = ''
           'Compiling @Component-annotated class "${element.name}" '
           'failed.\n\n${messages.analysisFailureReasons}';
     } else {
-      reason = 'Compiling element $element failed.';
+      reason =
+          'Compiling annotation $annnotationSouce on element $element failed.';
     }
 
     return BuildError(
