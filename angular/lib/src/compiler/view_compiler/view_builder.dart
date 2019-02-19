@@ -499,7 +499,7 @@ o.ClassStmt createViewClass(
   return viewClass;
 }
 
-o.ClassMethod _createViewClassConstructor(CompileView view) {
+o.Constructor _createViewClassConstructor(CompileView view) {
   var viewConstructorArgs = [
     o.FnParam(ViewConstructorVars.parentView.name,
         o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
@@ -511,10 +511,9 @@ o.ClassMethod _createViewClassConstructor(CompileView view) {
     ViewConstructorVars.parentIndex,
     changeDetectionStrategyToConst(_getChangeDetectionMode(view))
   ];
-  final ctor = o.ClassMethod(
-    null,
-    viewConstructorArgs,
-    [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()],
+  final ctor = o.Constructor(
+    params: viewConstructorArgs,
+    initializers: [o.SUPER_EXPR.callFn(superConstructorArgs).toStmt()],
   );
   if (view.viewType == ViewType.component && view.viewIndex == 0) {
     // No namespace just call [document.createElement].

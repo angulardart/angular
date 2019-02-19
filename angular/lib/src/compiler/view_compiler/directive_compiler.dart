@@ -65,7 +65,7 @@ class DirectiveCompiler {
   static String _changeDetectorClassName(ir.Directive directive) =>
       '${directive.name}NgCd';
 
-  o.ClassMethod _createChangeDetectorConstructor(
+  o.Constructor _createChangeDetectorConstructor(
       ir.Directive directive, CompileViewStorage storage) {
     var instanceType = o.importType(
       directive.metadata.type.identifier,
@@ -95,7 +95,7 @@ class DirectiveCompiler {
       statements.add(o.WriteClassMemberExpr('el', o.ReadVarExpr('e')).toStmt());
       statements.add(o.InvokeMemberMethodExpr('initCd', const []).toStmt());
     }
-    return o.ClassMethod(null, constructorArgs, statements);
+    return o.Constructor(params: constructorArgs, body: statements);
   }
 
   static bool _implementsOnChangesLifecycle(ir.Directive directive) =>

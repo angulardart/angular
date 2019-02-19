@@ -233,11 +233,10 @@ List<o.Statement> codegenStmts = [
             ],
             o.MapType(o.DYNAMIC_TYPE))
       ],
-      o.ClassMethod(null, [
+      o.Constructor(params: [
         o.FnParam("dataParam", o.DYNAMIC_TYPE),
         o.FnParam("dynamicPropParam", o.DYNAMIC_TYPE)
-      ], [
-        o.SUPER_EXPR.callFn([o.variable("dataParam")]).toStmt(),
+      ], body: [
         o.THIS_EXPR
             .prop("dynamicProp")
             .set(o.variable("dynamicPropParam"))
@@ -258,6 +257,8 @@ List<o.Statement> codegenStmts = [
               ]))
             ], o.DYNAMIC_TYPE))
             .toStmt()
+      ], initializers: [
+        o.SUPER_EXPR.callFn([o.variable("dataParam")]).toStmt(),
       ]),
       [
         o.ClassMethod(
