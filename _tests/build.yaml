@@ -14,3 +14,4 @@ targets:
           - test/regression/519_missing_query_selector_test.dart*
           - test/regression/1500_factory_provider_null_test.dart*
           - test/regression/1538_deferred_template_test.dart*
+          - test/regression/function_event_bindings_test.dart*
