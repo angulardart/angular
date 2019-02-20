@@ -209,7 +209,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
         import8.updateClassBindingNonHtml(rootEl, 'foo', import1.HostComponent.hostClassFoo);
       }
       if (!identical(import1.HostComponent.hostStyleColor, null)) {
-        rootEl.style.setProperty('color', import1.HostComponent.hostStyleColor?.toString());
+        rootEl.style.setProperty('color', import1.HostComponent.hostStyleColor);
       }
     }
     final currVal_0 = import1.HostComponent.hasTerrible;

@@ -21,6 +21,13 @@ external _ng.AppView<Comp1> viewFactory_Comp10(_ng.AppView<dynamic> parentView, 
 class ViewComp10 extends _ng.AppView<Comp1> {
   external ViewComp10(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class Comp1String.
+external List<dynamic> get styles$Comp1String;
+external _ng.ComponentFactory<Comp1String> get Comp1StringNgFactory;
+external _ng.AppView<Comp1String> viewFactory_Comp1String0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewComp1String0 extends _ng.AppView<Comp1String> {
+  external ViewComp1String0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 // For @Component class Comp2.
 external List<dynamic> get styles$Comp2;
 external _ng.ComponentFactory<Comp2> get Comp2NgFactory;

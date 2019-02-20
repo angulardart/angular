@@ -254,7 +254,15 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
         _implicitReceiverType = classElement.type;
 
   @override
-  DartType visitBinary(ast.Binary ast, _) => _dynamicType;
+  DartType visitBinary(ast.Binary ast, _) {
+    // Special case for adding two strings together.
+    if (ast.operation == '+' &&
+        ast.left.visit(this, _) == _stringType &&
+        ast.right.visit(this, _) == _stringType) {
+      return _stringType;
+    }
+    return _dynamicType;
+  }
 
   @override
   DartType visitChain(ast.Chain ast, _) => _dynamicType;
@@ -291,7 +299,8 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   DartType visitLiteralMap(ast.LiteralMap ast, _) => _dynamicType;
 
   @override
-  DartType visitLiteralPrimitive(ast.LiteralPrimitive ast, _) => _dynamicType;
+  DartType visitLiteralPrimitive(ast.LiteralPrimitive ast, _) =>
+      ast.value is String ? _stringType : _dynamicType;
 
   @override
   DartType visitMethodCall(ast.MethodCall ast, _) {
@@ -338,7 +347,10 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   }
 
   @override
-  DartType visitStaticRead(ast.StaticRead ast, _) => _dynamicType;
+  DartType visitStaticRead(ast.StaticRead ast, _) =>
+      ast.id.analyzedClass == null
+          ? _dynamicType
+          : ast.id.analyzedClass._classElement.type;
 
   /// Returns the return type of [getterName] on [receiverType], if it exists.
   ///

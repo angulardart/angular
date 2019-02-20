@@ -10,6 +10,16 @@ class Comp1 {
   var b = 2;
 }
 
+// OK: Compiles to "_ctx.a + _ctx.b"
+@Component(
+  selector: 'comp-1-string',
+  template: '{{a + b}}',
+)
+class Comp1String {
+  var a = "1";
+  var b = "2";
+}
+
 // OK: Compiles to "_ctx.a.b(_ctx.c)"
 @Component(
   selector: 'comp-2',
