@@ -101,6 +101,86 @@ AppView<import1.Comp1> viewFactory_Comp1Host0(AppView<dynamic> parentView, int p
   return _ViewComp1Host0(parentView, parentIndex);
 }
 
+final List<dynamic> styles$Comp1String = const [];
+
+class ViewComp1String0 extends AppView<import1.Comp1String> {
+  var _expr_0;
+  final import2.Text _text_0 = import3.createText('');
+  static import4.ComponentStyles _componentStyles;
+  ViewComp1String0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('comp-1-string');
+    initComponentStyles();
+  }
+  static String get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.Comp1String> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    parentRenderNode.append(_text_0);
+    init(const [], null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    final currVal_0 = import9.interpolateString0((_ctx.a + _ctx.b));
+    if (import9.checkBinding(_expr_0, currVal_0)) {
+      _text_0.text = currVal_0;
+      _expr_0 = currVal_0;
+    }
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$Comp1String, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.Comp1String> _Comp1StringNgFactory = const ComponentFactory('comp-1-string', viewFactory_Comp1StringHost0);
+ComponentFactory<import1.Comp1String> get Comp1StringNgFactory {
+  return _Comp1StringNgFactory;
+}
+
+final List<dynamic> styles$Comp1StringHost = const [];
+
+class _ViewComp1StringHost0 extends AppView<import1.Comp1String> {
+  ViewComp1String0 _compView_0;
+  import1.Comp1String _Comp1String_0_5;
+  _ViewComp1StringHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.Comp1String> build() {
+    _compView_0 = ViewComp1String0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _Comp1String_0_5 = import1.Comp1String();
+    _compView_0.create(_Comp1String_0_5, projectableNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _Comp1String_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.Comp1String> viewFactory_Comp1StringHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewComp1StringHost0(parentView, parentIndex);
+}
+
 final List<dynamic> styles$Comp2 = const [];
 
 class ViewComp20 extends AppView<import1.Comp2> {
@@ -716,6 +796,7 @@ void initReflector() {
   _visited = true;
 
   _ngRef.registerComponent(Comp1, Comp1NgFactory);
+  _ngRef.registerComponent(Comp1String, Comp1StringNgFactory);
   _ngRef.registerComponent(Comp2, Comp2NgFactory);
   _ngRef.registerComponent(Comp3, Comp3NgFactory);
   _ngRef.registerComponent(Comp4, Comp4NgFactory);
