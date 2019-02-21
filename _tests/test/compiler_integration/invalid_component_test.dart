@@ -1,8 +1,13 @@
 @TestOn('vm')
 import 'package:_tests/compiler.dart';
 import 'package:test/test.dart';
+import 'package:term_glyph/term_glyph.dart' as term_glyph;
 
 void main() {
+  setUpAll(() {
+    term_glyph.ascii = true;
+  });
+
   test('should identify a possibly unresolvable directive', () async {
     await compilesExpecting('''
       import '$ngImport';
@@ -180,8 +185,10 @@ void main() {
         'line 1, column 9 of asset:pkg/lib/input.dart: Dead code in template: '
             'Non-empty text node (Dropped) is a child of a non-projecting '
             'component (opaque) and will not be added to the DOM.\n'
-            '<opaque>Dropped</opaque>\n'
-            '        ^^^^^^^'
+            '  ,\n'
+            '1 | <opaque>Dropped</opaque>\n'
+            '  |         ^^^^^^^\n'
+            "  '"
       ])
     ]);
   });
