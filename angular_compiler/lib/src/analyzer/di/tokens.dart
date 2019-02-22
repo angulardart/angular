@@ -20,7 +20,11 @@ class TokenReader {
   TokenElement parseTokenObject(DartObject object, [ParameterElement element]) {
     final constant = ConstantReader(object);
     if (constant.isNull) {
-      throw FormatException('Expected token, but got "null".');
+      final errorMsg = 'Annotation on element has errors and was unresolvable.';
+      if (element != null) {
+        BuildError.throwForElement(element, errorMsg);
+      }
+      throw FormatException(errorMsg);
     }
     if (constant.isType) {
       return TypeTokenElement(linkTypeOf(constant.typeValue));
@@ -129,7 +133,7 @@ class TokenReader {
         $Inject.firstAnnotationOfExact(element)?.getField('token') ??
             $OpaqueToken.firstAnnotationOf(element);
     return constTypeOrToken != null
-        ? parseTokenObject(constTypeOrToken)
+        ? parseTokenObject(constTypeOrToken, element)
         : parseTokenType(element);
   }
 

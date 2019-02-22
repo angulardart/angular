@@ -38,6 +38,23 @@ void main() {
     ]);
   });
 
+  test('should fail with an error in an @Inject parameter', () async {
+    await compilesExpecting("""
+      import '$ngImport';
+
+      @Injectable()
+      class HeroComponent {
+        HeroComponent(@Inject(badValue) someService);
+      }
+    """, errors: [
+      allOf(
+        contains('Annotation on element has errors and was unresolvable.'),
+        contains('badValue'),
+        containsSourceLocation(5, 41),
+      ),
+    ]);
+  });
+
   test('should fail with a readable error on a missing import', () async {
     await compilesExpecting("""
       // Intentionally missing import.
