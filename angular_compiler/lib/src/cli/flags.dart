@@ -7,7 +7,6 @@ const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
 
 // Experimental flags (not published).
-const _argAppViewSpecialization = 'specialize-app-views';
 const _argForceMinifyWhitespace = 'force-minify-whitespace';
 const _argI18nEnabled = 'i18n';
 const _argNoEmitComponentFactories = 'no-emit-component-factories';
@@ -54,10 +53,6 @@ class CompilerFlags {
     ..addFlag(
       _argNoEmitInjectableFactories,
       hide: true,
-    )
-    ..addFlag(
-      _argAppViewSpecialization,
-      hide: true,
     );
 
   /// May emit extra code suitable for profiling or tooling.
@@ -97,11 +92,6 @@ class CompilerFlags {
   /// Whether to emit `export {{file.dart}}` in `file.template.dart`.
   @experimental
   final bool exportUserCodeFromTemplate;
-
-  /// Whether to emit specialized generated code for different types of views.
-  @experimental
-  final bool tryAppViewSpecialization;
-
   const CompilerFlags({
     this.ignoreNgPlaceholderForGoldens = false,
     this.profileFor = Profile.none,
@@ -110,7 +100,6 @@ class CompilerFlags {
     this.emitComponentFactories = true,
     this.emitInjectableFactories = true,
     this.exportUserCodeFromTemplate = true,
-    this.tryAppViewSpecialization = false,
   });
 
   /// Creates flags by parsing command-line arguments.
@@ -179,7 +168,6 @@ class CompilerFlags {
     final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
     final noEmitComponentFactories = options[_argNoEmitComponentFactories];
     final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
-    final tryAppViewSpecialization = options[_argAppViewSpecialization];
 
     return CompilerFlags(
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
@@ -189,8 +177,6 @@ class CompilerFlags {
           forceMinifyWhitespace ?? defaultTo.forceMinifyWhitespace,
       emitComponentFactories: !(noEmitComponentFactories == true),
       emitInjectableFactories: !(noEmitInjectableFactories == true),
-      tryAppViewSpecialization:
-          tryAppViewSpecialization ?? defaultTo.tryAppViewSpecialization,
     );
   }
 }
