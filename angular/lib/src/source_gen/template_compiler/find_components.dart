@@ -323,6 +323,11 @@ class _ComponentVisitor
           // Resolves specified generic type parameters.
           final setter = _directiveClassElement.type
               .lookUpInheritedSetter(element.displayName);
+          if (setter.parameters.isEmpty) {
+            _exceptionHandler.handle(ErrorMessageForElement(
+                element, "@Input setter has no parameters."));
+            return;
+          }
           final propertyType = setter.parameters.first.type;
           final dynamicType = setter.context.typeProvider.dynamicType;
           // Resolves unspecified or bounded generic type parameters.
