@@ -21,8 +21,6 @@ final List<dynamic> styles$AppComponent = const [];
 class ViewAppComponent0 extends AppView<import1.AppComponent> {
   ViewProvidesServicesComponent0 _compView_0;
   import1.ProvidesServicesComponent _ProvidesServicesComponent_0_5;
-  import1.ProvidesServicesComponent _EagerProviderA_0_6;
-  import1.ProvidesServicesComponent _EagerProviderB_0_7;
   ViewInjectsServicesComponent0 _compView_1;
   import1.InjectsServicesComponent _InjectsServicesComponent_1_5;
   static import2.ComponentStyles _componentStyles;
@@ -42,11 +40,9 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
-    _EagerProviderA_0_6 = _ProvidesServicesComponent_0_5;
-    _EagerProviderB_0_7 = _ProvidesServicesComponent_0_5;
     _compView_1 = ViewInjectsServicesComponent0(this, 1);
     final _el_1 = _compView_1.rootEl;
-    _InjectsServicesComponent_1_5 = import1.InjectsServicesComponent(_EagerProviderA_0_6, _EagerProviderB_0_7);
+    _InjectsServicesComponent_1_5 = import1.InjectsServicesComponent(_ProvidesServicesComponent_0_5, _ProvidesServicesComponent_0_5);
     _compView_1.create(_InjectsServicesComponent_1_5, []);
     _compView_0.create(_ProvidesServicesComponent_0_5, [
       [_el_1]
@@ -56,14 +52,8 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if (((identical(token, import1.LazyProviderA) || identical(token, import1.LazyProviderB)) && (nodeIndex <= 1))) {
+    if (((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB)) && (nodeIndex <= 1))) {
       return _ProvidesServicesComponent_0_5;
-    }
-    if ((identical(token, import1.EagerProviderA) && (nodeIndex <= 1))) {
-      return _EagerProviderA_0_6;
-    }
-    if ((identical(token, import1.EagerProviderB) && (nodeIndex <= 1))) {
-      return _EagerProviderB_0_7;
     }
     return notFoundResult;
   }
