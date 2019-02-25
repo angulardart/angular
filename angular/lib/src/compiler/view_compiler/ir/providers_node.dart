@@ -86,8 +86,8 @@ class ProvidersNode {
         if (provider.useExisting != null) {
           // If this provider is just an alias for another provider on this
           // component, we don't need to generate a getter.
+          // TODO(b/124535724): verify that multi providers can't be aliased.
           if (_instances.containsKey(provider.useExisting) &&
-              !resolvedProvider.eager &&
               !resolvedProvider.multiProvider) {
             isLocalAlias = true;
             break;
