@@ -11,7 +11,7 @@ import 'package:angular/src/di/injector/hierarchical.dart' as _i2;
 import 'generated_injectors.dart' as _i3;
 import 'package:angular/src/core/di/opaque_token.dart' as _i4;
 
-_i1.Injector doGenerate$Injector([_i1.Injector parent]) => new _Injector$doGenerate._(parent);
+_i1.Injector doGenerate$Injector([_i1.Injector parent]) => _Injector$doGenerate._(parent);
 
 class _Injector$doGenerate extends _i2.HierarchicalInjector {
   _Injector$doGenerate._([_i1.Injector parent]) : super(parent);
@@ -19,14 +19,14 @@ class _Injector$doGenerate extends _i2.HierarchicalInjector {
   _i3.Example _field8;
 
   dynamic _getdynamic$0() => r'ABC123';
-  dynamic _getdynamic$1() => const {r'instanceOfExample': const _i3.Example(), _i3.instanceOfExamplePrime: r'instanceOfExamplePrime'};
-  dynamic _getdynamic$2() => const [const _i3.Example(), _i3.instanceOfExamplePrime, _i3.ExampleTheta.instance];
+  dynamic _getdynamic$1() => const {r'instanceOfExample': _i3.Example(), _i3.instanceOfExamplePrime: r'instanceOfExamplePrime'};
+  dynamic _getdynamic$2() => const [_i3.Example(), _i3.instanceOfExamplePrime, _i3.ExampleTheta.instance];
   dynamic _getdynamic$3() => _i3.ExampleTheta.instance;
   dynamic _getdynamic$4() => _i3.instanceOfExamplePrime;
   dynamic _getdynamic$5() => const _i3.Example();
   String _getString$6() => r'String';
   String _getString$7() => r'dynamic';
-  _i3.Example _getExample$8() => _field8 ??= new _i3.Example();
+  _i3.Example _getExample$8() => _field8 ??= _i3.Example();
   String _getString$9() => r'A';
   String _getString$10() => r'B';
   _i1.Injector _getInjector$11() => this;

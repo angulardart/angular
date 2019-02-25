@@ -215,6 +215,6 @@ void initReflector() {
   _visited = true;
 
   _ngRef.registerComponent(ProvidersComponent, ProvidersComponentNgFactory);
-  _ngRef.registerFactory(MyInjectableTypeAnnotation, () => new MyInjectableTypeAnnotation());
+  _ngRef.registerFactory(MyInjectableTypeAnnotation, () => MyInjectableTypeAnnotation());
   _ref0.initReflector();
 }

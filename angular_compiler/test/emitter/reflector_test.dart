@@ -97,7 +97,7 @@ void main() {
   test('should register constructors for injectable services', () async {
     final reflector = ReflectableReader.noLinking();
     final output = await reflector.resolve(await resolveLibrary(r'''
-      const someToken = const OpaqueToken('someToken');
+      const someToken = OpaqueToken('someToken');
       class A {}
       class B {}
       class C {}
@@ -142,53 +142,53 @@ void main() {
 
           _ngRef.registerFactory(
             ExampleServiceNoDeps,
-            () => new ExampleServiceNoDeps()
+            () => ExampleServiceNoDeps()
           );
           _ngRef.registerFactory(
             ExampleServiceWithDeps,
-            (A p0, B p1, C p2) => new ExampleServiceWithDeps(p0, p1, p2)
+            (A p0, B p1, C p2) => ExampleServiceWithDeps(p0, p1, p2)
           );
           _ngRef.registerDependencies(
             ExampleServiceWithDeps,
             const [
-              const [A],
-              const [B],
-              const [C]
+              [A],
+              [B],
+              [C]
             ]
           );
           _ngRef.registerFactory(
             ExampleServiceWithNamedConstructor,
-            (A p0, B p1, C p2) => new ExampleServiceWithNamedConstructor.namedConstructor(p0, p1, p2)
+            (A p0, B p1, C p2) => ExampleServiceWithNamedConstructor.namedConstructor(p0, p1, p2)
           );
           _ngRef.registerDependencies(
             ExampleServiceWithNamedConstructor,
             const [
-              const [A],
-              const [B],
-              const [C]
+              [A],
+              [B],
+              [C]
             ]
           );
           _ngRef.registerFactory(
             ExampleServiceWithDynamicDeps,
-            (dynamic p0) => new ExampleServiceWithDynamicDeps(p0)
+            (dynamic p0) => ExampleServiceWithDynamicDeps(p0)
           );
           _ngRef.registerDependencies(
             ExampleServiceWithDynamicDeps,
             const [
-              const [
-                const _ngRef.Inject(const OpaqueToken<dynamic>('someToken'))
+              [
+                _ngRef.Inject(OpaqueToken<dynamic>('someToken'))
               ]
             ]
           );
           _ngRef.registerFactory(
             ExampleServiceWithDynamicDeps2,
-            (dynamic p0) => new ExampleServiceWithDynamicDeps2(p0)
+            (dynamic p0) => ExampleServiceWithDynamicDeps2(p0)
           );
           _ngRef.registerDependencies(
             ExampleServiceWithDynamicDeps2,
             const [
-              const [
-                const _ngRef.Inject(const OpaqueToken<dynamic>('someToken'))
+              [
+                _ngRef.Inject(OpaqueToken<dynamic>('someToken'))
               ]
             ]
           );
@@ -248,9 +248,9 @@ void main() {
           }
           _visited = true;
 
-          _ngRef.registerFactory(InjectsB, (_i1.B p0) => new InjectsB(p0));
+          _ngRef.registerFactory(InjectsB, (_i1.B p0) => InjectsB(p0));
           _ngRef.registerDependencies(InjectsB, const [
-            const [
+            [
               _i1.B
             ]
           ]);
@@ -287,9 +287,9 @@ void main() {
             }
             _visited = true;
 
-            _ngRef.registerFactory(InjectsGeneric, (GenericType<dynamic> p0) => new InjectsGeneric(p0));
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<dynamic> p0) => InjectsGeneric(p0));
             _ngRef.registerDependencies(InjectsGeneric, const [
-              const [
+              [
                 GenericType
               ]
             ]);
@@ -318,9 +318,9 @@ void main() {
             }
             _visited = true;
 
-            _ngRef.registerFactory(InjectsGeneric, (GenericType<dynamic> p0) => new InjectsGeneric(p0));
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<dynamic> p0) => InjectsGeneric(p0));
             _ngRef.registerDependencies(InjectsGeneric, const [
-              const [
+              [
                 GenericType
               ]
             ]);
@@ -348,9 +348,9 @@ void main() {
             }
             _visited = true;
 
-            _ngRef.registerFactory(InjectsGeneric, (GenericType<String> p0) => new InjectsGeneric(p0));
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<String> p0) => InjectsGeneric(p0));
             _ngRef.registerDependencies(InjectsGeneric, const [
-              const [
+              [
                 GenericType
               ]
             ]);
@@ -378,9 +378,9 @@ void main() {
             }
             _visited = true;
 
-            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>> p0) => new InjectsGeneric(p0));
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>> p0) => InjectsGeneric(p0));
             _ngRef.registerDependencies(InjectsGeneric, const [
-              const [
+              [
                 GenericType
               ]
             ]);
@@ -408,9 +408,9 @@ void main() {
             }
             _visited = true;
 
-            _ngRef.registerFactory(InjectsGeneric, (GenericType<String> p0) => new InjectsGeneric(p0));
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<String> p0) => InjectsGeneric(p0));
             _ngRef.registerDependencies(InjectsGeneric, const [
-              const [
+              [
                 GenericType
               ]
             ]);
@@ -440,9 +440,9 @@ void main() {
             }
             _visited = true;
 
-            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>, dynamic> p0) => new InjectsGeneric(p0));
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>, dynamic> p0) => InjectsGeneric(p0));
             _ngRef.registerDependencies(InjectsGeneric, const [
-              const [
+              [
                 GenericType
               ]
             ]);

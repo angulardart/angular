@@ -143,15 +143,15 @@ void initReflector() {
   _visited = true;
 
   _ngRef.registerComponent(InjectableComponent, InjectableComponentNgFactory);
-  _ngRef.registerFactory(SomeDep, () => new SomeDep());
-  _ngRef.registerFactory(BaseService, () => new BaseService());
-  _ngRef.registerFactory(InjectableService, () => new InjectableService());
-  _ngRef.registerFactory(InjectsXsrfToken, (String p0) => new InjectsXsrfToken(p0));
+  _ngRef.registerFactory(SomeDep, () => SomeDep());
+  _ngRef.registerFactory(BaseService, () => BaseService());
+  _ngRef.registerFactory(InjectableService, () => InjectableService());
+  _ngRef.registerFactory(InjectsXsrfToken, (String p0) => InjectsXsrfToken(p0));
   _ngRef.registerDependencies(InjectsXsrfToken, const [
-    const [const _ngRef.Inject(const _i1.XsrfToken())]
+    [_ngRef.Inject(_i1.XsrfToken())]
   ]);
   _ngRef.registerDependencies(injectableFactory, const [
-    const [_i2.Window]
+    [_i2.Window]
   ]);
   _ref0.initReflector();
 }
