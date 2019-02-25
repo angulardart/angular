@@ -61,6 +61,27 @@ void main() {
     ]);
   });
 
+  test('should error gracefully on a bad setter', () async {
+    await compilesExpecting('''
+      import '$ngImport';
+
+      @Component(
+        selector: 'bad-input',
+        template: '',
+      )
+      class BadInputSetter {
+        @Input()
+        set noMethodBody;
+      }
+    ''', errors: [
+      allOf([
+        contains('@Input setter has no parameters'),
+        contains('noMethodBody'),
+        containsSourceLocation(9, 13)
+      ])
+    ]);
+  });
+
   test('should error on incorrect function annotations', () async {
     await compilesExpecting('''
       import '$ngImport';
