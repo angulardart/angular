@@ -43,6 +43,12 @@
 
 *   The template compiler no longer crashes on HTML attributes ending in ":"
 
+### Breaking changes
+
+*   Removed `castCallback2ForDirective` from `meta.dart`. In practice this was
+    not used. We also deprecated `castCallback1ForDirective` now that the
+    `directiveTypes: [ ... ]` feature is live.
+
 [#1694]: https://github.com/dart-lang/angular/issues/1694
 [#1669]: https://github.com/dart-lang/angular/issues/1669
 

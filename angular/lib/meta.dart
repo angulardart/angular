@@ -18,7 +18,7 @@ export 'src/meta.dart' show visibleForTemplate;
 ///
 /// Common usage is when creating a callback to pass to a `@Component`
 /// that is expecting generic type parameters, but is missing them due
-/// to missing support in Angulardart:
+/// to missing support in AngularDart:
 /// ```dart
 /// typedef ItemRenderer<T> = String Function(T);
 ///
@@ -43,21 +43,9 @@ export 'src/meta.dart' show visibleForTemplate;
 /// **NOTE**: This method is _only_ intended as a workaround for the lack-of
 /// reified generics for components and directives. Do **not** use as a general
 /// purpose workaround: https://github.com/dart-lang/angular/issues/68
+@Deprecated('Use directiveTypes: [ ... ] to properly type instead')
 T Function(dynamic) castCallback1ForDirective<T, A>(
   T Function(A) callback,
 ) {
   return (element) => callback(element as A);
-}
-
-/// Wraps a typed [callback] with two parameters of types [A] and [B].
-///
-/// See [castCallback2ForDirective] for details.
-///
-/// **NOTE**: This method is _only_ intended as a workaround for the lack-of
-/// reified generics for components and directives. Do **not** use as a general
-/// purpose workaround: https://github.com/dart-lang/angular/issues/68
-T Function(dynamic, dynamic) castCallback2ForDirective<T, A, B>(
-  T Function(A, B) callback,
-) {
-  return (a, b) => callback(a as A, b as B);
 }
