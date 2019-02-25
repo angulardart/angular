@@ -253,7 +253,7 @@ void initReflector() {
   _visited = true;
 
   _ngRef.registerComponent(TestFooComponent, TestFooComponentNgFactory);
-  _ngRef.registerFactory(MyInjectableClass, () => new MyInjectableClass());
+  _ngRef.registerFactory(MyInjectableClass, () => MyInjectableClass());
   _ngRef.registerComponent(DirectiveContainerTest, DirectiveContainerTestNgFactory);
   _ref0.initReflector();
 }

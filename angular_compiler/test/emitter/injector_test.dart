@@ -18,7 +18,7 @@ void main() {
     expect(
       Library((b) => b.body.add(emitter.createFactory())),
       equalsDart(r'''
-        Injector fooInjector([Injector parent]) => new FooInjector._(parent);
+        Injector fooInjector([Injector parent]) => FooInjector._(parent);
       '''),
     );
   });
@@ -64,7 +64,7 @@ void main() {
 
           FooImpl _field0;
 
-          FooImpl _getFooImpl$0() => _field0 ??= new FooImpl(this.get(Dep1), this.get(Dep2));
+          FooImpl _getFooImpl$0() => _field0 ??= FooImpl(this.get(Dep1), this.get(Dep2));
           @override
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
             if (identical(token, Foo)) {

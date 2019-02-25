@@ -111,7 +111,7 @@ void initReflector() {
   }
   _visited = true;
 
-  _ngRef.registerFactory(TextService, () => new TextService());
+  _ngRef.registerFactory(TextService, () => TextService());
   _ngRef.registerComponent(AppComponent, AppComponentNgFactory);
   _ref0.initReflector();
 }
