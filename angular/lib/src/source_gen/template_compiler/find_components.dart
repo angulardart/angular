@@ -265,8 +265,8 @@ class _ComponentVisitor
       invalid = true;
     }
     if (invalid) return null;
-    final type =
-        element.accept(CompileTypeMetadataVisitor(_library, _exceptionHandler));
+    final type = element.accept(CompileTypeMetadataVisitor(
+        _library, _exceptionHandler, annotationInfo));
     final selector = coerceString(annotationValue, 'selector');
     return CompileDirectiveMetadata(
       type: type,
@@ -278,7 +278,7 @@ class _ComponentVisitor
       outputs: const {},
       hostBindings: const {},
       hostListeners: const {},
-      providers: _extractProviders(annotationValue, 'providers'),
+      providers: _extractProviders(annotationInfo, 'providers'),
     );
   }
 
@@ -584,8 +584,9 @@ class _ComponentVisitor
 
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
-    CompileTypeMetadata componentType =
-        element.accept(CompileTypeMetadataVisitor(_library, _exceptionHandler));
+    CompileTypeMetadata componentType = element.accept(
+        CompileTypeMetadataVisitor(
+            _library, _exceptionHandler, annotationInfo));
 
     final template = isComp
         ? _createTemplateMetadata(annotationValue, componentType)
@@ -640,8 +641,8 @@ class _ComponentVisitor
       hostListeners: _hostListeners,
       analyzedClass: analyzedClass,
       lifecycleHooks: lifecycleHooks,
-      providers: _extractProviders(annotationValue, 'providers'),
-      viewProviders: _extractProviders(annotationValue, 'viewProviders'),
+      providers: _extractProviders(annotationInfo, 'providers'),
+      viewProviders: _extractProviders(annotationInfo, 'viewProviders'),
       exports: _extractExports(annotation as ElementAnnotationImpl, element),
       queries: _queries,
       viewQueries: _viewQueries,
@@ -701,11 +702,12 @@ class _ComponentVisitor
   }
 
   List<CompileProviderMetadata> _extractProviders(
-          DartObject component, String providerField) =>
+          AnnotationInformation annotationInfo, String providerField) =>
       visitAll(
-          const ModuleReader()
-              .extractProviderObjects(getField(component, providerField)),
-          CompileTypeMetadataVisitor(_library, _exceptionHandler)
+          const ModuleReader().extractProviderObjects(
+              getField(annotationInfo.constantValue, providerField)),
+          CompileTypeMetadataVisitor(
+                  _library, _exceptionHandler, annotationInfo)
               .createProviderMetadata);
 
   List<CompileIdentifierMetadata> _extractExports(

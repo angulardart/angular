@@ -62,8 +62,8 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
     }
     final value = annotation.constantValue;
     return CompilePipeMetadata(
-      type: annotation.element
-          .accept(CompileTypeMetadataVisitor(_library, _exceptionHandler)),
+      type: annotation.element.accept(
+          CompileTypeMetadataVisitor(_library, _exceptionHandler, annotation)),
       transformType: fromFunctionType(transformType),
       name: coerceString(value, 'name'),
       pure: coerceBool(value, 'pure', defaultTo: true),
