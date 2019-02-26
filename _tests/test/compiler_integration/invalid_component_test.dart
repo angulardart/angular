@@ -312,4 +312,75 @@ void main() {
       ])
     ]);
   });
+
+  group('providers', () {
+    test('should error on invalid token', () async {
+      await compilesExpecting('''
+      import '$ngImport';
+
+      const tokenRef = BadToken;
+
+      @Component(
+        selector: 'badToken',
+        template: '',
+        providers: [ClassProvider(tokenRef)]
+      )
+      class BadComponent {};
+    ''', errors: [
+        allOf(contains('A provider\'s token field failed to compile'),
+            containsSourceLocation(5, 7)), // pointing at @Component
+      ]);
+    });
+
+    test('should warn on when provider is not a class', () async {
+      await compilesExpecting('''
+      import '$ngImport';
+
+      typedef Compare = int Function(Object a, Object b);
+      @Component(
+        selector: 'stringProvider',
+        template: '',
+        providers: [Compare]
+      )
+      class BadComponent {};
+    ''', errors: [], warnings: [
+        allOf(contains('Expected to find class in provider list'),
+            containsSourceLocation(4, 7)), // pointing at @Component
+      ]);
+    });
+
+    test('should error on when useClass is not a class', () async {
+      await compilesExpecting('''
+      import '$ngImport';
+
+      class ToProvide {}
+      typedef Compare = int Function(Object a, Object b);
+
+      @Component(
+        selector: 'useClass',
+        template: '',
+        providers: [ClassProvider(ToProvide, useClass: Compare)]
+      )
+      class BadComponent {};
+    ''', errors: [
+        allOf(contains('Provider.useClass can only be used with a class'),
+            containsSourceLocation(6, 7)) // pointing at @Component
+      ]);
+    });
+
+    test('should error on when useFactory is not a function', () async {
+      await compilesExpecting('''
+      import '$ngImport';
+
+      class ToProvide {}
+
+      @Component(
+        selector: 'useFactory',
+        template: '',
+        providers: [FactoryProvider(ToProvide, ToProvide)]
+      )
+      class BadComponent {};
+    ''', errors: [allOf(contains('ToProvide'), containsSourceLocation(8, 48))]);
+    });
+  });
 }

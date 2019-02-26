@@ -30,8 +30,10 @@ class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
   final LibraryReader _library;
   final ComponentVisitorExceptionHandler _exceptionHandler;
+  final IndexedAnnotation _indexedAnnotation;
 
-  CompileTypeMetadataVisitor(this._library, this._exceptionHandler);
+  CompileTypeMetadataVisitor(
+      this._library, this._exceptionHandler, this._indexedAnnotation);
 
   @override
   CompileTypeMetadata visitClassElement(ClassElement element) {
@@ -90,8 +92,10 @@ class CompileTypeMetadataVisitor
     if (provider.toTypeValue() != null) {
       var element = provider.toTypeValue().element;
       if (element is! ClassElement) {
-        logWarning('Expected to find class in provider list, but instead '
-            'found $provider');
+        _exceptionHandler.handleWarning(ErrorMessageForAnnotation(
+            _indexedAnnotation,
+            'Expected to find class in provider list, but instead '
+            'found $provider'));
         return null;
       }
       var metadata = visitClassElement(element as ClassElement);
@@ -106,6 +110,11 @@ class CompileTypeMetadataVisitor
     }
 
     final token = dart_objects.getField(provider, 'token');
+    if (token == null) {
+      _exceptionHandler.handle(ErrorMessageForAnnotation(
+          _indexedAnnotation, 'A provider\'s token field failed to compile.'));
+      return null;
+    }
     final providerType = inferProviderType(provider, token);
     final providerTypeElement = providerType?.element;
     final providerTypeArgument = providerTypeElement is ClassElement
@@ -141,9 +150,11 @@ class CompileTypeMetadataVisitor
           enforceClassCanBeCreated: true,
         );
       } else {
-        throwFailure(
+        _exceptionHandler.handle(ErrorMessageForAnnotation(
+            _indexedAnnotation,
             'Provider.useClass can only be used with a class, but found '
-            '${type.element}');
+            '${type.element}'));
+        return null;
       }
     } else if (_hasNoUseValue(provider) && _notAnythingElse(provider)) {
       final typeValue = token.toTypeValue();
@@ -179,8 +190,12 @@ class CompileTypeMetadataVisitor
           dart_objects.coerceList(provider, 'deps', defaultTo: null),
         );
       } else {
-        throwFailure('Provider.useFactory can only be used with a function, '
-            'but found ${maybeUseFactory.type.element}');
+        // NOTE: Since 'useFactory' is typed as a Function, this throw
+        // should not be accessible. [maybeUseFactory.type.element] will always
+        // be a [FunctionTypedElement].
+        throw StateError('Provider.useFactory must be a Function, but got '
+            'type ${maybeUseFactory.type} instead with type element '
+            '${maybeUseFactory.type.element}');
       }
     }
     return null;
