@@ -163,28 +163,48 @@ class HostView implements View {
 ///
 /// This is represented as a pairing between the [source], or value being bound,
 /// and the [target], or the place where the value is actually bound.
-class Binding {
+class Binding implements IRNode {
   final BindingSource source;
   final BindingTarget target;
 
   Binding({this.source, this.target});
+
+  @override
+  R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
+      visitor.visitBinding(this, context);
 }
 
-class BindingTarget {}
+abstract class BindingTarget extends IRNode {
+  @override
+  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]);
+}
 
-class TextBinding implements BindingTarget {}
+class TextBinding implements BindingTarget {
+  @override
+  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+      visitor.visitTextBinding(this, context);
+}
 
-class HtmlBinding implements BindingTarget {}
+class HtmlBinding implements BindingTarget {
+  @override
+  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+      visitor.visitHtmlBinding(this, context);
+}
 
 class AttributeBinding implements BindingTarget {
   final String name;
 
   AttributeBinding(this.name);
+  @override
+  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+      visitor.visitAttributeBinding(this, context);
 }
 
 abstract class BindingSource {
   bool get isImmutable;
   bool get isNullable;
+
+  R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]);
 }
 
 class BoundI18nMessage implements BindingSource {
@@ -196,9 +216,13 @@ class BoundI18nMessage implements BindingSource {
   final bool isNullable = false;
 
   BoundI18nMessage(this.value);
+
+  @override
+  R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]) =>
+      visitor.visitBoundI18nMessage(this, context);
 }
 
-class BoundLiteral implements BindingSource {
+abstract class BoundLiteral implements BindingSource {
   @override
   final bool isImmutable = true;
 
@@ -210,6 +234,10 @@ class StringLiteral extends BoundLiteral {
   final String value;
 
   StringLiteral(this.value);
+
+  @override
+  R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]) =>
+      visitor.visitStringLiteral(this, context);
 }
 
 /// A [BindingSource] which represents a general-purpose expression.
@@ -242,9 +270,26 @@ class BoundExpression implements BindingSource {
 
   @override
   bool get isNullable => analyzed.canBeNull(expression);
+
+  @override
+  R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]) =>
+      visitor.visitBoundExpression(this, context);
 }
 
-abstract class IRVisitor<R, C> {
+abstract class BindingTargetVisitor<R, C> {
+  R visitTextBinding(TextBinding textBinding, [C context]);
+  R visitHtmlBinding(HtmlBinding htmlBinding, [C context]);
+  R visitAttributeBinding(AttributeBinding attributeBinding, [C context]);
+}
+
+abstract class BindingSourceVisitor<R, C> {
+  R visitBoundI18nMessage(BoundI18nMessage boundI18nMessage, [C context]);
+  R visitStringLiteral(StringLiteral stringLiteral, [C context]);
+  R visitBoundExpression(BoundExpression boundExpression, [C context]);
+}
+
+abstract class IRVisitor<R, C> extends Object
+    with BindingTargetVisitor<R, C>, BindingSourceVisitor<R, C> {
   R visitLibrary(Library library, [C context]);
 
   R visitComponent(Component component, [C context]);
@@ -252,4 +297,6 @@ abstract class IRVisitor<R, C> {
 
   R visitComponentView(ComponentView componentView, [C context]);
   R visitHostView(HostView hostView, [C context]);
+
+  R visitBinding(Binding binding, [C context]);
 }
