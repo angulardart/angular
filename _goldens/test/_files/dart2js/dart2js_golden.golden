@@ -231,9 +231,6 @@
         return new H.EfficientLengthMappedIterable(iterable, $function, [$S, $T]);
       return new H.MappedIterable(iterable, $function, [$S, $T]);
     },
-    IterableElementError_noElement: function() {
-      return new P.StateError("No element");
-    },
     EfficientLengthIterable: function EfficientLengthIterable() {
     },
     ListIterable: function ListIterable() {
@@ -3520,21 +3517,6 @@
     AppViewData_AppViewData: function(appView, cdMode, viewType, parentIndex) {
       return new S.AppViewData(viewType, new L.ViewRefImpl(appView), parentIndex, cdMode, 0);
     },
-    _findLastRenderNode: function(node) {
-      var lastNode, nestedViews, i, t1;
-      if (node instanceof V.ViewContainer) {
-        lastNode = node.nativeElement;
-        nestedViews = node.nestedViews;
-        if (nestedViews != null)
-          for (i = nestedViews.length - 1; i >= 0; --i) {
-            t1 = nestedViews[i].viewData.rootNodesOrViewContainers;
-            if (t1.length !== 0)
-              return S._findLastRenderNode((t1 && C.JSArray_methods).get$last(t1));
-          }
-      } else
-        lastNode = node;
-      return lastNode;
-    },
     _flattenNestedViewRenderNodes: function(nodes, renderNodes) {
       var nodeCount, i, node, nestedViews, len, k;
       nodeCount = nodes.length;
@@ -3621,7 +3603,29 @@
       this._applications = t0;
       this._testabilityGetter = t1;
     }, _NoopGetTestability: function _NoopGetTestability() {
-    }},
+    },
+    ViewFragment_findLastDomNode: function(nodesOrViewContainers) {
+      var i, node;
+      if (nodesOrViewContainers == null)
+        return;
+      i = nodesOrViewContainers.length - 1;
+      if (i >= 0) {
+        node = nodesOrViewContainers[i];
+        return node instanceof V.ViewContainer ? D.ViewFragment__findLastDomNode(node) : node;
+      }
+      return;
+    },
+    ViewFragment__findLastDomNode: function(container) {
+      var nestedViews, i;
+      nestedViews = container.nestedViews;
+      if (nestedViews != null) {
+        i = nestedViews.length - 1;
+        if (i >= 0)
+          return D.ViewFragment_findLastDomNode(nestedViews[i].viewData.rootNodesOrViewContainers);
+      }
+      return container.nativeElement;
+    }
+  },
   L = {SlowComponentLoader: function SlowComponentLoader() {
     }, ViewRefImpl: function ViewRefImpl(t0) {
       this.appView = t0;
@@ -4079,12 +4083,6 @@
     },
     elementAt$1: function(receiver, index) {
       return receiver[index];
-    },
-    get$last: function(receiver) {
-      var t1 = receiver.length;
-      if (t1 > 0)
-        return receiver[t1 - 1];
-      throw H.wrapException(H.IterableElementError_noElement());
     },
     indexOf$1: function(receiver, element) {
       var i;
@@ -9214,6 +9212,9 @@
     },
     destroyInternal$0: function() {
     },
+    get$lastRootNode: function() {
+      return D.ViewFragment_findLastDomNode(this.viewData.rootNodesOrViewContainers);
+    },
     detectChanges$0: function() {
       if (this.viewData._skipChangeDetection)
         return;
@@ -9332,13 +9333,7 @@
       }
     },
     _findRenderNode$2: function(views, index) {
-      var t1;
-      if (index > 0) {
-        t1 = views[index - 1].viewData.rootNodesOrViewContainers;
-        t1 = S._findLastRenderNode(t1.length !== 0 ? (t1 && C.JSArray_methods).get$last(t1) : null);
-      } else
-        t1 = this.nativeElement;
-      return t1;
+      return index > 0 ? views[index - 1].get$lastRootNode() : this.nativeElement;
     },
     attachView$2: function(view, viewIndex) {
       var views, refRenderNode;

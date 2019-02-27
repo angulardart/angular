@@ -18,6 +18,7 @@ import 'app_view_utils.dart';
 import 'component_factory.dart';
 import 'template_ref.dart';
 import 'view_container.dart';
+import 'view_fragment.dart';
 import 'view_ref.dart' show ViewRefImpl;
 import 'view_type.dart' show ViewType;
 
@@ -349,11 +350,9 @@ abstract class AppView<T> {
   List<Node> get flatRootNodes =>
       _flattenNestedViews(viewData.rootNodesOrViewContainers);
 
+  @dart2js.noInline
   Node get lastRootNode {
-    var lastNode = viewData.rootNodesOrViewContainers.isNotEmpty
-        ? viewData.rootNodesOrViewContainers.last
-        : null;
-    return _findLastRenderNode(lastNode);
+    return ViewFragment.findLastDomNode(viewData.rootNodesOrViewContainers);
   }
 
   /// Local values scoped to this view.
@@ -616,28 +615,6 @@ abstract class AppView<T> {
       cancelled = true;
     };
   }
-}
-
-Node _findLastRenderNode(dynamic node) {
-  Node lastNode;
-  if (node is ViewContainer) {
-    final ViewContainer appEl = node;
-    lastNode = appEl.nativeElement;
-    var nestedViews = appEl.nestedViews;
-    if (nestedViews != null) {
-      // Note: Views might have no root nodes at all!
-      for (var i = nestedViews.length - 1; i >= 0; i--) {
-        var nestedViewData = appEl.nestedViews[i].viewData;
-        if (nestedViewData.rootNodesOrViewContainers.isNotEmpty) {
-          return _findLastRenderNode(
-              nestedViewData.rootNodesOrViewContainers.last);
-        }
-      }
-    }
-  } else {
-    lastNode = unsafeCast(node);
-  }
-  return lastNode;
 }
 
 /// Recursively appends app element and nested view nodes to target element.
