@@ -16,6 +16,7 @@ import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import8;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
+import 'package:angular/src/runtime/text_binding.dart' as import10;
 
 final List<dynamic> styles$CheckOnceComponent = const [];
 
@@ -509,8 +510,7 @@ AppView<import1.OnPushComponent> viewFactory_OnPushComponentHost0(AppView<dynami
 final List<dynamic> styles$OnPushChildComponent = const [];
 
 class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
-  var _expr_0;
-  final import5.Text _text_2 = import8.createText('');
+  final import10.TextBinding _textBinding_2 = import10.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewOnPushChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import5.document.createElement('cd-on-push-child');
@@ -527,18 +527,14 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'OnPushChild: ');
-    _el_0.append(_text_2);
+    _el_0.append(_textBinding_2.element);
     init(const [], null);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = (_ctx.name ?? '');
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _text_2.text = currVal_0;
-      _expr_0 = currVal_0;
-    }
+    _textBinding_2.updateText((_ctx.name ?? ''));
   }
 
   @override

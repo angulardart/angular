@@ -20,6 +20,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
 import 'dart:core';
+import 'package:angular/src/runtime/text_binding.dart' as import14;
 
 final List<dynamic> styles$NestedNgForComponent = const [];
 
@@ -124,8 +125,7 @@ AppView<void> viewFactory_NestedNgForComponent1(AppView<dynamic> parentView, int
 }
 
 class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
-  var _expr_0;
-  final import7.Text _text_1 = import10.createText('');
+  final import14.TextBinding _textBinding_1 = import14.TextBinding();
   _ViewNestedNgForComponent2(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
@@ -133,18 +133,14 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   ComponentRef<import1.NestedNgForComponent> build() {
     final doc = import7.document;
     final _el_0 = doc.createElement('div');
-    _el_0.append(_text_1);
+    _el_0.append(_textBinding_1.element);
     init0(_el_0);
   }
 
   @override
   void detectChangesInternal() {
     final local_value = import8.unsafeCast<int>(locals['\$implicit']);
-    final currVal_0 = import12.interpolate0(local_value);
-    if (import12.checkBinding(_expr_0, currVal_0)) {
-      _text_1.text = currVal_0;
-      _expr_0 = currVal_0;
-    }
+    _textBinding_1.updateText(import12.interpolate0(local_value));
   }
 }
 

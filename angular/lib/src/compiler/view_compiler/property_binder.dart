@@ -22,7 +22,7 @@ import 'package:angular_compiler/cli.dart';
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
-import 'compile_view.dart' show CompileView;
+import 'compile_view.dart' show CompileView, TextBindingNodeReference;
 import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'ir/view_storage.dart';
@@ -41,47 +41,16 @@ o.ReadClassMemberExpr _createBindFieldExpr(num exprIndex) =>
 o.ReadVarExpr _createCurrValueExpr(num exprIndex) =>
     o.variable('currVal_$exprIndex');
 
-/// A wrapper that converts [parsedExpression] and forwards to [_bind].
-///
-/// Historically [_bind] accepted a parsed AST; however, this detail was
-/// abstracted away so that [_bind] could be invoked on synthesized expressions
-/// with no parsed AST. This method acts an adapter between the old interface
-/// and the new.
-void _bindAst(
-  CompileDirectiveMetadata viewDirective,
-  ViewNameResolver nameResolver,
-  ViewStorage storage,
-  o.ReadVarExpr currValExpr,
-  o.ReadClassMemberExpr fieldExpr,
-  ir.BoundExpression bindingSource,
-  List<o.Statement> actions,
-  CompileMethod method,
-  CompileMethod literalMethod, {
-  o.OutputType fieldType,
-  o.Expression fieldExprInitializer,
-}) {
-  var checkExpression = convertCdExpressionToIr(
-      nameResolver,
-      DetectChangesVars.cachedCtx,
-      bindingSource.expression,
-      bindingSource.sourceSpan,
-      viewDirective,
-      fieldType);
-  _bind(
-    storage,
-    currValExpr,
-    fieldExpr,
-    checkExpression,
-    bindingSource.isImmutable,
-    bindingSource.isNullable,
-    actions,
-    method,
-    literalMethod,
-    fieldType: fieldType,
-    isHostComponent: false,
-    fieldExprInitializer: fieldExprInitializer,
-  );
-}
+o.Expression _checkExpressionForBoundExpression(
+        CompileView view, ir.BoundExpression bindingSource,
+        {o.OutputType fieldType}) =>
+    convertCdExpressionToIr(
+        view.nameResolver,
+        DetectChangesVars.cachedCtx,
+        bindingSource.expression,
+        bindingSource.sourceSpan,
+        view.component,
+        fieldType);
 
 /// Generates code to bind template expression.
 ///
@@ -171,35 +140,12 @@ void bindRenderText(
     // We already set the value to the text node at creation
     return;
   }
-  int bindingIndex = view.nameResolver.createUniqueBindIndex();
-  // Expression for current value of expression when value is re-read.
-  var currValExpr = _createCurrValueExpr(bindingIndex);
-  // Expression that points to _expr_## stored value.
-  var valueField = _createBindFieldExpr(bindingIndex);
-  var dynamicRenderMethod = CompileMethod();
-  var constantRenderMethod = CompileMethod();
-  _bindAst(
-    view.component,
-    view.nameResolver,
-    view.storage,
-    currValExpr,
-    valueField,
-    boundText,
-    [
-      compileNode.renderNode.toReadExpr().prop('text').set(currValExpr).toStmt()
-    ],
-    dynamicRenderMethod,
-    constantRenderMethod,
-  );
-  if (constantRenderMethod.isNotEmpty) {
-    view.detectChangesRenderPropertiesMethod.addStmtsIfFirstCheck(
-      constantRenderMethod.finish(),
-    );
-  }
-  if (dynamicRenderMethod.isNotEmpty) {
-    view.detectChangesRenderPropertiesMethod
-        .addStmts(dynamicRenderMethod.finish());
-  }
+
+  final renderNode = compileNode.renderNode as TextBindingNodeReference;
+
+  var checkExpression = _checkExpressionForBoundExpression(view, boundText);
+  view.detectChangesRenderPropertiesMethod
+      .addStmt(renderNode.updateExpr(checkExpression).toStmt());
 }
 
 /// For each bound property, creates code to update the binding.
@@ -681,18 +627,22 @@ void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
 
   var dynamicInputsMethod = CompileMethod();
   var constantInputsMethod = CompileMethod();
-  _bindAst(
-      view.component,
-      view.nameResolver,
-      view.storage,
-      currValExpr,
-      fieldExpr,
-      boundExpression,
-      statements,
-      dynamicInputsMethod,
-      constantInputsMethod,
-      fieldType: o.BOOL_TYPE,
-      fieldExprInitializer: o.literal(false));
+
+  _bind(
+    view.storage,
+    currValExpr,
+    fieldExpr,
+    _checkExpressionForBoundExpression(view, boundExpression,
+        fieldType: o.BOOL_TYPE),
+    boundExpression.isImmutable,
+    boundExpression.isNullable,
+    statements,
+    dynamicInputsMethod,
+    constantInputsMethod,
+    fieldType: o.BOOL_TYPE,
+    isHostComponent: false,
+    fieldExprInitializer: o.literal(false),
+  );
 
   if (constantInputsMethod.isNotEmpty) {
     view.detectChangesInInputsMethod.addStmtsIfFirstCheck(

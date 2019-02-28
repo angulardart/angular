@@ -21,6 +21,8 @@
 *   The compiler now includes source locations to errors in annotations on class
     members.
 
+*   The compiler now optimizes change detection for HTML Text nodes.
+
 ### Bug fixes
 
 *   The template compiler now outputs the full path to a template file when it
