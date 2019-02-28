@@ -3740,7 +3740,7 @@
     },
     updateAttribute: function(element, attribute, value) {
       if (value == null)
-        element.removeAttribute.apply(element, [attribute]);
+        element.removeAttribute(attribute);
       else
         T.setAttribute(element, attribute, value);
       $.domRootRendererIsDirty = true;
