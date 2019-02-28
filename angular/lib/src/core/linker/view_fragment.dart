@@ -14,17 +14,45 @@ import 'view_container.dart';
 class ViewFragment {
   const ViewFragment._();
 
+  /// Appends all DOM [Node]s (as defined by a DFS - depth first search).
+  ///
+  /// This is semantically similar to [flattenDomNodes], but operates based on
+  /// appending elements to [target] instead of to a [List]. It is possible to
+  /// create a generic "visit DOM nodes" method, but it would perform worse (it
+  /// would require using `target.children.add` or passing callbacks).
+  @dart2js.noInline
+  static void appendDomNodes(
+    Element target,
+    List<Object> nodesOrViewContainers,
+  ) {
+    final length = nodesOrViewContainers.length;
+    for (var i = 0; i < length; i++) {
+      final node = nodesOrViewContainers[i];
+      if (node is ViewContainer) {
+        target.append(node.nativeElement);
+        final nestedViews = node.nestedViews;
+        if (nestedViews != null) {
+          final length = nestedViews.length;
+          for (var n = 0; n < length; n++) {
+            appendDomNodes(
+              target,
+              nestedViews[n].viewData.rootNodesOrViewContainers,
+            );
+          }
+        }
+      } else {
+        target.append(unsafeCast(node));
+      }
+    }
+  }
+
   /// Returns the last (as defined by a DFS - depth first search) DOM [Node].
   ///
-  /// In the case where [rootNodesOrViewContainers] is `null` (or empty), this
+  /// In the case where [nodesOrViewContainers] is `null` (or empty), this
   /// method returns `null`. This is a rarer case (i.e. in the case of an empty
   /// template).
   @dart2js.noInline
   static Node findLastDomNode(List<Object> nodesOrViewContainers) {
-    if (nodesOrViewContainers == null) {
-      return null;
-    }
-
     // Finds the last Node or uses the anchor node of a ViewContainer.
     for (var i = nodesOrViewContainers.length - 1; i >= 0; i--) {
       final node = nodesOrViewContainers[i];
@@ -47,5 +75,35 @@ class ViewFragment {
     }
 
     return container.nativeElement;
+  }
+
+  /// Returns all DOM [Node]s (as defined by a DFS - depth first search).
+  ///
+  /// In the case where [nodesOrViewContainers] is `null`, this returns `[]`.
+  static List<Node> flattenDomNodes(List<Object> nodesOrViewContainers) {
+    return _flattenDomNodes([], nodesOrViewContainers);
+  }
+
+  static List<Node> _flattenDomNodes(List<Node> target, List<Object> nodes) {
+    final length = nodes.length;
+    for (var i = 0; i < length; i++) {
+      final node = nodes[i];
+      if (node is ViewContainer) {
+        target.add(node.nativeElement);
+        final nestedViews = node.nestedViews;
+        if (nestedViews != null) {
+          final length = nestedViews.length;
+          for (var n = 0; n < length; n++) {
+            _flattenDomNodes(
+              target,
+              nestedViews[n].viewData.rootNodesOrViewContainers,
+            );
+          }
+        }
+      } else {
+        target.add(unsafeCast(node));
+      }
+    }
+    return target;
   }
 }
