@@ -12,22 +12,6 @@ import 'package:meta/dart2js.dart' as dart2js;
 
 import 'optimizations.dart';
 
-// Adds additional (missing) methods to `dart:html`'s [Element].
-//
-// TODO(https://github.com/dart-lang/sdk/issues/35655): Remove.
-
-/// https://developer.mozilla.org/en-US/docs/Web/API/Element/removeAttribute
-void _removeAttribute(Element e, String attribute) {
-  js.callMethod(e, 'removeAttribute', [attribute]);
-}
-
-/// https://developer.mozilla.org/en-US/docs/Web/API/Element/removeAttributeNS
-void _removeAttributeNS(Element e, String namespace, String attribute) {
-  js.callMethod(e, 'removeAttributeNS', [namespace, attribute]);
-}
-
-// TODO(https://github.com/dart-lang/sdk/issues/35669): Remove.
-
 /// https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode
 Text _createTextNode(String text) => Text(text);
 
@@ -93,7 +77,7 @@ void updateAttribute(
   String value,
 ) {
   if (value == null) {
-    _removeAttribute(element, attribute);
+    element.removeAttribute(attribute);
   } else {
     setAttribute(element, attribute, value);
   }
@@ -109,7 +93,7 @@ void updateAttributeNS(
   String value,
 ) {
   if (value == null) {
-    _removeAttributeNS(element, namespace, attribute);
+    element.removeAttributeNS(namespace, attribute);
   } else {
     element.setAttributeNS(namespace, attribute, value);
   }
