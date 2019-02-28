@@ -3517,22 +3517,6 @@
     AppViewData_AppViewData: function(appView, cdMode, viewType, parentIndex) {
       return new S.AppViewData(viewType, new L.ViewRefImpl(appView), parentIndex, cdMode, 0);
     },
-    _flattenNestedViewRenderNodes: function(nodes, renderNodes) {
-      var nodeCount, i, node, nestedViews, len, k;
-      nodeCount = nodes.length;
-      for (i = 0; i < nodeCount; ++i) {
-        node = nodes[i];
-        if (node instanceof V.ViewContainer) {
-          renderNodes.push(node.nativeElement);
-          nestedViews = node.nestedViews;
-          if (nestedViews != null)
-            for (len = nestedViews.length, k = 0; k < len; ++k)
-              S._flattenNestedViewRenderNodes(nestedViews[k].viewData.rootNodesOrViewContainers, renderNodes);
-        } else
-          renderNodes.push(node);
-      }
-      return renderNodes;
-    },
     AppViewData: function AppViewData(t0, t1, t2, t3, t4) {
       var _ = this;
       _.type = t0;
@@ -3606,8 +3590,6 @@
     },
     ViewFragment_findLastDomNode: function(nodesOrViewContainers) {
       var i, node;
-      if (nodesOrViewContainers == null)
-        return;
       i = nodesOrViewContainers.length - 1;
       if (i >= 0) {
         node = nodesOrViewContainers[i];
@@ -3624,6 +3606,24 @@
           return D.ViewFragment_findLastDomNode(nestedViews[i].viewData.rootNodesOrViewContainers);
       }
       return container.nativeElement;
+    },
+    ViewFragment__flattenDomNodes: function(target, nodes) {
+      var $length, i, node, nestedViews, length0, n;
+      $length = nodes.length;
+      for (i = 0; i < $length; ++i) {
+        node = nodes[i];
+        if (node instanceof V.ViewContainer) {
+          target.push(node.nativeElement);
+          nestedViews = node.nestedViews;
+          if (nestedViews != null) {
+            length0 = nestedViews.length;
+            for (n = 0; n < length0; ++n)
+              D.ViewFragment__flattenDomNodes(target, nestedViews[n].viewData.rootNodesOrViewContainers);
+          }
+        } else
+          target.push(node);
+      }
+      return target;
     }
   },
   L = {SlowComponentLoader: function SlowComponentLoader() {
@@ -9216,6 +9216,10 @@
     },
     destroyInternal$0: function() {
     },
+    get$flatRootNodes: function() {
+      var t1 = this.viewData.rootNodesOrViewContainers;
+      return D.ViewFragment__flattenDomNodes(H.setRuntimeTypeInfo([], [W.Node]), t1);
+    },
     get$lastRootNode: function() {
       return D.ViewFragment_findLastDomNode(this.viewData.rootNodesOrViewContainers);
     },
@@ -9317,7 +9321,7 @@
       C.JSArray_methods.insert$2(views, currentIndex, t1);
       refRenderNode = this._findRenderNode$2(views, currentIndex);
       if (refRenderNode != null) {
-        T.insertNodesAsSibling(S._flattenNestedViewRenderNodes(t1.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])), refRenderNode);
+        T.insertNodesAsSibling(t1.get$flatRootNodes(), refRenderNode);
         $.domRootRendererIsDirty = true;
       }
       return viewRef;
@@ -9348,7 +9352,7 @@
       refRenderNode = this._findRenderNode$2(views, viewIndex);
       this.nestedViews = views;
       if (refRenderNode != null) {
-        T.insertNodesAsSibling(S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])), refRenderNode);
+        T.insertNodesAsSibling(view.get$flatRootNodes(), refRenderNode);
         $.domRootRendererIsDirty = true;
       }
     },
@@ -9356,7 +9360,7 @@
       var t1, view;
       t1 = this.nestedViews;
       view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex);
-      view.detachViewNodes$1(S._flattenNestedViewRenderNodes(view.viewData.rootNodesOrViewContainers, H.setRuntimeTypeInfo([], [W.Node])));
+      view.detachViewNodes$1(view.get$flatRootNodes());
       t1 = view.viewData.inlinedNodes;
       if (t1 != null)
         view.detachViewNodes$1(t1);
