@@ -347,8 +347,10 @@ abstract class AppView<T> {
 
   List<Node> get inlinedNodes => viewData.inlinedNodes;
 
-  List<Node> get flatRootNodes =>
-      _flattenNestedViews(viewData.rootNodesOrViewContainers);
+  @dart2js.noInline
+  List<Node> get flatRootNodes {
+    return ViewFragment.flattenDomNodes(viewData.rootNodesOrViewContainers);
+  }
 
   @dart2js.noInline
   Node get lastRootNode {
@@ -520,46 +522,58 @@ abstract class AppView<T> {
     }
   }
 
-  /// Projects projectableNodes at specified index. We don't use helper
-  /// functions to flatten the tree since it allocates list that are not
-  /// required in most cases.
-  void project(Element parentElement, int index) {
-    if (parentElement == null) return;
-    // Optimization for projectables that doesn't include ViewContainer(s).
-    // If the projectable is ViewContainer we fall back to building up a list.
-    var projectableNodes = viewData.projectableNodes;
-    if (projectableNodes == null || index >= projectableNodes.length) return;
-    List projectables = unsafeCast(projectableNodes[index]);
-    if (projectables == null) return;
-    int projectableCount = projectables.length;
-    for (var i = 0; i < projectableCount; i++) {
-      var projectable = projectables[i];
-      if (projectable is ViewContainer) {
-        if (projectable.nestedViews == null) {
-          parentElement.append(projectable.nativeElement);
-        } else {
-          _appendNestedViewRenderNodes(parentElement, projectable);
-        }
-      } else if (projectable is List) {
-        for (int n = 0, len = projectable.length; n < len; n++) {
-          var node = projectable[n];
-          if (node is ViewContainer) {
-            if (node.nestedViews == null) {
-              Node nativeNode = node.nativeElement;
-              parentElement.append(nativeNode);
-            } else {
-              _appendNestedViewRenderNodes(parentElement, node);
-            }
-          } else {
-            Node nativeNode = unsafeCast(node);
-            parentElement.append(nativeNode);
+  /// Moves (appends) appropriate DOM [Node]s of [ViewData.projectableNodes].
+  ///
+  /// In the case of multiple `<ng-content>` slots [index] is used as the
+  /// discriminator to determine which parts of the template are mapped to
+  /// what parts of the DOM.
+  @dart2js.noInline
+  void project(Element target, int index) {
+    // TODO: Determine in what case this is `null`.
+    if (target == null) {
+      return;
+    }
+
+    // TODO: Determine why this would be `null` or out of bounds.
+    final projectedNodesByContentIndex = viewData.projectableNodes;
+    if (projectedNodesByContentIndex == null ||
+        index >= projectedNodesByContentIndex.length) {
+      return;
+    }
+
+    // TODO: Also determine why this might be `null`.
+    final nodesToProjectIntoTarget = unsafeCast<List<Object>>(
+      projectedNodesByContentIndex[index],
+    );
+    if (nodesToProjectIntoTarget == null) {
+      return;
+    }
+
+    // This is slightly duplicated with ViewFragment due to the fact that nodes
+    // stored in the projection list are sometimes stored as a List and
+    // sometimes not as an optimization.
+    final length = nodesToProjectIntoTarget.length;
+    for (var i = 0; i < length; i++) {
+      final node = nodesToProjectIntoTarget[i];
+      if (node is ViewContainer) {
+        target.append(node.nativeElement);
+        final nestedViews = node.nestedViews;
+        if (nestedViews != null) {
+          final length = nestedViews.length;
+          for (var n = 0; n < length; n++) {
+            ViewFragment.appendDomNodes(
+              target,
+              nestedViews[n].viewData.rootNodesOrViewContainers,
+            );
           }
         }
+      } else if (node is List) {
+        ViewFragment.appendDomNodes(target, node);
       } else {
-        Node child = unsafeCast(projectable);
-        parentElement.append(child);
+        target.append(unsafeCast(node));
       }
     }
+
     domRootRendererIsDirty = true;
   }
 
@@ -615,54 +629,4 @@ abstract class AppView<T> {
       cancelled = true;
     };
   }
-}
-
-/// Recursively appends app element and nested view nodes to target element.
-void _appendNestedViewRenderNodes(
-    Element targetElement, ViewContainer appElement) {
-  targetElement.append(appElement.nativeElement);
-  var nestedViews = appElement.nestedViews;
-  // Components inside ngcontent may also have ngcontent to project,
-  // recursively walk nestedViews.
-  if (nestedViews == null || nestedViews.isEmpty) return;
-  int nestedViewCount = nestedViews.length;
-  for (int viewIndex = 0; viewIndex < nestedViewCount; viewIndex++) {
-    List projectables =
-        nestedViews[viewIndex].viewData.rootNodesOrViewContainers;
-    int projectableCount = projectables.length;
-    for (var i = 0; i < projectableCount; i++) {
-      var projectable = projectables[i];
-      if (projectable is ViewContainer) {
-        _appendNestedViewRenderNodes(targetElement, projectable);
-      } else {
-        Node child = unsafeCast(projectable);
-        targetElement.append(child);
-      }
-    }
-  }
-}
-
-List<Node> _flattenNestedViews(List nodes) {
-  return _flattenNestedViewRenderNodes(nodes, <Node>[]);
-}
-
-List<Node> _flattenNestedViewRenderNodes(List nodes, List<Node> renderNodes) {
-  int nodeCount = nodes.length;
-  for (var i = 0; i < nodeCount; i++) {
-    var node = nodes[i];
-    if (node is ViewContainer) {
-      final ViewContainer appEl = node;
-      renderNodes.add(appEl.nativeElement);
-      final nestedViews = appEl.nestedViews;
-      if (nestedViews != null) {
-        for (var k = 0, len = nestedViews.length; k < len; k++) {
-          _flattenNestedViewRenderNodes(
-              nestedViews[k].viewData.rootNodesOrViewContainers, renderNodes);
-        }
-      }
-    } else {
-      renderNodes.add(unsafeCast(node));
-    }
-  }
-  return renderNodes;
 }
