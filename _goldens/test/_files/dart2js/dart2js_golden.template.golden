@@ -20,10 +20,11 @@ import 'package:angular/src/di/errors.dart' as import9;
 import 'package:angular/src/core/di/opaque_token.dart' as import10;
 import 'dart:core';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
+import 'package:angular/src/runtime/text_binding.dart' as import13;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import16;
+import 'package:angular/src/common/directives/ng_for.dart' as import17;
 
 final List<dynamic> styles$RootComponent = const [];
 
@@ -355,10 +356,8 @@ AppView<import1.UsesDefaultChangeDetectionAndInputs> viewFactory_UsesDefaultChan
 final List<dynamic> styles$DefaultChangeDetectionAndInputs = const [];
 
 class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChangeDetectionAndInputs> {
-  var _expr_0;
-  var _expr_1;
-  final import5.Text _text_1 = import8.createText('');
-  final import5.Text _text_3 = import8.createText('');
+  final import13.TextBinding _textBinding_1 = import13.TextBinding();
+  final import13.TextBinding _textBinding_3 = import13.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewDefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('default-change-detection-and-inputs');
@@ -373,25 +372,17 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _text_0 = import8.appendText(parentRenderNode, 'Hello ');
-    parentRenderNode.append(_text_1);
+    parentRenderNode.append(_textBinding_1.element);
     final _text_2 = import8.appendText(parentRenderNode, ' ');
-    parentRenderNode.append(_text_3);
+    parentRenderNode.append(_textBinding_3.element);
     init(const [], null);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = (_ctx.title ?? '');
-    if (import12.checkBinding(_expr_0, currVal_0)) {
-      _text_1.text = currVal_0;
-      _expr_0 = currVal_0;
-    }
-    final currVal_1 = (_ctx.name ?? '');
-    if (import12.checkBinding(_expr_1, currVal_1)) {
-      _text_3.text = currVal_1;
-      _expr_1 = currVal_1;
-    }
+    _textBinding_1.updateText((_ctx.title ?? ''));
+    _textBinding_3.updateText((_ctx.name ?? ''));
   }
 
   @override
@@ -549,10 +540,8 @@ AppView<import1.UsesOnPushChangeDetectionAndInputs> viewFactory_UsesOnPushChange
 final List<dynamic> styles$OnPushChangeDetectionAndInputs = const [];
 
 class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDetectionAndInputs> {
-  var _expr_0;
-  var _expr_1;
-  final import5.Text _text_1 = import8.createText('');
-  final import5.Text _text_3 = import8.createText('');
+  final import13.TextBinding _textBinding_1 = import13.TextBinding();
+  final import13.TextBinding _textBinding_3 = import13.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewOnPushChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     rootEl = import5.document.createElement('on-push-change-detection-and-inputs');
@@ -567,25 +556,17 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _text_0 = import8.appendText(parentRenderNode, 'Hello ');
-    parentRenderNode.append(_text_1);
+    parentRenderNode.append(_textBinding_1.element);
     final _text_2 = import8.appendText(parentRenderNode, ' ');
-    parentRenderNode.append(_text_3);
+    parentRenderNode.append(_textBinding_3.element);
     init(const [], null);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = (_ctx.title ?? '');
-    if (import12.checkBinding(_expr_0, currVal_0)) {
-      _text_1.text = currVal_0;
-      _expr_0 = currVal_0;
-    }
-    final currVal_1 = (_ctx.name ?? '');
-    if (import12.checkBinding(_expr_1, currVal_1)) {
-      _text_3.text = currVal_1;
-      _expr_1 = currVal_1;
-    }
+    _textBinding_1.updateText((_ctx.title ?? ''));
+    _textBinding_3.updateText((_ctx.name ?? ''));
   }
 
   @override
@@ -847,7 +828,7 @@ final List<dynamic> styles$EmbeddedNgFor = const [];
 
 class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
   ViewContainer _appEl_1;
-  import16.NgFor _NgFor_1_9;
+  import17.NgFor _NgFor_1_9;
   static import2.ComponentStyles _componentStyles;
   ViewEmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('embedded-ng-for');
@@ -866,7 +847,7 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
     final _anchor_1 = import8.appendAnchor(_el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_EmbeddedNgFor1);
-    _NgFor_1_9 = import16.NgFor(_appEl_1, _TemplateRef_1_8);
+    _NgFor_1_9 = import17.NgFor(_appEl_1, _TemplateRef_1_8);
     init(const [], null);
   }
 
@@ -906,8 +887,7 @@ ComponentFactory<import1.EmbeddedNgFor> get EmbeddedNgForNgFactory {
 }
 
 class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
-  var _expr_0;
-  final import5.Text _text_1 = import8.createText('');
+  final import13.TextBinding _textBinding_1 = import13.TextBinding();
   _ViewEmbeddedNgFor1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
@@ -915,18 +895,14 @@ class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
   ComponentRef<import1.EmbeddedNgFor> build() {
     final doc = import5.document;
     final _el_0 = doc.createElement('li');
-    _el_0.append(_text_1);
+    _el_0.append(_textBinding_1.element);
     init0(_el_0);
   }
 
   @override
   void detectChangesInternal() {
     final local_item = import6.unsafeCast<String>(locals['\$implicit']);
-    final currVal_0 = import12.interpolateString0(local_item);
-    if (import12.checkBinding(_expr_0, currVal_0)) {
-      _text_1.text = currVal_0;
-      _expr_0 = currVal_0;
-    }
+    _textBinding_1.updateText(import12.interpolateString0(local_item));
   }
 }
 

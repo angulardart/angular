@@ -125,6 +125,12 @@ class NodeReference {
         _name = '_text_${nodeIndex}_$inlinedNodeIndex',
         _initialValue = initialValue;
 
+  /// Create a [NodeReference] for a `TextBinding` node.
+  NodeReference._textBindingNode(this._storage, int nodeIndex)
+      : _type = o.importType(Identifiers.TextBinding),
+        _name = '_textBinding_$nodeIndex',
+        _initialValue = o.importExpr(Identifiers.TextBinding).callFn([]);
+
   /// Create a [NodeReference] for an anchor node for view containers.
   NodeReference.anchor(
     this._storage,
@@ -165,6 +171,17 @@ class NodeReference {
       );
     }
   }
+}
+
+// Wraps references to HTML Text nodes in a [TextBinding] helper class.
+class TextBindingNodeReference extends NodeReference {
+  TextBindingNodeReference(CompileViewStorage storage, int nodeIndex)
+      : super._textBindingNode(storage, nodeIndex);
+
+  @override
+  o.Expression toReadExpr() => ReadNodeReferenceExpr(this).prop('element');
+  o.Expression updateExpr(o.Expression newValueExpr) =>
+      ReadNodeReferenceExpr(this).callMethod('updateText', [newValueExpr]);
 }
 
 /// An AST expression that reads the value of a NodeReference.
@@ -642,11 +659,7 @@ class CompileView {
               nodeIndex,
             );
     } else {
-      return NodeReference.textNode(
-        storage,
-        nodeIndex,
-        initialValue: _createEmptyText,
-      );
+      return TextBindingNodeReference(storage, nodeIndex);
     }
   }
 
@@ -690,10 +703,6 @@ class CompileView {
       throw ArgumentError.value(source, 'source', 'Unsupported source type');
     }
   }
-
-  static final _createEmptyText = o.importExpr(DomHelpers.createText).callFn(
-    [o.literal('')],
-  );
 
   /// Create an html node and appends to parent element.
   void createElement(CompileElement parent, NodeReference elementRef,
