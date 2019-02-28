@@ -13,6 +13,7 @@ const _ngIfUrl = "$_angularLib/src/common/directives/ng_if.dart";
 const _ngForUrl = "$_angularLib/src/common/directives/ng_for.dart";
 const _profileRuntimeModuleUrl = "$_angularLib/src/debug/profile_runtime.dart";
 const _runtimeUtilsModuleUrl = "$_angularLib/src/runtime.dart";
+const _textBindingModuleUrl = "$_angularLib/src/runtime/text_binding.dart";
 final _debugInjectorModuleUrl = '$_angularLib/src/di/errors.dart';
 
 /// A collection of methods for manipulating the DOM from generated code.
@@ -148,6 +149,12 @@ class Identifiers {
       name: "debugInjectorLeave", moduleUrl: _debugInjectorModuleUrl);
   static final debugInjectorWrap = CompileIdentifierMetadata<dynamic>(
       name: "debugInjectorWrap", moduleUrl: _debugInjectorModuleUrl);
+
+  static final TextBinding = CompileIdentifierMetadata<dynamic>(
+      name: "TextBinding", moduleUrl: _textBindingModuleUrl);
+
+  static final createTextBinding = CompileIdentifierMetadata<dynamic>(
+      name: "createTextBinding", moduleUrl: _textBindingModuleUrl);
 
   /// String interpolation where prefix,suffix are empty
   /// (most common case).

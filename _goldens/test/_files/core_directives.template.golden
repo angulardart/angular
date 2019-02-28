@@ -19,6 +19,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
+import 'package:angular/src/runtime/text_binding.dart' as import13;
 import 'dart:core';
 
 final List<dynamic> styles$TestFooComponent = const [];
@@ -92,12 +93,9 @@ ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
 }
 
 class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
-  var _expr_0;
-  var _expr_1;
-  var _expr_2;
-  final import4.Text _text_2 = import10.createText('');
-  final import4.Text _text_4 = import10.createText('');
-  final import4.Text _text_6 = import10.createText('');
+  final import13.TextBinding _textBinding_2 = import13.TextBinding();
+  final import13.TextBinding _textBinding_4 = import13.TextBinding();
+  final import13.TextBinding _textBinding_6 = import13.TextBinding();
   _ViewTestFooComponent2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
@@ -106,11 +104,11 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     final doc = import4.document;
     final _el_0 = doc.createElement('div');
     final _el_1 = import10.appendSpan(doc, _el_0);
-    _el_1.append(_text_2);
+    _el_1.append(_textBinding_2.element);
     final _text_3 = import10.appendText(_el_1, '. #');
-    _el_1.append(_text_4);
+    _el_1.append(_textBinding_4.element);
     final _text_5 = import10.appendText(_el_1, ' odd?');
-    _el_1.append(_text_6);
+    _el_1.append(_textBinding_6.element);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
     init0(_el_0);
   }
@@ -120,21 +118,9 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     final local_bar = import8.unsafeCast<String>(locals['\$implicit']);
     final local_index = import8.unsafeCast<int>(locals['index']);
     final local_odd = import8.unsafeCast<bool>(locals['odd']);
-    final currVal_0 = import12.interpolateString0(local_bar);
-    if (import12.checkBinding(_expr_0, currVal_0)) {
-      _text_2.text = currVal_0;
-      _expr_0 = currVal_0;
-    }
-    final currVal_1 = import12.interpolate0(local_index);
-    if (import12.checkBinding(_expr_1, currVal_1)) {
-      _text_4.text = currVal_1;
-      _expr_1 = currVal_1;
-    }
-    final currVal_2 = import12.interpolate0(local_odd);
-    if (import12.checkBinding(_expr_2, currVal_2)) {
-      _text_6.text = currVal_2;
-      _expr_2 = currVal_2;
-    }
+    _textBinding_2.updateText(import12.interpolateString0(local_bar));
+    _textBinding_4.updateText(import12.interpolate0(local_index));
+    _textBinding_6.updateText(import12.interpolate0(local_odd));
   }
 
   void _handle_click_1_0($event) {
