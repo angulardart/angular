@@ -66,7 +66,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   o.Expression elementRef;
 
   /// Expression that contains reference to componentView (root View class).
-  o.Expression _compViewExpr;
+  final o.Expression componentView;
 
   var _queryCount = 0;
   final _queries = CompileTokenMap<List<CompileQuery>>();
@@ -81,22 +81,23 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   bool _publishesTemplateRef = false;
 
   CompileElement(
-      CompileElement parent,
-      CompileView view,
-      int nodeIndex,
-      NodeReference renderNode,
-      this.sourceAst,
-      this.component,
-      this._directives,
-      this._resolvedProvidersArray,
-      this.hasViewContainer,
-      this.hasEmbeddedView,
-      List<ReferenceAst> references,
-      {this.isHtmlElement = false,
-      this.hasTemplateRefQuery = false,
-      this.isInlined = false,
-      this.isDeferredComponent = false})
-      : super(parent, view, nodeIndex, renderNode) {
+    CompileElement parent,
+    CompileView view,
+    int nodeIndex,
+    NodeReference renderNode,
+    this.sourceAst,
+    this.component,
+    this._directives,
+    this._resolvedProvidersArray,
+    this.hasViewContainer,
+    this.hasEmbeddedView,
+    List<ReferenceAst> references, {
+    this.componentView,
+    this.hasTemplateRefQuery = false,
+    this.isHtmlElement = false,
+    this.isInlined = false,
+    this.isDeferredComponent = false,
+  }) : super(parent, view, nodeIndex, renderNode) {
     _providers = ProvidersNode(this, parent?._providers,
         view == null || view.viewType == ViewType.host);
     if (references.isNotEmpty) {
@@ -128,23 +129,22 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
       );
       _providers.add(Identifiers.ViewContainerToken, appViewContainer);
     }
+
+    // This logic was copied from the setter for `componentView`, which was
+    // removed when `componentView` was made final (as there was no need for it
+    // to ever be reassigned).
+    if (componentView != null) {
+      final indexCount = component.template.ngContentSelectors.length;
+      contentNodesByNgContentIndex = List(indexCount);
+      for (var i = 0; i < indexCount; i++) {
+        contentNodesByNgContentIndex[i] = [];
+      }
+    }
   }
 
   CompileElement.root()
       : this(null, null, null, NodeReference.appViewRoot(), null, null, [], [],
             false, false, []);
-
-  set componentView(o.Expression componentViewExpr) {
-    _compViewExpr = componentViewExpr;
-    int indexCount = component.template.ngContentSelectors.length;
-    contentNodesByNgContentIndex = List<List<o.Expression>>(indexCount);
-    for (var i = 0; i < indexCount; i++) {
-      contentNodesByNgContentIndex[i] = <o.Expression>[];
-    }
-  }
-
-  /// Returns expression with reference to root component view.
-  o.Expression get componentView => _compViewExpr;
 
   void setEmbeddedView(CompileView view) {
     if (!isInlined) {
@@ -204,7 +204,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     // Access builtins with special visibility.
     if (component != null) {
       _providers.add(
-          Identifiers.ChangeDetectorRefToken, _compViewExpr.prop('ref'));
+          Identifiers.ChangeDetectorRefToken, componentView.prop('ref'));
     } else {
       _providers.add(
           Identifiers.ChangeDetectorRefToken, o.ReadClassMemberExpr('ref'));
