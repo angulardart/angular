@@ -33,8 +33,8 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   ViewContainer _appEl_1;
   NgIf _NgIf_1_9;
   ViewContainer _appEl_2;
-  bool _query_queryMe_1_0_isDirty = true;
   NgIf _NgIf_2_9;
+  bool _query_queryMe_1_0_isDirty = true;
   ViewContainer _appEl_3;
   void Function() _cancelDeferredLoad3;
   ViewContainer _appEl_4;
