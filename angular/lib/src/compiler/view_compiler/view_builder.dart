@@ -209,7 +209,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       List<CompileDirectiveMetadata> directives,
       ElementAst ast,
       {bool isDeferred = false}) {
-    AppViewReference compAppViewExpr = _view.createComponentNodeAndAppend(
+    AppViewReference compAppViewRef = _view.createComponentNodeAndAppend(
         component, parent, elementRef, nodeIndex, ast,
         isDeferred: isDeferred);
 
@@ -221,26 +221,27 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     _view.shimCssForNode(elementRef, nodeIndex, Identifiers.HTML_HTML_ELEMENT);
 
-    var compileElement = CompileElement(
-        parent,
-        _view,
-        nodeIndex,
-        elementRef,
-        ast,
-        component,
-        directives,
-        ast.providers,
-        ast.hasViewContainer,
-        false,
-        ast.references,
-        isHtmlElement: detectHtmlElementFromTagName(ast.name),
-        hasTemplateRefQuery: parent.hasTemplateRefQuery,
-        isDeferredComponent: isDeferred);
+    final compAppViewExpr = compAppViewRef.toReadExpr();
+    final compileElement = CompileElement(
+      parent,
+      _view,
+      nodeIndex,
+      elementRef,
+      ast,
+      component,
+      directives,
+      ast.providers,
+      ast.hasViewContainer,
+      false,
+      ast.references,
+      componentView: compAppViewExpr,
+      hasTemplateRefQuery: parent.hasTemplateRefQuery,
+      isHtmlElement: detectHtmlElementFromTagName(ast.name),
+      isDeferredComponent: isDeferred,
+    );
 
+    _view.addViewChild(compAppViewExpr);
     _view.nodes.add(compileElement);
-
-    compileElement.componentView = compAppViewExpr.toReadExpr();
-    _view.addViewChild(compAppViewExpr.toReadExpr());
 
     // beforeChildren() -> _prepareProviderInstances will create the actual
     // directive and component instances.
@@ -262,7 +263,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
           .toList());
     }
     var componentInstance = compileElement.getComponent();
-    _view.createAppView(compAppViewExpr, componentInstance, projectables);
+    _view.createAppView(compAppViewRef, componentInstance, projectables);
   }
 
   void _visitHtmlElement(
