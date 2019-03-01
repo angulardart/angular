@@ -174,9 +174,7 @@ void main() {
       });
       expect(fixture.text, 'MAIN(FIRST())');
       await fixture.update((NestedConditionalTest component) {
-        // WARNING: this is assuming that once the first viewport is shown, the
-        // new viewport becomes the first viewport in the query list.
-        component.conditional.viewports.first.show();
+        component.conditional.viewports[1].show();
       });
       expect(fixture.text, 'MAIN(FIRST(SECOND(a)))');
     });
