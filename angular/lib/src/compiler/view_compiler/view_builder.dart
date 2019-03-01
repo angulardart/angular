@@ -242,16 +242,15 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     _view.addViewChild(compAppViewExpr);
     _view.nodes.add(compileElement);
+    _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
 
     // beforeChildren() -> _prepareProviderInstances will create the actual
     // directive and component instances.
     compileElement.beforeChildren();
-    _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     bool oldVisitingProjectedContent = _visitingProjectedContent;
     _visitingProjectedContent = true;
     templateVisitAll(this, ast.children, compileElement);
     _visitingProjectedContent = oldVisitingProjectedContent;
-
     compileElement.afterChildren(_view.nodes.length - nodeIndex - 1);
 
     o.Expression projectables;
@@ -311,10 +310,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         hasTemplateRefQuery: parent.hasTemplateRefQuery);
 
     _view.nodes.add(compileElement);
+    _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     // beforeChildren() -> _prepareProviderInstances will create the actual
     // directive and component instances.
     compileElement.beforeChildren();
-    _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
     templateVisitAll(this, ast.children, compileElement);
     compileElement.afterChildren(_view.nodes.length - nodeIndex - 1);
   }
@@ -345,6 +344,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         isInlined: isPureHtml);
     _view.nodes.add(compileElement);
     _nestedViewCount++;
+    _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
 
     CompileDirectiveMetadata metadata = CompileDirectiveMetadata.from(
         _view.component,
@@ -365,6 +365,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         _view.deferredModules,
         isInlined: isPureHtml);
 
+    if (!isPureHtml) {
+      compileElement.beforeChildren();
+    }
+
     // Create a visitor for embedded view and visit all nodes.
     var embeddedViewVisitor = ViewBuilderVisitor(embeddedView);
     templateVisitAll(
@@ -375,12 +379,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     _nestedViewCount += embeddedViewVisitor._nestedViewCount;
 
     if (!isPureHtml) {
-      compileElement.beforeChildren();
-    }
-    _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
-    if (!isPureHtml) {
       compileElement.afterChildren(0);
     }
+
     if (ast.hasDeferredComponent) {
       _view.deferLoadEmbeddedTemplate(embeddedView, compileElement);
     }

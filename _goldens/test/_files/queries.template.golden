@@ -28,9 +28,9 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   import1.AnotherDirective _AnotherDirective_0_5;
   import1.AnotherDirective _AnotherDirective_1_5;
   ViewContainer _appEl_2;
+  NgIf _NgIf_2_9;
   bool _query_AnotherDirective_1_5_isDirty = true;
   bool _query_q3_1_6_isDirty = true;
-  NgIf _NgIf_2_9;
   static import4.ComponentStyles _componentStyles;
   ViewQueriesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import7.document.createElement('queries');
@@ -458,8 +458,8 @@ final List<dynamic> styles$NestedNgForQueriesList = const [];
 
 class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList> {
   ViewContainer _appEl_0;
-  bool _query_taggedItem_1_0_isDirty = true;
   NgIf _NgIf_0_9;
+  bool _query_taggedItem_1_0_isDirty = true;
   static import4.ComponentStyles _componentStyles;
   ViewNestedNgForQueriesList0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import7.document.createElement('test');

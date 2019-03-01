@@ -45,6 +45,12 @@
 
 *   The template compiler no longer crashes on HTML attributes ending in ":"
 
+*   When querying for a directive present in multiple embedded views (portions
+    of the template controlled by a structural directive such as `*ngIf`) with
+    `@ViewChildren()`, the directives in the resulting list are now in the same
+    order as they appear in the template. Prior to this fix, directives in
+    nested embedded views would occur *before* those in their parent view.
+
 ### Breaking changes
 
 *   Removed `castCallback2ForDirective` from `meta.dart`. In practice this was
