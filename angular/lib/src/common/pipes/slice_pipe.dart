@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:angular/di.dart' show PipeTransform, Pipe;
+import 'package:angular/core.dart' show PipeTransform, Pipe;
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
