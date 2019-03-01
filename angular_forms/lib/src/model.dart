@@ -359,9 +359,10 @@ abstract class AbstractControl<T> {
   /// Set the value of the AbstractControl to `value`.
   ///
   /// If `onlySelf` is `true`, this change will only affect the validation of
-  /// this `Control` and not its parent component. If `emitEvent` is `true`,
-  /// this change will cause a `valueChanges` event on the `Control` to be
-  /// emitted. Both of these options default to `false`.
+  /// this `Control` and not its parent component. This defaults to `false`.
+  ///
+  /// If `emitEvent` is `true`, this change will cause a `valueChanges` event on
+  /// the `Control` to be emitted. This is the default behavior.
   ///
   /// If `emitModelToViewChange` is `true`, the view will be notified about the
   /// new value via an `onChange` event. This is the default behavior if
