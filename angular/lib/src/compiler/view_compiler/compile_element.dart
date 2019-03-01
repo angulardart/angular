@@ -19,11 +19,7 @@ import 'compile_view.dart' show CompileView, NodeReference;
 import 'ir/provider_source.dart';
 import 'ir/providers_node.dart';
 import 'view_compiler_utils.dart'
-    show
-        createDiTokenExpression,
-        injectFromViewParentInjector,
-        getPropertyInView,
-        toTemplateExtension;
+    show injectFromViewParentInjector, getPropertyInView, toTemplateExtension;
 
 /// Compiled node in the view (such as text node) that is not an element.
 class CompileNode {
@@ -450,13 +446,6 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
   @override
   o.Expression createI18nMessage(I18nMessage message) =>
       view.createI18nMessage(message);
-
-  List<o.Expression> getProviderTokens() {
-    return _resolvedProvidersArray
-        .map((resolvedProvider) =>
-            createDiTokenExpression(resolvedProvider.token))
-        .toList();
-  }
 
   List<CompileQuery> _getQueriesFor(CompileTokenMetadata token) {
     List<CompileQuery> result = [];
