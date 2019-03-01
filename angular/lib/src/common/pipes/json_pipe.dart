@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:angular/di.dart' show PipeTransform, Pipe;
+import 'package:angular/core.dart' show PipeTransform, Pipe;
 
 /// Transforms any input value using `JSON.encode`. Useful for debugging.
 @Pipe('json', pure: false)
