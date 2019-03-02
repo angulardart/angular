@@ -45,7 +45,7 @@ import 'constants.dart'
         DetectChangesVars,
         ViewProperties,
         InjectMethodVars;
-import 'ir/providers_node.dart';
+import 'ir/provider_resolver.dart';
 import 'ir/view_storage.dart';
 import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'

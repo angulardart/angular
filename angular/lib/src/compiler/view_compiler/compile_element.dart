@@ -1,4 +1,3 @@
-import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular_compiler/cli.dart';
 
 import '../compile_metadata.dart'
@@ -16,8 +15,8 @@ import '../template_ast.dart'
     show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst, ElementAst;
 import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
 import 'compile_view.dart' show CompileView, NodeReference;
+import 'ir/provider_resolver.dart';
 import 'ir/provider_source.dart';
-import 'ir/providers_node.dart';
 import 'view_compiler_utils.dart'
     show injectFromViewParentInjector, getPropertyInView, toTemplateExtension;
 
@@ -43,7 +42,7 @@ class CompileNode {
 }
 
 /// Compiled element in the view.
-class CompileElement extends CompileNode implements ProvidersNodeHost {
+class CompileElement extends CompileNode implements ProviderResolverHost {
   // If true, we know for sure it is html and not svg or other type
   // so we can create code for more exact type HtmlElement.
   final bool isHtmlElement;
@@ -70,7 +69,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
 
   var _queryCount = 0;
   final _queries = CompileTokenMap<List<CompileQuery>>();
-  ProvidersNode _providers;
+  ProviderResolver _providers;
 
   List<List<o.Expression>> contentNodesByNgContentIndex;
   CompileView embeddedView;
@@ -98,8 +97,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
     this.isInlined = false,
     this.isDeferredComponent = false,
   }) : super(parent, view, nodeIndex, renderNode) {
-    _providers = ProvidersNode(this, parent?._providers,
-        view == null || view.viewType == ViewType.host);
+    _providers = ProviderResolver(this, parent?._providers);
     if (references.isNotEmpty) {
       referenceTokens = <String, CompileTokenMetadata>{};
       int referenceCount = references.length;
@@ -415,7 +413,7 @@ class CompileElement extends CompileNode implements ProvidersNodeHost {
 
   @override
   ProviderSource createDynamicInjectionSource(
-    ProvidersNode providersNode,
+    ProviderResolver providersNode,
     ProviderSource source,
     CompileTokenMetadata token,
     bool optional,
