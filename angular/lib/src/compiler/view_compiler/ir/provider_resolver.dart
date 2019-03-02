@@ -5,11 +5,20 @@ import '../../template_ast.dart';
 import '../../view_compiler/view_compiler_utils.dart';
 import 'provider_source.dart';
 
-/// Resolves and builds Providers for a single compile element that represents
-/// a template node.
-class ProvidersNode {
-  final ProvidersNodeHost _host;
-  final ProvidersNode _parent;
+/// Resolves providers for a compiled template element.
+///
+/// Users may configure multiple providers with the same token on a given
+/// element, as well as configure tokens to act as an alias to another existing
+/// provider. It's the [ProviderResolver]'s responsibility given such a
+/// configuration to reconcile overridden providers and collect aliases.
+class ProviderResolver {
+  /// The element hosting this resolver.
+  final ProviderResolverHost _host;
+
+  /// The resolver of [_host]'s parent.
+  ///
+  /// This may be used to resolve tokens that aren't provided by this resolver.
+  final ProviderResolver _parent;
 
   /// Maps from a provider token to expression that will return instance
   /// at runtime. Builtin(s) are populated eagerly, ProviderAst based
@@ -21,15 +30,9 @@ class ProvidersNode {
   /// a getter for them.
   final _aliases = CompileTokenMap<List<CompileTokenMetadata>>();
   final _aliasedProviders = CompileTokenMap<CompileTokenMetadata>();
+  final _resolvedProviders = CompileTokenMap<ProviderAst>();
 
-  /// Indicates that ProvidersNode is on a host AppView. Used to determine
-  /// how to reach correct dynamic injector.
-  final bool _isAppViewHost;
-
-  final CompileTokenMap<ProviderAst> _resolvedProviders =
-      CompileTokenMap<ProviderAst>();
-
-  ProvidersNode(this._host, this._parent, this._isAppViewHost);
+  ProviderResolver(this._host, this._parent);
 
   bool containsLocalProvider(CompileTokenMetadata token) =>
       _instances.containsKey(token);
@@ -189,7 +192,7 @@ class ProvidersNode {
   }
 
   ProviderSource _getDependency(CompileDiDependencyMetadata dep) {
-    ProvidersNode currProviders = this;
+    ProviderResolver currProviders = this;
     ProviderSource result;
     if (dep.isValue) {
       final value = dep.value;
@@ -233,8 +236,8 @@ class ProvidersNode {
   }
 }
 
-/// Interface to be implemented by NodeProviders users.
-abstract class ProvidersNodeHost {
+/// Interface to be implemented by [ProviderResolver] users.
+abstract class ProviderResolverHost {
   /// Creates an eager instance for a provider and returns reference to source.
   ProviderSource createProviderInstance(
       ProviderAst resolvedProvider,
@@ -244,7 +247,7 @@ abstract class ProvidersNodeHost {
 
   /// Creates ProviderSource to call injectorGet on parent view that contains
   /// source NodeProviders.
-  ProviderSource createDynamicInjectionSource(ProvidersNode source,
+  ProviderSource createDynamicInjectionSource(ProviderResolver source,
       ProviderSource value, CompileTokenMetadata token, bool optional);
 
   /// Creates an expression that returns the internationalized [message].
@@ -366,7 +369,7 @@ class FunctionalDirectiveSource extends ProviderSource {
 /// Source for injectable values that are resolved by
 /// dynamic lookup (injectorGet).
 class DynamicProviderSource extends ProviderSource {
-  final ProvidersNode parentProviders;
+  final ProviderResolver parentProviders;
   final bool optional;
   final bool _isAppViewHost;
 
