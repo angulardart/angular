@@ -6,6 +6,7 @@ import 'package:angular_analyzer_plugin/src/model/syntactic/top_level.dart';
 import 'package:meta/meta.dart';
 
 /// Syntactic representation of a class annotated with angular annotations.
+///
 /// Might be a directive, or a component, or neither. It might simply have
 /// annotated @Inputs, @Outputs() intended to be inherited.
 class AnnotatedClass extends TopLevel {
@@ -18,7 +19,7 @@ class AnnotatedClass extends TopLevel {
   /// The `@Input()` declarations on this class.
   final List<Input> inputs;
 
-  /// The `@Input()` declarations on this class.
+  /// The `@Output()` declarations on this class.
   final List<Output> outputs;
 
   /// The `@ContentChild()` declarations on this class.

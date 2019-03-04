@@ -12,8 +12,12 @@ import 'package:analyzer/src/generated/source.dart' show SourceRange;
 ///   [A, B, C, ...]
 /// ```
 ///
-/// By tracking each identifier individually, we can give better error reporting
+/// By tracking each identifier individually, we can give better error
+/// reporting.
 class ListLiteral implements ListOrReference {
+  /// The [Reference]s in the list literal. Note that we do not support list
+  /// literals inside list literals. This works in practice because when users
+  /// nest lists, the inner list is a [Reference], ie, `[A, B, listReference]`.
   final List<Reference> items;
 
   ListLiteral(this.items);

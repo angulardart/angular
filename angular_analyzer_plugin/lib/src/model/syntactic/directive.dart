@@ -7,9 +7,10 @@ import 'package:angular_analyzer_plugin/src/model/syntactic/output.dart';
 import 'package:angular_analyzer_plugin/src/selector.dart';
 import 'package:meta/meta.dart';
 
-/// Syntactic model of an Angular directive. This excludes functional
-/// directives, if you want to include functional directives then use
-/// DirectiveBase.
+/// Syntactic model of an Angular directive.
+///
+/// This excludes functional directives, if you want to include functional
+/// directives then use [DirectiveBase].
 ///
 /// ```dart
 /// @Directive(
