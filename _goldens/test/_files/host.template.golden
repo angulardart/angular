@@ -65,7 +65,7 @@ class _ViewHostComponentNewSyntaxHost0 extends AppView<import1.HostComponentNewS
     _compView_0 = ViewHostComponentNewSyntax0(this, 0);
     rootEl = _compView_0.rootEl;
     _HostComponentNewSyntax_0_5 = import1.HostComponentNewSyntax();
-    _compView_0.create(_HostComponentNewSyntax_0_5, projectableNodes);
+    _compView_0.create(_HostComponentNewSyntax_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HostComponentNewSyntax_0_5);
   }
@@ -155,7 +155,7 @@ class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostC
     _compView_0 = ViewUsesHostComponentWithDirective0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesHostComponentWithDirective_0_5 = import1.UsesHostComponentWithDirective();
-    _compView_0.create(_UsesHostComponentWithDirective_0_5, projectableNodes);
+    _compView_0.create(_UsesHostComponentWithDirective_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesHostComponentWithDirective_0_5);
   }
@@ -267,7 +267,7 @@ class _ViewHostComponentHost0 extends AppView<import1.HostComponent> {
     _compView_0 = ViewHostComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _HostComponent_0_5 = import1.HostComponent();
-    _compView_0.create(_HostComponent_0_5, projectableNodes);
+    _compView_0.create(_HostComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HostComponent_0_5);
   }

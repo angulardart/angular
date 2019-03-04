@@ -255,7 +255,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     o.Expression projectables;
     if (_view.component.type.isHost) {
-      projectables = ViewProperties.projectableNodes;
+      projectables = ViewProperties.projectedNodes;
     } else {
       projectables = o.literalArr(compileElement.contentNodesByNgContentIndex
           .map((nodes) => createFlatArray(nodes))

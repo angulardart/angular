@@ -46,7 +46,7 @@ final _appViewFields = Set<String>.from([
   'cdMode',
   'cdState',
   'ref',
-  'projectableNodes',
+  'projectedNodes',
   'changeDetectorRef',
   'inlinedNodes',
   'flatRootNodes',

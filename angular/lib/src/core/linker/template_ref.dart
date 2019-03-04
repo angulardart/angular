@@ -21,10 +21,11 @@ class TemplateRef {
 
   TemplateRef(this._viewContainer, this._viewFactory);
 
+  /// Instantiates an instance of the provided template.
   EmbeddedViewRef createEmbeddedView() {
     final parentView = _viewContainer.parentView;
     final view = _viewFactory(parentView, _viewContainer.index);
-    view.create(parentView.ctx, parentView.viewData.projectableNodes);
+    view.create(parentView.ctx, parentView.viewData.projectedNodes);
     return view.viewData.ref;
   }
 

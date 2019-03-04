@@ -98,7 +98,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
     _compView_0 = ViewAppComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _AppComponent_0_5 = import1.AppComponent();
-    _compView_0.create(_AppComponent_0_5, projectableNodes);
+    _compView_0.create(_AppComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _AppComponent_0_5);
   }
@@ -166,7 +166,7 @@ class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServic
     _compView_0 = ViewProvidesServicesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
-    _compView_0.create(_ProvidesServicesComponent_0_5, projectableNodes);
+    _compView_0.create(_ProvidesServicesComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ProvidesServicesComponent_0_5);
   }
@@ -245,7 +245,7 @@ class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServices
             return import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, viewData.parentIndex), this.injectorGet(import1.EagerProviderB, viewData.parentIndex));
           })
         : import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, viewData.parentIndex), this.injectorGet(import1.EagerProviderB, viewData.parentIndex)));
-    _compView_0.create(_InjectsServicesComponent_0_5, projectableNodes);
+    _compView_0.create(_InjectsServicesComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InjectsServicesComponent_0_5);
   }

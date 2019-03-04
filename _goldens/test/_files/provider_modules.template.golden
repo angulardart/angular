@@ -96,7 +96,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
     _compView_0 = ViewProviderModulesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ProviderModulesComponent_0_5 = import1.ProviderModulesComponent();
-    _compView_0.create(_ProviderModulesComponent_0_5, projectableNodes);
+    _compView_0.create(_ProviderModulesComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ProviderModulesComponent_0_5);
   }

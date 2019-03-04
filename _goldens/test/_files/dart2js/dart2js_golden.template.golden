@@ -236,7 +236,7 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
     _compView_0 = ViewRootComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _RootComponent_0_5 = import1.RootComponent();
-    _compView_0.create(_RootComponent_0_5, projectableNodes);
+    _compView_0.create(_RootComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _RootComponent_0_5);
   }
@@ -333,7 +333,7 @@ class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.Uses
     _compView_0 = ViewUsesDefaultChangeDetectionAndInputs0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesDefaultChangeDetectionAndInputs_0_5 = import1.UsesDefaultChangeDetectionAndInputs();
-    _compView_0.create(_UsesDefaultChangeDetectionAndInputs_0_5, projectableNodes);
+    _compView_0.create(_UsesDefaultChangeDetectionAndInputs_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesDefaultChangeDetectionAndInputs_0_5);
   }
@@ -413,7 +413,7 @@ class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultC
     _compView_0 = ViewDefaultChangeDetectionAndInputs0(this, 0);
     rootEl = _compView_0.rootEl;
     _DefaultChangeDetectionAndInputs_0_5 = import1.DefaultChangeDetectionAndInputs();
-    _compView_0.create(_DefaultChangeDetectionAndInputs_0_5, projectableNodes);
+    _compView_0.create(_DefaultChangeDetectionAndInputs_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DefaultChangeDetectionAndInputs_0_5);
   }
@@ -517,7 +517,7 @@ class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesO
     _compView_0 = ViewUsesOnPushChangeDetectionAndInputs0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesOnPushChangeDetectionAndInputs_0_5 = import1.UsesOnPushChangeDetectionAndInputs();
-    _compView_0.create(_UsesOnPushChangeDetectionAndInputs_0_5, projectableNodes);
+    _compView_0.create(_UsesOnPushChangeDetectionAndInputs_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesOnPushChangeDetectionAndInputs_0_5);
   }
@@ -597,7 +597,7 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
     _compView_0 = ViewOnPushChangeDetectionAndInputs0(this, 0);
     rootEl = _compView_0.rootEl;
     _OnPushChangeDetectionAndInputs_0_5 = import1.OnPushChangeDetectionAndInputs();
-    _compView_0.create(_OnPushChangeDetectionAndInputs_0_5, projectableNodes);
+    _compView_0.create(_OnPushChangeDetectionAndInputs_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _OnPushChangeDetectionAndInputs_0_5);
   }
@@ -689,7 +689,7 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
     _compView_0 = ViewInlinedNgIf0(this, 0);
     rootEl = _compView_0.rootEl;
     _InlinedNgIf_0_5 = import1.InlinedNgIf();
-    _compView_0.create(_InlinedNgIf_0_5, projectableNodes);
+    _compView_0.create(_InlinedNgIf_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InlinedNgIf_0_5);
   }
@@ -804,7 +804,7 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
     _compView_0 = ViewEmbeddedNgIf0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmbeddedNgIf_0_5 = import1.EmbeddedNgIf();
-    _compView_0.create(_EmbeddedNgIf_0_5, projectableNodes);
+    _compView_0.create(_EmbeddedNgIf_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _EmbeddedNgIf_0_5);
   }
@@ -923,7 +923,7 @@ class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
     _compView_0 = ViewEmbeddedNgFor0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmbeddedNgFor_0_5 = import1.EmbeddedNgFor();
-    _compView_0.create(_EmbeddedNgFor_0_5, projectableNodes);
+    _compView_0.create(_EmbeddedNgFor_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _EmbeddedNgFor_0_5);
   }
@@ -990,7 +990,7 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
     _compView_0 = ViewNullComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _NullComponent_0_5 = import1.NullComponent();
-    _compView_0.create(_NullComponent_0_5, projectableNodes);
+    _compView_0.create(_NullComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _NullComponent_0_5);
   }
@@ -1061,7 +1061,7 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
             return import1.InjectsFromArbitraryParent(this.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex));
           })
         : import1.InjectsFromArbitraryParent(this.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex)));
-    _compView_0.create(_InjectsFromArbitraryParent_0_5, projectableNodes);
+    _compView_0.create(_InjectsFromArbitraryParent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InjectsFromArbitraryParent_0_5);
   }
@@ -1215,7 +1215,7 @@ class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentCo
     _compView_0 = ViewComponentConditionalFeatures0(this, 0);
     rootEl = _compView_0.rootEl;
     _ComponentConditionalFeatures_0_5 = import1.ComponentConditionalFeatures();
-    _compView_0.create(_ComponentConditionalFeatures_0_5, projectableNodes);
+    _compView_0.create(_ComponentConditionalFeatures_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ComponentConditionalFeatures_0_5);
   }
@@ -1283,7 +1283,7 @@ class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
     _compView_0 = ViewFeatureA0(this, 0);
     rootEl = _compView_0.rootEl;
     _FeatureA_0_5 = import1.FeatureA();
-    _compView_0.create(_FeatureA_0_5, projectableNodes);
+    _compView_0.create(_FeatureA_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _FeatureA_0_5);
   }
@@ -1351,7 +1351,7 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
     _compView_0 = ViewFeatureB0(this, 0);
     rootEl = _compView_0.rootEl;
     _FeatureB_0_5 = import1.FeatureB();
-    _compView_0.create(_FeatureB_0_5, projectableNodes);
+    _compView_0.create(_FeatureB_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _FeatureB_0_5);
   }
@@ -1453,7 +1453,7 @@ class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
     _compView_0 = ViewUsesDomBindings0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesDomBindings_0_5 = import1.UsesDomBindings();
-    _compView_0.create(_UsesDomBindings_0_5, projectableNodes);
+    _compView_0.create(_UsesDomBindings_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesDomBindings_0_5);
   }
