@@ -13,11 +13,9 @@ const _typed = '$_angular/src/core/metadata/typed.dart';
 // Class metadata.
 const $Directive = TypeChecker.fromUrl('$_meta#Directive');
 const $Component = TypeChecker.fromUrl('$_meta#Component');
-const $Pipe = TypeChecker.fromUrl('$_meta#Pipe');
 const $Injectable = TypeChecker.fromUrl('$_di#Injectable');
 
 // Parameter metadata.
-const $Attribute = TypeChecker.fromUrl('$_meta#Attribute');
 const $Inject = TypeChecker.fromUrl('$_di#Inject');
 const $Optional = TypeChecker.fromUrl('$_di#Optional');
 const $Self = TypeChecker.fromUrl('$_di#Self');
@@ -25,12 +23,6 @@ const $SkipSelf = TypeChecker.fromUrl('$_di#SkipSelf');
 const $Host = TypeChecker.fromUrl('$_di#Host');
 
 // Field metadata.
-const $ContentChildren = TypeChecker.fromUrl('$_meta#ContentChildren');
-const $ContentChild = TypeChecker.fromUrl('$_meta#ContentChild');
-const $ViewChildren = TypeChecker.fromUrl('$_meta#ViewChildren');
-const $ViewChild = TypeChecker.fromUrl('$_meta#ViewChild');
-const $Input = TypeChecker.fromUrl('$_meta#Input');
-const $Output = TypeChecker.fromUrl('$_meta#Output');
 const $HostBinding = TypeChecker.fromUrl('$_meta#HostBinding');
 const $HostListener = TypeChecker.fromUrl('$_meta#HostListener');
 

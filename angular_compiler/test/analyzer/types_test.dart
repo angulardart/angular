@@ -14,33 +14,10 @@ void main() {
         class ADirective {}
 
         @Component()
-        class AComponent {
-          @ContentChildren()
-          List<ADirective> contentChildren;
-
-          @ContentChild()
-          ADirective contentChild;
-
-          @ViewChildren()
-          List<ADirective> viewChildren;
-
-          @ViewChild()
-          ADirective viewChild;
-
-          @Input()
-          set input(String input) {}
-
-          @Output()
-          get output => null;
-        }
-
-        @Pipe('aPipe')
-        class APipe {}
+        class AComponent {}
 
         @Injectable()
         class AnInjectable {}
-
-        void hasAttribute(@Attribute('name') String name) {}
 
         void hasInject(@Inject(#dep) List dep) {}
 
@@ -64,11 +41,6 @@ void main() {
       expect($Component.firstAnnotationOfExact(aComponent), isNotNull);
     });
 
-    test('@Pipe', () {
-      final aPipe = testLib.getType('APipe');
-      expect($Pipe.firstAnnotationOfExact(aPipe), isNotNull);
-    });
-
     test('@Injectable', () {
       final anInjectable = testLib.getType('AnInjectable');
       expect($Injectable.firstAnnotationOfExact(anInjectable), isNotNull);
@@ -82,7 +54,6 @@ void main() {
               .first;
 
       const {
-        'hasAttribute': $Attribute,
         'hasHost': $Host,
         'hasInject': $Inject,
         'hasOptional': $Optional,
@@ -91,32 +62,6 @@ void main() {
       }.forEach((name, type) {
         test('of $type should find "$name"', () {
           final parameter = getParameterFrom(name);
-          expect(type.firstAnnotationOfExact(parameter), isNotNull);
-        });
-      });
-    });
-
-    group('class body annotations', () {
-      Element getInstanceFrom(String name) {
-        final type = testLib.getType('AComponent');
-        final maybe = type.getField(name);
-        return maybe?.metadata?.isNotEmpty == true
-            ? maybe
-            : type.getGetter(name) ??
-                type.getSetter(name) ??
-                type.getMethod(name);
-      }
-
-      const {
-        'contentChildren': $ContentChildren,
-        'contentChild': $ContentChild,
-        'viewChildren': $ViewChildren,
-        'viewChild': $ViewChild,
-        'input': $Input,
-        'output': $Output,
-      }.forEach((name, type) {
-        test('of $type should find "$name"', () {
-          final parameter = getInstanceFrom(name);
           expect(type.firstAnnotationOfExact(parameter), isNotNull);
         });
       });

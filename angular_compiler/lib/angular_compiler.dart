@@ -27,26 +27,18 @@ export 'src/analyzer.dart'
         UseClassProviderElement,
         UseFactoryProviderElement,
         UseValueProviderElement,
-        $Attribute,
         $Component,
-        $ContentChild,
-        $ContentChildren,
         $Directive,
         $Host,
         $Inject,
         $Injectable,
-        $Input,
         $MultiToken,
         $OpaqueToken,
         $Optional,
-        $Output,
-        $Pipe,
         $Provider,
         $Self,
         $SkipSelf,
-        $Typed,
-        $ViewChild,
-        $ViewChildren;
+        $Typed;
 export 'src/asset.dart' show NgAssetReader;
 export 'src/emitter/injector.dart' show InjectorEmitter;
 export 'src/emitter/reflector.dart' show ReflectableEmitter, SplitDartEmitter;
