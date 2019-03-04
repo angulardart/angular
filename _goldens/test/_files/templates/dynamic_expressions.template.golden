@@ -77,7 +77,7 @@ class _ViewComp1Host0 extends AppView<import1.Comp1> {
     _compView_0 = ViewComp10(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp1_0_5 = import1.Comp1();
-    _compView_0.create(_Comp1_0_5, projectableNodes);
+    _compView_0.create(_Comp1_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _Comp1_0_5);
   }
@@ -152,7 +152,7 @@ class _ViewComp1StringHost0 extends AppView<import1.Comp1String> {
     _compView_0 = ViewComp1String0(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp1String_0_5 = import1.Comp1String();
-    _compView_0.create(_Comp1String_0_5, projectableNodes);
+    _compView_0.create(_Comp1String_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _Comp1String_0_5);
   }
@@ -227,7 +227,7 @@ class _ViewComp2Host0 extends AppView<import1.Comp2> {
     _compView_0 = ViewComp20(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp2_0_5 = import1.Comp2();
-    _compView_0.create(_Comp2_0_5, projectableNodes);
+    _compView_0.create(_Comp2_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _Comp2_0_5);
   }
@@ -302,7 +302,7 @@ class _ViewComp3Host0 extends AppView<import1.Comp3> {
     _compView_0 = ViewComp30(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp3_0_5 = import1.Comp3();
-    _compView_0.create(_Comp3_0_5, projectableNodes);
+    _compView_0.create(_Comp3_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _Comp3_0_5);
   }
@@ -381,7 +381,7 @@ class _ViewComp4Host0 extends AppView<import1.Comp4> {
     _compView_0 = ViewComp40(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp4_0_5 = import1.Comp4();
-    _compView_0.create(_Comp4_0_5, projectableNodes);
+    _compView_0.create(_Comp4_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _Comp4_0_5);
   }
@@ -461,7 +461,7 @@ class _ViewComp5Host0 extends AppView<import1.Comp5> {
     _compView_0 = ViewComp50(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp5_0_5 = import1.Comp5();
-    _compView_0.create(_Comp5_0_5, projectableNodes);
+    _compView_0.create(_Comp5_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _Comp5_0_5);
   }
@@ -575,7 +575,7 @@ class _ViewComp6Host0 extends AppView<import1.Comp6> {
     _compView_0 = ViewComp60(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp6_0_5 = import1.Comp6();
-    _compView_0.create(_Comp6_0_5, projectableNodes);
+    _compView_0.create(_Comp6_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _Comp6_0_5);
   }
@@ -729,7 +729,7 @@ class _ViewComp7Host0 extends AppView<import1.Comp7> {
     _compView_0 = ViewComp70(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp7_0_5 = import1.Comp7();
-    _compView_0.create(_Comp7_0_5, projectableNodes);
+    _compView_0.create(_Comp7_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _Comp7_0_5);
   }

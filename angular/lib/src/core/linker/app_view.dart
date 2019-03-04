@@ -41,7 +41,17 @@ class AppViewData<T> {
   /// Container that is set when this view is attached to a container.
   ViewContainer _viewContainerElement;
 
-  List<dynamic /* dynamic | List < dynamic > */ > projectableNodes;
+  /// Nodes that are given to this view by a parent view via content projection.
+  ///
+  /// A view will only attempt to _use_ this value if and only if it has at
+  /// least one `<ng-content>` slot. These nodes are not created by the view
+  /// itself but rather by the view's parent.
+  ///
+  /// See [AppView.create].
+  ///
+  /// It is tempting to make this `List<Object>`, but do not:
+  /// TODO: https://github.com/dart-lang/sdk/issues/36075
+  List<dynamic> projectedNodes;
 
   /// Host DI interface.
   Injector _hostInjector;
@@ -183,15 +193,14 @@ abstract class AppView<T> {
   /// View reference interface (user-visible API).
   ViewRefImpl get ref => viewData.ref;
 
-  List<dynamic /* dynamic | List < dynamic > */ > get projectableNodes =>
-      viewData.projectableNodes;
+  List<dynamic> get projectedNodes => viewData.projectedNodes;
 
   ComponentRef<T> create(
     T context,
     List<dynamic> givenProjectableNodes,
   ) {
     ctx = context;
-    viewData.projectableNodes = givenProjectableNodes;
+    viewData.projectedNodes = givenProjectableNodes;
     return build();
   }
 
@@ -201,7 +210,7 @@ abstract class AppView<T> {
     List<dynamic> givenProjectableNodes,
   ) {
     viewData._hostInjector = hostInjector;
-    viewData.projectableNodes = givenProjectableNodes;
+    viewData.projectedNodes = givenProjectableNodes;
     return build();
   }
 
@@ -522,7 +531,7 @@ abstract class AppView<T> {
     }
   }
 
-  /// Moves (appends) appropriate DOM [Node]s of [ViewData.projectableNodes].
+  /// Moves (appends) appropriate DOM [Node]s of [ViewData.projectedNodes].
   ///
   /// In the case of multiple `<ng-content>` slots [index] is used as the
   /// discriminator to determine which parts of the template are mapped to
@@ -535,7 +544,7 @@ abstract class AppView<T> {
     }
 
     // TODO: Determine why this would be `null` or out of bounds.
-    final projectedNodesByContentIndex = viewData.projectableNodes;
+    final projectedNodesByContentIndex = viewData.projectedNodes;
     if (projectedNodesByContentIndex == null ||
         index >= projectedNodesByContentIndex.length) {
       return;

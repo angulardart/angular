@@ -363,7 +363,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
     _compView_0 = ViewAppComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _AppComponent_0_5 = import1.AppComponent();
-    _compView_0.create(_AppComponent_0_5, projectableNodes);
+    _compView_0.create(_AppComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _AppComponent_0_5);
   }
@@ -430,7 +430,7 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.Materi
     _compView_0 = ViewMaterialAutoSuggestInputComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _MaterialAutoSuggestInputComponent_0_5 = import1.MaterialAutoSuggestInputComponent();
-    _compView_0.create(_MaterialAutoSuggestInputComponent_0_5, projectableNodes);
+    _compView_0.create(_MaterialAutoSuggestInputComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _MaterialAutoSuggestInputComponent_0_5);
   }
@@ -522,7 +522,7 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
     _compView_0 = ViewMaterialInputComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _MaterialInputComponent_0_5 = import1.MaterialInputComponent();
-    _compView_0.create(_MaterialInputComponent_0_5, projectableNodes);
+    _compView_0.create(_MaterialInputComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _MaterialInputComponent_0_5);
   }

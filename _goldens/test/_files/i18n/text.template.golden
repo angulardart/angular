@@ -68,7 +68,7 @@ class _ViewI18nTextComponentHost0 extends AppView<import1.I18nTextComponent> {
     _compView_0 = ViewI18nTextComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _I18nTextComponent_0_5 = import1.I18nTextComponent();
-    _compView_0.create(_I18nTextComponent_0_5, projectableNodes);
+    _compView_0.create(_I18nTextComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _I18nTextComponent_0_5);
   }

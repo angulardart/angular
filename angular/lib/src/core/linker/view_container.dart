@@ -2,7 +2,6 @@ import 'dart:html';
 
 import 'package:angular/src/di/injector/injector.dart' show Injector;
 import 'package:angular/src/runtime.dart';
-
 import 'app_view.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'component_loader.dart';
@@ -19,9 +18,10 @@ import 'view_type.dart';
 class ViewContainer extends ComponentLoader implements ViewContainerRef {
   final int index;
   final int parentIndex;
-  final AppView parentView;
+  final AppView<void> parentView;
   final Node nativeElement;
-  List<AppView> nestedViews;
+
+  List<AppView<void>> nestedViews;
 
   ViewContainer(
     this.index,
@@ -97,7 +97,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   @override
   EmbeddedViewRef createEmbeddedView(TemplateRef templateRef) {
     final viewRef = templateRef.createEmbeddedView();
-    attachView((viewRef as ViewRefImpl).appView, length);
+    attachView(unsafeCast<ViewRefImpl>(viewRef).appView, length);
     return viewRef;
   }
 

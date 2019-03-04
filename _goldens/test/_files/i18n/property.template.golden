@@ -78,7 +78,7 @@ class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyCompon
     _compView_0 = ViewI18nPropertyComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _I18nPropertyComponent_0_5 = import1.I18nPropertyComponent();
-    _compView_0.create(_I18nPropertyComponent_0_5, projectableNodes);
+    _compView_0.create(_I18nPropertyComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _I18nPropertyComponent_0_5);
   }

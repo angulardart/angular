@@ -77,7 +77,7 @@ class _ViewCheckOnceComponentHost0 extends AppView<import1.CheckOnceComponent> {
     _compView_0 = ViewCheckOnceComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _CheckOnceComponent_0_5 = import1.CheckOnceComponent();
-    _compView_0.create(_CheckOnceComponent_0_5, projectableNodes);
+    _compView_0.create(_CheckOnceComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _CheckOnceComponent_0_5);
   }
@@ -149,7 +149,7 @@ class _ViewCheckedComponentHost0 extends AppView<import1.CheckedComponent> {
     _compView_0 = ViewCheckedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _CheckedComponent_0_5 = import1.CheckedComponent();
-    _compView_0.create(_CheckedComponent_0_5, projectableNodes);
+    _compView_0.create(_CheckedComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _CheckedComponent_0_5);
   }
@@ -219,7 +219,7 @@ class _ViewCheckAlwaysComponentHost0 extends AppView<import1.CheckAlwaysComponen
     _compView_0 = ViewCheckAlwaysComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _CheckAlwaysComponent_0_5 = import1.CheckAlwaysComponent();
-    _compView_0.create(_CheckAlwaysComponent_0_5, projectableNodes);
+    _compView_0.create(_CheckAlwaysComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_5);
   }
@@ -289,7 +289,7 @@ class _ViewDetachedComponentHost0 extends AppView<import1.DetachedComponent> {
     _compView_0 = ViewDetachedComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _DetachedComponent_0_5 = import1.DetachedComponent();
-    _compView_0.create(_DetachedComponent_0_5, projectableNodes);
+    _compView_0.create(_DetachedComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DetachedComponent_0_5);
   }
@@ -386,7 +386,7 @@ class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent>
     _compView_0 = ViewUsesOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesOnPushComponent_0_5 = import1.UsesOnPushComponent();
-    _compView_0.create(_UsesOnPushComponent_0_5, projectableNodes);
+    _compView_0.create(_UsesOnPushComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesOnPushComponent_0_5);
   }
@@ -483,7 +483,7 @@ class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
     _compView_0 = ViewOnPushComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _OnPushComponent_0_5 = import1.OnPushComponent();
-    _compView_0.create(_OnPushComponent_0_5, projectableNodes);
+    _compView_0.create(_OnPushComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _OnPushComponent_0_5);
   }
@@ -565,7 +565,7 @@ class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponen
     _compView_0 = ViewOnPushChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _OnPushChildComponent_0_5 = import1.OnPushChildComponent();
-    _compView_0.create(_OnPushChildComponent_0_5, projectableNodes);
+    _compView_0.create(_OnPushChildComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _OnPushChildComponent_0_5);
   }
@@ -641,7 +641,7 @@ class _ViewStatefulComponentHost0 extends AppView<import1.StatefulComponent> {
     _compView_0 = ViewStatefulComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _StatefulComponent_0_5 = import1.StatefulComponent();
-    _compView_0.create(_StatefulComponent_0_5, projectableNodes);
+    _compView_0.create(_StatefulComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _StatefulComponent_0_5);
   }
@@ -711,7 +711,7 @@ class _ViewDefaultComponentHost0 extends AppView<import1.DefaultComponent> {
     _compView_0 = ViewDefaultComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _DefaultComponent_0_5 = import1.DefaultComponent();
-    _compView_0.create(_DefaultComponent_0_5, projectableNodes);
+    _compView_0.create(_DefaultComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DefaultComponent_0_5);
   }

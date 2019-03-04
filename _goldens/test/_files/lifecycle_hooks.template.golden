@@ -82,7 +82,7 @@ class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycl
     _compView_0 = ViewMostLifecycleHooksComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _MostLifecycleHooksComponent_0_5 = import1.MostLifecycleHooksComponent();
-    _compView_0.create(_MostLifecycleHooksComponent_0_5, projectableNodes);
+    _compView_0.create(_MostLifecycleHooksComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _MostLifecycleHooksComponent_0_5);
   }
@@ -166,7 +166,7 @@ class _ViewEmptyComponentHost0 extends AppView<import1.EmptyComponent> {
     _compView_0 = ViewEmptyComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmptyComponent_0_5 = import1.EmptyComponent();
-    _compView_0.create(_EmptyComponent_0_5, projectableNodes);
+    _compView_0.create(_EmptyComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _EmptyComponent_0_5);
   }
@@ -233,7 +233,7 @@ class _ViewOnChangesComponentHost0 extends AppView<import1.OnChangesComponent> {
     _compView_0 = ViewOnChangesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _OnChangesComponent_0_5 = import1.OnChangesComponent();
-    _compView_0.create(_OnChangesComponent_0_5, projectableNodes);
+    _compView_0.create(_OnChangesComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _OnChangesComponent_0_5);
   }
@@ -302,7 +302,7 @@ class _ViewAfterChangesComponentHost0 extends AppView<import1.AfterChangesCompon
     _compView_0 = ViewAfterChangesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _AfterChangesComponent_0_5 = import1.AfterChangesComponent();
-    _compView_0.create(_AfterChangesComponent_0_5, projectableNodes);
+    _compView_0.create(_AfterChangesComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _AfterChangesComponent_0_5);
   }
@@ -476,7 +476,7 @@ class _ViewUsesLifecycleHooksComponentHost0 extends AppView<import1.UsesLifecycl
     _compView_0 = ViewUsesLifecycleHooksComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesLifecycleHooksComponent_0_5 = import1.UsesLifecycleHooksComponent();
-    _compView_0.create(_UsesLifecycleHooksComponent_0_5, projectableNodes);
+    _compView_0.create(_UsesLifecycleHooksComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesLifecycleHooksComponent_0_5);
   }

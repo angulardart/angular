@@ -94,7 +94,7 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
     _compView_0 = ViewTestFooComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_5 = import1.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_5, projectableNodes);
+    _compView_0.create(_TestFooComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _TestFooComponent_0_5);
   }
@@ -182,7 +182,7 @@ class _ViewDirectiveContainerTestHost0 extends AppView<import1.DirectiveContaine
     _compView_0 = ViewDirectiveContainerTest0(this, 0);
     rootEl = _compView_0.rootEl;
     _DirectiveContainerTest_0_5 = import1.DirectiveContainerTest();
-    _compView_0.create(_DirectiveContainerTest_0_5, projectableNodes);
+    _compView_0.create(_DirectiveContainerTest_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _DirectiveContainerTest_0_5);
   }

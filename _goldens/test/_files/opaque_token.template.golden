@@ -72,7 +72,7 @@ class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
     rootEl = _compView_0.rootEl;
     _baseUrlDescription_0_5 = 'https://localhost';
     _HasOpaqueTokens_0_6 = import1.HasOpaqueTokens(_baseUrlDescription_0_5);
-    _compView_0.create(_HasOpaqueTokens_0_6, projectableNodes);
+    _compView_0.create(_HasOpaqueTokens_0_6, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_6);
   }
@@ -236,7 +236,7 @@ class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComp
     _compView_0 = ViewContainsChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ContainsChildComponent_0_5 = import1.ContainsChildComponent();
-    _compView_0.create(_ContainsChildComponent_0_5, projectableNodes);
+    _compView_0.create(_ContainsChildComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ContainsChildComponent_0_5);
   }
@@ -307,7 +307,7 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
             return import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
           })
         : import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import9.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex)));
-    _compView_0.create(_InjectsTypedTokenFromSomeParent_0_5, projectableNodes);
+    _compView_0.create(_InjectsTypedTokenFromSomeParent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_5);
   }

@@ -68,7 +68,7 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
     _compView_0 = ViewUsesNativeEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesNativeEvents_0_5 = import1.UsesNativeEvents();
-    _compView_0.create(_UsesNativeEvents_0_5, projectableNodes);
+    _compView_0.create(_UsesNativeEvents_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesNativeEvents_0_5);
   }
@@ -153,7 +153,7 @@ class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
     _compView_0 = ViewUsesAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     _UsesAngularEvents_0_5 = import1.UsesAngularEvents();
-    _compView_0.create(_UsesAngularEvents_0_5, projectableNodes);
+    _compView_0.create(_UsesAngularEvents_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _UsesAngularEvents_0_5);
   }
@@ -220,7 +220,7 @@ class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
     _compView_0 = ViewHasAngularEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     _HasAngularEvents_0_5 = import1.HasAngularEvents();
-    _compView_0.create(_HasAngularEvents_0_5, projectableNodes);
+    _compView_0.create(_HasAngularEvents_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HasAngularEvents_0_5);
   }
@@ -294,7 +294,7 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
     _compView_0 = ViewHasManyNativeHostEvents0(this, 0);
     rootEl = _compView_0.rootEl;
     _HasManyNativeHostEvents_0_5 = import1.HasManyNativeHostEvents();
-    _compView_0.create(_HasManyNativeHostEvents_0_5, projectableNodes);
+    _compView_0.create(_HasManyNativeHostEvents_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HasManyNativeHostEvents_0_5);
   }

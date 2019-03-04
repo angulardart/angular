@@ -291,7 +291,7 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
     _compView_0 = ViewParentComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ParentComponent_0_5 = import1.ParentComponent();
-    _compView_0.create(_ParentComponent_0_5, projectableNodes);
+    _compView_0.create(_ParentComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ParentComponent_0_5);
   }
@@ -382,7 +382,7 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
     _compView_0 = ViewChildComponentProvidingA$B$C0(this, 0);
     rootEl = _compView_0.rootEl;
     _ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
-    _compView_0.create(_ChildComponentProvidingA$B$C_0_5, projectableNodes);
+    _compView_0.create(_ChildComponentProvidingA$B$C_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ChildComponentProvidingA$B$C_0_5);
   }
@@ -472,7 +472,7 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
     _compView_0 = ViewChildComponentWithNgContentProviding$D0(this, 0);
     rootEl = _compView_0.rootEl;
     _ChildComponentWithNgContentProviding$D_0_5 = import1.ChildComponentWithNgContentProviding$D();
-    _compView_0.create(_ChildComponentWithNgContentProviding$D_0_5, projectableNodes);
+    _compView_0.create(_ChildComponentWithNgContentProviding$D_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ChildComponentWithNgContentProviding$D_0_5);
   }
@@ -551,7 +551,7 @@ class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponent
             return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, viewData.parentIndex));
           })
         : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, viewData.parentIndex)));
-    _compView_0.create(_ChildComponentInjecting$D_0_5, projectableNodes);
+    _compView_0.create(_ChildComponentInjecting$D_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ChildComponentInjecting$D_0_5);
   }
@@ -618,7 +618,7 @@ class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildCom
     _compView_0 = ViewChildComponentWithVisibilityAll0(this, 0);
     rootEl = _compView_0.rootEl;
     _ChildComponentWithVisibilityAll_0_5 = import1.ChildComponentWithVisibilityAll();
-    _compView_0.create(_ChildComponentWithVisibilityAll_0_5, projectableNodes);
+    _compView_0.create(_ChildComponentWithVisibilityAll_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ChildComponentWithVisibilityAll_0_5);
   }

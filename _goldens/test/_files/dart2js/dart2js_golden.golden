@@ -3522,7 +3522,7 @@
       _.type = t0;
       _.ref = t1;
       _.destroyed = false;
-      _.inlinedNodes = _.rootNodesOrViewContainers = _._onDestroyCallbacks = _.subscriptions = _._hostInjector = _.projectableNodes = null;
+      _.inlinedNodes = _.rootNodesOrViewContainers = _._onDestroyCallbacks = _.subscriptions = _._hostInjector = _.projectedNodes = null;
       _.parentIndex = t2;
       _._cdMode = t3;
       _._skipChangeDetection = false;
@@ -8564,7 +8564,7 @@
       hostView = t1._viewFactory.call$2(null, null);
       t4 = hostView.viewData;
       t4._hostInjector = t3;
-      t4.projectableNodes = C.List_empty;
+      t4.projectedNodes = C.List_empty;
       component = hostView.build$0();
       t4 = document;
       existing = t4.querySelector(t1.selector);
@@ -9154,7 +9154,7 @@
     },
     create$2: function(_, context, givenProjectableNodes) {
       this.ctx = context;
-      this.viewData.projectableNodes = givenProjectableNodes;
+      this.viewData.projectedNodes = givenProjectableNodes;
       return this.build$0();
     },
     build$0: function() {
@@ -9286,7 +9286,7 @@
       t1 = this._template_ref$_viewContainer;
       parentView = t1.parentView;
       view = this._template_ref$_viewFactory.call$2(parentView, t1.index);
-      view.create$2(0, parentView.ctx, parentView.viewData.projectableNodes);
+      view.create$2(0, parentView.ctx, parentView.viewData.projectedNodes);
       return view.viewData.ref;
     }
   };
@@ -10137,7 +10137,7 @@
       this.rootEl = t1.rootEl;
       t2 = new O.RootComponent();
       this._RootComponent_0_5 = t2;
-      t1.create$2(0, t2, this.viewData.projectableNodes);
+      t1.create$2(0, t2, this.viewData.projectedNodes);
       this.init0$1(this.rootEl);
       return new D.ComponentRef(this, 0, this.rootEl);
     },
