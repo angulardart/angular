@@ -962,6 +962,19 @@
           return $name;
       }
     },
+    propertyTypeCastError: function(value, property) {
+      throw H.wrapException(H.CastErrorImplementation$(value, H.unminifyOrTag(property.substring(3))));
+    },
+    interceptedTypeCast: function(value, property) {
+      var t1;
+      if (value != null)
+        t1 = (typeof value === "object" || typeof value === "function") && J.getInterceptor$(value)[property];
+      else
+        t1 = true;
+      if (t1)
+        return value;
+      H.propertyTypeCastError(value, property);
+    },
     extractFunctionTypeObjectFromInternal: function(o) {
       var signature;
       if ("$signature" in o) {
@@ -983,6 +996,20 @@
       if (functionTypeObject == null)
         return false;
       return H._isFunctionSubtype(functionTypeObject, null, functionTypeRti, null);
+    },
+    CastErrorImplementation$: function(value, type) {
+      return new H.CastErrorImplementation("CastError: " + P.Error_safeToString(value) + ": type '" + H._typeDescription(value) + "' is not a subtype of type '" + type + "'");
+    },
+    _typeDescription: function(value) {
+      var t1, functionTypeObject;
+      t1 = J.getInterceptor$(value);
+      if (!!t1.$isClosure) {
+        functionTypeObject = H.extractFunctionTypeObjectFromInternal(t1);
+        if (functionTypeObject != null)
+          return H.runtimeTypeToString(functionTypeObject);
+        return "Closure";
+      }
+      return H.Primitives_objectTypeName(value);
     },
     throwCyclicInit: function(staticName) {
       throw H.wrapException(new P.CyclicInitializationError(staticName));
@@ -1405,6 +1432,38 @@
     applyHooksTransformer: function(transformer, hooks) {
       return transformer(hooks) || hooks;
     },
+    JSSyntaxRegExp_makeNative: function(source, multiLine, caseSensitive, global) {
+      var m, i, g, regexp;
+      m = multiLine ? "m" : "";
+      i = caseSensitive ? "" : "i";
+      g = global ? "g" : "";
+      regexp = function(source, modifiers) {
+        try {
+          return new RegExp(source, modifiers);
+        } catch (e) {
+          return e;
+        }
+      }(source, m + i + g);
+      if (regexp instanceof RegExp)
+        return regexp;
+      throw H.wrapException(P.FormatException$("Illegal RegExp pattern (" + String(regexp) + ")", source, null));
+    },
+    stringContainsUnchecked: function(receiver, other, startIndex) {
+      var t1, t2;
+      if (typeof other === "string")
+        return receiver.indexOf(other, startIndex) >= 0;
+      else {
+        t1 = J.getInterceptor$(other);
+        if (!!t1.$isJSSyntaxRegExp) {
+          t1 = C.JSString_methods.substring$1(receiver, startIndex);
+          t2 = other._nativeRegExp;
+          return t2.test(t1);
+        } else {
+          t1 = t1.allMatches$1(other, C.JSString_methods.substring$1(receiver, startIndex));
+          return !t1.get$isEmpty(t1);
+        }
+      }
+    },
     ConstantMapView: function ConstantMapView(t0, t1) {
       this._collection$_map = t0;
       this.$ti = t1;
@@ -1472,6 +1531,9 @@
       _._receiver = t2;
       _._name = t3;
     },
+    CastErrorImplementation: function CastErrorImplementation(t0) {
+      this.message = t0;
+    },
     RuntimeError: function RuntimeError(t0) {
       this.message = t0;
     },
@@ -1513,6 +1575,43 @@
     },
     initHooks_closure1: function initHooks_closure1(t0) {
       this.prototypeForTag = t0;
+    },
+    JSSyntaxRegExp: function JSSyntaxRegExp(t0, t1) {
+      var _ = this;
+      _.pattern = t0;
+      _._nativeRegExp = t1;
+      _._nativeAnchoredRegExp = _._nativeGlobalRegExp = null;
+    },
+    _MatchImplementation: function _MatchImplementation(t0) {
+      this._match = t0;
+    },
+    _AllMatchesIterable: function _AllMatchesIterable(t0, t1, t2) {
+      this._re = t0;
+      this._string = t1;
+      this._start = t2;
+    },
+    _AllMatchesIterator: function _AllMatchesIterator(t0, t1, t2) {
+      var _ = this;
+      _._regExp = t0;
+      _._string = t1;
+      _._nextIndex = t2;
+      _.__js_helper$_current = null;
+    },
+    StringMatch: function StringMatch(t0, t1) {
+      this.start = t0;
+      this.pattern = t1;
+    },
+    _StringAllMatchesIterable: function _StringAllMatchesIterable(t0, t1, t2) {
+      this._input = t0;
+      this._pattern = t1;
+      this.__js_helper$_index = t2;
+    },
+    _StringAllMatchesIterator: function _StringAllMatchesIterator(t0, t1, t2) {
+      var _ = this;
+      _._input = t0;
+      _._pattern = t1;
+      _.__js_helper$_index = t2;
+      _.__js_helper$_current = null;
     },
     _checkValidIndex: function(index, list, $length) {
       if (index >>> 0 !== index || index >= $length)
@@ -1627,6 +1726,65 @@
       list.immutable$list = Array;
       return list;
     },
+    JSString__isWhitespace: function(codeUnit) {
+      if (codeUnit < 256)
+        switch (codeUnit) {
+          case 9:
+          case 10:
+          case 11:
+          case 12:
+          case 13:
+          case 32:
+          case 133:
+          case 160:
+            return true;
+          default:
+            return false;
+        }
+      switch (codeUnit) {
+        case 5760:
+        case 8192:
+        case 8193:
+        case 8194:
+        case 8195:
+        case 8196:
+        case 8197:
+        case 8198:
+        case 8199:
+        case 8200:
+        case 8201:
+        case 8202:
+        case 8232:
+        case 8233:
+        case 8239:
+        case 8287:
+        case 12288:
+        case 65279:
+          return true;
+        default:
+          return false;
+      }
+    },
+    JSString__skipLeadingWhitespace: function(string, index) {
+      var t1, codeUnit;
+      for (t1 = string.length; index < t1;) {
+        codeUnit = C.JSString_methods._codeUnitAt$1(string, index);
+        if (codeUnit !== 32 && codeUnit !== 13 && !J.JSString__isWhitespace(codeUnit))
+          break;
+        ++index;
+      }
+      return index;
+    },
+    JSString__skipTrailingWhitespace: function(string, index) {
+      var index0, codeUnit;
+      for (; index > 0; index = index0) {
+        index0 = index - 1;
+        codeUnit = C.JSString_methods.codeUnitAt$1(string, index0);
+        if (codeUnit !== 32 && codeUnit !== 13 && !J.JSString__isWhitespace(codeUnit))
+          break;
+      }
+      return index;
+    },
     getInterceptor$: function(receiver) {
       if (typeof receiver == "number") {
         if (Math.floor(receiver) == receiver)
@@ -1680,6 +1838,15 @@
         return receiver;
       return J.getNativeInterceptor(receiver);
     },
+    getInterceptor$s: function(receiver) {
+      if (typeof receiver == "string")
+        return J.JSString.prototype;
+      if (receiver == null)
+        return receiver;
+      if (!(receiver instanceof P.Object))
+        return J.UnknownJavaScriptObject.prototype;
+      return receiver;
+    },
     getInterceptor$x: function(receiver) {
       if (receiver == null)
         return receiver;
@@ -1730,6 +1897,12 @@
     addEventListener$3$x: function(receiver, a0, a1, a2) {
       return J.getInterceptor$x(receiver).addEventListener$3(receiver, a0, a1, a2);
     },
+    allMatches$1$s: function(receiver, a0) {
+      return J.getInterceptor$s(receiver).allMatches$1(receiver, a0);
+    },
+    contains$2$asx: function(receiver, a0, a1) {
+      return J.getInterceptor$asx(receiver).contains$2(receiver, a0, a1);
+    },
     elementAt$1$ax: function(receiver, a0) {
       return J.getInterceptor$ax(receiver).elementAt$1(receiver, a0);
     },
@@ -1747,6 +1920,9 @@
     },
     toString$0$: function(receiver) {
       return J.getInterceptor$(receiver).toString$0(receiver);
+    },
+    trim$0$s: function(receiver) {
+      return J.getInterceptor$s(receiver).trim$0(receiver);
     },
     Interceptor: function Interceptor() {
     },
@@ -2616,6 +2792,8 @@
     HashMap_HashMap$from_closure: function HashMap_HashMap$from_closure(t0) {
       this.result = t0;
     },
+    IterableBase: function IterableBase() {
+    },
     ListMixin: function ListMixin() {
     },
     MapBase: function MapBase() {
@@ -2647,6 +2825,9 @@
       if (growable)
         return list;
       return J.JSArray_markFixedList(list);
+    },
+    RegExp_RegExp: function(source, multiLine) {
+      return new H.JSSyntaxRegExp(source, H.JSSyntaxRegExp_makeNative(source, multiLine, true, false));
     },
     StringBuffer__writeAll: function(string, objects, separator) {
       var iterator = J.get$iterator$ax(objects);
@@ -2745,6 +2926,9 @@
     Exception_Exception: function(message) {
       return new P._Exception(message);
     },
+    FormatException$: function(message, source, offset) {
+      return new P.FormatException(message, source, offset);
+    },
     NoSuchMethodError_toString_closure: function NoSuchMethodError_toString_closure(t0, t1) {
       this._box_0 = t0;
       this.sb = t1;
@@ -2812,6 +2996,8 @@
     ConcurrentModificationError: function ConcurrentModificationError(t0) {
       this.modifiedObject = t0;
     },
+    OutOfMemoryError: function OutOfMemoryError() {
+    },
     StackOverflowError: function StackOverflowError() {
     },
     CyclicInitializationError: function CyclicInitializationError(t0) {
@@ -2819,6 +3005,11 @@
     },
     _Exception: function _Exception(t0) {
       this.message = t0;
+    },
+    FormatException: function FormatException(t0, t1, t2) {
+      this.message = t0;
+      this.source = t1;
+      this.offset = t2;
     },
     Function: function Function() {
     },
@@ -2837,6 +3028,8 @@
     num: function num() {
     },
     Object: function Object() {
+    },
+    Match: function Match() {
     },
     StackTrace: function StackTrace() {
     },
@@ -2868,6 +3061,40 @@
       completer = new P._AsyncCompleter(t1, [null]);
       promise.then(H.convertDartClosureToJS(new P.convertNativePromiseToDartFuture_closure(completer), 1))["catch"](H.convertDartClosureToJS(new P.convertNativePromiseToDartFuture_closure0(completer), 1));
       return t1;
+    },
+    Device_isOpera: function() {
+      var t1 = $.Device__isOpera;
+      if (t1 == null) {
+        t1 = J.contains$2$asx(window.navigator.userAgent, "Opera", 0);
+        $.Device__isOpera = t1;
+      }
+      return t1;
+    },
+    Device_cssPrefix: function() {
+      var prefix, t1;
+      prefix = $.Device__cachedCssPrefix;
+      if (prefix != null)
+        return prefix;
+      t1 = $.Device__isFirefox;
+      if (t1 == null) {
+        t1 = J.contains$2$asx(window.navigator.userAgent, "Firefox", 0);
+        $.Device__isFirefox = t1;
+      }
+      if (t1)
+        prefix = "-moz-";
+      else {
+        t1 = $.Device__isIE;
+        if (t1 == null) {
+          t1 = !P.Device_isOpera() && J.contains$2$asx(window.navigator.userAgent, "Trident/", 0);
+          $.Device__isIE = t1;
+        }
+        if (t1)
+          prefix = "-ms-";
+        else
+          prefix = P.Device_isOpera() ? "-o-" : "-webkit-";
+      }
+      $.Device__cachedCssPrefix = prefix;
+      return prefix;
     },
     _StructuredClone: function _StructuredClone() {
     },
@@ -3341,6 +3568,32 @@
       _._field5 = _._field3 = _._field2 = _._field1 = _._field0 = null;
       _.parent = t0;
     },
+    NgClass: function NgClass(t0, t1) {
+      var _ = this;
+      _._ngEl = t0;
+      _._keyValueDiffer = _._iterableDiffer = null;
+      _._initialClasses = t1;
+      _._rawClass = null;
+    },
+    NgClass__applyKeyValueChanges_closure: function NgClass__applyKeyValueChanges_closure(t0) {
+      this.$this = t0;
+    },
+    NgClass__applyKeyValueChanges_closure0: function NgClass__applyKeyValueChanges_closure0(t0) {
+      this.$this = t0;
+    },
+    NgClass__applyKeyValueChanges_closure1: function NgClass__applyKeyValueChanges_closure1(t0) {
+      this.$this = t0;
+    },
+    NgClass__applyIterableChanges_closure: function NgClass__applyIterableChanges_closure(t0) {
+      this.$this = t0;
+    },
+    NgClass__applyIterableChanges_closure0: function NgClass__applyIterableChanges_closure0(t0) {
+      this.$this = t0;
+    },
+    NgClass__applyClasses_closure: function NgClass__applyClasses_closure(t0, t1) {
+      this.$this = t0;
+      this.isCleanup = t1;
+    },
     ApplicationRef$_: function(_ngZone, _exceptionHandler, _injector) {
       var t1 = new Y.ApplicationRef(H.setRuntimeTypeInfo([], [[D.ComponentRef, -1]]), _exceptionHandler, _injector, _ngZone, H.setRuntimeTypeInfo([], [S.ChangeDetectorRef]));
       t1.ApplicationRef$_$3(_ngZone, _exceptionHandler, _injector);
@@ -3436,7 +3689,7 @@
   R = {NgFor: function NgFor(t0, t1) {
       var _ = this;
       _._ng_for$_viewContainer = t0;
-      _._ngForTrackBy = _._ngForOf = _._differ = null;
+      _._ngForTrackBy = _._ngForOf = _._ng_for$_differ = null;
       _._ng_for$_templateRef = t1;
     }, NgFor__applyChanges_closure: function NgFor__applyChanges_closure(t0, t1) {
       this.$this = t0;
@@ -3450,6 +3703,9 @@
     _trackByIdentity: function(index, item) {
       return item;
     },
+    DefaultIterableDiffer$: function(trackByFn) {
+      return new R.DefaultIterableDiffer(R.default_iterable_differ___trackByIdentity$closure());
+    },
     _getPreviousIndex: function(item, addRemoveOffset, moveOffsets) {
       var previousIndex, moveOffset;
       previousIndex = item.previousIndex;
@@ -3461,13 +3717,17 @@
     DefaultIterableDiffer: function DefaultIterableDiffer(t0) {
       var _ = this;
       _._trackByFn = t0;
-      _._identityChangesTail = _._identityChangesHead = _._removalsTail = _._removalsHead = _._movesTail = _._movesHead = _._additionsTail = _._additionsHead = _._itTail = _._itHead = _._previousItHead = _._unlinkedRecords = _._linkedRecords = _._default_iterable_differ$_length = null;
+      _._identityChangesTail = _._identityChangesHead = _._removalsTail = _._default_iterable_differ$_removalsHead = _._movesTail = _._movesHead = _._default_iterable_differ$_additionsTail = _._default_iterable_differ$_additionsHead = _._itTail = _._itHead = _._previousItHead = _._unlinkedRecords = _._linkedRecords = _._default_iterable_differ$_length = null;
+    },
+    DefaultIterableDiffer_check_closure: function DefaultIterableDiffer_check_closure(t0, t1) {
+      this._box_0 = t0;
+      this.$this = t1;
     },
     CollectionChangeRecord: function CollectionChangeRecord(t0, t1) {
       var _ = this;
       _.item = t0;
       _.trackById = t1;
-      _._nextIdentityChange = _._nextMoved = _._nextAdded = _._nextRemoved = _._prevRemoved = _._nextDup = _._prevDup = _._default_iterable_differ$_next = _._prev = _._nextPrevious = _.previousIndex = _.currentIndex = null;
+      _._nextIdentityChange = _._nextMoved = _._default_iterable_differ$_nextAdded = _._nextRemoved = _._prevRemoved = _._nextDup = _._prevDup = _._default_iterable_differ$_next = _._default_iterable_differ$_prev = _._default_iterable_differ$_nextPrevious = _.previousIndex = _.currentIndex = null;
     },
     _DuplicateItemRecordList: function _DuplicateItemRecordList() {
       this._tail = this._head = null;
@@ -3502,6 +3762,10 @@
       this.registry = t0;
     }, BrowserGetTestability__createRegistry__closure: function BrowserGetTestability__createRegistry__closure() {
     }},
+  X = {NgStyle: function NgStyle(t0) {
+      this._ngElement = t0;
+      this._differ = this._rawStyle = null;
+    }},
   S = {ChangeDetectorRef: function ChangeDetectorRef() {
     }, OpaqueToken: function OpaqueToken(t0, t1) {
       this._uniqueName = t0;
@@ -3525,6 +3789,196 @@
       _._cdState = t4;
     },
     AppView: function AppView() {
+    }
+  },
+  N = {DefaultKeyValueDiffer: function DefaultKeyValueDiffer(t0) {
+      var _ = this;
+      _._records = t0;
+      _._removalsHead = _._additionsTail = _._additionsHead = _._changesTail = _._changesHead = _._previousMapHead = _._appendAfter = _._mapHead = null;
+    }, DefaultKeyValueDiffer_check_closure: function DefaultKeyValueDiffer_check_closure(t0) {
+      this.$this = t0;
+    }, DefaultKeyValueDiffer_check_closure0: function DefaultKeyValueDiffer_check_closure0(t0, t1) {
+      this._box_0 = t0;
+      this.$this = t1;
+    }, KeyValueChangeRecord: function KeyValueChangeRecord(t0) {
+      var _ = this;
+      _.key = t0;
+      _._nextChanged = _._nextAdded = _._prev = _._default_keyvalue_differ$_next = _._nextPrevious = _.currentValue = _.previousValue = null;
+    },
+    EventManager$: function(_plugins, zone) {
+      var t1 = new N.EventManager(_plugins);
+      t1.EventManager$2(_plugins, zone);
+      return t1;
+    },
+    EventManager: function EventManager(t0) {
+      this._plugins = t0;
+    },
+    EventManagerPlugin: function EventManagerPlugin() {
+    },
+    KeyEventsPlugin: function KeyEventsPlugin() {
+    },
+    TextBinding$: function() {
+      return new N.TextBinding(document.createTextNode(""));
+    },
+    TextBinding: function TextBinding(t0) {
+      this._currentValue = "";
+      this.element = t0;
+    },
+    viewFactory_RootComponentHost0: function(parentView, parentIndex) {
+      var t1 = new N._ViewRootComponentHost0(parentView);
+      t1.AppView$4(C.ViewType_0, parentView, parentIndex, 3);
+      t1.initComponentStyles$0();
+      return t1;
+    },
+    viewFactory_EmbeddedNgIf1: function(parentView, parentIndex) {
+      var t1 = new N._ViewEmbeddedNgIf1(parentView);
+      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      t1.initComponentStyles$0();
+      return t1;
+    },
+    viewFactory_EmbeddedNgFor1: function(parentView, parentIndex) {
+      var t1 = new N._ViewEmbeddedNgFor1(N.TextBinding$(), parentView);
+      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      t1.initComponentStyles$0();
+      return t1;
+    },
+    viewFactory_ComponentConditionalFeatures1: function(parentView, parentIndex) {
+      var t1 = new N._ViewComponentConditionalFeatures1(parentView);
+      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      t1.initComponentStyles$0();
+      return t1;
+    },
+    viewFactory_ComponentConditionalFeatures2: function(parentView, parentIndex) {
+      var t1 = new N._ViewComponentConditionalFeatures2(parentView);
+      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      t1.initComponentStyles$0();
+      return t1;
+    },
+    ViewRootComponent0: function ViewRootComponent0(t0) {
+      var _ = this;
+      _.viewData = _._UsesNgDirectives_11_5 = _._compView_11 = _._UsesDomBindings_10_5 = _._compView_10 = _._ComponentConditionalFeatures_9_5 = _._compView_9 = _._InjectsFromArbitraryParent_8_5 = _._compView_8 = _._EmbeddedNgFor_7_5 = _._compView_7 = _._EmbeddedNgIf_6_5 = _._compView_6 = _._InlinedNgIf_5_5 = _._compView_5 = _._UsesOnPushChangeDetectionAndInputs_4_5 = _._compView_4 = _._UsesDefaultChangeDetectionAndInputs_3_5 = _._compView_3 = _.__C_2_6 = _.__C_1_6 = _.__C_0_8 = _.__B_0_7 = _.__A_0_6 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    _ViewRootComponentHost0: function _ViewRootComponentHost0(t0) {
+      var _ = this;
+      _.viewData = _._RootComponent_0_5 = _._compView_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewUsesDefaultChangeDetectionAndInputs0: function ViewUsesDefaultChangeDetectionAndInputs0(t0) {
+      var _ = this;
+      _.viewData = _._expr_1 = _._DefaultChangeDetectionAndInputs_0_5 = _._compView_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewDefaultChangeDetectionAndInputs0: function ViewDefaultChangeDetectionAndInputs0(t0, t1, t2) {
+      var _ = this;
+      _._textBinding_1 = t0;
+      _._textBinding_3 = t1;
+      _.viewData = null;
+      _.parentView = t2;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewUsesOnPushChangeDetectionAndInputs0: function ViewUsesOnPushChangeDetectionAndInputs0(t0) {
+      var _ = this;
+      _.viewData = _._expr_1 = _._OnPushChangeDetectionAndInputs_0_5 = _._compView_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewOnPushChangeDetectionAndInputs0: function ViewOnPushChangeDetectionAndInputs0(t0, t1, t2) {
+      var _ = this;
+      _._textBinding_1 = t0;
+      _._textBinding_3 = t1;
+      _.viewData = null;
+      _.parentView = t2;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewInlinedNgIf0: function ViewInlinedNgIf0(t0) {
+      var _ = this;
+      _._expr_0 = false;
+      _.viewData = _._el_0_0 = _._anchor_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewEmbeddedNgIf0: function ViewEmbeddedNgIf0(t0) {
+      var _ = this;
+      _.viewData = _._NgIf_0_9 = _._appEl_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    _ViewEmbeddedNgIf1: function _ViewEmbeddedNgIf1(t0) {
+      var _ = this;
+      _.viewData = _._NullComponent_0_5 = _._compView_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewEmbeddedNgFor0: function ViewEmbeddedNgFor0(t0) {
+      var _ = this;
+      _.viewData = _._NgFor_1_9 = _._appEl_1 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    _ViewEmbeddedNgFor1: function _ViewEmbeddedNgFor1(t0, t1) {
+      var _ = this;
+      _._textBinding_1 = t0;
+      _.viewData = null;
+      _.parentView = t1;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewNullComponent0: function ViewNullComponent0(t0) {
+      var _ = this;
+      _.viewData = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewInjectsFromArbitraryParent0: function ViewInjectsFromArbitraryParent0(t0) {
+      var _ = this;
+      _.viewData = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewComponentConditionalFeatures0: function ViewComponentConditionalFeatures0(t0) {
+      var _ = this;
+      _.viewData = _._NgIf_1_9 = _._appEl_1 = _._NgIf_0_9 = _._appEl_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    _ViewComponentConditionalFeatures1: function _ViewComponentConditionalFeatures1(t0) {
+      var _ = this;
+      _.viewData = _._FeatureA_0_5 = _._compView_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    _ViewComponentConditionalFeatures2: function _ViewComponentConditionalFeatures2(t0) {
+      var _ = this;
+      _.viewData = _._FeatureB_0_5 = _._compView_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewFeatureA0: function ViewFeatureA0(t0) {
+      var _ = this;
+      _.viewData = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewFeatureB0: function ViewFeatureB0(t0) {
+      var _ = this;
+      _.viewData = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewUsesDomBindings0: function ViewUsesDomBindings0(t0) {
+      var _ = this;
+      _.viewData = _._el_0 = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
+    },
+    ViewUsesNgDirectives0: function ViewUsesNgDirectives0(t0) {
+      var _ = this;
+      _.viewData = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = _._NgStyle_6_5 = _._NgClass_4_5 = _._NgClass_2_5 = _._NgClass_0_5 = null;
+      _.parentView = t0;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
     }
   },
   M = {ChangeDetectionHost: function ChangeDetectionHost() {
@@ -3690,6 +4144,13 @@
     FeatureB: function FeatureB() {
     },
     UsesDomBindings: function UsesDomBindings() {
+    },
+    UsesNgDirectives: function UsesNgDirectives(t0, t1, t2) {
+      var _ = this;
+      _.ngClassesMap = t0;
+      _.ngClassesList = t1;
+      _.ngClassesString = "foo bar";
+      _.ngStyles = t2;
     }
   },
   V = {ViewContainer: function ViewContainer(t0, t1, t2) {
@@ -3793,180 +4254,9 @@
         T.insertNodesBefore(nodes, parentOfSibling, nextSibling);
     }
   },
-  N = {
-    EventManager$: function(_plugins, zone) {
-      var t1 = new N.EventManager(_plugins);
-      t1.EventManager$2(_plugins, zone);
-      return t1;
-    },
-    EventManager: function EventManager(t0) {
-      this._plugins = t0;
-    },
-    EventManagerPlugin: function EventManagerPlugin() {
-    },
-    KeyEventsPlugin: function KeyEventsPlugin() {
-    },
-    TextBinding$: function() {
-      return new N.TextBinding(document.createTextNode(""));
-    },
-    TextBinding: function TextBinding(t0) {
-      this._currentValue = "";
-      this.element = t0;
-    },
-    viewFactory_RootComponentHost0: function(parentView, parentIndex) {
-      var t1 = new N._ViewRootComponentHost0(parentView);
-      t1.AppView$4(C.ViewType_0, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
-      return t1;
-    },
-    viewFactory_EmbeddedNgIf1: function(parentView, parentIndex) {
-      var t1 = new N._ViewEmbeddedNgIf1(parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
-      return t1;
-    },
-    viewFactory_EmbeddedNgFor1: function(parentView, parentIndex) {
-      var t1 = new N._ViewEmbeddedNgFor1(N.TextBinding$(), parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
-      return t1;
-    },
-    viewFactory_ComponentConditionalFeatures1: function(parentView, parentIndex) {
-      var t1 = new N._ViewComponentConditionalFeatures1(parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
-      return t1;
-    },
-    viewFactory_ComponentConditionalFeatures2: function(parentView, parentIndex) {
-      var t1 = new N._ViewComponentConditionalFeatures2(parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
-      return t1;
-    },
-    ViewRootComponent0: function ViewRootComponent0(t0) {
-      var _ = this;
-      _.viewData = _._UsesDomBindings_10_5 = _._compView_10 = _._ComponentConditionalFeatures_9_5 = _._compView_9 = _._InjectsFromArbitraryParent_8_5 = _._compView_8 = _._EmbeddedNgFor_7_5 = _._compView_7 = _._EmbeddedNgIf_6_5 = _._compView_6 = _._InlinedNgIf_5_5 = _._compView_5 = _._UsesOnPushChangeDetectionAndInputs_4_5 = _._compView_4 = _._UsesDefaultChangeDetectionAndInputs_3_5 = _._compView_3 = _.__C_2_6 = _.__C_1_6 = _.__C_0_8 = _.__B_0_7 = _.__A_0_6 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    _ViewRootComponentHost0: function _ViewRootComponentHost0(t0) {
-      var _ = this;
-      _.viewData = _._RootComponent_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewUsesDefaultChangeDetectionAndInputs0: function ViewUsesDefaultChangeDetectionAndInputs0(t0) {
-      var _ = this;
-      _.viewData = _._expr_1 = _._DefaultChangeDetectionAndInputs_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewDefaultChangeDetectionAndInputs0: function ViewDefaultChangeDetectionAndInputs0(t0, t1, t2) {
-      var _ = this;
-      _._textBinding_1 = t0;
-      _._textBinding_3 = t1;
-      _.viewData = null;
-      _.parentView = t2;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewUsesOnPushChangeDetectionAndInputs0: function ViewUsesOnPushChangeDetectionAndInputs0(t0) {
-      var _ = this;
-      _.viewData = _._expr_1 = _._OnPushChangeDetectionAndInputs_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewOnPushChangeDetectionAndInputs0: function ViewOnPushChangeDetectionAndInputs0(t0, t1, t2) {
-      var _ = this;
-      _._textBinding_1 = t0;
-      _._textBinding_3 = t1;
-      _.viewData = null;
-      _.parentView = t2;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewInlinedNgIf0: function ViewInlinedNgIf0(t0) {
-      var _ = this;
-      _._expr_0 = false;
-      _.viewData = _._el_0_0 = _._anchor_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewEmbeddedNgIf0: function ViewEmbeddedNgIf0(t0) {
-      var _ = this;
-      _.viewData = _._NgIf_0_9 = _._appEl_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    _ViewEmbeddedNgIf1: function _ViewEmbeddedNgIf1(t0) {
-      var _ = this;
-      _.viewData = _._NullComponent_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewEmbeddedNgFor0: function ViewEmbeddedNgFor0(t0) {
-      var _ = this;
-      _.viewData = _._NgFor_1_9 = _._appEl_1 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    _ViewEmbeddedNgFor1: function _ViewEmbeddedNgFor1(t0, t1) {
-      var _ = this;
-      _._textBinding_1 = t0;
-      _.viewData = null;
-      _.parentView = t1;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewNullComponent0: function ViewNullComponent0(t0) {
-      var _ = this;
-      _.viewData = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewInjectsFromArbitraryParent0: function ViewInjectsFromArbitraryParent0(t0) {
-      var _ = this;
-      _.viewData = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewComponentConditionalFeatures0: function ViewComponentConditionalFeatures0(t0) {
-      var _ = this;
-      _.viewData = _._NgIf_1_9 = _._appEl_1 = _._NgIf_0_9 = _._appEl_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    _ViewComponentConditionalFeatures1: function _ViewComponentConditionalFeatures1(t0) {
-      var _ = this;
-      _.viewData = _._FeatureA_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    _ViewComponentConditionalFeatures2: function _ViewComponentConditionalFeatures2(t0) {
-      var _ = this;
-      _.viewData = _._FeatureB_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewFeatureA0: function ViewFeatureA0(t0) {
-      var _ = this;
-      _.viewData = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewFeatureB0: function ViewFeatureB0(t0) {
-      var _ = this;
-      _.viewData = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    },
-    ViewUsesDomBindings0: function ViewUsesDomBindings0(t0) {
-      var _ = this;
-      _.viewData = _._el_0 = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = null;
-      _.parentView = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = null;
-    }
-  },
   Z = {DomSanitizationService: function DomSanitizationService() {
     }};
-  var holders = [C, H, J, P, W, G, Y, R, K, S, M, Q, D, L, O, V, E, A, U, T, N, Z];
+  var holders = [C, H, J, P, W, G, Y, R, K, X, S, N, M, Q, D, L, O, V, E, A, U, T, Z];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};
@@ -4072,6 +4362,15 @@
         H.throwExpression(P.UnsupportedError$("addAll"));
       for (t1 = J.get$iterator$ax(collection); t1.moveNext$0();)
         receiver.push(t1.get$current(t1));
+    },
+    forEach$1: function(receiver, f) {
+      var end, i;
+      end = receiver.length;
+      for (i = 0; i < end; ++i) {
+        f.call$1(receiver[i]);
+        if (receiver.length !== end)
+          throw H.wrapException(P.ConcurrentModificationError$(receiver));
+      }
     },
     join$1: function(receiver, separator) {
       var list, i;
@@ -4216,15 +4515,63 @@
   J.JSInt.prototype = {$isint: 1};
   J.JSDouble.prototype = {};
   J.JSString.prototype = {
+    codeUnitAt$1: function(receiver, index) {
+      if (typeof index !== "number" || Math.floor(index) !== index)
+        throw H.wrapException(H.diagnoseIndexError(receiver, index));
+      if (index < 0)
+        throw H.wrapException(H.diagnoseIndexError(receiver, index));
+      if (index >= receiver.length)
+        H.throwExpression(H.diagnoseIndexError(receiver, index));
+      return receiver.charCodeAt(index);
+    },
     _codeUnitAt$1: function(receiver, index) {
       if (index >= receiver.length)
         throw H.wrapException(H.diagnoseIndexError(receiver, index));
       return receiver.charCodeAt(index);
     },
+    allMatches$2: function(receiver, string, start) {
+      var t1;
+      if (typeof string !== "string")
+        H.throwExpression(H.argumentErrorValue(string));
+      t1 = string.length;
+      if (start > t1)
+        throw H.wrapException(P.RangeError$range(start, 0, string.length, null, null));
+      return new H._StringAllMatchesIterable(string, receiver, start);
+    },
+    allMatches$1: function($receiver, string) {
+      return this.allMatches$2($receiver, string, 0);
+    },
     $add: function(receiver, other) {
       if (typeof other !== "string")
         throw H.wrapException(P.ArgumentError$value(other, null, null));
       return receiver + other;
+    },
+    split$1: function(receiver, pattern) {
+      if (pattern == null)
+        H.throwExpression(H.argumentErrorValue(pattern));
+      if (typeof pattern === "string")
+        return H.setRuntimeTypeInfo(receiver.split(pattern), [P.String]);
+      else if (pattern instanceof H.JSSyntaxRegExp && pattern.get$_nativeAnchoredVersion().exec("").length - 2 === 0)
+        return H.setRuntimeTypeInfo(receiver.split(pattern._nativeRegExp), [P.String]);
+      else
+        return this._defaultSplit$1(receiver, pattern);
+    },
+    _defaultSplit$1: function(receiver, pattern) {
+      var result, t1, start, $length, match, matchStart, matchEnd;
+      result = H.setRuntimeTypeInfo([], [P.String]);
+      for (t1 = J.allMatches$1$s(pattern, receiver), t1 = t1.get$iterator(t1), start = 0, $length = 1; t1.moveNext$0();) {
+        match = t1.get$current(t1);
+        matchStart = match.get$start(match);
+        matchEnd = match.get$end(match);
+        $length = matchEnd - matchStart;
+        if ($length === 0 && start === matchStart)
+          continue;
+        result.push(this.substring$2(receiver, start, matchStart));
+        start = matchEnd;
+      }
+      if (start < receiver.length || $length > 0)
+        result.push(this.substring$1(receiver, start));
+      return result;
     },
     substring$2: function(receiver, startIndex, endIndex) {
       if (typeof startIndex !== "number" || Math.floor(startIndex) !== startIndex)
@@ -4241,6 +4588,52 @@
     },
     substring$1: function($receiver, startIndex) {
       return this.substring$2($receiver, startIndex, null);
+    },
+    trim$0: function(receiver) {
+      var result, endIndex, startIndex, t1, endIndex0;
+      result = receiver.trim();
+      endIndex = result.length;
+      if (endIndex === 0)
+        return result;
+      if (this._codeUnitAt$1(result, 0) === 133) {
+        startIndex = J.JSString__skipLeadingWhitespace(result, 1);
+        if (startIndex === endIndex)
+          return "";
+      } else
+        startIndex = 0;
+      t1 = endIndex - 1;
+      endIndex0 = this.codeUnitAt$1(result, t1) === 133 ? J.JSString__skipTrailingWhitespace(result, t1) : endIndex;
+      if (startIndex === 0 && endIndex0 === endIndex)
+        return result;
+      return result.substring(startIndex, endIndex0);
+    },
+    $mul: function(receiver, times) {
+      var s, result;
+      if (0 >= times)
+        return "";
+      if (times === 1 || receiver.length === 0)
+        return receiver;
+      if (times !== times >>> 0)
+        throw H.wrapException(C.C_OutOfMemoryError);
+      for (s = receiver, result = ""; true;) {
+        if ((times & 1) === 1)
+          result = s + result;
+        times = times >>> 1;
+        if (times === 0)
+          break;
+        s += s;
+      }
+      return result;
+    },
+    contains$2: function(receiver, other, startIndex) {
+      if (other == null)
+        H.throwExpression(H.argumentErrorValue(other));
+      if (startIndex > receiver.length)
+        throw H.wrapException(P.RangeError$range(startIndex, 0, receiver.length, null, null));
+      return H.stringContainsUnchecked(receiver, other, startIndex);
+    },
+    contains$1: function($receiver, other) {
+      return this.contains$2($receiver, other, 0);
     },
     toString$0: function(receiver) {
       return receiver;
@@ -4265,6 +4658,15 @@
   H.ListIterable.prototype = {
     get$iterator: function(_) {
       return new H.ListIterator(this, this.get$length(this), 0);
+    },
+    forEach$1: function(_, action) {
+      var $length, i;
+      $length = this.get$length(this);
+      for (i = 0; i < $length; ++i) {
+        action.call$1(this.elementAt$1(0, i));
+        if ($length !== this.get$length(this))
+          throw H.wrapException(P.ConcurrentModificationError$(this));
+      }
     },
     join$1: function(_, separator) {
       var $length, first, t1, i;
@@ -4585,6 +4987,11 @@
       return "Closure '" + H.S(this._name) + "' of " + ("Instance of '" + H.Primitives_objectTypeName(receiver) + "'");
     }
   };
+  H.CastErrorImplementation.prototype = {
+    toString$0: function(_) {
+      return this.message;
+    }
+  };
   H.RuntimeError.prototype = {
     toString$0: function(_) {
       return "RuntimeError: " + H.S(this.message);
@@ -4871,6 +5278,18 @@
       t2 = new H.LinkedHashMapKeyIterator(t1, t1._modifications);
       t2._cell = t1._first;
       return t2;
+    },
+    forEach$1: function(_, f) {
+      var t1, cell, modifications;
+      t1 = this._map;
+      cell = t1._first;
+      modifications = t1._modifications;
+      for (; cell != null;) {
+        f.call$1(cell.hashMapCellKey);
+        if (modifications !== t1._modifications)
+          throw H.wrapException(P.ConcurrentModificationError$(t1));
+        cell = cell._next;
+      }
     }
   };
   H.LinkedHashMapKeyIterator.prototype = {
@@ -4908,6 +5327,131 @@
   H.initHooks_closure1.prototype = {
     call$1: function(tag) {
       return this.prototypeForTag(tag);
+    }
+  };
+  H.JSSyntaxRegExp.prototype = {
+    toString$0: function(_) {
+      return "RegExp/" + this.pattern + "/";
+    },
+    get$_nativeGlobalVersion: function() {
+      var t1 = this._nativeGlobalRegExp;
+      if (t1 != null)
+        return t1;
+      t1 = this._nativeRegExp;
+      t1 = H.JSSyntaxRegExp_makeNative(this.pattern, t1.multiline, !t1.ignoreCase, true);
+      this._nativeGlobalRegExp = t1;
+      return t1;
+    },
+    get$_nativeAnchoredVersion: function() {
+      var t1 = this._nativeAnchoredRegExp;
+      if (t1 != null)
+        return t1;
+      t1 = this._nativeRegExp;
+      t1 = H.JSSyntaxRegExp_makeNative(this.pattern + "|()", t1.multiline, !t1.ignoreCase, true);
+      this._nativeAnchoredRegExp = t1;
+      return t1;
+    },
+    allMatches$2: function(_, string, start) {
+      if (start > string.length)
+        throw H.wrapException(P.RangeError$range(start, 0, string.length, null, null));
+      return new H._AllMatchesIterable(this, string, start);
+    },
+    allMatches$1: function($receiver, string) {
+      return this.allMatches$2($receiver, string, 0);
+    },
+    _execGlobal$2: function(string, start) {
+      var regexp, match;
+      regexp = this.get$_nativeGlobalVersion();
+      regexp.lastIndex = start;
+      match = regexp.exec(string);
+      if (match == null)
+        return;
+      return new H._MatchImplementation(match);
+    },
+    $isRegExp: 1
+  };
+  H._MatchImplementation.prototype = {
+    get$start: function(_) {
+      return this._match.index;
+    },
+    get$end: function(_) {
+      var t1 = this._match;
+      return t1.index + t1[0].length;
+    }
+  };
+  H._AllMatchesIterable.prototype = {
+    get$iterator: function(_) {
+      return new H._AllMatchesIterator(this._re, this._string, this._start);
+    },
+    $asIterable: function() {
+      return [P.Match];
+    }
+  };
+  H._AllMatchesIterator.prototype = {
+    get$current: function(_) {
+      return this.__js_helper$_current;
+    },
+    moveNext$0: function() {
+      var t1, t2, match, nextIndex;
+      t1 = this._string;
+      if (t1 == null)
+        return false;
+      t2 = this._nextIndex;
+      if (t2 <= t1.length) {
+        match = this._regExp._execGlobal$2(t1, t2);
+        if (match != null) {
+          this.__js_helper$_current = match;
+          nextIndex = match.get$end(match);
+          this._nextIndex = match._match.index === nextIndex ? nextIndex + 1 : nextIndex;
+          return true;
+        }
+      }
+      this.__js_helper$_current = null;
+      this._string = null;
+      return false;
+    }
+  };
+  H.StringMatch.prototype = {
+    get$end: function(_) {
+      return this.start + this.pattern.length;
+    },
+    get$start: function(receiver) {
+      return this.start;
+    }
+  };
+  H._StringAllMatchesIterable.prototype = {
+    get$iterator: function(_) {
+      return new H._StringAllMatchesIterator(this._input, this._pattern, this.__js_helper$_index);
+    },
+    $asIterable: function() {
+      return [P.Match];
+    }
+  };
+  H._StringAllMatchesIterator.prototype = {
+    moveNext$0: function() {
+      var t1, t2, t3, t4, t5, index, end;
+      t1 = this.__js_helper$_index;
+      t2 = this._pattern;
+      t3 = t2.length;
+      t4 = this._input;
+      t5 = t4.length;
+      if (t1 + t3 > t5) {
+        this.__js_helper$_current = null;
+        return false;
+      }
+      index = t4.indexOf(t2, t1);
+      if (index < 0) {
+        this.__js_helper$_index = t5 + 1;
+        this.__js_helper$_current = null;
+        return false;
+      }
+      end = index + t3;
+      this.__js_helper$_current = new H.StringMatch(index, t2);
+      this.__js_helper$_index = end === this.__js_helper$_index ? end + 1 : end;
+      return true;
+    },
+    get$current: function(_) {
+      return this.__js_helper$_current;
     }
   };
   H.NativeByteBuffer.prototype = {$isNativeByteBuffer: 1};
@@ -5026,7 +5570,7 @@
       t1.storedCallback = null;
       f.call$0();
     },
-    $signature: 3
+    $signature: 1
   };
   P._AsyncRun__initializeScheduleImmediate_closure.prototype = {
     call$1: function(callback) {
@@ -5420,7 +5964,7 @@
       t1._state = 0;
       t1._complete$1(value);
     },
-    $signature: 3
+    $signature: 1
   };
   P._Future__chainForeignFuture_closure0.prototype = {
     call$2: function(error, stackTrace) {
@@ -6320,6 +6864,16 @@
     get$iterator: function(_) {
       var t1 = this._collection$_map;
       return new P._HashMapKeyIterator(t1, t1._computeKeys$0());
+    },
+    forEach$1: function(_, f) {
+      var t1, keys, $length, i;
+      t1 = this._collection$_map;
+      keys = t1._computeKeys$0();
+      for ($length = keys.length, i = 0; i < $length; ++i) {
+        f.call$1(keys[i]);
+        if (keys !== t1._keys)
+          throw H.wrapException(P.ConcurrentModificationError$(t1));
+      }
     }
   };
   P._HashMapKeyIterator.prototype = {
@@ -6364,14 +6918,24 @@
     call$2: function(k, v) {
       this.result.$indexSet(0, k, v);
     },
-    $signature: 1
+    $signature: 0
   };
+  P.IterableBase.prototype = {};
   P.ListMixin.prototype = {
     get$iterator: function(receiver) {
       return new H.ListIterator(receiver, this.get$length(receiver), 0);
     },
     elementAt$1: function(receiver, index) {
       return this.$index(receiver, index);
+    },
+    forEach$1: function(receiver, action) {
+      var $length, i;
+      $length = this.get$length(receiver);
+      for (i = 0; i < $length; ++i) {
+        action.call$1(this.$index(receiver, i));
+        if ($length !== this.get$length(receiver))
+          throw H.wrapException(P.ConcurrentModificationError$(receiver));
+      }
     },
     join$1: function(receiver, separator) {
       var t1;
@@ -6402,7 +6966,7 @@
       t1._contents = t2 + ": ";
       t1._contents += H.S(v);
     },
-    $signature: 1
+    $signature: 0
   };
   P.MapMixin.prototype = {
     forEach$1: function(receiver, action) {
@@ -6627,6 +7191,12 @@
       return "Concurrent modification during iteration: " + P.Error_safeToString(t1) + ".";
     }
   };
+  P.OutOfMemoryError.prototype = {
+    toString$0: function(_) {
+      return "Out of Memory";
+    },
+    $isError: 1
+  };
   P.StackOverflowError.prototype = {
     toString$0: function(_) {
       return "Stack Overflow";
@@ -6644,9 +7214,84 @@
       return "Exception: " + this.message;
     }
   };
+  P.FormatException.prototype = {
+    toString$0: function(_) {
+      var t1, report, offset, objectSource, source, lineNum, lineStart, previousCharWasCR, i, char, lineEnd, end, start, prefix, postfix, slice;
+      t1 = this.message;
+      report = t1 != null && "" !== t1 ? "FormatException: " + H.S(t1) : "FormatException";
+      offset = this.offset;
+      objectSource = this.source;
+      if (typeof objectSource === "string") {
+        if (offset != null)
+          t1 = offset < 0 || offset > objectSource.length;
+        else
+          t1 = false;
+        if (t1)
+          offset = null;
+        if (offset == null) {
+          source = objectSource.length > 78 ? C.JSString_methods.substring$2(objectSource, 0, 75) + "..." : objectSource;
+          return report + "\n" + source;
+        }
+        for (lineNum = 1, lineStart = 0, previousCharWasCR = false, i = 0; i < offset; ++i) {
+          char = C.JSString_methods._codeUnitAt$1(objectSource, i);
+          if (char === 10) {
+            if (lineStart !== i || !previousCharWasCR)
+              ++lineNum;
+            lineStart = i + 1;
+            previousCharWasCR = false;
+          } else if (char === 13) {
+            ++lineNum;
+            lineStart = i + 1;
+            previousCharWasCR = true;
+          }
+        }
+        report = lineNum > 1 ? report + (" (at line " + lineNum + ", character " + (offset - lineStart + 1) + ")\n") : report + (" (at character " + (offset + 1) + ")\n");
+        lineEnd = objectSource.length;
+        for (i = offset; i < lineEnd; ++i) {
+          char = C.JSString_methods.codeUnitAt$1(objectSource, i);
+          if (char === 10 || char === 13) {
+            lineEnd = i;
+            break;
+          }
+        }
+        if (lineEnd - lineStart > 78)
+          if (offset - lineStart < 75) {
+            end = lineStart + 75;
+            start = lineStart;
+            prefix = "";
+            postfix = "...";
+          } else {
+            if (lineEnd - offset < 75) {
+              start = lineEnd - 75;
+              end = lineEnd;
+              postfix = "";
+            } else {
+              start = offset - 36;
+              end = offset + 36;
+              postfix = "...";
+            }
+            prefix = "...";
+          }
+        else {
+          end = lineEnd;
+          start = lineStart;
+          prefix = "";
+          postfix = "";
+        }
+        slice = C.JSString_methods.substring$2(objectSource, start, end);
+        return report + prefix + slice + postfix + "\n" + C.JSString_methods.$mul(" ", offset - start + prefix.length) + "^\n";
+      } else
+        return offset != null ? report + (" (at offset " + H.S(offset) + ")") : report;
+    }
+  };
   P.Function.prototype = {};
   P.int.prototype = {};
   P.Iterable.prototype = {
+    forEach$1: function(_, f) {
+      var t1;
+      for (t1 = this.get$iterator(this); t1.moveNext$0();)
+        f.call$1(t1.get$current(t1));
+    },
     join$1: function(_, separator) {
       var iterator, t1;
       iterator = this.get$iterator(this);
@@ -6670,6 +7315,9 @@
       for (count = 0; it.moveNext$0();)
         ++count;
       return count;
+    },
+    get$isEmpty: function(_) {
+      return !this.get$iterator(this).moveNext$0();
     },
     elementAt$1: function(_, index) {
       var t1, elementIndex, element;
@@ -6715,6 +7363,7 @@
       return this.toString$0(this);
     }
   };
+  P.Match.prototype = {};
   P.StackTrace.prototype = {};
   P._StringStackTrace.prototype = {
     toString$0: function(_) {
@@ -6767,6 +7416,27 @@
   };
   W.CssRule.prototype = {};
   W.CssStyleDeclaration.prototype = {
+    _browserPropertyName$1: function(receiver, propertyName) {
+      var t1, $name;
+      t1 = $.$get$CssStyleDeclaration__propertyCache();
+      $name = t1[propertyName];
+      if (typeof $name === "string")
+        return $name;
+      $name = this._supportedBrowserPropertyName$1(receiver, propertyName);
+      t1[propertyName] = $name;
+      return $name;
+    },
+    _supportedBrowserPropertyName$1: function(receiver, propertyName) {
+      var prefixed;
+      if (propertyName.replace(/^-ms-/, "ms-").replace(/-([\da-z])/ig, function(_, letter) {
+        return letter.toUpperCase();
+      }) in receiver)
+        return propertyName;
+      prefixed = P.Device_cssPrefix() + H.S(propertyName);
+      if (prefixed in receiver)
+        return prefixed;
+      return propertyName;
+    },
     get$length: function(receiver) {
       return receiver.length;
     }
@@ -7918,7 +8588,7 @@
     call$2: function(key, value) {
       this._box_0.copy[key] = this.$this.walk$1(value);
     },
-    $signature: 1
+    $signature: 0
   };
   P._AcceptStructuredClone.prototype = {
     findSlot$1: function(value) {
@@ -8426,6 +9096,125 @@
       return result.call$0();
     }
   };
+  Y.NgClass.prototype = {
+    set$rawClass: function(v) {
+      this._applyClasses$2(this._rawClass, true);
+      this._applyInitialClasses$1(false);
+      if (typeof v === "string")
+        v = H.setRuntimeTypeInfo(v.split(" "), [P.String]);
+      this._rawClass = v;
+      this._iterableDiffer = null;
+      this._keyValueDiffer = null;
+      if (!!J.getInterceptor$(v).$isIterable)
+        this._iterableDiffer = R.DefaultIterableDiffer$(null);
+      else
+        this._keyValueDiffer = new N.DefaultKeyValueDiffer(new H.JsLinkedHashMap([null, N.KeyValueChangeRecord]));
+    },
+    ngDoCheck$0: function() {
+      var t1, changes;
+      t1 = this._iterableDiffer;
+      if (t1 != null) {
+        changes = t1.diff$1(this._rawClass);
+        if (changes != null)
+          this._applyIterableChanges$1(changes);
+      }
+      t1 = this._keyValueDiffer;
+      if (t1 != null) {
+        changes = t1.diff$1(this._rawClass);
+        if (changes != null)
+          this._applyKeyValueChanges$1(changes);
+      }
+    },
+    _applyKeyValueChanges$1: function(changes) {
+      changes.forEachAddedItem$1(new Y.NgClass__applyKeyValueChanges_closure(this));
+      changes.forEachChangedItem$1(new Y.NgClass__applyKeyValueChanges_closure0(this));
+      changes.forEachRemovedItem$1(new Y.NgClass__applyKeyValueChanges_closure1(this));
+    },
+    _applyIterableChanges$1: function(changes) {
+      changes.forEachAddedItem$1(new Y.NgClass__applyIterableChanges_closure(this));
+      changes.forEachRemovedItem$1(new Y.NgClass__applyIterableChanges_closure0(this));
+    },
+    _applyInitialClasses$1: function(isCleanup) {
+      var t1, _i;
+      for (t1 = this._initialClasses, _i = 0; false; ++_i)
+        this._toggleClass$2(t1[_i], true);
+    },
+    _applyClasses$2: function(rawClassVal, isCleanup) {
+      var t1, len, i, _i;
+      if (rawClassVal != null) {
+        t1 = J.getInterceptor$(rawClassVal);
+        if (!!t1.$isList)
+          for (len = rawClassVal.length, i = 0; i < len; ++i)
+            this._toggleClass$2(rawClassVal[i], false);
+        else if (!!t1.$isIterable)
+          for (t1 = rawClassVal.length, _i = 0; _i < rawClassVal.length; rawClassVal.length === t1 || (0, H.throwConcurrentModificationError)(rawClassVal), ++_i)
+            this._toggleClass$2(rawClassVal[_i], false);
+        else
+          H.interceptedTypeCast(rawClassVal, "$isMap").forEach$1(0, new Y.NgClass__applyClasses_closure(this, true));
+      }
+    },
+    _toggleClass$2: function(className, enabled) {
+      var el, t1, classes, len, i;
+      className = J.trim$0$s(className);
+      if (className.length === 0)
+        return;
+      el = this._ngEl;
+      el.toString;
+      if (C.JSString_methods.contains$1(className, " ")) {
+        t1 = $.NgClass__separator;
+        if (t1 == null) {
+          t1 = P.RegExp_RegExp("\\s+", false);
+          $.NgClass__separator = t1;
+        }
+        classes = C.JSString_methods.split$1(className, t1);
+        for (len = classes.length, i = 0; i < len; ++i)
+          if (enabled) {
+            t1 = classes[i];
+            el.classList.add(t1);
+          } else {
+            t1 = classes[i];
+            if (typeof t1 === "string")
+              el.classList.remove(t1);
+          }
+      } else if (enabled)
+        el.classList.add(className);
+      else
+        el.classList.remove(className);
+    }
+  };
+  Y.NgClass__applyKeyValueChanges_closure.prototype = {
+    call$1: function(record) {
+      this.$this._toggleClass$2(record.key, record.currentValue);
+    }
+  };
+  Y.NgClass__applyKeyValueChanges_closure0.prototype = {
+    call$1: function(record) {
+      this.$this._toggleClass$2(record.key, record.currentValue);
+    }
+  };
+  Y.NgClass__applyKeyValueChanges_closure1.prototype = {
+    call$1: function(record) {
+      if (record.previousValue != null)
+        this.$this._toggleClass$2(record.key, false);
+    }
+  };
+  Y.NgClass__applyIterableChanges_closure.prototype = {
+    call$1: function(record) {
+      this.$this._toggleClass$2(record.item, true);
+    }
+  };
+  Y.NgClass__applyIterableChanges_closure0.prototype = {
+    call$1: function(record) {
+      this.$this._toggleClass$2(record.item, false);
+    }
+  };
+  Y.NgClass__applyClasses_closure.prototype = {
+    call$2: function(className, expVal) {
+      if (expVal != null)
+        this.$this._toggleClass$2(className, !this.isCleanup);
+    },
+    $signature: 0
+  };
   R.NgFor.prototype = {
     _applyChanges$1: function(changes) {
       var insertTuples, i, t1, t2, t3, len;
@@ -8501,6 +9290,31 @@
       } else
         t1.clear$0(0);
       this._prevCondition = newCondition;
+    }
+  };
+  X.NgStyle.prototype = {
+    ngDoCheck$0: function() {
+      var t1, changes;
+      t1 = this._differ;
+      if (t1 == null)
+        return;
+      changes = t1.diff$1(this._rawStyle);
+      if (changes == null)
+        return;
+      t1 = this.get$_setProperty();
+      changes.forEachAddedItem$1(t1);
+      changes.forEachChangedItem$1(t1);
+      changes.forEachRemovedItem$1(t1);
+    },
+    _setProperty$1: function(record) {
+      var t1, t2, value;
+      t1 = this._ngElement.style;
+      t2 = record.key;
+      value = record.currentValue;
+      t2 = (t1 && C.CssStyleDeclaration_methods)._browserPropertyName$1(t1, t2);
+      if (value == null)
+        value = "";
+      t1.setProperty(t2, value, "");
     }
   };
   Y.ApplicationRef.prototype = {
@@ -8602,7 +9416,7 @@
     forEachOperation$1: function(fn) {
       var nextIt, nextRemove, t1, addRemoveOffset, sizeDeficit, moveOffsets, t2, record, adjPreviousIndex, currentIndex, localMovePreviousIndex, localCurrentIndex, i, offset, j, index, previousIndex;
       nextIt = this._itHead;
-      nextRemove = this._removalsHead;
+      nextRemove = this._default_iterable_differ$_removalsHead;
       t1 = [P.int];
       addRemoveOffset = 0;
       sizeDeficit = null;
@@ -8662,64 +9476,95 @@
           fn.call$3(record, adjPreviousIndex, currentIndex);
       }
     },
+    forEachAddedItem$1: function(fn) {
+      var record;
+      for (record = this._default_iterable_differ$_additionsHead; record != null; record = record._default_iterable_differ$_nextAdded)
+        fn.call$1(record);
+    },
+    forEachRemovedItem$1: function(fn) {
+      var record;
+      for (record = this._default_iterable_differ$_removalsHead; record != null; record = record._nextRemoved)
+        fn.call$1(record);
+    },
     forEachIdentityChange$1: function(fn) {
       var record;
       for (record = this._identityChangesHead; record != null; record = record._nextIdentityChange)
         fn.call$1(record);
     },
+    diff$1: function(collection) {
+      if (!(collection != null))
+        collection = C.List_empty0;
+      return this.check$1(0, collection) ? this : null;
+    },
     check$1: function(_, collection) {
-      var record, t1, t2, t3, t4, index, item, itemTrackBy, t5;
-      this._reset$0();
-      record = this._itHead;
-      this._default_iterable_differ$_length = collection.length;
-      for (t1 = this._trackByFn, t2 = record, t3 = false, t4 = 0; t4 < this._default_iterable_differ$_length; index = t4 + 1, t4 = index, t2 = record) {
-        item = collection[t4];
-        itemTrackBy = t1.call$2(t4, item);
-        if (t2 != null) {
-          t5 = t2.trackById;
-          t5 = t5 == null ? itemTrackBy != null : t5 !== itemTrackBy;
-        } else
-          t5 = true;
-        if (t5) {
-          record = this._mismatch$4(t2, item, itemTrackBy, t4);
-          t2 = record;
-          t3 = true;
-        } else {
-          if (t3)
-            t2 = this._verifyReinsertion$4(t2, item, itemTrackBy, t4);
-          t5 = t2.item;
-          if (t5 == null ? item != null : t5 !== item) {
-            t2.item = item;
-            t5 = this._identityChangesTail;
-            if (t5 == null) {
-              this._identityChangesHead = t2;
-              this._identityChangesTail = t2;
-            } else {
-              t5._nextIdentityChange = t2;
-              this._identityChangesTail = t2;
+      var _box_0, t1, t2, t3, index, item, itemTrackBy, t4, record;
+      _box_0 = {};
+      this._default_iterable_differ$_reset$0();
+      _box_0.record = this._itHead;
+      _box_0.mayBeDirty = false;
+      _box_0.index = null;
+      _box_0.itemTrackBy = null;
+      t1 = J.getInterceptor$(collection);
+      if (!!t1.$isList) {
+        this._default_iterable_differ$_length = t1.get$length(collection);
+        for (_box_0.index = 0, t2 = this._trackByFn, t3 = 0; t3 < this._default_iterable_differ$_length; index = _box_0.index + 1, _box_0.index = index, t3 = index) {
+          item = t1.$index(collection, t3);
+          itemTrackBy = t2.call$2(_box_0.index, item);
+          _box_0.itemTrackBy = itemTrackBy;
+          t3 = _box_0.record;
+          if (t3 != null) {
+            t4 = t3.trackById;
+            t4 = t4 == null ? itemTrackBy != null : t4 !== itemTrackBy;
+          } else
+            t4 = true;
+          if (t4) {
+            record = this._mismatch$4(t3, item, itemTrackBy, _box_0.index);
+            _box_0.record = record;
+            _box_0.mayBeDirty = true;
+            t3 = record;
+          } else {
+            if (_box_0.mayBeDirty) {
+              record = this._verifyReinsertion$4(t3, item, itemTrackBy, _box_0.index);
+              _box_0.record = record;
+              t3 = record;
+            }
+            t4 = t3.item;
+            if (t4 == null ? item != null : t4 !== item) {
+              t3.item = item;
+              t4 = this._identityChangesTail;
+              if (t4 == null) {
+                this._identityChangesHead = t3;
+                this._identityChangesTail = t3;
+              } else {
+                t4._nextIdentityChange = t3;
+                this._identityChangesTail = t3;
+              }
             }
           }
+          _box_0.record = t3._default_iterable_differ$_next;
         }
-        record = t2._default_iterable_differ$_next;
+      } else {
+        _box_0.index = 0;
+        t1.forEach$1(collection, new R.DefaultIterableDiffer_check_closure(_box_0, this));
+        this._default_iterable_differ$_length = _box_0.index;
       }
-      t1 = t2;
-      this._truncate$1(t1);
+      this._truncate$1(_box_0.record);
       return this.get$isDirty();
     },
     get$isDirty: function() {
-      return this._additionsHead != null || this._movesHead != null || this._removalsHead != null || this._identityChangesHead != null;
+      return this._default_iterable_differ$_additionsHead != null || this._movesHead != null || this._default_iterable_differ$_removalsHead != null || this._identityChangesHead != null;
     },
-    _reset$0: function() {
+    _default_iterable_differ$_reset$0: function() {
       var record, record0, nextRecord;
       if (this.get$isDirty()) {
         for (record = this._itHead, this._previousItHead = record; record != null; record = record0) {
           record0 = record._default_iterable_differ$_next;
-          record._nextPrevious = record0;
+          record._default_iterable_differ$_nextPrevious = record0;
         }
-        for (record = this._additionsHead; record != null; record = record._nextAdded)
+        for (record = this._default_iterable_differ$_additionsHead; record != null; record = record._default_iterable_differ$_nextAdded)
           record.previousIndex = record.currentIndex;
-        this._additionsTail = null;
-        this._additionsHead = null;
+        this._default_iterable_differ$_additionsTail = null;
+        this._default_iterable_differ$_additionsHead = null;
         for (record = this._movesHead; record != null; record = nextRecord) {
           record.previousIndex = record.currentIndex;
           nextRecord = record._nextMoved;
@@ -8727,7 +9572,7 @@
         this._movesTail = null;
         this._movesHead = null;
         this._removalsTail = null;
-        this._removalsHead = null;
+        this._default_iterable_differ$_removalsHead = null;
         this._identityChangesTail = null;
         this._identityChangesHead = null;
       }
@@ -8737,7 +9582,7 @@
       if (record == null)
         previousRecord = this._itTail;
       else {
-        previousRecord = record._prev;
+        previousRecord = record._default_iterable_differ$_prev;
         this._addToRemovals$1(this._unlink$1(record));
       }
       t1 = this._linkedRecords;
@@ -8760,13 +9605,13 @@
         } else {
           record = new R.CollectionChangeRecord(item, itemTrackBy);
           this._insertAfter$3(record, previousRecord, index);
-          t1 = this._additionsTail;
+          t1 = this._default_iterable_differ$_additionsTail;
           if (t1 == null) {
-            this._additionsHead = record;
-            this._additionsTail = record;
+            this._default_iterable_differ$_additionsHead = record;
+            this._default_iterable_differ$_additionsTail = record;
           } else {
-            t1._nextAdded = record;
-            this._additionsTail = record;
+            t1._default_iterable_differ$_nextAdded = record;
+            this._default_iterable_differ$_additionsTail = record;
           }
         }
       }
@@ -8777,7 +9622,7 @@
       t1 = this._unlinkedRecords;
       reinsertRecord = t1 == null ? null : t1.$get$1(0, itemTrackBy);
       if (reinsertRecord != null)
-        record = this._reinsertAfter$3(reinsertRecord, record._prev, index);
+        record = this._reinsertAfter$3(reinsertRecord, record._default_iterable_differ$_prev, index);
       else if (record.currentIndex != index) {
         record.currentIndex = index;
         this._addToMoves$2(record, index);
@@ -8793,9 +9638,9 @@
       t1 = this._unlinkedRecords;
       if (t1 != null)
         t1._default_iterable_differ$_map.clear$0(0);
-      t1 = this._additionsTail;
+      t1 = this._default_iterable_differ$_additionsTail;
       if (t1 != null)
-        t1._nextAdded = null;
+        t1._default_iterable_differ$_nextAdded = null;
       t1 = this._movesTail;
       if (t1 != null)
         t1._nextMoved = null;
@@ -8817,7 +9662,7 @@
       prev = record._prevRemoved;
       next = record._nextRemoved;
       if (prev == null)
-        this._removalsHead = next;
+        this._default_iterable_differ$_removalsHead = next;
       else
         prev._nextRemoved = next;
       if (next == null)
@@ -8833,11 +9678,11 @@
       t1 = prevRecord == null;
       next = t1 ? this._itHead : prevRecord._default_iterable_differ$_next;
       record._default_iterable_differ$_next = next;
-      record._prev = prevRecord;
+      record._default_iterable_differ$_prev = prevRecord;
       if (next == null)
         this._itTail = record;
       else
-        next._prev = record;
+        next._default_iterable_differ$_prev = record;
       if (t1)
         this._itHead = record;
       else
@@ -8856,7 +9701,7 @@
       t1 = this._linkedRecords;
       if (t1 != null)
         t1.remove$1(0, record);
-      prev = record._prev;
+      prev = record._default_iterable_differ$_prev;
       next = record._default_iterable_differ$_next;
       if (prev == null)
         this._itHead = next;
@@ -8865,7 +9710,7 @@
       if (next == null)
         this._itTail = prev;
       else
-        next._prev = prev;
+        next._default_iterable_differ$_prev = prev;
       return record;
     },
     _addToMoves$2: function(record, toIndex) {
@@ -8893,7 +9738,7 @@
       record._nextRemoved = null;
       t1 = this._removalsTail;
       if (t1 == null) {
-        this._removalsHead = record;
+        this._default_iterable_differ$_removalsHead = record;
         this._removalsTail = record;
         record._prevRemoved = null;
       } else {
@@ -8920,6 +9765,37 @@
       var t1 = this.super$Object$toString(0);
       return t1;
     }
+  };
+  R.DefaultIterableDiffer_check_closure.prototype = {
+    call$1: function(item) {
+      var t1, t2, itemTrackBy, t3, t4, record;
+      t1 = this.$this;
+      t2 = this._box_0;
+      itemTrackBy = t1._trackByFn.call$2(t2.index, item);
+      t2.itemTrackBy = itemTrackBy;
+      t3 = t2.record;
+      if (t3 != null) {
+        t4 = t3.trackById;
+        t4 = t4 == null ? itemTrackBy != null : t4 !== itemTrackBy;
+      } else
+        t4 = true;
+      if (t4) {
+        t2.record = t1._mismatch$4(t3, item, itemTrackBy, t2.index);
+        t2.mayBeDirty = true;
+      } else {
+        if (t2.mayBeDirty) {
+          record = t1._verifyReinsertion$4(t3, item, itemTrackBy, t2.index);
+          t2.record = record;
+          t3 = record;
+        }
+        t4 = t3.item;
+        if (t4 == null ? item != null : t4 !== item)
+          t1._addIdentityChange$2(t3, item);
+      }
+      t2.record = t2.record._default_iterable_differ$_next;
+      t2.index = t2.index + 1;
+    },
+    $signature: 1
   };
   R.CollectionChangeRecord.prototype = {
     toString$0: function(_) {
@@ -9002,6 +9878,215 @@
     },
     toString$0: function(_) {
       return "_DuplicateMap(" + this._default_iterable_differ$_map.toString$0(0) + ")";
+    }
+  };
+  N.DefaultKeyValueDiffer.prototype = {
+    get$isDirty: function() {
+      return this._additionsHead != null || this._changesHead != null || this._removalsHead != null;
+    },
+    forEachChangedItem$1: function(fn) {
+      var record;
+      for (record = this._changesHead; record != null; record = record._nextChanged)
+        fn.call$1(record);
+    },
+    forEachAddedItem$1: function(fn) {
+      var record;
+      for (record = this._additionsHead; record != null; record = record._nextAdded)
+        fn.call$1(record);
+    },
+    forEachRemovedItem$1: function(fn) {
+      var record;
+      for (record = this._removalsHead; record != null; record = record._default_keyvalue_differ$_next)
+        fn.call$1(record);
+    },
+    diff$1: function(map) {
+      if (map == null)
+        map = P.LinkedHashMap__makeEmpty();
+      if (this.check$1(0, map))
+        return this;
+      else
+        return;
+    },
+    check$1: function(_, map) {
+      var _box_0, t1, record;
+      _box_0 = {};
+      this._reset$0();
+      t1 = this._mapHead;
+      if (t1 == null) {
+        J.forEach$1$ax(map, new N.DefaultKeyValueDiffer_check_closure(this));
+        return this._mapHead != null;
+      }
+      _box_0.insertBefore = t1;
+      J.forEach$1$ax(map, new N.DefaultKeyValueDiffer_check_closure0(_box_0, this));
+      record = _box_0.insertBefore;
+      if (record != null) {
+        this._removalsHead = record;
+        for (t1 = this._records; record != null; record = record._default_keyvalue_differ$_next) {
+          t1.remove$1(0, record.key);
+          record.previousValue = record.currentValue;
+          record.currentValue = null;
+        }
+        t1 = this._removalsHead;
+        if (t1 == this._mapHead)
+          this._mapHead = null;
+        else
+          t1._prev._default_keyvalue_differ$_next = null;
+      }
+      return this.get$isDirty();
+    },
+    _insertBeforeOrAppend$2: function(before, record) {
+      var t1;
+      if (before != null) {
+        record._default_keyvalue_differ$_next = before;
+        record._prev = before._prev;
+        t1 = before._prev;
+        if (t1 != null)
+          t1._default_keyvalue_differ$_next = record;
+        before._prev = record;
+        if (before === this._mapHead)
+          this._mapHead = record;
+        this._appendAfter = before;
+        return before;
+      }
+      t1 = this._appendAfter;
+      if (t1 != null) {
+        t1._default_keyvalue_differ$_next = record;
+        record._prev = t1;
+      } else
+        this._mapHead = record;
+      this._appendAfter = record;
+      return;
+    },
+    _getOrCreateRecord$2: function(key, value) {
+      var t1, record, t2;
+      t1 = this._records;
+      if (t1.containsKey$1(0, key)) {
+        record = t1.$index(0, key);
+        this._maybeAddToChanges$2(record, value);
+        t1 = record._prev;
+        if (t1 != null)
+          t1._default_keyvalue_differ$_next = record._default_keyvalue_differ$_next;
+        t2 = record._default_keyvalue_differ$_next;
+        if (t2 != null)
+          t2._prev = t1;
+        record._prev = null;
+        record._default_keyvalue_differ$_next = null;
+        return record;
+      }
+      record = new N.KeyValueChangeRecord(key);
+      record.currentValue = value;
+      t1.$indexSet(0, key, record);
+      this._addToAdditions$1(record);
+      return record;
+    },
+    _maybeAddToChanges$2: function(record, value) {
+      var t1 = record.currentValue;
+      if (value == null ? t1 != null : value !== t1) {
+        record.previousValue = t1;
+        record.currentValue = value;
+        if (this._changesHead == null) {
+          this._changesTail = record;
+          this._changesHead = record;
+        } else {
+          this._changesTail._nextChanged = record;
+          this._changesTail = record;
+        }
+      }
+    },
+    _reset$0: function() {
+      var record, record0;
+      this._appendAfter = null;
+      if (this.get$isDirty()) {
+        record = this._mapHead;
+        this._previousMapHead = record;
+        for (; record != null; record = record0) {
+          record0 = record._default_keyvalue_differ$_next;
+          record._nextPrevious = record0;
+        }
+        for (record = this._changesHead; record != null; record = record._nextChanged)
+          record.previousValue = record.currentValue;
+        for (record = this._additionsHead; record != null; record = record._nextAdded)
+          record.previousValue = record.currentValue;
+        this._changesTail = null;
+        this._changesHead = null;
+        this._additionsTail = null;
+        this._additionsHead = null;
+        this._removalsHead = null;
+      }
+    },
+    _addToAdditions$1: function(record) {
+      if (this._additionsHead == null) {
+        this._additionsTail = record;
+        this._additionsHead = record;
+      } else {
+        this._additionsTail._nextAdded = record;
+        this._additionsTail = record;
+      }
+    },
+    toString$0: function(_) {
+      var items, previous, changes, additions, removals, record;
+      items = [];
+      previous = [];
+      changes = [];
+      additions = [];
+      removals = [];
+      for (record = this._mapHead; record != null; record = record._default_keyvalue_differ$_next)
+        items.push(record);
+      for (record = this._previousMapHead; record != null; record = record._nextPrevious)
+        previous.push(record);
+      for (record = this._changesHead; record != null; record = record._nextChanged)
+        changes.push(record);
+      for (record = this._additionsHead; record != null; record = record._nextAdded)
+        additions.push(record);
+      for (record = this._removalsHead; record != null; record = record._default_keyvalue_differ$_next)
+        removals.push(record);
+      return "map: " + C.JSArray_methods.join$1(items, ", ") + "\nprevious: " + C.JSArray_methods.join$1(previous, ", ") + "\nadditions: " + C.JSArray_methods.join$1(additions, ", ") + "\nchanges: " + C.JSArray_methods.join$1(changes, ", ") + "\nremovals: " + C.JSArray_methods.join$1(removals, ", ") + "\n";
+    }
+  };
+  N.DefaultKeyValueDiffer_check_closure.prototype = {
+    call$2: function(key, value) {
+      var record, t1, t2;
+      record = new N.KeyValueChangeRecord(key);
+      record.currentValue = value;
+      t1 = this.$this;
+      t1._records.$indexSet(0, key, record);
+      t1._addToAdditions$1(record);
+      t2 = t1._appendAfter;
+      if (t2 == null)
+        t1._mapHead = record;
+      else {
+        record._prev = t2;
+        t2._default_keyvalue_differ$_next = record;
+      }
+      t1._appendAfter = record;
+    },
+    $signature: 0
+  };
+  N.DefaultKeyValueDiffer_check_closure0.prototype = {
+    call$2: function(key, value) {
+      var t1, t2, t3, record;
+      t1 = this._box_0;
+      t2 = t1.insertBefore;
+      t3 = this.$this;
+      if (J.$eq$(t2 == null ? null : t2.key, key)) {
+        t3._maybeAddToChanges$2(t1.insertBefore, value);
+        t2 = t1.insertBefore;
+        t3._appendAfter = t2;
+        t1.insertBefore = t2._default_keyvalue_differ$_next;
+      } else {
+        record = t3._getOrCreateRecord$2(key, value);
+        t1.insertBefore = t3._insertBeforeOrAppend$2(t1.insertBefore, record);
+      }
+    },
+    $signature: 0
+  };
+  N.KeyValueChangeRecord.prototype = {
+    toString$0: function(_) {
+      var t1, t2, t3;
+      t1 = this.previousValue;
+      t2 = this.currentValue;
+      t3 = this.key;
+      return (t1 == null ? t2 == null : t1 === t2) ? H.S(t3) : H.S(t3) + "[" + H.S(this.previousValue) + "->" + H.S(this.currentValue) + "]";
     }
   };
   M.ChangeDetectionHost.prototype = {
@@ -9106,7 +10191,7 @@
     },
     "call*": "call$2",
     $requiredArgCount: 2,
-    $signature: 1
+    $signature: 0
   };
   S.OpaqueToken.prototype = {
     toString$0: function(_) {
@@ -9802,7 +10887,7 @@
         testability.whenStable.apply(testability, [P.allowInterop(decrement)]);
       }
     },
-    $signature: 3
+    $signature: 1
   };
   K.BrowserGetTestability_addToWindow__closure.prototype = {
     call$1: function(didWork_) {
@@ -9879,9 +10964,10 @@
   O.FeatureA.prototype = {};
   O.FeatureB.prototype = {};
   O.UsesDomBindings.prototype = {};
+  O.UsesNgDirectives.prototype = {};
   N.ViewRootComponent0.prototype = {
     build$0: function() {
-      var parentRenderNode, doc, _el_0, t1, t2, styles, t3, t4, t5;
+      var parentRenderNode, doc, _el_0, t1, t2, styles, t3, t4, t5, t6, t7;
       parentRenderNode = this.initViewRoot$1(this.rootEl);
       doc = document;
       _el_0 = T.appendDiv(doc, parentRenderNode);
@@ -9966,63 +11052,81 @@
       t1.componentStyles = styles;
       this._compView_7 = t1;
       parentRenderNode.appendChild(t1.rootEl);
-      t1 = new O.EmbeddedNgFor(H.setRuntimeTypeInfo(["foo", "bar", "baz"], [P.String]));
-      this._EmbeddedNgFor_7_5 = t1;
-      this._compView_7.create$2(0, t1, H.setRuntimeTypeInfo([], t2));
-      t1 = new N.ViewInjectsFromArbitraryParent0(this);
-      t1.AppView$4(C.ViewType_1, this, 8, 3);
-      t3 = doc.createElement("injects-from-arbitrary-parent");
-      t1.rootEl = t3;
+      t1 = P.String;
+      t3 = [t1];
+      t4 = new O.EmbeddedNgFor(H.setRuntimeTypeInfo(["foo", "bar", "baz"], t3));
+      this._EmbeddedNgFor_7_5 = t4;
+      this._compView_7.create$2(0, t4, H.setRuntimeTypeInfo([], t2));
+      t4 = new N.ViewInjectsFromArbitraryParent0(this);
+      t4.AppView$4(C.ViewType_1, this, 8, 3);
+      t5 = doc.createElement("injects-from-arbitrary-parent");
+      t4.rootEl = t5;
       styles = $.ViewInjectsFromArbitraryParent0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
         $.ViewInjectsFromArbitraryParent0__componentStyles = styles;
       }
-      t1.componentStyles = styles;
-      this._compView_8 = t1;
-      parentRenderNode.appendChild(t1.rootEl);
-      t1 = this.parentView;
-      t3 = t1.injectorGet$2(C.MultiToken_usPresidents, this.viewData.parentIndex);
-      t4 = t1.injectorGet$2(C.MultiToken_whiteHouse, this.viewData.parentIndex);
-      t1 = t1.injectorGet$2(C.Type_InjectableService_AmT, this.viewData.parentIndex);
-      t5 = new O.InjectsFromArbitraryParent();
-      t1.printWashingtonDc$2(t4, t3);
-      t1 = t5;
-      this._InjectsFromArbitraryParent_8_5 = t1;
-      this._compView_8.create$2(0, t1, H.setRuntimeTypeInfo([], t2));
-      t1 = new N.ViewComponentConditionalFeatures0(this);
-      t1.AppView$4(C.ViewType_1, this, 9, 3);
-      t3 = doc.createElement("component-conditional-features");
-      t1.rootEl = t3;
+      t4.componentStyles = styles;
+      this._compView_8 = t4;
+      parentRenderNode.appendChild(t4.rootEl);
+      t4 = this.parentView;
+      t5 = t4.injectorGet$2(C.MultiToken_usPresidents, this.viewData.parentIndex);
+      t6 = t4.injectorGet$2(C.MultiToken_whiteHouse, this.viewData.parentIndex);
+      t4 = t4.injectorGet$2(C.Type_InjectableService_AmT, this.viewData.parentIndex);
+      t7 = new O.InjectsFromArbitraryParent();
+      t4.printWashingtonDc$2(t6, t5);
+      t4 = t7;
+      this._InjectsFromArbitraryParent_8_5 = t4;
+      this._compView_8.create$2(0, t4, H.setRuntimeTypeInfo([], t2));
+      t4 = new N.ViewComponentConditionalFeatures0(this);
+      t4.AppView$4(C.ViewType_1, this, 9, 3);
+      t5 = doc.createElement("component-conditional-features");
+      t4.rootEl = t5;
       styles = $.ViewComponentConditionalFeatures0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
         $.ViewComponentConditionalFeatures0__componentStyles = styles;
       }
-      t1.componentStyles = styles;
-      this._compView_9 = t1;
-      parentRenderNode.appendChild(t1.rootEl);
-      t1 = new O.ComponentConditionalFeatures();
-      this._ComponentConditionalFeatures_9_5 = t1;
-      this._compView_9.create$2(0, t1, H.setRuntimeTypeInfo([], t2));
-      t1 = new N.ViewUsesDomBindings0(this);
-      t1.AppView$4(C.ViewType_1, this, 10, 3);
-      t3 = doc.createElement("uses-dom-bindings");
-      t1.rootEl = t3;
+      t4.componentStyles = styles;
+      this._compView_9 = t4;
+      parentRenderNode.appendChild(t4.rootEl);
+      t4 = new O.ComponentConditionalFeatures();
+      this._ComponentConditionalFeatures_9_5 = t4;
+      this._compView_9.create$2(0, t4, H.setRuntimeTypeInfo([], t2));
+      t4 = new N.ViewUsesDomBindings0(this);
+      t4.AppView$4(C.ViewType_1, this, 10, 3);
+      t5 = doc.createElement("uses-dom-bindings");
+      t4.rootEl = t5;
       styles = $.ViewUsesDomBindings0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
         $.ViewUsesDomBindings0__componentStyles = styles;
       }
-      t1.componentStyles = styles;
-      this._compView_10 = t1;
-      parentRenderNode.appendChild(t1.rootEl);
-      t1 = new O.UsesDomBindings();
-      this._UsesDomBindings_10_5 = t1;
-      this._compView_10.create$2(0, t1, H.setRuntimeTypeInfo([], t2));
+      t4.componentStyles = styles;
+      this._compView_10 = t4;
+      parentRenderNode.appendChild(t4.rootEl);
+      t4 = new O.UsesDomBindings();
+      this._UsesDomBindings_10_5 = t4;
+      this._compView_10.create$2(0, t4, H.setRuntimeTypeInfo([], t2));
+      t4 = new N.ViewUsesNgDirectives0(this);
+      t4.AppView$4(C.ViewType_1, this, 11, 3);
+      t5 = doc.createElement("uses-ng-directives");
+      t4.rootEl = t5;
+      styles = $.ViewUsesNgDirectives0__componentStyles;
+      if (styles == null) {
+        styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
+        styles._appendStyles$0();
+        $.ViewUsesNgDirectives0__componentStyles = styles;
+      }
+      t4.componentStyles = styles;
+      this._compView_11 = t4;
+      parentRenderNode.appendChild(t4.rootEl);
+      t1 = new O.UsesNgDirectives(P.LinkedHashMap_LinkedHashMap$_literal(["foo", true, "bar", false], t1, P.bool), H.setRuntimeTypeInfo(["foo", "bar"], t3), P.LinkedHashMap_LinkedHashMap$_literal(["height", "100px", "width", "50px"], t1, t1));
+      this._UsesNgDirectives_11_5 = t1;
+      this._compView_11.create$2(0, t1, H.setRuntimeTypeInfo([], t2));
       this.init$2(C.List_empty, null);
     },
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
@@ -10099,6 +11203,7 @@
       this._compView_8.detectChanges$0();
       this._compView_9.detectChanges$0();
       this._compView_10.detectChanges$0();
+      this._compView_11.detectChanges$0();
     },
     destroyInternal$0: function() {
       this._compView_3.destroy$0();
@@ -10109,6 +11214,7 @@
       this._compView_8.destroy$0();
       this._compView_9.destroy$0();
       this._compView_10.destroy$0();
+      this._compView_11.destroy$0();
     },
     $asAppView: function() {
       return [O.RootComponent];
@@ -10386,21 +11492,18 @@
       this.init$2(C.List_empty, null);
     },
     detectChangesInternal$0: function() {
-      var _ctx, t1, changes, collection;
+      var _ctx, t1, t2, changes;
       _ctx = this.ctx;
       if (this.viewData._cdState === 0) {
         t1 = this._NgFor_1_9;
         t1._ngForOf = _ctx.items;
-        if (t1._differ == null && true)
-          t1._differ = new R.DefaultIterableDiffer(R.default_iterable_differ___trackByIdentity$closure());
+        if (t1._ng_for$_differ == null && true)
+          t1._ng_for$_differ = R.DefaultIterableDiffer$(t1._ngForTrackBy);
       }
       t1 = this._NgFor_1_9;
-      changes = t1._differ;
-      if (changes != null) {
-        collection = t1._ngForOf;
-        if (!(collection != null))
-          collection = C.List_empty0;
-        changes = changes.check$1(0, collection) ? changes : null;
+      t2 = t1._ng_for$_differ;
+      if (t2 != null) {
+        changes = t2.diff$1(t1._ngForOf);
         if (changes != null)
           t1._applyChanges$1(changes);
       }
@@ -10583,6 +11686,76 @@
       return [O.UsesDomBindings];
     }
   };
+  N.ViewUsesNgDirectives0.prototype = {
+    build$0: function() {
+      var parentRenderNode, doc, _el_0, t1, _el_2, _el_4, _el_6;
+      parentRenderNode = this.initViewRoot$1(this.rootEl);
+      doc = document;
+      _el_0 = T.appendDiv(doc, parentRenderNode);
+      t1 = [P.String];
+      this._NgClass_0_5 = new Y.NgClass(_el_0, H.setRuntimeTypeInfo([], t1));
+      T.appendText(_el_0, "Classes From Map");
+      _el_2 = T.appendDiv(doc, parentRenderNode);
+      this._NgClass_2_5 = new Y.NgClass(_el_2, H.setRuntimeTypeInfo([], t1));
+      T.appendText(_el_2, "Classes from List");
+      _el_4 = T.appendDiv(doc, parentRenderNode);
+      this._NgClass_4_5 = new Y.NgClass(_el_4, H.setRuntimeTypeInfo([], t1));
+      T.appendText(_el_4, "Classes from String");
+      _el_6 = T.appendDiv(doc, parentRenderNode);
+      this._NgStyle_6_5 = new X.NgStyle(_el_6);
+      T.appendText(_el_6, "Styles");
+      this.init$2(C.List_empty, null);
+    },
+    detectChangesInternal$0: function() {
+      var _ctx, currVal_0, t1, currVal_1, currVal_2, currVal_3;
+      _ctx = this.ctx;
+      currVal_0 = _ctx.ngClassesMap;
+      t1 = this._expr_0;
+      if (t1 !== currVal_0) {
+        this._NgClass_0_5.set$rawClass(currVal_0);
+        this._expr_0 = currVal_0;
+      }
+      this._NgClass_0_5.ngDoCheck$0();
+      currVal_1 = _ctx.ngClassesList;
+      t1 = this._expr_1;
+      if (t1 !== currVal_1) {
+        this._NgClass_2_5.set$rawClass(currVal_1);
+        this._expr_1 = currVal_1;
+      }
+      this._NgClass_2_5.ngDoCheck$0();
+      currVal_2 = _ctx.ngClassesString;
+      t1 = this._expr_2;
+      if (t1 !== currVal_2) {
+        this._NgClass_4_5.set$rawClass(currVal_2);
+        this._expr_2 = currVal_2;
+      }
+      this._NgClass_4_5.ngDoCheck$0();
+      currVal_3 = _ctx.ngStyles;
+      t1 = this._expr_3;
+      if (t1 !== currVal_3) {
+        t1 = this._NgStyle_6_5;
+        t1._rawStyle = currVal_3;
+        if (t1._differ == null && true)
+          t1._differ = new N.DefaultKeyValueDiffer(new H.JsLinkedHashMap([null, N.KeyValueChangeRecord]));
+        this._expr_3 = currVal_3;
+      }
+      this._NgStyle_6_5.ngDoCheck$0();
+    },
+    destroyInternal$0: function() {
+      var t1 = this._NgClass_0_5;
+      t1._applyClasses$2(t1._rawClass, true);
+      t1._applyInitialClasses$1(false);
+      t1 = this._NgClass_2_5;
+      t1._applyClasses$2(t1._rawClass, true);
+      t1._applyInitialClasses$1(false);
+      t1 = this._NgClass_4_5;
+      t1._applyClasses$2(t1._rawClass, true);
+      t1._applyInitialClasses$1(false);
+    },
+    $asAppView: function() {
+      return [O.UsesNgDirectives];
+    }
+  };
   (function aliases() {
     var _ = J.Interceptor.prototype;
     _.super$Interceptor$toString = _.toString$0;
@@ -10602,19 +11775,20 @@
       _static = hunkHelpers.installStaticTearOff,
       _instance = hunkHelpers.installInstanceTearOff,
       _instance_0_u = hunkHelpers._instance_0u,
+      _instance_1_u = hunkHelpers._instance_1u,
       _static_2 = hunkHelpers._static_2,
       _instance_0_i = hunkHelpers._instance_0i,
       _instance_1_i = hunkHelpers._instance_1i;
     _static_1(P, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 6);
     _static_1(P, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 6);
     _static_1(P, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 6);
-    _static_0(P, "async___startMicrotaskLoop$closure", "_startMicrotaskLoop", 0);
+    _static_0(P, "async___startMicrotaskLoop$closure", "_startMicrotaskLoop", 2);
     _static(P, "async___nullErrorHandler$closure", 1, function() {
       return [null];
     }, ["call$2", "call$1"], ["_nullErrorHandler", function(error) {
       return P._nullErrorHandler(error, null);
     }], 4, 0);
-    _static_0(P, "async___nullDoneHandler$closure", "_nullDoneHandler", 0);
+    _static_0(P, "async___nullDoneHandler$closure", "_nullDoneHandler", 2);
     _static(P, "async___rootHandleUncaughtError$closure", 5, null, ["call$5"], ["_rootHandleUncaughtError"], 13, 0);
     _static(P, "async___rootRun$closure", 4, null, ["call$1$4", "call$4"], ["_rootRun", function($self, $parent, zone, f) {
       return P._rootRun($self, $parent, zone, f, null);
@@ -10627,56 +11801,57 @@
     }], 12, 1);
     _static(P, "async___rootRegisterCallback$closure", 4, null, ["call$1$4", "call$4"], ["_rootRegisterCallback", function($self, $parent, zone, f) {
       return P._rootRegisterCallback($self, $parent, zone, f, null);
-    }], 20, 0);
+    }], 21, 0);
     _static(P, "async___rootRegisterUnaryCallback$closure", 4, null, ["call$2$4", "call$4"], ["_rootRegisterUnaryCallback", function($self, $parent, zone, f) {
       return P._rootRegisterUnaryCallback($self, $parent, zone, f, null, null);
-    }], 21, 0);
+    }], 22, 0);
     _static(P, "async___rootRegisterBinaryCallback$closure", 4, null, ["call$3$4", "call$4"], ["_rootRegisterBinaryCallback", function($self, $parent, zone, f) {
       return P._rootRegisterBinaryCallback($self, $parent, zone, f, null, null, null);
-    }], 22, 0);
-    _static(P, "async___rootErrorCallback$closure", 5, null, ["call$5"], ["_rootErrorCallback"], 23, 0);
+    }], 23, 0);
+    _static(P, "async___rootErrorCallback$closure", 5, null, ["call$5"], ["_rootErrorCallback"], 24, 0);
     _static(P, "async___rootScheduleMicrotask$closure", 4, null, ["call$4"], ["_rootScheduleMicrotask"], 9, 0);
     _static(P, "async___rootCreateTimer$closure", 5, null, ["call$5"], ["_rootCreateTimer"], 14, 0);
-    _static(P, "async___rootCreatePeriodicTimer$closure", 5, null, ["call$5"], ["_rootCreatePeriodicTimer"], 24, 0);
-    _static(P, "async___rootPrint$closure", 4, null, ["call$4"], ["_rootPrint"], 25, 0);
-    _static(P, "async___rootFork$closure", 5, null, ["call$5"], ["_rootFork"], 26, 0);
+    _static(P, "async___rootCreatePeriodicTimer$closure", 5, null, ["call$5"], ["_rootCreatePeriodicTimer"], 25, 0);
+    _static(P, "async___rootPrint$closure", 4, null, ["call$4"], ["_rootPrint"], 26, 0);
+    _static(P, "async___rootFork$closure", 5, null, ["call$5"], ["_rootFork"], 27, 0);
     _instance(P._Completer.prototype, "get$completeError", 0, 1, null, ["call$2", "call$1"], ["completeError$2", "completeError$1"], 4, 0);
     _instance(P._Future.prototype, "get$_completeError", 0, 1, function() {
       return [null];
     }, ["call$2", "call$1"], ["_completeError$2", "_completeError$1"], 4, 0);
-    _instance_0_u(P._DoneStreamSubscription.prototype, "get$_sendDone", "_sendDone$0", 0);
-    _static_0(G, "modules__createNgZone$closure", "createNgZone", 27);
+    _instance_0_u(P._DoneStreamSubscription.prototype, "get$_sendDone", "_sendDone$0", 2);
+    _static_0(G, "modules__createNgZone$closure", "createNgZone", 28);
     _static(G, "run___identityInjector$closure", 0, null, ["call$1", "call$0"], ["_identityInjector", function() {
       return G._identityInjector(null);
-    }], 28, 0);
-    _static_2(R, "default_iterable_differ___trackByIdentity$closure", "_trackByIdentity", 29);
-    _instance_0_u(M.ChangeDetectionHost.prototype, "get$tick", "tick$0", 0);
+    }], 29, 0);
+    _instance_1_u(X.NgStyle.prototype, "get$_setProperty", "_setProperty$1", 18);
+    _static_2(R, "default_iterable_differ___trackByIdentity$closure", "_trackByIdentity", 30);
+    _instance_0_u(M.ChangeDetectionHost.prototype, "get$tick", "tick$0", 2);
     var _;
-    _instance_0_i(_ = D.Testability.prototype, "get$isStable", "isStable$0", 18);
-    _instance_1_i(_, "get$whenStable", "whenStable$1", 19);
+    _instance_0_i(_ = D.Testability.prototype, "get$isStable", "isStable$0", 19);
+    _instance_1_i(_, "get$whenStable", "whenStable$1", 20);
     _instance(_ = Y.NgZone.prototype, "get$_ng_zone$_scheduleMicrotask", 0, 4, null, ["call$4"], ["_ng_zone$_scheduleMicrotask$4"], 9, 0);
     _instance(_, "get$_run", 0, 4, null, ["call$1$4", "call$4"], ["_run$1$4", "_run$4"], 10, 0);
     _instance(_, "get$_runUnary", 0, 5, null, ["call$2$5", "call$5"], ["_runUnary$2$5", "_runUnary$5"], 11, 0);
     _instance(_, "get$_runBinary", 0, 6, null, ["call$3$6"], ["_runBinary$3$6"], 12, 0);
     _instance(_, "get$_onErrorWithoutLongStackTrace", 0, 5, null, ["call$5"], ["_onErrorWithoutLongStackTrace$5"], 13, 0);
     _instance(_, "get$_createTimer", 0, 5, null, ["call$5"], ["_createTimer$5"], 14, 0);
-    _static_2(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 30);
-    _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", "viewFactory_EmbeddedNgIf1", 2);
-    _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure", "viewFactory_EmbeddedNgFor1", 2);
-    _static_2(N, "dart2js_golden_template__viewFactory_ComponentConditionalFeatures1$closure", "viewFactory_ComponentConditionalFeatures1", 2);
-    _static_2(N, "dart2js_golden_template__viewFactory_ComponentConditionalFeatures2$closure", "viewFactory_ComponentConditionalFeatures2", 2);
+    _static_2(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 31);
+    _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", "viewFactory_EmbeddedNgIf1", 3);
+    _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure", "viewFactory_EmbeddedNgFor1", 3);
+    _static_2(N, "dart2js_golden_template__viewFactory_ComponentConditionalFeatures1$closure", "viewFactory_ComponentConditionalFeatures1", 3);
+    _static_2(N, "dart2js_golden_template__viewFactory_ComponentConditionalFeatures2$closure", "viewFactory_ComponentConditionalFeatures2", 3);
   })();
   (function inheritance() {
     var _mixin = hunkHelpers.mixin,
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.StackOverflowError, P._Exception, P.Function, P.List, P.Map, P.Null, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, R.NgFor, R._RecordViewTuple, K.NgIf, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, S.OpaqueToken, S.AppViewData, S.AppView, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, L.ViewRefImpl, R.ViewType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.EventManagerPlugin, N.EventManager, N.TextBinding, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, Y.NgClass, R.NgFor, R._RecordViewTuple, K.NgIf, X.NgStyle, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, N.DefaultKeyValueDiffer, N.KeyValueChangeRecord, S.OpaqueToken, S.AppViewData, S.AppView, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, L.ViewRefImpl, R.ViewType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.EventManagerPlugin, N.EventManager, N.TextBinding, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings, O.UsesNgDirectives]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeByteBuffer, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssStyleValue, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W.Event, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.ImageData, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.Url, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.ObjectStore, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, U.JsTestability, U.JsTestabilityRegistry]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
     _inheritMany(J.JSNumber, [J.JSInt, J.JSDouble]);
-    _inheritMany(P.Iterable, [H.EfficientLengthIterable, H.MappedIterable]);
+    _inheritMany(P.Iterable, [H.EfficientLengthIterable, H.MappedIterable, P.IterableBase, H._StringAllMatchesIterable]);
     _inheritMany(H.EfficientLengthIterable, [H.ListIterable, H.LinkedHashMapKeyIterable, P._HashMapKeyIterable]);
     _inherit(H.EfficientLengthMappedIterable, H.MappedIterable);
     _inherit(H.MappedIterator, P.Iterator);
@@ -10685,11 +11860,12 @@
     _inherit(P.UnmodifiableMapView, P._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
     _inherit(H.ConstantMapView, P.UnmodifiableMapView);
     _inherit(H.ConstantStringMap, H.ConstantMap);
-    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.unwrapException_saveStackTrace, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncComplete_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._CustomZone_bindUnaryCallbackGuarded_closure, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._RootZone_bindUnaryCallbackGuarded_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, W._EventStreamSubscription_closure, P._StructuredClone_walk_closure, P._AcceptStructuredClone_walk_closure, P.convertNativePromiseToDartFuture_closure, P.convertNativePromiseToDartFuture_closure0, P._completeRequest_closure, P.AudioParamMap_keys_closure, G.createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, R.NgFor__applyChanges_closure, R.NgFor__applyChanges_closure0, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, D.Testability__watchAngularEvents_closure, D.Testability__watchAngularEvents_closure0, D.Testability__watchAngularEvents__closure, D.Testability__watchAngularEvents___closure, D.Testability__runCallbacksIfReady_closure, Y.NgZone__scheduleMicrotask_closure, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_closure0, Y.NgZone__createTimer_closure, Y.NgZone__checkStable_closure, K.BrowserGetTestability_addToWindow_closure, K.BrowserGetTestability_addToWindow_closure0, K.BrowserGetTestability_addToWindow_closure1, K.BrowserGetTestability_addToWindow__closure, K.BrowserGetTestability__createRegistry_closure, K.BrowserGetTestability__createRegistry_closure0, K.BrowserGetTestability__createRegistry__closure]);
-    _inheritMany(P.Error, [H.NullError, H.JsNoSuchMethodError, H.UnknownJsTypeError, H.RuntimeError, P.NullThrownError, P.ArgumentError, P.NoSuchMethodError, P.UnsupportedError, P.UnimplementedError, P.StateError, P.ConcurrentModificationError, P.CyclicInitializationError]);
+    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.unwrapException_saveStackTrace, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncComplete_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._CustomZone_bindUnaryCallbackGuarded_closure, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._RootZone_bindUnaryCallbackGuarded_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, W._EventStreamSubscription_closure, P._StructuredClone_walk_closure, P._AcceptStructuredClone_walk_closure, P.convertNativePromiseToDartFuture_closure, P.convertNativePromiseToDartFuture_closure0, P._completeRequest_closure, P.AudioParamMap_keys_closure, G.createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.NgClass__applyKeyValueChanges_closure, Y.NgClass__applyKeyValueChanges_closure0, Y.NgClass__applyKeyValueChanges_closure1, Y.NgClass__applyIterableChanges_closure, Y.NgClass__applyIterableChanges_closure0, Y.NgClass__applyClasses_closure, R.NgFor__applyChanges_closure, R.NgFor__applyChanges_closure0, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, R.DefaultIterableDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure0, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, D.Testability__watchAngularEvents_closure, D.Testability__watchAngularEvents_closure0, D.Testability__watchAngularEvents__closure, D.Testability__watchAngularEvents___closure, D.Testability__runCallbacksIfReady_closure, Y.NgZone__scheduleMicrotask_closure, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_closure0, Y.NgZone__createTimer_closure, Y.NgZone__checkStable_closure, K.BrowserGetTestability_addToWindow_closure, K.BrowserGetTestability_addToWindow_closure0, K.BrowserGetTestability_addToWindow_closure1, K.BrowserGetTestability_addToWindow__closure, K.BrowserGetTestability__createRegistry_closure, K.BrowserGetTestability__createRegistry_closure0, K.BrowserGetTestability__createRegistry__closure]);
+    _inheritMany(P.Error, [H.NullError, H.JsNoSuchMethodError, H.UnknownJsTypeError, H.CastErrorImplementation, H.RuntimeError, P.NullThrownError, P.ArgumentError, P.NoSuchMethodError, P.UnsupportedError, P.UnimplementedError, P.StateError, P.ConcurrentModificationError, P.CyclicInitializationError]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(P.MapBase, P.MapMixin);
     _inheritMany(P.MapBase, [H.JsLinkedHashMap, P._HashMap]);
+    _inherit(H._AllMatchesIterable, P.IterableBase);
     _inherit(H.NativeTypedArray, H.NativeTypedData);
     _inheritMany(H.NativeTypedArray, [H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin]);
     _inherit(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin);
@@ -10780,7 +11956,7 @@
     _inherit(O._UnscopedComponentStyles, O.ComponentStyles);
     _inherit(V.ViewContainer, M.ComponentLoader);
     _inheritMany(N.EventManagerPlugin, [L.DomEventsPlugin, N.KeyEventsPlugin]);
-    _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0]);
+    _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0, N.ViewUsesNgDirectives0]);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, P.ListMixin);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H.FixedLengthListMixin);
     _mixin(H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin, P.ListMixin);
@@ -10839,6 +12015,7 @@
   })();
   (function constants() {
     var makeConstList = hunkHelpers.makeConstList;
+    C.CssStyleDeclaration_methods = W.CssStyleDeclaration.prototype;
     C.Interceptor_methods = J.Interceptor.prototype;
     C.JSArray_methods = J.JSArray.prototype;
     C.JSInt_methods = J.JSInt.prototype;
@@ -10969,6 +12146,7 @@
     C.C_JS_CONST3 = function(hooks) { return hooks; }
 ;
     C.C_Object = new P.Object();
+    C.C_OutOfMemoryError = new P.OutOfMemoryError();
     C.C__JSRandom = new P._JSRandom();
     C.C__RootZone = new P._RootZone();
     C.ComponentFactory_2Vk = new D.ComponentFactory("root-component", N.dart2js_golden_template__viewFactory_RootComponentHost0$closure());
@@ -11031,7 +12209,12 @@
     $._isInCallbackLoop = false;
     $.Zone__current = C.C__RootZone;
     $._RootZone__rootDelegate = null;
+    $.Device__isOpera = null;
+    $.Device__isIE = null;
+    $.Device__isFirefox = null;
+    $.Device__cachedCssPrefix = null;
     $._platformInjectorCache = null;
+    $.NgClass__separator = null;
     $.ChangeDetectionHost__current = null;
     $.appViewUtils = null;
     $.domRootRendererIsDirty = false;
@@ -11049,6 +12232,7 @@
     $.ViewFeatureA0__componentStyles = null;
     $.ViewFeatureB0__componentStyles = null;
     $.ViewUsesDomBindings0__componentStyles = null;
+    $.ViewUsesNgDirectives0__componentStyles = null;
   })();
   (function lazyInitializers() {
     var _lazy = hunkHelpers.lazy;
@@ -11131,11 +12315,14 @@
     _lazy($, "_toStringVisiting", "$get$_toStringVisiting", function() {
       return [];
     });
+    _lazy($, "CssStyleDeclaration__propertyCache", "$get$CssStyleDeclaration__propertyCache", function() {
+      return {};
+    });
     _lazy($, "NgZone__anyZoneKey", "$get$NgZone__anyZoneKey", function() {
       return new P.Object();
     });
   })();
-  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: [S.AppView, -1], args: [[S.AppView,,], P.int]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, args: [,,]}, {func: 1, ret: P.bool}, {func: 1, ret: -1, args: [P.Function]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent], args: [[S.AppView,,], P.int]}], interceptorsByTag: null, leafTags: null};
+  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1}, {func: 1, ret: [S.AppView, -1], args: [[S.AppView,,], P.int]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, args: [,,]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, ret: P.bool}, {func: 1, ret: -1, args: [P.Function]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent], args: [[S.AppView,,], P.int]}], interceptorsByTag: null, leafTags: null};
   (function nativeSupport() {
     !function() {
       var intern = function(s) {

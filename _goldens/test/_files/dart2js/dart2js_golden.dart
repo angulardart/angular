@@ -38,6 +38,7 @@ void main() {
     EmbeddedNgFor,
     InjectsFromArbitraryParent,
     UsesDomBindings,
+    UsesNgDirectives,
   ],
   template: r'''
     <div hasProviders>
@@ -60,6 +61,8 @@ void main() {
     </component-conditional-features>
     <uses-dom-bindings>
     </uses-dom-bindings>
+    <uses-ng-directives>
+    </uses-ng-directives>
   ''',
 )
 class RootComponent {}
@@ -256,4 +259,36 @@ class UsesDomBindings {
 
   @HostBinding('class.fancy')
   bool get isFancy => defeatDart2JsOptimizations('fancy');
+}
+
+@Component(
+  selector: 'uses-ng-directives',
+  directives: [
+    NgClass,
+    NgStyle,
+  ],
+  template: r'''
+    <div [ngClass]="ngClassesMap">Classes From Map</div>
+    <div [ngClass]="ngClassesList">Classes from List</div>
+    <div [ngClass]="ngClassesString">Classes from String</div>
+    <div [ngStyle]="ngStyles">Styles</div>
+  ''',
+)
+class UsesNgDirectives {
+  var ngClassesMap = {
+    'foo': true,
+    'bar': false,
+  };
+
+  var ngClassesList = [
+    'foo',
+    'bar',
+  ];
+
+  var ngClassesString = 'foo bar';
+
+  var ngStyles = {
+    'height': '100px',
+    'width': '50px',
+  };
 }

@@ -25,6 +25,8 @@ import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import17;
+import 'package:angular/src/common/directives/ng_class.dart' as import18;
+import 'package:angular/src/common/directives/ng_style.dart' as import19;
 
 final List<dynamic> styles$RootComponent = const [];
 
@@ -53,6 +55,8 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   import1.ComponentConditionalFeatures _ComponentConditionalFeatures_9_5;
   ViewUsesDomBindings0 _compView_10;
   import1.UsesDomBindings _UsesDomBindings_10_5;
+  ViewUsesNgDirectives0 _compView_11;
+  import1.UsesNgDirectives _UsesNgDirectives_11_5;
   static import2.ComponentStyles _componentStyles;
   ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('root-component');
@@ -155,6 +159,11 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     parentRenderNode.append(_el_10);
     _UsesDomBindings_10_5 = import1.UsesDomBindings();
     _compView_10.create(_UsesDomBindings_10_5, []);
+    _compView_11 = ViewUsesNgDirectives0(this, 11);
+    final _el_11 = _compView_11.rootEl;
+    parentRenderNode.append(_el_11);
+    _UsesNgDirectives_11_5 = import1.UsesNgDirectives();
+    _compView_11.create(_UsesNgDirectives_11_5, []);
     init(const [], null);
   }
 
@@ -194,6 +203,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_8.detectChanges();
     _compView_9.detectChanges();
     _compView_10.detectChanges();
+    _compView_11.detectChanges();
   }
 
   @override
@@ -206,6 +216,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_8.destroy();
     _compView_9.destroy();
     _compView_10.destroy();
+    _compView_11.destroy();
   }
 
   @override
@@ -1475,6 +1486,138 @@ AppView<import1.UsesDomBindings> viewFactory_UsesDomBindingsHost0(AppView<dynami
   return _ViewUsesDomBindingsHost0(parentView, parentIndex);
 }
 
+final List<dynamic> styles$UsesNgDirectives = const [];
+
+class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
+  import18.NgClass _NgClass_0_5;
+  import18.NgClass _NgClass_2_5;
+  import18.NgClass _NgClass_4_5;
+  import19.NgStyle _NgStyle_6_5;
+  var _expr_0;
+  var _expr_1;
+  var _expr_2;
+  var _expr_3;
+  static import2.ComponentStyles _componentStyles;
+  ViewUsesNgDirectives0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('uses-ng-directives');
+    initComponentStyles();
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.UsesNgDirectives> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import5.document;
+    final _el_0 = import8.appendDiv(doc, parentRenderNode);
+    _NgClass_0_5 = import18.NgClass(_el_0);
+    final _text_1 = import8.appendText(_el_0, 'Classes From Map');
+    final _el_2 = import8.appendDiv(doc, parentRenderNode);
+    _NgClass_2_5 = import18.NgClass(_el_2);
+    final _text_3 = import8.appendText(_el_2, 'Classes from List');
+    final _el_4 = import8.appendDiv(doc, parentRenderNode);
+    _NgClass_4_5 = import18.NgClass(_el_4);
+    final _text_5 = import8.appendText(_el_4, 'Classes from String');
+    final _el_6 = import8.appendDiv(doc, parentRenderNode);
+    _NgStyle_6_5 = import19.NgStyle(_el_6);
+    final _text_7 = import8.appendText(_el_6, 'Styles');
+    init(const [], null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    final currVal_0 = _ctx.ngClassesMap;
+    if (import12.checkBinding(_expr_0, currVal_0)) {
+      _NgClass_0_5.rawClass = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    if (!import12.AppViewUtils.throwOnChanges) {
+      _NgClass_0_5.ngDoCheck();
+    }
+    final currVal_1 = _ctx.ngClassesList;
+    if (import12.checkBinding(_expr_1, currVal_1)) {
+      _NgClass_2_5.rawClass = currVal_1;
+      _expr_1 = currVal_1;
+    }
+    if (!import12.AppViewUtils.throwOnChanges) {
+      _NgClass_2_5.ngDoCheck();
+    }
+    final currVal_2 = _ctx.ngClassesString;
+    if (import12.checkBinding(_expr_2, currVal_2)) {
+      _NgClass_4_5.rawClass = currVal_2;
+      _expr_2 = currVal_2;
+    }
+    if (!import12.AppViewUtils.throwOnChanges) {
+      _NgClass_4_5.ngDoCheck();
+    }
+    final currVal_3 = _ctx.ngStyles;
+    if (import12.checkBinding(_expr_3, currVal_3)) {
+      _NgStyle_6_5.rawStyle = currVal_3;
+      _expr_3 = currVal_3;
+    }
+    if (!import12.AppViewUtils.throwOnChanges) {
+      _NgStyle_6_5.ngDoCheck();
+    }
+  }
+
+  @override
+  void destroyInternal() {
+    _NgClass_0_5.ngOnDestroy();
+    _NgClass_2_5.ngOnDestroy();
+    _NgClass_4_5.ngOnDestroy();
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesNgDirectives, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.UsesNgDirectives> _UsesNgDirectivesNgFactory = const ComponentFactory('uses-ng-directives', viewFactory_UsesNgDirectivesHost0);
+ComponentFactory<import1.UsesNgDirectives> get UsesNgDirectivesNgFactory {
+  return _UsesNgDirectivesNgFactory;
+}
+
+final List<dynamic> styles$UsesNgDirectivesHost = const [];
+
+class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
+  ViewUsesNgDirectives0 _compView_0;
+  import1.UsesNgDirectives _UsesNgDirectives_0_5;
+  _ViewUsesNgDirectivesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.UsesNgDirectives> build() {
+    _compView_0 = ViewUsesNgDirectives0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesNgDirectives_0_5 = import1.UsesNgDirectives();
+    _compView_0.create(_UsesNgDirectives_0_5, projectedNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _UsesNgDirectives_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.UsesNgDirectives> viewFactory_UsesNgDirectivesHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewUsesNgDirectivesHost0(parentView, parentIndex);
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -1496,6 +1639,7 @@ void initReflector() {
   _ngRef.registerComponent(FeatureA, FeatureANgFactory);
   _ngRef.registerComponent(FeatureB, FeatureBNgFactory);
   _ngRef.registerComponent(UsesDomBindings, UsesDomBindingsNgFactory);
+  _ngRef.registerComponent(UsesNgDirectives, UsesNgDirectivesNgFactory);
   _ref0.initReflector();
   _ref1.initReflector();
 }
