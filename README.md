@@ -1,92 +1,70 @@
-** WARNING: ** You are looking at a copy of [https://github.com/dart-lang/angular_analyzer_plugin].
-We are in the process of moving that repo into the angular repo. This is still
-ongoing and so the code here is not complete.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dart-lang/logos/master/logos_and_wordmarks/angulardart-logo.png" alt="AngularDart Logo">
+  <h1>AngularDart</h1>
+</p>
 
-[![Build Status](https://travis-ci.org/dart-lang/angular_analyzer_plugin.svg?branch=master)](https://travis-ci.org/dart-lang/angular_analyzer_plugin) [![pub package](https://img.shields.io/pub/v/angular_analyzer_plugin.svg)](https://pub.dartlang.org/packages/angular_analyzer_plugin)
+<!-- Badges -->
 
-**Requires angular-5.0.0\* and dart SDK 2.0.0-dev.31\*\* or higher to work.**
+[![Pub Package](https://img.shields.io/pub/v/angular.svg)](https://pub.dartlang.org/packages/angular)
+[![Build Status](https://travis-ci.org/dart-lang/angular.svg?branch=master)](https://travis-ci.org/dart-lang/angular)
+[![Gitter](https://img.shields.io/gitter/room/dart-lang/angular.svg)](https://gitter.im/dart-lang/angular)
 
-\* Works with angular-4.0.0 by following the steps in the section "loading an exact version."
+[AngularDart][webdev_angular] is a productive web application framework that
+powers some of Google's most critical applications.
+It's built on [Dart][dart_web] and used extensively by Google
+[AdWords][ad_words], [AdSense][ad_sense], [Fiber][fiber],
+and many more projects.
 
-\*\* Linux and Mac users should be able to an SDK version as old as 1.25.0-dev.12.0
+<a href="http://news.dartlang.org/2016/03/the-new-adwords-ui-uses-dart-we-asked.html">
+<img src="https://2.bp.blogspot.com/-T50YZP5hlW4/Vv07k1PPVmI/AAAAAAAAM_Q/kVo8eImMOFUWLYqXg_xGzaWPvvlO7lhng/s0/adwords-dart.png" width="800" alt="Built with AngularDart">
+</a>
 
-## Integration with Dart Analysis Server
+## New to AngularDart?
 
-  To provide information for DAS clients the `server_plugin` plugin contributes several extensions.
+Ramp up quickly with our docs, codelabs, and examples:
 
-* Angular analysis errors are automatically merged into normal `errors` notifications for Dart and HTML files.
+* Go to [Get Started][get_started] for a quick introduction to
+  creating and running AngularDart web apps.
 
-![Preview gif](https://raw.githubusercontent.com/dart-lang/angular_analyzer_plugin/master/assets/angular-dart-intellij-plugin-demo.gif "Preview gif")
+* Follow the [AngularDart tutorial][tutorial] to build a
+  fully working application that includes routing, HTTP networking, and more.
 
-## Installing By Angular Version -- For Angular Developers (recommended)
+You may also be interested in [other codelabs][codelabs] and
+a set of [community contributed tutorials][comm].
 
-Using this strategy allows the dart ecosystem to discover which version of our plugin will work best with your version of angular, and therefore is recommended.
+[get_started]: https://webdev.dartlang.org/guides/get-started
+[codelab1]: https://codelabs.developers.google.com/codelabs/your-first-angulardart-web-app/
+[tutorial]: https://webdev.dartlang.org/angular/tutorial
+[codelabs]: https://webdev.dartlang.org/codelabs
+[comm]: https://dart.academy/tag/angular/
+[webdev_components]: https://webdev.dartlang.org/components
 
-Simply add to your [analysis_options.yaml file](https://www.dartlang.org/guides/language/analysis-options#the-analysis-options-file):
+## Resources
 
-```yaml
-analyzer:
-  plugins:
-    - angular
-```
+ * Pub packages:
+   [angular][pub_angular],
+   [angular_components][pub_angular_components],
+   [angular_forms][pub_angular_forms],
+   [angular_router][pub_angular_router],
+   [angular_test][pub_angular_test],
+ * GitHub repo (dart-lang/angular):
+   [source code](https://github.com/dart-lang/angular),
+   [issues](https://github.com/dart-lang/angular/issues),
+   [contributor guidelines][contribute]
+ * Community/support:
+   [mailing list](https://groups.google.com/a/dartlang.org/forum/#!forum/web),
+   [Gitter chat room](https://gitter.im/dart-lang/angular)
+ * [Logo](https://github.com/dart-lang/logos/tree/master/angular/)
+ * [Documentation][webdev_angular]
 
-Then simply reboot your analysis server (inside IntelliJ this is done by clicking on the skull icon if it exists, or the refresh icon otherwise) and wait for the plugin to fully load, which can take a minute on the first run.
-
-The plugin will self-upgrade if you update angular. Otherwise, you can get any version of the plugin you wish by following the steps in the next section.
-
-## Loading an Exact Version
-
-This is much like the previous step. However, you should include this project in your pubspec:
-
-```yaml
-dependencies:
-  angular_analyzer_plugin: 0.0.13
-```
-
-and then load the plugin as itself, rather than as a dependency of angular:
-
-```yaml
-analyzer:
-  plugins:
-    - angular_analyzer_plugin
-```
-
-Like the previous installation option, you then just need to reboot your analysis server after running pub get.
-
-## Troubleshooting
-
-If you have any issues, filing an issue with us is always a welcome option. There are a few things you can try on your own, as well, to get an idea of what's going wrong:
-
-* Are you using angular 5 or newer? If not, are you loading a recent exact version of the plugin?
-* Are you using a bleeding edge SDK? The latest stable will not work correctly, and windows users require at least 2.0.0-dev-31.
-* Did you turn the plugin on correctly in your analysis options file?
-* From IntelliJ in the Dart Analysis panel, there's a gear icon that has "analyzer diagnostics," which opens a web page that has a section for loaded plugins. Are there any errors?
-* Does your editor support html+dart analysis, or is it an old version? Some (such as VSCode, vim) may have special steps to show errors surfaced by dart analysis inside your html files.
-* Check the directory `~/.dartServer/.plugin_manager` (on Windows: `\Users\you\AppData\Local\.dartServer\.plugin_manager`). Does it have any subdirectories?
-* There should be a hash representing each plugin you've loaded. Can you run `pub get` from `HASH/analyzer_plugin`? (If you have multiple hashes, it should be safe to clear this directory & reload.)
-* If you run `bin/plugin.dart` from `.plugin_manager/HASH/analyzer_plugin`, do you get any import errors? (Note: this is expected to crash when launched in this way, but without import-related errors)
-
-We may ask you any or all of these questions if you open an issue, so feel free to go run through these checks on your own to get a hint what might be wrong.
-
-## Upgrading
-
-Any Dart users on 2.0.0-dev.48 or newer will get updates on every restart of the analysis server. If you are on an older Dart version than that, check the Troubleshooting section.
-
-## Building -- For hacking on this plugin, or using the latest unpublished.
-
-There's an `pubspec.yaml` file that needs to be updated to point to your local system:
-
-```console
-$ cd angular_analyzer_plugin/tools/analyzer_plugin
-$ cp pubspec.yaml.defaults pubspec.yaml
-```
-
-Modify `pubspec.yaml` in this folder to fix the absolute paths. They **must** be absolute!
-
-Then run `pub get`.
-
-You can now use this in projects on your local system which a correctly configured pubspec and analysis options. For instance, `playground/`. Note that it imports the plugin by path, and imports it as a plugin inside `analysis_options.yaml`.
-
-## What's supported
-
-For what's currently supported, see `CURRENT_SUPPORT.md`.
+[ad_sense]: http://news.dartlang.org/2016/10/google-adsense-angular-dart.html
+[ad_words]: http://news.dartlang.org/2016/03/the-new-adwords-ui-uses-dart-we-asked.html
+[fiber]: http://news.dartlang.org/2015/11/how-google-uses-angular-2-with-dart.html
+[webdev_angular]: https://webdev.dartlang.org/angular
+[dart_web]: https://webdev.dartlang.org/
+[pub_angular]: https://pub.dartlang.org/packages/angular
+[pub_angular_components]: https://pub.dartlang.org/packages/angular_components
+[pub_angular_forms]: https://pub.dartlang.org/packages/angular_forms
+[pub_angular_router]: https://pub.dartlang.org/packages/angular_router
+[pub_angular_test]: https://pub.dartlang.org/packages/angular_test
+[contribute]: https://github.com/dart-lang/angular/blob/master/CONTRIBUTING.md
