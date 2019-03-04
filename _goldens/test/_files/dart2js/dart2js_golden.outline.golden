@@ -114,6 +114,13 @@ external _ng.AppView<UsesDomBindings> viewFactory_UsesDomBindings0(_ng.AppView<d
 class ViewUsesDomBindings0 extends _ng.AppView<UsesDomBindings> {
   external ViewUsesDomBindings0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesNgDirectives.
+external List<dynamic> get styles$UsesNgDirectives;
+external _ng.ComponentFactory<UsesNgDirectives> get UsesNgDirectivesNgFactory;
+external _ng.AppView<UsesNgDirectives> viewFactory_UsesNgDirectives0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesNgDirectives0 extends _ng.AppView<UsesNgDirectives> {
+  external ViewUsesNgDirectives0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 // For @Directive class HasProvider.
 class HasProviderNgCd extends _ng.DirectiveChangeDetector {
   external HasProvider get instance;
