@@ -14,16 +14,15 @@ import 'selector.dart' show CssSelector;
 
 final _listsEqual = const ListEquality<Object>().equals;
 
-abstract class CompileMetadataWithIdentifier<T> {
-  CompileIdentifierMetadata<T> get identifier;
+abstract class CompileMetadataWithIdentifier {
+  CompileIdentifierMetadata get identifier;
 }
 
-abstract class CompileMetadataWithType<T>
-    extends CompileMetadataWithIdentifier<T> {
+abstract class CompileMetadataWithType extends CompileMetadataWithIdentifier {
   CompileTypeMetadata get type;
 }
 
-class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
+class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
   // TODO(het): remove this once we switch to codegen. The transformer version
   // includes prefixes that aren't supposed to be emitted because it can't tell
   // if a prefix is a class name or a qualified import name.
@@ -33,22 +32,23 @@ class CompileIdentifierMetadata<T> implements CompileMetadataWithIdentifier<T> {
 
   final String name;
   final String moduleUrl;
-  final T value;
+  final Object value;
 
   /// If this identifier refers to a class declaration, this is non-null.
   final AnalyzedClass analyzedClass;
 
-  CompileIdentifierMetadata(
-      {this.name,
-      this.moduleUrl,
-      this.prefix,
-      this.emitPrefix = false,
-      this.typeArguments = const [],
-      this.value,
-      this.analyzedClass});
+  CompileIdentifierMetadata({
+    this.name,
+    this.moduleUrl,
+    this.prefix,
+    this.emitPrefix = false,
+    this.typeArguments = const [],
+    this.value,
+    this.analyzedClass,
+  });
 
   @override
-  CompileIdentifierMetadata<T> get identifier => this;
+  CompileIdentifierMetadata get identifier => this;
 }
 
 class CompileDiDependencyMetadata {
@@ -58,23 +58,25 @@ class CompileDiDependencyMetadata {
   final bool isSkipSelf;
   final bool isOptional;
   final bool isValue;
-  CompileTokenMetadata token;
-  dynamic value;
-  CompileDiDependencyMetadata(
-      {this.isAttribute = false,
-      this.isSelf = false,
-      this.isHost = false,
-      this.isSkipSelf = false,
-      this.isOptional = false,
-      this.isValue = false,
-      this.token,
-      this.value});
+  final CompileTokenMetadata token;
+  final Object value;
+
+  CompileDiDependencyMetadata({
+    this.isAttribute = false,
+    this.isSelf = false,
+    this.isHost = false,
+    this.isSkipSelf = false,
+    this.isOptional = false,
+    this.isValue = false,
+    this.token,
+    this.value,
+  });
 }
 
 class CompileProviderMetadata {
   final CompileTokenMetadata token;
   final CompileTypeMetadata useClass;
-  dynamic useValue;
+  final Object useValue;
   final CompileTokenMetadata useExisting;
   final CompileFactoryMetadata useFactory;
   final List<CompileDiDependencyMetadata> deps;
@@ -124,50 +126,55 @@ class CompileProviderMetadata {
       '}';
 }
 
-class CompileFactoryMetadata implements CompileIdentifierMetadata<Function> {
+class CompileFactoryMetadata implements CompileIdentifierMetadata {
   @override
-  String name;
+  final String name;
 
   @override
-  String prefix;
+  final String prefix;
 
   @override
-  bool emitPrefix;
+  final bool emitPrefix;
 
   @override
-  String moduleUrl;
-
-  @override
-  Function value;
+  final String moduleUrl;
 
   @override
   List<o.OutputType> get typeArguments => const [];
 
-  List<CompileDiDependencyMetadata> diDeps;
+  final List<CompileDiDependencyMetadata> diDeps;
 
-  CompileFactoryMetadata(
-      {this.name,
-      this.moduleUrl,
-      this.prefix,
-      this.emitPrefix = false,
-      this.diDeps = const [],
-      this.value});
+  CompileFactoryMetadata({
+    this.name,
+    this.moduleUrl,
+    this.prefix,
+    this.emitPrefix = false,
+    this.diDeps = const [],
+  });
 
   @override
-  CompileIdentifierMetadata<Function> get identifier => this;
+  CompileIdentifierMetadata get identifier => this;
 
   @override
   AnalyzedClass get analyzedClass => null;
+
+  @override
+  Object get value => throw UnsupportedError('Functions do not exist here');
 }
 
 class CompileTokenMetadata implements CompileMetadataWithIdentifier {
-  dynamic value;
-  @override
-  CompileIdentifierMetadata identifier;
-  bool identifierIsInstance;
+  final Object value;
 
-  CompileTokenMetadata(
-      {this.value, this.identifier, this.identifierIsInstance = false});
+  @override
+  final CompileIdentifierMetadata identifier;
+
+  final bool identifierIsInstance;
+
+  CompileTokenMetadata({
+    this.value,
+    this.identifier,
+    this.identifierIsInstance = false,
+  });
 
   // Used to determine unique-ness of CompileTokenMetadata.
   //
@@ -263,7 +270,7 @@ class CompileTokenMap<V> {
 
 /// Metadata regarding compilation of a type.
 class CompileTypeMetadata
-    implements CompileIdentifierMetadata<Type>, CompileMetadataWithType<Type> {
+    implements CompileIdentifierMetadata, CompileMetadataWithType {
   @override
   String name;
 
@@ -304,7 +311,7 @@ class CompileTypeMetadata
   });
 
   @override
-  CompileIdentifierMetadata<Type> get identifier => this;
+  CompileIdentifierMetadata get identifier => this;
 
   @override
   CompileTypeMetadata get type => this;

@@ -7,9 +7,9 @@ import 'package:angular/src/compiler/output/output_ast.dart' as o;
 
 var someModuleUrl = 'asset:somePackage/lib/somePath';
 var anotherModuleUrl = 'asset:somePackage/lib/someOtherPath';
-var sameModuleIdentifier = CompileIdentifierMetadata<dynamic>(
-    name: 'someLocalId', moduleUrl: someModuleUrl);
-var externalModuleIdentifier = CompileIdentifierMetadata<dynamic>(
+var sameModuleIdentifier =
+    CompileIdentifierMetadata(name: 'someLocalId', moduleUrl: someModuleUrl);
+var externalModuleIdentifier = CompileIdentifierMetadata(
     name: 'someExternalId', moduleUrl: anotherModuleUrl);
 
 void main() {
