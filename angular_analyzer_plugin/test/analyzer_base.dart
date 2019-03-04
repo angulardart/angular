@@ -1,4 +1,3 @@
-/// Base shared functionality for tests that rely on dart analysis
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/file_system/file_system.dart';
@@ -19,6 +18,7 @@ import 'package:test/test.dart';
 
 import 'mock_sdk.dart';
 
+/// Base shared functionality for tests that rely on dart analysis
 class AnalyzerTestBase {
   MemoryResourceProvider resourceProvider;
 
@@ -31,8 +31,9 @@ class AnalyzerTestBase {
   GatheringErrorListener errorListener;
 
   /// Assert that the [errCode] is reported for [code], highlighting the
-  /// [snippet]. Optionally, expect [additionalErrorCodes] to appear at any
-  /// location.
+  /// [snippet].
+  ///
+  /// Optionally, expect [additionalErrorCodes] to appear at any location.
   void assertErrorInCodeAtPosition(
       ErrorCode errCode, String code, String snippet,
       {List<ErrorCode> additionalErrorCodes}) {
@@ -107,8 +108,9 @@ class GatheringErrorListener implements AnalysisErrorListener {
   }
 
   /// Assert that the number of errors that have been gathered matches the number
-  /// of errors that are given and that they have the expected error codes. The
-  /// order in which the errors were gathered is ignored.
+  /// of errors that are given and that they have the expected error codes.
+  ///
+  /// The order in which the errors were gathered is ignored.
   void assertErrorsWithCodes(
       [List<ErrorCode> expectedErrorCodes = const <ErrorCode>[]]) {
     final buffer = new StringBuffer();
