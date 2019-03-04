@@ -42,7 +42,7 @@ class ViewConstructorVars {
 }
 
 class ViewProperties {
-  static final projectableNodes = o.ReadClassMemberExpr('projectableNodes');
+  static final projectedNodes = o.ReadClassMemberExpr('projectedNodes');
 }
 
 class EventHandlerVars {

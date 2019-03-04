@@ -82,7 +82,7 @@ class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComp
     _compView_0 = ViewInterpolationComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationComponent_0_5 = import1.InterpolationComponent();
-    _compView_0.create(_InterpolationComponent_0_5, projectableNodes);
+    _compView_0.create(_InterpolationComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationComponent_0_5);
   }
@@ -159,7 +159,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.Inter
     _compView_0 = ViewInterpolationComponentNoWhitespace0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationComponentNoWhitespace_0_5 = import1.InterpolationComponentNoWhitespace();
-    _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectableNodes);
+    _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
   }
@@ -241,7 +241,7 @@ class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTw
     _compView_0 = ViewInterpolationTwoAdjacent0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationTwoAdjacent_0_5 = import1.InterpolationTwoAdjacent();
-    _compView_0.create(_InterpolationTwoAdjacent_0_5, projectableNodes);
+    _compView_0.create(_InterpolationTwoAdjacent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationTwoAdjacent_0_5);
   }
@@ -328,7 +328,7 @@ class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.Interpolatio
     _compView_0 = ViewInterpolationLongerSentence0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationLongerSentence_0_5 = import1.InterpolationLongerSentence();
-    _compView_0.create(_InterpolationLongerSentence_0_5, projectableNodes);
+    _compView_0.create(_InterpolationLongerSentence_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationLongerSentence_0_5);
   }
@@ -401,7 +401,7 @@ class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiter
     _compView_0 = ViewInterpolationLiterals0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationLiterals_0_5 = import1.InterpolationLiterals();
-    _compView_0.create(_InterpolationLiterals_0_5, projectableNodes);
+    _compView_0.create(_InterpolationLiterals_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationLiterals_0_5);
   }
@@ -562,7 +562,7 @@ class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals>
     _compView_0 = ViewInterpolationLocals0(this, 0);
     rootEl = _compView_0.rootEl;
     _InterpolationLocals_0_5 = import1.InterpolationLocals();
-    _compView_0.create(_InterpolationLocals_0_5, projectableNodes);
+    _compView_0.create(_InterpolationLocals_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationLocals_0_5);
   }

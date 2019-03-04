@@ -146,7 +146,7 @@ class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
     rootEl = _compView_0.rootEl;
     _QueriesComponent_0_5 = import1.QueriesComponent();
     _QueriesComponent_0_5.contentChildrenFromField = [];
-    _compView_0.create(_QueriesComponent_0_5, projectableNodes);
+    _compView_0.create(_QueriesComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _QueriesComponent_0_5);
   }
@@ -290,7 +290,7 @@ class _ViewEmbeddedQueriesHost0 extends AppView<import1.EmbeddedQueries> {
     _compView_0 = ViewEmbeddedQueries0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmbeddedQueries_0_5 = import1.EmbeddedQueries();
-    _compView_0.create(_EmbeddedQueries_0_5, projectableNodes);
+    _compView_0.create(_EmbeddedQueries_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _EmbeddedQueries_0_5);
   }
@@ -434,7 +434,7 @@ class _ViewEmbeddedQueriesListHost0 extends AppView<import1.EmbeddedQueriesList>
     _compView_0 = ViewEmbeddedQueriesList0(this, 0);
     rootEl = _compView_0.rootEl;
     _EmbeddedQueriesList_0_5 = import1.EmbeddedQueriesList();
-    _compView_0.create(_EmbeddedQueriesList_0_5, projectableNodes);
+    _compView_0.create(_EmbeddedQueriesList_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _EmbeddedQueriesList_0_5);
   }
@@ -633,7 +633,7 @@ class _ViewNestedNgForQueriesListHost0 extends AppView<import1.NestedNgForQuerie
     _compView_0 = ViewNestedNgForQueriesList0(this, 0);
     rootEl = _compView_0.rootEl;
     _NestedNgForQueriesList_0_5 = import1.NestedNgForQueriesList();
-    _compView_0.create(_NestedNgForQueriesList_0_5, projectableNodes);
+    _compView_0.create(_NestedNgForQueriesList_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _NestedNgForQueriesList_0_5);
   }

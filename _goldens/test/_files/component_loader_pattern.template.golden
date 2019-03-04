@@ -64,7 +64,7 @@ class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
     _compView_0 = ViewTestComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _TestComponent_0_5 = import1.TestComponent();
-    _compView_0.create(_TestComponent_0_5, projectableNodes);
+    _compView_0.create(_TestComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _TestComponent_0_5);
   }

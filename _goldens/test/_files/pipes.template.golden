@@ -105,7 +105,7 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
     _compView_0 = ViewComp0(this, 0);
     rootEl = _compView_0.rootEl;
     _Comp_0_5 = import1.Comp();
-    _compView_0.create(_Comp_0_5, projectableNodes);
+    _compView_0.create(_Comp_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _Comp_0_5);
   }

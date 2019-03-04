@@ -917,7 +917,7 @@ class CompileView {
     // AppView.projectableNodes property contains the list of nodes
     // to project for each NgContent.
     // Creates a call to project(parentNode, nodeIndex).
-    var nodesExpression = ViewProperties.projectableNodes.key(
+    var nodesExpression = ViewProperties.projectedNodes.key(
         o.literal(sourceAstIndex),
         o.ArrayType(o.importType(Identifiers.HTML_NODE)));
     bool isRootNode = !identical(target.view, this);

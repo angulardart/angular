@@ -79,7 +79,7 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
     _compView_0 = ViewParentComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ParentComponent_0_5 = import1.ParentComponent();
-    _compView_0.create(_ParentComponent_0_5, projectableNodes);
+    _compView_0.create(_ParentComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ParentComponent_0_5);
   }
@@ -154,7 +154,7 @@ class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
     _compView_0 = ViewChildComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ChildComponent_0_5 = import1.ChildComponent();
-    _compView_0.create(_ChildComponent_0_5, projectableNodes);
+    _compView_0.create(_ChildComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ChildComponent_0_5);
   }

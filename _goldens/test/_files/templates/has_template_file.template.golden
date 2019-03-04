@@ -68,7 +68,7 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFile
     _compView_0 = ViewHasTemplateFileComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _HasTemplateFileComponent_0_5 = import2.HasTemplateFileComponent();
-    _compView_0.create(_HasTemplateFileComponent_0_5, projectableNodes);
+    _compView_0.create(_HasTemplateFileComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_5);
   }

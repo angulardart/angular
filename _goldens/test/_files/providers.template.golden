@@ -152,7 +152,7 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
     _compView_0 = ViewProvidersComponent0(this, 0);
     rootEl = _compView_0.rootEl;
     _ProvidersComponent_0_5 = import1.ProvidersComponent();
-    _compView_0.create(_ProvidersComponent_0_5, projectableNodes);
+    _compView_0.create(_ProvidersComponent_0_5, projectedNodes);
     init0(rootEl);
     return ComponentRef(0, this, rootEl, _ProvidersComponent_0_5);
   }
