@@ -8,10 +8,8 @@ import 'package:angular/src/compiler/output/output_ast.dart' as o;
 /// the actual resolution from view compiler backend.
 abstract class ProviderSource {
   final CompileTokenMetadata token;
-  final bool eager;
-  final bool multiProvider;
 
-  ProviderSource(this.token, {this.eager, this.multiProvider});
+  ProviderSource(this.token);
 
   o.Expression build();
 
