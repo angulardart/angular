@@ -539,8 +539,8 @@ class MockSdk implements DartSdk {
   PackageBundle _bundle;
 
   MockSdk(
-      {bool generateSummaryFiles: false,
-      bool dartAsync: true,
+      {bool generateSummaryFiles = false,
+      bool dartAsync = true,
       resource.MemoryResourceProvider resourceProvider})
       : provider = resourceProvider ?? new resource.MemoryResourceProvider(),
         sdkLibraries = dartAsync ? _LIBRARIES : [_LIB_CORE],
