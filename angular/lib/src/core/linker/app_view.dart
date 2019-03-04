@@ -48,22 +48,19 @@ class AppViewData<T> {
   /// itself but rather by the view's parent.
   ///
   /// See [AppView.create].
-  ///
-  /// It is tempting to make this `List<Object>`, but do not:
-  /// TODO: https://github.com/dart-lang/sdk/issues/36075
-  List<dynamic> projectedNodes;
+  List<Object> projectedNodes;
 
   /// Host DI interface.
   Injector _hostInjector;
 
-  List subscriptions;
+  List<StreamSubscription<void>> subscriptions;
 
   List<void Function()> _onDestroyCallbacks;
 
   /// Tracks the root DOM elements or view containers (for `<template>`).
   ///
   /// **INTERNAL ONLY**: Not part of the supported public API.
-  List rootNodesOrViewContainers;
+  List<Object> rootNodesOrViewContainers;
 
   /// Tracks nodes created as a result of an inlined NgIf being set to 'true'.
   ///
@@ -193,24 +190,24 @@ abstract class AppView<T> {
   /// View reference interface (user-visible API).
   ViewRefImpl get ref => viewData.ref;
 
-  List<dynamic> get projectedNodes => viewData.projectedNodes;
+  List<Object> get projectedNodes => viewData.projectedNodes;
 
   ComponentRef<T> create(
     T context,
-    List<dynamic> givenProjectableNodes,
+    List<Object> projectedNodes,
   ) {
     ctx = context;
-    viewData.projectedNodes = givenProjectableNodes;
+    viewData.projectedNodes = projectedNodes;
     return build();
   }
 
   /// Builds host level view.
   ComponentRef<T> createHostView(
     Injector hostInjector,
-    List<dynamic> givenProjectableNodes,
+    List<Object> projectedNodes,
   ) {
     viewData._hostInjector = hostInjector;
-    viewData.projectedNodes = givenProjectableNodes;
+    viewData.projectedNodes = projectedNodes;
     return build();
   }
 
@@ -225,15 +222,19 @@ abstract class AppView<T> {
 
   /// Specialized init when component has a single root node.
   @dart2js.noInline
-  void init0(dynamic e) {
-    viewData.rootNodesOrViewContainers = <dynamic>[e];
+  void init0(Object rootElement) {
+    viewData.rootNodesOrViewContainers = [rootElement];
   }
 
   /// Called by build once all dom nodes are available.
   @dart2js.noInline
-  void init(List rootNodesOrViewContainers, List subscriptions) {
-    viewData.rootNodesOrViewContainers = rootNodesOrViewContainers;
-    viewData.subscriptions = subscriptions;
+  void init(
+    List<Object> rootNodesOrViewContainers,
+    List<StreamSubscription<void>> subscriptions,
+  ) {
+    viewData
+      ..rootNodesOrViewContainers = rootNodesOrViewContainers
+      ..subscriptions = subscriptions;
   }
 
   void addInlinedNodes(
@@ -267,7 +268,11 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
-  dynamic injectorGet(token, int nodeIndex, [notFoundValue = throwIfNotFound]) {
+  Object injectorGet(
+    Object token,
+    int nodeIndex, [
+    Object notFoundValue = throwIfNotFound,
+  ]) {
     di_errors.debugInjectorEnter(token);
     var result = _UndefinedInjectorResult;
     AppView view = this;
@@ -314,7 +319,7 @@ abstract class AppView<T> {
   /// for it's children's providers, with each child node representing a
   /// different [nodeIndex].
   @protected
-  dynamic injectorGetInternal(
+  Object injectorGetInternal(
     Object token,
     int nodeIndex,
     Object notFoundResult,
@@ -338,7 +343,9 @@ abstract class AppView<T> {
   /// If appropriate, any nodes that were added to the DOM by [build] are also
   /// detached from the DOM and destroyed.
   void destroy() {
-    if (viewData.destroyed) return;
+    if (viewData.destroyed) {
+      return;
+    }
     viewData.destroyed = true;
     viewData.destroy();
     destroyInternal();
@@ -370,6 +377,8 @@ abstract class AppView<T> {
   ///
   /// Directives may create views and set additional variables accessible to
   /// the template (for example, `NgFor` sets the current element iterated).
+  ///
+  /// TODO: When we can rely on locals always being typed, encode as <, Object>.
   Map<String, dynamic> locals;
 
   bool hasLocal(String contextName) => locals.containsKey(contextName);
