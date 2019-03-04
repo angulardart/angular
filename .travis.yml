@@ -144,11 +144,15 @@ jobs:
 
     - stage: presubmit
       script: ./tool/travis.sh analyze
-      env: PKG="angular_ast"
+      env: PKG="angular_analyzer_plugin"
+
+    - stage: testing
+      script: ./tool/travis.sh test:nobuild
+      env: PKG="angular_analyzer_plugin"
 
     - stage: presubmit
       script: ./tool/travis.sh analyze
-      env: PKG="angular_analyzer_plugin"
+      env: PKG="angular_ast"
 
     - stage: building
       script: ./tool/travis.sh build
@@ -165,13 +169,6 @@ jobs:
         directories:
           - $HOME/.pub-cache
           - angular_ast/.dart_tool
-
-    - stage: testing
-      script: ./tool/travis.sh test
-      env: PKG="angular_analyzer_plugin"
-      cache:
-        directories:
-          - $HOME/.pub-cache
 
     - stage: presubmit
       script: ./tool/travis.sh analyze
