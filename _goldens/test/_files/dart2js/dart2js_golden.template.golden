@@ -57,6 +57,8 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   import1.UsesDomBindings _UsesDomBindings_10_5;
   ViewUsesNgDirectives0 _compView_11;
   import1.UsesNgDirectives _UsesNgDirectives_11_5;
+  ViewHasNestedProviderLookups0 _compView_12;
+  import1.HasNestedProviderLookups _HasNestedProviderLookups_12_5;
   static import2.ComponentStyles _componentStyles;
   ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     rootEl = import5.document.createElement('root-component');
@@ -164,6 +166,11 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     parentRenderNode.append(_el_11);
     _UsesNgDirectives_11_5 = import1.UsesNgDirectives();
     _compView_11.create(_UsesNgDirectives_11_5, []);
+    _compView_12 = ViewHasNestedProviderLookups0(this, 12);
+    final _el_12 = _compView_12.rootEl;
+    parentRenderNode.append(_el_12);
+    _HasNestedProviderLookups_12_5 = import1.HasNestedProviderLookups();
+    _compView_12.create(_HasNestedProviderLookups_12_5, []);
     init(const [], null);
   }
 
@@ -204,6 +211,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_9.detectChanges();
     _compView_10.detectChanges();
     _compView_11.detectChanges();
+    _compView_12.detectChanges();
   }
 
   @override
@@ -217,6 +225,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_9.destroy();
     _compView_10.destroy();
     _compView_11.destroy();
+    _compView_12.destroy();
   }
 
   @override
@@ -1618,6 +1627,233 @@ AppView<import1.UsesNgDirectives> viewFactory_UsesNgDirectivesHost0(AppView<dyna
   return _ViewUsesNgDirectivesHost0(parentView, parentIndex);
 }
 
+final List<dynamic> styles$HasNestedProviderLookups = const [];
+
+class ViewHasNestedProviderLookups0 extends AppView<import1.HasNestedProviderLookups> {
+  ViewContainer _appEl_0;
+  NgIf _NgIf_0_9;
+  static import2.ComponentStyles _componentStyles;
+  ViewHasNestedProviderLookups0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('has-nested-provider-lookups');
+    initComponentStyles();
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.HasNestedProviderLookups> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _anchor_0 = import8.appendAnchor(parentRenderNode);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_HasNestedProviderLookups1);
+    _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
+    init(const [], null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    _NgIf_0_9.ngIf = _ctx.maybe1;
+    _appEl_0.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_0.destroyNestedViews();
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasNestedProviderLookups, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.HasNestedProviderLookups> _HasNestedProviderLookupsNgFactory = const ComponentFactory('has-nested-provider-lookups', viewFactory_HasNestedProviderLookupsHost0);
+ComponentFactory<import1.HasNestedProviderLookups> get HasNestedProviderLookupsNgFactory {
+  return _HasNestedProviderLookupsNgFactory;
+}
+
+class _ViewHasNestedProviderLookups1 extends AppView<import1.HasNestedProviderLookups> {
+  ViewContainer _appEl_1;
+  NgIf _NgIf_1_9;
+  _ViewHasNestedProviderLookups1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.HasNestedProviderLookups> build() {
+    final doc = import5.document;
+    final _el_0 = doc.createElement('div');
+    final _anchor_1 = import8.appendAnchor(_el_0);
+    _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
+    TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_HasNestedProviderLookups2);
+    _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
+    init0(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    _NgIf_1_9.ngIf = _ctx.maybe2;
+    _appEl_1.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_1.destroyNestedViews();
+  }
+}
+
+AppView<void> viewFactory_HasNestedProviderLookups1(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewHasNestedProviderLookups1(parentView, parentIndex);
+}
+
+class _ViewHasNestedProviderLookups2 extends AppView<import1.HasNestedProviderLookups> {
+  ViewInjectsManyThingsDynamically0 _compView_1;
+  import1.InjectsManyThingsDynamically _InjectsManyThingsDynamically_1_5;
+  _ViewHasNestedProviderLookups2(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.HasNestedProviderLookups> build() {
+    final doc = import5.document;
+    final _el_0 = doc.createElement('div');
+    _compView_1 = ViewInjectsManyThingsDynamically0(this, 1);
+    final _el_1 = _compView_1.rootEl;
+    _el_0.append(_el_1);
+    _InjectsManyThingsDynamically_1_5 = (import6.isDevMode
+        ? import9.debugInjectorWrap(import1.InjectsManyThingsDynamically, () {
+            return import1.InjectsManyThingsDynamically(parentView.parentView.injectorGet(import1.DepA, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepB, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepC, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepD, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepE, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepF, parentView.viewData.parentIndex, null));
+          })
+        : import1.InjectsManyThingsDynamically(parentView.parentView.injectorGet(import1.DepA, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepB, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepC, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepD, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepE, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepF, parentView.viewData.parentIndex, null)));
+    _compView_1.create(_InjectsManyThingsDynamically_1_5, []);
+    init0(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_1.destroy();
+  }
+}
+
+AppView<void> viewFactory_HasNestedProviderLookups2(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewHasNestedProviderLookups2(parentView, parentIndex);
+}
+
+final List<dynamic> styles$HasNestedProviderLookupsHost = const [];
+
+class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProviderLookups> {
+  ViewHasNestedProviderLookups0 _compView_0;
+  import1.HasNestedProviderLookups _HasNestedProviderLookups_0_5;
+  _ViewHasNestedProviderLookupsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.HasNestedProviderLookups> build() {
+    _compView_0 = ViewHasNestedProviderLookups0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _HasNestedProviderLookups_0_5 = import1.HasNestedProviderLookups();
+    _compView_0.create(_HasNestedProviderLookups_0_5, projectedNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _HasNestedProviderLookups_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.HasNestedProviderLookups> viewFactory_HasNestedProviderLookupsHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewHasNestedProviderLookupsHost0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$InjectsManyThingsDynamically = const [];
+
+class ViewInjectsManyThingsDynamically0 extends AppView<import1.InjectsManyThingsDynamically> {
+  static import2.ComponentStyles _componentStyles;
+  ViewInjectsManyThingsDynamically0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import5.document.createElement('injects-many-things-dynamically');
+    initComponentStyles();
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.InjectsManyThingsDynamically> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init(const [], null);
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$InjectsManyThingsDynamically, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.InjectsManyThingsDynamically> _InjectsManyThingsDynamicallyNgFactory = const ComponentFactory('injects-many-things-dynamically', viewFactory_InjectsManyThingsDynamicallyHost0);
+ComponentFactory<import1.InjectsManyThingsDynamically> get InjectsManyThingsDynamicallyNgFactory {
+  return _InjectsManyThingsDynamicallyNgFactory;
+}
+
+final List<dynamic> styles$InjectsManyThingsDynamicallyHost = const [];
+
+class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsManyThingsDynamically> {
+  ViewInjectsManyThingsDynamically0 _compView_0;
+  import1.InjectsManyThingsDynamically _InjectsManyThingsDynamically_0_5;
+  _ViewInjectsManyThingsDynamicallyHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.InjectsManyThingsDynamically> build() {
+    _compView_0 = ViewInjectsManyThingsDynamically0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _InjectsManyThingsDynamically_0_5 = (import6.isDevMode
+        ? import9.debugInjectorWrap(import1.InjectsManyThingsDynamically, () {
+            return import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, viewData.parentIndex), this.injectorGet(import1.DepB, viewData.parentIndex), this.injectorGet(import1.DepC, viewData.parentIndex), this.injectorGet(import1.DepD, viewData.parentIndex, null), this.injectorGet(import1.DepE, viewData.parentIndex, null), this.injectorGet(import1.DepF, viewData.parentIndex, null));
+          })
+        : import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, viewData.parentIndex), this.injectorGet(import1.DepB, viewData.parentIndex), this.injectorGet(import1.DepC, viewData.parentIndex), this.injectorGet(import1.DepD, viewData.parentIndex, null), this.injectorGet(import1.DepE, viewData.parentIndex, null), this.injectorGet(import1.DepF, viewData.parentIndex, null)));
+    _compView_0.create(_InjectsManyThingsDynamically_0_5, projectedNodes);
+    init0(rootEl);
+    return ComponentRef(0, this, rootEl, _InjectsManyThingsDynamically_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.InjectsManyThingsDynamically> viewFactory_InjectsManyThingsDynamicallyHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewInjectsManyThingsDynamicallyHost0(parentView, parentIndex);
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -1640,6 +1876,8 @@ void initReflector() {
   _ngRef.registerComponent(FeatureB, FeatureBNgFactory);
   _ngRef.registerComponent(UsesDomBindings, UsesDomBindingsNgFactory);
   _ngRef.registerComponent(UsesNgDirectives, UsesNgDirectivesNgFactory);
+  _ngRef.registerComponent(HasNestedProviderLookups, HasNestedProviderLookupsNgFactory);
+  _ngRef.registerComponent(InjectsManyThingsDynamically, InjectsManyThingsDynamicallyNgFactory);
   _ref0.initReflector();
   _ref1.initReflector();
 }
