@@ -105,14 +105,27 @@ abstract class ReferenceDirective {}
 )
 class MaterialInputValueAccessor {}
 
+abstract class Service {}
+
+class ServiceA implements Service {}
+
+class ServiceB implements Service {}
+
+const luckyNumber = OpaqueToken<int>('luckyNumber');
+
 @Component(
   selector: 'material-input',
   providers: [
+    ClassProvider(Service, useClass: ServiceA),
     ClassProvider(DeferredValidator),
     ExistingProvider.forToken(ngValidators, DeferredValidator),
     ExistingProvider(MaterialInputBase, MaterialInputComponent),
     ExistingProvider(Focusable, MaterialInputComponent),
     ExistingProvider(HasDisabled, MaterialInputComponent),
+  ],
+  viewProviders: [
+    ClassProvider(Service, useClass: ServiceB),
+    ValueProvider.forToken(luckyNumber, 12),
     ExistingProvider(ReferenceDirective, MaterialInputComponent),
   ],
   template: r'''
