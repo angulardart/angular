@@ -27,8 +27,8 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   final import2.TextBinding _textBinding_3 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('interpolation');
     initComponentStyles();
+    rootEl = import6.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -108,8 +108,8 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationComponentNoWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('interpolation');
     initComponentStyles();
+    rootEl = import6.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -186,8 +186,8 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
   final import2.TextBinding _textBinding_3 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationTwoAdjacent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('interpolation');
     initComponentStyles();
+    rootEl = import6.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -269,8 +269,8 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
   final import2.TextBinding _textBinding_6 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLongerSentence0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('interpolation');
     initComponentStyles();
+    rootEl = import6.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -353,8 +353,8 @@ final List<dynamic> styles$InterpolationLiterals = const [];
 class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> {
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLiterals0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('interpolation');
     initComponentStyles();
+    rootEl = import6.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -429,8 +429,8 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   var _expr_0;
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLocals0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('interpolation');
     initComponentStyles();
+    rootEl = import6.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);

@@ -30,8 +30,8 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   var _expr_0;
   static import4.ComponentStyles _componentStyles;
   ViewNestedNgForComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import7.document.createElement('nested-ng-for');
     initComponentStyles();
+    rootEl = import7.document.createElement('nested-ng-for');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/directives/nested_ng_for.dart' : null);

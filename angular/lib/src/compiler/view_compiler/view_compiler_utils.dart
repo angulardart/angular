@@ -344,8 +344,16 @@ String toTemplateExtension(String moduleUrl) {
   return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
 }
 
-o.Statement createSetAttributeStatement(String astNodeName,
-    o.Expression renderNode, String attrName, o.Expression attrValue) {
+// For class bindings only, we treat HostBindings set in the constructor body
+// differently than those defined in detectChangesInternal. This is to support a
+// hacky implementation of tooltips in angular components. See b/118698430 for
+// more background.
+o.Statement createSetAttributeStatement(
+    String astNodeName,
+    o.Expression renderNode,
+    String attrName,
+    o.Expression attrValue,
+    bool isHostBinding) {
   String attrNs;
   // Copy of the logic in property_binder.dart.
   //
@@ -371,7 +379,10 @@ o.Statement createSetAttributeStatement(String astNodeName,
         bool hasNamespace =
             astNodeName.startsWith('@') || astNodeName.contains(':');
         if (!hasNamespace) {
-          return renderNode.prop('className').set(attrValue).toStmt();
+          return isHostBinding
+              ? renderNode.prop('className').set(attrValue).toStmt()
+              : o.THIS_EXPR.callMethod(
+                  'updateChildClass', [renderNode, attrValue]).toStmt();
         }
         break;
       case 'tabindex':

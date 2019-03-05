@@ -22,8 +22,8 @@ final List<dynamic> styles$Dependent = const [];
 class ViewDependent0 extends AppView<import1.Dependent> {
   static import2.ComponentStyles _componentStyles;
   ViewDependent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('dependent');
     initComponentStyles();
+    rootEl = import5.document.createElement('dependent');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null);
@@ -95,8 +95,8 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
   import1.Dependent _Dependent_0_5;
   static import2.ComponentStyles _componentStyles;
   ViewDependencyWithDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('dependency-with-dependent-in-view');
     initComponentStyles();
+    rootEl = import5.document.createElement('dependency-with-dependent-in-view');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null);
@@ -189,8 +189,8 @@ final List<dynamic> styles$DependencyWithContent = const [];
 class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> {
   static import2.ComponentStyles _componentStyles;
   ViewDependencyWithContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('dependency-with-content');
     initComponentStyles();
+    rootEl = import5.document.createElement('dependency-with-content');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null);
@@ -267,8 +267,8 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
   import1.Dependent _Dependent_1_5;
   static import2.ComponentStyles _componentStyles;
   ViewDependencyAndDependentInView0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('dependency-and-dependent-in-view');
     initComponentStyles();
+    rootEl = import5.document.createElement('dependency-and-dependent-in-view');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null);
@@ -355,8 +355,8 @@ final List<dynamic> styles$HasVisibilityAll = const [];
 class ViewHasVisibilityAll0 extends AppView<import1.HasVisibilityAll> {
   static import2.ComponentStyles _componentStyles;
   ViewHasVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('has-visibility-all');
     initComponentStyles();
+    rootEl = import5.document.createElement('has-visibility-all');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null);
@@ -430,8 +430,8 @@ final List<dynamic> styles$HasVisibilityLocal = const [];
 class ViewHasVisibilityLocal0 extends AppView<import1.HasVisibilityLocal> {
   static import2.ComponentStyles _componentStyles;
   ViewHasVisibilityLocal0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('has-visibility-local');
     initComponentStyles();
+    rootEl = import5.document.createElement('has-visibility-local');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/visibility.dart' : null);

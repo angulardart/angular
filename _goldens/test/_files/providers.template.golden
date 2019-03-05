@@ -25,8 +25,8 @@ final List<dynamic> styles$ProvidersComponent = const [];
 class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewProvidersComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('providers');
     initComponentStyles();
+    rootEl = import5.document.createElement('providers');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/providers.dart' : null);

@@ -45,8 +45,8 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
   void Function() _cancelDeferredLoad6;
   static import6.ComponentStyles _componentStyles;
   ViewTestContainerComponent0(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import9.document.createElement('test-container');
     initComponentStyles();
+    rootEl = import9.document.createElement('test-container');
   }
   static String get _debugComponentUrl {
     return (import10.isDevMode ? 'asset:_goldens/test/_files/deferred/container_component.dart' : null);

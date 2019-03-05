@@ -24,8 +24,8 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
   final import2.TextBinding _textBinding_4 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewCompWithoutFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-without-final');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-without-final');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
@@ -104,8 +104,8 @@ final List<dynamic> styles$CompWithFinal = const [];
 class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
   static import3.ComponentStyles _componentStyles;
   ViewCompWithFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-with-final');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-with-final');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
@@ -177,8 +177,8 @@ final List<dynamic> styles$CompWithFinalStatic = const [];
 class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
   static import3.ComponentStyles _componentStyles;
   ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-with-final-static');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-with-final-static');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
@@ -250,8 +250,8 @@ final List<dynamic> styles$CompWithExternalFinal = const [];
 class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> {
   static import3.ComponentStyles _componentStyles;
   ViewCompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-with-external-final');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-with-external-final');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);

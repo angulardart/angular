@@ -25,8 +25,8 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   import1.InjectsServicesComponent _InjectsServicesComponent_1_5;
   static import2.ComponentStyles _componentStyles;
   ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('app');
     initComponentStyles();
+    rootEl = import5.document.createElement('app');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
@@ -123,8 +123,8 @@ final List<dynamic> styles$ProvidesServicesComponent = const [];
 class ViewProvidesServicesComponent0 extends AppView<import1.ProvidesServicesComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewProvidesServicesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('provides-services');
     initComponentStyles();
+    rootEl = import5.document.createElement('provides-services');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
@@ -199,8 +199,8 @@ final List<dynamic> styles$InjectsServicesComponent = const [];
 class ViewInjectsServicesComponent0 extends AppView<import1.InjectsServicesComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectsServicesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('injects-services');
     initComponentStyles();
+    rootEl = import5.document.createElement('injects-services');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);

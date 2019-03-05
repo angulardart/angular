@@ -21,8 +21,8 @@ final List<dynamic> styles$PreserveWhitespace = const [];
 class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
   static import2.ComponentStyles _componentStyles;
   ViewPreserveWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('preserve-whitespace');
     initComponentStyles();
+    rootEl = import5.document.createElement('preserve-whitespace');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/whitespace.dart' : null);
@@ -96,8 +96,8 @@ final List<dynamic> styles$MinifyWhitespace = const [];
 class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
   static import2.ComponentStyles _componentStyles;
   ViewMinifyWhitespace0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('preserve-whitespace');
     initComponentStyles();
+    rootEl = import5.document.createElement('preserve-whitespace');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/whitespace.dart' : null);

@@ -27,8 +27,8 @@ final List<dynamic> styles$UntypedComp = const [];
 class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
   static import2.ComponentStyles _componentStyles;
   ViewUntypedComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -97,8 +97,8 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesUntypedComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -185,8 +185,8 @@ final List<dynamic> styles$GenericComp = const [];
 class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewGenericComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -255,8 +255,8 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesGenericComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -343,8 +343,8 @@ final List<dynamic> styles$MappingComp1 = const [];
 class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
   static import2.ComponentStyles _componentStyles;
   ViewMappingComp10(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -414,8 +414,8 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
   var _expr_1;
   static import2.ComponentStyles _componentStyles;
   ViewUsesMappingComp10(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -507,8 +507,8 @@ final List<dynamic> styles$MappingComp2 = const [];
 class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
   static import2.ComponentStyles _componentStyles;
   ViewMappingComp20(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -577,8 +577,8 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesMappingComp20(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -665,8 +665,8 @@ final List<dynamic> styles$BoundComp = const [];
 class ViewBoundComp0<T extends num> extends AppView<import1.BoundComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -735,8 +735,8 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
   num _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesBoundCompWithBounds0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -826,8 +826,8 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
   num _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -914,8 +914,8 @@ final List<dynamic> styles$SelfBoundComp = const [];
 class ViewSelfBoundComp0<A, B extends A> extends AppView<import1.SelfBoundComp<A, B>> {
   static import2.ComponentStyles _componentStyles;
   ViewSelfBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -985,8 +985,8 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
   var _expr_1;
   static import2.ComponentStyles _componentStyles;
   ViewUsesSelfBoundComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1078,8 +1078,8 @@ final List<dynamic> styles$RecursiveComp = const [];
 class ViewRecursiveComp0<T extends Comparable<T>> extends AppView<import1.RecursiveComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewRecursiveComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1148,8 +1148,8 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesRecursiveComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1236,8 +1236,8 @@ final List<dynamic> styles$FunctionTypeComp = const [];
 class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
   static import2.ComponentStyles _componentStyles;
   ViewFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1306,8 +1306,8 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesFunctionTypeComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1403,8 +1403,8 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
   var _expr_2;
   static import2.ComponentStyles _componentStyles;
   ViewNestedParentComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('parent');
     initComponentStyles();
+    rootEl = import5.document.createElement('parent');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1556,8 +1556,8 @@ final List<dynamic> styles$NestedChildComp = const [];
 class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewNestedChildComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('child');
     initComponentStyles();
+    rootEl = import5.document.createElement('child');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1628,8 +1628,8 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
   var _expr_2;
   static import2.ComponentStyles _componentStyles;
   ViewUsesNestedParentComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1732,8 +1732,8 @@ class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> 
   var _expr_1;
   static import2.ComponentStyles _componentStyles;
   ViewUsesMultipleTypesComp0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1835,8 +1835,8 @@ class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDe
   import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesGenericChangeDetector0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('comp');
     initComponentStyles();
+    rootEl = import5.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);

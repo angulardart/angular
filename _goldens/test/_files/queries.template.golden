@@ -33,8 +33,8 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   bool _query_q3_1_6_isDirty = true;
   static import4.ComponentStyles _componentStyles;
   ViewQueriesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import7.document.createElement('queries');
     initComponentStyles();
+    rootEl = import7.document.createElement('queries');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/queries.dart' : null);
@@ -175,8 +175,8 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
   ViewEmbeddedQueries0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import7.document.createElement('test');
     initComponentStyles();
+    rootEl = import7.document.createElement('test');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/queries.dart' : null);
@@ -319,8 +319,8 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
   ViewEmbeddedQueriesList0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import7.document.createElement('test');
     initComponentStyles();
+    rootEl = import7.document.createElement('test');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/queries.dart' : null);
@@ -462,8 +462,8 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
   bool _query_taggedItem_1_0_isDirty = true;
   static import4.ComponentStyles _componentStyles;
   ViewNestedNgForQueriesList0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import7.document.createElement('test');
     initComponentStyles();
+    rootEl = import7.document.createElement('test');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/queries.dart' : null);

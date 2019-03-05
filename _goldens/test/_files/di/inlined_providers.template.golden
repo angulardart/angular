@@ -53,8 +53,8 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   import1.ChildComponentInjecting$D _ChildComponentInjecting$D_7_5;
   static import2.ComponentStyles _componentStyles;
   ViewParentComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('parent-component');
     initComponentStyles();
+    rootEl = import5.document.createElement('parent-component');
   }
   import1.A get _A_0_6 {
     if ((__A_0_6 == null)) {
@@ -316,8 +316,8 @@ final List<dynamic> styles$ChildComponentProvidingA$B$C = const [];
 class ViewChildComponentProvidingA$B$C0 extends AppView<import1.ChildComponentProvidingA$B$C> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentProvidingA$B$C0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('child-component-providing-a-b-c');
     initComponentStyles();
+    rootEl = import5.document.createElement('child-component-providing-a-b-c');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null);
@@ -421,8 +421,8 @@ final List<dynamic> styles$ChildComponentWithNgContentProviding$D = const [];
 class ViewChildComponentWithNgContentProviding$D0 extends AppView<import1.ChildComponentWithNgContentProviding$D> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentWithNgContentProviding$D0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('child-component-with-ngcontent-providing-d');
     initComponentStyles();
+    rootEl = import5.document.createElement('child-component-with-ngcontent-providing-d');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null);
@@ -505,8 +505,8 @@ final List<dynamic> styles$ChildComponentInjecting$D = const [];
 class ViewChildComponentInjecting$D0 extends AppView<import1.ChildComponentInjecting$D> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentInjecting$D0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('child-component-injecting-d');
     initComponentStyles();
+    rootEl = import5.document.createElement('child-component-injecting-d');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null);
@@ -576,8 +576,8 @@ final List<dynamic> styles$ChildComponentWithVisibilityAll = const [];
 class ViewChildComponentWithVisibilityAll0 extends AppView<import1.ChildComponentWithVisibilityAll> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentWithVisibilityAll0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('child-component-with-visibility-all');
     initComponentStyles();
+    rootEl = import5.document.createElement('child-component-with-visibility-all');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null);

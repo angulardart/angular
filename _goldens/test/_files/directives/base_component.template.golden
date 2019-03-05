@@ -25,8 +25,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   import3.TestSubComponent _TestSubComponent_2_5;
   static import4.ComponentStyles _componentStyles;
   ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import7.document.createElement('test-foo');
     initComponentStyles();
+    rootEl = import7.document.createElement('test-foo');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/directives/base_component.dart' : null);

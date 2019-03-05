@@ -1221,14 +1221,18 @@ class CompileView {
     ir.BindingSource source,
   ) {
     _createMethod.addStmt(createAttributeStatement(
-        source, target, elementName, nodeReference.toReadExpr()));
+        source, target, elementName, nodeReference.toReadExpr(), false));
   }
 
-  o.Statement createAttributeStatement(ir.BindingSource source,
-      ir.AttributeBinding target, String elementName, o.Expression renderNode) {
+  o.Statement createAttributeStatement(
+      ir.BindingSource source,
+      ir.AttributeBinding target,
+      String elementName,
+      o.Expression renderNode,
+      bool isHostBinding) {
     var expression = _toExpression(source, o.THIS_EXPR);
     o.Statement stmt = createSetAttributeStatement(
-        elementName, renderNode, target.name, expression);
+        elementName, renderNode, target.name, expression, isHostBinding);
     return stmt;
   }
 

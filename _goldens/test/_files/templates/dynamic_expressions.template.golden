@@ -28,8 +28,8 @@ class ViewComp10 extends AppView<import1.Comp1> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewComp10(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-1');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-1');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null);
@@ -103,8 +103,8 @@ class ViewComp1String0 extends AppView<import1.Comp1String> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewComp1String0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-1-string');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-1-string');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null);
@@ -178,8 +178,8 @@ class ViewComp20 extends AppView<import1.Comp2> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewComp20(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-2');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-2');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null);
@@ -253,8 +253,8 @@ class ViewComp30 extends AppView<import1.Comp3> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewComp30(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-3');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-3');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null);
@@ -329,8 +329,8 @@ class ViewComp40 extends AppView<import1.Comp4> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewComp40(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-4');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-4');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null);
@@ -408,8 +408,8 @@ class ViewComp50 extends AppView<import1.Comp5> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewComp50(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-5');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-5');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null);
@@ -489,8 +489,8 @@ class ViewComp60 extends AppView<import1.Comp6> {
   var _expr_0;
   static import3.ComponentStyles _componentStyles;
   ViewComp60(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-6');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-6');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null);
@@ -603,8 +603,8 @@ class ViewComp70 extends AppView<import1.Comp7> {
   var _expr_0;
   static import3.ComponentStyles _componentStyles;
   ViewComp70(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('comp-7');
     initComponentStyles();
+    rootEl = import6.document.createElement('comp-7');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dynamic_expressions.dart' : null);

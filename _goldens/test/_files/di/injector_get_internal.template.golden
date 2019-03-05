@@ -74,8 +74,8 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   int __luckyNumber_8_14;
   static import3.ComponentStyles _componentStyles;
   ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('app');
     initComponentStyles();
+    rootEl = import6.document.createElement('app');
   }
   import1.ServiceB get _Service_1_9 {
     if ((__Service_1_9 == null)) {
@@ -499,8 +499,8 @@ final List<dynamic> styles$MaterialAutoSuggestInputComponent = const [];
 class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAutoSuggestInputComponent> {
   static import3.ComponentStyles _componentStyles;
   ViewMaterialAutoSuggestInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('material-auto-suggest-input');
     initComponentStyles();
+    rootEl = import6.document.createElement('material-auto-suggest-input');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
@@ -574,8 +574,8 @@ final List<dynamic> styles$MaterialInputComponent = const [];
 class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent> {
   static import3.ComponentStyles _componentStyles;
   ViewMaterialInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('material-input');
     initComponentStyles();
+    rootEl = import6.document.createElement('material-input');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);

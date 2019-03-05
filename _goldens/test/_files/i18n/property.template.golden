@@ -24,8 +24,8 @@ class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> 
   static final String _message_0 = import2.Intl.message('message', desc: 'description');
   static import3.ComponentStyles _componentStyles;
   ViewI18nPropertyComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import6.document.createElement('message');
     initComponentStyles();
+    rootEl = import6.document.createElement('message');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/i18n/property.dart' : null);
