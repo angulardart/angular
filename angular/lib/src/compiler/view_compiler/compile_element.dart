@@ -17,8 +17,7 @@ import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
 import 'compile_view.dart' show CompileView, NodeReference;
 import 'ir/provider_resolver.dart';
 import 'ir/provider_source.dart';
-import 'view_compiler_utils.dart'
-    show injectFromViewParentInjector, getPropertyInView, toTemplateExtension;
+import 'view_compiler_utils.dart' show toTemplateExtension;
 
 /// Compiled node in the view (such as text node) that is not an element.
 class CompileNode {
@@ -431,25 +430,12 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     CompileTokenMetadata token,
     bool optional,
   ) {
-    // If request was made on a service resolving to a private directive,
-    // use requested dependency to call injectorGet instead of directive
-    // that redirects using useExisting type provider.
-    var value = source?.build();
-    var hasDynamicDependencies = false;
-    if (value == null) {
-      value = injectFromViewParentInjector(view, token, optional);
-      hasDynamicDependencies = true;
-    }
-    final element = findElementByResolver(providersNode);
-    final viewRelativeExpression = getPropertyInView(
-      value,
-      view,
-      element.view,
-    );
-    return LiteralValueSource(
+    return DynamicProviderSource(
       token,
-      viewRelativeExpression,
-      hasDynamicDependencies: hasDynamicDependencies,
+      this,
+      providersNode,
+      source,
+      isOptional: optional,
     );
   }
 
