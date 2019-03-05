@@ -8,15 +8,16 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'injector_get_internal.dart' as import1;
-import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'dart:core';
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import5;
-import 'package:angular/src/runtime.dart' as import6;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import8;
-import 'package:angular/src/core/di/opaque_token.dart' as import9;
-import 'injector_get_internal.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/di/opaque_token.dart' as import10;
+import 'injector_get_internal.dart' as import11;
 
 final List<dynamic> styles$AppComponent = const [];
 
@@ -27,29 +28,37 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   import1.MaterialInputValueAccessor _MaterialInputValueAccessor_1_6;
   import1.NgControlName _NgControlName_1_7;
   import1.RequiredValidator _RequiredValidator_1_8;
-  import1.DeferredValidator __DeferredValidator_1_9;
-  List<import1.Validator> __MultiToken_1_10;
+  import1.ServiceB __Service_1_9;
+  import1.DeferredValidator __DeferredValidator_1_10;
+  List<import1.Validator> __MultiToken_1_11;
+  int __luckyNumber_1_15;
   import1.NgControlGroup _NgControlGroup_3_5;
   ViewMaterialInputComponent0 _compView_4;
   import1.MaterialInputComponent _MaterialInputComponent_4_5;
   import1.MaterialInputValueAccessor _MaterialInputValueAccessor_4_6;
   import1.NgControlName _NgControlName_4_7;
   import1.RequiredValidator _RequiredValidator_4_8;
-  import1.DeferredValidator __DeferredValidator_4_9;
-  List<import1.Validator> __MultiToken_4_10;
+  import1.ServiceB __Service_4_9;
+  import1.DeferredValidator __DeferredValidator_4_10;
+  List<import1.Validator> __MultiToken_4_11;
+  int __luckyNumber_4_15;
   ViewMaterialInputComponent0 _compView_5;
   import1.MaterialInputComponent _MaterialInputComponent_5_5;
   import1.MaterialInputValueAccessor _MaterialInputValueAccessor_5_6;
   import1.NgControlName _NgControlName_5_7;
-  import1.DeferredValidator __DeferredValidator_5_8;
-  List<import1.Validator> __MultiToken_5_9;
+  import1.ServiceB __Service_5_8;
+  import1.DeferredValidator __DeferredValidator_5_9;
+  List<import1.Validator> __MultiToken_5_10;
+  int __luckyNumber_5_14;
   ViewMaterialInputComponent0 _compView_6;
   import1.MaterialInputComponent _MaterialInputComponent_6_5;
   import1.MaterialInputValueAccessor _MaterialInputValueAccessor_6_6;
   import1.NgControlName _NgControlName_6_7;
   import1.RequiredValidator _RequiredValidator_6_8;
-  import1.DeferredValidator __DeferredValidator_6_9;
-  List<import1.Validator> __MultiToken_6_10;
+  import1.ServiceB __Service_6_9;
+  import1.DeferredValidator __DeferredValidator_6_10;
+  List<import1.Validator> __MultiToken_6_11;
+  int __luckyNumber_6_15;
   ViewMaterialAutoSuggestInputComponent0 _compView_7;
   import1.MaterialAutoSuggestInputComponent _MaterialAutoSuggestInputComponent_7_5;
   import1.NgControlName _NgControlName_7_6;
@@ -59,67 +68,125 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   import1.MaterialInputComponent _MaterialInputComponent_8_5;
   import1.MaterialInputValueAccessor _MaterialInputValueAccessor_8_6;
   import1.NgControlName _NgControlName_8_7;
-  import1.DeferredValidator __DeferredValidator_8_8;
-  List<import1.Validator> __MultiToken_8_9;
-  static import2.ComponentStyles _componentStyles;
-  ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('app');
+  import1.ServiceB __Service_8_8;
+  import1.DeferredValidator __DeferredValidator_8_9;
+  List<import1.Validator> __MultiToken_8_10;
+  int __luckyNumber_8_14;
+  static import3.ComponentStyles _componentStyles;
+  ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import6.document.createElement('app');
     initComponentStyles();
   }
-  import1.DeferredValidator get _DeferredValidator_1_9 {
-    if ((__DeferredValidator_1_9 == null)) {
-      (__DeferredValidator_1_9 = import1.DeferredValidator());
+  import1.ServiceB get _Service_1_9 {
+    if ((__Service_1_9 == null)) {
+      (__Service_1_9 = import1.ServiceB());
     }
-    return __DeferredValidator_1_9;
+    return __Service_1_9;
   }
 
-  List<import1.Validator> get _MultiToken_1_10 {
-    if ((__MultiToken_1_10 == null)) {
-      (__MultiToken_1_10 = [_DeferredValidator_1_9, _RequiredValidator_1_8]);
+  import1.DeferredValidator get _DeferredValidator_1_10 {
+    if ((__DeferredValidator_1_10 == null)) {
+      (__DeferredValidator_1_10 = import1.DeferredValidator());
     }
-    return __MultiToken_1_10;
+    return __DeferredValidator_1_10;
   }
 
-  import1.DeferredValidator get _DeferredValidator_4_9 {
-    if ((__DeferredValidator_4_9 == null)) {
-      (__DeferredValidator_4_9 = import1.DeferredValidator());
+  List<import1.Validator> get _MultiToken_1_11 {
+    if ((__MultiToken_1_11 == null)) {
+      (__MultiToken_1_11 = [_DeferredValidator_1_10, _RequiredValidator_1_8]);
     }
-    return __DeferredValidator_4_9;
+    return __MultiToken_1_11;
   }
 
-  List<import1.Validator> get _MultiToken_4_10 {
-    if ((__MultiToken_4_10 == null)) {
-      (__MultiToken_4_10 = [_DeferredValidator_4_9, _RequiredValidator_4_8]);
+  int get _luckyNumber_1_15 {
+    if ((__luckyNumber_1_15 == null)) {
+      (__luckyNumber_1_15 = 12);
     }
-    return __MultiToken_4_10;
+    return __luckyNumber_1_15;
   }
 
-  import1.DeferredValidator get _DeferredValidator_5_8 {
-    if ((__DeferredValidator_5_8 == null)) {
-      (__DeferredValidator_5_8 = import1.DeferredValidator());
+  import1.ServiceB get _Service_4_9 {
+    if ((__Service_4_9 == null)) {
+      (__Service_4_9 = import1.ServiceB());
     }
-    return __DeferredValidator_5_8;
+    return __Service_4_9;
   }
 
-  List<import1.Validator> get _MultiToken_5_9 {
-    if ((__MultiToken_5_9 == null)) {
-      (__MultiToken_5_9 = [_DeferredValidator_5_8]);
+  import1.DeferredValidator get _DeferredValidator_4_10 {
+    if ((__DeferredValidator_4_10 == null)) {
+      (__DeferredValidator_4_10 = import1.DeferredValidator());
     }
-    return __MultiToken_5_9;
+    return __DeferredValidator_4_10;
   }
 
-  import1.DeferredValidator get _DeferredValidator_6_9 {
-    if ((__DeferredValidator_6_9 == null)) {
-      (__DeferredValidator_6_9 = import1.DeferredValidator());
+  List<import1.Validator> get _MultiToken_4_11 {
+    if ((__MultiToken_4_11 == null)) {
+      (__MultiToken_4_11 = [_DeferredValidator_4_10, _RequiredValidator_4_8]);
     }
-    return __DeferredValidator_6_9;
+    return __MultiToken_4_11;
   }
 
-  List<import1.Validator> get _MultiToken_6_10 {
-    if ((__MultiToken_6_10 == null)) {
-      (__MultiToken_6_10 = [_DeferredValidator_6_9, _RequiredValidator_6_8]);
+  int get _luckyNumber_4_15 {
+    if ((__luckyNumber_4_15 == null)) {
+      (__luckyNumber_4_15 = 12);
     }
-    return __MultiToken_6_10;
+    return __luckyNumber_4_15;
+  }
+
+  import1.ServiceB get _Service_5_8 {
+    if ((__Service_5_8 == null)) {
+      (__Service_5_8 = import1.ServiceB());
+    }
+    return __Service_5_8;
+  }
+
+  import1.DeferredValidator get _DeferredValidator_5_9 {
+    if ((__DeferredValidator_5_9 == null)) {
+      (__DeferredValidator_5_9 = import1.DeferredValidator());
+    }
+    return __DeferredValidator_5_9;
+  }
+
+  List<import1.Validator> get _MultiToken_5_10 {
+    if ((__MultiToken_5_10 == null)) {
+      (__MultiToken_5_10 = [_DeferredValidator_5_9]);
+    }
+    return __MultiToken_5_10;
+  }
+
+  int get _luckyNumber_5_14 {
+    if ((__luckyNumber_5_14 == null)) {
+      (__luckyNumber_5_14 = 12);
+    }
+    return __luckyNumber_5_14;
+  }
+
+  import1.ServiceB get _Service_6_9 {
+    if ((__Service_6_9 == null)) {
+      (__Service_6_9 = import1.ServiceB());
+    }
+    return __Service_6_9;
+  }
+
+  import1.DeferredValidator get _DeferredValidator_6_10 {
+    if ((__DeferredValidator_6_10 == null)) {
+      (__DeferredValidator_6_10 = import1.DeferredValidator());
+    }
+    return __DeferredValidator_6_10;
+  }
+
+  List<import1.Validator> get _MultiToken_6_11 {
+    if ((__MultiToken_6_11 == null)) {
+      (__MultiToken_6_11 = [_DeferredValidator_6_10, _RequiredValidator_6_8]);
+    }
+    return __MultiToken_6_11;
+  }
+
+  int get _luckyNumber_6_15 {
+    if ((__luckyNumber_6_15 == null)) {
+      (__luckyNumber_6_15 = 12);
+    }
+    return __luckyNumber_6_15;
   }
 
   List<import1.Validator> get _MultiToken_7_13 {
@@ -129,54 +196,68 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     return __MultiToken_7_13;
   }
 
-  import1.DeferredValidator get _DeferredValidator_8_8 {
-    if ((__DeferredValidator_8_8 == null)) {
-      (__DeferredValidator_8_8 = import1.DeferredValidator());
+  import1.ServiceB get _Service_8_8 {
+    if ((__Service_8_8 == null)) {
+      (__Service_8_8 = import1.ServiceB());
     }
-    return __DeferredValidator_8_8;
+    return __Service_8_8;
   }
 
-  List<import1.Validator> get _MultiToken_8_9 {
-    if ((__MultiToken_8_9 == null)) {
-      (__MultiToken_8_9 = [_DeferredValidator_8_8]);
+  import1.DeferredValidator get _DeferredValidator_8_9 {
+    if ((__DeferredValidator_8_9 == null)) {
+      (__DeferredValidator_8_9 = import1.DeferredValidator());
     }
-    return __MultiToken_8_9;
+    return __DeferredValidator_8_9;
+  }
+
+  List<import1.Validator> get _MultiToken_8_10 {
+    if ((__MultiToken_8_10 == null)) {
+      (__MultiToken_8_10 = [_DeferredValidator_8_9]);
+    }
+    return __MultiToken_8_10;
+  }
+
+  int get _luckyNumber_8_14 {
+    if ((__luckyNumber_8_14 == null)) {
+      (__luckyNumber_8_14 = 12);
+    }
+    return __luckyNumber_8_14;
   }
 
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
   }
 
   @override
   ComponentRef<import1.AppComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import5.document;
-    final _el_0 = import8.appendElement(doc, parentRenderNode, 'form');
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import6.document;
+    final _el_0 = import9.appendElement(doc, parentRenderNode, 'form');
     _NgForm_0_5 = import1.NgForm();
     _compView_1 = ViewMaterialInputComponent0(this, 1);
     final _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
-    import8.setAttribute(_el_1, 'ngControl', 'name');
-    import8.setAttribute(_el_1, 'required', '');
+    import9.setAttribute(_el_1, 'ngControl', 'name');
+    import9.setAttribute(_el_1, 'required', '');
     _MaterialInputComponent_1_5 = import1.MaterialInputComponent();
     _MaterialInputValueAccessor_1_6 = import1.MaterialInputValueAccessor();
     _NgControlName_1_7 = import1.NgControlName();
     _RequiredValidator_1_8 = import1.RequiredValidator();
     final _el_2 = doc.createElement('material-icon');
-    import8.setAttribute(_el_2, 'tooltipTarget', '');
-    import8.setAttribute(_el_2, 'trailing', '');
+    import9.setAttribute(_el_2, 'tooltipTarget', '');
+    import9.setAttribute(_el_2, 'trailing', '');
     _compView_1.create(_MaterialInputComponent_1_5, [
       [_el_2]
     ]);
-    final _el_3 = import8.appendDiv(doc, _el_0);
-    import8.setAttribute(_el_3, 'ngControlGroup', 'address');
+    final _el_3 = import9.appendDiv(doc, _el_0);
+    import9.setAttribute(_el_3, 'ngControlGroup', 'address');
     _NgControlGroup_3_5 = import1.NgControlGroup();
     _compView_4 = ViewMaterialInputComponent0(this, 4);
     final _el_4 = _compView_4.rootEl;
     _el_3.append(_el_4);
-    import8.setAttribute(_el_4, 'ngControl', 'address1');
-    import8.setAttribute(_el_4, 'required', '');
+    import9.setAttribute(_el_4, 'ngControl', 'address1');
+    import9.setAttribute(_el_4, 'required', '');
     _MaterialInputComponent_4_5 = import1.MaterialInputComponent();
     _MaterialInputValueAccessor_4_6 = import1.MaterialInputValueAccessor();
     _NgControlName_4_7 = import1.NgControlName();
@@ -185,7 +266,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _compView_5 = ViewMaterialInputComponent0(this, 5);
     final _el_5 = _compView_5.rootEl;
     _el_3.append(_el_5);
-    import8.setAttribute(_el_5, 'ngControl', 'address2');
+    import9.setAttribute(_el_5, 'ngControl', 'address2');
     _MaterialInputComponent_5_5 = import1.MaterialInputComponent();
     _MaterialInputValueAccessor_5_6 = import1.MaterialInputValueAccessor();
     _NgControlName_5_7 = import1.NgControlName();
@@ -193,8 +274,8 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _compView_6 = ViewMaterialInputComponent0(this, 6);
     final _el_6 = _compView_6.rootEl;
     _el_3.append(_el_6);
-    import8.setAttribute(_el_6, 'ngControl', 'city');
-    import8.setAttribute(_el_6, 'required', '');
+    import9.setAttribute(_el_6, 'ngControl', 'city');
+    import9.setAttribute(_el_6, 'required', '');
     _MaterialInputComponent_6_5 = import1.MaterialInputComponent();
     _MaterialInputValueAccessor_6_6 = import1.MaterialInputValueAccessor();
     _NgControlName_6_7 = import1.NgControlName();
@@ -203,8 +284,8 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _compView_7 = ViewMaterialAutoSuggestInputComponent0(this, 7);
     final _el_7 = _compView_7.rootEl;
     _el_3.append(_el_7);
-    import8.setAttribute(_el_7, 'ngControl', 'state');
-    import8.setAttribute(_el_7, 'required', '');
+    import9.setAttribute(_el_7, 'ngControl', 'state');
+    import9.setAttribute(_el_7, 'required', '');
     _MaterialAutoSuggestInputComponent_7_5 = import1.MaterialAutoSuggestInputComponent();
     _NgControlName_7_6 = import1.NgControlName();
     _RequiredValidator_7_7 = import1.RequiredValidator();
@@ -212,7 +293,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _compView_8 = ViewMaterialInputComponent0(this, 8);
     final _el_8 = _compView_8.rootEl;
     _el_3.append(_el_8);
-    import8.setAttribute(_el_8, 'ngControl', 'zip');
+    import9.setAttribute(_el_8, 'ngControl', 'zip');
     _MaterialInputComponent_8_5 = import1.MaterialInputComponent();
     _MaterialInputValueAccessor_8_6 = import1.MaterialInputValueAccessor();
     _NgControlName_8_7 = import1.NgControlName();
@@ -231,11 +312,17 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if ((identical(token, import1.NgControl) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
       return _NgControlName_1_7;
     }
-    if ((identical(token, import1.DeferredValidator) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
-      return _DeferredValidator_1_9;
+    if ((identical(token, import1.Service) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
+      return _Service_1_9;
     }
-    if ((identical(token, const import9.MultiToken<import10.Validator>()) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
-      return _MultiToken_1_10;
+    if ((identical(token, import1.DeferredValidator) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
+      return _DeferredValidator_1_10;
+    }
+    if ((identical(token, const import10.MultiToken<import11.Validator>()) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
+      return _MultiToken_1_11;
+    }
+    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (1 == nodeIndex))) {
+      return _luckyNumber_1_15;
     }
     if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (4 == nodeIndex))) {
       return _MaterialInputComponent_4_5;
@@ -246,11 +333,17 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if ((identical(token, import1.NgControl) && (4 == nodeIndex))) {
       return _NgControlName_4_7;
     }
-    if ((identical(token, import1.DeferredValidator) && (4 == nodeIndex))) {
-      return _DeferredValidator_4_9;
+    if ((identical(token, import1.Service) && (4 == nodeIndex))) {
+      return _Service_4_9;
     }
-    if ((identical(token, const import9.MultiToken<import10.Validator>()) && (4 == nodeIndex))) {
-      return _MultiToken_4_10;
+    if ((identical(token, import1.DeferredValidator) && (4 == nodeIndex))) {
+      return _DeferredValidator_4_10;
+    }
+    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (4 == nodeIndex))) {
+      return _MultiToken_4_11;
+    }
+    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (4 == nodeIndex))) {
+      return _luckyNumber_4_15;
     }
     if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (5 == nodeIndex))) {
       return _MaterialInputComponent_5_5;
@@ -261,11 +354,17 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if ((identical(token, import1.NgControl) && (5 == nodeIndex))) {
       return _NgControlName_5_7;
     }
-    if ((identical(token, import1.DeferredValidator) && (5 == nodeIndex))) {
-      return _DeferredValidator_5_8;
+    if ((identical(token, import1.Service) && (5 == nodeIndex))) {
+      return _Service_5_8;
     }
-    if ((identical(token, const import9.MultiToken<import10.Validator>()) && (5 == nodeIndex))) {
-      return _MultiToken_5_9;
+    if ((identical(token, import1.DeferredValidator) && (5 == nodeIndex))) {
+      return _DeferredValidator_5_9;
+    }
+    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (5 == nodeIndex))) {
+      return _MultiToken_5_10;
+    }
+    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (5 == nodeIndex))) {
+      return _luckyNumber_5_14;
     }
     if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (6 == nodeIndex))) {
       return _MaterialInputComponent_6_5;
@@ -276,11 +375,17 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if ((identical(token, import1.NgControl) && (6 == nodeIndex))) {
       return _NgControlName_6_7;
     }
-    if ((identical(token, import1.DeferredValidator) && (6 == nodeIndex))) {
-      return _DeferredValidator_6_9;
+    if ((identical(token, import1.Service) && (6 == nodeIndex))) {
+      return _Service_6_9;
     }
-    if ((identical(token, const import9.MultiToken<import10.Validator>()) && (6 == nodeIndex))) {
-      return _MultiToken_6_10;
+    if ((identical(token, import1.DeferredValidator) && (6 == nodeIndex))) {
+      return _DeferredValidator_6_10;
+    }
+    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (6 == nodeIndex))) {
+      return _MultiToken_6_11;
+    }
+    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (6 == nodeIndex))) {
+      return _luckyNumber_6_15;
     }
     if ((((((identical(token, import1.MaterialAutoSuggestInputComponent) || identical(token, import1.HasDisabled)) || identical(token, import1.HasRenderer)) || identical(token, import1.SelectionContainer)) || identical(token, import1.Focusable)) && (7 == nodeIndex))) {
       return _MaterialAutoSuggestInputComponent_7_5;
@@ -288,7 +393,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if ((identical(token, import1.NgControl) && (7 == nodeIndex))) {
       return _NgControlName_7_6;
     }
-    if ((identical(token, const import9.MultiToken<import10.Validator>()) && (7 == nodeIndex))) {
+    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (7 == nodeIndex))) {
       return _MultiToken_7_13;
     }
     if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (8 == nodeIndex))) {
@@ -300,11 +405,17 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if ((identical(token, import1.NgControl) && (8 == nodeIndex))) {
       return _NgControlName_8_7;
     }
-    if ((identical(token, import1.DeferredValidator) && (8 == nodeIndex))) {
-      return _DeferredValidator_8_8;
+    if ((identical(token, import1.Service) && (8 == nodeIndex))) {
+      return _Service_8_8;
     }
-    if ((identical(token, const import9.MultiToken<import10.Validator>()) && (8 == nodeIndex))) {
-      return _MultiToken_8_9;
+    if ((identical(token, import1.DeferredValidator) && (8 == nodeIndex))) {
+      return _DeferredValidator_8_9;
+    }
+    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (8 == nodeIndex))) {
+      return _MultiToken_8_10;
+    }
+    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (8 == nodeIndex))) {
+      return _luckyNumber_8_14;
     }
     if ((identical(token, import1.ControlContainer) && ((3 <= nodeIndex) && (nodeIndex <= 8)))) {
       return _NgControlGroup_3_5;
@@ -339,7 +450,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl))));
     }
     componentStyles = styles;
   }
@@ -355,7 +466,7 @@ final List<dynamic> styles$AppComponentHost = const [];
 class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_5;
-  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -386,19 +497,19 @@ AppView<import1.AppComponent> viewFactory_AppComponentHost0(AppView<dynamic> par
 final List<dynamic> styles$MaterialAutoSuggestInputComponent = const [];
 
 class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAutoSuggestInputComponent> {
-  static import2.ComponentStyles _componentStyles;
-  ViewMaterialAutoSuggestInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('material-auto-suggest-input');
+  static import3.ComponentStyles _componentStyles;
+  ViewMaterialAutoSuggestInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import6.document.createElement('material-auto-suggest-input');
     initComponentStyles();
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
   }
 
   @override
   ComponentRef<import1.MaterialAutoSuggestInputComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init(const [], null);
   }
 
@@ -406,7 +517,7 @@ class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAut
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$MaterialAutoSuggestInputComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$MaterialAutoSuggestInputComponent, _debugComponentUrl))));
     }
     componentStyles = styles;
   }
@@ -422,7 +533,7 @@ final List<dynamic> styles$MaterialAutoSuggestInputComponentHost = const [];
 class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.MaterialAutoSuggestInputComponent> {
   ViewMaterialAutoSuggestInputComponent0 _compView_0;
   import1.MaterialAutoSuggestInputComponent _MaterialAutoSuggestInputComponent_0_5;
-  _ViewMaterialAutoSuggestInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  _ViewMaterialAutoSuggestInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
@@ -461,19 +572,19 @@ AppView<import1.MaterialAutoSuggestInputComponent> viewFactory_MaterialAutoSugge
 final List<dynamic> styles$MaterialInputComponent = const [];
 
 class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent> {
-  static import2.ComponentStyles _componentStyles;
-  ViewMaterialInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('material-input');
+  static import3.ComponentStyles _componentStyles;
+  ViewMaterialInputComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import6.document.createElement('material-input');
     initComponentStyles();
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
   }
 
   @override
   ComponentRef<import1.MaterialInputComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     project(parentRenderNode, 0);
     init(const [], null);
   }
@@ -482,7 +593,7 @@ class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$MaterialInputComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$MaterialInputComponent, _debugComponentUrl))));
     }
     componentStyles = styles;
   }
@@ -498,23 +609,39 @@ final List<dynamic> styles$MaterialInputComponentHost = const [];
 class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComponent> {
   ViewMaterialInputComponent0 _compView_0;
   import1.MaterialInputComponent _MaterialInputComponent_0_5;
-  import1.DeferredValidator __DeferredValidator_0_6;
-  List<import1.Validator> __MultiToken_0_7;
-  _ViewMaterialInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  import1.ServiceB __Service_0_6;
+  import1.DeferredValidator __DeferredValidator_0_7;
+  List<import1.Validator> __MultiToken_0_8;
+  int __luckyNumber_0_12;
+  _ViewMaterialInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
-  import1.DeferredValidator get _DeferredValidator_0_6 {
-    if ((__DeferredValidator_0_6 == null)) {
-      (__DeferredValidator_0_6 = import1.DeferredValidator());
+  import1.ServiceB get _Service_0_6 {
+    if ((__Service_0_6 == null)) {
+      (__Service_0_6 = import1.ServiceB());
     }
-    return __DeferredValidator_0_6;
+    return __Service_0_6;
   }
 
-  List<import1.Validator> get _MultiToken_0_7 {
-    if ((__MultiToken_0_7 == null)) {
-      (__MultiToken_0_7 = [_DeferredValidator_0_6]);
+  import1.DeferredValidator get _DeferredValidator_0_7 {
+    if ((__DeferredValidator_0_7 == null)) {
+      (__DeferredValidator_0_7 = import1.DeferredValidator());
     }
-    return __MultiToken_0_7;
+    return __DeferredValidator_0_7;
+  }
+
+  List<import1.Validator> get _MultiToken_0_8 {
+    if ((__MultiToken_0_8 == null)) {
+      (__MultiToken_0_8 = [_DeferredValidator_0_7]);
+    }
+    return __MultiToken_0_8;
+  }
+
+  int get _luckyNumber_0_12 {
+    if ((__luckyNumber_0_12 == null)) {
+      (__luckyNumber_0_12 = 12);
+    }
+    return __luckyNumber_0_12;
   }
 
   @override
@@ -532,11 +659,17 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
     if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (0 == nodeIndex))) {
       return _MaterialInputComponent_0_5;
     }
-    if ((identical(token, import1.DeferredValidator) && (0 == nodeIndex))) {
-      return _DeferredValidator_0_6;
+    if ((identical(token, import1.Service) && (0 == nodeIndex))) {
+      return _Service_0_6;
     }
-    if ((identical(token, const import9.MultiToken<import10.Validator>()) && (0 == nodeIndex))) {
-      return _MultiToken_0_7;
+    if ((identical(token, import1.DeferredValidator) && (0 == nodeIndex))) {
+      return _DeferredValidator_0_7;
+    }
+    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (0 == nodeIndex))) {
+      return _MultiToken_0_8;
+    }
+    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (0 == nodeIndex))) {
+      return _luckyNumber_0_12;
     }
     return notFoundResult;
   }
