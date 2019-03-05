@@ -39,6 +39,7 @@ void main() {
     InjectsFromArbitraryParent,
     UsesDomBindings,
     UsesNgDirectives,
+    HasNestedProviderLookups,
   ],
   template: r'''
     <div hasProviders>
@@ -63,6 +64,8 @@ void main() {
     </uses-dom-bindings>
     <uses-ng-directives>
     </uses-ng-directives>
+    <has-nested-provider-lookups>
+    </has-nested-provider-lookups>
   ''',
 )
 class RootComponent {}
@@ -292,3 +295,52 @@ class UsesNgDirectives {
     'width': '50px',
   };
 }
+
+@Component(
+  selector: 'has-nested-provider-lookups',
+  directives: [
+    InjectsManyThingsDynamically,
+    NgIf,
+  ],
+  template: r'''
+    <div *ngIf="maybe1">
+      <div *ngIf="maybe2">
+        <injects-many-things-dynamically></injects-many-things-dynamically>
+      </div>
+    </div>
+  ''',
+)
+class HasNestedProviderLookups {
+  var maybe1 = true;
+  var maybe2 = true;
+}
+
+@Component(
+  selector: 'injects-many-things-dynamically',
+  template: '',
+)
+class InjectsManyThingsDynamically {
+  @pragma('dart2js:noInline')
+  InjectsManyThingsDynamically(
+    DepA a,
+    DepB b,
+    DepC c,
+    @Optional() DepD d,
+    @Optional() DepE e,
+    @Optional() DepF f,
+  ) {
+    defeatDart2JsOptimizations([a, b, c, d, e, f]);
+  }
+}
+
+class DepA {}
+
+class DepB {}
+
+class DepC {}
+
+class DepD {}
+
+class DepE {}
+
+class DepF {}
