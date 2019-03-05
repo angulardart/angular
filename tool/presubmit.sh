@@ -33,6 +33,8 @@ echo "Running tests in _tests in debug mode"
 PKG=_tests tool/travis.sh test
 echo "Analyzing angular..."
 PKG=angular tool/travis.sh analyze
+echo "Analyzing angular_analyzer_plugin..."
+PKG=angular_analyzer_plugin tool/travis.sh analyze
 echo "Analyzing angular_ast..."
 PKG=angular_ast tool/travis.sh analyze
 echo "Building angular_ast in debug mode..."
