@@ -34,7 +34,7 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   ComponentRef<import1.HasHostAttributes> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   void detectHostChanges(bool firstCheck) {
@@ -74,7 +74,7 @@ class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
     rootEl = _compView_0.rootEl;
     _HasHostAttributes_0_5 = import1.HasHostAttributes();
     _compView_0.create(_HasHostAttributes_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _HasHostAttributes_0_5);
   }
 
@@ -115,7 +115,7 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     _el_0 = import9.appendDiv(doc, parentRenderNode);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -157,7 +157,7 @@ class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttribu
     rootEl = _compView_0.rootEl;
     _HasTemplateAttributes_0_5 = import1.HasTemplateAttributes();
     _compView_0.create(_HasTemplateAttributes_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _HasTemplateAttributes_0_5);
   }
 
@@ -195,7 +195,7 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     _el_0 = import9.appendDiv(doc, parentRenderNode);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -235,7 +235,7 @@ class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
     rootEl = _compView_0.rootEl;
     _HasStaticAttribute_0_5 = import1.HasStaticAttribute();
     _compView_0.create(_HasStaticAttribute_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _HasStaticAttribute_0_5);
   }
 
@@ -271,7 +271,7 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
   ComponentRef<import1.HasHostClass> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   void detectHostChanges(bool firstCheck) {
@@ -311,7 +311,7 @@ class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
     rootEl = _compView_0.rootEl;
     _HasHostClass_0_5 = import1.HasHostClass();
     _compView_0.create(_HasHostClass_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _HasHostClass_0_5);
   }
 
@@ -352,7 +352,7 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     _el_0 = import9.appendDiv(doc, parentRenderNode);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -394,7 +394,7 @@ class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
     rootEl = _compView_0.rootEl;
     _HasTemplateClass_0_5 = import1.HasTemplateClass();
     _compView_0.create(_HasTemplateClass_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _HasTemplateClass_0_5);
   }
 

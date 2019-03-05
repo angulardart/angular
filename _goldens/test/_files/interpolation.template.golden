@@ -45,7 +45,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
     _el_1.append(_textBinding_3.element);
     final _text_4 = import9.appendText(_el_1, '\n    ');
     final _text_5 = import9.appendText(parentRenderNode, '\n  ');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -83,7 +83,7 @@ class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComp
     rootEl = _compView_0.rootEl;
     _InterpolationComponent_0_5 = import1.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationComponent_0_5);
   }
 
@@ -122,7 +122,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
     final doc = import6.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
     _el_0.append(_textBinding_1.element);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -160,7 +160,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.Inter
     rootEl = _compView_0.rootEl;
     _InterpolationComponentNoWhitespace_0_5 = import1.InterpolationComponentNoWhitespace();
     _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
   }
 
@@ -203,7 +203,7 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
     final _text_2 = import9.appendText(_el_0, ' ');
     _el_0.append(_textBinding_3.element);
     final _text_4 = import9.appendText(_el_0, '!');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -242,7 +242,7 @@ class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTw
     rootEl = _compView_0.rootEl;
     _InterpolationTwoAdjacent_0_5 = import1.InterpolationTwoAdjacent();
     _compView_0.create(_InterpolationTwoAdjacent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationTwoAdjacent_0_5);
   }
 
@@ -289,7 +289,7 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
     final _text_5 = import9.appendText(_el_0, ' of ');
     _el_0.append(_textBinding_6.element);
     final _text_7 = import9.appendText(_el_0, '!');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -329,7 +329,7 @@ class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.Interpolatio
     rootEl = _compView_0.rootEl;
     _InterpolationLongerSentence_0_5 = import1.InterpolationLongerSentence();
     _compView_0.create(_InterpolationLongerSentence_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationLongerSentence_0_5);
   }
 
@@ -370,7 +370,7 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
     final _text_2 = import9.appendText(_el_0, ' ');
     final _text_3 = import9.appendText(_el_0, 'Home');
     final _text_4 = import9.appendText(_el_0, '!');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -402,7 +402,7 @@ class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiter
     rootEl = _compView_0.rootEl;
     _InterpolationLiterals_0_5 = import1.InterpolationLiterals();
     _compView_0.create(_InterpolationLiterals_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationLiterals_0_5);
   }
 
@@ -444,7 +444,7 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
     _NgFor_0_9 = import11.NgFor(_appEl_0, _TemplateRef_0_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -494,7 +494,7 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
     _NgFor_0_9 = import11.NgFor(_appEl_0, _TemplateRef_0_8);
-    init0(_appEl_0);
+    init1(_appEl_0);
   }
 
   @override
@@ -563,7 +563,7 @@ class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals>
     rootEl = _compView_0.rootEl;
     _InterpolationLocals_0_5 = import1.InterpolationLocals();
     _compView_0.create(_InterpolationLocals_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InterpolationLocals_0_5);
   }
 

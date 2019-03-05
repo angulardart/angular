@@ -289,7 +289,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _MaterialAutoSuggestInputComponent_7_5 = import1.MaterialAutoSuggestInputComponent();
     _NgControlName_7_6 = import1.NgControlName();
     _RequiredValidator_7_7 = import1.RequiredValidator();
-    _compView_7.create(_MaterialAutoSuggestInputComponent_7_5, []);
+    _compView_7.create0(_MaterialAutoSuggestInputComponent_7_5);
     _compView_8 = ViewMaterialInputComponent0(this, 8);
     final _el_8 = _compView_8.rootEl;
     _el_3.append(_el_8);
@@ -298,7 +298,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _MaterialInputValueAccessor_8_6 = import1.MaterialInputValueAccessor();
     _NgControlName_8_7 = import1.NgControlName();
     _compView_8.create(_MaterialInputComponent_8_5, [const []]);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -475,7 +475,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
     rootEl = _compView_0.rootEl;
     _AppComponent_0_5 = import1.AppComponent();
     _compView_0.create(_AppComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _AppComponent_0_5);
   }
 
@@ -510,7 +510,7 @@ class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAut
   ComponentRef<import1.MaterialAutoSuggestInputComponent> build() {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -542,7 +542,7 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.Materi
     rootEl = _compView_0.rootEl;
     _MaterialAutoSuggestInputComponent_0_5 = import1.MaterialAutoSuggestInputComponent();
     _compView_0.create(_MaterialAutoSuggestInputComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _MaterialAutoSuggestInputComponent_0_5);
   }
 
@@ -586,7 +586,7 @@ class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     project(parentRenderNode, 0);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -650,7 +650,7 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
     rootEl = _compView_0.rootEl;
     _MaterialInputComponent_0_5 = import1.MaterialInputComponent();
     _compView_0.create(_MaterialInputComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _MaterialInputComponent_0_5);
   }
 

@@ -46,7 +46,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
     _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
-    init([], null);
+    init0Mutable();
   }
 
   @override
@@ -110,7 +110,7 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     final _text_5 = import10.appendText(_el_1, ' odd?');
     _el_1.append(_textBinding_6.element);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -147,7 +147,7 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_5 = import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _TestFooComponent_0_5);
   }
 

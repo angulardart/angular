@@ -37,7 +37,7 @@ class ViewI18nAttributeComponent0 extends AppView<import1.I18nAttributeComponent
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'img');
     import9.setAttribute(_el_0, 'alt', _message_0);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -69,7 +69,7 @@ class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComp
     rootEl = _compView_0.rootEl;
     _I18nAttributeComponent_0_5 = import1.I18nAttributeComponent();
     _compView_0.create(_I18nAttributeComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _I18nAttributeComponent_0_5);
   }
 

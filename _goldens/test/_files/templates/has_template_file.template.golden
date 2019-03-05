@@ -37,7 +37,7 @@ class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileCompo
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
     addShimC(_el_0);
     final _text_1 = import9.appendText(_el_0, 'Has Template File!');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -69,7 +69,7 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFile
     rootEl = _compView_0.rootEl;
     _HasTemplateFileComponent_0_5 = import2.HasTemplateFileComponent();
     _compView_0.create(_HasTemplateFileComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _HasTemplateFileComponent_0_5);
   }
 

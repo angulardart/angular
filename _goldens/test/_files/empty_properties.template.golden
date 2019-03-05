@@ -45,23 +45,23 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
     parentRenderNode.append(_el_0);
     import8.setAttribute(_el_0, 'raised', '');
     _FancyButtonComponent_0_5 = import1.FancyButtonComponent();
-    _compView_0.create(_FancyButtonComponent_0_5, []);
+    _compView_0.create0(_FancyButtonComponent_0_5);
     _compView_1 = ViewFancyButtonComponent0(this, 1);
     final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     _FancyButtonComponent_1_5 = import1.FancyButtonComponent();
-    _compView_1.create(_FancyButtonComponent_1_5, []);
+    _compView_1.create0(_FancyButtonComponent_1_5);
     _compView_2 = ViewFancyButtonComponent0(this, 2);
     final _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     _FancyButtonComponent_2_5 = import1.FancyButtonComponent();
-    _compView_2.create(_FancyButtonComponent_2_5, []);
+    _compView_2.create0(_FancyButtonComponent_2_5);
     _compView_3 = ViewFancyButtonComponent0(this, 3);
     final _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
     _FancyButtonComponent_3_5 = import1.FancyButtonComponent();
-    _compView_3.create(_FancyButtonComponent_3_5, []);
-    init(const [], null);
+    _compView_3.create0(_FancyButtonComponent_3_5);
+    init0();
   }
 
   @override
@@ -116,7 +116,7 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyProperties
     rootEl = _compView_0.rootEl;
     _EmptyPropertiesComponent_0_5 = import1.EmptyPropertiesComponent();
     _compView_0.create(_EmptyPropertiesComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _EmptyPropertiesComponent_0_5);
   }
 
@@ -151,7 +151,7 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
   ComponentRef<import1.FancyButtonComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -183,7 +183,7 @@ class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponen
     rootEl = _compView_0.rootEl;
     _FancyButtonComponent_0_5 = import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _FancyButtonComponent_0_5);
   }
 

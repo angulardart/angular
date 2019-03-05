@@ -38,7 +38,7 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'CheckOnce');
-    init(const [], null);
+    init0();
   }
 
   void detectHostChanges(bool firstCheck) {
@@ -78,7 +78,7 @@ class _ViewCheckOnceComponentHost0 extends AppView<import1.CheckOnceComponent> {
     rootEl = _compView_0.rootEl;
     _CheckOnceComponent_0_5 = import1.CheckOnceComponent();
     _compView_0.create(_CheckOnceComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _CheckOnceComponent_0_5);
   }
 
@@ -118,7 +118,7 @@ class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'Checked');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -150,7 +150,7 @@ class _ViewCheckedComponentHost0 extends AppView<import1.CheckedComponent> {
     rootEl = _compView_0.rootEl;
     _CheckedComponent_0_5 = import1.CheckedComponent();
     _compView_0.create(_CheckedComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _CheckedComponent_0_5);
   }
 
@@ -188,7 +188,7 @@ class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'CheckAlways');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -220,7 +220,7 @@ class _ViewCheckAlwaysComponentHost0 extends AppView<import1.CheckAlwaysComponen
     rootEl = _compView_0.rootEl;
     _CheckAlwaysComponent_0_5 = import1.CheckAlwaysComponent();
     _compView_0.create(_CheckAlwaysComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _CheckAlwaysComponent_0_5);
   }
 
@@ -258,7 +258,7 @@ class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'Detached');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -290,7 +290,7 @@ class _ViewDetachedComponentHost0 extends AppView<import1.DetachedComponent> {
     rootEl = _compView_0.rootEl;
     _DetachedComponent_0_5 = import1.DetachedComponent();
     _compView_0.create(_DetachedComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _DetachedComponent_0_5);
   }
 
@@ -332,8 +332,8 @@ class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _OnPushComponent_0_5 = import1.OnPushComponent();
-    _compView_0.create(_OnPushComponent_0_5, []);
-    init(const [], null);
+    _compView_0.create0(_OnPushComponent_0_5);
+    init0();
   }
 
   @override
@@ -387,7 +387,7 @@ class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent>
     rootEl = _compView_0.rootEl;
     _UsesOnPushComponent_0_5 = import1.UsesOnPushComponent();
     _compView_0.create(_UsesOnPushComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _UsesOnPushComponent_0_5);
   }
 
@@ -429,8 +429,8 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _OnPushChildComponent_0_5 = import1.OnPushChildComponent();
-    _compView_0.create(_OnPushChildComponent_0_5, []);
-    init(const [], null);
+    _compView_0.create0(_OnPushChildComponent_0_5);
+    init0();
   }
 
   @override
@@ -484,7 +484,7 @@ class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
     rootEl = _compView_0.rootEl;
     _OnPushComponent_0_5 = import1.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _OnPushComponent_0_5);
   }
 
@@ -528,7 +528,7 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'OnPushChild: ');
     _el_0.append(_textBinding_2.element);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -566,7 +566,7 @@ class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponen
     rootEl = _compView_0.rootEl;
     _OnPushChildComponent_0_5 = import1.OnPushChildComponent();
     _compView_0.create(_OnPushChildComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _OnPushChildComponent_0_5);
   }
 
@@ -609,7 +609,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'Stateful');
-    init(const [], null);
+    init0();
     _ctx.stateChangeCallback = markStateChanged;
   }
 
@@ -642,7 +642,7 @@ class _ViewStatefulComponentHost0 extends AppView<import1.StatefulComponent> {
     rootEl = _compView_0.rootEl;
     _StatefulComponent_0_5 = import1.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _StatefulComponent_0_5);
   }
 
@@ -680,7 +680,7 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'Default');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -712,7 +712,7 @@ class _ViewDefaultComponentHost0 extends AppView<import1.DefaultComponent> {
     rootEl = _compView_0.rootEl;
     _DefaultComponent_0_5 = import1.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _DefaultComponent_0_5);
   }
 

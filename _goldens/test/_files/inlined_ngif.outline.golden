@@ -21,6 +21,13 @@ external _ng.AppView<InlinedNgIfComponent> viewFactory_InlinedNgIfComponent0(_ng
 class ViewInlinedNgIfComponent0 extends _ng.AppView<InlinedNgIfComponent> {
   external ViewInlinedNgIfComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class IgnoredNgIfComponent.
+external List<dynamic> get styles$IgnoredNgIfComponent;
+external _ng.ComponentFactory<IgnoredNgIfComponent> get IgnoredNgIfComponentNgFactory;
+external _ng.AppView<IgnoredNgIfComponent> viewFactory_IgnoredNgIfComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewIgnoredNgIfComponent0 extends _ng.AppView<IgnoredNgIfComponent> {
+  external ViewIgnoredNgIfComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 // For @Component class InlinedNgIfWithImmutableConditionComponent.
 external List<dynamic> get styles$InlinedNgIfWithImmutableConditionComponent;
 external _ng.ComponentFactory<InlinedNgIfWithImmutableConditionComponent> get InlinedNgIfWithImmutableConditionComponentNgFactory;

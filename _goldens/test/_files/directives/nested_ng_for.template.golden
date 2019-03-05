@@ -45,7 +45,7 @@ class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_NestedNgForComponent1);
     _NgFor_0_9 = import3.NgFor(_appEl_0, _TemplateRef_0_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -97,7 +97,7 @@ class _ViewNestedNgForComponent1 extends AppView<import1.NestedNgForComponent> {
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForComponent2);
     _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -134,7 +134,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
     final doc = import7.document;
     final _el_0 = doc.createElement('div');
     _el_0.append(_textBinding_1.element);
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -162,7 +162,7 @@ class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponen
     rootEl = _compView_0.rootEl;
     _NestedNgForComponent_0_5 = import1.NestedNgForComponent();
     _compView_0.create(_NestedNgForComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _NestedNgForComponent_0_5);
   }
 

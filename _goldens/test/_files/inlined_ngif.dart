@@ -4,23 +4,34 @@ import 'package:angular/angular.dart';
 @Component(
   selector: 'inlined-ngif',
   template: '''
-<div *ngIf="foo">Hello World!</div>
+    <div *ngIf="foo">Hello World!</div>
     ''',
   directives: [NgIf],
-  visibility: Visibility.local,
 )
 class InlinedNgIfComponent {
-  bool foo = true;
+  var foo = true;
 }
 
+/// Tests that this simple NgIf is *not* inlined.
+@Component(
+  selector: 'inlined-ngif',
+  template: '''
+    <div *ngIf="foo">Hello {{name}}!</div>
+    ''',
+  directives: [NgIf],
+)
+class IgnoredNgIfComponent {
+  final name = 'World';
+}
+
+/// Tests that an *ngIf that is always true is just treated as plain HTML.
 @Component(
   selector: 'inlined-ngif-with-immutable-condition',
   template: '''
-<div *ngIf="foo">Hello World!</div>
+    <div *ngIf="foo">Hello World!</div>
     ''',
   directives: [NgIf],
-  visibility: Visibility.local,
 )
 class InlinedNgIfWithImmutableConditionComponent {
-  final bool foo = true;
+  final foo = true;
 }

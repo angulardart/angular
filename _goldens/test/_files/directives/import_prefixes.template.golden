@@ -37,7 +37,7 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import2.document;
     _el_0 = import8.appendElement(doc, parentRenderNode, 'child-comp');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -80,7 +80,7 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
     rootEl = _compView_0.rootEl;
     _ParentComponent_0_5 = import1.ParentComponent();
     _compView_0.create(_ParentComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _ParentComponent_0_5);
   }
 
@@ -117,7 +117,7 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     parentRenderNode.append(_textBinding_0.element);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -155,7 +155,7 @@ class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
     rootEl = _compView_0.rootEl;
     _ChildComponent_0_5 = import1.ChildComponent();
     _compView_0.create(_ChildComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _ChildComponent_0_5);
   }
 

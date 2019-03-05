@@ -46,8 +46,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
     _TestSubComponent_5_5 = import1.TestSubComponent();
-    _compView_5.create(_TestSubComponent_5_5, []);
-    init(const [], null);
+    _compView_5.create0(_TestSubComponent_5_5);
+    init0();
   }
 
   @override
@@ -89,7 +89,7 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_5 = import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _TestFooComponent_0_5);
   }
 
@@ -127,7 +127,7 @@ class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'Bar');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -159,7 +159,7 @@ class _ViewTestSubComponentHost0 extends AppView<import1.TestSubComponent> {
     rootEl = _compView_0.rootEl;
     _TestSubComponent_0_5 = import1.TestSubComponent();
     _compView_0.create(_TestSubComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _TestSubComponent_0_5);
   }
 
