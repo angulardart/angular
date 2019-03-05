@@ -31,9 +31,6 @@ const namespaceUris = {
   'xhtml': 'http://www.w3.org/1999/xhtml'
 };
 
-/// Variable name used to read viewData.parentIndex in build functions.
-const String cachedParentIndexVarName = 'parentIdx';
-
 /// All fields and getters defined on [AppView] that don't need a cast in
 /// getPropertyInView.
 final _appViewFields = Set<String>.from([

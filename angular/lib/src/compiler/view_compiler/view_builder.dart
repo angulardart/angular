@@ -32,7 +32,6 @@ import 'parse_utils.dart';
 import 'perf_profiler.dart';
 import 'view_compiler_utils.dart'
     show
-        cachedParentIndexVarName,
         createFlatArray,
         detectHtmlElementFromTagName,
         identifierFromTagName,
@@ -780,14 +779,6 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     )));
     // Rely on the implicit `return null` for non host views. This reduces the
     // size of output from dart2js.
-  }
-
-  var readVars = o.findReadVarNames(statements);
-  if (readVars.contains(cachedParentIndexVarName)) {
-    statements.insert(
-        0,
-        o.DeclareVarStmt(cachedParentIndexVarName,
-            o.ReadClassMemberExpr('viewData').prop('parentIndex')));
   }
   return statements;
 }
