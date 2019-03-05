@@ -24,8 +24,8 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   import2.Element _el_0;
   static import3.ComponentStyles _componentStyles;
   ViewParentComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('parent-comp');
     initComponentStyles();
+    rootEl = import2.document.createElement('parent-comp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null);
@@ -105,8 +105,8 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
   final import9.TextBinding _textBinding_0 = import9.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('child-cmp');
     initComponentStyles();
+    rootEl = import2.document.createElement('child-cmp');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/import_prefixes.dart' : null);

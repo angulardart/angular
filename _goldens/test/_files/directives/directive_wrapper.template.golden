@@ -28,8 +28,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   import2.DivElement _el_0;
   static import3.ComponentStyles _componentStyles;
   ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('test-foo');
     initComponentStyles();
+    rootEl = import2.document.createElement('test-foo');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/directive_wrapper.dart' : null);
@@ -121,8 +121,8 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
   FastDirectiveNgCd _FastDirective_1_5;
   static import3.ComponentStyles _componentStyles;
   ViewDirectiveContainerTest0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('directive-container');
     initComponentStyles();
+    rootEl = import2.document.createElement('directive-container');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/directive_wrapper.dart' : null);
@@ -134,11 +134,11 @@ class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import2.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
-    _el_0.className = 'target1';
+    this.updateChildClass(_el_0, 'target1');
     import8.setAttribute(_el_0, 'fastDirective', '');
     _FastDirective_0_5 = FastDirectiveNgCd(import1.FastDirective(_el_0), this, _el_0);
     final _el_1 = import8.appendDiv(doc, parentRenderNode);
-    _el_1.className = 'target2';
+    this.updateChildClass(_el_1, 'target2');
     import8.setAttribute(_el_1, 'fastDirective', '');
     _FastDirective_1_5 = FastDirectiveNgCd(import1.FastDirective(_el_1), this, _el_1);
     init0();

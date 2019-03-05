@@ -23,8 +23,8 @@ final List<dynamic> styles$I18nHtmlComponent = const [];
 class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('message');
     initComponentStyles();
+    rootEl = import5.document.createElement('message');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null);

@@ -24,8 +24,8 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewCheckOnceComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import5.document.createElement('CheckOnce');
     initComponentStyles();
+    rootEl = import5.document.createElement('CheckOnce');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -104,8 +104,8 @@ final List<dynamic> styles$CheckedComponent = const [];
 class ViewCheckedComponent0 extends AppView<import1.CheckedComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewCheckedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import5.document.createElement('Checked');
     initComponentStyles();
+    rootEl = import5.document.createElement('Checked');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -174,8 +174,8 @@ final List<dynamic> styles$CheckAlwaysComponent = const [];
 class ViewCheckAlwaysComponent0 extends AppView<import1.CheckAlwaysComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewCheckAlwaysComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import5.document.createElement('CheckAlways');
     initComponentStyles();
+    rootEl = import5.document.createElement('CheckAlways');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -244,8 +244,8 @@ final List<dynamic> styles$DetachedComponent = const [];
 class ViewDetachedComponent0 extends AppView<import1.DetachedComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewDetachedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import5.document.createElement('Detached');
     initComponentStyles();
+    rootEl = import5.document.createElement('Detached');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -317,8 +317,8 @@ class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
   String _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesOnPushComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('uses-cd-on-push');
     initComponentStyles();
+    rootEl = import5.document.createElement('uses-cd-on-push');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -414,8 +414,8 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
   String _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewOnPushComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import5.document.createElement('cd-on-push');
     initComponentStyles();
+    rootEl = import5.document.createElement('cd-on-push');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -513,8 +513,8 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
   final import10.TextBinding _textBinding_2 = import10.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewOnPushChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import5.document.createElement('cd-on-push-child');
     initComponentStyles();
+    rootEl = import5.document.createElement('cd-on-push-child');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -594,8 +594,8 @@ final List<dynamic> styles$StatefulComponent = const [];
 class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewStatefulComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import5.document.createElement('Stateful');
     initComponentStyles();
+    rootEl = import5.document.createElement('Stateful');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -666,8 +666,8 @@ final List<dynamic> styles$DefaultComponent = const [];
 class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewDefaultComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('Default');
     initComponentStyles();
+    rootEl = import5.document.createElement('Default');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);

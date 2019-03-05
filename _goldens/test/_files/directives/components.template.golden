@@ -21,8 +21,8 @@ final List<dynamic> styles$TestSubComponent = const [];
 class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewTestSubComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('test-bar');
     initComponentStyles();
+    rootEl = import5.document.createElement('test-bar');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/components.dart' : null);

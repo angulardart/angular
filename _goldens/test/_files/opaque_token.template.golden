@@ -27,8 +27,8 @@ final List<dynamic> styles$HasOpaqueTokens = const [];
 class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   static import2.ComponentStyles _componentStyles;
   ViewHasOpaqueTokens0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('has-opaque-tokens');
     initComponentStyles();
+    rootEl = import5.document.createElement('has-opaque-tokens');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/opaque_token.dart' : null);
@@ -107,8 +107,8 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
   NgIf _NgIf_0_9;
   static import2.ComponentStyles _componentStyles;
   ViewContainsChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('contains-child-component');
     initComponentStyles();
+    rootEl = import5.document.createElement('contains-child-component');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/opaque_token.dart' : null);
@@ -261,8 +261,8 @@ final List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
 class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedTokenFromSomeParent> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectsTypedTokenFromSomeParent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('injects-typed-token-from-parent');
     initComponentStyles();
+    rootEl = import5.document.createElement('injects-typed-token-from-parent');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/opaque_token.dart' : null);

@@ -26,8 +26,8 @@ final List<dynamic> styles$InjectableComponent = const [];
 class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectableComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('test-injectables');
     initComponentStyles();
+    rootEl = import5.document.createElement('test-injectables');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/injectables.dart' : null);

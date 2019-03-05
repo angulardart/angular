@@ -29,8 +29,8 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
   import1.FancyButtonComponent _FancyButtonComponent_3_5;
   static import2.ComponentStyles _componentStyles;
   ViewEmptyPropertiesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('empty-properties');
     initComponentStyles();
+    rootEl = import5.document.createElement('empty-properties');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/empty_properties.dart' : null);
@@ -140,8 +140,8 @@ final List<dynamic> styles$FancyButtonComponent = const [];
 class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewFancyButtonComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('fancy-button');
     initComponentStyles();
+    rootEl = import5.document.createElement('fancy-button');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/empty_properties.dart' : null);

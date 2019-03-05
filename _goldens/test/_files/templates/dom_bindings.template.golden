@@ -23,8 +23,8 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasHostAttributes0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('has-host-attributes');
     initComponentStyles();
+    rootEl = import5.document.createElement('has-host-attributes');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -102,8 +102,8 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
   import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasTemplateAttributes0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('has-template-attributes');
     initComponentStyles();
+    rootEl = import5.document.createElement('has-template-attributes');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -182,8 +182,8 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
   import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasStaticAttribute0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('has-static-attribute');
     initComponentStyles();
+    rootEl = import5.document.createElement('has-static-attribute');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -260,8 +260,8 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
   bool _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasHostClass0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('has-host-class');
     initComponentStyles();
+    rootEl = import5.document.createElement('has-host-class');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -339,8 +339,8 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
   import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasTemplateClass0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('has-template-class');
     initComponentStyles();
+    rootEl = import5.document.createElement('has-template-class');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);

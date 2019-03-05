@@ -21,8 +21,8 @@ final List<dynamic> styles$UsesEventTearoff = const [];
 class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
   static import2.ComponentStyles _componentStyles;
   ViewUsesEventTearoff0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('uses-event-tearoff');
     initComponentStyles();
+    rootEl = import5.document.createElement('uses-event-tearoff');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/event_tearoff.dart' : null);

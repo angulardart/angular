@@ -22,8 +22,8 @@ final List<dynamic> styles$DeferredChild1Component = const [];
 class ViewDeferredChild1Component0 extends AppView<import1.DeferredChild1Component> {
   static import2.ComponentStyles _componentStyles;
   ViewDeferredChild1Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('deferred-child-1');
     initComponentStyles();
+    rootEl = import5.document.createElement('deferred-child-1');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
@@ -90,8 +90,8 @@ final List<dynamic> styles$DeferredChild2Component = const [];
 class ViewDeferredChild2Component0 extends AppView<import1.DeferredChild2Component> {
   static import2.ComponentStyles _componentStyles;
   ViewDeferredChild2Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('deferred-child-2');
     initComponentStyles();
+    rootEl = import5.document.createElement('deferred-child-2');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
@@ -158,8 +158,8 @@ final List<dynamic> styles$DeferredChild3Component = const [];
 class ViewDeferredChild3Component0 extends AppView<import1.DeferredChild3Component> {
   static import2.ComponentStyles _componentStyles;
   ViewDeferredChild3Component0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('deferred-child-3');
     initComponentStyles();
+    rootEl = import5.document.createElement('deferred-child-3');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
@@ -226,8 +226,8 @@ final List<dynamic> styles$NotDeferredChildComponent = const [];
 class ViewNotDeferredChildComponent0 extends AppView<import1.NotDeferredChildComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewNotDeferredChildComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('not-deferred-child');
     initComponentStyles();
+    rootEl = import5.document.createElement('not-deferred-child');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
@@ -293,8 +293,8 @@ final List<dynamic> styles$DeferredChildComponentWithoutNgContent = const [];
 class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.DeferredChildComponentWithoutNgContent> {
   static import2.ComponentStyles _componentStyles;
   ViewDeferredChildComponentWithoutNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('deferred-child-without-ng-content');
     initComponentStyles();
+    rootEl = import5.document.createElement('deferred-child-without-ng-content');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
@@ -363,8 +363,8 @@ final List<dynamic> styles$DeferredChildComponentWithNgContent = const [];
 class ViewDeferredChildComponentWithNgContent0 extends AppView<import1.DeferredChildComponentWithNgContent> {
   static import2.ComponentStyles _componentStyles;
   ViewDeferredChildComponentWithNgContent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('deferred-child-with-ng-content');
     initComponentStyles();
+    rootEl = import5.document.createElement('deferred-child-with-ng-content');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
@@ -433,8 +433,8 @@ final List<dynamic> styles$DeferredChildComponentWithServices = const [];
 class ViewDeferredChildComponentWithServices0 extends AppView<import1.DeferredChildComponentWithServices> {
   static import2.ComponentStyles _componentStyles;
   ViewDeferredChildComponentWithServices0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('deferred-child-with-services');
     initComponentStyles();
+    rootEl = import5.document.createElement('deferred-child-with-services');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);

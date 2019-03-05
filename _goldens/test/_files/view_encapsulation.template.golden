@@ -26,8 +26,8 @@ class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
   ViewEmulatedComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import7.document.createElement('Emulated');
     initComponentStyles();
+    rootEl = import7.document.createElement('Emulated');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/view_encapsulation.dart' : null);
@@ -119,8 +119,8 @@ class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
   ViewNoneComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import7.document.createElement('None');
     initComponentStyles();
+    rootEl = import7.document.createElement('None');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/view_encapsulation.dart' : null);

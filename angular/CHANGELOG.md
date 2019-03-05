@@ -51,6 +51,11 @@
     order as they appear in the template. Prior to this fix, directives in
     nested embedded views would occur *before* those in their parent view.
 
+*   The template compiler now properly updates class statements for "literal
+    attributes". Previously, we did not shim these classes correctly. This
+    includes both raw attributes (e.g. `class="foo"`) and host bindings (e.g.
+    `@HostBinding('class')`).
+
 ### Breaking changes
 
 *   Removed `castCallback2ForDirective` from `meta.dart`. In practice this was

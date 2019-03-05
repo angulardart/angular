@@ -1,0 +1,112 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'styles.dart';
+export 'styles.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'styles.dart' as import1;
+import 'dart:html' as import2;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import8;
+
+final List<dynamic> styles$StylesComponent = const [];
+
+class ViewStylesComponent0 extends AppView<import1.StylesComponent> {
+  import2.DivElement _el_0;
+  static import3.ComponentStyles _componentStyles;
+  ViewStylesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+    rootEl = import2.document.createElement('styles');
+    rootEl.className = import1.StylesComponent.baz;
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/styles.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.StylesComponent> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import2.document;
+    _el_0 = import8.appendDiv(doc, parentRenderNode);
+    this.updateChildClass(_el_0, 'foo');
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      _el_0.style.setProperty('width', '5px;');
+      if (!identical(_ctx.bar, null)) {
+        this.updateChildClass(_el_0, _ctx.bar);
+      }
+    }
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$StylesComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.StylesComponent> _StylesComponentNgFactory = const ComponentFactory('styles', viewFactory_StylesComponentHost0);
+ComponentFactory<import1.StylesComponent> get StylesComponentNgFactory {
+  return _StylesComponentNgFactory;
+}
+
+final List<dynamic> styles$StylesComponentHost = const [];
+
+class _ViewStylesComponentHost0 extends AppView<import1.StylesComponent> {
+  ViewStylesComponent0 _compView_0;
+  import1.StylesComponent _StylesComponent_0_5;
+  _ViewStylesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.StylesComponent> build() {
+    _compView_0 = ViewStylesComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _StylesComponent_0_5 = import1.StylesComponent();
+    _compView_0.create(_StylesComponent_0_5, projectedNodes);
+    init1(rootEl);
+    return ComponentRef(0, this, rootEl, _StylesComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.StylesComponent> viewFactory_StylesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewStylesComponentHost0(parentView, parentIndex);
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(StylesComponent, StylesComponentNgFactory);
+  _ref0.initReflector();
+}

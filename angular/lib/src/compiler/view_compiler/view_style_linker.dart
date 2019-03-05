@@ -32,7 +32,12 @@ class _ViewStyleLinker {
       : StyleEncapsulation.componentStylesUnscoped);
 
   void initStyleEncapsulation() {
-    _class.constructorMethod.body.add(
+    // We need to call initComponentStyles() before we handle any constant
+    // bindings, which may attempt to update styles in the constructor body.
+    // As an easy hack to ensure this, we just insert this call at the beginning
+    // of the constructor body.
+    _class.constructorMethod.body.insert(
+      0,
       o.InvokeMemberMethodExpr(_initComponentStyles, const []).toStmt(),
     );
     if (_isComponentView) {

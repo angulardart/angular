@@ -28,8 +28,8 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
   import2.DivElement _el_0_0;
   static import3.ComponentStyles _componentStyles;
   ViewInlinedNgIfComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('inlined-ngif');
     initComponentStyles();
+    rootEl = import2.document.createElement('inlined-ngif');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/inlined_ngif.dart' : null);
@@ -115,8 +115,8 @@ class ViewIgnoredNgIfComponent0 extends AppView<import1.IgnoredNgIfComponent> {
   NgIf _NgIf_0_9;
   static import3.ComponentStyles _componentStyles;
   ViewIgnoredNgIfComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('inlined-ngif');
     initComponentStyles();
+    rootEl = import2.document.createElement('inlined-ngif');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/inlined_ngif.dart' : null);
@@ -218,8 +218,8 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
   import2.Comment _anchor_0;
   static import3.ComponentStyles _componentStyles;
   ViewInlinedNgIfWithImmutableConditionComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import2.document.createElement('inlined-ngif-with-immutable-condition');
     initComponentStyles();
+    rootEl = import2.document.createElement('inlined-ngif-with-immutable-condition');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/inlined_ngif.dart' : null);

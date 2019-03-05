@@ -61,8 +61,8 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   import1.HasNestedProviderLookups _HasNestedProviderLookups_12_5;
   static import2.ComponentStyles _componentStyles;
   ViewRootComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('root-component');
     initComponentStyles();
+    rootEl = import5.document.createElement('root-component');
   }
   import1.A get _A_0_6 {
     if ((__A_0_6 == null)) {
@@ -284,8 +284,8 @@ class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefau
   String _expr_1;
   static import2.ComponentStyles _componentStyles;
   ViewUsesDefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('uses-default-change-detection-and-inputs');
     initComponentStyles();
+    rootEl = import5.document.createElement('uses-default-change-detection-and-inputs');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -380,8 +380,8 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
   final import13.TextBinding _textBinding_3 = import13.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewDefaultChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('default-change-detection-and-inputs');
     initComponentStyles();
+    rootEl = import5.document.createElement('default-change-detection-and-inputs');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -461,8 +461,8 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
   String _expr_1;
   static import2.ComponentStyles _componentStyles;
   ViewUsesOnPushChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('uses-on-push-change-detection-and-inputs');
     initComponentStyles();
+    rootEl = import5.document.createElement('uses-on-push-change-detection-and-inputs');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -564,8 +564,8 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
   final import13.TextBinding _textBinding_3 = import13.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewOnPushChangeDetectionAndInputs0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
-    rootEl = import5.document.createElement('on-push-change-detection-and-inputs');
     initComponentStyles();
+    rootEl = import5.document.createElement('on-push-change-detection-and-inputs');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -649,8 +649,8 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
   import5.DivElement _el_0_0;
   static import2.ComponentStyles _componentStyles;
   ViewInlinedNgIf0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('inlined-ng-if');
     initComponentStyles();
+    rootEl = import5.document.createElement('inlined-ng-if');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -736,8 +736,8 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
   NgIf _NgIf_0_9;
   static import2.ComponentStyles _componentStyles;
   ViewEmbeddedNgIf0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('embedded-ng-if');
     initComponentStyles();
+    rootEl = import5.document.createElement('embedded-ng-if');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -851,8 +851,8 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
   import17.NgFor _NgFor_1_9;
   static import2.ComponentStyles _componentStyles;
   ViewEmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('embedded-ng-for');
     initComponentStyles();
+    rootEl = import5.document.createElement('embedded-ng-for');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -968,8 +968,8 @@ final List<dynamic> styles$NullComponent = const [];
 class ViewNullComponent0 extends AppView<import1.NullComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewNullComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('null');
     initComponentStyles();
+    rootEl = import5.document.createElement('null');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -1035,8 +1035,8 @@ final List<dynamic> styles$InjectsFromArbitraryParent = const [];
 class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitraryParent> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectsFromArbitraryParent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('injects-from-arbitrary-parent');
     initComponentStyles();
+    rootEl = import5.document.createElement('injects-from-arbitrary-parent');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -1110,8 +1110,8 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
   NgIf _NgIf_1_9;
   static import2.ComponentStyles _componentStyles;
   ViewComponentConditionalFeatures0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('component-conditional-features');
     initComponentStyles();
+    rootEl = import5.document.createElement('component-conditional-features');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -1260,8 +1260,8 @@ final List<dynamic> styles$FeatureA = const [];
 class ViewFeatureA0 extends AppView<import1.FeatureA> {
   static import2.ComponentStyles _componentStyles;
   ViewFeatureA0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('feature-a');
     initComponentStyles();
+    rootEl = import5.document.createElement('feature-a');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -1328,8 +1328,8 @@ final List<dynamic> styles$FeatureB = const [];
 class ViewFeatureB0 extends AppView<import1.FeatureB> {
   static import2.ComponentStyles _componentStyles;
   ViewFeatureB0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('feature-b');
     initComponentStyles();
+    rootEl = import5.document.createElement('feature-b');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -1401,8 +1401,8 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
   import5.ButtonElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesDomBindings0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('uses-dom-bindings');
     initComponentStyles();
+    rootEl = import5.document.createElement('uses-dom-bindings');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -1508,8 +1508,8 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
   var _expr_3;
   static import2.ComponentStyles _componentStyles;
   ViewUsesNgDirectives0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('uses-ng-directives');
     initComponentStyles();
+    rootEl = import5.document.createElement('uses-ng-directives');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -1634,8 +1634,8 @@ class ViewHasNestedProviderLookups0 extends AppView<import1.HasNestedProviderLoo
   NgIf _NgIf_0_9;
   static import2.ComponentStyles _componentStyles;
   ViewHasNestedProviderLookups0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('has-nested-provider-lookups');
     initComponentStyles();
+    rootEl = import5.document.createElement('has-nested-provider-lookups');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
@@ -1788,8 +1788,8 @@ final List<dynamic> styles$InjectsManyThingsDynamically = const [];
 class ViewInjectsManyThingsDynamically0 extends AppView<import1.InjectsManyThingsDynamically> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectsManyThingsDynamically0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    rootEl = import5.document.createElement('injects-many-things-dynamically');
     initComponentStyles();
+    rootEl = import5.document.createElement('injects-many-things-dynamically');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);

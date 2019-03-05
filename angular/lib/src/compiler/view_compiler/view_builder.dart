@@ -543,6 +543,7 @@ o.Constructor _createViewClassConstructor(CompileView view) {
         binding.target as ir.AttributeBinding,
         tagName,
         o.variable(appViewRootElementName),
+        true,
       );
       ctor.body.add(statement);
     });
