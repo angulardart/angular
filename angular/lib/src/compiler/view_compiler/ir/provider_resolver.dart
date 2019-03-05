@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 import '../../compile_metadata.dart';
 import '../../i18n/message.dart';
 import '../../output/output_ast.dart' as o;
 import '../../template_ast.dart';
+import '../../view_compiler/compile_element.dart';
 import '../../view_compiler/view_compiler_utils.dart';
 import 'provider_source.dart';
 
@@ -219,7 +222,11 @@ class ProviderResolver {
     // Ask host to build a ProviderSource that injects the instance
     // dynamically through injectorGet call.
     return _host.createDynamicInjectionSource(
-        currProviders, result, dep.token, dep.isOptional);
+      currProviders,
+      result,
+      dep.token,
+      dep.isOptional,
+    );
   }
 
   /// Creates an expression that calls a functional directive.
@@ -284,7 +291,7 @@ class LiteralValueSource extends ProviderSource {
 
 bool _hasDynamicDependencies(Iterable<ProviderSource> sources) {
   for (final source in sources) {
-    if (source is DynamicProviderSource || source.hasDynamicDependencies) {
+    if (source.hasDynamicDependencies) {
       return true;
     }
   }
@@ -366,31 +373,33 @@ class FunctionalDirectiveSource extends ProviderSource {
   bool get hasDynamicDependencies => _hasDynamicDependencies(_parameters);
 }
 
-/// Source for injectable values that are resolved by
-/// dynamic lookup (injectorGet).
+/// Source for injectable values resolved by dynamic lookup (`injectorGet`).
 class DynamicProviderSource extends ProviderSource {
-  final ProviderResolver parentProviders;
-  final bool optional;
-  final bool _isAppViewHost;
+  final CompileElement _element;
+  final ProviderResolver _resolver;
+  final ProviderSource _source;
+  final bool _isOptional;
 
-  DynamicProviderSource(this.parentProviders, CompileTokenMetadata token,
-      this.optional, this._isAppViewHost)
-      : super(token);
+  DynamicProviderSource(
+    CompileTokenMetadata token,
+    this._element,
+    this._resolver,
+    this._source, {
+    @required bool isOptional,
+  })  : _isOptional = isOptional,
+        super(token);
 
   @override
   o.Expression build() {
-    o.Expression viewExpr =
-        _isAppViewHost ? o.THIS_EXPR : o.ReadClassMemberExpr('parentView');
-    var args = [
-      createDiTokenExpression(token),
-      o.ReadClassMemberExpr('viewData').prop('parentIndex')
-    ];
-    if (optional) {
-      args.add(o.NULL_EXPR);
-    }
-    return viewExpr.callMethod('injectorGet', args);
+    final value = _source?.build() ?? _injectFromViewParent();
+    final parent = _element.findElementByResolver(_resolver);
+    return getPropertyInView(value, _element.view, parent.view);
+  }
+
+  o.Expression _injectFromViewParent() {
+    return injectFromViewParentInjector(_element.view, token, _isOptional);
   }
 
   @override
-  final hasDynamicDependencies = false;
+  bool get hasDynamicDependencies => _source?.hasDynamicDependencies != false;
 }
