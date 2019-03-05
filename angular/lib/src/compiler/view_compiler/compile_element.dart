@@ -140,6 +140,19 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     }
   }
 
+  /// Returns the [CompileElement] where [resolver] originates from.
+  ///
+  /// May be used to find the correct parent view (in nested views).
+  CompileElement findElementByResolver(ProviderResolver resolver) {
+    // TODO: [ProviderResolver._host] *is* the `CompileElement`.
+    // We should take this into account during the pipeline refactor.
+    var current = this;
+    while (current?._providers != resolver) {
+      current = current.parent;
+    }
+    return current;
+  }
+
   CompileElement.root()
       : this(null, null, null, NodeReference.appViewRoot(), null, null, [], [],
             false, false, []);
@@ -427,13 +440,12 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
       value = injectFromViewParentInjector(view, token, optional);
       hasDynamicDependencies = true;
     }
-    CompileElement currElement = this;
-    while (currElement != null) {
-      if (currElement._providers == providersNode) break;
-      currElement = currElement.parent;
-    }
-    var viewRelativeExpression =
-        getPropertyInView(value, view, currElement.view);
+    final element = findElementByResolver(providersNode);
+    final viewRelativeExpression = getPropertyInView(
+      value,
+      view,
+      element.view,
+    );
     return LiteralValueSource(
       token,
       viewRelativeExpression,
