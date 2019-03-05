@@ -52,7 +52,6 @@ import 'view_compiler_utils.dart'
     show
         createDiTokenExpression,
         createSetAttributeStatement,
-        cachedParentIndexVarName,
         debugInjectorEnter,
         debugInjectorLeave,
         getViewFactory,
@@ -1136,13 +1135,6 @@ class CompileView {
             .buildWriteExpr(internalField, resolvedProviderValueExpr)
             .toStmt()
       ];
-      var readVars = o.findReadVarNames(statements);
-      if (readVars.contains(cachedParentIndexVarName)) {
-        statements.insert(
-            0,
-            o.DeclareVarStmt(cachedParentIndexVarName,
-                o.ReadClassMemberExpr('viewData').prop('parentIndex')));
-      }
       getter.addStmt(
           o.IfStmt(storage.buildReadExpr(internalField).isBlank(), statements));
       getter.addStmt(o.ReturnStatement(storage.buildReadExpr(internalField)));
@@ -1319,10 +1311,6 @@ class CompileView {
     var varStmts = [];
     var readVars = o.findReadVarNames(statements);
     var writeVars = o.findWriteVarNames(statements);
-    if (readVars.contains(cachedParentIndexVarName)) {
-      varStmts.add(o.DeclareVarStmt(cachedParentIndexVarName,
-          o.ReadClassMemberExpr('viewData').prop('parentIndex')));
-    }
     if (readVars.contains(DetectChangesVars.cachedCtx.name)) {
       // Cache [ctx] class field member as typed [_ctx] local for change
       // detection code to consume.
